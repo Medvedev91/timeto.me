@@ -6,6 +6,13 @@ Any questions [hi@timeto.me](mailto:hi@timeto.me?subject=[GitHub]%20Feedback)
 
 ---
 
+To build, you have to create  **local.properties** file like
+```
+sdk.dir=/Users/__USER__/Library/Android/sdk
+```
+
+---
+
 # Android Specific
 
 ### combinedClickable()
