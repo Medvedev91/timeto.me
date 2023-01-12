@@ -178,6 +178,7 @@ struct TabToolsView: View {
                      */
 
                 MyListSection {
+
                     MyListItem_Button(text: "Ask a Question", withTopDivider: false) {
                         if (MFMailComposeViewController.canSendMail()) {
                             isMailViewPresented.toggle()
@@ -196,6 +197,10 @@ struct TabToolsView: View {
                                         result: $mailViewResult
                                 )
                             }
+
+                    MyListItem_Button(text: "Open Source", withTopDivider: true) {
+                        UIApplication.shared.open(URL(string: state.openSourceUrl)!)
+                    }
                 }
                         .padding(.top, 10)
 
