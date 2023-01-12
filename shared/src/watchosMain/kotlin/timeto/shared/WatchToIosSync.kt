@@ -1,0 +1,212 @@
+package timeto.shared
+
+import kotlinx.cinterop.UnsafeNumber
+import kotlinx.coroutines.delay
+import kotlinx.serialization.json.*
+import platform.Foundation.NSString
+import platform.Foundation.NSUTF8StringEncoding
+import platform.Foundation.create
+import platform.Foundation.dataUsingEncoding
+import platform.WatchConnectivity.WCSession
+import timeto.shared.db.*
+
+/**
+ * I use application context for backup because of limits:
+ * https://stackoverflow.com/a/35076706/5169420
+ * I mean the option - send a request and immediately get a backup
+ * does not work, but it is ok, because for responsive UI data are
+ * updated locally on the watch and only then synchronized with iPhone.
+ *
+ * While using the app, I ran into a limit of 65.5 KB. This is mainly
+ * for the history of the interval for hints. 262.1 KB should be enough,
+ * we can look for optimization.
+ */
+object WatchToIosSync {
+
+    private const val LOCAL_DELAY_MLS = 300L
+
+    fun sync() {
+        requestFromAppleWatch(
+            command = "sync",
+            jData = JsonObject(mapOf()),
+        )
+    }
+
+    fun cancelWithLocal(): Unit = defaultScope().launchEx {
+        IntervalModel.addWithValidation(
+            deadline = IntervalModel.DEADLINE_AFTER_CANCEL,
+            activity = ActivityModel.getOther(),
+            note = null,
+        )
+        launchEx {
+            delay(LOCAL_DELAY_MLS)
+            requestFromAppleWatch(
+                command = "cancel",
+                jData = JsonObject(mapOf())
+            )
+        }
+    }
+
+    fun startIntervalWithLocal(
+        activity: ActivityModel,
+        deadline: Int,
+    ): Unit = defaultScope().launchEx {
+        val last = DI.lastInterval
+        val note = if (last.activity_id == activity.id) last.note else null
+        IntervalModel.addWithValidation(
+            deadline = deadline,
+            activity = activity,
+            note = note,
+        )
+        launchEx {
+            delay(LOCAL_DELAY_MLS)
+            val map = mapOf(
+                "activity_id" to JsonPrimitive(activity.id),
+                "deadline" to JsonPrimitive(deadline),
+                "note" to JsonPrimitive(note),
+            )
+            requestFromAppleWatch(
+                command = "start_interval",
+                jData = JsonObject(map)
+            )
+        }
+    }
+
+    fun startTaskWithLocal(
+        activity: ActivityModel,
+        deadline: Int,
+        task: TaskModel,
+    ): Unit = defaultScope().launchEx {
+        task.startInterval(deadline, activity)
+        launchEx {
+            delay(LOCAL_DELAY_MLS)
+            val map = mapOf(
+                "activity_id" to JsonPrimitive(activity.id),
+                "deadline" to JsonPrimitive(deadline),
+                "task_id" to JsonPrimitive(task.id),
+            )
+            requestFromAppleWatch(
+                command = "start_task",
+                jData = JsonObject(map)
+            )
+        }
+    }
+
+    ///
+    /// Smart Restore
+
+    private var lastSyncId: Long? = null
+
+    fun smartRestore(
+        jsonString: String,
+    ): Unit = defaultScope().launchEx {
+        // Transaction to avoid many UI updates
+        db.transaction {
+            val json = Json.parseToJsonElement(jsonString)
+
+            val newSyncId = json.jsonObject["type"]!!.jsonPrimitive.long
+            val lastSyncIdLocal = lastSyncId
+            if (lastSyncIdLocal != null && lastSyncIdLocal > newSyncId)
+                return@transaction
+            lastSyncId = newSyncId
+
+            // Ordering is important
+            // WARNING The same models must be in listenForSyncWatch()
+            val intervals = smartRestore__start(IntervalModel, json.jsonObject["intervals"]!!.jsonArray, doNotUpdate = true)
+            val tasks = smartRestore__start(TaskModel, json.jsonObject["tasks"]!!.jsonArray)
+            val taskFolders = smartRestore__start(TaskFolderModel, json.jsonObject["task_folders"]!!.jsonArray)
+            val activities = smartRestore__start(ActivityModel, json.jsonObject["activities"]!!.jsonArray)
+
+            activities()
+            taskFolders()
+            tasks()
+            intervals()
+
+            // To 100% ensure
+            val ifl = IntervalModel.getFirstAndLastNeedTransaction()
+            DI.fillLateInit(firstInterval = ifl[0], lastInterval = ifl[1])
+        }
+    }
+}
+
+private fun smartRestore__start(
+    backupableHolder: Backupable__Holder,
+    jArray: JsonArray,
+    doNotUpdate: Boolean = false,
+): (() -> Unit) {
+    val newIds = jArray.map { it.jsonArray[0].jsonPrimitive.content }.toSet()
+    backupableHolder.backupable__getAll().forEach { item ->
+        if (!newIds.contains(item.backupable__getId()))
+            item.backupable__delete()
+    }
+    return {
+        val oldItemsMap: Map<String, Backupable__Item> = backupableHolder
+            .backupable__getAll()
+            .associateBy { it.backupable__getId() }
+
+        jArray
+            .map { it.jsonArray }
+            .forEach { j ->
+                val newId = j[0].jsonPrimitive.content
+                val oldItem = oldItemsMap[newId]
+                if (oldItem != null) {
+                    if (!doNotUpdate && (oldItem.backupable__backup().toString() != j.toString()))
+                        oldItem.backupable__update(j)
+                    return@forEach
+                }
+                backupableHolder.backupable__restore(j)
+            }
+    }
+}
+
+@OptIn(UnsafeNumber::class)
+private fun requestFromAppleWatch(
+    command: String,
+    jData: JsonElement,
+    errDelayMls: Long = 5_000L,
+    onResponse: ((String) -> Unit)? = null,
+) {
+    if (!WCSession.isSupported())
+        return
+
+    val jRequest = JsonObject(
+        mapOf(
+            "command" to JsonPrimitive(command),
+            "data" to jData,
+        )
+    )
+    val requestString = jRequest.toString() as NSString
+    val requestData = requestString.dataUsingEncoding(NSUTF8StringEncoding)
+    if (requestData == null) {
+        reportApi("requestFromAppleWatch() REQUEST data is null\n$requestString")
+        return
+    }
+
+    var isResponseReceived = false
+    WCSession.defaultSession.sendMessageData(
+        requestData,
+        replyHandler = { responseData ->
+            isResponseReceived = true
+
+            if (responseData == null) {
+                reportApi("requestFromAppleWatch() RESPONSE data is null\n$command\n$requestString")
+                return@sendMessageData
+            }
+
+            onResponse?.invoke(NSString.create(responseData, NSUTF8StringEncoding) as String)
+        },
+        errorHandler = { error ->
+            defaultScope().launchEx {
+                reportApi("requestFromAppleWatch() errorHandler:\n${error?.localizedDescription}")
+                showUiAlert(error?.localizedDescription ?: "Internal Error")
+            }
+        }
+    )
+    defaultScope().launchEx {
+        delay(errDelayMls)
+        if (!isResponseReceived) {
+            zlog("Sync Error")
+            // showUiAlert("Sync Error") // todo
+        }
+    }
+}
