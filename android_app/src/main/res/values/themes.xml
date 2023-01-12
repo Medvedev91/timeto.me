@@ -1,0 +1,17 @@
+<resources>
+
+    <style name="Theme.TimeTo" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/my_dn_background</item>
+        <!-- Dark icons for status bar -->
+        <item name="android:windowLightStatusBar">@bool/my_dn_is_light_status_bar</item>
+        <item name="android:statusBarColor">#00000000</item>
+        <item name="android:navigationBarColor">@color/my_dn_background</item>
+    </style>
+
+    <style name="MyFullscreen">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:navigationBarColor">#000000</item>
+    </style>
+
+</resources>
