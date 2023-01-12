@@ -1,0 +1,107 @@
+package timeto.shared.db
+
+import com.squareup.sqldelight.runtime.coroutines.asFlow
+import com.squareup.sqldelight.runtime.coroutines.mapToList
+import dbsq.ShortcutSQ
+import kotlinx.coroutines.flow.map
+import timeto.shared.UIException
+import timeto.shared.time
+import kotlin.math.max
+
+data class ShortcutModel(
+    val id: Int,
+    val name: String,
+    val uri: String,
+) {
+
+    companion object {
+
+        suspend fun getCount(): Int = dbIO {
+            db.shortcutQueries.getCount().executeAsOne().toInt()
+        }
+
+        suspend fun getAsc() = dbIO {
+            db.shortcutQueries.getAsc().executeAsList().map { it.toModel() }
+        }
+
+        fun getAscFlow() = db.shortcutQueries.getAsc().asFlow()
+            .mapToList().map { list -> list.map { it.toModel() } }
+
+        suspend fun getByIdOrNull(id: Int) = dbIO {
+            db.shortcutQueries.getById(id).executeAsOneOrNull()?.toModel()
+        }
+
+        suspend fun addWithValidation(
+            name: String,
+            uri: String,
+        ) = dbIO {
+            val validatedName = validateName(name) // todo to inside transaction
+            db.transaction {
+                addRaw(
+                    id = max(time(), db.shortcutQueries.getDesc(1).executeAsOneOrNull()?.id?.plus(1) ?: 0),
+                    name = validatedName,
+                    uri = validateUri(uri)
+                )
+            }
+        }
+
+        fun addRaw(
+            id: Int,
+            name: String,
+            uri: String,
+        ) {
+            db.shortcutQueries.insert(
+                id = id, name = name, uri = uri
+            )
+        }
+
+        fun truncate() {
+            db.shortcutQueries.truncate()
+        }
+
+        private suspend fun validateName(
+            name: String,
+            exIds: Set<Int> = setOf(),
+        ): String {
+
+            val validatedName = name.trim()
+            if (validatedName.isEmpty())
+                throw UIException("Empty name")
+
+            getAsc()
+                .filter { it.id !in exIds }
+                .forEach { shortcut ->
+                    if (shortcut.name.equals(validatedName, ignoreCase = true))
+                        throw UIException("$validatedName already exists.")
+                }
+
+            return validatedName
+        }
+
+        private fun validateUri(uri: String): String {
+            val validatedUri = uri.trim()
+            if (validatedUri.isEmpty())
+                throw UIException("Empty shortcut link")
+
+            // https://stackoverflow.com/a/62856745/5169420
+            // Since API level 30 resolveActivity always returns null
+            // val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+            // if (intent.resolveActivity(context.packageManager) == null)
+            //    throw MyException("Invalid action link")
+
+            return validatedUri
+        }
+
+        private fun ShortcutSQ.toModel() = ShortcutModel(
+            id = id, name = name, uri = uri
+        )
+    }
+
+    suspend fun upWithValidation(name: String, uri: String) = dbIO {
+        db.shortcutQueries.updateById(
+            id = id, name = validateName(name, setOf(id)), uri = validateUri(uri)
+        )
+    }
+
+    suspend fun delete() = dbIO { db.shortcutQueries.deleteById(id) }
+}
