@@ -1,0 +1,43 @@
+CREATE TABLE ShortcutSQ (
+    id INTEGER AS Int NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    uri TEXT NOT NULL
+);
+
+getCount:
+SELECT COUNT(*)
+FROM ShortcutSQ;
+
+getAsc:
+SELECT *
+FROM ShortcutSQ
+ORDER BY id ASC;
+
+getDesc:
+SELECT *
+FROM ShortcutSQ
+ORDER BY id DESC
+LIMIT :limit;
+
+getById:
+SELECT *
+FROM ShortcutSQ
+WHERE id = ?
+LIMIT 1;
+
+insert:
+INSERT INTO ShortcutSQ
+( id,  name,  uri) VALUES
+(:id, :name, :uri);
+
+updateById:
+UPDATE ShortcutSQ
+SET name = ?, uri = ?
+WHERE id = ?;
+
+deleteById:
+DELETE FROM ShortcutSQ
+WHERE id = ?;
+
+truncate:
+DELETE FROM ShortcutSQ;

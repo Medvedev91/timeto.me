@@ -1,0 +1,63 @@
+CREATE TABLE IntervalSQ (
+    id INTEGER AS Int NOT NULL PRIMARY KEY,
+    deadline INTEGER AS Int NOT NULL,
+    note TEXT, -- Nullable!
+    activity_id INTEGER AS Int NOT NULL
+);
+
+anyChange: SELECT id FROM IntervalSQ LIMIT 1;
+
+getBetweenIdDesc:
+SELECT *
+FROM IntervalSQ
+WHERE id BETWEEN :timeStart AND :timeFinish
+ORDER BY id DESC
+LIMIT :limit;
+
+getCount:
+SELECT COUNT(*)
+FROM IntervalSQ;
+
+getById:
+SELECT *
+FROM IntervalSQ
+WHERE id = ?
+LIMIT 1;
+
+getAsc:
+SELECT *
+FROM IntervalSQ
+ORDER BY id ASC
+LIMIT :limit;
+
+getDesc:
+SELECT *
+FROM IntervalSQ
+ORDER BY id DESC
+LIMIT :limit;
+
+insert:
+INSERT INTO IntervalSQ
+VALUES ?;
+
+upId:
+UPDATE IntervalSQ
+SET id = :newId
+WHERE id = :oldId;
+
+upById:
+UPDATE IntervalSQ
+SET deadline = ?, note = ?, activity_id = ?
+WHERE id = ?;
+
+upActivityIdById:
+UPDATE IntervalSQ
+SET activity_id = ?
+WHERE id = ?;
+
+deleteById:
+DELETE FROM IntervalSQ
+WHERE id = ?;
+
+truncate:
+DELETE FROM IntervalSQ;

@@ -1,0 +1,33 @@
+CREATE TABLE ChecklistItemSQ (
+    id INTEGER AS Int NOT NULL PRIMARY KEY,
+    text TEXT NOT NULL,
+    list_id INTEGER AS Int NOT NULL,
+    check_time INTEGER AS Int NOT NULL
+);
+
+getAsc:
+SELECT *
+FROM ChecklistItemSQ
+ORDER BY id ASC;
+
+insert:
+INSERT INTO ChecklistItemSQ
+( id,  text,  list_id,  check_time) VALUES
+(:id, :text, :list_id, :check_time);
+
+deleteById:
+DELETE FROM ChecklistItemSQ
+WHERE id = ?;
+
+upTextById:
+UPDATE ChecklistItemSQ
+SET text = ?
+WHERE id = ?;
+
+upCheckTimeById:
+UPDATE ChecklistItemSQ
+SET check_time = ?
+WHERE id = ?;
+
+truncate:
+DELETE FROM ChecklistItemSQ;

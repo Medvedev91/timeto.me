@@ -1,0 +1,60 @@
+CREATE TABLE ActivitySQ (
+    id INTEGER AS Int NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    emoji TEXT NOT NULL UNIQUE,
+    deadline INTEGER AS Int NOT NULL,
+    sort INTEGER AS Int NOT NULL,
+    type_id INTEGER AS Int NOT NULL,
+    color_rgba TEXT NOT NULL,
+    data_json TEXT NOT NULL
+);
+
+anyChange: SELECT id FROM ActivitySQ LIMIT 1;
+
+getAscSorted:
+SELECT *
+FROM ActivitySQ
+ORDER BY sort ASC, id DESC;
+
+getDesc:
+SELECT *
+FROM ActivitySQ
+ORDER BY id DESC
+LIMIT :limit;
+
+getById:
+SELECT *
+FROM ActivitySQ
+WHERE id = ?
+LIMIT 1;
+
+insert:
+INSERT INTO ActivitySQ
+VALUES ?;
+
+upById:
+UPDATE ActivitySQ
+SET name = ?, emoji = ?, deadline = ?, sort = ?, type_id = ?, color_rgba = ?, data_json = ?
+WHERE id = ?;
+
+upNameAndEmojiAndData:
+UPDATE ActivitySQ
+SET name = ?, emoji = ?, data_json = ?
+WHERE id = ?;
+
+upData:
+UPDATE ActivitySQ
+SET data_json = ?
+WHERE id = ?;
+
+upSort:
+UPDATE ActivitySQ
+SET sort = ?
+WHERE id = ?;
+
+deleteById:
+DELETE FROM ActivitySQ
+WHERE id = ?;
+
+truncate:
+DELETE FROM ActivitySQ;

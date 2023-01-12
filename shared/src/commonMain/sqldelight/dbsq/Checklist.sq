@@ -1,0 +1,26 @@
+CREATE TABLE ChecklistSQ (
+    id INTEGER AS Int NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL
+);
+
+getAsc:
+SELECT *
+FROM ChecklistSQ
+ORDER BY id ASC;
+
+insert:
+INSERT INTO ChecklistSQ
+( id,  name) VALUES
+(:id, :name);
+
+upNameById:
+UPDATE ChecklistSQ
+SET name = ?
+WHERE id = ?;
+
+deleteById:
+DELETE FROM ChecklistSQ
+WHERE id = ?;
+
+truncate:
+DELETE FROM ChecklistSQ;

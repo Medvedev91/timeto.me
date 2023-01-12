@@ -1,0 +1,28 @@
+CREATE TABLE TaskFolderSQ (
+    id INTEGER AS Int NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    sort INTEGER AS Int NOT NULL
+);
+
+anyChange: SELECT id FROM TaskFolderSQ LIMIT 1;
+
+getAscBySort:
+SELECT *
+FROM TaskFolderSQ
+ORDER BY sort ASC;
+
+insert:
+INSERT INTO TaskFolderSQ
+(id, name, sort) VALUES (?, ?, ?);
+
+upById:
+UPDATE TaskFolderSQ
+SET name = ?, sort = ?
+WHERE id = ?;
+
+truncate:
+DELETE FROM TaskFolderSQ;
+
+deleteById:
+DELETE FROM TaskFolderSQ
+WHERE id = ?;
