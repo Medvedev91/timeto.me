@@ -2,7 +2,7 @@ Google Play https://play.google.com/store/apps/details?id=app.time_to.timeto
 
 App Store https://apps.apple.com/us/app/24-7-time-tracker-timeto/id1619782270
 
-Any questions: [hi@timeto.me](mailto:hi@timeto.me?subject=Feedback From Github)
+Any questions: [hi@timeto.me](mailto:hi@timeto.me?subject=Feedback%20From%20Github)
 
 ---
 
