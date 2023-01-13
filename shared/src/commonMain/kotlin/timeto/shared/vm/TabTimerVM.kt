@@ -33,7 +33,7 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
             listText = textFeatures.textNoFeatures
             triggers = textFeatures.triggers
 
-            val nameWithEmojiNoTriggers = TextFeatures.parse(activity.nameWithEmoji()).textNoFeatures
+            val nameWithEmojiNoTriggers = TextFeatures.parse(activity.nameWithEmoji()).uiText()
             deletionHint = nameWithEmojiNoTriggers
             deletionConfirmation = "Are you sure you want to delete \"$nameWithEmojiNoTriggers\" activity?"
         }
