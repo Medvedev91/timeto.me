@@ -3,21 +3,32 @@ package timeto.shared
 class TextFeatures(
     val textNoFeatures: String,
     val triggers: List<Trigger>,
+    val daytime: Int? = null,
 ) {
 
-    fun textWithFeatures(): String =
-        "$textNoFeatures ${triggers.joinToString(" ") { it.id }}".removeDuplicateSpaces().trim()
+    fun textWithFeatures(): String {
+        val strings = mutableListOf(textNoFeatures.trim())
+        if (triggers.isNotEmpty())
+            strings.add(triggers.joinToString(" ") { it.id })
+        if (daytime != null)
+            strings.add(daytimeToString(daytime))
+        return strings.joinToString(" ")
+    }
 
     companion object {
 
-        fun parse(text: String): TextFeatures {
+        fun parse(initText: String): TextFeatures {
+            var textNoFeatures = initText
+
             val triggers = mutableListOf<Trigger>()
-            var textNoFeatures = text
+
+            //
+            // Checklists
 
             val allChecklists = DI.checklists
             if (allChecklists.isNotEmpty())
-                "#c\\d{10}".toRegex()
-                    .findAll(text.lowercase())
+                checklistRegex
+                    .findAll(textNoFeatures)
                     .forEach {
                         val id = it.value.filter { it.isDigit() }.toInt()
                         allChecklists.firstOrNull { it.id == id }?.let { checklist ->
@@ -26,10 +37,13 @@ class TextFeatures(
                         textNoFeatures = textNoFeatures.replace(it.value, "").trim()
                     }
 
+            //
+            // Shortcuts
+
             val allShortcuts = DI.shortcuts
             if (allShortcuts.isNotEmpty())
-                "#s\\d{10}".toRegex()
-                    .findAll(text.lowercase())
+                shortcutRegex
+                    .findAll(textNoFeatures)
                     .forEach {
                         val id = it.value.filter { it.isDigit() }.toInt()
                         allShortcuts.firstOrNull { it.id == id }?.let { shortcut ->
@@ -38,10 +52,33 @@ class TextFeatures(
                         textNoFeatures = textNoFeatures.replace(it.value, "").trim()
                     }
 
+            //
+            // Daytime
+
+            val daytime: Int? = daytimeRegex
+                .find(textNoFeatures)?.let { match ->
+                    val hour = match.groupValues[2].toInt()
+                    val minute = match.groupValues[3].toInt()
+                    if (hour > 23 || minute > 59)
+                        return@let null
+                    textNoFeatures = textNoFeatures.replace(match.value, "").trim()
+                    return@let (hour * 3_600) + (minute * 60)
+                }
+
             return TextFeatures(
                 textNoFeatures = textNoFeatures.removeDuplicateSpaces().trim(),
                 triggers = triggers,
+                daytime = daytime,
             )
+        }
+
+        fun daytimeToString(daytime: Int): String {
+            val hms = secondsToHms(daytime)
+            return "${hms[0]}:${hms[1].toString().padStart(2, '0')}"
         }
     }
 }
+
+private val checklistRegex = "#c\\d{10}".toRegex()
+private val shortcutRegex = "#s\\d{10}".toRegex()
+private val daytimeRegex = "(^|\\s)(\\d?\\d):(\\d\\d)(\\s|$)".toRegex()
