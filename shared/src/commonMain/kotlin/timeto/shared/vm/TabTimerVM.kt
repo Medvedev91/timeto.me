@@ -30,7 +30,7 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
 
         init {
             val textFeatures = TextFeatures.parse(activity.name)
-            listText = textFeatures.textNoFeatures
+            listText = textFeatures.uiText()
             triggers = textFeatures.triggers
 
             val nameWithEmojiNoTriggers = TextFeatures.parse(activity.nameWithEmoji()).uiText()
