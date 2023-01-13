@@ -17,7 +17,7 @@ class TasksListVM(
 
         init {
             val textFeatures = TextFeatures.parse(task.text)
-            listText = textFeatures.textNoFeatures
+            listText = textFeatures.textUI()
             triggers = textFeatures.triggers
         }
 
