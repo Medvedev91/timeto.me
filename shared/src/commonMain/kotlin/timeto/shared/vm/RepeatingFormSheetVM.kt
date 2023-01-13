@@ -19,6 +19,9 @@ class RepeatingFormSheetVM(
         val selectedDaysOfMonth: Set<Int>,
         val selectedDaysOfYear: List<RepeatingModel.Period.DaysOfYear.MonthDayItem>,
     ) {
+
+        val daytimeHeader = "Time of the Day"
+
         val isHeaderDoneEnabled = (inputTextValue.isNotBlank() && activePeriodIndex != null)
 
         // WARNING The order is hardcoded in UI
