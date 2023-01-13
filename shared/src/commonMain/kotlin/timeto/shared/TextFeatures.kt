@@ -12,7 +12,7 @@ class TextFeatures(
 
         fun parse(text: String): TextFeatures {
             val triggers = mutableListOf<Trigger>()
-            var textNoTriggers = text
+            var textNoFeatures = text
 
             val allChecklists = DI.checklists
             if (allChecklists.isNotEmpty())
@@ -23,7 +23,7 @@ class TextFeatures(
                         allChecklists.firstOrNull { it.id == id }?.let { checklist ->
                             triggers.add(Trigger.Checklist(checklist))
                         }
-                        textNoTriggers = textNoTriggers.replace(it.value, "").trim()
+                        textNoFeatures = textNoFeatures.replace(it.value, "").trim()
                     }
 
             val allShortcuts = DI.shortcuts
@@ -35,12 +35,12 @@ class TextFeatures(
                         allShortcuts.firstOrNull { it.id == id }?.let { shortcut ->
                             triggers.add(Trigger.Shortcut(shortcut))
                         }
-                        textNoTriggers = textNoTriggers.replace(it.value, "").trim()
+                        textNoFeatures = textNoFeatures.replace(it.value, "").trim()
                     }
 
             return TextFeatures(
-                textNoFeatures = textNoTriggers.removeDuplicateSpaces().trim(),
-                triggers = triggers
+                textNoFeatures = textNoFeatures.removeDuplicateSpaces().trim(),
+                triggers = triggers,
             )
         }
     }
