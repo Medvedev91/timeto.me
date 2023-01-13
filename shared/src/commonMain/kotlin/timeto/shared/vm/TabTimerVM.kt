@@ -8,7 +8,7 @@ import timeto.shared.vm.ui.TimerHintUI
 
 class TabTimerVM : __VM<TabTimerVM.State>() {
 
-    inner class ActivityUI(
+    class ActivityUI(
         val activity: ActivityModel,
     ) {
         val timerHints = TimerHintUI.buildList(
@@ -18,7 +18,7 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
             customLimit = 5
         ) { seconds ->
             val last = DI.lastInterval
-            val note  = if (last.activity_id == activity.id) last.note else null
+            val note = if (last.activity_id == activity.id) last.note else null
             IntervalModel.addWithValidation(seconds, activity, note)
         }
 
@@ -39,7 +39,7 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
         }
 
         fun delete() {
-            scopeVM().launchEx {
+            launchExDefault {
                 try {
                     activity.delete()
                 } catch (e: UIException) {
@@ -53,15 +53,11 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
         val activitiesUI: List<ActivityUI>,
     )
 
-    override val state: MutableStateFlow<State>
-
-    init {
-        state = MutableStateFlow(
-            State(
-                activitiesUI = DI.activitiesSorted.toUiList()
-            )
+    override val state = MutableStateFlow(
+        State(
+            activitiesUI = DI.activitiesSorted.toUiList()
         )
-    }
+    )
 
     override fun onAppear() {
         ActivityModel.getAscSortedFlow()
@@ -69,8 +65,8 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
                 state.update { it.copy(activitiesUI = list.toUiList()) }
             }
     }
-
-    private fun List<ActivityModel>.toUiList() = this
-        .sortedWith(compareBy({ it.sort }, { it.id }))
-        .map { ActivityUI(it) }
 }
+
+private fun List<ActivityModel>.toUiList() = this
+    .sortedWith(compareBy({ it.sort }, { it.id }))
+    .map { TabTimerVM.ActivityUI(it) }
