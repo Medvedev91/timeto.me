@@ -199,7 +199,8 @@ fun RepeatingFormSheet(
                                         ) {
                                             RepeatingModel.dayShortNames1.forEachIndexed { index, dayName ->
                                                 val isSelected = state.selectedWeekDays[index]
-                                                val bgColor = animateColorAsState(if (isSelected) c.blue else c.background2)
+                                                val bgColor =
+                                                    animateColorAsState(if (isSelected) c.blue else c.background2)
                                                 Text(
                                                     dayName,
                                                     modifier = Modifier
@@ -248,7 +249,8 @@ fun RepeatingFormSheet(
                                                 }
                                             }
 
-                                            val isLastDaySelected = RepeatingModel.LAST_DAY_OF_MONTH in state.selectedDaysOfMonth
+                                            val isLastDaySelected =
+                                                RepeatingModel.LAST_DAY_OF_MONTH in state.selectedDaysOfMonth
                                             DaysOfMonthItemView(
                                                 dayName = "Last Day of the Month",
                                                 isSelected = isLastDaySelected,
