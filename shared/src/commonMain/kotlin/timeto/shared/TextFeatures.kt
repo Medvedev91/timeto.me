@@ -1,6 +1,6 @@
 package timeto.shared
 
-class TextFeatures(
+data class TextFeatures(
     val textNoFeatures: String,
     val triggers: List<Trigger>,
     val daytime: Int? = null,
