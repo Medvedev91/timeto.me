@@ -5,9 +5,8 @@ import timeto.shared.*
 import timeto.shared.db.EventModel
 
 /**
- * Different platform have different logic.
- * For iOS we use the Date for date and time at
- * same time, for Android there are custom pickers.
+ * Different logic for platform. For iOS we use a Date() object
+ * for date and time, for Android there are custom pickers.
  */
 class EventFormSheetVM(
     val event: EventModel?,
