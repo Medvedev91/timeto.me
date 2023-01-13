@@ -9,20 +9,11 @@ class TasksListVM(
     val folder: TaskFolderModel,
 ) : __VM<TasksListVM.State>() {
 
-    inner class UiTask(
+    class UiTask(
         val task: TaskModel,
     ) {
         val listText: String
         val triggers: List<Trigger>
-
-        // - By manual removing;
-        // - After adding to calendar;
-        // - By starting from activity sheet;
-        val delete = {
-            scopeVM().launchEx {
-                task.delete()
-            }
-        }
 
         init {
             val textFeatures = TextFeatures.parse(task.text)
@@ -45,8 +36,17 @@ class TasksListVM(
         }
 
         fun upFolder(newFolder: TaskFolderModel) {
-            scopeVM().launchEx {
+            launchExDefault {
                 task.upFolder(newFolder)
+            }
+        }
+
+        // - By manual removing;
+        // - After adding to calendar;
+        // - By starting from activity sheet;
+        fun delete() {
+            launchExDefault {
+                task.delete()
             }
         }
     }
@@ -55,15 +55,11 @@ class TasksListVM(
         val uiTasks: List<UiTask>,
     )
 
-    override val state: MutableStateFlow<State>
-
-    init {
-        state = MutableStateFlow(
-            State(
-                uiTasks = DI.tasks.toUiList()
-            )
+    override val state = MutableStateFlow(
+        State(
+            uiTasks = DI.tasks.toUiList()
         )
-    }
+    )
 
     override fun onAppear() {
         TaskModel.getAscFlow()
