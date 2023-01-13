@@ -6,6 +6,10 @@ data class TextFeatures(
     val daytime: Int? = null,
 ) {
 
+    fun uiText(): String {
+        return textNoFeatures
+    }
+
     fun textWithFeatures(): String {
         val strings = mutableListOf(textNoFeatures.trim())
         if (triggers.isNotEmpty())
