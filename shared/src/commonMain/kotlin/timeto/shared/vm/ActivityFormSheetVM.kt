@@ -93,7 +93,6 @@ class ActivityFormSheetVM(
 
     //////
 
-    // todo Validate activity data
     fun save(
         onSuccess: () -> Unit
     ): Unit = scopeVM().launchEx {
