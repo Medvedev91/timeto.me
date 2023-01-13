@@ -237,6 +237,21 @@ fun MyListView__SectionView__ButtonView(
 }
 
 @Composable
+fun MyListView__SectionView__ButtonView__RightText(
+    text: String,
+    paddingEnd: Dp = 4.dp
+) {
+    Text(
+        text,
+        modifier = Modifier
+            .padding(end = paddingEnd)
+            .offset(),
+        fontSize = 14.sp,
+        color = c.text,
+    )
+}
+
+@Composable
 fun MyListView__SectionView__SwitcherView(
     text: String,
     withTopDivider: Boolean,
