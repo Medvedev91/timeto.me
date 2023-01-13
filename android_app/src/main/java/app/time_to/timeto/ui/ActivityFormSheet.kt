@@ -82,7 +82,7 @@ fun ActivityFormSheet(
                 ////
 
                 TriggersView__FormView(
-                    triggers = state.triggers,
+                    triggers = state.textFeatures.triggers,
                     onTriggersChanged = { vm.setTriggers(it) },
                     modifier = Modifier.padding(top = 18.dp),
                     contentPaddingHints = PaddingValues(horizontal = MyListView.PADDING_SECTION_OUTER_HORIZONTAL),

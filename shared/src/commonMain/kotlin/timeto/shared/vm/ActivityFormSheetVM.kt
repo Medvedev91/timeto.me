@@ -13,11 +13,11 @@ class ActivityFormSheetVM(
     data class State(
         val headerTitle: String,
         val headerDoneText: String,
-        val inputNameValue: String,
-        val triggers: List<Trigger>,
         val emoji: String?,
         val activityData: ActivityModel__Data,
+        val textFeatures: TextFeatures,
     ) {
+        val inputNameValue = textFeatures.textNoFeatures
         val isHeaderDoneEnabled = (inputNameValue.isNotBlank() && emoji != null)
         val inputNameHeader = "ACTIVITY NAME"
         val inputNamePlaceholder = "Activity Name"
@@ -34,30 +34,25 @@ class ActivityFormSheetVM(
         val text: String,
     )
 
-    override val state: MutableStateFlow<State>
-
-    init {
-        val textFeatures = TextFeatures.parse(activity?.name ?: "")
-
-        state = MutableStateFlow(
-            State(
-                headerTitle = if (activity != null) "Edit Activity" else "New Activity",
-                headerDoneText = if (activity != null) "Done" else "Create",
-                inputNameValue = textFeatures.textNoFeatures,
-                triggers = textFeatures.triggers,
-                emoji = activity?.emoji,
-                activityData = activity?.getData() ?: ActivityModel__Data.buildDefault()
-            )
+    override val state = MutableStateFlow(
+        State(
+            headerTitle = if (activity != null) "Edit Activity" else "New Activity",
+            headerDoneText = if (activity != null) "Done" else "Create",
+            emoji = activity?.emoji,
+            activityData = activity?.getData() ?: ActivityModel__Data.buildDefault(),
+            textFeatures = TextFeatures.parse(activity?.name ?: ""),
         )
-    }
+    )
 
     fun setInputNameValue(text: String) = state.update {
-        it.copy(inputNameValue = text)
+        it.copy(textFeatures = it.textFeatures.copy(textNoFeatures = text))
     }
 
     fun setEmoji(newEmoji: String) = state.update { it.copy(emoji = newEmoji) }
 
-    fun setTriggers(newTriggers: List<Trigger>) = state.update { it.copy(triggers = newTriggers) }
+    fun setTriggers(newTriggers: List<Trigger>) = state.update {
+        it.copy(textFeatures = it.textFeatures.copy(triggers = newTriggers))
+    }
 
     ///
     /// Timer Hints
@@ -99,10 +94,7 @@ class ActivityFormSheetVM(
         try {
             val selectedEmoji = state.value.emoji ?: return@launchEx showUiAlert("Emoji not selected")
             // todo check if a text without features
-            val nameWithFeatures = TextFeatures(
-                textNoFeatures = state.value.inputNameValue,
-                triggers = state.value.triggers,
-            ).textWithFeatures()
+            val nameWithFeatures = state.value.textFeatures.textWithFeatures()
 
             val activityData = state.value.activityData
             activityData.assertValidity()
