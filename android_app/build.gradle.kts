@@ -40,7 +40,7 @@ dependencies {
     implementation(project(":shared"))
 
     implementation("androidx.compose.material:material:1.3.1")
-    implementation("androidx.compose.animation:animation-graphics:1.3.2")
+    implementation("androidx.compose.animation:animation-graphics:1.3.3")
     implementation("androidx.navigation:navigation-compose:2.5.3")
     implementation("com.google.android.material:material:1.7.0")
 
