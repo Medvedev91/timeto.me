@@ -11,8 +11,7 @@ class RepeatingFormSheetVM(
     data class State(
         val headerTitle: String,
         val headerDoneText: String,
-        val inputTextValue: String,
-        val triggers: List<Trigger>,
+        val textFeatures: TextFeatures,
         val activePeriodIndex: Int?,
         val selectedNDays: Int,
         val selectedWeekDays: List<Boolean>,
@@ -22,6 +21,7 @@ class RepeatingFormSheetVM(
 
         val daytimeHeader = "Time of the Day"
 
+        val inputTextValue = textFeatures.textNoFeatures
         val isHeaderDoneEnabled = (inputTextValue.isNotBlank() && activePeriodIndex != null)
 
         // WARNING The order is hardcoded in UI
@@ -37,7 +37,6 @@ class RepeatingFormSheetVM(
     override val state: MutableStateFlow<State>
 
     init {
-        val textFeatures = TextFeatures.parse(repeating?.text ?: "")
         val activePeriodIndex = if (repeating == null) null else {
             when (val period = repeating.getPeriod()) {
                 is RepeatingModel.Period.EveryNDays -> if (period.nDays == 1) 0 else 1
@@ -73,19 +72,18 @@ class RepeatingFormSheetVM(
             State(
                 headerTitle = if (repeating != null) "Edit Repeating" else "New Repeating",
                 headerDoneText = if (repeating != null) "Done" else "Create",
-                inputTextValue = textFeatures.textNoFeatures,
-                triggers = textFeatures.triggers,
                 activePeriodIndex = activePeriodIndex,
                 selectedNDays = selectedNDays,
                 selectedWeekDays = selectedWeekDays,
                 selectedDaysOfMonth = selectedDaysOfMonth,
                 selectedDaysOfYear = selectedDaysOfYear,
+                textFeatures = TextFeatures.parse(repeating?.text ?: ""),
             )
         )
     }
 
     fun setTextValue(text: String) {
-        state.update { it.copy(inputTextValue = text) }
+        state.update { it.copy(textFeatures = it.textFeatures.copy(textNoFeatures = text)) }
     }
 
     fun upTimerTime(timerString: String) {
@@ -152,17 +150,16 @@ class RepeatingFormSheetVM(
         }
     }
 
-    fun setTriggers(newTriggers: List<Trigger>) = state.update { it.copy(triggers = newTriggers) }
+    fun setTriggers(newTriggers: List<Trigger>) = state.update {
+        it.copy(textFeatures = it.textFeatures.copy(triggers = newTriggers))
+    }
 
     fun save(
         onSuccess: () -> Unit
     ) = scopeVM().launchEx {
         try {
             // todo check if a text without features
-            val nameWithFeatures = TextFeatures(
-                textNoFeatures = state.value.inputTextValue,
-                triggers = state.value.triggers,
-            ).textWithFeatures()
+            val nameWithFeatures = state.value.textFeatures.textWithFeatures()
 
             // !! Because "enabled" contains the checking
             val period = when (state.value.activePeriodIndex!!) {
