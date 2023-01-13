@@ -7,11 +7,18 @@ Any questions [hi@timeto.me](mailto:hi@timeto.me?subject=[GitHub]%20Feedback)
 ---
 
 To build, you have to create  **local.properties** file like
+
 ```
 sdk.dir=/Users/__USER__/Library/Android/sdk
 ```
 
 ---
+
+# IntelliJ IDEA
+
+`Settings -> Editor -> Code Style -> Kotlin -> Wrapping and Braces -> 'when' statements -> uncheck 'New line after multiline entry'`
+
+`Settings -> Editor -> TODO -> + -> Pattern: \btrick\b.*   Foreground: F22613`
 
 # Android Specific
 
