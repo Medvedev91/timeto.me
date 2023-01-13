@@ -16,7 +16,7 @@ kotlin {
         watchosX64(),
         watchosArm32(),
         watchosArm64(),
-        watchosSimulatorArm64()
+        watchosSimulatorArm64(),
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
@@ -26,7 +26,7 @@ kotlin {
     sourceSets {
 
         val ktor_version = "2.1.3"
-        val sqldelight_version = "1.5.4" // WARNING Sync version with project build.gradle.kts
+        val sqldelight_version = "1.5.4" // TRICK Sync with project build.gradle.kts
 
         val commonMain by getting {
             dependencies {
