@@ -8,23 +8,24 @@ import timeto.shared.db.EventModel
 
 class EventsListVM : __VM<EventsListVM.State>() {
 
-    inner class UiEvent(
+    class UiEvent(
         val event: EventModel,
     ) {
         val deletionNote = "Are you sure you want to delete \"${event.text}\" event?"
         val dayLeftString = "${event.getLocalTime().localDay - UnixTime().localDay}d"
         val listText: String
         val triggers: List<Trigger>
-        val delete = {
-            scopeVM().launchEx {
-                event.delete()
-            }
-        }
 
         init {
             val textFeatures = TextFeatures.parse(event.text)
-            listText = textFeatures.textNoFeatures
+            listText = textFeatures.textUI()
             triggers = textFeatures.triggers
+        }
+
+        fun delete() {
+            launchExDefault {
+                event.delete()
+            }
         }
     }
 
@@ -33,16 +34,12 @@ class EventsListVM : __VM<EventsListVM.State>() {
         val uiEvents: List<UiEvent>,
     )
 
-    override val state: MutableStateFlow<State>
-
-    init {
-        state = MutableStateFlow(
-            State(
-                curTimeString = getCurTimeString(),
-                uiEvents = DI.events.toUiList()
-            )
+    override val state = MutableStateFlow(
+        State(
+            curTimeString = getCurTimeString(),
+            uiEvents = DI.events.toUiList()
         )
-    }
+    )
 
     override fun onAppear() {
         scopeVM().launch {
@@ -56,20 +53,20 @@ class EventsListVM : __VM<EventsListVM.State>() {
                 state.update { it.copy(uiEvents = list.toUiList()) }
             }
     }
-
-    private fun getCurTimeString() = UnixTime()
-        .getStringByComponents(
-            listOf(
-                UnixTime.StringComponent.dayOfMonth,
-                UnixTime.StringComponent.space,
-                UnixTime.StringComponent.month3,
-                UnixTime.StringComponent.comma,
-                UnixTime.StringComponent.space,
-                UnixTime.StringComponent.dayOfWeek3,
-                UnixTime.StringComponent.space,
-                UnixTime.StringComponent.hhmm24
-            )
-        )
-
-    private fun List<EventModel>.toUiList() = map { UiEvent(it) }
 }
+
+private fun getCurTimeString() = UnixTime()
+    .getStringByComponents(
+        listOf(
+            UnixTime.StringComponent.dayOfMonth,
+            UnixTime.StringComponent.space,
+            UnixTime.StringComponent.month3,
+            UnixTime.StringComponent.comma,
+            UnixTime.StringComponent.space,
+            UnixTime.StringComponent.dayOfWeek3,
+            UnixTime.StringComponent.space,
+            UnixTime.StringComponent.hhmm24
+        )
+    )
+
+private fun List<EventModel>.toUiList() = map { EventsListVM.UiEvent(it) }
