@@ -6,7 +6,7 @@ import timeto.shared.db.RepeatingModel
 
 class RepeatingsListVM : __VM<RepeatingsListVM.State>() {
 
-    inner class UiRepeating(
+    class UiRepeating(
         val repeating: RepeatingModel,
     ) {
         val deletionNote = "Are you sure you want to delete \"${repeating.text}\"?"
@@ -14,16 +14,17 @@ class RepeatingsListVM : __VM<RepeatingsListVM.State>() {
         val dayRightString = repeating.getNextDayString() + ", " + "${repeating.getNextDay() - UnixTime().localDay}d"
         val listText: String
         val triggers: List<Trigger>
-        val delete = {
-            scopeVM().launchEx {
-                repeating.delete()
-            }
-        }
 
         init {
             val textFeatures = TextFeatures.parse(repeating.text)
-            listText = textFeatures.textNoFeatures
+            listText = textFeatures.textUI()
             triggers = textFeatures.triggers
+        }
+
+        fun delete() {
+            launchExDefault {
+                repeating.delete()
+            }
         }
     }
 
@@ -31,15 +32,11 @@ class RepeatingsListVM : __VM<RepeatingsListVM.State>() {
         val uiRepeatings: List<UiRepeating>,
     )
 
-    override val state: MutableStateFlow<State>
-
-    init {
-        state = MutableStateFlow(
-            State(
-                uiRepeatings = DI.repeatings.toUiList()
-            )
+    override val state = MutableStateFlow(
+        State(
+            uiRepeatings = DI.repeatings.toUiList()
         )
-    }
+    )
 
     override fun onAppear() {
         RepeatingModel.getAscFlow()
@@ -47,8 +44,8 @@ class RepeatingsListVM : __VM<RepeatingsListVM.State>() {
                 state.update { it.copy(uiRepeatings = list.toUiList()) }
             }
     }
-
-    private fun List<RepeatingModel>.toUiList() = this
-        .sortedWith(compareBy<RepeatingModel> { it.getNextDay() }.thenByDescending { it.text.lowercase() })
-        .map { UiRepeating(it) }
 }
+
+private fun List<RepeatingModel>.toUiList() = this
+    .sortedWith(compareBy<RepeatingModel> { it.getNextDay() }.thenByDescending { it.text.lowercase() })
+    .map { RepeatingsListVM.UiRepeating(it) }
