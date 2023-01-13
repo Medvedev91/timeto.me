@@ -17,11 +17,11 @@ class EventFormSheetVM(
     data class State(
         val headerTitle: String,
         val headerDoneText: String,
-        val inputTextValue: String,
-        val triggers: List<Trigger>, // todo now invisible
         val selectedTime: Int,
-        val isAutoFocus: Boolean
+        val isAutoFocus: Boolean,
+        val textFeatures: TextFeatures,
     ) {
+        val inputTextValue = textFeatures.textNoFeatures
         val minTime = UnixTime().localDayStartTime()
         val isHeaderDoneEnabled =
             inputTextValue.isNotBlank() && (UnixTime(selectedTime).localDay > UnixTime().localDay)
@@ -42,15 +42,13 @@ class EventFormSheetVM(
 
     init {
         val textFeatures = TextFeatures.parse(event?.text ?: defText ?: "")
-
         state = MutableStateFlow(
             State(
                 headerTitle = if (event != null) "Edit Event" else "New Event",
                 headerDoneText = if (event != null) "Done" else "Create",
-                inputTextValue = textFeatures.textNoFeatures,
-                triggers = textFeatures.triggers,
                 selectedTime = event?.getLocalTime()?.time ?: defTime ?: UnixTime().localDayStartTime(),
-                isAutoFocus = (event == null && textFeatures.textNoFeatures.isBlank())
+                isAutoFocus = (event == null && textFeatures.textNoFeatures.isBlank()),
+                textFeatures = textFeatures,
             )
         )
     }
@@ -68,7 +66,7 @@ class EventFormSheetVM(
     }
 
     fun setInputTextValue(text: String) = state.update {
-        it.copy(inputTextValue = text)
+        it.copy(textFeatures = it.textFeatures.copy(textNoFeatures = text))
     }
 
     fun save(
@@ -76,10 +74,8 @@ class EventFormSheetVM(
     ) = scopeVM().launchEx {
         try {
             // todo check if a text without features
-            val nameWithFeatures = TextFeatures(
-                textNoFeatures = state.value.inputTextValue,
-                triggers = state.value.triggers,
-            ).textWithFeatures()
+            val nameWithFeatures = state.value.textFeatures.textWithFeatures()
+
             if (event != null) {
                 event.upWithValidation(
                     text = nameWithFeatures,
