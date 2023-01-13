@@ -12,7 +12,7 @@ class WatchTabTimerVM : __VM<WatchTabTimerVM.State>() {
         val activity: ActivityModel,
     ) {
 
-        val listTitle = TextFeatures.parse(activity.nameWithEmoji()).uiText()
+        val listTitle = TextFeatures.parse(activity.nameWithEmoji()).textUI()
 
         val timerHints = TimerHintUI.buildList(
             activity,

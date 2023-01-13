@@ -6,7 +6,7 @@ data class TextFeatures(
     val daytime: Int? = null,
 ) {
 
-    fun uiText(): String {
+    fun textUI(): String {
         return textNoFeatures
     }
 

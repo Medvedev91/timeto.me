@@ -182,8 +182,8 @@ class HistoryVM : __VM<HistoryVM.State>() {
                 return IntervalUI(
                     interval = interval,
                     isStartsPrevDay = unixTime.localDay < section.day,
-                    activityText = TextFeatures.parse(activity.nameWithEmoji()).uiText(),
-                    noteText = interval.note?.let { TextFeatures.parse(it).uiText() },
+                    activityText = TextFeatures.parse(activity.nameWithEmoji()).textUI(),
+                    noteText = interval.note?.let { TextFeatures.parse(it).textUI() },
                     secondsForBar = barTimeFinish - sectionDayTimeStart.max(interval.id),
                     barTimeFinish = barTimeFinish,
                     timeString = unixTime.getStringByComponents(listOf(UnixTime.StringComponent.hhmm24)),
