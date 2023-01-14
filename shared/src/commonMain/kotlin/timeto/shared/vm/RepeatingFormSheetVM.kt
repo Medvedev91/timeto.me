@@ -20,7 +20,7 @@ class RepeatingFormSheetVM(
     ) {
 
         val daytimeHeader = "Time of the Day"
-        val daytimeNote = textFeatures.daytime?.let { TextFeatures.daytimeToString(it) } ?: "None"
+        val daytimeNote = textFeatures.daytimeToStringOrNull() ?: "None"
 
         val inputTextValue = textFeatures.textNoFeatures
         val isHeaderDoneEnabled = (inputTextValue.isNotBlank() && activePeriodIndex != null)

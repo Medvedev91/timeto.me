@@ -14,9 +14,16 @@ data class TextFeatures(
         val strings = mutableListOf(textNoFeatures.trim())
         if (triggers.isNotEmpty())
             strings.add(triggers.joinToString(" ") { it.id })
-        if (daytime != null)
-            strings.add(daytimeToString(daytime))
+        val daytimeString = daytimeToStringOrNull()
+        if (daytimeString != null)
+            strings.add(daytimeString)
         return strings.joinToString(" ")
+    }
+
+    fun daytimeToStringOrNull(): String? {
+        val daytime = daytime ?: return null
+        val hms = secondsToHms(daytime)
+        return "${hms[0]}:${hms[1].toString().padStart(2, '0')}"
     }
 
     companion object {
@@ -74,11 +81,6 @@ data class TextFeatures(
                 triggers = triggers,
                 daytime = daytime,
             )
-        }
-
-        fun daytimeToString(daytime: Int): String {
-            val hms = secondsToHms(daytime)
-            return "${hms[0]}:${hms[1].toString().padStart(2, '0')}"
         }
     }
 }
