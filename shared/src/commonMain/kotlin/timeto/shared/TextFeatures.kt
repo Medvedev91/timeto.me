@@ -20,13 +20,14 @@ data class TextFeatures(
         return strings.joinToString(" ")
     }
 
-    fun daytimeToStringOrNull(): String? {
-        val daytime = daytime ?: return null
-        val hms = secondsToHms(daytime)
-        return "${hms[0]}:${hms[1].toString().padStart(2, '0')}"
-    }
+    fun daytimeToStringOrNull(): String? = daytime?.let { daytimeToString(it) }
 
     companion object {
+
+        fun daytimeToString(daytime: Int): String {
+            val hms = secondsToHms(daytime)
+            return "${hms[0]}:${hms[1].toString().padStart(2, '0')}"
+        }
 
         fun parse(initText: String): TextFeatures {
             var textNoFeatures = initText
