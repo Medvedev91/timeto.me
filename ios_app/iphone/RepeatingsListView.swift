@@ -26,11 +26,11 @@ struct RepeatingsListView: View {
                             Spacer()
 
                             VStack(spacing: 0) {
-                                let uiRepeatings = state.uiRepeatings.reversed()
-                                ForEach(uiRepeatings, id: \.repeating.id) { uiRepeating in
+                                let repeatingsUI = state.repeatingsUI.reversed()
+                                ForEach(repeatingsUI, id: \.repeating.id) { repeatingUI in
                                     RepeatingsView__ItemView(
-                                            uiRepeating: uiRepeating,
-                                            withTopDivider: uiRepeatings.first != uiRepeating
+                                            repeatingUI: repeatingUI,
+                                            withTopDivider: repeatingsUI.first != repeatingUI
                                     )
                                 }
                             }
@@ -107,25 +107,25 @@ struct RepeatingsListView: View {
 
 struct RepeatingsView__ItemView: View {
 
-    private let uiRepeating: RepeatingsListVM.UiRepeating
+    private let repeatingUI: RepeatingsListVM.RepeatingUI
 
     @State private var isEditSheetPresented = false
 
     private let withTopDivider: Bool
 
     init(
-            uiRepeating: RepeatingsListVM.UiRepeating,
+            repeatingUI: RepeatingsListVM.RepeatingUI,
             withTopDivider: Bool
     ) {
-        self.uiRepeating = uiRepeating
+        self.repeatingUI = repeatingUI
         self.withTopDivider = withTopDivider
     }
 
     var body: some View {
         MyListSwipeToActionItem(
                 withTopDivider: withTopDivider,
-                deletionHint: uiRepeating.listText,
-                deletionConfirmationNote: uiRepeating.deletionNote,
+                deletionHint: repeatingUI.listText,
+                deletionConfirmationNote: repeatingUI.deletionNote,
                 onEdit: {
                     isEditSheetPresented = true
                 },
@@ -134,7 +134,7 @@ struct RepeatingsView__ItemView: View {
                         // WARNING WTF! // todo is it actual after migration to KMM?
                         // Without async the getPeriod() calls with NPE on typeId
                         myAsyncAfter(0.1) {
-                            uiRepeating.delete()
+                            repeatingUI.delete()
                         }
                     }
                 }
@@ -148,13 +148,13 @@ struct RepeatingsView__ItemView: View {
         VStack(spacing: 0) {
 
             HStack {
-                Text(uiRepeating.dayLeftString)
+                Text(repeatingUI.dayLeftString)
                         .font(.system(size: 14, weight: .light))
                         .foregroundColor(.secondary)
 
                 Spacer()
 
-                Text(uiRepeating.dayRightString)
+                Text(repeatingUI.dayRightString)
                         .font(.system(size: 14, weight: .light))
                         .foregroundColor(.secondary)
             }
@@ -162,7 +162,7 @@ struct RepeatingsView__ItemView: View {
                     .padding(.trailing, DEF_LIST_H_PADDING)
 
             HStack {
-                Text(uiRepeating.listText)
+                Text(repeatingUI.listText)
                         .myMultilineText()
                 Spacer(minLength: 0)
             }
@@ -170,8 +170,8 @@ struct RepeatingsView__ItemView: View {
                     .padding(.leading, DEF_LIST_H_PADDING)
                     .padding(.trailing, DEF_LIST_H_PADDING)
 
-            TriggersView__List(triggers: uiRepeating.triggers)
-                    .padding(.top, uiRepeating.triggers.isEmpty ? 0 : 8)
+            TriggersView__List(triggers: repeatingUI.triggers)
+                    .padding(.top, repeatingUI.triggers.isEmpty ? 0 : 8)
         }
                 .padding(.top, 10)
                 .padding(.bottom, 10)
@@ -181,12 +181,12 @@ struct RepeatingsView__ItemView: View {
                         content: {
                             RepeatingsFormSheet(
                                     isPresented: $isEditSheetPresented,
-                                    editedRepeating: uiRepeating.repeating
+                                    editedRepeating: repeatingUI.repeating
                             ) {
                             }
                         }
                 )
-                .id("\(uiRepeating.repeating.id) \(uiRepeating.repeating.text)") /// #TruncationDynamic
+                .id("\(repeatingUI.repeating.id) \(repeatingUI.repeating.text)") /// #TruncationDynamic
     }
 
     private struct MyButtonStyle: ButtonStyle {

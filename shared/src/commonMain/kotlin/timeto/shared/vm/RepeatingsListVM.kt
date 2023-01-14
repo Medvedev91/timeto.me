@@ -6,7 +6,7 @@ import timeto.shared.db.RepeatingModel
 
 class RepeatingsListVM : __VM<RepeatingsListVM.State>() {
 
-    class UiRepeating(
+    class RepeatingUI(
         val repeating: RepeatingModel,
     ) {
         val deletionNote = "Are you sure you want to delete \"${repeating.text}\"?"
@@ -29,23 +29,23 @@ class RepeatingsListVM : __VM<RepeatingsListVM.State>() {
     }
 
     data class State(
-        val uiRepeatings: List<UiRepeating>,
+        val repeatingsUI: List<RepeatingUI>,
     )
 
     override val state = MutableStateFlow(
         State(
-            uiRepeatings = DI.repeatings.toUiList()
+            repeatingsUI = DI.repeatings.toUiList()
         )
     )
 
     override fun onAppear() {
         RepeatingModel.getAscFlow()
             .onEachExIn(scopeVM()) { list ->
-                state.update { it.copy(uiRepeatings = list.toUiList()) }
+                state.update { it.copy(repeatingsUI = list.toUiList()) }
             }
     }
 }
 
 private fun List<RepeatingModel>.toUiList() = this
     .sortedWith(compareBy<RepeatingModel> { it.getNextDay() }.thenByDescending { it.text.lowercase() })
-    .map { RepeatingsListVM.UiRepeating(it) }
+    .map { RepeatingsListVM.RepeatingUI(it) }

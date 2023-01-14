@@ -59,14 +59,14 @@ fun RepeatingsListView() {
             }
         }
 
-        itemsIndexed(state.uiRepeatings, key = { _, i -> i.repeating.id }) { index, uiRepeating ->
+        itemsIndexed(state.repeatingsUI, key = { _, i -> i.repeating.id }) { index, repeatingUI ->
             val isEditPresented = remember { mutableStateOf(false) }
             RepeatingFormSheet(
                 isPresented = isEditPresented,
-                editedRepeating = uiRepeating.repeating
+                editedRepeating = repeatingUI.repeating
             )
 
-            val isLast = index == state.uiRepeatings.size - 1
+            val isLast = index == state.repeatingsUI.size - 1
 
             // Remember that the list is reversed
             val clip = when {
@@ -82,11 +82,11 @@ fun RepeatingsListView() {
                 endView = { state ->
                     SwipeToAction__DeleteView(
                         state = state,
-                        note = uiRepeating.listText,
-                        deletionConfirmationNote = uiRepeating.deletionNote,
+                        note = repeatingUI.listText,
+                        deletionConfirmationNote = repeatingUI.deletionNote,
                     ) {
                         vibrateLong()
-                        uiRepeating.delete()
+                        repeatingUI.delete()
                     }
                 },
                 onStart = {
@@ -121,7 +121,7 @@ fun RepeatingsListView() {
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
-                                uiRepeating.dayLeftString,
+                                repeatingUI.dayLeftString,
                                 modifier = Modifier.weight(1f),
                                 fontSize = 13.sp,
                                 fontWeight = FontWeight.W300,
@@ -130,7 +130,7 @@ fun RepeatingsListView() {
                                 overflow = TextOverflow.Ellipsis,
                             )
                             Text(
-                                uiRepeating.dayRightString,
+                                repeatingUI.dayRightString,
                                 fontSize = 13.sp,
                                 fontWeight = FontWeight.W300,
                                 color = c.textSecondary,
@@ -139,12 +139,12 @@ fun RepeatingsListView() {
                         }
 
                         Text(
-                            uiRepeating.listText,
+                            repeatingUI.listText,
                             modifier = Modifier.padding(horizontal = horizontalPadding)
                         )
 
                         TriggersView__ListView(
-                            triggers = uiRepeating.triggers,
+                            triggers = repeatingUI.triggers,
                             withOnClick = true,
                             modifier = Modifier.padding(top = 6.dp),
                             contentPadding = PaddingValues(horizontal = horizontalPadding - 2.dp)
