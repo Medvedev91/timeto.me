@@ -75,29 +75,29 @@ fun TasksListView(
                 Box(modifier = Modifier.height(taskFormHeight.value))
             }
 
-            val uiTasks = state.uiTasks
+            val tasksUI = state.tasksUI
             items(
-                uiTasks,
+                tasksUI,
                 /**
                  * WTF?! task.id, does not work. Issue:
                  * After editing and saving, re-editing the form fills in the outdated data.
                  * In SwipeToAction.onStart{} the task object with the old data. Fixed by using hashCode().
                  */
                 key = { task -> task.hashCode() }
-            ) { uiTask ->
+            ) { taskUI ->
                 val isAddCalendarPresented = remember { mutableStateOf(false) }
                 EventFormSheet(
                     isPresented = isAddCalendarPresented,
                     editedEvent = null,
-                    defText = uiTask.task.text,
+                    defText = taskUI.task.text,
                 ) {
-                    uiTask.delete()
+                    taskUI.delete()
                 }
 
                 val startPadding = 18.dp
 
-                val isLast = uiTask == uiTasks.lastOrNull()
-                val isFirst = uiTask == uiTasks.firstOrNull()
+                val isLast = taskUI == tasksUI.lastOrNull()
+                val isFirst = taskUI == tasksUI.firstOrNull()
                 val clip = when {
                     isFirst && isLast -> MySquircleShape()
                     isFirst -> MySquircleShape(angles = listOf(false, false, true, true))
@@ -113,7 +113,7 @@ fun TasksListView(
                 ) {
 
                     val isSheetPresented = remember { mutableStateOf(false) }
-                    TaskSheet(isSheetPresented, uiTask.task)
+                    TaskSheet(isSheetPresented, taskUI.task)
 
                     val ignoreOneSwipeToAction = remember { mutableStateOf(false) }
                     val isEditOrDelete = remember { mutableStateOf<Boolean?>(null) }
@@ -136,15 +136,15 @@ fun TasksListView(
                                 val whenRes = when (target.type) {
                                     DropItem.TYPE.INBOX -> {
                                         vibrateLong()
-                                        uiTask.upFolder(TaskFolderModel.getInbox())
+                                        taskUI.upFolder(TaskFolderModel.getInbox())
                                     }
                                     DropItem.TYPE.WEEK -> {
                                         vibrateLong()
-                                        uiTask.upFolder(TaskFolderModel.getWeek())
+                                        taskUI.upFolder(TaskFolderModel.getWeek())
                                     }
                                     DropItem.TYPE.TODAY -> {
                                         vibrateLong()
-                                        uiTask.upFolder(TaskFolderModel.getToday())
+                                        taskUI.upFolder(TaskFolderModel.getToday())
                                     }
                                     DropItem.TYPE.CALENDAR -> {
                                         vibrateShort()
@@ -177,13 +177,13 @@ fun TasksListView(
                             )
                         },
                         endView = { state ->
-                            SwipeToAction__DeleteView(state, uiTask.task.text) {
+                            SwipeToAction__DeleteView(state, taskUI.task.text) {
                                 vibrateLong()
-                                uiTask.delete()
+                                taskUI.delete()
                             }
                         },
                         onStart = {
-                            editedTask.value = uiTask.task
+                            editedTask.value = taskUI.task
                             false
                         },
                         onEnd = {
@@ -197,7 +197,7 @@ fun TasksListView(
                             modifier = Modifier
                                 .background(c.background2)
                                 .clickable {
-                                    uiTask.start(
+                                    taskUI.start(
                                         onStarted = {
                                             // Without scope: "Method setCurrentState must be called on the main thread"
                                             scope.launchEx {
@@ -218,7 +218,7 @@ fun TasksListView(
                                 verticalArrangement = Arrangement.Center
                             ) {
                                 Text(
-                                    uiTask.listText,
+                                    taskUI.listText,
                                     color = c.text,
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -226,7 +226,7 @@ fun TasksListView(
                                         .padding(horizontal = startPadding, vertical = 2.dp),
                                 )
                                 TriggersView__ListView(
-                                    triggers = uiTask.triggers,
+                                    triggers = taskUI.triggers,
                                     withOnClick = true,
                                     modifier = Modifier.padding(top = 2.dp),
                                     contentPadding = PaddingValues(horizontal = startPadding - 2.dp),

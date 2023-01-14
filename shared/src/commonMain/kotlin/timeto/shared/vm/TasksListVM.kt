@@ -9,7 +9,7 @@ class TasksListVM(
     val folder: TaskFolderModel,
 ) : __VM<TasksListVM.State>() {
 
-    class UiTask(
+    class TaskUI(
         val task: TaskModel,
     ) {
         val listText: String
@@ -52,24 +52,24 @@ class TasksListVM(
     }
 
     data class State(
-        val uiTasks: List<UiTask>,
+        val tasksUI: List<TaskUI>,
     )
 
     override val state = MutableStateFlow(
         State(
-            uiTasks = DI.tasks.toUiList()
+            tasksUI = DI.tasks.toUiList()
         )
     )
 
     override fun onAppear() {
         TaskModel.getAscFlow()
             .onEachExIn(scopeVM()) { list ->
-                state.update { it.copy(uiTasks = list.toUiList()) }
+                state.update { it.copy(tasksUI = list.toUiList()) }
             }
     }
 
     private fun List<TaskModel>.toUiList() = this
         .filter { it.folder_id == folder.id }
         .sortedByDescending { it.id }
-        .map { UiTask(it) }
+        .map { TaskUI(it) }
 }
