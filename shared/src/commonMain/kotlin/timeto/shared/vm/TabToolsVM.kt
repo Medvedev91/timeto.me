@@ -73,7 +73,6 @@ class TabToolsVM : __VM<TabToolsVM.State>() {
             }
         scope.launchEx {
             val subject = SecureLocalStorage__Key.feedback_subject.getOrNull()
-            zlog(subject)
             if (subject != null)
                 state.update { it.copy(feedbackSubject = subject) }
         }
