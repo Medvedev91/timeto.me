@@ -5,7 +5,7 @@ import timeto.shared.*
 import timeto.shared.db.RepeatingModel
 
 class RepeatingFormSheetVM(
-    val repeating: RepeatingModel?
+    private val repeating: RepeatingModel?
 ) : __VM<RepeatingFormSheetVM.State>() {
 
     data class State(
