@@ -142,7 +142,7 @@ fun RepeatingsListView() {
 
                                 Text(
                                     daytimeText,
-                                    modifier = Modifier.padding(start = 1.dp, end = 2.dp),
+                                    modifier = Modifier.padding(start = 1.dp, end = 3.dp),
                                     fontSize = 13.sp,
                                     color = c.white,
                                 )
