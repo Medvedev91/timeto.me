@@ -123,9 +123,21 @@ fun TasksListView(
                         DragItem(
                             mutableStateOf(null),
                             when {
-                                activeFolder.isInbox -> listOf(DropItem.TYPE.CALENDAR, DropItem.TYPE.WEEK, DropItem.TYPE.TODAY)
-                                activeFolder.isWeek -> listOf(DropItem.TYPE.CALENDAR, DropItem.TYPE.INBOX, DropItem.TYPE.TODAY)
-                                activeFolder.isToday -> listOf(DropItem.TYPE.CALENDAR, DropItem.TYPE.INBOX, DropItem.TYPE.WEEK)
+                                activeFolder.isInbox -> listOf(
+                                    DropItem.TYPE.CALENDAR,
+                                    DropItem.TYPE.WEEK,
+                                    DropItem.TYPE.TODAY,
+                                )
+                                activeFolder.isWeek -> listOf(
+                                    DropItem.TYPE.CALENDAR,
+                                    DropItem.TYPE.INBOX,
+                                    DropItem.TYPE.TODAY,
+                                )
+                                activeFolder.isToday -> listOf(
+                                    DropItem.TYPE.CALENDAR,
+                                    DropItem.TYPE.INBOX,
+                                    DropItem.TYPE.WEEK,
+                                )
                                 else -> throw Exception()
                             }
                         ) { target ->
