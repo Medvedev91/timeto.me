@@ -97,7 +97,7 @@ struct RepeatingsFormSheet: View {
                             .padding(.leading, MyListView.PADDING_SECTION_OUTER_HORIZONTAL + 5)
 
                     TriggersView__Form(
-                            triggers: state.triggers,
+                            triggers: state.textFeatures.triggers,
                             onTriggersChanged: { newTriggers in
                                 vm.setTriggers(newTriggers: newTriggers)
                             },

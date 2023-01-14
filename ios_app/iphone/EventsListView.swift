@@ -198,7 +198,7 @@ private struct EventItemView: View {
                 },
                 onDelete: {
                     withAnimation {
-                        uiEvent.delete_()
+                        uiEvent.delete()
                     }
                 }
         ) {

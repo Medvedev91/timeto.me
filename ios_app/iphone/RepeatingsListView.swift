@@ -134,7 +134,7 @@ struct RepeatingsView__ItemView: View {
                         // WARNING WTF! // todo is it actual after migration to KMM?
                         // Without async the getPeriod() calls with NPE on typeId
                         myAsyncAfter(0.1) {
-                            uiRepeating.delete_()
+                            uiRepeating.delete()
                         }
                     }
                 }

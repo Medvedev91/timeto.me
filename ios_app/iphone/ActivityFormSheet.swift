@@ -61,7 +61,7 @@ struct ActivityFormSheet: View {
                             .padding(.top, MyListView.PADDING_HEADER_SECTION)
 
                     TriggersView__Form(
-                            triggers: state.triggers,
+                            triggers: state.textFeatures.triggers,
                             onTriggersChanged: { newTriggers in
                                 vm.setTriggers(newTriggers: newTriggers)
                             },

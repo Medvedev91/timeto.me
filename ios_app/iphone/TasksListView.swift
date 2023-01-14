@@ -291,7 +291,7 @@ struct TasksView__TaskRowView: View {
 
                     Button(
                             action: {
-                                uiTask.delete_()
+                                uiTask.delete()
                             },
                             label: {
                                 Text("Delete")
@@ -388,7 +388,7 @@ struct TasksView__TaskRowView: View {
                                     defText: uiTask.listText,
                                     defDate: Date().startOfDay()
                             ) {
-                                uiTask.delete_()
+                                uiTask.delete()
                             }
                         }
                 )
