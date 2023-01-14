@@ -37,15 +37,15 @@ struct TasksListView: View {
 
                             Spacer()
 
-                            let uiTasksReversed = state.uiTasks.reversed()
+                            let tasksUIReversed = state.tasksUI.reversed()
                             VStack(spacing: 0) {
-                                ForEach(uiTasksReversed, id: \.task.id) { uiTask in
+                                ForEach(tasksUIReversed, id: \.task.id) { taskUI in
                                     TasksView__TaskRowView(
-                                            uiTask: uiTask,
+                                            taskUI: taskUI,
                                             tasksListView: self,
-                                            withDivider: uiTasksReversed.last != uiTask
+                                            withDivider: tasksUIReversed.last != taskUI
                                     )
-                                            .id(uiTask.task.id)
+                                            .id(taskUI.task.id)
                                 }
                             }
                                     .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
@@ -192,7 +192,7 @@ struct TasksListView: View {
 
 struct TasksView__TaskRowView: View {
 
-    private let uiTask: TasksListVM.UiTask
+    private let taskUI: TasksListVM.TaskUI
 
     let tasksListView: TasksListView
     @State private var dragItem: DragItem
@@ -209,13 +209,13 @@ struct TasksView__TaskRowView: View {
 
     private let withDivider: Bool
 
-    init(uiTask: TasksListVM.UiTask, tasksListView: TasksListView, withDivider: Bool) {
-        self.uiTask = uiTask
+    init(taskUI: TasksListVM.TaskUI, tasksListView: TasksListView, withDivider: Bool) {
+        self.taskUI = taskUI
         self.tasksListView = tasksListView
         self.withDivider = withDivider
 
         let types: [DropItem.TYPE]
-        let task = uiTask.task
+        let task = taskUI.task
         if task.isToday {
             types = [DropItem.TYPE.CALENDAR, DropItem.TYPE.WEEK, DropItem.TYPE.INBOX]
         } else if task.isWeek {
@@ -274,7 +274,7 @@ struct TasksView__TaskRowView: View {
 
                 HStack {
 
-                    Text(uiTask.listText)
+                    Text(taskUI.listText)
                             .padding(.leading, 12)
                             .padding(.trailing, 4)
                             .foregroundColor(.white)
@@ -291,7 +291,7 @@ struct TasksView__TaskRowView: View {
 
                     Button(
                             action: {
-                                uiTask.delete()
+                                taskUI.delete()
                             },
                             label: {
                                 Text("Delete")
@@ -319,7 +319,7 @@ struct TasksView__TaskRowView: View {
                 Button(
                         action: {
                             hideKeyboard()
-                            uiTask.start(
+                            taskUI.start(
                                     onStarted: {
                                         gotoTimer()
                                     },
@@ -333,7 +333,7 @@ struct TasksView__TaskRowView: View {
 
                                 HStack {
                                     /// It can be multiline
-                                    Text(uiTask.listText)
+                                    Text(taskUI.listText)
                                             .padding(.top, 12)
                                             .padding(.leading, 16)
                                             .padding(.trailing, 16)
@@ -344,8 +344,8 @@ struct TasksView__TaskRowView: View {
                                     Spacer(minLength: 0)
                                 }
 
-                                TriggersView__List(triggers: uiTask.triggers)
-                                        .padding(.top, uiTask.triggers.isEmpty ? 0 : 8)
+                                TriggersView__List(triggers: taskUI.triggers)
+                                        .padding(.top, taskUI.triggers.isEmpty ? 0 : 8)
                             }
                                     .padding(.bottom, 12)
                         }
@@ -365,7 +365,7 @@ struct TasksView__TaskRowView: View {
                         .sheetEnv(isPresented: $isSheetPresented) {
                             TaskSheet(
                                     isPresented: $isSheetPresented,
-                                    task: uiTask.task
+                                    task: taskUI.task
                             ) {
                                 isSheetPresented = false
                                 gotoTimer()
@@ -378,17 +378,17 @@ struct TasksView__TaskRowView: View {
             }
         }
                 .background(Color(.mySecondaryBackground))
-                .id("\(uiTask.task.id) \(uiTask.task.text)") /// #TruncationDynamic
+                .id("\(taskUI.task.id) \(taskUI.task.text)") /// #TruncationDynamic
                 .sheetEnv(
                         isPresented: $isAddCalendarSheetPresented,
                         content: {
                             EventFormSheet(
                                     isPresented: $isAddCalendarSheetPresented,
                                     editedEvent: nil,
-                                    defText: uiTask.listText,
+                                    defText: taskUI.listText,
                                     defDate: Date().startOfDay()
                             ) {
-                                uiTask.delete()
+                                taskUI.delete()
                             }
                         }
                 )
@@ -397,7 +397,7 @@ struct TasksView__TaskRowView: View {
                         content: {
                             TaskEditDialog(
                                     isPresented: $isEditTaskPresented,
-                                    task: uiTask.task
+                                    task: taskUI.task
                             )
                         }
                 )
@@ -419,11 +419,11 @@ struct TasksView__TaskRowView: View {
                         case .CALENDAR:
                             isAddCalendarSheetPresented = true
                         case .TODAY:
-                            uiTask.upFolder(newFolder: TaskFolderModel.Companion().getToday())
+                            taskUI.upFolder(newFolder: TaskFolderModel.Companion().getToday())
                         case .WEEK:
-                            uiTask.upFolder(newFolder: TaskFolderModel.Companion().getWeek())
+                            taskUI.upFolder(newFolder: TaskFolderModel.Companion().getWeek())
                         case .INBOX:
-                            uiTask.upFolder(newFolder: TaskFolderModel.Companion().getInbox())
+                            taskUI.upFolder(newFolder: TaskFolderModel.Companion().getInbox())
                         }
                     } else if value.translation.width < -80 {
                         xSwipeOffset = (width ?? 999) * -1
