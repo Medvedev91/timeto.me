@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.*
 import timeto.shared.*
 import timeto.shared.db.TaskFolderModel
 import timeto.shared.db.TaskModel
+import timeto.shared.vm.ui.DaytimeUI
 
 class TasksListVM(
     val folder: TaskFolderModel,
@@ -12,6 +13,7 @@ class TasksListVM(
     class TaskUI(
         val task: TaskModel,
     ) {
+        val daytimeUI: DaytimeUI?
         val listText: String
         val triggers: List<Trigger>
 
@@ -19,6 +21,7 @@ class TasksListVM(
             val textFeatures = TextFeatures.parse(task.text)
             listText = textFeatures.textUI()
             triggers = textFeatures.triggers
+            daytimeUI = textFeatures.toDaytimeUIOrNull()
         }
 
         fun start(

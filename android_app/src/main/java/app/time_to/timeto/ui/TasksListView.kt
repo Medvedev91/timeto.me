@@ -229,19 +229,30 @@ fun TasksListView(
                                     .padding(vertical = 8.dp),
                                 verticalArrangement = Arrangement.Center
                             ) {
+
                                 Text(
                                     taskUI.listText,
                                     color = c.text,
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        // 2.dp for triggers
-                                        .padding(horizontal = startPadding, vertical = 2.dp),
+                                        .padding(horizontal = startPadding),
                                 )
+
+                                val badgesHPadding = startPadding - 2.dp
+                                val badgesTopPadding = 6.dp
+
+                                val daytimeUI = taskUI.daytimeUI
+                                if (daytimeUI != null)
+                                    DaytimeView(
+                                        daytimeUI = daytimeUI,
+                                        modifier = Modifier.padding(start = badgesHPadding, top = badgesTopPadding),
+                                    )
+
                                 TriggersView__ListView(
                                     triggers = taskUI.triggers,
                                     withOnClick = true,
-                                    modifier = Modifier.padding(top = 2.dp),
-                                    contentPadding = PaddingValues(horizontal = startPadding - 2.dp),
+                                    modifier = Modifier.padding(top = badgesTopPadding),
+                                    contentPadding = PaddingValues(horizontal = badgesHPadding),
                                 )
                             }
 
