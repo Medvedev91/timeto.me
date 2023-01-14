@@ -166,6 +166,8 @@ fun secondsToHms(seconds: Int): List<Int> {
     return listOf(h, m, secondsLeft)
 }
 
+fun Int.toHms() = secondsToHms(this)
+
 fun Int.toTimerHintNote(isShort: Boolean): String {
     val hms = secondsToHms(this)
     if (hms[0] > 0) {
