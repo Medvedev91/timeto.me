@@ -24,7 +24,7 @@ class RepeatingFormSheetVM(
         val inputTextValue = textFeatures.textNoFeatures
         val isHeaderDoneEnabled = (inputTextValue.isNotBlank() && activePeriodIndex != null)
 
-        // WARNING The order is hardcoded in UI
+        // TRICK The order is hardcoded in ui
         val periods = listOf(
             "Every Day",
             "Every N Days",
