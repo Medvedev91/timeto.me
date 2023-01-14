@@ -133,7 +133,11 @@ fun EventFormSheet(
                                 }
                             }
                             .padding(horizontal = 8.dp, vertical = 4.dp),
-                        color = animateColorAsState(targetValue = if (state.isHeaderDoneEnabled) c.blue else c.textSecondary.copy(alpha = 0.4f)).value,
+                        color = animateColorAsState(
+                            targetValue =
+                            if (state.isHeaderDoneEnabled) c.blue
+                            else c.textSecondary.copy(alpha = 0.4f)
+                        ).value,
                         fontSize = 17.sp,
                         fontWeight = FontWeight.W600
                     )
