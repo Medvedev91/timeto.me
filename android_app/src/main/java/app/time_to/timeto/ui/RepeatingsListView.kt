@@ -118,37 +118,6 @@ fun RepeatingsListView() {
                             .padding(vertical = 10.dp)
                     ) {
 
-                        val daytimeText = repeatingUI.daytimeText
-                        if (daytimeText != null) {
-                            Row(
-                                modifier = Modifier
-                                    .offset(y = (-1).dp)
-                                    .padding(horizontal = horizontalPadding - 1.dp)
-                                    .padding(top = 0.dp, bottom = 3.dp)
-                                    .clip(MySquircleShape(len = 50f))
-                                    .background(c.blue)
-                                    .padding(horizontal = 4.dp, vertical = 2.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-
-                                Icon(
-                                    painterResource(id = R.drawable.sf_clock_medium_medium),
-                                    contentDescription = "Daytime",
-                                    modifier = Modifier
-                                        .size(20.dp, 20.dp)
-                                        .padding(3.dp),
-                                    tint = c.white
-                                )
-
-                                Text(
-                                    daytimeText,
-                                    modifier = Modifier.padding(start = 1.dp, end = 3.dp),
-                                    fontSize = 13.sp,
-                                    color = c.white,
-                                )
-                            }
-                        }
-
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -175,14 +144,47 @@ fun RepeatingsListView() {
 
                         Text(
                             repeatingUI.listText,
-                            modifier = Modifier.padding(horizontal = horizontalPadding)
+                            modifier = Modifier
+                                .padding(horizontal = horizontalPadding)
+                                .padding(top = 2.dp)
                         )
+
+                        val badgesHPadding = horizontalPadding - 2.dp
+                        val daytimeText = repeatingUI.daytimeText
+                        if (daytimeText != null) {
+                            Row(
+                                modifier = Modifier
+                                    .padding(horizontal = badgesHPadding)
+                                    .padding(top = 6.dp, bottom = 0.dp)
+                                    .clip(MySquircleShape(len = 50f))
+                                    .background(c.blue)
+                                    .padding(horizontal = 4.dp, vertical = 2.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+
+                                Icon(
+                                    painterResource(id = R.drawable.sf_clock_medium_medium),
+                                    contentDescription = "Daytime",
+                                    modifier = Modifier
+                                        .size(20.dp, 20.dp)
+                                        .padding(3.dp),
+                                    tint = c.white
+                                )
+
+                                Text(
+                                    daytimeText,
+                                    modifier = Modifier.padding(start = 1.dp, end = 3.dp),
+                                    fontSize = 13.sp,
+                                    color = c.white,
+                                )
+                            }
+                        }
 
                         TriggersView__ListView(
                             triggers = repeatingUI.triggers,
                             withOnClick = true,
                             modifier = Modifier.padding(top = 6.dp),
-                            contentPadding = PaddingValues(horizontal = horizontalPadding - 2.dp)
+                            contentPadding = PaddingValues(horizontal = badgesHPadding)
                         )
                     }
 
