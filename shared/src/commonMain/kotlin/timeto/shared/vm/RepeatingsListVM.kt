@@ -3,6 +3,7 @@ package timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import timeto.shared.*
 import timeto.shared.db.RepeatingModel
+import timeto.shared.vm.ui.DaytimeUI
 
 class RepeatingsListVM : __VM<RepeatingsListVM.State>() {
 
@@ -15,13 +16,13 @@ class RepeatingsListVM : __VM<RepeatingsListVM.State>() {
 
         val listText: String
         val triggers: List<Trigger>
-        val daytimeText: String?
+        val daytimeUI: DaytimeUI?
 
         init {
             val textFeatures = TextFeatures.parse(repeating.text)
             listText = textFeatures.textUI()
             triggers = textFeatures.triggers
-            daytimeText = textFeatures.daytimeToStringOrNull()
+            daytimeUI = textFeatures.daytime?.let { DaytimeUI(it) }
         }
 
         fun delete() {
