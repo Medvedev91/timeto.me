@@ -178,6 +178,11 @@ fun Int.toTimerHintNote(isShort: Boolean): String {
     return "${hms[1]}${if (isShort) "m" else " min"}"
 }
 
+fun Int.toStringEnding(withNum: Boolean, one: String, many: String): String {
+    val strNum = if (this == 1) one else many
+    return if (withNum) "$this $strNum" else strNum
+}
+
 data class ColorRgba(
     val r: Int, val g: Int,
     val b: Int, val a: Int = 255,
