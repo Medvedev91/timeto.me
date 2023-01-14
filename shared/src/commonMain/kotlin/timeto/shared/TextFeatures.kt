@@ -11,7 +11,7 @@ data class TextFeatures(
     }
 
     fun textWithFeatures(): String {
-        val strings = mutableListOf(textNoFeatures.trim())
+        val strings = mutableListOf(textUI().trim())
         if (triggers.isNotEmpty())
             strings.add(triggers.joinToString(" ") { it.id })
         val daytimeString = daytimeToStringOrNull()
