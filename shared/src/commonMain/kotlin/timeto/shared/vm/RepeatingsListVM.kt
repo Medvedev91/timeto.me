@@ -21,10 +21,7 @@ class RepeatingsListVM : __VM<RepeatingsListVM.State>() {
             val textFeatures = TextFeatures.parse(repeating.text)
             listText = textFeatures.textUI()
             triggers = textFeatures.triggers
-            daytimeText = textFeatures.daytime?.let { daytime ->
-                val hms = secondsToHms(daytime)
-                "${hms[0]}:${hms[1].toString().padStart(2, '0')}"
-            }
+            daytimeText = textFeatures.daytimeToStringOrNull()
         }
 
         fun delete() {
