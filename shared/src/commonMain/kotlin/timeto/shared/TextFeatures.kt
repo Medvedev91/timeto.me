@@ -1,5 +1,7 @@
 package timeto.shared
 
+import timeto.shared.vm.ui.DaytimeUI
+
 data class TextFeatures(
     val textNoFeatures: String,
     val triggers: List<Trigger>,
@@ -21,6 +23,8 @@ data class TextFeatures(
     }
 
     fun daytimeToStringOrNull(): String? = daytime?.let { daytimeToString(it) }
+
+    fun toDaytimeUIOrNull(): DaytimeUI? = daytime?.let { DaytimeUI(it) }
 
     companion object {
 
