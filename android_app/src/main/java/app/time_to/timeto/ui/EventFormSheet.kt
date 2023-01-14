@@ -1,7 +1,6 @@
 package app.time_to.timeto.ui
 
 import android.widget.CalendarView
-import android.widget.NumberPicker
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -157,61 +156,12 @@ fun EventFormSheet(
                     }
                 )
 
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-
-                    Box(
-                        modifier = Modifier.width(100.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        AndroidView(
-                            modifier = Modifier.fillMaxWidth(),
-                            factory = { context ->
-                                val hourIndexes = 0..23
-                                NumberPicker(context).apply {
-                                    setOnValueChangedListener { _, _, new ->
-                                        vm.setTimeByComponents(hour = new)
-                                    }
-                                    displayedValues = hourIndexes.map { "$it".padStart(2, '0') }.toTypedArray()
-                                    if (isSDKQPlus())
-                                        textSize = dpToPx(18f).toFloat()
-                                    wrapSelectorWheel = false
-                                    minValue = 0
-                                    maxValue = hourIndexes.last
-                                    value = state.hour // Set last
-                                }
-                            }
-                        )
-                    }
-
-                    Box(
-                        modifier = Modifier.width(100.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        AndroidView(
-                            modifier = Modifier.fillMaxWidth(),
-                            factory = { context ->
-                                val minuteIndexes = 0..59
-                                NumberPicker(context).apply {
-                                    setOnValueChangedListener { _, _, new ->
-                                        vm.setTimeByComponents(minute = new)
-                                    }
-                                    displayedValues = minuteIndexes.map { "$it".padStart(2, '0') }.toTypedArray()
-                                    if (isSDKQPlus())
-                                        textSize = dpToPx(18f).toFloat()
-                                    wrapSelectorWheel = false
-                                    minValue = 0
-                                    maxValue = minuteIndexes.last
-                                    value = state.minute // Set last
-                                }
-                            }
-                        )
-                    }
-                }
+                DayTimePickerView(
+                    hour = state.hour,
+                    minute = state.minute,
+                    onHourChanged = { hour -> vm.setTimeByComponents(hour = hour) },
+                    onMinuteChanged = { minute -> vm.setTimeByComponents(minute = minute) },
+                )
             }
         }
     }
