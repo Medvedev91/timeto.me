@@ -7,16 +7,19 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.time_to.timeto.*
+import app.time_to.timeto.R
 import timeto.shared.vm.RepeatingsListVM
 import java.util.*
 
@@ -114,6 +117,38 @@ fun RepeatingsListView() {
                             .fillMaxWidth()
                             .padding(vertical = 10.dp)
                     ) {
+
+                        val daytimeText = repeatingUI.daytimeText
+                        if (daytimeText != null) {
+                            Row(
+                                modifier = Modifier
+                                    .offset(y = (-1).dp)
+                                    .padding(horizontal = horizontalPadding - 1.dp)
+                                    .padding(top = 0.dp, bottom = 3.dp)
+                                    .clip(MySquircleShape(len = 50f))
+                                    .background(c.blue)
+                                    .padding(horizontal = 4.dp, vertical = 2.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+
+                                Icon(
+                                    painterResource(id = R.drawable.sf_clock_medium_medium),
+                                    contentDescription = "Daytime",
+                                    modifier = Modifier
+                                        .size(20.dp, 20.dp)
+                                        .padding(3.dp),
+                                    tint = c.white
+                                )
+
+                                Text(
+                                    daytimeText,
+                                    modifier = Modifier.padding(start = 1.dp, end = 2.dp),
+                                    fontSize = 13.sp,
+                                    color = c.white,
+                                )
+                            }
+                        }
+
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
