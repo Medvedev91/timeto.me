@@ -24,7 +24,6 @@ fun DaytimeView(
 ) {
     Row(
         modifier = modifier
-            .padding(top = 6.dp, bottom = 0.dp)
             .clip(MySquircleShape(len = 50f))
             .background(daytimeUI.color.toColor())
             .padding(horizontal = 4.dp, vertical = 2.dp),

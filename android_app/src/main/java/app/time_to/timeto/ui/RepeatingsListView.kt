@@ -147,18 +147,20 @@ fun RepeatingsListView() {
                         )
 
                         val badgesHPadding = horizontalPadding - 2.dp
+                        val badgesTopPadding = 6.dp
+
                         val daytimeUI = repeatingUI.daytimeUI
                         if (daytimeUI != null)
                             DaytimeView(
                                 daytimeUI = daytimeUI,
                                 modifier = Modifier
-                                    .padding(horizontal = badgesHPadding)
+                                    .padding(start = badgesHPadding, top = badgesTopPadding)
                             )
 
                         TriggersView__ListView(
                             triggers = repeatingUI.triggers,
                             withOnClick = true,
-                            modifier = Modifier.padding(top = 6.dp),
+                            modifier = Modifier.padding(top = badgesTopPadding),
                             contentPadding = PaddingValues(horizontal = badgesHPadding)
                         )
                     }
