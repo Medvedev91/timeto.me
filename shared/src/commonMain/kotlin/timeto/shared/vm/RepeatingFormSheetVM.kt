@@ -96,6 +96,10 @@ class RepeatingFormSheetVM(
         setTextValue(newText.trim() + " ")
     }
 
+    fun upDaytime(newDaytimeOrNull: Int?) {
+        state.update { it.copy(textFeatures = it.textFeatures.copy(daytime = newDaytimeOrNull)) }
+    }
+
     fun setActivePeriodIndex(index: Int?) {
         state.update { it.copy(activePeriodIndex = index) }
     }
