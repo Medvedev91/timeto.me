@@ -134,8 +134,8 @@ fun RepeatingFormSheet(
                     isPresented = isDaytimeSheetPresented,
                     title = state.daytimeHeader,
                     doneText = "Done",
-                    defHour = 12,
-                    defMinute = 0,
+                    defHour = state.daytimePickerDefHour,
+                    defMinute = state.daytimePickerDefMinute,
                     onPick = { secondsOrNull ->
                         vm.upDaytime(secondsOrNull)
                     }

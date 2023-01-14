@@ -21,6 +21,8 @@ class RepeatingFormSheetVM(
 
         val daytimeHeader = "Time of the Day"
         val daytimeNote = textFeatures.daytimeToStringOrNull() ?: "None"
+        val daytimePickerDefHour: Int
+        val daytimePickerDefMinute: Int
 
         val inputTextValue = textFeatures.textNoFeatures
         val isHeaderDoneEnabled = (inputTextValue.isNotBlank() && activePeriodIndex != null)
@@ -33,6 +35,18 @@ class RepeatingFormSheetVM(
             "Days of the Month",
             "Days of the Year",
         )
+
+        init {
+            val daytime = textFeatures.daytime
+            if (daytime != null) {
+                val hms = secondsToHms(daytime)
+                daytimePickerDefHour = hms[0]
+                daytimePickerDefMinute = hms[1]
+            } else {
+                daytimePickerDefHour = 12
+                daytimePickerDefMinute = 0
+            }
+        }
     }
 
     override val state: MutableStateFlow<State>
