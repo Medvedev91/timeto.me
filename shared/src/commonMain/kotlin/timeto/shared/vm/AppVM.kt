@@ -45,7 +45,7 @@ class AppVM : __VM<AppVM.State>() {
 
             launchEx {
                 while (true) {
-                    delay(1_000L)
+                    delayToNextMinute(extraMls = 1_000L)
                     try {
                         syncTodayRepeating()
                         syncTodayEvents()
