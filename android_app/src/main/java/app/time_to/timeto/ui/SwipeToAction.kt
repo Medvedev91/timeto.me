@@ -38,6 +38,18 @@ fun SwipeToAction(
     stateOffsetAbsDp: MutableState<Dp> = remember { mutableStateOf(0.dp) },
     content: @Composable RowScope.() -> Unit
 ) {
+
+    ///
+    /// TRICK
+    /// rememberDismissState() keeps initial onStart/onEnd references. Using
+    /// actionsTrick to pass the state reference to rememberDismissState().
+    ///
+    /// Bug example without using this hack:
+    /// After editing and saving the task, re-editing form contains the outdated data.
+    /// In SwipeToAction.onStart{} the task object with the old data.
+
+    val actionsTrick = remember { mutableStateOf(ActionsContainer(onStart, onEnd)) }
+    actionsTrick.value = ActionsContainer(onStart, onEnd)
     val state = rememberDismissState(
         confirmStateChange = {
 
@@ -50,12 +62,15 @@ fun SwipeToAction(
                 return@rememberDismissState false
 
             when (it) {
-                DismissValue.DismissedToStart -> onEnd()
-                DismissValue.DismissedToEnd -> onStart()
+                DismissValue.DismissedToStart -> actionsTrick.value.onEnd()
+                DismissValue.DismissedToEnd -> actionsTrick.value.onStart()
                 DismissValue.Default -> false
             }
         }
     )
+
+    //////
+
     stateOffsetAbsDp.value = pxToDp(state.offset.value.toInt()).absoluteValue.dp
 
     var lastStateOffsetAbsDp by remember { mutableStateOf(stateOffsetAbsDp.value) }
@@ -209,3 +224,8 @@ private class SwipeToAction__ViewConfiguration(
     override val longPressTimeoutMillis = curVC.longPressTimeoutMillis
     override val touchSlop = slop
 }
+
+private class ActionsContainer(
+    val onStart: () -> Boolean,
+    val onEnd: () -> Boolean,
+)
