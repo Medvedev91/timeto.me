@@ -37,7 +37,12 @@ fun DaytimeView(
         ) {
 
             Icon(
-                painterResource(id = R.drawable.sf_clock_medium_medium),
+                painterResource(
+                    id = when (daytimeUI.daytimeIcon) {
+                        DaytimeUI.DaytimeIcon.clock -> R.drawable.sf_clock_medium_medium
+                        DaytimeUI.DaytimeIcon.alarm -> R.drawable.sf_alarm_fill_medium_medium
+                    }
+                ),
                 contentDescription = "Daytime",
                 modifier = Modifier
                     .size(20.dp, 20.dp)
