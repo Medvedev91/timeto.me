@@ -269,6 +269,8 @@ extension ColorNative {
             return .green
         case .blue:
             return .blue
+        case .orange:
+            return .orange
         case .purple:
             return .purple
         case .white:

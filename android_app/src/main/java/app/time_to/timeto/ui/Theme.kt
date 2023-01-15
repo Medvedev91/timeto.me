@@ -22,6 +22,7 @@ val c: MyColors
 
 class MyColors(
     val blue: Color, // Not Color(0xFF0055FF)
+    val orange: Color,
     val text: Color, // https://material.io/design/color/text-legibility.html ~ 87%
     val textSecondary: Color, // ~ 60%
     val background2: Color,
@@ -57,6 +58,7 @@ private val tgLikeLightSheetBg = Color(0xFFEFEFF3)
 
 private val myLightColors = MyColors(
     blue = Color(0xFF007AFF),
+    orange = Color(0xFFFF9500), // AG Orange iOS Light
     text = Color(0xEE000000),
     textSecondary = Color(0xAA000000),
     background2 = Color.White,
@@ -76,6 +78,7 @@ private val myLightColors = MyColors(
 
 private val myDarkColors = MyColors(
     blue = Color(0xFF0A84FF),
+    orange = Color(0xFFFF9D0A), // AG Orange iOS Dark
     text = Color(0xEEFFFFFF),
     textSecondary = Color(0xAAFFFFFF),
     background2 = Color(0xFF202022), // 0xFF1C1C1E
