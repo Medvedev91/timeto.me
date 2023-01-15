@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.time_to.timeto.R
@@ -23,27 +24,45 @@ fun DaytimeView(
     modifier: Modifier,
 ) {
     Row(
-        modifier = modifier
-            .clip(MySquircleShape(len = 50f))
-            .background(daytimeUI.color.toColor())
-            .padding(horizontal = 4.dp, vertical = 2.dp),
+        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
     ) {
 
-        Icon(
-            painterResource(id = R.drawable.sf_clock_medium_medium),
-            contentDescription = "Daytime",
+        Row(
             modifier = Modifier
-                .size(20.dp, 20.dp)
-                .padding(3.dp),
-            tint = c.white
-        )
+                .clip(MySquircleShape(len = 50f))
+                .background(daytimeUI.color.toColor())
+                .padding(horizontal = 4.dp, vertical = 2.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
 
-        Text(
-            daytimeUI.daytimeText,
-            modifier = Modifier.padding(start = 1.dp, end = 3.dp),
-            fontSize = 13.sp,
-            color = c.white,
-        )
+            Icon(
+                painterResource(id = R.drawable.sf_clock_medium_medium),
+                contentDescription = "Daytime",
+                modifier = Modifier
+                    .size(20.dp, 20.dp)
+                    .padding(3.dp),
+                tint = c.white
+            )
+
+            Text(
+                daytimeUI.daytimeText,
+                modifier = Modifier.padding(start = 1.dp, end = 3.dp),
+                fontSize = 13.sp,
+                color = c.white,
+            )
+        }
+
+        val timeLeftText = daytimeUI.timeLeftText
+        if (timeLeftText != null) {
+            Text(
+                timeLeftText,
+                modifier = Modifier.padding(start = 8.dp),
+                fontSize = 14.sp,
+                color = daytimeUI.color.toColor(),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
     }
 }
