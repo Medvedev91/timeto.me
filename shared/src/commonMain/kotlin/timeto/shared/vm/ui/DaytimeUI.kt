@@ -22,7 +22,7 @@ class DaytimeUI(
                 timeLeftText = "In " + secondsToString(secondsLeft, isShort = false)
             } else {
                 color = ColorNative.red
-                timeLeftText = "Overdue by " + secondsToString(secondsLeft, isShort = true)
+                timeLeftText = secondsToString(secondsLeft, isShort = true) + " overdue"
             }
         } else {
             color = ColorNative.blue
