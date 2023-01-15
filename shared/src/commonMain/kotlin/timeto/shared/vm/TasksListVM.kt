@@ -1,6 +1,7 @@
 package timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import timeto.shared.*
 import timeto.shared.db.TaskFolderModel
 import timeto.shared.db.TaskModel
@@ -65,10 +66,18 @@ class TasksListVM(
     )
 
     override fun onAppear() {
+        val scope = scopeVM()
         TaskModel.getAscFlow()
-            .onEachExIn(scopeVM()) { list ->
+            .onEachExIn(scope) { list ->
                 state.update { it.copy(tasksUI = list.toUiList()) }
             }
+        // To update daytime badges
+        scope.launch {
+            while (true) {
+                delayToNextMinute()
+                state.update { it.copy(tasksUI = TaskModel.getAsc().toUiList()) }
+            }
+        }
     }
 
     private fun List<TaskModel>.toUiList() = this
