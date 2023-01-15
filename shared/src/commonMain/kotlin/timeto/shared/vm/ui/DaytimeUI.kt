@@ -5,9 +5,30 @@ import kotlin.math.absoluteValue
 
 class DaytimeUI(
     daytime: Int,
+    withTimeLeft: Boolean,
 ) {
+
     val daytimeText = TextFeatures.daytimeToString(daytime)
-    val color: ColorNative = ColorNative.blue
+    val color: ColorNative
+    val timeLeftText: String?
+
+    init {
+        if (withTimeLeft) {
+            val dayStartTime = UnixTime().localDayStartTime()
+            val secondsSinceDayStart = time() - dayStartTime
+            val secondsLeft = daytime - secondsSinceDayStart
+            if (secondsLeft > 0) {
+                color = if (secondsLeft > 600) ColorNative.blue else ColorNative.purple // todo
+                timeLeftText = "In " + secondsToString(secondsLeft, isShort = false)
+            } else {
+                color = ColorNative.red
+                timeLeftText = "Overdue by " + secondsToString(secondsLeft, isShort = true)
+            }
+        } else {
+            color = ColorNative.blue
+            timeLeftText = null
+        }
+    }
 }
 
 private fun secondsToString(

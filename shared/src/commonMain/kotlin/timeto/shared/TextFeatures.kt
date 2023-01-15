@@ -24,7 +24,8 @@ data class TextFeatures(
 
     fun daytimeToStringOrNull(): String? = daytime?.let { daytimeToString(it) }
 
-    fun toDaytimeUIOrNull(): DaytimeUI? = daytime?.let { DaytimeUI(it) }
+    fun toDaytimeUIOrNull(withTimeLeft: Boolean): DaytimeUI? =
+        daytime?.let { DaytimeUI(it, withTimeLeft) }
 
     companion object {
 

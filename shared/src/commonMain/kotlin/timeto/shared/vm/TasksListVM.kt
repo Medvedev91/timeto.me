@@ -21,7 +21,7 @@ class TasksListVM(
             val textFeatures = TextFeatures.parse(task.text)
             listText = textFeatures.textUI()
             triggers = textFeatures.triggers
-            daytimeUI = textFeatures.toDaytimeUIOrNull()
+            daytimeUI = textFeatures.toDaytimeUIOrNull(withTimeLeft = true)
         }
 
         fun start(
