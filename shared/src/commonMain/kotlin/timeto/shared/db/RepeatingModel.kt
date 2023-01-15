@@ -74,6 +74,13 @@ data class RepeatingModel(
                 db.repeatingQueries.getAsc().executeAsList()
                     .map { it.toModel() }
                     .filter { it.getNextDay() <= today }
+                    .sortedWith(
+                        compareByDescending<RepeatingModel> { repeating ->
+                            TextFeatures.parse(repeating.text).daytime ?: Int.MAX_VALUE
+                        }.thenByDescending { repeating ->
+                            repeating.text
+                        }
+                    )
                     .forEach { repeating ->
                         TaskModel.addWithValidationNeedTransaction(
                             text = "$EMOJI_REPEATING ${repeating.text}",
