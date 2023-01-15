@@ -18,7 +18,7 @@ class DaytimeUI(
             val secondsSinceDayStart = time() - dayStartTime
             val secondsLeft = daytime - secondsSinceDayStart
             if (secondsLeft > 0) {
-                color = if (secondsLeft > 600) ColorNative.blue else ColorNative.purple // todo
+                color = if (secondsLeft > 600) ColorNative.blue else ColorNative.orange
                 timeLeftText = "In " + secondsToString(secondsLeft, isShort = false)
             } else {
                 color = ColorNative.red
