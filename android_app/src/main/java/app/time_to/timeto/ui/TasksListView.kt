@@ -78,12 +78,7 @@ fun TasksListView(
             val tasksUI = state.tasksUI
             items(
                 tasksUI,
-                /**
-                 * WTF?! task.id, does not work. Issue:
-                 * After editing and saving, re-editing the form fills in the outdated data.
-                 * In SwipeToAction.onStart{} the task object with the old data. Fixed by using hashCode().
-                 */
-                key = { task -> task.hashCode() }
+                key = { taskUI -> taskUI.task.id }
             ) { taskUI ->
                 val isAddCalendarPresented = remember { mutableStateOf(false) }
                 EventFormSheet(
