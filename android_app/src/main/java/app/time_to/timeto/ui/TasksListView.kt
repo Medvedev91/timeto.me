@@ -230,6 +230,21 @@ fun TasksListView(
                                 verticalArrangement = Arrangement.Center
                             ) {
 
+                                val badgesHPadding = startPadding - 2.dp
+                                val badgesVPadding = 6.dp
+
+                                val daytimeUI = taskUI.daytimeUI
+                                if (daytimeUI != null) {
+                                    DaytimeView(
+                                        daytimeUI = daytimeUI,
+                                        modifier = Modifier.padding(
+                                            start = badgesHPadding,
+                                            top = 2.dp,
+                                            bottom = badgesVPadding,
+                                        ),
+                                    )
+                                }
+
                                 Text(
                                     taskUI.listText,
                                     color = c.text,
@@ -238,20 +253,10 @@ fun TasksListView(
                                         .padding(horizontal = startPadding),
                                 )
 
-                                val badgesHPadding = startPadding - 2.dp
-                                val badgesTopPadding = 6.dp
-
-                                val daytimeUI = taskUI.daytimeUI
-                                if (daytimeUI != null)
-                                    DaytimeView(
-                                        daytimeUI = daytimeUI,
-                                        modifier = Modifier.padding(start = badgesHPadding, top = badgesTopPadding),
-                                    )
-
                                 TriggersView__ListView(
                                     triggers = taskUI.triggers,
                                     withOnClick = true,
-                                    modifier = Modifier.padding(top = badgesTopPadding),
+                                    modifier = Modifier.padding(top = badgesVPadding),
                                     contentPadding = PaddingValues(horizontal = badgesHPadding),
                                 )
                             }
