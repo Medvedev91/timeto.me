@@ -19,10 +19,10 @@ class DaytimeUI(
             val secondsLeft = daytime - secondsSinceDayStart
             if (secondsLeft > 0) {
                 color = if (secondsLeft > 600) ColorNative.blue else ColorNative.orange
-                timeLeftText = "In " + secondsToString(secondsLeft, isShort = false)
+                timeLeftText = "In " + secondsToString(secondsLeft, isOverdueOrIn = false)
             } else {
                 color = ColorNative.red
-                timeLeftText = secondsToString(secondsLeft, isShort = true) + " overdue"
+                timeLeftText = secondsToString(secondsLeft, isOverdueOrIn = true) + " overdue"
             }
         } else {
             color = ColorNative.blue
@@ -33,17 +33,14 @@ class DaytimeUI(
 
 private fun secondsToString(
     secondsAnySign: Int,
-    isShort: Boolean,
+    isOverdueOrIn: Boolean,
 ): String {
     val (h, m) = secondsAnySign.absoluteValue.toHms()
 
-    if (isShort) {
+    if (isOverdueOrIn) {
         if (h == 0)
             return if (m == 0) "~1 minute"
             else m.toStringEndingMinutes()
-        if (h <= 2)
-            return if (m == 0) h.toStringEndingHours()
-            else "${h.toStringEndingHours()} $m min"
         return h.toStringEndingHours()
     }
 
@@ -52,7 +49,7 @@ private fun secondsToString(
 
     val strings = mutableListOf<String>()
     if (h > 0) strings.add(h.toStringEndingHours())
-    if (h <= 2 && m > 0) strings.add(m.toStringEndingMinutes())
+    if (h <= 1 && m > 0) strings.add(m.toStringEndingMinutes())
     val separator = if (m <= 5) " and " else " "
     return strings.joinToString(separator)
 }
