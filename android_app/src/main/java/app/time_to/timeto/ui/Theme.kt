@@ -13,7 +13,7 @@ import app.time_to.timeto.colorFromRgbaString
 
 // Sources
 // MD https://material.io/resources/color/
-// AG https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/color
+// AG https://developer.apple.com/design/human-interface-guidelines/foundations/color
 
 // todo check performance
 val c: MyColors
