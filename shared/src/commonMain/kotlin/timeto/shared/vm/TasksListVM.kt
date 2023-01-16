@@ -82,6 +82,26 @@ class TasksListVM(
 
     private fun List<TaskModel>.toUiList() = this
         .filter { it.folder_id == folder.id }
-        .sortedWith(compareByDescending { it.id })
         .map { TaskUI(it) }
+        .let { tasksUI ->
+            if (folder.id == TaskFolderModel.ID_TODAY)
+                tasksUI.sortedForToday()
+            else
+                tasksUI.sortedByDescending { it.task.id }
+        }
+}
+
+private fun List<TasksListVM.TaskUI>.sortedForToday(): List<TasksListVM.TaskUI> {
+    val (tasksWithDaytime, tasksNoDaytime) = this.partition { it.daytimeUI != null }
+    val minTaskIdWithDaytime = tasksWithDaytime.minOfOrNull { it.task.id } ?: Int.MIN_VALUE
+    val (tasksBeforeDaytime, tasksAfterDaytime) = tasksNoDaytime.partition { it.task.id < minTaskIdWithDaytime }
+
+    val resList = mutableListOf<TasksListVM.TaskUI>()
+    tasksAfterDaytime.forEach { resList.add(it) }
+    tasksWithDaytime
+        .sortedBy { it.daytimeUI!!.daytime }
+        .forEach { resList.add(it) }
+    tasksBeforeDaytime.forEach { resList.add(it) }
+
+    return resList
 }
