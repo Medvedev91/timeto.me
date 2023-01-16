@@ -19,7 +19,7 @@ class DaytimeUI(
             val secondsSinceDayStart = time() - dayStartTime
             val secondsLeft = daytime - secondsSinceDayStart
             if (secondsLeft > 0) {
-                color = if (secondsLeft > 600) ColorNative.blue else ColorNative.orange
+                color = if (secondsLeft <= 3_600) ColorNative.blue else ColorNative.textSecondary
                 timeLeftText = "In " + secondsToString(secondsLeft, isOverdueOrIn = false)
                 daytimeIcon = DaytimeIcon.clock
             } else {
