@@ -121,8 +121,9 @@ fun RepeatingsListView() {
                                 .padding(horizontal = horizontalPadding),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
+                            val daytimeText = repeatingUI.daytimeUI?.let { " at ${it.daytimeText}" } ?: ""
                             Text(
-                                repeatingUI.dayLeftString,
+                                repeatingUI.dayLeftString + daytimeText,
                                 modifier = Modifier.weight(1f),
                                 fontSize = 13.sp,
                                 fontWeight = FontWeight.W300,
@@ -148,14 +149,6 @@ fun RepeatingsListView() {
 
                         val badgesHPadding = horizontalPadding - 2.dp
                         val badgesTopPadding = 6.dp
-
-                        val daytimeUI = repeatingUI.daytimeUI
-                        if (daytimeUI != null)
-                            DaytimeView(
-                                daytimeUI = daytimeUI,
-                                modifier = Modifier
-                                    .padding(start = badgesHPadding, top = badgesTopPadding)
-                            )
 
                         TriggersView__ListView(
                             triggers = repeatingUI.triggers,
