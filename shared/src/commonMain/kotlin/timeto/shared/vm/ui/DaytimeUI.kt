@@ -4,7 +4,7 @@ import timeto.shared.*
 import kotlin.math.absoluteValue
 
 class DaytimeUI(
-    daytime: Int,
+    val daytime: Int,
     withTimeLeft: Boolean,
 ) {
 
