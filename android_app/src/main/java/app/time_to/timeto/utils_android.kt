@@ -45,6 +45,7 @@ fun ColorNative.toColor() = when (this) {
     ColorNative.purple -> c.purple
     ColorNative.white -> c.white
     ColorNative.text -> c.text
+    ColorNative.textSecondary -> c.textSecondary
 }
 
 fun colorFromRgbaString(colorRgba: String) = colorRgba
