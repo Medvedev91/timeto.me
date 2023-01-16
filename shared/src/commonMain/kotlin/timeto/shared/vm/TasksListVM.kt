@@ -82,6 +82,6 @@ class TasksListVM(
 
     private fun List<TaskModel>.toUiList() = this
         .filter { it.folder_id == folder.id }
-        .sortedByDescending { it.id }
+        .sortedWith(compareByDescending { it.id })
         .map { TaskUI(it) }
 }
