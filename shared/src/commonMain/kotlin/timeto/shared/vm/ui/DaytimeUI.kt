@@ -10,7 +10,6 @@ class DaytimeUI(
     val daytimeText = TextFeatures.daytimeToString(daytime)
     val color: ColorNative
     val timeLeftText: String
-    val daytimeIcon: DaytimeIcon
 
     init {
         val dayStartTime = UnixTime().localDayStartTime()
@@ -19,16 +18,10 @@ class DaytimeUI(
         if (secondsLeft > 0) {
             color = if (secondsLeft <= 3_600) ColorNative.blue else ColorNative.textSecondary
             timeLeftText = "In " + secondsToString(secondsLeft, isOverdueOrIn = false)
-            daytimeIcon = DaytimeIcon.clock
         } else {
             color = ColorNative.red
             timeLeftText = secondsToString(secondsLeft, isOverdueOrIn = true) + " overdue"
-            daytimeIcon = DaytimeIcon.alarm
         }
-    }
-
-    enum class DaytimeIcon {
-        clock, alarm
     }
 }
 
