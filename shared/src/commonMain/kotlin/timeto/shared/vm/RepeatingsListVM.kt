@@ -22,7 +22,7 @@ class RepeatingsListVM : __VM<RepeatingsListVM.State>() {
             val textFeatures = TextFeatures.parse(repeating.text)
             listText = textFeatures.textUI()
             triggers = textFeatures.triggers
-            daytimeUI = textFeatures.toDaytimeUIOrNull()
+            daytimeUI = textFeatures.daytimeUIOrNull()
         }
 
         fun delete() {
