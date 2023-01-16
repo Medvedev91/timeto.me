@@ -230,13 +230,18 @@ fun TasksListView(
 
                                 val daytimeUI = taskUI.daytimeUI
                                 if (daytimeUI != null) {
-                                    DaytimeView(
-                                        daytimeUI = daytimeUI,
-                                        modifier = Modifier.padding(
-                                            start = badgesHPadding,
-                                            top = 2.dp,
-                                            bottom = badgesVPadding,
-                                        ),
+                                    Text(
+                                        daytimeUI.daytimeText + "  " + daytimeUI.timeLeftText,
+                                        modifier = Modifier
+                                            .padding(
+                                                start = badgesHPadding,
+                                                top = 2.dp,
+                                                bottom = badgesVPadding,
+                                            )
+                                            .padding(start = 2.dp),
+                                        fontSize = 13.sp,
+                                        fontWeight = FontWeight.W300,
+                                        color = daytimeUI.color.toColor(),
                                     )
                                 }
 
