@@ -71,14 +71,16 @@ data class TextFeatures(
 
             //
             // Daytime
+            //
+            // Remember, it also works for calendar events daytime
 
             val daytime: Int? = daytimeRegex
                 .find(textNoFeatures)?.let { match ->
-                    val hour = match.groupValues[2].toInt()
-                    val minute = match.groupValues[3].toInt()
+                    val hour = match.groupValues[3].toInt()
+                    val minute = match.groupValues[4].toInt()
                     if (hour > 23 || minute > 59)
                         return@let null
-                    textNoFeatures = textNoFeatures.replace(match.value, "").trim()
+                    textNoFeatures = textNoFeatures.replace(match.groupValues[2], "").trim()
                     return@let (hour * 3_600) + (minute * 60)
                 }
 
@@ -93,4 +95,4 @@ data class TextFeatures(
 
 private val checklistRegex = "#c\\d{10}".toRegex()
 private val shortcutRegex = "#s\\d{10}".toRegex()
-private val daytimeRegex = "(^|\\s)(\\d?\\d):(\\d\\d)(\\s|$)".toRegex()
+private val daytimeRegex = "(^|\\s)((\\d?\\d):(\\d\\d))(\\s|$)".toRegex()
