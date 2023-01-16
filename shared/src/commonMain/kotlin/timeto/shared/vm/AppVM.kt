@@ -45,7 +45,12 @@ class AppVM : __VM<AppVM.State>() {
 
             launchEx {
                 while (true) {
-                    delayToNextMinute(extraMls = 1_000L)
+                    /**
+                     * Not delayToNextMinute(extraMls = 1_000L):
+                     * - No need to wait after daytime changes;
+                     * - No need to wait after backup restore.
+                     */
+                    delay(1_000L)
                     try {
                         syncTodayRepeating()
                         syncTodayEvents()
