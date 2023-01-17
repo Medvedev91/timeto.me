@@ -1,0 +1,1 @@
+ALTER TABLE RepeatingSQ ADD COLUMN daytime INTEGER AS Int;

@@ -3,7 +3,8 @@ CREATE TABLE RepeatingSQ (
     text TEXT NOT NULL,
     last_day INTEGER AS Int NOT NULL,
     type_id INTEGER AS Int NOT NULL,
-    value TEXT NOT NULL
+    value TEXT NOT NULL,
+    daytime INTEGER AS Int -- Nullable!
 );
 
 getAsc:
