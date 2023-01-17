@@ -100,6 +100,8 @@ data class TaskModel(
     val isWeek = folder_id == TaskFolderModel.ID_WEEK
     val isInbox = folder_id == TaskFolderModel.ID_INBOX
 
+    fun unixTime() = UnixTime(id)
+
     suspend fun startInterval(
         deadline: Int,
         activity: ActivityModel,
