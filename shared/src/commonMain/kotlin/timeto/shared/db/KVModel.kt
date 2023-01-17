@@ -5,6 +5,7 @@ import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import dbsq.KVSQ
 import kotlinx.coroutines.flow.map
+import timeto.shared.DI
 
 data class KVModel(
     val key: String,
@@ -41,8 +42,9 @@ data class KVModel(
     }
 
     enum class KEY {
-        EVENTS_HISTORY,
-        IS_SHOW_README_ON_MAIN,
-        DAY_START_OFFSET_SECONDS,
+
+        EVENTS_HISTORY, IS_SHOW_README_ON_MAIN, DAY_START_OFFSET_SECONDS;
+
+        fun getFromDIOrNull(): String? = DI.kv.firstOrNull { it.key == this.name }?.value
     }
 }
