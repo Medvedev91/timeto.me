@@ -190,12 +190,14 @@ data class RepeatingModel(
     suspend fun upDataWithValidation(
         text: String,
         period: Period,
+        daytime: Int?,
     ): Unit = dbIO {
         db.repeatingQueries.upDataById(
             id = id,
             type_id = period.type.id,
             value_ = period.value,
             text = validateText(text),
+            daytime = daytime,
         )
     }
 

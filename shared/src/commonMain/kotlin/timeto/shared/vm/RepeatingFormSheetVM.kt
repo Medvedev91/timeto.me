@@ -12,6 +12,7 @@ class RepeatingFormSheetVM(
         val headerTitle: String,
         val headerDoneText: String,
         val textFeatures: TextFeatures,
+        val daytime: Int?,
         val activePeriodIndex: Int?,
         val selectedNDays: Int,
         val selectedWeekDays: List<Boolean>,
@@ -20,7 +21,7 @@ class RepeatingFormSheetVM(
     ) {
 
         val daytimeHeader = "Time of the Day"
-        val daytimeNote = textFeatures.daytimeToStringOrNull() ?: "None"
+        val daytimeNote = daytime?.let { daytimeToString(it) } ?: "None"
         val daytimePickerDefHour: Int
         val daytimePickerDefMinute: Int
 
@@ -37,11 +38,10 @@ class RepeatingFormSheetVM(
         )
 
         init {
-            val daytime = textFeatures.daytime
             if (daytime != null) {
-                val hms = secondsToHms(daytime)
-                daytimePickerDefHour = hms[0]
-                daytimePickerDefMinute = hms[1]
+                val (h, m) = daytime.toHms()
+                daytimePickerDefHour = h
+                daytimePickerDefMinute = m
             } else {
                 daytimePickerDefHour = 12
                 daytimePickerDefMinute = 0
@@ -87,12 +87,13 @@ class RepeatingFormSheetVM(
             State(
                 headerTitle = if (repeating != null) "Edit Repeating" else "New Repeating",
                 headerDoneText = if (repeating != null) "Done" else "Create",
+                textFeatures = TextFeatures.parse(repeating?.text ?: ""),
+                daytime = repeating?.daytime,
                 activePeriodIndex = activePeriodIndex,
                 selectedNDays = selectedNDays,
                 selectedWeekDays = selectedWeekDays,
                 selectedDaysOfMonth = selectedDaysOfMonth,
                 selectedDaysOfYear = selectedDaysOfYear,
-                textFeatures = TextFeatures.parse(repeating?.text ?: ""),
             )
         )
     }
@@ -111,7 +112,7 @@ class RepeatingFormSheetVM(
     }
 
     fun upDaytime(newDaytimeOrNull: Int?) {
-        state.update { it.copy(textFeatures = it.textFeatures.copy(daytime = newDaytimeOrNull)) }
+        state.update { it.copy(daytime = newDaytimeOrNull) }
     }
 
     fun setActivePeriodIndex(index: Int?) {
@@ -193,7 +194,11 @@ class RepeatingFormSheetVM(
             }
 
             if (repeating != null) {
-                repeating.upDataWithValidation(nameWithFeatures, period)
+                repeating.upDataWithValidation(
+                    text = nameWithFeatures,
+                    period = period,
+                    daytime = state.value.daytime,
+                )
             } else
                 RepeatingModel.addWithValidation(
                     nameWithFeatures,
