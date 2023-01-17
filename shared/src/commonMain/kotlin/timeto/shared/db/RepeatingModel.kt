@@ -14,6 +14,7 @@ data class RepeatingModel(
     val last_day: Int,
     val type_id: Int,
     val value: String,
+    val daytime: Int?,
 ) {
 
     companion object {
@@ -100,7 +101,7 @@ data class RepeatingModel(
 
         private fun RepeatingSQ.toModel() = RepeatingModel(
             id = id, text = text, last_day = last_day,
-            type_id = type_id, value = value_
+            type_id = type_id, value = value_, daytime = daytime,
         )
     }
 
