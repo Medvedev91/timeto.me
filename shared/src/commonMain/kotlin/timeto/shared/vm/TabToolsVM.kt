@@ -43,22 +43,14 @@ class TabToolsVM : __VM<TabToolsVM.State>() {
         val appVersion = deviceData.build.toString()
     }
 
-    override val state: MutableStateFlow<State>
-
-    init {
-        val dayStartSeconds = (DI.kv
-            .firstOrNull { it.key == KVModel.KEY.DAY_START_OFFSET_SECONDS.name }?.value?.toInt()
-            ?: KVModel.DAY_START_OFFSET_SECONDS_DEFAULT)
-
-        state = MutableStateFlow(
-            State(
-                shortcuts = DI.shortcuts,
-                checklists = DI.checklists,
-                dayStartSeconds = dayStartSeconds,
-                feedbackSubject = "Feedback"
-            )
+    override val state = MutableStateFlow(
+        State(
+            shortcuts = DI.shortcuts,
+            checklists = DI.checklists,
+            dayStartSeconds = dayStartOffsetSeconds(),
+            feedbackSubject = "Feedback"
         )
-    }
+    )
 
     override fun onAppear() {
         val scope = scopeVM()
