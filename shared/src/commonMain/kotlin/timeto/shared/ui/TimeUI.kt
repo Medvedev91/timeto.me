@@ -1,20 +1,18 @@
-package timeto.shared.vm.ui
+package timeto.shared.ui
 
 import timeto.shared.*
 import kotlin.math.absoluteValue
 
-class DaytimeUI(
-    val daytime: Int,
+class TimeUI(
+    val unixTime: UnixTime
 ) {
 
-    val daytimeText = TextFeatures.daytimeToString(daytime)
+    val daytimeText = daytimeToString(unixTime.time - unixTime.localDayStartTime())
     val timeLeftText: String
     val color: ColorNative
 
     init {
-        val dayStartTime = UnixTime().localDayStartTime()
-        val secondsSinceDayStart = time() - dayStartTime
-        val secondsLeft = daytime - secondsSinceDayStart
+        val secondsLeft = unixTime.time - time()
         if (secondsLeft > 0) {
             timeLeftText = "In " + secondsToString(secondsLeft, isOverdueOrIn = false)
             color = if (secondsLeft <= 3_600) ColorNative.blue else ColorNative.textSecondary
@@ -24,6 +22,8 @@ class DaytimeUI(
         }
     }
 }
+
+//////
 
 private fun secondsToString(
     secondsAnySign: Int,

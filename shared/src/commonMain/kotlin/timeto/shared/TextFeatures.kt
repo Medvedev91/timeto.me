@@ -1,11 +1,11 @@
 package timeto.shared
 
-import timeto.shared.vm.ui.DaytimeUI
+import timeto.shared.ui.TimeUI
 
 data class TextFeatures(
     val textNoFeatures: String,
     val triggers: List<Trigger>,
-    val daytime: Int? = null,
+    val timeUI: TimeUI? = null,
 ) {
 
     fun textUI(): String {
@@ -16,22 +16,12 @@ data class TextFeatures(
         val strings = mutableListOf(textUI().trim())
         if (triggers.isNotEmpty())
             strings.add(triggers.joinToString(" ") { it.id })
-        val daytimeString = daytimeToStringOrNull()
-        if (daytimeString != null)
-            strings.add(daytimeString)
+        if (timeUI != null)
+            strings.add("#t${timeUI.unixTime.time}")
         return strings.joinToString(" ")
     }
 
-    fun daytimeToStringOrNull(): String? = daytime?.let { daytimeToString(it) }
-
-    fun daytimeUIOrNull(): DaytimeUI? = daytime?.let { DaytimeUI(it) }
-
     companion object {
-
-        fun daytimeToString(daytime: Int): String {
-            val (h, m) = daytime.toHms()
-            return "$h:${m.toString().padStart(2, '0')}"
-        }
 
         fun parse(initText: String): TextFeatures = parseLocal(initText)
     }
@@ -41,7 +31,7 @@ data class TextFeatures(
 
 private val checklistRegex = "#c\\d{10}".toRegex()
 private val shortcutRegex = "#s\\d{10}".toRegex()
-private val daytimeRegex = "(^|\\s)((\\d?\\d):(\\d\\d))(\\s|$)".toRegex()
+private val timeRegex = "#t(\\d{10})".toRegex()
 
 private fun parseLocal(initText: String): TextFeatures {
     var textNoFeatures = initText
@@ -79,24 +69,18 @@ private fun parseLocal(initText: String): TextFeatures {
             }
 
     //
-    // Daytime
-    //
-    // Remember, it also works for calendar events daytime
+    // TimeUI
 
-    val daytime: Int? = daytimeRegex
+    val timeUI: TimeUI? = timeRegex
         .find(textNoFeatures)?.let { match ->
-            val hour = match.groupValues[3].toInt()
-            val minute = match.groupValues[4].toInt()
-            if (hour > 23 || minute > 59)
-                return@let null
-            textNoFeatures = textNoFeatures.replace(match.groupValues[2], "").trim()
-            return@let (hour * 3_600) + (minute * 60)
+            val time = match.groupValues[3].toInt()
+            textNoFeatures = textNoFeatures.replace(match.value, "").trim()
+            return@let TimeUI(UnixTime(time))
         }
 
     return TextFeatures(
         textNoFeatures = textNoFeatures.removeDuplicateSpaces().trim(),
         triggers = triggers,
-        daytime = daytime,
+        timeUI = timeUI,
     )
 }
-
