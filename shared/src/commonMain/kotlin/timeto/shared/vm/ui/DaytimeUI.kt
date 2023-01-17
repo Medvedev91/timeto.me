@@ -16,11 +16,11 @@ class DaytimeUI(
         val secondsSinceDayStart = time() - dayStartTime
         val secondsLeft = daytime - secondsSinceDayStart
         if (secondsLeft > 0) {
-            color = if (secondsLeft <= 3_600) ColorNative.blue else ColorNative.textSecondary
             timeLeftText = "In " + secondsToString(secondsLeft, isOverdueOrIn = false)
+            color = if (secondsLeft <= 3_600) ColorNative.blue else ColorNative.textSecondary
         } else {
-            color = ColorNative.red
             timeLeftText = secondsToString(secondsLeft, isOverdueOrIn = true) + " overdue"
+            color = ColorNative.red
         }
     }
 }
