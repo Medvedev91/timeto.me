@@ -129,8 +129,7 @@ private fun getsertTokenPassword(): String {
 
 private var syncTodayRepeatingLastDay: Int? = null
 private suspend fun syncTodayRepeating() {
-    val offset = DI.kv.firstOrNull { it.key == KVModel.KEY.DAY_START_OFFSET_SECONDS.name }?.value?.toInt() ?: 0
-    val todayWithOffset = UnixTime(time() - offset).localDay
+    val todayWithOffset = UnixTime(time() - dayStartOffsetSeconds()).localDay
     // To avoid unnecessary checks. It works without that.
     if (syncTodayRepeatingLastDay == todayWithOffset)
         return
