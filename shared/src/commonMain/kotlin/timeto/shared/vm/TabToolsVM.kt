@@ -75,7 +75,7 @@ class TabToolsVM : __VM<TabToolsVM.State>() {
         onSuccess: () -> Unit,
     ) {
         scopeVM().launchEx {
-            KVModel.upsert(KVModel.KEY.DAY_START_OFFSET_SECONDS, seconds.toString())
+            KVModel.KEY.DAY_START_OFFSET_SECONDS.upsert(seconds.toString())
             onSuccess()
         }
     }

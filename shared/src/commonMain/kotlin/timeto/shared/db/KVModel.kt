@@ -26,8 +26,6 @@ data class KVModel(
         fun getByKeyOrNullFlow(key: KEY) = db.kVQueries.getByKey(key.name).asFlow()
             .mapToOneOrNull().map { it?.toModel() }
 
-        suspend fun upsert(key: KEY, value: String): Unit = addRaw(k = key.name, v = value)
-
         fun addRaw(k: String, v: String) {
             db.kVQueries.upsert(key = k, value_ = v)
         }
@@ -42,6 +40,8 @@ data class KVModel(
         EVENTS_HISTORY, DAY_START_OFFSET_SECONDS;
 
         fun getFromDIOrNull(): String? = DI.kv.firstOrNull { it.key == this.name }?.value
+
+        suspend fun upsert(value: String): Unit = addRaw(k = name, v = value)
     }
 }
 

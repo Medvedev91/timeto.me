@@ -39,7 +39,7 @@ data class EventsHistory(
         val map = mapOf(
             "items" to JsonArray(items.map { it.toJsonObject() })
         )
-        KVModel.upsert(KVModel.KEY.EVENTS_HISTORY, JsonObject(map).toString())
+        KVModel.KEY.EVENTS_HISTORY.upsert(JsonObject(map).toString())
     }
 
     companion object {
