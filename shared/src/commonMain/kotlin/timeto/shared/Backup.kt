@@ -22,7 +22,7 @@ object Backup {
                 listOf(c.id, c.utc_time, c.text).toJsonArray()
             },
             "repeatings" to RepeatingModel.getAsc().modelsToJsonArray { r ->
-                listOf(r.id, r.text, r.last_day, r.type_id, r.value).toJsonArray()
+                listOf(r.id, r.text, r.last_day, r.type_id, r.value, r.daytime).toJsonArray()
             },
             "checklists" to ChecklistModel.getAsc().modelsToJsonArray { i ->
                 listOf(i.id, i.name).toJsonArray()
