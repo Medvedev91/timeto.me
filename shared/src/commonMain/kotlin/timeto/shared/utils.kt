@@ -376,6 +376,11 @@ fun dayStartOffsetSeconds(): Int =
     KVModel.KEY.DAY_START_OFFSET_SECONDS.getFromDIOrNull()?.toInt()
         ?: KVModel.DAY_START_OFFSET_SECONDS_DEFAULT
 
+fun daytimeToString(daytime: Int): String {
+    val (h, m) = daytime.toHms()
+    return "$h:${m.toString().padStart(2, '0')}"
+}
+
 //////
 
 class TimerPickerItem(
