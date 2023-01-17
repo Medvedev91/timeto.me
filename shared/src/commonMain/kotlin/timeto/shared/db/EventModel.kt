@@ -72,17 +72,6 @@ data class EventModel(
                     }
             }
         }
-
-        private fun validateText(text: String): String {
-            val validatedText = text.trim()
-            if (validatedText.isEmpty())
-                throw UIException("Empty text")
-            return validatedText
-        }
-
-        private fun EventSQ.toModel() = EventModel(
-            id = id, text = text, utc_time = utc_time
-        )
     }
 
     fun getLocalTime() = UnixTime(utc_time - utcOffset)
@@ -119,3 +108,14 @@ data class EventModel(
 
     suspend fun delete() = dbIO { db.eventQueries.deleteById(id) }
 }
+
+private fun validateText(text: String): String {
+    val validatedText = text.trim()
+    if (validatedText.isEmpty())
+        throw UIException("Empty text")
+    return validatedText
+}
+
+private fun EventSQ.toModel() = EventModel(
+    id = id, text = text, utc_time = utc_time
+)
