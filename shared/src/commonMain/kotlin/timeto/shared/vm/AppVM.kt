@@ -140,7 +140,7 @@ private suspend fun syncTodayRepeating() {
 
 private var syncTodayEventsLastDay: Int? = null
 private suspend fun syncTodayEvents() {
-    // #EventsNoOffset
+    // GD "Day Start Offset" -> "Using for Events"
     val todayNoOffset = UnixTime().localDay
     // To avoid unnecessary checks. It works without that.
     if (syncTodayEventsLastDay == todayNoOffset)
