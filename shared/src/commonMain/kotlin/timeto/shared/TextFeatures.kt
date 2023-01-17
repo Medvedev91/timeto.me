@@ -17,13 +17,15 @@ data class TextFeatures(
         if (triggers.isNotEmpty())
             strings.add(triggers.joinToString(" ") { it.id })
         if (timeUI != null)
-            strings.add("#t${timeUI.unixTime.time}")
+            strings.add(timeToSubstring(timeUI.unixTime.time))
         return strings.joinToString(" ")
     }
 
     companion object {
 
         fun parse(initText: String): TextFeatures = parseLocal(initText)
+
+        fun timeToSubstring(time: Int) = "#t$time"
     }
 }
 
