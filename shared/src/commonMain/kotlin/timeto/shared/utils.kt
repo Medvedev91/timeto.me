@@ -64,6 +64,7 @@ fun CoroutineScope.launchEx(
         try {
             block()
         } catch (e: Throwable) {
+            // todo stacktrace
             reportApi("launchEx $e")
         }
     }
