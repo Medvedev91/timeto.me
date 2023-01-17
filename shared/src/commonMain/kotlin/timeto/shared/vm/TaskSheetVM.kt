@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.*
 import timeto.shared.DI
 import timeto.shared.db.ActivityModel
 import timeto.shared.db.TaskModel
-import timeto.shared.vm.ui.TimerHintUI
+import timeto.shared.ui.TimerHintUI
 
 class TaskSheetVM(
     val task: TaskModel,

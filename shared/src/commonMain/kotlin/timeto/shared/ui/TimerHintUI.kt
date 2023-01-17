@@ -1,4 +1,4 @@
-package timeto.shared.vm.ui
+package timeto.shared.ui
 
 import timeto.shared.db.ActivityModel
 import timeto.shared.launchExDefault

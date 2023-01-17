@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.*
 import timeto.shared.*
 import timeto.shared.db.ActivityModel
 import timeto.shared.db.IntervalModel
-import timeto.shared.vm.ui.TimerHintUI
+import timeto.shared.ui.TimerHintUI
 
 class TabTimerVM : __VM<TabTimerVM.State>() {
 
