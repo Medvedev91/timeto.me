@@ -121,9 +121,9 @@ fun RepeatingsListView() {
                                 .padding(horizontal = horizontalPadding),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            val daytimeText = repeatingUI.daytimeUI?.let { " at ${it.daytimeText}" } ?: ""
+
                             Text(
-                                repeatingUI.dayLeftString + daytimeText,
+                                repeatingUI.dayLeftString,
                                 modifier = Modifier.weight(1f),
                                 fontSize = 13.sp,
                                 fontWeight = FontWeight.W300,
@@ -131,6 +131,7 @@ fun RepeatingsListView() {
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
                             )
+
                             Text(
                                 repeatingUI.dayRightString,
                                 fontSize = 13.sp,
