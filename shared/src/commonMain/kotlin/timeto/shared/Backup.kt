@@ -85,6 +85,7 @@ private fun restoreV1NeedTransaction(jString: String) {
             last_day = j.getInt(2),
             type_id = j.getInt(3),
             value = j.getString(4),
+            daytime = j.getIntOrNull(5),
         )
     }
 

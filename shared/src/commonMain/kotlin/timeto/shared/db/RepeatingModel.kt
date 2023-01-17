@@ -40,6 +40,7 @@ data class RepeatingModel(
             text: String,
             period: Period,
             lastDay: Int,
+            daytime: Int?,
         ) = dbIO {
             db.transaction {
                 addRaw(
@@ -47,7 +48,8 @@ data class RepeatingModel(
                     text = validateText(text),
                     last_day = lastDay,
                     type_id = period.type.id,
-                    value = period.value
+                    value = period.value,
+                    daytime = daytime,
                 )
             }
         }
@@ -58,10 +60,11 @@ data class RepeatingModel(
             last_day: Int,
             type_id: Int,
             value: String,
+            daytime: Int?,
         ) {
             db.repeatingQueries.insert(
                 id = id, text = text, last_day = last_day,
-                type_id = type_id, value_ = value
+                type_id = type_id, value_ = value, daytime = daytime,
             )
         }
 

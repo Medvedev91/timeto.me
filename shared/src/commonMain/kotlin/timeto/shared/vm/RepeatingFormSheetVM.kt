@@ -201,9 +201,10 @@ class RepeatingFormSheetVM(
                 )
             } else
                 RepeatingModel.addWithValidation(
-                    nameWithFeatures,
-                    period,
-                    UnixTime().localDay
+                    text = nameWithFeatures,
+                    period = period,
+                    lastDay = UnixTime().localDay,
+                    daytime = state.value.daytime,
                 )
             onSuccess()
         } catch (e: UIException) {
