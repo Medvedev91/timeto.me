@@ -8,8 +8,8 @@ class DaytimeUI(
 ) {
 
     val daytimeText = TextFeatures.daytimeToString(daytime)
-    val color: ColorNative
     val timeLeftText: String
+    val color: ColorNative
 
     init {
         val dayStartTime = UnixTime().localDayStartTime()
