@@ -41,7 +41,7 @@ data class KVModel(
 
         fun getFromDIOrNull(): String? = DI.kv.firstOrNull { it.key == this.name }?.value
 
-        suspend fun upsert(value: String): Unit = addRaw(k = name, v = value)
+        suspend fun upsert(value: String): Unit = dbIO { addRaw(k = name, v = value) }
     }
 }
 
