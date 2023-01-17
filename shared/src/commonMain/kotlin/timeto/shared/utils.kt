@@ -116,6 +116,7 @@ fun JsonObject.getStringOrNull(key: String): String? = this[key]!!.jsonPrimitive
 fun JsonObject.getIntArray(key: String): List<Int> = this[key]!!.jsonArray.map { it.jsonPrimitive.int }
 
 fun JsonArray.getInt(index: Int): Int = this[index].jsonPrimitive.int
+fun JsonArray.getIntOrNull(index: Int): Int? = this[index].jsonPrimitive.intOrNull
 fun JsonArray.getString(index: Int): String = this[index].jsonPrimitive.content
 fun JsonArray.getStringOrNull(index: Int): String? = this[index].jsonPrimitive.contentOrNull
 
