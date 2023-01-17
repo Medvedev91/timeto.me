@@ -35,10 +35,6 @@ data class KVModel(
         fun truncate() {
             db.kVQueries.truncate()
         }
-
-        private fun KVSQ.toModel() = KVModel(
-            key = key, value = value_
-        )
     }
 
     enum class KEY {
@@ -48,3 +44,7 @@ data class KVModel(
         fun getFromDIOrNull(): String? = DI.kv.firstOrNull { it.key == this.name }?.value
     }
 }
+
+private fun KVSQ.toModel() = KVModel(
+    key = key, value = value_
+)
