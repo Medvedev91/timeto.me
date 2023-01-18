@@ -33,6 +33,8 @@ data class TextFeatures(
         fun fromRepeatingToSubstring(day: Int) = "#r$day"
     }
 
+    // Day to sync! May be different from the real one meaning day
+    // start. "day" is used for sorting within "Today" tasks list.
     class FromRepeating(val day: Int)
 }
 
