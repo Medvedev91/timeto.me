@@ -20,7 +20,7 @@ data class TextFeatures(
         if (timeUI != null)
             strings.add(substringForTime(timeUI.unixTime.time))
         if (fromRepeating != null)
-            strings.add(substringFromRepeating(fromRepeating.day))
+            strings.add(substringFromRepeating(fromRepeating.day, fromRepeating.time))
         return strings.joinToString(" ")
     }
 
@@ -30,12 +30,12 @@ data class TextFeatures(
 
         fun substringForTime(time: Int) = "#t$time"
 
-        fun substringFromRepeating(day: Int) = "#r$day"
+        fun substringFromRepeating(day: Int, time: Int?) = "#r${day}_${time ?: ""}"
     }
 
-    // Day to sync! May be different from the real one meaning day
-    // start. "day" is used for sorting within "Today" tasks list.
-    class FromRepeating(val day: Int)
+    // Day to sync! May be different from the real one meaning "Day Start"
+    // setting. "day" is used for sorting within "Today" tasks list.
+    class FromRepeating(val day: Int, val time: Int?)
 }
 
 //////
@@ -43,7 +43,7 @@ data class TextFeatures(
 private val checklistRegex = "#c\\d{10}".toRegex()
 private val shortcutRegex = "#s\\d{10}".toRegex()
 private val timeRegex = "#t(\\d{10})".toRegex()
-private val fromRepeatingRegex = "#r(\\d{5})".toRegex()
+private val fromRepeatingRegex = "#r(\\d{5})_(\\d{10})?".toRegex()
 
 private fun parseLocal(initText: String): TextFeatures {
     var textNoFeatures = initText
@@ -96,8 +96,9 @@ private fun parseLocal(initText: String): TextFeatures {
     val fromRepeating: TextFeatures.FromRepeating? = fromRepeatingRegex
         .find(textNoFeatures)?.let { match ->
             val day = match.groupValues[1].toInt()
+            val time = match.groupValues.getOrNull(2)?.toInt()
             textNoFeatures = textNoFeatures.replace(match.value, "").trim()
-            return@let TextFeatures.FromRepeating(day)
+            return@let TextFeatures.FromRepeating(day, time)
         }
 
     return TextFeatures(

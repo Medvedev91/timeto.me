@@ -80,11 +80,8 @@ data class RepeatingModel(
                     .map { it.toModel() }
                     .filter { it.getNextDay() <= today }
                     .forEach { repeating ->
-                        val textStrings = mutableListOf(
-                            EMOJI_REPEATING,
-                            repeating.text,
-                            TextFeatures.substringFromRepeating(today)
-                        )
+                        val textStrings = mutableListOf(EMOJI_REPEATING, repeating.text)
+                        var featureTime: Int? = null
                         val daytime = repeating.daytime
                         if (daytime != null) {
                             val dayStartOffset = dayStartOffsetSeconds()
@@ -93,9 +90,9 @@ data class RepeatingModel(
                                     if (daytime >= dayStartOffset) today else today + 1
                                 else
                                     if (daytime >= (86_400 - dayStartOffset.absoluteValue)) today - 1 else today
-                            val featureTime = UnixTime.byLocalDay(dayForDaytime).localDayStartTime() + daytime
-                            textStrings.add(TextFeatures.substringForTime(featureTime))
+                            featureTime = UnixTime.byLocalDay(dayForDaytime).localDayStartTime() + daytime
                         }
+                        textStrings.add(TextFeatures.substringFromRepeating(today, featureTime))
                         TaskModel.addWithValidationNeedTransaction(
                             text = textStrings.joinToString(" "),
                             folder = TaskFolderModel.getToday(),
