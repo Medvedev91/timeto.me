@@ -6,6 +6,7 @@ data class TextFeatures(
     val textNoFeatures: String,
     val triggers: List<Trigger>,
     val timeUI: TimeUI?,
+    val fromRepeating: FromRepeating?,
 ) {
 
     fun textUI(): String {
@@ -18,6 +19,8 @@ data class TextFeatures(
             strings.add(triggers.joinToString(" ") { it.id })
         if (timeUI != null)
             strings.add(timeToSubstring(timeUI.unixTime.time))
+        if (fromRepeating != null)
+            strings.add(fromRepeatingToSubstring(fromRepeating.day))
         return strings.joinToString(" ")
     }
 
@@ -26,7 +29,11 @@ data class TextFeatures(
         fun parse(initText: String): TextFeatures = parseLocal(initText)
 
         fun timeToSubstring(time: Int) = "#t$time"
+
+        fun fromRepeatingToSubstring(day: Int) = "#r$day"
     }
+
+    class FromRepeating(val day: Int)
 }
 
 //////
@@ -34,6 +41,7 @@ data class TextFeatures(
 private val checklistRegex = "#c\\d{10}".toRegex()
 private val shortcutRegex = "#s\\d{10}".toRegex()
 private val timeRegex = "#t(\\d{10})".toRegex()
+private val fromRepeatingRegex = "#r(\\d{5})".toRegex()
 
 private fun parseLocal(initText: String): TextFeatures {
     var textNoFeatures = initText
@@ -80,9 +88,20 @@ private fun parseLocal(initText: String): TextFeatures {
             return@let TimeUI(UnixTime(time))
         }
 
+    //
+    // From Repeating
+
+    val fromRepeating: TextFeatures.FromRepeating? = fromRepeatingRegex
+        .find(textNoFeatures)?.let { match ->
+            val day = match.groupValues[1].toInt()
+            textNoFeatures = textNoFeatures.replace(match.value, "").trim()
+            return@let TextFeatures.FromRepeating(day)
+        }
+
     return TextFeatures(
         textNoFeatures = textNoFeatures.removeDuplicateSpaces().trim(),
         triggers = triggers,
         timeUI = timeUI,
+        fromRepeating = fromRepeating,
     )
 }
