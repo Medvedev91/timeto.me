@@ -5,9 +5,15 @@ import timeto.shared.ui.TimeUI
 data class TextFeatures(
     val textNoFeatures: String,
     val triggers: List<Trigger>,
-    val timeUI: TimeUI?,
     val fromRepeating: FromRepeating?,
 ) {
+
+    val timeUI: TimeUI? = when {
+        fromRepeating?.time != null -> TimeUI(UnixTime(fromRepeating.time))
+        else -> null
+    }
+
+    ///
 
     fun textUI(): String {
         return textNoFeatures
@@ -17,8 +23,6 @@ data class TextFeatures(
         val strings = mutableListOf(textUI().trim())
         if (triggers.isNotEmpty())
             strings.add(triggers.joinToString(" ") { it.id })
-        if (timeUI != null)
-            strings.add(substringForTime(timeUI.unixTime.time))
         if (fromRepeating != null)
             strings.add(substringFromRepeating(fromRepeating.day, fromRepeating.time))
         return strings.joinToString(" ")
@@ -27,8 +31,6 @@ data class TextFeatures(
     companion object {
 
         fun parse(initText: String): TextFeatures = parseLocal(initText)
-
-        fun substringForTime(time: Int) = "#t$time"
 
         fun substringFromRepeating(day: Int, time: Int?) = "#r${day}_${time ?: ""}"
     }
@@ -42,7 +44,6 @@ data class TextFeatures(
 
 private val checklistRegex = "#c\\d{10}".toRegex()
 private val shortcutRegex = "#s\\d{10}".toRegex()
-private val timeRegex = "#t(\\d{10})".toRegex()
 private val fromRepeatingRegex = "#r(\\d{5})_(\\d{10})?".toRegex()
 
 private fun parseLocal(initText: String): TextFeatures {
@@ -81,16 +82,6 @@ private fun parseLocal(initText: String): TextFeatures {
             }
 
     //
-    // TimeUI
-
-    val timeUI: TimeUI? = timeRegex
-        .find(textNoFeatures)?.let { match ->
-            val time = match.groupValues[1].toInt()
-            textNoFeatures = textNoFeatures.replace(match.value, "").trim()
-            return@let TimeUI(UnixTime(time))
-        }
-
-    //
     // From Repeating
 
     val fromRepeating: TextFeatures.FromRepeating? = fromRepeatingRegex
@@ -104,7 +95,6 @@ private fun parseLocal(initText: String): TextFeatures {
     return TextFeatures(
         textNoFeatures = textNoFeatures.removeDuplicateSpaces().trim(),
         triggers = triggers,
-        timeUI = timeUI,
         fromRepeating = fromRepeating,
     )
 }
