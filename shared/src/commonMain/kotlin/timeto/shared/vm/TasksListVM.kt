@@ -5,7 +5,6 @@ import kotlinx.coroutines.launch
 import timeto.shared.*
 import timeto.shared.db.TaskFolderModel
 import timeto.shared.db.TaskModel
-import timeto.shared.ui.TimeUI
 
 class TasksListVM(
     val folder: TaskFolderModel,
@@ -15,16 +14,8 @@ class TasksListVM(
         val task: TaskModel,
     ) {
 
-        val timeUI: TimeUI?
-        val listText: String
-        val triggers: List<Trigger>
-
-        init {
-            val textFeatures = TextFeatures.parse(task.text)
-            listText = textFeatures.textUI()
-            triggers = textFeatures.triggers
-            timeUI = textFeatures.timeUI
-        }
+        val textFeatures = TextFeatures.parse(task.text)
+        val listText = textFeatures.textUI()
 
         fun start(
             onStarted: () -> Unit,

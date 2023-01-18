@@ -228,7 +228,7 @@ fun TasksListView(
                                 val badgesHPadding = startPadding - 2.dp
                                 val badgesVPadding = 6.dp
 
-                                val daytimeUI = taskUI.timeUI
+                                val daytimeUI = taskUI.textFeatures.timeUI
                                 if (daytimeUI != null) {
                                     Text(
                                         daytimeUI.daytimeText + "  " + daytimeUI.timeLeftText,
@@ -254,7 +254,7 @@ fun TasksListView(
                                 )
 
                                 TriggersView__ListView(
-                                    triggers = taskUI.triggers,
+                                    triggers = taskUI.textFeatures.triggers,
                                     withOnClick = true,
                                     modifier = Modifier.padding(top = badgesVPadding),
                                     contentPadding = PaddingValues(horizontal = badgesHPadding),
