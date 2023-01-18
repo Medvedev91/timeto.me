@@ -6,6 +6,7 @@ import dbsq.RepeatingSQ
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.*
 import timeto.shared.*
+import kotlin.math.absoluteValue
 import kotlin.math.max
 
 data class RepeatingModel(
@@ -79,8 +80,24 @@ data class RepeatingModel(
                     .map { it.toModel() }
                     .filter { it.getNextDay() <= today }
                     .forEach { repeating ->
+                        val textStrings = mutableListOf(
+                            EMOJI_REPEATING,
+                            repeating.text,
+                            TextFeatures.substringFromRepeating(today)
+                        )
+                        val daytime = repeating.daytime
+                        if (daytime != null) {
+                            val dayStartOffset = dayStartOffsetSeconds()
+                            val dayForDaytime: Int =
+                                if (dayStartOffset >= 0)
+                                    if (daytime >= dayStartOffset) today else today + 1
+                                else
+                                    if (daytime >= (86_400 - dayStartOffset.absoluteValue)) today - 1 else today
+                            val featureTime = UnixTime.byLocalDay(dayForDaytime).localDayStartTime() + daytime
+                            textStrings.add(TextFeatures.substringForTime(featureTime))
+                        }
                         TaskModel.addWithValidationNeedTransaction(
-                            text = "$EMOJI_REPEATING ${repeating.text}",
+                            text = textStrings.joinToString(" "),
                             folder = TaskFolderModel.getToday(),
                         )
                         db.repeatingQueries.upLastDayById(last_day = today, id = repeating.id)
