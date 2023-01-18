@@ -83,15 +83,28 @@ class TasksListVM(
         }
 }
 
-private fun List<TasksListVM.TaskUI>.sortedForToday(): List<TasksListVM.TaskUI> {
-    val (tasksWithDaytime, tasksNoDaytime) = this.partition { it.daytimeUI != null }
+private fun List<TasksListVM.TaskUI>.sortedForToday(): List<TasksListVM.TaskUI> = this
+    // Map<Int /* day */, List<TasksListVM.TaskUI>>
+    .groupBy { taskUI ->
+        taskUI.textFeatures.fromRepeating?.day
+            ?: taskUI.textFeatures.timeUI?.unixTime?.localDay
+            ?: taskUI.task.unixTime().localDay
+    }
+    .toList()
+    .sortedByDescending { it.first }
+    // List<List<TasksListVM.TaskUI>>
+    .map { it.second.sortedInsideDay() }
+    .flatten()
+
+private fun List<TasksListVM.TaskUI>.sortedInsideDay(): List<TasksListVM.TaskUI> {
+    val (tasksWithDaytime, tasksNoDaytime) = this.partition { it.textFeatures.timeUI != null }
     val minTaskIdWithDaytime = tasksWithDaytime.minOfOrNull { it.task.id } ?: Int.MIN_VALUE
     val (tasksBeforeDaytime, tasksAfterDaytime) = tasksNoDaytime.partition { it.task.id < minTaskIdWithDaytime }
 
     val resList = mutableListOf<TasksListVM.TaskUI>()
     tasksAfterDaytime.forEach { resList.add(it) }
     tasksWithDaytime
-        .sortedBy { it.daytimeUI!!.daytime }
+        .sortedBy { it.textFeatures.timeUI!!.unixTime.time }
         .forEach { resList.add(it) }
     tasksBeforeDaytime.forEach { resList.add(it) }
 
