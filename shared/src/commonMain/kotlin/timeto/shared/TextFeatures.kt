@@ -18,9 +18,9 @@ data class TextFeatures(
         if (triggers.isNotEmpty())
             strings.add(triggers.joinToString(" ") { it.id })
         if (timeUI != null)
-            strings.add(timeToSubstring(timeUI.unixTime.time))
+            strings.add(substringForTime(timeUI.unixTime.time))
         if (fromRepeating != null)
-            strings.add(fromRepeatingToSubstring(fromRepeating.day))
+            strings.add(substringFromRepeating(fromRepeating.day))
         return strings.joinToString(" ")
     }
 
@@ -28,9 +28,9 @@ data class TextFeatures(
 
         fun parse(initText: String): TextFeatures = parseLocal(initText)
 
-        fun timeToSubstring(time: Int) = "#t$time"
+        fun substringForTime(time: Int) = "#t$time"
 
-        fun fromRepeatingToSubstring(day: Int) = "#r$day"
+        fun substringFromRepeating(day: Int) = "#r$day"
     }
 
     // Day to sync! May be different from the real one meaning day
