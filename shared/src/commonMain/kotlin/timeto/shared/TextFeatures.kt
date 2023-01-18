@@ -5,7 +5,7 @@ import timeto.shared.ui.TimeUI
 data class TextFeatures(
     val textNoFeatures: String,
     val triggers: List<Trigger>,
-    val timeUI: TimeUI? = null,
+    val timeUI: TimeUI?,
 ) {
 
     fun textUI(): String {
