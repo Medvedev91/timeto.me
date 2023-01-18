@@ -228,7 +228,7 @@ fun TasksListView(
                                 val badgesHPadding = startPadding - 2.dp
                                 val badgesVPadding = 6.dp
 
-                                val daytimeUI = taskUI.daytimeUI
+                                val daytimeUI = taskUI.timeUI
                                 if (daytimeUI != null) {
                                     Text(
                                         daytimeUI.daytimeText + "  " + daytimeUI.timeLeftText,

@@ -15,7 +15,7 @@ class TasksListVM(
         val task: TaskModel,
     ) {
 
-        val daytimeUI: TimeUI?
+        val timeUI: TimeUI?
         val listText: String
         val triggers: List<Trigger>
 
@@ -23,7 +23,7 @@ class TasksListVM(
             val textFeatures = TextFeatures.parse(task.text)
             listText = textFeatures.textUI()
             triggers = textFeatures.triggers
-            daytimeUI = textFeatures.timeUI
+            timeUI = textFeatures.timeUI
         }
 
         fun start(
