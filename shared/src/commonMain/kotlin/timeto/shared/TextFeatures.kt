@@ -75,7 +75,7 @@ private fun parseLocal(initText: String): TextFeatures {
 
     val timeUI: TimeUI? = timeRegex
         .find(textNoFeatures)?.let { match ->
-            val time = match.groupValues[3].toInt()
+            val time = match.groupValues[1].toInt()
             textNoFeatures = textNoFeatures.replace(match.value, "").trim()
             return@let TimeUI(UnixTime(time))
         }
