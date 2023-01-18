@@ -6,10 +6,12 @@ data class TextFeatures(
     val textNoFeatures: String,
     val triggers: List<Trigger>,
     val fromRepeating: FromRepeating?,
+    val fromEvent: FromEvent?,
 ) {
 
     val timeUI: TimeUI? = when {
         fromRepeating?.time != null -> TimeUI(UnixTime(fromRepeating.time))
+        fromEvent != null -> TimeUI(UnixTime(fromEvent.time))
         else -> null
     }
 
@@ -25,6 +27,8 @@ data class TextFeatures(
             strings.add(triggers.joinToString(" ") { it.id })
         if (fromRepeating != null)
             strings.add(substringFromRepeating(fromRepeating.day, fromRepeating.time))
+        if (fromEvent != null)
+            strings.add(substringFromEvent(fromEvent.time))
         return strings.joinToString(" ")
     }
 
@@ -33,11 +37,15 @@ data class TextFeatures(
         fun parse(initText: String): TextFeatures = parseLocal(initText)
 
         fun substringFromRepeating(day: Int, time: Int?) = "#r${day}_${time ?: ""}"
+
+        fun substringFromEvent(time: Int) = "#e$time"
     }
 
     // Day to sync! May be different from the real one meaning "Day Start"
     // setting. "day" is used for sorting within "Today" tasks list.
     class FromRepeating(val day: Int, val time: Int?)
+
+    class FromEvent(val time: Int)
 }
 
 //////
@@ -45,6 +53,7 @@ data class TextFeatures(
 private val checklistRegex = "#c\\d{10}".toRegex()
 private val shortcutRegex = "#s\\d{10}".toRegex()
 private val fromRepeatingRegex = "#r(\\d{5})_(\\d{10})?".toRegex()
+private val fromEventRegex = "#e(\\d{10})".toRegex()
 
 private fun parseLocal(initText: String): TextFeatures {
     var textNoFeatures = initText
@@ -92,9 +101,20 @@ private fun parseLocal(initText: String): TextFeatures {
             return@let TextFeatures.FromRepeating(day, time)
         }
 
+    //
+    // From Event
+
+    val fromEvent: TextFeatures.FromEvent? = fromEventRegex
+        .find(textNoFeatures)?.let { match ->
+            val time = match.groupValues[1].toInt()
+            textNoFeatures = textNoFeatures.replace(match.value, "").trim()
+            return@let TextFeatures.FromEvent(time)
+        }
+
     return TextFeatures(
         textNoFeatures = textNoFeatures.removeDuplicateSpaces().trim(),
         triggers = triggers,
         fromRepeating = fromRepeating,
+        fromEvent = fromEvent,
     )
 }
