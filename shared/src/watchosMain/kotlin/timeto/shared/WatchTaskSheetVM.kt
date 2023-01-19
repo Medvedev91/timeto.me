@@ -5,7 +5,7 @@ import timeto.shared.db.ActivityModel
 import timeto.shared.db.TaskModel
 import timeto.shared.vm.TaskSheetVM
 import timeto.shared.vm.__VM
-import timeto.shared.vm.ui.TimerHintUI
+import timeto.shared.ui.TimerHintUI
 
 class WatchTaskSheetVM(
     val task: TaskModel,
