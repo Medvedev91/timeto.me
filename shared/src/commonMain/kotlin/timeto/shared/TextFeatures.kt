@@ -96,7 +96,7 @@ private fun parseLocal(initText: String): TextFeatures {
     val fromRepeating: TextFeatures.FromRepeating? = fromRepeatingRegex
         .find(textNoFeatures)?.let { match ->
             val day = match.groupValues[1].toInt()
-            val time = match.groupValues.getOrNull(2)?.toInt()
+            val time = match.groupValues[2].takeIf { it.isNotBlank() }?.toInt()
             textNoFeatures = textNoFeatures.replace(match.value, "").trim()
             return@let TextFeatures.FromRepeating(day, time)
         }
