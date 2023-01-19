@@ -14,10 +14,10 @@ class TimeUI(
     init {
         val secondsLeft = unixTime.time - time()
         if (secondsLeft > 0) {
-            timeLeftText = "In " + secondsToString(secondsLeft, isOverdueOrIn = false)
+            timeLeftText = "In " + secondsToString(secondsLeft)
             color = if (secondsLeft <= 3_600) ColorNative.blue else ColorNative.textSecondary
         } else {
-            timeLeftText = secondsToString(secondsLeft, isOverdueOrIn = true) + " overdue"
+            timeLeftText = secondsOverdueToString(secondsLeft)
             color = ColorNative.red
         }
     }
@@ -27,17 +27,8 @@ class TimeUI(
 
 private fun secondsToString(
     secondsAnySign: Int,
-    isOverdueOrIn: Boolean,
 ): String {
     val (h, m) = secondsAnySign.absoluteValue.toHms()
-
-    if (isOverdueOrIn) {
-        if (h == 0)
-            return if (m == 0) "~1 minute"
-            else m.toStringEndingMinutes()
-        return h.toStringEndingHours()
-    }
-
     if ((h == 0) && (m == 0))
         return "less than a minute"
 
@@ -46,6 +37,15 @@ private fun secondsToString(
     if (h <= 1 && m > 0) strings.add(m.toStringEndingMinutes())
     val separator = if (m <= 5) " and " else " "
     return strings.joinToString(separator)
+}
+
+private fun secondsOverdueToString(seconds: Int): String {
+    val (h, m) = seconds.absoluteValue.toHms()
+    return when {
+        h > 0 -> h.toStringEndingHours() + " overdue"
+        m == 0 -> "Now! 🙀"
+        else -> "$m min overdue"
+    }
 }
 
 private fun Int.toStringEndingHours() = toStringEnding(true, "hour", "hours")
