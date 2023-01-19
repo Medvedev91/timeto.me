@@ -28,7 +28,8 @@ class TimeUI(
 private fun secondsInToString(seconds: Int): String {
     // With roundToNextMinute it's impossible to (h == 0 && m == 0)
     val (h, m) = seconds.toHms(roundToNextMinute = true)
-    return if (h > 0) "In ${h.toStringEndingHours()}" else "In $m min"
+    return if (h > 0) "In ${h.toStringEndingHours()}"
+    else "In ${m.toStringEnding(true, "minute", "min")}"
 }
 
 private fun secondsOverdueToString(seconds: Int): String {
