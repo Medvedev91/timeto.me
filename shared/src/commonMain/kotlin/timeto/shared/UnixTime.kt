@@ -84,7 +84,7 @@ class UnixTime(
                 StringComponent.dayOfMonth -> dayTime.dayOfMonth.toString()
                 StringComponent.dayOfWeek3 -> dayOfWeekNames3[dayOfWeek()]
                 StringComponent.hhmm24 -> {
-                    val hms = secondsToHms(utcTime() % 86_400)
+                    val hms = (utcTime() % 86_400).toHms()
                     "${hms[0]}".padStart(2, '0') + ":" + "${hms[1]}".padStart(2, '0')
                 }
                 StringComponent.space -> " "

@@ -55,7 +55,7 @@ class EventsHistoryVM : __VM<EventsHistoryVM.State>() {
         val dayTimeString = run {
             if (historyItem.daytime == 0)
                 return@run ""
-            val hms = secondsToHms(historyItem.daytime)
+            val hms = historyItem.daytime.toHms()
             " " + ("${hms[0]}".padStart(2, '0')) + ":" + ("${hms[1]}".padStart(2, '0'))
         }
 

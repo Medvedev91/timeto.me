@@ -26,7 +26,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import app.time_to.timeto.*
 import app.time_to.timeto.R
 import timeto.shared.UnixTime
-import timeto.shared.secondsToHms
+import timeto.shared.toHms
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -108,7 +108,7 @@ fun MyDatePicker__Dialog(
         marginValues = PaddingValues(30.dp),
     ) {
         val defHms = if (defaultTime != null)
-            secondsToHms(defaultTime.time - defaultTime.localDayStartTime())
+            (defaultTime.time - defaultTime.localDayStartTime()).toHms()
         else null
 
         var timeHIndex by remember { mutableStateOf(defHms?.get(0) ?: 0) }

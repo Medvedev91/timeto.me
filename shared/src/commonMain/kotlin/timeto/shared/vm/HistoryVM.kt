@@ -198,7 +198,7 @@ class HistoryVM : __VM<HistoryVM.State>() {
 private fun prepPeriodString(
     seconds: Int,
 ): String {
-    val hms = secondsToHms(seconds)
+    val hms = seconds.toHms()
     return when {
         hms[0] == 0 && hms[1] == 0 -> "${hms[2]} sec"
         hms[0] == 0 -> "${hms[1]} min"

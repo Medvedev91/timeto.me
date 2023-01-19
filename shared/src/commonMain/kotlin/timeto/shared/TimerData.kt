@@ -11,7 +11,7 @@ class TimerData(
     companion object {
 
         fun secondsToString(seconds: Int): String {
-            val hms = secondsToHms(seconds.absoluteValue)
+            val hms = seconds.absoluteValue.toHms()
             val h = if (hms[0] > 0) "${hms[0]}:" else ""
             val m = hms[1].toString().padStart(2, '0') + ":"
             val s = hms[2].toString().padStart(2, '0')

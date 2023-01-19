@@ -164,8 +164,8 @@ fun <T> List<T>.getNextOrNull(item: T): T? {
     return if (index + 1 == size) null else get(index + 1)
 }
 
-fun secondsToHms(seconds: Int): List<Int> {
-    var secondsLeft = seconds
+fun Int.toHms(): List<Int> {
+    var secondsLeft = this
     val h = secondsLeft / 3600
     secondsLeft -= h * 3600
     val m = secondsLeft / 60
@@ -173,10 +173,8 @@ fun secondsToHms(seconds: Int): List<Int> {
     return listOf(h, m, secondsLeft)
 }
 
-fun Int.toHms() = secondsToHms(this)
-
 fun Int.toTimerHintNote(isShort: Boolean): String {
-    val hms = secondsToHms(this)
+    val hms = this.toHms()
     if (hms[0] > 0) {
         if (hms[1] == 0)
             return "${hms[0]}h"

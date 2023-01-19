@@ -154,7 +154,7 @@ private suspend fun prepPieItems(
 
 private fun secondsToString(seconds: Int): String {
     val aTime = mutableListOf<String>()
-    val hms = secondsToHms(seconds)
+    val hms = seconds.toHms()
     if (hms[0] > 0)
         aTime.add("${hms[0]}h")
     if (hms[1] > 0)

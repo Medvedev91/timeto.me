@@ -32,7 +32,7 @@ class EventFormSheetVM(
         val minute: Int
 
         init {
-            val hms = secondsToHms(selectedTime - dayStartTime)
+            val hms = (selectedTime - dayStartTime).toHms()
             hour = hms[0]
             minute = hms[1]
         }
