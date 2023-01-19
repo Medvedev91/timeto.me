@@ -20,7 +20,7 @@ class TabToolsVM : __VM<TabToolsVM.State>() {
         val feedbackSubject: String,
     ) {
 
-        val openSourceUrl = "https://github.com/timeto-app/timeto_app"
+        val openSourceUrl = "https://github.com/timeto-app/timeto-app"
         val feedbackEmail = "hi@timeto.me"
 
         val dayStartNote = dayStartSecondsToString(dayStartSeconds)
