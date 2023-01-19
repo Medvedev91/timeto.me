@@ -11,6 +11,7 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
     class ActivityUI(
         val activity: ActivityModel,
     ) {
+
         val timerHints = TimerHintUI.buildList(
             activity,
             isShort = true,
