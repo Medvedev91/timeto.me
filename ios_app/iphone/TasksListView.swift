@@ -344,8 +344,8 @@ struct TasksView__TaskRowView: View {
                                     Spacer(minLength: 0)
                                 }
 
-                                TriggersView__List(triggers: taskUI.triggers)
-                                        .padding(.top, taskUI.triggers.isEmpty ? 0 : 8)
+                                TriggersView__List(triggers: taskUI.textFeatures.triggers)
+                                        .padding(.top, taskUI.textFeatures.triggers.isEmpty ? 0 : 8)
                             }
                                     .padding(.bottom, 12)
                         }
