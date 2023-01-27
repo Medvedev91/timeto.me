@@ -167,12 +167,11 @@ fun <T> List<T>.getNextOrNull(item: T): T? {
 fun Int.toHms(
     roundToNextMinute: Boolean = false
 ): List<Int> {
-    val time: Int
-    if (roundToNextMinute) {
+    val time = if (!roundToNextMinute) this
+    else {
         val rmd = this % 60
-        time = if (rmd == 0) this else (this + (60 - rmd))
-    } else
-        time = this
+        if (rmd == 0) this else (this + (60 - rmd))
+    }
 
     var secondsLeft = time
     val h = secondsLeft / 3600
