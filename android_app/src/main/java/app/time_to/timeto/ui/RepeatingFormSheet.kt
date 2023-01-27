@@ -316,7 +316,7 @@ fun RepeatingFormSheet(
                                                         "•  " + item.getTitle(isShortOrLong = false),
                                                         modifier = Modifier
                                                             .padding(start = 1.dp)
-                                                            .offset(y = -1.dp),
+                                                            .offset(y = (-1).dp),
                                                         color = c.text,
                                                         fontSize = 14.sp,
                                                     )
