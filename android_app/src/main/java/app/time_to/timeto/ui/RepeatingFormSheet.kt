@@ -154,6 +154,7 @@ fun RepeatingFormSheet(
                             )
                         }
                     ) {
+                        keyboardController?.hide()
                         isDaytimeSheetPresented.value = true
                     }
                 }
