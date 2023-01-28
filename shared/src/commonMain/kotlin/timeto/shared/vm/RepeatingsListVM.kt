@@ -52,5 +52,23 @@ class RepeatingsListVM : __VM<RepeatingsListVM.State>() {
 }
 
 private fun List<RepeatingModel>.toUiList() = this
-    .sortedWith(compareBy<RepeatingModel> { it.getNextDay() }.thenByDescending { it.text.lowercase() })
+    .groupBy { it.getNextDay() }
+    .toList()
+    .sortedBy { it.first }
+    .map { it.second.sortedInsideDay() }
+    .flatten()
     .map { RepeatingsListVM.RepeatingUI(it) }
+
+private fun List<RepeatingModel>.sortedInsideDay(): List<RepeatingModel> {
+    val (withDaytime, noDaytime) = this.partition { it.daytime != null }
+
+    val resList = mutableListOf<RepeatingModel>()
+    withDaytime
+        .sortedBy { it.daytimeToTimeWithDayStart(123) } // 123 - regardless of the day
+        .forEach { resList.add(it) }
+    noDaytime
+        .sortedByDescending { it.id }
+        .forEach { resList.add(it) }
+
+    return resList
+}
