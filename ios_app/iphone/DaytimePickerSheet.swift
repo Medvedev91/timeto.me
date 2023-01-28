@@ -77,6 +77,12 @@ struct DaytimePickerSheet: View {
                     .labelsHidden()
                     .datePickerStyle(.wheel)
 
+            Button("Remove") {
+                onPick(nil)
+                isPresented = false
+            }
+                    .foregroundColor(.red)
+
             Spacer()
         }
     }
