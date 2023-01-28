@@ -314,6 +314,8 @@ struct TasksView__TaskRowView: View {
 
             //////
 
+            let paddingStart = 16.0
+
             ZStack {
 
                 Button(
@@ -331,11 +333,24 @@ struct TasksView__TaskRowView: View {
                         label: {
                             VStack(spacing: 0) {
 
+                                let vPadding = 8.0
+
+                                if let daytimeUI = taskUI.textFeatures.timeUI {
+                                    HStack {
+                                        Text(daytimeUI.daytimeText + "  " + daytimeUI.timeLeftText)
+                                                .padding(.leading, paddingStart)
+                                                .padding(.top, 1)
+                                                .padding(.bottom, vPadding)
+                                                .font(.system(size: 14, weight: .light))
+                                                .foregroundColor(daytimeUI.color.toColor())
+                                        Spacer()
+                                    }
+                                }
+
                                 HStack {
                                     /// It can be multiline
                                     Text(taskUI.listText)
-                                            .padding(.top, 12)
-                                            .padding(.leading, 16)
+                                            .padding(.leading, paddingStart)
                                             .padding(.trailing, 16)
                                             .lineSpacing(4)
                                             .multilineTextAlignment(.leading)
@@ -345,9 +360,9 @@ struct TasksView__TaskRowView: View {
                                 }
 
                                 TriggersView__List(triggers: taskUI.textFeatures.triggers)
-                                        .padding(.top, taskUI.textFeatures.triggers.isEmpty ? 0 : 8)
+                                        .padding(.top, taskUI.textFeatures.triggers.isEmpty ? 0 : vPadding)
                             }
-                                    .padding(.bottom, 12)
+                                    .padding(.vertical, 10)
                         }
                 )
                         .offset(x: xSwipeOffset)
@@ -374,7 +389,7 @@ struct TasksView__TaskRowView: View {
             }
 
             if (withDivider) {
-                MyDivider(xOffset: DEF_LIST_H_PADDING)
+                MyDivider(xOffset: paddingStart)
             }
         }
                 .background(Color(.mySecondaryBackground))
