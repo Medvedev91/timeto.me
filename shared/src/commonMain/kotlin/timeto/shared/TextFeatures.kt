@@ -26,9 +26,9 @@ data class TextFeatures(
         if (triggers.isNotEmpty())
             strings.add(triggers.joinToString(" ") { it.id })
         if (fromRepeating != null)
-            strings.add(substringFromRepeating(fromRepeating.day, fromRepeating.time))
+            strings.add(substringRepeating(fromRepeating.day, fromRepeating.time))
         if (fromEvent != null)
-            strings.add(substringFromEvent(fromEvent.time))
+            strings.add(substringEvent(fromEvent.time))
         return strings.joinToString(" ")
     }
 
@@ -36,9 +36,9 @@ data class TextFeatures(
 
         fun parse(initText: String): TextFeatures = parseLocal(initText)
 
-        fun substringFromRepeating(day: Int, time: Int?) = "#r${day}_${time ?: ""}"
+        fun substringRepeating(day: Int, time: Int?) = "#r${day}_${time ?: ""}"
 
-        fun substringFromEvent(time: Int) = "#e$time"
+        fun substringEvent(time: Int) = "#e$time"
     }
 
     // Day to sync! May be different from the real one meaning "Day Start"

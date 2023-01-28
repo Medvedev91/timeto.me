@@ -64,7 +64,7 @@ data class EventModel(
                         event.getLocalTime().time
                     }
                     .forEach { event ->
-                        val featureTime = TextFeatures.substringFromEvent(event.getLocalTime().time)
+                        val featureTime = TextFeatures.substringEvent(event.getLocalTime().time)
                         TaskModel.addWithValidationNeedTransaction(
                             "$EMOJI_CALENDAR ${event.timeToString()}\n${event.text} $featureTime",
                             TaskFolderModel.getToday()
