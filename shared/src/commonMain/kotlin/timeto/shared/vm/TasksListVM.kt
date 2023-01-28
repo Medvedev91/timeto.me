@@ -101,19 +101,16 @@ private fun List<TasksListVM.TaskUI>.sortedForToday(): List<TasksListVM.TaskUI> 
 
 private fun List<TasksListVM.TaskUI>.sortedInsideDay(): List<TasksListVM.TaskUI> {
     val (tasksWithDaytime, tasksNoDaytime) = this.partition { it.textFeatures.timeUI != null }
-    val minTaskIdWithDaytime = tasksWithDaytime.minOfOrNull { it.task.id } ?: Int.MIN_VALUE
-    val (tasksBeforeDaytime, tasksAfterDaytime) = tasksNoDaytime.partition { it.task.id < minTaskIdWithDaytime }
 
     val resList = mutableListOf<TasksListVM.TaskUI>()
-    tasksAfterDaytime
+    tasksNoDaytime
         .sortedByDescending { it.task.id }
         .forEach { resList.add(it) }
     tasksWithDaytime
         .sortedBy { it.textFeatures.timeUI!!.unixTime.time }
         .forEach { resList.add(it) }
-    tasksBeforeDaytime
-        .sortedByDescending { it.task.id }
-        .forEach { resList.add(it) }
 
     return resList
 }
+
+//////
