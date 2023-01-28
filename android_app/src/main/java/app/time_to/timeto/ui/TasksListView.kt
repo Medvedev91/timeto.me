@@ -234,11 +234,10 @@ fun TasksListView(
                                         daytimeUI.daytimeText + "  " + daytimeUI.timeLeftText,
                                         modifier = Modifier
                                             .padding(
-                                                start = badgesHPadding,
+                                                start = badgesHPadding + 2.dp,
                                                 top = 2.dp,
                                                 bottom = badgesVPadding,
-                                            )
-                                            .padding(start = 2.dp),
+                                            ),
                                         fontSize = 13.sp,
                                         fontWeight = FontWeight.W300,
                                         color = daytimeUI.color.toColor(),
