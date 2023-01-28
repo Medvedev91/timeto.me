@@ -15,6 +15,7 @@ android {
         versionCode = 122
         versionName = "2023.01.28"
     }
+
     buildTypes {
         release {
             isMinifyEnabled = true
@@ -22,12 +23,9 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"))
         }
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.2"
-    }
+
+    buildFeatures.compose = true
+    composeOptions.kotlinCompilerExtensionVersion = "1.3.2"
 }
 
 dependencies {
