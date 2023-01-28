@@ -41,7 +41,7 @@ dependencies {
 
     implementation("androidx.compose.material:material:1.3.1")
     implementation("androidx.navigation:navigation-compose:2.5.3")
-    implementation("com.google.android.material:material:1.7.0")
+    implementation("com.google.android.material:material:1.8.0")
 
     val accompanist_version = "0.23.0"
     implementation("com.google.accompanist:accompanist-systemuicontroller:$accompanist_version")
