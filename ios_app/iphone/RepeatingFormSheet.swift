@@ -106,6 +106,31 @@ struct RepeatingsFormSheet: View {
                             paddingTop: 30
                     )
 
+                    MyListView__SectionView {
+
+                        MyListView__SectionView__ButtonView(
+                                text: state.daytimeHeader,
+                                withTopDivider: false,
+                                rightView: AnyView(
+                                        HStack(spacing: 0) {
+
+                                            Text(state.daytimeNote)
+                                                    .foregroundColor(.secondary)
+                                                    .font(.system(size: 15))
+                                                    .padding(.trailing, 10)
+
+                                            Image(systemName: "chevron.right")
+                                                    .foregroundColor(.secondary)
+                                                    .font(.system(size: 16, weight: .medium))
+                                                    .padding(.trailing, 12)
+                                        }
+                                )
+                        ) {
+                            // todo
+                        }
+                    }
+                            .padding(.top, 20)
+
                     MyListView__HeaderView(title: "REPETITION PERIOD")
                             .padding(.top, MyListView.PADDING_SECTION_SECTION)
 
