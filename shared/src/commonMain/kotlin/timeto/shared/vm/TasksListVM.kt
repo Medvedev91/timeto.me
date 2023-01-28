@@ -83,6 +83,9 @@ class TasksListVM(
         }
 }
 
+///
+/// GD Tasks Sorting
+
 private fun List<TasksListVM.TaskUI>.sortedForToday(): List<TasksListVM.TaskUI> = this
     // Map<Int /* day */, List<TasksListVM.TaskUI>>
     .groupBy { taskUI ->
