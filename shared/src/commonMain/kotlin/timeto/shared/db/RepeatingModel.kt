@@ -81,17 +81,7 @@ data class RepeatingModel(
                     .filter { it.getNextDay() <= today }
                     .forEach { repeating ->
                         val textStrings = mutableListOf(EMOJI_REPEATING, repeating.text)
-                        var featureTime: Int? = null
-                        val daytime = repeating.daytime
-                        if (daytime != null) {
-                            val dayStartOffset = dayStartOffsetSeconds()
-                            val dayForDaytime: Int =
-                                if (dayStartOffset >= 0)
-                                    if (daytime >= dayStartOffset) today else today + 1
-                                else
-                                    if (daytime >= (86_400 - dayStartOffset.absoluteValue)) today - 1 else today
-                            featureTime = UnixTime.byLocalDay(dayForDaytime).localDayStartTime() + daytime
-                        }
+                        val featureTime = repeating.daytimeToTimeWithDayStart(today)
                         textStrings.add(TextFeatures.substringFromRepeating(today, featureTime))
                         TaskModel.addWithValidationNeedTransaction(
                             text = textStrings.joinToString(" "),
@@ -113,6 +103,17 @@ data class RepeatingModel(
             id = id, text = text, last_day = last_day,
             type_id = type_id, value = value_, daytime = daytime,
         )
+    }
+
+    fun daytimeToTimeWithDayStart(today: Int): Int? {
+        val daytime = daytime ?: return null
+        val dayStartOffset = dayStartOffsetSeconds()
+        val dayForDaytime: Int =
+            if (dayStartOffset >= 0)
+                if (daytime >= dayStartOffset) today else today + 1
+            else
+                if (daytime >= (86_400 - dayStartOffset.absoluteValue)) today - 1 else today
+        return UnixTime.byLocalDay(dayForDaytime).localDayStartTime() + daytime
     }
 
     fun getPeriod() = Period.build(type_id, value)
