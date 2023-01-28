@@ -343,6 +343,7 @@ struct TasksView__TaskRowView: View {
                                                 .padding(.bottom, vPadding)
                                                 .font(.system(size: 14, weight: .light))
                                                 .foregroundColor(daytimeUI.color.toColor())
+                                                .lineLimit(1)
                                         Spacer()
                                     }
                                 }
