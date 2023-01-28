@@ -14,6 +14,7 @@ struct RepeatingsFormSheet: View {
 
     @State private var isAddDayOfYearSheetPresented = false
     @State private var isCustomTimeSheetPresented = false
+    @State private var isDaytimeSheetPresented = false
 
     @State private var sheetHeaderScroll = 0
 
@@ -126,8 +127,21 @@ struct RepeatingsFormSheet: View {
                                         }
                                 )
                         ) {
-                            // todo
+                            hideKeyboard()
+                            isDaytimeSheetPresented = true
                         }
+                                .sheetEnv(isPresented: $isDaytimeSheetPresented) {
+                                    DaytimePickerSheet(
+                                            isPresented: $isDaytimeSheetPresented,
+                                            title: state.daytimeHeader,
+                                            doneText: "Done",
+                                            defMinute: state.daytimePickerDefMinute,
+                                            defHour: state.daytimePickerDefHour
+                                    ) { seconds in
+                                        vm.upDaytime(newDaytimeOrNull: seconds?.toKotlinInt())
+                                    }
+                                            .presentationDetentsMediumIf16()
+                                }
                     }
                             .padding(.top, 20)
 
