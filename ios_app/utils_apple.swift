@@ -277,6 +277,8 @@ extension ColorNative {
             return .white
         case .text:
             return .primary
+        case .textsecondary:
+            return .secondary
         default:
             fatalError("Trigger.TriggerColor")
         }
