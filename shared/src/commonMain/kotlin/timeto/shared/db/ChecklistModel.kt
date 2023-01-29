@@ -36,29 +36,6 @@ data class ChecklistModel(
             db.checklistQueries.truncate()
         }
 
-        private suspend fun validateName(
-            name: String,
-            exIds: Set<Int> = setOf(),
-        ): String {
-
-            val validatedName = name.trim()
-            if (validatedName.isEmpty())
-                throw UIException("Empty name")
-
-            getAsc()
-                .filter { it.id !in exIds }
-                .forEach { checklist ->
-                    if (checklist.name.equals(validatedName, ignoreCase = true))
-                        throw UIException("$validatedName already exists.")
-                }
-
-            return validatedName
-        }
-
-        private fun ChecklistSQ.toModel() = ChecklistModel(
-            id = id, name = name
-        )
-
         ///
         /// Backupable Holder
 
@@ -106,3 +83,26 @@ data class ChecklistModel(
         db.checklistQueries.deleteById(id)
     }
 }
+
+private suspend fun validateName(
+    name: String,
+    exIds: Set<Int> = setOf(),
+): String {
+
+    val validatedName = name.trim()
+    if (validatedName.isEmpty())
+        throw UIException("Empty name")
+
+    ChecklistModel.getAsc()
+        .filter { it.id !in exIds }
+        .forEach { checklist ->
+            if (checklist.name.equals(validatedName, ignoreCase = true))
+                throw UIException("$validatedName already exists.")
+        }
+
+    return validatedName
+}
+
+private fun ChecklistSQ.toModel() = ChecklistModel(
+    id = id, name = name
+)
