@@ -4,17 +4,18 @@ import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import dbsq.ChecklistItemSQ
 import kotlinx.coroutines.flow.map
-import timeto.shared.UIException
-import timeto.shared.time
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.jsonArray
+import timeto.shared.*
 
 data class ChecklistItemModel(
     val id: Int,
     val text: String,
     val list_id: Int,
     val check_time: Int,
-) {
+) : Backupable__Item {
 
-    companion object {
+    companion object : Backupable__Holder {
 
         suspend fun getAsc() = dbIO {
             db.checklistItemQueries.getAsc().executeAsList().map { it.toModel() }
@@ -66,6 +67,22 @@ data class ChecklistItemModel(
         private fun ChecklistItemSQ.toModel() = ChecklistItemModel(
             id = id, text = text, list_id = list_id, check_time = check_time
         )
+
+        ///
+        /// Backupable Holder
+
+        override fun backupable__getAll(): List<Backupable__Item> =
+            db.checklistItemQueries.getAsc().executeAsList().map { it.toModel() }
+
+        override fun backupable__restore(json: JsonElement) {
+            val j = json.jsonArray
+            db.checklistItemQueries.insert(
+                id = j.getInt(0),
+                text = j.getString(1),
+                list_id = j.getInt(2),
+                check_time = j.getInt(3),
+            )
+        }
     }
 
     fun isChecked() = check_time > 0
@@ -83,4 +100,27 @@ data class ChecklistItemModel(
     }
 
     suspend fun delete() = dbIO { db.checklistItemQueries.deleteById(id) }
+
+    ///
+    /// Backupable Item
+
+    override fun backupable__getId(): String = id.toString()
+
+    override fun backupable__backup(): JsonElement = listOf(
+        id, text, list_id, check_time
+    ).toJsonArray()
+
+    override fun backupable__update(json: JsonElement) {
+        val j = json.jsonArray
+        db.checklistItemQueries.upById(
+            id = j.getInt(0),
+            text = j.getString(1),
+            list_id = j.getInt(2),
+            check_time = j.getInt(3),
+        )
+    }
+
+    override fun backupable__delete() {
+        db.checklistItemQueries.deleteById(id)
+    }
 }

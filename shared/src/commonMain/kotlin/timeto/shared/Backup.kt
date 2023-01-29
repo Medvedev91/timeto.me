@@ -18,15 +18,13 @@ object Backup {
             "task_folders" to TaskFolderModel.getAscBySort().modelsToJsonArray { it.backupable__backup() },
             "tasks" to TaskModel.getAsc().modelsToJsonArray { it.backupable__backup() },
             "checklists" to ChecklistModel.getAsc().modelsToJsonArray { it.backupable__backup() },
+            "checklist_items" to ChecklistItemModel.getAsc().modelsToJsonArray { it.backupable__backup() },
 
             "events" to EventModel.getAscByTime().modelsToJsonArray { c ->
                 listOf(c.id, c.utc_time, c.text).toJsonArray()
             },
             "repeatings" to RepeatingModel.getAsc().modelsToJsonArray { r ->
                 listOf(r.id, r.text, r.last_day, r.type_id, r.value, r.daytime).toJsonArray()
-            },
-            "checklist_items" to ChecklistItemModel.getAsc().modelsToJsonArray { i ->
-                listOf(i.id, i.text, i.list_id, i.check_time).toJsonArray()
             },
             "shortcuts" to ShortcutModel.getAsc().modelsToJsonArray { i ->
                 listOf(i.id, i.name, i.uri).toJsonArray()
@@ -68,6 +66,7 @@ private fun restoreV1NeedTransaction(jString: String) {
     json.mapJsonArray("task_folders") { TaskFolderModel.backupable__restore(it) }
     json.mapJsonArray("tasks") { TaskModel.backupable__restore(it) }
     json.mapJsonArray("checklists") { ChecklistModel.backupable__restore(it) }
+    json.mapJsonArray("checklist_items") { ChecklistItemModel.backupable__restore(it) }
 
     json.mapJsonArray("events") { j ->
         EventModel.addRaw(
@@ -85,15 +84,6 @@ private fun restoreV1NeedTransaction(jString: String) {
             type_id = j.getInt(3),
             value = j.getString(4),
             daytime = j.getIntOrNull(5),
-        )
-    }
-
-    json.mapJsonArray("checklist_items") { j ->
-        ChecklistItemModel.addRaw(
-            id = j.getInt(0),
-            text = j.getString(1),
-            listId = j.getInt(2),
-            checkTime = j.getInt(3),
         )
     }
 
