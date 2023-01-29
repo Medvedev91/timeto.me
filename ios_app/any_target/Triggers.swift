@@ -75,8 +75,4 @@ extension String {
     func removeTriggerIdsNoEnsure() -> String {
         Triggers__Parsed(self, ensureInDb: false).text
     }
-
-    func removeTriggerIdsEnsure() -> String {
-        Triggers__Parsed(self, ensureInDb: true).text
-    }
 }
