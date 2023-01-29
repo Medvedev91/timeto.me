@@ -67,10 +67,6 @@ struct W_TabTimerView: View {
         let defBgColor = Color(rgba: [34, 34, 35])
 
         var body: some View {
-            AnyView(safeView)
-        }
-
-        private var safeView: some View {
             Button(
                     action: {
                         isTickerPresented = true
