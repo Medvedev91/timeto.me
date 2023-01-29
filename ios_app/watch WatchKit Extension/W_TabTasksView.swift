@@ -49,7 +49,19 @@ struct W_TabTasksView: View {
                             )
                         },
                         label: {
-                            Text(taskUI.listText)
+                            VStack(alignment: .leading, spacing: 0) {
+
+                                if let timeUI = taskUI.textFeatures.timeUI {
+                                    Text(timeUI.daytimeText + "  " + timeUI.timeLeftText)
+                                            .padding(.top, 1)
+                                            .padding(.bottom, 2)
+                                            .font(.system(size: 14, weight: .light))
+                                            .foregroundColor(timeUI.color.toColor())
+                                            .lineLimit(1)
+                                }
+
+                                Text(taskUI.listText)
+                            }
                         }
                 )
                         .sheet(isPresented: $isActivitiesPresented) {
