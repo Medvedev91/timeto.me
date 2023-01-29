@@ -112,7 +112,10 @@ fun TabTimerView() {
             ) {
 
                 val activitiesUI = state.activitiesUI
-                itemsIndexed(activitiesUI, key = { _, i -> i.activity.id }) { index, uiActivity ->
+                itemsIndexed(
+                    activitiesUI,
+                    key = { _, i -> i.activity.id }
+                ) { index, uiActivity ->
 
                     val isLast = index == activitiesUI.size - 1
                     val isActive = lastInterval.activity_id == uiActivity.activity.id
