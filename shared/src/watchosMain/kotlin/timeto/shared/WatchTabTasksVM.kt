@@ -58,7 +58,7 @@ class WatchTabTasksVM : __VM<WatchTabTasksVM.State>() {
                 tasks = allTasks
                     .filter { it.folder_id == folder.id }
                     .map { TaskUI(it) }
-                    .sortedByFolder(folder, isReversedInsideDay = true)
+                    .sortedByFolder(folder)
             )
         }
         state.update { it.copy(foldersUI = foldersUI) }

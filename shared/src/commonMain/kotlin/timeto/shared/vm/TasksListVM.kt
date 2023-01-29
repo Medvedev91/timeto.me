@@ -73,5 +73,5 @@ class TasksListVM(
     private fun List<TaskModel>.toUiList() = this
         .filter { it.folder_id == folder.id }
         .map { TaskUI(it) }
-        .sortedByFolder(folder, isReversedInsideDay = false)
+        .sortedByFolder(folder)
 }
