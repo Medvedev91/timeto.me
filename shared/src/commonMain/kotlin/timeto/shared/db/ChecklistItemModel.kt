@@ -34,22 +34,11 @@ data class ChecklistItemModel(
             else
                 timeId
 
-            addRaw(
+            db.checklistItemQueries.insert(
                 id = nextId,
                 text = validateText(text),
-                listId = checklist.id,
-                checkTime = 0
-            )
-        }
-
-        fun addRaw(
-            id: Int,
-            text: String,
-            listId: Int,
-            checkTime: Int,
-        ) {
-            db.checklistItemQueries.insert(
-                id = id, text = text, list_id = listId, check_time = checkTime
+                list_id = checklist.id,
+                check_time = 0,
             )
         }
 
