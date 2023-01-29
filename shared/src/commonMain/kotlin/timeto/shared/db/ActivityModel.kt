@@ -121,10 +121,6 @@ data class ActivityModel(
             }
         }
 
-        fun truncate() {
-            db.activityQueries.truncate()
-        }
-
         fun validateName(name: String): String {
             val validatedName = name.trim()
             if (validatedName.isEmpty())

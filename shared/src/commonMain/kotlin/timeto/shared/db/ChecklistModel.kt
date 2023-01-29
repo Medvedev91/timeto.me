@@ -34,10 +34,6 @@ data class ChecklistModel(
             )
         }
 
-        fun truncate() {
-            db.checklistQueries.truncate()
-        }
-
         private suspend fun validateName(
             name: String,
             exIds: Set<Int> = setOf(),

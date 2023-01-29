@@ -29,10 +29,6 @@ data class KVModel(
         fun addRaw(k: String, v: String) {
             db.kVQueries.upsert(key = k, value_ = v)
         }
-
-        fun truncate() {
-            db.kVQueries.truncate()
-        }
     }
 
     enum class KEY {

@@ -69,10 +69,6 @@ data class RepeatingModel(
             )
         }
 
-        fun truncate() {
-            db.repeatingQueries.truncate()
-        }
-
         suspend fun syncTodaySafe(today: Int): Unit = dbIO {
             // Select within a transaction to avoid duplicate additions
             db.transaction {

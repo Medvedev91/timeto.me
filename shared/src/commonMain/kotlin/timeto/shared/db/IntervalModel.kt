@@ -114,10 +114,6 @@ data class IntervalModel(
 
         //////
 
-        fun truncate() {
-            db.intervalQueries.truncate()
-        }
-
         // todo rename to last
         // todo use transaction
         suspend fun restartActualInterval() {

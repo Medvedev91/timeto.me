@@ -52,10 +52,6 @@ data class TaskFolderModel(
             )
         }
 
-        fun truncate() {
-            db.taskFolderQueries.truncate()
-        }
-
         private fun TaskFolderSQ.toModel() = TaskFolderModel(
             id = id, name = name, sort = sort
         )

@@ -48,16 +48,16 @@ object Backup {
 private fun restoreV1NeedTransaction(jString: String) {
     val json = Json.parseToJsonElement(jString)
 
-    TaskModel.truncate()
-    TaskFolderModel.truncate()
-    IntervalModel.truncate()
-    ActivityModel.truncate()
-    EventModel.truncate()
-    RepeatingModel.truncate()
-    ChecklistItemModel.truncate()
-    ChecklistModel.truncate()
-    ShortcutModel.truncate()
-    KVModel.truncate()
+    db.taskQueries.truncate()
+    db.taskFolderQueries.truncate()
+    db.intervalQueries.truncate()
+    db.activityQueries.truncate()
+    db.eventQueries.truncate()
+    db.repeatingQueries.truncate()
+    db.checklistItemQueries.truncate()
+    db.checklistQueries.truncate()
+    db.shortcutQueries.truncate()
+    db.kVQueries.truncate()
 
     json.mapJsonArray("activities") { ActivityModel.backupable__restore(it) }
     json.mapJsonArray("intervals") { IntervalModel.backupable__restore(it) }

@@ -65,10 +65,6 @@ data class TaskModel(
 
         //////
 
-        fun truncate() {
-            db.taskQueries.truncate()
-        }
-
         private fun validateText(text: String): String {
             val validatedText = text.trim()
             if (validatedText.isEmpty())

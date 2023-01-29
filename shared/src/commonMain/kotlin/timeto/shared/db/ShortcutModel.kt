@@ -58,10 +58,6 @@ data class ShortcutModel(
             )
         }
 
-        fun truncate() {
-            db.shortcutQueries.truncate()
-        }
-
         private suspend fun validateName(
             name: String,
             exIds: Set<Int> = setOf(),

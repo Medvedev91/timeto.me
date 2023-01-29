@@ -44,10 +44,6 @@ data class ChecklistItemModel(
             )
         }
 
-        fun truncate() {
-            db.checklistItemQueries.truncate()
-        }
-
         ///
         /// Backupable Holder
 
