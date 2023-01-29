@@ -16,6 +16,7 @@ abstract class TaskUI(
 
 fun <T : TaskUI> List<T>.sortedByFolder(
     folder: TaskFolderModel,
+    isReversedInsideDay: Boolean
 ): List<T> {
     if (!folder.isToday)
         return this.sortedByDescending { it.task.id }
@@ -28,11 +29,13 @@ fun <T : TaskUI> List<T>.sortedByFolder(
         }
         .toList()
         .sortedByDescending { it.first }
-        .map { it.second.sortedInsideDay() }
+        .map { it.second.sortedInsideDay(isReversedInsideDay) }
         .flatten()
 }
 
-private fun <T : TaskUI> List<T>.sortedInsideDay(): List<T> {
+private fun <T : TaskUI> List<T>.sortedInsideDay(
+    isReversed: Boolean
+): List<T> {
     val (tasksWithDaytime, tasksNoDaytime) = this.partition { it.textFeatures.timeUI != null }
 
     val resList = mutableListOf<T>()
@@ -43,7 +46,7 @@ private fun <T : TaskUI> List<T>.sortedInsideDay(): List<T> {
         .sortedBy { it.textFeatures.timeUI!!.unixTime.time }
         .forEach { resList.add(it) }
 
-    return resList
+    return if (isReversed) resList.reversed() else resList
 }
 
 //////
