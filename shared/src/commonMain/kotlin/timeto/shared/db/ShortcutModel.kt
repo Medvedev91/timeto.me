@@ -4,17 +4,18 @@ import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import dbsq.ShortcutSQ
 import kotlinx.coroutines.flow.map
-import timeto.shared.UIException
-import timeto.shared.time
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.jsonArray
+import timeto.shared.*
 import kotlin.math.max
 
 data class ShortcutModel(
     val id: Int,
     val name: String,
     val uri: String,
-) {
+) : Backupable__Item {
 
-    companion object {
+    companion object : Backupable__Holder {
 
         suspend fun getCount(): Int = dbIO {
             db.shortcutQueries.getCount().executeAsOne().toInt()
@@ -59,6 +60,20 @@ data class ShortcutModel(
             db.shortcutQueries.truncate()
         }
 
+        ///
+        /// Backupable Holder
+
+        override fun backupable__getAll(): List<Backupable__Item> =
+            db.shortcutQueries.getAsc().executeAsList().map { it.toModel() }
+
+        override fun backupable__restore(json: JsonElement) {
+            val j = json.jsonArray
+            db.shortcutQueries.insert(
+                id = j.getInt(0),
+                name = j.getString(1),
+                uri = j.getString(2),
+            )
+        }
     }
 
     suspend fun upWithValidation(name: String, uri: String) = dbIO {
@@ -68,6 +83,28 @@ data class ShortcutModel(
     }
 
     suspend fun delete() = dbIO { db.shortcutQueries.deleteById(id) }
+
+    ///
+    /// Backupable Item
+
+    override fun backupable__getId(): String = id.toString()
+
+    override fun backupable__backup(): JsonElement = listOf(
+        id, name, uri
+    ).toJsonArray()
+
+    override fun backupable__update(json: JsonElement) {
+        val j = json.jsonArray
+        db.shortcutQueries.updateById(
+            id = j.getInt(0),
+            name = j.getString(1),
+            uri = j.getString(2),
+        )
+    }
+
+    override fun backupable__delete() {
+        db.shortcutQueries.deleteById(id)
+    }
 }
 
 private suspend fun validateName(
