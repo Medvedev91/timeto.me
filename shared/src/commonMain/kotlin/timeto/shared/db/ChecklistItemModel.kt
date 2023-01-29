@@ -46,17 +46,6 @@ data class ChecklistItemModel(
             db.checklistItemQueries.truncate()
         }
 
-        private fun validateText(text: String): String {
-            val validatedText = text.trim()
-            if (validatedText.isEmpty())
-                throw UIException("Empty text")
-            return validatedText
-        }
-
-        private fun ChecklistItemSQ.toModel() = ChecklistItemModel(
-            id = id, text = text, list_id = list_id, check_time = check_time
-        )
-
         ///
         /// Backupable Holder
 
@@ -113,3 +102,14 @@ data class ChecklistItemModel(
         db.checklistItemQueries.deleteById(id)
     }
 }
+
+private fun validateText(text: String): String {
+    val validatedText = text.trim()
+    if (validatedText.isEmpty())
+        throw UIException("Empty text")
+    return validatedText
+}
+
+private fun ChecklistItemSQ.toModel() = ChecklistItemModel(
+    id = id, text = text, list_id = list_id, check_time = check_time
+)
