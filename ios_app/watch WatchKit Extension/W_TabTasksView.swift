@@ -3,63 +3,57 @@ import shared
 
 struct W_TabTasksView: View {
 
-    @EnvironmentObject private var diApple: DIApple
+    @State private var vm = WatchTabTasksVM()
 
     var body: some View {
-        List {
-            FolderView(title: "Today", tasks: diApple.tasks.filter { $0.isToday })
-            FolderView(title: "Week", tasks: diApple.tasks.filter { $0.isWeek })
-            FolderView(title: "Inbox", tasks: diApple.tasks.filter { $0.isInbox })
+        VMView(vm: vm) { state in
+            List {
+                ForEach(state.folders, id: \.title) { folderUI in
+                    FolderView(title: folderUI.title, tasksUI: folderUI.tasks)
+                }
+            }
         }
     }
 
     private struct FolderView: View {
 
         let title: String
-        let tasks: [TaskModel]
+        let tasksUI: [WatchTabTasksVM.TaskUI]
 
         var body: some View {
 
             Section(title) {
-                ForEach(tasks, id: \.id) { task in
-                    TaskView(task: task)
+                ForEach(tasksUI, id: \.task.id) { taskUI in
+                    TaskView(taskUI: taskUI)
                 }
             }
         }
 
         private struct TaskView: View {
 
-            var task: TaskModel
+            var taskUI: WatchTabTasksVM.TaskUI
             @State private var isActivitiesPresented = false
 
             var body: some View {
-                AnyView(safeView)
-            }
-
-            private var safeView: some View {
                 Button(
                         action: {
-                            Task {
-                                if let (autostartActivity, autostartSeconds) = await autostartData(task: task) {
-                                    WatchToIosSync.shared.startTaskWithLocal(
-                                            activity: autostartActivity,
-                                            deadline: autostartSeconds.toInt32(),
-                                            task: task
-                                    )
-                                    withAnimation {
-                                        W_TabsView.lastInstance?.tabSelection = W_TabsView.TAB_ID_TIMER
+                            taskUI.start(
+                                    onStarted: {
+                                        withAnimation {
+                                            W_TabsView.lastInstance?.tabSelection = W_TabsView.TAB_ID_TIMER
+                                        }
+                                    },
+                                    needSheet: {
+                                        isActivitiesPresented = true
                                     }
-                                } else {
-                                    isActivitiesPresented = true
-                                }
-                            }
+                            )
                         },
                         label: {
-                            Text(task.text.removeTriggerIdsNoEnsure())
+                            Text(taskUI.listText)
                         }
                 )
                         .sheet(isPresented: $isActivitiesPresented) {
-                            TaskSheetDialog(task: task, isPresented: $isActivitiesPresented)
+                            TaskSheetDialog(task: taskUI.task, isPresented: $isActivitiesPresented)
                         }
             }
 
