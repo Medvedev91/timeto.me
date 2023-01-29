@@ -101,11 +101,11 @@ fun TabTimerView() {
                 .fillMaxSize()
         ) {
 
-            val lastInterval = IntervalModel.getLastOneOrNullFlow().collectAsState(null).value
-            if (lastInterval != null)
-                TimerView(lastInterval)
+            TimerView(state.lastInterval)
 
-            val note = lastInterval?.note
+            val lastInterval = state.lastInterval
+
+            val note = lastInterval.note
 
             LazyColumn(
                 contentPadding = PaddingValues(horizontal = 24.dp, vertical = 22.dp),
@@ -115,7 +115,7 @@ fun TabTimerView() {
                 itemsIndexed(activitiesUI, key = { _, i -> i.activity.id }) { index, uiActivity ->
 
                     val isLast = index == activitiesUI.size - 1
-                    val isActive = lastInterval != null && lastInterval.activity_id == uiActivity.activity.id
+                    val isActive = lastInterval.activity_id == uiActivity.activity.id
                     val bgAnimate = animateColorAsState(
                         if (isActive) c.blue else c.background2,
                         spring(stiffness = Spring.StiffnessMediumLow)
@@ -312,7 +312,7 @@ fun TabTimerView() {
                             }
 
                             val next = activitiesUI.getOrNull(index + 1)?.activity
-                            val isNextActive = next != null && next.id == lastInterval?.activity_id
+                            val isNextActive = next != null && next.id == lastInterval.activity_id
 
                             if (!isActive && !isLast && !isNextActive)
                                 Divider(

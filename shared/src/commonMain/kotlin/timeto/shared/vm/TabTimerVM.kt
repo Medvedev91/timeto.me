@@ -52,18 +52,26 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
 
     data class State(
         val activitiesUI: List<ActivityUI>,
+        val lastInterval: IntervalModel,
     )
 
     override val state = MutableStateFlow(
         State(
-            activitiesUI = DI.activitiesSorted.toUiList()
+            activitiesUI = DI.activitiesSorted.toUiList(),
+            lastInterval = DI.lastInterval,
         )
     )
 
     override fun onAppear() {
+        val scope = scopeVM()
         ActivityModel.getAscSortedFlow()
-            .onEachExIn(scopeVM()) { list ->
+            .onEachExIn(scope) { list ->
                 state.update { it.copy(activitiesUI = list.toUiList()) }
+            }
+        IntervalModel.getLastOneOrNullFlow()
+            .filterNotNull()
+            .onEachExIn(scope) { interval ->
+                state.update { it.copy(lastInterval = interval) }
             }
     }
 }
