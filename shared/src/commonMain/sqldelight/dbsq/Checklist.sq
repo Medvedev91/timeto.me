@@ -3,6 +3,8 @@ CREATE TABLE ChecklistSQ (
     name TEXT NOT NULL
 );
 
+anyChange: SELECT id FROM ChecklistSQ LIMIT 1;
+
 getAsc:
 SELECT *
 FROM ChecklistSQ

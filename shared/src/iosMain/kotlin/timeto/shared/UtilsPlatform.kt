@@ -163,6 +163,9 @@ private fun listenForSyncWatch() = launchExDefault {
         TaskFolderModel.anyChangeFlow(),
         TaskModel.anyChangeFlow(),
         IntervalModel.anyChangeFlow(),
+        ChecklistModel.anyChangeFlow(),
+        ChecklistItemModel.anyChangeFlow(),
+        ShortcutModel.anyChangeFlow(),
     ).forEach { diFlow ->
         var isFirst = true
         diFlow.onEachExIn(this) {

@@ -17,6 +17,8 @@ data class ShortcutModel(
 
     companion object : Backupable__Holder {
 
+        fun anyChangeFlow() = db.shortcutQueries.anyChange().asFlow()
+
         suspend fun getCount(): Int = dbIO {
             db.shortcutQueries.getCount().executeAsOne().toInt()
         }

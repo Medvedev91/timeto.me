@@ -4,6 +4,8 @@ CREATE TABLE ShortcutSQ (
     uri TEXT NOT NULL
 );
 
+anyChange: SELECT id FROM ShortcutSQ LIMIT 1;
+
 getCount:
 SELECT COUNT(*)
 FROM ShortcutSQ;

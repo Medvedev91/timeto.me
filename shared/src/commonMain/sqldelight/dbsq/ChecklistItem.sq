@@ -5,6 +5,8 @@ CREATE TABLE ChecklistItemSQ (
     check_time INTEGER AS Int NOT NULL
 );
 
+anyChange: SELECT id FROM ChecklistItemSQ LIMIT 1;
+
 getAsc:
 SELECT *
 FROM ChecklistItemSQ

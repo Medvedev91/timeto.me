@@ -17,6 +17,8 @@ data class ChecklistItemModel(
 
     companion object : Backupable__Holder {
 
+        fun anyChangeFlow() = db.checklistItemQueries.anyChange().asFlow()
+
         suspend fun getAsc() = dbIO {
             db.checklistItemQueries.getAsc().executeAsList().map { it.toModel() }
         }
