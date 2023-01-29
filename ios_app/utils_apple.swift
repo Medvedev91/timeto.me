@@ -22,15 +22,6 @@ func zlog(_ message: Any?) {
 
 //////
 
-/// todo move to KMM
-func autostartData(task: TaskModel) async -> (ActivityModel, Int)? {
-    if let activityByEmoji = try! await ActivityModel.Companion().getAscSorted().first { task.text.contains($0.emoji) },
-            let timerTime = TimerTimeParser.shared.findTime(text: task.text) {
-        return (activityByEmoji, timerTime.seconds.toInt())
-    }
-    return nil
-}
-
 /// Based on https://stackoverflow.com/a/26962452/5169420
 func machineIdentifier() -> String {
     var systemInfo = utsname()
