@@ -26,12 +26,12 @@ class TimeUI(
 //////
 
 private fun secondsInToString(seconds: Int): String {
-    // With roundToNextMinute it's impossible to (h == 0 && m == 0)
     val (h, m) = seconds.toHms(roundToNextMinute = true)
     val d = h / 24
     return when {
         d >= 1 -> "In ${d.toStringEndingDays()}"
-        h > 0 -> "In ${h.toStringEndingHours()}"
+        h >= 5 -> "In ${h.toStringEndingHours()}"
+        h > 0 -> "In ${h.toStringEndingHours()}${if (m == 0) "" else " $m min"}"
         else -> "In ${m.toStringEnding(true, "minute", "min")}"
     }
 }
