@@ -112,6 +112,7 @@ object WatchToIosSync {
 
             // Ordering is important
             // WARNING The same models must be in listenForSyncWatch()
+            val shortcuts = smartRestore__start(ShortcutModel, json.jsonObject["shortcuts"]!!.jsonArray)
             val intervals = smartRestore__start(IntervalModel, json.jsonObject["intervals"]!!.jsonArray, doNotUpdate = true)
             val tasks = smartRestore__start(TaskModel, json.jsonObject["tasks"]!!.jsonArray)
             val taskFolders = smartRestore__start(TaskFolderModel, json.jsonObject["task_folders"]!!.jsonArray)
@@ -121,6 +122,7 @@ object WatchToIosSync {
             taskFolders()
             tasks()
             intervals()
+            shortcuts()
 
             // To 100% ensure
             val ifl = IntervalModel.getFirstAndLastNeedTransaction()
