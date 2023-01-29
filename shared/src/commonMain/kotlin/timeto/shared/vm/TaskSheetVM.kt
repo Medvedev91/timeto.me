@@ -2,6 +2,7 @@ package timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import timeto.shared.DI
+import timeto.shared.TextFeatures
 import timeto.shared.db.ActivityModel
 import timeto.shared.db.TaskModel
 import timeto.shared.ui.TimerHintUI
@@ -29,6 +30,9 @@ class TaskSheetVM(
         val activity: ActivityModel,
         val historySeconds: List<Int>,
     ) {
+
+        val listText = TextFeatures.parse(activity.name).textUI()
+
         val timerHints = TimerHintUI.buildList(
             activity,
             isShort = true,

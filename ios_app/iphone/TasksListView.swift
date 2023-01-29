@@ -480,14 +480,12 @@ struct TasksView__TaskRowView__ActivityRowView: View {
 
                         HStack(spacing: 0) {
 
-                            let activity = activityUI.activity
-
-                            Text(activity.emoji)
+                            Text(activityUI.activity.emoji)
                                     .frame(width: emojiWidth)
                                     .padding(.horizontal, emojiHPadding)
                                     .font(.system(size: 22))
 
-                            Text(activity.name.removeTriggerIdsEnsure())
+                            Text(activityUI.listText)
                                     .foregroundColor(.primary)
                                     .truncationMode(.tail)
                                     .lineLimit(1)

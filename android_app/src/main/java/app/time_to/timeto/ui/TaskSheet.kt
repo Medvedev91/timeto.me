@@ -95,7 +95,7 @@ fun TaskSheet(
                         )
 
                         Text(
-                            activity.name.removeTriggerIds(),
+                            activityUI.listText,
                             modifier = Modifier
                                 .weight(1f),
                             color = c.text,
