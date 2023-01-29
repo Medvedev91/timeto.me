@@ -7,12 +7,9 @@ import timeto.shared.vm.__VM
 
 class WatchTabTasksVM : __VM<WatchTabTasksVM.State>() {
 
-    data class TaskUI(
-        val task: TaskModel,
-    ) {
-
-        val textFeatures = TextFeatures.parse(task.text)
-        val listText = textFeatures.textUI()
+    class TaskUI(
+        task: TaskModel,
+    ) : timeto.shared.ui.TaskUI(task) {
 
         fun start(
             onStarted: () -> Unit,
