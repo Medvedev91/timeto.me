@@ -8,7 +8,7 @@ struct W_TabTasksView: View {
     var body: some View {
         VMView(vm: vm) { state in
             List {
-                ForEach(state.folders, id: \.title) { folderUI in
+                ForEach(state.foldersUI, id: \.title) { folderUI in
                     FolderView(title: folderUI.title, tasksUI: folderUI.tasks)
                 }
             }

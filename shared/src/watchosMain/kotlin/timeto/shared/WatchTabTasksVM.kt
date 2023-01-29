@@ -2,6 +2,7 @@ package timeto.shared
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import timeto.shared.db.TaskFolderModel
 import timeto.shared.db.TaskModel
 import timeto.shared.vm.__VM
 
@@ -33,12 +34,12 @@ class WatchTabTasksVM : __VM<WatchTabTasksVM.State>() {
     )
 
     data class State(
-        val folders: List<FolderUI>
+        val foldersUI: List<FolderUI>
     )
 
     override val state = MutableStateFlow(
         State(
-            folders = listOf()
+            foldersUI = listOf()
         )
     )
 
@@ -49,12 +50,15 @@ class WatchTabTasksVM : __VM<WatchTabTasksVM.State>() {
         }
     }
 
-    private fun upFolders(allTasks: List<TaskModel>) {
-        val folders = listOf(
-            FolderUI(title = "Today", tasks = allTasks.filter { it.isToday }.map { TaskUI(it) }),
-            FolderUI(title = "Week", tasks = allTasks.filter { it.isWeek }.map { TaskUI(it) }),
-            FolderUI(title = "Inbox", tasks = allTasks.filter { it.isInbox }.map { TaskUI(it) }),
-        )
-        state.update { it.copy(folders = folders) }
+    private suspend fun upFolders(allTasks: List<TaskModel>) {
+        val foldersUI = TaskFolderModel.getAscBySort().map { folder ->
+            FolderUI(
+                title = folder.name,
+                tasks = allTasks
+                    .filter { it.folder_id == folder.id }
+                    .map { TaskUI(it) }
+            )
+        }
+        state.update { it.copy(foldersUI = foldersUI) }
     }
 }
