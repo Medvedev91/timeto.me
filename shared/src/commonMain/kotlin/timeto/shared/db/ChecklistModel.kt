@@ -26,18 +26,9 @@ data class ChecklistModel(
             name: String,
         ) {
             val nextId = time()
-            addRaw(
+            db.checklistQueries.insert(
                 id = nextId,
                 name = validateName(name),
-            )
-        }
-
-        fun addRaw(
-            id: Int,
-            name: String,
-        ) {
-            db.checklistQueries.insert(
-                id = id, name = name
             )
         }
 
