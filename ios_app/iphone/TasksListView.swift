@@ -335,14 +335,14 @@ struct TasksView__TaskRowView: View {
 
                                 let vPadding = 8.0
 
-                                if let daytimeUI = taskUI.textFeatures.timeUI {
+                                if let timeUI = taskUI.textFeatures.timeUI {
                                     HStack {
-                                        Text(daytimeUI.daytimeText + "  " + daytimeUI.timeLeftText)
+                                        Text(timeUI.daytimeText + "  " + timeUI.timeLeftText)
                                                 .padding(.leading, paddingStart)
                                                 .padding(.top, 1)
                                                 .padding(.bottom, vPadding)
                                                 .font(.system(size: 14, weight: .light))
-                                                .foregroundColor(daytimeUI.color.toColor())
+                                                .foregroundColor(timeUI.color.toColor())
                                                 .lineLimit(1)
                                         Spacer()
                                     }
