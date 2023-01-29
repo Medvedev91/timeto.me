@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import timeto.shared.db.TaskFolderModel
 import timeto.shared.db.TaskModel
+import timeto.shared.ui.sortedByFolder
 import timeto.shared.vm.__VM
 
 class WatchTabTasksVM : __VM<WatchTabTasksVM.State>() {
@@ -57,6 +58,7 @@ class WatchTabTasksVM : __VM<WatchTabTasksVM.State>() {
                 tasks = allTasks
                     .filter { it.folder_id == folder.id }
                     .map { TaskUI(it) }
+                    .sortedByFolder(folder, isReversedInsideDay = true)
             )
         }
         state.update { it.copy(foldersUI = foldersUI) }
