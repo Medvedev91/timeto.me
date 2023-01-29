@@ -59,42 +59,6 @@ data class ShortcutModel(
             db.shortcutQueries.truncate()
         }
 
-        private suspend fun validateName(
-            name: String,
-            exIds: Set<Int> = setOf(),
-        ): String {
-
-            val validatedName = name.trim()
-            if (validatedName.isEmpty())
-                throw UIException("Empty name")
-
-            getAsc()
-                .filter { it.id !in exIds }
-                .forEach { shortcut ->
-                    if (shortcut.name.equals(validatedName, ignoreCase = true))
-                        throw UIException("$validatedName already exists.")
-                }
-
-            return validatedName
-        }
-
-        private fun validateUri(uri: String): String {
-            val validatedUri = uri.trim()
-            if (validatedUri.isEmpty())
-                throw UIException("Empty shortcut link")
-
-            // https://stackoverflow.com/a/62856745/5169420
-            // Since API level 30 resolveActivity always returns null
-            // val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
-            // if (intent.resolveActivity(context.packageManager) == null)
-            //    throw MyException("Invalid action link")
-
-            return validatedUri
-        }
-
-        private fun ShortcutSQ.toModel() = ShortcutModel(
-            id = id, name = name, uri = uri
-        )
     }
 
     suspend fun upWithValidation(name: String, uri: String) = dbIO {
@@ -105,3 +69,40 @@ data class ShortcutModel(
 
     suspend fun delete() = dbIO { db.shortcutQueries.deleteById(id) }
 }
+
+private suspend fun validateName(
+    name: String,
+    exIds: Set<Int> = setOf(),
+): String {
+
+    val validatedName = name.trim()
+    if (validatedName.isEmpty())
+        throw UIException("Empty name")
+
+    ShortcutModel.getAsc()
+        .filter { it.id !in exIds }
+        .forEach { shortcut ->
+            if (shortcut.name.equals(validatedName, ignoreCase = true))
+                throw UIException("$validatedName already exists.")
+        }
+
+    return validatedName
+}
+
+private fun validateUri(uri: String): String {
+    val validatedUri = uri.trim()
+    if (validatedUri.isEmpty())
+        throw UIException("Empty shortcut link")
+
+    // https://stackoverflow.com/a/62856745/5169420
+    // Since API level 30 resolveActivity always returns null
+    // val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+    // if (intent.resolveActivity(context.packageManager) == null)
+    //    throw MyException("Invalid action link")
+
+    return validatedUri
+}
+
+private fun ShortcutSQ.toModel() = ShortcutModel(
+    id = id, name = name, uri = uri
+)
