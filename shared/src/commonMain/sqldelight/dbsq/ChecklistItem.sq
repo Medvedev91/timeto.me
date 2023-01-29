@@ -19,6 +19,11 @@ deleteById:
 DELETE FROM ChecklistItemSQ
 WHERE id = ?;
 
+upById:
+UPDATE ChecklistItemSQ
+SET text = ?, list_id = ?, check_time = ?
+WHERE id = ?;
+
 upTextById:
 UPDATE ChecklistItemSQ
 SET text = ?
