@@ -4,15 +4,16 @@ import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import dbsq.ChecklistSQ
 import kotlinx.coroutines.flow.map
-import timeto.shared.UIException
-import timeto.shared.time
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.jsonArray
+import timeto.shared.*
 
 data class ChecklistModel(
     val id: Int,
     val name: String,
-) {
+) : Backupable__Item {
 
-    companion object {
+    companion object : Backupable__Holder {
 
         suspend fun getAsc() = dbIO {
             db.checklistQueries.getAsc().executeAsList().map { it.toModel() }
@@ -66,6 +67,20 @@ data class ChecklistModel(
         private fun ChecklistSQ.toModel() = ChecklistModel(
             id = id, name = name
         )
+
+        ///
+        /// Backupable Holder
+
+        override fun backupable__getAll(): List<Backupable__Item> =
+            db.checklistQueries.getAsc().executeAsList().map { it.toModel() }
+
+        override fun backupable__restore(json: JsonElement) {
+            val j = json.jsonArray
+            db.checklistQueries.insert(
+                id = j.getInt(0),
+                name = j.getString(1),
+            )
+        }
     }
 
     suspend fun upNameWithValidation(newName: String): Unit = dbIO {
@@ -76,6 +91,27 @@ data class ChecklistModel(
 
     suspend fun deleteWithDependencies(): Unit = dbIO {
         ChecklistItemModel.getAsc().filter { it.list_id == id }.forEach { it.delete() }
+        db.checklistQueries.deleteById(id)
+    }
+
+    ///
+    /// Backupable Item
+
+    override fun backupable__getId(): String = id.toString()
+
+    override fun backupable__backup(): JsonElement = listOf(
+        id, name
+    ).toJsonArray()
+
+    override fun backupable__update(json: JsonElement) {
+        val j = json.jsonArray
+        db.checklistQueries.upNameById(
+            id = j.getInt(0),
+            name = j.getString(1),
+        )
+    }
+
+    override fun backupable__delete() {
         db.checklistQueries.deleteById(id)
     }
 }
