@@ -583,7 +583,7 @@ private fun TimerView(
                         .clickable {
                             val bundle = ActivityOptionsCompat
                                 // fullscreen_in - animation for new activity, 0 - no animation for current.
-                                // Animation for closing is inside of FullscreenActivity.
+                                // Animation for closing if inside FullscreenActivity.
                                 .makeCustomAnimation(context, R.anim.fullscreen_in, 0)
                                 .toBundle()
                             context.startActivity(Intent(context, FullscreenActivity::class.java), bundle)
