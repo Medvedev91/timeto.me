@@ -5,17 +5,15 @@ import kotlinx.coroutines.launch
 import timeto.shared.*
 import timeto.shared.db.TaskFolderModel
 import timeto.shared.db.TaskModel
+import timeto.shared.ui.sortedByFolder
 
 class TasksListVM(
     val folder: TaskFolderModel,
 ) : __VM<TasksListVM.State>() {
 
     class TaskUI(
-        val task: TaskModel,
-    ) {
-
-        val textFeatures = TextFeatures.parse(task.text)
-        val listText = textFeatures.textUI()
+        task: TaskModel,
+    ) : timeto.shared.ui.TaskUI(task) {
 
         fun start(
             onStarted: () -> Unit,
@@ -75,42 +73,5 @@ class TasksListVM(
     private fun List<TaskModel>.toUiList() = this
         .filter { it.folder_id == folder.id }
         .map { TaskUI(it) }
-        .let { tasksUI ->
-            if (folder.id == TaskFolderModel.ID_TODAY)
-                tasksUI.sortedForToday()
-            else
-                tasksUI.sortedByDescending { it.task.id }
-        }
+        .sortedByFolder(folder)
 }
-
-///
-/// GD Tasks Sorting
-
-private fun List<TasksListVM.TaskUI>.sortedForToday(): List<TasksListVM.TaskUI> = this
-    // Map<Int /* day */, List<TasksListVM.TaskUI>>
-    .groupBy { taskUI ->
-        taskUI.textFeatures.fromRepeating?.day
-            ?: taskUI.textFeatures.timeUI?.unixTime?.localDay
-            ?: taskUI.task.unixTime().localDay
-    }
-    .toList()
-    .sortedByDescending { it.first }
-    // List<List<TasksListVM.TaskUI>>
-    .map { it.second.sortedInsideDay() }
-    .flatten()
-
-private fun List<TasksListVM.TaskUI>.sortedInsideDay(): List<TasksListVM.TaskUI> {
-    val (tasksWithDaytime, tasksNoDaytime) = this.partition { it.textFeatures.timeUI != null }
-
-    val resList = mutableListOf<TasksListVM.TaskUI>()
-    tasksNoDaytime
-        .sortedByDescending { it.task.id }
-        .forEach { resList.add(it) }
-    tasksWithDaytime
-        .sortedBy { it.textFeatures.timeUI!!.unixTime.time }
-        .forEach { resList.add(it) }
-
-    return resList
-}
-
-//////
