@@ -38,6 +38,7 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
         val activity: ActivityModel,
         val noteData: NoteData?,
         val isActive: Boolean,
+        val withTopDivider: Boolean,
     ) {
 
         val timerHints = TimerHintUI.buildList(
@@ -120,6 +121,7 @@ private fun List<ActivityModel>.toUiList(
             activity = activity,
             noteData = noteData,
             isActive = isActive,
+            withTopDivider = (idx != 0) && (activeIdx != idx - 1),
         )
     }
 }

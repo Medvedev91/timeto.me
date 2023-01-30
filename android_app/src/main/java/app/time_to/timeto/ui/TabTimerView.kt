@@ -103,8 +103,6 @@ fun TabTimerView() {
 
             TimerView(state.lastInterval)
 
-            val lastInterval = state.lastInterval
-
             LazyColumn(
                 contentPadding = PaddingValues(horizontal = 24.dp, vertical = 22.dp),
             ) {
@@ -174,7 +172,7 @@ fun TabTimerView() {
                                         timerSheetState.value = true
                                     }
                                 },
-                            contentAlignment = Alignment.BottomCenter,
+                            contentAlignment = Alignment.TopCenter,
                         ) {
 
                             val emojiHPadding = 8.dp
@@ -302,10 +300,7 @@ fun TabTimerView() {
                                 }
                             }
 
-                            val next = activitiesUI.getOrNull(index + 1)?.activity
-                            val isNextActive = next != null && next.id == lastInterval.activity_id
-
-                            if (!isActive && !isLast && !isNextActive)
+                            if (uiActivity.withTopDivider)
                                 Divider(
                                     color = c.dividerBackground2,
                                     modifier = Modifier
