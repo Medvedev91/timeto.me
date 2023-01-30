@@ -56,14 +56,12 @@ class FullscreenActivity : ComponentActivity() {
                     ListenNewIntervalForTriggers()
                     ///
 
-                    val (titleNoActions, actions) = TriggersView__Utils.parseText(text = state.title)
-
                     Column(
                         modifier = Modifier.align(Alignment.TopCenter)
                     ) {
 
                         Text(
-                            text = titleNoActions,
+                            text = state.title,
                             modifier = Modifier
                                 .padding(top = 30.dp, start = 30.dp, end = 30.dp),
                             fontSize = 22.sp,
@@ -73,7 +71,7 @@ class FullscreenActivity : ComponentActivity() {
                         )
 
                         TriggersView__ListView(
-                            triggers = actions,
+                            triggers = state.triggers,
                             withOnClick = true,
                             modifier = Modifier.padding(top = 10.dp),
                             contentPadding = PaddingValues(horizontal = 50.dp)

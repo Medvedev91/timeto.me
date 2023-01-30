@@ -12,6 +12,7 @@ class FullscreenVM(
 
     data class State(
         val title: String,
+        val triggers: List<Trigger>,
         val timerData: TimerData,
     )
 
@@ -41,10 +42,11 @@ private fun prepState(
     lastInterval: IntervalModel,
     defColor: ColorNative,
 ): FullscreenVM.State {
-    val title = lastInterval.note ?: DI.activitiesSorted.first { it.id == lastInterval.activity_id }.nameWithEmoji()
-    val timerData = TimerData(lastInterval, defColor)
+    val titlePlain = lastInterval.note ?: lastInterval.getActivityDI().nameWithEmoji()
+    val textFeatures = TextFeatures.parse(titlePlain)
     return FullscreenVM.State(
-        title = title,
-        timerData = timerData,
+        title = textFeatures.textUI(),
+        triggers = textFeatures.triggers,
+        timerData = TimerData(lastInterval, defColor),
     )
 }
