@@ -3,15 +3,15 @@ import shared
 
 struct ActivityEmojiPickerView: View {
 
-    @EnvironmentObject private var diApple: DIApple
+    @State private var vm = ActivityEmojiPickerVM()
 
     var text: String
     var spaceAround: CGFloat
-    var onSelect: (/* emoji */ String, /* new string */ String) -> Void
+    var onSelect: (/* new string */ String) -> Void
 
     var body: some View {
 
-        VStack(spacing: 0) {
+        VMView(vm: vm, stack: .VStack(spacing: 0)) { state in
 
             ScrollView(.horizontal, showsIndicators: false) {
 
@@ -19,25 +19,10 @@ struct ActivityEmojiPickerView: View {
 
                     MySpacerSize(width: spaceAround)
 
-                    let allActivities = diApple.activities
-
-                    ForEach(allActivities, id: \.id) { activity in
+                    ForEach(state.activities, id: \.id) { activity in
                         Button(
                                 action: {
-                                    let textFirstEmoji = allActivities
-                                            .map { ($0.emoji, text.index(of: $0.emoji)) }
-                                            .filter { $0.1 != nil }
-                                            .min(by: { $0.1! < $1.1! })?
-                                            .0
-
-                                    let newText: String
-                                    if let textFirstEmoji = textFirstEmoji {
-                                        newText = text.replacingOccurrences(of: textFirstEmoji, with: activity.emoji)
-                                    } else {
-                                        newText = "\(text.trim()) \(activity.emoji)"
-                                    }
-
-                                    onSelect(activity.emoji, newText)
+                                    onSelect(vm.upText(text: text, activity: activity))
                                 },
                                 label: {
                                     Text(activity.emoji)

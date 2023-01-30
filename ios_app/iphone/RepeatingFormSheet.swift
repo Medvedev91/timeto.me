@@ -64,7 +64,7 @@ struct RepeatingsFormSheet: View {
                     ActivityEmojiPickerView(
                             text: state.inputTextValue,
                             spaceAround: MyListView.PADDING_SECTION_OUTER_HORIZONTAL - 5
-                    ) { emoji, newString in
+                    ) { newString in
                         vm.setTextValue(text: newString)
                     }
                             .padding(.top, 8)
