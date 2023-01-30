@@ -60,10 +60,6 @@ struct W_TabTimerView: View {
         var lastInterval: IntervalModel
         @State private var isTickerPresented = false
 
-        private var isActive: Bool {
-            activityUI.activity.id == lastInterval.activity_id
-        }
-
         let defBgColor = Color(rgba: [34, 34, 35])
 
         var body: some View {
@@ -79,11 +75,11 @@ struct W_TabTimerView: View {
                                     .lineLimit(1)
                                     .truncationMode(.middle)
 
-                            if isActive, let note = lastInterval.note {
+                            if let noteUI = activityUI.noteUI {
 
                                 HStack(spacing: 0) {
 
-                                    Text(note.removeTriggerIdsNoEnsure())
+                                    Text(noteUI.text)
                                             .font(.system(size: 14, weight: .light))
                                             .lineLimit(1)
                                             .truncationMode(.middle)
@@ -143,7 +139,7 @@ struct W_TabTimerView: View {
                     .background(
                             RoundedRectangle(cornerRadius: 10, style: .continuous)
                                     // На глаз с элементами из списка задач
-                                    .fill(isActive ? .blue : defBgColor)
+                                    .fill(activityUI.isActive ? .blue : defBgColor)
                     )
                     .sheet(isPresented: $isTickerPresented) {
                         W_TickerDialog(
