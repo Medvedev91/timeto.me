@@ -3,6 +3,7 @@ package timeto.shared
 import kotlinx.coroutines.flow.*
 import timeto.shared.db.ActivityModel
 import timeto.shared.db.IntervalModel
+import timeto.shared.ui.IntervalNoteUI
 import timeto.shared.vm.__VM
 import timeto.shared.ui.TimerHintUI
 
@@ -10,6 +11,8 @@ class WatchTabTimerVM : __VM<WatchTabTimerVM.State>() {
 
     class ActivityUI(
         val activity: ActivityModel,
+        val noteUI: IntervalNoteUI?,
+        val isActive: Boolean,
     ) {
 
         val listTitle = TextFeatures.parse(activity.nameWithEmoji()).textUI()
@@ -60,12 +63,24 @@ private fun prepState(
     activities: List<ActivityModel>,
 ) = WatchTabTimerVM.State(
     lastInterval = lastInterval,
-    activitiesUI = activities
-        // On top the active activity :)
-        .sortedByDescending { it.id == lastInterval.activity_id }
-        .map { activity ->
-            WatchTabTimerVM.ActivityUI(
-                activity = activity
-            )
-        }
+    activitiesUI = activities.toUiList(lastInterval)
 )
+
+private fun List<ActivityModel>.toUiList(
+    lastInterval: IntervalModel
+): List<WatchTabTimerVM.ActivityUI> {
+    // On top the active activity :)
+    val sorted = this.sortedByDescending { it.id == lastInterval.activity_id }
+    val activeIdx = sorted.indexOfFirst { it.id == lastInterval.activity_id }
+    return sorted.mapIndexed { idx, activity ->
+        val isActive = (idx == activeIdx)
+        val noteUI = if (isActive && lastInterval.note != null)
+            IntervalNoteUI(lastInterval.note, checkLeadingEmoji = false)
+        else null
+        WatchTabTimerVM.ActivityUI(
+            activity = activity,
+            noteUI = noteUI,
+            isActive = isActive,
+        )
+    }
+}
