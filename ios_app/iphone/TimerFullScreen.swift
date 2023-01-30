@@ -37,7 +37,7 @@ private struct TimerFullScreen__ViewModifier: ViewModifier {
 
 private struct TimerFullScreen__FullScreenCoverView: View {
 
-    @State private var vm = FullscreenVM(defColor: ColorNative.white)
+    @State private var vm = FullscreenVM(defColor: .white)
 
     @EnvironmentObject private var timerFullScreen: TimerFullScreen
 
@@ -93,9 +93,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
                 Button(
                         action: {
-                            IntervalModel.Companion().restartActualInterval { _ in
-                                // todo
-                            }
+                            vm.restart()
                         },
                         label: {
                             Text("Restart")
