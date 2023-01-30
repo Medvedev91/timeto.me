@@ -68,11 +68,3 @@ struct Triggers__Parsed {
         self.triggers = triggers
     }
 }
-
-extension String {
-
-    /// todo remove
-    func removeTriggerIdsNoEnsure() -> String {
-        Triggers__Parsed(self, ensureInDb: false).text
-    }
-}
