@@ -240,8 +240,8 @@ fun TabTimerView() {
                                     contentPadding = triggersListContentPaddings
                                 )
 
-                                val noteData = uiActivity.noteData
-                                if (noteData != null) {
+                                val noteUI = uiActivity.noteUI
+                                if (noteUI != null) {
 
                                     Row(
                                         modifier = Modifier
@@ -249,7 +249,7 @@ fun TabTimerView() {
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
 
-                                        val leadingEmoji = noteData.leadingEmoji
+                                        val leadingEmoji = noteUI.leadingEmoji
                                         if (leadingEmoji != null)
                                             Text(
                                                 text = leadingEmoji,
@@ -261,7 +261,7 @@ fun TabTimerView() {
                                             )
 
                                         Text(
-                                            noteData.text,
+                                            noteUI.text,
                                             fontWeight = FontWeight.W300,
                                             fontSize = 14.sp,
                                             color = c.white,
@@ -292,7 +292,7 @@ fun TabTimerView() {
                                     }
 
                                     TriggersView__ListView(
-                                        triggers = noteData.triggers,
+                                        triggers = noteUI.triggers,
                                         withOnClick = true,
                                         modifier = Modifier.padding(top = 7.dp, bottom = 4.dp),
                                         contentPadding = triggersListContentPaddings

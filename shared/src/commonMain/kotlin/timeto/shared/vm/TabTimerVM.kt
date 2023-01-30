@@ -4,39 +4,15 @@ import kotlinx.coroutines.flow.*
 import timeto.shared.*
 import timeto.shared.db.ActivityModel
 import timeto.shared.db.IntervalModel
+import timeto.shared.ui.IntervalNoteUI
 import timeto.shared.ui.TimerHintUI
 
 class TabTimerVM : __VM<TabTimerVM.State>() {
 
-    class NoteData(
-        plainText: String,
-    ) {
-
-        val text: String
-        val leadingEmoji: String?
-        val triggers: List<Trigger>
-
-        init {
-            val textFeatures = TextFeatures.parse(plainText)
-            triggers = textFeatures.triggers
-
-            // todo refactor by text features repeatings/events
-            val noteUI = textFeatures.textUI()
-            val emoji = setOf(EMOJI_REPEATING, EMOJI_CALENDAR)
-                .firstOrNull { emoji -> noteUI.startsWith(emoji) }
-            if (emoji != null) {
-                text = noteUI.replaceFirst(emoji, "").trim()
-                leadingEmoji = emoji
-            } else {
-                text = noteUI
-                leadingEmoji = null
-            }
-        }
-    }
 
     class ActivityUI(
         val activity: ActivityModel,
-        val noteData: NoteData?,
+        val noteUI: IntervalNoteUI?,
         val isActive: Boolean,
         val withTopDivider: Boolean,
     ) {
@@ -114,12 +90,12 @@ private fun List<ActivityModel>.toUiList(
     val activeIdx = this.indexOfFirst { it.id == lastInterval.activity_id }
     return sorted.mapIndexed { idx, activity ->
         val isActive = (idx == activeIdx)
-        val noteData = if (isActive && lastInterval.note != null)
-            TabTimerVM.NoteData(lastInterval.note)
+        val noteUI = if (isActive && lastInterval.note != null)
+            IntervalNoteUI(lastInterval.note)
         else null
         TabTimerVM.ActivityUI(
             activity = activity,
-            noteData = noteData,
+            noteUI = noteUI,
             isActive = isActive,
             withTopDivider = (idx != 0) && (activeIdx != idx - 1),
         )

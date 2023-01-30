@@ -370,13 +370,13 @@ struct TabTimerView_ActivityRowView: View {
                                 contentPaddingEnd: endPadding
                         )
 
-                        if let noteData = activityUI.noteData {
+                        if let noteUI = activityUI.noteUI {
 
                             VStack(alignment: .leading, spacing: 0) {
 
                                 HStack(spacing: 0) {
 
-                                    if let leadingEmoji = noteData.leadingEmoji {
+                                    if let leadingEmoji = noteUI.leadingEmoji {
                                         Text(leadingEmoji)
                                                 .foregroundColor(Color(.white))
                                                 .font(.system(size: 14, weight: .thin))
@@ -384,11 +384,11 @@ struct TabTimerView_ActivityRowView: View {
                                                 .padding(.horizontal, emojiHPadding)
                                     }
 
-                                    Text(noteData.text)
+                                    Text(noteUI.text)
                                             .myMultilineText()
                                             .foregroundColor(Color(.white))
                                             .font(.system(size: 14, weight: .thin))
-                                            .padding(.leading, noteData.leadingEmoji != nil ? 0.0 : emojiStartPadding)
+                                            .padding(.leading, noteUI.leadingEmoji != nil ? 0.0 : emojiStartPadding)
 
                                     Button(
                                             action: {
@@ -415,7 +415,7 @@ struct TabTimerView_ActivityRowView: View {
                                         .padding(.trailing, endPadding - 2)
 
                                 TriggersView__List(
-                                        triggers: noteData.triggers,
+                                        triggers: noteUI.triggers,
                                         paddingTop: 6.0,
                                         paddingBottom: 4.0,
                                         contentPaddingStart: emojiStartPadding - 1,
