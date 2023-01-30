@@ -5,8 +5,6 @@ struct TabTimerView: View {
 
     @State private var vm = TabTimerVM()
 
-    let lastInterval: IntervalModel
-
     @State private var isReadmePresented = false
 
     @State private var isAddActivityPresented = false
@@ -39,7 +37,7 @@ struct TabTimerView: View {
                             /// Ordering is important, otherwise Edit would not be clicked.
 
                             TabTimerView_ProgressView(
-                                    lastInterval: lastInterval
+                                    lastInterval: state.lastInterval
                             )
                                     .padding(.leading, 16)
                                     .padding(.trailing, 16)
@@ -88,23 +86,10 @@ struct TabTimerView: View {
 
                                     ForEach(activitiesUI, id: \.activity.id) { activityUI in
 
-                                        let isPrevActivityActive: Bool = {
-                                            /// При удалении активности ина пропадает из списка, по этому ее может не быть
-                                            /// On activity remove it disappear from the list, so it can not be existing.
-                                            guard let curIndex = activitiesUI.firstIndex(of: activityUI) else {
-                                                return false
-                                            }
-                                            let prevIndex = curIndex - 1
-                                            if prevIndex < 0 {
-                                                return false
-                                            }
-                                            return activitiesUI[prevIndex].activity.id == lastInterval.activity_id
-                                        }()
-
                                         TabTimerView_ActivityRowView(
                                                 activityUI: activityUI,
-                                                lastInterval: lastInterval,
-                                                withTopDivider: (activitiesUI.first != activityUI) && !isPrevActivityActive
+                                                lastInterval: state.lastInterval,
+                                                withTopDivider: activityUI.withTopDivider
                                         )
                                     }
                                 }

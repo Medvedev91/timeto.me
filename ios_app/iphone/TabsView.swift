@@ -51,17 +51,15 @@ struct TabsView: View {
             /// # PROVOKE_STATE_UPDATE
             EmptyView().id("MainView checklist \(triggersChecklist?.id ?? 0)")
 
-            if let lastInterval = diApple.lastInterval {
-                TabTimerView(lastInterval: lastInterval)
-                        .background(TabBarAccessor { tabBar in
-                            TabsView.tabHeight = tabBar.bounds.height
-                        })
-                        .tabItem {
-                            Image(systemName: "timer")
-                            Text("Timer")
-                        }
-                        .tag(TabsView.TAB_ID_TIMER)
-            }
+            TabTimerView()
+                    .background(TabBarAccessor { tabBar in
+                        TabsView.tabHeight = tabBar.bounds.height
+                    })
+                    .tabItem {
+                        Image(systemName: "timer")
+                        Text("Timer")
+                    }
+                    .tag(TabsView.TAB_ID_TIMER)
 
             TabTasksView()
                     .tabItem {
