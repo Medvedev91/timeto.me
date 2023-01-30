@@ -88,7 +88,7 @@ fun RepeatingFormSheet(
                     modifier = Modifier
                         .padding(top = 8.dp),
                     contentPadding = PaddingValues(horizontal = MyListView.PADDING_SECTION_OUTER_HORIZONTAL - 4.dp),
-                    onSelect = { _, newString ->
+                    onSelect = { newString ->
                         vm.setTextValue(newString.trim() + " ")
                     }
                 )
