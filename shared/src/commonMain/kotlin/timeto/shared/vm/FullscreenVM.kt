@@ -28,12 +28,13 @@ class FullscreenVM(
     }
 
     override fun onAppear() {
+        val scope = scopeVM()
         IntervalModel.getLastOneOrNullFlow()
             .filterNotNull()
-            .onEachExIn(scopeVM()) {
+            .onEachExIn(scope) {
                 upState(it)
             }
-        scopeVM().launch {
+        scope.launch {
             while (true) {
                 upState(DI.lastInterval)
                 delay(1_000L)
