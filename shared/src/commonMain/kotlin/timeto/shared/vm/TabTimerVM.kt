@@ -8,8 +8,35 @@ import timeto.shared.ui.TimerHintUI
 
 class TabTimerVM : __VM<TabTimerVM.State>() {
 
+    class NoteData(
+        plainText: String,
+    ) {
+
+        val text: String
+        val leadingEmoji: String?
+        val triggers: List<Trigger>
+
+        init {
+            val textFeatures = TextFeatures.parse(plainText)
+            triggers = textFeatures.triggers
+
+            // todo refactor by text features repeatings/events
+            val noteUI = textFeatures.textUI()
+            val emoji = setOf(EMOJI_REPEATING, EMOJI_CALENDAR)
+                .firstOrNull { emoji -> noteUI.startsWith(emoji) }
+            if (emoji != null) {
+                text = noteUI.replaceFirst(emoji, "").trim()
+                leadingEmoji = emoji
+            } else {
+                text = noteUI
+                leadingEmoji = null
+            }
+        }
+    }
+
     class ActivityUI(
         val activity: ActivityModel,
+        val noteData: NoteData?,
     ) {
 
         val timerHints = TimerHintUI.buildList(
@@ -51,13 +78,15 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
     }
 
     data class State(
-        val activitiesUI: List<ActivityUI>,
+        val activities: List<ActivityModel>,
         val lastInterval: IntervalModel,
-    )
+    ) {
+        val activitiesUI = activities.toUiList(lastInterval)
+    }
 
     override val state = MutableStateFlow(
         State(
-            activitiesUI = DI.activitiesSorted.toUiList(),
+            activities = DI.activitiesSorted,
             lastInterval = DI.lastInterval,
         )
     )
@@ -65,8 +94,8 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
     override fun onAppear() {
         val scope = scopeVM()
         ActivityModel.getAscSortedFlow()
-            .onEachExIn(scope) { list ->
-                state.update { it.copy(activitiesUI = list.toUiList()) }
+            .onEachExIn(scope) { activities ->
+                state.update { it.copy(activities = activities) }
             }
         IntervalModel.getLastOneOrNullFlow()
             .filterNotNull()
@@ -76,6 +105,16 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
     }
 }
 
-private fun List<ActivityModel>.toUiList() = this
-    .sortedWith(compareBy({ it.sort }, { it.id }))
-    .map { TabTimerVM.ActivityUI(it) }
+private fun List<ActivityModel>.toUiList(
+    lastInterval: IntervalModel
+): List<TabTimerVM.ActivityUI> {
+    val sorted = this.sortedWith(compareBy({ it.sort }, { it.id }))
+    val activeIdx = this.indexOfFirst { it.id == lastInterval.activity_id }
+    return sorted.mapIndexed { idx, activity ->
+        val isActive = (idx == activeIdx)
+        val noteData = if (isActive && lastInterval.note != null)
+            TabTimerVM.NoteData(lastInterval.note)
+        else null
+        TabTimerVM.ActivityUI(activity, noteData)
+    }
+}

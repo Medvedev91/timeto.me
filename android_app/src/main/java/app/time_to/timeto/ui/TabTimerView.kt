@@ -105,8 +105,6 @@ fun TabTimerView() {
 
             val lastInterval = state.lastInterval
 
-            val note = lastInterval.note
-
             LazyColumn(
                 contentPadding = PaddingValues(horizontal = 24.dp, vertical = 22.dp),
             ) {
@@ -244,9 +242,8 @@ fun TabTimerView() {
                                     contentPadding = triggersListContentPaddings
                                 )
 
-                                if (isActive && note != null) {
-
-                                    val (noteNoTriggers, noteTriggers) = TriggersView__Utils.parseText(note)
+                                val noteData = uiActivity.noteData
+                                if (noteData != null) {
 
                                     Row(
                                         modifier = Modifier
@@ -254,16 +251,7 @@ fun TabTimerView() {
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
 
-                                        val (leadingEmoji: String?, prepNote: String) = remember(noteNoTriggers) {
-                                            val emoji = setOf(EMOJI_REPEATING, EMOJI_CALENDAR)
-                                                .firstOrNull { emoji -> noteNoTriggers.startsWith(emoji) }
-
-                                            if (emoji != null)
-                                                emoji to noteNoTriggers.replaceFirst(emoji, "").trim()
-                                            else
-                                                null to noteNoTriggers
-                                        }
-
+                                        val leadingEmoji = noteData.leadingEmoji
                                         if (leadingEmoji != null)
                                             Text(
                                                 text = leadingEmoji,
@@ -275,7 +263,7 @@ fun TabTimerView() {
                                             )
 
                                         Text(
-                                            prepNote,
+                                            noteData.text,
                                             fontWeight = FontWeight.W300,
                                             fontSize = 14.sp,
                                             color = c.white,
@@ -306,7 +294,7 @@ fun TabTimerView() {
                                     }
 
                                     TriggersView__ListView(
-                                        triggers = noteTriggers,
+                                        triggers = noteData.triggers,
                                         withOnClick = true,
                                         modifier = Modifier.padding(top = 7.dp, bottom = 4.dp),
                                         contentPadding = triggersListContentPaddings
