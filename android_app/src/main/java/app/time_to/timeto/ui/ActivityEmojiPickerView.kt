@@ -28,15 +28,15 @@ fun ActivityEmojiPickerView(
         modifier = modifier
     ) {
         items(
-            state.activitiesUI,
-            key = { it.activity.id }
-        ) { activityUI ->
+            state.activities,
+            key = { it.id }
+        ) { activity ->
             Text(
-                activityUI.activity.emoji,
+                activity.emoji,
                 modifier = Modifier
                     .clip(RoundedCornerShape(99.dp))
                     .clickable {
-                        onSelect(vm.upText(text, activityUI.activity))
+                        onSelect(vm.upText(text, activity))
                     }
                     .padding(5.dp),
                 fontSize = 24.sp,

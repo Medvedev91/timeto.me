@@ -2,33 +2,25 @@ package timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import timeto.shared.DI
-import timeto.shared.TextFeatures
 import timeto.shared.db.ActivityModel
 import timeto.shared.onEachExIn
 
 class ActivityEmojiPickerVM : __VM<ActivityEmojiPickerVM.State>() {
 
-    class ActivityUI(
-        val activity: ActivityModel,
-    ) {
-        val listText = TextFeatures.parse(activity.nameWithEmoji()).textUI()
-    }
-
     data class State(
-        val activitiesUI: List<ActivityUI>,
+        val activities: List<ActivityModel>,
     )
 
-    override val state = MutableStateFlow(State(DI.activitiesSorted.toUiList()))
+    override val state = MutableStateFlow(State(DI.activitiesSorted))
 
     override fun onAppear() {
         ActivityModel.getAscSortedFlow().onEachExIn(scopeVM()) { activities ->
-            state.update { it.copy(activitiesUI = activities.toUiList()) }
+            state.update { it.copy(activities = activities) }
         }
     }
 
     fun upText(text: String, activity: ActivityModel): String {
-        val textFirstEmoji = state.value.activitiesUI
-            .map { it.activity }
+        val textFirstEmoji = state.value.activities
             .map { it.emoji to text.indexOf(it.emoji) }
             .filter { it.second != -1 }
             .minByOrNull { it.second }
@@ -40,5 +32,3 @@ class ActivityEmojiPickerVM : __VM<ActivityEmojiPickerVM.State>() {
         return "${text.trim()} ${activity.emoji}"
     }
 }
-
-private fun List<ActivityModel>.toUiList() = this.map { ActivityEmojiPickerVM.ActivityUI(it) }
