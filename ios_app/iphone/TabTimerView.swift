@@ -88,8 +88,7 @@ struct TabTimerView: View {
 
                                         TabTimerView_ActivityRowView(
                                                 activityUI: activityUI,
-                                                lastInterval: state.lastInterval,
-                                                withTopDivider: activityUI.withTopDivider
+                                                lastInterval: state.lastInterval
                                         )
                                     }
                                 }
@@ -279,11 +278,6 @@ struct TabTimerView_ActivityRowView: View {
     private var activityUI: TabTimerVM.ActivityUI
     private var lastInterval: IntervalModel
 
-    private let withTopDivider: Bool
-    private var isActive: Bool {
-        activityUI.activity.id == lastInterval.activity_id
-    }
-
     @State private var isSetTimerPresented = false
     @State private var isEditSheetPresented = false
 
@@ -298,17 +292,15 @@ struct TabTimerView_ActivityRowView: View {
 
     init(
             activityUI: TabTimerVM.ActivityUI,
-            lastInterval: IntervalModel,
-            withTopDivider: Bool
+            lastInterval: IntervalModel
     ) {
         self.activityUI = activityUI
         self.lastInterval = lastInterval
-        self.withTopDivider = withTopDivider
     }
 
     var body: some View {
         MyListSwipeToActionItem(
-                withTopDivider: withTopDivider && !isActive,
+                withTopDivider: activityUI.withTopDivider,
                 dividerStartOffset: emojiStartPadding,
                 deletionHint: activityUI.deletionHint,
                 deletionConfirmationNote: activityUI.deletionConfirmation,
@@ -331,6 +323,7 @@ struct TabTimerView_ActivityRowView: View {
                 },
                 label: {
 
+                    let isActive = activityUI.isActive
                     let endPadding = 12.0
 
                     VStack(alignment: .leading, spacing: 0) {
@@ -377,26 +370,13 @@ struct TabTimerView_ActivityRowView: View {
                                 contentPaddingEnd: endPadding
                         )
 
-                        if isActive, let note = lastInterval.note {
-
-                            let triggersParsedNote = Triggers__Parsed(note)
+                        if let noteData = activityUI.noteData {
 
                             VStack(alignment: .leading, spacing: 0) {
 
                                 HStack(spacing: 0) {
 
-                                    let resTmp: (leadingEmoji: String?, prepNote: String) = {
-                                        let noteNoTriggers = triggersParsedNote.text
-                                        let emoji = Set([UtilsKt.EMOJI_REPEATING, UtilsKt.EMOJI_CALENDAR])
-                                                .first { emoji in noteNoTriggers.starts(with: emoji) }
-
-                                        if let emoji = emoji {
-                                            return (emoji, noteNoTriggers.replacingOccurrences(of: emoji, with: "").trim())
-                                        }
-                                        return (nil, noteNoTriggers)
-                                    }()
-
-                                    if let leadingEmoji = resTmp.leadingEmoji {
+                                    if let leadingEmoji = noteData.leadingEmoji {
                                         Text(leadingEmoji)
                                                 .foregroundColor(Color(.white))
                                                 .font(.system(size: 14, weight: .thin))
@@ -404,11 +384,11 @@ struct TabTimerView_ActivityRowView: View {
                                                 .padding(.horizontal, emojiHPadding)
                                     }
 
-                                    Text(resTmp.prepNote)
+                                    Text(noteData.text)
                                             .myMultilineText()
                                             .foregroundColor(Color(.white))
                                             .font(.system(size: 14, weight: .thin))
-                                            .padding(.leading, resTmp.leadingEmoji != nil ? 0.0 : emojiStartPadding)
+                                            .padding(.leading, noteData.leadingEmoji != nil ? 0.0 : emojiStartPadding)
 
                                     Button(
                                             action: {
@@ -435,7 +415,7 @@ struct TabTimerView_ActivityRowView: View {
                                         .padding(.trailing, endPadding - 2)
 
                                 TriggersView__List(
-                                        triggers: triggersParsedNote.triggers,
+                                        triggers: noteData.triggers,
                                         paddingTop: 6.0,
                                         paddingBottom: 4.0,
                                         contentPaddingStart: emojiStartPadding - 1,
@@ -469,7 +449,7 @@ struct TabTimerView_ActivityRowView: View {
                     ) {
                     }
                 }
-                .buttonStyle(TabTimerView_ActivityRowView_ButtonStyle(isActive: isActive))
+                .buttonStyle(TabTimerView_ActivityRowView_ButtonStyle(isActive: activityUI.isActive))
     }
 }
 
