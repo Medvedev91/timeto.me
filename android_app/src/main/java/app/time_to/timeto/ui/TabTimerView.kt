@@ -116,7 +116,7 @@ fun TabTimerView() {
                 ) { index, uiActivity ->
 
                     val isLast = index == activitiesUI.size - 1
-                    val isActive = lastInterval.activity_id == uiActivity.activity.id
+                    val isActive = uiActivity.isActive
                     val bgAnimate = animateColorAsState(
                         if (isActive) c.blue else c.background2,
                         spring(stiffness = Spring.StiffnessMediumLow)
