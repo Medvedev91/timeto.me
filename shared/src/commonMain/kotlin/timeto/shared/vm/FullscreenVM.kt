@@ -15,17 +15,7 @@ class FullscreenVM(
         val timerData: TimerData,
     )
 
-    override val state: MutableStateFlow<State>
-
-    init {
-        val prepState = prepState(DI.lastInterval, defColor)
-        state = MutableStateFlow(
-            State(
-                title = prepState.first,
-                timerData = prepState.second,
-            )
-        )
-    }
+    override val state = MutableStateFlow(prepState(DI.lastInterval, defColor))
 
     override fun onAppear() {
         val scope = scopeVM()
@@ -43,21 +33,18 @@ class FullscreenVM(
     }
 
     private fun upState(interval: IntervalModel) {
-        val prepState = prepState(interval, defColor)
-        state.update {
-            it.copy(
-                title = prepState.first,
-                timerData = prepState.second,
-            )
-        }
+        state.update { prepState(interval, defColor) }
     }
 }
 
 private fun prepState(
     lastInterval: IntervalModel,
     defColor: ColorNative,
-): Pair<String, TimerData> {
+): FullscreenVM.State {
     val title = lastInterval.note ?: DI.activitiesSorted.first { it.id == lastInterval.activity_id }.nameWithEmoji()
     val timerData = TimerData(lastInterval, defColor)
-    return title to timerData
+    return FullscreenVM.State(
+        title = title,
+        timerData = timerData,
+    )
 }
