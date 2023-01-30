@@ -9,7 +9,6 @@ import timeto.shared.ui.TimerHintUI
 
 class TabTimerVM : __VM<TabTimerVM.State>() {
 
-
     class ActivityUI(
         val activity: ActivityModel,
         val noteUI: IntervalNoteUI?,
@@ -87,7 +86,7 @@ private fun List<ActivityModel>.toUiList(
     lastInterval: IntervalModel
 ): List<TabTimerVM.ActivityUI> {
     val sorted = this.sortedWith(compareBy({ it.sort }, { it.id }))
-    val activeIdx = this.indexOfFirst { it.id == lastInterval.activity_id }
+    val activeIdx = sorted.indexOfFirst { it.id == lastInterval.activity_id }
     return sorted.mapIndexed { idx, activity ->
         val isActive = (idx == activeIdx)
         val noteUI = if (isActive && lastInterval.note != null)
