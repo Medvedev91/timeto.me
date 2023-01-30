@@ -19,20 +19,17 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.time_to.timeto.R
-import app.time_to.timeto.ui.TriggersView__Utils.removeTriggerIds
-import timeto.shared.db.ActivityModel
-import timeto.shared.launchEx
-import java.util.*
+import app.time_to.timeto.rememberVM
+import timeto.shared.vm.SortActivitiesVM
 
 @Composable
 fun EditActivitiesSheet(
     isPresented: MutableState<Boolean>,
 ) {
-    val scope = rememberCoroutineScope()
 
     TimetoSheet(state = isPresented) {
 
-        val allActivities = ActivityModel.getAscSortedFlow().collectAsState(listOf()).value
+        val (vm, state) = rememberVM { SortActivitiesVM() }
 
         Box(
             modifier = Modifier
@@ -46,11 +43,15 @@ fun EditActivitiesSheet(
                 contentPadding = PaddingValues(top = 20.dp, bottom = 70.dp)
             ) {
 
-                itemsIndexed(allActivities, key = { _, item -> item.id }) { _, activity ->
+                val activitiesUI = state.activitiesUI
+                itemsIndexed(
+                    activitiesUI,
+                    key = { _, item -> item.activity.id }
+                ) { idx, activityUI ->
 
                     MyList.SectionItem(
-                        isFirst = allActivities.first() == activity,
-                        isLast = allActivities.last() == activity,
+                        isFirst = activitiesUI.first() == activityUI,
+                        isLast = activitiesUI.last() == activityUI,
                     ) {
 
                         Box(
@@ -65,7 +66,7 @@ fun EditActivitiesSheet(
                             ) {
 
                                 Text(
-                                    activity.nameWithEmoji().removeTriggerIds(),
+                                    activityUI.listText,
                                     modifier = Modifier
                                         .padding(
                                             PaddingValues(
@@ -88,17 +89,7 @@ fun EditActivitiesSheet(
                                         .size(24.dp)
                                         .clip(RoundedCornerShape(99.dp))
                                         .clickable {
-                                            val tmpActivities = allActivities.map { it }
-                                            if (tmpActivities.lastOrNull() == activity)
-                                                return@clickable
-
-                                            val oldIndex = tmpActivities.indexOf(activity)
-                                            Collections.swap(tmpActivities, oldIndex, oldIndex + 1)
-                                            scope.launchEx {
-                                                tmpActivities.forEachIndexed { newIndex, activity ->
-                                                    activity.upSort(newIndex)
-                                                }
-                                            }
+                                            vm.down(activityUI)
                                         }
                                         .padding(1.dp)
                                 )
@@ -112,23 +103,13 @@ fun EditActivitiesSheet(
                                         .size(24.dp)
                                         .clip(RoundedCornerShape(99.dp))
                                         .clickable {
-                                            val tmpActivities = allActivities.map { it }
-                                            if (tmpActivities.firstOrNull() == activity)
-                                                return@clickable
-
-                                            val oldIndex = tmpActivities.indexOf(activity)
-                                            Collections.swap(tmpActivities, oldIndex, oldIndex - 1)
-                                            scope.launchEx {
-                                                tmpActivities.forEachIndexed { newIndex, activity ->
-                                                    activity.upSort(newIndex)
-                                                }
-                                            }
+                                            vm.up(activityUI)
                                         }
                                         .padding(1.dp)
                                 )
                             }
 
-                            if (allActivities.firstOrNull() != activity)
+                            if (idx > 0)
                                 Divider(
                                     color = c.dividerBackground2,
                                     modifier = Modifier.padding(start = 18.dp),
