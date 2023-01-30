@@ -297,9 +297,6 @@ object TriggersView__Utils {
 
         return textNoTriggers.removeDuplicateSpaces().trim() to triggers
     }
-
-    @Composable
-    fun String.removeTriggerIds() = parseText(this).first
 }
 
 class TriggersView__State__TextField private constructor(
