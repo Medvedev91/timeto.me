@@ -91,7 +91,7 @@ private fun List<ActivityModel>.toUiList(
     return sorted.mapIndexed { idx, activity ->
         val isActive = (idx == activeIdx)
         val noteUI = if (isActive && lastInterval.note != null)
-            IntervalNoteUI(lastInterval.note)
+            IntervalNoteUI(lastInterval.note, checkLeadingEmoji = true)
         else null
         TabTimerVM.ActivityUI(
             activity = activity,

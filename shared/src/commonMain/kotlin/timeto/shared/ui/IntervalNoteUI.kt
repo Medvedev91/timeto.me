@@ -7,6 +7,7 @@ import timeto.shared.Trigger
 
 class IntervalNoteUI(
     plainText: String,
+    checkLeadingEmoji: Boolean,
 ) {
 
     val text: String
@@ -19,11 +20,16 @@ class IntervalNoteUI(
 
         // todo refactor by text features repeatings/events
         val textUI = textFeatures.textUI()
-        val emoji = setOf(EMOJI_REPEATING, EMOJI_CALENDAR)
-            .firstOrNull { emoji -> textUI.startsWith(emoji) }
-        if (emoji != null) {
-            text = textUI.replaceFirst(emoji, "").trim()
-            leadingEmoji = emoji
+        if (checkLeadingEmoji) {
+            val emoji = setOf(EMOJI_REPEATING, EMOJI_CALENDAR)
+                .firstOrNull { emoji -> textUI.startsWith(emoji) }
+            if (emoji != null) {
+                text = textUI.replaceFirst(emoji, "").trim()
+                leadingEmoji = emoji
+            } else {
+                text = textUI
+                leadingEmoji = null
+            }
         } else {
             text = textUI
             leadingEmoji = null
