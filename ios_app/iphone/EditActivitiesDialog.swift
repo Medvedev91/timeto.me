@@ -29,10 +29,6 @@ struct EditActivitiesDialog: View {
         var activity: ActivityModel
 
         var body: some View {
-            AnyView(safeView)
-        }
-
-        private var safeView: some View {
 
             HStack(spacing: 8) {
 
