@@ -15,7 +15,6 @@ class DIApple: ObservableObject {
     @Published var taskFolders = [TaskFolderModel]()
     @Published var tasks = [TaskModel]()
     @Published var lastInterval: IntervalModel? = nil
-    @Published var activities = [ActivityModel]()
 }
 
 private struct DIApple__Modifier: ViewModifier {
@@ -28,7 +27,6 @@ private struct DIApple__Modifier: ViewModifier {
     private let taskFolders: pubArray = TaskFolderModel.Companion().getAscBySortFlow().toPublisher()
     private let tasks: pubArray = TaskModel.Companion().getAscFlow().toPublisher()
     private let lastInterval: AnyPublisher<IntervalModel, Never> = IntervalModel.Companion().getLastOneOrNullFlow().toPublisher()
-    private let activities: pubArray = ActivityModel.Companion().getAscSortedFlow().toPublisher()
 
     func body(content: Content) -> some View {
         content
@@ -36,7 +34,6 @@ private struct DIApple__Modifier: ViewModifier {
                 .onReceive(taskFolders) { diApple.taskFolders = $0 as! [TaskFolderModel] }
                 .onReceive(tasks) { diApple.tasks = $0 as! [TaskModel] }
                 .onReceive(lastInterval) { diApple.lastInterval = $0 as! IntervalModel? }
-                .onReceive(activities) { diApple.activities = $0 as! [ActivityModel] }
                 .environmentObject(diApple)
     }
 }
