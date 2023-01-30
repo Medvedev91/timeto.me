@@ -21,8 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.time_to.timeto.ui.*
 import timeto.shared.ColorNative
-import timeto.shared.db.IntervalModel
-import timeto.shared.launchEx
 import timeto.shared.vm.FullscreenVM
 
 class FullscreenActivity : ComponentActivity() {
@@ -35,11 +33,9 @@ class FullscreenActivity : ComponentActivity() {
 
         setContent {
 
-            val scope = rememberCoroutineScope()
-
             MyLocalProvider {
 
-                val (_, state) = rememberVM { FullscreenVM(ColorNative.white) }
+                val (vm, state) = rememberVM { FullscreenVM(ColorNative.white) }
                 val timerData = state.timerData
 
                 Box(
@@ -109,9 +105,7 @@ class FullscreenActivity : ComponentActivity() {
                             modifier = Modifier
                                 .alpha(if (timerData.title != null) 1f else 0f)
                                 .clickable(timerData.title != null) {
-                                    scope.launchEx {
-                                        IntervalModel.restartActualInterval()
-                                    }
+                                    vm.restart()
                                 },
                             color = c.white,
                             letterSpacing = 2.sp,

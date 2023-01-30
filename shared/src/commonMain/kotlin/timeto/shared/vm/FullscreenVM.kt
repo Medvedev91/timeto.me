@@ -33,6 +33,12 @@ class FullscreenVM(
         }
     }
 
+    fun restart() {
+        launchExDefault {
+            IntervalModel.restartActualInterval()
+        }
+    }
+
     private fun upState(interval: IntervalModel) {
         state.update { prepState(interval, defColor) }
     }
