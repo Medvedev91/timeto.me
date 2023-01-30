@@ -110,7 +110,7 @@ struct HistoryView: View {
                                         VStack {
 
                                             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                                    .fill(interval.getActivity().getColorRgba().toColor())
+                                                    .fill(interval.getActivityDI().getColorRgba().toColor())
                                                     .frame(
                                                             width: 10,
                                                             height: Double(10.max(intervalUI.secondsForBar.toInt() / 50))

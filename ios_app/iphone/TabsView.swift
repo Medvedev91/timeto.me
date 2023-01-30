@@ -87,7 +87,7 @@ struct TabsView: View {
                 .onChange(of: diApple.lastInterval?.id) { _ in
                     /// #GD AUTOSTART_TRIGGERS
                     if let lastInterval = diApple.lastInterval, (lastInterval.id + 3 > time()) {
-                        let stringToCheckTriggers = lastInterval.note ?? lastInterval.getActivity().name
+                        let stringToCheckTriggers = lastInterval.note ?? lastInterval.getActivityDI().name
                         guard let trigger = Triggers__Parsed(stringToCheckTriggers).triggers.first else {
                             return
                         }

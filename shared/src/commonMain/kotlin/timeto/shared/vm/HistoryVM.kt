@@ -170,7 +170,7 @@ class HistoryVM : __VM<HistoryVM.State>() {
                 section: HistorySection,
             ): IntervalUI {
                 val unixTime = interval.unixTime()
-                val activity = interval.getActivity()
+                val activity = interval.getActivityDI()
 
                 val sectionDayTimeStart = UnixTime.byLocalDay(section.day).time
                 val sectionDayTimeFinish = sectionDayTimeStart + 86400 - 1

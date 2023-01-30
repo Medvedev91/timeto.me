@@ -187,7 +187,7 @@ fun ListenNewIntervalForTriggers() {
             return@LaunchedEffect
 
         // #GD AUTOSTART_TRIGGERS
-        val stringToCheckTriggers = lastInterval.note ?: lastInterval.getActivity().name
+        val stringToCheckTriggers = lastInterval.note ?: lastInterval.getActivityDI().name
 
         val trigger = TriggersView__Utils
             .parseText(stringToCheckTriggers)

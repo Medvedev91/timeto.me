@@ -120,7 +120,7 @@ data class IntervalModel(
             val interval = getLastOneOrNull()!!
             addWithValidation(
                 interval.deadline,
-                interval.getActivity(),
+                interval.getActivityDI(),
                 interval.note
             )
         }
@@ -163,7 +163,7 @@ data class IntervalModel(
 
     fun unixTime() = UnixTime(id)
 
-    fun getActivity() = DI.activitiesSorted.first { it.id == activity_id }
+    fun getActivityDI() = DI.activitiesSorted.first { it.id == activity_id }
 
     suspend fun upActivity(newActivity: ActivityModel): Unit = dbIO {
         db.intervalQueries.upActivityIdById(
