@@ -6,17 +6,18 @@ import android.app.NotificationManager
 import android.content.Context
 import android.media.AudioAttributes
 import android.net.Uri
+import timeto.shared.getSoundTimeToBreakFileName
 
 /**
  * WARNING
- * DO NOT CHANGE FILE NAME FOR SOUND FILES. Otherwise they will stop working.
+ * DO NOT CHANGE FILE NAME FOR SOUND FILES. Otherwise, they will stop working.
  *
  * Common docs: https://developer.android.com/guide/topics/ui/notifiers/notifications
  * Channel docs: https://developer.android.com/training/notify-user/channels
  */
 object NotificationCenter {
 
-    fun channelTimeToBreak() = upsertChannel("time_to_break", "Time to Break", "sound_time_to_break")
+    fun channelTimeToBreak() = upsertChannel("time_to_break", "Time to Break", getSoundTimeToBreakFileName(false))
     fun channelTimerOverdue() = upsertChannel("timer_overdue", "Timer Overdue", null)
 
     fun getManager() =

@@ -37,7 +37,7 @@ struct TimeToApp: App {
 
                                 let dataItems = $0 as! [ScheduledNotificationData]
                                 dataItems.forEach { data in
-                                    let soundFile = data.type == .break_ ? "notif_time_to_break.wav" : nil
+                                    let soundFile = data.type == .break_ ? UtilsKt.getSoundTimeToBreakFileName(withExtension: true) : nil
                                     schedulePush(
                                             seconds: data.inSeconds.toInt(),
                                             title: data.title,
