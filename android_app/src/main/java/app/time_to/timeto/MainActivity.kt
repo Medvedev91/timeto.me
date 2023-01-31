@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Removes all system paddings. Needs android:windowSoftInputMode="adjustNothing" on manifest.
+        // Removes all system paddings. Needs android:windowSoftInputMode="adjustNothing" in manifest.
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
