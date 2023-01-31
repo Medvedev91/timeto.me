@@ -8,9 +8,10 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowCompat
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import androidx.core.view.WindowInsetsControllerCompat
 import app.time_to.timeto.ui.*
 import kotlinx.coroutines.delay
 import timeto.shared.*
@@ -33,16 +34,16 @@ class MainActivity : ComponentActivity() {
 
             val (vm, state) = rememberVM { AppVM() }
 
+            val isDayOrNight = !isSystemInDarkTheme()
+
             MaterialTheme(
-                colors = if (isSystemInDarkTheme()) darkColors(primary = c.blue) else lightColors(primary = c.blue),
+                colors = if (isDayOrNight) lightColors(primary = c.blue) else darkColors(primary = c.blue),
             ) {
-                val systemUiController = rememberSystemUiController()
                 if (state.isAppReady) {
-                    /**
-                     * Setting background initially in xml. Here after buttons appear.
-                     * c.transparent set the default background. WTF?!
-                     */
-                    systemUiController.setNavigationBarColor(c.tabsBackground.copy(alpha = 0.1f))
+                    // Setting background and icons initially in xml. Here after tabs appear.
+                    // c.transparent set the default background. WTF?!
+                    window.navigationBarColor = c.tabsBackground.copy(alpha = 0.1f).toArgb()
+                    WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = isDayOrNight
 
                     MyLocalProvider {
 
