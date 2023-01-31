@@ -2,9 +2,10 @@
 
     <style name="Theme.TimeTo" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/my_dn_background</item>
-        <!-- Dark icons for status bar -->
-        <item name="android:windowLightStatusBar">@bool/my_dn_is_light_status_bar</item>
+        <!-- Status bar background + icons color -->
         <item name="android:statusBarColor">#00000000</item>
+        <item name="android:windowLightStatusBar">@bool/my_dn_is_light_status_bar</item>
+        <!-- Navigation bar background (changing programmatically) -->
         <item name="android:navigationBarColor">@color/my_dn_background</item>
     </style>
 
