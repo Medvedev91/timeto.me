@@ -17,7 +17,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.TimeTo"
-            android:windowSoftInputMode="adjustResize"> <!-- Or API 29 imePadding() bug -->
+            android:windowSoftInputMode="adjustResize"> <!-- Fix API 29 imePadding() -->
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
