@@ -199,7 +199,7 @@ private fun BottomNavigation(
                 onClick = {
 
                     if (item.route == TabItem.Tasks.route)
-                        tabTasksSetToday?.invoke()
+                        setTodayFolder?.invoke()
 
                     navController.navigate(item.route) {
 

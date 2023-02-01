@@ -1,6 +1,7 @@
 package app.time_to.timeto.ui
 
 import android.view.MotionEvent
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
@@ -33,10 +34,7 @@ import timeto.shared.db.TaskFolderModel
 import java.util.*
 import kotlin.random.Random
 
-/**
- * True/false - итак Today
- */
-var tabTasksSetToday: (() -> Boolean)? = null
+var setTodayFolder: (() -> Unit)? = null
 
 val TAB_TASKS_PADDING_START = 24.dp
 val TAB_TASKS_PADDING_END = 68.dp
@@ -52,16 +50,19 @@ fun TabTasks() {
         mutableStateOf<Section?>(null)
     }
 
-    tabTasksSetToday = {
-        if ((activeSection as? Section_Folder)?.folder?.isToday == true)
-            true
-        else {
-            scope.launch {
-                activeSection = Section_Folder(TaskFolderModel.getToday())
-            }
-            false
+    ///
+    /// Navigation
+
+    setTodayFolder = {
+        scope.launch {
+            activeSection = Section_Folder(TaskFolderModel.getToday())
         }
     }
+    BackHandler((activeSection as? Section_Folder)?.folder?.isToday != true) {
+        setTodayFolder!!()
+    }
+
+    //////
 
     LaunchedEffect(Unit) {
         activeSection = Section_Folder(TaskFolderModel.getToday())

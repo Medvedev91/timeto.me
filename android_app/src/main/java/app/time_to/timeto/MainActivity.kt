@@ -91,17 +91,6 @@ class MainActivity : ComponentActivity() {
         super.onResume()
         NotificationCenter.cleanAllPushes()
     }
-
-    override fun onBackPressed() {
-        if (
-            (globalNav?.currentDestination?.route == TabItem.Tasks.route)
-            &&
-            (tabTasksSetToday?.invoke() == false)
-        )
-            return
-
-        super.onBackPressed()
-    }
 }
 
 @Composable
