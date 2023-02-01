@@ -10,23 +10,20 @@ func hideKeyboard() {
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
 }
 
-func schedulePush(
-        seconds: Int,
-        title: String,
-        body: String,
-        soundFile: String?
-) {
+func schedulePush(data: ScheduledNotificationData) {
     let content = UNMutableNotificationContent()
-    content.title = title
-    content.body = body
-    if let soundFile = soundFile {
+    content.title = data.title
+    content.body = data.text
+
+    if data.type == .break_ {
+        let soundFile = UtilsKt.getSoundTimeToBreakFileName(withExtension: true)
         content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: soundFile))
     } else {
         content.sound = .default
     }
     content.badge = 1
 
-    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(seconds), repeats: false)
+    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(data.inSeconds.toInt()), repeats: false)
 
     let req = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
 

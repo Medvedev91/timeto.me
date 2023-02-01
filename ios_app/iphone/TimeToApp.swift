@@ -34,17 +34,8 @@ struct TimeToApp: App {
                             .onReceive(scheduledNotificationsDataPublisher) {
                                 let center = UNUserNotificationCenter.current()
                                 center.removeAllPendingNotificationRequests()
-
                                 let dataItems = $0 as! [ScheduledNotificationData]
-                                dataItems.forEach { data in
-                                    let soundFile = data.type == .break_ ? UtilsKt.getSoundTimeToBreakFileName(withExtension: true) : nil
-                                    schedulePush(
-                                            seconds: data.inSeconds.toInt(),
-                                            title: data.title,
-                                            body: data.text,
-                                            soundFile: soundFile
-                                    )
-                                }
+                                dataItems.forEach { data in schedulePush(data: data) }
                             }
                             .onAppear {
                                 /// Use together
