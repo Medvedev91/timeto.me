@@ -74,19 +74,8 @@ class MainActivity : ComponentActivity() {
                             scheduledNotificationsDataFlow
                                 .onEachExIn(this) { notificationsData ->
                                     NotificationCenter.cleanAllPushes()
-                                    notificationsData.forEach { data ->
-                                        scheduleNotification(
-                                            title = data.title,
-                                            text = data.text,
-                                            inSeconds = data.inSeconds,
-                                            requestCode = when (data.type) {
-                                                ScheduledNotificationData.TYPE.BREAK -> TimerNotificationReceiver.NOTIFICATION_ID_BREAK
-                                                ScheduledNotificationData.TYPE.OVERDUE -> TimerNotificationReceiver.NOTIFICATION_ID_OVERDUE
-                                            },
-                                        )
-                                    }
+                                    notificationsData.forEach { scheduleNotification(it) }
                                 }
-                            //
                             // TRICK Run strictly after scheduledNotificationsDataFlow launch.
                             // TRICK Without delay the first event does not handled. 1L enough.
                             vm.onNotificationsPermissionReady(delayMls = 500L)

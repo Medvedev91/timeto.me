@@ -57,17 +57,17 @@ fun colorFromRgbaString(colorRgba: String) = colorRgba
 
 ///
 
-fun scheduleNotification(
-    title: String,
-    text: String,
-    inSeconds: Int,
-    requestCode: Int,
-) {
+fun scheduleNotification(data: ScheduledNotificationData) {
+    val requestCode = when (data.type) {
+        ScheduledNotificationData.TYPE.BREAK -> TimerNotificationReceiver.NOTIFICATION_ID_BREAK
+        ScheduledNotificationData.TYPE.OVERDUE -> TimerNotificationReceiver.NOTIFICATION_ID_OVERDUE
+    }
+
     val context = App.instance
     val intent = Intent(context, TimerNotificationReceiver::class.java)
 
-    intent.putExtra(TimerNotificationReceiver.EXTRA_TITLE, title)
-    intent.putExtra(TimerNotificationReceiver.EXTRA_TEXT, text)
+    intent.putExtra(TimerNotificationReceiver.EXTRA_TITLE, data.title)
+    intent.putExtra(TimerNotificationReceiver.EXTRA_TEXT, data.text)
     intent.putExtra(TimerNotificationReceiver.EXTRA_REQUEST_CODE, requestCode)
 
     val pIntent = PendingIntent.getBroadcast(
@@ -84,7 +84,7 @@ fun scheduleNotification(
      * Works better. I do not know why to use 2 times pIntent, but it's okey.
      */
     val alarm = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    val alarmInfo = AlarmManager.AlarmClockInfo(timeMls() + (inSeconds * 1_000L), pIntent)
+    val alarmInfo = AlarmManager.AlarmClockInfo(timeMls() + (data.inSeconds * 1_000L), pIntent)
     alarm.setAlarmClock(alarmInfo, pIntent)
 }
 
