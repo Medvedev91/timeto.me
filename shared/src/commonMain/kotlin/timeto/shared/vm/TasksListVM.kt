@@ -80,8 +80,7 @@ class TasksListVM(
         onSuccess: () -> Unit,
     ) = scopeVM().launchEx {
         try {
-            val textWithFeatures = state.value.addFormInputTextValue
-            TaskModel.addWithValidation(textWithFeatures, folder)
+            TaskModel.addWithValidation(state.value.addFormInputTextValue, folder)
             setAddFormInputTextValue("")
             onSuccess()
         } catch (e: UIException) {
