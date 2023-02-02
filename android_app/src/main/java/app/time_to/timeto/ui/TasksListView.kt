@@ -38,7 +38,7 @@ import timeto.shared.vm.TasksListVM
 
 private val TASKS_LIST_ITEM_MIN_HEIGHT = 42.dp
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TasksListView(
     activeFolder: TaskFolderModel,
@@ -49,14 +49,23 @@ fun TasksListView(
     val scope = rememberCoroutineScope()
 
     val editedTask = remember { mutableStateOf<TaskModel?>(null) }
+    val editedTaskLocal = editedTask.value
+    if (editedTaskLocal != null) {
+        val isEditTaskPresented = remember { mutableStateOf(true) }
+        LaunchedEffect(isEditTaskPresented.value) {
+            if (!isEditTaskPresented.value)
+                editedTask.value = null
+        }
+        TaskFormSheet(
+            task = editedTaskLocal,
+            isPresented = isEditTaskPresented,
+        )
+    }
 
     // Without the default value - animation on open
     val taskFormHeight = remember { mutableStateOf(TASKS_LIST_ITEM_MIN_HEIGHT + taskListSectionPadding * 2) }
 
     Box(
-        modifier = Modifier
-            .consumedWindowInsets(PaddingValues(bottom = LocalTabsHeight.current))
-            .imePadding(),
         contentAlignment = Alignment.BottomCenter,
     ) {
 
@@ -276,7 +285,7 @@ fun TasksListView(
             height = taskFormHeight,
             folder = activeFolder,
             listState = listState,
-            editedTask = editedTask,
+            editedTask = remember { mutableStateOf(null) }, // todo
         )
     }
 }
@@ -480,5 +489,12 @@ private fun TaskFormView(
                 )
             }
         }
+
+        if (isFocused && WindowInsets.isImeVisible)
+            Box(
+                modifier = Modifier
+                    .consumedWindowInsets(PaddingValues(bottom = LocalTabsHeight.current))
+                    .imePadding()
+            )
     }
 }
