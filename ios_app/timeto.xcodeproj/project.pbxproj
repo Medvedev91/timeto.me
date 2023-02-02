@@ -35,6 +35,7 @@
 		318211D5994178629ED2FA09 /* W_TabTasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182161C9947F88C6A1D3B80 /* W_TabTasksView.swift */; };
 		31821286152F9C43BA2C4B7B /* TimetoSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318210AB991EB1C25EA1B565 /* TimetoSheet.swift */; };
 		318212C07B5351BA8C7C9671 /* PieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E01EC49E0964E5CB2F5 /* PieView.swift */; };
+		318212D55BBA074155F95EB0 /* TextField__VMState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821CC7588164B713321141 /* TextField__VMState.swift */; };
 		3182132BB1D4C32160A2EBCE /* TasksListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821AD0C2CE87BF5AE03022 /* TasksListView.swift */; };
 		318213413EE00D5D8F3FA396 /* EventsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821F7CBA1480191F065D5E /* EventsListView.swift */; };
 		318213463760A308F3C143A0 /* TabToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318215C1991B23DE1654074B /* TabToolsView.swift */; };
@@ -158,6 +159,7 @@
 		31821BCB57EC030987E8342E /* SheetHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SheetHeaderView.swift; sourceTree = "<group>"; };
 		31821C625A8A199EAEF17182 /* MailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
 		31821CAC31C48C0016357E8C /* TabsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsView.swift; sourceTree = "<group>"; };
+		31821CC7588164B713321141 /* TextField__VMState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField__VMState.swift; sourceTree = "<group>"; };
 		31821CEEF63544D48A45B8F4 /* W_TabTimerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W_TabTimerView.swift; sourceTree = "<group>"; };
 		31821CF31C64B32D614C6A9D /* EditActivitiesDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditActivitiesDialog.swift; sourceTree = "<group>"; };
 		31821D4211F3426B1F444F81 /* DaytimePickerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaytimePickerSheet.swift; sourceTree = "<group>"; };
@@ -333,6 +335,7 @@
 				318212D56D0EAA6EAEF424E4 /* TriggersView.swift */,
 				318218DEA96CCDED8A4C448C /* ui */,
 				3182118D8EA3E0D889D4FDC3 /* utils_ios.swift */,
+				31821CC7588164B713321141 /* TextField__VMState.swift */,
 			);
 			path = iphone;
 			sourceTree = "<group>";
@@ -551,6 +554,7 @@
 				318210CF629A7E593B9F8FE4 /* ChecklistItemFormSheet.swift in Sources */,
 				31821DF974247D110D01C3A2 /* TaskSheet.swift in Sources */,
 				31821611D065F54C0BC007A9 /* DaytimePickerSheet.swift in Sources */,
+				318212D55BBA074155F95EB0 /* TextField__VMState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
