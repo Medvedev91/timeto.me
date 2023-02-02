@@ -411,7 +411,7 @@ struct TasksView__TaskRowView: View {
                 .sheetEnv(
                         isPresented: $isEditTaskPresented,
                         content: {
-                            TaskEditDialog(
+                            TaskFormSheet(
                                     isPresented: $isEditTaskPresented,
                                     task: taskUI.task
                             )

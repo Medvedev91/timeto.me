@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-struct TaskEditDialog: View {
+struct TaskFormSheet: View {
 
     @Binding private var isPresented: Bool
     private var task: TaskModel
