@@ -18,9 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -219,38 +217,6 @@ object TriggersView__Utils {
                 }
 
         return textNoTriggers.removeDuplicateSpaces().trim() to triggers
-    }
-}
-
-class TriggersView__State__TextField private constructor(
-    initText: String,
-    defTriggers: List<Trigger>
-) {
-
-    val triggers = mutableStateListOf(*defTriggers.toTypedArray())
-
-    val textField = mutableStateOf(TextFieldValue(initText, TextRange(initText.length)))
-
-    fun upTextField(newText: String) {
-        textField.value = TextFieldValue(newText, TextRange(newText.length))
-    }
-
-    fun reInit(initText: String) {
-        val (newText, newTriggers) = TriggersView__Utils.parseText(text = initText)
-        upTextField(newText)
-        triggers.clear()
-        triggers.addAll(newTriggers)
-    }
-
-    fun textWithTriggers() = "${textField.value.text} ${triggers.joinToString(" ") { it.id }}".trim()
-
-    companion object {
-
-        @Composable
-        fun asState(initText: String): TriggersView__State__TextField = remember {
-            val (text, triggers) = TriggersView__Utils.parseText(initText)
-            TriggersView__State__TextField(text, triggers)
-        }
     }
 }
 
