@@ -144,7 +144,7 @@ fun TasksListView(
                                 .clip(MySquircleShape(45f))
                                 .background(c.blue)
                                 .clickable {
-                                    if (state.addFormInputTextValue.isBlank()) {
+                                    if (vm.isAddFormInputEmpty()) {
                                         if (isFocused) focusManager.clearFocus()
                                         else focusRequester.requestFocus()
                                         return@clickable

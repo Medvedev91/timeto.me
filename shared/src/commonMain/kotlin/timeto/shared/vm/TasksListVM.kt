@@ -76,6 +76,8 @@ class TasksListVM(
         it.copy(addFormInputTextValue = text)
     }
 
+    fun isAddFormInputEmpty() = state.value.addFormInputTextValue.isBlank()
+
     fun addTask(
         onSuccess: () -> Unit,
     ) = scopeVM().launchEx {
