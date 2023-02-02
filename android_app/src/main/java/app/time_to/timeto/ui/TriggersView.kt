@@ -26,11 +26,9 @@ import app.time_to.timeto.*
 import app.time_to.timeto.R
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import timeto.shared.DI
 import timeto.shared.Trigger
 import timeto.shared.db.ChecklistModel
 import timeto.shared.db.ShortcutModel
-import timeto.shared.removeDuplicateSpaces
 import java.util.*
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -181,42 +179,6 @@ fun TriggersView__ListView(
                     )
             }
         }
-    }
-}
-
-object TriggersView__Utils {
-
-    fun parseText(
-        text: String,
-    ): Pair<String, List<Trigger>> {
-        val triggers = mutableListOf<Trigger>()
-        var textNoTriggers = text
-
-        val allChecklists = DI.checklists
-        if (allChecklists.isNotEmpty())
-            "#c\\d{10}".toRegex()
-                .findAll(text.lowercase(Locale.getDefault()))
-                .forEach {
-                    val id = it.value.filter { it.isDigit() }.toInt()
-                    allChecklists.firstOrNull { it.id == id }?.let { checklist ->
-                        triggers.add(Trigger.Checklist(checklist))
-                    }
-                    textNoTriggers = textNoTriggers.replace(it.value, "").trim()
-                }
-
-        val allShortcuts = DI.shortcuts
-        if (allShortcuts.isNotEmpty())
-            "#s\\d{10}".toRegex()
-                .findAll(text.lowercase(Locale.getDefault()))
-                .forEach {
-                    val id = it.value.filter { it.isDigit() }.toInt()
-                    allShortcuts.firstOrNull { it.id == id }?.let { shortcut ->
-                        triggers.add(Trigger.Shortcut(shortcut))
-                    }
-                    textNoTriggers = textNoTriggers.replace(it.value, "").trim()
-                }
-
-        return textNoTriggers.removeDuplicateSpaces().trim() to triggers
     }
 }
 
