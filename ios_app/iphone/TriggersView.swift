@@ -149,7 +149,7 @@ struct TriggersView__Form: View {
                                                 .background(
                                                         ZStack {
                                                             Capsule(style: .circular).fill(.blue)
-                                                            Capsule(style: .circular).fill(Color(isSelected ? .blue : bgColor)).padding(.all, 1)
+                                                            Capsule(style: .circular).fill(isSelected ? .blue : Color(bgColor)).padding(.all, 1)
                                                         }
                                                 )
                                     }

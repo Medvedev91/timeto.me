@@ -412,8 +412,8 @@ struct TasksView__TaskRowView: View {
                         isPresented: $isEditTaskPresented,
                         content: {
                             TaskFormSheet(
-                                    isPresented: $isEditTaskPresented,
-                                    task: taskUI.task
+                                    task: taskUI.task,
+                                    isPresented: $isEditTaskPresented
                             )
                         }
                 )

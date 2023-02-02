@@ -3,73 +3,59 @@ import shared
 
 struct TaskFormSheet: View {
 
+    @State private var vm: TaskFormSheetVM
     @Binding private var isPresented: Bool
-    private var task: TaskModel
 
-    @EnvironmentObject private var timetoAlert: TimetoAlert
+    @State private var triggersBg = UIColor.myDayNight(.white, .mySheetFormBg)
 
-    @StateObject private var triggersState: Triggers__State
-
-    init(isPresented: Binding<Bool>, task: TaskModel) {
-        self.task = task
+    init(
+            task: TaskModel,
+            isPresented: Binding<Bool>
+    ) {
+        _vm = State(initialValue: TaskFormSheetVM(task: task))
         _isPresented = isPresented
-        _triggersState = StateObject(wrappedValue: Triggers__State(text: task.text))
     }
 
     var body: some View {
 
-        VStack {
+        VMView(vm: vm, stack: .VStack(spacing: 0)) { state in
 
-            HStack {
-
-                Button(
-                        action: { isPresented.toggle() },
-                        label: { Text("Cancel") }
-                )
-                        .padding(.leading, 25)
-
-                Spacer()
-
-                Button(
-                        action: {
-                            do {
-                                task.upTextWithValidation(newText: triggersState.textWithTriggers()) { _ in
-                                    // todo
-                                    isPresented = false
-                                }
-                            } catch let error as MyError {
-                                timetoAlert.alert(error.message)
-                                return
-                            } catch {
-                                fatalError()
-                            }
-                        },
-                        label: {
-                            Text("Save")
-                                    .fontWeight(.heavy)
-                                    .padding(.trailing, 25)
-                        }
-                )
-                        .disabled(triggersState.text.isEmpty)
+            SheetHeaderView(
+                    onCancel: { isPresented.toggle() },
+                    title: state.headerTitle,
+                    doneText: state.headerDoneText,
+                    isDoneEnabled: state.isHeaderDoneEnabled,
+                    scrollToHeader: 0
+            ) {
+                vm.save {
+                    isPresented = false
+                }
             }
-                    .padding(.top, 20)
 
-            TriggersView__Form__Deprecated(state: triggersState)
+            MyListView__SectionView {
+
+                MyListView__SectionView__TextInputView(
+                        text: state.inputTextValue,
+                        placeholder: "Task",
+                        isAutofocus: true
+                ) { newValue in
+                    vm.setInputTextValue(text: newValue)
+                }
+            }
                     .padding(.top, 10)
-                    .padding(.leading, 10)
 
-            MyTextEditor(
-                    text: $triggersState.text,
-                    placeholder: "Task"
+            TriggersView__Form(
+                    triggers: state.textFeatures.triggers,
+                    onTriggersChanged: { newTriggers in
+                        vm.setTriggers(newTriggers: newTriggers)
+                    },
+                    spaceAround: MyListView.PADDING_SECTION_OUTER_HORIZONTAL,
+                    bgColor: triggersBg,
+                    paddingTop: 20
             )
-                    .padding(.leading, 25)
-                    .padding(.trailing, 25)
-                    // The height and padding should not be large because
-                    // there is not enough space to show the WheelPicker
-                    .padding(.top, 15)
-                    .frame(height: 60)
 
             Spacer()
         }
+                .background(Color(.mySheetFormBg))
     }
 }
