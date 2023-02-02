@@ -47,11 +47,13 @@ class TasksListVM(
 
     data class State(
         val tasksUI: List<TaskUI>,
+        val addFormInputTextValue: String,
     )
 
     override val state = MutableStateFlow(
         State(
-            tasksUI = DI.tasks.toUiList()
+            tasksUI = DI.tasks.toUiList(),
+            addFormInputTextValue = "",
         )
     )
 
@@ -67,6 +69,23 @@ class TasksListVM(
                 delayToNextMinute()
                 state.update { it.copy(tasksUI = TaskModel.getAsc().toUiList()) }
             }
+        }
+    }
+
+    fun setAddFormInputTextValue(text: String) = state.update {
+        it.copy(addFormInputTextValue = text)
+    }
+
+    fun addTask(
+        onSuccess: () -> Unit,
+    ) = scopeVM().launchEx {
+        try {
+            val textWithFeatures = state.value.addFormInputTextValue
+            TaskModel.addWithValidation(textWithFeatures, folder)
+            setAddFormInputTextValue("")
+            onSuccess()
+        } catch (e: UIException) {
+            showUiAlert(e.uiMessage)
         }
     }
 

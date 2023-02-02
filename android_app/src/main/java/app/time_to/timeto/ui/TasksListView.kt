@@ -1,6 +1,5 @@
 package app.time_to.timeto.ui
 
-import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -9,7 +8,6 @@ import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -24,7 +22,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.*
 import app.time_to.timeto.*
 import kotlinx.coroutines.delay
@@ -35,13 +32,13 @@ import timeto.shared.vm.TasksListVM
 
 private val TASKS_LIST_ITEM_MIN_HEIGHT = 42.dp
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalLayoutApi::class)
 @Composable
 fun TasksListView(
     activeFolder: TaskFolderModel,
     dragItem: MutableState<DragItem?>,
 ) {
-    val (_, state) = rememberVM(activeFolder) { TasksListVM(activeFolder) }
+    val (vm, state) = rememberVM(activeFolder) { TasksListVM(activeFolder) }
 
     val scope = rememberCoroutineScope()
 
@@ -75,10 +72,121 @@ fun TasksListView(
         ) {
 
             item {
-                TaskFormView(
-                    folder = activeFolder,
-                    listState = listState,
-                )
+
+                var isFocused by remember { mutableStateOf(false) }
+                val focusManager = LocalFocusManager.current
+                val focusRequester = remember { FocusRequester() }
+
+                val isLight = MaterialTheme.colors.isLight
+
+                Column(
+                    modifier = Modifier
+                        .pointerInput(Unit) { } // Ignore clicks through
+                        .padding(
+                            top = taskListSectionPadding,
+                            bottom = taskListSectionPadding,
+                        )
+                ) {
+
+                    Row(
+                        modifier = Modifier
+                            .border(
+                                width = 0.5.dp,
+                                // Border has almost the same color for the light theme
+                                color = if (isLight) c.background else c.white.copy(alpha = 0.4f),
+                                shape = MySquircleShape()
+                            )
+                            .clip(MySquircleShape())
+                            .background(if (isLight) c.background2.copy(alpha = 0.9f) else c.background.copy(alpha = 0.85f))
+                            .height(IntrinsicSize.Min), // To use fillMaxHeight() inside
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+
+                        BasicTextField__VMState(
+                            text = state.addFormInputTextValue,
+                            onValueChange = {
+                                vm.setAddFormInputTextValue(it)
+                            },
+                            keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
+                            singleLine = false,
+                            cursorBrush = SolidColor(MaterialTheme.colors.primary),
+                            textStyle = LocalTextStyle.current.copy(
+                                color = MaterialTheme.colors.onSurface,
+                                fontSize = 16.sp
+                            ),
+                            decorationBox = { innerTextField ->
+                                Box(
+                                    modifier = Modifier
+                                        .defaultMinSize(minHeight = TASKS_LIST_ITEM_MIN_HEIGHT)
+                                        .padding(start = 14.dp, end = 4.dp),
+                                    contentAlignment = Alignment.CenterStart
+                                ) {
+                                    if (state.addFormInputTextValue.isEmpty())
+                                        Text(
+                                            text = "Task",
+                                            color = c.text.copy(alpha = 0.5f)
+                                        )
+                                    innerTextField()
+                                }
+                            },
+                            modifier = Modifier
+                                .focusRequester(focusRequester)
+                                .weight(1f)
+                                .onFocusChanged {
+                                    isFocused = it.isFocused
+                                }
+                        )
+
+                        Box(
+                            modifier = Modifier
+                                .padding(top = 5.dp, bottom = 5.dp, end = 5.dp)
+                                .fillMaxHeight()
+                                .clip(MySquircleShape(45f))
+                                .background(c.blue)
+                                .clickable {
+                                    if (state.addFormInputTextValue.isBlank()) {
+                                        if (isFocused) focusManager.clearFocus()
+                                        else focusRequester.requestFocus()
+                                        return@clickable
+                                    }
+
+                                    vm.addTask {
+                                        scope.launchEx {
+                                            listState.animateScrollBy(
+                                                -dpToPx(TASKS_LIST_ITEM_MIN_HEIGHT.value).toFloat(),
+                                                animationSpec = spring(stiffness = Spring.StiffnessMediumLow)
+                                            )
+                                            // In case if it's higher than TASKS_LIST_ITEM_MIN_HEIGHT
+                                            listState.animateScrollToItem(0)
+                                        }
+                                        scope.launchEx {                                             // WTF Without delay() does not clear before close.
+                                            // clearFocus() to change isFocused as fast as possible.
+                                            // During delay() adding animation.
+                                            delay(250)
+                                            focusManager.clearFocus()
+                                            ////
+                                        }
+                                    }
+                                }
+                                .padding(horizontal = 12.dp),
+                            contentAlignment = Alignment.CenterStart
+                        ) {
+                            Text(
+                                "SAVE",
+                                color = c.white,
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.W600
+                            )
+                        }
+                    }
+
+                    if (isFocused && WindowInsets.isImeVisible)
+                        Box(
+                            modifier = Modifier
+                                .consumedWindowInsets(PaddingValues(bottom = LocalTabsHeight.current))
+                                .imePadding()
+                        )
+                }
             }
 
             val tasksUI = state.tasksUI
@@ -277,144 +385,5 @@ fun TasksListView(
                 }
             }
         }
-    }
-}
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-private fun TaskFormView(
-    folder: TaskFolderModel,
-    listState: LazyListState,
-) {
-    val scope = rememberCoroutineScope()
-    val errorDialog = LocalErrorDialog.current
-
-    var isFocused by remember { mutableStateOf(false) }
-    val focusManager = LocalFocusManager.current
-    val focusRequester = remember { FocusRequester() }
-
-    val triggersState = TriggersView__State__TextField.asState(initText = "")
-
-    // Input UI
-    val isLight = MaterialTheme.colors.isLight
-    val inputBg = if (isLight) c.background2.copy(alpha = 0.9f) else c.background.copy(alpha = 0.85f)
-    // Border has almost the same color for the light theme
-    val inputBorder = if (isLight) c.background else c.white.copy(alpha = 0.4f)
-
-    Column(
-        modifier = Modifier
-            .pointerInput(Unit) { } // Ignore clicks through
-            .padding(
-                top = taskListSectionPadding,
-                bottom = taskListSectionPadding,
-            )
-    ) {
-
-        Row(
-            modifier = Modifier
-                .border(0.5.dp, inputBorder, shape = MySquircleShape())
-                .clip(MySquircleShape())
-                .background(inputBg)
-                .height(IntrinsicSize.Min), // To use fillMaxHeight() inside
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-
-            BasicTextField(
-                value = triggersState.textField.value,
-                onValueChange = {
-                    triggersState.textField.value = it
-                },
-                keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
-                singleLine = false,
-                cursorBrush = SolidColor(MaterialTheme.colors.primary),
-                textStyle = LocalTextStyle.current.copy(
-                    color = MaterialTheme.colors.onSurface,
-                    fontSize = 16.sp
-                ),
-                decorationBox = { innerTextField ->
-                    Box(
-                        modifier = Modifier
-                            .defaultMinSize(minHeight = TASKS_LIST_ITEM_MIN_HEIGHT)
-                            .padding(start = 14.dp, end = 4.dp),
-                        contentAlignment = Alignment.CenterStart
-                    ) {
-                        if (triggersState.textField.value.text.isEmpty())
-                            Text(
-                                text = "Task",
-                                color = c.text.copy(alpha = 0.5f)
-                            )
-                        innerTextField()
-                    }
-                },
-                modifier = Modifier
-                    .focusRequester(focusRequester)
-                    .weight(1f)
-                    .onFocusChanged {
-                        isFocused = it.isFocused
-                    }
-            )
-
-            Box(
-                modifier = Modifier
-                    .padding(top = 5.dp, bottom = 5.dp, end = 5.dp)
-                    .fillMaxHeight()
-                    .clip(MySquircleShape(45f))
-                    .background(c.blue)
-                    .clickable {
-                        if (triggersState.textField.value.text.isBlank()) {
-                            if (isFocused) focusManager.clearFocus()
-                            else focusRequester.requestFocus()
-                            return@clickable
-                        }
-
-
-                        scope.launchEx {
-                            try {
-                                val newText = triggersState.textWithTriggers()
-
-                                TaskModel.addWithValidation(newText, folder)
-
-                                scope.launchEx {
-                                    listState.animateScrollBy(
-                                        -dpToPx(TASKS_LIST_ITEM_MIN_HEIGHT.value).toFloat(),
-                                        animationSpec = spring(stiffness = Spring.StiffnessMediumLow)
-                                    )
-                                    // In case if it's higher than TASKS_LIST_ITEM_MIN_HEIGHT
-                                    listState.animateScrollToItem(0)
-                                }
-
-                                triggersState.textField.value = TextFieldValue()
-                                triggersState.triggers.clear()
-
-                                // WTF Without delay() does not clear before close.
-                                // clearFocus() to change isFocused as fast as possible.
-                                // During delay() adding animation.
-                                delay(250)
-                                focusManager.clearFocus()
-                                ////
-
-                            } catch (e: MyException) {
-                                errorDialog.value = e.uiMessage
-                            }
-                        }
-                    }
-                    .padding(horizontal = 12.dp),
-                contentAlignment = Alignment.CenterStart
-            ) {
-                Text(
-                    "SAVE",
-                    color = c.white,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.W600
-                )
-            }
-        }
-
-        if (isFocused && WindowInsets.isImeVisible)
-            Box(
-                modifier = Modifier
-                    .consumedWindowInsets(PaddingValues(bottom = LocalTabsHeight.current))
-                    .imePadding()
-            )
     }
 }
