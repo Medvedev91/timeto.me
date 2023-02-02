@@ -35,7 +35,7 @@ fun RepeatingFormSheet(
     editedRepeating: RepeatingModel?,
 ) {
 
-    TimetoSheet(state = isPresented) {
+    TimetoSheet(isPresented = isPresented) {
 
         val (vm, state) = rememberVM(editedRepeating) { RepeatingFormSheetVM(editedRepeating) }
 

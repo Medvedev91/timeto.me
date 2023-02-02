@@ -27,7 +27,7 @@ fun EditActivitiesSheet(
     isPresented: MutableState<Boolean>,
 ) {
 
-    TimetoSheet(state = isPresented) {
+    TimetoSheet(isPresented = isPresented) {
 
         val (vm, state) = rememberVM { SortActivitiesVM() }
 

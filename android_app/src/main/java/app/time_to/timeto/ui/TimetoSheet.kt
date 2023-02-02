@@ -14,13 +14,13 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun TimetoSheet(
-    state: MutableState<Boolean>,
+    isPresented: MutableState<Boolean>,
     topPadding: Dp = 20.dp,
     sheetContent: @Composable () -> Unit
 ) {
     UIWrapper.LayerView(
         UIWrapper.LayerData(
-            isPresented = state,
+            isPresented = isPresented,
             shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
             content = {
                 Box(

@@ -27,7 +27,7 @@ fun ActivityFormSheet(
     isPresented: MutableState<Boolean>,
     editedActivity: ActivityModel?,
 ) {
-    TimetoSheet(state = isPresented) {
+    TimetoSheet(isPresented = isPresented) {
 
         val (vm, state) = rememberVM(editedActivity) { ActivityFormSheetVM(editedActivity) }
 

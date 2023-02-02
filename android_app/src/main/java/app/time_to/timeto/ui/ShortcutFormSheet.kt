@@ -29,7 +29,7 @@ fun ShortcutFormSheet(
     editedShortcut: ShortcutModel?,
 ) {
 
-    TimetoSheet(state = isPresented) {
+    TimetoSheet(isPresented = isPresented) {
 
         val (vm, state) = rememberVM(editedShortcut) { ShortcutFormSheetVM(editedShortcut) }
 

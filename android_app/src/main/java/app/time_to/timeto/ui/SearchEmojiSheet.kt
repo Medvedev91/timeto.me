@@ -37,7 +37,7 @@ fun SearchEmojiSheet(
     // Outside of TimetoSheet to have data at open time
     val (vm, state) = rememberVM { SearchEmojiSheetVM() }
 
-    TimetoSheet(state = isPresented) {
+    TimetoSheet(isPresented = isPresented) {
 
         val focusRequester = remember { FocusRequester() }
 

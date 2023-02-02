@@ -41,7 +41,7 @@ fun EventFormSheet(
 ) {
 
     TimetoSheet(
-        state = isPresented,
+        isPresented = isPresented,
         topPadding = 2.dp, // To fit calendar over the keyboard
     ) {
 
