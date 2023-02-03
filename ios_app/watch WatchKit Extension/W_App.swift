@@ -7,11 +7,10 @@ struct W_App: App {
     @Environment(\.scenePhase) private var scenePhase
     @WKApplicationDelegateAdaptor(W_Delegate.self) var delegate
 
-    @State private var vm: WatchAppVM
+    @State private var vm = WatchAppVM()
 
     init() {
         UtilsPlatformKt.doInitKmmWatchOS(deviceName: machineIdentifier())
-        _vm = State(initialValue: WatchAppVM())
     }
 
     var body: some Scene {
