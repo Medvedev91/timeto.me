@@ -68,7 +68,6 @@
 		31821BCAB8BA795D691FADF8 /* MyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821D7654D0C105DFC60DDD /* MyListView.swift */; };
 		31821C4D6DA83EF42B805658 /* MySpacerSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318212FFE80A0856A0A88DCF /* MySpacerSize.swift */; };
 		31821D2F481BE7580FE4DCC2 /* MyDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821155EAD516A3967CFF52 /* MyDivider.swift */; };
-		31821D56A4F90177C5BD8BE1 /* TimetoAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821555DEFE8CA82096AF8F /* TimetoAlert.swift */; };
 		31821D960D04B6FF21EA9918 /* ActivityFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821794CA93E29D6889286D /* ActivityFormSheet.swift */; };
 		31821DF974247D110D01C3A2 /* TaskSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318213DE3B58FA098A8DBAE7 /* TaskSheet.swift */; };
 		31821E89257A3F8032DE116A /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182118DB415E858D0B449DB /* ChartView.swift */; };
@@ -487,7 +486,6 @@
 				2C712F32291E6A32008E07C0 /* DIApple.swift in Sources */,
 				31821ED40BEA91336DBFE0B4 /* W_TickerDialog.swift in Sources */,
 				318216E60DD4CA4153065416 /* utils_apple.swift in Sources */,
-				31821D56A4F90177C5BD8BE1 /* TimetoAlert.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
