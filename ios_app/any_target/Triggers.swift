@@ -1,30 +1,6 @@
 import SwiftUI
 import shared
 
-class Triggers__State: ObservableObject {
-
-    @Published var text: String
-    @Published var triggers: [Trigger]
-
-    init(text: String) {
-        let parsed = Triggers__Parsed(text)
-        self.text = parsed.text
-        triggers = parsed.triggers
-    }
-
-    func textWithTriggers() -> String {
-        // @formatter:off
-        "\(text) \(triggers.map { $0.id }.joined(separator: " "))".trim()
-        // @formatter:on
-    }
-
-    func upByText(_ text: String) {
-        let parsed = Triggers__Parsed(text)
-        self.text = parsed.text
-        triggers = parsed.triggers
-    }
-}
-
 struct Triggers__Parsed {
 
     let text: String
