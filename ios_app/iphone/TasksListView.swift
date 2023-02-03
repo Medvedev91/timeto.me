@@ -8,14 +8,12 @@ struct TasksListView: View {
     private let activeFolder: TaskFolderModel
     let tabTasksView: TabTasksView
 
+    /// hideKeyboard() is more reliable than false
+    @FocusState private var isAddFormFocused: Bool
+
     private let LIST_BOTTOM_ITEM_ID = "bottom_id"
 
     @StateObject private var keyboardManager = KeyboardManager()
-    @StateObject private var addState = Triggers__State(text: "")
-    /// hideKeyboard() is more reliable than false
-    @FocusState private var isAddFieldFocused: Bool
-
-    @EnvironmentObject private var timetoAlert: TimetoAlert
 
     init(activeFolder: TaskFolderModel, tabTasksView: TabTasksView) {
         self.tabTasksView = tabTasksView
@@ -50,31 +48,21 @@ struct TasksListView: View {
                             }
                                     .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
 
-                            if isAddFieldFocused {
-                                TriggersView__Form__Deprecated(state: addState)
-                                        .padding(.top, 20)
-                            }
-
                             HStack {
 
                                 ZStack {
 
-                                    if #available(iOS 16.0, *) {
-                                        TextField(
-                                                text: $addState.text,
-                                                prompt: Text("Task"),
-                                                axis: .vertical
-                                        ) { /* todo what is it? */ }
-                                                .focused($isAddFieldFocused)
-                                                .padding(.vertical, 8)
-                                    } else {
-                                        // One line ;(
-                                        TextField(text: $addState.text, prompt: Text("Task")) {}
-                                                .focused($isAddFieldFocused)
-                                    }
+                                    TextField__VMState(
+                                            text: state.addFormInputTextValue,
+                                            placeholder: "Task",
+                                            isFocused: $isAddFormFocused,
+                                            onValueChanged: { newText in
+                                                vm.setAddFormInputTextValue(text: newText)
+                                            }
+                                    )
                                 }
                                         .onTapGesture {
-                                            isAddFieldFocused = true
+                                            isAddFormFocused = true
                                         }
                                         .padding(.leading, 16)
 
@@ -117,15 +105,10 @@ struct TasksListView: View {
                                 .frame(minHeight: geometry.size.height)
                     }
                             .animation(tabTasksView.withListAnimation ? Animation.easeOut(duration: 0.25) : nil)
-                            .offset(y: keyboardManager.height > 0 && isAddFieldFocused ? -(keyboardManager.height - TabsView.tabHeight) : 0)
+                            .offset(y: keyboardManager.height > 0 && isAddFormFocused ? -(keyboardManager.height - TabsView.tabHeight) : 0)
                             ///
-                            .onChange(of: isAddFieldFocused) { _ in
+                            .onChange(of: isAddFormFocused) { _ in
                                 scrollDown(scrollProxy: scrollProxy, toAnimate: true)
-                            }
-                            .onChange(of: addState.triggers.count) { newCount in
-                                if newCount > 0 {
-                                    scrollDown(scrollProxy: scrollProxy, toAnimate: true)
-                                }
                             }
                             .onAppear {
                                 scrollDown(scrollProxy: scrollProxy, toAnimate: false)
@@ -159,33 +142,21 @@ struct TasksListView: View {
             toHideKeyboard: Bool,
             scrollProxy: ScrollViewProxy
     ) {
-        withAnimation {
-            if addState.text.isEmpty {
-                if toHideKeyboard {
-                    hideKeyboard()
-                }
-                return
-            }
-
+        if vm.isAddFormInputEmpty() {
             if toHideKeyboard {
                 hideKeyboard()
             }
+            return
+        }
 
-            do {
-                TaskModel.Companion().addWithValidation(
-                        text: addState.textWithTriggers(),
-                        folder: activeFolder
-                ) { _ in
-                    // todo
+        vm.addTask {
+            DispatchQueue.main.async {
+                if toHideKeyboard {
+                    hideKeyboard()
                 }
-                addState.upByText("")
-            } catch let error as MyError {
-                timetoAlert.alert(error.message)
-                return
-            } catch {
-                fatalError()
             }
         }
+
         scrollDown(scrollProxy: scrollProxy, toAnimate: true)
     }
 }
