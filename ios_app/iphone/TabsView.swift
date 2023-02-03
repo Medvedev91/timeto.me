@@ -115,7 +115,7 @@ struct TabsView: View {
                         }
                     }
                     .onAppear {
-                        UITabBar.appearance().scrollEdgeAppearance = UITabBarAppearance() /// Иначе прозрачный TabView
+                        UITabBar.appearance().scrollEdgeAppearance = UITabBarAppearance() /// Fix transparent TabView
                         TabsView.lastInstance = self
                     }
         }
