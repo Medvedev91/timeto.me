@@ -3,9 +3,10 @@ import Combine
 import shared
 
 @main
-struct TimeToApp: App {
+struct IOSApp: App {
 
     @State private var vm = AppVM()
+
     @Environment(\.scenePhase) private var scenePhase
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @StateObject private var myInAppNotificationDelegate = MyInAppNotificationDelegate()

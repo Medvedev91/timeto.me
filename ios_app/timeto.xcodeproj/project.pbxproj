@@ -22,7 +22,7 @@
 		2C82BF6E28726E400041BCA3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C82BF6D28726E400041BCA3 /* Preview Assets.xcassets */; };
 		2C82BF7228726E400041BCA3 /* TimeTo.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 2C82BF5728726E3F0041BCA3 /* TimeTo.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2C82BF7C287272520041BCA3 /* W_Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82BF7B287272520041BCA3 /* W_Delegate.swift */; };
-		2C95BA8D280D74AA0027FC35 /* TimeToApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C95BA7A280D74AA0027FC35 /* TimeToApp.swift */; };
+		2C95BA8D280D74AA0027FC35 /* IOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C95BA7A280D74AA0027FC35 /* IOSApp.swift */; };
 		2CB73DE3292FACE00053B2D6 /* SearchEmojiSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB73DE2292FACE00053B2D6 /* SearchEmojiSheet.swift */; };
 		31821012DE2A1AB2843BEDA9 /* MyListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821F8331A2FF4EAEC38B12 /* MyListHeader.swift */; };
 		31821041BD8177F53F3B5357 /* MyTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318219EE6381832156C8B77B /* MyTextEditor.swift */; };
@@ -117,7 +117,7 @@
 		2C82BF6D28726E400041BCA3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2C82BF6F28726E400041BCA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2C82BF7B287272520041BCA3 /* W_Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = W_Delegate.swift; sourceTree = "<group>"; };
-		2C95BA7A280D74AA0027FC35 /* TimeToApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeToApp.swift; sourceTree = "<group>"; };
+		2C95BA7A280D74AA0027FC35 /* IOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSApp.swift; sourceTree = "<group>"; };
 		2C95BA82280D74AA0027FC35 /* TimeTo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeTo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CB73DE2292FACE00053B2D6 /* SearchEmojiSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEmojiSheet.swift; sourceTree = "<group>"; };
 		3182105EDDDD7B20C7211083 /* ActivityEmojiPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityEmojiPickerView.swift; sourceTree = "<group>"; };
@@ -318,7 +318,7 @@
 				31821ED2142F08DDD1E0CC75 /* TimerFullScreen.swift */,
 				31821AE61EE1FC22CCF8E753 /* TimerPickerSheet.swift */,
 				31821527096D1BDB0A35B178 /* TimetoAlert.swift */,
-				2C95BA7A280D74AA0027FC35 /* TimeToApp.swift */,
+				2C95BA7A280D74AA0027FC35 /* IOSApp.swift */,
 				318210AB991EB1C25EA1B565 /* TimetoSheet.swift */,
 				318212D56D0EAA6EAEF424E4 /* TriggersView.swift */,
 				318218DEA96CCDED8A4C448C /* ui */,
@@ -485,7 +485,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2C95BA8D280D74AA0027FC35 /* TimeToApp.swift in Sources */,
+				2C95BA8D280D74AA0027FC35 /* IOSApp.swift in Sources */,
 				318211C63D2C7A7AC48659E8 /* AppDelegate.swift in Sources */,
 				318213463760A308F3C143A0 /* TabToolsView.swift in Sources */,
 				31821D960D04B6FF21EA9918 /* ActivityFormSheet.swift in Sources */,
