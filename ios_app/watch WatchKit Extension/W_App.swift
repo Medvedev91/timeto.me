@@ -4,10 +4,10 @@ import shared
 @main
 struct W_App: App {
 
+    @State private var vm = WatchAppVM()
+
     @Environment(\.scenePhase) private var scenePhase
     @WKApplicationDelegateAdaptor(W_Delegate.self) var delegate
-
-    @State private var vm = WatchAppVM()
 
     init() {
         UtilsPlatformKt.doInitKmmWatchOS(deviceName: machineIdentifier())
