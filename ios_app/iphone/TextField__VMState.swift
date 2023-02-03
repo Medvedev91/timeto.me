@@ -3,11 +3,11 @@ import SwiftUI
 struct TextField__VMState: View {
 
     @FocusState private var focusedField: Bool
-    @State private var text: String
 
-    // TRICK
-    // Otherwise on init() with new text @State text would not updated.
-    // It is needed for view model if input hints exists.
+    /// TRICK
+    /// Otherwise on init() with new text @State text would not updated.
+    /// It is needed for view model if input hints exists.
+    @State private var text: String
     private let stateText: String
 
     private let placeholder: String
