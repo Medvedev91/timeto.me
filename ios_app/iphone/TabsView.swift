@@ -88,7 +88,7 @@ struct TabsView: View {
                     /// #GD AUTOSTART_TRIGGERS
                     if let lastInterval = diApple.lastInterval, (lastInterval.id + 3 > time()) {
                         let stringToCheckTriggers = lastInterval.note ?? lastInterval.getActivityDI().name
-                        guard let trigger = Triggers__Parsed(stringToCheckTriggers).triggers.first else {
+                        guard let trigger = TextFeatures.companion.parse(initText: stringToCheckTriggers).triggers.first else {
                             return
                         }
                         if let trigger = trigger as? Trigger.Checklist {
