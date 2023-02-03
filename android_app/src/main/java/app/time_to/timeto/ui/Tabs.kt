@@ -27,8 +27,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import app.time_to.timeto.MyException
 import app.time_to.timeto.R
-import timeto.shared.db.TaskFolderModel
-import timeto.shared.db.TaskModel
+import app.time_to.timeto.rememberVM
+import timeto.shared.vm.TabsVM
 
 // todo
 // https://stackoverflow.com/q/67059823
@@ -104,11 +104,7 @@ private fun BottomNavigation(
         TabItem.Tools,
     )
 
-    val todayCount = TaskModel.getAscFlow()
-        .collectAsState(listOf())
-        .value
-        .filter { it.folder_id == TaskFolderModel.ID_TODAY }
-        .size
+    val (_, state) = rememberVM { TabsVM() }
 
     androidx.compose.material.BottomNavigation(
         backgroundColor = c.tabsBackground
@@ -134,8 +130,10 @@ private fun BottomNavigation(
 
                             Column {
 
+                                val todayBadge = state.todayBadge
+
                                 AnimatedVisibility(
-                                    visible = item == TabItem.Tasks && todayCount > 0,
+                                    visible = item == TabItem.Tasks && todayBadge > 0,
                                     enter = fadeIn(),
                                     exit = fadeOut(),
                                 ) {
@@ -164,13 +162,13 @@ private fun BottomNavigation(
 
                                         Text(
                                             when {
-                                                todayCount < 1 -> "1" // Otherwise, on remove the last, while animation we see 0
-                                                todayCount > 99 -> "..."
-                                                else -> todayCount.toString()
+                                                todayBadge < 1 -> "1" // Otherwise, on remove the last, while animation we see 0
+                                                todayBadge > 99 -> "..."
+                                                else -> todayBadge.toString()
                                             },
                                             style = TextStyle(
                                                 color = c.white,
-                                                fontSize = if (todayCount < 10) 10.sp else 9.sp,
+                                                fontSize = if (todayBadge < 10) 10.sp else 9.sp,
                                                 fontWeight = FontWeight.W400,
                                                 fontFamily = FontFamily.Default,
                                                 letterSpacing = (-0.3).sp

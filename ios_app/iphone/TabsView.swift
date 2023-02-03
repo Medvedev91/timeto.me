@@ -3,6 +3,8 @@ import shared
 
 struct TabsView: View {
 
+    @State private var vm = TabsVM()
+
     @EnvironmentObject private var diApple: DIApple
 
     static var lastInstance: TabsView? = nil
@@ -46,74 +48,77 @@ struct TabsView: View {
 
     private var tabsBody: some View {
 
-        TabView(selection: tabSelectionHandler) {
+        VMView(vm: vm) { state in
 
-            /// # PROVOKE_STATE_UPDATE
-            EmptyView().id("MainView checklist \(triggersChecklist?.id ?? 0)")
+            TabView(selection: tabSelectionHandler) {
 
-            TabTimerView()
-                    .background(TabBarAccessor { tabBar in
-                        TabsView.tabHeight = tabBar.bounds.height
-                    })
-                    .tabItem {
-                        Image(systemName: "timer")
-                        Text("Timer")
-                    }
-                    .tag(TabsView.TAB_ID_TIMER)
+                /// # PROVOKE_STATE_UPDATE
+                EmptyView().id("MainView checklist \(triggersChecklist?.id ?? 0)")
 
-            TabTasksView()
-                    .tabItem {
-                        Image(systemName: "tray.full")
-                                // Иначе заполненное изображение т.е. tray.full.full
-                                .environment(\.symbolVariants, .none)
-                        Text("Tasks")
-                    }
-                    .tag(TabsView.TAB_ID_TASKS)
-                    .badge(diApple.tasks.filter { $0.isToday }.count)
-
-            TabToolsView()
-                    .tabItem {
-                        // 1. SF Symbols -> File -> Export Template
-                        // 2. Xcode -> Assets -> Symbol Image Set
-                        // Just export, import, up .font(...)
-                        //                        Image("my_wrench.and.screwdriver")
-                        //                                .font(.system(size: 20, weight: .semibold))
-                        Image(systemName: "gearshape")
-                                .environment(\.symbolVariants, .none)
-                        Text("Tools")
-                    }
-                    .tag(TabsView.TAB_ID_TOOLS)
-        }
-                .onChange(of: diApple.lastInterval?.id) { _ in
-                    /// #GD AUTOSTART_TRIGGERS
-                    if let lastInterval = diApple.lastInterval, (lastInterval.id + 3 > time()) {
-                        let stringToCheckTriggers = lastInterval.note ?? lastInterval.getActivityDI().name
-                        guard let trigger = TextFeatures.companion.parse(initText: stringToCheckTriggers).triggers.first else {
-                            return
+                TabTimerView()
+                        .background(TabBarAccessor { tabBar in
+                            TabsView.tabHeight = tabBar.bounds.height
+                        })
+                        .tabItem {
+                            Image(systemName: "timer")
+                            Text("Timer")
                         }
-                        if let trigger = trigger as? Trigger.Checklist {
-                            triggersChecklist = trigger.checklist
-                            isTriggersChecklistPresented = true
-                            return
+                        .tag(TabsView.TAB_ID_TIMER)
+
+                TabTasksView()
+                        .tabItem {
+                            Image(systemName: "tray.full")
+                                    // Иначе заполненное изображение т.е. tray.full.full
+                                    .environment(\.symbolVariants, .none)
+                            Text("Tasks")
                         }
-                        if let trigger = trigger as? Trigger.Shortcut {
-                            performShortcutOrError(trigger.shortcut) { error in
-                                timetoAlert.alert(error)
+                        .tag(TabsView.TAB_ID_TASKS)
+                        .badge(state.todayBadge.toInt())
+
+                TabToolsView()
+                        .tabItem {
+                            // 1. SF Symbols -> File -> Export Template
+                            // 2. Xcode -> Assets -> Symbol Image Set
+                            // Just export, import, up .font(...)
+                            //                        Image("my_wrench.and.screwdriver")
+                            //                                .font(.system(size: 20, weight: .semibold))
+                            Image(systemName: "gearshape")
+                                    .environment(\.symbolVariants, .none)
+                            Text("Tools")
+                        }
+                        .tag(TabsView.TAB_ID_TOOLS)
+            }
+                    .onChange(of: diApple.lastInterval?.id) { _ in
+                        /// #GD AUTOSTART_TRIGGERS
+                        if let lastInterval = diApple.lastInterval, (lastInterval.id + 3 > time()) {
+                            let stringToCheckTriggers = lastInterval.note ?? lastInterval.getActivityDI().name
+                            guard let trigger = TextFeatures.companion.parse(initText: stringToCheckTriggers).triggers.first else {
+                                return
                             }
-                            return
+                            if let trigger = trigger as? Trigger.Checklist {
+                                triggersChecklist = trigger.checklist
+                                isTriggersChecklistPresented = true
+                                return
+                            }
+                            if let trigger = trigger as? Trigger.Shortcut {
+                                performShortcutOrError(trigger.shortcut) { error in
+                                    timetoAlert.alert(error)
+                                }
+                                return
+                            }
+                            fatalError("invalid trigger type")
                         }
-                        fatalError("invalid trigger type")
                     }
-                }
-                .sheetEnv(isPresented: $isTriggersChecklistPresented) {
-                    if let checklist = triggersChecklist {
-                        ChecklistDialog(isPresented: $isTriggersChecklistPresented, checklist: checklist)
+                    .sheetEnv(isPresented: $isTriggersChecklistPresented) {
+                        if let checklist = triggersChecklist {
+                            ChecklistDialog(isPresented: $isTriggersChecklistPresented, checklist: checklist)
+                        }
                     }
-                }
-                .onAppear {
-                    UITabBar.appearance().scrollEdgeAppearance = UITabBarAppearance() /// Иначе прозрачный TabView
-                    TabsView.lastInstance = self
-                }
+                    .onAppear {
+                        UITabBar.appearance().scrollEdgeAppearance = UITabBarAppearance() /// Иначе прозрачный TabView
+                        TabsView.lastInstance = self
+                    }
+        }
     }
 }
 
