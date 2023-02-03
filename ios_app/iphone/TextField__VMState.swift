@@ -10,9 +10,9 @@ struct TextField__VMState: View {
     // It is needed for view model if input hints exists.
     private let stateText: String
 
-    private let onValueChanged: (String) -> Void
     private let placeholder: String
     private let isAutofocus: Bool
+    private let onValueChanged: (String) -> Void
 
     init(
             text: String,
