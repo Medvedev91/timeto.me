@@ -64,7 +64,6 @@ struct TasksListView: View {
                                         .onTapGesture {
                                             isAddFormFocused = true
                                         }
-                                        .padding(.leading, 16)
 
                                 Button(
                                         action: {
@@ -92,8 +91,6 @@ struct TasksListView: View {
                                         .padding(.trailing, 5)
                                         .buttonStyle(PlainButtonStyle())
                             }
-                                    .padding(.top, 5)
-                                    .padding(.bottom, 5)
                                     .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color(.mySecondaryBackground)))
                                     .padding(.top, 20)
                                     .padding(.bottom, 20)
