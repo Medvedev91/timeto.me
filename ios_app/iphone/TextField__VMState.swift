@@ -2,7 +2,8 @@ import SwiftUI
 
 struct TextField__VMState: View {
 
-    @FocusState private var focusedField: Bool
+    /// It's not VMState-like, but it's useful for UI logic.
+    @FocusState.Binding private var isFocused: Bool
 
     /// TRICK
     /// Otherwise on init() with new text @State text would not updated.
@@ -11,19 +12,18 @@ struct TextField__VMState: View {
     private let stateText: String
 
     private let placeholder: String
-    private let isAutofocus: Bool
     private let onValueChanged: (String) -> Void
 
     init(
             text: String,
             placeholder: String,
-            isAutofocus: Bool,
+            isFocused: FocusState<Bool>.Binding,
             onValueChanged: @escaping (String) -> Void
     ) {
+        _isFocused = isFocused
         _text = State(initialValue: text)
         stateText = text
         self.placeholder = placeholder
-        self.isAutofocus = isAutofocus
         self.onValueChanged = onValueChanged
     }
 
@@ -54,7 +54,7 @@ struct TextField__VMState: View {
                         text = newValue
                     }
                     ///
-                    .focused($focusedField)
+                    .focused($isFocused)
                     .textFieldStyle(.plain)
                     .frame(minHeight: MyListView.ITEM_MIN_HEIGHT)
                     .padding(.leading, MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL)
@@ -64,20 +64,11 @@ struct TextField__VMState: View {
                     text: $text,
                     trailingPadding: 8
             ) {
-                focusedField = true
+                isFocused = true
             }
         }
                 .onTapGesture {
-                    focusedField = true
-                }
-                .onAppear {
-                    if isAutofocus {
-                        for i in 0...10 {
-                            myAsyncAfter(0.1 * i.toDouble()) {
-                                focusedField = true
-                            }
-                        }
-                    }
+                    isFocused = true
                 }
     }
 }

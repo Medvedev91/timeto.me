@@ -85,19 +85,24 @@ struct MyListView__SectionView__ItemView<Content: View>: View {
 
 struct MyListView__SectionView__TextInputView: View {
 
-    var text: String
+    let text: String
     let placeholder: String
     let isAutofocus: Bool
     let onValueChanged: (String) -> Void
+
+    @FocusState private var isFocused: Bool
 
     var body: some View {
 
         TextField__VMState(
                 text: text,
                 placeholder: placeholder,
-                isAutofocus: isAutofocus,
+                isFocused: $isFocused,
                 onValueChanged: onValueChanged
         )
+                .onAppear {
+                    isFocused = isAutofocus
+                }
     }
 }
 
