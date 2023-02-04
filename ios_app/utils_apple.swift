@@ -252,6 +252,7 @@ extension Color {
 }
 
 extension ColorNative {
+
     func toColor() -> Color {
         switch self {
         case .red:
@@ -271,7 +272,7 @@ extension ColorNative {
         case .textsecondary:
             return .secondary
         default:
-            fatalError("Trigger.TriggerColor")
+            fatalError("ColorNative.toColor()")
         }
     }
 }
