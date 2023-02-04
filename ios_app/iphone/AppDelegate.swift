@@ -8,12 +8,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             _ application: UIApplication,
             didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
-
         setupWCSession(self)
-
-        /// To transparent TextEditor. todo is it actual?
-        UITextView.appearance().backgroundColor = .clear
-
         return true
     }
 }
