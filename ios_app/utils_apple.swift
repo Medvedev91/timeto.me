@@ -64,25 +64,6 @@ func is12HoursFormat() -> Bool {
     DateFormatter.dateFormat(fromTemplate: "j", options: 0, locale: Locale.current)?.range(of: "a") != nil
 }
 
-// todo remove
-/// https://stackoverflow.com/a/27880748/5169420
-func matches(
-        for regex: String,
-        in text: String
-) -> [String] {
-    do {
-        let regex = try NSRegularExpression(pattern: regex)
-        let results = regex.matches(in: text, range: NSRange(text.startIndex..., in: text))
-        return results.map {
-            String(text[Range($0.range, in: text)!])
-        }
-    } catch let error {
-        // todo report
-        print("invalid regex: \(error.myMessage())")
-        return []
-    }
-}
-
 extension Date {
 
     /// For device time zone
