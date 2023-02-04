@@ -392,7 +392,7 @@ struct TabTimerView_ActivityRowView: View {
 
                                     Button(
                                             action: {
-                                                IntervalModel.Companion().cancelCurrentInterval { _ in
+                                                IntervalModel.companion.cancelCurrentInterval { _ in
                                                     // todo
                                                 }
                                             },
@@ -525,7 +525,7 @@ struct TabTimerView_ProgressView: View {
 
                         Button(
                                 action: {
-                                    IntervalModel.Companion().restartActualInterval { _ in
+                                    IntervalModel.companion.restartActualInterval { _ in
                                         // todo
                                     }
                                 },
@@ -542,7 +542,7 @@ struct TabTimerView_ProgressView: View {
 
                         Spacer(minLength: 0)
 
-                        Text(isCountDown ? timerData.timer : TimerData.Companion().secondsToString(seconds: time().toInt32() - lastInterval.id))
+                        Text(isCountDown ? timerData.timer : TimerData.companion.secondsToString(seconds: time().toInt32() - lastInterval.id))
                                 .font(.system(size: 53, design: .monospaced))
                                 //.font(Font.custom("San Francisco", size: 49).monospacedDigit())
                                 .fontWeight(.medium)

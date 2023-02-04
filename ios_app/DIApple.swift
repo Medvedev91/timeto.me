@@ -22,9 +22,9 @@ private struct DIApple__Modifier: ViewModifier {
 
     @StateObject private var diApple = DIApple()
 
-    private let checklistItems: pubArray = ChecklistItemModel.Companion().getAscFlow().toPublisher()
-    private let taskFolders: pubArray = TaskFolderModel.Companion().getAscBySortFlow().toPublisher()
-    private let lastInterval: AnyPublisher<IntervalModel, Never> = IntervalModel.Companion().getLastOneOrNullFlow().toPublisher()
+    private let checklistItems: pubArray = ChecklistItemModel.companion.getAscFlow().toPublisher()
+    private let taskFolders: pubArray = TaskFolderModel.companion.getAscBySortFlow().toPublisher()
+    private let lastInterval: AnyPublisher<IntervalModel, Never> = IntervalModel.companion.getLastOneOrNullFlow().toPublisher()
 
     func body(content: Content) -> some View {
         content

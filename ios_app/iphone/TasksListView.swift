@@ -403,11 +403,11 @@ struct TasksView__TaskRowView: View {
                         case .CALENDAR:
                             isAddCalendarSheetPresented = true
                         case .TODAY:
-                            taskUI.upFolder(newFolder: TaskFolderModel.Companion().getToday())
+                            taskUI.upFolder(newFolder: TaskFolderModel.companion.getToday())
                         case .WEEK:
-                            taskUI.upFolder(newFolder: TaskFolderModel.Companion().getWeek())
+                            taskUI.upFolder(newFolder: TaskFolderModel.companion.getWeek())
                         case .INBOX:
-                            taskUI.upFolder(newFolder: TaskFolderModel.Companion().getInbox())
+                            taskUI.upFolder(newFolder: TaskFolderModel.companion.getInbox())
                         }
                     } else if value.translation.width < -80 {
                         xSwipeOffset = (width ?? 999) * -1
