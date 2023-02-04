@@ -25,7 +25,6 @@
 		2C95BA8D280D74AA0027FC35 /* IOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C95BA7A280D74AA0027FC35 /* IOSApp.swift */; };
 		2CB73DE3292FACE00053B2D6 /* SearchEmojiSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB73DE2292FACE00053B2D6 /* SearchEmojiSheet.swift */; };
 		31821012DE2A1AB2843BEDA9 /* MyListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821F8331A2FF4EAEC38B12 /* MyListHeader.swift */; };
-		31821041BD8177F53F3B5357 /* MyTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318219EE6381832156C8B77B /* MyTextEditor.swift */; };
 		318210CF629A7E593B9F8FE4 /* ChecklistItemFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821290CB27918CD444FBB0 /* ChecklistItemFormSheet.swift */; };
 		318210E102D112C2860ADF9F /* DialogCloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E53EB27CE7F81AF0F69 /* DialogCloseButton.swift */; };
 		318210ECF60308ECF341FEA2 /* utils_ios.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182118D8EA3E0D889D4FDC3 /* utils_ios.swift */; };
@@ -145,7 +144,6 @@
 		3182189A26C9B48C0D2E8A4A /* KeyboardManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		318218D93C3456758557A6E0 /* ScrollViewWithVListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollViewWithVListener.swift; sourceTree = "<group>"; };
 		31821996D20B09EBA4F73C2B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		318219EE6381832156C8B77B /* MyTextEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTextEditor.swift; sourceTree = "<group>"; };
 		31821A7EADEF749C7A5F04DE /* ChecklistDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChecklistDialog.swift; sourceTree = "<group>"; };
 		31821ACA6C9306A2CD2016A0 /* HistoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		31821AD0C2CE87BF5AE03022 /* TasksListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksListView.swift; sourceTree = "<group>"; };
@@ -299,7 +297,6 @@
 				31821FC9040CA1D64E5D6990 /* MyListSection.swift */,
 				31821DC6AEBDF478C34116FE /* MyListSwipeToActionItem.swift */,
 				318212FFE80A0856A0A88DCF /* MySpacerSize.swift */,
-				318219EE6381832156C8B77B /* MyTextEditor.swift */,
 				2C0BE02E295751B70099AD7C /* PickerStateView.swift */,
 				31821E01EC49E0964E5CB2F5 /* PieView.swift */,
 				31821D879F9361C3DD65EAC9 /* RepeatingFormSheet.swift */,
@@ -497,7 +494,6 @@
 				3182185DFB576215349F8005 /* ActivityTimerSheet.swift in Sources */,
 				2CB73DE3292FACE00053B2D6 /* SearchEmojiSheet.swift in Sources */,
 				31821286152F9C43BA2C4B7B /* TimetoSheet.swift in Sources */,
-				31821041BD8177F53F3B5357 /* MyTextEditor.swift in Sources */,
 				318212C07B5351BA8C7C9671 /* PieView.swift in Sources */,
 				31821D2F481BE7580FE4DCC2 /* MyDivider.swift in Sources */,
 				31821012DE2A1AB2843BEDA9 /* MyListHeader.swift in Sources */,
