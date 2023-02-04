@@ -276,14 +276,6 @@ extension ColorNative {
     }
 }
 
-// todo remove
-extension String {
-
-    func trim() -> String {
-        trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-}
-
 /// https://www.avanderlee.com/swiftui/conditional-view-modifier/
 extension View {
 
