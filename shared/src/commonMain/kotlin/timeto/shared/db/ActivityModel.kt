@@ -314,16 +314,14 @@ data class ActivityModel__Data(
 
     companion object {
 
-        fun jParse(jString: String): ActivityModel__Data {
-            return try {
-                val jData = Json.parseToJsonElement(jString)
-                val jTimerHints = jData.jsonObject["timer_hints"]!!.jsonObject
-                ActivityModel__Data(TimerHints.fromJsonObject(jTimerHints))
-            } catch (e: Throwable) {
-                // todo migration?
-                reportApi("ActivityModel__Data.jParse() exception:\n$jString\n$e")
-                buildDefault()
-            }
+        fun jParse(jString: String): ActivityModel__Data = try {
+            val jData = Json.parseToJsonElement(jString)
+            val jTimerHints = jData.jsonObject["timer_hints"]!!.jsonObject
+            ActivityModel__Data(TimerHints.fromJsonObject(jTimerHints))
+        } catch (e: Throwable) {
+            // todo migration?
+            reportApi("ActivityModel__Data.jParse() exception:\n$jString\n$e")
+            buildDefault()
         }
 
         fun buildDefault() = ActivityModel__Data(
