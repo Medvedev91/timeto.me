@@ -17,8 +17,6 @@ data class TaskFolderModel(
     companion object : Backupable__Holder {
 
         const val ID_TODAY = 1
-        const val ID_WEEK = 2
-        const val ID_INBOX = 3
         const val ID_TMRW = 4
 
         fun anyChangeFlow() = db.taskFolderQueries.anyChange().asFlow()
