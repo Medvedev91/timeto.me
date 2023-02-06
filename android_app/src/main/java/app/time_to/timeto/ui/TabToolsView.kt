@@ -242,19 +242,26 @@ fun TabToolsView() {
 
         item {
 
-            MyList.Header("SETTINGS")
-
-            val isDayStartPresented = remember { mutableStateOf(false) }
-            DayStartDialog(
-                isPresented = isDayStartPresented,
-                tabToolsVM = vm,
-                tabToolsState = state,
+            MyListView__HeaderView(
+                "SETTINGS",
+                modifier = Modifier
+                    .padding(top = MyListView.PADDING_SECTION_SECTION),
             )
 
-            MyList.SectionItem(isFirst = true, isLast = true, paddingTop = MyList.HEADER_BOTTOM_PADDING) {
-                MyList.SectionItem_Button(
+            MyListView__SectionView(
+                modifier = Modifier.padding(top = MyListView.PADDING_HEADER_SECTION)
+            ) {
+                val isDayStartPresented = remember { mutableStateOf(false) }
+                DayStartDialog(
+                    isPresented = isDayStartPresented,
+                    tabToolsVM = vm,
+                    tabToolsState = state,
+                )
+
+                MyListView__SectionView__ButtonView(
                     text = "Day Start",
-                    withDivider = false,
+                    withTopDivider = true,
+                    withArrow = false,
                     rightView = {
                         Text(
                             state.dayStartNote,
