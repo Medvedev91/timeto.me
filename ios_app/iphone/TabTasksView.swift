@@ -3,7 +3,7 @@ import shared
 
 struct TabTasksView: View {
 
-    @EnvironmentObject private var diApple: DIApple
+    private let vm = TabTasksVM()
 
     static var lastInstance: TabTasksView? = nil
 
@@ -48,7 +48,7 @@ struct TabTasksView: View {
 
     var body: some View {
 
-        ZStack {
+        VMView(vm: vm, stack: .ZStack()) { state in
 
             Color(.myBackground)
                     .ignoresSafeArea()
@@ -61,7 +61,7 @@ struct TabTasksView: View {
                 if let section = activeSection as? TabTasksView_Section_Folder {
                     /// OMG! Dirty trick!
                     /// Just TabTaskView_TasksListView(...) doesn't call onAppear() to scroll to the bottom.
-                    ForEach(diApple.taskFolders, id: \.id) { folder in
+                    ForEach(state.folders, id: \.id) { folder in
                         if section.folder.id == folder.id {
                             TasksListView(activeFolder: section.folder, tabTasksView: self)
                         }
@@ -166,7 +166,7 @@ struct TabTasksView: View {
                     //
                     // Folders
 
-                    ForEach(diApple.taskFolders.reversed(), id: \.id) { folder in
+                    ForEach(state.folders.reversed(), id: \.id) { folder in
 
                         let isActive = folder.id == (activeSection as? TabTasksView_Section_Folder)?.folder.id
 
