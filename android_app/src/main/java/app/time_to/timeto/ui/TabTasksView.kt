@@ -43,7 +43,7 @@ val taskListSectionPadding = 20.dp
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun TabTasks() {
+fun TabTasksView() {
     val scope = rememberCoroutineScope()
 
     var activeSection by remember {

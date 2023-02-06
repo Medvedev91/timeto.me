@@ -73,7 +73,7 @@ fun Tabs() {
                     TabTimerView()
                 }
                 composable(TabItem.Tasks.route) {
-                    TabTasks()
+                    TabTasksView()
                 }
                 composable(TabItem.Tools.route) {
                     TabToolsView()
