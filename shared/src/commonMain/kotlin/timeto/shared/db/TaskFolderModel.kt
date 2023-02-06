@@ -68,6 +68,7 @@ data class TaskFolderModel(
     }
 
     val isToday = id == ID_TODAY
+    val isTmrw = id == ID_TMRW
 
     ///
     /// Backupable Item
