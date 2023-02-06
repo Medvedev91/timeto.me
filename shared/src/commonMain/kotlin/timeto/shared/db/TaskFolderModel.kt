@@ -35,10 +35,6 @@ data class TaskFolderModel(
 
         fun getToday() = getById(ID_TODAY)
 
-        fun getWeek() = getById(ID_WEEK)
-
-        fun getInbox() = getById(ID_INBOX)
-
         fun getById(id: Int) = DI.taskFolders.first { it.id == id }
 
         //////
