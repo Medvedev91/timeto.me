@@ -47,7 +47,7 @@ fun TabTasksView() {
     val scope = rememberCoroutineScope()
 
     var activeSection by remember {
-        mutableStateOf<Section?>(null)
+        mutableStateOf<Section?>(Section_Folder(TaskFolderModel.getToday()))
     }
 
     ///
@@ -63,10 +63,6 @@ fun TabTasksView() {
     }
 
     //////
-
-    LaunchedEffect(Unit) {
-        activeSection = Section_Folder(TaskFolderModel.getToday())
-    }
 
     val dragItem = remember { mutableStateOf<DragItem?>(null) }
     val dropItems = remember { mutableListOf<DropItem>() }
