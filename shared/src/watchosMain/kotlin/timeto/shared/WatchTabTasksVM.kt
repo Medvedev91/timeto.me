@@ -50,6 +50,9 @@ class WatchTabTasksVM : __VM<WatchTabTasksVM.State>() {
         TaskModel.getAscFlow().onEachExIn(scope) { tasks ->
             upFolders(tasks)
         }
+        TaskFolderModel.anyChangeFlow().onEachExIn(scope) {
+            upFolders(TaskModel.getAsc())
+        }
     }
 
     private suspend fun upFolders(allTasks: List<TaskModel>) {
