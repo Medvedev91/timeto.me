@@ -77,11 +77,11 @@ struct TabTasksView: View {
                     //
                     // Calendar
 
-                    let dropCalendar = DropItem(name: "Calendar", type: DropItem.TYPE.CALENDAR, square: DropItem.Square())
+                    let dropCalendar = DropItem__Calendar()
 
                     let isActiveCalendar = activeSection is TabTasksView_Section_Calendar
                     let calendarFgColor: Color = {
-                        if focusedDrop?.type == dropCalendar.type {
+                        if focusedDrop is DropItem__Calendar {
                             return .green
                         }
                         if activeDrag?.isDropAllowed(dropCalendar) == true {
@@ -184,23 +184,12 @@ struct TabTasksView: View {
                                             }
                                             .joined(separator: "\n")
 
-                                    let dropType: DropItem.TYPE = try! {
-                                        if folder.isInbox {
-                                            return DropItem.TYPE.INBOX
-                                        }
-                                        if folder.isWeek {
-                                            return DropItem.TYPE.WEEK
-                                        }
-                                        if folder.isToday {
-                                            return DropItem.TYPE.TODAY
-                                        }
-                                        throw MyError("Invalid type drop tasks tab")
-                                    }()
-                                    let drop = DropItem(name: folder.name, type: dropType, square: DropItem.Square())
+
+                                    let drop = DropItem__Folder(folder)
 
                                     let isAllowedForDrop = activeDrag?.isDropAllowed(drop) == true
                                     let bgColor: Color = {
-                                        if focusedDrop?.type == drop.type {
+                                        if (focusedDrop as? DropItem__Folder)?.folder.id == folder.id {
                                             return .green
                                         }
                                         if isAllowedForDrop {
@@ -291,29 +280,16 @@ struct TabTasksView: View {
 
 struct DragItem {
 
-    let allowedTypes: [DropItem.TYPE]
-
-    func isDropAllowed(_ drop: DropItem) -> Bool {
-        allowedTypes.contains(drop.type)
-    }
+    let isDropAllowed: (_ drop: DropItem) -> Bool
 }
 
 class DropItem: ObservableObject {
 
     let name: String
-    let type: TYPE
     let square: Square
 
-    enum TYPE {
-        case INBOX
-        case WEEK
-        case TODAY
-        case CALENDAR
-    }
-
-    init(name: String, type: TYPE, square: Square) {
+    init(name: String, square: Square) {
         self.name = name
-        self.type = type
         self.square = square
     }
 
@@ -337,6 +313,23 @@ class DropItem: ObservableObject {
             x2 = rect.origin.x + rect.width
             y2 = rect.origin.y + rect.height
         }
+    }
+}
+
+class DropItem__Calendar: DropItem {
+
+    init() {
+        super.init(name: "Calendar", square: DropItem.Square())
+    }
+}
+
+class DropItem__Folder: DropItem {
+
+    let folder: TaskFolderModel
+
+    init(_ folder: TaskFolderModel) {
+        self.folder = folder
+        super.init(name: folder.name, square: DropItem.Square())
     }
 }
 

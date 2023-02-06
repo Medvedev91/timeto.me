@@ -182,18 +182,17 @@ struct TasksView__TaskRowView: View {
         self.tasksListView = tasksListView
         self.withDivider = withDivider
 
-        let types: [DropItem.TYPE]
-        let task = taskUI.task
-        if task.isToday {
-            types = [DropItem.TYPE.CALENDAR, DropItem.TYPE.WEEK, DropItem.TYPE.INBOX]
-        } else if task.isWeek {
-            types = [DropItem.TYPE.CALENDAR, DropItem.TYPE.TODAY, DropItem.TYPE.INBOX]
-        } else if task.isInbox {
-            types = [DropItem.TYPE.CALENDAR, DropItem.TYPE.TODAY, DropItem.TYPE.WEEK]
-        } else {
-            fatalError()
-        }
-        _dragItem = State(initialValue: DragItem(allowedTypes: types))
+        _dragItem = State(initialValue: DragItem(
+                isDropAllowed: { drop in
+                    if drop is DropItem__Calendar {
+                        return true
+                    }
+                    if let dropFolder = drop as? DropItem__Folder {
+                        return dropFolder.folder.id != taskUI.task.folder_id
+                    }
+                    fatalError("Unknown tasks list drop type")
+                }
+        ))
     }
 
     var body: some View {
@@ -399,15 +398,11 @@ struct TasksView__TaskRowView: View {
                     let drop = tasksListView.tabTasksView.onDragStop()
                     if let drop = drop {
                         xSwipeOffset = 0
-                        switch drop.type {
-                        case .CALENDAR:
+                        if drop is DropItem__Calendar {
                             isAddCalendarSheetPresented = true
-                        case .TODAY:
-                            taskUI.upFolder(newFolder: TaskFolderModel.companion.getToday())
-                        case .WEEK:
-                            taskUI.upFolder(newFolder: TaskFolderModel.companion.getWeek())
-                        case .INBOX:
-                            taskUI.upFolder(newFolder: TaskFolderModel.companion.getInbox())
+                        }
+                        else if let dropFolder = drop as? DropItem__Folder {
+                            taskUI.upFolder(newFolder: dropFolder.folder)
                         }
                     } else if value.translation.width < -80 {
                         xSwipeOffset = (width ?? 999) * -1
