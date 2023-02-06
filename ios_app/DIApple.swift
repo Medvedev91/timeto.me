@@ -12,7 +12,6 @@ extension View {
 class DIApple: ObservableObject {
 
     @Published var checklistItems = [ChecklistItemModel]()
-    @Published var taskFolders = [TaskFolderModel]()
     @Published var lastInterval: IntervalModel? = nil
 }
 
@@ -23,13 +22,11 @@ private struct DIApple__Modifier: ViewModifier {
     @StateObject private var diApple = DIApple()
 
     private let checklistItems: pubArray = ChecklistItemModel.companion.getAscFlow().toPublisher()
-    private let taskFolders: pubArray = TaskFolderModel.companion.getAscBySortFlow().toPublisher()
     private let lastInterval: AnyPublisher<IntervalModel, Never> = IntervalModel.companion.getLastOneOrNullFlow().toPublisher()
 
     func body(content: Content) -> some View {
         content
                 .onReceive(checklistItems) { diApple.checklistItems = $0 as! [ChecklistItemModel] }
-                .onReceive(taskFolders) { diApple.taskFolders = $0 as! [TaskFolderModel] }
                 .onReceive(lastInterval) { diApple.lastInterval = $0 as! IntervalModel? }
                 .environmentObject(diApple)
     }
