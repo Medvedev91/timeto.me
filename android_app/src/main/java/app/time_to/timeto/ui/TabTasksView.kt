@@ -29,7 +29,6 @@ import androidx.compose.ui.unit.sp
 import app.time_to.timeto.*
 import app.time_to.timeto.R
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import timeto.shared.db.TaskFolderModel
 import java.util.*
 import kotlin.random.Random
@@ -44,7 +43,6 @@ val taskListSectionPadding = 20.dp
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TabTasksView() {
-    val scope = rememberCoroutineScope()
 
     var activeSection by remember {
         mutableStateOf<Section?>(Section_Folder(TaskFolderModel.getToday()))
@@ -54,9 +52,7 @@ fun TabTasksView() {
     /// Navigation
 
     setTodayFolder = {
-        scope.launch {
-            activeSection = Section_Folder(TaskFolderModel.getToday())
-        }
+        activeSection = Section_Folder(TaskFolderModel.getToday())
     }
     BackHandler((activeSection as? Section_Folder)?.folder?.isToday != true) {
         setTodayFolder!!()
