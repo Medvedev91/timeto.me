@@ -231,45 +231,25 @@ fun TasksListView(
                     val localDragItem = remember {
                         DragItem(
                             mutableStateOf(null),
-                            when {
-                                activeFolder.isInbox -> listOf(
-                                    DropItem.TYPE.CALENDAR,
-                                    DropItem.TYPE.WEEK,
-                                    DropItem.TYPE.TODAY,
-                                )
-                                activeFolder.isWeek -> listOf(
-                                    DropItem.TYPE.CALENDAR,
-                                    DropItem.TYPE.INBOX,
-                                    DropItem.TYPE.TODAY,
-                                )
-                                activeFolder.isToday -> listOf(
-                                    DropItem.TYPE.CALENDAR,
-                                    DropItem.TYPE.INBOX,
-                                    DropItem.TYPE.WEEK,
-                                )
-                                else -> throw Exception()
+                            { drop ->
+                                when (drop) {
+                                    is DropItem.Type__Calendar -> true
+                                    is DropItem.Type__Folder -> drop.folder.id != taskUI.task.folder_id
+                                }
                             }
-                        ) { target ->
+                        ) { drop ->
                             // Otherwise, the mod of editing is activated, so the keyboard is started.
                             // And since the task is transferred, sometimes just opens the keyboard.
                             ignoreOneSwipeToAction.value = true
                             scope.launchEx {
-                                val whenRes = when (target.type) {
-                                    DropItem.TYPE.INBOX -> {
-                                        vibrateLong()
-                                        taskUI.upFolder(TaskFolderModel.getInbox())
-                                    }
-                                    DropItem.TYPE.WEEK -> {
-                                        vibrateLong()
-                                        taskUI.upFolder(TaskFolderModel.getWeek())
-                                    }
-                                    DropItem.TYPE.TODAY -> {
-                                        vibrateLong()
-                                        taskUI.upFolder(TaskFolderModel.getToday())
-                                    }
-                                    DropItem.TYPE.CALENDAR -> {
+                                when (drop) {
+                                    is DropItem.Type__Calendar -> {
                                         vibrateShort()
                                         isAddCalendarPresented.value = true
+                                    }
+                                    is DropItem.Type__Folder -> {
+                                        vibrateLong()
+                                        taskUI.upFolder(drop.folder)
                                     }
                                 }
                             }

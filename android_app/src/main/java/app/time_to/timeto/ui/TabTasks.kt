@@ -142,12 +142,12 @@ fun TabTasks() {
                 item {
                     val isActive = activeSection is Section_Calendar
 
-                    val dropItem = remember { DropItem("Calendar", DropItem.TYPE.CALENDAR, DropItem.Square(0, 0, 0, 0)) }
+                    val dropItem = remember { DropItem.Type__Calendar(DropItem.Square(0, 0, 0, 0)) }
                     DisposableEffect(Unit) {
                         dropItems.add(dropItem)
                         onDispose { dropItems.remove(dropItem) }
                     }
-                    val isAllowedToDrop = dragItem.value?.isDropAllowed(dropItem) ?: false
+                    val isAllowedToDrop = dragItem.value?.isDropAllowed?.invoke(dropItem) ?: false
                     val isFocusedToDrop = dragItem.value?.focusedDrop?.value == dropItem
 
                     val textColor = animateColorAsState(
@@ -228,13 +228,7 @@ fun TabTasks() {
 
                 items(folders.reversed()) { folder ->
                     val dropItem = remember {
-                        val type = when {
-                            folder.isInbox -> DropItem.TYPE.INBOX
-                            folder.isWeek -> DropItem.TYPE.WEEK
-                            folder.isToday -> DropItem.TYPE.TODAY
-                            else -> throw Exception()
-                        }
-                        DropItem(folder.name, type, DropItem.Square(0, 0, 0, 0))
+                        DropItem.Type__Folder(folder, DropItem.Square(0, 0, 0, 0))
                     }
                     DisposableEffect(Unit) {
                         dropItems.add(dropItem)
@@ -242,7 +236,7 @@ fun TabTasks() {
                             dropItems.remove(dropItem)
                         }
                     }
-                    val isAllowedToDrop = dragItem.value?.isDropAllowed(dropItem) ?: false
+                    val isAllowedToDrop = dragItem.value?.isDropAllowed?.invoke(dropItem) ?: false
                     val isFocusedToDrop = dragItem.value?.focusedDrop?.value == dropItem
 
                     val isActive = (activeSection as? Section_Folder)?.folder?.id == folder.id
@@ -320,21 +314,14 @@ private class Section_Repeating : Section
 
 class DragItem(
     val focusedDrop: MutableState<DropItem?>,
-    val allowedTypes: List<DropItem.TYPE>,
+    val isDropAllowed: (drop: DropItem) -> Boolean,
     val onDrop: (drop: DropItem) -> Unit,
-) {
-    fun isDropAllowed(drop: DropItem) = drop.type in allowedTypes
-}
+)
 
-class DropItem(
+sealed class DropItem(
     val name: String,
-    val type: TYPE,
     val square: Square,
 ) {
-
-    enum class TYPE {
-        INBOX, WEEK, TODAY, CALENDAR
-    }
 
     fun upSquareByCoordinates(c: LayoutCoordinates) {
         val p = c.positionInWindow()
@@ -345,6 +332,18 @@ class DropItem(
     }
 
     class Square(var x1: Int, var y1: Int, var x2: Int, var y2: Int)
+
+    ///
+    /// Types
+
+    class Type__Folder(
+        val folder: TaskFolderModel,
+        square: Square,
+    ) : DropItem(folder.name, square)
+
+    class Type__Calendar(
+        square: Square,
+    ) : DropItem("Calendar", square)
 }
 
 ////
