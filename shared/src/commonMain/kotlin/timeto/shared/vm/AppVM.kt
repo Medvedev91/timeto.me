@@ -169,9 +169,10 @@ private suspend fun fillInitData() {
         reportApi("fillInitData() exception:\n$e")
     }
 
+    // TRICK time() only for SMDAY
     TaskFolderModel.addRaw(TaskFolderModel.ID_TODAY, "Today", 1)
-    TaskFolderModel.addRaw(TaskFolderModel.ID_WEEK, "Week", 2)
-    TaskFolderModel.addRaw(TaskFolderModel.ID_INBOX, "Inbox", 3)
+    TaskFolderModel.addRaw(TaskFolderModel.ID_TMRW, "TMRW", 2)
+    TaskFolderModel.addRaw(time(), "SMDAY", 3)
 
     val colorsWheel = Wheel(ActivityModel.colors)
     val cGreen = colorsWheel.next()
