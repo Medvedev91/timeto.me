@@ -30,6 +30,7 @@ import app.time_to.timeto.*
 import app.time_to.timeto.R
 import kotlinx.coroutines.delay
 import timeto.shared.db.TaskFolderModel
+import timeto.shared.vm.TabTasksVM
 import java.util.*
 import kotlin.random.Random
 
@@ -43,6 +44,7 @@ val taskListSectionPadding = 20.dp
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TabTasksView() {
+    val (_, state) = rememberVM { TabTasksVM() }
 
     var activeSection by remember {
         mutableStateOf<Section?>(Section_Folder(TaskFolderModel.getToday()))
@@ -124,7 +126,6 @@ fun TabTasksView() {
             val activeTextColor = c.white
             val inactiveTextColor = c.textSecondary
 
-            val folders = TaskFolderModel.getAscBySortFlow().collectAsState(listOf()).value
             LazyColumn(
                 contentPadding = PaddingValues(bottom = tabSpace)
             ) {
@@ -218,7 +219,7 @@ fun TabTasksView() {
                     }
                 }
 
-                items(folders.reversed()) { folder ->
+                items(state.folders.reversed()) { folder ->
                     val dropItem = remember {
                         DropItem.Type__Folder(folder, DropItem.Square(0, 0, 0, 0))
                     }
