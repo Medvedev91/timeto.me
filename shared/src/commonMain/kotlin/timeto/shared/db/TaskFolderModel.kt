@@ -74,8 +74,6 @@ data class TaskFolderModel(
     }
 
     val isToday = id == ID_TODAY
-    val isWeek = id == ID_WEEK
-    val isInbox = id == ID_INBOX
 
     ///
     /// Backupable Item
