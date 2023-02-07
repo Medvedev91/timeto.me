@@ -78,6 +78,7 @@ fun RepeatingsListView() {
 
             SwipeToAction(
                 isStartOrEnd = remember { mutableStateOf(null) },
+                modifier = Modifier.clip(clip),
                 startView = { SwipeToAction__StartView("Edit", c.blue) },
                 endView = { state ->
                     SwipeToAction__DeleteView(
@@ -102,7 +103,6 @@ fun RepeatingsListView() {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clip(clip)
                         .background(c.background2),
                     contentAlignment = Alignment.BottomCenter
                 ) {
