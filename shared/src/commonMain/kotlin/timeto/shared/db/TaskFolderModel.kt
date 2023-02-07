@@ -48,7 +48,7 @@ data class TaskFolderModel(
         }
 
         fun List<TaskFolderModel>.sortedFolders() = this.sortedWith(
-            compareBy({ !it.isToday }, { !it.isTmrw }, { it.sort }, { it.id })
+            compareBy({ it.sort }, { it.id })
         )
 
         private fun TaskFolderSQ.toModel() = TaskFolderModel(
