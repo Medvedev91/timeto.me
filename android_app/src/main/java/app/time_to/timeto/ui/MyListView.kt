@@ -47,7 +47,8 @@ fun MyListView__HeaderView(
 ) {
     Row(
         modifier = modifier
-            .padding(horizontal = MyListView.PADDING_SECTION_OUTER_HORIZONTAL + MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL)
+            .padding(horizontal = MyListView.PADDING_SECTION_OUTER_HORIZONTAL + MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL),
+        verticalAlignment = Alignment.Bottom,
     ) {
         Text(
             title,
@@ -74,7 +75,7 @@ fun MyListView__HeaderView__RightIcon(
         modifier = Modifier
             .padding(start = 10.dp)
             .size(26.dp)
-            .offset(y = (-4).dp, x = 4.dp)
+            .offset(y = 4.dp, x = 4.dp)
             .alpha(0.8f)
             .clip(RoundedCornerShape(99.dp))
             .clickable {
