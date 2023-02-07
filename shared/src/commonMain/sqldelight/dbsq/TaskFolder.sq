@@ -20,6 +20,11 @@ UPDATE TaskFolderSQ
 SET name = ?, sort = ?
 WHERE id = ?;
 
+upSortById:
+UPDATE TaskFolderSQ
+SET sort = ?
+WHERE id = ?;
+
 truncate:
 DELETE FROM TaskFolderSQ;
 
