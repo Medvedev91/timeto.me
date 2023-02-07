@@ -1,8 +1,10 @@
 package app.time_to.timeto.ui
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -57,6 +59,29 @@ fun MyListView__HeaderView(
         )
         rightView?.invoke()
     }
+}
+
+@Composable
+fun MyListView__HeaderView__RightIcon(
+    @DrawableRes iconId: Int,
+    contentDescription: String,
+    onClick: () -> Unit
+) {
+    Icon(
+        painterResource(id = iconId),
+        contentDescription,
+        tint = c.blue,
+        modifier = Modifier
+            .padding(start = 10.dp)
+            .size(26.dp)
+            .offset(y = (-4).dp, x = 4.dp)
+            .alpha(0.8f)
+            .clip(RoundedCornerShape(99.dp))
+            .clickable {
+                onClick()
+            }
+            .padding(2.5.dp)
+    )
 }
 
 @Composable
