@@ -102,23 +102,25 @@ fun TabToolsView() {
         modifier = Modifier
             .fillMaxSize()
             .background(c.background),
-        contentPadding = PaddingValues(bottom = 25.dp)
+        contentPadding = PaddingValues(top = MyListView.PADDING_SECTION_HEADER, bottom = 25.dp)
     ) {
 
         item {
 
-            MyList.Header("CHECKLISTS") {
+            MyListView__HeaderView(
+                title = "CHECKLISTS",
+                rightView = {
+                    val isChecklistNewPresented = remember { mutableStateOf(false) }
+                    ChecklistEditDialog(editedChecklist = null, isPresented = isChecklistNewPresented)
 
-                val isChecklistNewPresented = remember { mutableStateOf(false) }
-                ChecklistEditDialog(editedChecklist = null, isPresented = isChecklistNewPresented)
-
-                MyList.Header__RightIcon(
-                    iconId = R.drawable.ic_round_add_24,
-                    contentDescription = "New Checklist"
-                ) {
-                    isChecklistNewPresented.value = true
+                    MyList.Header__RightIcon(
+                        iconId = R.drawable.ic_round_add_24,
+                        contentDescription = "New Checklist"
+                    ) {
+                        isChecklistNewPresented.value = true
+                    }
                 }
-            }
+            )
         }
 
         val checklists = state.checklists
@@ -176,18 +178,21 @@ fun TabToolsView() {
 
         item {
 
-            MyList.Header("SHORTCUTS") {
+            MyListView__HeaderView(
+                title = "SHORTCUTS",
+                modifier = Modifier.padding(top = MyListView.PADDING_SECTION_HEADER),
+                rightView = {
+                    val isAddShortcutPresented = remember { mutableStateOf(false) }
+                    ShortcutFormSheet(isPresented = isAddShortcutPresented, editedShortcut = null)
 
-                val isAddShortcutPresented = remember { mutableStateOf(false) }
-                ShortcutFormSheet(isPresented = isAddShortcutPresented, editedShortcut = null)
-
-                MyList.Header__RightIcon(
-                    iconId = R.drawable.ic_round_add_24,
-                    contentDescription = "New Shortcut"
-                ) {
-                    isAddShortcutPresented.value = true
+                    MyList.Header__RightIcon(
+                        iconId = R.drawable.ic_round_add_24,
+                        contentDescription = "New Shortcut"
+                    ) {
+                        isAddShortcutPresented.value = true
+                    }
                 }
-            }
+            )
         }
 
         val shortcuts = state.shortcuts
@@ -353,9 +358,16 @@ fun TabToolsView() {
 
         item {
 
-            MyList.Header("NOTIFICATIONS")
+            MyListView__HeaderView(
+                title = "NOTIFICATIONS",
+                modifier = Modifier.padding(top = MyListView.PADDING_SECTION_HEADER),
+            )
 
-            MyList.SectionItem(isFirst = true, isLast = false, paddingTop = MyList.HEADER_BOTTOM_PADDING) {
+            MyList.SectionItem(
+                isFirst = true,
+                isLast = false,
+                paddingTop = MyList.HEADER_BOTTOM_PADDING,
+            ) {
                 MyList.SectionItem_Button(text = "Time to Break", withDivider = false) {
                     context.startActivity(
                         Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).apply {

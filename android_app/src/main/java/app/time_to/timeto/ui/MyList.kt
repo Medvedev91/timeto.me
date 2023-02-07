@@ -16,7 +16,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 object MyList {
 
@@ -25,26 +24,6 @@ object MyList {
 
     val SECTION_ITEM_BUTTON_H_PADDING = 18.dp
     val SECTION_ITEM_BUTTON_V_PADDING = 12.dp
-
-    @Composable
-    fun Header(
-        title: String,
-        rightView: (@Composable () -> Unit)? = null
-    ) {
-        Row(
-            Modifier.padding(top = 30.dp, start = PADDING_H * 2 - 1.dp, end = PADDING_H * 2)
-        ) {
-            Text(
-                title,
-                modifier = Modifier
-                    .alpha(0.8f)
-                    .weight(1f),
-                color = c.textSecondary,
-                fontSize = 12.sp
-            )
-            rightView?.invoke()
-        }
-    }
 
     @Composable
     fun Header__RightIcon(
