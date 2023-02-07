@@ -106,6 +106,44 @@ fun MyListView__SectionView__ItemView(
 }
 
 @Composable
+fun MyListView__ItemView(
+    isFirst: Boolean,
+    isLast: Boolean,
+    modifier: Modifier = Modifier,
+    withTopDivider: Boolean = false,
+    dividerPadding: PaddingValues = PaddingValues(start = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL),
+    outerPadding: PaddingValues = PaddingValues(horizontal = MyListView.PADDING_SECTION_OUTER_HORIZONTAL),
+    minHeight: Dp = MyListView.SECTION_VIEW_ITEM_MIN_HEIGHT,
+    content: @Composable () -> Unit
+) {
+    Box(
+        modifier = modifier
+            .padding(outerPadding)
+            .clip(MySquircleShape(angles = listOf(isFirst, isFirst, isLast, isLast))),
+        contentAlignment = Alignment.TopCenter,
+    ) {
+
+        Box(
+            modifier = modifier
+                .fillMaxWidth()
+                .sizeIn(minHeight = minHeight)
+                .background(c.background2),
+            contentAlignment = Alignment.CenterStart,
+        ) {
+            content()
+        }
+
+        if (withTopDivider)
+            Divider(
+                color = c.dividerBackground2,
+                modifier = Modifier
+                    .padding(dividerPadding),
+                thickness = 0.5.dp,
+            )
+    }
+}
+
+@Composable
 fun MyListView__SectionView__TextInputView(
     placeholder: String,
     text: String,
