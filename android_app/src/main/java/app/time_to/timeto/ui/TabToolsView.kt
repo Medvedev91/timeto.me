@@ -113,7 +113,7 @@ fun TabToolsView() {
                     val isChecklistNewPresented = remember { mutableStateOf(false) }
                     ChecklistEditDialog(editedChecklist = null, isPresented = isChecklistNewPresented)
 
-                    MyList.Header__RightIcon(
+                    MyListView__HeaderView__RightIcon(
                         iconId = R.drawable.ic_round_add_24,
                         contentDescription = "New Checklist"
                     ) {
@@ -185,7 +185,7 @@ fun TabToolsView() {
                     val isAddShortcutPresented = remember { mutableStateOf(false) }
                     ShortcutFormSheet(isPresented = isAddShortcutPresented, editedShortcut = null)
 
-                    MyList.Header__RightIcon(
+                    MyListView__HeaderView__RightIcon(
                         iconId = R.drawable.ic_round_add_24,
                         contentDescription = "New Shortcut"
                     ) {

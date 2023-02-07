@@ -1,19 +1,14 @@
 package app.time_to.timeto.ui
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -24,29 +19,6 @@ object MyList {
 
     val SECTION_ITEM_BUTTON_H_PADDING = 18.dp
     val SECTION_ITEM_BUTTON_V_PADDING = 12.dp
-
-    @Composable
-    fun Header__RightIcon(
-        @DrawableRes iconId: Int,
-        contentDescription: String,
-        onClick: () -> Unit
-    ) {
-        Icon(
-            painterResource(id = iconId),
-            contentDescription,
-            tint = c.blue,
-            modifier = Modifier
-                .padding(start = 10.dp)
-                .size(26.dp)
-                .offset(y = (-4).dp, x = 4.dp)
-                .alpha(0.8f)
-                .clip(RoundedCornerShape(99.dp))
-                .clickable {
-                    onClick()
-                }
-                .padding(2.5.dp)
-        )
-    }
 
     @Composable
     fun SectionItem(
