@@ -146,6 +146,7 @@ fun MyListView__ButtonView(
     text: String,
     isFirst: Boolean,
     isLast: Boolean,
+    modifier: Modifier,
     withArrow: Boolean = false,
     withTopDivider: Boolean = false,
     rightView: @Composable (() -> Unit)? = null,
@@ -156,7 +157,7 @@ fun MyListView__ButtonView(
     MyListView__ItemView(
         isFirst = isFirst,
         isLast = isLast,
-        modifier = Modifier
+        modifier = modifier
             .clickable {
                 onClick()
             },
