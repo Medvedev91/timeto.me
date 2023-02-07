@@ -168,60 +168,52 @@ fun MyListView__ItemView(
 }
 
 @Composable
-fun MyListView__ButtonView(
+fun MyListView__ItemView__ButtonView(
     text: String,
-    isFirst: Boolean,
-    isLast: Boolean,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     withArrow: Boolean = false,
-    withTopDivider: Boolean = false,
     rightView: @Composable (() -> Unit)? = null,
     bottomView: @Composable (() -> Unit)? = null,
     onClick: () -> Unit,
 ) {
 
-    MyListView__ItemView(
-        isFirst = isFirst,
-        isLast = isLast,
+    Column(
         modifier = modifier
             .clickable {
                 onClick()
             },
-        withTopDivider = withTopDivider,
     ) {
-        Column {
 
-            Row(
+        Row(
+            modifier = Modifier
+                .sizeIn(minHeight = MyListView.SECTION_VIEW_ITEM_MIN_HEIGHT),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            Text(
+                text,
                 modifier = Modifier
-                    .sizeIn(minHeight = MyListView.SECTION_VIEW_ITEM_MIN_HEIGHT),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+                    .padding(start = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL),
+                color = c.text,
+            )
 
-                Text(
-                    text,
+            SpacerW1()
+
+            rightView?.invoke()
+
+            if (withArrow) {
+                Icon(
+                    painterResource(id = R.drawable.ic_round_keyboard_arrow_right_24),
+                    "Select emoji",
+                    tint = c.textSecondary.copy(alpha = 0.4f),
                     modifier = Modifier
-                        .padding(start = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL),
-                    color = c.text,
+                        .padding(end = 4.dp)
+                        .size(28.dp)
                 )
-
-                SpacerW1()
-
-                rightView?.invoke()
-
-                if (withArrow) {
-                    Icon(
-                        painterResource(id = R.drawable.ic_round_keyboard_arrow_right_24),
-                        "Select emoji",
-                        tint = c.textSecondary.copy(alpha = 0.4f),
-                        modifier = Modifier
-                            .padding(end = 4.dp)
-                            .size(28.dp)
-                    )
-                }
             }
-
-            bottomView?.invoke()
         }
+
+        bottomView?.invoke()
     }
 }
 

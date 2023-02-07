@@ -59,30 +59,33 @@ fun FoldersSettingsSheet(
                 ) { folder ->
 
                     val isFirst = folders.first() == folder
-                    MyListView__ButtonView(
-                        text = folder.name,
+                    MyListView__ItemView(
                         isFirst = isFirst,
                         isLast = folders.last() == folder,
-                        modifier = Modifier.animateItemPlacement(),
                         withTopDivider = !isFirst,
-                        rightView = {
-                            Icon(
-                                painterResource(id = R.drawable.ic_round_arrow_upward_24),
-                                "Up",
-                                tint = c.blue,
-                                modifier = Modifier
-                                    .padding(end = 10.dp)
-                                    .size(26.dp)
-                                    .clip(RoundedCornerShape(99.dp))
-                                    .clickable(!isFirst) {
-                                        vm.sortUp(folder)
-                                    }
-                                    .padding(2.dp)
-                            )
-                        }
+                        modifier = Modifier.animateItemPlacement(),
                     ) {
-                        // todo
+                        MyListView__ItemView__ButtonView(
+                            text = folder.name,
+                            rightView = {
+                                Icon(
+                                    painterResource(id = R.drawable.ic_round_arrow_upward_24),
+                                    "Up",
+                                    tint = c.blue,
+                                    modifier = Modifier
+                                        .padding(end = 10.dp)
+                                        .size(26.dp)
+                                        .clip(RoundedCornerShape(99.dp))
+                                        .clickable(!isFirst) {
+                                            vm.sortUp(folder)
+                                        }
+                                        .padding(2.dp)
+                                )
+                            }
+                        ) {
+                            // todo
 //                            Text(folderUI.folder.name)
+                        }
                     }
                 }
 
