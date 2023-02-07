@@ -21,7 +21,6 @@ class FoldersSettingsVM : __VM<FoldersSettingsVM.State>() {
     data class State(
         val folders: List<TaskFolderModel>,
     ) {
-
         val headerTitle = "Folders"
         val headerDoneText = "Done" // Strange but ok for now
         val tmrwButtonUI = if (folders.any { it.isTmrw }) null else TmrwButtonUI()
