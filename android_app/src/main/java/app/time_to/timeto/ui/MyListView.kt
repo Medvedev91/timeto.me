@@ -113,7 +113,6 @@ fun MyListView__ItemView(
     withTopDivider: Boolean = false,
     dividerPadding: PaddingValues = PaddingValues(start = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL),
     outerPadding: PaddingValues = PaddingValues(horizontal = MyListView.PADDING_SECTION_OUTER_HORIZONTAL),
-    minHeight: Dp = MyListView.SECTION_VIEW_ITEM_MIN_HEIGHT,
     content: @Composable () -> Unit
 ) {
     Box(
@@ -126,7 +125,6 @@ fun MyListView__ItemView(
         Box(
             modifier = modifier
                 .fillMaxWidth()
-                .sizeIn(minHeight = minHeight)
                 .background(c.background2),
             contentAlignment = Alignment.CenterStart,
         ) {
