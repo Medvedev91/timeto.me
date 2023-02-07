@@ -45,7 +45,7 @@ fun MyListView__HeaderView(
 ) {
     Row(
         modifier = modifier
-            .padding(horizontal = MyListView.PADDING_SECTION_OUTER_HORIZONTAL + 16.dp)
+            .padding(horizontal = MyListView.PADDING_SECTION_OUTER_HORIZONTAL + MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL)
     ) {
         Text(
             title,
