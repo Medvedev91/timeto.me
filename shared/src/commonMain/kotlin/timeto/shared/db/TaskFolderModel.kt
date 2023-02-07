@@ -74,6 +74,10 @@ data class TaskFolderModel(
     val isToday = id == ID_TODAY
     val isTmrw = id == ID_TMRW
 
+    fun upSort(newSort: Int) {
+        db.taskFolderQueries.upSortById(id = id, sort = newSort)
+    }
+
     ///
     /// Backupable Item
 
