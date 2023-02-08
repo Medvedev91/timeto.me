@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 
 object MyList {
 
-    val HEADER_BOTTOM_PADDING = 10.dp
     private val PADDING_H = 20.dp
 
     val SECTION_ITEM_BUTTON_H_PADDING = 18.dp
