@@ -259,32 +259,39 @@ fun TabToolsView() {
                     .padding(top = MyListView.PADDING_SECTION_SECTION),
             )
 
-            MyListView__SectionView(
-                modifier = Modifier.padding(top = MyListView.PADDING_HEADER_SECTION)
+            MyListView__ItemView(
+                isFirst = true,
+                isLast = false,
+                modifier = Modifier.padding(top = MyListView.PADDING_HEADER_SECTION),
             ) {
 
                 val isFoldersSettingsPresented = remember { mutableStateOf(false) }
                 FoldersSettingsSheet(isFoldersSettingsPresented)
-                MyListView__SectionView__ButtonView(
+                MyListView__ItemView__ButtonView(
                     text = "Folders",
-                    withTopDivider = false,
                     withArrow = true,
                 ) {
                     isFoldersSettingsPresented.trueValue()
                 }
+            }
 
-                //////
+            //////
 
-                val isDayStartPresented = remember { mutableStateOf(false) }
-                DayStartDialog(
-                    isPresented = isDayStartPresented,
-                    tabToolsVM = vm,
-                    tabToolsState = state,
-                )
+            val isDayStartPresented = remember { mutableStateOf(false) }
+            DayStartDialog(
+                isPresented = isDayStartPresented,
+                tabToolsVM = vm,
+                tabToolsState = state,
+            )
 
-                MyListView__SectionView__ButtonView(
+            MyListView__ItemView(
+                isFirst = false,
+                isLast = true,
+                withTopDivider = true,
+            ) {
+
+                MyListView__ItemView__ButtonView(
                     text = "Day Start",
-                    withTopDivider = true,
                     withArrow = false,
                     rightView = {
                         MyListView__SectionView__ButtonView__RightText(
