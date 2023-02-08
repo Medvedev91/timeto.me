@@ -17,13 +17,16 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.time_to.timeto.R
+import app.time_to.timeto.toColor
 import kotlinx.coroutines.delay
+import timeto.shared.ColorNative
 
 object MyListView {
 
@@ -293,6 +296,43 @@ fun MyListView__ItemView__ButtonView(
         }
 
         bottomView?.invoke()
+    }
+}
+
+
+@Composable
+fun MyListView__ItemView__ActionView(
+    text: String,
+    textColor: ColorNative = ColorNative.red,
+    onClick: () -> Unit,
+) {
+
+    Column(
+        modifier = Modifier
+            .background(c.background2) // Fix swipe to action bg on swipe
+            .clickable {
+                onClick()
+            },
+    ) {
+
+        Row(
+            modifier = Modifier
+                .sizeIn(minHeight = MyListView.SECTION_VIEW_ITEM_MIN_HEIGHT),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            SpacerW1()
+
+            Text(
+                text,
+                modifier = Modifier
+                    .padding(horizontal = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL),
+                color = textColor.toColor(),
+                fontWeight = FontWeight.W600,
+            )
+
+            SpacerW1()
+        }
     }
 }
 
