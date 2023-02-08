@@ -8,6 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import app.time_to.timeto.rememberVM
+import app.time_to.timeto.setFalse
 import timeto.shared.db.TaskFolderModel
 import timeto.shared.vm.FolderFormSheetVM
 
@@ -67,6 +68,24 @@ fun FolderFormSheet(
                         text = state.inputNameValue,
                         onTextChanged = { newText -> vm.setInputNameValue(newText) },
                     )
+                }
+
+                if (folder != null && !folder.isToday) {
+
+                    MyListView__Padding__SectionSection()
+
+                    MyListView__ItemView(
+                        isFirst = true,
+                        isLast = true,
+                    ) {
+                        MyListView__ItemView__ActionView(
+                            text = state.deleteFolderText,
+                        ) {
+                            vm.delete {
+                                isPresented.setFalse()
+                            }
+                        }
+                    }
                 }
             }
         }
