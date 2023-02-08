@@ -46,9 +46,10 @@ fun ChecklistItemEditDialog(
             //
             //
 
-            MyListView__SectionView(
-                paddingStart = 8.dp,
-                paddingEnd = 10.dp,
+            MyListView__ItemView(
+                isFirst = true,
+                isLast = true,
+                outerPadding = PaddingValues(horizontal = 8.dp)
             ) {
                 MyListView__ItemView__TextInputView(
                     placeholder = "Item",

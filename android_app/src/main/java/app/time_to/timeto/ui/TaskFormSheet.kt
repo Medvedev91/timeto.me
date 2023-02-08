@@ -49,7 +49,10 @@ fun TaskFormSheet(
                 }
             }
 
-            MyListView__SectionView {
+            MyListView__ItemView(
+                isFirst = true,
+                isLast = true,
+            ) {
 
                 MyListView__ItemView__TextInputView(
                     placeholder = "Task",

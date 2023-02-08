@@ -54,10 +54,11 @@ fun SearchEmojiSheet(
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
-                MyListView__SectionView(
+                MyListView__ItemView(
+                    isFirst = true,
+                    isLast = true,
                     modifier = Modifier
                         .weight(1f),
-                    paddingEnd = 4.dp,
                 ) {
                     Box(
                         contentAlignment = Alignment.CenterEnd

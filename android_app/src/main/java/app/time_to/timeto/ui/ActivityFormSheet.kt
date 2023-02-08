@@ -71,7 +71,10 @@ fun ActivityFormSheet(
 
                 MyListView__Padding__HeaderSection()
 
-                MyListView__SectionView {
+                MyListView__ItemView(
+                    isFirst = true,
+                    isLast = true,
+                ) {
                     MyListView__ItemView__TextInputView(
                         placeholder = state.inputNamePlaceholder,
                         text = state.inputNameValue,

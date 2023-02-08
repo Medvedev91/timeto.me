@@ -106,10 +106,11 @@ fun EventFormSheet(
                             .padding(6.dp)
                     )
 
-                    MyListView__SectionView(
+                    MyListView__ItemView(
                         modifier = Modifier.weight(1f),
-                        paddingStart = 8.dp,
-                        paddingEnd = 10.dp,
+                        isFirst = true,
+                        isLast = true,
+                        outerPadding = PaddingValues(horizontal = 8.dp)
                     ) {
                         MyListView__ItemView__TextInputView(
                             placeholder = "Event Title",
