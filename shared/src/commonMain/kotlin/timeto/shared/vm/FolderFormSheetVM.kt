@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.*
 import timeto.shared.UIException
 import timeto.shared.db.TaskFolderModel
 import timeto.shared.launchExDefault
+import timeto.shared.reportApi
 import timeto.shared.showUiAlert
 
 class FolderFormSheetVM(
@@ -41,5 +42,12 @@ class FolderFormSheetVM(
         } catch (e: UIException) {
             showUiAlert(e.uiMessage)
         }
+    }
+
+    fun delete() {
+        val folder = folder ?: return reportApi("FolderFormSheetVM no folder. WTF??!!")
+        if (folder.isToday)
+            return reportApi("It's impossible to remove \"Today\" folder")
+        folder.backupable__delete()
     }
 }
