@@ -118,35 +118,6 @@ fun MyListView__SectionView(
     }
 }
 
-@Composable
-fun MyListView__SectionView__ItemView(
-    modifier: Modifier = Modifier,
-    withTopDivider: Boolean = false,
-    minHeight: Dp = MyListView.SECTION_VIEW_ITEM_MIN_HEIGHT,
-    content: @Composable () -> Unit
-) {
-    Box(
-        contentAlignment = Alignment.TopCenter // For divider
-    ) {
-
-        Box(
-            modifier = modifier
-                .fillMaxWidth()
-                .sizeIn(minHeight = minHeight),
-            contentAlignment = Alignment.CenterStart
-        ) {
-            content()
-        }
-
-        if (withTopDivider)
-            Divider(
-                color = c.dividerBackground2,
-                modifier = Modifier.padding(start = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL),
-                thickness = 0.5.dp
-            )
-    }
-}
-
 ///
 /// Item
 
