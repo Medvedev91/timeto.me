@@ -60,6 +60,13 @@ fun FoldersSettingsSheet(
                 ) { folder ->
 
                     val isFirst = folders.first() == folder
+
+                    val isEditFolderPresented = remember { mutableStateOf(false) }
+                    FolderFormSheet(
+                        isPresented = isEditFolderPresented,
+                        folder = folder,
+                    )
+
                     MyListView__ItemView(
                         isFirst = isFirst,
                         isLast = folders.last() == folder,
@@ -84,8 +91,7 @@ fun FoldersSettingsSheet(
                                 )
                             }
                         ) {
-                            // todo
-//                            Text(folderUI.folder.name)
+                            isEditFolderPresented.setTrue()
                         }
                     }
                 }
