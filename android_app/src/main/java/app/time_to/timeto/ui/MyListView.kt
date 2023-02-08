@@ -100,24 +100,6 @@ fun MyListView__HeaderView__RightIcon(
     )
 }
 
-@Composable
-fun MyListView__SectionView(
-    modifier: Modifier = Modifier,
-    paddingStart: Dp = MyListView.PADDING_SECTION_OUTER_HORIZONTAL,
-    paddingEnd: Dp = MyListView.PADDING_SECTION_OUTER_HORIZONTAL,
-    content: @Composable () -> Unit
-) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(start = paddingStart, end = paddingEnd)
-            .clip(MySquircleShape())
-            .background(c.background2)
-    ) {
-        content()
-    }
-}
-
 ///
 /// Item
 
