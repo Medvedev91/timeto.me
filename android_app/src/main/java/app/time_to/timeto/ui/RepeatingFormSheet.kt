@@ -141,10 +141,12 @@ fun RepeatingFormSheet(
                     }
                 )
 
-                MyListView__SectionView(
+                MyListView__ItemView(
+                    isFirst = true,
+                    isLast = true,
                     modifier = Modifier.padding(top = 20.dp)
                 ) {
-                    MyListView__SectionView__ButtonView(
+                    MyListView__ItemView__ButtonView(
                         text = state.daytimeHeader,
                         withArrow = true,
                         rightView = {
