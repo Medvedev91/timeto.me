@@ -35,6 +35,10 @@ fun MutableState<Boolean>.setTrue() {
     value = true
 }
 
+fun MutableState<Boolean>.setFalse() {
+    value = false
+}
+
 ///
 /// Color
 
