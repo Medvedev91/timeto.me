@@ -235,6 +235,23 @@ fun MyListView__ItemView__ButtonView(
 }
 
 @Composable
+fun MyListView__ItemView__ButtonView__RightText(
+    text: String,
+    paddingEnd: Dp = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL,
+) {
+    Text(
+        text,
+        modifier = Modifier
+            .padding(end = paddingEnd)
+            .offset(),
+        fontSize = 14.sp,
+        color = c.text,
+    )
+}
+
+//////
+
+@Composable
 fun MyListView__ItemView__TextInputView(
     placeholder: String,
     text: String,
@@ -307,21 +324,6 @@ fun MyListView__ItemView__TextInputView(
             }
         }
     }
-}
-
-@Composable
-fun MyListView__ItemView__ButtonView__RightText(
-    text: String,
-    paddingEnd: Dp = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL,
-) {
-    Text(
-        text,
-        modifier = Modifier
-            .padding(end = paddingEnd)
-            .offset(),
-        fontSize = 14.sp,
-        color = c.text,
-    )
 }
 
 @Composable
