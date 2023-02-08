@@ -172,6 +172,7 @@ fun MyListView__ItemView(
 fun MyListView__ItemView__ButtonView(
     text: String,
     modifier: Modifier = Modifier,
+    textModifier: Modifier = Modifier,
     withArrow: Boolean = false,
     rightView: @Composable (() -> Unit)? = null,
     bottomView: @Composable (() -> Unit)? = null,
@@ -193,7 +194,7 @@ fun MyListView__ItemView__ButtonView(
 
             Text(
                 text,
-                modifier = Modifier
+                modifier = textModifier
                     .padding(start = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL),
                 color = c.text,
             )
