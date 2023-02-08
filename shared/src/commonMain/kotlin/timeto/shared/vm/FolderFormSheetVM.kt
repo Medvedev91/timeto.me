@@ -20,6 +20,7 @@ class FolderFormSheetVM(
         val inputNameHeader = "FOLDER NAME"
         val inputNamePlaceholder = "Folder Name"
         val isHeaderDoneEnabled = inputNameValue.isNotBlank()
+        val deleteFolderText = "Delete Folder"
     }
 
     override val state = MutableStateFlow(
@@ -49,10 +50,17 @@ class FolderFormSheetVM(
         }
     }
 
-    fun delete() {
-        val folder = folder ?: return reportApi("FolderFormSheetVM no folder. WTF??!!")
-        if (folder.isToday)
-            return reportApi("It's impossible to remove \"Today\" folder")
-        folder.backupable__delete()
+    fun delete(
+        onSuccess: () -> Unit
+    ) {
+        try {
+            val folder = folder ?: return reportApi("FolderFormSheetVM no folder. WTF??!!")
+            if (folder.isToday)
+                throw UIException("It's impossible to delete \"Today\" folder")
+            folder.backupable__delete()
+            onSuccess()
+        } catch (e: UIException) {
+            showUiAlert(e.uiMessage)
+        }
     }
 }
