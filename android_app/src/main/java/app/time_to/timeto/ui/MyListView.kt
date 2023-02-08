@@ -235,13 +235,12 @@ fun MyListView__ItemView__ButtonView(
 }
 
 @Composable
-fun MyListView__SectionView__TextInputView(
+fun MyListView__ItemView__TextInputView(
     placeholder: String,
     text: String,
     onTextChanged: (String) -> Unit, // WARNING Run only in LaunchedEffect()
     isSingleLine: Boolean = false,
     isAutofocus: Boolean = false,
-    withTopDivider: Boolean = false, // todo Not tested
     keyboardButton: ImeAction = ImeAction.Default,
     keyboardEvent: () -> Unit = {}
 ) {
@@ -270,9 +269,7 @@ fun MyListView__SectionView__TextInputView(
                 fontSize = 16.sp
             ),
             decorationBox = { innerTextField ->
-                MyListView__SectionView__ItemView(
-                    withTopDivider = withTopDivider
-                ) {
+                MyListView__SectionView__ItemView {
                     Box(
                         modifier = Modifier
                             .padding(

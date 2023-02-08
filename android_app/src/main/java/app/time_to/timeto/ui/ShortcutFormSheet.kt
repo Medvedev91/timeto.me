@@ -74,7 +74,7 @@ fun ShortcutFormSheet(
                 MyListView__Padding__HeaderSection()
 
                 MyListView__SectionView {
-                    MyListView__SectionView__TextInputView(
+                    MyListView__ItemView__TextInputView(
                         placeholder = state.inputNamePlaceholder,
                         text = state.inputNameValue,
                         onTextChanged = { newText -> vm.setInputNameValue(newText) },
@@ -89,7 +89,7 @@ fun ShortcutFormSheet(
                 MyListView__Padding__HeaderSection()
 
                 MyListView__SectionView {
-                    MyListView__SectionView__TextInputView(
+                    MyListView__ItemView__TextInputView(
                         placeholder = state.inputUriPlaceholder,
                         text = state.inputUriValue,
                         onTextChanged = { newText -> vm.setInputUriValue(newText) },

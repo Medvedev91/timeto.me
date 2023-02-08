@@ -76,7 +76,7 @@ fun RepeatingFormSheet(
                 MyListView__SectionView(
                     modifier = Modifier.padding(top = 8.dp)
                 ) {
-                    MyListView__SectionView__TextInputView(
+                    MyListView__ItemView__TextInputView(
                         placeholder = "Task",
                         text = state.inputTextValue,
                         onTextChanged = { vm.setTextValue(it) }

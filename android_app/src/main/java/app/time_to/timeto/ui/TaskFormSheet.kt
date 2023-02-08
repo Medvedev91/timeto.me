@@ -51,7 +51,7 @@ fun TaskFormSheet(
 
             MyListView__SectionView {
 
-                MyListView__SectionView__TextInputView(
+                MyListView__ItemView__TextInputView(
                     placeholder = "Task",
                     text = state.inputTextValue,
                     onTextChanged = { vm.setInputTextValue(it) },

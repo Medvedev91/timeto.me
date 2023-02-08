@@ -111,7 +111,7 @@ fun EventFormSheet(
                         paddingStart = 8.dp,
                         paddingEnd = 10.dp,
                     ) {
-                        MyListView__SectionView__TextInputView(
+                        MyListView__ItemView__TextInputView(
                             placeholder = "Event Title",
                             text = state.inputTextValue,
                             onTextChanged = { vm.setInputTextValue(it) },
