@@ -278,7 +278,7 @@ fun TabToolsView() {
                     text = "Folders",
                     withArrow = true,
                 ) {
-                    isFoldersSettingsPresented.trueValue()
+                    isFoldersSettingsPresented.setTrue()
                 }
             }
 

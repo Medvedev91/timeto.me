@@ -31,7 +31,7 @@ fun pxToDp(px: Float) = (px / density)
 fun Dp.max(dp: Dp) = if (this > dp) this else dp
 fun Dp.min(dp: Dp) = if (this < dp) this else dp
 
-fun MutableState<Boolean>.trueValue() {
+fun MutableState<Boolean>.setTrue() {
     value = true
 }
 
