@@ -287,11 +287,8 @@ fun TabToolsView() {
                     withTopDivider = true,
                     withArrow = false,
                     rightView = {
-                        Text(
-                            state.dayStartNote,
-                            modifier = Modifier.padding(horizontal = MyList.SECTION_ITEM_BUTTON_H_PADDING),
-                            fontSize = 14.sp,
-                            color = c.text,
+                        MyListView__SectionView__ButtonView__RightText(
+                            text = state.dayStartNote
                         )
                     }
                 ) {
