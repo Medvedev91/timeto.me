@@ -403,8 +403,13 @@ fun TabToolsView() {
 
         item {
 
-            MyList.SectionItem(isFirst = true, isLast = false, paddingTop = MyList.HEADER_BOTTOM_PADDING * 3) {
-                MyList.SectionItem_Button(text = "Ask a Question", withDivider = false) {
+            MyListView__ItemView(
+                isFirst = true,
+                isLast = false,
+                modifier = Modifier.padding(top = MyListView.PADDING_SECTION_SECTION),
+                withTopDivider = false,
+            ) {
+                MyListView__ItemView__ButtonView(text = "Ask a Question") {
                     context.startActivity(
                         Intent(Intent.ACTION_VIEW).apply {
                             data = Uri.parse("mailto:${state.feedbackEmail}?subject=${state.feedbackSubject}")
@@ -413,8 +418,12 @@ fun TabToolsView() {
                 }
             }
 
-            MyList.SectionItem(isFirst = false, isLast = true) {
-                MyList.SectionItem_Button(text = "Open Source", withDivider = true) {
+            MyListView__ItemView(
+                isFirst = false,
+                isLast = true,
+                withTopDivider = true,
+            ) {
+                MyListView__ItemView__ButtonView(text = "Open Source") {
                     context.startActivity(
                         Intent(Intent.ACTION_VIEW).apply {
                             data = Uri.parse(state.openSourceUrl)
