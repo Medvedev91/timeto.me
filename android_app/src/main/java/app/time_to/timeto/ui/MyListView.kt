@@ -150,7 +150,7 @@ fun MyListView__ItemView(
     ) {
 
         Box(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .background(c.background2),
             contentAlignment = Alignment.CenterStart,
