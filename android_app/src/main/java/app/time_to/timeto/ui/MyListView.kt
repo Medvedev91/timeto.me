@@ -257,6 +257,7 @@ fun MyListView__ItemView__ButtonView(
 
     Column(
         modifier = modifier
+            .background(c.background2) // Fix swipe to action bg on swipe
             .clickable {
                 onClick()
             },
