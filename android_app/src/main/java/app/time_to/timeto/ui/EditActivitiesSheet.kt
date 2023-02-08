@@ -74,7 +74,7 @@ fun EditActivitiesSheet(
                                         .padding(
                                             PaddingValues(
                                                 horizontal = 16.dp,
-                                                vertical = MyList.SECTION_ITEM_BUTTON_V_PADDING
+                                                vertical = 12.dp,
                                             )
                                         )
                                         .weight(1f),
