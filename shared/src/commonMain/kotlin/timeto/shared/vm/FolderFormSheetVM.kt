@@ -37,7 +37,12 @@ class FolderFormSheetVM(
         onSuccess: () -> Unit
     ) = launchExDefault {
         try {
-            TaskFolderModel.addWithValidation(state.value.inputNameValue)
+            val name = state.value.inputNameValue
+            if (folder != null) {
+                folder.upNameWithValidation(name)
+            } else {
+                TaskFolderModel.addWithValidation(name)
+            }
             onSuccess()
         } catch (e: UIException) {
             showUiAlert(e.uiMessage)
