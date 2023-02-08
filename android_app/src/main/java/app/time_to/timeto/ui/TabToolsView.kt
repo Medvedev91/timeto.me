@@ -132,9 +132,13 @@ fun TabToolsView() {
             val isChecklistPresented = remember { mutableStateOf(false) }
             ChecklistDialog(checklist = checklist, isPresented = isChecklistPresented)
 
-            MyList.SectionItem(
-                isFirst = checklists.first() == checklist,
+            val isFirst = checklists.first() == checklist
+
+            MyListView__ItemView(
+                isFirst = isFirst,
                 isLast = checklists.last() == checklist,
+                withTopDivider = !isFirst,
+                modifier = Modifier.padding(top = if (isFirst) MyListView.PADDING_HEADER_SECTION else 0.dp),
             ) {
 
                 SwipeToAction(
@@ -166,9 +170,8 @@ fun TabToolsView() {
                     },
                     toVibrateStartEnd = listOf(true, false),
                 ) {
-                    MyList.SectionItem_Button(
+                    MyListView__ItemView__ButtonView(
                         text = checklist.name,
-                        withDivider = checklists.first() != checklist
                     ) {
                         isChecklistPresented.value = true
                     }
@@ -201,9 +204,13 @@ fun TabToolsView() {
             val isShortcutEditPresented = remember { mutableStateOf(false) }
             ShortcutFormSheet(isPresented = isShortcutEditPresented, editedShortcut = shortcut)
 
-            MyList.SectionItem(
-                isFirst = shortcuts.first() == shortcut,
+            val isFirst = shortcuts.first() == shortcut
+
+            MyListView__ItemView(
+                isFirst = isFirst,
                 isLast = shortcuts.last() == shortcut,
+                withTopDivider = !isFirst,
+                modifier = Modifier.padding(top = if (isFirst) MyListView.PADDING_HEADER_SECTION else 0.dp),
             ) {
 
                 SwipeToAction(
@@ -235,9 +242,8 @@ fun TabToolsView() {
                     },
                     toVibrateStartEnd = listOf(true, false),
                 ) {
-                    MyList.SectionItem_Button(
+                    MyListView__ItemView__ButtonView(
                         text = shortcut.name,
-                        withDivider = shortcuts.first() != shortcut
                     ) {
                         performShortcutOrError(shortcut, context, errorDialog)
                     }
