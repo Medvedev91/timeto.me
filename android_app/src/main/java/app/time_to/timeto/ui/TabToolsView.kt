@@ -312,11 +312,14 @@ fun TabToolsView() {
                     .padding(top = MyListView.PADDING_SECTION_SECTION),
             )
 
-            MyListView__SectionView(
-                modifier = Modifier.padding(top = MyListView.PADDING_HEADER_SECTION)
+            MyListView__ItemView(
+                isFirst = true,
+                isLast = false,
+                modifier = Modifier.padding(top = MyListView.PADDING_HEADER_SECTION),
+                withTopDivider = false,
             ) {
 
-                MyListView__SectionView__ButtonView(
+                MyListView__ItemView__ButtonView(
                     text = "Create",
                 ) {
                     scope.launch {
@@ -324,15 +327,28 @@ fun TabToolsView() {
                         launcherBackup.launch("timeto_${date}.json")
                     }
                 }
+            }
 
-                MyListView__SectionView__ButtonView(
+            MyListView__ItemView(
+                isFirst = false,
+                isLast = false,
+                withTopDivider = true,
+            ) {
+
+                MyListView__ItemView__ButtonView(
                     text = "Restore",
-                    withTopDivider = true
                 ) {
                     scope.launch {
                         launcherRestore.launch("*/*")
                     }
                 }
+            }
+
+            MyListView__ItemView(
+                isFirst = false,
+                isLast = true,
+                withTopDivider = true,
+            ) {
 
                 val autoBackup = LocalAutoBackup.current
                 if (autoBackup != null && isSDKQPlus()) {
@@ -344,9 +360,8 @@ fun TabToolsView() {
                         DateFormat.format(format, calendar).toString()
                     }
 
-                    MyListView__SectionView__ButtonView(
+                    MyListView__ItemView__ButtonView(
                         text = "Auto Backup",
-                        withTopDivider = true,
                         withArrow = true,
                         rightView = {
                             Text(
