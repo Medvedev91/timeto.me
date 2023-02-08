@@ -38,12 +38,9 @@ data class TaskFolderModel(
         //////
 
         suspend fun addWithValidation(name: String) {
-            val validatedName = name.trim()
-            if (validatedName.isBlank())
-                throw UIException("Invalid folder name")
             addRaw(
                 id = time(),
-                name = validatedName,
+                name = validateName(name),
                 sort = getAscBySort().maxOf { it.sort } + 1,
             )
         }
@@ -110,4 +107,11 @@ data class TaskFolderModel(
     override fun backupable__delete() {
         db.taskFolderQueries.deleteById(id)
     }
+}
+
+private fun validateName(name: String): String {
+    val validatedName = name.trim()
+    if (validatedName.isBlank())
+        throw UIException("Invalid folder name")
+    return validatedName
 }
