@@ -47,11 +47,14 @@ fun EditActivitiesSheet(
                 itemsIndexed(
                     activitiesUI,
                     key = { _, item -> item.activity.id }
-                ) { idx, activityUI ->
+                ) { _, activityUI ->
 
-                    MyList.SectionItem(
-                        isFirst = activitiesUI.first() == activityUI,
+                    val isFirst = activitiesUI.first() == activityUI
+
+                    MyListView__ItemView(
+                        isFirst = isFirst,
                         isLast = activitiesUI.last() == activityUI,
+                        withTopDivider = !isFirst,
                     ) {
 
                         Box(
@@ -108,13 +111,6 @@ fun EditActivitiesSheet(
                                         .padding(1.dp)
                                 )
                             }
-
-                            if (idx > 0)
-                                Divider(
-                                    color = c.dividerBackground2,
-                                    modifier = Modifier.padding(start = 18.dp),
-                                    thickness = 0.5.dp
-                                )
                         }
                     }
                 }
