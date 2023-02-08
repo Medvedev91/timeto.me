@@ -30,7 +30,6 @@ object MyListView {
     val PADDING_SHEET_FIRST_HEADER = 30.dp
 
     val PADDING_HEADER_SECTION = 6.dp
-    val PADDING_SECTION_SECTION = 34.dp
     val PADDING_SECTION_HEADER = 30.dp
 
     val PADDING_SECTION_OUTER_HORIZONTAL = 20.dp
@@ -38,6 +37,15 @@ object MyListView {
 
     val SECTION_VIEW_ITEM_MIN_HEIGHT = 46.dp
 }
+
+//////
+
+@Composable
+fun MyListView__Padding__SectionSection() {
+    Box(Modifier.height(34.dp))
+}
+
+//////
 
 @Composable
 fun MyListView__HeaderView(

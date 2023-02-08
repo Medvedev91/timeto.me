@@ -164,10 +164,10 @@ fun RepeatingFormSheet(
                 ///
                 ///
 
+                MyListView__Padding__SectionSection()
+
                 MyListView__HeaderView(
                     title = "REPETITION PERIOD",
-                    modifier = Modifier
-                        .padding(top = MyListView.PADDING_SECTION_SECTION)
                 )
 
                 MyListView__SectionView(

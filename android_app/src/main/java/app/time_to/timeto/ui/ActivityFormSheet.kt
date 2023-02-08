@@ -93,10 +93,11 @@ fun ActivityFormSheet(
                     vm.setEmoji(it)
                 }
 
+                MyListView__Padding__SectionSection()
+
                 MyListView__ItemView(
                     isFirst = true,
                     isLast = true,
-                    modifier = Modifier.padding(top = MyListView.PADDING_SECTION_SECTION)
                 ) {
                     MyListView__ItemView__ButtonView(
                         text = state.emojiTitle,
@@ -125,10 +126,10 @@ fun ActivityFormSheet(
                     }
                 }
 
+                MyListView__Padding__SectionSection()
+
                 MyListView__HeaderView(
                     title = state.timerHintsHeader,
-                    modifier = Modifier
-                        .padding(top = MyListView.PADDING_SECTION_SECTION)
                 )
 
                 MyListView__SectionView(

@@ -65,9 +65,10 @@ fun ShortcutFormSheet(
                     .imePadding()
             ) {
 
+                MyListView__Padding__SectionSection()
+
                 MyListView__HeaderView(
                     title = state.inputNameHeader,
-                    Modifier.padding(top = MyListView.PADDING_SECTION_SECTION)
                 )
 
                 MyListView__SectionView(

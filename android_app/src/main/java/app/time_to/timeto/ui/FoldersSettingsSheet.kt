@@ -95,10 +95,12 @@ fun FoldersSettingsSheet(
                 val tmrwButtonUI = state.tmrwButtonUI
                 if (tmrwButtonUI != null) {
                     item {
+
+                        MyListView__Padding__SectionSection()
+
                         MyListView__ItemView(
                             isFirst = true,
                             isLast = true,
-                            modifier = Modifier.padding(top = MyListView.PADDING_SECTION_SECTION)
                         ) {
                             MyListView__ItemView__ButtonView(
                                 text = tmrwButtonUI.text,
