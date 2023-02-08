@@ -50,8 +50,6 @@ fun FolderFormSheet(
                     .imePadding()
             ) {
 
-                ////
-
                 MyListView__Padding__SectionHeader()
 
                 MyListView__HeaderView(
