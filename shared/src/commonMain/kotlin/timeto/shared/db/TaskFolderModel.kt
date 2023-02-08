@@ -37,6 +37,17 @@ data class TaskFolderModel(
 
         //////
 
+        suspend fun addWithValidation(name: String) {
+            val validatedName = name.trim()
+            if (validatedName.isBlank())
+                throw UIException("Invalid folder name")
+            addRaw(
+                id = time(),
+                name = validatedName,
+                sort = getAscBySort().maxOf { it.sort } + 1,
+            )
+        }
+
         fun addRaw(
             id: Int,
             name: String,
