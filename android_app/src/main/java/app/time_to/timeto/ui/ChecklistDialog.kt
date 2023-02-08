@@ -62,9 +62,10 @@ fun ChecklistDialog(
 
                     val isChecklistItemEditPresented = ChecklistItemEditDialog(checklist = checklist, editedChecklistItem = item)
 
-                    MyList.SectionItem(
+                    MyListView__ItemView(
                         isFirst = checklistItems.first() == item,
                         isLast = checklistItems.last() == item,
+                        withTopDivider = checklistItems.first() != item,
                     ) {
 
                         SwipeToAction(
@@ -93,14 +94,10 @@ fun ChecklistDialog(
                             toVibrateStartEnd = listOf(true, false),
                         ) {
                             Box {
-                                MyList.SectionItem_Button(
+                                MyListView__ItemView__ButtonView(
                                     text = item.text,
-                                    withDivider = checklistItems.first() != item,
-                                    paddings = PaddingValues(
-                                        top = MyList.SECTION_ITEM_BUTTON_V_PADDING,
-                                        bottom = MyList.SECTION_ITEM_BUTTON_V_PADDING,
-                                        start = MyList.SECTION_ITEM_BUTTON_H_PADDING,
-                                        end = 40.dp, // for check icon space
+                                    textModifier = Modifier.padding(
+                                        end = 40.dp, // Check icon space
                                     )
                                 ) {
                                     scope.launchEx {
