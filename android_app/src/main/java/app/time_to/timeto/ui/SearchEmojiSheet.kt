@@ -138,7 +138,9 @@ fun SearchEmojiSheet(
                 }
             }
 
-            MyListView__SectionView(
+            MyListView__ItemView(
+                isFirst = true,
+                isLast = true,
                 modifier = Modifier
                     .padding(vertical = 12.dp)
                     .fillMaxSize()
