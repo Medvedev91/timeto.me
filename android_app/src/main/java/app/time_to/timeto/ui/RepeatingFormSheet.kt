@@ -148,7 +148,7 @@ fun RepeatingFormSheet(
                         text = state.daytimeHeader,
                         withArrow = true,
                         rightView = {
-                            MyListView__SectionView__ButtonView__RightText(
+                            MyListView__ItemView__ButtonView__RightText(
                                 text = state.daytimeNote,
                                 paddingEnd = 2.dp,
                             )

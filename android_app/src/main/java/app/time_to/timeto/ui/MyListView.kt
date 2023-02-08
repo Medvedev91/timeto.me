@@ -351,7 +351,7 @@ fun MyListView__SectionView__ButtonView(
 }
 
 @Composable
-fun MyListView__SectionView__ButtonView__RightText(
+fun MyListView__ItemView__ButtonView__RightText(
     text: String,
     paddingEnd: Dp = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL,
 ) {

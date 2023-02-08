@@ -294,7 +294,7 @@ fun TabToolsView() {
                     text = "Day Start",
                     withArrow = false,
                     rightView = {
-                        MyListView__SectionView__ButtonView__RightText(
+                        MyListView__ItemView__ButtonView__RightText(
                             text = state.dayStartNote
                         )
                     }
