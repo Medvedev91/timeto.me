@@ -63,10 +63,10 @@ fun ActivityFormSheet(
 
                 ////
 
+                MyListView__Padding__SectionHeader()
+
                 MyListView__HeaderView(
                     state.inputNameHeader,
-                    modifier = Modifier
-                        .padding(top = MyListView.PADDING_SHEET_FIRST_HEADER),
                 )
 
                 MyListView__SectionView(

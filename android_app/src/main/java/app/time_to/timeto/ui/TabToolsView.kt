@@ -102,10 +102,12 @@ fun TabToolsView() {
         modifier = Modifier
             .fillMaxSize()
             .background(c.background),
-        contentPadding = PaddingValues(top = MyListView.PADDING_SECTION_HEADER, bottom = 25.dp)
+        contentPadding = PaddingValues(bottom = 25.dp),
     ) {
 
         item {
+
+            MyListView__Padding__SectionHeader()
 
             MyListView__HeaderView(
                 title = "CHECKLISTS",
@@ -181,9 +183,10 @@ fun TabToolsView() {
 
         item {
 
+            MyListView__Padding__SectionHeader((-9).dp) // ~9.dp consume icon space
+
             MyListView__HeaderView(
                 title = "SHORTCUTS",
-                modifier = Modifier.padding(top = MyListView.PADDING_SECTION_HEADER - 9.dp), // ~9.dp consume icon space
                 rightView = {
                     val isAddShortcutPresented = remember { mutableStateOf(false) }
                     ShortcutFormSheet(isPresented = isAddShortcutPresented, editedShortcut = null)
@@ -253,10 +256,10 @@ fun TabToolsView() {
 
         item {
 
+            MyListView__Padding__SectionHeader()
+
             MyListView__HeaderView(
                 "SETTINGS",
-                modifier = Modifier
-                    .padding(top = MyListView.PADDING_SECTION_HEADER),
             )
 
             MyListView__ItemView(
@@ -306,10 +309,10 @@ fun TabToolsView() {
 
         item {
 
+            MyListView__Padding__SectionHeader()
+
             MyListView__HeaderView(
                 "BACKUPS",
-                modifier = Modifier
-                    .padding(top = MyListView.PADDING_SECTION_HEADER),
             )
 
             MyListView__ItemView(
@@ -379,9 +382,10 @@ fun TabToolsView() {
 
         item {
 
+            MyListView__Padding__SectionHeader()
+
             MyListView__HeaderView(
                 title = "NOTIFICATIONS",
-                modifier = Modifier.padding(top = MyListView.PADDING_SECTION_HEADER),
             )
 
             MyListView__ItemView(

@@ -27,10 +27,7 @@ import kotlinx.coroutines.delay
 
 object MyListView {
 
-    val PADDING_SHEET_FIRST_HEADER = 30.dp
-
     val PADDING_HEADER_SECTION = 6.dp
-    val PADDING_SECTION_HEADER = 30.dp
 
     val PADDING_SECTION_OUTER_HORIZONTAL = 20.dp
     val PADDING_SECTION_ITEM_INNER_HORIZONTAL = 16.dp
@@ -43,6 +40,11 @@ object MyListView {
 @Composable
 fun MyListView__Padding__SectionSection() {
     Box(Modifier.height(34.dp))
+}
+
+@Composable
+fun MyListView__Padding__SectionHeader(extraHeight: Dp = 0.dp) {
+    Box(Modifier.height(30.dp + extraHeight))
 }
 
 //////
