@@ -71,9 +71,9 @@ fun ShortcutFormSheet(
                     title = state.inputNameHeader,
                 )
 
-                MyListView__SectionView(
-                    modifier = Modifier.padding(top = MyListView.PADDING_HEADER_SECTION)
-                ) {
+                MyListView__Padding__HeaderSection()
+
+                MyListView__SectionView {
                     MyListView__SectionView__TextInputView(
                         placeholder = state.inputNamePlaceholder,
                         text = state.inputNameValue,
@@ -86,9 +86,9 @@ fun ShortcutFormSheet(
                     Modifier.padding(top = 30.dp)
                 )
 
-                MyListView__SectionView(
-                    modifier = Modifier.padding(top = MyListView.PADDING_HEADER_SECTION)
-                ) {
+                MyListView__Padding__HeaderSection()
+
+                MyListView__SectionView {
                     MyListView__SectionView__TextInputView(
                         placeholder = state.inputUriPlaceholder,
                         text = state.inputUriValue,
@@ -101,12 +101,13 @@ fun ShortcutFormSheet(
                     Modifier.padding(top = 60.dp)
                 )
 
+                MyListView__Padding__HeaderSection()
+
                 shortcutExamples.forEach { example ->
                     val isFirst = shortcutExamples.first() == example
                     MyListView__ItemView(
                         isFirst = isFirst,
                         isLast = shortcutExamples.last() == example,
-                        modifier = Modifier.padding(top = if (isFirst) MyListView.PADDING_HEADER_SECTION else 0.dp),
                         withTopDivider = !isFirst,
                     ) {
                         MyListView__ItemView__ButtonView(

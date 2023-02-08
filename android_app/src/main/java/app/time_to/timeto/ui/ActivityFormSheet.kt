@@ -69,9 +69,9 @@ fun ActivityFormSheet(
                     state.inputNameHeader,
                 )
 
-                MyListView__SectionView(
-                    modifier = Modifier.padding(top = MyListView.PADDING_HEADER_SECTION)
-                ) {
+                MyListView__Padding__HeaderSection()
+
+                MyListView__SectionView {
                     MyListView__SectionView__TextInputView(
                         placeholder = state.inputNamePlaceholder,
                         text = state.inputNameValue,
@@ -132,10 +132,9 @@ fun ActivityFormSheet(
                     title = state.timerHintsHeader,
                 )
 
-                MyListView__SectionView(
-                    modifier = Modifier
-                        .padding(top = MyListView.PADDING_HEADER_SECTION)
-                ) {
+                MyListView__Padding__HeaderSection()
+
+                MyListView__SectionView {
 
                     Column {
 

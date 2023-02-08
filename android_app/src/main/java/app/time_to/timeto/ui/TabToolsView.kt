@@ -126,6 +126,9 @@ fun TabToolsView() {
         }
 
         val checklists = state.checklists
+        if (checklists.isNotEmpty())
+            item { MyListView__Padding__HeaderSection() }
+
         itemsIndexed(checklists, key = { _, checklist -> checklist.id }) { _, checklist ->
 
             val isChecklistEditPresented = remember { mutableStateOf(false) }
@@ -140,7 +143,6 @@ fun TabToolsView() {
                 isFirst = isFirst,
                 isLast = checklists.last() == checklist,
                 withTopDivider = !isFirst,
-                modifier = Modifier.padding(top = if (isFirst) MyListView.PADDING_HEADER_SECTION else 0.dp),
             ) {
 
                 SwipeToAction(
@@ -202,6 +204,9 @@ fun TabToolsView() {
         }
 
         val shortcuts = state.shortcuts
+        if (shortcuts.isNotEmpty())
+            item { MyListView__Padding__HeaderSection() }
+
         itemsIndexed(shortcuts, key = { _, shortcut -> shortcut.id }) { _, shortcut ->
 
             val isShortcutEditPresented = remember { mutableStateOf(false) }
@@ -213,7 +218,6 @@ fun TabToolsView() {
                 isFirst = isFirst,
                 isLast = shortcuts.last() == shortcut,
                 withTopDivider = !isFirst,
-                modifier = Modifier.padding(top = if (isFirst) MyListView.PADDING_HEADER_SECTION else 0.dp),
             ) {
 
                 SwipeToAction(
@@ -262,12 +266,12 @@ fun TabToolsView() {
                 "SETTINGS",
             )
 
+            MyListView__Padding__HeaderSection()
+
             MyListView__ItemView(
                 isFirst = true,
                 isLast = false,
-                modifier = Modifier.padding(top = MyListView.PADDING_HEADER_SECTION),
             ) {
-
                 val isFoldersSettingsPresented = remember { mutableStateOf(false) }
                 FoldersSettingsSheet(isFoldersSettingsPresented)
                 MyListView__ItemView__ButtonView(
@@ -315,10 +319,11 @@ fun TabToolsView() {
                 "BACKUPS",
             )
 
+            MyListView__Padding__HeaderSection()
+
             MyListView__ItemView(
                 isFirst = true,
                 isLast = false,
-                modifier = Modifier.padding(top = MyListView.PADDING_HEADER_SECTION),
                 withTopDivider = false,
             ) {
 
@@ -388,10 +393,11 @@ fun TabToolsView() {
                 title = "NOTIFICATIONS",
             )
 
+            MyListView__Padding__HeaderSection()
+
             MyListView__ItemView(
                 isFirst = true,
                 isLast = false,
-                modifier = Modifier.padding(top = MyListView.PADDING_HEADER_SECTION),
                 withTopDivider = false,
             ) {
                 MyListView__ItemView__ButtonView(text = "Time to Break") {

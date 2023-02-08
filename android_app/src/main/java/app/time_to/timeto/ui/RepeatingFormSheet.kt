@@ -170,10 +170,9 @@ fun RepeatingFormSheet(
                     title = "REPETITION PERIOD",
                 )
 
-                MyListView__SectionView(
-                    modifier = Modifier
-                        .padding(top = MyListView.PADDING_HEADER_SECTION)
-                ) {
+                MyListView__Padding__HeaderSection()
+
+                MyListView__SectionView {
                     state.periods.forEachIndexed { index, periodTitle ->
                         val isActive = index == state.activePeriodIndex
                         Column {
