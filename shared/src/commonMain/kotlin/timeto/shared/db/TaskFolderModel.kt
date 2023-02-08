@@ -82,6 +82,10 @@ data class TaskFolderModel(
     val isToday = id == ID_TODAY
     val isTmrw = id == ID_TMRW
 
+    fun upNameWithValidation(newName: String) {
+        db.taskFolderQueries.upNameById(id = id, name = validateName(newName))
+    }
+
     fun upSort(newSort: Int) {
         db.taskFolderQueries.upSortById(id = id, sort = newSort)
     }
