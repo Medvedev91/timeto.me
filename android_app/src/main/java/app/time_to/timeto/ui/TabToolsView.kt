@@ -256,7 +256,7 @@ fun TabToolsView() {
             MyListView__HeaderView(
                 "SETTINGS",
                 modifier = Modifier
-                    .padding(top = MyListView.PADDING_SECTION_SECTION),
+                    .padding(top = MyListView.PADDING_SECTION_HEADER),
             )
 
             MyListView__ItemView(
@@ -309,7 +309,7 @@ fun TabToolsView() {
             MyListView__HeaderView(
                 "BACKUPS",
                 modifier = Modifier
-                    .padding(top = MyListView.PADDING_SECTION_SECTION),
+                    .padding(top = MyListView.PADDING_SECTION_HEADER),
             )
 
             MyListView__ItemView(
