@@ -369,12 +369,13 @@ fun TabToolsView() {
                 modifier = Modifier.padding(top = MyListView.PADDING_SECTION_HEADER),
             )
 
-            MyList.SectionItem(
+            MyListView__ItemView(
                 isFirst = true,
                 isLast = false,
-                paddingTop = MyList.HEADER_BOTTOM_PADDING,
+                modifier = Modifier.padding(top = MyListView.PADDING_HEADER_SECTION),
+                withTopDivider = false,
             ) {
-                MyList.SectionItem_Button(text = "Time to Break", withDivider = false) {
+                MyListView__ItemView__ButtonView(text = "Time to Break") {
                     context.startActivity(
                         Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).apply {
                             putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
@@ -384,8 +385,12 @@ fun TabToolsView() {
                 }
             }
 
-            MyList.SectionItem(isFirst = false, isLast = true) {
-                MyList.SectionItem_Button(text = "Timer Overdue", withDivider = true) {
+            MyListView__ItemView(
+                isFirst = false,
+                isLast = true,
+                withTopDivider = true,
+            ) {
+                MyListView__ItemView__ButtonView(text = "Timer Overdue") {
                     context.startActivity(
                         Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).apply {
                             putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
