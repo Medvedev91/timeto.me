@@ -14,6 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import app.time_to.timeto.R
 import app.time_to.timeto.rememberVM
+import app.time_to.timeto.setTrue
 import timeto.shared.vm.FoldersSettingsVM
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -89,6 +90,27 @@ fun FoldersSettingsSheet(
                     }
                 }
 
+                item {
+
+                    MyListView__Padding__SectionSection()
+
+                    val isAddFolderPresented = remember { mutableStateOf(false) }
+                    FolderFormSheet(
+                        isPresented = isAddFolderPresented,
+                        folder = null,
+                    )
+
+                    MyListView__ItemView(
+                        isFirst = true,
+                        isLast = true,
+                    ) {
+                        MyListView__ItemView__ButtonView(
+                            text = "New Folder",
+                        ) {
+                            isAddFolderPresented.setTrue()
+                        }
+                    }
+                }
 
                 ////
 
