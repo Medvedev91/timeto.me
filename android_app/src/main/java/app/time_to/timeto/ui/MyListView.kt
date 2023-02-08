@@ -121,7 +121,7 @@ fun MyListView__SectionView(
 @Composable
 fun MyListView__SectionView__ItemView(
     modifier: Modifier = Modifier,
-    withTopDivider: Boolean = false, // Because of the texts base line, divider at the top looks more natural
+    withTopDivider: Boolean = false,
     minHeight: Dp = MyListView.SECTION_VIEW_ITEM_MIN_HEIGHT,
     content: @Composable () -> Unit
 ) {
@@ -146,6 +146,9 @@ fun MyListView__SectionView__ItemView(
             )
     }
 }
+
+///
+/// Item
 
 @Composable
 fun MyListView__ItemView(
@@ -182,77 +185,6 @@ fun MyListView__ItemView(
             )
     }
 }
-
-///
-/// Button
-
-@Composable
-fun MyListView__ItemView__ButtonView(
-    text: String,
-    modifier: Modifier = Modifier,
-    textModifier: Modifier = Modifier,
-    withArrow: Boolean = false,
-    rightView: @Composable (() -> Unit)? = null,
-    bottomView: @Composable (() -> Unit)? = null,
-    onClick: () -> Unit,
-) {
-
-    Column(
-        modifier = modifier
-            .clickable {
-                onClick()
-            },
-    ) {
-
-        Row(
-            modifier = Modifier
-                .sizeIn(minHeight = MyListView.SECTION_VIEW_ITEM_MIN_HEIGHT),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-
-            Text(
-                text,
-                modifier = textModifier
-                    .padding(start = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL),
-                color = c.text,
-            )
-
-            SpacerW1()
-
-            rightView?.invoke()
-
-            if (withArrow) {
-                Icon(
-                    painterResource(id = R.drawable.ic_round_keyboard_arrow_right_24),
-                    "Select emoji",
-                    tint = c.textSecondary.copy(alpha = 0.4f),
-                    modifier = Modifier
-                        .padding(end = 4.dp)
-                        .size(28.dp)
-                )
-            }
-        }
-
-        bottomView?.invoke()
-    }
-}
-
-@Composable
-fun MyListView__ItemView__ButtonView__RightText(
-    text: String,
-    paddingEnd: Dp = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL,
-) {
-    Text(
-        text,
-        modifier = Modifier
-            .padding(end = paddingEnd)
-            .offset(),
-        fontSize = 14.sp,
-        color = c.text,
-    )
-}
-
-//////
 
 @Composable
 fun MyListView__ItemView__TextInputView(
@@ -353,4 +285,73 @@ fun MyListView__ItemView__SwitcherView(
     ) {
         onClick()
     }
+}
+
+///
+/// Button
+
+@Composable
+fun MyListView__ItemView__ButtonView(
+    text: String,
+    modifier: Modifier = Modifier,
+    textModifier: Modifier = Modifier,
+    withArrow: Boolean = false,
+    rightView: @Composable (() -> Unit)? = null,
+    bottomView: @Composable (() -> Unit)? = null,
+    onClick: () -> Unit,
+) {
+
+    Column(
+        modifier = modifier
+            .clickable {
+                onClick()
+            },
+    ) {
+
+        Row(
+            modifier = Modifier
+                .sizeIn(minHeight = MyListView.SECTION_VIEW_ITEM_MIN_HEIGHT),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            Text(
+                text,
+                modifier = textModifier
+                    .padding(start = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL),
+                color = c.text,
+            )
+
+            SpacerW1()
+
+            rightView?.invoke()
+
+            if (withArrow) {
+                Icon(
+                    painterResource(id = R.drawable.ic_round_keyboard_arrow_right_24),
+                    "Select emoji",
+                    tint = c.textSecondary.copy(alpha = 0.4f),
+                    modifier = Modifier
+                        .padding(end = 4.dp)
+                        .size(28.dp)
+                )
+            }
+        }
+
+        bottomView?.invoke()
+    }
+}
+
+@Composable
+fun MyListView__ItemView__ButtonView__RightText(
+    text: String,
+    paddingEnd: Dp = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL,
+) {
+    Text(
+        text,
+        modifier = Modifier
+            .padding(end = paddingEnd)
+            .offset(),
+        fontSize = 14.sp,
+        color = c.text,
+    )
 }
