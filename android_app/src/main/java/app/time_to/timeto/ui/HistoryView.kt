@@ -369,13 +369,14 @@ private fun AddIntervalDialog(
                         }
                     )
 
-                    MyList.SectionItem(
-                        isFirst = state.activitiesFormAddUI.first() == activityUI,
+                    val isFirst = state.activitiesFormAddUI.first() == activityUI
+                    MyListView__ItemView(
+                        isFirst = isFirst,
                         isLast = state.activitiesFormAddUI.last() == activityUI,
+                        withTopDivider = !isFirst,
                     ) {
-                        MyList.SectionItem_Button(
+                        MyListView__ItemView__ButtonView(
                             text = activityUI.activity.nameWithEmoji(),
-                            withDivider = true
                         ) {
                             isAddCalendarPresented.value = true
                         }
