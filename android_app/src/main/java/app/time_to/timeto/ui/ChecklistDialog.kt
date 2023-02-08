@@ -114,7 +114,7 @@ fun ChecklistDialog(
                                     ) {
                                         Icon(
                                             painterResource(id = R.drawable.sf_checkmark_medium_medium),
-                                            "New item",
+                                            "Checkmark",
                                             tint = c.blue,
                                             modifier = Modifier
                                                 .padding(end = 18.5.dp)
