@@ -183,7 +183,7 @@ fun TabToolsView() {
 
             MyListView__HeaderView(
                 title = "SHORTCUTS",
-                modifier = Modifier.padding(top = MyListView.PADDING_SECTION_HEADER),
+                modifier = Modifier.padding(top = MyListView.PADDING_SECTION_HEADER - 5.dp), // ~5.dp consume icon space
                 rightView = {
                     val isAddShortcutPresented = remember { mutableStateOf(false) }
                     ShortcutFormSheet(isPresented = isAddShortcutPresented, editedShortcut = null)
