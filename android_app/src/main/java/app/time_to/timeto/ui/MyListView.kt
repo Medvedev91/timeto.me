@@ -221,26 +221,27 @@ fun MyListView__ItemView__TextInputView(
                 fontSize = 16.sp
             ),
             decorationBox = { innerTextField ->
-                MyListView__SectionView__ItemView {
-                    Box(
-                        modifier = Modifier
-                            .padding(
-                                start = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL,
-                                end = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL + 12.dp, // for clear button
-                                // top and bottom for multiline padding
-                                top = 8.dp,
-                                bottom = 8.dp,
-                            ),
-                    ) {
-                        if (text.isEmpty()) Text(
-                            placeholder,
-                            style = LocalTextStyle.current.copy(
-                                color = MaterialTheme.colors.onSurface.copy(alpha = 0.3f),
-                                fontSize = 16.sp
-                            )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .sizeIn(minHeight = MyListView.SECTION_VIEW_ITEM_MIN_HEIGHT)
+                        .padding(
+                            start = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL,
+                            end = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL + 12.dp, // for clear button
+                            // top and bottom for multiline padding
+                            top = 8.dp,
+                            bottom = 8.dp,
+                        ),
+                    contentAlignment = Alignment.CenterStart,
+                ) {
+                    if (text.isEmpty()) Text(
+                        placeholder,
+                        style = LocalTextStyle.current.copy(
+                            color = MaterialTheme.colors.onSurface.copy(alpha = 0.3f),
+                            fontSize = 16.sp
                         )
-                        innerTextField()
-                    }
+                    )
+                    innerTextField()
                 }
             },
             modifier = Modifier
