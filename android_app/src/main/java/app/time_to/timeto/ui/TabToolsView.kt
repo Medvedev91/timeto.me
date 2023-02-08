@@ -364,13 +364,9 @@ fun TabToolsView() {
                         text = "Auto Backup",
                         withArrow = true,
                         rightView = {
-                            Text(
-                                dateStr ?: "",
-                                modifier = Modifier
-                                    .padding(end = 4.dp)
-                                    .offset(),
-                                fontSize = 14.sp,
-                                color = c.text,
+                            MyListView__ItemView__ButtonView__RightText(
+                                text = dateStr ?: "",
+                                paddingEnd = 4.dp,
                             )
                         }
                     ) {
