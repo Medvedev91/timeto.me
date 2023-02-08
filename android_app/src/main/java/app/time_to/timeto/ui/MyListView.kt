@@ -33,7 +33,8 @@ object MyListView {
     val SECTION_VIEW_ITEM_MIN_HEIGHT = 46.dp
 }
 
-//////
+///
+/// Paddings
 
 @Composable
 fun MyListView__Padding__SectionSection() {
@@ -50,7 +51,8 @@ fun MyListView__Padding__HeaderSection() {
     Box(Modifier.height(6.dp))
 }
 
-//////
+///
+/// Header
 
 @Composable
 fun MyListView__HeaderView(
@@ -97,8 +99,6 @@ fun MyListView__HeaderView__RightIcon(
             .padding(2.5.dp)
     )
 }
-
-//////
 
 @Composable
 fun MyListView__SectionView(
@@ -182,6 +182,9 @@ fun MyListView__ItemView(
             )
     }
 }
+
+///
+/// Button
 
 @Composable
 fun MyListView__ItemView__ButtonView(
