@@ -172,13 +172,20 @@ fun RepeatingFormSheet(
 
                 MyListView__Padding__HeaderSection()
 
-                MyListView__SectionView {
-                    state.periods.forEachIndexed { index, periodTitle ->
+                val periods = state.periods
+                periods.forEachIndexed { index, periodTitle ->
+                    val isFirst = periods.first() == periodTitle
+                    MyListView__ItemView(
+                        isFirst = isFirst,
+                        isLast = periods.last() == periodTitle,
+                        withTopDivider = !isFirst,
+                    ) {
                         val isActive = index == state.activePeriodIndex
+
                         Column {
-                            MyListView__SectionView__SwitcherView(
+
+                            MyListView__ItemView__SwitcherView(
                                 text = periodTitle,
-                                withTopDivider = index > 0,
                                 isActive = isActive
                             ) {
                                 vm.setActivePeriodIndex(if (isActive) null else index)

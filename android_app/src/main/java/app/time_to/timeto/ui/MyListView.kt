@@ -381,15 +381,13 @@ fun MyListView__ItemView__ButtonView__RightText(
 }
 
 @Composable
-fun MyListView__SectionView__SwitcherView(
+fun MyListView__ItemView__SwitcherView(
     text: String,
-    withTopDivider: Boolean,
     isActive: Boolean,
     onClick: () -> Unit,
 ) {
-    MyListView__SectionView__ButtonView(
+    MyListView__ItemView__ButtonView(
         text = text,
-        withTopDivider = withTopDivider,
         rightView = {
             Icon(
                 painterResource(
