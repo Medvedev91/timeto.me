@@ -92,8 +92,11 @@ fun SearchEmojiSheet(
                                             .offset(y = 0.5.dp)
                                     )
 
-                                    MyListView__SectionView__ItemView(
-                                        minHeight = 40.dp
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .sizeIn(minHeight = 40.dp),
+                                        contentAlignment = Alignment.CenterStart,
                                     ) {
                                         if (state.inputValue.isEmpty()) Text(
                                             state.inputPlaceholder,
