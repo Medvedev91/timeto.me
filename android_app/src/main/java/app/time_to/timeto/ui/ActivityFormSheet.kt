@@ -93,10 +93,12 @@ fun ActivityFormSheet(
                     vm.setEmoji(it)
                 }
 
-                MyListView__SectionView(
+                MyListView__ItemView(
+                    isFirst = true,
+                    isLast = true,
                     modifier = Modifier.padding(top = MyListView.PADDING_SECTION_SECTION)
                 ) {
-                    MyListView__SectionView__ButtonView(
+                    MyListView__ItemView__ButtonView(
                         text = state.emojiTitle,
                         withArrow = true,
                         rightView = {
