@@ -23,7 +23,7 @@ struct TabsView: View {
                 set: {
                     /// Repeated click on "Tasks"
                     if tabSelection == TabsView.TAB_ID_TASKS {
-                        TabTasksView.lastInstance?.activeSection = TabTasksView_Section_Folder(folder: TaskFolderModel.companion.getToday())
+                        TabTasksView.lastInstance?.activeSection = TabTasksView_Section_Folder(folder: DI.getTodayFolder())
                     }
                     tabSelection = $0
                 }

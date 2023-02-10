@@ -21,8 +21,7 @@ struct TabTasksView: View {
     @State var activeDrag: DragItem? = nil
 
     init() {
-        let today = TaskFolderModel.companion.getToday()
-        _activeSection = State(initialValue: TabTasksView_Section_Folder(folder: today))
+        _activeSection = State(initialValue: TabTasksView_Section_Folder(folder: DI.getTodayFolder()))
     }
 
     func onDragMove(curDragItem: DragItem, value: DragGesture.Value) {
@@ -244,7 +243,7 @@ struct TabTasksView: View {
                     }
                     .onDisappear {
                         /// On onDisappear(), otherwise on onAppear() twitching (hide old and open new).
-                        activeSection = TabTasksView_Section_Folder(folder: TaskFolderModel.companion.getToday())
+                        activeSection = TabTasksView_Section_Folder(folder: DI.getTodayFolder())
                     }
         }
                 .ignoresSafeArea(.keyboard, edges: .bottom)
