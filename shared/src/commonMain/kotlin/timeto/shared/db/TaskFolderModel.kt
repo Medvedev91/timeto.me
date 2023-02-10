@@ -37,7 +37,7 @@ data class TaskFolderModel(
 
         //////
 
-        suspend fun addWithValidation(name: String) {
+        suspend fun addWithValidation(name: String) = dbIO {
             addRaw(
                 id = time(),
                 name = validateName(name),
