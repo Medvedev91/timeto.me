@@ -37,85 +37,100 @@ struct TabToolsView: View {
                 ///
                 /// Checklists
 
-                MyListHeader(
-                        title: "Checklists",
-                        rightView: AnyView(
-                                Button(
-                                        action: {
-                                            isAddChecklistPresented.toggle()
-                                        },
-                                        label: {
-                                            Image(systemName: "plus")
-                                        }
-                                )
-                        )
-                )
-                        .padding(.top, 10)
+                VStack(spacing: 0) {
 
-                MyListSection {
-                    let checklists = state.checklists
-                    ForEach(checklists, id: \.id) { checklist in
-                        ToolsView_ChecklistView(checklist: checklist, withDivider: checklists.first != checklist)
+                    MyListView__Padding__SectionHeader()
+
+                    MyListView__HeaderView(
+                            title: "CHECKLISTS",
+                            rightView: AnyView(
+                                    Button(
+                                            action: {
+                                                isAddChecklistPresented.toggle()
+                                            },
+                                            label: {
+                                                Image(systemName: "plus")
+                                            }
+                                    )
+                            )
+                    )
+
+                    MyListSection {
+                        let checklists = state.checklists
+                        ForEach(checklists, id: \.id) { checklist in
+                            ToolsView_ChecklistView(checklist: checklist, withDivider: checklists.first != checklist)
+                        }
                     }
                 }
-
 
                 ///
                 /// Shortcuts
 
-                MyListHeader(
-                        title: "SHORTCUTS",
-                        rightView: AnyView(
-                                Button(
-                                        action: {
-                                            isAddShortcutPresented.toggle()
-                                        },
-                                        label: {
-                                            Image(systemName: "plus")
-                                        }
-                                )
-                        )
-                )
+                VStack(spacing: 0) {
 
-                MyListSection {
-                    let shortcuts = state.shortcuts
-                    ForEach(shortcuts, id: \.id) { shortcut in
-                        ToolsView_ShortcutView(shortcut: shortcut, withDivider: shortcuts.first != shortcut)
+                    MyListView__Padding__SectionHeader()
+
+                    MyListView__HeaderView(
+                            title: "SHORTCUTS",
+                            rightView: AnyView(
+                                    Button(
+                                            action: {
+                                                isAddShortcutPresented.toggle()
+                                            },
+                                            label: {
+                                                Image(systemName: "plus")
+                                            }
+                                    )
+                            )
+                    )
+
+                    MyListSection {
+                        let shortcuts = state.shortcuts
+                        ForEach(shortcuts, id: \.id) { shortcut in
+                            ToolsView_ShortcutView(shortcut: shortcut, withDivider: shortcuts.first != shortcut)
+                        }
                     }
                 }
 
                 ///
                 /// Settings
 
-                MyListHeader(title: "SETTINGS")
+                VStack(spacing: 0) {
 
-                MyListSection {
+                    MyListView__Padding__SectionHeader()
 
-                    MyListItem_Button(
-                            text: "Day Start",
-                            withTopDivider: false,
-                            rightView: AnyView(
-                                    Text(state.dayStartNote)
-                                            .foregroundColor(.secondary)
-                                            .font(.system(size: 15))
-                                            .padding(.trailing, DEF_LIST_H_PADDING)
-                            )
-                    ) {
-                        isDayStartPresented = true
-                    }
-                            .sheetEnv(isPresented: $isDayStartPresented) {
-                                DayStartDialog(
-                                        isPresented: $isDayStartPresented,
-                                        tabToolsVM: vm,
-                                        tabToolsState: state
+                    MyListView__HeaderView(title: "SETTINGS")
+
+                    MyListSection {
+
+                        MyListItem_Button(
+                                text: "Day Start",
+                                withTopDivider: false,
+                                rightView: AnyView(
+                                        Text(state.dayStartNote)
+                                                .foregroundColor(.secondary)
+                                                .font(.system(size: 15))
+                                                .padding(.trailing, DEF_LIST_H_PADDING)
                                 )
-                            }
+                        ) {
+                            isDayStartPresented = true
+                        }
+                                .sheetEnv(isPresented: $isDayStartPresented) {
+                                    DayStartDialog(
+                                            isPresented: $isDayStartPresented,
+                                            tabToolsVM: vm,
+                                            tabToolsState: state
+                                    )
+                                }
+                    }
                 }
 
                 ///
                 /// Backup
 
-                MyListHeader(title: "Backups")
+                MyListView__Padding__SectionHeader()
+
+                MyListView__HeaderView(title: "BACKUPS")
 
                 MyListSection {
 

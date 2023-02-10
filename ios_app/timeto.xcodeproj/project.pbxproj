@@ -24,7 +24,6 @@
 		2C82BF7C287272520041BCA3 /* W_Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82BF7B287272520041BCA3 /* W_Delegate.swift */; };
 		2C95BA8D280D74AA0027FC35 /* IOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C95BA7A280D74AA0027FC35 /* IOSApp.swift */; };
 		2CB73DE3292FACE00053B2D6 /* SearchEmojiSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB73DE2292FACE00053B2D6 /* SearchEmojiSheet.swift */; };
-		31821012DE2A1AB2843BEDA9 /* MyListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821F8331A2FF4EAEC38B12 /* MyListHeader.swift */; };
 		318210CF629A7E593B9F8FE4 /* ChecklistItemFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821290CB27918CD444FBB0 /* ChecklistItemFormSheet.swift */; };
 		318210E102D112C2860ADF9F /* DialogCloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E53EB27CE7F81AF0F69 /* DialogCloseButton.swift */; };
 		318210ECF60308ECF341FEA2 /* utils_ios.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182118D8EA3E0D889D4FDC3 /* utils_ios.swift */; };
@@ -169,7 +168,6 @@
 		31821ED2142F08DDD1E0CC75 /* TimerFullScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerFullScreen.swift; sourceTree = "<group>"; };
 		31821F4527059D286AC0AF41 /* TaskFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskFormSheet.swift; sourceTree = "<group>"; };
 		31821F7CBA1480191F065D5E /* EventsListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsListView.swift; sourceTree = "<group>"; };
-		31821F8331A2FF4EAEC38B12 /* MyListHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyListHeader.swift; sourceTree = "<group>"; };
 		31821FC26DE90D545D9620B0 /* W_TickerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W_TickerDialog.swift; sourceTree = "<group>"; };
 		31821FC9040CA1D64E5D6990 /* MyListSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyListSection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -292,7 +290,6 @@
 				3182189A26C9B48C0D2E8A4A /* KeyboardManager.swift */,
 				31821C625A8A199EAEF17182 /* MailView.swift */,
 				31821155EAD516A3967CFF52 /* MyDivider.swift */,
-				31821F8331A2FF4EAEC38B12 /* MyListHeader.swift */,
 				31821D86E12326C97CBAC064 /* MyListItem_Button.swift */,
 				31821FC9040CA1D64E5D6990 /* MyListSection.swift */,
 				31821DC6AEBDF478C34116FE /* MyListSwipeToActionItem.swift */,
@@ -496,7 +493,6 @@
 				31821286152F9C43BA2C4B7B /* TimetoSheet.swift in Sources */,
 				318212C07B5351BA8C7C9671 /* PieView.swift in Sources */,
 				31821D2F481BE7580FE4DCC2 /* MyDivider.swift in Sources */,
-				31821012DE2A1AB2843BEDA9 /* MyListHeader.swift in Sources */,
 				31821F6921362D113D7B212F /* MyListSection.swift in Sources */,
 				318214BD0E34368A953B17CD /* MyListSwipeToActionItem.swift in Sources */,
 				2C0BE02F295751B70099AD7C /* PickerStateView.swift in Sources */,
