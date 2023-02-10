@@ -289,8 +289,13 @@ data class UIAlertData(
     val message: String,
 )
 
-fun showUiAlert(message: String) {
+fun showUiAlert(
+    message: String,
+    reportApiText: String? = null,
+) {
     launchExDefault { uiAlertFlow.emit(UIAlertData(message)) }
+    if (reportApiText != null)
+        reportApi(reportApiText)
 }
 
 val uiConfirmationFlow = MutableSharedFlow<UIConfirmationData>()
