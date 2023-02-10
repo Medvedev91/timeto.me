@@ -61,7 +61,7 @@ struct MyListView__HeaderView: View {
                 rightView
             }
         }
-                .padding(.leading, MyListView.PADDING_OUTER_HORIZONTAL + 16)
+                .padding(.horizontal, MyListView.PADDING_OUTER_HORIZONTAL + MyListView.PADDING_INNER_HORIZONTAL)
     }
 }
 
