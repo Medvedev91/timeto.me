@@ -49,9 +49,14 @@ class FolderFormSheetVM(
 
     fun delete(
         onSuccess: () -> Unit
-    ) {
+    ) = launchExDefault {
         try {
-            val folder = folder ?: return reportApi("FolderFormSheetVM no folder. WTF??!!")
+            val folder = folder
+            if (folder == null) {
+                reportApi("FolderFormSheetVM no folder. WTF??!!")
+                return@launchExDefault
+            }
+
             if (folder.isToday)
                 throw UIException("It's impossible to delete \"Today\" folder")
 
