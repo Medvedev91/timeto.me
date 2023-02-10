@@ -30,6 +30,13 @@ object DI {
     }
 
     ///
+    /// Task Folders
+
+    fun getTodayFolder(): TaskFolderModel = taskFolders.first { it.isToday }
+
+    fun getTmrwFolderOrNull(): TaskFolderModel? = taskFolders.firstOrNull { it.isTmrw }
+
+    //////
 
     internal suspend fun init() {
 
