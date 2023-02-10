@@ -1,11 +1,9 @@
 package timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
-import timeto.shared.DI
+import timeto.shared.*
 import timeto.shared.db.TaskFolderModel
 import timeto.shared.db.TaskFolderModel.Companion.sortedFolders
-import timeto.shared.launchExDefault
-import timeto.shared.onEachExIn
 
 class FoldersSettingsVM : __VM<FoldersSettingsVM.State>() {
 
@@ -13,8 +11,12 @@ class FoldersSettingsVM : __VM<FoldersSettingsVM.State>() {
 
         val text = "Add \"Tomorrow\" Folder"
 
-        fun add() {
-            // todo
+        fun add(): Unit = launchExDefault {
+            if (DI.getTmrwFolderOrNull() != null) {
+                showUiAlert("Tmrw already exists", "Tmrw already exists")
+                return@launchExDefault
+            }
+            TaskFolderModel.addTmrw()
         }
     }
 
