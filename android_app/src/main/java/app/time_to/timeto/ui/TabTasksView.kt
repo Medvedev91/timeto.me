@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import app.time_to.timeto.*
 import app.time_to.timeto.R
 import kotlinx.coroutines.delay
+import timeto.shared.DI
 import timeto.shared.db.TaskFolderModel
 import timeto.shared.vm.TabTasksVM
 import java.util.*
@@ -47,14 +48,14 @@ fun TabTasksView() {
     val (_, state) = rememberVM { TabTasksVM() }
 
     var activeSection by remember {
-        mutableStateOf<Section?>(Section_Folder(TaskFolderModel.getToday()))
+        mutableStateOf<Section?>(Section_Folder(DI.getTodayFolder()))
     }
 
     ///
     /// Navigation
 
     setTodayFolder = {
-        activeSection = Section_Folder(TaskFolderModel.getToday())
+        activeSection = Section_Folder(DI.getTodayFolder())
     }
     BackHandler((activeSection as? Section_Folder)?.folder?.isToday != true) {
         setTodayFolder!!()

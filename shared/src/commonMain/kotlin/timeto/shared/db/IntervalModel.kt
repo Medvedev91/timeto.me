@@ -132,7 +132,7 @@ data class IntervalModel(
                 if (lastInterval.note != null)
                     TaskModel.addWithValidationNeedTransaction(
                         text = lastInterval.note,
-                        folder = TaskFolderModel.getToday(),
+                        folder = DI.getTodayFolder(),
                     )
                 addWithValidationNeedTransaction(DEADLINE_AFTER_CANCEL, ActivityModel.getOther(), null)
             }

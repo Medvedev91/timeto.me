@@ -81,7 +81,7 @@ data class RepeatingModel(
                         textStrings.add(TextFeatures.substringRepeating(today, featureTime))
                         TaskModel.addWithValidationNeedTransaction(
                             text = textStrings.joinToString(" "),
-                            folder = TaskFolderModel.getToday(),
+                            folder = DI.getTodayFolder(),
                         )
                         db.repeatingQueries.upLastDayById(last_day = today, id = repeating.id)
                     }

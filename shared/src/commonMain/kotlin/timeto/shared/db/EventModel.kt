@@ -63,7 +63,7 @@ data class EventModel(
                         val featureTime = TextFeatures.substringEvent(event.getLocalTime().time)
                         TaskModel.addWithValidationNeedTransaction(
                             "$EMOJI_CALENDAR ${event.timeToString()}\n${event.text} $featureTime",
-                            TaskFolderModel.getToday()
+                            DI.getTodayFolder()
                         )
                         db.eventQueries.deleteById(event.id)
                     }
