@@ -39,7 +39,7 @@ struct MyListView__Padding__HeaderSection: View {
 }
 
 ///
-/// MyListView__HeaderView
+/// Header
 
 struct MyListView__HeaderView: View {
 
