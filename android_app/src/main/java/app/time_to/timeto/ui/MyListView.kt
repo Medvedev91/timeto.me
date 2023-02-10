@@ -51,7 +51,7 @@ fun MyListView__Padding__SectionHeader(extraHeight: Dp = 0.dp) {
 
 @Composable
 fun MyListView__Padding__HeaderSection() {
-    Box(Modifier.height(6.dp))
+    Box(Modifier.height(4.dp))
 }
 
 ///
