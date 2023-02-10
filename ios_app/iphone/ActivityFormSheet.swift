@@ -173,7 +173,7 @@ struct ActivityFormSheet: View {
                                             )
                                         }
                                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                                .padding(.leading, MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL)
+                                                .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL)
                                                 .padding(.bottom, 14)
                                                 .sheetEnv(isPresented: $isAddCustomHintPresented) {
                                                     TimerPickerSheet(

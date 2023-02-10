@@ -63,7 +63,7 @@ struct RepeatingsFormSheet: View {
 
                     ActivityEmojiPickerView(
                             text: state.inputTextValue,
-                            spaceAround: MyListView.PADDING_SECTION_OUTER_HORIZONTAL - 5
+                            spaceAround: MyListView.PADDING_OUTER_HORIZONTAL - 5
                     ) { newString in
                         vm.setTextValue(text: newString)
                     }
@@ -95,14 +95,14 @@ struct RepeatingsFormSheet: View {
                     }
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                             .padding(.top, 8)
-                            .padding(.leading, MyListView.PADDING_SECTION_OUTER_HORIZONTAL + 5)
+                            .padding(.leading, MyListView.PADDING_OUTER_HORIZONTAL + 5)
 
                     TriggersView__Form(
                             triggers: state.textFeatures.triggers,
                             onTriggersChanged: { newTriggers in
                                 vm.setTriggers(newTriggers: newTriggers)
                             },
-                            spaceAround: MyListView.PADDING_SECTION_OUTER_HORIZONTAL,
+                            spaceAround: MyListView.PADDING_OUTER_HORIZONTAL,
                             bgColor: triggersBg,
                             paddingTop: 30
                     )
@@ -225,7 +225,7 @@ struct RepeatingsFormSheet: View {
                                         }
                                                 .padding(.top, 4)
                                                 .padding(.bottom, 16)
-                                                .padding(.leading, MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL - 1)
+                                                .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL - 1)
                                     } else if periodIndex == 3 {
                                         let dayNumbers: [Int] = Array(1..<(RepeatingModel.companion.MAX_DAY_OF_MONTH.toInt() + 1))
                                         VStack(alignment: .leading, spacing: 8) {
@@ -255,7 +255,7 @@ struct RepeatingsFormSheet: View {
                                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                                 .padding(.top, 6)
                                                 .padding(.bottom, 16)
-                                                .padding(.leading, MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL - 1)
+                                                .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL - 1)
                                     } else if periodIndex == 4 {
 
                                         VStack(alignment: .leading, spacing: 0) {
@@ -289,7 +289,7 @@ struct RepeatingsFormSheet: View {
                                             )
                                         }
                                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                                .padding(.leading, MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL)
+                                                .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL)
                                                 .padding(.bottom, 14)
                                                 .sheetEnv(isPresented: $isAddDayOfYearSheetPresented) {
                                                     AddDayOfYearSheet(

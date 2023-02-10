@@ -49,7 +49,7 @@ struct TaskFormSheet: View {
                     onTriggersChanged: { newTriggers in
                         vm.setTriggers(newTriggers: newTriggers)
                     },
-                    spaceAround: MyListView.PADDING_SECTION_OUTER_HORIZONTAL,
+                    spaceAround: MyListView.PADDING_OUTER_HORIZONTAL,
                     bgColor: triggersBg,
                     paddingTop: 20
             )

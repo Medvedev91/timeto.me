@@ -2,15 +2,15 @@ import SwiftUI
 
 class MyListView {
 
+    static let ITEM_MIN_HEIGHT = 44.0
+
+    static let PADDING_OUTER_HORIZONTAL = 20.0
+    static let PADDING_INNER_HORIZONTAL = 16.0
+
     static let PADDING_SHEET_FIRST_HEADER = 30.0
     static let PADDING_HEADER_SECTION = 6.0
     static let PADDING_SECTION_HEADER = 38.0
     static let PADDING_SECTION_SECTION = 34.0
-
-    static let PADDING_SECTION_OUTER_HORIZONTAL = 20.0
-    static let PADDING_SECTION_ITEM_INNER_HORIZONTAL = 16.0
-
-    static let ITEM_MIN_HEIGHT = 44.0
 }
 
 ///
@@ -36,7 +36,7 @@ struct MyListView__HeaderView: View {
                 rightView
             }
         }
-                .padding(.leading, MyListView.PADDING_SECTION_OUTER_HORIZONTAL + 16)
+                .padding(.leading, MyListView.PADDING_OUTER_HORIZONTAL + 16)
     }
 }
 
@@ -45,8 +45,8 @@ struct MyListView__HeaderView: View {
 
 struct MyListView__SectionView<Content: View>: View {
 
-    var paddingStart = MyListView.PADDING_SECTION_OUTER_HORIZONTAL
-    var paddingEnd = MyListView.PADDING_SECTION_OUTER_HORIZONTAL
+    var paddingStart = MyListView.PADDING_OUTER_HORIZONTAL
+    var paddingEnd = MyListView.PADDING_OUTER_HORIZONTAL
     @ViewBuilder var content: () -> Content
 
     var body: some View {
@@ -77,7 +77,7 @@ struct MyListView__SectionView__ItemView<Content: View>: View {
                     .frame(minHeight: MyListView.ITEM_MIN_HEIGHT)
 
             if withTopDivider {
-                MyDivider(xOffset: MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL)
+                MyDivider(xOffset: MyListView.PADDING_INNER_HORIZONTAL)
             }
         }
     }
@@ -130,7 +130,7 @@ struct MyListView__SectionView__ButtonView: View {
                         HStack {
 
                             Text(text)
-                                    .padding(.leading, MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL)
+                                    .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL)
 
                             Spacer(minLength: 0)
 
@@ -161,7 +161,7 @@ struct MyListView__SectionView__SwitcherView: View {
                 rightView: AnyView(
                         Image(systemName: isActive ? "circle.inset.filled" : "circle")
                                 .foregroundColor(isActive ? .blue : .primary)
-                                .padding(.trailing, MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL - 2)
+                                .padding(.trailing, MyListView.PADDING_INNER_HORIZONTAL - 2)
                 )
         ) {
             onClick()
