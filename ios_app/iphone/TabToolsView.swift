@@ -55,6 +55,8 @@ struct TabToolsView: View {
                             )
                     )
 
+                    MyListView__Padding__HeaderSection()
+
                     MyListSection {
                         let checklists = state.checklists
                         ForEach(checklists, id: \.id) { checklist in
@@ -84,6 +86,8 @@ struct TabToolsView: View {
                             )
                     )
 
+                    MyListView__Padding__HeaderSection()
+
                     MyListSection {
                         let shortcuts = state.shortcuts
                         ForEach(shortcuts, id: \.id) { shortcut in
@@ -100,6 +104,8 @@ struct TabToolsView: View {
                     MyListView__Padding__SectionHeader()
 
                     MyListView__HeaderView(title: "SETTINGS")
+
+                    MyListView__Padding__HeaderSection()
 
                     MyListSection {
 
@@ -128,53 +134,58 @@ struct TabToolsView: View {
                 ///
                 /// Backup
 
-                MyListView__Padding__SectionHeader()
+                VStack(spacing: 0) {
 
-                MyListView__HeaderView(title: "BACKUPS")
+                    MyListView__Padding__SectionHeader()
 
-                MyListSection {
+                    MyListView__HeaderView(title: "BACKUPS")
 
-                    MyListItem_Button(text: "Create", withTopDivider: false) {
-                        Task {
-                            let jString = try await Backup.shared.create(type: "manual", intervalsLimit: 999_999_999.toInt32()) // todo
+                    MyListView__Padding__HeaderSection()
 
+                    MyListSection {
+
+                        MyListItem_Button(text: "Create", withTopDivider: false) {
+                            Task {
+                                let jString = try await Backup.shared.create(type: "manual", intervalsLimit: 999_999_999.toInt32()) // todo
+
+                                let formatter = DateFormatter()
+                                formatter.dateFormat = "yyyyMMdd_HHmmss"
+                                fileForExportName = "timeto_\(formatter.string(from: Date())).json"
+
+                                fileForExport = MyJsonFileDocument(initialText: jString)
+                                isFileExporterPresented = true
+                            }
+                        }
+
+                        MyListItem_Button(text: "Restore", withTopDivider: true) {
+                            isFileImporterPresented = true
+                        }
+
+                        let autoBackupString: String = {
+                            guard let lastBackupDate = autoBackup.lastDate else {
+                                return "None"
+                            }
                             let formatter = DateFormatter()
-                            formatter.dateFormat = "yyyyMMdd_HHmmss"
-                            fileForExportName = "timeto_\(formatter.string(from: Date())).json"
-
-                            fileForExport = MyJsonFileDocument(initialText: jString)
-                            isFileExporterPresented = true
+                            formatter.dateFormat = is12HoursFormat() ? "d MMM, hh:mm a" : "d MMM, HH:mm"
+                            return formatter.string(from: lastBackupDate)
+                        }()
+                        MyListItem_Button(
+                                text: "Auto Backup",
+                                withTopDivider: true,
+                                rightView: AnyView(
+                                        Text(autoBackupString)
+                                                .foregroundColor(.secondary)
+                                                .font(.system(size: 15))
+                                                .padding(.trailing, DEF_LIST_H_PADDING)
+                                )
+                        ) {
+                            // todo do catch
+                            // https://stackoverflow.com/a/64592118/5169420
+                            let path = try! AutoBackup.autoBackupsFolder()
+                                    .absoluteString
+                                    .replacingOccurrences(of: "file://", with: "shareddocuments://")
+                            UIApplication.shared.open(URL(string: path)!)
                         }
-                    }
-
-                    MyListItem_Button(text: "Restore", withTopDivider: true) {
-                        isFileImporterPresented = true
-                    }
-
-                    let autoBackupString: String = {
-                        guard let lastBackupDate = autoBackup.lastDate else {
-                            return "None"
-                        }
-                        let formatter = DateFormatter()
-                        formatter.dateFormat = is12HoursFormat() ? "d MMM, hh:mm a" : "d MMM, HH:mm"
-                        return formatter.string(from: lastBackupDate)
-                    }()
-                    MyListItem_Button(
-                            text: "Auto Backup",
-                            withTopDivider: true,
-                            rightView: AnyView(
-                                    Text(autoBackupString)
-                                            .foregroundColor(.secondary)
-                                            .font(.system(size: 15))
-                                            .padding(.trailing, DEF_LIST_H_PADDING)
-                            )
-                    ) {
-                        // todo do catch
-                        // https://stackoverflow.com/a/64592118/5169420
-                        let path = try! AutoBackup.autoBackupsFolder()
-                                .absoluteString
-                                .replacingOccurrences(of: "file://", with: "shareddocuments://")
-                        UIApplication.shared.open(URL(string: path)!)
                     }
                 }
 
