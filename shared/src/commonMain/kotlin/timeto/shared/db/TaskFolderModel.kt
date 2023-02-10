@@ -28,13 +28,6 @@ data class TaskFolderModel(
         fun getAscBySortFlow() = db.taskFolderQueries.getAscBySort().asFlow()
             .mapToList().map { list -> list.map { it.toModel() } }
 
-        ///
-        /// Getsert
-
-        fun getToday() = getById(ID_TODAY)
-
-        fun getById(id: Int) = DI.taskFolders.first { it.id == id }
-
         //////
 
         suspend fun addTmrw() = dbIO { addRaw(id = ID_TMRW, name = "TMRW", sort = 2) }
