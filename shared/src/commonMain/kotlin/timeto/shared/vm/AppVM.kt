@@ -171,7 +171,7 @@ private suspend fun fillInitData() {
 
     // TRICK time() only for SMDAY
     TaskFolderModel.addRaw(TaskFolderModel.ID_TODAY, "Today", 1)
-    TaskFolderModel.addRaw(TaskFolderModel.ID_TMRW, "TMRW", 2)
+    TaskFolderModel.addTmrw()
     TaskFolderModel.addRaw(time(), "SMDAY", 3)
 
     val colorsWheel = Wheel(ActivityModel.colors)

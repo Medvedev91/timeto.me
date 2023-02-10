@@ -37,6 +37,8 @@ data class TaskFolderModel(
 
         //////
 
+        suspend fun addTmrw() = dbIO { addRaw(id = ID_TMRW, name = "TMRW", sort = 2) }
+
         suspend fun addWithValidation(name: String) = dbIO {
             addRaw(
                 id = time(),
