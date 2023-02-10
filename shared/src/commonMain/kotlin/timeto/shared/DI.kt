@@ -20,6 +20,7 @@ object DI {
     lateinit var lastInterval: IntervalModel
 
     ///
+    /// Late Init
 
     fun isLateInitInitialized() = ::firstInterval.isInitialized && ::lastInterval.isInitialized
 
