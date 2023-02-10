@@ -14,6 +14,32 @@ class MyListView {
 }
 
 ///
+/// Paddings
+
+struct MyListView__Padding__SectionSection: View {
+
+    var body: some View {
+        ZStack {}.frame(height: 34)
+    }
+}
+
+struct MyListView__Padding__SectionHeader: View {
+
+    var extraHeight = 0.0
+
+    var body: some View {
+        ZStack {}.frame(height: 30.0 + extraHeight)
+    }
+}
+
+struct MyListView__Padding__HeaderSection: View {
+
+    var body: some View {
+        ZStack {}.frame(height: 6)
+    }
+}
+
+///
 /// MyListView__HeaderView
 
 struct MyListView__HeaderView: View {
