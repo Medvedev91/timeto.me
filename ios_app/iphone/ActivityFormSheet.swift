@@ -44,8 +44,9 @@ struct ActivityFormSheet: View {
 
                 VStack(spacing: 0) {
 
+                    MyListView__Padding__SectionHeader()
+
                     MyListView__HeaderView(title: state.inputNameHeader)
-                            .padding(.top, MyListView.PADDING_SHEET_FIRST_HEADER)
 
                     MyListView__SectionView {
 
