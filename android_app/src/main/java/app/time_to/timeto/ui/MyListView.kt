@@ -30,10 +30,10 @@ import timeto.shared.ColorNative
 
 object MyListView {
 
-    val PADDING_SECTION_OUTER_HORIZONTAL = 20.dp
-    val PADDING_SECTION_ITEM_INNER_HORIZONTAL = 16.dp
+    val ITEM_MIN_HEIGHT = 46.dp
 
-    val SECTION_VIEW_ITEM_MIN_HEIGHT = 46.dp
+    val PADDING_OUTER_HORIZONTAL = 20.dp
+    val PADDING_INNER_HORIZONTAL = 16.dp
 }
 
 ///
@@ -65,7 +65,7 @@ fun MyListView__HeaderView(
 ) {
     Row(
         modifier = modifier
-            .padding(horizontal = MyListView.PADDING_SECTION_OUTER_HORIZONTAL + MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL),
+            .padding(horizontal = MyListView.PADDING_OUTER_HORIZONTAL + MyListView.PADDING_INNER_HORIZONTAL),
         verticalAlignment = Alignment.Bottom,
     ) {
         Text(
@@ -112,8 +112,8 @@ fun MyListView__ItemView(
     isLast: Boolean,
     modifier: Modifier = Modifier,
     withTopDivider: Boolean = false,
-    dividerPadding: PaddingValues = PaddingValues(start = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL),
-    outerPadding: PaddingValues = PaddingValues(horizontal = MyListView.PADDING_SECTION_OUTER_HORIZONTAL),
+    dividerPadding: PaddingValues = PaddingValues(start = MyListView.PADDING_INNER_HORIZONTAL),
+    outerPadding: PaddingValues = PaddingValues(horizontal = MyListView.PADDING_OUTER_HORIZONTAL),
     content: @Composable () -> Unit
 ) {
     Box(
@@ -180,10 +180,10 @@ fun MyListView__ItemView__TextInputView(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .sizeIn(minHeight = MyListView.SECTION_VIEW_ITEM_MIN_HEIGHT)
+                        .sizeIn(minHeight = MyListView.ITEM_MIN_HEIGHT)
                         .padding(
-                            start = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL,
-                            end = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL + 12.dp, // for clear button
+                            start = MyListView.PADDING_INNER_HORIZONTAL,
+                            end = MyListView.PADDING_INNER_HORIZONTAL + 12.dp, // for clear button
                             // top and bottom for multiline padding
                             top = 8.dp,
                             bottom = 8.dp,
@@ -268,14 +268,14 @@ fun MyListView__ItemView__ButtonView(
 
         Row(
             modifier = Modifier
-                .sizeIn(minHeight = MyListView.SECTION_VIEW_ITEM_MIN_HEIGHT),
+                .sizeIn(minHeight = MyListView.ITEM_MIN_HEIGHT),
             verticalAlignment = Alignment.CenterVertically
         ) {
 
             Text(
                 text,
                 modifier = textModifier
-                    .padding(start = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL),
+                    .padding(start = MyListView.PADDING_INNER_HORIZONTAL),
                 color = c.text,
             )
 
@@ -317,7 +317,7 @@ fun MyListView__ItemView__ActionView(
 
         Row(
             modifier = Modifier
-                .sizeIn(minHeight = MyListView.SECTION_VIEW_ITEM_MIN_HEIGHT),
+                .sizeIn(minHeight = MyListView.ITEM_MIN_HEIGHT),
             verticalAlignment = Alignment.CenterVertically
         ) {
 
@@ -326,7 +326,7 @@ fun MyListView__ItemView__ActionView(
             Text(
                 text,
                 modifier = Modifier
-                    .padding(horizontal = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL),
+                    .padding(horizontal = MyListView.PADDING_INNER_HORIZONTAL),
                 color = textColor.toColor(),
                 fontWeight = FontWeight.W600,
             )
@@ -339,7 +339,7 @@ fun MyListView__ItemView__ActionView(
 @Composable
 fun MyListView__ItemView__ButtonView__RightText(
     text: String,
-    paddingEnd: Dp = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL,
+    paddingEnd: Dp = MyListView.PADDING_INNER_HORIZONTAL,
 ) {
     Text(
         text,

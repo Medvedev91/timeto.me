@@ -89,7 +89,7 @@ fun RepeatingFormSheet(
                     text = state.inputTextValue,
                     modifier = Modifier
                         .padding(top = 8.dp),
-                    contentPadding = PaddingValues(horizontal = MyListView.PADDING_SECTION_OUTER_HORIZONTAL - 4.dp),
+                    contentPadding = PaddingValues(horizontal = MyListView.PADDING_OUTER_HORIZONTAL - 4.dp),
                     onSelect = { newString ->
                         vm.setTextValue(newString.trim() + " ")
                     }
@@ -97,7 +97,7 @@ fun RepeatingFormSheet(
 
                 Row(
                     modifier = Modifier
-                        .padding(top = 2.dp, start = MyListView.PADDING_SECTION_OUTER_HORIZONTAL - 8.dp)
+                        .padding(top = 2.dp, start = MyListView.PADDING_OUTER_HORIZONTAL - 8.dp)
                 ) {
 
                     listOf("5 min", "25 min", "60 min").forEach { timerString ->
@@ -127,7 +127,7 @@ fun RepeatingFormSheet(
                     triggers = state.textFeatures.triggers,
                     onTriggersChanged = { vm.setTriggers(it) },
                     modifier = Modifier.padding(top = 18.dp),
-                    contentPaddingHints = PaddingValues(horizontal = MyListView.PADDING_SECTION_OUTER_HORIZONTAL),
+                    contentPaddingHints = PaddingValues(horizontal = MyListView.PADDING_OUTER_HORIZONTAL),
                     defBg = if (MaterialTheme.colors.isLight) c.white else c.bgFormSheet,
                 )
 
@@ -209,7 +209,7 @@ fun RepeatingFormSheet(
                                         Column(
                                             modifier = Modifier
                                                 .padding(
-                                                    start = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL,
+                                                    start = MyListView.PADDING_INNER_HORIZONTAL,
                                                     top = 4.dp,
                                                     bottom = 12.dp,
                                                 )
@@ -232,7 +232,7 @@ fun RepeatingFormSheet(
                                         Row(
                                             modifier = Modifier
                                                 .padding(
-                                                    start = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL - 2.dp,
+                                                    start = MyListView.PADDING_INNER_HORIZONTAL - 2.dp,
                                                     top = 4.dp,
                                                     bottom = 12.dp,
                                                 )
@@ -269,7 +269,7 @@ fun RepeatingFormSheet(
                                         Column(
                                             modifier = Modifier
                                                 .padding(
-                                                    start = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL - 2.dp,
+                                                    start = MyListView.PADDING_INNER_HORIZONTAL - 2.dp,
                                                     top = 4.dp,
                                                     bottom = 6.dp,
                                                 )
@@ -306,7 +306,7 @@ fun RepeatingFormSheet(
                                         Column(
                                             modifier = Modifier
                                                 .padding(
-                                                    start = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL - 1.dp,
+                                                    start = MyListView.PADDING_INNER_HORIZONTAL - 1.dp,
                                                     bottom = 12.dp,
                                                 )
                                         ) {

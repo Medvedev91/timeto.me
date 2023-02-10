@@ -88,7 +88,7 @@ fun ActivityFormSheet(
                     triggers = state.textFeatures.triggers,
                     onTriggersChanged = { vm.setTriggers(it) },
                     modifier = Modifier.padding(top = 18.dp),
-                    contentPaddingHints = PaddingValues(horizontal = MyListView.PADDING_SECTION_OUTER_HORIZONTAL),
+                    contentPaddingHints = PaddingValues(horizontal = MyListView.PADDING_OUTER_HORIZONTAL),
                 )
 
                 val isEmojiSheetPresented = remember { mutableStateOf(false) }
@@ -192,7 +192,7 @@ fun ActivityFormSheet(
                                                     modifier = Modifier
                                                         .padding(
                                                             bottom = 8.dp,
-                                                            start = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL
+                                                            start = MyListView.PADDING_INNER_HORIZONTAL
                                                         ),
                                                     verticalAlignment = Alignment.CenterVertically,
                                                 ) {
@@ -227,7 +227,7 @@ fun ActivityFormSheet(
                                                 "Add",
                                                 modifier = Modifier
                                                     .padding(
-                                                        start = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL - 8.dp,
+                                                        start = MyListView.PADDING_INNER_HORIZONTAL - 8.dp,
                                                         bottom = 8.dp,
                                                     )
                                                     .clip(RoundedCornerShape(99f))

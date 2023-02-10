@@ -72,7 +72,7 @@ fun EventsListView() {
                         "Event",
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(start = MyListView.PADDING_SECTION_ITEM_INNER_HORIZONTAL)
+                            .padding(start = MyListView.PADDING_INNER_HORIZONTAL)
                             .align(Alignment.CenterStart),
                         color = c.textSecondary.copy(alpha = 0.4f)
                     )
