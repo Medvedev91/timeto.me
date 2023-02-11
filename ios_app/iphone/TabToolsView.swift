@@ -57,9 +57,14 @@ struct TabToolsView: View {
 
                     MyListView__Padding__HeaderSection()
 
-                    MyListSection {
-                        let checklists = state.checklists
-                        ForEach(checklists, id: \.id) { checklist in
+                    let checklists = state.checklists
+                    ForEach(checklists, id: \.id) { checklist in
+                        let isFirst = checklists.first == checklist
+                        MyListView__ItemView(
+                                isFirst: isFirst,
+                                isLast: checklists.last == checklist,
+                                withTopDivider: !isFirst
+                        ) {
                             ToolsView_ChecklistView(checklist: checklist, withDivider: checklists.first != checklist)
                         }
                     }
@@ -88,9 +93,14 @@ struct TabToolsView: View {
 
                     MyListView__Padding__HeaderSection()
 
-                    MyListSection {
-                        let shortcuts = state.shortcuts
-                        ForEach(shortcuts, id: \.id) { shortcut in
+                    let shortcuts = state.shortcuts
+                    ForEach(shortcuts, id: \.id) { shortcut in
+                        let isFirst = shortcuts.first == shortcut
+                        MyListView__ItemView(
+                                isFirst: isFirst,
+                                isLast: shortcuts.last == shortcut,
+                                withTopDivider: !isFirst
+                        ) {
                             ToolsView_ShortcutView(shortcut: shortcut, withDivider: shortcuts.first != shortcut)
                         }
                     }
@@ -107,16 +117,17 @@ struct TabToolsView: View {
 
                     MyListView__Padding__HeaderSection()
 
-                    MyListSection {
-
-                        MyListItem_Button(
+                    MyListView__ItemView(
+                            isFirst: true,
+                            isLast: true
+                    ) {
+                        MyListView__ItemView__ButtonView(
                                 text: "Day Start",
-                                withTopDivider: false,
                                 rightView: AnyView(
                                         Text(state.dayStartNote)
                                                 .foregroundColor(.secondary)
                                                 .font(.system(size: 15))
-                                                .padding(.trailing, DEF_LIST_H_PADDING)
+                                                .padding(.trailing, MyListView.PADDING_INNER_HORIZONTAL)
                                 )
                         ) {
                             isDayStartPresented = true
@@ -142,7 +153,10 @@ struct TabToolsView: View {
 
                     MyListView__Padding__HeaderSection()
 
-                    MyListSection {
+                    MyListView__ItemView(
+                            isFirst: true,
+                            isLast: false
+                    ) {
 
                         MyListItem_Button(text: "Create", withTopDivider: false) {
                             Task {
@@ -156,10 +170,24 @@ struct TabToolsView: View {
                                 isFileExporterPresented = true
                             }
                         }
+                    }
+
+                    MyListView__ItemView(
+                            isFirst: false,
+                            isLast: false,
+                            withTopDivider: true
+                    ) {
 
                         MyListItem_Button(text: "Restore", withTopDivider: true) {
                             isFileImporterPresented = true
                         }
+                    }
+
+                    MyListView__ItemView(
+                            isFirst: false,
+                            isLast: true,
+                            withTopDivider: true
+                    ) {
 
                         let autoBackupString: String = {
                             guard let lastBackupDate = autoBackup.lastDate else {
@@ -176,7 +204,7 @@ struct TabToolsView: View {
                                         Text(autoBackupString)
                                                 .foregroundColor(.secondary)
                                                 .font(.system(size: 15))
-                                                .padding(.trailing, DEF_LIST_H_PADDING)
+                                                .padding(.trailing, MyListView.PADDING_INNER_HORIZONTAL)
                                 )
                         ) {
                             // todo do catch
@@ -203,8 +231,12 @@ struct TabToolsView: View {
                             .foregroundColor(.primary)
                      */
 
-                MyListSection {
+                MyListView__Padding__SectionHeader()
 
+                MyListView__ItemView(
+                        isFirst: true,
+                        isLast: false
+                ) {
                     MyListItem_Button(text: "Ask a Question", withTopDivider: false) {
                         if (MFMailComposeViewController.canSendMail()) {
                             isMailViewPresented.toggle()
@@ -223,12 +255,18 @@ struct TabToolsView: View {
                                         result: $mailViewResult
                                 )
                             }
+                }
+
+                MyListView__ItemView(
+                        isFirst: false,
+                        isLast: true,
+                        withTopDivider: true
+                ) {
 
                     MyListItem_Button(text: "Open Source", withTopDivider: true) {
                         UIApplication.shared.open(URL(string: state.openSourceUrl)!)
                     }
                 }
-                        .padding(.top, 10)
 
                 HStack {
                     Text("TimeTo for iOS v" + state.appVersion)
@@ -422,7 +460,7 @@ struct ToolsView_ChecklistView: View {
                 }
         ) {
             AnyView(safeView)
-                    .padding(.horizontal, DEF_LIST_H_PADDING)
+                    .padding(.horizontal, MyListView.PADDING_INNER_HORIZONTAL)
                     .padding(.vertical, DEF_LIST_V_PADDING)
         }
                 .sheetEnv(isPresented: $isEditPresented) {
@@ -472,7 +510,7 @@ struct ToolsView_ShortcutView: View {
                 }
         ) {
             AnyView(itemView)
-                    .padding(.horizontal, DEF_LIST_H_PADDING)
+                    .padding(.horizontal, MyListView.PADDING_INNER_HORIZONTAL)
                     .padding(.vertical, DEF_LIST_V_PADDING)
         }
                 .sheetEnv(isPresented: $isEditPresented) {
