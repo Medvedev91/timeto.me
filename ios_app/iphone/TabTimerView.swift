@@ -1,6 +1,15 @@
 import SwiftUI
 import shared
 
+///
+/// Related code
+
+private let emojiHPadding = 8.0 // ------↴
+private let emojiWidth = 30.0 // ↴       ↓
+private let emojiStartPadding = 30.0 + (8.0 * 2)
+
+//////
+
 struct TabTimerView: View {
 
     @State private var vm = TabTimerVM()
@@ -85,11 +94,19 @@ struct TabTimerView: View {
                                     let activitiesUI = state.activitiesUI
 
                                     ForEach(activitiesUI, id: \.activity.id) { activityUI in
-
-                                        TabTimerView_ActivityRowView(
-                                                activityUI: activityUI,
-                                                lastInterval: state.lastInterval
-                                        )
+                                        MyListView__ItemView(
+                                                isFirst: activitiesUI.first == activityUI,
+                                                isLast: activitiesUI.last == activityUI,
+                                                withTopDivider: activityUI.withTopDivider,
+                                                dividerPaddingStart: emojiStartPadding,
+                                                outerPaddingStart: 0,
+                                                outerPaddingEnd: 0
+                                        ) {
+                                            TabTimerView_ActivityRowView(
+                                                    activityUI: activityUI,
+                                                    lastInterval: state.lastInterval
+                                            )
+                                        }
                                     }
                                 }
                                         .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
@@ -275,33 +292,14 @@ struct TabTimerView: View {
 
 struct TabTimerView_ActivityRowView: View {
 
-    private var activityUI: TabTimerVM.ActivityUI
-    private var lastInterval: IntervalModel
+    var activityUI: TabTimerVM.ActivityUI
+    var lastInterval: IntervalModel
 
     @State private var isSetTimerPresented = false
     @State private var isEditSheetPresented = false
 
-    ///
-    /// Related code
-
-    private let emojiHPadding = 8.0 // ------↴
-    private let emojiWidth = 30.0 // ↴       ↓
-    private let emojiStartPadding = 30.0 + (8.0 * 2)
-
-    //////
-
-    init(
-            activityUI: TabTimerVM.ActivityUI,
-            lastInterval: IntervalModel
-    ) {
-        self.activityUI = activityUI
-        self.lastInterval = lastInterval
-    }
-
     var body: some View {
         MyListSwipeToActionItem(
-                withTopDivider: activityUI.withTopDivider,
-                dividerStartOffset: emojiStartPadding,
                 deletionHint: activityUI.deletionHint,
                 deletionConfirmationNote: activityUI.deletionConfirmation,
                 onEdit: {
