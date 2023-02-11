@@ -6,8 +6,6 @@ class MyListView {
 
     static let PADDING_OUTER_HORIZONTAL = 20.0
     static let PADDING_INNER_HORIZONTAL = 16.0
-
-    static let PADDING_SECTION_SECTION = 34.0
 }
 
 ///

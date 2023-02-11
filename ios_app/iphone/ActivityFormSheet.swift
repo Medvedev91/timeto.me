@@ -44,36 +44,41 @@ struct ActivityFormSheet: View {
 
                 VStack(spacing: 0) {
 
-                    MyListView__Padding__SectionHeader()
+                    VStack(spacing: 0) {
 
-                    MyListView__HeaderView(title: state.inputNameHeader)
+                        MyListView__Padding__SectionHeader()
 
-                    MyListView__Padding__HeaderSection()
+                        MyListView__HeaderView(title: state.inputNameHeader)
 
-                    MyListView__ItemView(
-                            isFirst: true,
-                            isLast: true
-                    ) {
+                        MyListView__Padding__HeaderSection()
 
-                        MyListView__ItemView__TextInputView(
-                                text: state.inputNameValue,
-                                placeholder: state.inputNamePlaceholder,
-                                isAutofocus: false,
-                                onValueChanged: { newValue in
-                                    vm.setInputNameValue(text: newValue)
-                                }
+                        MyListView__ItemView(
+                                isFirst: true,
+                                isLast: true
+                        ) {
+
+                            MyListView__ItemView__TextInputView(
+                                    text: state.inputNameValue,
+                                    placeholder: state.inputNamePlaceholder,
+                                    isAutofocus: false,
+                                    onValueChanged: { newValue in
+                                        vm.setInputNameValue(text: newValue)
+                                    }
+                            )
+                        }
+
+                        TriggersView__Form(
+                                triggers: state.textFeatures.triggers,
+                                onTriggersChanged: { newTriggers in
+                                    vm.setTriggers(newTriggers: newTriggers)
+                                },
+                                spaceAround: 21,
+                                bgColor: .myDayNight(.white, .mySheetFormBg),
+                                paddingTop: 18
                         )
-                    }
 
-                    TriggersView__Form(
-                            triggers: state.textFeatures.triggers,
-                            onTriggersChanged: { newTriggers in
-                                vm.setTriggers(newTriggers: newTriggers)
-                            },
-                            spaceAround: 21,
-                            bgColor: .myDayNight(.white, .mySheetFormBg),
-                            paddingTop: 18
-                    )
+                        MyListView__Padding__SectionSection()
+                    }
 
                     MyListView__ItemView(
                             isFirst: true,
@@ -112,12 +117,12 @@ struct ActivityFormSheet: View {
                                     }
                                 }
                     }
-                            .padding(.top, MyListView.PADDING_SECTION_SECTION)
 
                     //////
 
+                    MyListView__Padding__SectionSection()
+
                     MyListView__HeaderView(title: state.timerHintsHeader)
-                            .padding(.top, MyListView.PADDING_SECTION_SECTION)
 
                     MyListView__Padding__HeaderSection()
 
@@ -136,7 +141,7 @@ struct ActivityFormSheet: View {
 
                             MyListView__ItemView(
                                     isFirst: isFirst,
-                                    isLast:  hintsTypeName.last! == pair,
+                                    isLast: hintsTypeName.last! == pair,
                                     withTopDivider: !isFirst
                             ) {
 

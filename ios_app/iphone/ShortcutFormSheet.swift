@@ -35,24 +35,29 @@ struct ShortcutFormSheet: View {
 
                 VStack(spacing: 0) {
 
-                    MyListView__HeaderView(title: state.inputNameHeader)
-                            .padding(.top, MyListView.PADDING_SECTION_SECTION)
+                    VStack(spacing: 0) {
 
-                    MyListView__Padding__HeaderSection()
+                        MyListView__Padding__SectionSection()
 
-                    MyListView__ItemView(
-                            isFirst: true,
-                            isLast: true
-                    ) {
+                        MyListView__HeaderView(title: state.inputNameHeader)
 
-                        MyListView__ItemView__TextInputView(
-                                text: state.inputNameValue,
-                                placeholder: state.inputNamePlaceholder,
-                                isAutofocus: false,
-                                onValueChanged: { newValue in
-                                    vm.setInputNameValue(text: newValue)
-                                }
-                        )
+                        MyListView__Padding__HeaderSection()
+
+                        MyListView__ItemView(
+                                isFirst: true,
+                                isLast: true
+                        ) {
+
+                            MyListView__ItemView__TextInputView(
+                                    text: state.inputNameValue,
+                                    placeholder: state.inputNamePlaceholder,
+                                    isAutofocus: false,
+                                    onValueChanged: { newValue in
+                                        vm.setInputNameValue(text: newValue)
+                                    }
+                            )
+                        }
+
                     }
 
                     MyListView__HeaderView(title: state.inputUriHeader)
