@@ -48,6 +48,8 @@ struct ActivityFormSheet: View {
 
                     MyListView__HeaderView(title: state.inputNameHeader)
 
+                    MyListView__Padding__HeaderSection()
+
                     MyListView__ItemView(
                             isFirst: true,
                             isLast: true
@@ -62,7 +64,6 @@ struct ActivityFormSheet: View {
                                 }
                         )
                     }
-                            .padding(.top, MyListView.PADDING_HEADER_SECTION)
 
                     TriggersView__Form(
                             triggers: state.textFeatures.triggers,

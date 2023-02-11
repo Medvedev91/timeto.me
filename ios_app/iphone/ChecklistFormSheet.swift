@@ -47,6 +47,8 @@ struct ChecklistFormSheet: View {
             }
                     .padding(.top, 20)
 
+            MyListView__Padding__HeaderSection()
+
             MyListView__ItemView(
                     isFirst: true,
                     isLast: true
@@ -61,7 +63,6 @@ struct ChecklistFormSheet: View {
                         }
                 )
             }
-                    .padding(.top, MyListView.PADDING_HEADER_SECTION)
 
             Spacer()
         }

@@ -38,6 +38,8 @@ struct ShortcutFormSheet: View {
                     MyListView__HeaderView(title: state.inputNameHeader)
                             .padding(.top, MyListView.PADDING_SECTION_SECTION)
 
+                    MyListView__Padding__HeaderSection()
+
                     MyListView__ItemView(
                             isFirst: true,
                             isLast: true
@@ -52,10 +54,11 @@ struct ShortcutFormSheet: View {
                                 }
                         )
                     }
-                            .padding(.top, MyListView.PADDING_HEADER_SECTION)
 
                     MyListView__HeaderView(title: state.inputUriHeader)
                             .padding(.top, 30)
+
+                    MyListView__Padding__HeaderSection()
 
                     MyListView__ItemView(
                             isFirst: true,
@@ -71,7 +74,6 @@ struct ShortcutFormSheet: View {
                                 }
                         )
                     }
-                            .padding(.top, MyListView.PADDING_HEADER_SECTION)
 
                     MyListView__HeaderView(title: "EXAMPLES")
                             .padding(.top, 60)
