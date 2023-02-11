@@ -136,11 +136,11 @@ struct ChecklistView__ItemView: View {
                                         .offset(x: 4)
                             }
                         }
+                                .frame(minHeight: MyListView.ITEM_MIN_HEIGHT)
                     }
             )
                     .foregroundColor(.primary)
                     .padding(.horizontal, DEF_LIST_H_PADDING)
-                    .padding(.vertical, DEF_LIST_V_PADDING)
         }
                 .sheetEnv(isPresented: $isEditPresented) {
                     ChecklistItemFormSheet(
