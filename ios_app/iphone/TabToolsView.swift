@@ -39,188 +39,190 @@ struct TabToolsView: View {
 
                 VStack(spacing: 0) {
 
-                    MyListView__Padding__SectionHeader()
+                    VStack(spacing: 0) {
 
-                    MyListView__HeaderView(
-                            title: "CHECKLISTS",
-                            rightView: AnyView(
-                                    Button(
-                                            action: {
-                                                isAddChecklistPresented.toggle()
-                                            },
-                                            label: {
-                                                Image(systemName: "plus")
-                                            }
-                                    )
-                            )
-                    )
+                        MyListView__Padding__SectionHeader()
 
-                    MyListView__Padding__HeaderSection()
-
-                    let checklists = state.checklists
-                    ForEach(checklists, id: \.id) { checklist in
-                        let isFirst = checklists.first == checklist
-                        MyListView__ItemView(
-                                isFirst: isFirst,
-                                isLast: checklists.last == checklist,
-                                withTopDivider: !isFirst
-                        ) {
-                            ToolsView_ChecklistView(checklist: checklist, withDivider: checklists.first != checklist)
-                        }
-                    }
-                }
-
-                ///
-                /// Shortcuts
-
-                VStack(spacing: 0) {
-
-                    MyListView__Padding__SectionHeader()
-
-                    MyListView__HeaderView(
-                            title: "SHORTCUTS",
-                            rightView: AnyView(
-                                    Button(
-                                            action: {
-                                                isAddShortcutPresented.toggle()
-                                            },
-                                            label: {
-                                                Image(systemName: "plus")
-                                            }
-                                    )
-                            )
-                    )
-
-                    MyListView__Padding__HeaderSection()
-
-                    let shortcuts = state.shortcuts
-                    ForEach(shortcuts, id: \.id) { shortcut in
-                        let isFirst = shortcuts.first == shortcut
-                        MyListView__ItemView(
-                                isFirst: isFirst,
-                                isLast: shortcuts.last == shortcut,
-                                withTopDivider: !isFirst
-                        ) {
-                            ToolsView_ShortcutView(shortcut: shortcut, withDivider: shortcuts.first != shortcut)
-                        }
-                    }
-                }
-
-                ///
-                /// Settings
-
-                VStack(spacing: 0) {
-
-                    MyListView__Padding__SectionHeader()
-
-                    MyListView__HeaderView(title: "SETTINGS")
-
-                    MyListView__Padding__HeaderSection()
-
-                    MyListView__ItemView(
-                            isFirst: true,
-                            isLast: true
-                    ) {
-                        MyListView__ItemView__ButtonView(
-                                text: "Day Start",
+                        MyListView__HeaderView(
+                                title: "CHECKLISTS",
                                 rightView: AnyView(
-                                        Text(state.dayStartNote)
-                                                .foregroundColor(.secondary)
-                                                .font(.system(size: 15))
-                                                .padding(.trailing, MyListView.PADDING_INNER_HORIZONTAL)
+                                        Button(
+                                                action: {
+                                                    isAddChecklistPresented.toggle()
+                                                },
+                                                label: {
+                                                    Image(systemName: "plus")
+                                                }
+                                        )
                                 )
-                        ) {
-                            isDayStartPresented = true
+                        )
+
+                        MyListView__Padding__HeaderSection()
+
+                        let checklists = state.checklists
+                        ForEach(checklists, id: \.id) { checklist in
+                            let isFirst = checklists.first == checklist
+                            MyListView__ItemView(
+                                    isFirst: isFirst,
+                                    isLast: checklists.last == checklist,
+                                    withTopDivider: !isFirst
+                            ) {
+                                ToolsView_ChecklistView(checklist: checklist, withDivider: checklists.first != checklist)
+                            }
                         }
-                                .sheetEnv(isPresented: $isDayStartPresented) {
-                                    DayStartDialog(
-                                            isPresented: $isDayStartPresented,
-                                            tabToolsVM: vm,
-                                            tabToolsState: state
+                    }
+
+                    ///
+                    /// Shortcuts
+
+                    VStack(spacing: 0) {
+
+                        MyListView__Padding__SectionHeader()
+
+                        MyListView__HeaderView(
+                                title: "SHORTCUTS",
+                                rightView: AnyView(
+                                        Button(
+                                                action: {
+                                                    isAddShortcutPresented.toggle()
+                                                },
+                                                label: {
+                                                    Image(systemName: "plus")
+                                                }
+                                        )
+                                )
+                        )
+
+                        MyListView__Padding__HeaderSection()
+
+                        let shortcuts = state.shortcuts
+                        ForEach(shortcuts, id: \.id) { shortcut in
+                            let isFirst = shortcuts.first == shortcut
+                            MyListView__ItemView(
+                                    isFirst: isFirst,
+                                    isLast: shortcuts.last == shortcut,
+                                    withTopDivider: !isFirst
+                            ) {
+                                ToolsView_ShortcutView(shortcut: shortcut, withDivider: shortcuts.first != shortcut)
+                            }
+                        }
+                    }
+
+                    ///
+                    /// Settings
+
+                    VStack(spacing: 0) {
+
+                        MyListView__Padding__SectionHeader()
+
+                        MyListView__HeaderView(title: "SETTINGS")
+
+                        MyListView__Padding__HeaderSection()
+
+                        MyListView__ItemView(
+                                isFirst: true,
+                                isLast: true
+                        ) {
+                            MyListView__ItemView__ButtonView(
+                                    text: "Day Start",
+                                    rightView: AnyView(
+                                            Text(state.dayStartNote)
+                                                    .foregroundColor(.secondary)
+                                                    .font(.system(size: 15))
+                                                    .padding(.trailing, MyListView.PADDING_INNER_HORIZONTAL)
                                     )
+                            ) {
+                                isDayStartPresented = true
+                            }
+                                    .sheetEnv(isPresented: $isDayStartPresented) {
+                                        DayStartDialog(
+                                                isPresented: $isDayStartPresented,
+                                                tabToolsVM: vm,
+                                                tabToolsState: state
+                                        )
+                                    }
+                        }
+                    }
+
+                    ///
+                    /// Backup
+
+                    VStack(spacing: 0) {
+
+                        MyListView__Padding__SectionHeader()
+
+                        MyListView__HeaderView(title: "BACKUPS")
+
+                        MyListView__Padding__HeaderSection()
+
+                        MyListView__ItemView(
+                                isFirst: true,
+                                isLast: false
+                        ) {
+
+                            MyListView__ItemView__ButtonView(text: "Create") {
+                                Task {
+                                    let jString = try await Backup.shared.create(type: "manual", intervalsLimit: 999_999_999.toInt32()) // todo
+
+                                    let formatter = DateFormatter()
+                                    formatter.dateFormat = "yyyyMMdd_HHmmss"
+                                    fileForExportName = "timeto_\(formatter.string(from: Date())).json"
+
+                                    fileForExport = MyJsonFileDocument(initialText: jString)
+                                    isFileExporterPresented = true
                                 }
-                    }
-                }
-
-                ///
-                /// Backup
-
-                VStack(spacing: 0) {
-
-                    MyListView__Padding__SectionHeader()
-
-                    MyListView__HeaderView(title: "BACKUPS")
-
-                    MyListView__Padding__HeaderSection()
-
-                    MyListView__ItemView(
-                            isFirst: true,
-                            isLast: false
-                    ) {
-
-                        MyListView__ItemView__ButtonView(text: "Create") {
-                            Task {
-                                let jString = try await Backup.shared.create(type: "manual", intervalsLimit: 999_999_999.toInt32()) // todo
-
-                                let formatter = DateFormatter()
-                                formatter.dateFormat = "yyyyMMdd_HHmmss"
-                                fileForExportName = "timeto_\(formatter.string(from: Date())).json"
-
-                                fileForExport = MyJsonFileDocument(initialText: jString)
-                                isFileExporterPresented = true
                             }
                         }
-                    }
 
-                    MyListView__ItemView(
-                            isFirst: false,
-                            isLast: false,
-                            withTopDivider: true
-                    ) {
-
-                        MyListView__ItemView__ButtonView(text: "Restore") {
-                            isFileImporterPresented = true
-                        }
-                    }
-
-                    MyListView__ItemView(
-                            isFirst: false,
-                            isLast: true,
-                            withTopDivider: true
-                    ) {
-
-                        let autoBackupString: String = {
-                            guard let lastBackupDate = autoBackup.lastDate else {
-                                return "None"
-                            }
-                            let formatter = DateFormatter()
-                            formatter.dateFormat = is12HoursFormat() ? "d MMM, hh:mm a" : "d MMM, HH:mm"
-                            return formatter.string(from: lastBackupDate)
-                        }()
-                        MyListView__ItemView__ButtonView(
-                                text: "Auto Backup",
-                                rightView: AnyView(
-                                        Text(autoBackupString)
-                                                .foregroundColor(.secondary)
-                                                .font(.system(size: 15))
-                                                .padding(.trailing, MyListView.PADDING_INNER_HORIZONTAL)
-                                )
+                        MyListView__ItemView(
+                                isFirst: false,
+                                isLast: false,
+                                withTopDivider: true
                         ) {
-                            // todo do catch
-                            // https://stackoverflow.com/a/64592118/5169420
-                            let path = try! AutoBackup.autoBackupsFolder()
-                                    .absoluteString
-                                    .replacingOccurrences(of: "file://", with: "shareddocuments://")
-                            UIApplication.shared.open(URL(string: path)!)
+
+                            MyListView__ItemView__ButtonView(text: "Restore") {
+                                isFileImporterPresented = true
+                            }
+                        }
+
+                        MyListView__ItemView(
+                                isFirst: false,
+                                isLast: true,
+                                withTopDivider: true
+                        ) {
+
+                            let autoBackupString: String = {
+                                guard let lastBackupDate = autoBackup.lastDate else {
+                                    return "None"
+                                }
+                                let formatter = DateFormatter()
+                                formatter.dateFormat = is12HoursFormat() ? "d MMM, hh:mm a" : "d MMM, HH:mm"
+                                return formatter.string(from: lastBackupDate)
+                            }()
+                            MyListView__ItemView__ButtonView(
+                                    text: "Auto Backup",
+                                    rightView: AnyView(
+                                            Text(autoBackupString)
+                                                    .foregroundColor(.secondary)
+                                                    .font(.system(size: 15))
+                                                    .padding(.trailing, MyListView.PADDING_INNER_HORIZONTAL)
+                                    )
+                            ) {
+                                // todo do catch
+                                // https://stackoverflow.com/a/64592118/5169420
+                                let path = try! AutoBackup.autoBackupsFolder()
+                                        .absoluteString
+                                        .replacingOccurrences(of: "file://", with: "shareddocuments://")
+                                UIApplication.shared.open(URL(string: path)!)
+                            }
                         }
                     }
-                }
 
 
-                ///
-                /// Mics
+                    ///
+                    /// Mics
 
-                /*
+                    /*
                     Button("Readme") {
                         isReadmePresented = true
                     }
@@ -230,40 +232,41 @@ struct TabToolsView: View {
                             .foregroundColor(.primary)
                      */
 
-                MyListView__Padding__SectionHeader()
+                    MyListView__Padding__SectionHeader()
 
-                MyListView__ItemView(
-                        isFirst: true,
-                        isLast: false
-                ) {
-                    MyListView__ItemView__ButtonView(text: "Ask a Question") {
-                        if (MFMailComposeViewController.canSendMail()) {
-                            isMailViewPresented.toggle()
-                        } else {
-                            // Взято из skorolek
-                            let subjectEncoded = state.feedbackSubject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-                            let url = URL(string: "mailto:\(state.feedbackEmail)?subject=\(subjectEncoded)")!
-                            UIApplication.shared.open(url)
-                        }
-                    }
-                            .sheetEnv(isPresented: $isMailViewPresented) {
-                                MailView(
-                                        toEmail: state.feedbackEmail,
-                                        subject: state.feedbackSubject,
-                                        body: nil,
-                                        result: $mailViewResult
-                                )
+                    MyListView__ItemView(
+                            isFirst: true,
+                            isLast: false
+                    ) {
+                        MyListView__ItemView__ButtonView(text: "Ask a Question") {
+                            if (MFMailComposeViewController.canSendMail()) {
+                                isMailViewPresented.toggle()
+                            } else {
+                                // Взято из skorolek
+                                let subjectEncoded = state.feedbackSubject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+                                let url = URL(string: "mailto:\(state.feedbackEmail)?subject=\(subjectEncoded)")!
+                                UIApplication.shared.open(url)
                             }
-                }
+                        }
+                                .sheetEnv(isPresented: $isMailViewPresented) {
+                                    MailView(
+                                            toEmail: state.feedbackEmail,
+                                            subject: state.feedbackSubject,
+                                            body: nil,
+                                            result: $mailViewResult
+                                    )
+                                }
+                    }
 
-                MyListView__ItemView(
-                        isFirst: false,
-                        isLast: true,
-                        withTopDivider: true
-                ) {
+                    MyListView__ItemView(
+                            isFirst: false,
+                            isLast: true,
+                            withTopDivider: true
+                    ) {
 
-                    MyListView__ItemView__ButtonView(text: "Open Source") {
-                        UIApplication.shared.open(URL(string: state.openSourceUrl)!)
+                        MyListView__ItemView__ButtonView(text: "Open Source") {
+                            UIApplication.shared.open(URL(string: state.openSourceUrl)!)
+                        }
                     }
                 }
 
