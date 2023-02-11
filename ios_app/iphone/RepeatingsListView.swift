@@ -28,14 +28,18 @@ struct RepeatingsListView: View {
                             VStack(spacing: 0) {
                                 let repeatingsUI = state.repeatingsUI.reversed()
                                 ForEach(repeatingsUI, id: \.repeating.id) { repeatingUI in
-                                    RepeatingsView__ItemView(
-                                            repeatingUI: repeatingUI,
-                                            withTopDivider: repeatingsUI.first != repeatingUI
-                                    )
+                                    let isFirst = repeatingsUI.first == repeatingUI
+                                    MyListView__ItemView(
+                                            isFirst: isFirst,
+                                            isLast: repeatingsUI.last == repeatingUI,
+                                            withTopDivider: !isFirst,
+                                            outerPaddingStart: 0,
+                                            outerPaddingEnd: 0
+                                    ) {
+                                        RepeatingsView__ItemView(repeatingUI: repeatingUI)
+                                    }
                                 }
                             }
-                                    .background(Color(.mySecondaryBackground))
-                                    .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                                     .padding(.bottom, 20)
 
                             Button(
@@ -79,7 +83,7 @@ struct RepeatingsListView: View {
                             }
                 }
             }
-                    .padding(.leading, 16)
+                    .padding(.leading, MyListView.PADDING_OUTER_HORIZONTAL)
                     .padding(.trailing, 20)
         }
     }
@@ -107,23 +111,12 @@ struct RepeatingsListView: View {
 
 struct RepeatingsView__ItemView: View {
 
-    private let repeatingUI: RepeatingsListVM.RepeatingUI
+    let repeatingUI: RepeatingsListVM.RepeatingUI
 
     @State private var isEditSheetPresented = false
 
-    private let withTopDivider: Bool
-
-    init(
-            repeatingUI: RepeatingsListVM.RepeatingUI,
-            withTopDivider: Bool
-    ) {
-        self.repeatingUI = repeatingUI
-        self.withTopDivider = withTopDivider
-    }
-
     var body: some View {
         MyListSwipeToActionItem(
-                withTopDivider: withTopDivider,
                 deletionHint: repeatingUI.listText,
                 deletionConfirmationNote: repeatingUI.deletionNote,
                 onEdit: {
