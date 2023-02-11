@@ -417,7 +417,10 @@ private struct AddDayOfYearSheet: View {
             }
                     .padding(.bottom, 20)
 
-            MyListView__SectionView {
+            MyListView__ItemView(
+                    isFirst: true,
+                    isLast: true
+            ) {
 
                 Picker(
                         "",
@@ -438,7 +441,10 @@ private struct AddDayOfYearSheet: View {
             }
                     .padding(.bottom, MyListView.PADDING_SECTION_HEADER)
 
-            MyListView__SectionView {
+            MyListView__ItemView(
+                    isFirst: true,
+                    isLast: true
+            ) {
 
                 Picker(
                         "",
