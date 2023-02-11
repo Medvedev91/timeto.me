@@ -54,7 +54,6 @@
 		3182185DFB576215349F8005 /* ActivityTimerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821407A6DA0B853D8B1116 /* ActivityTimerSheet.swift */; };
 		31821874203EAD4F021DAD0E /* AutoBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821D5928C18299586075F4 /* AutoBackup.swift */; };
 		318218EA86BCB1BC8830D2E7 /* TabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821CAC31C48C0016357E8C /* TabsView.swift */; };
-		318219845CF042BA87A276A1 /* MyListItem_Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821D86E12326C97CBAC064 /* MyListItem_Button.swift */; };
 		318219D2BBD9BE5D46C83469 /* EditActivitiesDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821CF31C64B32D614C6A9D /* EditActivitiesDialog.swift */; };
 		318219E30EE52A96A502BF30 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182189A26C9B48C0D2E8A4A /* KeyboardManager.swift */; };
 		318219E4F8AFEB280A077F74 /* utils_apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E58DC92CD5673A6B49E /* utils_apple.swift */; };
@@ -158,7 +157,6 @@
 		31821D4211F3426B1F444F81 /* DaytimePickerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaytimePickerSheet.swift; sourceTree = "<group>"; };
 		31821D5928C18299586075F4 /* AutoBackup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoBackup.swift; sourceTree = "<group>"; };
 		31821D7654D0C105DFC60DDD /* MyListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyListView.swift; sourceTree = "<group>"; };
-		31821D86E12326C97CBAC064 /* MyListItem_Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyListItem_Button.swift; sourceTree = "<group>"; };
 		31821D879F9361C3DD65EAC9 /* RepeatingFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepeatingFormSheet.swift; sourceTree = "<group>"; };
 		31821DC6AEBDF478C34116FE /* MyListSwipeToActionItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyListSwipeToActionItem.swift; sourceTree = "<group>"; };
 		31821E01EC49E0964E5CB2F5 /* PieView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieView.swift; sourceTree = "<group>"; };
@@ -290,7 +288,6 @@
 				3182189A26C9B48C0D2E8A4A /* KeyboardManager.swift */,
 				31821C625A8A199EAEF17182 /* MailView.swift */,
 				31821155EAD516A3967CFF52 /* MyDivider.swift */,
-				31821D86E12326C97CBAC064 /* MyListItem_Button.swift */,
 				31821FC9040CA1D64E5D6990 /* MyListSection.swift */,
 				31821DC6AEBDF478C34116FE /* MyListSwipeToActionItem.swift */,
 				318212FFE80A0856A0A88DCF /* MySpacerSize.swift */,
@@ -498,7 +495,6 @@
 				2C0BE02F295751B70099AD7C /* PickerStateView.swift in Sources */,
 				318216F271691CC07FC67AFC /* ChecklistFormSheet.swift in Sources */,
 				318215D20ED732E4BF4F3071 /* ChecklistDialog.swift in Sources */,
-				318219845CF042BA87A276A1 /* MyListItem_Button.swift in Sources */,
 				3182155E1C1E5D91279DE1A9 /* TriggersView.swift in Sources */,
 				318214F11883D036EC488EA5 /* TaskFormSheet.swift in Sources */,
 				318219E30EE52A96A502BF30 /* KeyboardManager.swift in Sources */,
