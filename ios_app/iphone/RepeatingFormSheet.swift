@@ -107,11 +107,13 @@ struct RepeatingsFormSheet: View {
                             paddingTop: 30
                     )
 
-                    MyListView__SectionView {
+                    MyListView__ItemView(
+                            isFirst: true,
+                            isLast: true
+                    ) {
 
-                        MyListView__SectionView__ButtonView(
+                        MyListView__ItemView__ButtonView(
                                 text: state.daytimeHeader,
-                                withTopDivider: false,
                                 rightView: AnyView(
                                         HStack(spacing: 0) {
 

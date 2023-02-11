@@ -71,11 +71,13 @@ struct ActivityFormSheet: View {
                             paddingTop: 18
                     )
 
-                    MyListView__SectionView {
+                    MyListView__ItemView(
+                            isFirst: true,
+                            isLast: true
+                    ) {
 
-                        MyListView__SectionView__ButtonView(
+                        MyListView__ItemView__ButtonView(
                                 text: state.emojiTitle,
-                                withTopDivider: false,
                                 rightView: AnyView(
 
                                         HStack(spacing: 0) {
