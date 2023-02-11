@@ -147,20 +147,28 @@ struct RepeatingsFormSheet: View {
                     }
                             .padding(.top, 20)
 
+                    MyListView__Padding__SectionHeader()
+
                     MyListView__HeaderView(title: "REPETITION PERIOD")
-                            .padding(.top, MyListView.PADDING_SECTION_SECTION)
 
-                    MyListView__SectionView {
+                    MyListView__Padding__HeaderSection()
 
-                        ForEach(0..<state.periods.count, id: \.self) { periodIndex in
+                    ForEach(0..<state.periods.count, id: \.self) { periodIndex in
+
+                        let isFirst = periodIndex == 0
+
+                        MyListView__ItemView(
+                                isFirst: isFirst,
+                                isLast: state.periods.count == periodIndex + 1,
+                                withTopDivider: !isFirst
+                        ) {
 
                             VStack(spacing: 0) {
 
                                 let isActive = state.activePeriodIndex?.toInt() == periodIndex
 
-                                MyListView__SectionView__SwitcherView(
+                                MyListView__ItemView__SwitcherView(
                                         text: state.periods[periodIndex],
-                                        withTopDivider: periodIndex > 0,
                                         isActive: isActive
                                 ) {
                                     withAnimation {
@@ -307,7 +315,6 @@ struct RepeatingsFormSheet: View {
                             }
                         }
                     }
-                            .padding(.top, MyListView.PADDING_HEADER_SECTION)
 
                     Spacer()
                             .frame(minHeight: 20)

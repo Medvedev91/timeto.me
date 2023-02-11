@@ -115,86 +115,95 @@ struct ActivityFormSheet: View {
                     MyListView__HeaderView(title: state.timerHintsHeader)
                             .padding(.top, MyListView.PADDING_SECTION_SECTION)
 
-                    MyListView__SectionView {
+                    MyListView__Padding__HeaderSection()
 
-                        VStack(spacing: 0) {
+                    VStack(spacing: 0) {
 
-                            let hintsTypeName: [(title: String, type: ActivityModel__Data.TimerHintsHINT_TYPE)] = [
-                                ("By History", .history),
-                                ("Custom", .custom),
-                            ]
+                        let hintsTypeName: [(title: String, type: ActivityModel__Data.TimerHintsHINT_TYPE)] = [
+                            ("By History", .history),
+                            ("Custom", .custom),
+                        ]
 
-                            ForEach(hintsTypeName, id: \.type) { pair in
+                        ForEach(hintsTypeName, id: \.type) { pair in
 
-                                let isActive = state.activityData.timer_hints.type == pair.type
+                            let isActive = state.activityData.timer_hints.type == pair.type
 
-                                MyListView__SectionView__SwitcherView(
-                                        text: pair.title,
-                                        withTopDivider: hintsTypeName.first! != pair,
-                                        isActive: isActive
-                                ) {
-                                    withAnimation {
-                                        vm.setTimerHintsType(type: pair.type)
-                                    }
-                                }
+                            let isFirst = hintsTypeName.first! == pair
 
-                                if isActive {
+                            MyListView__ItemView(
+                                    isFirst: isFirst,
+                                    isLast:  hintsTypeName.last! == pair,
+                                    withTopDivider: !isFirst
+                            ) {
 
-                                    if (pair.type == .custom) {
+                                VStack(spacing: 0) {
 
-                                        VStack(alignment: .leading, spacing: 0) {
-
-                                            // Because it can be by mistake not unique I do through count
-                                            ForEach(0..<state.timerHintsCustomItems.count, id: \.self) { idx in
-
-                                                let customItem = state.timerHintsCustomItems[idx]
-
-                                                HStack {
-
-                                                    Button(
-                                                            action: {
-                                                                vm.delCustomTimerHint(seconds: customItem.seconds)
-                                                            },
-                                                            label: {
-                                                                Image(systemName: "minus.circle.fill")
-                                                                        .foregroundColor(.red)
-                                                            }
-                                                    )
-
-                                                    Text(customItem.text)
-                                                }
-                                                        .padding(.bottom, 10)
-                                            }
-
-                                            Button(
-                                                    action: {
-                                                        isAddCustomHintPresented = true
-                                                    },
-                                                    label: {
-                                                        Text("Add")
-                                                    }
-                                            )
+                                    MyListView__ItemView__SwitcherView(
+                                            text: pair.title,
+                                            isActive: isActive
+                                    ) {
+                                        withAnimation {
+                                            vm.setTimerHintsType(type: pair.type)
                                         }
-                                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                                .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL)
-                                                .padding(.bottom, 14)
-                                                .sheetEnv(isPresented: $isAddCustomHintPresented) {
-                                                    TimerPickerSheet(
-                                                            isPresented: $isAddCustomHintPresented,
-                                                            title: "Timer Hint",
-                                                            doneText: "Add",
-                                                            defMinutes: 30
-                                                    ) { seconds in
-                                                        vm.addCustomTimerHint(seconds: seconds.toInt32())
+                                    }
+
+                                    if isActive {
+
+                                        if (pair.type == .custom) {
+
+                                            VStack(alignment: .leading, spacing: 0) {
+
+                                                // Because it can be by mistake not unique I do through count
+                                                ForEach(0..<state.timerHintsCustomItems.count, id: \.self) { idx in
+
+                                                    let customItem = state.timerHintsCustomItems[idx]
+
+                                                    HStack {
+
+                                                        Button(
+                                                                action: {
+                                                                    vm.delCustomTimerHint(seconds: customItem.seconds)
+                                                                },
+                                                                label: {
+                                                                    Image(systemName: "minus.circle.fill")
+                                                                            .foregroundColor(.red)
+                                                                }
+                                                        )
+
+                                                        Text(customItem.text)
                                                     }
-                                                            .presentationDetentsMediumIf16()
+                                                            .padding(.bottom, 10)
                                                 }
+
+                                                Button(
+                                                        action: {
+                                                            isAddCustomHintPresented = true
+                                                        },
+                                                        label: {
+                                                            Text("Add")
+                                                        }
+                                                )
+                                            }
+                                                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                                    .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL)
+                                                    .padding(.bottom, 14)
+                                                    .sheetEnv(isPresented: $isAddCustomHintPresented) {
+                                                        TimerPickerSheet(
+                                                                isPresented: $isAddCustomHintPresented,
+                                                                title: "Timer Hint",
+                                                                doneText: "Add",
+                                                                defMinutes: 30
+                                                        ) { seconds in
+                                                            vm.addCustomTimerHint(seconds: seconds.toInt32())
+                                                        }
+                                                                .presentationDetentsMediumIf16()
+                                                    }
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                            .padding(.top, MyListView.PADDING_HEADER_SECTION)
 
                     Spacer()
                             .frame(minHeight: 20)
