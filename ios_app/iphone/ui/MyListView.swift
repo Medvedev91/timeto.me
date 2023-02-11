@@ -66,26 +66,6 @@ struct MyListView__HeaderView: View {
 }
 
 ///
-/// MyListView__SectionView
-
-struct MyListView__SectionView<Content: View>: View {
-
-    var paddingStart = MyListView.PADDING_OUTER_HORIZONTAL
-    var paddingEnd = MyListView.PADDING_OUTER_HORIZONTAL
-    @ViewBuilder var content: () -> Content
-
-    var body: some View {
-        VStack(spacing: 0) {
-            content()
-        }
-                .background(Color(.mySecondaryBackground))
-                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                .padding(.leading, paddingStart)
-                .padding(.trailing, paddingEnd)
-    }
-}
-
-///
 /// Item
 
 struct MyListView__ItemView<Content: View>: View {
