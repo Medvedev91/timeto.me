@@ -26,14 +26,22 @@ struct ChecklistDialog: View {
 
             ScrollView(showsIndicators: false) {
 
-                Text(checklist.name)
-                        .font(.system(size: 28, weight: .bold))
-                        .padding(.top, 70)
-                        .padding(.bottom, 15)
+                VStack(spacing: 0) {
 
-                MyListView__SectionView {
+                    Text(checklist.name)
+                            .font(.system(size: 28, weight: .bold))
+                            .padding(.top, 70)
+                            .padding(.bottom, 15)
+
                     ForEach(items, id: \.id) { item in
-                        ChecklistView__ItemView(item: item, withDivider: items.first != item)
+                        let isFirst = items.first == item
+                        MyListView__ItemView(
+                                isFirst: isFirst,
+                                isLast: items.last == item,
+                                withTopDivider: !isFirst
+                        ) {
+                            ChecklistView__ItemView(item: item, withDivider: items.first != item)
+                        }
                     }
                 }
             }
