@@ -277,3 +277,24 @@ struct MyListView__ItemView__ButtonView: View {
                 .foregroundColor(.primary)
     }
 }
+
+struct MyListView__ItemView__SwitcherView: View {
+
+    let text: String
+    let isActive: Bool
+    let onClick: () -> Void
+
+    var body: some View {
+
+        MyListView__ItemView__ButtonView(
+                text: text,
+                rightView: AnyView(
+                        Image(systemName: isActive ? "circle.inset.filled" : "circle")
+                                .foregroundColor(isActive ? .blue : .primary)
+                                .padding(.trailing, MyListView.PADDING_INNER_HORIZONTAL - 2)
+                )
+        ) {
+            onClick()
+        }
+    }
+}
