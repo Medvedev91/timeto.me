@@ -271,6 +271,7 @@ struct MyListView__ItemView__ButtonView: View {
                         }
                     }
                             .frame(maxWidth: .infinity)
+                            .frame(minHeight: MyListView.ITEM_MIN_HEIGHT)
                 }
         )
                 .foregroundColor(.primary)
