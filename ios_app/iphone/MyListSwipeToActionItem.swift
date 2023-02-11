@@ -2,8 +2,6 @@ import SwiftUI
 
 struct MyListSwipeToActionItem<Content: View>: View {
 
-    let withTopDivider: Bool
-    var dividerStartOffset = 16.0
     let deletionHint: String
     let deletionConfirmationNote: String?
     let onEdit: () -> Void
@@ -101,14 +99,7 @@ struct MyListSwipeToActionItem<Content: View>: View {
                         .offset(x: xSwipeOffset < 0 ? 0 : xSwipeOffset)
             }
 
-            ZStack(alignment: .top) {
-
-                content()
-
-                if withTopDivider {
-                    MyDivider(xOffset: dividerStartOffset)
-                }
-            }
+            content()
                     .background(GeometryReader { geometry -> Color in
                         /// Otherwise "Modifying state during view update, this will cause undefined behavior."
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
