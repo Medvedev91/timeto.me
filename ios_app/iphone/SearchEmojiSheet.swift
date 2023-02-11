@@ -18,7 +18,10 @@ struct SearchEmojiSheet: View {
 
                 ZStack(alignment: .trailing) {
 
-                    MyListView__SectionView {
+                    MyListView__ItemView(
+                            isFirst: true,
+                            isLast: true
+                    ) {
 
                         HStack(spacing: 0) {
 
@@ -89,7 +92,10 @@ struct SearchEmojiSheet: View {
             }
                     .padding(.top, 10)
 
-            MyListView__SectionView {
+            MyListView__ItemView(
+                    isFirst: true,
+                    isLast: true
+            ) {
 
                 ScrollView {
 
