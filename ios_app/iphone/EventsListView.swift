@@ -16,7 +16,6 @@ struct EventsListView: View {
     @State private var useAnimation = false
 
     private let LIST_BOTTOM_ITEM_ID = "bottom_id"
-    private let PADDING_START = 16.0
 
     var body: some View {
 
@@ -35,17 +34,18 @@ struct EventsListView: View {
                             VStack(spacing: 0) {
                                 let uiEvents = state.uiEvents.reversed()
                                 ForEach(uiEvents, id: \.event.id) { uiEvent in
-                                    EventItemView(
-                                            uiEvent: uiEvent,
-                                            withTopDivider: uiEvents.first != uiEvent
-                                    )
+                                    let isFirst = uiEvents.first == uiEvent
+                                    MyListView__ItemView(
+                                            isFirst: isFirst,
+                                            isLast: uiEvents.last == uiEvent,
+                                            withTopDivider: !isFirst,
+                                            outerPaddingEnd: 0
+                                    ) {
+                                        EventItemView(uiEvent: uiEvent)
+                                    }
                                 }
                             }
-                                    .background(Color(.mySecondaryBackground))
-                                    .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                                     .padding(.bottom, 20)
-                                    .padding(.leading, PADDING_START)
-
 
                             HStack {
                                 Spacer()
@@ -54,10 +54,10 @@ struct EventsListView: View {
 
                                 Spacer()
                             }
-                                    .padding(.leading, PADDING_START)
+                                    .padding(.leading, MyListView.PADDING_OUTER_HORIZONTAL)
 
                             EventsHistoryView(
-                                    spaceAround: PADDING_START + 1,
+                                    spaceAround: MyListView.PADDING_OUTER_HORIZONTAL + 1,
                                     paddingTop: 20
                             ) { historyItem in
                                 showAddCalendar(
@@ -95,7 +95,7 @@ struct EventsListView: View {
                                     .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color(.mySecondaryBackground)))
                                     .padding(.top, 19)
                                     .padding(.bottom, 20)
-                                    .padding(.leading, PADDING_START)
+                                    .padding(.leading, MyListView.PADDING_OUTER_HORIZONTAL)
 
                             HStack {
                             }
@@ -177,20 +177,10 @@ private struct EventItemView: View {
 
     @State private var isEditEventPresented = false
 
-    private let uiEvent: EventsListVM.UiEvent
-    private let withTopDivider: Bool
-
-    init(
-            uiEvent: EventsListVM.UiEvent,
-            withTopDivider: Bool
-    ) {
-        self.uiEvent = uiEvent
-        self.withTopDivider = withTopDivider
-    }
+    let uiEvent: EventsListVM.UiEvent
 
     var body: some View {
         MyListSwipeToActionItem(
-                withTopDivider: withTopDivider,
                 deletionHint: uiEvent.event.text,
                 deletionConfirmationNote: uiEvent.deletionNote,
                 onEdit: {
