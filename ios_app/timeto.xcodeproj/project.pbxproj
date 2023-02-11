@@ -70,7 +70,6 @@
 		31821E89257A3F8032DE116A /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182118DB415E858D0B449DB /* ChartView.swift */; };
 		31821ED40BEA91336DBFE0B4 /* W_TickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821FC26DE90D545D9620B0 /* W_TickerDialog.swift */; };
 		31821F3DCAF6792F0E78CEBD /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821ACA6C9306A2CD2016A0 /* HistoryView.swift */; };
-		31821F6921362D113D7B212F /* MyListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821FC9040CA1D64E5D6990 /* MyListSection.swift */; };
 		31821F8486D3EF0F71B8F254 /* ActivityEmojiPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182105EDDDD7B20C7211083 /* ActivityEmojiPickerView.swift */; };
 		31821F9CB27F8F5BF61E2D37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3182151D618D3ED8AEE1B80A /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -167,7 +166,6 @@
 		31821F4527059D286AC0AF41 /* TaskFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskFormSheet.swift; sourceTree = "<group>"; };
 		31821F7CBA1480191F065D5E /* EventsListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsListView.swift; sourceTree = "<group>"; };
 		31821FC26DE90D545D9620B0 /* W_TickerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W_TickerDialog.swift; sourceTree = "<group>"; };
-		31821FC9040CA1D64E5D6990 /* MyListSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyListSection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -288,7 +286,6 @@
 				3182189A26C9B48C0D2E8A4A /* KeyboardManager.swift */,
 				31821C625A8A199EAEF17182 /* MailView.swift */,
 				31821155EAD516A3967CFF52 /* MyDivider.swift */,
-				31821FC9040CA1D64E5D6990 /* MyListSection.swift */,
 				31821DC6AEBDF478C34116FE /* MyListSwipeToActionItem.swift */,
 				318212FFE80A0856A0A88DCF /* MySpacerSize.swift */,
 				2C0BE02E295751B70099AD7C /* PickerStateView.swift */,
@@ -490,7 +487,6 @@
 				31821286152F9C43BA2C4B7B /* TimetoSheet.swift in Sources */,
 				318212C07B5351BA8C7C9671 /* PieView.swift in Sources */,
 				31821D2F481BE7580FE4DCC2 /* MyDivider.swift in Sources */,
-				31821F6921362D113D7B212F /* MyListSection.swift in Sources */,
 				318214BD0E34368A953B17CD /* MyListSwipeToActionItem.swift in Sources */,
 				2C0BE02F295751B70099AD7C /* PickerStateView.swift in Sources */,
 				318216F271691CC07FC67AFC /* ChecklistFormSheet.swift in Sources */,
