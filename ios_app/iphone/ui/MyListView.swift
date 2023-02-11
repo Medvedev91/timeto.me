@@ -171,29 +171,6 @@ struct MyListView__SectionView__ButtonView: View {
     }
 }
 
-struct MyListView__SectionView__SwitcherView: View {
-
-    let text: String
-    let withTopDivider: Bool
-    let isActive: Bool
-    let onClick: () -> Void
-
-    var body: some View {
-
-        MyListView__SectionView__ButtonView(
-                text: text,
-                withTopDivider: withTopDivider,
-                rightView: AnyView(
-                        Image(systemName: isActive ? "circle.inset.filled" : "circle")
-                                .foregroundColor(isActive ? .blue : .primary)
-                                .padding(.trailing, MyListView.PADDING_INNER_HORIZONTAL - 2)
-                )
-        ) {
-            onClick()
-        }
-    }
-}
-
 ///
 /// Item
 
