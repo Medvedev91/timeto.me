@@ -132,46 +132,6 @@ struct MyListView__SectionView__TextInputView: View {
 }
 
 ///
-/// MyListView__SectionView__ButtonView
-
-struct MyListView__SectionView__ButtonView: View {
-
-    let text: String
-    let withTopDivider: Bool
-    var rightView: AnyView? = nil
-    let onClick: () -> Void
-
-    var body: some View {
-
-        MyListView__SectionView__ItemView(
-                withTopDivider: withTopDivider
-        ) {
-            Button(
-                    action: {
-                        onClick()
-                    },
-                    label: {
-
-                        HStack {
-
-                            Text(text)
-                                    .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL)
-
-                            Spacer(minLength: 0)
-
-                            if let rightView = rightView {
-                                rightView
-                            }
-                        }
-                                .frame(maxWidth: .infinity)
-                    }
-            )
-                    .foregroundColor(.primary)
-        }
-    }
-}
-
-///
 /// Item
 
 struct MyListView__ItemView<Content: View>: View {
