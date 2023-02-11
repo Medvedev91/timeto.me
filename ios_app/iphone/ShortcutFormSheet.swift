@@ -70,12 +70,17 @@ struct ShortcutFormSheet: View {
                     MyListView__HeaderView(title: "EXAMPLES")
                             .padding(.top, 60)
 
-                    MyListView__SectionView {
+                    MyListView__Padding__HeaderSection()
 
-                        ForEach(examples) { example in
-                            MyListView__SectionView__ButtonView(
+                    ForEach(examples) { example in
+                        let isFirst = examples.first!.id == example.id
+                        MyListView__ItemView(
+                                isFirst: isFirst,
+                                isLast: examples.last!.id == example.id,
+                                withTopDivider: !isFirst
+                        ) {
+                            MyListView__ItemView__ButtonView(
                                     text: example.name,
-                                    withTopDivider: examples.first!.id != example.id,
                                     rightView: AnyView(
                                             HStack {
 
@@ -96,9 +101,7 @@ struct ShortcutFormSheet: View {
                                 hideKeyboard()
                             }
                         }
-
                     }
-                            .padding(.top, MyListView.PADDING_HEADER_SECTION)
 
                     Spacer()
                             .frame(minHeight: 20)
