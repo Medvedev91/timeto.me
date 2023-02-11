@@ -85,29 +85,6 @@ struct MyListView__SectionView<Content: View>: View {
     }
 }
 
-///
-/// MyListView__SectionView__ItemView
-
-struct MyListView__SectionView__ItemView<Content: View>: View {
-
-    let withTopDivider: Bool
-    @ViewBuilder var content: () -> Content
-
-    var body: some View {
-
-        ZStack(alignment: .top) {
-
-            content()
-                    .frame(maxWidth: .infinity)
-                    .frame(minHeight: MyListView.ITEM_MIN_HEIGHT)
-
-            if withTopDivider {
-                MyDivider(xOffset: MyListView.PADDING_INNER_HORIZONTAL)
-            }
-        }
-    }
-}
-
 struct MyListView__SectionView__TextInputView: View {
 
     let text: String
