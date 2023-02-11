@@ -40,7 +40,7 @@ struct ChecklistDialog: View {
                                 isLast: items.last == item,
                                 withTopDivider: !isFirst
                         ) {
-                            ChecklistView__ItemView(item: item, withDivider: items.first != item)
+                            ChecklistView__ItemView(item: item)
                         }
                     }
                 }
@@ -102,13 +102,11 @@ struct ChecklistDialog: View {
 struct ChecklistView__ItemView: View {
 
     let item: ChecklistItemModel
-    let withDivider: Bool
 
     @State private var isEditPresented = false
 
     var body: some View {
         MyListSwipeToActionItem(
-                withTopDivider: withDivider,
                 deletionHint: item.text,
                 deletionConfirmationNote: nil,
                 onEdit: {
