@@ -67,7 +67,7 @@ struct TabToolsView: View {
                                     isLast: checklists.last == checklist,
                                     withTopDivider: !isFirst
                             ) {
-                                ToolsView_ChecklistView(checklist: checklist, withDivider: checklists.first != checklist)
+                                ToolsView_ChecklistView(checklist: checklist)
                             }
                         }
                     }
@@ -103,7 +103,7 @@ struct TabToolsView: View {
                                     isLast: shortcuts.last == shortcut,
                                     withTopDivider: !isFirst
                             ) {
-                                ToolsView_ShortcutView(shortcut: shortcut, withDivider: shortcuts.first != shortcut)
+                                ToolsView_ShortcutView(shortcut: shortcut)
                             }
                         }
                     }
@@ -442,14 +442,12 @@ struct TabToolsView: View {
 struct ToolsView_ChecklistView: View {
 
     let checklist: ChecklistModel
-    let withDivider: Bool
 
     @State private var isItemsPresented = false
     @State private var isEditPresented = false
 
     var body: some View {
         MyListSwipeToActionItem(
-                withTopDivider: withDivider,
                 deletionHint: checklist.name,
                 deletionConfirmationNote: "Are you sure you want to delete \"\(checklist.name)\" checklist?",
                 onEdit: {
@@ -492,14 +490,12 @@ struct ToolsView_ChecklistView: View {
 struct ToolsView_ShortcutView: View {
 
     let shortcut: ShortcutModel
-    let withDivider: Bool
 
     @State private var isEditPresented = false
     @EnvironmentObject private var timetoAlert: TimetoAlert
 
     var body: some View {
         MyListSwipeToActionItem(
-                withTopDivider: withDivider,
                 deletionHint: shortcut.name,
                 deletionConfirmationNote: "Are you sure you want to delete \"\(shortcut.name)\" shortcut?",
                 onEdit: {
