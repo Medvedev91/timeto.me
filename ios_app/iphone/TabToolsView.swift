@@ -158,7 +158,7 @@ struct TabToolsView: View {
                             isLast: false
                     ) {
 
-                        MyListItem_Button(text: "Create", withTopDivider: false) {
+                        MyListView__ItemView__ButtonView(text: "Create") {
                             Task {
                                 let jString = try await Backup.shared.create(type: "manual", intervalsLimit: 999_999_999.toInt32()) // todo
 
@@ -178,7 +178,7 @@ struct TabToolsView: View {
                             withTopDivider: true
                     ) {
 
-                        MyListItem_Button(text: "Restore", withTopDivider: true) {
+                        MyListView__ItemView__ButtonView(text: "Restore") {
                             isFileImporterPresented = true
                         }
                     }
@@ -197,9 +197,8 @@ struct TabToolsView: View {
                             formatter.dateFormat = is12HoursFormat() ? "d MMM, hh:mm a" : "d MMM, HH:mm"
                             return formatter.string(from: lastBackupDate)
                         }()
-                        MyListItem_Button(
+                        MyListView__ItemView__ButtonView(
                                 text: "Auto Backup",
-                                withTopDivider: true,
                                 rightView: AnyView(
                                         Text(autoBackupString)
                                                 .foregroundColor(.secondary)
@@ -237,7 +236,7 @@ struct TabToolsView: View {
                         isFirst: true,
                         isLast: false
                 ) {
-                    MyListItem_Button(text: "Ask a Question", withTopDivider: false) {
+                    MyListView__ItemView__ButtonView(text: "Ask a Question") {
                         if (MFMailComposeViewController.canSendMail()) {
                             isMailViewPresented.toggle()
                         } else {
@@ -263,7 +262,7 @@ struct TabToolsView: View {
                         withTopDivider: true
                 ) {
 
-                    MyListItem_Button(text: "Open Source", withTopDivider: true) {
+                    MyListView__ItemView__ButtonView(text: "Open Source") {
                         UIApplication.shared.open(URL(string: state.openSourceUrl)!)
                     }
                 }
