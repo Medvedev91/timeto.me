@@ -3,6 +3,7 @@ import Combine
 import WatchConnectivity
 import shared
 
+// todo remove
 let DEF_LIST_H_PADDING = 16.0
 let DEF_LIST_V_PADDING = 12.0
 
