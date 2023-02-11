@@ -47,9 +47,12 @@ struct ChecklistFormSheet: View {
             }
                     .padding(.top, 20)
 
-            MyListView__SectionView {
+            MyListView__ItemView(
+                    isFirst: true,
+                    isLast: true
+            ) {
 
-                MyListView__SectionView__TextInputView(
+                MyListView__ItemView__TextInputView(
                         text: state.inputNameValue,
                         placeholder: "Name",
                         isAutofocus: true,

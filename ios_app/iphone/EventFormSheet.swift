@@ -56,9 +56,12 @@ struct EventFormSheet: View {
 
                 VStack(spacing: 0) {
 
-                    MyListView__SectionView {
+                    MyListView__ItemView(
+                            isFirst: true,
+                            isLast: true
+                    ) {
 
-                        MyListView__SectionView__TextInputView(
+                        MyListView__ItemView__TextInputView(
                                 text: state.inputTextValue,
                                 placeholder: "Title",
                                 // Autofocus only for new events

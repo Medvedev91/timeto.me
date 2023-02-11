@@ -38,9 +38,12 @@ struct ShortcutFormSheet: View {
                     MyListView__HeaderView(title: state.inputNameHeader)
                             .padding(.top, MyListView.PADDING_SECTION_SECTION)
 
-                    MyListView__SectionView {
+                    MyListView__ItemView(
+                            isFirst: true,
+                            isLast: true
+                    ) {
 
-                        MyListView__SectionView__TextInputView(
+                        MyListView__ItemView__TextInputView(
                                 text: state.inputNameValue,
                                 placeholder: state.inputNamePlaceholder,
                                 isAutofocus: false,
@@ -54,9 +57,12 @@ struct ShortcutFormSheet: View {
                     MyListView__HeaderView(title: state.inputUriHeader)
                             .padding(.top, 30)
 
-                    MyListView__SectionView {
+                    MyListView__ItemView(
+                            isFirst: true,
+                            isLast: true
+                    ) {
 
-                        MyListView__SectionView__TextInputView(
+                        MyListView__ItemView__TextInputView(
                                 text: state.inputUriValue,
                                 placeholder: state.inputUriPlaceholder,
                                 isAutofocus: false,

@@ -48,9 +48,12 @@ struct ActivityFormSheet: View {
 
                     MyListView__HeaderView(title: state.inputNameHeader)
 
-                    MyListView__SectionView {
+                    MyListView__ItemView(
+                            isFirst: true,
+                            isLast: true
+                    ) {
 
-                        MyListView__SectionView__TextInputView(
+                        MyListView__ItemView__TextInputView(
                                 text: state.inputNameValue,
                                 placeholder: state.inputNamePlaceholder,
                                 isAutofocus: false,

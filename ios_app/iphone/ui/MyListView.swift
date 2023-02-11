@@ -85,29 +85,6 @@ struct MyListView__SectionView<Content: View>: View {
     }
 }
 
-struct MyListView__SectionView__TextInputView: View {
-
-    let text: String
-    let placeholder: String
-    let isAutofocus: Bool
-    let onValueChanged: (String) -> Void
-
-    @FocusState private var isFocused: Bool
-
-    var body: some View {
-
-        TextField__VMState(
-                text: text,
-                placeholder: placeholder,
-                isFocused: $isFocused,
-                onValueChanged: onValueChanged
-        )
-                .onAppear {
-                    isFocused = isAutofocus
-                }
-    }
-}
-
 ///
 /// Item
 
@@ -210,5 +187,28 @@ struct MyListView__ItemView__SwitcherView: View {
         ) {
             onClick()
         }
+    }
+}
+
+struct MyListView__ItemView__TextInputView: View {
+
+    let text: String
+    let placeholder: String
+    let isAutofocus: Bool
+    let onValueChanged: (String) -> Void
+
+    @FocusState private var isFocused: Bool
+
+    var body: some View {
+
+        TextField__VMState(
+                text: text,
+                placeholder: placeholder,
+                isFocused: $isFocused,
+                onValueChanged: onValueChanged
+        )
+                .onAppear {
+                    isFocused = isAutofocus
+                }
     }
 }
