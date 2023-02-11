@@ -120,7 +120,6 @@ struct MyListView__ItemView<Content: View>: View {
 
             content()
                     .frame(maxWidth: .infinity)
-                    .frame(minHeight: MyListView.ITEM_MIN_HEIGHT)
 
             if withTopDivider {
                 MyDivider(xOffset: MyListView.PADDING_INNER_HORIZONTAL)
