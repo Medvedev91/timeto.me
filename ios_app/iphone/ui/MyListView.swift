@@ -193,3 +193,86 @@ struct MyListView__SectionView__SwitcherView: View {
         }
     }
 }
+
+///
+/// Item
+
+struct MyListView__ItemView<Content: View>: View {
+
+    var isFirst: Bool
+    var isLast: Bool
+
+    var withTopDivider: Bool = false
+    var dividerPaddingStart = MyListView.PADDING_INNER_HORIZONTAL
+
+    var outerPaddingStart = MyListView.PADDING_OUTER_HORIZONTAL
+    var outerPaddingEnd = MyListView.PADDING_OUTER_HORIZONTAL
+
+    @ViewBuilder var content: () -> Content
+
+    private var corners: UIRectCorner {
+        var corners: UIRectCorner = []
+        if isFirst {
+            corners.insert(.topLeft)
+            corners.insert(.topRight)
+        }
+        if isLast {
+            corners.insert(.bottomLeft)
+            corners.insert(.bottomRight)
+        }
+        return corners
+    }
+
+    var body: some View {
+
+        ZStack(alignment: .top) {
+
+            content()
+                    .frame(maxWidth: .infinity)
+                    .frame(minHeight: MyListView.ITEM_MIN_HEIGHT)
+
+            if withTopDivider {
+                MyDivider(xOffset: MyListView.PADDING_INNER_HORIZONTAL)
+            }
+        }
+                .background(Color(.mySecondaryBackground))
+                .timeToSheetCornerRadius(10, corners: corners)
+                .padding(.leading, outerPaddingStart)
+                .padding(.trailing, outerPaddingEnd)
+    }
+}
+
+///
+/// Button
+
+struct MyListView__ItemView__ButtonView: View {
+
+    let text: String
+    var rightView: AnyView? = nil
+    let onClick: () -> Void
+
+    var body: some View {
+
+        Button(
+                action: {
+                    onClick()
+                },
+                label: {
+
+                    HStack {
+
+                        Text(text)
+                                .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL)
+
+                        Spacer(minLength: 0)
+
+                        if let rightView = rightView {
+                            rightView
+                        }
+                    }
+                            .frame(maxWidth: .infinity)
+                }
+        )
+                .foregroundColor(.primary)
+    }
+}
