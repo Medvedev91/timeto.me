@@ -46,20 +46,11 @@ data class TaskModel(
             text: String,
             folder: TaskFolderModel,
         ) {
-            addRaw(
-                id = max(time(), db.taskQueries.getDesc(limit = 1).executeAsOneOrNull()?.id?.plus(1) ?: 0),
-                text = validateText(text),
-                folder_id = folder.id,
-            )
-        }
-
-        fun addRaw(
-            id: Int,
-            text: String,
-            folder_id: Int,
-        ) {
+            val id = max(time(), db.taskQueries.getDesc(limit = 1).executeAsOneOrNull()?.id?.plus(1) ?: 0)
             db.taskQueries.insert(
-                id = id, text = text, folder_id = folder_id
+                id = id,
+                text = validateText(text),
+                folder_id = folder.id
             )
         }
 
