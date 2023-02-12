@@ -35,7 +35,7 @@ class ChartVM : __VM<ChartVM.State>() {
     override val state: MutableStateFlow<State>
 
     init {
-        val today = UnixTime.today().localDay
+        val today = UnixTime().localDay
 
         val initDay = DI.firstInterval.unixTime().localDay
         val periods: List<PeriodHint> = listOfNotNull(

@@ -17,8 +17,6 @@ class UnixTime(
         const val MAX_DAY = 22571 // 19 October 2031...
         const val MAX_TIME = 1_950_134_400 // ...40 years old
 
-        fun today() = UnixTime(UnixTime().localDayStartTime())
-
         fun byLocalDay(localDay: Int) = UnixTime((localDay * 86_400) - utcOffset)
 
         fun byUtcTime(utcTime: Int) = UnixTime(utcTime - utcOffset)

@@ -86,7 +86,7 @@ fun HistoryView(
                                     defaultTime = interval.unixTime(),
                                     minPickableDay = state.minPickerDay,
                                     minSaveableDay = state.minPickerDay,
-                                    maxDay = UnixTime.today().localDay,
+                                    maxDay = UnixTime().localDay,
                                     title = null,
                                     withTimeBtnText = "Save",
                                     onSelect = { selectedTime ->
@@ -237,7 +237,7 @@ fun HistoryView(
                         defaultTime = UnixTime.byLocalDay(section.day),
                         minPickableDay = state.minPickerDay,
                         minSaveableDay = state.minPickerDay,
-                        maxDay = UnixTime.today().localDay,
+                        maxDay = UnixTime().localDay,
                         onSelect = { selectedTime ->
                             scope.launchEx {
                                 val dayToMove = vm.calcDayToMove(selectedTime.localDay)
@@ -357,7 +357,7 @@ private fun AddIntervalDialog(
                         defaultTime = UnixTime(defaultTime),
                         minPickableDay = 0,
                         minSaveableDay = 0,
-                        maxDay = UnixTime.today().localDay,
+                        maxDay = UnixTime().localDay,
                         title = null,
                         withTimeBtnText = "Save",
                         onSelect = { selectedTime ->

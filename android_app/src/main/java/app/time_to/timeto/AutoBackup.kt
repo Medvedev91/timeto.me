@@ -30,7 +30,7 @@ class AutoBackup(
     suspend fun dailyBackupIfNeeded() {
         try {
             val lastBackupUnixDay = getLastDate()?.toUnixTime()?.localDay ?: 0
-            if (lastBackupUnixDay < UnixTime.today().localDay) {
+            if (lastBackupUnixDay < UnixTime().localDay) {
                 newBackup()
                 cleanOld()
             }
