@@ -57,6 +57,24 @@ struct FolderFormSheet: View {
                             )
                         }
 
+                        if let folder = vm.folder, !folder.isToday {
+
+                            MyListView__Padding__SectionSection()
+
+                            MyListView__ItemView(
+                                    isFirst: true,
+                                    isLast: true
+                            ) {
+
+                                MyListView__ItemView__ActionView(
+                                        text: state.deleteFolderText
+                                ) {
+                                    vm.delete {
+                                        isPresented = false
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
