@@ -27,6 +27,11 @@ insert:
 INSERT INTO TaskSQ
 (id, text, folder_id) VALUES (?, ?, ?);
 
+upId:
+UPDATE TaskSQ
+SET id = :newId
+WHERE id = :oldId;
+
 upById:
 UPDATE TaskSQ
 SET text = ?, folder_id = ?
