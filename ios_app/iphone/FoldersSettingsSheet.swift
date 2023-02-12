@@ -8,6 +8,8 @@ struct FoldersSettingsSheet: View {
     @State private var vm = FoldersSettingsVM()
     @State private var sheetHeaderScroll = 0
 
+    @State private var isAddSheetPresented = false
+
     var body: some View {
 
         VMView(vm: vm, stack: .VStack(spacing: 0)) { state in
@@ -41,6 +43,25 @@ struct FoldersSettingsSheet: View {
                                     folder: folder
                             )
                         }
+                    }
+
+                    MyListView__Padding__SectionSection()
+
+                    MyListView__ItemView(
+                            isFirst: true,
+                            isLast: true
+                    ) {
+                        MyListView__ItemView__ButtonView(
+                                text: "New Folder"
+                        ) {
+                            isAddSheetPresented = true
+                        }
+                                .sheetEnv(isPresented: $isAddSheetPresented) {
+                                    FolderFormSheet(
+                                            isPresented: $isAddSheetPresented,
+                                            folder: nil
+                                    )
+                                }
                     }
                 }
             }
