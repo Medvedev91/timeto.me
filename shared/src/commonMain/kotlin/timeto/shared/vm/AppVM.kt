@@ -52,9 +52,9 @@ class AppVM : __VM<AppVM.State>() {
                      */
                     delay(1_000L)
                     try {
-                        syncTodayRepeating()
-                        syncTodayEvents()
                         syncTmrw()
+                        syncTodayEvents()
+                        syncTodayRepeating()
                     } catch (e: Throwable) {
                         reportApi("AppVM sync today error:$e")
                         delay(300_000L)
