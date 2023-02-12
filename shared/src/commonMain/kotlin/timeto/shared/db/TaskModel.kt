@@ -47,13 +47,13 @@ data class TaskModel(
             folder: TaskFolderModel,
         ) {
             db.taskQueries.insert(
-                id = getNextId_IORequired(),
+                id = getNextId_ioRequired(),
                 text = validateText(text),
                 folder_id = folder.id
             )
         }
 
-        private fun getNextId_IORequired(): Int = max(
+        private fun getNextId_ioRequired(): Int = max(
             time(),
             db.taskQueries.getDesc(limit = 1).executeAsOneOrNull()?.id?.plus(1) ?: 0
         )
