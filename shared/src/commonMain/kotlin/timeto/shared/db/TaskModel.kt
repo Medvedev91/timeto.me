@@ -88,6 +88,7 @@ data class TaskModel(
     }
 
     val isToday = folder_id == TaskFolderModel.ID_TODAY
+    val isTmrw = folder_id == TaskFolderModel.ID_TMRW
 
     fun unixTime() = UnixTime(id)
 
