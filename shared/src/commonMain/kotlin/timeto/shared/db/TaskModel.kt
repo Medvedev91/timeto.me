@@ -38,11 +38,11 @@ data class TaskModel(
             folder: TaskFolderModel,
         ): Unit = dbIO {
             db.transaction {
-                addWithValidationNeedTransaction(text = text, folder = folder)
+                addWithValidation_transactionRequired(text = text, folder = folder)
             }
         }
 
-        fun addWithValidationNeedTransaction(
+        fun addWithValidation_transactionRequired(
             text: String,
             folder: TaskFolderModel,
         ) {

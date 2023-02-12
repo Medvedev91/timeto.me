@@ -79,7 +79,7 @@ data class RepeatingModel(
                         val textStrings = mutableListOf(EMOJI_REPEATING, repeating.text)
                         val featureTime = repeating.daytimeToTimeWithDayStart(today)
                         textStrings.add(TextFeatures.substringRepeating(today, featureTime))
-                        TaskModel.addWithValidationNeedTransaction(
+                        TaskModel.addWithValidation_transactionRequired(
                             text = textStrings.joinToString(" "),
                             folder = DI.getTodayFolder(),
                         )

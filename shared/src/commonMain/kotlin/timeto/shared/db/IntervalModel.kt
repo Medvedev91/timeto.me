@@ -130,7 +130,7 @@ data class IntervalModel(
             db.transaction {
                 val lastInterval = db.intervalQueries.getDesc(limit = 1).executeAsOne().toModel()
                 if (lastInterval.note != null)
-                    TaskModel.addWithValidationNeedTransaction(
+                    TaskModel.addWithValidation_transactionRequired(
                         text = lastInterval.note,
                         folder = DI.getTodayFolder(),
                     )
