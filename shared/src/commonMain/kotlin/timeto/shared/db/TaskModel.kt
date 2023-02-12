@@ -113,10 +113,20 @@ data class TaskModel(
         )
     }
 
-    suspend fun upFolder(newFolder: TaskFolderModel): Unit = dbIO {
+    suspend fun upFolder(
+        newFolder: TaskFolderModel,
+        replaceIfTmrw: Boolean,
+    ): Unit = dbIO {
         db.taskQueries.upFolderIdById(
-            id = id, folder_id = newFolder.id
+            id = id,
+            folder_id = newFolder.id,
         )
+        if (replaceIfTmrw && newFolder.isTmrw) {
+            db.taskQueries.upId(
+                oldId = id,
+                newId = getNextId_ioRequired(),
+            )
+        }
     }
 
     suspend fun delete(): Unit = dbIO {

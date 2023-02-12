@@ -31,7 +31,7 @@ class TasksListVM(
 
         fun upFolder(newFolder: TaskFolderModel) {
             launchExDefault {
-                task.upFolder(newFolder)
+                task.upFolder(newFolder, replaceIfTmrw = true)
             }
         }
 
