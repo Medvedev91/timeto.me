@@ -16,6 +16,7 @@ struct TabToolsView: View {
 
     @State private var isFileImporterPresented = false
 
+    @State private var isFoldersSettingsPresented = false
     @State private var isDayStartPresented = false
 
     @State private var isFileExporterPresented = false
@@ -121,7 +122,28 @@ struct TabToolsView: View {
 
                         MyListView__ItemView(
                                 isFirst: true,
-                                isLast: true
+                                isLast: false
+                        ) {
+                            MyListView__ItemView__ButtonView(
+                                    text: "Folders",
+                                    withArrow: true
+                            ) {
+                                isFoldersSettingsPresented = true
+                            }
+                                    .sheetEnv(isPresented: $isFoldersSettingsPresented) {
+                                        // todo
+//                                        DayStartDialog(
+//                                                isPresented: $isFoldersSettingsPresented,
+//                                                tabToolsVM: vm,
+//                                                tabToolsState: state
+//                                        )
+                                    }
+                        }
+
+                        MyListView__ItemView(
+                                isFirst: false,
+                                isLast: true,
+                                withTopDivider: true
                         ) {
                             MyListView__ItemView__ButtonView(
                                     text: "Day Start",
