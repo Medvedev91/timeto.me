@@ -75,7 +75,13 @@ private struct FoldersSettingsSheet__FolderItem: View {
                                 .padding(.trailing, MyListView.PADDING_INNER_HORIZONTAL)
                 )
         ) {
-
+            isEditPresented = true
         }
+                .sheetEnv(isPresented: $isEditPresented) {
+                    FolderFormSheet(
+                            isPresented: $isEditPresented,
+                            folder: folder
+                    )
+                }
     }
 }
