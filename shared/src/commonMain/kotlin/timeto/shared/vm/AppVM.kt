@@ -54,6 +54,7 @@ class AppVM : __VM<AppVM.State>() {
                     try {
                         syncTodayRepeating()
                         syncTodayEvents()
+                        syncTmrw()
                     } catch (e: Throwable) {
                         reportApi("AppVM sync today error:$e")
                         delay(300_000L)
@@ -148,6 +149,22 @@ private suspend fun syncTodayEvents() {
     EventModel.syncTodaySafe(todayNoOffset)
     // In case on error while syncTodaySafe()
     syncTodayEventsLastDay = todayNoOffset
+}
+
+// DI to performance
+private fun syncTmrw() {
+    val todayDay = UnixTime().localDay
+    val todayFolder = DI.getTodayFolder()
+    DI.tasks
+        .filter { it.isTmrw && (it.unixTime().localDay < todayDay) }
+        .forEach { task ->
+            launchExDefault {
+                task.upFolder(
+                    newFolder = todayFolder,
+                    replaceIfTmrw = false // No matter
+                )
+            }
+        }
 }
 
 //////
