@@ -131,12 +131,7 @@ struct TabToolsView: View {
                                 isFoldersSettingsPresented = true
                             }
                                     .sheetEnv(isPresented: $isFoldersSettingsPresented) {
-                                        // todo
-//                                        DayStartDialog(
-//                                                isPresented: $isFoldersSettingsPresented,
-//                                                tabToolsVM: vm,
-//                                                tabToolsState: state
-//                                        )
+                                        FoldersSettingsSheet(isPresented: $isFoldersSettingsPresented)
                                     }
                         }
 
