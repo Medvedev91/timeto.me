@@ -121,6 +121,7 @@ data class TaskModel(
             id = id,
             folder_id = newFolder.id,
         )
+        // To know which day the task moved to "Tomorrow"
         if (replaceIfTmrw && newFolder.isTmrw) {
             db.taskQueries.upId(
                 oldId = id,
