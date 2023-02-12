@@ -1,4 +1,5 @@
 import SwiftUI
+import shared
 
 class MyListView {
 
@@ -187,6 +188,38 @@ struct MyListView__ItemView__ButtonView: View {
                                     .font(.system(size: 16, weight: .medium))
                                     .padding(.trailing, 12)
                         }
+                    }
+                            .frame(maxWidth: .infinity)
+                            .frame(minHeight: MyListView.ITEM_MIN_HEIGHT)
+                }
+        )
+                .foregroundColor(.primary)
+    }
+}
+
+struct MyListView__ItemView__ActionView: View {
+
+    let text: String
+    var textColor: ColorNative = .red
+    let onClick: () -> Void
+
+    var body: some View {
+
+        Button(
+                action: {
+                    onClick()
+                },
+                label: {
+
+                    HStack(spacing: 0) {
+
+                        Spacer(minLength: 0)
+
+                        Text(text)
+                                .foregroundColor(textColor.toColor())
+                                .fontWeight(.medium)
+
+                        Spacer(minLength: 0)
                     }
                             .frame(maxWidth: .infinity)
                             .frame(minHeight: MyListView.ITEM_MIN_HEIGHT)
