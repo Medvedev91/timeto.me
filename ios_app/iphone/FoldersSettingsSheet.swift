@@ -63,6 +63,22 @@ struct FoldersSettingsSheet: View {
                                     )
                                 }
                     }
+
+                    if let tmrwButtonUI = state.tmrwButtonUI {
+
+                        MyListView__Padding__SectionSection()
+
+                        MyListView__ItemView(
+                                isFirst: true,
+                                isLast: true
+                        ) {
+                            MyListView__ItemView__ButtonView(
+                                    text: tmrwButtonUI.text
+                            ) {
+                                tmrwButtonUI.add()
+                            }
+                        }
+                    }
                 }
             }
         }
