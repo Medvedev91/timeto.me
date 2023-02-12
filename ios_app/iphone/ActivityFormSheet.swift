@@ -87,6 +87,7 @@ struct ActivityFormSheet: View {
 
                         MyListView__ItemView__ButtonView(
                                 text: state.emojiTitle,
+                                withArrow: true,
                                 rightView: AnyView(
 
                                         HStack(spacing: 0) {
@@ -101,11 +102,6 @@ struct ActivityFormSheet: View {
                                                         .font(.system(size: 15))
                                                         .padding(.trailing, 8)
                                             }
-
-                                            Image(systemName: "chevron.right")
-                                                    .foregroundColor(.secondary)
-                                                    .font(.system(size: 16, weight: .medium))
-                                                    .padding(.trailing, 12)
                                         }
                                 )
                         ) {

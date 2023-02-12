@@ -158,6 +158,7 @@ struct MyListView__ItemView__SwitcherView: View {
 struct MyListView__ItemView__ButtonView: View {
 
     let text: String
+    var withArrow: Bool = false
     var rightView: AnyView? = nil
     let onClick: () -> Void
 
@@ -169,7 +170,7 @@ struct MyListView__ItemView__ButtonView: View {
                 },
                 label: {
 
-                    HStack {
+                    HStack(spacing: 0) {
 
                         Text(text)
                                 .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL)
@@ -178,6 +179,13 @@ struct MyListView__ItemView__ButtonView: View {
 
                         if let rightView = rightView {
                             rightView
+                        }
+
+                        if withArrow {
+                            Image(systemName: "chevron.right")
+                                    .foregroundColor(.secondary)
+                                    .font(.system(size: 16, weight: .medium))
+                                    .padding(.trailing, 12)
                         }
                     }
                             .frame(maxWidth: .infinity)

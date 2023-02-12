@@ -117,19 +117,12 @@ struct RepeatingsFormSheet: View {
 
                         MyListView__ItemView__ButtonView(
                                 text: state.daytimeHeader,
+                                withArrow: true,
                                 rightView: AnyView(
-                                        HStack(spacing: 0) {
-
-                                            Text(state.daytimeNote)
-                                                    .foregroundColor(.secondary)
-                                                    .font(.system(size: 15))
-                                                    .padding(.trailing, 10)
-
-                                            Image(systemName: "chevron.right")
-                                                    .foregroundColor(.secondary)
-                                                    .font(.system(size: 16, weight: .medium))
-                                                    .padding(.trailing, 12)
-                                        }
+                                        Text(state.daytimeNote)
+                                                .foregroundColor(.secondary)
+                                                .font(.system(size: 15))
+                                                .padding(.trailing, 10)
                                 )
                         ) {
                             hideKeyboard()
