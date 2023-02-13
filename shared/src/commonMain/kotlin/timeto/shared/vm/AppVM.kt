@@ -151,12 +151,13 @@ private suspend fun syncTodayEvents() {
     syncTodayEventsLastDay = todayNoOffset
 }
 
-// DI to performance
 private fun syncTmrw() {
-    val todayDay = UnixTime().localDay
+    // DI to performance
+    // Using .localDayWithDayStart() everywhere
+    val todayDay = UnixTime().localDayWithDayStart()
     val todayFolder = DI.getTodayFolder()
     DI.tasks
-        .filter { it.isTmrw && (it.unixTime().localDay < todayDay) }
+        .filter { it.isTmrw && (it.unixTime().localDayWithDayStart() < todayDay) }
         .forEach { task ->
             launchExDefault {
                 task.upFolder(
