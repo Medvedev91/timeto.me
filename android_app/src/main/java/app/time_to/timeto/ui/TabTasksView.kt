@@ -283,6 +283,9 @@ fun TabTasksView() {
                             .background(backgroundColor.value)
                     ) {
 
+                        val textTopPadding = 8.dp
+                        val textBottomPadding = if (folder.isTmrw) 6.dp else textTopPadding
+
                         Text(
                             folder.name.uppercase().split("").joinToString("\n").trim(),
                             modifier = Modifier
@@ -290,7 +293,7 @@ fun TabTasksView() {
                                 .clickable {
                                     activeSection = Section_Folder(folder)
                                 }
-                                .padding(vertical = 8.dp),
+                                .padding(top = textTopPadding, bottom = textBottomPadding),
                             textAlign = TextAlign.Center,
                             color = textColor.value,
                             fontSize = 15.sp,
@@ -324,7 +327,7 @@ fun TabTasksView() {
                                         activeSection = Section_TmrwPeek()
                                     }
                                     .fillMaxWidth()
-                                    .padding(horizontal = 7.dp, vertical = 8.dp)
+                                    .padding(horizontal = 8.dp, vertical = 8.dp)
                             )
                         }
                     }
