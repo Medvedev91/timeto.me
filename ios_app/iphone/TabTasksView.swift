@@ -171,65 +171,10 @@ struct TabTasksView: View {
                         Spacer()
                                 .frame(height: tabPadding)
 
-                        Button(
-                                action: {
-                                    upActiveSectionWithAnimation(TabTasksView_Section_Folder(folder: folder))
-                                },
-                                label: {
-                                    let nameN = Array(folder.name)
-                                            .map {
-                                                String($0)
-                                            }
-                                            .joined(separator: "\n")
-
-
-                                    let drop = DropItem__Folder(folder)
-
-                                    let isAllowedForDrop = activeDrag?.isDropAllowed(drop) == true
-                                    let bgColor: Color = {
-                                        if (focusedDrop as? DropItem__Folder)?.folder.id == folder.id {
-                                            return .green
-                                        }
-                                        if isAllowedForDrop {
-                                            return .purple
-                                        }
-                                        return isActive ? .blue : Color(.mySecondaryBackground)
-                                    }()
-
-                                    Text(nameN)
-                                            .textCase(.uppercase)
-                                            .lineSpacing(0)
-                                            .font(.system(size: 14, weight: isActive ? .semibold : .regular, design: .monospaced))
-                                            .frame(width: tabWidth)
-                                            .padding(.top, 10)
-                                            .padding(.bottom, 10)
-                                            .foregroundColor(isActive || isAllowedForDrop ? .white : .primary)
-                                            .background(
-                                                    ZStack {
-                                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                                .fill(bgColor)
-                                                        if !isActive {
-                                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                                    .stroke(Color(.systemGray6))
-                                                        }
-                                                    }
-                                            )
-                                            .background(GeometryReader { geometry -> Color in
-                                                drop.square.upByRect(rect: geometry.frame(in: CoordinateSpace.global))
-                                                return Color.clear
-                                            })
-                                            ///
-                                            .onAppear {
-                                                dropItems.append(drop)
-                                            }
-                                            .onDisappear {
-                                                if let index = dropItems.firstIndex { $0 === drop } {
-                                                    dropItems.remove(at: index)
-                                                }
-                                            }
-                                            ///
-                                            .animation(.spring())
-                                }
+                        TabTasksView__FolderView(
+                                isActive: isActive,
+                                folder: folder,
+                                tabTasksView: self
                         )
                     }
                 }
@@ -251,7 +196,7 @@ struct TabTasksView: View {
                 }
     }
 
-    private func upActiveSectionWithAnimation(
+    func upActiveSectionWithAnimation(
             _ newSection: TabTasksView_Section
     ) {
         /// Fix issue: on tab changes scroll animation.
@@ -270,6 +215,82 @@ struct TabTasksView: View {
                 activeSection = newSection
             }
         }
+    }
+}
+
+private struct TabTasksView__FolderView: View {
+
+    private let isActive: Bool
+    private let folder: TaskFolderModel
+    private let tabTasksView: TabTasksView
+
+    @State private var drop: DropItem__Folder
+
+    init(
+            isActive: Bool,
+            folder: TaskFolderModel,
+            tabTasksView: TabTasksView
+    ) {
+        self.isActive = isActive
+        self.folder = folder
+        self.tabTasksView = tabTasksView
+        _drop = State(initialValue: DropItem__Folder(folder))
+    }
+
+    var body: some View {
+        Button(
+                action: {
+                    tabTasksView.upActiveSectionWithAnimation(TabTasksView_Section_Folder(folder: folder))
+                },
+                label: {
+                    let nameN = Array(folder.name)
+                            .map { String($0) }
+                            .joined(separator: "\n")
+
+                    let isAllowedForDrop = tabTasksView.activeDrag?.isDropAllowed(drop) == true
+                    let bgColor: Color = {
+                        if (tabTasksView.focusedDrop as? DropItem__Folder)?.folder.id == folder.id {
+                            return .green
+                        }
+                        if isAllowedForDrop {
+                            return .purple
+                        }
+                        return isActive ? .blue : Color(.mySecondaryBackground)
+                    }()
+
+                    Text(nameN)
+                            .textCase(.uppercase)
+                            .lineSpacing(0)
+                            .font(.system(size: 14, weight: isActive ? .semibold : .regular, design: .monospaced))
+                            .frame(width: tabWidth)
+                            .padding(.top, 10)
+                            .padding(.bottom, 10)
+                            .foregroundColor(isActive || isAllowedForDrop ? .white : .primary)
+                            .background(
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                .fill(bgColor)
+                                        if !isActive {
+                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                    .stroke(Color(.systemGray6))
+                                        }
+                                    }
+                            )
+                            .background(GeometryReader { geometry -> Color in
+                                drop.square.upByRect(rect: geometry.frame(in: CoordinateSpace.global))
+                                return Color.clear
+                            })
+                            ///
+                            .onAppear {
+                                tabTasksView.dropItems.append(drop)
+                            }
+                            .onDisappear {
+                                tabTasksView.dropItems.removeAll { $0 === drop }
+                            }
+                            ///
+                            .animation(.spring())
+                }
+        )
     }
 }
 
