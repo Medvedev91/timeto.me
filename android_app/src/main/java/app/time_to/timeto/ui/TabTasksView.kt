@@ -269,8 +269,7 @@ fun TabTasksView() {
                         rotationAngle = if (isAllowedToDrop) (if (Random.nextBoolean()) rotationMaxAngle else -rotationMaxAngle) else 0f
                     }
 
-                    Text(
-                        folder.name.uppercase().split("").joinToString("\n").trim(),
+                    Column(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = tabSpace)
@@ -280,17 +279,24 @@ fun TabTasksView() {
                             }
                             .clip(tabShape)
                             .background(backgroundColor.value)
-                            .clickable {
-                                activeSection = Section_Folder(folder)
-                            }
-                            .padding(vertical = 8.dp),
-                        textAlign = TextAlign.Center,
-                        color = textColor.value,
-                        fontSize = 15.sp,
-                        lineHeight = 16.5.sp,
-                        fontWeight = FontWeight.W600,
-                        fontFamily = FontFamily.Monospace
-                    )
+                    ) {
+
+                        Text(
+                            folder.name.uppercase().split("").joinToString("\n").trim(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    activeSection = Section_Folder(folder)
+                                }
+                                .padding(vertical = 8.dp),
+                            textAlign = TextAlign.Center,
+                            color = textColor.value,
+                            fontSize = 15.sp,
+                            lineHeight = 16.5.sp,
+                            fontWeight = FontWeight.W600,
+                            fontFamily = FontFamily.Monospace
+                        )
+                    }
                 }
             }
         }
