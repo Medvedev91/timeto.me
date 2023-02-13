@@ -1,6 +1,8 @@
 import SwiftUI
 import shared
 
+private let tabWidth: CGFloat = 34
+
 struct TabTasksView: View {
 
     @State private var vm = TabTasksVM()
@@ -9,7 +11,6 @@ struct TabTasksView: View {
 
     @State var activeSection: TabTasksView_Section?
 
-    private let tabWidth: CGFloat = 34
     /// No more fits when the keyboard is open on the SE
     private let tabPadding: CGFloat = 15
 
