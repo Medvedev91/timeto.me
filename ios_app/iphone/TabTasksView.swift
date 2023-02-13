@@ -3,7 +3,7 @@ import shared
 
 struct TabTasksView: View {
 
-    private let vm = TabTasksVM()
+    @State private var vm = TabTasksVM()
 
     static var lastInstance: TabTasksView? = nil
 
