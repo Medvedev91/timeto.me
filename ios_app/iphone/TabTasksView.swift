@@ -20,6 +20,8 @@ struct TabTasksView: View {
     @State var focusedDrop: DropItem? = nil
     @State var activeDrag: DragItem? = nil
 
+    @State private var dropCalendar = DropItem__Calendar()
+
     init() {
         _activeSection = State(initialValue: TabTasksView_Section_Folder(folder: DI.getTodayFolder()))
     }
@@ -76,8 +78,6 @@ struct TabTasksView: View {
                     //
                     // Calendar
 
-                    let dropCalendar = DropItem__Calendar()
-
                     let isActiveCalendar = activeSection is TabTasksView_Section_Calendar
                     let calendarFgColor: Color = {
                         if focusedDrop is DropItem__Calendar {
@@ -107,9 +107,7 @@ struct TabTasksView: View {
                                                 dropItems.append(dropCalendar)
                                             }
                                             .onDisappear {
-                                                if let index = dropItems.firstIndex { $0 === dropCalendar } {
-                                                    dropItems.remove(at: index)
-                                                }
+                                                dropItems.removeAll { $0 === dropCalendar }
                                             }
                                             ///
                                             .foregroundColor(calendarFgColor)
