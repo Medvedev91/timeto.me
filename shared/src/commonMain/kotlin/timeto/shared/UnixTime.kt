@@ -26,6 +26,8 @@ class UnixTime(
 
     fun localDayStartTime() = (localDay * 86_400) - utcOffset
 
+    fun localDayWithDayStart() = (time + utcOffset - dayStartOffsetSeconds()) / 86_400
+
     fun utcTime() = time + utcOffset
 
     // 0 - Mon. 1 Jan 1970 - Thu.
