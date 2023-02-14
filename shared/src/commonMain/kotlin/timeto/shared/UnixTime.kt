@@ -2,7 +2,7 @@ package timeto.shared
 
 import kotlinx.datetime.*
 
-class UnixTime(
+data class UnixTime(
     val time: Int = time(),
     val utcOffset: Int = localUtcOffset,
 ) {
