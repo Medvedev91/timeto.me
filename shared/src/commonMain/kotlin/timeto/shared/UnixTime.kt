@@ -20,7 +20,7 @@ class UnixTime(
             UnixTime(time = (localDay * 86_400) - utcOffset, utcOffset = utcOffset)
 
         fun byUtcTime(utcTime: Int, utcOffset: Int = localUtcOffset) =
-            UnixTime(time = utcTime - utcOffset, utcOffset = utcTime)
+            UnixTime(time = utcTime - utcOffset, utcOffset = utcOffset)
     }
 
     val localDay = (time + utcOffset) / 86_400
