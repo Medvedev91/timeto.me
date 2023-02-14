@@ -11,6 +11,7 @@ data class UnixTime(
 
         val monthNames = listOf("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
         val monthNames3 = listOf("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+        val dayOfWeekNames = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
         val dayOfWeekNames3 = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
 
         const val MAX_DAY = 22571 // 19 October 2031...
@@ -81,6 +82,7 @@ data class UnixTime(
                 StringComponent.month -> monthNames[dayTime.monthNumber - 1]
                 StringComponent.month3 -> monthNames3[dayTime.monthNumber - 1]
                 StringComponent.dayOfMonth -> dayTime.dayOfMonth.toString()
+                StringComponent.dayOfWeek -> dayOfWeekNames[dayOfWeek()]
                 StringComponent.dayOfWeek3 -> dayOfWeekNames3[dayOfWeek()]
                 StringComponent.hhmm24 -> {
                     val (h, m) = (utcTime() % 86_400).toHms()
@@ -93,6 +95,6 @@ data class UnixTime(
     }
 
     enum class StringComponent {
-        month, month3, dayOfMonth, dayOfWeek3, hhmm24, space, comma
+        month, month3, dayOfMonth, dayOfWeek, dayOfWeek3, hhmm24, space, comma
     }
 }
