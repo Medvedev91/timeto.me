@@ -90,7 +90,7 @@ data class TaskModel(
     val isToday = folder_id == TaskFolderModel.ID_TODAY
     val isTmrw = folder_id == TaskFolderModel.ID_TMRW
 
-    fun unixTime() = UnixTime(id)
+    fun unixTime(utcOffset: Int = localUtcOffset) = UnixTime(id, utcOffset = utcOffset)
 
     suspend fun startInterval(
         deadline: Int,
