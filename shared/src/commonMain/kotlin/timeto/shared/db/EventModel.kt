@@ -60,15 +60,19 @@ data class EventModel(
                         event.getLocalTime().time
                     }
                     .forEach { event ->
-                        val featureTime = TextFeatures.substringEvent(event.getLocalTime().time)
                         TaskModel.addWithValidation_transactionRequired(
-                            "$EMOJI_CALENDAR ${event.timeToString()}\n${event.text} $featureTime",
+                            event.prepTextForTask(),
                             DI.getTodayFolder()
                         )
                         db.eventQueries.deleteById(event.id)
                     }
             }
         }
+    }
+
+    fun prepTextForTask(): String {
+        val featureTime = TextFeatures.substringEvent(getLocalTime().time)
+        return "$EMOJI_CALENDAR ${timeToString()}\n${text} $featureTime"
     }
 
     fun getLocalTime() = UnixTime(utc_time - localUtcOffset)
