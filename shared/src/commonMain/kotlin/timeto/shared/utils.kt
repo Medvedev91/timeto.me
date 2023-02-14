@@ -383,6 +383,9 @@ internal class SecureLocalStorage__Exception(
 val localUtcOffset: Int
     get() = Clock.System.now().offsetIn(TimeZone.currentSystemDefault()).totalSeconds
 
+val localUtcOffsetWithDayStart: Int
+    get() = localUtcOffset - dayStartOffsetSeconds()
+
 fun time(): Int = Clock.System.now().epochSeconds.toInt()
 
 fun timeMls(): Long = Clock.System.now().toEpochMilliseconds()
