@@ -29,7 +29,7 @@ data class EventModel(
             val newEvent = addRaw(
                 id = time(), // todo check unique
                 text = validateText(text),
-                utcTime = localTime + deviceUtcOffset
+                utcTime = localTime + localUtcOffset
             )
             if (addToHistory)
                 EventsHistory.upsert(newEvent)
@@ -71,7 +71,7 @@ data class EventModel(
         }
     }
 
-    fun getLocalTime() = UnixTime(utc_time - deviceUtcOffset)
+    fun getLocalTime() = UnixTime(utc_time - localUtcOffset)
 
     // todo is24
     fun timeToString(): String {
@@ -97,7 +97,7 @@ data class EventModel(
         text: String,
         localTime: Int,
     ) = dbIO {
-        val utcTime = localTime + deviceUtcOffset
+        val utcTime = localTime + localUtcOffset
         db.eventQueries.updateById(
             id = id, text = validateText(text), utc_time = utcTime
         )

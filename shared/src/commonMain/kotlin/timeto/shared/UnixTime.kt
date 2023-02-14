@@ -4,7 +4,7 @@ import kotlinx.datetime.*
 
 class UnixTime(
     val time: Int = time(),
-    val utcOffset: Int = deviceUtcOffset,
+    val utcOffset: Int = localUtcOffset,
 ) {
 
     companion object {
@@ -16,10 +16,10 @@ class UnixTime(
         const val MAX_DAY = 22571 // 19 October 2031...
         const val MAX_TIME = 1_950_134_400 // ...40 years old
 
-        fun byLocalDay(localDay: Int, utcOffset: Int = deviceUtcOffset) =
+        fun byLocalDay(localDay: Int, utcOffset: Int = localUtcOffset) =
             UnixTime(time = (localDay * 86_400) - utcOffset, utcOffset = utcOffset)
 
-        fun byUtcTime(utcTime: Int, utcOffset: Int = deviceUtcOffset) =
+        fun byUtcTime(utcTime: Int, utcOffset: Int = localUtcOffset) =
             UnixTime(time = utcTime - utcOffset, utcOffset = utcTime)
     }
 
