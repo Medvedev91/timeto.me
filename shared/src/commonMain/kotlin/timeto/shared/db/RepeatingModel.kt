@@ -76,11 +76,8 @@ data class RepeatingModel(
                     .map { it.toModel() }
                     .filter { it.getNextDay() <= today }
                     .forEach { repeating ->
-                        val textStrings = mutableListOf(EMOJI_REPEATING, repeating.text)
-                        val featureTime = repeating.daytimeToTimeWithDayStart(today)
-                        textStrings.add(TextFeatures.substringRepeating(today, featureTime))
                         TaskModel.addWithValidation_transactionRequired(
-                            text = textStrings.joinToString(" "),
+                            text = repeating.prepTextForTask(today),
                             folder = DI.getTodayFolder(),
                         )
                         db.repeatingQueries.upLastDayById(last_day = today, id = repeating.id)
@@ -187,6 +184,13 @@ data class RepeatingModel(
                 days.min()
             }
         }
+    }
+
+    fun prepTextForTask(day: Int): String {
+        val textStrings = mutableListOf(EMOJI_REPEATING, text)
+        val featureTime = daytimeToTimeWithDayStart(day)
+        textStrings.add(TextFeatures.substringRepeating(day, featureTime))
+        return textStrings.joinToString(" ")
     }
 
     fun getNextDayString(): String =
