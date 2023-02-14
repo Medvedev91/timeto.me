@@ -89,6 +89,6 @@ private fun getCurTimeString(
         UnixTime.StringComponent.month,
         UnixTime.StringComponent.comma,
         UnixTime.StringComponent.space,
-        UnixTime.StringComponent.dayOfWeek3,
+        UnixTime.StringComponent.dayOfWeek,
     )
 )
