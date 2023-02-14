@@ -1,11 +1,10 @@
 package timeto.shared
 
-import kotlinx.datetime.Instant
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
+import kotlinx.datetime.*
 
 class UnixTime(
     val time: Int = time(),
+    val utcOffset: Int = deviceUtcOffset,
 ) {
 
     companion object {
@@ -17,9 +16,11 @@ class UnixTime(
         const val MAX_DAY = 22571 // 19 October 2031...
         const val MAX_TIME = 1_950_134_400 // ...40 years old
 
-        fun byLocalDay(localDay: Int) = UnixTime((localDay * 86_400) - utcOffset)
+        fun byLocalDay(localDay: Int, utcOffset: Int = deviceUtcOffset) =
+            UnixTime(time = (localDay * 86_400) - utcOffset, utcOffset = utcOffset)
 
-        fun byUtcTime(utcTime: Int) = UnixTime(utcTime - utcOffset)
+        fun byUtcTime(utcTime: Int, utcOffset: Int = deviceUtcOffset) =
+            UnixTime(time = utcTime - utcOffset, utcOffset = utcTime)
     }
 
     val localDay = (time + utcOffset) / 86_400
