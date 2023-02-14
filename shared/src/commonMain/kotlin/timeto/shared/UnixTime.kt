@@ -41,9 +41,9 @@ data class UnixTime(
         else -> throw Exception()
     }
 
-    fun inDays(days: Int) = UnixTime(time + (days * 86_400))
+    fun inDays(days: Int): UnixTime = copy(time = time + (days * 86_400))
 
-    fun inSeconds(seconds: Int) = UnixTime(time + seconds)
+    fun inSeconds(seconds: Int): UnixTime = copy(time = time + seconds)
 
     fun year(): Int =
         Instant.fromEpochSeconds(localDay * 86_400L).toLocalDateTime(TimeZone.UTC).year
@@ -69,7 +69,7 @@ data class UnixTime(
             }
             else -> throw Exception()
         }
-        return byLocalDay(localDay + lastDayOfMonth - dayOfMonth())
+        return byLocalDay(localDay + lastDayOfMonth - dayOfMonth(), utcOffset)
     }
 
     fun getStringByComponents(
