@@ -9,7 +9,7 @@ import timeto.shared.db.TaskModel
 import timeto.shared.ui.sortedByFolder
 
 /**
- * todo Live update
+ * todo Live update? tasksUI + curTimeString
  */
 class TmrwPeekVM : __VM<TmrwPeekVM.State>() {
 
@@ -17,11 +17,13 @@ class TmrwPeekVM : __VM<TmrwPeekVM.State>() {
 
     data class State(
         val tasksUI: List<TaskUI>,
+        val curTimeString: String,
     )
 
     override val state = MutableStateFlow(
         State(
-            tasksUI = listOf()
+            tasksUI = listOf(),
+            curTimeString = " "
         )
     )
 
@@ -65,10 +67,28 @@ class TmrwPeekVM : __VM<TmrwPeekVM.State>() {
                     )
                 }
 
-            rawTasks
+            val resTasks = rawTasks
                 .map { TaskUI(it) }
                 .sortedByFolder(DI.getTodayFolder())
-                .forEach { zlog(it.listText) }
+            state.update {
+                it.copy(
+                    tasksUI = resTasks,
+                    curTimeString = getCurTimeString(unixTmrwDS)
+                )
+            }
         }
     }
 }
+
+private fun getCurTimeString(
+    unixTime: UnixTime
+): String = unixTime.getStringByComponents(
+    listOf(
+        UnixTime.StringComponent.dayOfMonth,
+        UnixTime.StringComponent.space,
+        UnixTime.StringComponent.month,
+        UnixTime.StringComponent.comma,
+        UnixTime.StringComponent.space,
+        UnixTime.StringComponent.dayOfWeek3,
+    )
+)
