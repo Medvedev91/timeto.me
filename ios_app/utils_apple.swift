@@ -81,7 +81,7 @@ extension Date {
     }
 
     func toUnixTime() -> UnixTime {
-        UnixTime(time: Int32(timeIntervalSince1970))
+        UnixTime(time: Int32(timeIntervalSince1970), utcOffset: UtilsKt.localUtcOffset)
     }
 }
 
@@ -129,7 +129,7 @@ extension FixedWidthInteger {
     ///
 
     func asUnixDayToDate() -> Date {
-        Date(timeIntervalSince1970: Double(UnixTime.companion.byLocalDay(localDay: Int32(self)).time))
+        Date(timeIntervalSince1970: Double(UnixTime.companion.byLocalDay(localDay: Int32(self), utcOffset: UtilsKt.localUtcOffset).time))
     }
 
     func asTimeToDate() -> Date {

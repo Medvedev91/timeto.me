@@ -54,5 +54,5 @@ struct DayPickerStateView: View {
 }
 
 private func unixDayToDate(_ day: some FixedWidthInteger) -> Date {
-    Date(timeIntervalSince1970: Double(UnixTime.companion.byLocalDay(localDay: Int32(day)).time))
+    Date(timeIntervalSince1970: Double(UnixTime.companion.byLocalDay(localDay: Int32(day), utcOffset: UtilsKt.localUtcOffset).time))
 }

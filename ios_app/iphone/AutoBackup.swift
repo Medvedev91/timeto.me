@@ -29,7 +29,7 @@ private struct AutoBackup__Modifier: ViewModifier {
         Task {
             do {
                 let lastBackupUnixDay = try AutoBackup.getLastDate()?.toUnixTime().localDay.toInt() ?? 0
-                if lastBackupUnixDay < UnixTime(time: time().toInt32()).localDay.toInt() {
+                if lastBackupUnixDay < UnixTime(time: time().toInt32(), utcOffset: UtilsKt.localUtcOffset).localDay.toInt() {
                     try await autoBackup.newBackup()
                     try AutoBackup.cleanOld()
                 }
