@@ -258,14 +258,17 @@ private struct TabTasksView__FolderView: View {
                         return isActive ? .blue : Color(.mySecondaryBackground)
                     }()
 
-                    Text(nameN)
-                            .textCase(.uppercase)
-                            .lineSpacing(0)
-                            .font(.system(size: 14, weight: isActive ? .semibold : .regular, design: .monospaced))
-                            .frame(width: tabWidth)
+                    VStack(spacing: 0) {
+
+                        Text(nameN)
+                                .textCase(.uppercase)
+                                .lineSpacing(0)
+                                .font(.system(size: 14, weight: isActive ? .semibold : .regular, design: .monospaced))
+                                .frame(width: tabWidth)
+                                .foregroundColor(isActive || isAllowedForDrop ? .white : .primary)
+                    }
                             .padding(.top, 10)
                             .padding(.bottom, 10)
-                            .foregroundColor(isActive || isAllowedForDrop ? .white : .primary)
                             .background(
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 8, style: .continuous)
