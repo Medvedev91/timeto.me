@@ -73,6 +73,7 @@
 		31821ED40BEA91336DBFE0B4 /* W_TickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821FC26DE90D545D9620B0 /* W_TickerDialog.swift */; };
 		31821F3DCAF6792F0E78CEBD /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821ACA6C9306A2CD2016A0 /* HistoryView.swift */; };
 		31821F8486D3EF0F71B8F254 /* ActivityEmojiPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182105EDDDD7B20C7211083 /* ActivityEmojiPickerView.swift */; };
+		31821F98BA6E1CE38F5300C9 /* TmrwPeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318214286BC983E37631F878 /* TmrwPeekView.swift */; };
 		31821F9CB27F8F5BF61E2D37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3182151D618D3ED8AEE1B80A /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -134,6 +135,7 @@
 		318212FFE80A0856A0A88DCF /* MySpacerSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySpacerSize.swift; sourceTree = "<group>"; };
 		318213DE3B58FA098A8DBAE7 /* TaskSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskSheet.swift; sourceTree = "<group>"; };
 		31821407A6DA0B853D8B1116 /* ActivityTimerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityTimerSheet.swift; sourceTree = "<group>"; };
+		318214286BC983E37631F878 /* TmrwPeekView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TmrwPeekView.swift; sourceTree = "<group>"; };
 		31821514C5F55F9A34FBC8AD /* FolderFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderFormSheet.swift; sourceTree = "<group>"; };
 		3182151D618D3ED8AEE1B80A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		31821527096D1BDB0A35B178 /* TimetoAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetoAlert.swift; sourceTree = "<group>"; };
@@ -317,6 +319,7 @@
 				3182118D8EA3E0D889D4FDC3 /* utils_ios.swift */,
 				31821E3EB266890584C3EF87 /* FoldersSettingsSheet.swift */,
 				31821514C5F55F9A34FBC8AD /* FolderFormSheet.swift */,
+				318214286BC983E37631F878 /* TmrwPeekView.swift */,
 			);
 			path = iphone;
 			sourceTree = "<group>";
@@ -531,6 +534,7 @@
 				318215958A7A06F6610DF5AF /* TimetoAlert.swift in Sources */,
 				318210C5F98B5CD4E8D8C104 /* FoldersSettingsSheet.swift in Sources */,
 				31821DF8D1DFB408872C85BD /* FolderFormSheet.swift in Sources */,
+				31821F98BA6E1CE38F5300C9 /* TmrwPeekView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

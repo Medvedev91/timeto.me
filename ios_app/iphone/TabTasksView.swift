@@ -72,6 +72,8 @@ struct TabTasksView: View {
                     RepeatingsListView()
                 } else if activeSection is TabTasksView_Section_Calendar {
                     EventsListView()
+                } else if activeSection is TabTasksView_Section_TmrwPeek {
+                    TmrwPeekView()
                 }
 
                 VStack {
