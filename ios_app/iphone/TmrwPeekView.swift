@@ -40,6 +40,16 @@ struct TmrwPeekView: View {
                                     .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
 
                             HStack {
+                                Spacer()
+                                Text(state.curTimeString)
+                                        .font(.system(size: 14, weight: .light))
+
+                                Spacer()
+                            }
+                                    .padding(.leading, MyListView.PADDING_OUTER_HORIZONTAL)
+                                    .padding(.vertical, 24)
+
+                            HStack {
                             }
                                     .id(LIST_BOTTOM_ITEM_ID)
                         }
