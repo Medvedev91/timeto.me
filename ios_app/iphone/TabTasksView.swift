@@ -266,9 +266,41 @@ private struct TabTasksView__FolderView: View {
                                 .font(.system(size: 14, weight: isActive ? .semibold : .regular, design: .monospaced))
                                 .frame(width: tabWidth)
                                 .foregroundColor(isActive || isAllowedForDrop ? .white : .primary)
+                                ///
+                                .padding(.top, 8)
+                                .padding(.bottom, folder.isTmrw ? 6 : 8)
+
+                        if folder.isTmrw {
+
+                            let isTmrwActive = tabTasksView.activeSection is TabTasksView_Section_TmrwPeek
+
+                            let tmrwSize = tabWidth - 8
+
+                            Button(
+                                    action: {
+                                        tabTasksView.activeSection = TabTasksView_Section_TmrwPeek()
+                                    },
+                                    label: {
+                                        Image(systemName: "eye")
+                                                .foregroundColor(isTmrwActive ? .white : .primary)
+                                                .opacity(0.8)
+                                                .font(.system(size: 13))
+                                                .frame(width: tmrwSize, height: tmrwSize)
+                                    }
+                            )
+                                    .background(
+                                            ZStack {
+                                                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                        .fill(isTmrwActive ? .blue : .white)
+                                                if !isActive {
+                                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                            .stroke(Color(isTmrwActive ? .systemGray6 : .systemGray4))
+                                                }
+                                            }
+                                    )
+                                    .padding(.bottom, 4)
+                        }
                     }
-                            .padding(.top, 10)
-                            .padding(.bottom, 10)
                             .background(
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 8, style: .continuous)
@@ -372,4 +404,7 @@ struct TabTasksView_Section_Repeating: TabTasksView_Section {
 }
 
 struct TabTasksView_Section_Calendar: TabTasksView_Section {
+}
+
+struct TabTasksView_Section_TmrwPeek: TabTasksView_Section {
 }
