@@ -81,6 +81,12 @@ struct TmrwPeekView: View {
             }
         } else {
             scrollProxy.scrollTo(LIST_BOTTOM_ITEM_ID, anchor: .bottom)
+            for i in 0...4 {
+                let delay = 0.1 * i.toDouble()
+                myAsyncAfter(delay) {
+                    scrollProxy.scrollTo(LIST_BOTTOM_ITEM_ID, anchor: .bottom)
+                }
+            }
         }
     }
 }
