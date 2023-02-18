@@ -112,7 +112,6 @@ fun TabTasksView() {
             is Section_Folder -> TasksListView(curSection.folder, dragItem)
             is Section_Calendar -> EventsListView()
             is Section_Repeating -> RepeatingsListView()
-            is Section_TmrwPeek -> TmrwPeekView()
         }
 
         val buttonWidth = 35.dp
@@ -283,9 +282,6 @@ fun TabTasksView() {
                             .background(backgroundColor.value)
                     ) {
 
-                        val textTopPadding = 8.dp
-                        val textBottomPadding = if (folder.isTmrw) 6.dp else textTopPadding
-
                         Text(
                             folder.name.uppercase().split("").joinToString("\n").trim(),
                             modifier = Modifier
@@ -293,7 +289,7 @@ fun TabTasksView() {
                                 .clickable {
                                     activeSection = Section_Folder(folder)
                                 }
-                                .padding(top = textTopPadding, bottom = textBottomPadding),
+                                .padding(vertical = 8.dp),
                             textAlign = TextAlign.Center,
                             color = textColor.value,
                             fontSize = 15.sp,
@@ -301,35 +297,6 @@ fun TabTasksView() {
                             fontWeight = FontWeight.W600,
                             fontFamily = FontFamily.Monospace
                         )
-
-                        if (folder.isTmrw) {
-
-                            val isTmrwActive = activeSection is Section_TmrwPeek
-
-                            val tmrwBackgroundColor = animateColorAsState(
-                                if (isTmrwActive) c.blue else c.background2,
-                                spring(stiffness = Spring.StiffnessMedium)
-                            )
-                            val tmrwTextColor = animateColorAsState(
-                                if (isTmrwActive) activeTextColor else inactiveTextColor,
-                                spring(stiffness = Spring.StiffnessMedium)
-                            )
-
-                            Divider(Modifier.alpha(if (isTmrwActive || isActive) 0f else 1f))
-
-                            Icon(
-                                painterResource(id = R.drawable.sf_eye_medium_medium),
-                                contentDescription = "Peek tomorrow",
-                                tint = tmrwTextColor.value,
-                                modifier = Modifier
-                                    .background(tmrwBackgroundColor.value)
-                                    .clickable {
-                                        activeSection = Section_TmrwPeek()
-                                    }
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 8.dp, vertical = 8.dp)
-                            )
-                        }
                     }
                 }
             }
@@ -341,7 +308,6 @@ private interface Section
 private class Section_Folder(val folder: TaskFolderModel) : Section
 private class Section_Calendar : Section
 private class Section_Repeating : Section
-private class Section_TmrwPeek : Section
 
 
 //
