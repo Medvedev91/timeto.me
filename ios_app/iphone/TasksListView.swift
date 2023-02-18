@@ -35,6 +35,29 @@ struct TasksListView: View {
 
                             Spacer()
 
+                            if let tmrwData = state.tmrwData {
+                                let tmrwTasksUI = tmrwData.tasksUI
+                                ForEach(tmrwTasksUI, id: \.task.id) { taskUI in
+                                    let isFirst = tmrwTasksUI.first == taskUI
+                                    let isLast = tmrwTasksUI.last == taskUI
+                                    MyListView__ItemView(
+                                            isFirst: isFirst,
+                                            isLast: isLast,
+                                            withTopDivider: !isFirst,
+                                            outerPaddingStart: 0,
+                                            outerPaddingEnd: 0
+                                    ) {
+                                        TasksListView__TmrwTaskView(taskUI: taskUI)
+                                                .id("tmrw \(taskUI.task.id)")
+                                    }
+                                }
+
+                                MyDivider()
+                                        .padding(.horizontal, 80)
+                                        .padding(.top, 20)
+                                        .padding(.bottom, state.tasksUI.isEmpty ? 0 : 20)
+                            }
+
                             let tasksUIReversed = state.tasksUI.reversed()
                             VStack(spacing: 0) {
                                 ForEach(tasksUIReversed, id: \.task.id) { taskUI in
@@ -47,6 +70,17 @@ struct TasksListView: View {
                                 }
                             }
                                     .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+
+                            if let tmrwData = state.tmrwData {
+                                HStack {
+                                    Spacer()
+                                    Text(tmrwData.curTimeString)
+                                            .font(.system(size: 14, weight: .light))
+
+                                    Spacer()
+                                }
+                                        .padding(.top, 24)
+                            }
 
                             HStack {
 
@@ -396,8 +430,7 @@ struct TasksView__TaskRowView: View {
                         xSwipeOffset = 0
                         if drop is DropItem__Calendar {
                             isAddCalendarSheetPresented = true
-                        }
-                        else if let dropFolder = drop as? DropItem__Folder {
+                        } else if let dropFolder = drop as? DropItem__Folder {
                             taskUI.upFolder(newFolder: dropFolder.folder)
                         }
                     } else if value.translation.width < -80 {
@@ -498,5 +531,49 @@ struct TasksView__TaskRowView__ActivityRowView__ButtonStyle: ButtonStyle {
         configuration.label
                 .frame(height: TasksView__TaskRowView__ActivityRowView__ButtonStyle.LIST_ITEM_HEIGHT)
                 .background(configuration.isPressed ? Color(.systemGray4) : Color(.mySecondaryBackground))
+    }
+}
+
+private struct TasksListView__TmrwTaskView: View {
+
+    let taskUI: TasksListVM.TmrwTaskUI
+
+    var body: some View {
+
+        let paddingStart = 16.0
+
+        VStack(spacing: 0) {
+
+            let vPadding = 8.0
+
+            if let timeUI = taskUI.textFeatures.timeUI {
+                HStack {
+                    Text(timeUI.daytimeText)
+                            .padding(.leading, paddingStart)
+                            .padding(.top, 1)
+                            .padding(.bottom, vPadding)
+                            .font(.system(size: 14, weight: .light))
+                            .foregroundColor(timeUI.color.toColor())
+                            .lineLimit(1)
+                    Spacer()
+                }
+            }
+
+            HStack {
+                /// It can be multiline
+                Text(taskUI.listText)
+                        .padding(.leading, paddingStart)
+                        .padding(.trailing, 16)
+                        .lineSpacing(4)
+                        .multilineTextAlignment(.leading)
+                        .myMultilineText()
+
+                Spacer(minLength: 0)
+            }
+
+            TriggersView__List(triggers: taskUI.textFeatures.triggers)
+                    .padding(.top, taskUI.textFeatures.triggers.isEmpty ? 0 : vPadding)
+        }
+                .padding(.vertical, 10)
     }
 }
