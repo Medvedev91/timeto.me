@@ -11,40 +11,6 @@ class TasksListVM(
     val folder: TaskFolderModel,
 ) : __VM<TasksListVM.State>() {
 
-    class TaskUI(
-        task: TaskModel,
-    ) : timeto.shared.ui.TaskUI(task) {
-
-        fun start(
-            onStarted: () -> Unit,
-            needSheet: () -> Unit, // todo data for sheet
-        ) {
-            val autostartData = taskAutostartData(task) ?: return needSheet()
-            launchExDefault {
-                task.startInterval(
-                    deadline = autostartData.second,
-                    activity = autostartData.first,
-                )
-                onStarted()
-            }
-        }
-
-        fun upFolder(newFolder: TaskFolderModel) {
-            launchExDefault {
-                task.upFolder(newFolder, replaceIfTmrw = true)
-            }
-        }
-
-        // - By manual removing;
-        // - After adding to calendar;
-        // - By starting from activity sheet;
-        fun delete() {
-            launchExDefault {
-                task.delete()
-            }
-        }
-    }
-
     data class State(
         val tasksUI: List<TaskUI>,
         val addFormInputTextValue: String,
@@ -94,4 +60,41 @@ class TasksListVM(
         .filter { it.folder_id == folder.id }
         .map { TaskUI(it) }
         .sortedByFolder(folder)
+
+    ///
+    ///
+
+    class TaskUI(
+        task: TaskModel,
+    ) : timeto.shared.ui.TaskUI(task) {
+
+        fun start(
+            onStarted: () -> Unit,
+            needSheet: () -> Unit, // todo data for sheet
+        ) {
+            val autostartData = taskAutostartData(task) ?: return needSheet()
+            launchExDefault {
+                task.startInterval(
+                    deadline = autostartData.second,
+                    activity = autostartData.first,
+                )
+                onStarted()
+            }
+        }
+
+        fun upFolder(newFolder: TaskFolderModel) {
+            launchExDefault {
+                task.upFolder(newFolder, replaceIfTmrw = true)
+            }
+        }
+
+        // - By manual removing;
+        // - After adding to calendar;
+        // - By starting from activity sheet;
+        fun delete() {
+            launchExDefault {
+                task.delete()
+            }
+        }
+    }
 }
