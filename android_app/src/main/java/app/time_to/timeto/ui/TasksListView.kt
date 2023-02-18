@@ -39,6 +39,7 @@ fun TasksListView(
     dragItem: MutableState<DragItem?>,
 ) {
     val (vm, state) = rememberVM(activeFolder) { TasksListVM(activeFolder) }
+    val tmrwData = state.tmrwData
 
     val scope = rememberCoroutineScope()
 
@@ -186,6 +187,24 @@ fun TasksListView(
                                 .consumedWindowInsets(PaddingValues(bottom = LocalTabsHeight.current))
                                 .imePadding()
                         )
+                }
+            }
+
+            if (tmrwData != null) {
+                item {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = taskListSectionPadding),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            tmrwData.curTimeString,
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.W300,
+                            color = c.textSecondary,
+                        )
+                    }
                 }
             }
 
@@ -364,6 +383,91 @@ fun TasksListView(
                     }
                 }
             }
+
+            if (tmrwData != null) {
+
+                item {
+                    Divider(
+                        Modifier
+                            .padding(horizontal = 80.dp)
+                            .padding(top = 22.dp, bottom = 18.dp)
+                    )
+                }
+
+                val tmrwTasksUI = tmrwData.tasksUI
+                items(
+                    tmrwTasksUI,
+                    key = { taskUI -> "tmrw_${taskUI.task.id}" }
+                ) { taskUI ->
+
+                    // Reversed
+                    val isFirst = taskUI == tmrwTasksUI.lastOrNull()
+                    val isLast = taskUI == tmrwTasksUI.firstOrNull()
+
+                    TasksListView__TmrwTaskView(
+                        taskUI = taskUI,
+                        isFirst = isFirst,
+                        isLast = isLast,
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun TasksListView__TmrwTaskView(
+    taskUI: TasksListVM.TmrwTaskUI,
+    isFirst: Boolean,
+    isLast: Boolean,
+) {
+    val startPadding = 18.dp
+
+    MyListView__ItemView(
+        isFirst = isFirst,
+        isLast = isLast,
+        withTopDivider = !isFirst,
+        outerPadding = PaddingValues(0.dp)
+    ) {
+
+        Column(
+            modifier = Modifier
+                .padding(vertical = 8.dp),
+            verticalArrangement = Arrangement.Center
+        ) {
+
+            val vPadding = 6.dp
+
+            val daytimeUI = taskUI.textFeatures.timeUI
+            if (daytimeUI != null) {
+                Text(
+                    daytimeUI.daytimeText,
+                    modifier = Modifier
+                        .padding(
+                            start = startPadding,
+                            top = 2.dp,
+                            bottom = vPadding,
+                        ),
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.W300,
+                    color = daytimeUI.color.toColor(),
+                )
+            }
+
+            Text(
+                taskUI.listText,
+                color = c.text,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = startPadding),
+            )
+
+            TriggersView__ListView(
+                triggers = taskUI.textFeatures.triggers,
+                withOnClick = true,
+                modifier = Modifier.padding(top = vPadding),
+                contentPadding = PaddingValues(horizontal = startPadding - 2.dp),
+            )
         }
     }
 }
