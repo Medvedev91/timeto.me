@@ -195,17 +195,13 @@ struct TasksView__TaskRowView: View {
         ))
     }
 
-    var body: some View {
-        AnyView(safeView)
-    }
-
     struct MyButtonStyle: ButtonStyle {
         func makeBody(configuration: Self.Configuration) -> some View {
             configuration.label.background(configuration.isPressed ? Color(.systemGray5) : Color(.mySecondaryBackground))
         }
     }
 
-    private var safeView: some View {
+    var body: some View {
 
         ZStack(alignment: .bottom) {
 
