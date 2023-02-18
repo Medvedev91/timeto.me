@@ -390,7 +390,7 @@ fun TasksListView(
                     Divider(
                         Modifier
                             .padding(horizontal = 80.dp)
-                            .padding(top = 22.dp, bottom = 18.dp)
+                            .padding(top = 22.dp, bottom = if (tasksUI.isEmpty()) 0.dp else 18.dp)
                     )
                 }
 
