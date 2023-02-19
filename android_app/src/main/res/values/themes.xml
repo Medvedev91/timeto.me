@@ -10,10 +10,4 @@
         <item name="android:windowLightNavigationBar" tools:targetApi="27">@bool/my_dn_is_light</item>
     </style>
 
-    <style name="MyFullscreen">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:navigationBarColor">#000000</item>
-    </style>
-
 </resources>

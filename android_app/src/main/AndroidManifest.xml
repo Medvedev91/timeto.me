@@ -26,10 +26,6 @@
 
         </activity>
 
-        <activity
-            android:name=".FullscreenActivity"
-            android:theme="@style/MyFullscreen" />
-
         <receiver
             android:name=".TimerNotificationReceiver"
             android:enabled="true" />
