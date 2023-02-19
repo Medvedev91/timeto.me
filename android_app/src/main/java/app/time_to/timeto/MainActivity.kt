@@ -18,6 +18,7 @@ import timeto.shared.*
 import timeto.shared.db.*
 import timeto.shared.vm.AppVM
 
+val LocalMainActivity = compositionLocalOf<MainActivity> { throw MyException("LocalMainActivity") }
 val LocalTriggersDialogManager = compositionLocalOf<TriggersView__DialogManager> { throw MyException("LocalTriggersDialogManager") }
 val LocalAutoBackup = compositionLocalOf<AutoBackup?> { throw MyException("LocalAutoBackup") }
 val LocalErrorDialog = compositionLocalOf<MutableState<String?>> { throw MyException("LocalErrorDialog") }
@@ -45,7 +46,7 @@ class MainActivity : ComponentActivity() {
                     window.navigationBarColor = c.tabsBackground.copy(alpha = 0.1f).toArgb()
                     WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = isDayOrNight
 
-                    MyLocalProvider {
+                    MyLocalProvider(this) {
 
                         UIWrapper.Layout {
 
@@ -95,7 +96,8 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MyLocalProvider(
+private fun MyLocalProvider(
+    mainActivity: MainActivity,
     content: @Composable () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
@@ -147,6 +149,7 @@ fun MyLocalProvider(
     //////
 
     CompositionLocalProvider(
+        LocalMainActivity provides mainActivity,
         LocalTriggersDialogManager provides remember { TriggersView__DialogManager() },
         LocalAutoBackup provides if (isSDKQPlus()) remember { AutoBackup(scope) } else null,
         LocalErrorDialog provides dialogErrorMessage,
