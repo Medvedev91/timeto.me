@@ -1,5 +1,10 @@
 package app.time_to.timeto.ui
 
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.VisibilityThreshold
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -10,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -22,6 +28,20 @@ fun TimetoSheet(
         UIWrapper.LayerData(
             isPresented = isPresented,
             shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+            enterAnimation = slideInVertically(
+                animationSpec = spring(
+                    stiffness = Spring.StiffnessMedium,
+                    visibilityThreshold = IntOffset.VisibilityThreshold
+                ),
+                initialOffsetY = { it }
+            ),
+            exitAnimation = slideOutVertically(
+                animationSpec = spring(
+                    stiffness = Spring.StiffnessMedium,
+                    visibilityThreshold = IntOffset.VisibilityThreshold
+                ),
+                targetOffsetY = { it }
+            ),
             content = {
                 Box(
                     /**

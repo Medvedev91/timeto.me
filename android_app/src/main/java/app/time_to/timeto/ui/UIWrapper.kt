@@ -2,9 +2,6 @@ package app.time_to.timeto.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.*
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.VisibilityThreshold
-import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -14,7 +11,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.unit.IntOffset
 
 private val LocalLayers = compositionLocalOf<MutableList<UIWrapper.LayerData>> { mutableListOf() }
 
@@ -23,6 +19,8 @@ object UIWrapper {
     class LayerData(
         val isPresented: MutableState<Boolean>,
         val shape: Shape,
+        val enterAnimation: EnterTransition,
+        val exitAnimation: ExitTransition,
         val content: @Composable () -> Unit,
     )
 
@@ -66,20 +64,8 @@ object UIWrapper {
 
                         AnimatedVisibility(
                             layer.isPresented.value,
-                            enter = slideInVertically(
-                                animationSpec = spring(
-                                    stiffness = Spring.StiffnessMedium,
-                                    visibilityThreshold = IntOffset.VisibilityThreshold
-                                ),
-                                initialOffsetY = { it }
-                            ),
-                            exit = slideOutVertically(
-                                animationSpec = spring(
-                                    stiffness = Spring.StiffnessMedium,
-                                    visibilityThreshold = IntOffset.VisibilityThreshold
-                                ),
-                                targetOffsetY = { it }
-                            ),
+                            enter = layer.enterAnimation,
+                            exit = layer.exitAnimation,
                         ) {
                             layer.content()
                         }
