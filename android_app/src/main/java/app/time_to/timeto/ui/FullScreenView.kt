@@ -29,12 +29,11 @@ import app.time_to.timeto.R
 import timeto.shared.ColorNative
 import timeto.shared.vm.FullscreenVM
 
-val LocalIsFullScreenPresented = compositionLocalOf<MutableState<Boolean>> { throw MyException("LocalIsFullScreenPresented") }
-
 @Composable
-fun FullScreenView(activity: Activity) {
-    val isPresented = LocalIsFullScreenPresented.current
-
+fun FullScreenView(
+    isPresented: MutableState<Boolean>
+) {
+    val activity = LocalMainActivity.current
     val isPresentedValue = isPresented.value
     // https://developer.android.com/develop/ui/views/layout/immersive#kotlin
     LaunchedEffect(isPresentedValue) {

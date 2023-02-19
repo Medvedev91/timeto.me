@@ -553,7 +553,8 @@ private fun TimerView(
 
                 Spacer(Modifier.weight(1f))
 
-                val isFullScreenPresented = LocalIsFullScreenPresented.current
+                val isFullScreenPresented = remember { mutableStateOf(false) }
+                FullScreenView(isFullScreenPresented)
 
                 Icon(
                     painterResource(id = R.drawable.sf_up_left_medium_light),

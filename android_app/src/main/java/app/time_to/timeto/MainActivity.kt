@@ -50,8 +50,6 @@ class MainActivity : ComponentActivity() {
 
                         UIWrapper.Layout {
 
-                            FullScreenView(this@MainActivity)
-
                             Surface(Modifier.statusBarsPadding()) {
 
                                 Tabs()
@@ -153,7 +151,6 @@ private fun MyLocalProvider(
         LocalTriggersDialogManager provides remember { TriggersView__DialogManager() },
         LocalAutoBackup provides if (isSDKQPlus()) remember { AutoBackup(scope) } else null,
         LocalErrorDialog provides dialogErrorMessage,
-        LocalIsFullScreenPresented provides remember { mutableStateOf(false) },
     ) {
         content()
     }
