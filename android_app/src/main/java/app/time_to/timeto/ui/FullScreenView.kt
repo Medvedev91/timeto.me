@@ -41,9 +41,17 @@ fun FullScreenView(
     val isPresentedValue = isPresented.value
     // https://developer.android.com/develop/ui/views/layout/immersive#kotlin
     LaunchedEffect(isPresentedValue) {
-        val window = activity.window
-        // No systemBars(), because on Redmi the first touch opens navbar.
+        /**
+         * No systemBars(), because on Redmi the first touch opens navbar.
+         *
+         * Needs "android:windowLayoutInDisplayCutoutMode shortEdges" in manifest
+         * to hide dark space on the top while WindowInsetsCompat.Type.statusBars()
+         * like https://stackoverflow.com/q/72179274 in "2. Completely black...".
+         * https://developer.android.com/develop/ui/views/layout/display-cutout
+         */
         val barTypes = WindowInsetsCompat.Type.statusBars()
+
+        val window = activity.window
         val controller = WindowInsetsControllerCompat(window, window.decorView)
         val flagKeepScreenOn = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
         if (isPresentedValue) {
