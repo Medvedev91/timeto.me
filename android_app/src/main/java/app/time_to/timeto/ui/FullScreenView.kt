@@ -1,6 +1,5 @@
 package app.time_to.timeto.ui
 
-import android.app.Activity
 import android.view.WindowManager
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.VisibilityThreshold
@@ -16,7 +15,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -44,7 +42,8 @@ fun FullScreenView(
     // https://developer.android.com/develop/ui/views/layout/immersive#kotlin
     LaunchedEffect(isPresentedValue) {
         val window = activity.window
-        val barTypes = WindowInsetsCompat.Type.systemBars()
+        // No systemBars(), because on Redmi the first touch opens navbar.
+        val barTypes = WindowInsetsCompat.Type.statusBars()
         val controller = WindowInsetsControllerCompat(window, window.decorView)
         val flagKeepScreenOn = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
         if (isPresentedValue) {
@@ -74,8 +73,8 @@ fun FullScreenView(
                         .pointerInput(Unit) { }
                         .fillMaxSize()
                         .background(c.black)
-                        // todo test if the bars are showed
-                        .padding(top = 14.dp, bottom = 20.dp)
+                        .navigationBarsPadding()
+                        .padding(top = 20.dp)
                 ) {
 
                     val (vm, state) = rememberVM { FullscreenVM(ColorNative.white) }
