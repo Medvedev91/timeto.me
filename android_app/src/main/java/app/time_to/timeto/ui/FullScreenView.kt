@@ -3,9 +3,10 @@ package app.time_to.timeto.ui
 import android.app.Activity
 import android.view.WindowManager
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.VisibilityThreshold
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -24,6 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowInsetsCompat
@@ -59,7 +61,13 @@ fun FullScreenView(
             isPresented = isPresented,
             shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
             enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessHigh)),
-            exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessMediumLow)),
+            exitAnimation = slideOutVertically(
+                animationSpec = spring(
+                    stiffness = Spring.StiffnessMedium,
+                    visibilityThreshold = IntOffset.VisibilityThreshold
+                ),
+                targetOffsetY = { it }
+            ),
             content = {
                 Box(
                     modifier = Modifier
