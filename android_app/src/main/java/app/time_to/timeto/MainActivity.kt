@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowCompat
@@ -43,7 +44,8 @@ class MainActivity : ComponentActivity() {
                 if (state.isAppReady) {
                     // Setting background and icons initially in xml. Here after tabs appear.
                     // c.transparent set the default background. WTF?!
-                    window.navigationBarColor = c.tabsBackground.copy(alpha = 0.1f).toArgb()
+                    // 01 - alpha to max transparency, 888888 - no matter, between day and night.
+                    window.navigationBarColor = Color(0x01888888).toArgb()
                     WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = isDayOrNight
 
                     MyLocalProvider(this) {
