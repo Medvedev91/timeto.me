@@ -551,8 +551,6 @@ private fun TimerView(
 
                 Spacer(Modifier.weight(1f))
 
-                val isFullScreenPresented = LocalIsFullScreenPresented.current
-
                 Icon(
                     painterResource(id = R.drawable.sf_up_left_medium_light),
                     "Fullscreen",
@@ -564,7 +562,7 @@ private fun TimerView(
                         .size(40.dp)
                         .clip(RoundedCornerShape(99.dp))
                         .clickable {
-                            isFullScreenPresented.setTrue()
+                            FullScreenUI.open()
                         }
                         .padding(11.dp)
                 )

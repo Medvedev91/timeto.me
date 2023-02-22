@@ -14,6 +14,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -31,6 +32,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import app.time_to.timeto.*
 import app.time_to.timeto.R
 import timeto.shared.ColorNative
+import timeto.shared.FullScreenUI
 import timeto.shared.vm.FullscreenVM
 
 @Composable
@@ -38,8 +40,7 @@ fun FullScreenView(
     activity: Activity,
     onClose: () -> Unit,
 ) {
-    val isPresented = LocalIsFullScreenPresented.current
-    val isPresentedValue = isPresented.value
+    val isPresentedValue = FullScreenUI.state.collectAsState().value
     // https://developer.android.com/develop/ui/views/layout/immersive#kotlin
     LaunchedEffect(isPresentedValue) {
         /**
@@ -73,7 +74,7 @@ fun FullScreenView(
     UIWrapper.LayerView(
         UIWrapper.LayerData(
             isPresented = isPresentedValue,
-            onClose = { isPresented.value = false },
+            onClose = { FullScreenUI.close() },
             shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
             enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessHigh)),
             exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessHigh)),
@@ -158,7 +159,7 @@ fun FullScreenView(
                             .size(20.dp, 20.dp)
                             .align(Alignment.BottomCenter)
                             .clickable {
-                                isPresented.setFalse()
+                                FullScreenUI.close()
                             },
                         tint = c.white.copy(alpha = 0.9f)
                     )

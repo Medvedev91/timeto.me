@@ -21,7 +21,6 @@ import timeto.shared.vm.AppVM
 val LocalTriggersDialogManager = compositionLocalOf<TriggersView__DialogManager> { throw MyException("LocalTriggersDialogManager") }
 val LocalAutoBackup = compositionLocalOf<AutoBackup?> { throw MyException("LocalAutoBackup") }
 val LocalErrorDialog = compositionLocalOf<MutableState<String?>> { throw MyException("LocalErrorDialog") }
-val LocalIsFullScreenPresented = compositionLocalOf<MutableState<Boolean>> { throw MyException("LocalIsFullScreenPresented") }
 
 class MainActivity : ComponentActivity() {
 
@@ -156,7 +155,6 @@ private fun MyLocalProvider(
         LocalTriggersDialogManager provides remember { TriggersView__DialogManager() },
         LocalAutoBackup provides if (isSDKQPlus()) remember { AutoBackup(scope) } else null,
         LocalErrorDialog provides dialogErrorMessage,
-        LocalIsFullScreenPresented provides remember { mutableStateOf(false) },
     ) {
         content()
     }
