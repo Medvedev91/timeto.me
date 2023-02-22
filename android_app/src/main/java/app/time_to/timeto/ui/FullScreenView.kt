@@ -16,6 +16,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
@@ -31,7 +33,9 @@ import timeto.shared.ColorNative
 import timeto.shared.vm.FullscreenVM
 
 @Composable
-fun FullScreenView() {
+fun FullScreenView(
+    onClose: () -> Unit,
+) {
     val mainActivity = LocalMainActivity.current
     val isPresented = LocalIsFullScreenPresented.current
     val isPresentedValue = isPresented.value
@@ -57,6 +61,13 @@ fun FullScreenView() {
             controller.show(barTypes)
             window.clearFlags(flagKeepScreenOn)
         }
+
+        if (isPresentedValue) {
+            window.navigationBarColor = Color(0x01000000).toArgb()
+            WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = false
+        }
+        else
+            onClose()
     }
 
     UIWrapper.LayerView(

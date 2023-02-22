@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowCompat
@@ -43,17 +42,20 @@ class MainActivity : ComponentActivity() {
                 colors = if (isDayOrNight) lightColors(primary = c.blue) else darkColors(primary = c.blue),
             ) {
                 if (state.isAppReady) {
-                    // Setting background and icons initially in xml. Here after tabs appear.
                     // c.transparent set the default background. WTF?!
-                    // 01 - alpha to max transparency, 888888 - no matter, between day and night.
-                    window.navigationBarColor = Color(0x01888888).toArgb()
-                    WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = isDayOrNight
+                    // 0.004 based on Color(0x01......).alpha -> 0.003921569
+                    val navigationBgColor = c.tabsBackground.copy(alpha = 0.004f).toArgb()
+                    fun upNavigationUI() {
+                        window.navigationBarColor = navigationBgColor
+                        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = isDayOrNight
+                    }
+                    upNavigationUI() // Setting background and icons initially in xml. Here after tabs appear.
 
                     MyLocalProvider(this) {
 
                         UIWrapper.Layout {
 
-                            FullScreenView()
+                            FullScreenView(onClose = ::upNavigationUI)
 
                             Surface(Modifier.statusBarsPadding()) {
 
