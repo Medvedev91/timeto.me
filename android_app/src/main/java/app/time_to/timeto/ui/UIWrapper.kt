@@ -23,10 +23,20 @@ data class WrapperView__LayerData(
     val content: @Composable () -> Unit,
 )
 
-object UIWrapper {
+@Composable
+fun WrapperView__LayerView(
+    layerData: WrapperView__LayerData
+) {
+    val layers = LocalLayers.current
+    DisposableEffect(layerData) {
+        layers.add(layerData)
+        onDispose {
+            layers.remove(layerData)
+        }
+    }
+}
 
-    ///
-    /// Composable
+object UIWrapper {
 
     @Composable
     fun Layout(
@@ -75,17 +85,6 @@ object UIWrapper {
                         }
                     }
                 }
-            }
-        }
-    }
-
-    @Composable
-    fun LayerView(layerData: WrapperView__LayerData) {
-        val layers = LocalLayers.current
-        DisposableEffect(layerData) {
-            layers.add(layerData)
-            onDispose {
-                layers.remove(layerData)
             }
         }
     }

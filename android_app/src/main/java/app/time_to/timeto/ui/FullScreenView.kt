@@ -71,7 +71,7 @@ fun FullScreenView(
             onClose()
     }
 
-    UIWrapper.LayerView(
+    WrapperView__LayerView(
         WrapperView__LayerData(
             isPresented = isPresentedValue,
             onClose = { FullScreenUI.close() },
