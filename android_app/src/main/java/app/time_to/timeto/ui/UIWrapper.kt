@@ -12,18 +12,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 
-private val LocalLayers = compositionLocalOf<MutableList<UIWrapper.LayerData>> { mutableListOf() }
+private val LocalLayers = compositionLocalOf<MutableList<WrapperView__LayerData>> { mutableListOf() }
+
+data class WrapperView__LayerData(
+    val isPresented: Boolean,
+    val onClose: () -> Unit,
+    val shape: Shape,
+    val enterAnimation: EnterTransition,
+    val exitAnimation: ExitTransition,
+    val content: @Composable () -> Unit,
+)
 
 object UIWrapper {
-
-    data class LayerData(
-        val isPresented: Boolean,
-        val onClose: () -> Unit,
-        val shape: Shape,
-        val enterAnimation: EnterTransition,
-        val exitAnimation: ExitTransition,
-        val content: @Composable () -> Unit,
-    )
 
     ///
     /// Composable
@@ -33,7 +33,7 @@ object UIWrapper {
         content: @Composable () -> Unit
     ) {
 
-        val items = remember { mutableStateListOf<LayerData>() }
+        val items = remember { mutableStateListOf<WrapperView__LayerData>() }
 
         CompositionLocalProvider(
             LocalLayers provides items,
@@ -80,12 +80,12 @@ object UIWrapper {
     }
 
     @Composable
-    fun LayerView(data: LayerData) {
+    fun LayerView(layerData: WrapperView__LayerData) {
         val layers = LocalLayers.current
-        DisposableEffect(data) {
-            layers.add(data)
+        DisposableEffect(layerData) {
+            layers.add(layerData)
             onDispose {
-                layers.remove(data)
+                layers.remove(layerData)
             }
         }
     }

@@ -72,7 +72,7 @@ fun FullScreenView(
     }
 
     UIWrapper.LayerView(
-        UIWrapper.LayerData(
+        WrapperView__LayerData(
             isPresented = isPresentedValue,
             onClose = { FullScreenUI.close() },
             shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
