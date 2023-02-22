@@ -68,6 +68,9 @@ object UIWrapper {
                             enter = layer.enterAnimation,
                             exit = layer.exitAnimation,
                         ) {
+                            BackHandler(layer.isPresented) {
+                                layer.onClose()
+                            }
                             layer.content()
                         }
                     }
@@ -78,9 +81,6 @@ object UIWrapper {
 
     @Composable
     fun LayerView(data: LayerData) {
-        BackHandler(data.isPresented) {
-            data.onClose()
-        }
         val layers = LocalLayers.current
         DisposableEffect(data) {
             layers.add(data)
