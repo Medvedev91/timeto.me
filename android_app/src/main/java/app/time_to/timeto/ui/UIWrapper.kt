@@ -16,8 +16,9 @@ private val LocalLayers = compositionLocalOf<MutableList<UIWrapper.LayerData>> {
 
 object UIWrapper {
 
-    class LayerData(
-        val isPresented: MutableState<Boolean>,
+    data class LayerData(
+        val isPresented: Boolean,
+        val onClose: () -> Unit,
         val shape: Shape,
         val enterAnimation: EnterTransition,
         val exitAnimation: ExitTransition,
@@ -50,7 +51,7 @@ object UIWrapper {
                     ) {
 
                         AnimatedVisibility(
-                            layer.isPresented.value,
+                            layer.isPresented,
                             enter = fadeIn(),
                             exit = fadeOut(),
                         ) {
@@ -58,12 +59,12 @@ object UIWrapper {
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .background(Color(0x55000000))
-                                    .clickable { layer.isPresented.value = false }
+                                    .clickable { layer.onClose() }
                             )
                         }
 
                         AnimatedVisibility(
-                            layer.isPresented.value,
+                            layer.isPresented,
                             enter = layer.enterAnimation,
                             exit = layer.exitAnimation,
                         ) {
@@ -77,11 +78,11 @@ object UIWrapper {
 
     @Composable
     fun LayerView(data: LayerData) {
-        BackHandler(data.isPresented.value) {
-            data.isPresented.value = false
+        BackHandler(data.isPresented) {
+            data.onClose()
         }
         val layers = LocalLayers.current
-        DisposableEffect(Unit) {
+        DisposableEffect(data) {
             layers.add(data)
             onDispose {
                 layers.remove(data)

@@ -72,7 +72,8 @@ fun FullScreenView(
 
     UIWrapper.LayerView(
         UIWrapper.LayerData(
-            isPresented = isPresented,
+            isPresented = isPresentedValue,
+            onClose = { isPresented.value = false },
             shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
             enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessHigh)),
             exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessHigh)),
