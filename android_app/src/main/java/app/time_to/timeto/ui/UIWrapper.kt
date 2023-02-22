@@ -11,8 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-
-private val LocalLayers = compositionLocalOf<MutableList<WrapperView__LayerData>> { mutableListOf() }
+import app.time_to.timeto.LocalWrapperViewLayers
 
 data class WrapperView__LayerData(
     val isPresented: Boolean,
@@ -27,7 +26,7 @@ data class WrapperView__LayerData(
 fun WrapperView__LayerView(
     layerData: WrapperView__LayerData
 ) {
-    val layers = LocalLayers.current
+    val layers = LocalWrapperViewLayers.current
     DisposableEffect(layerData) {
         layers.add(layerData)
         onDispose {
@@ -41,46 +40,41 @@ fun WrapperView(
     content: @Composable () -> Unit
 ) {
 
-    val items = remember { mutableStateListOf<WrapperView__LayerData>() }
+    val layers = LocalWrapperViewLayers.current
 
-    CompositionLocalProvider(
-        LocalLayers provides items,
-    ) {
+    Box {
 
-        Box {
+        content()
 
-            content()
+        layers.forEach { layer ->
 
-            items.forEach { layer ->
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.BottomCenter,
+            ) {
 
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.BottomCenter,
+                AnimatedVisibility(
+                    layer.isPresented,
+                    enter = fadeIn(),
+                    exit = fadeOut(),
                 ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color(0x55000000))
+                            .clickable { layer.onClose() }
+                    )
+                }
 
-                    AnimatedVisibility(
-                        layer.isPresented,
-                        enter = fadeIn(),
-                        exit = fadeOut(),
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(Color(0x55000000))
-                                .clickable { layer.onClose() }
-                        )
+                AnimatedVisibility(
+                    layer.isPresented,
+                    enter = layer.enterAnimation,
+                    exit = layer.exitAnimation,
+                ) {
+                    BackHandler(layer.isPresented) {
+                        layer.onClose()
                     }
-
-                    AnimatedVisibility(
-                        layer.isPresented,
-                        enter = layer.enterAnimation,
-                        exit = layer.exitAnimation,
-                    ) {
-                        BackHandler(layer.isPresented) {
-                            layer.onClose()
-                        }
-                        layer.content()
-                    }
+                    layer.content()
                 }
             }
         }
