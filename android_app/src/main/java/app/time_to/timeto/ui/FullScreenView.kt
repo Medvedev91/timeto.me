@@ -66,8 +66,7 @@ fun FullScreenView(
         if (isPresentedValue) {
             window.navigationBarColor = Color(0x01000000).toArgb()
             WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = false
-        }
-        else
+        } else
             onClose()
     }
 
