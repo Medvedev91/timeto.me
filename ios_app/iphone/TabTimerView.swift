@@ -488,8 +488,6 @@ struct TabTimerView_ProgressView: View {
         TimerData(interval: lastInterval, defColor: ColorNative.text)
     }
 
-    @EnvironmentObject private var timerFullScreen: TimerFullScreen
-
     var body: some View {
 
         GeometryReader { geometry in
@@ -552,7 +550,7 @@ struct TabTimerView_ProgressView: View {
 
                         Button(
                                 action: {
-                                    timerFullScreen.isPresented.toggle()
+                                    FullScreenUI.shared.open()
                                 },
                                 label: {
                                     Image(systemName: "arrow.up.left.and.arrow.down.right")

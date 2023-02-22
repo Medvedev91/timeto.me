@@ -1,7 +1,6 @@
 import SwiftUI
+import Combine
 import shared
-
-var isTimerFullScreenPresentedGlobal = false
 
 extension View {
 
@@ -10,36 +9,31 @@ extension View {
     }
 }
 
-class TimerFullScreen: ObservableObject {
-    @Published var isPresented = false
-}
-
 ///
 ///
 
 private struct TimerFullScreen__ViewModifier: ViewModifier {
 
-    @StateObject private var timerFullScreen = TimerFullScreen()
+    @State private var isPresented = false
+
+    private let statePublisher: AnyPublisher<KotlinBoolean, Never> = FullScreenUI.shared.state.toPublisher()
 
     func body(content: Content) -> some View {
 
         content
                 /// Скрывание status bar в .statusBar(...)
-                .fullScreenCover(isPresented: $timerFullScreen.isPresented) {
+                .fullScreenCover(isPresented: $isPresented) {
                     TimerFullScreen__FullScreenCoverView()
                 }
-                .onChange(of: timerFullScreen.isPresented) { newValue in
-                    isTimerFullScreenPresentedGlobal = newValue
+                .onReceive(statePublisher) { newValue in
+                    isPresented = newValue.boolValue
                 }
-                .environmentObject(timerFullScreen)
     }
 }
 
 private struct TimerFullScreen__FullScreenCoverView: View {
 
     @State private var vm = FullscreenVM(defColor: .white)
-
-    @EnvironmentObject private var timerFullScreen: TimerFullScreen
 
     var body: some View {
 
@@ -65,7 +59,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                 Spacer()
                 Button(
                         action: {
-                            timerFullScreen.isPresented = false
+                            FullScreenUI.shared.close()
                         },
                         label: {
                             Image(systemName: "xmark")
