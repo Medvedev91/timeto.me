@@ -23,6 +23,7 @@ val LocalMainActivity = compositionLocalOf<MainActivity> { throw MyException("Lo
 val LocalTriggersDialogManager = compositionLocalOf<TriggersView__DialogManager> { throw MyException("LocalTriggersDialogManager") }
 val LocalAutoBackup = compositionLocalOf<AutoBackup?> { throw MyException("LocalAutoBackup") }
 val LocalErrorDialog = compositionLocalOf<MutableState<String?>> { throw MyException("LocalErrorDialog") }
+val LocalIsFullScreenPresented = compositionLocalOf<MutableState<Boolean>> { throw MyException("LocalIsFullScreenPresented") }
 
 class MainActivity : ComponentActivity() {
 
@@ -51,6 +52,8 @@ class MainActivity : ComponentActivity() {
                     MyLocalProvider(this) {
 
                         UIWrapper.Layout {
+
+                            FullScreenView()
 
                             Surface(Modifier.statusBarsPadding()) {
 
@@ -153,6 +156,7 @@ private fun MyLocalProvider(
         LocalTriggersDialogManager provides remember { TriggersView__DialogManager() },
         LocalAutoBackup provides if (isSDKQPlus()) remember { AutoBackup(scope) } else null,
         LocalErrorDialog provides dialogErrorMessage,
+        LocalIsFullScreenPresented provides remember { mutableStateOf(false) },
     ) {
         content()
     }

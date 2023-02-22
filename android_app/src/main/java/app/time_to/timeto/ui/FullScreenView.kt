@@ -13,7 +13,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -32,10 +31,9 @@ import timeto.shared.ColorNative
 import timeto.shared.vm.FullscreenVM
 
 @Composable
-fun FullScreenView(
-    isPresented: MutableState<Boolean>
-) {
-    val activity = LocalMainActivity.current
+fun FullScreenView() {
+    val mainActivity = LocalMainActivity.current
+    val isPresented = LocalIsFullScreenPresented.current
     val isPresentedValue = isPresented.value
     // https://developer.android.com/develop/ui/views/layout/immersive#kotlin
     LaunchedEffect(isPresentedValue) {
@@ -49,7 +47,7 @@ fun FullScreenView(
          */
         val barTypes = WindowInsetsCompat.Type.statusBars()
 
-        val window = activity.window
+        val window = mainActivity.window
         val controller = WindowInsetsControllerCompat(window, window.decorView)
         val flagKeepScreenOn = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
         if (isPresentedValue) {
