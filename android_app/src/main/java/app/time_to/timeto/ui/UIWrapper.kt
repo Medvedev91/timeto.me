@@ -36,53 +36,50 @@ fun WrapperView__LayerView(
     }
 }
 
-object UIWrapper {
+@Composable
+fun WrapperView(
+    content: @Composable () -> Unit
+) {
 
-    @Composable
-    fun Layout(
-        content: @Composable () -> Unit
+    val items = remember { mutableStateListOf<WrapperView__LayerData>() }
+
+    CompositionLocalProvider(
+        LocalLayers provides items,
     ) {
 
-        val items = remember { mutableStateListOf<WrapperView__LayerData>() }
+        Box {
 
-        CompositionLocalProvider(
-            LocalLayers provides items,
-        ) {
+            content()
 
-            Box {
+            items.forEach { layer ->
 
-                content()
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.BottomCenter,
+                ) {
 
-                items.forEach { layer ->
-
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.BottomCenter,
+                    AnimatedVisibility(
+                        layer.isPresented,
+                        enter = fadeIn(),
+                        exit = fadeOut(),
                     ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(Color(0x55000000))
+                                .clickable { layer.onClose() }
+                        )
+                    }
 
-                        AnimatedVisibility(
-                            layer.isPresented,
-                            enter = fadeIn(),
-                            exit = fadeOut(),
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(Color(0x55000000))
-                                    .clickable { layer.onClose() }
-                            )
+                    AnimatedVisibility(
+                        layer.isPresented,
+                        enter = layer.enterAnimation,
+                        exit = layer.exitAnimation,
+                    ) {
+                        BackHandler(layer.isPresented) {
+                            layer.onClose()
                         }
-
-                        AnimatedVisibility(
-                            layer.isPresented,
-                            enter = layer.enterAnimation,
-                            exit = layer.exitAnimation,
-                        ) {
-                            BackHandler(layer.isPresented) {
-                                layer.onClose()
-                            }
-                            layer.content()
-                        }
+                        layer.content()
                     }
                 }
             }

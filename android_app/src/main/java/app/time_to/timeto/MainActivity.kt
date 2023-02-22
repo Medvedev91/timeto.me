@@ -52,7 +52,7 @@ class MainActivity : ComponentActivity() {
 
                     MyLocalProvider {
 
-                        UIWrapper.Layout {
+                        WrapperView {
 
                             FullScreenView(activity = this, onClose = ::upNavigationUI)
 
