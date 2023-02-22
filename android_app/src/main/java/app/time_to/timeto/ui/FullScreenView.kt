@@ -1,5 +1,6 @@
 package app.time_to.timeto.ui
 
+import android.app.Activity
 import android.view.WindowManager
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -34,9 +35,9 @@ import timeto.shared.vm.FullscreenVM
 
 @Composable
 fun FullScreenView(
+    activity: Activity,
     onClose: () -> Unit,
 ) {
-    val mainActivity = LocalMainActivity.current
     val isPresented = LocalIsFullScreenPresented.current
     val isPresentedValue = isPresented.value
     // https://developer.android.com/develop/ui/views/layout/immersive#kotlin
@@ -51,7 +52,7 @@ fun FullScreenView(
          */
         val barTypes = WindowInsetsCompat.Type.statusBars()
 
-        val window = mainActivity.window
+        val window = activity.window
         val controller = WindowInsetsControllerCompat(window, window.decorView)
         val flagKeepScreenOn = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
         if (isPresentedValue) {

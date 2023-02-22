@@ -18,7 +18,6 @@ import timeto.shared.*
 import timeto.shared.db.*
 import timeto.shared.vm.AppVM
 
-val LocalMainActivity = compositionLocalOf<MainActivity> { throw MyException("LocalMainActivity") }
 val LocalTriggersDialogManager = compositionLocalOf<TriggersView__DialogManager> { throw MyException("LocalTriggersDialogManager") }
 val LocalAutoBackup = compositionLocalOf<AutoBackup?> { throw MyException("LocalAutoBackup") }
 val LocalErrorDialog = compositionLocalOf<MutableState<String?>> { throw MyException("LocalErrorDialog") }
@@ -42,6 +41,7 @@ class MainActivity : ComponentActivity() {
                 colors = if (isDayOrNight) lightColors(primary = c.blue) else darkColors(primary = c.blue),
             ) {
                 if (state.isAppReady) {
+
                     // c.transparent set the default background. WTF?!
                     // 0.004 based on Color(0x01......).alpha -> 0.003921569
                     val navigationBgColor = c.tabsBackground.copy(alpha = 0.004f).toArgb()
@@ -51,11 +51,11 @@ class MainActivity : ComponentActivity() {
                     }
                     upNavigationUI() // Setting background and icons initially in xml. Here after tabs appear.
 
-                    MyLocalProvider(this) {
+                    MyLocalProvider {
 
                         UIWrapper.Layout {
 
-                            FullScreenView(onClose = ::upNavigationUI)
+                            FullScreenView(activity = this, onClose = ::upNavigationUI)
 
                             Surface(Modifier.statusBarsPadding()) {
 
@@ -102,7 +102,6 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun MyLocalProvider(
-    mainActivity: MainActivity,
     content: @Composable () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
@@ -154,7 +153,6 @@ private fun MyLocalProvider(
     //////
 
     CompositionLocalProvider(
-        LocalMainActivity provides mainActivity,
         LocalTriggersDialogManager provides remember { TriggersView__DialogManager() },
         LocalAutoBackup provides if (isSDKQPlus()) remember { AutoBackup(scope) } else null,
         LocalErrorDialog provides dialogErrorMessage,
