@@ -1,6 +1,5 @@
 package app.time_to.timeto.ui
 
-import android.content.Intent
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
@@ -28,7 +27,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.app.ActivityOptionsCompat
 import app.time_to.timeto.*
 import app.time_to.timeto.R
 import kotlinx.coroutines.delay
