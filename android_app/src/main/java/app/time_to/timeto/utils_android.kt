@@ -118,12 +118,11 @@ fun <State, VM : __VM<State>> rememberVM(
 fun performShortcutOrError(
     shortcut: ShortcutModel,
     context: Context,
-    errorState: MutableState<String?>,
 ) {
     try {
         context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(shortcut.uri)))
     } catch (e: ActivityNotFoundException) {
-        errorState.value = "Invalid shortcut link"
+        showUiAlert("Invalid shortcut link")
     }
 }
 

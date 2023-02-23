@@ -29,11 +29,8 @@ import androidx.compose.ui.viewinterop.AndroidView
 import app.time_to.timeto.*
 import app.time_to.timeto.R
 import kotlinx.coroutines.launch
-import timeto.shared.Backup
-import timeto.shared.launchEx
-import timeto.shared.reportApi
+import timeto.shared.*
 import timeto.shared.vm.TabToolsVM
-import timeto.shared.zlog
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.*
@@ -45,8 +42,6 @@ fun TabToolsView() {
     val scope = rememberCoroutineScope()
 
     val (vm, state) = rememberVM { TabToolsVM() }
-
-    val errorDialog = LocalErrorDialog.current
 
     val launcherBackup = rememberLauncherForActivityResult(
         ActivityResultContracts.CreateDocument()
@@ -61,8 +56,7 @@ fun TabToolsView() {
                 // todo
                 zlog("ok")
             } catch (e: Exception) {
-                errorDialog.value = "Error"
-                reportApi("launcherBackup exception:\n$e")
+                showUiAlert("Error", "launcherBackup exception:\n$e")
             }
         }
     }
@@ -92,8 +86,7 @@ fun TabToolsView() {
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 })
             } catch (e: Exception) {
-                errorDialog.value = "Error"
-                reportApi("launcherRestore exception:\n$e")
+                showUiAlert("Error", "launcherRestore exception:\n$e")
             }
         }
     }
@@ -252,7 +245,7 @@ fun TabToolsView() {
                     MyListView__ItemView__ButtonView(
                         text = shortcut.name,
                     ) {
-                        performShortcutOrError(shortcut, context, errorDialog)
+                        performShortcutOrError(shortcut, context)
                     }
                 }
             }

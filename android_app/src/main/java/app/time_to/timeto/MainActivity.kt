@@ -165,7 +165,6 @@ private fun MyLocalProvider(
 @Composable
 fun ListenNewIntervalForTriggers() {
     val context = LocalContext.current
-    val errorDialog = LocalErrorDialog.current
 
     val localTriggersDialogManager = LocalTriggersDialogManager.current
     val lastIntervalLive = IntervalModel.getLastOneOrNullFlow().collectAsState(null).value
@@ -180,6 +179,6 @@ fun ListenNewIntervalForTriggers() {
         val trigger = TextFeatures.parse(stringToCheckTriggers)
             .triggers.firstOrNull() ?: return@LaunchedEffect
 
-        localTriggersDialogManager.show(trigger, context, errorDialog)
+        localTriggersDialogManager.show(trigger, context)
     }
 }
