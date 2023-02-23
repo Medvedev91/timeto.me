@@ -1,4 +1,5 @@
 import SwiftUI
+import shared
 
 struct MyListSwipeToActionItem<Content: View>: View {
 
@@ -11,8 +12,6 @@ struct MyListSwipeToActionItem<Content: View>: View {
     @State private var xSwipeOffset = 0.0
     @State private var width = 999.0
     @State private var itemHeight = 0.0
-
-    @EnvironmentObject private var timetoAlert: TimetoAlert
 
     var body: some View {
 
@@ -67,17 +66,16 @@ struct MyListSwipeToActionItem<Content: View>: View {
                     Button(
                             action: {
                                 if let deletionConfirmationNote = deletionConfirmationNote {
-                                    timetoAlert.confirm(
-                                            deletionConfirmationNote,
-                                            confirmationText: "Delete",
-                                            onConfirm: {
-                                                withAnimation {
-                                                    xSwipeOffset = 0
-                                                    onDelete()
-                                                }
-                                            },
-                                            isDestructive: true
-                                    )
+                                    UtilsKt.showUiConfirmation(data: UIConfirmationData(
+                                            text: deletionConfirmationNote,
+                                            buttonText: "Delete",
+                                            isRed: true
+                                    ) {
+                                        withAnimation {
+                                            xSwipeOffset = 0
+                                            onDelete()
+                                        }
+                                    })
                                 } else {
                                     xSwipeOffset = 0
                                     onDelete()
