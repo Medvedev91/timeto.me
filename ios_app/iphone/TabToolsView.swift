@@ -509,7 +509,6 @@ struct ToolsView_ShortcutView: View {
     let shortcut: ShortcutModel
 
     @State private var isEditPresented = false
-    @EnvironmentObject private var timetoAlert: TimetoAlert
 
     var body: some View {
         MyListSwipeToActionItem(
@@ -537,7 +536,7 @@ struct ToolsView_ShortcutView: View {
         Button(
                 action: {
                     performShortcutOrError(shortcut) { error in
-                        timetoAlert.alert(error)
+                        UtilsKt.showUiAlert(message: error, reportApiText: nil)
                     }
                 },
                 label: {
