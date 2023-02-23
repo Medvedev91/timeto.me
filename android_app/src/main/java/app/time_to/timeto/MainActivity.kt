@@ -20,7 +20,6 @@ import timeto.shared.vm.AppVM
 
 val LocalTriggersDialogManager = compositionLocalOf<TriggersView__DialogManager> { throw MyException("LocalTriggersDialogManager") }
 val LocalAutoBackup = compositionLocalOf<AutoBackup?> { throw MyException("LocalAutoBackup") }
-val LocalErrorDialog = compositionLocalOf<MutableState<String?>> { throw MyException("LocalErrorDialog") }
 val LocalWrapperViewLayers = compositionLocalOf<MutableList<WrapperView__LayerData>> { throw MyException("LocalWrapperViewLayers") }
 
 class MainActivity : ComponentActivity() {
@@ -155,7 +154,6 @@ private fun MyLocalProvider(
     CompositionLocalProvider(
         LocalTriggersDialogManager provides remember { TriggersView__DialogManager() },
         LocalAutoBackup provides if (isSDKQPlus()) remember { AutoBackup(scope) } else null,
-        LocalErrorDialog provides dialogErrorMessage,
         LocalWrapperViewLayers provides remember { mutableStateListOf() }
     ) {
         content()
