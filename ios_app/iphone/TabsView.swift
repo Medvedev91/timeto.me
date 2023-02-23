@@ -36,8 +36,6 @@ struct TabsView: View {
     @State private var triggersChecklist: ChecklistModel?
     @State private var isTriggersChecklistPresented = false
 
-    @EnvironmentObject private var timetoAlert: TimetoAlert
-
     var body: some View {
         if let loadingView = loadingView {
             loadingView
@@ -102,7 +100,7 @@ struct TabsView: View {
                             }
                             if let trigger = trigger as? Trigger.Shortcut {
                                 performShortcutOrError(trigger.shortcut) { error in
-                                    timetoAlert.alert(error)
+                                    UtilsKt.showUiAlert(message: error, reportApiText: nil)
                                 }
                                 return
                             }
