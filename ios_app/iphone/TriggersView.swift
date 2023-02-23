@@ -132,7 +132,6 @@ struct TriggersView__ListItem: View {
     @State private var isChecklistPresented = false
     /// # PROVOKE_STATE_UPDATE
     @State private var checklist: ChecklistModel? = nil
-    @EnvironmentObject private var timetoAlert: TimetoAlert
 
     var body: some View {
         Button(
@@ -142,7 +141,7 @@ struct TriggersView__ListItem: View {
                         isChecklistPresented = true
                     } else if let trigger = trigger as? Trigger.Shortcut {
                         performShortcutOrError(trigger.shortcut) { error in
-                            timetoAlert.alert(error)
+                            UtilsKt.showUiAlert(message: error, reportApiText: nil)
                         }
                     } else {
                         fatalError("TriggersView__ListItem")
