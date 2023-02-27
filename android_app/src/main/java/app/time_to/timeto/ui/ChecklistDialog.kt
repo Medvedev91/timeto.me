@@ -24,9 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.time_to.timeto.*
 import app.time_to.timeto.R
-import timeto.shared.db.ChecklistItemModel
 import timeto.shared.db.ChecklistModel
 import timeto.shared.launchEx
+import timeto.shared.vm.ChecklistDialogVM
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -36,12 +36,12 @@ fun ChecklistDialog(
 ) {
     val scope = rememberCoroutineScope()
 
+    val (_, state) = rememberVM { ChecklistDialogVM(checklist = checklist) }
+
     if (!isPresented.value)
         return
 
-    val allChecklistItems = ChecklistItemModel.getAscFlow().collectAsState(emptyList()).value
-
-    val checklistItems = allChecklistItems.filter { it.list_id == checklist.id }
+    val checklistItems = state.items
     val isChecklistItemAddPresented = ChecklistItemEditDialog(checklist = checklist, editedChecklistItem = null)
 
     MyDialog(
