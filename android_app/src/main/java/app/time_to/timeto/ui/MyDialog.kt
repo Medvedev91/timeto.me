@@ -24,7 +24,6 @@ fun MyDialog(
     paddingValues: PaddingValues = PaddingValues(all = 20.dp),
     marginValues: PaddingValues = PaddingValues(horizontal = 20.dp),
     backgroundColor: Color = c.background2,
-    onDismiss: (() -> Unit)? = null,
     content: @Composable () -> Unit
 ) {
     if (!isPresented.value)
@@ -32,8 +31,6 @@ fun MyDialog(
 
     Dialog(
         onDismissRequest = {
-            if (onDismiss != null)
-                onDismiss()
             isPresented.value = false
         },
         /**
