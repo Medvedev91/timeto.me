@@ -6,6 +6,7 @@ import timeto.shared.db.ChecklistItemModel
 import timeto.shared.db.ChecklistModel
 import timeto.shared.onEachExIn
 
+// todo actions from view to vm
 class ChecklistDialogVM(
     val checklist: ChecklistModel,
 ) : __VM<ChecklistDialogVM.State>() {
