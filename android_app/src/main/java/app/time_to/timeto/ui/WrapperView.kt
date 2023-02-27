@@ -19,6 +19,7 @@ data class WrapperView__LayerData(
     val shape: Shape,
     val enterAnimation: EnterTransition,
     val exitAnimation: ExitTransition,
+    val alignment: Alignment,
     val content: @Composable () -> Unit,
 )
 
@@ -50,7 +51,7 @@ fun WrapperView(
 
             Box(
                 modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.BottomCenter,
+                contentAlignment = layer.alignment,
             ) {
 
                 AnimatedVisibility(

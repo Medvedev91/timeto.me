@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.pointer.pointerInput
@@ -43,6 +44,7 @@ fun TimetoSheet(
                 ),
                 targetOffsetY = { it }
             ),
+            alignment = Alignment.BottomCenter,
             content = {
                 Box(
                     /**

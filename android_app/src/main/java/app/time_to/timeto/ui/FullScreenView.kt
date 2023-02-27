@@ -78,6 +78,7 @@ fun FullScreenView(
             shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
             enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessHigh)),
             exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessHigh)),
+            alignment = Alignment.Center,
             content = {
                 Box(
                     modifier = Modifier
