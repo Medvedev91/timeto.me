@@ -454,40 +454,6 @@ fun TabToolsView() {
 
         item {
 
-            val isReadmePresented = remember { mutableStateOf(false) }
-            ReadmeView(isPresented = isReadmePresented)
-
-            /*
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 20.dp)
-                    .clip(MySquircleShape(angles = listOf(true, true, false, false)))
-                    .background(c.background2)
-                    .clickable {
-                        isReadmePresented.value = true
-                    },
-                contentAlignment = Alignment.BottomCenter,
-            ) {
-                Text(
-                    "Readme",
-                    modifier = Modifier
-                        .padding(horizontal = 18.dp, vertical = 12.dp)
-                        .align(Alignment.CenterStart),
-                    color = c.text,
-                )
-
-                Divider(
-                    color = c.dividerBackground2,
-                    modifier = Modifier.padding(start = 18.dp),
-                    thickness = 0.5.dp
-                )
-            }
-             */
-        }
-
-        item {
-
             Row {
 
                 Text(

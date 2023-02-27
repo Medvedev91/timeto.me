@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -70,29 +69,6 @@ fun TabTimerView() {
             isPresented = isAddSheetPresented,
             editedActivity = null
         )
-
-        val isReadmePresented = remember { mutableStateOf(false) }
-        ReadmeView(isPresented = isReadmePresented)
-
-        /*
-        val isShowReadme = KVModel.isShowReadmeOnMainLive().observeAsState().value
-        if (isShowReadme == true && false) {
-            Text(
-                "Readme",
-                modifier = Modifier
-                    .padding(end = 26.dp, top = 2.dp)
-                    .align(Alignment.TopEnd)
-                    .clip(MySquircleShape(angleParam = -5f))
-                    .clickable {
-                        isReadmePresented.value = true
-                    }
-                    .padding(horizontal = 4.dp, vertical = 2.dp),
-                color = c.blue,
-                fontSize = 15.sp,
-                fontWeight = FontWeight.W400
-            )
-        }
-         */
 
         Column(
             modifier = Modifier
@@ -437,23 +413,12 @@ fun TabTimerView() {
                             append("Chart")
                         }
                         append(". ")
-
-//                        pushStringAnnotation(tag = "full_guide", annotation = "full_guide")
-//                        withStyle(style = SpanStyle(color = c.blue)) {
-//                            append("Read full guide.")
-//                        }
-//                        pop()
                     }
 
-                    ClickableText(
+                    Text(
                         text = s8,
                         modifier = Modifier.padding(top = 8.dp, start = 8.dp, end = 8.dp),
                         style = prepTextStyle(),
-                        onClick = { offset ->
-                            s8.getStringAnnotations(tag = "full_guide", start = offset, end = offset).firstOrNull()?.let {
-                                isReadmePresented.value = true
-                            }
-                        }
                     )
                 }
             }
