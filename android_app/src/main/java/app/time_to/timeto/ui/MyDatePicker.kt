@@ -98,12 +98,10 @@ fun MyDatePicker__Dialog(
     maxDay: Int = UnixTime.MAX_DAY,
     title: String? = null,
     withTimeBtnText: String? = null,
-    onCancel: (() -> Unit)? = null,
     onSelect: (UnixTime) -> Unit,
 ) {
     MyDialog(
         isPresented = isDialogPresented,
-        onDismiss = onCancel,
         paddingValues = PaddingValues(0.dp),
         marginValues = PaddingValues(30.dp),
     ) {
@@ -240,8 +238,6 @@ fun MyDatePicker__Dialog(
                             .clip(RoundedCornerShape(99.dp))
                             .background(c.transparent)
                             .clickable {
-                                if (onCancel != null)
-                                    onCancel()
                                 isDialogPresented.value = false
                             }
                             .padding(4.dp)
