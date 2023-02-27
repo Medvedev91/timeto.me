@@ -10,13 +10,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import app.time_to.timeto.LocalWrapperViewLayers
 
 data class WrapperView__LayerData(
     val isPresented: Boolean,
     val onClose: () -> Unit,
-    val shape: Shape,
     val enterAnimation: EnterTransition,
     val exitAnimation: ExitTransition,
     val alignment: Alignment,

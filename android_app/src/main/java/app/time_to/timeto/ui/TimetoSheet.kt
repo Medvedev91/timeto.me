@@ -29,7 +29,6 @@ fun TimetoSheet(
         WrapperView__LayerData(
             isPresented = isPresented.value,
             onClose = { isPresented.value = false },
-            shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
             enterAnimation = slideInVertically(
                 animationSpec = spring(
                     stiffness = Spring.StiffnessMedium,
