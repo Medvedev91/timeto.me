@@ -3,7 +3,7 @@ import shared
 
 struct ChecklistDialog: View {
 
-    @EnvironmentObject private var diApple: DIApple
+    @State private var vm: ChecklistDialogVM
 
     @Binding private var isPresented: Bool
     private var checklist: ChecklistModel
@@ -14,15 +14,16 @@ struct ChecklistDialog: View {
             isPresented: Binding<Bool>,
             checklist: ChecklistModel
     ) {
-        self._isPresented = isPresented
+        _isPresented = isPresented
         self.checklist = checklist
+        _vm = State(initialValue: ChecklistDialogVM(checklist: checklist))
     }
 
     var body: some View {
 
-        ZStack(alignment: .top) {
+        VMView(vm: vm, stack: .ZStack(alignment: .top)) { state in
 
-            let items = diApple.checklistItems.filter { $0.list_id == checklist.id }
+            let items = state.items
 
             ScrollView(showsIndicators: false) {
 
