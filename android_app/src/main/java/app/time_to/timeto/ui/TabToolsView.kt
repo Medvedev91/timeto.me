@@ -476,9 +476,6 @@ private fun DayStartDialog(
     tabToolsVM: TabToolsVM,
     tabToolsState: TabToolsVM.State,
 ) {
-    if (!isPresented.value)
-        return
-
     MyDialog(isPresented) {
 
         Column {

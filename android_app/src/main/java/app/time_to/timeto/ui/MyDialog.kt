@@ -1,5 +1,9 @@
 package app.time_to.timeto.ui
 
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -8,15 +12,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
+import app.time_to.timeto.setFalse
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun MyDialog(
     isPresented: MutableState<Boolean>,
@@ -26,29 +28,28 @@ fun MyDialog(
     backgroundColor: Color = c.background2,
     content: @Composable () -> Unit
 ) {
-    if (!isPresented.value)
-        return
-
-    Dialog(
-        onDismissRequest = {
-            isPresented.value = false
-        },
-        /**
-         * Otherwise, for unknown reasons on some phones, such as OPPO, in some
-         * cases, the height limit. Faced while creating a calendar dialog.
-         */
-        properties = DialogProperties(usePlatformDefaultWidth = false),
-        content = {
-            Box(
-                modifier
-                    .padding(marginValues)
-                    .clip(MySquircleShape(80f))
-                    .background(backgroundColor)
-                    .padding(paddingValues)
-            ) {
-                content()
+    WrapperView__LayerView(
+        WrapperView__LayerData(
+            isPresented = isPresented.value,
+            onClose = { isPresented.setFalse() },
+            enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessMedium)),
+            exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessMedium)),
+            alignment = Alignment.Center,
+            content = {
+                Box(
+                    modifier
+                        .systemBarsPadding()
+                        .imePadding()
+                        .padding(marginValues)
+                        .clip(MySquircleShape(80f))
+                        .background(backgroundColor)
+                        .pointerInput(Unit) { }
+                        .padding(paddingValues)
+                ) {
+                    content()
+                }
             }
-        }
+        )
     )
 }
 

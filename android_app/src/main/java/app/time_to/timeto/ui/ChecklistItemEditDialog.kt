@@ -18,13 +18,10 @@ import timeto.shared.vm.ChecklistItemFormVM
 
 @Composable
 fun ChecklistItemEditDialog(
+    isPresented: MutableState<Boolean>,
     checklist: ChecklistModel,
     editedChecklistItem: ChecklistItemModel?,
-): MutableState<Boolean> {
-    val isPresented = remember { mutableStateOf(false) }
-
-    if (!isPresented.value)
-        return isPresented
+) {
 
     MyDialog(
         isPresented,
@@ -87,5 +84,4 @@ fun ChecklistItemEditDialog(
             }
         }
     }
-    return isPresented
 }

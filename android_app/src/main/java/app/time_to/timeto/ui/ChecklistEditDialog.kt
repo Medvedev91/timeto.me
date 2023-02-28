@@ -20,8 +20,6 @@ fun ChecklistEditDialog(
     editedChecklist: ChecklistModel?,
     isPresented: MutableState<Boolean>,
 ) {
-    if (!isPresented.value)
-        return
 
     MyDialog(
         isPresented,

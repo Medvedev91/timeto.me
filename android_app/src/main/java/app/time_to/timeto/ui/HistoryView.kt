@@ -332,9 +332,6 @@ private fun AddIntervalDialog(
 ) {
     val scope = rememberCoroutineScope()
 
-    if (!isPresented.value)
-        return
-
     MyDialog(
         isPresented,
         paddingValues = PaddingValues(horizontal = 0.dp),

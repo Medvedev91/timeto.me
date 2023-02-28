@@ -38,9 +38,6 @@ fun ChecklistDialog(
 
     val (_, state) = rememberVM { ChecklistDialogVM(checklist = checklist) }
 
-    if (!isPresented.value)
-        return
-
     MyDialog(
         isPresented = isPresented,
         paddingValues = PaddingValues(horizontal = 0.dp),
@@ -61,7 +58,8 @@ fun ChecklistDialog(
 
                 itemsIndexed(checklistItems, key = { _, item -> item.id }) { _, item ->
 
-                    val isChecklistItemEditPresented = ChecklistItemEditDialog(checklist = checklist, editedChecklistItem = item)
+                    val isChecklistItemEditPresented = remember { mutableStateOf(false) }
+                    ChecklistItemEditDialog(isChecklistItemEditPresented, checklist = checklist, editedChecklistItem = item)
 
                     MyListView__ItemView(
                         isFirst = checklistItems.first() == item,
