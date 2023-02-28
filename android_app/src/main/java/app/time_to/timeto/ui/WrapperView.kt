@@ -18,7 +18,7 @@ data class WrapperView__LayerData(
     val enterAnimation: EnterTransition,
     val exitAnimation: ExitTransition,
     val alignment: Alignment,
-    val content: @Composable () -> Unit,
+    val content: @Composable (WrapperView__LayerData) -> Unit,
 )
 
 @Composable
@@ -73,7 +73,7 @@ fun WrapperView(
                     BackHandler(layer.isPresented) {
                         layer.onClose(layer)
                     }
-                    layer.content()
+                    layer.content(layer)
                 }
             }
         }

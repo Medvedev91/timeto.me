@@ -26,7 +26,7 @@ fun MyDialog(
     paddingValues: PaddingValues = PaddingValues(all = 20.dp),
     marginValues: PaddingValues = PaddingValues(horizontal = 20.dp),
     backgroundColor: Color = c.background2,
-    content: @Composable () -> Unit
+    content: @Composable (WrapperView__LayerData) -> Unit
 ) {
     WrapperView__LayerView(
         prepMyDialogLayer(
@@ -48,14 +48,14 @@ private fun prepMyDialogLayer(
     modifier: Modifier = Modifier,
     paddingValues: PaddingValues = PaddingValues(all = 20.dp),
     marginValues: PaddingValues = PaddingValues(horizontal = 20.dp),
-    content: @Composable () -> Unit
+    content: @Composable (WrapperView__LayerData) -> Unit
 ) = WrapperView__LayerData(
     isPresented = isPresented,
     onClose = { onClose(it) },
     enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessMedium)),
     exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessMedium)),
     alignment = Alignment.Center,
-    content = {
+    content = { layer ->
         Box(
             modifier
                 .systemBarsPadding()
@@ -66,7 +66,7 @@ private fun prepMyDialogLayer(
                 .pointerInput(Unit) { }
                 .padding(paddingValues)
         ) {
-            content()
+            content(layer)
         }
     }
 )
