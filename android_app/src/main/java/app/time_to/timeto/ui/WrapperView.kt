@@ -23,13 +23,13 @@ data class WrapperView__LayerData(
 
 @Composable
 fun WrapperView__LayerView(
-    layerData: WrapperView__LayerData
+    layer: WrapperView__LayerData
 ) {
     val layers = LocalWrapperViewLayers.current
-    DisposableEffect(layerData) {
-        layers.add(layerData)
+    DisposableEffect(layer) {
+        layers.add(layer)
         onDispose {
-            layers.remove(layerData)
+            layers.remove(layer)
         }
     }
 }
