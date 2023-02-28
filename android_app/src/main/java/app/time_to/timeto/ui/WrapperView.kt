@@ -14,7 +14,7 @@ import app.time_to.timeto.LocalWrapperViewLayers
 
 data class WrapperView__LayerData(
     val isPresented: Boolean,
-    val onClose: () -> Unit,
+    val onClose: (WrapperView__LayerData) -> Unit,
     val enterAnimation: EnterTransition,
     val exitAnimation: ExitTransition,
     val alignment: Alignment,
@@ -61,7 +61,7 @@ fun WrapperView(
                         modifier = Modifier
                             .fillMaxSize()
                             .background(Color(0x55000000))
-                            .clickable { layer.onClose() }
+                            .clickable { layer.onClose(layer) }
                     )
                 }
 
@@ -71,7 +71,7 @@ fun WrapperView(
                     exit = layer.exitAnimation,
                 ) {
                     BackHandler(layer.isPresented) {
-                        layer.onClose()
+                        layer.onClose(layer)
                     }
                     layer.content()
                 }
