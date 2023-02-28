@@ -62,6 +62,7 @@ fun MyDialog__Confirmation(
     onConfirm: () -> Unit
 ) {
     MyDialog(isPresented = isPresented) {
+
         Column {
 
             Row(
@@ -95,7 +96,6 @@ fun MyDialog__Confirmation(
                     onConfirm()
                 }
             }
-
         }
     }
 }
