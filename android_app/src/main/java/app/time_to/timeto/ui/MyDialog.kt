@@ -29,29 +29,45 @@ fun MyDialog(
     content: @Composable () -> Unit
 ) {
     WrapperView__LayerView(
-        WrapperView__LayerData(
-            isPresented = isPresented.value,
-            onClose = { isPresented.setFalse() },
-            enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessMedium)),
-            exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessMedium)),
-            alignment = Alignment.Center,
-            content = {
-                Box(
-                    modifier
-                        .systemBarsPadding()
-                        .imePadding()
-                        .padding(marginValues)
-                        .clip(MySquircleShape(80f))
-                        .background(backgroundColor)
-                        .pointerInput(Unit) { }
-                        .padding(paddingValues)
-                ) {
-                    content()
-                }
-            }
+        prepMyDialogLayer(
+            isPresented = isPresented,
+            modifier = modifier,
+            paddingValues = paddingValues,
+            marginValues = marginValues,
+            backgroundColor = backgroundColor,
+            content = content
         )
     )
 }
+
+private fun prepMyDialogLayer(
+    isPresented: MutableState<Boolean>,
+    modifier: Modifier = Modifier,
+    paddingValues: PaddingValues = PaddingValues(all = 20.dp),
+    marginValues: PaddingValues = PaddingValues(horizontal = 20.dp),
+    backgroundColor: Color = c.background2,
+    content: @Composable () -> Unit
+) = WrapperView__LayerData(
+    isPresented = isPresented.value,
+    onClose = { isPresented.setFalse() },
+    enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessMedium)),
+    exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessMedium)),
+    alignment = Alignment.Center,
+    content = {
+        Box(
+            modifier
+                .systemBarsPadding()
+                .imePadding()
+                .padding(marginValues)
+                .clip(MySquircleShape(80f))
+                .background(backgroundColor)
+                .pointerInput(Unit) { }
+                .padding(paddingValues)
+        ) {
+            content()
+        }
+    }
+)
 
 @Composable
 fun MyDialog__Confirmation(
