@@ -30,26 +30,28 @@ fun MyDialog(
 ) {
     WrapperView__LayerView(
         prepMyDialogLayer(
-            isPresented = isPresented,
+            isPresented = isPresented.value,
+            onClose = { isPresented.setFalse() },
+            backgroundColor = backgroundColor,
             modifier = modifier,
             paddingValues = paddingValues,
             marginValues = marginValues,
-            backgroundColor = backgroundColor,
             content = content
         )
     )
 }
 
 private fun prepMyDialogLayer(
-    isPresented: MutableState<Boolean>,
+    isPresented: Boolean,
+    onClose: (WrapperView__LayerData) -> Unit,
+    backgroundColor: Color,
     modifier: Modifier = Modifier,
     paddingValues: PaddingValues = PaddingValues(all = 20.dp),
     marginValues: PaddingValues = PaddingValues(horizontal = 20.dp),
-    backgroundColor: Color = c.background2,
     content: @Composable () -> Unit
 ) = WrapperView__LayerData(
-    isPresented = isPresented.value,
-    onClose = { isPresented.setFalse() },
+    isPresented = isPresented,
+    onClose = { onClose(it) },
     enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessMedium)),
     exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessMedium)),
     alignment = Alignment.Center,
