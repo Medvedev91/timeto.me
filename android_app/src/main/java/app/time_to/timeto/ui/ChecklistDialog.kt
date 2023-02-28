@@ -41,14 +41,15 @@ fun ChecklistDialog(
     if (!isPresented.value)
         return
 
-    val checklistItems = state.items
-    val isChecklistItemAddPresented = ChecklistItemEditDialog(checklist = checklist, editedChecklistItem = null)
-
     MyDialog(
-        isPresented,
+        isPresented = isPresented,
         paddingValues = PaddingValues(horizontal = 0.dp),
         backgroundColor = c.background
     ) {
+
+        val isChecklistItemAddPresented = remember { mutableStateOf(false) }
+        ChecklistItemEditDialog(isChecklistItemAddPresented, checklist = checklist, editedChecklistItem = null)
+        val checklistItems = state.items
 
         Box {
 
