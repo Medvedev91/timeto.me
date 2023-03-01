@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import app.time_to.timeto.LocalWrapperViewLayers
 
-data class WrapperView__LayerData(
+class WrapperView__LayerData(
     val isPresented: MutableState<Boolean>,
     val onClose: (WrapperView__LayerData) -> Unit,
     val enterAnimation: EnterTransition,
