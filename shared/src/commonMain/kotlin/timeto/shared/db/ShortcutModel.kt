@@ -107,6 +107,10 @@ data class ShortcutModel(
         }
     }
 
+    fun performUI() {
+        launchExDefault { uiShortcutFlow.emit(this@ShortcutModel) }
+    }
+
     suspend fun upWithValidation(name: String, uri: String) = dbIO {
         db.shortcutQueries.updateById(
             id = id, name = validateName(name, setOf(id)), uri = validateUri(uri)
