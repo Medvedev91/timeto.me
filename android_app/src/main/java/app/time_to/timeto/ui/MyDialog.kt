@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import app.time_to.timeto.setFalse
+import timeto.shared.UIConfirmationData
 
 @Composable
 fun MyDialog(
@@ -117,4 +118,53 @@ fun MyDialog__Confirmation(
             }
         }
     }
+}
+
+fun MyDialog__showConfirmation(
+    allLayers: MutableList<WrapperView__LayerData>,
+    data: UIConfirmationData,
+    backgroundColor: Color,
+) {
+    val isPresented = mutableStateOf(false)
+    val layer = prepMyDialogLayer(
+        isPresented = isPresented,
+        onClose = { it.removeOneTimeLayer(allLayers) },
+        backgroundColor = backgroundColor,
+        content = { layer ->
+            Column {
+
+                Text(
+                    text = data.text,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(all = 5.dp)
+                )
+
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 18.dp),
+                    horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+
+                    Text(
+                        "Cancel",
+                        color = c.textSecondary,
+                        modifier = Modifier
+                            .padding(end = 11.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                            .clickable { layer.onClose(layer) }
+                            .padding(horizontal = 8.dp, vertical = 4.dp)
+                    )
+
+                    MyButton(data.buttonText, true, if (data.isRed) c.red else c.blue) {
+                        data.onConfirm()
+                        layer.onClose(layer)
+                    }
+                }
+            }
+        }
+    )
+    layer.showOneTime(allLayers)
 }
