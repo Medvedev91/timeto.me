@@ -20,6 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.time_to.timeto.*
 import kotlinx.coroutines.launch
+import timeto.shared.UIConfirmationData
+import timeto.shared.showUiConfirmation
 import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -148,17 +150,6 @@ fun SwipeToAction__DeleteView(
 ) {
     val scope = rememberCoroutineScope()
 
-    val isConfirmationPresented = remember { mutableStateOf(false) }
-    if (deletionConfirmationNote != null)
-        MyDialog__Confirmation(
-            isConfirmationPresented,
-            { Text(deletionConfirmationNote) },
-            "Delete",
-            c.red
-        ) {
-            onDelete()
-        }
-
     Row(
         modifier = Modifier
             .fillMaxHeight()
@@ -203,9 +194,18 @@ fun SwipeToAction__DeleteView(
                 .clip(MySquircleShape(len = 50f))
                 .background(c.white)
                 .clickable {
-                    if (deletionConfirmationNote != null)
-                        isConfirmationPresented.value = true
-                    else
+                    if (deletionConfirmationNote != null) {
+                        showUiConfirmation(
+                            UIConfirmationData(
+                                text = deletionConfirmationNote,
+                                buttonText = "Delete",
+                                isRed = true,
+                                onConfirm = {
+                                    onDelete()
+                                }
+                            )
+                        )
+                    } else
                         onDelete()
                 }
                 .padding(start = 10.dp, end = 10.dp, top = 4.dp, bottom = 5.dp),
