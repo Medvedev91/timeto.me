@@ -127,9 +127,6 @@ fun TabToolsView() {
             val isChecklistEditPresented = remember { mutableStateOf(false) }
             ChecklistEditDialog(editedChecklist = checklist, isPresented = isChecklistEditPresented)
 
-            val isChecklistPresented = remember { mutableStateOf(false) }
-            ChecklistDialog(checklist = checklist, isPresented = isChecklistPresented)
-
             val isFirst = checklists.first() == checklist
 
             MyListView__ItemView(
@@ -167,10 +164,11 @@ fun TabToolsView() {
                     },
                     toVibrateStartEnd = listOf(true, false),
                 ) {
+
                     MyListView__ItemView__ButtonView(
                         text = checklist.name,
                     ) {
-                        isChecklistPresented.value = true
+                        checklist.performUI()
                     }
                 }
             }
