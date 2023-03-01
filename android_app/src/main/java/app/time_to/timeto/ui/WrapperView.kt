@@ -45,7 +45,7 @@ fun WrapperView__LayerData.showOneTime(
     allLayers: MutableList<WrapperView__LayerData>,
 ) = launchExDefault {
     allLayers.add(this@showOneTime)
-    delay(50)
+    delay(50) // Waiting for adding to view
     this@showOneTime.isPresented.setTrue()
 }
 
@@ -53,7 +53,7 @@ fun WrapperView__LayerData.removeOneTimeLayer(
     allLayers: MutableList<WrapperView__LayerData>,
 ) = launchExDefault {
     this@removeOneTimeLayer.isPresented.setFalse()
-    delay(500)
+    delay(500) // Waiting for animation
     allLayers.remove(this@removeOneTimeLayer)
 }
 
