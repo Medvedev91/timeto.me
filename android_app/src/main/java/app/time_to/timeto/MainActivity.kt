@@ -7,10 +7,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowCompat
@@ -59,7 +57,7 @@ class MainActivity : ComponentActivity() {
                         WrapperView {
                             FullScreenView(activity = this, onClose = ::upNavigationUI)
                             UIListeners()
-                            Tabs()
+                            TabsView()
                         }
 
                         val autoBackup = LocalAutoBackup.current

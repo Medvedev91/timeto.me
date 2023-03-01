@@ -37,7 +37,7 @@ var globalNav: NavHostController? = null
 val LocalTabsHeight = compositionLocalOf<Dp> { throw MyException("LocalTabsHeight") }
 
 @Composable
-fun Tabs() {
+fun TabsView() {
     val navController = rememberNavController()
     globalNav = navController
     Scaffold(
