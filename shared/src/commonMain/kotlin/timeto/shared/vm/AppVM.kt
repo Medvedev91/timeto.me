@@ -38,9 +38,10 @@ class AppVM : __VM<AppVM.State>() {
             IntervalModel
                 .getLastOneOrNullFlow()
                 .filterNotNull()
-                .onEachExIn(this) {
+                .onEachExIn(this) { lastInterval ->
                     ActivityModel.syncTimeHints()
                     rescheduleNotifications()
+                    showTriggersForInterval(lastInterval)
                 }
 
             launchEx {
@@ -78,6 +79,24 @@ class AppVM : __VM<AppVM.State>() {
         scopeVM().launchEx {
             delay(delayMls)
             rescheduleNotifications()
+        }
+    }
+}
+
+private fun showTriggersForInterval(
+    lastInterval: IntervalModel
+) {
+    if ((lastInterval.id + 3) < time())
+        return
+    val stringToCheckTriggers = lastInterval.note ?: lastInterval.getActivityDI().name
+    val trigger = TextFeatures.parse(stringToCheckTriggers).triggers.firstOrNull() ?: return
+    val _when = when (trigger) {
+        is Trigger.Checklist -> {
+//            todo
+            zlog("ff")
+        }
+        is Trigger.Shortcut -> {
+            launchExDefault { trigger.shortcut.performUI() }
         }
     }
 }
