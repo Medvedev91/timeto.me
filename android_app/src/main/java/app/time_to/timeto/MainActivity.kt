@@ -113,6 +113,13 @@ private fun UIListeners() {
                 backgroundColor = alertDialogBgColor,
             )
         }
+        uiAlertFlow.onEachExIn(this) { data ->
+            MyDialog__showAlert(
+                allLayers = layers,
+                data = data,
+                backgroundColor = alertDialogBgColor,
+            )
+        }
     }
 }
 
@@ -121,29 +128,6 @@ private fun MyLocalProvider(
     content: @Composable () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
-
-    ///
-    /// Error Dialog
-
-    val dialogErrorMessage = remember { mutableStateOf<String?>(null) }
-
-    if (dialogErrorMessage.value != null)
-        AlertDialog(
-            onDismissRequest = { dialogErrorMessage.value = null },
-            title = { Text(text = "Error") },
-            text = { Text(text = dialogErrorMessage.value ?: "") },
-            confirmButton = {
-                Button(onClick = { dialogErrorMessage.value = null }) { Text("Ok") }
-            }
-        )
-
-    LaunchedEffect(Unit) {
-        uiAlertFlow.collect {
-            dialogErrorMessage.value = it.message
-        }
-    }
-
-    //////
 
     CompositionLocalProvider(
         LocalTriggersDialogManager provides remember { TriggersView__DialogManager() },
