@@ -68,6 +68,10 @@ data class ChecklistModel(
         }
     }
 
+    fun performUI() {
+        launchExDefault { uiChecklistFlow.emit(this@ChecklistModel) }
+    }
+
     suspend fun upNameWithValidation(newName: String): Unit = dbIO {
         db.checklistQueries.upNameById(
             id = id, name = validateName(newName, setOf(id))
