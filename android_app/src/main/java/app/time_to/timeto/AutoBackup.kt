@@ -6,23 +6,17 @@ import android.provider.MediaStore
 import android.text.format.DateFormat
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.mutableStateOf
-import kotlinx.coroutines.CoroutineScope
-import timeto.shared.Backup
-import timeto.shared.UnixTime
-import timeto.shared.launchEx
-import timeto.shared.zlog
+import timeto.shared.*
 import java.util.*
 import kotlin.jvm.Throws
 
 @RequiresApi(Build.VERSION_CODES.Q) // Because of MediaStore.MediaColumns.RELATIVE_PATH
-class AutoBackup(
-    scope: CoroutineScope,
-) {
+class AutoBackup {
 
     val lastCacheDate = mutableStateOf<Date?>(null)
 
     init {
-        scope.launchEx {
+        launchExDefault {
             lastCacheDate.value = getLastDate()
         }
     }
