@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import app.time_to.timeto.LocalWrapperViewLayers
 
 data class WrapperView__LayerData(
-    val isPresented: Boolean,
+    val isPresented: MutableState<Boolean>,
     val onClose: (WrapperView__LayerData) -> Unit,
     val enterAnimation: EnterTransition,
     val exitAnimation: ExitTransition,
@@ -53,7 +53,7 @@ fun WrapperView(
             ) {
 
                 AnimatedVisibility(
-                    layer.isPresented,
+                    layer.isPresented.value,
                     enter = fadeIn(),
                     exit = fadeOut(),
                 ) {
@@ -66,11 +66,11 @@ fun WrapperView(
                 }
 
                 AnimatedVisibility(
-                    layer.isPresented,
+                    layer.isPresented.value,
                     enter = layer.enterAnimation,
                     exit = layer.exitAnimation,
                 ) {
-                    BackHandler(layer.isPresented) {
+                    BackHandler(layer.isPresented.value) {
                         layer.onClose(layer)
                     }
                     layer.content(layer)

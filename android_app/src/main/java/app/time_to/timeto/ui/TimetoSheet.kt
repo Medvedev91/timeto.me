@@ -27,7 +27,7 @@ fun TimetoSheet(
 ) {
     WrapperView__LayerView(
         WrapperView__LayerData(
-            isPresented = isPresented.value,
+            isPresented = isPresented,
             onClose = { isPresented.value = false },
             enterAnimation = slideInVertically(
                 animationSpec = spring(

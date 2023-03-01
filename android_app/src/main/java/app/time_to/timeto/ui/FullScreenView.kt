@@ -9,12 +9,9 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -41,6 +38,7 @@ fun FullScreenView(
     onClose: () -> Unit,
 ) {
     val isPresentedValue = FullScreenUI.state.collectAsState().value
+    val isPresented = remember(isPresentedValue) { mutableStateOf(isPresentedValue) }
     // https://developer.android.com/develop/ui/views/layout/immersive#kotlin
     LaunchedEffect(isPresentedValue) {
         /**
@@ -73,7 +71,7 @@ fun FullScreenView(
 
     WrapperView__LayerView(
         WrapperView__LayerData(
-            isPresented = isPresentedValue,
+            isPresented = isPresented,
             onClose = { FullScreenUI.close() },
             enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessHigh)),
             exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessHigh)),

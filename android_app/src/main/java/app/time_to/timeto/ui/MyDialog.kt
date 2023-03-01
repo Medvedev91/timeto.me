@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,7 +31,7 @@ fun MyDialog(
 ) {
     WrapperView__LayerView(
         prepMyDialogLayer(
-            isPresented = isPresented.value,
+            isPresented = isPresented,
             onClose = { isPresented.setFalse() },
             backgroundColor = backgroundColor,
             modifier = modifier,
@@ -42,7 +43,7 @@ fun MyDialog(
 }
 
 private fun prepMyDialogLayer(
-    isPresented: Boolean,
+    isPresented: MutableState<Boolean>,
     onClose: (WrapperView__LayerData) -> Unit,
     backgroundColor: Color,
     modifier: Modifier = Modifier,
