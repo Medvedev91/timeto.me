@@ -1,5 +1,8 @@
 package app.time_to.timeto
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -107,6 +110,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun UIListeners() {
+    val context = LocalContext.current
     val layers = LocalWrapperViewLayers.current
     val alertDialogBgColor = c.background2
     LaunchedEffect(Unit) {
@@ -123,6 +127,13 @@ private fun UIListeners() {
                 data = data,
                 backgroundColor = alertDialogBgColor,
             )
+        }
+        uiShortcutFlow.onEachExIn(this) { shortcut ->
+            try {
+                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(shortcut.uri)))
+            } catch (e: ActivityNotFoundException) {
+                showUiAlert("Invalid shortcut link")
+            }
         }
     }
 }
