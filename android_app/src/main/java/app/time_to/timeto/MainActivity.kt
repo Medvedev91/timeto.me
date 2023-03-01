@@ -96,6 +96,7 @@ private fun UIListeners() {
     val context = LocalContext.current
     val layers = LocalWrapperViewLayers.current
     val alertDialogBgColor = c.background2
+    val checklistBgColor = c.background
     LaunchedEffect(Unit) {
         uiAlertFlow.onEachExIn(this) { data ->
             MyDialog__showAlert(
@@ -117,6 +118,13 @@ private fun UIListeners() {
             } catch (e: ActivityNotFoundException) {
                 showUiAlert("Invalid shortcut link")
             }
+        }
+        uiChecklistFlow.onEachExIn(this) { checklist ->
+            ChecklistDialog__show(
+                checklist = checklist,
+                allLayers = layers,
+                backgroundColor = checklistBgColor,
+            )
         }
     }
 }
