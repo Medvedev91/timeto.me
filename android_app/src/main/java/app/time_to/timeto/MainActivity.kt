@@ -110,15 +110,15 @@ private fun UIListeners() {
     val layers = LocalWrapperViewLayers.current
     val alertDialogBgColor = c.background2
     LaunchedEffect(Unit) {
-        uiConfirmationFlow.onEachExIn(this) { data ->
-            MyDialog__showConfirmation(
+        uiAlertFlow.onEachExIn(this) { data ->
+            MyDialog__showAlert(
                 allLayers = layers,
                 data = data,
                 backgroundColor = alertDialogBgColor,
             )
         }
-        uiAlertFlow.onEachExIn(this) { data ->
-            MyDialog__showAlert(
+        uiConfirmationFlow.onEachExIn(this) { data ->
+            MyDialog__showConfirmation(
                 allLayers = layers,
                 data = data,
                 backgroundColor = alertDialogBgColor,
