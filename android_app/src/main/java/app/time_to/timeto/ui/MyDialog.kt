@@ -43,36 +43,6 @@ fun MyDialog(
     )
 }
 
-private fun prepMyDialogLayer(
-    isPresented: MutableState<Boolean>,
-    onClose: (WrapperView__LayerData) -> Unit,
-    backgroundColor: Color,
-    modifier: Modifier = Modifier,
-    paddingValues: PaddingValues = PaddingValues(all = 20.dp),
-    marginValues: PaddingValues = PaddingValues(horizontal = 20.dp),
-    content: @Composable (WrapperView__LayerData) -> Unit
-) = WrapperView__LayerData(
-    isPresented = isPresented,
-    onClose = { onClose(it) },
-    enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessMedium)),
-    exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessMedium)),
-    alignment = Alignment.Center,
-    content = { layer ->
-        Box(
-            modifier
-                .systemBarsPadding()
-                .imePadding()
-                .padding(marginValues)
-                .clip(MySquircleShape(80f))
-                .background(backgroundColor)
-                .pointerInput(Unit) { }
-                .padding(paddingValues)
-        ) {
-            content(layer)
-        }
-    }
-)
-
 fun MyDialog__showConfirmation(
     allLayers: MutableList<WrapperView__LayerData>,
     data: UIConfirmationData,
@@ -121,3 +91,33 @@ fun MyDialog__showConfirmation(
     )
     layer.showOneTime(allLayers)
 }
+
+private fun prepMyDialogLayer(
+    isPresented: MutableState<Boolean>,
+    onClose: (WrapperView__LayerData) -> Unit,
+    backgroundColor: Color,
+    modifier: Modifier = Modifier,
+    paddingValues: PaddingValues = PaddingValues(all = 20.dp),
+    marginValues: PaddingValues = PaddingValues(horizontal = 20.dp),
+    content: @Composable (WrapperView__LayerData) -> Unit
+) = WrapperView__LayerData(
+    isPresented = isPresented,
+    onClose = { onClose(it) },
+    enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessMedium)),
+    exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessMedium)),
+    alignment = Alignment.Center,
+    content = { layer ->
+        Box(
+            modifier
+                .systemBarsPadding()
+                .imePadding()
+                .padding(marginValues)
+                .clip(MySquircleShape(80f))
+                .background(backgroundColor)
+                .pointerInput(Unit) { }
+                .padding(paddingValues)
+        ) {
+            content(layer)
+        }
+    }
+)
