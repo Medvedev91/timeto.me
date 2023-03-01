@@ -56,6 +56,8 @@ class MainActivity : ComponentActivity() {
 
                             FullScreenView(activity = this, onClose = ::upNavigationUI)
 
+                            UIListeners()
+
                             Surface(Modifier.statusBarsPadding()) {
 
                                 Tabs()
@@ -100,6 +102,21 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
+private fun UIListeners() {
+    val layers = LocalWrapperViewLayers.current
+    val alertDialogBgColor = c.background2
+    LaunchedEffect(Unit) {
+        uiConfirmationFlow.onEachExIn(this) { confirmationData ->
+            MyDialog__showConfirmation(
+                allLayers = layers,
+                data = confirmationData,
+                backgroundColor = alertDialogBgColor,
+            )
+        }
+    }
+}
+
+@Composable
 private fun MyLocalProvider(
     content: @Composable () -> Unit,
 ) {
@@ -123,29 +140,6 @@ private fun MyLocalProvider(
     LaunchedEffect(Unit) {
         uiAlertFlow.collect {
             dialogErrorMessage.value = it.message
-        }
-    }
-
-    ///
-    /// Confirmation Dialog
-
-    val dialogConfirmationIsPresented = remember { mutableStateOf(true) }
-    val dialogConfirmationData = remember { mutableStateOf<UIConfirmationData?>(null) }
-    val dialogConfirmationDataValue = dialogConfirmationData.value
-
-    if (dialogConfirmationDataValue != null)
-        MyDialog__Confirmation(
-            dialogConfirmationIsPresented,
-            { Text(dialogConfirmationDataValue.text) },
-            dialogConfirmationDataValue.buttonText,
-            if (dialogConfirmationDataValue.isRed) c.red else c.blue,
-            dialogConfirmationDataValue.onConfirm
-        )
-
-    LaunchedEffect(Unit) {
-        uiConfirmationFlow.collect {
-            dialogConfirmationIsPresented.value = true
-            dialogConfirmationData.value = it
         }
     }
 
