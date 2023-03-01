@@ -11,6 +11,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import app.time_to.timeto.LocalWrapperViewLayers
+import app.time_to.timeto.setFalse
+import app.time_to.timeto.setTrue
+import kotlinx.coroutines.delay
+import timeto.shared.launchExDefault
 
 class WrapperView__LayerData(
     val isPresented: MutableState<Boolean>,
@@ -33,6 +37,31 @@ fun WrapperView__LayerView(
         }
     }
 }
+
+///
+/// Show One Time
+
+fun WrapperView__LayerData.showOneTime(
+    allLayers: MutableList<WrapperView__LayerData>,
+) {
+    allLayers.add(this)
+    launchExDefault {
+        delay(10)
+        this@showOneTime.isPresented.setTrue()
+    }
+}
+
+fun WrapperView__LayerData.removeOneTimeLayer(
+    allLayers: MutableList<WrapperView__LayerData>,
+) {
+    this.isPresented.setFalse()
+    launchExDefault {
+        delay(500)
+        allLayers.remove(this@removeOneTimeLayer)
+    }
+}
+
+//////
 
 @Composable
 fun WrapperView(
