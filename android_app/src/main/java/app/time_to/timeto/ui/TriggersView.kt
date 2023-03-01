@@ -174,24 +174,3 @@ fun TriggersView__ListView(
         }
     }
 }
-
-class TriggersView__DialogManager {
-
-    val checklist = mutableStateOf<ChecklistModel?>(null)
-    val checklistIsPresented = mutableStateOf(false)
-
-    fun show(
-        trigger: Trigger,
-    ) {
-        val whenRes = when (trigger) {
-            is Trigger.Checklist -> {
-                checklistIsPresented.value = false
-                checklist.value = trigger.checklist
-                checklistIsPresented.value = true
-            }
-            is Trigger.Shortcut -> {
-                trigger.shortcut.performUI()
-            }
-        }
-    }
-}

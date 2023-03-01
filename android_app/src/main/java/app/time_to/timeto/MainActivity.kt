@@ -18,10 +18,8 @@ import androidx.core.view.WindowInsetsControllerCompat
 import app.time_to.timeto.ui.*
 import kotlinx.coroutines.delay
 import timeto.shared.*
-import timeto.shared.db.*
 import timeto.shared.vm.AppVM
 
-val LocalTriggersDialogManager = compositionLocalOf<TriggersView__DialogManager> { throw MyException("LocalTriggersDialogManager") }
 val LocalAutoBackup = compositionLocalOf<AutoBackup?> { throw MyException("LocalAutoBackup") }
 val LocalWrapperViewLayers = compositionLocalOf<MutableList<WrapperView__LayerData>> { throw MyException("LocalWrapperViewLayers") }
 
@@ -54,7 +52,6 @@ class MainActivity : ComponentActivity() {
                     upNavigationUI() // Setting background and icons initially in xml. Here after tabs appear.
 
                     CompositionLocalProvider(
-                        LocalTriggersDialogManager provides remember { TriggersView__DialogManager() },
                         LocalAutoBackup provides if (isSDKQPlus()) remember { AutoBackup() } else null,
                         LocalWrapperViewLayers provides remember { mutableStateListOf() }
                     ) {
@@ -66,14 +63,7 @@ class MainActivity : ComponentActivity() {
                             UIListeners()
 
                             Surface(Modifier.statusBarsPadding()) {
-
                                 Tabs()
-
-                                val localTriggersDialogManager = LocalTriggersDialogManager.current
-                                localTriggersDialogManager.checklist.value?.let { checklist ->
-                                    ChecklistDialog(checklist, localTriggersDialogManager.checklistIsPresented)
-                                }
-                                ListenNewIntervalForTriggers()
                             }
                         }
 
@@ -135,26 +125,5 @@ private fun UIListeners() {
                 showUiAlert("Invalid shortcut link")
             }
         }
-    }
-}
-
-@Composable
-fun ListenNewIntervalForTriggers() {
-    val context = LocalContext.current
-
-    val localTriggersDialogManager = LocalTriggersDialogManager.current
-    val lastIntervalLive = IntervalModel.getLastOneOrNullFlow().collectAsState(null).value
-    LaunchedEffect(lastIntervalLive?.id) {
-        val lastInterval = lastIntervalLive ?: return@LaunchedEffect
-        if ((lastInterval.id + 3) < time())
-            return@LaunchedEffect
-
-        // #GD AUTOSTART_TRIGGERS
-        val stringToCheckTriggers = lastInterval.note ?: lastInterval.getActivityDI().name
-
-        val trigger = TextFeatures.parse(stringToCheckTriggers)
-            .triggers.firstOrNull() ?: return@LaunchedEffect
-
-        localTriggersDialogManager.show(trigger, context)
     }
 }
