@@ -1,6 +1,5 @@
 package app.time_to.timeto.ui
 
-import android.content.Context
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -124,8 +122,6 @@ fun TriggersView__ListView(
     if (triggers.isEmpty())
         return
 
-    val triggersDialogManager = LocalTriggersDialogManager.current
-
     val itemHeight = 26.dp
     LazyRow(
         modifier = modifier,
@@ -147,7 +143,7 @@ fun TriggersView__ListView(
                             .toColor()
                     )
                     .clickable(withOnClick) {
-                        triggersDialogManager.show(trigger)
+                        trigger.performUI()
                     }
                     .padding(start = 8.dp, end = if (withDeletion != null) 1.dp else 8.dp),
                 verticalAlignment = Alignment.CenterVertically
