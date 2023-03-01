@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import app.time_to.timeto.setFalse
+import timeto.shared.UIAlertData
 import timeto.shared.UIConfirmationData
 
 @Composable
@@ -41,6 +42,44 @@ fun MyDialog(
             content = content
         )
     )
+}
+
+fun MyDialog__showAlert(
+    allLayers: MutableList<WrapperView__LayerData>,
+    data: UIAlertData,
+    backgroundColor: Color,
+) {
+    val isPresented = mutableStateOf(false)
+    val layer = prepMyDialogLayer(
+        isPresented = isPresented,
+        onClose = { it.removeOneTimeLayer(allLayers) },
+        backgroundColor = backgroundColor,
+        content = { layer ->
+            Column {
+
+                Text(
+                    text = data.message,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(all = 5.dp)
+                )
+
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 18.dp),
+                    horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+
+                    MyButton("OK", true, c.blue) {
+                        layer.onClose(layer)
+                    }
+                }
+            }
+        }
+    )
+    layer.showOneTime(allLayers)
 }
 
 fun MyDialog__showConfirmation(
