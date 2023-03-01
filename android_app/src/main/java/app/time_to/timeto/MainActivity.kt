@@ -50,7 +50,11 @@ class MainActivity : ComponentActivity() {
                     }
                     upNavigationUI() // Setting background and icons initially in xml. Here after tabs appear.
 
-                    MyLocalProvider {
+                    CompositionLocalProvider(
+                        LocalTriggersDialogManager provides remember { TriggersView__DialogManager() },
+                        LocalAutoBackup provides if (isSDKQPlus()) remember { AutoBackup() } else null,
+                        LocalWrapperViewLayers provides remember { mutableStateListOf() }
+                    ) {
 
                         WrapperView {
 
@@ -120,19 +124,6 @@ private fun UIListeners() {
                 backgroundColor = alertDialogBgColor,
             )
         }
-    }
-}
-
-@Composable
-private fun MyLocalProvider(
-    content: @Composable () -> Unit,
-) {
-    CompositionLocalProvider(
-        LocalTriggersDialogManager provides remember { TriggersView__DialogManager() },
-        LocalAutoBackup provides if (isSDKQPlus()) remember { AutoBackup() } else null,
-        LocalWrapperViewLayers provides remember { mutableStateListOf() }
-    ) {
-        content()
     }
 }
 
