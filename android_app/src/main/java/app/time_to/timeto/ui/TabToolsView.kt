@@ -245,7 +245,7 @@ fun TabToolsView() {
                     MyListView__ItemView__ButtonView(
                         text = shortcut.name,
                     ) {
-                        performShortcutOrError(shortcut, context)
+                        shortcut.performUI()
                     }
                 }
             }

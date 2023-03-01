@@ -124,8 +124,6 @@ fun TriggersView__ListView(
     if (triggers.isEmpty())
         return
 
-    val context = LocalContext.current
-
     val triggersDialogManager = LocalTriggersDialogManager.current
 
     val itemHeight = 26.dp
@@ -149,7 +147,7 @@ fun TriggersView__ListView(
                             .toColor()
                     )
                     .clickable(withOnClick) {
-                        triggersDialogManager.show(trigger, context)
+                        triggersDialogManager.show(trigger)
                     }
                     .padding(start = 8.dp, end = if (withDeletion != null) 1.dp else 8.dp),
                 verticalAlignment = Alignment.CenterVertically
@@ -188,7 +186,6 @@ class TriggersView__DialogManager {
 
     fun show(
         trigger: Trigger,
-        context: Context,
     ) {
         val whenRes = when (trigger) {
             is Trigger.Checklist -> {
@@ -197,7 +194,7 @@ class TriggersView__DialogManager {
                 checklistIsPresented.value = true
             }
             is Trigger.Shortcut -> {
-                performShortcutOrError(trigger.shortcut, context)
+                trigger.shortcut.performUI()
             }
         }
     }

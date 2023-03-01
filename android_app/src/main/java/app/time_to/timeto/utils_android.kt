@@ -2,11 +2,9 @@ package app.time_to.timeto
 
 import android.app.AlarmManager
 import android.app.PendingIntent
-import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
-import android.net.Uri
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
@@ -15,7 +13,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import app.time_to.timeto.ui.c
 import timeto.shared.*
-import timeto.shared.db.ShortcutModel
 import timeto.shared.vm.__VM
 import java.util.*
 
@@ -113,17 +110,6 @@ fun <State, VM : __VM<State>> rememberVM(
         }
     }
     return vm to vm.state.collectAsState().value
-}
-
-fun performShortcutOrError(
-    shortcut: ShortcutModel,
-    context: Context,
-) {
-    try {
-        context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(shortcut.uri)))
-    } catch (e: ActivityNotFoundException) {
-        showUiAlert("Invalid shortcut link")
-    }
 }
 
 // todo remove
