@@ -43,22 +43,18 @@ fun WrapperView__LayerView(
 
 fun WrapperView__LayerData.showOneTime(
     allLayers: MutableList<WrapperView__LayerData>,
-) {
-    allLayers.add(this)
-    launchExDefault {
-        delay(10)
-        this@showOneTime.isPresented.setTrue()
-    }
+) = launchExDefault {
+    allLayers.add(this@showOneTime)
+    delay(50)
+    this@showOneTime.isPresented.setTrue()
 }
 
 fun WrapperView__LayerData.removeOneTimeLayer(
     allLayers: MutableList<WrapperView__LayerData>,
-) {
-    this.isPresented.setFalse()
-    launchExDefault {
-        delay(500)
-        allLayers.remove(this@removeOneTimeLayer)
-    }
+) = launchExDefault {
+    this@removeOneTimeLayer.isPresented.setFalse()
+    delay(500)
+    allLayers.remove(this@removeOneTimeLayer)
 }
 
 //////
