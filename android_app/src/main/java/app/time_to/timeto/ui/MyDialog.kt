@@ -131,7 +131,7 @@ fun MyDialog__showConfirmation(
     layer.showOneTime(allLayers)
 }
 
-private fun prepMyDialogLayer(
+fun prepMyDialogLayer(
     isPresented: MutableState<Boolean>,
     onClose: (WrapperView__LayerData) -> Unit,
     backgroundColor: Color,
