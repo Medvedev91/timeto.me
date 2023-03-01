@@ -34,15 +34,14 @@ fun ChecklistDialog(
     checklist: ChecklistModel,
     isPresented: MutableState<Boolean>,
 ) {
-    val scope = rememberCoroutineScope()
-
-    val (_, state) = rememberVM { ChecklistDialogVM(checklist = checklist) }
-
     MyDialog(
         isPresented = isPresented,
         paddingValues = PaddingValues(horizontal = 0.dp),
         backgroundColor = c.background
     ) {
+
+        val scope = rememberCoroutineScope()
+        val (_, state) = rememberVM { ChecklistDialogVM(checklist = checklist) }
 
         val isChecklistItemAddPresented = remember { mutableStateOf(false) }
         ChecklistItemEditDialog(isChecklistItemAddPresented, checklist = checklist, editedChecklistItem = null)
