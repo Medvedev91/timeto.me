@@ -281,7 +281,7 @@ suspend fun rescheduleNotifications() {
 }
 
 ///
-/// UI Alert/Confirmation
+/// UI Alert/Confirmation/Triggers
 
 val uiAlertFlow = MutableSharedFlow<UIAlertData>()
 
@@ -312,6 +312,10 @@ data class UIConfirmationData(
 fun showUiConfirmation(data: UIConfirmationData) {
     launchExDefault { uiConfirmationFlow.emit(data) }
 }
+
+///
+
+val uiShortcutFlow = MutableSharedFlow<ShortcutModel>()
 
 ///
 /// KMM init/await
