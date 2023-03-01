@@ -73,53 +73,6 @@ private fun prepMyDialogLayer(
     }
 )
 
-@Composable
-fun MyDialog__Confirmation(
-    isPresented: MutableState<Boolean>,
-    text: @Composable () -> Unit,
-    buttonText: String,
-    buttonColor: Color,
-    onConfirm: () -> Unit
-) {
-    MyDialog(isPresented = isPresented) {
-
-        Column {
-
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(all = 5.dp)
-            ) {
-                text()
-            }
-
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(top = 18.dp),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-
-                Text(
-                    "Cancel",
-                    color = c.textSecondary,
-                    modifier = Modifier
-                        .padding(end = 11.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .clickable { isPresented.value = false }
-                        .padding(horizontal = 8.dp, vertical = 4.dp)
-                )
-
-                MyButton(buttonText, true, buttonColor) {
-                    isPresented.value = false
-                    onConfirm()
-                }
-            }
-        }
-    }
-}
-
 fun MyDialog__showConfirmation(
     allLayers: MutableList<WrapperView__LayerData>,
     data: UIConfirmationData,
