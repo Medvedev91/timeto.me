@@ -317,6 +317,8 @@ fun showUiConfirmation(data: UIConfirmationData) {
 
 val uiShortcutFlow = MutableSharedFlow<ShortcutModel>()
 
+val uiChecklistFlow = MutableSharedFlow<ChecklistModel>()
+
 ///
 /// KMM init/await
 
