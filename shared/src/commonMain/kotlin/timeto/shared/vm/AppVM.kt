@@ -92,8 +92,7 @@ private fun showTriggersForInterval(
     val trigger = TextFeatures.parse(stringToCheckTriggers).triggers.firstOrNull() ?: return
     val _when = when (trigger) {
         is Trigger.Checklist -> {
-//            todo
-            zlog("ff")
+            launchExDefault { trigger.checklist.performUI() }
         }
         is Trigger.Shortcut -> {
             launchExDefault { trigger.shortcut.performUI() }
