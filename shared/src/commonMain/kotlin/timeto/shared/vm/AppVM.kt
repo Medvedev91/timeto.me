@@ -86,18 +86,9 @@ class AppVM : __VM<AppVM.State>() {
 private fun showTriggersForInterval(
     lastInterval: IntervalModel
 ) {
-    if ((lastInterval.id + 3) < time())
-        return
+    if ((lastInterval.id + 3) < time()) return
     val stringToCheckTriggers = lastInterval.note ?: lastInterval.getActivityDI().name
-    val trigger = TextFeatures.parse(stringToCheckTriggers).triggers.firstOrNull() ?: return
-    val _when = when (trigger) {
-        is Trigger.Checklist -> {
-            launchExDefault { trigger.checklist.performUI() }
-        }
-        is Trigger.Shortcut -> {
-            launchExDefault { trigger.shortcut.performUI() }
-        }
-    }
+    TextFeatures.parse(stringToCheckTriggers).triggers.firstOrNull()?.performUI()
 }
 
 ///

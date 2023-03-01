@@ -31,6 +31,13 @@ sealed class Trigger(
         is Shortcut -> ColorNative.red
     }
 
+    fun performUI() {
+        val _when = when (this) {
+            is Checklist -> launchExDefault { checklist.performUI() }
+            is Shortcut -> launchExDefault { shortcut.performUI() }
+        }
+    }
+
     class Checklist(
         val checklist: ChecklistModel
     ) : Trigger("#c${checklist.id}", checklist.name, 1)
