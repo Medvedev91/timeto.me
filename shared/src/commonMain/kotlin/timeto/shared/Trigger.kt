@@ -13,7 +13,7 @@ sealed class Trigger(
     /// https://stackoverflow.com/q/2265503/5169420
 
     // IDE recommends implementing hashCode() it the equals() exists,
-    // According by stackoverflow it is needed for HashMap...
+    // According to stackoverflow it is needed for HashMap...
     override fun hashCode() = id.hashCode()
 
     override fun equals(
