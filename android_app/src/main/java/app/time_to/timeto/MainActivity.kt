@@ -57,14 +57,9 @@ class MainActivity : ComponentActivity() {
                     ) {
 
                         WrapperView {
-
                             FullScreenView(activity = this, onClose = ::upNavigationUI)
-
                             UIListeners()
-
-                            Surface(Modifier.statusBarsPadding()) {
-                                Tabs()
-                            }
+                            Tabs()
                         }
 
                         val autoBackup = LocalAutoBackup.current
