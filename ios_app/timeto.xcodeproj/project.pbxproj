@@ -14,7 +14,6 @@
 		2C2E93F92905759100EAADBE /* TimerPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821AE61EE1FC22CCF8E753 /* TimerPickerSheet.swift */; };
 		2C2E93FA2905B57700EAADBE /* ScrollViewWithVListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318218D93C3456758557A6E0 /* ScrollViewWithVListener.swift */; };
 		2C4044982951FCA800A24521 /* emojis.json in Resources */ = {isa = PBXBuildFile; fileRef = 2C4044972951FCA800A24521 /* emojis.json */; };
-		2C712F32291E6A32008E07C0 /* DIApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318212E051C03BC201C4BE70 /* DIApple.swift */; };
 		2C82BF5A28726E400041BCA3 /* WAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C82BF5928726E400041BCA3 /* WAssets.xcassets */; };
 		2C82BF6528726E400041BCA3 /* W_TabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82BF6428726E400041BCA3 /* W_TabsView.swift */; };
 		2C82BF6728726E400041BCA3 /* W_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82BF6628726E400041BCA3 /* W_App.swift */; };
@@ -51,7 +50,6 @@
 		318216CD611B132D9DE288F3 /* EventsHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821B4BCB049B516BF2DF2E /* EventsHistoryView.swift */; };
 		318216E60DD4CA4153065416 /* utils_apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E58DC92CD5673A6B49E /* utils_apple.swift */; };
 		318216F271691CC07FC67AFC /* ChecklistFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318212FEA97CBD2AEC3AA1D6 /* ChecklistFormSheet.swift */; };
-		318217FE39EBADA74A799BD8 /* DIApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318212E051C03BC201C4BE70 /* DIApple.swift */; };
 		3182185DFB576215349F8005 /* ActivityTimerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821407A6DA0B853D8B1116 /* ActivityTimerSheet.swift */; };
 		31821874203EAD4F021DAD0E /* AutoBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821D5928C18299586075F4 /* AutoBackup.swift */; };
 		318218EA86BCB1BC8830D2E7 /* TabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821CAC31C48C0016357E8C /* TabsView.swift */; };
@@ -129,7 +127,6 @@
 		31821290CB27918CD444FBB0 /* ChecklistItemFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChecklistItemFormSheet.swift; sourceTree = "<group>"; };
 		318212B384624F1CF416C576 /* EventFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventFormSheet.swift; sourceTree = "<group>"; };
 		318212D56D0EAA6EAEF424E4 /* TriggersView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggersView.swift; sourceTree = "<group>"; };
-		318212E051C03BC201C4BE70 /* DIApple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIApple.swift; sourceTree = "<group>"; };
 		318212FEA97CBD2AEC3AA1D6 /* ChecklistFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChecklistFormSheet.swift; sourceTree = "<group>"; };
 		318212FFE80A0856A0A88DCF /* MySpacerSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySpacerSize.swift; sourceTree = "<group>"; };
 		318213DE3B58FA098A8DBAE7 /* TaskSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskSheet.swift; sourceTree = "<group>"; };
@@ -239,7 +236,6 @@
 				2C4044962951FC5400A24521 /* resources */,
 				2C82BF5828726E3F0041BCA3 /* watch */,
 				2C82BF6328726E400041BCA3 /* watch WatchKit Extension */,
-				318212E051C03BC201C4BE70 /* DIApple.swift */,
 				2C2C419628C4CF2A00923267 /* timeto (iOS).entitlements */,
 				2C2C419728C4D83400923267 /* timeto--iOS--Info.plist */,
 				31821E58DC92CD5673A6B49E /* utils_apple.swift */,
@@ -469,7 +465,6 @@
 				2C82BF6728726E400041BCA3 /* W_App.swift in Sources */,
 				318214C7567540476671C2FB /* W_TabTimerView.swift in Sources */,
 				318211D5994178629ED2FA09 /* W_TabTasksView.swift in Sources */,
-				2C712F32291E6A32008E07C0 /* DIApple.swift in Sources */,
 				31821ED40BEA91336DBFE0B4 /* W_TickerDialog.swift in Sources */,
 				318216E60DD4CA4153065416 /* utils_apple.swift in Sources */,
 			);
@@ -522,7 +517,6 @@
 				31821F8486D3EF0F71B8F254 /* ActivityEmojiPickerView.swift in Sources */,
 				318216CD611B132D9DE288F3 /* EventsHistoryView.swift in Sources */,
 				31821A329A5D1AE8F7CB0604 /* EventFormSheet.swift in Sources */,
-				318217FE39EBADA74A799BD8 /* DIApple.swift in Sources */,
 				318219E4F8AFEB280A077F74 /* utils_apple.swift in Sources */,
 				318210CF629A7E593B9F8FE4 /* ChecklistItemFormSheet.swift in Sources */,
 				31821DF974247D110D01C3A2 /* TaskSheet.swift in Sources */,

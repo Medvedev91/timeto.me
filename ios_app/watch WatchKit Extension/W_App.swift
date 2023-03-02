@@ -21,7 +21,6 @@ struct W_App: App {
 
                 if state.isAppReady {
                     W_TabsView()
-                            .attachDIApple()
                 } else if let syncBtnText = state.syncBtnTextOrNull {
                     Button(syncBtnText) {
                         vm.sync(doForceOrOnce: true)

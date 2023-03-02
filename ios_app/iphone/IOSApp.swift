@@ -31,7 +31,6 @@ struct IOSApp: App {
                             .attachTimetoAlert()
                             .attachAutoBackup()
                             .attachTimerFullScreenView()
-                            .attachDIApple()
                             .onReceive(scheduledNotificationsDataPublisher) {
                                 let center = UNUserNotificationCenter.current()
                                 center.removeAllPendingNotificationRequests()
