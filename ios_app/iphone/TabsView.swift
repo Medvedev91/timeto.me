@@ -38,6 +38,7 @@ struct TabsView: View {
     @State private var isTriggersChecklistPresented = false
 
     private let shortcutPublisher: AnyPublisher<ShortcutModel, Never> = UtilsKt.uiShortcutFlow.toPublisher()
+    private let checklistPublisher: AnyPublisher<ChecklistModel, Never> = UtilsKt.uiChecklistFlow.toPublisher()
 
     var body: some View {
         if let loadingView = loadingView {
@@ -89,27 +90,6 @@ struct TabsView: View {
                         }
                         .tag(TabsView.TAB_ID_TOOLS)
             }
-                    .onChange(of: diApple.lastInterval?.id) { _ in
-                        /// #GD AUTOSTART_TRIGGERS
-                        if let lastInterval = diApple.lastInterval, (lastInterval.id + 3 > time()) {
-                            let stringToCheckTriggers = lastInterval.note ?? lastInterval.getActivityDI().name
-                            guard let trigger = TextFeatures.companion.parse(initText: stringToCheckTriggers).triggers.first else {
-                                return
-                            }
-                            if let trigger = trigger as? Trigger.Checklist {
-                                triggersChecklist = trigger.checklist
-                                isTriggersChecklistPresented = true
-                                return
-                            }
-                            if let trigger = trigger as? Trigger.Shortcut {
-                                performShortcutOrError(trigger.shortcut) { error in
-                                    UtilsKt.showUiAlert(message: error, reportApiText: nil)
-                                }
-                                return
-                            }
-                            fatalError("invalid trigger type")
-                        }
-                    }
                     .onReceive(shortcutPublisher) { shortcut in
                         let swiftURL = URL(string: shortcut.uri)!
                         if !UIApplication.shared.canOpenURL(swiftURL) {
@@ -117,6 +97,10 @@ struct TabsView: View {
                             return
                         }
                         UIApplication.shared.open(swiftURL)
+                    }
+                    .onReceive(checklistPublisher) { checklist in
+                        triggersChecklist = checklist
+                        isTriggersChecklistPresented = true
                     }
                     .sheetEnv(isPresented: $isTriggersChecklistPresented) {
                         if let checklist = triggersChecklist {
