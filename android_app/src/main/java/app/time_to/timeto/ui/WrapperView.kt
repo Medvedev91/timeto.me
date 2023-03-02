@@ -16,6 +16,55 @@ import app.time_to.timeto.setTrue
 import kotlinx.coroutines.delay
 import timeto.shared.launchExDefault
 
+object WrapperView {
+
+    @Composable
+    fun LayoutView(
+        content: @Composable () -> Unit
+    ) {
+
+        val layers = LocalWrapperViewLayers.current
+
+        Box {
+
+            content()
+
+            layers.forEach { layer ->
+
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = layer.alignment,
+                ) {
+
+                    AnimatedVisibility(
+                        layer.isPresented.value,
+                        enter = fadeIn(),
+                        exit = fadeOut(),
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(Color(0x55000000))
+                                .clickable { layer.onClose(layer) }
+                        )
+                    }
+
+                    AnimatedVisibility(
+                        layer.isPresented.value,
+                        enter = layer.enterAnimation,
+                        exit = layer.exitAnimation,
+                    ) {
+                        BackHandler(layer.isPresented.value) {
+                            layer.onClose(layer)
+                        }
+                        layer.content(layer)
+                    }
+                }
+            }
+        }
+    }
+}
+
 class WrapperView__LayerData(
     val isPresented: MutableState<Boolean>,
     val onClose: (WrapperView__LayerData) -> Unit,
@@ -55,52 +104,4 @@ fun WrapperView__LayerData.removeOneTimeLayer(
     this@removeOneTimeLayer.isPresented.setFalse()
     delay(500) // Waiting for animation
     allLayers.remove(this@removeOneTimeLayer)
-}
-
-//////
-
-@Composable
-fun WrapperView(
-    content: @Composable () -> Unit
-) {
-
-    val layers = LocalWrapperViewLayers.current
-
-    Box {
-
-        content()
-
-        layers.forEach { layer ->
-
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = layer.alignment,
-            ) {
-
-                AnimatedVisibility(
-                    layer.isPresented.value,
-                    enter = fadeIn(),
-                    exit = fadeOut(),
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(Color(0x55000000))
-                            .clickable { layer.onClose(layer) }
-                    )
-                }
-
-                AnimatedVisibility(
-                    layer.isPresented.value,
-                    enter = layer.enterAnimation,
-                    exit = layer.exitAnimation,
-                ) {
-                    BackHandler(layer.isPresented.value) {
-                        layer.onClose(layer)
-                    }
-                    layer.content(layer)
-                }
-            }
-        }
-    }
 }

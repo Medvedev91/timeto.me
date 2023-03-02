@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
                         LocalWrapperViewLayers provides remember { mutableStateListOf() }
                     ) {
 
-                        WrapperView {
+                        WrapperView.LayoutView {
                             TabsView()
                             UIListeners()
                             FullScreenView(activity = this, onClose = ::upNavigationUI)
