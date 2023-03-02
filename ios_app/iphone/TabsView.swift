@@ -6,8 +6,6 @@ struct TabsView: View {
 
     @State private var vm = TabsVM()
 
-    @EnvironmentObject private var diApple: DIApple
-
     static var lastInstance: TabsView? = nil
 
     /// https://stackoverflow.com/a/59972635
