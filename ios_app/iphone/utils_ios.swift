@@ -42,18 +42,6 @@ func cosDegrees(_ degrees: Double) -> Double {
     cos(degrees * Double.pi / 180.0)
 }
 
-func performShortcutOrError(
-        _ shortcut: ShortcutModel,
-        onError: (String) -> Void
-) {
-    let swiftURL = URL(string: shortcut.uri)!
-    if !UIApplication.shared.canOpenURL(swiftURL) {
-        onError("Invalid shortcut link")
-        return
-    }
-    UIApplication.shared.open(swiftURL)
-}
-
 /// Sheet uses default colors. Set by hardcode.
 extension UIColor {
 
