@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 import shared
 
 struct TabsView: View {
@@ -35,6 +36,8 @@ struct TabsView: View {
 
     @State private var triggersChecklist: ChecklistModel?
     @State private var isTriggersChecklistPresented = false
+
+    private let shortcutPublisher: AnyPublisher<ShortcutModel, Never> = UtilsKt.uiShortcutFlow.toPublisher()
 
     var body: some View {
         if let loadingView = loadingView {
@@ -106,6 +109,14 @@ struct TabsView: View {
                             }
                             fatalError("invalid trigger type")
                         }
+                    }
+                    .onReceive(shortcutPublisher) { shortcut in
+                        let swiftURL = URL(string: shortcut.uri)!
+                        if !UIApplication.shared.canOpenURL(swiftURL) {
+                            UtilsKt.showUiAlert(message: "Invalid shortcut link", reportApiText: nil)
+                            return
+                        }
+                        UIApplication.shared.open(swiftURL)
                     }
                     .sheetEnv(isPresented: $isTriggersChecklistPresented) {
                         if let checklist = triggersChecklist {
