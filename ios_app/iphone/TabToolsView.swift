@@ -535,9 +535,7 @@ struct ToolsView_ShortcutView: View {
     private var itemView: some View {
         Button(
                 action: {
-                    performShortcutOrError(shortcut) { error in
-                        UtilsKt.showUiAlert(message: error, reportApiText: nil)
-                    }
+                    shortcut.performUI()
                 },
                 label: {
                     HStack {
