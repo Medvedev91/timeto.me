@@ -136,16 +136,7 @@ struct TriggersView__ListItem: View {
     var body: some View {
         Button(
                 action: {
-                    if let trigger = trigger as? Trigger.Checklist {
-                        checklist = trigger.checklist
-                        isChecklistPresented = true
-                    } else if let trigger = trigger as? Trigger.Shortcut {
-                        performShortcutOrError(trigger.shortcut) { error in
-                            UtilsKt.showUiAlert(message: error, reportApiText: nil)
-                        }
-                    } else {
-                        fatalError("TriggersView__ListItem")
-                    }
+                    trigger.performUI()
                 },
                 label: {
                     Text(trigger.title)
