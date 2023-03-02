@@ -41,13 +41,13 @@ fun TabTimerView() {
 
     val scope = rememberCoroutineScope()
 
-    val isSummaryPresented = remember { mutableStateOf(false) }
+    val isChartPresented = remember { mutableStateOf(false) }
     MyDialog(
-        isPresented = isSummaryPresented,
+        isPresented = isChartPresented,
         modifier = Modifier.fillMaxHeight(0.95f),
         paddingValues = PaddingValues()
     ) {
-        ChartView(isSummaryPresented)
+        ChartView(isChartPresented)
     }
 
     val isHistoryPresented = remember { mutableStateOf(false) }
@@ -297,7 +297,7 @@ fun TabTimerView() {
                                 .clip(MySquircleShape())
                                 .background(c.background2)
                                 .clickable {
-                                    isSummaryPresented.value = true
+                                    isChartPresented.value = true
                                 },
                             contentAlignment = Alignment.BottomCenter,
                         ) {
