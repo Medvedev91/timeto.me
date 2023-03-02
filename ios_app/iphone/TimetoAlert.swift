@@ -17,6 +17,8 @@ private struct TimetoAlert__Modifier: ViewModifier {
     private let alertPublisher: AnyPublisher<UIAlertData, Never> = UtilsKt.uiAlertFlow.toPublisher()
     private let confirmationPublisher: AnyPublisher<UIConfirmationData, Never> = UtilsKt.uiConfirmationFlow.toPublisher()
 
+    private let shortcutPublisher: AnyPublisher<ShortcutModel, Never> = UtilsKt.uiShortcutFlow.toPublisher()
+
     func body(content: Content) -> some View {
 
         content
@@ -54,6 +56,14 @@ private struct TimetoAlert__Modifier: ViewModifier {
                             onConfirm: data.onConfirm,
                             isDestructive: data.isRed
                     )
+                }
+                .onReceive(shortcutPublisher) { shortcut in
+                    let swiftURL = URL(string: shortcut.uri)!
+                    if !UIApplication.shared.canOpenURL(swiftURL) {
+                        UtilsKt.showUiAlert(message: "Invalid shortcut link", reportApiText: nil)
+                        return
+                    }
+                    UIApplication.shared.open(swiftURL)
                 }
     }
 }
