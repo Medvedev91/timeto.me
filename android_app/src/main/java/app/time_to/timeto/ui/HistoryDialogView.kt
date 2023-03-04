@@ -28,7 +28,7 @@ import timeto.shared.*
 import timeto.shared.vm.HistoryVM
 
 @Composable
-fun HistoryView(
+fun HistoryDialogView(
     onClose: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()

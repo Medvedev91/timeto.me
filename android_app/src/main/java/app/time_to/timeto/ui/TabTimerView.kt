@@ -312,7 +312,7 @@ fun TabTimerView() {
                                         layers = layers,
                                         modifier = Modifier.fillMaxHeight(0.95f),
                                     ) { layer ->
-                                        HistoryView(layer::close)
+                                        HistoryDialogView(layer::close)
                                     }
                                 },
                             contentAlignment = Alignment.BottomCenter,
