@@ -36,6 +36,8 @@ fun HistoryDialogView(
 
     val (vm, state) = rememberVM { HistoryVM() }
 
+    val layers = LocalWrapperViewLayers.current
+
     Box(
         contentAlignment = Alignment.BottomCenter,
         modifier = Modifier.background(c.background2),
@@ -83,20 +85,6 @@ fun HistoryDialogView(
 
                             if (!intervalUI.isStartsPrevDay) {
 
-                                val isEditIntervalPresented = remember { mutableStateOf(false) }
-                                MyDatePicker__Dialog(
-                                    isDialogPresented = isEditIntervalPresented,
-                                    defaultTime = interval.unixTime(),
-                                    minPickableDay = state.minPickerDay,
-                                    minSaveableDay = state.minPickerDay,
-                                    maxDay = UnixTime().localDay,
-                                    title = null,
-                                    withTimeBtnText = "Save",
-                                    onSelect = { selectedTime ->
-                                        intervalUI.upTime(selectedTime)
-                                    }
-                                )
-
                                 AnimatedVisibility(isEditMode) {
                                     Row(modifier = Modifier.padding(top = 1.dp)) {
                                         Icon(
@@ -120,7 +108,19 @@ fun HistoryDialogView(
                                                 .size(24.dp)
                                                 .clip(RoundedCornerShape(99.dp))
                                                 .clickable {
-                                                    isEditIntervalPresented.value = true
+                                                    MyDialog.showDatePicker(
+                                                        layers = layers,
+                                                        defaultTime = interval.unixTime(),
+                                                        minPickableDay = state.minPickerDay,
+                                                        minSavableDay = state.minPickerDay,
+                                                        maxDay = UnixTime().localDay,
+                                                        title = null,
+                                                        withTimeBtnText = "Save",
+                                                        onSelect = { selectedTime ->
+                                                            intervalUI.upTime(selectedTime)
+                                                        }
+                                                    )
+
                                                 }
                                                 .padding(5.dp)
                                         )
