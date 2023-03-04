@@ -285,7 +285,7 @@ fun TabTimerView() {
                                         layers = layers,
                                         modifier = Modifier.fillMaxHeight(0.95f),
                                     ) { layer ->
-                                        ChartView(layer::close)
+                                        ChartDialogView(layer::close)
                                     }
                                 },
                             contentAlignment = Alignment.BottomCenter,

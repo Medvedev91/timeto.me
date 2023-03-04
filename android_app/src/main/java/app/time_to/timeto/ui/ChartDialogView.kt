@@ -29,7 +29,7 @@ import timeto.shared.UnixTime
 import timeto.shared.vm.ChartVM
 
 @Composable
-fun ChartView(
+fun ChartDialogView(
     onClose: () -> Unit,
 ) {
 
