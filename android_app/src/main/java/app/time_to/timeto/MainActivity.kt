@@ -95,7 +95,6 @@ class MainActivity : ComponentActivity() {
 private fun UIListeners() {
     val context = LocalContext.current
     val layers = LocalWrapperViewLayers.current
-    val checklistBgColor = c.background
     LaunchedEffect(Unit) {
         uiAlertFlow.onEachExIn(this) { data ->
             MyDialog.show(layers = layers) { layer ->
@@ -115,11 +114,9 @@ private fun UIListeners() {
             }
         }
         uiChecklistFlow.onEachExIn(this) { checklist ->
-            ChecklistDialog__show(
-                checklist = checklist,
-                allLayers = layers,
-                backgroundColor = checklistBgColor,
-            )
+            MyDialog.show(layers = layers) { layer ->
+                ChecklistDialogView(checklist) { layer.onClose(layer) }
+            }
         }
     }
 }
