@@ -40,22 +40,22 @@ fun MyDatePicker(
     withTimeBtnText: String? = null,
     onSelect: (UnixTime) -> Unit,
 ) {
-    val isDialogPresented = remember { mutableStateOf(false) }
-    MyDatePicker__Dialog(
-        isDialogPresented = isDialogPresented,
-        defaultTime = defaultTime,
-        minPickableDay = minPickableDay,
-        minSaveableDay = minSaveableDay,
-        maxDay = maxDay,
-        withTimeBtnText = withTimeBtnText,
-        onSelect = onSelect
-    )
-
+    val layers = LocalWrapperViewLayers.current
     val calendar = Calendar.getInstance(Locale.ENGLISH)
     calendar.timeInMillis = defaultTime.time * 1_000L
     MyDatePicker__Button(
         modifier = modifier,
-        onClick = { isDialogPresented.value = true }
+        onClick = {
+            MyDialog.showDatePicker(
+                layers = layers,
+                defaultTime = defaultTime,
+                minPickableDay = minPickableDay,
+                minSavableDay = minSaveableDay,
+                maxDay = maxDay,
+                withTimeBtnText = withTimeBtnText,
+                onSelect = onSelect
+            )
+        }
     ) {
         val is0000 = defaultTime.localDayStartTime() == defaultTime.time
         val format = if (is0000) "d MMM, E" else "d MMM, E HH:mm"
