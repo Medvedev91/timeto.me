@@ -275,18 +275,13 @@ fun TabToolsView() {
 
             //////
 
-            val isDayStartPresented = remember { mutableStateOf(false) }
-            DayStartDialog(
-                isPresented = isDayStartPresented,
-                tabToolsVM = vm,
-                tabToolsState = state,
-            )
-
             MyListView__ItemView(
                 isFirst = false,
                 isLast = true,
                 withTopDivider = true,
             ) {
+
+                val layers = LocalWrapperViewLayers.current
 
                 MyListView__ItemView__ButtonView(
                     text = "Day Start",
@@ -297,7 +292,13 @@ fun TabToolsView() {
                         )
                     }
                 ) {
-                    isDayStartPresented.value = true
+                    MyDialog.show(layers) { layer ->
+                        DayStartDialogView(
+                            tabToolsVM = vm,
+                            tabToolsState = state,
+                            onClose = layer::close
+                        )
+                    }
                 }
             }
         }
@@ -469,68 +470,69 @@ fun TabToolsView() {
 }
 
 @Composable
-private fun DayStartDialog(
-    isPresented: MutableState<Boolean>,
+private fun DayStartDialogView(
     tabToolsVM: TabToolsVM,
     tabToolsState: TabToolsVM.State,
+    onClose: () -> Unit,
 ) {
-    MyDialog(isPresented) {
+    Column(
+        modifier = Modifier
+            .background(c.background2)
+            .padding(20.dp)
+    ) {
 
-        Column {
+        Text(
+            "Day Start",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.W500,
+        )
+
+        val items = tabToolsState.dayStartListItems
+        var selectedItem by remember { mutableStateOf(tabToolsState.dayStartSelectedIdx) }
+
+        AndroidView(
+            modifier = Modifier
+                .padding(top = 10.dp)
+                .size(100.dp, 150.dp)
+                .align(Alignment.CenterHorizontally),
+            factory = { context ->
+                NumberPicker(context).apply {
+                    displayedValues = items.map { it.note }.toTypedArray()
+                    setOnValueChangedListener { _, _, new ->
+                        selectedItem = new
+                    }
+                    wrapSelectorWheel = false
+                    minValue = 0
+                    maxValue = items.size - 1
+                    value = selectedItem // Set last
+                }
+            }
+        )
+
+        //
+        //
+
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .padding(top = 24.dp),
+            horizontalArrangement = Arrangement.End,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
 
             Text(
-                "Day Start",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.W500,
-            )
-
-            val items = tabToolsState.dayStartListItems
-            var selectedItem by remember { mutableStateOf(tabToolsState.dayStartSelectedIdx) }
-
-            AndroidView(
+                "Cancel",
+                color = c.textSecondary,
                 modifier = Modifier
-                    .padding(top = 10.dp)
-                    .size(100.dp, 150.dp)
-                    .align(Alignment.CenterHorizontally),
-                factory = { context ->
-                    NumberPicker(context).apply {
-                        displayedValues = items.map { it.note }.toTypedArray()
-                        setOnValueChangedListener { _, _, new ->
-                            selectedItem = new
-                        }
-                        wrapSelectorWheel = false
-                        minValue = 0
-                        maxValue = items.size - 1
-                        value = selectedItem // Set last
-                    }
-                }
+                    .padding(end = 11.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .clickable { onClose() }
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
             )
 
-            //
-            //
-
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(top = 24.dp),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-
-                Text(
-                    "Cancel",
-                    color = c.textSecondary,
-                    modifier = Modifier
-                        .padding(end = 11.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .clickable { isPresented.value = false }
-                        .padding(horizontal = 8.dp, vertical = 4.dp)
-                )
-
-                MyButton("Save", true, c.blue) {
-                    tabToolsVM.upDayStartOffsetSeconds(items[selectedItem].seconds) {
-                        isPresented.value = false
-                    }
+            MyButton("Save", true, c.blue) {
+                tabToolsVM.upDayStartOffsetSeconds(items[selectedItem].seconds) {
+                    onClose()
                 }
             }
         }
