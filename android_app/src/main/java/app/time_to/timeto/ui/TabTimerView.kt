@@ -41,15 +41,6 @@ fun TabTimerView() {
 
     val scope = rememberCoroutineScope()
 
-    val isHistoryPresented = remember { mutableStateOf(false) }
-    MyDialog(
-        isPresented = isHistoryPresented,
-        modifier = Modifier.fillMaxHeight(0.95f),
-        paddingValues = PaddingValues()
-    ) {
-        HistoryView(isHistoryPresented)
-    }
-
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -294,7 +285,7 @@ fun TabTimerView() {
                                         layers = layers,
                                         modifier = Modifier.fillMaxHeight(0.95f),
                                     ) { layer ->
-                                        ChartView { layer.close() }
+                                        ChartView(layer::close)
                                     }
                                 },
                             contentAlignment = Alignment.BottomCenter,
@@ -317,7 +308,12 @@ fun TabTimerView() {
                                 .clip(MySquircleShape())
                                 .background(c.background2)
                                 .clickable {
-                                    isHistoryPresented.value = true
+                                    MyDialog.show(
+                                        layers = layers,
+                                        modifier = Modifier.fillMaxHeight(0.95f),
+                                    ) { layer ->
+                                        HistoryView(layer::close)
+                                    }
                                 },
                             contentAlignment = Alignment.BottomCenter,
                         ) {

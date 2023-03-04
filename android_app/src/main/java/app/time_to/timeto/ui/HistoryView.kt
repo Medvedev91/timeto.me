@@ -29,14 +29,17 @@ import timeto.shared.vm.HistoryVM
 
 @Composable
 fun HistoryView(
-    isPresented: MutableState<Boolean>,
+    onClose: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     var isEditMode by remember { mutableStateOf(false) }
 
     val (vm, state) = rememberVM { HistoryVM() }
 
-    Box(contentAlignment = Alignment.BottomCenter) {
+    Box(
+        contentAlignment = Alignment.BottomCenter,
+        modifier = Modifier.background(c.background2),
+    ) {
 
         val scrollState = rememberLazyListState()
         var listHeight by remember { mutableStateOf(0) }
@@ -319,7 +322,7 @@ fun HistoryView(
                     .clip(RoundedCornerShape(99.dp))
                     .background(c.background2)
                     .clickable {
-                        isPresented.value = false
+                        onClose()
                     }
                     .padding(4.dp)
             )
