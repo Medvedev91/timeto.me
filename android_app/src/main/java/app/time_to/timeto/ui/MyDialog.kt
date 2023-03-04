@@ -22,6 +22,39 @@ import app.time_to.timeto.setFalse
 import timeto.shared.UIAlertData
 import timeto.shared.UIConfirmationData
 
+object MyDialog {
+
+    fun show(
+        layers: MutableList<WrapperView__LayerData>,
+        modifier: Modifier = Modifier,
+        margin: PaddingValues = PaddingValues(horizontal = 20.dp),
+        content: @Composable (WrapperView__LayerData) -> Unit
+    ) {
+        val isPresented = mutableStateOf(false)
+        WrapperView__LayerData(
+            isPresented = isPresented,
+            onClose = { layer ->
+                layer.removeOneTimeLayer(layers)
+            },
+            enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessMedium)),
+            exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessMedium)),
+            alignment = Alignment.Center,
+            content = { layer ->
+                Box(
+                    modifier
+                        .systemBarsPadding()
+                        .imePadding()
+                        .padding(margin)
+                        .clip(MySquircleShape(80f))
+                        .pointerInput(Unit) { }
+                ) {
+                    content(layer)
+                }
+            }
+        ).showOneTime(layers)
+    }
+}
+
 @Composable
 fun MyDialog(
     isPresented: MutableState<Boolean>,
