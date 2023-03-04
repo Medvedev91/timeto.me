@@ -237,29 +237,6 @@ fun HistoryDialogView(
                     val headerHeight = 26.dp
                     val headerVerticalPadding = 20.dp
 
-                    val isDialogPresented = remember { mutableStateOf(false) }
-                    MyDatePicker__Dialog(
-                        isDialogPresented = isDialogPresented,
-                        defaultTime = UnixTime.byLocalDay(section.day),
-                        minPickableDay = state.minPickerDay,
-                        minSaveableDay = state.minPickerDay,
-                        maxDay = UnixTime().localDay,
-                        onSelect = { selectedTime ->
-                            scope.launchEx {
-                                val dayToMove = vm.calcDayToMove(selectedTime.localDay)
-                                val sectionsLater = state.sections.filter { it.day >= dayToMove }
-                                // Header indexes + sum of elements in them
-                                val index = sectionsLater.count() - 1 + sectionsLater.sumOf { it.intervals.size }
-                                val offset = -(listHeight
-                                        - dpToPx((listContentPadding.calculateTopPadding() + listContentPadding.calculateBottomPadding()).value)
-                                        - dpToPx(headerHeight.value)
-                                        - dpToPx(headerVerticalPadding.value)
-                                        )
-                                scrollState.animateScrollToItem(index, offset)
-                            }
-                        }
-                    )
-
                     Box(
                         Modifier
                             .fillMaxWidth()
@@ -274,7 +251,27 @@ fun HistoryDialogView(
                                 .clip(RoundedCornerShape(99))
                                 .background(c.blue)
                                 .clickable {
-                                    isDialogPresented.value = true
+                                    MyDialog.showDatePicker(
+                                        layers = layers,
+                                        defaultTime = UnixTime.byLocalDay(section.day),
+                                        minPickableDay = state.minPickerDay,
+                                        minSavableDay = state.minPickerDay,
+                                        maxDay = UnixTime().localDay,
+                                        onSelect = { selectedTime ->
+                                            scope.launchEx {
+                                                val dayToMove = vm.calcDayToMove(selectedTime.localDay)
+                                                val sectionsLater = state.sections.filter { it.day >= dayToMove }
+                                                // Header indexes + sum of elements in them
+                                                val index = sectionsLater.count() - 1 + sectionsLater.sumOf { it.intervals.size }
+                                                val offset = -(listHeight
+                                                        - dpToPx((listContentPadding.calculateTopPadding() + listContentPadding.calculateBottomPadding()).value)
+                                                        - dpToPx(headerHeight.value)
+                                                        - dpToPx(headerVerticalPadding.value)
+                                                        )
+                                                scrollState.animateScrollToItem(index, offset)
+                                            }
+                                        }
+                                    )
                                 }
                                 .padding(horizontal = 9.dp)
                                 .padding(bottom = 0.5.dp)
@@ -337,6 +334,7 @@ private fun AddIntervalDialogView(
     onClose: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
+    val layers = LocalWrapperViewLayers.current
 
     Box(Modifier.background(c.background)) {
 
@@ -348,24 +346,6 @@ private fun AddIntervalDialogView(
 
             itemsIndexed(state.activitiesFormAddUI, key = { _, item -> item.activity.id }) { _, activityUI ->
 
-                val isAddCalendarPresented = remember { mutableStateOf(false) }
-                MyDatePicker__Dialog(
-                    isDialogPresented = isAddCalendarPresented,
-                    defaultTime = UnixTime(defaultTime),
-                    minPickableDay = 0,
-                    minSaveableDay = 0,
-                    maxDay = UnixTime().localDay,
-                    title = null,
-                    withTimeBtnText = "Save",
-                    onSelect = { selectedTime ->
-                        activityUI.addInterval(selectedTime) {
-                            scope.launchEx {
-                                onClose()
-                            }
-                        }
-                    }
-                )
-
                 val isFirst = state.activitiesFormAddUI.first() == activityUI
                 MyListView__ItemView(
                     isFirst = isFirst,
@@ -375,7 +355,22 @@ private fun AddIntervalDialogView(
                     MyListView__ItemView__ButtonView(
                         text = activityUI.activity.nameWithEmoji(),
                     ) {
-                        isAddCalendarPresented.value = true
+                        MyDialog.showDatePicker(
+                            layers = layers,
+                            defaultTime = UnixTime(defaultTime),
+                            minPickableDay = 0,
+                            minSavableDay = 0,
+                            maxDay = UnixTime().localDay,
+                            title = null,
+                            withTimeBtnText = "Save",
+                            onSelect = { selectedTime ->
+                                activityUI.addInterval(selectedTime) {
+                                    scope.launchEx {
+                                        onClose()
+                                    }
+                                }
+                            }
+                        )
                     }
                 }
             }
