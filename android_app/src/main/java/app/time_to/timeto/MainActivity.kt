@@ -106,7 +106,9 @@ private fun UIListeners() {
     val checklistBgColor = c.background
     LaunchedEffect(Unit) {
         uiAlertFlow.onEachExIn(this) { data ->
-            showAlert(layers = layers, data = data)
+            MyDialog.show(layers = layers) { layer ->
+                AlertDialogView(data) { layer.onClose(layer) }
+            }
         }
         uiConfirmationFlow.onEachExIn(this) { data ->
             showConfirmation(layers = layers, data = data)
@@ -124,43 +126,6 @@ private fun UIListeners() {
                 allLayers = layers,
                 backgroundColor = checklistBgColor,
             )
-        }
-    }
-}
-
-private fun showAlert(
-    layers: MutableList<WrapperView__LayerData>,
-    data: UIAlertData,
-) {
-    MyDialog.show(
-        layers = layers,
-    ) { layer ->
-
-        Column(
-            modifier = Modifier
-                .background(c.background2)
-                .padding(20.dp)
-        ) {
-
-            Text(
-                text = data.message,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(all = 5.dp)
-            )
-
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(top = 18.dp),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-
-                MyButton("OK", true, c.blue) {
-                    layer.onClose(layer)
-                }
-            }
         }
     }
 }
