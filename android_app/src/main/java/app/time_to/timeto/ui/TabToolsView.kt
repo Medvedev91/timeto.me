@@ -91,6 +91,8 @@ fun TabToolsView() {
         }
     }
 
+    val layers = LocalWrapperViewLayers.current
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -105,14 +107,13 @@ fun TabToolsView() {
             MyListView__HeaderView(
                 title = "CHECKLISTS",
                 rightView = {
-                    val isChecklistNewPresented = remember { mutableStateOf(false) }
-                    ChecklistEditDialog(editedChecklist = null, isPresented = isChecklistNewPresented)
-
                     MyListView__HeaderView__RightIcon(
                         iconId = R.drawable.ic_round_add_24,
                         contentDescription = "New Checklist"
                     ) {
-                        isChecklistNewPresented.value = true
+                        MyDialog.show(layers) { layer ->
+                            ChecklistEditDialog(editedChecklist = null, onClose = layer::close)
+                        }
                     }
                 }
             )
@@ -123,9 +124,6 @@ fun TabToolsView() {
             item { MyListView__Padding__HeaderSection() }
 
         itemsIndexed(checklists, key = { _, checklist -> checklist.id }) { _, checklist ->
-
-            val isChecklistEditPresented = remember { mutableStateOf(false) }
-            ChecklistEditDialog(editedChecklist = checklist, isPresented = isChecklistEditPresented)
 
             val isFirst = checklists.first() == checklist
 
@@ -156,7 +154,9 @@ fun TabToolsView() {
                         }
                     },
                     onStart = {
-                        isChecklistEditPresented.value = true
+                        MyDialog.show(layers) { layer ->
+                            ChecklistEditDialog(editedChecklist = checklist, onClose = layer::close)
+                        }
                         false
                     },
                     onEnd = {
@@ -280,8 +280,6 @@ fun TabToolsView() {
                 isLast = true,
                 withTopDivider = true,
             ) {
-
-                val layers = LocalWrapperViewLayers.current
 
                 MyListView__ItemView__ButtonView(
                     text = "Day Start",

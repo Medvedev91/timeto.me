@@ -1,5 +1,6 @@
 package app.time_to.timeto.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,66 +19,64 @@ import timeto.shared.vm.ChecklistFormVM
 @Composable
 fun ChecklistEditDialog(
     editedChecklist: ChecklistModel?,
-    isPresented: MutableState<Boolean>,
+    onClose: () -> Unit,
 ) {
 
-    MyDialog(
-        isPresented,
-        backgroundColor = c.bgFormSheet
+    val (vm, state) = rememberVM(editedChecklist) { ChecklistFormVM(editedChecklist) }
+
+    Column(
+        modifier = Modifier
+            .background(c.bgFormSheet)
+            .padding(20.dp)
     ) {
 
-        val (vm, state) = rememberVM(editedChecklist) { ChecklistFormVM(editedChecklist) }
+        Text(
+            editedChecklist?.name ?: "New Checklist",
+            modifier = Modifier
+                .padding(start = 10.dp, bottom = 15.dp),
+            fontSize = 24.sp,
+            fontWeight = FontWeight.W500,
+        )
 
-        Column {
+        //
+        //
+
+        MyListView__ItemView(
+            isFirst = true,
+            isLast = true,
+            outerPadding = PaddingValues(horizontal = 8.dp)
+        ) {
+            MyListView__ItemView__TextInputView(
+                placeholder = "Name",
+                text = state.inputNameValue,
+                onTextChanged = { vm.setInputName(it) },
+                isAutofocus = true,
+            )
+        }
+
+        ////
+
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .padding(top = 24.dp),
+            horizontalArrangement = Arrangement.End,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
 
             Text(
-                editedChecklist?.name ?: "New Checklist",
+                "Cancel",
+                color = c.textSecondary,
                 modifier = Modifier
-                    .padding(start = 10.dp, bottom = 15.dp),
-                fontSize = 24.sp,
-                fontWeight = FontWeight.W500,
+                    .padding(end = 11.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .clickable { onClose() }
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
             )
 
-            //
-            //
-
-            MyListView__ItemView(
-                isFirst = true,
-                isLast = true,
-                outerPadding = PaddingValues(horizontal = 8.dp)
-            ) {
-                MyListView__ItemView__TextInputView(
-                    placeholder = "Name",
-                    text = state.inputNameValue,
-                    onTextChanged = { vm.setInputName(it) },
-                    isAutofocus = true,
-                )
-            }
-
-            ////
-
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(top = 24.dp),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-
-                Text(
-                    "Cancel",
-                    color = c.textSecondary,
-                    modifier = Modifier
-                        .padding(end = 11.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .clickable { isPresented.value = false }
-                        .padding(horizontal = 8.dp, vertical = 4.dp)
-                )
-
-                MyButton("Save", state.isSaveEnabled, c.blue) {
-                    vm.save {
-                        isPresented.value = false
-                    }
+            MyButton("Save", state.isSaveEnabled, c.blue) {
+                vm.save {
+                    onClose()
                 }
             }
         }
