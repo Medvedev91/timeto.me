@@ -281,7 +281,7 @@ suspend fun rescheduleNotifications() {
 }
 
 ///
-/// UI Alert/Confirmation/Triggers
+/// UI Alert / Confirmation / Triggers
 
 val uiAlertFlow = MutableSharedFlow<UIAlertData>()
 
@@ -298,7 +298,7 @@ fun showUiAlert(
         reportApi(reportApiText)
 }
 
-///
+//
 
 val uiConfirmationFlow = MutableSharedFlow<UIConfirmationData>()
 
@@ -313,7 +313,7 @@ fun showUiConfirmation(data: UIConfirmationData) {
     launchExDefault { uiConfirmationFlow.emit(data) }
 }
 
-///
+//
 
 val uiShortcutFlow = MutableSharedFlow<ShortcutModel>()
 
