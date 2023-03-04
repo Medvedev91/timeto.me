@@ -521,7 +521,7 @@ private fun TimerView(
                         .size(40.dp)
                         .clip(RoundedCornerShape(99.dp))
                         .clickable {
-                            FullScreenUI.open()
+                            showUiFullScreen()
                         }
                         .padding(11.dp)
                 )

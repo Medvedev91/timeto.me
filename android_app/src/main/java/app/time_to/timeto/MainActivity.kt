@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
                         WrapperView.LayoutView {
                             TabsView()
                             UIListeners()
-                            FullScreenView(activity = this, onClose = ::upNavigationUI)
+                            FullScreenListener(activity = this, onClose = ::upNavigationUI)
                         }
 
                         val autoBackup = LocalAutoBackup.current
