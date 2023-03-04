@@ -41,15 +41,6 @@ fun TabTimerView() {
 
     val scope = rememberCoroutineScope()
 
-    val isChartPresented = remember { mutableStateOf(false) }
-    MyDialog(
-        isPresented = isChartPresented,
-        modifier = Modifier.fillMaxHeight(0.95f),
-        paddingValues = PaddingValues()
-    ) {
-        ChartView(isChartPresented)
-    }
-
     val isHistoryPresented = remember { mutableStateOf(false) }
     MyDialog(
         isPresented = isHistoryPresented,
@@ -291,13 +282,20 @@ fun TabTimerView() {
                         modifier = Modifier.padding(top = 20.dp)
                     ) {
 
+                        val layers = LocalWrapperViewLayers.current
+
                         Box(
                             modifier = Modifier
                                 .weight(1f)
                                 .clip(MySquircleShape())
                                 .background(c.background2)
                                 .clickable {
-                                    isChartPresented.value = true
+                                    MyDialog.show(
+                                        layers = layers,
+                                        modifier = Modifier.fillMaxHeight(0.95f),
+                                    ) { layer ->
+                                        ChartView { layer.onClose(layer) }
+                                    }
                                 },
                             contentAlignment = Alignment.BottomCenter,
                         ) {

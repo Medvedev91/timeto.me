@@ -30,12 +30,14 @@ import timeto.shared.vm.ChartVM
 
 @Composable
 fun ChartView(
-    isPresented: MutableState<Boolean>,
+    onClose: () -> Unit,
 ) {
 
     val (vm, state) = rememberVM { ChartVM() }
 
-    Box {
+    Box(
+        modifier = Modifier.background(c.background2)
+    ) {
 
         Column {
 
@@ -204,7 +206,7 @@ fun ChartView(
                             .clip(RoundedCornerShape(99.dp))
                             .background(c.background2)
                             .clickable {
-                                isPresented.value = false
+                                onClose()
                             }
                             .padding(4.dp)
                     )
