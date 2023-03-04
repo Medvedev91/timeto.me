@@ -30,48 +30,35 @@ fun MyDatePicker(
     val layers = LocalWrapperViewLayers.current
     val calendar = Calendar.getInstance(Locale.ENGLISH)
     calendar.timeInMillis = defaultTime.time * 1_000L
-    MyDatePicker__Button(
-        modifier = modifier,
-        onClick = {
-            MyDialog.showDatePicker(
-                layers = layers,
-                defaultTime = defaultTime,
-                minPickableDay = minPickableDay,
-                minSavableDay = minSaveableDay,
-                maxDay = maxDay,
-                withTimeBtnText = withTimeBtnText,
-                onSelect = onSelect
-            )
-        }
-    ) {
-        val is0000 = defaultTime.localDayStartTime() == defaultTime.time
-        val format = if (is0000) "d MMM, E" else "d MMM, E HH:mm"
-        Text(
-            DateFormat.format(format, calendar).toString(),
-            color = c.white,
-            modifier = Modifier.padding(horizontal = 10.dp),
-            fontSize = 14.sp,
-            fontWeight = FontWeight.W600
-        )
-    }
-}
 
-@Composable
-fun MyDatePicker__Button(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-    content: @Composable () -> Unit,
-) {
     Surface(
         elevation = 6.dp,
         shape = MySquircleShape(),
         color = c.blue,
         modifier = modifier
             .height(30.dp)
-            .clickable { onClick() },
+            .clickable {
+                MyDialog.showDatePicker(
+                    layers = layers,
+                    defaultTime = defaultTime,
+                    minPickableDay = minPickableDay,
+                    minSavableDay = minSaveableDay,
+                    maxDay = maxDay,
+                    withTimeBtnText = withTimeBtnText,
+                    onSelect = onSelect
+                )
+            },
     ) {
         Box(contentAlignment = Alignment.Center) {
-            content()
+            val is0000 = defaultTime.localDayStartTime() == defaultTime.time
+            val format = if (is0000) "d MMM, E" else "d MMM, E HH:mm"
+            Text(
+                DateFormat.format(format, calendar).toString(),
+                color = c.white,
+                modifier = Modifier.padding(horizontal = 10.dp),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.W600
+            )
         }
     }
 }
