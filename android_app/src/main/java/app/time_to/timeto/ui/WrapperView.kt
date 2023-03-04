@@ -71,11 +71,13 @@ class WrapperView__LayerData(
     val enterAnimation: EnterTransition,
     val exitAnimation: ExitTransition,
     val alignment: Alignment,
+    val onClose: () -> Unit,
     val content: @Composable (WrapperView__LayerData) -> Unit,
 ) {
     fun close() {
+        onClose()
+        isPresented.setFalse()
         launchExDefault {
-            isPresented.setFalse()
             delay(500) // Waiting for animation
             layers.remove(this@WrapperView__LayerData)
         }

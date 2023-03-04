@@ -45,6 +45,7 @@ fun TimetoSheet(
                 targetOffsetY = { it }
             ),
             alignment = Alignment.BottomCenter,
+            onClose = {},
             content = {
                 Box(
                     /**

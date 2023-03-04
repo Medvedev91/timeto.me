@@ -47,6 +47,7 @@ object MyDialog {
             enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessMedium)),
             exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessMedium)),
             alignment = Alignment.Center,
+            onClose = {},
             content = { layer ->
                 Box(
                     modifier
