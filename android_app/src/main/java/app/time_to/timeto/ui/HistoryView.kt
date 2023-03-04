@@ -186,7 +186,7 @@ fun HistoryView(
                                                 AddIntervalDialogView(
                                                     state = state,
                                                     defaultTime = intervalUI.barTimeFinish,
-                                                    onClose = { layer.onClose(layer) }
+                                                    onClose = { layer.close() }
                                                 )
                                             }
                                         }

@@ -15,7 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
-import app.time_to.timeto.setFalse
+import app.time_to.timeto.LocalWrapperViewLayers
 
 object MyDialog {
 
@@ -27,10 +27,8 @@ object MyDialog {
     ) {
         val isPresented = mutableStateOf(false)
         WrapperView__LayerData(
+            layers = layers,
             isPresented = isPresented,
-            onClose = { layer ->
-                layer.removeOneTimeLayer(layers)
-            },
             enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessMedium)),
             exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessMedium)),
             alignment = Alignment.Center,
@@ -61,8 +59,8 @@ fun MyDialog(
 ) {
     WrapperView__LayerView(
         prepMyDialogLayer(
+            layers = LocalWrapperViewLayers.current,
             isPresented = isPresented,
-            onClose = { isPresented.setFalse() },
             backgroundColor = backgroundColor,
             modifier = modifier,
             paddingValues = paddingValues,
@@ -73,16 +71,16 @@ fun MyDialog(
 }
 
 fun prepMyDialogLayer(
+    layers: MutableList<WrapperView__LayerData>,
     isPresented: MutableState<Boolean>,
-    onClose: (WrapperView__LayerData) -> Unit,
     backgroundColor: Color,
     modifier: Modifier = Modifier,
     paddingValues: PaddingValues = PaddingValues(all = 20.dp),
     marginValues: PaddingValues = PaddingValues(horizontal = 20.dp),
     content: @Composable (WrapperView__LayerData) -> Unit
 ) = WrapperView__LayerData(
+    layers = layers,
     isPresented = isPresented,
-    onClose = { onClose(it) },
     enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessMedium)),
     exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessMedium)),
     alignment = Alignment.Center,

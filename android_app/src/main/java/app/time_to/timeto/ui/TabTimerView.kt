@@ -294,7 +294,7 @@ fun TabTimerView() {
                                         layers = layers,
                                         modifier = Modifier.fillMaxHeight(0.95f),
                                     ) { layer ->
-                                        ChartView { layer.onClose(layer) }
+                                        ChartView { layer.close() }
                                     }
                                 },
                             contentAlignment = Alignment.BottomCenter,

@@ -71,8 +71,8 @@ fun FullScreenView(
 
     WrapperView__LayerView(
         WrapperView__LayerData(
+            layers = LocalWrapperViewLayers.current,
             isPresented = isPresented,
-            onClose = { FullScreenUI.close() },
             enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessHigh)),
             exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessHigh)),
             alignment = Alignment.Center,

@@ -45,7 +45,7 @@ object WrapperView {
                             modifier = Modifier
                                 .fillMaxSize()
                                 .background(Color(0x55000000))
-                                .clickable { layer.onClose(layer) }
+                                .clickable { layer.close() }
                         )
                     }
 
@@ -55,7 +55,7 @@ object WrapperView {
                         exit = layer.exitAnimation,
                     ) {
                         BackHandler(layer.isPresented.value) {
-                            layer.onClose(layer)
+                            layer.close()
                         }
                         layer.content(layer)
                     }
@@ -66,13 +66,21 @@ object WrapperView {
 }
 
 class WrapperView__LayerData(
+    val layers: MutableList<WrapperView__LayerData>,
     val isPresented: MutableState<Boolean>,
-    val onClose: (WrapperView__LayerData) -> Unit,
     val enterAnimation: EnterTransition,
     val exitAnimation: ExitTransition,
     val alignment: Alignment,
     val content: @Composable (WrapperView__LayerData) -> Unit,
-)
+) {
+    fun close() {
+        launchExDefault {
+            isPresented.setFalse()
+            delay(500) // Waiting for animation
+            layers.remove(this@WrapperView__LayerData)
+        }
+    }
+}
 
 @Composable
 fun WrapperView__LayerView(

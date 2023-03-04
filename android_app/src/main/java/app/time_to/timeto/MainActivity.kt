@@ -98,12 +98,12 @@ private fun UIListeners() {
     LaunchedEffect(Unit) {
         uiAlertFlow.onEachExIn(this) { data ->
             MyDialog.show(layers = layers) { layer ->
-                AlertDialogView(data) { layer.onClose(layer) }
+                AlertDialogView(data) { layer.close() }
             }
         }
         uiConfirmationFlow.onEachExIn(this) { data ->
             MyDialog.show(layers = layers) { layer ->
-                ConfirmationDialogView(data) { layer.onClose(layer) }
+                ConfirmationDialogView(data) { layer.close() }
             }
         }
         uiShortcutFlow.onEachExIn(this) { shortcut ->
@@ -115,7 +115,7 @@ private fun UIListeners() {
         }
         uiChecklistFlow.onEachExIn(this) { checklist ->
             MyDialog.show(layers = layers) { layer ->
-                ChecklistDialogView(checklist) { layer.onClose(layer) }
+                ChecklistDialogView(checklist) { layer.close() }
             }
         }
     }
