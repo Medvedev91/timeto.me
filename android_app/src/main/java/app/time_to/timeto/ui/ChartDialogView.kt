@@ -169,7 +169,7 @@ fun ChartDialogView(
                 MyDatePicker(
                     UnixTime.byLocalDay(state.dayStart),
                     minPickableDay = state.minPickerDay,
-                    minSaveableDay = state.minPickerDay,
+                    minSavableDay = state.minPickerDay,
                     maxDay = state.maxPickerDay,
                 ) {
                     vm.upDayStart(it.localDay)
@@ -187,7 +187,7 @@ fun ChartDialogView(
                 MyDatePicker(
                     UnixTime.byLocalDay(state.dayFinish),
                     minPickableDay = state.minPickerDay,
-                    minSaveableDay = state.minPickerDay,
+                    minSavableDay = state.minPickerDay,
                     maxDay = state.maxPickerDay,
                 ) {
                     vm.upDayFinish(it.localDay)

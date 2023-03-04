@@ -22,7 +22,7 @@ fun MyDatePicker(
     defaultTime: UnixTime,
     modifier: Modifier = Modifier,
     minPickableDay: Int,
-    minSaveableDay: Int,
+    minSavableDay: Int,
     maxDay: Int = UnixTime.MAX_DAY,
     withTimeBtnText: String? = null,
     onSelect: (UnixTime) -> Unit,
@@ -42,7 +42,7 @@ fun MyDatePicker(
                     layers = layers,
                     defaultTime = defaultTime,
                     minPickableDay = minPickableDay,
-                    minSavableDay = minSaveableDay,
+                    minSavableDay = minSavableDay,
                     maxDay = maxDay,
                     withTimeBtnText = withTimeBtnText,
                     onSelect = onSelect
