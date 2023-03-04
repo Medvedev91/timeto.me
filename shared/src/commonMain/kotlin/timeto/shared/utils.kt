@@ -281,7 +281,7 @@ suspend fun rescheduleNotifications() {
 }
 
 ///
-/// UI Alert / Confirmation / Triggers / Full Screen
+/// UI Alert / Confirmation / Triggers
 
 val uiAlertFlow = MutableSharedFlow<UIAlertData>()
 
@@ -311,14 +311,6 @@ data class UIConfirmationData(
 
 fun showUiConfirmation(data: UIConfirmationData) {
     launchExDefault { uiConfirmationFlow.emit(data) }
-}
-
-//
-
-val uiFullscreenFlow = MutableSharedFlow<Unit>()
-
-fun showUiFullScreen() {
-    launchExDefault { uiFullscreenFlow.emit(Unit) }
 }
 
 //

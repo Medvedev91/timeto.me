@@ -29,8 +29,8 @@ import androidx.core.view.WindowInsetsControllerCompat
 import app.time_to.timeto.*
 import app.time_to.timeto.R
 import timeto.shared.ColorNative
+import timeto.shared.FullScreenUI
 import timeto.shared.onEachExIn
-import timeto.shared.uiFullscreenFlow
 import timeto.shared.vm.FullscreenVM
 
 @Composable
@@ -39,8 +39,10 @@ fun FullScreenListener(
     onClose: () -> Unit,
 ) {
     val layers = LocalWrapperViewLayers.current
+
     LaunchedEffect(Unit) {
-        uiFullscreenFlow.onEachExIn(this) {
+
+        FullScreenUI.state.onEachExIn(this) { toOpenOrClose ->
 
             /**
              * https://developer.android.com/develop/ui/views/layout/immersive#kotlin
@@ -57,21 +59,22 @@ fun FullScreenListener(
             val controller = WindowInsetsControllerCompat(window, window.decorView)
             val flagKeepScreenOn = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
 
-            fun show() {
-                controller.hide(barTypes)
-                window.addFlags(flagKeepScreenOn)
-                window.navigationBarColor = Color(0x01000000).toArgb()
-                WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = false
-            }
-            show()
+            ///
+            /// Open / Close
 
-            fun hide() {
+            if (!toOpenOrClose) {
                 controller.show(barTypes)
                 window.clearFlags(flagKeepScreenOn)
                 onClose()
+                return@onEachExIn
             }
 
-            /****/
+            controller.hide(barTypes)
+            window.addFlags(flagKeepScreenOn)
+            window.navigationBarColor = Color(0x01000000).toArgb()
+            WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = false
+
+            //////
 
             WrapperView__LayerData(
                 layers = layers,
@@ -79,7 +82,7 @@ fun FullScreenListener(
                 enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessHigh)),
                 exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessHigh)),
                 alignment = Alignment.Center,
-                onClose = ::hide,
+                onClose = { FullScreenUI.close() },
                 content = { layer ->
                     Box(
                         modifier = Modifier
