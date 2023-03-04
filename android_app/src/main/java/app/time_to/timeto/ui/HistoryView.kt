@@ -163,12 +163,7 @@ fun HistoryView(
                                     .background(intervalUI.color.toColor())
                             )
 
-                            val isAddDialogPresented = remember { mutableStateOf(false) }
-                            AddIntervalDialog(
-                                state = state,
-                                defaultTime = intervalUI.barTimeFinish,
-                                isPresented = isAddDialogPresented
-                            )
+                            val layers = LocalWrapperViewLayers.current
 
                             AnimatedVisibility(
                                 visible = isEditMode,
@@ -185,7 +180,15 @@ fun HistoryView(
                                         .clip(RoundedCornerShape(99.dp))
                                         .background(c.blue)
                                         .clickable {
-                                            isAddDialogPresented.value = true
+                                            MyDialog.show(
+                                                layers = layers
+                                            ) { layer ->
+                                                AddIntervalDialogView(
+                                                    state = state,
+                                                    defaultTime = intervalUI.barTimeFinish,
+                                                    onClose = { layer.onClose(layer) }
+                                                )
+                                            }
                                         }
                                         .padding(2.dp)
                                 )
@@ -325,87 +328,80 @@ fun HistoryView(
 }
 
 @Composable
-private fun AddIntervalDialog(
+private fun AddIntervalDialogView(
     state: HistoryVM.State,
     defaultTime: Int,
-    isPresented: MutableState<Boolean>,
+    onClose: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
 
-    MyDialog(
-        isPresented,
-        paddingValues = PaddingValues(horizontal = 0.dp),
-        backgroundColor = c.background
-    ) {
+    Box(Modifier.background(c.background)) {
 
-        Box {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth(),
+            contentPadding = PaddingValues(top = 20.dp, bottom = 70.dp)
+        ) {
 
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                contentPadding = PaddingValues(top = 20.dp, bottom = 70.dp)
-            ) {
+            itemsIndexed(state.activitiesFormAddUI, key = { _, item -> item.activity.id }) { _, activityUI ->
 
-                itemsIndexed(state.activitiesFormAddUI, key = { _, item -> item.activity.id }) { _, activityUI ->
-
-                    val isAddCalendarPresented = remember { mutableStateOf(false) }
-                    MyDatePicker__Dialog(
-                        isDialogPresented = isAddCalendarPresented,
-                        defaultTime = UnixTime(defaultTime),
-                        minPickableDay = 0,
-                        minSaveableDay = 0,
-                        maxDay = UnixTime().localDay,
-                        title = null,
-                        withTimeBtnText = "Save",
-                        onSelect = { selectedTime ->
-                            activityUI.addInterval(selectedTime) {
-                                scope.launchEx {
-                                    isPresented.value = false
-                                }
+                val isAddCalendarPresented = remember { mutableStateOf(false) }
+                MyDatePicker__Dialog(
+                    isDialogPresented = isAddCalendarPresented,
+                    defaultTime = UnixTime(defaultTime),
+                    minPickableDay = 0,
+                    minSaveableDay = 0,
+                    maxDay = UnixTime().localDay,
+                    title = null,
+                    withTimeBtnText = "Save",
+                    onSelect = { selectedTime ->
+                        activityUI.addInterval(selectedTime) {
+                            scope.launchEx {
+                                onClose()
                             }
                         }
-                    )
+                    }
+                )
 
-                    val isFirst = state.activitiesFormAddUI.first() == activityUI
-                    MyListView__ItemView(
-                        isFirst = isFirst,
-                        isLast = state.activitiesFormAddUI.last() == activityUI,
-                        withTopDivider = !isFirst,
+                val isFirst = state.activitiesFormAddUI.first() == activityUI
+                MyListView__ItemView(
+                    isFirst = isFirst,
+                    isLast = state.activitiesFormAddUI.last() == activityUI,
+                    withTopDivider = !isFirst,
+                ) {
+                    MyListView__ItemView__ButtonView(
+                        text = activityUI.activity.nameWithEmoji(),
                     ) {
-                        MyListView__ItemView__ButtonView(
-                            text = activityUI.activity.nameWithEmoji(),
-                        ) {
-                            isAddCalendarPresented.value = true
-                        }
+                        isAddCalendarPresented.value = true
                     }
                 }
             }
+        }
 
-            Row(
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(end = 21.dp, bottom = 20.dp)
+                .align(Alignment.BottomCenter),
+            horizontalArrangement = Arrangement.End,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            SpacerW1()
+
+            Text(
+                "Cancel",
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(end = 21.dp, bottom = 20.dp)
-                    .align(Alignment.BottomCenter),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-
-                SpacerW1()
-
-                Text(
-                    "Cancel",
-                    modifier = Modifier
-                        .padding(end = 14.dp)
-                        .clip(MySquircleShape())
-                        .clickable {
-                            isPresented.value = false
-                        }
-                        .padding(bottom = 5.dp, top = 5.dp, start = 9.dp, end = 9.dp),
-                    color = c.textSecondary,
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.W400
-                )
-            }
+                    .padding(end = 14.dp)
+                    .clip(MySquircleShape())
+                    .clickable {
+                        onClose()
+                    }
+                    .padding(bottom = 5.dp, top = 5.dp, start = 9.dp, end = 9.dp),
+                color = c.textSecondary,
+                fontSize = 15.sp,
+                fontWeight = FontWeight.W400
+            )
         }
     }
 }
