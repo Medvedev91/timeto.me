@@ -37,8 +37,8 @@ fun ChecklistDialogView(
     val scope = rememberCoroutineScope()
     val (_, state) = rememberVM { ChecklistDialogVM(checklist = checklist) }
 
-    val isChecklistItemAddPresented = remember { mutableStateOf(false) }
-    ChecklistItemEditDialog(isChecklistItemAddPresented, checklist = checklist, editedChecklistItem = null)
+    val layers = LocalWrapperViewLayers.current
+
     val checklistItems = state.items
 
     Box(Modifier.background(c.background)) {
@@ -50,9 +50,6 @@ fun ChecklistDialogView(
         ) {
 
             itemsIndexed(checklistItems, key = { _, item -> item.id }) { _, item ->
-
-                val isChecklistItemEditPresented = remember { mutableStateOf(false) }
-                ChecklistItemEditDialog(isChecklistItemEditPresented, checklist = checklist, editedChecklistItem = item)
 
                 MyListView__ItemView(
                     isFirst = checklistItems.first() == item,
@@ -77,7 +74,13 @@ fun ChecklistDialogView(
                             }
                         },
                         onStart = {
-                            isChecklistItemEditPresented.value = true
+                            MyDialog.show(layers) { layer ->
+                                ChecklistItemEditDialog(
+                                    checklist = checklist,
+                                    editedChecklistItem = item,
+                                    onClose = layer::close
+                                )
+                            }
                             false
                         },
                         onEnd = {
@@ -189,7 +192,13 @@ fun ChecklistDialogView(
                 true,
                 c.blue,
             ) {
-                isChecklistItemAddPresented.value = true
+                MyDialog.show(layers) { layer ->
+                    ChecklistItemEditDialog(
+                        checklist = checklist,
+                        editedChecklistItem = null,
+                        onClose = layer::close
+                    )
+                }
             }
         }
     }
