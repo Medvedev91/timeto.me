@@ -6,11 +6,16 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import app.time_to.timeto.ui.*
@@ -99,11 +104,7 @@ private fun UIListeners() {
     val checklistBgColor = c.background
     LaunchedEffect(Unit) {
         uiAlertFlow.onEachExIn(this) { data ->
-            MyDialog__showAlert(
-                allLayers = layers,
-                data = data,
-                backgroundColor = alertDialogBgColor,
-            )
+            showAlert(layers = layers, data = data)
         }
         uiConfirmationFlow.onEachExIn(this) { data ->
             MyDialog__showConfirmation(
@@ -125,6 +126,43 @@ private fun UIListeners() {
                 allLayers = layers,
                 backgroundColor = checklistBgColor,
             )
+        }
+    }
+}
+
+private fun showAlert(
+    layers: MutableList<WrapperView__LayerData>,
+    data: UIAlertData,
+) {
+    MyDialog.show(
+        layers = layers,
+    ) { layer ->
+
+        Column(
+            modifier = Modifier
+                .background(c.background2)
+                .padding(20.dp)
+        ) {
+
+            Text(
+                text = data.message,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(all = 5.dp)
+            )
+
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 18.dp),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+
+                MyButton("OK", true, c.blue) {
+                    layer.onClose(layer)
+                }
+            }
         }
     }
 }
