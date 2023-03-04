@@ -1,5 +1,6 @@
 package app.time_to.timeto.ui
 
+import android.text.format.DateFormat
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
@@ -11,6 +12,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -27,6 +29,7 @@ import app.time_to.timeto.*
 import app.time_to.timeto.R
 import timeto.shared.UnixTime
 import timeto.shared.vm.ChartVM
+import java.util.*
 
 @Composable
 fun ChartDialogView(
@@ -166,7 +169,7 @@ fun ChartDialogView(
 
                 Box(modifier = Modifier.weight(1f))
 
-                MyDatePicker(
+                ChartDatePicker(
                     UnixTime.byLocalDay(state.dayStart),
                     minPickableDay = state.minPickerDay,
                     minSavableDay = state.minPickerDay,
@@ -184,7 +187,7 @@ fun ChartDialogView(
                     color = c.text
                 )
 
-                MyDatePicker(
+                ChartDatePicker(
                     UnixTime.byLocalDay(state.dayFinish),
                     minPickableDay = state.minPickerDay,
                     minSavableDay = state.minPickerDay,
@@ -212,6 +215,52 @@ fun ChartDialogView(
                     )
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun ChartDatePicker(
+    defaultTime: UnixTime,
+    modifier: Modifier = Modifier,
+    minPickableDay: Int,
+    minSavableDay: Int,
+    maxDay: Int = UnixTime.MAX_DAY,
+    withTimeBtnText: String? = null,
+    onSelect: (UnixTime) -> Unit,
+) {
+    val layers = LocalWrapperViewLayers.current
+    val calendar = Calendar.getInstance(Locale.ENGLISH)
+    calendar.timeInMillis = defaultTime.time * 1_000L
+
+    Surface(
+        elevation = 6.dp,
+        shape = MySquircleShape(),
+        color = c.blue,
+        modifier = modifier
+            .height(30.dp)
+            .clickable {
+                MyDialog.showDatePicker(
+                    layers = layers,
+                    defaultTime = defaultTime,
+                    minPickableDay = minPickableDay,
+                    minSavableDay = minSavableDay,
+                    maxDay = maxDay,
+                    withTimeBtnText = withTimeBtnText,
+                    onSelect = onSelect
+                )
+            },
+    ) {
+        Box(contentAlignment = Alignment.Center) {
+            val is0000 = defaultTime.localDayStartTime() == defaultTime.time
+            val format = if (is0000) "d MMM, E" else "d MMM, E HH:mm"
+            Text(
+                DateFormat.format(format, calendar).toString(),
+                color = c.white,
+                modifier = Modifier.padding(horizontal = 10.dp),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.W600
+            )
         }
     }
 }
