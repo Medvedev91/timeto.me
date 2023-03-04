@@ -13,14 +13,12 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -28,7 +26,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
-import app.time_to.timeto.LocalWrapperViewLayers
 import app.time_to.timeto.toUnixTime
 import timeto.shared.UnixTime
 import timeto.shared.toHms
@@ -225,55 +222,3 @@ object MyDialog {
         }
     }
 }
-
-@Composable
-fun MyDialog(
-    isPresented: MutableState<Boolean>,
-    modifier: Modifier = Modifier,
-    paddingValues: PaddingValues = PaddingValues(all = 20.dp),
-    marginValues: PaddingValues = PaddingValues(horizontal = 20.dp),
-    backgroundColor: Color = c.background2,
-    content: @Composable (WrapperView__LayerData) -> Unit
-) {
-    WrapperView__LayerView(
-        prepMyDialogLayer(
-            layers = LocalWrapperViewLayers.current,
-            isPresented = isPresented,
-            backgroundColor = backgroundColor,
-            modifier = modifier,
-            paddingValues = paddingValues,
-            marginValues = marginValues,
-            content = content
-        )
-    )
-}
-
-fun prepMyDialogLayer(
-    layers: MutableList<WrapperView__LayerData>,
-    isPresented: MutableState<Boolean>,
-    backgroundColor: Color,
-    modifier: Modifier = Modifier,
-    paddingValues: PaddingValues = PaddingValues(all = 20.dp),
-    marginValues: PaddingValues = PaddingValues(horizontal = 20.dp),
-    content: @Composable (WrapperView__LayerData) -> Unit
-) = WrapperView__LayerData(
-    layers = layers,
-    isPresented = isPresented,
-    enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessMedium)),
-    exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessMedium)),
-    alignment = Alignment.Center,
-    content = { layer ->
-        Box(
-            modifier
-                .systemBarsPadding()
-                .imePadding()
-                .padding(marginValues)
-                .clip(MySquircleShape(80f))
-                .background(backgroundColor)
-                .pointerInput(Unit) { }
-                .padding(paddingValues)
-        ) {
-            content(layer)
-        }
-    }
-)
