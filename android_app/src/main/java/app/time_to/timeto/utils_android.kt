@@ -60,7 +60,7 @@ fun colorFromRgbaString(colorRgba: String) = colorRgba
         Color(it[0], it[1], it[2], it.getOrNull(3) ?: 255)
     }
 
-///
+//////
 
 fun scheduleNotification(data: ScheduledNotificationData) {
     val requestCode = when (data.type) {
@@ -112,8 +112,8 @@ fun <State, VM : __VM<State>> rememberVM(
     return vm to vm.state.collectAsState().value
 }
 
-//
-// Vibration
+///
+/// Vibration
 
 private var vibrateOneShotLastMillis: Long = 0
 
