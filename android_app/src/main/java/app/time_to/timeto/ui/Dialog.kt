@@ -56,7 +56,7 @@ object Dialog {
                     content(layer)
                 }
             }
-        ).showOneTime()
+        ).show()
     }
 
     fun showDatePicker(

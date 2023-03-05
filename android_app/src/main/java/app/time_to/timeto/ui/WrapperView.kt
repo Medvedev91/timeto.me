@@ -58,6 +58,10 @@ object WrapperView {
                         layer.content(layer)
                     }
                 }
+
+                LaunchedEffect(Unit) {
+                    layer.isPresented.setTrue()
+                }
             }
         }
     }
@@ -73,6 +77,10 @@ class WrapperView__Layer(
 
     val isPresented = mutableStateOf(false)
 
+    fun show() {
+        wrapperViewLayers.add(this)
+    }
+
     fun close() {
         onClose()
         isPresented.setFalse()
@@ -81,13 +89,4 @@ class WrapperView__Layer(
             wrapperViewLayers.remove(this@WrapperView__Layer)
         }
     }
-}
-
-///
-/// Show One Time
-
-fun WrapperView__Layer.showOneTime() = launchExDefault {
-    wrapperViewLayers.add(this@showOneTime)
-    delay(50) // Waiting for adding to view
-    this@showOneTime.isPresented.setTrue()
 }

@@ -70,7 +70,7 @@ object Sheet {
                     content(layer)
                 }
             }
-        ).showOneTime()
+        ).show()
     }
 
     @Composable

@@ -166,7 +166,7 @@ fun FullScreenListener(
                         )
                     }
                 }
-            ).showOneTime()
+            ).show()
         }
     }
 }
