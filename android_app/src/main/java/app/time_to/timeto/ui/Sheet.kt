@@ -37,9 +37,7 @@ object Sheet {
         topPadding: Dp = 20.dp,
         content: @Composable (WrapperView__LayerData) -> Unit,
     ) {
-        val isPresented = mutableStateOf(false)
         WrapperView__LayerData(
-            isPresented = isPresented,
             enterAnimation = slideInVertically(
                 animationSpec = spring(
                     stiffness = Spring.StiffnessMedium,

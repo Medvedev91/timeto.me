@@ -75,7 +75,6 @@ fun FullScreenListener(
             //////
 
             WrapperView__LayerData(
-                isPresented = mutableStateOf(false),
                 enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessHigh)),
                 exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessHigh)),
                 alignment = Alignment.Center,

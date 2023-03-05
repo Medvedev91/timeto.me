@@ -64,13 +64,15 @@ object WrapperView {
 }
 
 class WrapperView__LayerData(
-    val isPresented: MutableState<Boolean>,
     val enterAnimation: EnterTransition,
     val exitAnimation: ExitTransition,
     val alignment: Alignment,
     val onClose: () -> Unit,
     val content: @Composable (WrapperView__LayerData) -> Unit,
 ) {
+
+    val isPresented = mutableStateOf(false)
+
     fun close() {
         onClose()
         isPresented.setFalse()

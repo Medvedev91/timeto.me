@@ -39,9 +39,7 @@ object Dialog {
         margin: PaddingValues = PaddingValues(horizontal = 20.dp),
         content: @Composable (WrapperView__LayerData) -> Unit
     ) {
-        val isPresented = mutableStateOf(false)
         WrapperView__LayerData(
-            isPresented = isPresented,
             enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessMedium)),
             exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessMedium)),
             alignment = Alignment.Center,
