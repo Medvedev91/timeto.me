@@ -81,18 +81,6 @@ class WrapperView__LayerData(
     }
 }
 
-@Composable
-fun WrapperView__LayerView(
-    layer: WrapperView__LayerData
-) {
-    DisposableEffect(layer) {
-        wrapperViewLayers.add(layer)
-        onDispose {
-            wrapperViewLayers.remove(layer)
-        }
-    }
-}
-
 ///
 /// Show One Time
 
