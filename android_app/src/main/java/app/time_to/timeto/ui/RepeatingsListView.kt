@@ -26,12 +26,6 @@ fun RepeatingsListView() {
 
     val (_, state) = rememberVM { RepeatingsListVM() }
 
-    val isAddRepeatingPresented = remember { mutableStateOf(false) }
-    RepeatingFormSheet(
-        isPresented = isAddRepeatingPresented,
-        editedRepeating = null
-    )
-
     LazyColumn(
         reverseLayout = true,
         contentPadding = PaddingValues(
@@ -55,17 +49,16 @@ fun RepeatingsListView() {
                 extraPaddings = 0 to 3,
                 fontSize = 16.sp
             ) {
-                isAddRepeatingPresented.value = true
+                Sheet.show { layer ->
+                    RepeatingFormSheet(
+                        layer = layer,
+                        editedRepeating = null
+                    )
+                }
             }
         }
 
         itemsIndexed(state.repeatingsUI, key = { _, i -> i.repeating.id }) { index, repeatingUI ->
-            val isEditPresented = remember { mutableStateOf(false) }
-            RepeatingFormSheet(
-                isPresented = isEditPresented,
-                editedRepeating = repeatingUI.repeating
-            )
-
             val isLast = index == state.repeatingsUI.size - 1
 
             // Remember that the list is reversed
@@ -91,7 +84,12 @@ fun RepeatingsListView() {
                     }
                 },
                 onStart = {
-                    isEditPresented.value = true
+                    Sheet.show { layer ->
+                        RepeatingFormSheet(
+                            layer = layer,
+                            editedRepeating = repeatingUI.repeating,
+                        )
+                    }
                     false
                 },
                 onEnd = {

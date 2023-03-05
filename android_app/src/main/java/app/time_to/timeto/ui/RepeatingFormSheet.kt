@@ -31,333 +31,330 @@ import timeto.shared.vm.RepeatingFormSheetVM
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun RepeatingFormSheet(
-    isPresented: MutableState<Boolean>,
+    layer: WrapperView__LayerData,
     editedRepeating: RepeatingModel?,
 ) {
 
-    TimetoSheet(isPresented = isPresented) {
+    val (vm, state) = rememberVM(editedRepeating) { RepeatingFormSheetVM(editedRepeating) }
 
-        val (vm, state) = rememberVM(editedRepeating) { RepeatingFormSheetVM(editedRepeating) }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
-        val keyboardController = LocalSoftwareKeyboardController.current
+    val scope = rememberCoroutineScope()
 
-        val scope = rememberCoroutineScope()
+    Column(
+        modifier = Modifier
+            .fillMaxHeight()
+            .background(c.bgFormSheet)
+    ) {
+
+        val scrollState = rememberScrollState()
+
+        SheetHeaderView(
+            onCancel = { layer.close() },
+            title = state.headerTitle,
+            doneText = state.headerDoneText,
+            isDoneEnabled = state.isHeaderDoneEnabled,
+            scrollToHeader = scrollState.value,
+        ) {
+            vm.save {
+                layer.close()
+            }
+        }
 
         Column(
             modifier = Modifier
-                .fillMaxHeight()
-                .background(c.bgFormSheet)
+                .verticalScroll(
+                    state = scrollState
+                )
+                .padding(bottom = 20.dp)
+                .navigationBarsPadding()
+                .imePadding()
         ) {
 
-            val scrollState = rememberScrollState()
-
-            SheetHeaderView(
-                onCancel = { isPresented.value = false },
-                title = state.headerTitle,
-                doneText = state.headerDoneText,
-                isDoneEnabled = state.isHeaderDoneEnabled,
-                scrollToHeader = scrollState.value,
+            MyListView__ItemView(
+                isFirst = true,
+                isLast = true,
+                modifier = Modifier.padding(top = 8.dp)
             ) {
-                vm.save {
-                    isPresented.value = false
+                MyListView__ItemView__TextInputView(
+                    placeholder = "Task",
+                    text = state.inputTextValue,
+                    onTextChanged = { vm.setTextValue(it) }
+                )
+            }
+
+            ActivityEmojiPickerView(
+                text = state.inputTextValue,
+                modifier = Modifier
+                    .padding(top = 8.dp),
+                contentPadding = PaddingValues(horizontal = MyListView.PADDING_OUTER_HORIZONTAL - 4.dp),
+                onSelect = { newString ->
+                    vm.setTextValue(newString.trim() + " ")
+                }
+            )
+
+            Row(
+                modifier = Modifier
+                    .padding(top = 2.dp, start = MyListView.PADDING_OUTER_HORIZONTAL - 8.dp)
+            ) {
+
+                listOf("5 min", "25 min", "60 min").forEach { timerString ->
+                    TimerHintView(text = timerString) {
+                        vm.upTimerTime(timerString)
+                    }
+                }
+
+                TimerHintView(text = "Custom") {
+                    keyboardController?.hide()
+                    Sheet.show { layer ->
+                        TimerPickerSheet(
+                            layer = layer,
+                            title = "Timer",
+                            doneText = "Done",
+                            defMinutes = 30,
+                            stepMinutes = 10,
+                            onPick = { seconds ->
+                                vm.upTimerTime("${seconds / 60} min")
+                            }
+                        )
+                    }
                 }
             }
 
-            Column(
-                modifier = Modifier
-                    .verticalScroll(
-                        state = scrollState
-                    )
-                    .padding(bottom = 20.dp)
-                    .navigationBarsPadding()
-                    .imePadding()
+            TriggersView__FormView(
+                triggers = state.textFeatures.triggers,
+                onTriggersChanged = { vm.setTriggers(it) },
+                modifier = Modifier.padding(top = 18.dp),
+                contentPaddingHints = PaddingValues(horizontal = MyListView.PADDING_OUTER_HORIZONTAL),
+                defBg = if (MaterialTheme.colors.isLight) c.white else c.bgFormSheet,
+            )
+
+            MyListView__ItemView(
+                isFirst = true,
+                isLast = true,
+                modifier = Modifier.padding(top = 20.dp)
             ) {
+                MyListView__ItemView__ButtonView(
+                    text = state.daytimeHeader,
+                    withArrow = true,
+                    rightView = {
+                        MyListView__ItemView__ButtonView__RightText(
+                            text = state.daytimeNote,
+                            paddingEnd = 2.dp,
+                        )
+                    }
+                ) {
+                    keyboardController?.hide()
+                    Sheet.show { layer ->
+                        DaytimePickerSheet(
+                            layer = layer,
+                            title = state.daytimeHeader,
+                            doneText = "Done",
+                            defHour = state.daytimePickerDefHour,
+                            defMinute = state.daytimePickerDefMinute,
+                            onPick = { secondsOrNull ->
+                                vm.upDaytime(secondsOrNull)
+                            }
+                        )
+                    }
+                }
+            }
 
+            ///
+            ///
+
+            MyListView__Padding__SectionSection()
+
+            MyListView__HeaderView(
+                title = "REPETITION PERIOD",
+            )
+
+            MyListView__Padding__HeaderSection()
+
+            val periods = state.periods
+            periods.forEachIndexed { index, periodTitle ->
+                val isFirst = periods.first() == periodTitle
                 MyListView__ItemView(
-                    isFirst = true,
-                    isLast = true,
-                    modifier = Modifier.padding(top = 8.dp)
+                    isFirst = isFirst,
+                    isLast = periods.last() == periodTitle,
+                    withTopDivider = !isFirst,
                 ) {
-                    MyListView__ItemView__TextInputView(
-                        placeholder = "Task",
-                        text = state.inputTextValue,
-                        onTextChanged = { vm.setTextValue(it) }
-                    )
-                }
+                    val isActive = index == state.activePeriodIndex
 
-                ActivityEmojiPickerView(
-                    text = state.inputTextValue,
-                    modifier = Modifier
-                        .padding(top = 8.dp),
-                    contentPadding = PaddingValues(horizontal = MyListView.PADDING_OUTER_HORIZONTAL - 4.dp),
-                    onSelect = { newString ->
-                        vm.setTextValue(newString.trim() + " ")
-                    }
-                )
+                    Column {
 
-                Row(
-                    modifier = Modifier
-                        .padding(top = 2.dp, start = MyListView.PADDING_OUTER_HORIZONTAL - 8.dp)
-                ) {
-
-                    listOf("5 min", "25 min", "60 min").forEach { timerString ->
-                        TimerHintView(text = timerString) {
-                            vm.upTimerTime(timerString)
-                        }
-                    }
-
-                    TimerHintView(text = "Custom") {
-                        keyboardController?.hide()
-                        Sheet.show { layer ->
-                            TimerPickerSheet(
-                                layer = layer,
-                                title = "Timer",
-                                doneText = "Done",
-                                defMinutes = 30,
-                                stepMinutes = 10,
-                                onPick = { seconds ->
-                                    vm.upTimerTime("${seconds / 60} min")
-                                }
-                            )
-                        }
-                    }
-                }
-
-                TriggersView__FormView(
-                    triggers = state.textFeatures.triggers,
-                    onTriggersChanged = { vm.setTriggers(it) },
-                    modifier = Modifier.padding(top = 18.dp),
-                    contentPaddingHints = PaddingValues(horizontal = MyListView.PADDING_OUTER_HORIZONTAL),
-                    defBg = if (MaterialTheme.colors.isLight) c.white else c.bgFormSheet,
-                )
-
-                MyListView__ItemView(
-                    isFirst = true,
-                    isLast = true,
-                    modifier = Modifier.padding(top = 20.dp)
-                ) {
-                    MyListView__ItemView__ButtonView(
-                        text = state.daytimeHeader,
-                        withArrow = true,
-                        rightView = {
-                            MyListView__ItemView__ButtonView__RightText(
-                                text = state.daytimeNote,
-                                paddingEnd = 2.dp,
-                            )
-                        }
-                    ) {
-                        keyboardController?.hide()
-                        Sheet.show { layer ->
-                            DaytimePickerSheet(
-                                layer = layer,
-                                title = state.daytimeHeader,
-                                doneText = "Done",
-                                defHour = state.daytimePickerDefHour,
-                                defMinute = state.daytimePickerDefMinute,
-                                onPick = { secondsOrNull ->
-                                    vm.upDaytime(secondsOrNull)
-                                }
-                            )
-                        }
-                    }
-                }
-
-                ///
-                ///
-
-                MyListView__Padding__SectionSection()
-
-                MyListView__HeaderView(
-                    title = "REPETITION PERIOD",
-                )
-
-                MyListView__Padding__HeaderSection()
-
-                val periods = state.periods
-                periods.forEachIndexed { index, periodTitle ->
-                    val isFirst = periods.first() == periodTitle
-                    MyListView__ItemView(
-                        isFirst = isFirst,
-                        isLast = periods.last() == periodTitle,
-                        withTopDivider = !isFirst,
-                    ) {
-                        val isActive = index == state.activePeriodIndex
-
-                        Column {
-
-                            MyListView__ItemView__SwitcherView(
-                                text = periodTitle,
-                                isActive = isActive
-                            ) {
-                                vm.setActivePeriodIndex(if (isActive) null else index)
-                                if (state.activePeriodIndex != null) {
-                                    scope.launchEx {
-                                        keyboardController?.hide()
-                                        delay(100)
-                                        scrollState.animateScrollBy(100f)
-                                    }
+                        MyListView__ItemView__SwitcherView(
+                            text = periodTitle,
+                            isActive = isActive
+                        ) {
+                            vm.setActivePeriodIndex(if (isActive) null else index)
+                            if (state.activePeriodIndex != null) {
+                                scope.launchEx {
+                                    keyboardController?.hide()
+                                    delay(100)
+                                    scrollState.animateScrollBy(100f)
                                 }
                             }
+                        }
 
-                            AnimatedVisibility(
-                                visible = isActive
-                            ) {
-                                when (index) {
-                                    0 -> {}
-                                    1 -> {
-                                        Column(
-                                            modifier = Modifier
-                                                .padding(
-                                                    start = MyListView.PADDING_INNER_HORIZONTAL,
-                                                    top = 4.dp,
-                                                    bottom = 12.dp,
-                                                )
-                                        ) {
+                        AnimatedVisibility(
+                            visible = isActive
+                        ) {
+                            when (index) {
+                                0 -> {}
+                                1 -> {
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(
+                                                start = MyListView.PADDING_INNER_HORIZONTAL,
+                                                top = 4.dp,
+                                                bottom = 12.dp,
+                                            )
+                                    ) {
 
-                                            // Remember that indexes from zero, UI from 1.
-                                            MyPicker(
-                                                items = (1..666).toList(),
-                                                containerWidth = 80.dp,
-                                                containerHeight = 60.dp,
-                                                itemHeight = 20.dp,
-                                                selectedIndex = state.selectedNDays - 1,
-                                                onChange = { index, _ ->
-                                                    vm.setSelectedNDays(index + 1)
-                                                },
+                                        // Remember that indexes from zero, UI from 1.
+                                        MyPicker(
+                                            items = (1..666).toList(),
+                                            containerWidth = 80.dp,
+                                            containerHeight = 60.dp,
+                                            itemHeight = 20.dp,
+                                            selectedIndex = state.selectedNDays - 1,
+                                            onChange = { index, _ ->
+                                                vm.setSelectedNDays(index + 1)
+                                            },
+                                        )
+                                    }
+                                }
+                                2 -> {
+                                    Row(
+                                        modifier = Modifier
+                                            .padding(
+                                                start = MyListView.PADDING_INNER_HORIZONTAL - 2.dp,
+                                                top = 4.dp,
+                                                bottom = 12.dp,
+                                            )
+                                    ) {
+                                        RepeatingModel.dayShortNames1.forEachIndexed { index, dayName ->
+                                            val isSelected = state.selectedWeekDays[index]
+                                            val bgColor =
+                                                animateColorAsState(if (isSelected) c.blue else c.background2)
+                                            Text(
+                                                dayName,
+                                                modifier = Modifier
+                                                    .padding(end = 6.dp)
+                                                    .size(30.dp, 30.dp)
+                                                    .border(
+                                                        width = 1.dp,
+                                                        color = if (isSelected) c.blue else c.text,
+                                                        shape = RoundedCornerShape(99.dp)
+                                                    )
+                                                    .clip(RoundedCornerShape(99.dp))
+                                                    .background(bgColor.value)
+                                                    .clickable {
+                                                        vm.toggleWeekDay(index)
+                                                    }
+                                                    .wrapContentHeight(), // To center vertical
+                                                fontWeight = FontWeight.W500,
+                                                fontSize = 14.sp,
+                                                textAlign = TextAlign.Center,
+                                                color = if (isSelected) c.white else c.text,
                                             )
                                         }
                                     }
-                                    2 -> {
-                                        Row(
-                                            modifier = Modifier
-                                                .padding(
-                                                    start = MyListView.PADDING_INNER_HORIZONTAL - 2.dp,
-                                                    top = 4.dp,
-                                                    bottom = 12.dp,
-                                                )
-                                        ) {
-                                            RepeatingModel.dayShortNames1.forEachIndexed { index, dayName ->
-                                                val isSelected = state.selectedWeekDays[index]
-                                                val bgColor =
-                                                    animateColorAsState(if (isSelected) c.blue else c.background2)
-                                                Text(
-                                                    dayName,
-                                                    modifier = Modifier
-                                                        .padding(end = 6.dp)
-                                                        .size(30.dp, 30.dp)
-                                                        .border(
-                                                            width = 1.dp,
-                                                            color = if (isSelected) c.blue else c.text,
-                                                            shape = RoundedCornerShape(99.dp)
-                                                        )
-                                                        .clip(RoundedCornerShape(99.dp))
-                                                        .background(bgColor.value)
-                                                        .clickable {
-                                                            vm.toggleWeekDay(index)
-                                                        }
-                                                        .wrapContentHeight(), // To center vertical
-                                                    fontWeight = FontWeight.W500,
-                                                    fontSize = 14.sp,
-                                                    textAlign = TextAlign.Center,
-                                                    color = if (isSelected) c.white else c.text,
-                                                )
-                                            }
-                                        }
-                                    }
-                                    3 -> {
-                                        Column(
-                                            modifier = Modifier
-                                                .padding(
-                                                    start = MyListView.PADDING_INNER_HORIZONTAL - 2.dp,
-                                                    top = 4.dp,
-                                                    bottom = 6.dp,
-                                                )
-                                        ) {
+                                }
+                                3 -> {
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(
+                                                start = MyListView.PADDING_INNER_HORIZONTAL - 2.dp,
+                                                top = 4.dp,
+                                                bottom = 6.dp,
+                                            )
+                                    ) {
 
-                                            (1..RepeatingModel.MAX_DAY_OF_MONTH).chunked(7).forEach { days ->
-                                                Row {
-                                                    days.forEach { day ->
-                                                        val isDaySelected = day in state.selectedDaysOfMonth
-                                                        DaysOfMonthItemView(
-                                                            dayName = day.toString(),
-                                                            isSelected = isDaySelected,
-                                                        ) {
-                                                            vm.toggleDayOfMonth(day)
-                                                        }
+                                        (1..RepeatingModel.MAX_DAY_OF_MONTH).chunked(7).forEach { days ->
+                                            Row {
+                                                days.forEach { day ->
+                                                    val isDaySelected = day in state.selectedDaysOfMonth
+                                                    DaysOfMonthItemView(
+                                                        dayName = day.toString(),
+                                                        isSelected = isDaySelected,
+                                                    ) {
+                                                        vm.toggleDayOfMonth(day)
                                                     }
                                                 }
                                             }
-
-                                            val isLastDaySelected =
-                                                RepeatingModel.LAST_DAY_OF_MONTH in state.selectedDaysOfMonth
-                                            DaysOfMonthItemView(
-                                                dayName = "Last Day of the Month",
-                                                isSelected = isLastDaySelected,
-                                                width = Dp.Unspecified,
-                                                paddingValues = PaddingValues(start = 8.dp, end = 8.dp, bottom = 1.dp)
-                                            ) {
-                                                vm.toggleDayOfMonth(RepeatingModel.LAST_DAY_OF_MONTH)
-                                            }
-
                                         }
-                                    }
-                                    4 -> {
-                                        Column(
-                                            modifier = Modifier
-                                                .padding(
-                                                    start = MyListView.PADDING_INNER_HORIZONTAL - 1.dp,
-                                                    bottom = 12.dp,
-                                                )
+
+                                        val isLastDaySelected =
+                                            RepeatingModel.LAST_DAY_OF_MONTH in state.selectedDaysOfMonth
+                                        DaysOfMonthItemView(
+                                            dayName = "Last Day of the Month",
+                                            isSelected = isLastDaySelected,
+                                            width = Dp.Unspecified,
+                                            paddingValues = PaddingValues(start = 8.dp, end = 8.dp, bottom = 1.dp)
                                         ) {
+                                            vm.toggleDayOfMonth(RepeatingModel.LAST_DAY_OF_MONTH)
+                                        }
 
-                                            /**
-                                             * Impossible to use LazyColumn because of nested scroll. todo animation
-                                             */
-                                            state.selectedDaysOfYear.forEach { item ->
+                                    }
+                                }
+                                4 -> {
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(
+                                                start = MyListView.PADDING_INNER_HORIZONTAL - 1.dp,
+                                                bottom = 12.dp,
+                                            )
+                                    ) {
 
-                                                Row(
+                                        /**
+                                         * Impossible to use LazyColumn because of nested scroll. todo animation
+                                         */
+                                        state.selectedDaysOfYear.forEach { item ->
+
+                                            Row(
+                                                modifier = Modifier
+                                                    .padding(bottom = 8.dp),
+                                                verticalAlignment = Alignment.Bottom,
+                                            ) {
+
+                                                Text(
+                                                    "•  " + item.getTitle(isShortOrLong = false),
                                                     modifier = Modifier
-                                                        .padding(bottom = 8.dp),
-                                                    verticalAlignment = Alignment.Bottom,
-                                                ) {
+                                                        .padding(start = 1.dp)
+                                                        .offset(y = (-1).dp),
+                                                    color = c.text,
+                                                    fontSize = 14.sp,
+                                                )
 
-                                                    Text(
-                                                        "•  " + item.getTitle(isShortOrLong = false),
-                                                        modifier = Modifier
-                                                            .padding(start = 1.dp)
-                                                            .offset(y = (-1).dp),
-                                                        color = c.text,
-                                                        fontSize = 14.sp,
-                                                    )
-
-                                                    Icon(
-                                                        painterResource(id = R.drawable.sf_xmark_large_light),
-                                                        contentDescription = "Close",
-                                                        modifier = Modifier
-                                                            .padding(start = 8.dp)
-                                                            .offset(y = 1.dp)
-                                                            .size(19.dp, 19.dp)
-                                                            .clip(RoundedCornerShape(99f))
-                                                            .clickable {
-                                                                vm.delDayOfTheYear(item)
-                                                            }
-                                                            .padding(4.dp),
-                                                        tint = c.red
-                                                    )
-                                                }
+                                                Icon(
+                                                    painterResource(id = R.drawable.sf_xmark_large_light),
+                                                    contentDescription = "Close",
+                                                    modifier = Modifier
+                                                        .padding(start = 8.dp)
+                                                        .offset(y = 1.dp)
+                                                        .size(19.dp, 19.dp)
+                                                        .clip(RoundedCornerShape(99f))
+                                                        .clickable {
+                                                            vm.delDayOfTheYear(item)
+                                                        }
+                                                        .padding(4.dp),
+                                                    tint = c.red
+                                                )
                                             }
+                                        }
 
-                                            DaysOfTheYearForm { item ->
-                                                vm.addDayOfTheYear(item)
-                                                scope.launchEx {
-                                                    delay(100)
-                                                    scrollState.animateScrollBy(100f)
-                                                }
+                                        DaysOfTheYearForm { item ->
+                                            vm.addDayOfTheYear(item)
+                                            scope.launchEx {
+                                                delay(100)
+                                                scrollState.animateScrollBy(100f)
                                             }
                                         }
                                     }
-                                    else -> throw Exception()
                                 }
+                                else -> throw Exception()
                             }
                         }
                     }
