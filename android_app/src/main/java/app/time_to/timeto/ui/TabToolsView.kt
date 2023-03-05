@@ -261,13 +261,13 @@ fun TabToolsView() {
                 isFirst = true,
                 isLast = false,
             ) {
-                val isFoldersSettingsPresented = remember { mutableStateOf(false) }
-                FoldersSettingsSheet(isFoldersSettingsPresented)
                 MyListView__ItemView__ButtonView(
                     text = "Folders",
                     withArrow = true,
                 ) {
-                    isFoldersSettingsPresented.setTrue()
+                    Sheet.show { layer ->
+                        FoldersSettingsSheet(layer)
+                    }
                 }
             }
 
