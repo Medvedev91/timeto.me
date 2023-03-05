@@ -46,11 +46,6 @@ fun TabTimerView() {
             .fillMaxSize()
             .background(c.background),
     ) {
-        val isAddSheetPresented = remember { mutableStateOf(false) }
-        ActivityFormSheet(
-            isPresented = isAddSheetPresented,
-            editedActivity = null
-        )
 
         Column(
             modifier = Modifier
@@ -83,12 +78,6 @@ fun TabTimerView() {
                         else -> RoundedCornerShape(0.dp)
                     }
 
-                    val isEditSheetPresented = remember { mutableStateOf(false) }
-                    ActivityFormSheet(
-                        isPresented = isEditSheetPresented,
-                        editedActivity = uiActivity.activity,
-                    )
-
                     SwipeToAction(
                         isStartOrEnd = remember { mutableStateOf(null) },
                         modifier = Modifier.clip(clip),
@@ -109,7 +98,12 @@ fun TabTimerView() {
                             }
                         },
                         onStart = {
-                            isEditSheetPresented.value = true
+                            Sheet.show { layer ->
+                                ActivityFormSheet(
+                                    layer = layer,
+                                    editedActivity = uiActivity.activity,
+                                )
+                            }
                             false
                         },
                         onEnd = {
@@ -347,7 +341,12 @@ fun TabTimerView() {
                                 .clip(RoundedCornerShape(99.dp))
                                 .background(c.background)
                                 .clickable {
-                                    isAddSheetPresented.value = true
+                                    Sheet.show { layer ->
+                                        ActivityFormSheet(
+                                            layer = layer,
+                                            editedActivity = null
+                                        )
+                                    }
                                 }
                                 .padding(4.dp)
                         )
