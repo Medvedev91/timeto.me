@@ -48,9 +48,9 @@ class AutoBackup {
         values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
         values.put(MediaStore.MediaColumns.RELATIVE_PATH, AUTOBACKUPS_PATH) // RELATIVE_PATH require Build.VERSION_CODES.Q+
         val fileUri = App.instance.contentResolver.insert(getVolume(), values)
-            ?: throw MyException("AutoBackup.newBackup() contentResolver.insert() nullable")
+            ?: throw Exception("AutoBackup.newBackup() contentResolver.insert() nullable")
         val outputStream = App.instance.contentResolver.openOutputStream(fileUri)
-            ?: throw MyException("AutoBackup.newBackup() contentResolver.openOutputStream() nullable")
+            ?: throw Exception("AutoBackup.newBackup() contentResolver.openOutputStream() nullable")
         outputStream.write(jsonBytes)
         outputStream.close()
 
@@ -88,7 +88,7 @@ class AutoBackup {
         @Throws // WARNING
         private fun getAutoBackupsSortedDesc(): List<MyFileData> {
             val cursor = App.instance.contentResolver.query(getVolume(), null, null, null, null)
-                ?: throw MyException("AutoBackup.getAutoBackupsSortedDesc() cursor nullable")
+                ?: throw Exception("AutoBackup.getAutoBackupsSortedDesc() cursor nullable")
             val files = mutableListOf<MyFileData>()
             cursor.use { cursor ->
                 while (cursor.moveToNext()) {
@@ -116,11 +116,11 @@ class AutoBackup {
             // Should be like 2022_09_07__19_08_39
             val dateArray = lastBackupFileName.split(".").first().replace("__", "_").split("_")
             if (dateArray.size != 6)
-                throw MyException("getLastUnixDay() dateArray.count != 6 $lastBackupFileName")
+                throw Exception("getLastUnixDay() dateArray.count != 6 $lastBackupFileName")
 
             val dateArrayInts = dateArray.map { it.toIntOrNull() ?: -1 }.toTypedArray()
             if (dateArrayInts.any { it == -1 })
-                throw MyException("getLastUnixDay() dateArrayInts $lastBackupFileName")
+                throw Exception("getLastUnixDay() dateArrayInts $lastBackupFileName")
 
             val calendar = Calendar.getInstance()
             calendar[Calendar.YEAR] = dateArrayInts[0]
