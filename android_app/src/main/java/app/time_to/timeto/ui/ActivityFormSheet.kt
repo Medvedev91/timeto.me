@@ -169,16 +169,6 @@ fun ActivityFormSheet(
                             ) {
 
                                 if (pair.second == HINT_TYPE.custom) {
-                                    val isAddCustomHintPresented = remember { mutableStateOf(false) }
-                                    TimerPickerSheet(
-                                        isPresented = isAddCustomHintPresented,
-                                        title = "Timer Hint",
-                                        doneText = "Add",
-                                        defMinutes = 30,
-                                        stepMinutes = 10
-                                    ) { seconds ->
-                                        vm.addCustomTimerHint(seconds)
-                                    }
 
                                     Column {
 
@@ -231,7 +221,17 @@ fun ActivityFormSheet(
                                                 )
                                                 .clip(RoundedCornerShape(99f))
                                                 .clickable {
-                                                    isAddCustomHintPresented.value = true
+                                                    Sheet.show { layer ->
+                                                        TimerPickerSheet(
+                                                            layer = layer,
+                                                            title = "Timer Hint",
+                                                            doneText = "Add",
+                                                            defMinutes = 30,
+                                                            stepMinutes = 10
+                                                        ) { seconds ->
+                                                            vm.addCustomTimerHint(seconds)
+                                                        }
+                                                    }
                                                 }
                                                 .padding(vertical = 4.dp, horizontal = 8.dp),
                                             color = c.blue,

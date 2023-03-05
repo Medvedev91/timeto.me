@@ -106,20 +106,20 @@ fun RepeatingFormSheet(
                         }
                     }
 
-                    val isCustomTimeSheetPresented = remember { mutableStateOf(false) }
-                    TimerPickerSheet(
-                        isPresented = isCustomTimeSheetPresented,
-                        title = "Timer",
-                        doneText = "Done",
-                        defMinutes = 30,
-                        stepMinutes = 10,
-                        onPick = { seconds ->
-                            vm.upTimerTime("${seconds / 60} min")
-                        }
-                    )
                     TimerHintView(text = "Custom") {
                         keyboardController?.hide()
-                        isCustomTimeSheetPresented.value = true
+                        Sheet.show { layer ->
+                            TimerPickerSheet(
+                                layer = layer,
+                                title = "Timer",
+                                doneText = "Done",
+                                defMinutes = 30,
+                                stepMinutes = 10,
+                                onPick = { seconds ->
+                                    vm.upTimerTime("${seconds / 60} min")
+                                }
+                            )
+                        }
                     }
                 }
 
