@@ -29,38 +29,41 @@ object WrapperView {
 
             wrapperViewLayers.forEach { layer ->
 
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = layer.alignment,
-                ) {
+                key(layer) {
 
-                    AnimatedVisibility(
-                        layer.isPresented.value,
-                        enter = fadeIn(),
-                        exit = fadeOut(),
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = layer.alignment,
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(Color(0x55000000))
-                                .clickable { layer.close() }
-                        )
-                    }
 
-                    AnimatedVisibility(
-                        layer.isPresented.value,
-                        enter = layer.enterAnimation,
-                        exit = layer.exitAnimation,
-                    ) {
-                        BackHandler(layer.isPresented.value) {
-                            layer.close()
+                        AnimatedVisibility(
+                            layer.isPresented.value,
+                            enter = fadeIn(),
+                            exit = fadeOut(),
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(Color(0x55000000))
+                                    .clickable { layer.close() }
+                            )
                         }
-                        layer.content(layer)
-                    }
-                }
 
-                LaunchedEffect(Unit) {
-                    layer.isPresented.setTrue()
+                        AnimatedVisibility(
+                            layer.isPresented.value,
+                            enter = layer.enterAnimation,
+                            exit = layer.exitAnimation,
+                        ) {
+                            BackHandler(layer.isPresented.value) {
+                                layer.close()
+                            }
+                            layer.content(layer)
+                        }
+                    }
+
+                    LaunchedEffect(Unit) {
+                        layer.isPresented.setTrue()
+                    }
                 }
             }
         }
