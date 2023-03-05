@@ -18,7 +18,7 @@ import kotlinx.coroutines.delay
 import timeto.shared.*
 import timeto.shared.vm.AppVM
 
-val LocalAutoBackup = compositionLocalOf<AutoBackup?> { throw MyException("LocalAutoBackup") }
+val LocalAutoBackup = compositionLocalOf<AutoBackup?> { throw Exception("LocalAutoBackup") }
 val wrapperViewLayers = mutableStateListOf<WrapperView.Layer>()
 
 class MainActivity : ComponentActivity() {
