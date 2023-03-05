@@ -109,7 +109,7 @@ fun TabToolsView() {
                         iconId = R.drawable.ic_round_add_24,
                         contentDescription = "New Checklist"
                     ) {
-                        MyDialog.show { layer ->
+                        Dialog.show { layer ->
                             ChecklistEditDialog(editedChecklist = null, onClose = layer::close)
                         }
                     }
@@ -152,7 +152,7 @@ fun TabToolsView() {
                         }
                     },
                     onStart = {
-                        MyDialog.show { layer ->
+                        Dialog.show { layer ->
                             ChecklistEditDialog(editedChecklist = checklist, onClose = layer::close)
                         }
                         false
@@ -286,7 +286,7 @@ fun TabToolsView() {
                         )
                     }
                 ) {
-                    MyDialog.show { layer ->
+                    Dialog.show { layer ->
                         DayStartDialogView(
                             tabToolsVM = vm,
                             tabToolsState = state,

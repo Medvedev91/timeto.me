@@ -95,12 +95,12 @@ private fun UIListeners() {
     val context = LocalContext.current
     LaunchedEffect(Unit) {
         uiAlertFlow.onEachExIn(this) { data ->
-            MyDialog.show { layer ->
+            Dialog.show { layer ->
                 AlertDialogView(data) { layer.close() }
             }
         }
         uiConfirmationFlow.onEachExIn(this) { data ->
-            MyDialog.show { layer ->
+            Dialog.show { layer ->
                 ConfirmationDialogView(data) { layer.close() }
             }
         }
@@ -112,7 +112,7 @@ private fun UIListeners() {
             }
         }
         uiChecklistFlow.onEachExIn(this) { checklist ->
-            MyDialog.show { layer ->
+            Dialog.show { layer ->
                 ChecklistDialogView(checklist) { layer.close() }
             }
         }

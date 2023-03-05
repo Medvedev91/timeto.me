@@ -32,7 +32,7 @@ import timeto.shared.toHms
 import java.text.SimpleDateFormat
 import java.util.*
 
-object MyDialog {
+object Dialog {
 
     fun show(
         modifier: Modifier = Modifier,

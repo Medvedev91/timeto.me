@@ -72,7 +72,7 @@ fun ChecklistDialogView(
                             }
                         },
                         onStart = {
-                            MyDialog.show { layer ->
+                            Dialog.show { layer ->
                                 ChecklistItemEditDialog(
                                     checklist = checklist,
                                     editedChecklistItem = item,
@@ -190,7 +190,7 @@ fun ChecklistDialogView(
                 true,
                 c.blue,
             ) {
-                MyDialog.show { layer ->
+                Dialog.show { layer ->
                     ChecklistItemEditDialog(
                         checklist = checklist,
                         editedChecklistItem = null,

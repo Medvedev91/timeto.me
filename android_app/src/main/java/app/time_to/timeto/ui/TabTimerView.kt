@@ -275,7 +275,7 @@ fun TabTimerView() {
                                 .clip(MySquircleShape())
                                 .background(c.background2)
                                 .clickable {
-                                    MyDialog.show(
+                                    Dialog.show(
                                         modifier = Modifier.fillMaxHeight(0.95f),
                                     ) { layer ->
                                         ChartDialogView(layer::close)
@@ -301,7 +301,7 @@ fun TabTimerView() {
                                 .clip(MySquircleShape())
                                 .background(c.background2)
                                 .clickable {
-                                    MyDialog.show(
+                                    Dialog.show(
                                         modifier = Modifier.fillMaxHeight(0.95f),
                                     ) { layer ->
                                         HistoryDialogView(layer::close)

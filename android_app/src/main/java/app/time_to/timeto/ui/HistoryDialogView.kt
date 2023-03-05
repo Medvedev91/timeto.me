@@ -106,7 +106,7 @@ fun HistoryDialogView(
                                                 .size(24.dp)
                                                 .clip(RoundedCornerShape(99.dp))
                                                 .clickable {
-                                                    MyDialog.showDatePicker(
+                                                    Dialog.showDatePicker(
                                                         defaultTime = interval.unixTime(),
                                                         minPickableDay = state.minPickerDay,
                                                         minSavableDay = state.minPickerDay,
@@ -178,7 +178,7 @@ fun HistoryDialogView(
                                         .clip(RoundedCornerShape(99.dp))
                                         .background(c.blue)
                                         .clickable {
-                                            MyDialog.show { layer ->
+                                            Dialog.show { layer ->
                                                 AddIntervalDialogView(
                                                     state = state,
                                                     defaultTime = intervalUI.barTimeFinish,
@@ -244,7 +244,7 @@ fun HistoryDialogView(
                                 .clip(RoundedCornerShape(99))
                                 .background(c.blue)
                                 .clickable {
-                                    MyDialog.showDatePicker(
+                                    Dialog.showDatePicker(
                                         defaultTime = UnixTime.byLocalDay(section.day),
                                         minPickableDay = state.minPickerDay,
                                         minSavableDay = state.minPickerDay,
@@ -346,7 +346,7 @@ private fun AddIntervalDialogView(
                     MyListView__ItemView__ButtonView(
                         text = activityUI.activity.nameWithEmoji(),
                     ) {
-                        MyDialog.showDatePicker(
+                        Dialog.showDatePicker(
                             defaultTime = UnixTime(defaultTime),
                             minPickableDay = 0,
                             minSavableDay = 0,
