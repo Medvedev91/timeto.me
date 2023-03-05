@@ -10,9 +10,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import app.time_to.timeto.LocalWrapperViewLayers
 import app.time_to.timeto.setFalse
 import app.time_to.timeto.setTrue
+import app.time_to.timeto.wrapperViewLayers
 import kotlinx.coroutines.delay
 import timeto.shared.launchExDefault
 
@@ -23,13 +23,11 @@ object WrapperView {
         content: @Composable () -> Unit
     ) {
 
-        val layers = LocalWrapperViewLayers.current
-
         Box {
 
             content()
 
-            layers.forEach { layer ->
+            wrapperViewLayers.forEach { layer ->
 
                 Box(
                     modifier = Modifier.fillMaxSize(),
@@ -66,7 +64,6 @@ object WrapperView {
 }
 
 class WrapperView__LayerData(
-    val layers: MutableList<WrapperView__LayerData>,
     val isPresented: MutableState<Boolean>,
     val enterAnimation: EnterTransition,
     val exitAnimation: ExitTransition,
@@ -79,7 +76,7 @@ class WrapperView__LayerData(
         isPresented.setFalse()
         launchExDefault {
             delay(500) // Waiting for animation
-            layers.remove(this@WrapperView__LayerData)
+            wrapperViewLayers.remove(this@WrapperView__LayerData)
         }
     }
 }
@@ -88,11 +85,10 @@ class WrapperView__LayerData(
 fun WrapperView__LayerView(
     layer: WrapperView__LayerData
 ) {
-    val layers = LocalWrapperViewLayers.current
     DisposableEffect(layer) {
-        layers.add(layer)
+        wrapperViewLayers.add(layer)
         onDispose {
-            layers.remove(layer)
+            wrapperViewLayers.remove(layer)
         }
     }
 }
@@ -100,10 +96,8 @@ fun WrapperView__LayerView(
 ///
 /// Show One Time
 
-fun WrapperView__LayerData.showOneTime(
-    allLayers: MutableList<WrapperView__LayerData>,
-) = launchExDefault {
-    allLayers.add(this@showOneTime)
+fun WrapperView__LayerData.showOneTime() = launchExDefault {
+    wrapperViewLayers.add(this@showOneTime)
     delay(50) // Waiting for adding to view
     this@showOneTime.isPresented.setTrue()
 }

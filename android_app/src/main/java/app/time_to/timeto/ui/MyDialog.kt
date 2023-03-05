@@ -35,14 +35,12 @@ import java.util.*
 object MyDialog {
 
     fun show(
-        layers: MutableList<WrapperView__LayerData>,
         modifier: Modifier = Modifier,
         margin: PaddingValues = PaddingValues(horizontal = 20.dp),
         content: @Composable (WrapperView__LayerData) -> Unit
     ) {
         val isPresented = mutableStateOf(false)
         WrapperView__LayerData(
-            layers = layers,
             isPresented = isPresented,
             enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessMedium)),
             exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessMedium)),
@@ -60,11 +58,10 @@ object MyDialog {
                     content(layer)
                 }
             }
-        ).showOneTime(layers)
+        ).showOneTime()
     }
 
     fun showDatePicker(
-        layers: MutableList<WrapperView__LayerData>,
         defaultTime: UnixTime? = null,
         minPickableDay: Int, // Available to pick
         minSavableDay: Int, // Active add button
@@ -74,7 +71,6 @@ object MyDialog {
         onSelect: (UnixTime) -> Unit,
     ) {
         show(
-            layers = layers,
             margin = PaddingValues(horizontal = 30.dp)
         ) { layer ->
 

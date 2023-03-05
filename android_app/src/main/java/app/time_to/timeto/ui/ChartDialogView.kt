@@ -229,7 +229,6 @@ private fun ChartDatePicker(
     withTimeBtnText: String? = null,
     onSelect: (UnixTime) -> Unit,
 ) {
-    val layers = LocalWrapperViewLayers.current
     val calendar = Calendar.getInstance(Locale.ENGLISH)
     calendar.timeInMillis = defaultTime.time * 1_000L
 
@@ -241,7 +240,6 @@ private fun ChartDatePicker(
             .height(30.dp)
             .clickable {
                 MyDialog.showDatePicker(
-                    layers = layers,
                     defaultTime = defaultTime,
                     minPickableDay = minPickableDay,
                     minSavableDay = minSavableDay,

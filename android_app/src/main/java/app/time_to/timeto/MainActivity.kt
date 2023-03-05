@@ -19,7 +19,7 @@ import timeto.shared.*
 import timeto.shared.vm.AppVM
 
 val LocalAutoBackup = compositionLocalOf<AutoBackup?> { throw MyException("LocalAutoBackup") }
-val LocalWrapperViewLayers = compositionLocalOf<MutableList<WrapperView__LayerData>> { throw MyException("LocalWrapperViewLayers") }
+val wrapperViewLayers = mutableStateListOf<WrapperView__LayerData>()
 
 class MainActivity : ComponentActivity() {
 
@@ -51,7 +51,6 @@ class MainActivity : ComponentActivity() {
 
                     CompositionLocalProvider(
                         LocalAutoBackup provides if (isSDKQPlus()) remember { AutoBackup() } else null,
-                        LocalWrapperViewLayers provides remember { mutableStateListOf() }
                     ) {
 
                         WrapperView.LayoutView {
@@ -94,15 +93,14 @@ class MainActivity : ComponentActivity() {
 @Composable
 private fun UIListeners() {
     val context = LocalContext.current
-    val layers = LocalWrapperViewLayers.current
     LaunchedEffect(Unit) {
         uiAlertFlow.onEachExIn(this) { data ->
-            MyDialog.show(layers = layers) { layer ->
+            MyDialog.show { layer ->
                 AlertDialogView(data) { layer.close() }
             }
         }
         uiConfirmationFlow.onEachExIn(this) { data ->
-            MyDialog.show(layers = layers) { layer ->
+            MyDialog.show { layer ->
                 ConfirmationDialogView(data) { layer.close() }
             }
         }
@@ -114,7 +112,7 @@ private fun UIListeners() {
             }
         }
         uiChecklistFlow.onEachExIn(this) { checklist ->
-            MyDialog.show(layers = layers) { layer ->
+            MyDialog.show { layer ->
                 ChecklistDialogView(checklist) { layer.close() }
             }
         }

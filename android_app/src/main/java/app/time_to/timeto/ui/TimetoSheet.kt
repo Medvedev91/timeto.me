@@ -18,7 +18,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import app.time_to.timeto.LocalWrapperViewLayers
 
 @Composable
 fun TimetoSheet(
@@ -28,7 +27,6 @@ fun TimetoSheet(
 ) {
     WrapperView__LayerView(
         WrapperView__LayerData(
-            layers = LocalWrapperViewLayers.current,
             isPresented = isPresented,
             enterAnimation = slideInVertically(
                 animationSpec = spring(

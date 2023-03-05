@@ -38,8 +38,6 @@ fun FullScreenListener(
     activity: Activity,
     onClose: () -> Unit,
 ) {
-    val layers = LocalWrapperViewLayers.current
-
     LaunchedEffect(Unit) {
 
         FullScreenUI.state.onEachExIn(this) { toOpenOrClose ->
@@ -77,7 +75,6 @@ fun FullScreenListener(
             //////
 
             WrapperView__LayerData(
-                layers = layers,
                 isPresented = mutableStateOf(false),
                 enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessHigh)),
                 exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessHigh)),
@@ -170,7 +167,7 @@ fun FullScreenListener(
                         )
                     }
                 }
-            ).showOneTime(layers)
+            ).showOneTime()
         }
     }
 }

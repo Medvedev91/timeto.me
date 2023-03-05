@@ -91,8 +91,6 @@ fun TabToolsView() {
         }
     }
 
-    val layers = LocalWrapperViewLayers.current
-
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -111,7 +109,7 @@ fun TabToolsView() {
                         iconId = R.drawable.ic_round_add_24,
                         contentDescription = "New Checklist"
                     ) {
-                        MyDialog.show(layers) { layer ->
+                        MyDialog.show { layer ->
                             ChecklistEditDialog(editedChecklist = null, onClose = layer::close)
                         }
                     }
@@ -154,7 +152,7 @@ fun TabToolsView() {
                         }
                     },
                     onStart = {
-                        MyDialog.show(layers) { layer ->
+                        MyDialog.show { layer ->
                             ChecklistEditDialog(editedChecklist = checklist, onClose = layer::close)
                         }
                         false
@@ -290,7 +288,7 @@ fun TabToolsView() {
                         )
                     }
                 ) {
-                    MyDialog.show(layers) { layer ->
+                    MyDialog.show { layer ->
                         DayStartDialogView(
                             tabToolsVM = vm,
                             tabToolsState = state,

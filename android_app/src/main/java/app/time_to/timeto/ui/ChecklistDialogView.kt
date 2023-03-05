@@ -37,8 +37,6 @@ fun ChecklistDialogView(
     val scope = rememberCoroutineScope()
     val (_, state) = rememberVM { ChecklistDialogVM(checklist = checklist) }
 
-    val layers = LocalWrapperViewLayers.current
-
     val checklistItems = state.items
 
     Box(Modifier.background(c.background)) {
@@ -74,7 +72,7 @@ fun ChecklistDialogView(
                             }
                         },
                         onStart = {
-                            MyDialog.show(layers) { layer ->
+                            MyDialog.show { layer ->
                                 ChecklistItemEditDialog(
                                     checklist = checklist,
                                     editedChecklistItem = item,
@@ -192,7 +190,7 @@ fun ChecklistDialogView(
                 true,
                 c.blue,
             ) {
-                MyDialog.show(layers) { layer ->
+                MyDialog.show { layer ->
                     ChecklistItemEditDialog(
                         checklist = checklist,
                         editedChecklistItem = null,

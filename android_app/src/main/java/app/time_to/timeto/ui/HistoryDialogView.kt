@@ -36,8 +36,6 @@ fun HistoryDialogView(
 
     val (vm, state) = rememberVM { HistoryVM() }
 
-    val layers = LocalWrapperViewLayers.current
-
     Box(
         contentAlignment = Alignment.BottomCenter,
         modifier = Modifier.background(c.background2),
@@ -109,7 +107,6 @@ fun HistoryDialogView(
                                                 .clip(RoundedCornerShape(99.dp))
                                                 .clickable {
                                                     MyDialog.showDatePicker(
-                                                        layers = layers,
                                                         defaultTime = interval.unixTime(),
                                                         minPickableDay = state.minPickerDay,
                                                         minSavableDay = state.minPickerDay,
@@ -166,8 +163,6 @@ fun HistoryDialogView(
                                     .background(intervalUI.color.toColor())
                             )
 
-                            val layers = LocalWrapperViewLayers.current
-
                             AnimatedVisibility(
                                 visible = isEditMode,
                                 modifier = Modifier
@@ -183,9 +178,7 @@ fun HistoryDialogView(
                                         .clip(RoundedCornerShape(99.dp))
                                         .background(c.blue)
                                         .clickable {
-                                            MyDialog.show(
-                                                layers = layers
-                                            ) { layer ->
+                                            MyDialog.show { layer ->
                                                 AddIntervalDialogView(
                                                     state = state,
                                                     defaultTime = intervalUI.barTimeFinish,
@@ -252,7 +245,6 @@ fun HistoryDialogView(
                                 .background(c.blue)
                                 .clickable {
                                     MyDialog.showDatePicker(
-                                        layers = layers,
                                         defaultTime = UnixTime.byLocalDay(section.day),
                                         minPickableDay = state.minPickerDay,
                                         minSavableDay = state.minPickerDay,
@@ -334,7 +326,6 @@ private fun AddIntervalDialogView(
     onClose: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
-    val layers = LocalWrapperViewLayers.current
 
     Box(Modifier.background(c.background)) {
 
@@ -356,7 +347,6 @@ private fun AddIntervalDialogView(
                         text = activityUI.activity.nameWithEmoji(),
                     ) {
                         MyDialog.showDatePicker(
-                            layers = layers,
                             defaultTime = UnixTime(defaultTime),
                             minPickableDay = 0,
                             minSavableDay = 0,

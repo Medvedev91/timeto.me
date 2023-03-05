@@ -273,8 +273,6 @@ fun TabTimerView() {
                         modifier = Modifier.padding(top = 20.dp)
                     ) {
 
-                        val layers = LocalWrapperViewLayers.current
-
                         Box(
                             modifier = Modifier
                                 .weight(1f)
@@ -282,7 +280,6 @@ fun TabTimerView() {
                                 .background(c.background2)
                                 .clickable {
                                     MyDialog.show(
-                                        layers = layers,
                                         modifier = Modifier.fillMaxHeight(0.95f),
                                     ) { layer ->
                                         ChartDialogView(layer::close)
@@ -309,7 +306,6 @@ fun TabTimerView() {
                                 .background(c.background2)
                                 .clickable {
                                     MyDialog.show(
-                                        layers = layers,
                                         modifier = Modifier.fillMaxHeight(0.95f),
                                     ) { layer ->
                                         HistoryDialogView(layer::close)
