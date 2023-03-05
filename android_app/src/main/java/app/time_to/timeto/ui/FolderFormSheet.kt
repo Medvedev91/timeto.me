@@ -8,82 +8,78 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import app.time_to.timeto.rememberVM
-import app.time_to.timeto.setFalse
 import timeto.shared.db.TaskFolderModel
 import timeto.shared.vm.FolderFormSheetVM
 
 @Composable
 fun FolderFormSheet(
-    isPresented: MutableState<Boolean>,
+    layer: WrapperView__LayerData,
     folder: TaskFolderModel?,
 ) {
-    TimetoSheet(isPresented = isPresented) {
+    val (vm, state) = rememberVM(folder) { FolderFormSheetVM(folder) }
 
-        val (vm, state) = rememberVM(folder) { FolderFormSheetVM(folder) }
+    Column(
+        modifier = Modifier
+            .fillMaxHeight()
+            .background(c.bgFormSheet)
+    ) {
+
+        val scrollState = rememberScrollState()
+
+        SheetHeaderView(
+            onCancel = { layer.close() },
+            title = state.headerTitle,
+            doneText = state.headerDoneText,
+            isDoneEnabled = state.isHeaderDoneEnabled,
+            scrollToHeader = scrollState.value,
+        ) {
+            vm.save {
+                layer.close()
+            }
+        }
 
         Column(
             modifier = Modifier
-                .fillMaxHeight()
-                .background(c.bgFormSheet)
+                .verticalScroll(
+                    state = scrollState
+                )
+                .padding(bottom = 20.dp)
+                .navigationBarsPadding()
+                .imePadding()
         ) {
 
-            val scrollState = rememberScrollState()
+            MyListView__Padding__SectionHeader()
 
-            SheetHeaderView(
-                onCancel = { isPresented.value = false },
-                title = state.headerTitle,
-                doneText = state.headerDoneText,
-                isDoneEnabled = state.isHeaderDoneEnabled,
-                scrollToHeader = scrollState.value,
+            MyListView__HeaderView(
+                state.inputNameHeader,
+            )
+
+            MyListView__Padding__HeaderSection()
+
+            MyListView__ItemView(
+                isFirst = true,
+                isLast = true,
             ) {
-                vm.save {
-                    isPresented.value = false
-                }
+                MyListView__ItemView__TextInputView(
+                    placeholder = state.inputNamePlaceholder,
+                    text = state.inputNameValue,
+                    onTextChanged = { newText -> vm.setInputNameValue(newText) },
+                )
             }
 
-            Column(
-                modifier = Modifier
-                    .verticalScroll(
-                        state = scrollState
-                    )
-                    .padding(bottom = 20.dp)
-                    .navigationBarsPadding()
-                    .imePadding()
-            ) {
+            if (folder != null && !folder.isToday) {
 
-                MyListView__Padding__SectionHeader()
-
-                MyListView__HeaderView(
-                    state.inputNameHeader,
-                )
-
-                MyListView__Padding__HeaderSection()
+                MyListView__Padding__SectionSection()
 
                 MyListView__ItemView(
                     isFirst = true,
                     isLast = true,
                 ) {
-                    MyListView__ItemView__TextInputView(
-                        placeholder = state.inputNamePlaceholder,
-                        text = state.inputNameValue,
-                        onTextChanged = { newText -> vm.setInputNameValue(newText) },
-                    )
-                }
-
-                if (folder != null && !folder.isToday) {
-
-                    MyListView__Padding__SectionSection()
-
-                    MyListView__ItemView(
-                        isFirst = true,
-                        isLast = true,
+                    MyListView__ItemView__ActionView(
+                        text = state.deleteFolderText,
                     ) {
-                        MyListView__ItemView__ActionView(
-                            text = state.deleteFolderText,
-                        ) {
-                            vm.delete {
-                                isPresented.setFalse()
-                            }
+                        vm.delete {
+                            layer.close()
                         }
                     }
                 }

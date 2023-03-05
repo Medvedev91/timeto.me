@@ -61,12 +61,6 @@ fun FoldersSettingsSheet(
 
                     val isFirst = folders.first() == folder
 
-                    val isEditFolderPresented = remember { mutableStateOf(false) }
-                    FolderFormSheet(
-                        isPresented = isEditFolderPresented,
-                        folder = folder,
-                    )
-
                     MyListView__ItemView(
                         isFirst = isFirst,
                         isLast = folders.last() == folder,
@@ -91,7 +85,12 @@ fun FoldersSettingsSheet(
                                 )
                             }
                         ) {
-                            isEditFolderPresented.setTrue()
+                            Sheet.show { layer ->
+                                FolderFormSheet(
+                                    layer = layer,
+                                    folder = folder,
+                                )
+                            }
                         }
                     }
                 }
@@ -100,12 +99,6 @@ fun FoldersSettingsSheet(
 
                     MyListView__Padding__SectionSection()
 
-                    val isAddFolderPresented = remember { mutableStateOf(false) }
-                    FolderFormSheet(
-                        isPresented = isAddFolderPresented,
-                        folder = null,
-                    )
-
                     MyListView__ItemView(
                         isFirst = true,
                         isLast = true,
@@ -113,7 +106,12 @@ fun FoldersSettingsSheet(
                         MyListView__ItemView__ButtonView(
                             text = "New Folder",
                         ) {
-                            isAddFolderPresented.setTrue()
+                            Sheet.show { layer ->
+                                FolderFormSheet(
+                                    layer = layer,
+                                    folder = null,
+                                )
+                            }
                         }
                     }
                 }
