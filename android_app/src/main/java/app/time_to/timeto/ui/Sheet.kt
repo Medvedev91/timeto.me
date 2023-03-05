@@ -34,9 +34,9 @@ object Sheet {
 
     fun show(
         topPadding: Dp = 20.dp,
-        content: @Composable (WrapperView__Layer) -> Unit,
+        content: @Composable (WrapperView.Layer) -> Unit,
     ) {
-        WrapperView__Layer(
+        WrapperView.Layer(
             enterAnimation = slideInVertically(
                 animationSpec = spring(
                     stiffness = Spring.StiffnessMedium,

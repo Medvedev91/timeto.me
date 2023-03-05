@@ -31,7 +31,7 @@ import timeto.shared.vm.SearchEmojiSheetVM
 
 @Composable
 fun SearchEmojiSheet(
-    layer: WrapperView__Layer,
+    layer: WrapperView.Layer,
     onSelectEmoji: (String) -> Unit
 ) {
     // Outside TimetoSheet to have data at open time

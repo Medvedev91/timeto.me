@@ -37,9 +37,9 @@ object Dialog {
     fun show(
         modifier: Modifier = Modifier,
         margin: PaddingValues = PaddingValues(horizontal = 20.dp),
-        content: @Composable (WrapperView__Layer) -> Unit
+        content: @Composable (WrapperView.Layer) -> Unit
     ) {
-        WrapperView__Layer(
+        WrapperView.Layer(
             enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessMedium)),
             exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessMedium)),
             alignment = Alignment.Center,

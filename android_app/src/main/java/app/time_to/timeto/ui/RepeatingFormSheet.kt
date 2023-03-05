@@ -31,7 +31,7 @@ import timeto.shared.vm.RepeatingFormSheetVM
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun RepeatingFormSheet(
-    layer: WrapperView__Layer,
+    layer: WrapperView.Layer,
     editedRepeating: RepeatingModel?,
 ) {
 

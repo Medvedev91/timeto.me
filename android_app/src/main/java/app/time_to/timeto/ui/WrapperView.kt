@@ -18,6 +18,30 @@ import timeto.shared.launchExDefault
 
 object WrapperView {
 
+    class Layer(
+        val enterAnimation: EnterTransition,
+        val exitAnimation: ExitTransition,
+        val alignment: Alignment,
+        val onClose: () -> Unit,
+        val content: @Composable (Layer) -> Unit,
+    ) {
+
+        val isPresented = mutableStateOf(false)
+
+        fun show() {
+            wrapperViewLayers.add(this)
+        }
+
+        fun close() {
+            onClose()
+            isPresented.setFalse()
+            launchExDefault {
+                delay(500) // Waiting for animation
+                wrapperViewLayers.remove(this@Layer)
+            }
+        }
+    }
+
     @Composable
     fun LayoutView(
         content: @Composable () -> Unit
@@ -66,30 +90,6 @@ object WrapperView {
                     }
                 }
             }
-        }
-    }
-}
-
-class WrapperView__Layer(
-    val enterAnimation: EnterTransition,
-    val exitAnimation: ExitTransition,
-    val alignment: Alignment,
-    val onClose: () -> Unit,
-    val content: @Composable (WrapperView__Layer) -> Unit,
-) {
-
-    val isPresented = mutableStateOf(false)
-
-    fun show() {
-        wrapperViewLayers.add(this)
-    }
-
-    fun close() {
-        onClose()
-        isPresented.setFalse()
-        launchExDefault {
-            delay(500) // Waiting for animation
-            wrapperViewLayers.remove(this@WrapperView__Layer)
         }
     }
 }

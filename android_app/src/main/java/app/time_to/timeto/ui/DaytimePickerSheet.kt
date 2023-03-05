@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun DaytimePickerSheet(
-    layer: WrapperView__Layer,
+    layer: WrapperView.Layer,
     title: String,
     doneText: String,
     defMinute: Int,

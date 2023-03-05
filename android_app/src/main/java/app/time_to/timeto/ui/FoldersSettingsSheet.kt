@@ -19,7 +19,7 @@ import timeto.shared.vm.FoldersSettingsVM
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FoldersSettingsSheet(
-    layer: WrapperView__Layer,
+    layer: WrapperView.Layer,
 ) {
     val (vm, state) = rememberVM { FoldersSettingsVM() }
 
