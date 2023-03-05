@@ -131,18 +131,6 @@ fun RepeatingFormSheet(
                     defBg = if (MaterialTheme.colors.isLight) c.white else c.bgFormSheet,
                 )
 
-                val isDaytimeSheetPresented = remember { mutableStateOf(false) }
-                DaytimePickerSheet(
-                    isPresented = isDaytimeSheetPresented,
-                    title = state.daytimeHeader,
-                    doneText = "Done",
-                    defHour = state.daytimePickerDefHour,
-                    defMinute = state.daytimePickerDefMinute,
-                    onPick = { secondsOrNull ->
-                        vm.upDaytime(secondsOrNull)
-                    }
-                )
-
                 MyListView__ItemView(
                     isFirst = true,
                     isLast = true,
@@ -159,7 +147,18 @@ fun RepeatingFormSheet(
                         }
                     ) {
                         keyboardController?.hide()
-                        isDaytimeSheetPresented.value = true
+                        Sheet.show { layer ->
+                            DaytimePickerSheet(
+                                layer = layer,
+                                title = state.daytimeHeader,
+                                doneText = "Done",
+                                defHour = state.daytimePickerDefHour,
+                                defMinute = state.daytimePickerDefMinute,
+                                onPick = { secondsOrNull ->
+                                    vm.upDaytime(secondsOrNull)
+                                }
+                            )
+                        }
                     }
                 }
 
