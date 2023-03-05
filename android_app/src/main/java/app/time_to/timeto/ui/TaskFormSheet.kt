@@ -32,7 +32,7 @@ fun TaskFormSheet(
             .padding(bottom = 24.dp),
     ) {
 
-        SheetHeaderView(
+        Sheet.HeaderView(
             onCancel = { layer.close() },
             title = state.headerTitle,
             doneText = state.headerDoneText,

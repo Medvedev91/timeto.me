@@ -38,7 +38,7 @@ fun ActivityFormSheet(
 
         val scrollState = rememberScrollState()
 
-        SheetHeaderView(
+        Sheet.HeaderView(
             onCancel = { layer.close() },
             title = state.headerTitle,
             doneText = state.headerDoneText,
