@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -18,6 +19,52 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+
+object Sheet {
+
+    fun show(
+        topPadding: Dp = 20.dp,
+        content: @Composable (WrapperView__LayerData) -> Unit,
+    ) {
+        val isPresented = mutableStateOf(false)
+        WrapperView__LayerData(
+            isPresented = isPresented,
+            enterAnimation = slideInVertically(
+                animationSpec = spring(
+                    stiffness = Spring.StiffnessMedium,
+                    visibilityThreshold = IntOffset.VisibilityThreshold
+                ),
+                initialOffsetY = { it }
+            ),
+            exitAnimation = slideOutVertically(
+                animationSpec = spring(
+                    stiffness = Spring.StiffnessMedium,
+                    visibilityThreshold = IntOffset.VisibilityThreshold
+                ),
+                targetOffsetY = { it }
+            ),
+            alignment = Alignment.BottomCenter,
+            onClose = {},
+            content = { layer ->
+                Box(
+                    /**
+                     * Ordering is important. Otherwise, podding
+                     * by height wouldn't work on close click.
+                     */
+                    modifier = Modifier
+                        // Restriction max height
+                        .statusBarsPadding()
+                        .padding(top = topPadding)
+                        ////
+                        .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
+                        .pointerInput(Unit) { }
+                ) {
+                    content(layer)
+                }
+            }
+        ).showOneTime()
+    }
+}
 
 @Composable
 fun TimetoSheet(
