@@ -25,7 +25,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import app.time_to.timeto.MyException
 import app.time_to.timeto.R
 import app.time_to.timeto.rememberVM
 import timeto.shared.vm.TabsVM
@@ -34,7 +33,7 @@ import timeto.shared.vm.TabsVM
 // https://stackoverflow.com/q/67059823
 var globalNav: NavHostController? = null
 
-val LocalTabsHeight = compositionLocalOf<Dp> { throw MyException("LocalTabsHeight") }
+val LocalTabsHeight = compositionLocalOf<Dp> { throw Exception("LocalTabsHeight") }
 
 @Composable
 fun TabsView() {
