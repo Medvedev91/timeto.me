@@ -90,11 +90,6 @@ fun ActivityFormSheet(
                 contentPaddingHints = PaddingValues(horizontal = MyListView.PADDING_OUTER_HORIZONTAL),
             )
 
-            val isEmojiSheetPresented = remember { mutableStateOf(false) }
-            SearchEmojiSheet(isPresented = isEmojiSheetPresented) {
-                vm.setEmoji(it)
-            }
-
             MyListView__Padding__SectionSection()
 
             MyListView__ItemView(
@@ -124,7 +119,11 @@ fun ActivityFormSheet(
                         }
                     }
                 ) {
-                    isEmojiSheetPresented.value = true
+                    Sheet.show { layer ->
+                        SearchEmojiSheet(layer = layer) {
+                            vm.setEmoji(it)
+                        }
+                    }
                 }
             }
 
