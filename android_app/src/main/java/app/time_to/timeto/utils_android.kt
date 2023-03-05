@@ -112,13 +112,6 @@ fun <State, VM : __VM<State>> rememberVM(
     return vm to vm.state.collectAsState().value
 }
 
-// todo remove
-class MyException(
-    val uiMessage: String,
-    reportMessage: String? = null,
-) : Exception(uiMessage)
-
-
 //
 // Vibration
 
