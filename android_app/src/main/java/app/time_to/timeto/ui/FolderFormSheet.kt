@@ -13,7 +13,7 @@ import timeto.shared.vm.FolderFormSheetVM
 
 @Composable
 fun FolderFormSheet(
-    layer: WrapperView__LayerData,
+    layer: WrapperView__Layer,
     folder: TaskFolderModel?,
 ) {
     val (vm, state) = rememberVM(folder) { FolderFormSheetVM(folder) }

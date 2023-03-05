@@ -19,7 +19,7 @@ import timeto.shared.*
 import timeto.shared.vm.AppVM
 
 val LocalAutoBackup = compositionLocalOf<AutoBackup?> { throw MyException("LocalAutoBackup") }
-val wrapperViewLayers = mutableStateListOf<WrapperView__LayerData>()
+val wrapperViewLayers = mutableStateListOf<WrapperView__Layer>()
 
 class MainActivity : ComponentActivity() {
 

@@ -17,7 +17,6 @@ import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,9 +34,9 @@ object Sheet {
 
     fun show(
         topPadding: Dp = 20.dp,
-        content: @Composable (WrapperView__LayerData) -> Unit,
+        content: @Composable (WrapperView__Layer) -> Unit,
     ) {
-        WrapperView__LayerData(
+        WrapperView__Layer(
             enterAnimation = slideInVertically(
                 animationSpec = spring(
                     stiffness = Spring.StiffnessMedium,

@@ -63,12 +63,12 @@ object WrapperView {
     }
 }
 
-class WrapperView__LayerData(
+class WrapperView__Layer(
     val enterAnimation: EnterTransition,
     val exitAnimation: ExitTransition,
     val alignment: Alignment,
     val onClose: () -> Unit,
-    val content: @Composable (WrapperView__LayerData) -> Unit,
+    val content: @Composable (WrapperView__Layer) -> Unit,
 ) {
 
     val isPresented = mutableStateOf(false)
@@ -78,7 +78,7 @@ class WrapperView__LayerData(
         isPresented.setFalse()
         launchExDefault {
             delay(500) // Waiting for animation
-            wrapperViewLayers.remove(this@WrapperView__LayerData)
+            wrapperViewLayers.remove(this@WrapperView__Layer)
         }
     }
 }
@@ -86,7 +86,7 @@ class WrapperView__LayerData(
 ///
 /// Show One Time
 
-fun WrapperView__LayerData.showOneTime() = launchExDefault {
+fun WrapperView__Layer.showOneTime() = launchExDefault {
     wrapperViewLayers.add(this@showOneTime)
     delay(50) // Waiting for adding to view
     this@showOneTime.isPresented.setTrue()

@@ -22,7 +22,7 @@ import timeto.shared.launchEx
 
 @Composable
 fun TimerPickerSheet(
-    layer: WrapperView__LayerData,
+    layer: WrapperView__Layer,
     title: String,
     doneText: String,
     defMinutes: Int,

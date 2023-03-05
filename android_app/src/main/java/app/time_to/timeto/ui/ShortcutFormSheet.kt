@@ -25,7 +25,7 @@ import timeto.shared.vm.ShortcutFormSheetVM
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ShortcutFormSheet(
-    layer: WrapperView__LayerData,
+    layer: WrapperView__Layer,
     editedShortcut: ShortcutModel?,
 ) {
 

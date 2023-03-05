@@ -23,7 +23,7 @@ import timeto.shared.vm.ActivityTimerSheetVM
 
 @Composable
 fun ActivityTimerSheet(
-    layer: WrapperView__LayerData,
+    layer: WrapperView__Layer,
     activity: ActivityModel,
     timerContext: ActivityTimerSheetVM.TimerContext?,
     onStarted: (() -> Unit)? = null,

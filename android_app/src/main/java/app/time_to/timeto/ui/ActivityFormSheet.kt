@@ -24,7 +24,7 @@ import timeto.shared.vm.ActivityFormSheetVM
 
 @Composable
 fun ActivityFormSheet(
-    layer: WrapperView__LayerData,
+    layer: WrapperView__Layer,
     editedActivity: ActivityModel?,
 ) {
 

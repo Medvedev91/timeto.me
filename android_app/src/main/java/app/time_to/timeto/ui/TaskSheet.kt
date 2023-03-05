@@ -26,7 +26,7 @@ import timeto.shared.vm.TaskSheetVM
 
 @Composable
 fun TaskSheet(
-    layer: WrapperView__LayerData,
+    layer: WrapperView__Layer,
     task: TaskModel,
 ) {
     val scope = rememberCoroutineScope()

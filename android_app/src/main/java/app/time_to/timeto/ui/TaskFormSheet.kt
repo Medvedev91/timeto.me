@@ -17,7 +17,7 @@ import timeto.shared.vm.TaskFormSheetVM
 @Composable
 fun TaskFormSheet(
     task: TaskModel,
-    layer: WrapperView__LayerData,
+    layer: WrapperView__Layer,
 ) {
 
     val (vm, state) = rememberVM(task) { TaskFormSheetVM(task) }

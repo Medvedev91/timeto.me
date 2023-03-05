@@ -23,7 +23,7 @@ import timeto.shared.vm.SortActivitiesVM
 
 @Composable
 fun EditActivitiesSheet(
-    layer: WrapperView__LayerData
+    layer: WrapperView__Layer
 ) {
 
     val (vm, state) = rememberVM { SortActivitiesVM() }
