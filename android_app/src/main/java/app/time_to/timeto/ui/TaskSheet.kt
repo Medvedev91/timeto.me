@@ -26,7 +26,7 @@ import timeto.shared.vm.TaskSheetVM
 
 @Composable
 fun TaskSheet(
-    isPresented: MutableState<Boolean>,
+    layer: WrapperView__LayerData,
     task: TaskModel,
 ) {
     val scope = rememberCoroutineScope()
@@ -35,104 +35,101 @@ fun TaskSheet(
     val topContentPadding = 2.dp
     val bottomContentPadding = 20.dp
 
-    TimetoSheet(isPresented) {
+    val (_, state) = rememberVM(task) { TaskSheetVM(task) }
 
-        val (_, state) = rememberVM(task) { TaskSheetVM(task) }
+    val screenHeight = LocalConfiguration.current.screenHeightDp.dp
 
-        val screenHeight = LocalConfiguration.current.screenHeightDp.dp
+    LazyColumn(
+        modifier = Modifier
+            .background(c.background2)
+            .navigationBarsPadding()
+            .height((activityItemHeight * state.allActivities.size + topContentPadding + bottomContentPadding).min(screenHeight - 60.dp))
+            .fillMaxWidth(),
+        contentPadding = PaddingValues(top = topContentPadding, bottom = bottomContentPadding)
+    ) {
 
-        LazyColumn(
-            modifier = Modifier
-                .background(c.background2)
-                .navigationBarsPadding()
-                .height((activityItemHeight * state.allActivities.size + topContentPadding + bottomContentPadding).min(screenHeight - 60.dp))
-                .fillMaxWidth(),
-            contentPadding = PaddingValues(top = topContentPadding, bottom = bottomContentPadding)
-        ) {
+        items(state.allActivities) { activityUI ->
 
-            items(state.allActivities) { activityUI ->
+            val activity = activityUI.activity
 
-                val activity = activityUI.activity
+            val emojiHPadding = 8.dp
+            val emojiWidth = 30.dp
+            val startPadding = emojiWidth + (emojiHPadding * 2)
 
-                val emojiHPadding = 8.dp
-                val emojiWidth = 30.dp
-                val startPadding = emojiWidth + (emojiHPadding * 2)
+            Box(
+                contentAlignment = Alignment.BottomCenter, // for divider
+            ) {
 
-                Box(
-                    contentAlignment = Alignment.BottomCenter, // for divider
+                Row(
+                    modifier = Modifier
+                        .height(activityItemHeight)
+                        .clickable {
+                            layer.close()
+                            Sheet.show { layer ->
+                                ActivityTimerSheet(
+                                    layer = layer,
+                                    activity = activity,
+                                    timerContext = ActivityTimerSheetVM.TimerContext.Task(task)
+                                ) {
+                                    scope.launchEx {
+                                        gotoTimer()
+                                    }
+                                }
+                            }
+                        }
+                        .padding(start = 2.dp, end = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
 
-                    Row(
+                    Text(
+                        text = activity.emoji,
                         modifier = Modifier
-                            .height(activityItemHeight)
-                            .clickable {
-                                isPresented.value = false
-                                Sheet.show { layer ->
-                                    ActivityTimerSheet(
-                                        layer = layer,
-                                        activity = activity,
-                                        timerContext = ActivityTimerSheetVM.TimerContext.Task(task)
-                                    ) {
+                            .padding(horizontal = emojiHPadding)
+                            .width(emojiWidth),
+                        textAlign = TextAlign.Center,
+                        fontSize = 20.sp,
+                    )
+
+                    Text(
+                        activityUI.listText,
+                        modifier = Modifier
+                            .weight(1f),
+                        color = c.text,
+                        textAlign = TextAlign.Start,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1,
+                    )
+
+                    activityUI.timerHints.forEach { hintUI ->
+                        val inHistory = hintUI.seconds in activityUI.historySeconds
+                        val hPadding = if (inHistory) 6.dp else 5.dp
+                        Text(
+                            text = hintUI.text,
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(99.dp))
+                                .align(Alignment.CenterVertically)
+                                .background(if (inHistory) c.blue else c.transparent)
+                                .clickable {
+                                    hintUI.startInterval {
                                         scope.launchEx {
                                             gotoTimer()
                                         }
                                     }
                                 }
-                            }
-                            .padding(start = 2.dp, end = 8.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-
-                        Text(
-                            text = activity.emoji,
-                            modifier = Modifier
-                                .padding(horizontal = emojiHPadding)
-                                .width(emojiWidth),
-                            textAlign = TextAlign.Center,
-                            fontSize = 20.sp,
+                                .padding(start = hPadding, end = hPadding, top = 3.dp, bottom = 4.dp),
+                            color = if (inHistory) c.white else c.blue,
+                            fontSize = if (inHistory) 13.sp else 14.sp,
+                            fontWeight = if (inHistory) FontWeight.W500 else FontWeight.W300,
                         )
-
-                        Text(
-                            activityUI.listText,
-                            modifier = Modifier
-                                .weight(1f),
-                            color = c.text,
-                            textAlign = TextAlign.Start,
-                            overflow = TextOverflow.Ellipsis,
-                            maxLines = 1,
-                        )
-
-                        activityUI.timerHints.forEach { hintUI ->
-                            val inHistory = hintUI.seconds in activityUI.historySeconds
-                            val hPadding = if (inHistory) 6.dp else 5.dp
-                            Text(
-                                text = hintUI.text,
-                                modifier = Modifier
-                                    .clip(RoundedCornerShape(99.dp))
-                                    .align(Alignment.CenterVertically)
-                                    .background(if (inHistory) c.blue else c.transparent)
-                                    .clickable {
-                                        hintUI.startInterval {
-                                            scope.launchEx {
-                                                gotoTimer()
-                                            }
-                                        }
-                                    }
-                                    .padding(start = hPadding, end = hPadding, top = 3.dp, bottom = 4.dp),
-                                color = if (inHistory) c.white else c.blue,
-                                fontSize = if (inHistory) 13.sp else 14.sp,
-                                fontWeight = if (inHistory) FontWeight.W500 else FontWeight.W300,
-                            )
-                        }
                     }
-
-                    Divider(
-                        color = c.dividerBackground2,
-                        modifier = Modifier
-                            .padding(start = startPadding),
-                        thickness = 0.5.dp
-                    )
                 }
+
+                Divider(
+                    color = c.dividerBackground2,
+                    modifier = Modifier
+                        .padding(start = startPadding),
+                    thickness = 0.5.dp
+                )
             }
         }
     }

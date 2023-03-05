@@ -240,9 +240,6 @@ fun TasksListView(
                     // .animateItemPlacement() // Slow rendering on IME open
                 ) {
 
-                    val isSheetPresented = remember { mutableStateOf(false) }
-                    TaskSheet(isSheetPresented, taskUI.task)
-
                     val ignoreOneSwipeToAction = remember { mutableStateOf(false) }
                     val isEditOrDelete = remember { mutableStateOf<Boolean?>(null) }
                     val stateOffsetAbsDp = remember { mutableStateOf(0.dp) }
@@ -325,7 +322,9 @@ fun TasksListView(
                                             }
                                         },
                                         needSheet = {
-                                            isSheetPresented.value = true
+                                            Sheet.show { layer ->
+                                                TaskSheet(layer, taskUI.task)
+                                            }
                                         },
                                     )
                                 },
