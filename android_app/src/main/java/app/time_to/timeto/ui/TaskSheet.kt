@@ -54,16 +54,6 @@ fun TaskSheet(
 
                 val activity = activityUI.activity
 
-                val timerSheet = ActivityTimerSheet(
-                    activity = activity,
-                    timerContext = ActivityTimerSheetVM.TimerContext.Task(task)
-                ) {
-                    isPresented.value = false
-                    scope.launchEx {
-                        gotoTimer()
-                    }
-                }
-
                 val emojiHPadding = 8.dp
                 val emojiWidth = 30.dp
                 val startPadding = emojiWidth + (emojiHPadding * 2)
@@ -76,8 +66,17 @@ fun TaskSheet(
                         modifier = Modifier
                             .height(activityItemHeight)
                             .clickable {
-                                scope.launchEx {
-                                    timerSheet.value = true
+                                isPresented.value = false
+                                Sheet.show { layer ->
+                                    ActivityTimerSheet(
+                                        layer = layer,
+                                        activity = activity,
+                                        timerContext = ActivityTimerSheetVM.TimerContext.Task(task)
+                                    ) {
+                                        scope.launchEx {
+                                            gotoTimer()
+                                        }
+                                    }
                                 }
                             }
                             .padding(start = 2.dp, end = 8.dp),

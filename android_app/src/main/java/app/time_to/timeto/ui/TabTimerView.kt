@@ -118,14 +118,16 @@ fun TabTimerView() {
                         toVibrateStartEnd = listOf(true, false),
                     ) {
 
-                        val timerSheetState = ActivityTimerSheet(activity = uiActivity.activity, timerContext = null)
-
                         Box(
                             modifier = Modifier
                                 .background(bgAnimate.value)
                                 .clickable {
-                                    scope.launchEx {
-                                        timerSheetState.value = true
+                                    Sheet.show { layer ->
+                                        ActivityTimerSheet(
+                                            layer = layer,
+                                            activity = uiActivity.activity,
+                                            timerContext = null
+                                        )
                                     }
                                 },
                             contentAlignment = Alignment.TopCenter,
