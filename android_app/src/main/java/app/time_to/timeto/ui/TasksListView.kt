@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.*
 import app.time_to.timeto.*
 import kotlinx.coroutines.delay
 import timeto.shared.db.TaskFolderModel
-import timeto.shared.db.TaskModel
 import timeto.shared.launchEx
 import timeto.shared.vm.TasksListVM
 
@@ -42,20 +41,6 @@ fun TasksListView(
     val tmrwData = state.tmrwData
 
     val scope = rememberCoroutineScope()
-
-    val editedTask = remember { mutableStateOf<TaskModel?>(null) }
-    val editedTaskLocal = editedTask.value
-    if (editedTaskLocal != null) {
-        val isEditTaskPresented = remember { mutableStateOf(true) }
-        LaunchedEffect(isEditTaskPresented.value) {
-            if (!isEditTaskPresented.value)
-                editedTask.value = null
-        }
-        TaskFormSheet(
-            task = editedTaskLocal,
-            isPresented = isEditTaskPresented,
-        )
-    }
 
     Box(
         contentAlignment = Alignment.BottomCenter,
@@ -300,7 +285,12 @@ fun TasksListView(
                             }
                         },
                         onStart = {
-                            editedTask.value = taskUI.task
+                            Sheet.show { layer ->
+                                TaskFormSheet(
+                                    task = taskUI.task,
+                                    layer = layer,
+                                )
+                            }
                             false
                         },
                         onEnd = {
