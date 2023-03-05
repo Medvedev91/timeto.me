@@ -37,12 +37,6 @@ fun EventsListView() {
 
         item {
 
-            val isAddCalendarPresented = remember { mutableStateOf(false) }
-            EventFormSheet(
-                isPresented = isAddCalendarPresented,
-                editedEvent = null,
-            ) {}
-
             val saveBtnPadding = 4.dp
 
             Column {
@@ -63,7 +57,7 @@ fun EventsListView() {
                         .clip(MySquircleShape())
                         .background(c.background2)
                         .clickable {
-                            isAddCalendarPresented.value = true
+                            EventFormSheet__show(editedEvent = null) {}
                         }
                         .padding(vertical = saveBtnPadding),
                 ) {
@@ -113,13 +107,6 @@ fun EventsListView() {
         }
 
         itemsIndexed(state.uiEvents, key = { _, uiEvent -> uiEvent.event.id }) { index, uiEvent ->
-            val isEditSheetPresented = remember { mutableStateOf(false) }
-
-            EventFormSheet(
-                isPresented = isEditSheetPresented,
-                editedEvent = uiEvent.event,
-            ) {}
-
             val isLast = index == state.uiEvents.size - 1
 
             // Remember the list is reversed
@@ -152,7 +139,7 @@ fun EventsListView() {
                         }
                     },
                     onStart = {
-                        isEditSheetPresented.value = true
+                        EventFormSheet__show(editedEvent = uiEvent.event) {}
                         false
                     },
                     onEnd = {

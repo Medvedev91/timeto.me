@@ -30,144 +30,157 @@ import timeto.shared.vm.EventFormSheetVM
 import java.text.SimpleDateFormat
 import java.util.*
 
+fun EventFormSheet__show(
+    editedEvent: EventModel?,
+    defText: String? = null,
+    defTime: Int? = null,
+    onSave: () -> Unit,
+) {
+    Sheet.show(
+        topPadding = 2.dp
+    ) { layer ->
+        EventFormSheet(
+            layer = layer,
+            editedEvent = editedEvent,
+            defText = defText,
+            defTime = defTime,
+            onSave = onSave,
+        )
+    }
+}
+
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun EventFormSheet(
-    isPresented: MutableState<Boolean>,
+    layer: WrapperView__LayerData,
     editedEvent: EventModel?,
     defText: String? = null,
     defTime: Int? = null,
     onSave: () -> Unit,
 ) {
 
-    TimetoSheet(
-        isPresented = isPresented,
-        topPadding = 2.dp, // To fit calendar over the keyboard
-    ) {
+    val (vm, state) = rememberVM(editedEvent, defText, defTime) {
+        EventFormSheetVM(
+            event = editedEvent,
+            defText = defText,
+            defTime = defTime,
+        )
+    }
 
-        val (vm, state) = rememberVM(editedEvent, defText, defTime) {
-            EventFormSheetVM(
-                event = editedEvent,
-                defText = defText,
-                defTime = defTime,
-            )
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val scrollState = rememberScrollState()
+
+    var isFirstImeHideSkipped by remember { mutableStateOf(false) }
+    LaunchedEffect(state.selectedTime) {
+        if (!isFirstImeHideSkipped) {
+            isFirstImeHideSkipped = true
+            return@LaunchedEffect
         }
+        keyboardController?.hide()
+    }
 
-        val keyboardController = LocalSoftwareKeyboardController.current
-        val scrollState = rememberScrollState()
-
-        var isFirstImeHideSkipped by remember { mutableStateOf(false) }
-        LaunchedEffect(state.selectedTime) {
-            if (!isFirstImeHideSkipped) {
-                isFirstImeHideSkipped = true
-                return@LaunchedEffect
-            }
+    LaunchedEffect(scrollState.isScrollInProgress) {
+        if (scrollState.isScrollInProgress)
             keyboardController?.hide()
-        }
+    }
 
-        LaunchedEffect(scrollState.isScrollInProgress) {
-            if (scrollState.isScrollInProgress)
-                keyboardController?.hide()
-        }
+    Column(
+        modifier = Modifier
+            .fillMaxHeight()
+            .background(c.bgFormSheet)
+    ) {
 
         Column(
             modifier = Modifier
-                .fillMaxHeight()
-                .background(c.bgFormSheet)
+                .verticalScroll(
+                    state = scrollState
+                )
+                .padding(bottom = 20.dp)
+                .navigationBarsPadding()
+                .imePadding()
         ) {
 
-            Column(
-                modifier = Modifier
-                    .verticalScroll(
-                        state = scrollState
-                    )
-                    .padding(bottom = 20.dp)
-                    .navigationBarsPadding()
-                    .imePadding()
+            Row(
+                modifier = Modifier.padding(top = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
 
-                Row(
-                    modifier = Modifier.padding(top = 16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
+                Icon(
+                    painterResource(id = R.drawable.ic_round_close_24),
+                    "Close",
+                    tint = c.text.copy(alpha = 0.4f),
+                    modifier = Modifier
+                        .padding(start = 10.dp)
+                        .size(36.dp)
+                        .clip(RoundedCornerShape(99.dp))
+                        .background(c.transparent)
+                        .clickable {
+                            layer.close()
+                        }
+                        .padding(6.dp)
+                )
+
+                MyListView__ItemView(
+                    modifier = Modifier.weight(1f),
+                    isFirst = true,
+                    isLast = true,
+                    outerPadding = PaddingValues(horizontal = 8.dp)
                 ) {
-
-                    Icon(
-                        painterResource(id = R.drawable.ic_round_close_24),
-                        "Close",
-                        tint = c.text.copy(alpha = 0.4f),
-                        modifier = Modifier
-                            .padding(start = 10.dp)
-                            .size(36.dp)
-                            .clip(RoundedCornerShape(99.dp))
-                            .background(c.transparent)
-                            .clickable {
-                                isPresented.value = false
-                            }
-                            .padding(6.dp)
-                    )
-
-                    MyListView__ItemView(
-                        modifier = Modifier.weight(1f),
-                        isFirst = true,
-                        isLast = true,
-                        outerPadding = PaddingValues(horizontal = 8.dp)
-                    ) {
-                        MyListView__ItemView__TextInputView(
-                            placeholder = "Event Title",
-                            text = state.inputTextValue,
-                            onTextChanged = { vm.setInputTextValue(it) },
-                            isAutofocus = state.isAutoFocus,
-                            keyboardButton = ImeAction.Done,
-                            keyboardEvent = { keyboardController?.hide() },
-                        )
-                    }
-
-                    Text(
-                        state.headerDoneText,
-                        modifier = Modifier
-                            .padding(end = 10.dp, bottom = 1.dp)
-                            .clip(RoundedCornerShape(99.dp))
-                            .clickable(enabled = state.isHeaderDoneEnabled) {
-                                vm.save {
-                                    isPresented.value = false
-                                    onSave()
-                                }
-                            }
-                            .padding(horizontal = 8.dp, vertical = 4.dp),
-                        color = animateColorAsState(
-                            targetValue =
-                            if (state.isHeaderDoneEnabled) c.blue
-                            else c.textSecondary.copy(alpha = 0.4f)
-                        ).value,
-                        fontSize = 17.sp,
-                        fontWeight = FontWeight.W600
+                    MyListView__ItemView__TextInputView(
+                        placeholder = "Event Title",
+                        text = state.inputTextValue,
+                        onTextChanged = { vm.setInputTextValue(it) },
+                        isAutofocus = state.isAutoFocus,
+                        keyboardButton = ImeAction.Done,
+                        keyboardEvent = { keyboardController?.hide() },
                     )
                 }
 
-                AndroidView(
-                    { CalendarView(it) },
+                Text(
+                    state.headerDoneText,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .offset(y = (-2).dp),
-                    update = { calendarView ->
-                        calendarView.date = state.selectedTime * 1000L
-                        calendarView.minDate = state.minTime * 1000L
-                        calendarView.setOnDateChangeListener { _, cYear, cMonthIndex, cDay ->
-                            val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-                            val newDate = formatter.parse("$cYear-${cMonthIndex + 1}-${cDay}")!!
-                            val newDayStartTime = UnixTime((newDate.time / 1000L).toInt()).localDayStartTime()
-                            vm.setTimeByComponents(dayStartTime = newDayStartTime)
+                        .padding(end = 10.dp, bottom = 1.dp)
+                        .clip(RoundedCornerShape(99.dp))
+                        .clickable(enabled = state.isHeaderDoneEnabled) {
+                            vm.save {
+                                layer.close()
+                                onSave()
+                            }
                         }
-                    }
-                )
-
-                DayTimePickerView(
-                    hour = state.hour,
-                    minute = state.minute,
-                    onHourChanged = { hour -> vm.setTimeByComponents(hour = hour) },
-                    onMinuteChanged = { minute -> vm.setTimeByComponents(minute = minute) },
+                        .padding(horizontal = 8.dp, vertical = 4.dp),
+                    color = animateColorAsState(
+                        targetValue =
+                        if (state.isHeaderDoneEnabled) c.blue
+                        else c.textSecondary.copy(alpha = 0.4f)
+                    ).value,
+                    fontSize = 17.sp,
+                    fontWeight = FontWeight.W600
                 )
             }
+
+            AndroidView(
+                { CalendarView(it) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .offset(y = (-2).dp),
+                update = { calendarView ->
+                    calendarView.date = state.selectedTime * 1000L
+                    calendarView.minDate = state.minTime * 1000L
+                    calendarView.setOnDateChangeListener { _, cYear, cMonthIndex, cDay ->
+                        val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+                        val newDate = formatter.parse("$cYear-${cMonthIndex + 1}-${cDay}")!!
+                        val newDayStartTime = UnixTime((newDate.time / 1000L).toInt()).localDayStartTime()
+                        vm.setTimeByComponents(dayStartTime = newDayStartTime)
+                    }
+                }
+            )
+
+            DayTimePickerView(
+                hour = state.hour,
+                minute = state.minute,
+                onHourChanged = { hour -> vm.setTimeByComponents(hour = hour) },
+                onMinuteChanged = { minute -> vm.setTimeByComponents(minute = minute) },
+            )
         }
     }
 }

@@ -49,14 +49,6 @@ fun EventsHistoryView(
             key = { _, item -> item.historyItem.normalized_title }
         ) { _, uiItem ->
 
-            val isAddEventPresented = remember { mutableStateOf(false) }
-            EventFormSheet(
-                isPresented = isAddEventPresented,
-                editedEvent = null,
-                defText = uiItem.historyItem.raw_title,
-                defTime = uiItem.defTime,
-            ) {}
-
             Text(
                 uiItem.note,
                 modifier = Modifier
@@ -67,7 +59,11 @@ fun EventsHistoryView(
                     .animateItemPlacement()
                     .combinedClickable(
                         onClick = {
-                            isAddEventPresented.value = true
+                            EventFormSheet__show(
+                                editedEvent = null,
+                                defText = uiItem.historyItem.raw_title,
+                                defTime = uiItem.defTime,
+                            ) {}
                         },
                         onLongClick = {
                             vm.delItem(uiItem.historyItem)

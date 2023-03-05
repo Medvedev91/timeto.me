@@ -198,15 +198,6 @@ fun TasksListView(
                 tasksUI,
                 key = { taskUI -> taskUI.task.id }
             ) { taskUI ->
-                val isAddCalendarPresented = remember { mutableStateOf(false) }
-                EventFormSheet(
-                    isPresented = isAddCalendarPresented,
-                    editedEvent = null,
-                    defText = taskUI.task.text,
-                ) {
-                    taskUI.delete()
-                }
-
                 val startPadding = 18.dp
 
                 val isLast = taskUI == tasksUI.lastOrNull()
@@ -246,7 +237,12 @@ fun TasksListView(
                                 when (drop) {
                                     is DropItem.Type__Calendar -> {
                                         vibrateShort()
-                                        isAddCalendarPresented.value = true
+                                        EventFormSheet__show(
+                                            editedEvent = null,
+                                            defText = taskUI.task.text,
+                                        ) {
+                                            taskUI.delete()
+                                        }
                                     }
                                     is DropItem.Type__Folder -> {
                                         vibrateLong()
