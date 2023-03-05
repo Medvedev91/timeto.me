@@ -25,130 +25,127 @@ import timeto.shared.vm.ShortcutFormSheetVM
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ShortcutFormSheet(
-    isPresented: MutableState<Boolean>,
+    layer: WrapperView__LayerData,
     editedShortcut: ShortcutModel?,
 ) {
 
-    TimetoSheet(isPresented = isPresented) {
+    val (vm, state) = rememberVM(editedShortcut) { ShortcutFormSheetVM(editedShortcut) }
 
-        val (vm, state) = rememberVM(editedShortcut) { ShortcutFormSheetVM(editedShortcut) }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
-        val keyboardController = LocalSoftwareKeyboardController.current
+    Column(
+        modifier = Modifier
+            .fillMaxHeight()
+            .background(c.bgFormSheet)
+    ) {
+
+        val scrollState = rememberScrollState()
+
+        SheetHeaderView(
+            onCancel = { layer.close() },
+            title = state.headerTitle,
+            doneText = state.headerDoneText,
+            isDoneEnabled = state.isHeaderDoneEnabled,
+            scrollToHeader = scrollState.value,
+        ) {
+            vm.save {
+                layer.close()
+            }
+        }
 
         Column(
             modifier = Modifier
-                .fillMaxHeight()
-                .background(c.bgFormSheet)
+                .verticalScroll(
+                    state = scrollState
+                )
+                .padding(bottom = 20.dp)
+                .navigationBarsPadding()
+                .imePadding()
         ) {
 
-            val scrollState = rememberScrollState()
+            MyListView__Padding__SectionSection()
 
-            SheetHeaderView(
-                onCancel = { isPresented.value = false },
-                title = state.headerTitle,
-                doneText = state.headerDoneText,
-                isDoneEnabled = state.isHeaderDoneEnabled,
-                scrollToHeader = scrollState.value,
+            MyListView__HeaderView(
+                title = state.inputNameHeader,
+            )
+
+            MyListView__Padding__HeaderSection()
+
+            MyListView__ItemView(
+                isFirst = true,
+                isLast = true,
             ) {
-                vm.save {
-                    isPresented.value = false
-                }
+                MyListView__ItemView__TextInputView(
+                    placeholder = state.inputNamePlaceholder,
+                    text = state.inputNameValue,
+                    onTextChanged = { newText -> vm.setInputNameValue(newText) },
+                )
             }
 
-            Column(
-                modifier = Modifier
-                    .verticalScroll(
-                        state = scrollState
-                    )
-                    .padding(bottom = 20.dp)
-                    .navigationBarsPadding()
-                    .imePadding()
+            MyListView__HeaderView(
+                title = state.inputUriHeader,
+                Modifier.padding(top = 30.dp)
+            )
+
+            MyListView__Padding__HeaderSection()
+
+            MyListView__ItemView(
+                isFirst = true,
+                isLast = true,
             ) {
-
-                MyListView__Padding__SectionSection()
-
-                MyListView__HeaderView(
-                    title = state.inputNameHeader,
+                MyListView__ItemView__TextInputView(
+                    placeholder = state.inputUriPlaceholder,
+                    text = state.inputUriValue,
+                    onTextChanged = { newText -> vm.setInputUriValue(newText) },
                 )
+            }
 
-                MyListView__Padding__HeaderSection()
+            MyListView__HeaderView(
+                title = "EXAMPLES",
+                Modifier.padding(top = 60.dp)
+            )
 
+            MyListView__Padding__HeaderSection()
+
+            shortcutExamples.forEach { example ->
+                val isFirst = shortcutExamples.first() == example
                 MyListView__ItemView(
-                    isFirst = true,
-                    isLast = true,
+                    isFirst = isFirst,
+                    isLast = shortcutExamples.last() == example,
+                    withTopDivider = !isFirst,
                 ) {
-                    MyListView__ItemView__TextInputView(
-                        placeholder = state.inputNamePlaceholder,
-                        text = state.inputNameValue,
-                        onTextChanged = { newText -> vm.setInputNameValue(newText) },
-                    )
-                }
-
-                MyListView__HeaderView(
-                    title = state.inputUriHeader,
-                    Modifier.padding(top = 30.dp)
-                )
-
-                MyListView__Padding__HeaderSection()
-
-                MyListView__ItemView(
-                    isFirst = true,
-                    isLast = true,
-                ) {
-                    MyListView__ItemView__TextInputView(
-                        placeholder = state.inputUriPlaceholder,
-                        text = state.inputUriValue,
-                        onTextChanged = { newText -> vm.setInputUriValue(newText) },
-                    )
-                }
-
-                MyListView__HeaderView(
-                    title = "EXAMPLES",
-                    Modifier.padding(top = 60.dp)
-                )
-
-                MyListView__Padding__HeaderSection()
-
-                shortcutExamples.forEach { example ->
-                    val isFirst = shortcutExamples.first() == example
-                    MyListView__ItemView(
-                        isFirst = isFirst,
-                        isLast = shortcutExamples.last() == example,
-                        withTopDivider = !isFirst,
-                    ) {
-                        MyListView__ItemView__ButtonView(
-                            text = example.name,
-                            rightView = {
-                                Row(
-                                    modifier = Modifier.padding(end = 14.dp)
+                    MyListView__ItemView__ButtonView(
+                        text = example.name,
+                        rightView = {
+                            Row(
+                                modifier = Modifier.padding(end = 14.dp)
+                            ) {
+                                Text(
+                                    example.hint,
+                                    fontSize = 14.sp,
+                                    color = c.text,
+                                )
+                                AnimatedVisibility(
+                                    visible = state.inputUriValue == example.uri,
                                 ) {
-                                    Text(
-                                        example.hint,
-                                        fontSize = 14.sp,
-                                        color = c.text,
+                                    Icon(
+                                        painterResource(id = R.drawable.sf_checkmark_medium_medium),
+                                        "Selected",
+                                        tint = c.green,
+                                        modifier = Modifier
+                                            .padding(start = 8.dp)
+                                            .size(18.dp)
+                                            .alpha(0.8f)
+                                            .clip(RoundedCornerShape(99.dp))
+                                            .padding(3.dp)
                                     )
-                                    AnimatedVisibility(
-                                        visible = state.inputUriValue == example.uri,
-                                    ) {
-                                        Icon(
-                                            painterResource(id = R.drawable.sf_checkmark_medium_medium),
-                                            "Selected",
-                                            tint = c.green,
-                                            modifier = Modifier
-                                                .padding(start = 8.dp)
-                                                .size(18.dp)
-                                                .alpha(0.8f)
-                                                .clip(RoundedCornerShape(99.dp))
-                                                .padding(3.dp)
-                                        )
-                                    }
                                 }
                             }
-                        ) {
-                            vm.setInputNameValue(example.name)
-                            vm.setInputUriValue(example.uri)
-                            keyboardController?.hide()
                         }
+                    ) {
+                        vm.setInputNameValue(example.name)
+                        vm.setInputUriValue(example.uri)
+                        keyboardController?.hide()
                     }
                 }
             }

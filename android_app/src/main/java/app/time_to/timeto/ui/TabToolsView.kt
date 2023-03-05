@@ -179,14 +179,13 @@ fun TabToolsView() {
             MyListView__HeaderView(
                 title = "SHORTCUTS",
                 rightView = {
-                    val isAddShortcutPresented = remember { mutableStateOf(false) }
-                    ShortcutFormSheet(isPresented = isAddShortcutPresented, editedShortcut = null)
-
                     MyListView__HeaderView__RightIcon(
                         iconId = R.drawable.ic_round_add_24,
                         contentDescription = "New Shortcut"
                     ) {
-                        isAddShortcutPresented.value = true
+                        Sheet.show { layer ->
+                            ShortcutFormSheet(layer = layer, editedShortcut = null)
+                        }
                     }
                 }
             )
@@ -197,9 +196,6 @@ fun TabToolsView() {
             item { MyListView__Padding__HeaderSection() }
 
         itemsIndexed(shortcuts, key = { _, shortcut -> shortcut.id }) { _, shortcut ->
-
-            val isShortcutEditPresented = remember { mutableStateOf(false) }
-            ShortcutFormSheet(isPresented = isShortcutEditPresented, editedShortcut = shortcut)
 
             val isFirst = shortcuts.first() == shortcut
 
@@ -230,7 +226,9 @@ fun TabToolsView() {
                         }
                     },
                     onStart = {
-                        isShortcutEditPresented.value = true
+                        Sheet.show { layer ->
+                            ShortcutFormSheet(layer = layer, editedShortcut = shortcut)
+                        }
                         false
                     },
                     onEnd = {
