@@ -351,18 +351,17 @@ fun TabTimerView() {
                                 .padding(4.dp)
                         )
 
-                        val isEditActivitiesDialogPresented = remember { mutableStateOf(false) }
-                        EditActivitiesSheet(
-                            isPresented = isEditActivitiesDialogPresented
-                        )
-
                         Text(
                             "Edit",
                             modifier = Modifier
                                 .padding(top = 1.dp, start = 12.dp)
                                 .clip(MySquircleShape())
                                 .clickable {
-                                    isEditActivitiesDialogPresented.value = true
+                                    Sheet.show { layer ->
+                                        EditActivitiesSheet(
+                                            layer = layer,
+                                        )
+                                    }
                                 }
                                 .padding(horizontal = 6.dp, vertical = 2.dp),
                             style = TextStyle(
