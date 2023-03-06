@@ -194,7 +194,7 @@ class RepeatingFormSheetVM(
             }
 
             if (repeating != null) {
-                repeating.upDataWithValidation(
+                repeating.upWithValidation(
                     text = nameWithFeatures,
                     period = period,
                     daytime = state.value.daytime,

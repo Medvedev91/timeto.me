@@ -205,7 +205,7 @@ data class RepeatingModel(
                 )
             )
 
-    suspend fun upDataWithValidation(
+    suspend fun upWithValidation(
         text: String,
         period: Period,
         daytime: Int?,
