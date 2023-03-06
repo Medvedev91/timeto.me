@@ -210,7 +210,7 @@ data class RepeatingModel(
         period: Period,
         daytime: Int?,
     ): Unit = dbIO {
-        db.repeatingQueries.upDataById(
+        db.repeatingQueries.upById(
             id = id,
             type_id = period.type.id,
             value_ = period.value,

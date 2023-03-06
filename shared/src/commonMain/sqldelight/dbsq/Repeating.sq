@@ -34,7 +34,7 @@ deleteById:
 DELETE FROM RepeatingSQ
 WHERE id = ?;
 
-upDataById:
+upById:
 UPDATE RepeatingSQ
 SET text = ?, type_id = ?, value = ?, daytime = ?
 WHERE id = ?;
