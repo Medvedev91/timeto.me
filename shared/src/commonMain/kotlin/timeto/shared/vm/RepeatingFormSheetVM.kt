@@ -28,6 +28,8 @@ class RepeatingFormSheetVM(
         val inputTextValue = textFeatures.textNoFeatures
         val isHeaderDoneEnabled = (inputTextValue.isNotBlank() && activePeriodIndex != null)
 
+        val autoFSTitle = Strings.AUTO_FS_FORM_TITLE
+
         // TRICK The order is hardcoded in ui
         val periods = listOf(
             "Every Day",
@@ -172,6 +174,10 @@ class RepeatingFormSheetVM(
 
     fun setTriggers(newTriggers: List<Trigger>) = state.update {
         it.copy(textFeatures = it.textFeatures.copy(triggers = newTriggers))
+    }
+
+    fun toggleAutoFS() = state.update {
+        it.copy(textFeatures = it.textFeatures.copy(isAutoFS = !it.textFeatures.isAutoFS))
     }
 
     fun save(

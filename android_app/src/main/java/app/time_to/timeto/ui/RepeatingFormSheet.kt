@@ -131,7 +131,7 @@ fun RepeatingFormSheet(
 
             MyListView__ItemView(
                 isFirst = true,
-                isLast = true,
+                isLast = false,
                 modifier = Modifier.padding(top = 20.dp)
             ) {
                 MyListView__ItemView__ButtonView(
@@ -157,6 +157,19 @@ fun RepeatingFormSheet(
                             }
                         )
                     }
+                }
+            }
+
+            MyListView__ItemView(
+                isFirst = false,
+                isLast = true,
+                withTopDivider = true,
+            ) {
+                MyListView__ItemView__SwitchView(
+                    text = state.autoFSTitle,
+                    isActive = state.textFeatures.isAutoFS,
+                ) {
+                    vm.toggleAutoFS()
                 }
             }
 
