@@ -24,7 +24,7 @@ class ActivityFormSheetVM(
         val emojiTitle = "Unique Emoji"
         val emojiNotSelected = "Not Selected"
         val timerHintsHeader = "TIMER HINTS"
-        val autoFSTitle = "Auto-Open in Full Screen"
+        val autoFSTitle = Strings.AUTO_FS_FORM_TITLE
         val timerHintsCustomItems = activityData.timer_hints.custom_list.map { seconds ->
             TimerHintCustomItem(seconds = seconds, text = seconds.toTimerHintNote(isShort = false))
         }
