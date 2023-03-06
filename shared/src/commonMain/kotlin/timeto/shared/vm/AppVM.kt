@@ -86,9 +86,30 @@ class AppVM : __VM<AppVM.State>() {
 private fun showTriggersForInterval(
     lastInterval: IntervalModel
 ) {
-    if ((lastInterval.id + 3) < time()) return
-    val stringToCheckTriggers = lastInterval.note ?: lastInterval.getActivityDI().name
-    TextFeatures.parse(stringToCheckTriggers).triggers.firstOrNull()?.performUI()
+    if ((lastInterval.id + 3) < time())
+        return
+
+    val activity = lastInterval.getActivityDI()
+    val activityFeatures = activity.name.parseTextFeatures()
+    val isActivityAutoFS = activityFeatures.isAutoFS
+
+    val note = lastInterval.note
+    if (note != null) {
+        val noteFeatures = note.parseTextFeatures()
+        if (
+            noteFeatures.isAutoFS ||
+            // Do not open if repeating without autoFS
+            (isActivityAutoFS && (noteFeatures.fromRepeating == null))
+        )
+            FullScreenUI.open()
+
+        noteFeatures.triggers.firstOrNull()?.performUI()
+        return
+    }
+
+    if (isActivityAutoFS)
+        FullScreenUI.open()
+    activityFeatures.triggers.firstOrNull()?.performUI()
 }
 
 ///
