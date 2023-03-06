@@ -39,6 +39,8 @@ data class TextFeatures(
 
         fun parse(initText: String): TextFeatures = parseLocal(initText)
 
+        fun String.parseTextFeatures(): TextFeatures = parseLocal(this)
+
         fun substringRepeating(day: Int, time: Int?) = "#r${day}_${time ?: ""}"
 
         fun substringEvent(time: Int) = "#e$time"
