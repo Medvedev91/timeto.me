@@ -163,7 +163,7 @@ struct RepeatingsFormSheet: View {
 
                                 let isActive = state.activePeriodIndex?.toInt() == periodIndex
 
-                                MyListView__ItemView__SwitcherView(
+                                MyListView__ItemView__RadioView(
                                         text: state.periods[periodIndex],
                                         isActive: isActive
                                 ) {

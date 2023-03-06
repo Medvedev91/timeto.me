@@ -132,7 +132,7 @@ struct MyListView__ItemView__TextInputView: View {
     }
 }
 
-struct MyListView__ItemView__SwitcherView: View {
+struct MyListView__ItemView__RadioView: View {
 
     let text: String
     let isActive: Bool

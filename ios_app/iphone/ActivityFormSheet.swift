@@ -143,7 +143,7 @@ struct ActivityFormSheet: View {
 
                                 VStack(spacing: 0) {
 
-                                    MyListView__ItemView__SwitcherView(
+                                    MyListView__ItemView__RadioView(
                                             text: pair.title,
                                             isActive: isActive
                                     ) {
