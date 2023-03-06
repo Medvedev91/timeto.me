@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -237,6 +238,31 @@ fun MyListView__ItemView__RadioView(
                 modifier = Modifier
                     .padding(end = 12.dp)
                     .size(26.dp),
+            )
+        }
+    ) {
+        onClick()
+    }
+}
+
+@Composable
+fun MyListView__ItemView__SwitchView(
+    text: String,
+    isActive: Boolean,
+    onClick: () -> Unit,
+) {
+    MyListView__ItemView__ButtonView(
+        text = text,
+        rightView = {
+            Switch(
+                checked = isActive,
+                onCheckedChange = { onClick() },
+                modifier = Modifier.padding(end = 6.dp),
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = c.blue,
+                    uncheckedThumbColor = Color.Gray,
+                    uncheckedTrackColor = Color.Gray,
+                ),
             )
         }
     ) {
