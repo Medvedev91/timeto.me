@@ -183,7 +183,7 @@ fun RepeatingFormSheet(
 
                     Column {
 
-                        MyListView__ItemView__SwitcherView(
+                        MyListView__ItemView__RadioView(
                             text = periodTitle,
                             isActive = isActive
                         ) {

@@ -156,7 +156,7 @@ fun ActivityFormSheet(
 
                         Column {
 
-                            MyListView__ItemView__SwitcherView(
+                            MyListView__ItemView__RadioView(
                                 text = pair.first,
                                 isActive = isActive
                             ) {

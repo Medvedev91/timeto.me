@@ -219,7 +219,7 @@ fun MyListView__ItemView__TextInputView(
 }
 
 @Composable
-fun MyListView__ItemView__SwitcherView(
+fun MyListView__ItemView__RadioView(
     text: String,
     isActive: Boolean,
     onClick: () -> Unit,
