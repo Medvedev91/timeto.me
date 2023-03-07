@@ -112,7 +112,7 @@ struct RepeatingsFormSheet: View {
 
                     MyListView__ItemView(
                             isFirst: true,
-                            isLast: true
+                            isLast: false
                     ) {
 
                         MyListView__ItemView__ButtonView(
@@ -143,11 +143,27 @@ struct RepeatingsFormSheet: View {
                     }
                             .padding(.top, 20)
 
-                    MyListView__Padding__SectionHeader()
+                    VStack(spacing: 0) {
 
-                    MyListView__HeaderView(title: "REPETITION PERIOD")
+                        MyListView__ItemView(
+                                isFirst: false,
+                                isLast: true,
+                                withTopDivider: true
+                        ) {
+                            MyListView__ItemView__SwitchView(
+                                    text: state.autoFSTitle,
+                                    isActive: state.textFeatures.isAutoFS
+                            ) {
+                                vm.toggleAutoFS()
+                            }
+                        }
 
-                    MyListView__Padding__HeaderSection()
+                        MyListView__Padding__SectionHeader()
+
+                        MyListView__HeaderView(title: "REPETITION PERIOD")
+
+                        MyListView__Padding__HeaderSection()
+                    }
 
                     ForEach(0..<state.periods.count, id: \.self) { periodIndex in
 
