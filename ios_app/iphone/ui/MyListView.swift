@@ -153,6 +153,44 @@ struct MyListView__ItemView__RadioView: View {
     }
 }
 
+struct MyListView__ItemView__SwitchView: View {
+
+    @State private var isActive: Bool
+    private let isActiveState: Bool
+
+    private let text: String
+    private let onClick: () -> Void
+
+    init(
+            text: String,
+            isActive: Bool,
+            onClick: @escaping () -> Void
+    ) {
+        self.text = text
+        self.onClick = onClick
+
+        _isActive = State(initialValue: isActive)
+        isActiveState = isActive
+    }
+
+    var body: some View {
+
+        MyListView__ItemView__ButtonView(
+                text: text,
+                rightView: AnyView(
+                        Toggle("", isOn: $isActive)
+                                .padding(.trailing, 10)
+                                .labelsHidden()
+                                .onChange(of: isActiveState) { newValue in
+                                    isActive = newValue
+                                }
+                )
+        ) {
+            onClick()
+        }
+    }
+}
+
 ///
 /// Button
 
