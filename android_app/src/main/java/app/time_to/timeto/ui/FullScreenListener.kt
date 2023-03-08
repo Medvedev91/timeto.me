@@ -80,93 +80,100 @@ fun FullScreenListener(
                 alignment = Alignment.Center,
                 onClose = { FullScreenUI.close() },
                 content = { layer ->
-                    Box(
-                        modifier = Modifier
-                            .pointerInput(Unit) { }
-                            .fillMaxSize()
-                            .background(c.black)
-                            .navigationBarsPadding()
-                            .padding(top = 20.dp)
-                    ) {
-
-                        val (vm, state) = rememberVM { FullscreenVM(ColorNative.white) }
-                        val timerData = state.timerData
-
-                        Column(
-                            modifier = Modifier.align(Alignment.TopCenter)
-                        ) {
-
-                            Text(
-                                text = state.title,
-                                modifier = Modifier
-                                    .padding(top = 30.dp, start = 30.dp, end = 30.dp),
-                                fontSize = 22.sp,
-                                fontWeight = FontWeight.Light,
-                                color = c.white,
-                                textAlign = TextAlign.Center
-                            )
-
-                            TriggersView__ListView(
-                                triggers = state.triggers,
-                                withOnClick = true,
-                                modifier = Modifier.padding(top = 10.dp),
-                                contentPadding = PaddingValues(horizontal = 50.dp)
-                            )
-                        }
-
-                        Column(
-                            modifier = Modifier.align(Alignment.Center),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-
-                            Text(
-                                text = timerData.title ?: "0",
-                                fontSize = 30.sp,
-                                modifier = Modifier
-                                    .alpha(if (timerData.title != null) 1f else 0f),
-                                fontWeight = FontWeight.ExtraBold,
-                                color = timerData.color.toColor(),
-                                letterSpacing = 5.sp
-                            )
-
-                            Text(
-                                text = timerData.timer,
-                                fontSize = 69.sp,
-                                fontWeight = FontWeight.Medium,
-                                fontFamily = FontFamily.Monospace,
-                                color = timerData.color.toColor(),
-                                modifier = Modifier.padding(top = 15.dp, bottom = 30.dp),
-                            )
-
-                            Text(
-                                text = "Restart",
-                                fontSize = 22.sp,
-                                fontWeight = FontWeight.Light,
-                                modifier = Modifier
-                                    .alpha(if (timerData.title != null) 1f else 0f)
-                                    .clickable(timerData.title != null) {
-                                        vm.restart()
-                                    },
-                                color = c.white,
-                                letterSpacing = 2.sp,
-                            )
-                        }
-
-                        Icon(
-                            painterResource(id = R.drawable.sf_xmark_large_light),
-                            contentDescription = "Close",
-                            modifier = Modifier
-                                .padding(bottom = 34.dp)
-                                .size(20.dp, 20.dp)
-                                .align(Alignment.BottomCenter)
-                                .clickable {
-                                    layer.close()
-                                },
-                            tint = c.white.copy(alpha = 0.9f)
-                        )
-                    }
+                    FullScreenView(layer)
                 }
             ).show()
         }
+    }
+}
+
+@Composable
+private fun FullScreenView(
+    layer: WrapperView.Layer,
+) {
+    Box(
+        modifier = Modifier
+            .pointerInput(Unit) { }
+            .fillMaxSize()
+            .background(c.black)
+            .navigationBarsPadding()
+            .padding(top = 20.dp)
+    ) {
+
+        val (vm, state) = rememberVM { FullscreenVM(ColorNative.white) }
+        val timerData = state.timerData
+
+        Column(
+            modifier = Modifier.align(Alignment.TopCenter)
+        ) {
+
+            Text(
+                text = state.title,
+                modifier = Modifier
+                    .padding(top = 30.dp, start = 30.dp, end = 30.dp),
+                fontSize = 22.sp,
+                fontWeight = FontWeight.Light,
+                color = c.white,
+                textAlign = TextAlign.Center
+            )
+
+            TriggersView__ListView(
+                triggers = state.triggers,
+                withOnClick = true,
+                modifier = Modifier.padding(top = 10.dp),
+                contentPadding = PaddingValues(horizontal = 50.dp)
+            )
+        }
+
+        Column(
+            modifier = Modifier.align(Alignment.Center),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            Text(
+                text = timerData.title ?: "0",
+                fontSize = 30.sp,
+                modifier = Modifier
+                    .alpha(if (timerData.title != null) 1f else 0f),
+                fontWeight = FontWeight.ExtraBold,
+                color = timerData.color.toColor(),
+                letterSpacing = 5.sp
+            )
+
+            Text(
+                text = timerData.timer,
+                fontSize = 69.sp,
+                fontWeight = FontWeight.Medium,
+                fontFamily = FontFamily.Monospace,
+                color = timerData.color.toColor(),
+                modifier = Modifier.padding(top = 15.dp, bottom = 30.dp),
+            )
+
+            Text(
+                text = "Restart",
+                fontSize = 22.sp,
+                fontWeight = FontWeight.Light,
+                modifier = Modifier
+                    .alpha(if (timerData.title != null) 1f else 0f)
+                    .clickable(timerData.title != null) {
+                        vm.restart()
+                    },
+                color = c.white,
+                letterSpacing = 2.sp,
+            )
+        }
+
+        Icon(
+            painterResource(id = R.drawable.sf_xmark_large_light),
+            contentDescription = "Close",
+            modifier = Modifier
+                .padding(bottom = 34.dp)
+                .size(20.dp, 20.dp)
+                .align(Alignment.BottomCenter)
+                .clickable {
+                    layer.close()
+                },
+            tint = c.white.copy(alpha = 0.9f)
+        )
     }
 }
