@@ -89,6 +89,14 @@ private fun showTriggersForInterval(
     if ((lastInterval.id + 3) < time())
         return
 
+    fun fsOrTriggers(isFS: Boolean, features: TextFeatures) {
+        if (isFS) {
+            FullScreenUI.open()
+            features.triggers.firstOrNull { it !is Trigger.Checklist }?.performUI()
+        } else
+            features.triggers.firstOrNull()?.performUI()
+    }
+
     val activity = lastInterval.getActivityDI()
     val activityFeatures = activity.name.parseTextFeatures()
     val isActivityAutoFS = activityFeatures.isAutoFS
@@ -96,20 +104,19 @@ private fun showTriggersForInterval(
     val note = lastInterval.note
     if (note != null) {
         val noteFeatures = note.parseTextFeatures()
-        if (
-            noteFeatures.isAutoFS ||
-            // Do not open if repeating without autoFS
-            (isActivityAutoFS && (noteFeatures.fromRepeating == null))
+        fsOrTriggers(
+            isFS = noteFeatures.isAutoFS ||
+                    // Do not open if repeating without autoFS
+                    (isActivityAutoFS && (noteFeatures.fromRepeating == null)),
+            features = noteFeatures,
         )
-            FullScreenUI.open()
-
-        noteFeatures.triggers.firstOrNull()?.performUI()
         return
     }
 
-    if (isActivityAutoFS)
-        FullScreenUI.open()
-    activityFeatures.triggers.firstOrNull()?.performUI()
+    fsOrTriggers(
+        isFS = isActivityAutoFS,
+        features = activityFeatures,
+    )
 }
 
 ///
