@@ -4,10 +4,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timeto.shared.*
+import timeto.shared.db.ChecklistItemModel
 import timeto.shared.db.IntervalModel
 import timeto.shared.vm.ui.ChecklistUI
 import timeto.shared.vm.ui.toChecklistUI
 
+// todo Refactoring
 class FullscreenVM(
     private val defColor: ColorNative,
 ) : __VM<FullscreenVM.State>() {
@@ -38,6 +40,11 @@ class FullscreenVM(
             .onEachExIn(scope) {
                 upState(it)
             }
+        // todo
+        ChecklistItemModel.anyChangeFlow().onEachExIn(scope) {
+            delay(50L)
+            upState(DI.lastInterval)
+        }
         scope.launch {
             while (true) {
                 upState(DI.lastInterval)

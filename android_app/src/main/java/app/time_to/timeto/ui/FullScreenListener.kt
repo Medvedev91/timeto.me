@@ -9,6 +9,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -122,15 +123,26 @@ private fun FullScreenView(
                     modifier = Modifier.padding(top = 20.dp),
                 )
 
-                Column(
-                    modifier = Modifier.padding(top = 30.dp).weight(1f),
+                LazyColumn(
+                    modifier = Modifier
+                        .padding(top = 20.dp)
+                        .weight(1f),
                     horizontalAlignment = Alignment.CenterHorizontally,
+                    contentPadding = PaddingValues(bottom = 20.dp),
                 ) {
-                    checklistUI.itemsUI.forEach {
-                        Text(
-                            text = it.item.text,
-                            color = c.white,
-                        )
+                    checklistUI.itemsUI.forEach { itemUI ->
+                        item {
+                            Text(
+                                text = itemUI.item.text + if (itemUI.item.isChecked()) "  ✅" else "",
+                                color = c.white,
+                                modifier = Modifier
+                                    .clickable {
+                                        itemUI.toggle()
+                                    }
+                                    .padding(horizontal = 20.dp, vertical = 6.dp),
+                                textAlign = TextAlign.Center,
+                            )
+                        }
                     }
                 }
 
