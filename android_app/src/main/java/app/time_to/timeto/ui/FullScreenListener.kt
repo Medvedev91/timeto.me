@@ -102,21 +102,62 @@ private fun FullScreenView(
 
         val (vm, state) = rememberVM { FullscreenVM(ColorNative.white) }
 
-        FullScreenView__HeaderView(
-            state = state,
-            modifier = Modifier.align(Alignment.TopCenter),
-        )
+        val checklistUI = state.checklistUI
+        if (checklistUI != null) {
 
-        FullScreenView__TimerView(
-            vm = vm,
-            state = state,
-            modifier = Modifier.align(Alignment.Center),
-        )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxSize(),
+            ) {
 
-        Fullscreen__CloseView(
-            layer = layer,
-            modifier = Modifier.align(Alignment.BottomCenter)
-        )
+                FullScreenView__HeaderView(
+                    state = state,
+                    modifier = Modifier,
+                )
+
+                FullScreenView__TimerView(
+                    vm = vm,
+                    state = state,
+                    isCompact = true,
+                    modifier = Modifier.padding(top = 20.dp),
+                )
+
+                Column(
+                    modifier = Modifier.padding(top = 30.dp).weight(1f),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    checklistUI.itemsUI.forEach {
+                        Text(
+                            text = it.item.text,
+                            color = c.white,
+                        )
+                    }
+                }
+
+                Fullscreen__CloseView(
+                    layer = layer,
+                    modifier = Modifier,
+                )
+            }
+        } else {
+
+            FullScreenView__HeaderView(
+                state = state,
+                modifier = Modifier.align(Alignment.TopCenter),
+            )
+
+            FullScreenView__TimerView(
+                vm = vm,
+                state = state,
+                isCompact = false,
+                modifier = Modifier.align(Alignment.Center),
+            )
+
+            Fullscreen__CloseView(
+                layer = layer,
+                modifier = Modifier.align(Alignment.BottomCenter),
+            )
+        }
     }
 }
 
@@ -152,6 +193,7 @@ private fun FullScreenView__HeaderView(
 private fun FullScreenView__TimerView(
     vm: FullscreenVM,
     state: FullscreenVM.State,
+    isCompact: Boolean,
     modifier: Modifier,
 ) {
     val timerData = state.timerData
@@ -170,13 +212,17 @@ private fun FullScreenView__TimerView(
             letterSpacing = 5.sp
         )
 
+        val paddings: PaddingValues = if (isCompact)
+            PaddingValues(top = 5.dp, bottom = 15.dp)
+        else PaddingValues(top = 10.dp, bottom = 20.dp)
+
         Text(
             text = timerData.timer,
             fontSize = 69.sp,
             fontWeight = FontWeight.Medium,
             fontFamily = FontFamily.Monospace,
             color = timerData.color.toColor(),
-            modifier = Modifier.padding(top = 15.dp, bottom = 30.dp),
+            modifier = Modifier.padding(paddings),
         )
 
         Text(
