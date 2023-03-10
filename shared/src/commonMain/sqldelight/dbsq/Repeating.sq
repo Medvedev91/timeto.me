@@ -36,8 +36,8 @@ WHERE id = ?;
 
 upById:
 UPDATE RepeatingSQ
-SET text = ?, type_id = ?, value = ?, daytime = ?
-WHERE id = ?;
+SET text=?, type_id=?, value=?, daytime=?
+WHERE id=?;
 
 upLastDayById:
 UPDATE RepeatingSQ
