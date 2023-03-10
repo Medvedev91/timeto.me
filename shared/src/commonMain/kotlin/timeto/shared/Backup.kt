@@ -20,12 +20,10 @@ object Backup {
             "checklists" to ChecklistModel.getAsc().modelsToJsonArray { it.backupable__backup() },
             "checklist_items" to ChecklistItemModel.getAsc().modelsToJsonArray { it.backupable__backup() },
             "shortcuts" to ShortcutModel.getAsc().modelsToJsonArray { it.backupable__backup() },
+            "repeatings" to RepeatingModel.getAsc().modelsToJsonArray { it.backupable__backup() },
 
             "events" to EventModel.getAscByTime().modelsToJsonArray { c ->
                 listOf(c.id, c.utc_time, c.text).toJsonArray()
-            },
-            "repeatings" to RepeatingModel.getAsc().modelsToJsonArray { r ->
-                listOf(r.id, r.text, r.last_day, r.type_id, r.value, r.daytime).toJsonArray()
             },
             "kv" to KVModel.getAll().modelsToJsonArray { i ->
                 listOf(i.key, i.value).toJsonArray()
@@ -66,23 +64,13 @@ private fun restoreV1NeedTransaction(jString: String) {
     json.mapJsonArray("checklists") { ChecklistModel.backupable__restore(it) }
     json.mapJsonArray("checklist_items") { ChecklistItemModel.backupable__restore(it) }
     json.mapJsonArray("shortcuts") { ShortcutModel.backupable__restore(it) }
+    json.mapJsonArray("repeatings") { RepeatingModel.backupable__restore(it) }
 
     json.mapJsonArray("events") { j ->
         EventModel.addRaw(
             id = j.getInt(0),
             text = j.getString(2),
             utcTime = j.getInt(1),
-        )
-    }
-
-    json.mapJsonArray("repeatings") { j ->
-        RepeatingModel.addRaw(
-            id = j.getInt(0),
-            text = j.getString(1),
-            last_day = j.getInt(2),
-            type_id = j.getInt(3),
-            value = j.getString(4),
-            daytime = j.getIntOrNull(5),
         )
     }
 
