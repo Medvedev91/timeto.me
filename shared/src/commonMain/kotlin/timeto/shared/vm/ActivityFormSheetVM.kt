@@ -124,7 +124,7 @@ class ActivityFormSheetVM(
                     type = ActivityModel.TYPE.NORMAL,
                     colorRgba = ActivityModel.nextColor(),
                     data = activityData,
-                    isAutoFs = isAutoFS,
+                    isAutoFS = isAutoFS,
                 )
             }
             onSuccess()
