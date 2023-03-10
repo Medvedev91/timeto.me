@@ -7,7 +7,6 @@ data class TextFeatures(
     val triggers: List<Trigger>,
     val fromRepeating: FromRepeating?,
     val fromEvent: FromEvent?,
-    val isAutoFS: Boolean,
 ) {
 
     val timeUI: TimeUI? = when {
@@ -30,8 +29,6 @@ data class TextFeatures(
             strings.add(substringRepeating(fromRepeating.id, fromRepeating.day, fromRepeating.time))
         if (fromEvent != null)
             strings.add(substringEvent(fromEvent.time))
-        if (isAutoFS)
-            strings.add(isAutoFSString)
         return strings.joinToString(" ")
     }
 
@@ -59,7 +56,6 @@ private val checklistRegex = "#c\\d{10}".toRegex()
 private val shortcutRegex = "#s\\d{10}".toRegex()
 private val fromRepeatingRegex = "#r(\\d{10})_(\\d{5})_(\\d{10})?".toRegex()
 private val fromEventRegex = "#e(\\d{10})".toRegex()
-private const val isAutoFSString = "#autoFS"
 
 private fun parseLocal(initText: String): TextFeatures {
     var textNoFeatures = initText
@@ -118,18 +114,10 @@ private fun parseLocal(initText: String): TextFeatures {
             return@let TextFeatures.FromEvent(time)
         }
 
-    //
-    // Auto FS
-
-    val isAutoFS = textNoFeatures.contains(isAutoFSString)
-    if (isAutoFS)
-        textNoFeatures = textNoFeatures.replace(isAutoFSString, "")
-
     return TextFeatures(
         textNoFeatures = textNoFeatures.removeDuplicateSpaces().trim(),
         triggers = triggers,
         fromRepeating = fromRepeating,
         fromEvent = fromEvent,
-        isAutoFS = isAutoFS,
     )
 }
