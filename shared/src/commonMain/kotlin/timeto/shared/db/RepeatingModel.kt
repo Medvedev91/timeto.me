@@ -18,7 +18,7 @@ data class RepeatingModel(
     val type_id: Int,
     val value: String,
     val daytime: Int?,
-    val autoFS: Int,
+    val auto_fs: Int,
 ) : Backupable__Item {
 
     companion object : Backupable__Holder {
@@ -105,7 +105,7 @@ data class RepeatingModel(
         private fun RepeatingSQ.toModel() = RepeatingModel(
             id = id, text = text, last_day = last_day,
             type_id = type_id, value = value_, daytime = daytime,
-            autoFS = auto_fs,
+            auto_fs = auto_fs,
         )
     }
 
@@ -243,7 +243,7 @@ data class RepeatingModel(
     override fun backupable__getId(): String = id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
-        id, text, last_day, type_id, value, daytime, autoFS,
+        id, text, last_day, type_id, value, daytime, auto_fs,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
