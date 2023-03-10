@@ -27,7 +27,7 @@ data class TextFeatures(
         if (triggers.isNotEmpty())
             strings.add(triggers.joinToString(" ") { it.id })
         if (fromRepeating != null)
-            strings.add(substringRepeating(fromRepeating.day, fromRepeating.time))
+            strings.add(substringRepeating(fromRepeating.id, fromRepeating.day, fromRepeating.time))
         if (fromEvent != null)
             strings.add(substringEvent(fromEvent.time))
         if (isAutoFS)
@@ -39,14 +39,14 @@ data class TextFeatures(
 
         fun parse(initText: String): TextFeatures = parseLocal(initText)
 
-        fun substringRepeating(day: Int, time: Int?) = "#r${day}_${time ?: ""}"
+        fun substringRepeating(id: Int, day: Int, time: Int?) = "#r${id}_${day}_${time ?: ""}"
 
         fun substringEvent(time: Int) = "#e$time"
     }
 
     // Day to sync! May be different from the real one meaning "Day Start"
     // setting. "day" is used for sorting within "Today" tasks list.
-    class FromRepeating(val day: Int, val time: Int?)
+    class FromRepeating(val id: Int, val day: Int, val time: Int?)
 
     class FromEvent(val time: Int)
 }
@@ -57,7 +57,7 @@ fun String.parseTextFeatures() = TextFeatures.parse(this)
 
 private val checklistRegex = "#c\\d{10}".toRegex()
 private val shortcutRegex = "#s\\d{10}".toRegex()
-private val fromRepeatingRegex = "#r(\\d{5})_(\\d{10})?".toRegex()
+private val fromRepeatingRegex = "#r(\\d{10})_(\\d{5})_(\\d{10})?".toRegex()
 private val fromEventRegex = "#e(\\d{10})".toRegex()
 private const val isAutoFSString = "#autoFS"
 
@@ -101,10 +101,11 @@ private fun parseLocal(initText: String): TextFeatures {
 
     val fromRepeating: TextFeatures.FromRepeating? = fromRepeatingRegex
         .find(textNoFeatures)?.let { match ->
-            val day = match.groupValues[1].toInt()
-            val time = match.groupValues[2].takeIf { it.isNotBlank() }?.toInt()
+            val id = match.groupValues[1].toInt()
+            val day = match.groupValues[2].toInt()
+            val time = match.groupValues[3].takeIf { it.isNotBlank() }?.toInt()
             textNoFeatures = textNoFeatures.replace(match.value, "").trim()
-            return@let TextFeatures.FromRepeating(day, time)
+            return@let TextFeatures.FromRepeating(id, day, time)
         }
 
     //

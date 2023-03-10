@@ -189,7 +189,7 @@ data class RepeatingModel(
     fun prepTextForTask(day: Int): String {
         val textStrings = mutableListOf(EMOJI_REPEATING, text)
         val featureTime = daytimeToTimeWithDayStart(day)
-        textStrings.add(TextFeatures.substringRepeating(day, featureTime))
+        textStrings.add(TextFeatures.substringRepeating(id, day, featureTime))
         return textStrings.joinToString(" ")
     }
 
