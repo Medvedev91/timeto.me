@@ -191,12 +191,12 @@ data class ActivityModel(
                 ActivitySQ(
                     id = j.getInt(0),
                     name = j.getString(1),
-                    emoji = j.getString(7),
                     deadline = j.getInt(2),
                     sort = j.getInt(3),
                     type_id = j.getInt(4),
                     color_rgba = j.getString(5),
                     data_json = j.getString(6),
+                    emoji = j.getString(7),
                 )
             )
         }
