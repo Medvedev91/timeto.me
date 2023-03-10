@@ -167,7 +167,7 @@ fun RepeatingFormSheet(
             ) {
                 MyListView__ItemView__SwitchView(
                     text = state.autoFSTitle,
-                    isActive = state.textFeatures.isAutoFS,
+                    isActive = state.isAutoFS,
                 ) {
                     vm.toggleAutoFS()
                 }
