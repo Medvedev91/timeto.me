@@ -201,11 +201,14 @@ class RepeatingFormSheetVM(
                 else -> throw Exception()
             }
 
+            val isAutoFS = state.value.isAutoFS
+
             if (repeating != null) {
                 repeating.upWithValidation(
                     text = nameWithFeatures,
                     period = period,
                     daytime = state.value.daytime,
+                    isAutoFs = isAutoFS,
                 )
             } else
                 RepeatingModel.addWithValidation(
@@ -213,6 +216,7 @@ class RepeatingFormSheetVM(
                     period = period,
                     lastDay = UnixTime().localDay,
                     daytime = state.value.daytime,
+                    isAutoFs = isAutoFS,
                 )
             onSuccess()
         } catch (e: UIException) {
