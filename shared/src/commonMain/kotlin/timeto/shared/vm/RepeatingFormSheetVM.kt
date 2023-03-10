@@ -18,6 +18,7 @@ class RepeatingFormSheetVM(
         val selectedWeekDays: List<Boolean>,
         val selectedDaysOfMonth: Set<Int>,
         val selectedDaysOfYear: List<RepeatingModel.Period.DaysOfYear.MonthDayItem>,
+        val isAutoFS: Boolean,
     ) {
 
         val daytimeHeader = "Time of the Day"
@@ -96,6 +97,7 @@ class RepeatingFormSheetVM(
                 selectedWeekDays = selectedWeekDays,
                 selectedDaysOfMonth = selectedDaysOfMonth,
                 selectedDaysOfYear = selectedDaysOfYear,
+                isAutoFS = repeating?.isAutoFs ?: false
             )
         )
     }
@@ -177,7 +179,7 @@ class RepeatingFormSheetVM(
     }
 
     fun toggleAutoFS() = state.update {
-        it.copy(textFeatures = it.textFeatures.copy(isAutoFS = !it.textFeatures.isAutoFS))
+        it.copy(isAutoFS = !it.isAutoFS)
     }
 
     fun save(
