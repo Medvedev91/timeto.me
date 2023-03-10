@@ -16,6 +16,7 @@ class ActivityFormSheetVM(
         val emoji: String?,
         val activityData: ActivityModel__Data,
         val textFeatures: TextFeatures,
+        val isAutoFS: Boolean,
     ) {
         val inputNameValue = textFeatures.textNoFeatures
         val isHeaderDoneEnabled = (inputNameValue.isNotBlank() && emoji != null)
@@ -42,6 +43,7 @@ class ActivityFormSheetVM(
             emoji = activity?.emoji,
             activityData = activity?.getData() ?: ActivityModel__Data.buildDefault(),
             textFeatures = TextFeatures.parse(activity?.name ?: ""),
+            isAutoFS = activity?.isAutoFs ?: false
         )
     )
 
@@ -56,7 +58,7 @@ class ActivityFormSheetVM(
     }
 
     fun toggleAutoFS() = state.update {
-        it.copy(textFeatures = it.textFeatures.copy(isAutoFS = !it.textFeatures.isAutoFS))
+        it.copy(isAutoFS = !it.isAutoFS)
     }
 
     ///
