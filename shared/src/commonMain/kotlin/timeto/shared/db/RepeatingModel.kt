@@ -57,20 +57,6 @@ data class RepeatingModel(
             }
         }
 
-        fun addRaw(
-            id: Int,
-            text: String,
-            last_day: Int,
-            type_id: Int,
-            value: String,
-            daytime: Int?,
-        ) {
-            db.repeatingQueries.insert(
-                id = id, text = text, last_day = last_day,
-                type_id = type_id, value_ = value, daytime = daytime,
-            )
-        }
-
         suspend fun syncTodaySafe(today: Int): Unit = dbIO {
             // Select within a transaction to avoid duplicate additions
             db.transaction {
