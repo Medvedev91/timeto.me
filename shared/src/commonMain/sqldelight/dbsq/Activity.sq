@@ -6,7 +6,8 @@ CREATE TABLE ActivitySQ (
     sort INTEGER AS Int NOT NULL,
     type_id INTEGER AS Int NOT NULL,
     color_rgba TEXT NOT NULL,
-    data_json TEXT NOT NULL
+    data_json TEXT NOT NULL,
+    auto_fs INTEGER AS Int NOT NULL
 );
 
 anyChange: SELECT id FROM ActivitySQ LIMIT 1;
@@ -34,7 +35,7 @@ VALUES ?;
 
 upById:
 UPDATE ActivitySQ
-SET name=?, emoji=?, deadline=?, sort=?, type_id=?, color_rgba=?, data_json=?
+SET name=?, emoji=?, deadline=?, sort=?, type_id=?, color_rgba=?, data_json=?, auto_fs=?
 WHERE id=?;
 
 upNameAndEmojiAndData:

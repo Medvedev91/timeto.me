@@ -17,6 +17,7 @@ data class ActivityModel(
     val type_id: Int,
     val color_rgba: String,
     val data_json: String,
+    val auto_fs: Int,
 ) : Backupable__Item {
 
     enum class TYPE(val id: Int) {
@@ -176,7 +177,8 @@ data class ActivityModel(
 
         private fun ActivitySQ.toModel() = ActivityModel(
             id = id, name = name, emoji = emoji, deadline = deadline, sort = sort,
-            type_id = type_id, color_rgba = color_rgba, data_json = data_json
+            type_id = type_id, color_rgba = color_rgba, data_json = data_json,
+            auto_fs = auto_fs,
         )
 
         ///
@@ -197,6 +199,7 @@ data class ActivityModel(
                     color_rgba = j.getString(5),
                     data_json = j.getString(6),
                     emoji = j.getString(7),
+                    auto_fs = j.getInt(8),
                 )
             )
         }
@@ -263,7 +266,7 @@ data class ActivityModel(
     override fun backupable__getId(): String = id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
-        id, name, deadline, sort, type_id, color_rgba, data_json, emoji
+        id, name, deadline, sort, type_id, color_rgba, data_json, emoji, auto_fs
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
@@ -277,6 +280,7 @@ data class ActivityModel(
             color_rgba = j.getString(5),
             data_json = j.getString(6),
             emoji = j.getString(7),
+            auto_fs = j.getInt(8),
         )
     }
 
