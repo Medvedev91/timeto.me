@@ -207,6 +207,8 @@ data class ActivityModel(
         }
     }
 
+    val isAutoFs = auto_fs.toBoolean10()
+
     fun nameWithEmoji() = "$name $emoji"
 
     fun getType() = TYPE.values().first { it.id == type_id }
