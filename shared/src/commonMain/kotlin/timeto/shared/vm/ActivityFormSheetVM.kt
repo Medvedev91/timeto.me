@@ -106,6 +106,8 @@ class ActivityFormSheetVM(
             val activityData = state.value.activityData
             activityData.assertValidity()
 
+            val isAutoFS = state.value.isAutoFS
+
             if (activity != null) {
                 activity.upNameAndEmojiAndDataWithValidation(
                     name = nameWithFeatures,
@@ -121,6 +123,7 @@ class ActivityFormSheetVM(
                     type = ActivityModel.TYPE.NORMAL,
                     colorRgba = ActivityModel.nextColor(),
                     data = activityData,
+                    isAutoFs = isAutoFS,
                 )
             }
             onSuccess()
