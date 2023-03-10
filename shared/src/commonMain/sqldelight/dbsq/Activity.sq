@@ -34,8 +34,8 @@ VALUES ?;
 
 upById:
 UPDATE ActivitySQ
-SET name = ?, emoji = ?, deadline = ?, sort = ?, type_id = ?, color_rgba = ?, data_json = ?
-WHERE id = ?;
+SET name=?, emoji=?, deadline=?, sort=?, type_id=?, color_rgba=?, data_json=?
+WHERE id=?;
 
 upNameAndEmojiAndData:
 UPDATE ActivitySQ
