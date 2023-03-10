@@ -34,7 +34,7 @@ object Backup {
         return JsonObject(map).toString()
     }
 
-    suspend fun restore(jString: String) {
+    fun restore(jString: String) {
         db.transaction {
             restoreV1NeedTransaction(jString)
         }
