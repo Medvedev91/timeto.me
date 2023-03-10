@@ -109,10 +109,11 @@ class ActivityFormSheetVM(
             val isAutoFS = state.value.isAutoFS
 
             if (activity != null) {
-                activity.upNameAndEmojiAndDataWithValidation(
+                activity.upByIdWithValidation(
                     name = nameWithFeatures,
                     emoji = selectedEmoji,
                     data = activityData,
+                    isAutoFS = isAutoFS,
                 )
             } else {
                 ActivityModel.addWithValidation(

@@ -219,19 +219,25 @@ data class ActivityModel(
 
     fun getData() = ActivityModel__Data.jParse(data_json)
 
-    suspend fun upNameAndEmojiAndDataWithValidation(
+    suspend fun upByIdWithValidation(
         name: String,
         emoji: String,
         data: ActivityModel__Data,
+        isAutoFS: Boolean,
     ) = dbIO {
         if (isOther())
             throw UIException("It's impossible to change \"Other\" activity")
 
-        db.activityQueries.upNameAndEmojiAndData(
+        db.activityQueries.upById(
             id = id,
             name = validateName(name),
+            deadline = deadline,
+            sort = sort,
+            type_id = type_id,
+            color_rgba = color_rgba,
+            data_json = data.toJString(),
             emoji = validateEmoji(emoji, exActivity = this@ActivityModel),
-            data_json = data.toJString()
+            auto_fs = isAutoFS.toInt10(),
         )
     }
 
