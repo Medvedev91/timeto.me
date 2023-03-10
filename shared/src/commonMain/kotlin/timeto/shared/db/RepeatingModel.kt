@@ -44,12 +44,12 @@ data class RepeatingModel(
             daytime: Int?,
         ) = dbIO {
             db.transaction {
-                addRaw(
+                db.repeatingQueries.insert(
                     id = max(time(), db.repeatingQueries.getDesc(1).executeAsOneOrNull()?.id?.plus(1) ?: 0),
                     text = validateText(text),
                     last_day = lastDay,
                     type_id = period.type.id,
-                    value = period.value,
+                    value_ = period.value,
                     daytime = daytime,
                 )
             }
