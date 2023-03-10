@@ -66,6 +66,7 @@ data class ActivityModel(
             type: TYPE,
             colorRgba: ColorRgba,
             data: ActivityModel__Data,
+            isAutoFs: Boolean,
         ): ActivityModel = dbIO {
 
             if (type == TYPE.OTHER && getAscSorted().find { it.getType() == TYPE.OTHER } != null)
@@ -86,7 +87,8 @@ data class ActivityModel(
                     sort = sort,
                     type_id = type.id,
                     color_rgba = colorRgba.toRgbaString(),
-                    data_json = data.toJString()
+                    data_json = data.toJString(),
+                    auto_fs = isAutoFs.toInt10(),
                 )
                 db.activityQueries.insert(activitySQ)
                 activitySQ.toModel()
