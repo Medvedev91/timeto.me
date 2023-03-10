@@ -5,6 +5,8 @@ import com.squareup.sqldelight.runtime.coroutines.mapToList
 import dbsq.RepeatingSQ
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.*
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.jsonArray
 import timeto.shared.*
 import kotlin.math.absoluteValue
 import kotlin.math.max
@@ -16,9 +18,9 @@ data class RepeatingModel(
     val type_id: Int,
     val value: String,
     val daytime: Int?,
-) {
+) : Backupable__Item {
 
-    companion object {
+    companion object : Backupable__Holder {
 
         const val LAST_DAY_OF_MONTH = 0
         const val MAX_DAY_OF_MONTH = 27
@@ -83,6 +85,24 @@ data class RepeatingModel(
                         db.repeatingQueries.upLastDayById(last_day = today, id = repeating.id)
                     }
             }
+        }
+
+        ///
+        /// Backupable Holder
+
+        override fun backupable__getAll(): List<Backupable__Item> =
+            db.repeatingQueries.getAsc().executeAsList().map { it.toModel() }
+
+        override fun backupable__restore(json: JsonElement) {
+            val j = json.jsonArray
+            db.repeatingQueries.insert(
+                id = j.getInt(0),
+                text = j.getString(1),
+                last_day = j.getInt(2),
+                type_id = j.getInt(3),
+                value_ = j.getString(4),
+                daytime = j.getIntOrNull(5),
+            )
         }
 
         private fun validateText(text: String): String {
@@ -221,6 +241,31 @@ data class RepeatingModel(
     }
 
     suspend fun delete(): Unit = dbIO {
+        db.repeatingQueries.deleteById(id)
+    }
+
+    ///
+    /// Backupable Item
+
+    override fun backupable__getId(): String = id.toString()
+
+    override fun backupable__backup(): JsonElement = listOf(
+        id, text, last_day, type_id, value, daytime
+    ).toJsonArray()
+
+    override fun backupable__update(json: JsonElement) {
+        val j = json.jsonArray
+        db.repeatingQueries.upById(
+            id = j.getInt(0),
+            text = j.getString(1),
+            last_day = j.getInt(2),
+            type_id = j.getInt(3),
+            value_ = j.getString(4),
+            daytime = j.getIntOrNull(5),
+        )
+    }
+
+    override fun backupable__delete() {
         db.repeatingQueries.deleteById(id)
     }
 
