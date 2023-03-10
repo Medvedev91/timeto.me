@@ -212,9 +212,10 @@ data class RepeatingModel(
     ): Unit = dbIO {
         db.repeatingQueries.upById(
             id = id,
+            text = validateText(text),
+            last_day = last_day,
             type_id = period.type.id,
             value_ = period.value,
-            text = validateText(text),
             daytime = daytime,
         )
     }
