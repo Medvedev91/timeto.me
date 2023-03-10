@@ -103,6 +103,8 @@ fun HttpRequestBuilder.appendDeviceData() {
     }
 }
 
+fun Boolean.toInt10(): Int = if (this) 1 else 0
+
 // Do not use "\\s+" because it removes line breaks.
 private val duplicateSpacesRegex = " +".toRegex()
 fun String.removeDuplicateSpaces() = this.replace(duplicateSpacesRegex, " ")
