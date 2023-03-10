@@ -38,11 +38,6 @@ UPDATE ActivitySQ
 SET name=?, emoji=?, deadline=?, sort=?, type_id=?, color_rgba=?, data_json=?, auto_fs=?
 WHERE id=?;
 
-upNameAndEmojiAndData:
-UPDATE ActivitySQ
-SET name = ?, emoji = ?, data_json = ?
-WHERE id = ?;
-
 upData:
 UPDATE ActivitySQ
 SET data_json = ?
