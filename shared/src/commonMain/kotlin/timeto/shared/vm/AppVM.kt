@@ -83,7 +83,7 @@ class AppVM : __VM<AppVM.State>() {
     }
 }
 
-private fun showTriggersForInterval(
+private suspend fun showTriggersForInterval(
     lastInterval: IntervalModel
 ) {
     if ((lastInterval.id + 3) < time())
@@ -98,25 +98,24 @@ private fun showTriggersForInterval(
     }
 
     val activity = lastInterval.getActivityDI()
-    val activityFeatures = activity.name.parseTextFeatures()
-    val isActivityAutoFS = activityFeatures.isAutoFS
+    val isActivityAutoFS = activity.isAutoFs
 
     val note = lastInterval.note
     if (note != null) {
         val noteFeatures = note.parseTextFeatures()
-        fsOrTriggers(
-            isFS = noteFeatures.isAutoFS ||
-                    // Do not open if repeating without autoFS
-                    (isActivityAutoFS && (noteFeatures.fromRepeating == null)),
-            features = noteFeatures,
-        )
+
+        val fromRepeating = noteFeatures.fromRepeating
+        if (fromRepeating != null) {
+            val isFS = RepeatingModel.getByIdOrNull(fromRepeating.id)?.isAutoFs ?: false
+            fsOrTriggers(isFS, noteFeatures)
+            return
+        }
+
+        fsOrTriggers(isActivityAutoFS, noteFeatures)
         return
     }
 
-    fsOrTriggers(
-        isFS = isActivityAutoFS,
-        features = activityFeatures,
-    )
+    fsOrTriggers(isActivityAutoFS, activity.name.parseTextFeatures())
 }
 
 ///
