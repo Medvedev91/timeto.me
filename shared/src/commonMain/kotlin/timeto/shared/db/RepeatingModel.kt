@@ -109,6 +109,8 @@ data class RepeatingModel(
         )
     }
 
+    val isAutoFs = auto_fs.toBoolean10()
+
     fun daytimeToTimeWithDayStart(today: Int): Int? {
         val daytime = daytime ?: return null
         val dayStartOffset = dayStartOffsetSeconds()
