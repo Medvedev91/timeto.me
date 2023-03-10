@@ -45,6 +45,7 @@ data class RepeatingModel(
             period: Period,
             lastDay: Int,
             daytime: Int?,
+            isAutoFs: Boolean,
         ) = dbIO {
             db.transaction {
                 db.repeatingQueries.insert(
@@ -54,6 +55,7 @@ data class RepeatingModel(
                     type_id = period.type.id,
                     value_ = period.value,
                     daytime = daytime,
+                    auto_fs = isAutoFs.toInt10(),
                 )
             }
         }
@@ -218,6 +220,7 @@ data class RepeatingModel(
         text: String,
         period: Period,
         daytime: Int?,
+        isAutoFs: Boolean,
     ): Unit = dbIO {
         db.repeatingQueries.upById(
             id = id,
@@ -226,6 +229,7 @@ data class RepeatingModel(
             type_id = period.type.id,
             value_ = period.value,
             daytime = daytime,
+            auto_fs = isAutoFs.toInt10(),
         )
     }
 

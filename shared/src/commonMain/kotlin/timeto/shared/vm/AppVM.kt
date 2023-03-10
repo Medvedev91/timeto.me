@@ -254,9 +254,9 @@ private suspend fun fillInitData() {
     DI.fillLateInit(interval, interval)
 
     val todayDay = UnixTime().localDay
-    RepeatingModel.addWithValidation("Exercises 💪 30 min", RepeatingModel.Period.EveryNDays(1), todayDay, null)
-    RepeatingModel.addWithValidation("Meditation 🧘‍♀️ 20 min", RepeatingModel.Period.EveryNDays(1), todayDay, null)
-    RepeatingModel.addWithValidation("Small tasks 💡 30 min", RepeatingModel.Period.EveryNDays(1), todayDay, null)
-    RepeatingModel.addWithValidation("Getting ready 🚀 20 min", RepeatingModel.Period.EveryNDays(1), todayDay, null)
-    RepeatingModel.addWithValidation("Weekly plan 📁 20 min", RepeatingModel.Period.DaysOfWeek(listOf(0)), todayDay, null)
+    RepeatingModel.addWithValidation("Exercises 💪 30 min", RepeatingModel.Period.EveryNDays(1), todayDay, null, false)
+    RepeatingModel.addWithValidation("Meditation 🧘‍♀️ 20 min", RepeatingModel.Period.EveryNDays(1), todayDay, null, false)
+    RepeatingModel.addWithValidation("Small tasks 💡 30 min", RepeatingModel.Period.EveryNDays(1), todayDay, null, false)
+    RepeatingModel.addWithValidation("Getting ready 🚀 20 min", RepeatingModel.Period.EveryNDays(1), todayDay, null, false)
+    RepeatingModel.addWithValidation("Weekly plan 📁 20 min", RepeatingModel.Period.DaysOfWeek(listOf(0)), todayDay, null, false)
 }
