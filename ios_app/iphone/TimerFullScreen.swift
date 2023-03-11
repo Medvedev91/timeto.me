@@ -42,13 +42,22 @@ private struct TimerFullScreen__FullScreenCoverView: View {
             Color.black.edgesIgnoringSafeArea(.all)
                     .statusBar(hidden: true)
 
-            VStack {
-                TimerFullScreen__HeaderView(state: state)
-                Spacer()
-                TimerFullScreen__CloseView()
+            if let checklistUI = state.checklistUI {
+                VStack {
+                    TimerFullScreen__HeaderView(state: state)
+                    TimerFullScreen__TimerView(vm: vm, state: state, isCompact: true)
+                            .padding(.top, 20)
+                    Spacer()
+                    TimerFullScreen__CloseView()
+                }
+            } else {
+                VStack {
+                    TimerFullScreen__HeaderView(state: state)
+                    Spacer()
+                    TimerFullScreen__CloseView()
+                }
+                TimerFullScreen__TimerView(vm: vm, state: state, isCompact: false)
             }
-
-            TimerFullScreen__TimerView(vm: vm, state: state)
         }
                 .onAppear {
                     UIApplication.shared.isIdleTimerDisabled = true
@@ -82,10 +91,11 @@ private struct TimerFullScreen__TimerView: View {
 
     let vm: FullscreenVM
     let state: FullscreenVM.State
+    let isCompact: Bool
 
     var body: some View {
 
-        VStack {
+        VStack(spacing: 0) {
 
             let timerData = state.timerData
 
@@ -94,7 +104,7 @@ private struct TimerFullScreen__TimerView: View {
                     .tracking(5)
                     .foregroundColor(timerData.color.toColor())
                     .opacity(0.9)
-                    .padding(.bottom, -10)
+                    .padding(.bottom, isCompact ? 0 : 20)
 
             Text(timerData.timer)
                     .font(.system(size: 72, design: .monospaced))
@@ -116,7 +126,7 @@ private struct TimerFullScreen__TimerView: View {
                     .opacity(timerData.title == nil ? 0 : 1)
                     .disabled(timerData.title == nil)
                     ///
-                    .padding(.top, -15)
+                    .padding(.top, isCompact ? 5 : 20)
         }
                 .padding(.bottom, 20)
     }
