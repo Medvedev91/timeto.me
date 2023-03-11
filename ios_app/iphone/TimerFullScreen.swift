@@ -49,20 +49,22 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                             .padding(.top, 20)
 
                     VStack {
-                        ForEach(checklistUI.itemsUI, id: \.item.id) { itemUI in
-                            Button(
-                                    action: {
-                                        itemUI.toggle()
-                                    },
-                                    label: {
-                                        Text(itemUI.item.text + (itemUI.item.isChecked() ? "  ✅" : ""))
-                                                .padding(.vertical, 4)
-                                                .foregroundColor(.white)
-                                                .font(.system(size: 18))
-                                    }
-                            )
+                        ScrollView {
+                            ForEach(checklistUI.itemsUI, id: \.item.id) { itemUI in
+                                Button(
+                                        action: {
+                                            itemUI.toggle()
+                                        },
+                                        label: {
+                                            Text(itemUI.item.text + (itemUI.item.isChecked() ? "  ✅" : ""))
+                                                    .padding(.vertical, 4)
+                                                    .foregroundColor(.white)
+                                                    .font(.system(size: 18))
+                                        }
+                                )
+                            }
+                            Spacer()
                         }
-                        Spacer()
                     }
                             .padding(.top, 20)
 
