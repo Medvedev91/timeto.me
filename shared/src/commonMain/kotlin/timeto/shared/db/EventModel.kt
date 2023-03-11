@@ -4,15 +4,17 @@ import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import dbsq.EventSQ
 import kotlinx.coroutines.flow.map
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.jsonArray
 import timeto.shared.*
 
 data class EventModel(
     val id: Int,
     val text: String,
     val utc_time: Int,
-) {
+) : Backupable__Item {
 
-    companion object {
+    companion object : Backupable__Holder {
 
         suspend fun getAscByTime() = dbIO {
             db.eventQueries.getAscByTime().executeAsList().map { it.toModel() }
@@ -68,6 +70,23 @@ data class EventModel(
                     }
             }
         }
+
+        ///
+        /// Backupable Holder
+
+        override fun backupable__getAll(): List<Backupable__Item> =
+            db.eventQueries.getAscByTime().executeAsList().map { it.toModel() }
+
+        override fun backupable__restore(json: JsonElement) {
+            val j = json.jsonArray
+            db.eventQueries.insertObject(
+                EventSQ(
+                    id = j.getInt(0),
+                    utc_time = j.getInt(1),
+                    text = j.getString(2),
+                )
+            )
+        }
     }
 
     fun prepTextForTask(): String {
@@ -108,6 +127,28 @@ data class EventModel(
     }
 
     suspend fun delete() = dbIO { db.eventQueries.deleteById(id) }
+
+    ///
+    /// Backupable Item
+
+    override fun backupable__getId(): String = id.toString()
+
+    override fun backupable__backup(): JsonElement = listOf(
+        id, utc_time, text,
+    ).toJsonArray()
+
+    override fun backupable__update(json: JsonElement) {
+        val j = json.jsonArray
+        db.eventQueries.updateById(
+            id = j.getInt(0),
+            utc_time = j.getInt(1),
+            text = j.getString(2),
+        )
+    }
+
+    override fun backupable__delete() {
+        db.eventQueries.deleteById(id)
+    }
 }
 
 private fun validateText(text: String): String {
