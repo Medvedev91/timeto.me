@@ -47,7 +47,25 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                     TimerFullScreen__HeaderView(state: state)
                     TimerFullScreen__TimerView(vm: vm, state: state, isCompact: true)
                             .padding(.top, 20)
-                    Spacer()
+
+                    VStack {
+                        ForEach(checklistUI.itemsUI, id: \.item.id) { itemUI in
+                            Button(
+                                    action: {
+                                        itemUI.toggle()
+                                    },
+                                    label: {
+                                        Text(itemUI.item.text + (itemUI.item.isChecked() ? "  ✅" : ""))
+                                                .padding(.vertical, 4)
+                                                .foregroundColor(.white)
+                                                .font(.system(size: 18))
+                                    }
+                            )
+                        }
+                        Spacer()
+                    }
+                            .padding(.top, 20)
+
                     TimerFullScreen__CloseView()
                 }
             } else {
