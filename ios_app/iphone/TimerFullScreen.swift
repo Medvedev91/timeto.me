@@ -122,7 +122,7 @@ private struct TimerFullScreen__TimerView: View {
                     .tracking(5)
                     .foregroundColor(timerData.color.toColor())
                     .opacity(0.9)
-                    .padding(.bottom, isCompact ? 0 : 20)
+                    .padding(.bottom, isCompact ? 5 : 20)
 
             Text(timerData.timer)
                     .font(.system(size: 72, design: .monospaced))
