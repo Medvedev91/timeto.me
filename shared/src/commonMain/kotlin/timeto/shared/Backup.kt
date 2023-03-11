@@ -13,16 +13,16 @@ object Backup {
             "version" to JsonPrimitive(1),
             "type" to JsonPrimitive(type),
 
-            "activities" to ActivityModel.getAscSorted().modelsToJsonArray { it.backupable__backup() },
-            "intervals" to IntervalModel.getDesc(intervalsLimit).modelsToJsonArray { it.backupable__backup() },
-            "task_folders" to TaskFolderModel.getAscBySort().modelsToJsonArray { it.backupable__backup() },
-            "tasks" to TaskModel.getAsc().modelsToJsonArray { it.backupable__backup() },
-            "checklists" to ChecklistModel.getAsc().modelsToJsonArray { it.backupable__backup() },
-            "checklist_items" to ChecklistItemModel.getAsc().modelsToJsonArray { it.backupable__backup() },
-            "shortcuts" to ShortcutModel.getAsc().modelsToJsonArray { it.backupable__backup() },
-            "repeatings" to RepeatingModel.getAsc().modelsToJsonArray { it.backupable__backup() },
-            "events" to EventModel.getAscByTime().modelsToJsonArray { it.backupable__backup() },
-            "kv" to KVModel.getAll().modelsToJsonArray { it.backupable__backup() },
+            "activities" to ActivityModel.getAscSorted().modelsToJsonArray(),
+            "intervals" to IntervalModel.getDesc(intervalsLimit).modelsToJsonArray(),
+            "task_folders" to TaskFolderModel.getAscBySort().modelsToJsonArray(),
+            "tasks" to TaskModel.getAsc().modelsToJsonArray(),
+            "checklists" to ChecklistModel.getAsc().modelsToJsonArray(),
+            "checklist_items" to ChecklistItemModel.getAsc().modelsToJsonArray(),
+            "shortcuts" to ShortcutModel.getAsc().modelsToJsonArray(),
+            "repeatings" to RepeatingModel.getAsc().modelsToJsonArray(),
+            "events" to EventModel.getAscByTime().modelsToJsonArray(),
+            "kv" to KVModel.getAll().modelsToJsonArray(),
         )
         return JsonObject(map).toString()
     }
@@ -71,6 +71,5 @@ private inline fun JsonElement.mapJsonArray(
     this.jsonObject[key]!!.jsonArray.forEach { block(it.jsonArray) }
 }
 
-private inline fun <T> List<T>.modelsToJsonArray(
-    block: (T) -> JsonElement,
-) = JsonArray(this.map { block(it) })
+private fun List<Backupable__Item>.modelsToJsonArray() =
+    JsonArray(this.map { it.backupable__backup() })
