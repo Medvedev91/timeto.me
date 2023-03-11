@@ -28,10 +28,6 @@ data class KVModel(
         fun getByKeyOrNullFlow(key: KEY) = db.kVQueries.getByKey(key.name).asFlow()
             .mapToOneOrNull().map { it?.toModel() }
 
-        fun addRaw(k: String, v: String) {
-            db.kVQueries.upsert(key = k, value_ = v)
-        }
-
         ///
         /// Backupable Holder
 
@@ -53,7 +49,9 @@ data class KVModel(
 
         fun getFromDIOrNull(): String? = DI.kv.firstOrNull { it.key == this.name }?.value
 
-        suspend fun upsert(value: String): Unit = dbIO { addRaw(k = name, v = value) }
+        suspend fun upsert(value: String): Unit = dbIO {
+            db.kVQueries.upsert(key = name, value_ = value)
+        }
     }
 
     ///
