@@ -39,70 +39,16 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
         VMView(vm: vm, stack: .ZStack()) { state in
 
-            let timerData = state.timerData
-
             Color.black.edgesIgnoringSafeArea(.all)
                     .statusBar(hidden: true)
 
             VStack {
-
-                Text(state.title)
-                        .foregroundColor(.white)
-                        .font(.system(size: 22, weight: .light))
-                        .tracking(0.4)
-                        .padding(.top, 35)
-                        .padding(.leading, 20)
-                        .padding(.trailing, 20)
-                        .opacity(0.9)
-                        .multilineTextAlignment(.center)
-
+                TimerFullScreen__HeaderView(state: state)
                 Spacer()
-                Button(
-                        action: {
-                            FullScreenUI.shared.close()
-                        },
-                        label: {
-                            Image(systemName: "xmark")
-                                    .font(.system(size: 26, weight: .thin))
-                                    .foregroundColor(.white)
-                        }
-                )
-                        .padding(.bottom, 30)
-                        .opacity(0.8)
+                TimerFullScreen__CloseView()
             }
 
-            VStack {
-
-                Text(timerData.title ?? "")
-                        .font(.system(size: 26, weight: .bold))
-                        .tracking(5)
-                        .foregroundColor(timerData.color.toColor())
-                        .opacity(0.9)
-                        .padding(.bottom, -10)
-
-                Text(timerData.timer)
-                        .font(.system(size: 72, design: .monospaced))
-                        .foregroundColor(timerData.color.toColor())
-                        .opacity(0.9)
-
-                Button(
-                        action: {
-                            vm.restart()
-                        },
-                        label: {
-                            Text("Restart")
-                                    .font(.system(size: 25, weight: .light))
-                                    .foregroundColor(.white)
-                                    .tracking(1)
-                        }
-                )
-                        ///
-                        .opacity(timerData.title == nil ? 0 : 1)
-                        .disabled(timerData.title == nil)
-                        ///
-                        .padding(.top, -15)
-            }
-                    .padding(.bottom, 20)
+            TimerFullScreen__TimerView(vm: vm, state: state)
         }
                 .onAppear {
                     UIApplication.shared.isIdleTimerDisabled = true
@@ -110,5 +56,87 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                 .onDisappear {
                     UIApplication.shared.isIdleTimerDisabled = false
                 }
+    }
+}
+
+private struct TimerFullScreen__HeaderView: View {
+
+    let state: FullscreenVM.State
+
+    var body: some View {
+
+        Text(state.title)
+                .foregroundColor(.white)
+                .font(.system(size: 22, weight: .light))
+                .tracking(0.4)
+                .padding(.top, 35)
+                .padding(.leading, 20)
+                .padding(.trailing, 20)
+                .opacity(0.9)
+                .multilineTextAlignment(.center)
+    }
+}
+
+
+private struct TimerFullScreen__TimerView: View {
+
+    let vm: FullscreenVM
+    let state: FullscreenVM.State
+
+    var body: some View {
+
+        VStack {
+
+            let timerData = state.timerData
+
+            Text(timerData.title ?? "")
+                    .font(.system(size: 26, weight: .bold))
+                    .tracking(5)
+                    .foregroundColor(timerData.color.toColor())
+                    .opacity(0.9)
+                    .padding(.bottom, -10)
+
+            Text(timerData.timer)
+                    .font(.system(size: 72, design: .monospaced))
+                    .foregroundColor(timerData.color.toColor())
+                    .opacity(0.9)
+
+            Button(
+                    action: {
+                        vm.restart()
+                    },
+                    label: {
+                        Text("Restart")
+                                .font(.system(size: 25, weight: .light))
+                                .foregroundColor(.white)
+                                .tracking(1)
+                    }
+            )
+                    ///
+                    .opacity(timerData.title == nil ? 0 : 1)
+                    .disabled(timerData.title == nil)
+                    ///
+                    .padding(.top, -15)
+        }
+                .padding(.bottom, 20)
+    }
+}
+
+private struct TimerFullScreen__CloseView: View {
+
+    var body: some View {
+
+        Button(
+                action: {
+                    FullScreenUI.shared.close()
+                },
+                label: {
+                    Image(systemName: "xmark")
+                            .font(.system(size: 26, weight: .thin))
+                            .foregroundColor(.white)
+                }
+        )
+                .padding(.bottom, 30)
+                .opacity(0.8)
     }
 }
