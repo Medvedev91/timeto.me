@@ -17,5 +17,9 @@ upsert:
 INSERT OR REPLACE INTO KVSQ
 (key, value) VALUES (?, ?);
 
+delByKey:
+DELETE FROM KVSQ
+WHERE key=?;
+
 truncate:
 DELETE FROM KVSQ;
