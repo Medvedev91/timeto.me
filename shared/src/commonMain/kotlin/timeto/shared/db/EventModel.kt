@@ -28,25 +28,16 @@ data class EventModel(
             localTime: Int,
             addToHistory: Boolean,
         ): Unit = dbIO {
-            val newEvent = addRaw(
+            val newEventSQ = EventSQ(
                 id = time(), // todo check unique
                 text = validateText(text),
-                utcTime = localTime + localUtcOffset
-            )
-            if (addToHistory)
-                EventsHistory.upsert(newEvent)
-        }
-
-        fun addRaw(
-            id: Int,
-            text: String,
-            utcTime: Int,
-        ): EventModel {
-            val newEventSQ = EventSQ(
-                id = id, text = text, utc_time = utcTime
+                utc_time = localTime + localUtcOffset
             )
             db.eventQueries.insertObject(newEventSQ)
-            return newEventSQ.toModel()
+
+            val newEvent = newEventSQ.toModel()
+            if (addToHistory)
+                EventsHistory.upsert(newEvent)
         }
 
         suspend fun syncTodaySafe(today: Int): Unit = dbIO {
