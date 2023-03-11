@@ -22,10 +22,7 @@ object Backup {
             "shortcuts" to ShortcutModel.getAsc().modelsToJsonArray { it.backupable__backup() },
             "repeatings" to RepeatingModel.getAsc().modelsToJsonArray { it.backupable__backup() },
             "events" to EventModel.getAscByTime().modelsToJsonArray { it.backupable__backup() },
-
-            "kv" to KVModel.getAll().modelsToJsonArray { i ->
-                listOf(i.key, i.value).toJsonArray()
-            },
+            "kv" to KVModel.getAll().modelsToJsonArray { it.backupable__backup() },
         )
         return JsonObject(map).toString()
     }
@@ -64,13 +61,7 @@ private fun restoreV1NeedTransaction(jString: String) {
     json.mapJsonArray("shortcuts") { ShortcutModel.backupable__restore(it) }
     json.mapJsonArray("repeatings") { RepeatingModel.backupable__restore(it) }
     json.mapJsonArray("events") { EventModel.backupable__restore(it) }
-
-    json.mapJsonArray("kv") { j ->
-        KVModel.addRaw(
-            k = j.getString(0),
-            v = j.getString(1),
-        )
-    }
+    json.mapJsonArray("kv") { KVModel.backupable__restore(it) }
 }
 
 private inline fun JsonElement.mapJsonArray(

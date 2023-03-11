@@ -5,14 +5,16 @@ import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import dbsq.KVSQ
 import kotlinx.coroutines.flow.map
-import timeto.shared.DI
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.jsonArray
+import timeto.shared.*
 
 data class KVModel(
     val key: String,
     val value: String,
-) {
+) : Backupable__Item {
 
-    companion object {
+    companion object : Backupable__Holder {
 
         const val DAY_START_OFFSET_SECONDS_DEFAULT = 0
 
@@ -29,6 +31,20 @@ data class KVModel(
         fun addRaw(k: String, v: String) {
             db.kVQueries.upsert(key = k, value_ = v)
         }
+
+        ///
+        /// Backupable Holder
+
+        override fun backupable__getAll(): List<Backupable__Item> =
+            db.kVQueries.getAll().executeAsList().map { it.toModel() }
+
+        override fun backupable__restore(json: JsonElement) {
+            val j = json.jsonArray
+            db.kVQueries.upsert(
+                key = j.getString(0),
+                value_ = j.getString(1),
+            )
+        }
     }
 
     enum class KEY {
@@ -38,6 +54,27 @@ data class KVModel(
         fun getFromDIOrNull(): String? = DI.kv.firstOrNull { it.key == this.name }?.value
 
         suspend fun upsert(value: String): Unit = dbIO { addRaw(k = name, v = value) }
+    }
+
+    ///
+    /// Backupable Item
+
+    override fun backupable__getId(): String = key
+
+    override fun backupable__backup(): JsonElement = listOf(
+        key, value
+    ).toJsonArray()
+
+    override fun backupable__update(json: JsonElement) {
+        val j = json.jsonArray
+        db.kVQueries.upsert(
+            key = j.getString(0),
+            value_ = j.getString(1),
+        )
+    }
+
+    override fun backupable__delete() {
+        db.kVQueries.delByKey(key)
     }
 }
 
