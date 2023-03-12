@@ -110,6 +110,7 @@ fun TaskSheet(
                                 .align(Alignment.CenterVertically)
                                 .background(if (inHistory) c.blue else c.transparent)
                                 .clickable {
+                                    layer.close()
                                     hintUI.startInterval {
                                         scope.launchEx {
                                             gotoTimer()
