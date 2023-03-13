@@ -31,7 +31,7 @@ class TaskSheetVM(
         val historySeconds: List<Int>,
     ) {
 
-        val listText = TextFeatures.parse(activity.name).textUI()
+        val listText = TextFeatures.parse(activity.name).textUi
 
         val timerHints = TimerHintUI.buildList(
             activity,

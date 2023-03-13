@@ -18,7 +18,7 @@ class EventsListVM : __VM<EventsListVM.State>() {
 
         init {
             val textFeatures = TextFeatures.parse(event.text)
-            listText = textFeatures.textUI()
+            listText = textFeatures.textUi
             triggers = textFeatures.triggers
         }
 

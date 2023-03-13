@@ -22,7 +22,7 @@ class RepeatingsListVM : __VM<RepeatingsListVM.State>() {
             dayLeftString = repeating.getPeriod().title + daytimeText
 
             val textFeatures = TextFeatures.parse(repeating.text)
-            listText = textFeatures.textUI()
+            listText = textFeatures.textUi
             triggers = textFeatures.triggers
         }
 

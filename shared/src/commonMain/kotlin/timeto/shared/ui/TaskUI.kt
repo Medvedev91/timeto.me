@@ -8,7 +8,7 @@ abstract class TaskUI(
     val task: TaskModel
 ) {
     val textFeatures = TextFeatures.parse(task.text)
-    val listText = textFeatures.textUI()
+    val listText = textFeatures.textUi
 }
 
 ///

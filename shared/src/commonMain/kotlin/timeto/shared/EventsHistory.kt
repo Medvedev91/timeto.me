@@ -98,6 +98,6 @@ data class EventsHistory(
         }
 
         private fun normalizeTitle(title: String): String =
-            TextFeatures.parse(title).textUI().lowercase().trim()
+            TextFeatures.parse(title).textUi.lowercase().trim()
     }
 }

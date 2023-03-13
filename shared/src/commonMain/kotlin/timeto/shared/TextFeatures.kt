@@ -15,14 +15,10 @@ data class TextFeatures(
         else -> null
     }
 
-    ///
-
-    fun textUI(): String {
-        return textNoFeatures
-    }
+    val textUi = textNoFeatures
 
     fun textWithFeatures(): String {
-        val strings = mutableListOf(textUI().trim())
+        val strings = mutableListOf(textUi.trim())
         if (triggers.isNotEmpty())
             strings.add(triggers.joinToString(" ") { it.id })
         if (fromRepeating != null)

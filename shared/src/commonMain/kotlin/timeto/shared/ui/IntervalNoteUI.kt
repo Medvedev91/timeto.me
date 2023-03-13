@@ -19,7 +19,7 @@ class IntervalNoteUI(
         triggers = textFeatures.triggers
 
         // todo refactor by text features repeatings/events
-        val textUI = textFeatures.textUI()
+        val textUI = textFeatures.textUi
         if (checkLeadingEmoji) {
             val emoji = setOf(EMOJI_REPEATING, EMOJI_CALENDAR)
                 .firstOrNull { emoji -> textUI.startsWith(emoji) }
