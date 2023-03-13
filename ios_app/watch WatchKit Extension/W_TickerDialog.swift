@@ -23,7 +23,7 @@ struct W_TickerDialog: View {
 
         let defSeconds = TimerPickerItem.companion.calcDefSeconds(activity: activity, note: task?.text)
         _formSeconds = State(initialValue: defSeconds)
-        timeItems = TimerPickerItem.companion.buildList(defSeconds: defSeconds, stepMinutes: 10.toInt32())
+        timeItems = TimerPickerItem.companion.buildList(defSeconds: defSeconds)
 
         self.preAdd = preAdd
         self.task = task

@@ -112,7 +112,6 @@ fun RepeatingFormSheet(
                             title = "Timer",
                             doneText = "Done",
                             defMinutes = 30,
-                            stepMinutes = 10,
                             onPick = { seconds ->
                                 vm.upTimerTime("${seconds / 60} min")
                             }

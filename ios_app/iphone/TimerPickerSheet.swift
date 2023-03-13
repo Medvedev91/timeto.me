@@ -32,7 +32,7 @@ struct TimerPickerSheet: View {
 
         let defSeconds = defMinutes.toInt32() * 60
         _formSeconds = State(initialValue: defSeconds)
-        pickerItems = TimerPickerItem.companion.buildList(defSeconds: defSeconds, stepMinutes: 10.toInt32())
+        pickerItems = TimerPickerItem.companion.buildList(defSeconds: defSeconds)
     }
 
     var body: some View {

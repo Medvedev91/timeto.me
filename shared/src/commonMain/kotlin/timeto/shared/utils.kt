@@ -433,14 +433,14 @@ class TimerPickerItem(
 
         fun buildList(
             defSeconds: Int,
-            stepMinutes: Int,
         ): List<TimerPickerItem> {
 
-            val stepSeconds = stepMinutes * 60
-            val secondsTemp = (1..(86_400 / stepSeconds)).map { it * stepSeconds }.toMutableList()
-            secondsTemp.add(defSeconds)
+            val a = (1..10).map { it * 60 } + // 1 - 10 min by 1 min
+                    (1..10).map { (600 + (it * 300)) } + // 15 min - 1 hour by 5 min
+                    (1..10).map { (3600 + (it * 600)) } + // 1 hour+ by 10 min
+                    defSeconds
 
-            return secondsTemp.toSet().sorted().mapIndexed { idx, seconds ->
+            return a.toSet().sorted().mapIndexed { idx, seconds ->
 
                 val hours = seconds / 3600
                 val minutes = (seconds % 3600) / 60

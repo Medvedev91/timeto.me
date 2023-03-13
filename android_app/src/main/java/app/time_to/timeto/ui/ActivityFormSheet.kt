@@ -239,7 +239,6 @@ fun ActivityFormSheet(
                                                             title = "Timer Hint",
                                                             doneText = "Add",
                                                             defMinutes = 30,
-                                                            stepMinutes = 10
                                                         ) { seconds ->
                                                             vm.addCustomTimerHint(seconds)
                                                         }

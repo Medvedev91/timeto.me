@@ -29,7 +29,7 @@ class ActivityTimerSheetVM(
         }
 
         val defSeconds = TimerPickerItem.calcDefSeconds(activity, note)
-        val timeItems = TimerPickerItem.buildList(defSeconds, stepMinutes = 10)
+        val timeItems = TimerPickerItem.buildList(defSeconds)
 
         state = MutableStateFlow(
             State(

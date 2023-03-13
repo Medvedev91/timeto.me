@@ -26,14 +26,13 @@ fun TimerPickerSheet(
     title: String,
     doneText: String,
     defMinutes: Int,
-    stepMinutes: Int,
     onPick: (/* seconds */ Int) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
 
     // todo what if change defMinutes/defSeconds -> timeItems
     val defSeconds = defMinutes * 60
-    val timeItems = remember { TimerPickerItem.buildList(defSeconds, stepMinutes) }
+    val timeItems = remember { TimerPickerItem.buildList(defSeconds) }
     ////
 
     var formTimeItemIdx by remember { mutableStateOf(timeItems.indexOfFirst { it.seconds == defSeconds }) }
