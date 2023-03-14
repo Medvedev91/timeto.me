@@ -112,7 +112,7 @@ class RepeatingFormSheetVM(
         state.update { it.copy(textFeatures = it.textFeatures.copy(textNoFeatures = text)) }
     }
 
-    fun upTimer(seconds: Int?) {
+    fun upTimer(seconds: Int) {
         state.update { it.copy(textFeatures = it.textFeatures.copy(timer = seconds)) }
     }
 
