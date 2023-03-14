@@ -406,7 +406,7 @@ fun timeMls(): Long = Clock.System.now().toEpochMilliseconds()
 
 fun dayStartOffsetSeconds(): Int =
     KVModel.KEY.DAY_START_OFFSET_SECONDS.getFromDIOrNull()?.toInt()
-        ?: KVModel.DAY_START_OFFSET_SECONDS_DEFAULT
+    ?: KVModel.DAY_START_OFFSET_SECONDS_DEFAULT
 
 fun daytimeToString(daytime: Int): String {
     val (h, m) = daytime.toHms()
