@@ -37,6 +37,11 @@ object DI {
     fun getTmrwFolderOrNull(): TaskFolderModel? = taskFolders.firstOrNull { it.isTmrw }
 
     ///
+    /// Mics
+
+    fun getActivityByIdOrNull(id: Int) = activitiesSorted.firstOrNull { id == it.id }
+
+    ///
     /// Init
 
     internal suspend fun init() {
