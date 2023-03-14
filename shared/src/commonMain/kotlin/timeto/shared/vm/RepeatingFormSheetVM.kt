@@ -2,6 +2,7 @@ package timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import timeto.shared.*
+import timeto.shared.db.ActivityModel
 import timeto.shared.db.RepeatingModel
 
 class RepeatingFormSheetVM(
@@ -21,6 +22,13 @@ class RepeatingFormSheetVM(
         val isAutoFS: Boolean,
     ) {
 
+        val activityTitle = "Activity"
+        val activityNote: String = run {
+            val activity = textFeatures.activity ?: return@run "Not Selected"
+            "${activity.name.parseTextFeatures().textNoFeatures}  ${activity.emoji}"
+        }
+        val activityColor = if (textFeatures.activity == null) ColorNative.red else ColorNative.text
+
         val timerTitle = "Timer"
         val timerNote = textFeatures.timer?.toTimerHintNote(isShort = false) ?: "Not Selected"
         val timerColor = if (textFeatures.timer == null) ColorNative.red else ColorNative.text
@@ -33,6 +41,7 @@ class RepeatingFormSheetVM(
         val inputTextValue = textFeatures.textNoFeatures
         val isHeaderDoneEnabled = inputTextValue.isNotBlank() &&
                                   activePeriodIndex != null &&
+                                  textFeatures.activity != null &&
                                   textFeatures.timer != null
 
         val autoFSTitle = Strings.AUTO_FS_FORM_TITLE
@@ -110,6 +119,10 @@ class RepeatingFormSheetVM(
 
     fun setTextValue(text: String) {
         state.update { it.copy(textFeatures = it.textFeatures.copy(textNoFeatures = text)) }
+    }
+
+    fun upActivity(activity: ActivityModel) {
+        state.update { it.copy(textFeatures = it.textFeatures.copy(activity = activity)) }
     }
 
     fun upTimer(seconds: Int) {
