@@ -57,8 +57,8 @@ fun String.parseTextFeatures() = TextFeatures.parse(this)
 
 //////
 
-private val checklistRegex = "#c\\d{10}".toRegex()
-private val shortcutRegex = "#s\\d{10}".toRegex()
+private val checklistRegex = "#c(\\d{10})".toRegex()
+private val shortcutRegex = "#s(\\d{10})".toRegex()
 private val fromRepeatingRegex = "#r(\\d{10})_(\\d{5})_(\\d{10})?".toRegex()
 private val fromEventRegex = "#e(\\d{10})".toRegex()
 private val activityRegex = "#a(\\d{10})".toRegex()
@@ -77,24 +77,22 @@ private fun parseLocal(initText: String): TextFeatures {
     if (allChecklists.isNotEmpty())
         checklistRegex
             .findAll(textNoFeatures)
-            .forEach {
-                val id = it.value.filter { it.isDigit() }.toInt()
-                allChecklists.firstOrNull { it.id == id }?.let { checklist ->
-                    triggers.add(Trigger.Checklist(checklist))
-                }
-                textNoFeatures = textNoFeatures.replace(it.value, "").trim()
+            .forEach { match ->
+                val id = match.groupValues[1].toInt()
+                val checklist = DI.getChecklistByIdOrNull(id) ?: return@forEach
+                triggers.add(Trigger.Checklist(checklist))
+                match.clean()
             }
 
     val allShortcuts = DI.shortcuts
     if (allShortcuts.isNotEmpty())
         shortcutRegex
             .findAll(textNoFeatures)
-            .forEach {
-                val id = it.value.filter { it.isDigit() }.toInt()
-                allShortcuts.firstOrNull { it.id == id }?.let { shortcut ->
-                    triggers.add(Trigger.Shortcut(shortcut))
-                }
-                textNoFeatures = textNoFeatures.replace(it.value, "").trim()
+            .forEach { match ->
+                val id = match.groupValues[1].toInt()
+                val shortcut = DI.getShortcutByIdOrNull(id) ?: return@forEach
+                triggers.add(Trigger.Shortcut(shortcut))
+                match.clean()
             }
 
     val fromRepeating: TextFeatures.FromRepeating? = fromRepeatingRegex
