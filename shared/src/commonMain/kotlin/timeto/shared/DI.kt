@@ -41,6 +41,10 @@ object DI {
 
     fun getActivityByIdOrNull(id: Int) = activitiesSorted.firstOrNull { id == it.id }
 
+    fun getChecklistByIdOrNull(id: Int) = checklists.firstOrNull { id == it.id }
+
+    fun getShortcutByIdOrNull(id: Int) = shortcuts.firstOrNull { id == it.id }
+
     ///
     /// Init
 
