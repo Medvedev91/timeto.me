@@ -73,9 +73,6 @@ private fun parseLocal(initText: String): TextFeatures {
 
     val triggers = mutableListOf<Trigger>()
 
-    //
-    // Checklists
-
     val allChecklists = DI.checklists
     if (allChecklists.isNotEmpty())
         checklistRegex
@@ -87,9 +84,6 @@ private fun parseLocal(initText: String): TextFeatures {
                 }
                 textNoFeatures = textNoFeatures.replace(it.value, "").trim()
             }
-
-    //
-    // Shortcuts
 
     val allShortcuts = DI.shortcuts
     if (allShortcuts.isNotEmpty())
@@ -103,9 +97,6 @@ private fun parseLocal(initText: String): TextFeatures {
                 textNoFeatures = textNoFeatures.replace(it.value, "").trim()
             }
 
-    //
-    // From Repeating
-
     val fromRepeating: TextFeatures.FromRepeating? = fromRepeatingRegex
         .find(textNoFeatures)?.let { match ->
             val id = match.groupValues[1].toInt()
@@ -115,18 +106,12 @@ private fun parseLocal(initText: String): TextFeatures {
             return@let TextFeatures.FromRepeating(id, day, time)
         }
 
-    //
-    // From Event
-
     val fromEvent: TextFeatures.FromEvent? = fromEventRegex
         .find(textNoFeatures)?.let { match ->
             val time = match.groupValues[1].toInt()
             match.clean()
             return@let TextFeatures.FromEvent(time)
         }
-
-    //
-    // Activity
 
     val activity: ActivityModel? = activityRegex
         .find(textNoFeatures)?.let { match ->
@@ -135,9 +120,6 @@ private fun parseLocal(initText: String): TextFeatures {
             match.clean()
             return@let activity
         }
-
-    //
-    // Timer
 
     val timer: Int? = timerRegex
         .find(textNoFeatures)?.let { match ->
