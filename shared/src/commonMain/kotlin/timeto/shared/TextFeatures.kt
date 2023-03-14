@@ -1,5 +1,6 @@
 package timeto.shared
 
+import timeto.shared.db.ActivityModel
 import timeto.shared.ui.TimeUI
 
 data class TextFeatures(
@@ -7,6 +8,7 @@ data class TextFeatures(
     val triggers: List<Trigger>,
     val fromRepeating: FromRepeating?,
     val fromEvent: FromEvent?,
+    val activity: ActivityModel?,
     val timer: Int?,
 ) {
 
@@ -17,6 +19,7 @@ data class TextFeatures(
     }
 
     val textUi = textNoFeatures +
+                 (if (activity != null) " ${activity.emoji}" else "") +
                  (timer?.toTimerHintNote(isShort = false, prefix = " ") ?: "")
 
     fun textWithFeatures(): String {
@@ -27,6 +30,8 @@ data class TextFeatures(
             strings.add(substringRepeating(fromRepeating.id, fromRepeating.day, fromRepeating.time))
         if (fromEvent != null)
             strings.add(substringEvent(fromEvent.time))
+        if (activity != null)
+            strings.add("#a${activity.id}")
         if (timer != null)
             strings.add("#t$timer")
         return strings.joinToString(" ")
@@ -56,6 +61,7 @@ private val checklistRegex = "#c\\d{10}".toRegex()
 private val shortcutRegex = "#s\\d{10}".toRegex()
 private val fromRepeatingRegex = "#r(\\d{10})_(\\d{5})_(\\d{10})?".toRegex()
 private val fromEventRegex = "#e(\\d{10})".toRegex()
+private val activityRegex = "#a(\\d{10})".toRegex()
 private val timerRegex = "#t(\\d+)".toRegex()
 
 private fun parseLocal(initText: String): TextFeatures {
@@ -116,6 +122,17 @@ private fun parseLocal(initText: String): TextFeatures {
         }
 
     //
+    // Activity
+
+    val activity: ActivityModel? = activityRegex
+        .find(textNoFeatures)?.let { match ->
+            val id = match.groupValues[1].toInt()
+            val activity = DI.getActivityByIdOrNull(id) ?: return@let null
+            textNoFeatures = textNoFeatures.replace(match.value, "").trim()
+            return@let activity
+        }
+
+    //
     // Timer
 
     val timer: Int? = timerRegex
@@ -130,6 +147,7 @@ private fun parseLocal(initText: String): TextFeatures {
         triggers = triggers,
         fromRepeating = fromRepeating,
         fromEvent = fromEvent,
+        activity = activity,
         timer = timer,
     )
 }
