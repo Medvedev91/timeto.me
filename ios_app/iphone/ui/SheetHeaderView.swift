@@ -5,7 +5,7 @@ struct SheetHeaderView: View {
     let onCancel: () -> Void
     let title: String
     let doneText: String
-    let isDoneEnabled: Bool
+    let isDoneEnabled: Bool?
     let scrollToHeader: Int
     let onDone: () -> Void
 
@@ -47,9 +47,10 @@ struct SheetHeaderView: View {
                             Text(doneText)
                                     .fontWeight(.bold)
                                     .padding(.trailing, 25)
+                                    .opacity(isDoneEnabled == nil ? 0 : 1)
                         }
                 )
-                        .disabled(!isDoneEnabled)
+                        .disabled(isDoneEnabled != true)
             }
                     .padding(.top, 18)
                     .padding(.bottom, 18)
