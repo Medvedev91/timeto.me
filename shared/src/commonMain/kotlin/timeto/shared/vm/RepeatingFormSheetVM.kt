@@ -21,13 +21,19 @@ class RepeatingFormSheetVM(
         val isAutoFS: Boolean,
     ) {
 
+        val timerTitle = "Timer"
+        val timerNote = textFeatures.timer?.toTimerHintNote(isShort = false) ?: "Not Selected"
+        val timerColor = if (textFeatures.timer == null) ColorNative.red else ColorNative.text
+
         val daytimeHeader = "Time of the Day"
         val daytimeNote = daytime?.let { daytimeToString(it) } ?: "None"
         val daytimePickerDefHour: Int
         val daytimePickerDefMinute: Int
 
         val inputTextValue = textFeatures.textNoFeatures
-        val isHeaderDoneEnabled = (inputTextValue.isNotBlank() && activePeriodIndex != null)
+        val isHeaderDoneEnabled = inputTextValue.isNotBlank() &&
+                                  activePeriodIndex != null &&
+                                  textFeatures.timer != null
 
         val autoFSTitle = Strings.AUTO_FS_FORM_TITLE
 
@@ -106,13 +112,8 @@ class RepeatingFormSheetVM(
         state.update { it.copy(textFeatures = it.textFeatures.copy(textNoFeatures = text)) }
     }
 
-    fun upTimerTime(timerString: String) {
-        val timerTime = TimerTimeParser.findTime(state.value.inputTextValue)
-        val newText = if (timerTime != null)
-            state.value.inputTextValue.replace(timerTime.match, timerString)
-        else
-            state.value.inputTextValue.trim() + " $timerString"
-        setTextValue(newText.trim() + " ")
+    fun upTimer(seconds: Int?) {
+        state.update { it.copy(textFeatures = it.textFeatures.copy(timer = seconds)) }
     }
 
     fun upDaytime(newDaytimeOrNull: Int?) {
