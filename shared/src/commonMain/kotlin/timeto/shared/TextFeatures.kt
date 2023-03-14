@@ -17,7 +17,7 @@ data class TextFeatures(
     }
 
     val textUi = textNoFeatures +
-            (if (timer != null) " ${(timer / 60)} min" else "")
+                 (if (timer != null) " ${(timer / 60)} min" else "")
 
     fun textWithFeatures(): String {
         val strings = mutableListOf(textNoFeatures.trim())
