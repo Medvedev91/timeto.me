@@ -13,6 +13,7 @@ struct RepeatingsFormSheet: View {
     @State private var pickerNDaysTemp = 2
 
     @State private var isAddDayOfYearSheetPresented = false
+    @State private var isActivitySheetPresented = false
     @State private var isCustomTimeSheetPresented = false
     @State private var isDaytimeSheetPresented = false
 
@@ -64,14 +65,6 @@ struct RepeatingsFormSheet: View {
                     }
                             .padding(.top, 10)
 
-                    ActivityEmojiPickerView(
-                            text: state.inputTextValue,
-                            spaceAround: MyListView.PADDING_OUTER_HORIZONTAL - 5
-                    ) { newString in
-                        vm.setTextValue(text: newString)
-                    }
-                            .padding(.top, 8)
-
                     TriggersView__Form(
                             triggers: state.textFeatures.triggers,
                             onTriggersChanged: { newTriggers in
@@ -79,8 +72,36 @@ struct RepeatingsFormSheet: View {
                             },
                             spaceAround: MyListView.PADDING_OUTER_HORIZONTAL,
                             bgColor: triggersBg,
-                            paddingTop: 30
+                            paddingTop: 20
                     )
+
+                    MyListView__ItemView(
+                            isFirst: true,
+                            isLast: false
+                    ) {
+
+                        MyListView__ItemView__ButtonView(
+                                text: state.activityTitle,
+                                withArrow: true,
+                                rightView: AnyView(
+                                        Text(state.activityNote)
+                                                .foregroundColor(state.activityColor.toColor())
+                                                .font(.system(size: 15))
+                                                .padding(.trailing, 10)
+                                )
+                        ) {
+                            hideKeyboard()
+                            isActivitySheetPresented = true
+                        }
+                                .sheetEnv(isPresented: $isActivitySheetPresented) {
+                                    ActivityPickerSheet(
+                                            isPresented: $isActivitySheetPresented
+                                    ) { activity in
+                                        vm.upActivity(activity: activity)
+                                    }
+                                }
+                    }
+                            .padding(.top, 30)
 
                     MyListView__ItemView(
                             isFirst: false,
