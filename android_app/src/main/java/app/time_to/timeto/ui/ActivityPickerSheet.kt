@@ -30,8 +30,8 @@ fun ActivityPickerSheet(
         Sheet.HeaderView(
             onCancel = { layer.close() },
             title = state.headerTitle,
-            doneText = "          ",
-            isDoneEnabled = false,
+            doneText = "-------",
+            isDoneEnabled = null,
             scrollToHeader = scrollState.value,
         ) {
         }
@@ -45,6 +45,8 @@ fun ActivityPickerSheet(
                 .navigationBarsPadding()
                 .imePadding()
         ) {
+
+            Row(Modifier.height(20.dp)) {  }
 
             val activitiesUI = state.activitiesUI
             activitiesUI.forEach { activityUI ->
