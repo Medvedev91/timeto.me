@@ -20,6 +20,8 @@ sdk.dir=/Users/__USER__/Library/Android/sdk
 
 `Settings -> Editor -> Code Style -> Kotlin -> Wrapping and Braces -> 'Hard wrap at:' 999`
 
+`Settings -> Editor -> Code Style -> Kotlin -> Wrapping and Braces -> Binary expressions -> check 'Align when multiline'`
+
 `Settings -> Editor -> TODO -> + -> Pattern: \btrick\b.*   Foreground: F22613`
 
 # Android Specific
