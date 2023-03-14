@@ -83,16 +83,6 @@ fun RepeatingFormSheet(
                 )
             }
 
-            ActivityEmojiPickerView(
-                text = state.inputTextValue,
-                modifier = Modifier
-                    .padding(top = 8.dp),
-                contentPadding = PaddingValues(horizontal = MyListView.PADDING_OUTER_HORIZONTAL - 4.dp),
-                onSelect = { newString ->
-                    vm.setTextValue(newString.trim() + " ")
-                }
-            )
-
             TriggersView__FormView(
                 triggers = state.textFeatures.triggers,
                 onTriggersChanged = { vm.setTriggers(it) },
@@ -100,6 +90,32 @@ fun RepeatingFormSheet(
                 contentPaddingHints = PaddingValues(horizontal = MyListView.PADDING_OUTER_HORIZONTAL),
                 defBg = if (MaterialTheme.colors.isLight) c.white else c.bgFormSheet,
             )
+
+            MyListView__ItemView(
+                isFirst = true,
+                isLast = false,
+                modifier = Modifier.padding(top = 20.dp)
+            ) {
+                MyListView__ItemView__ButtonView(
+                    text = state.activityTitle,
+                    withArrow = true,
+                    rightView = {
+                        MyListView__ItemView__ButtonView__RightText(
+                            text = state.activityNote,
+                            paddingEnd = 2.dp,
+                            color = state.activityColor.toColor(),
+                        )
+                    }
+                ) {
+                    Sheet.show { layer ->
+                        ActivityPickerSheet(
+                            layer = layer,
+                        ) {
+                            vm.upActivity(it)
+                        }
+                    }
+                }
+            }
 
             MyListView__ItemView(
                 isFirst = false,
