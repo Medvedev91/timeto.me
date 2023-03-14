@@ -72,15 +72,32 @@ struct RepeatingsFormSheet: View {
                     }
                             .padding(.top, 8)
 
-                    HStack(spacing: 12) {
+                    TriggersView__Form(
+                            triggers: state.textFeatures.triggers,
+                            onTriggersChanged: { newTriggers in
+                                vm.setTriggers(newTriggers: newTriggers)
+                            },
+                            spaceAround: MyListView.PADDING_OUTER_HORIZONTAL,
+                            bgColor: triggersBg,
+                            paddingTop: 30
+                    )
 
-                        ForEach(["5 min", "25 min", "60 min"], id: \.self) { hint in
-                            TimerHintView(text: hint) {
-                                vm.upTimerTime(timerString: hint)
-                            }
-                        }
+                    MyListView__ItemView(
+                            isFirst: false,
+                            isLast: true,
+                            withTopDivider: true
+                    ) {
 
-                        TimerHintView(text: "Custom") {
+                        MyListView__ItemView__ButtonView(
+                                text: state.timerTitle,
+                                withArrow: true,
+                                rightView: AnyView(
+                                        Text(state.timerNote)
+                                                .foregroundColor(state.timerColor.toColor())
+                                                .font(.system(size: 15))
+                                                .padding(.trailing, 10)
+                                )
+                        ) {
                             hideKeyboard()
                             isCustomTimeSheetPresented = true
                         }
@@ -91,24 +108,13 @@ struct RepeatingsFormSheet: View {
                                             doneText: "Done",
                                             defMinutes: 30
                                     ) { seconds in
-                                        vm.upTimerTime(timerString: "\((seconds / 60)) min")
+                                        vm.upTimer(seconds: seconds.toInt32())
                                     }
                                             .presentationDetentsMediumIf16()
                                 }
                     }
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                            .padding(.top, 8)
-                            .padding(.leading, MyListView.PADDING_OUTER_HORIZONTAL + 5)
 
-                    TriggersView__Form(
-                            triggers: state.textFeatures.triggers,
-                            onTriggersChanged: { newTriggers in
-                                vm.setTriggers(newTriggers: newTriggers)
-                            },
-                            spaceAround: MyListView.PADDING_OUTER_HORIZONTAL,
-                            bgColor: triggersBg,
-                            paddingTop: 30
-                    )
+                    MyListView__Padding__SectionSection()
 
                     MyListView__ItemView(
                             isFirst: true,
@@ -141,7 +147,6 @@ struct RepeatingsFormSheet: View {
                                             .presentationDetentsMediumIf16()
                                 }
                     }
-                            .padding(.top, 20)
 
                     VStack(spacing: 0) {
 
@@ -337,24 +342,6 @@ struct RepeatingsFormSheet: View {
                     }
         }
                 .background(Color(.mySheetFormBg))
-    }
-}
-
-private struct TimerHintView: View {
-
-    var text: String
-    var onClick: () -> Void
-
-    var body: some View {
-
-        Button(
-                action: {
-                    onClick()
-                },
-                label: {
-                    Text(text)
-                }
-        )
     }
 }
 
