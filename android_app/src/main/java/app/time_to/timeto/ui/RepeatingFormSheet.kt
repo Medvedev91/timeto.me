@@ -93,33 +93,6 @@ fun RepeatingFormSheet(
                 }
             )
 
-            Row(
-                modifier = Modifier
-                    .padding(top = 2.dp, start = MyListView.PADDING_OUTER_HORIZONTAL - 8.dp)
-            ) {
-
-                listOf("5 min", "25 min", "60 min").forEach { timerString ->
-                    TimerHintView(text = timerString) {
-                        vm.upTimerTime(timerString)
-                    }
-                }
-
-                TimerHintView(text = "Custom") {
-                    keyboardController?.hide()
-                    Sheet.show { layer ->
-                        TimerPickerSheet(
-                            layer = layer,
-                            title = "Timer",
-                            doneText = "Done",
-                            defMinutes = 30,
-                            onPick = { seconds ->
-                                vm.upTimerTime("${seconds / 60} min")
-                            }
-                        )
-                    }
-                }
-            }
-
             TriggersView__FormView(
                 triggers = state.textFeatures.triggers,
                 onTriggersChanged = { vm.setTriggers(it) },
@@ -129,9 +102,41 @@ fun RepeatingFormSheet(
             )
 
             MyListView__ItemView(
+                isFirst = false,
+                isLast = true,
+                withTopDivider = true,
+            ) {
+                MyListView__ItemView__ButtonView(
+                    text = state.timerTitle,
+                    withArrow = true,
+                    rightView = {
+                        MyListView__ItemView__ButtonView__RightText(
+                            text = state.timerNote,
+                            paddingEnd = 2.dp,
+                            color = state.timerColor,
+                        )
+                    }
+                ) {
+                    keyboardController?.hide()
+                    Sheet.show { layer ->
+                        TimerPickerSheet(
+                            layer = layer,
+                            title = "Timer",
+                            doneText = "Done",
+                            defMinutes = 30,
+                            onPick = { seconds ->
+                                vm.upTimer(seconds)
+                            }
+                        )
+                    }
+                }
+            }
+
+            MyListView__Padding__SectionSection()
+
+            MyListView__ItemView(
                 isFirst = true,
                 isLast = false,
-                modifier = Modifier.padding(top = 20.dp)
             ) {
                 MyListView__ItemView__ButtonView(
                     text = state.daytimeHeader,
@@ -490,24 +495,5 @@ private fun DaysOfMonthItemView(
         color = if (isSelected) c.white else c.text,
         textAlign = TextAlign.Center,
         fontSize = 13.sp,
-    )
-}
-
-@Composable
-private fun TimerHintView(
-    text: String,
-    onClick: () -> Unit
-) {
-    Text(
-        text = text,
-        color = c.blue,
-        fontSize = 15.sp,
-        modifier = Modifier
-            .padding(start = 8.dp)
-            .clip(MySquircleShape())
-            .clickable {
-                onClick()
-            }
-            .padding(vertical = 5.dp, horizontal = 5.dp)
     )
 }
