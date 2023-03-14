@@ -40,6 +40,12 @@ UPDATE RepeatingSQ
 SET text=?, last_day=?, type_id=?, value=?, daytime=?, auto_fs=?
 WHERE id=?;
 
+-- todo remove after migration
+upTextById:
+UPDATE RepeatingSQ
+SET text=?
+WHERE id=?;
+
 upLastDayById:
 UPDATE RepeatingSQ
 SET last_day = ?
