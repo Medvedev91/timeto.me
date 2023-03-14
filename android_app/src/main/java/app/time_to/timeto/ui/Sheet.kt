@@ -78,7 +78,7 @@ object Sheet {
         onCancel: () -> Unit,
         title: String,
         doneText: String,
-        isDoneEnabled: Boolean,
+        isDoneEnabled: Boolean?, // null - hidden
         scrollToHeader: Int,
         onDone: () -> Unit,
     ) {
@@ -128,11 +128,17 @@ object Sheet {
                     modifier = Modifier
                         .padding(end = 16.dp)
                         .clip(RoundedCornerShape(99.dp))
-                        .clickable(enabled = isDoneEnabled) {
+                        .clickable(enabled = isDoneEnabled == true) {
                             onDone()
                         }
                         .padding(horizontal = 8.dp, vertical = 4.dp),
-                    color = animateColorAsState(targetValue = if (isDoneEnabled) c.blue else c.textSecondary.copy(alpha = 0.4f)).value,
+                    color = animateColorAsState(
+                        targetValue = when (isDoneEnabled) {
+                            true -> c.blue
+                            false -> c.textSecondary.copy(alpha = 0.4f)
+                            null -> c.transparent
+                        }
+                    ).value,
                     fontSize = 17.sp,
                     fontWeight = FontWeight.W600
                 )
