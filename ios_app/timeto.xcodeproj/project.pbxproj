@@ -60,6 +60,7 @@
 		31821A46712E80148E00481B /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821C625A8A199EAEF17182 /* MailView.swift */; };
 		31821A947CB3AFF5CE923090 /* ShortcutFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182106A0DA4A0D8844CFA11 /* ShortcutFormSheet.swift */; };
 		31821AAC3BB87DE0D8E46697 /* TabTasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182118FAB48EDF7FE78201B /* TabTasksView.swift */; };
+		31821AFA9798F3945CA34D09 /* ActivityPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821A15532BF8D598665449 /* ActivityPickerSheet.swift */; };
 		31821B2BC67AB0C1C5A986D1 /* TabTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E772C640720D7220928 /* TabTimerView.swift */; };
 		31821BCAB8BA795D691FADF8 /* MyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821D7654D0C105DFC60DDD /* MyListView.swift */; };
 		31821C4D6DA83EF42B805658 /* MySpacerSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318212FFE80A0856A0A88DCF /* MySpacerSize.swift */; };
@@ -70,7 +71,6 @@
 		31821E89257A3F8032DE116A /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182118DB415E858D0B449DB /* ChartView.swift */; };
 		31821ED40BEA91336DBFE0B4 /* W_TickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821FC26DE90D545D9620B0 /* W_TickerDialog.swift */; };
 		31821F3DCAF6792F0E78CEBD /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821ACA6C9306A2CD2016A0 /* HistoryView.swift */; };
-		31821F8486D3EF0F71B8F254 /* ActivityEmojiPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182105EDDDD7B20C7211083 /* ActivityEmojiPickerView.swift */; };
 		31821F9CB27F8F5BF61E2D37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3182151D618D3ED8AEE1B80A /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -116,7 +116,6 @@
 		2C95BA7A280D74AA0027FC35 /* IOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSApp.swift; sourceTree = "<group>"; };
 		2C95BA82280D74AA0027FC35 /* TimeTo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeTo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CB73DE2292FACE00053B2D6 /* SearchEmojiSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEmojiSheet.swift; sourceTree = "<group>"; };
-		3182105EDDDD7B20C7211083 /* ActivityEmojiPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityEmojiPickerView.swift; sourceTree = "<group>"; };
 		3182106A0DA4A0D8844CFA11 /* ShortcutFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutFormSheet.swift; sourceTree = "<group>"; };
 		318210AB991EB1C25EA1B565 /* TimetoSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetoSheet.swift; sourceTree = "<group>"; };
 		31821155EAD516A3967CFF52 /* MyDivider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDivider.swift; sourceTree = "<group>"; };
@@ -141,6 +140,7 @@
 		3182189A26C9B48C0D2E8A4A /* KeyboardManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		318218D93C3456758557A6E0 /* ScrollViewWithVListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollViewWithVListener.swift; sourceTree = "<group>"; };
 		31821996D20B09EBA4F73C2B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		31821A15532BF8D598665449 /* ActivityPickerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityPickerSheet.swift; sourceTree = "<group>"; };
 		31821A7EADEF749C7A5F04DE /* ChecklistDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChecklistDialog.swift; sourceTree = "<group>"; };
 		31821ACA6C9306A2CD2016A0 /* HistoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		31821AD0C2CE87BF5AE03022 /* TasksListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksListView.swift; sourceTree = "<group>"; };
@@ -257,7 +257,6 @@
 				318216D54CC429737780D176 /* TextFieldClearButtonView.swift */,
 				31821D7654D0C105DFC60DDD /* MyListView.swift */,
 				31821BCB57EC030987E8342E /* SheetHeaderView.swift */,
-				3182105EDDDD7B20C7211083 /* ActivityEmojiPickerView.swift */,
 				318218D93C3456758557A6E0 /* ScrollViewWithVListener.swift */,
 			);
 			path = ui;
@@ -313,6 +312,7 @@
 				3182118D8EA3E0D889D4FDC3 /* utils_ios.swift */,
 				31821E3EB266890584C3EF87 /* FoldersSettingsSheet.swift */,
 				31821514C5F55F9A34FBC8AD /* FolderFormSheet.swift */,
+				31821A15532BF8D598665449 /* ActivityPickerSheet.swift */,
 			);
 			path = iphone;
 			sourceTree = "<group>";
@@ -514,7 +514,6 @@
 				31821874203EAD4F021DAD0E /* AutoBackup.swift in Sources */,
 				3182135819CDEB457816DD2B /* SheetHeaderView.swift in Sources */,
 				318213F14285EE686F7C1AF4 /* RepeatingFormSheet.swift in Sources */,
-				31821F8486D3EF0F71B8F254 /* ActivityEmojiPickerView.swift in Sources */,
 				318216CD611B132D9DE288F3 /* EventsHistoryView.swift in Sources */,
 				31821A329A5D1AE8F7CB0604 /* EventFormSheet.swift in Sources */,
 				318219E4F8AFEB280A077F74 /* utils_apple.swift in Sources */,
@@ -525,6 +524,7 @@
 				318215958A7A06F6610DF5AF /* TimetoAlert.swift in Sources */,
 				318210C5F98B5CD4E8D8C104 /* FoldersSettingsSheet.swift in Sources */,
 				31821DF8D1DFB408872C85BD /* FolderFormSheet.swift in Sources */,
+				31821AFA9798F3945CA34D09 /* ActivityPickerSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
