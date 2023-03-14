@@ -113,7 +113,7 @@ fun RepeatingFormSheet(
                         MyListView__ItemView__ButtonView__RightText(
                             text = state.timerNote,
                             paddingEnd = 2.dp,
-                            color = state.timerColor,
+                            color = state.timerColor.toColor(),
                         )
                     }
                 ) {

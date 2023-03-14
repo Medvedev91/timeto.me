@@ -366,7 +366,7 @@ fun MyListView__ItemView__ActionView(
 fun MyListView__ItemView__ButtonView__RightText(
     text: String,
     paddingEnd: Dp = MyListView.PADDING_INNER_HORIZONTAL,
-    color: ColorNative = ColorNative.text,
+    color: Color = c.text,
 ) {
     Text(
         text,
@@ -374,6 +374,6 @@ fun MyListView__ItemView__ButtonView__RightText(
             .padding(end = paddingEnd)
             .offset(),
         fontSize = 14.sp,
-        color = color.toColor(),
+        color = color,
     )
 }
