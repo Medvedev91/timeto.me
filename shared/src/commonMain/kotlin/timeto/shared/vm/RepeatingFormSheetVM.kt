@@ -74,7 +74,7 @@ class RepeatingFormSheetVM(
 
         val selectedWeekDays: List<Boolean> = run {
             val period = (repeating?.getPeriod() as? RepeatingModel.Period.DaysOfWeek)
-                ?: return@run listOf(false, false, false, false, false, false, false)
+                         ?: return@run listOf(false, false, false, false, false, false, false)
             (0..6).map { it in period.weekDays }.toList()
         }
 
