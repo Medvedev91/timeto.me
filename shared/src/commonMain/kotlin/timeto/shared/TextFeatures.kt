@@ -1,11 +1,15 @@
 package timeto.shared
 
 import timeto.shared.db.ActivityModel
+import timeto.shared.db.ChecklistModel
+import timeto.shared.db.ShortcutModel
 import timeto.shared.ui.TimeUI
 
 data class TextFeatures(
     val textNoFeatures: String,
     val triggers: List<Trigger>,
+    val checklists: List<ChecklistModel>,
+    val shortcuts: List<ShortcutModel>,
     val fromRepeating: FromRepeating?,
     val fromEvent: FromEvent?,
     val activity: ActivityModel?,
@@ -70,29 +74,27 @@ private fun parseLocal(initText: String): TextFeatures {
         textNoFeatures = textNoFeatures.replace(this.value, "").trim()
     }
 
-    val triggers = mutableListOf<Trigger>()
+    val checklists: List<ChecklistModel> = checklistRegex
+        .findAll(textNoFeatures)
+        .map { match ->
+            val id = match.groupValues[1].toInt()
+            val checklist = DI.getChecklistByIdOrNull(id) ?: return@map null
+            match.clean()
+            checklist
+        }
+        .filterNotNull()
+        .toList()
 
-    val allChecklists = DI.checklists
-    if (allChecklists.isNotEmpty())
-        checklistRegex
-            .findAll(textNoFeatures)
-            .forEach { match ->
-                val id = match.groupValues[1].toInt()
-                val checklist = DI.getChecklistByIdOrNull(id) ?: return@forEach
-                triggers.add(Trigger.Checklist(checklist))
-                match.clean()
-            }
-
-    val allShortcuts = DI.shortcuts
-    if (allShortcuts.isNotEmpty())
-        shortcutRegex
-            .findAll(textNoFeatures)
-            .forEach { match ->
-                val id = match.groupValues[1].toInt()
-                val shortcut = DI.getShortcutByIdOrNull(id) ?: return@forEach
-                triggers.add(Trigger.Shortcut(shortcut))
-                match.clean()
-            }
+    val shortcuts: List<ShortcutModel> = shortcutRegex
+        .findAll(textNoFeatures)
+        .map { match ->
+            val id = match.groupValues[1].toInt()
+            val shortcut = DI.getShortcutByIdOrNull(id) ?: return@map null
+            match.clean()
+            shortcut
+        }
+        .filterNotNull()
+        .toList()
 
     val fromRepeating: TextFeatures.FromRepeating? = fromRepeatingRegex
         .find(textNoFeatures)?.let { match ->
@@ -127,7 +129,9 @@ private fun parseLocal(initText: String): TextFeatures {
 
     return TextFeatures(
         textNoFeatures = textNoFeatures.removeDuplicateSpaces().trim(),
-        triggers = triggers,
+        triggers = listOf(),
+        checklists = checklists,
+        shortcuts = shortcuts,
         fromRepeating = fromRepeating,
         fromEvent = fromEvent,
         activity = activity,
