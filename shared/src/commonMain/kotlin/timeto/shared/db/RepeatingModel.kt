@@ -199,12 +199,15 @@ data class RepeatingModel(
         }
     }
 
-    fun prepTextForTask(day: Int): String {
-        val textStrings = mutableListOf(EMOJI_REPEATING, text)
-        val featureTime = daytimeToTimeWithDayStart(day)
-        textStrings.add(TextFeatures.substringRepeating(id, day, featureTime))
-        return textStrings.joinToString(" ")
-    }
+    fun prepTextForTask(day: Int): String =
+        "$EMOJI_REPEATING $text"
+            .textFeatures()
+            .copy(
+                fromRepeating = TextFeatures.FromRepeating(
+                    id = id, day = day, time = daytimeToTimeWithDayStart(day)
+                )
+            )
+            .textWithFeatures()
 
     fun getNextDayString(): String =
         UnixTime.byLocalDay(getNextDay())
