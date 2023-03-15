@@ -91,10 +91,11 @@ fun RepeatingFormSheet(
                 defBg = if (MaterialTheme.colors.isLight) c.white else c.bgFormSheet,
             )
 
+            MyListView__Padding__SectionSection()
+
             MyListView__ItemView(
                 isFirst = true,
                 isLast = false,
-                modifier = Modifier.padding(top = 20.dp)
             ) {
                 MyListView__ItemView__ButtonView(
                     text = state.activityTitle,
