@@ -27,7 +27,7 @@ data class TextFeatures(
         if (triggers.isNotEmpty())
             strings.add(triggers.joinToString(" ") { it.id })
         if (fromRepeating != null)
-            strings.add(substringRepeating(fromRepeating.id, fromRepeating.day, fromRepeating.time))
+            strings.add("#r${fromRepeating.id}_${fromRepeating.day}_${fromRepeating.time ?: ""}")
         if (fromEvent != null)
             strings.add("#e${fromEvent.time}")
         if (activity != null)
@@ -40,8 +40,6 @@ data class TextFeatures(
     companion object {
 
         fun parse(initText: String): TextFeatures = parseLocal(initText)
-
-        fun substringRepeating(id: Int, day: Int, time: Int?) = "#r${id}_${day}_${time ?: ""}"
     }
 
     // Day to sync! May be different from the real one meaning "Day Start"
