@@ -143,7 +143,7 @@ private suspend fun prepPieItems(
                 id = "${activity.id}",
                 value = seconds.toDouble(),
                 color = activity.getColorRgba(),
-                title = activity.nameWithEmoji().textFeatures().textUi,
+                title = activity.nameWithEmoji().textFeatures().textUi(),
                 shortTitle = activity.emoji,
                 subtitleTop = "${(ratio * 100).toInt()}%",
                 subtitleBottom = secondsToString(seconds),

@@ -15,7 +15,7 @@ class WatchTabTimerVM : __VM<WatchTabTimerVM.State>() {
         val isActive: Boolean,
     ) {
 
-        val listTitle = activity.nameWithEmoji().textFeatures().textUi
+        val listTitle = activity.nameWithEmoji().textFeatures().textUi()
 
         val timerHints = TimerHintUI.buildList(
             activity,

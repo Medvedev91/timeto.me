@@ -10,7 +10,7 @@ class SortActivitiesVM : __VM<SortActivitiesVM.State>() {
         val activity: ActivityModel,
     ) {
 
-        val listText = activity.nameWithEmoji().textFeatures().textUi
+        val listText = activity.nameWithEmoji().textFeatures().textUi()
     }
 
     data class State(

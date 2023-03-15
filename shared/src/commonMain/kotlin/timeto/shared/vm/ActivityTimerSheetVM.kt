@@ -33,7 +33,7 @@ class ActivityTimerSheetVM(
 
         state = MutableStateFlow(
             State(
-                title = activity.nameWithEmoji().textFeatures().textUi,
+                title = activity.nameWithEmoji().textFeatures().textUi(),
                 note = note,
                 formTimeItemIdx = timeItems.indexOfFirst { it.seconds == defSeconds },
                 timeItems = timeItems,

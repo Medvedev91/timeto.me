@@ -71,7 +71,7 @@ private fun prepState(
     val titlePlain = lastInterval.note ?: lastInterval.getActivityDI().nameWithEmoji()
     val textFeatures = titlePlain.textFeatures()
     return FullscreenVM.State(
-        title = textFeatures.textUi,
+        title = textFeatures.textUi(),
         triggers = textFeatures.triggers,
         timerData = TimerData(lastInterval, defColor),
     )

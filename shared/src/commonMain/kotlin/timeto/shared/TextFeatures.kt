@@ -18,10 +18,6 @@ data class TextFeatures(
         else -> null
     }
 
-    val textUi = textNoFeatures +
-                 (if (activity != null) " ${activity.emoji}" else "") +
-                 (timer?.toTimerHintNote(isShort = false, prefix = " ") ?: "")
-
     fun textUi(
         withActivityEmoji: Boolean = true,
         withTimer: Boolean = true,
