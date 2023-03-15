@@ -22,6 +22,18 @@ data class TextFeatures(
                  (if (activity != null) " ${activity.emoji}" else "") +
                  (timer?.toTimerHintNote(isShort = false, prefix = " ") ?: "")
 
+    fun textUi(
+        withActivityEmoji: Boolean = true,
+        withTimer: Boolean = true,
+    ): String {
+        val a = mutableListOf(textNoFeatures)
+        if (activity != null && withActivityEmoji)
+            a.add(activity.emoji)
+        if (timer != null && withTimer)
+            a.add(timer.toTimerHintNote(isShort = false))
+        return a.joinToString(" ")
+    }
+
     fun textWithFeatures(): String {
         val strings = mutableListOf(textNoFeatures.trim())
         if (triggers.isNotEmpty())
