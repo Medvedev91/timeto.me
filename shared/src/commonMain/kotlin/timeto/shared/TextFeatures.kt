@@ -37,11 +37,6 @@ data class TextFeatures(
         return strings.joinToString(" ")
     }
 
-    companion object {
-
-        fun parse(initText: String): TextFeatures = parseLocal(initText)
-    }
-
     // Day to sync! May be different from the real one meaning "Day Start"
     // setting. "day" is used for sorting within "Today" tasks list.
     class FromRepeating(val id: Int, val day: Int, val time: Int?)

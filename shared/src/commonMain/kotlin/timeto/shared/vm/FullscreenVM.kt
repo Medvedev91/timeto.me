@@ -69,7 +69,7 @@ private fun prepState(
     defColor: ColorNative,
 ): FullscreenVM.State {
     val titlePlain = lastInterval.note ?: lastInterval.getActivityDI().nameWithEmoji()
-    val textFeatures = TextFeatures.parse(titlePlain)
+    val textFeatures = titlePlain.textFeatures()
     return FullscreenVM.State(
         title = textFeatures.textUi,
         triggers = textFeatures.triggers,

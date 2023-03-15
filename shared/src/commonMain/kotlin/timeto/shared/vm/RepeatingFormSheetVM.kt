@@ -105,7 +105,7 @@ class RepeatingFormSheetVM(
             State(
                 headerTitle = if (repeating != null) "Edit Repeating" else "New Repeating",
                 headerDoneText = if (repeating != null) "Done" else "Create",
-                textFeatures = TextFeatures.parse(repeating?.text ?: ""),
+                textFeatures = (repeating?.text ?: "").textFeatures(),
                 daytime = repeating?.daytime,
                 activePeriodIndex = activePeriodIndex,
                 selectedNDays = selectedNDays,

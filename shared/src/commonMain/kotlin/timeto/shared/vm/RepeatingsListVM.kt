@@ -21,7 +21,7 @@ class RepeatingsListVM : __VM<RepeatingsListVM.State>() {
             val daytimeText = repeating.daytime?.let { " at ${daytimeToString(it)}" } ?: ""
             dayLeftString = repeating.getPeriod().title + daytimeText
 
-            val textFeatures = TextFeatures.parse(repeating.text)
+            val textFeatures = repeating.text.textFeatures()
             listText = textFeatures.textUi
             triggers = textFeatures.triggers
         }

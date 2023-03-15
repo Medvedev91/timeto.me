@@ -1,9 +1,6 @@
 package timeto.shared.ui
 
-import timeto.shared.EMOJI_CALENDAR
-import timeto.shared.EMOJI_REPEATING
-import timeto.shared.TextFeatures
-import timeto.shared.Trigger
+import timeto.shared.*
 
 class IntervalNoteUI(
     plainText: String,
@@ -15,7 +12,7 @@ class IntervalNoteUI(
     val triggers: List<Trigger>
 
     init {
-        val textFeatures = TextFeatures.parse(plainText)
+        val textFeatures = plainText.textFeatures()
         triggers = textFeatures.triggers
 
         // todo refactor by text features repeatings/events

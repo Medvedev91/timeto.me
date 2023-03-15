@@ -20,7 +20,7 @@ class TaskFormSheetVM(
     override val state: MutableStateFlow<State>
 
     init {
-        val textFeatures = TextFeatures.parse(task.text)
+        val textFeatures = task.text.textFeatures()
         state = MutableStateFlow(
             State(
                 headerTitle = "Edit Task",

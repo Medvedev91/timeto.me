@@ -42,7 +42,7 @@ class ActivityFormSheetVM(
             headerDoneText = if (activity != null) "Done" else "Create",
             emoji = activity?.emoji,
             activityData = activity?.getData() ?: ActivityModel__Data.buildDefault(),
-            textFeatures = TextFeatures.parse(activity?.name ?: ""),
+            textFeatures = (activity?.name ?: "").textFeatures(),
             isAutoFS = activity?.isAutoFs ?: false
         )
     )

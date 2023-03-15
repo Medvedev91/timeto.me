@@ -16,7 +16,7 @@ class WatchTaskSheetVM(
         val historySeconds: List<Int>,
     ) {
 
-        val listTitle = TextFeatures.parse(activity.nameWithEmoji()).textUi
+        val listTitle = activity.nameWithEmoji().textFeatures().textUi
 
         val timerHints = TimerHintUI.buildList(
             activity,

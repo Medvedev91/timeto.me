@@ -1,11 +1,8 @@
 package timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
-import timeto.shared.DI
-import timeto.shared.TextFeatures
+import timeto.shared.*
 import timeto.shared.db.ActivityModel
-import timeto.shared.launchExDefault
-import timeto.shared.onEachExIn
 
 class SortActivitiesVM : __VM<SortActivitiesVM.State>() {
 
@@ -13,7 +10,7 @@ class SortActivitiesVM : __VM<SortActivitiesVM.State>() {
         val activity: ActivityModel,
     ) {
 
-        val listText = TextFeatures.parse(activity.nameWithEmoji()).textUi
+        val listText = activity.nameWithEmoji().textFeatures().textUi
     }
 
     data class State(

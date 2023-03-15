@@ -41,7 +41,7 @@ class EventFormSheetVM(
     override val state: MutableStateFlow<State>
 
     init {
-        val textFeatures = TextFeatures.parse(event?.text ?: defText ?: "")
+        val textFeatures = (event?.text ?: defText ?: "").textFeatures()
         state = MutableStateFlow(
             State(
                 headerTitle = if (event != null) "Edit Event" else "New Event",

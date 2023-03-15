@@ -1,13 +1,13 @@
 package timeto.shared.ui
 
-import timeto.shared.TextFeatures
 import timeto.shared.db.TaskFolderModel
 import timeto.shared.db.TaskModel
+import timeto.shared.textFeatures
 
 abstract class TaskUI(
     val task: TaskModel
 ) {
-    val textFeatures = TextFeatures.parse(task.text)
+    val textFeatures = task.text.textFeatures()
     val listText = textFeatures.textUi
 }
 
