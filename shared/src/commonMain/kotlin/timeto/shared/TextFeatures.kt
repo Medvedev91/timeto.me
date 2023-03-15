@@ -53,7 +53,7 @@ data class TextFeatures(
     class FromEvent(val time: Int)
 }
 
-fun String.parseTextFeatures() = TextFeatures.parse(this)
+fun String.textFeatures() = TextFeatures.parse(this)
 
 //////
 

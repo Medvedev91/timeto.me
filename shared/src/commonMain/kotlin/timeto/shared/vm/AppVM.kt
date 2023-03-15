@@ -125,7 +125,7 @@ private suspend fun showTriggersForInterval(
 
     val note = lastInterval.note
     if (note != null) {
-        val noteFeatures = note.parseTextFeatures()
+        val noteFeatures = note.textFeatures()
 
         val fromRepeating = noteFeatures.fromRepeating
         if (fromRepeating != null) {
@@ -138,7 +138,7 @@ private suspend fun showTriggersForInterval(
         return
     }
 
-    fsOrTriggers(isActivityAutoFS, activity.name.parseTextFeatures())
+    fsOrTriggers(isActivityAutoFS, activity.name.textFeatures())
 }
 
 ///

@@ -25,7 +25,7 @@ class RepeatingFormSheetVM(
         val activityTitle = "Activity"
         val activityNote: String = run {
             val activity = textFeatures.activity ?: return@run "Not Selected"
-            "${activity.name.parseTextFeatures().textNoFeatures}  ${activity.emoji}"
+            "${activity.name.textFeatures().textNoFeatures}  ${activity.emoji}"
         }
         val activityColor = if (textFeatures.activity == null) ColorNative.red else ColorNative.text
 
