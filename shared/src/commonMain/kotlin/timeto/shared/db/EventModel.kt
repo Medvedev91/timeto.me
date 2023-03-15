@@ -80,10 +80,11 @@ data class EventModel(
         }
     }
 
-    fun prepTextForTask(): String {
-        val featureTime = TextFeatures.substringEvent(getLocalTime().time)
-        return "$EMOJI_CALENDAR ${timeToString()}\n${text} $featureTime"
-    }
+    fun prepTextForTask(): String =
+        "$EMOJI_CALENDAR ${timeToString()}\n${text}"
+            .textFeatures()
+            .copy(fromEvent = TextFeatures.FromEvent(getLocalTime().time))
+            .textWithFeatures()
 
     fun getLocalTime() = UnixTime(utc_time - localUtcOffset)
 
