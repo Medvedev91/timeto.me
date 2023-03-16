@@ -1,18 +1,12 @@
 package app.time_to.timeto.ui
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import app.time_to.timeto.R
 import app.time_to.timeto.rememberVM
 import timeto.shared.db.ChecklistModel
 import timeto.shared.vm.ChecklistsPickerSheetVM
@@ -65,25 +59,9 @@ fun ChecklistsPickerSheet(
                     isLast = state.checklistsUI.last() == checklistUI,
                     withTopDivider = !isFirst,
                 ) {
-                    MyListView__ItemView__ButtonView(
+                    MyListView__ItemView__CheckboxView(
                         text = checklistUI.text,
-                        rightView = {
-                            AnimatedVisibility(
-                                visible = checklistUI.isSelected,
-                                enter = fadeIn(),
-                                exit = fadeOut(),
-                            ) {
-                                Icon(
-                                    painterResource(id = R.drawable.sf_checkmark_medium_medium),
-                                    "Checkmark",
-                                    tint = c.blue,
-                                    modifier = Modifier
-                                        .padding(end = MyListView.PADDING_INNER_HORIZONTAL)
-                                        .size(20.dp)
-                                        .padding(2.dp)
-                                )
-                            }
-                        }
+                        isChecked = checklistUI.isSelected,
                     ) {
                         vm.toggleChecklist(checklistUI)
                     }
