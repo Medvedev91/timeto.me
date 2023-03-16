@@ -36,11 +36,11 @@ struct TextFeaturesTriggersFormView: View {
             ) {
 
                 MyListView__ItemView__ButtonView(
-                        text: state.titleChecklist,
+                        text: state.checklistsTitle,
                         withArrow: true,
                         rightView: AnyView(
                                 MyListView__ItemView__ButtonView__RightText(
-                                        text: state.noteChecklists,
+                                        text: state.checklistsNote,
                                         paddingEnd: 2
                                 )
                         )
@@ -64,11 +64,11 @@ struct TextFeaturesTriggersFormView: View {
             ) {
 
                 MyListView__ItemView__ButtonView(
-                        text: state.titleShortcuts,
+                        text: state.shortcutsTitle,
                         withArrow: true,
                         rightView: AnyView(
                                 MyListView__ItemView__ButtonView__RightText(
-                                        text: state.noteShortcuts,
+                                        text: state.shortcutsNote,
                                         paddingEnd: 2
                                 )
                         )
