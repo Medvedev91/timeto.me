@@ -13,8 +13,6 @@ struct RepeatingsFormSheet: View {
     @State private var pickerNDaysTemp = 2
 
     @State private var isAddDayOfYearSheetPresented = false
-    @State private var isActivitySheetPresented = false
-    @State private var isCustomTimeSheetPresented = false
     @State private var isDaytimeSheetPresented = false
 
     @State private var sheetHeaderScroll = 0
@@ -73,66 +71,12 @@ struct RepeatingsFormSheet: View {
                         vm.upTextFeatures(textFeatures: textFeatures)
                     }
 
-                    MyListView__ItemView(
-                            isFirst: true,
-                            isLast: false
-                    ) {
+                    MyListView__Padding__SectionSection()
 
-                        MyListView__ItemView__ButtonView(
-                                text: state.activityTitle,
-                                withArrow: true,
-                                rightView: AnyView(
-                                        MyListView__ItemView__ButtonView__RightText(
-                                                text: state.activityNote,
-                                                paddingEnd: 2,
-                                                textColor: state.activityColorOrNull?.toColor()
-                                        )
-                                )
-                        ) {
-                            hideKeyboard()
-                            isActivitySheetPresented = true
-                        }
-                                .sheetEnv(isPresented: $isActivitySheetPresented) {
-                                    ActivityPickerSheet(
-                                            isPresented: $isActivitySheetPresented
-                                    ) { activity in
-                                        vm.upActivity(activity: activity)
-                                    }
-                                }
-                    }
-                            .padding(.top, 30)
-
-                    MyListView__ItemView(
-                            isFirst: false,
-                            isLast: true,
-                            withTopDivider: true
-                    ) {
-
-                        MyListView__ItemView__ButtonView(
-                                text: state.timerTitle,
-                                withArrow: true,
-                                rightView: AnyView(
-                                        MyListView__ItemView__ButtonView__RightText(
-                                                text: state.timerNote,
-                                                paddingEnd: 2,
-                                                textColor: state.timerColorOrNull?.toColor()
-                                        )
-                                )
-                        ) {
-                            hideKeyboard()
-                            isCustomTimeSheetPresented = true
-                        }
-                                .sheetEnv(isPresented: $isCustomTimeSheetPresented) {
-                                    TimerPickerSheet(
-                                            isPresented: $isCustomTimeSheetPresented,
-                                            title: "Timer",
-                                            doneText: "Done",
-                                            defMinutes: 30
-                                    ) { seconds in
-                                        vm.upTimer(seconds: seconds.toInt32())
-                                    }
-                                            .presentationDetentsMediumIf16()
-                                }
+                    TextFeaturesTimerFormView(
+                            textFeatures: state.textFeatures
+                    ) { textFeatures in
+                        vm.upTextFeatures(textFeatures: textFeatures)
                     }
 
                     MyListView__Padding__SectionSection()
