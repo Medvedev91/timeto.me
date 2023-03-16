@@ -38,6 +38,7 @@ class MyColors(
     val bgButtonBlueInactive: Color,
     val textButtonBlueInactive: Color,
     val bgFormSheet: Color,
+    val formButtonRightNoteText: Color,
 ) {
     // todo check performance
     val background: Color
@@ -74,6 +75,7 @@ private val myLightColors = MyColors(
     bgButtonBlueInactive = Color(0xFFAAAAAA),
     textButtonBlueInactive = Color(0xEEFFFFFF),
     bgFormSheet = tgLikeLightSheetBg,
+    formButtonRightNoteText = Color(0x88000000),
 )
 
 private val myDarkColors = MyColors(
@@ -94,6 +96,7 @@ private val myDarkColors = MyColors(
     bgButtonBlueInactive = Color(0xFF444444),
     textButtonBlueInactive = Color(0xAAFFFFFF),
     bgFormSheet = Color(0xFF121214),
+    formButtonRightNoteText = Color(0x88FFFFFF),
 )
 
 ////
