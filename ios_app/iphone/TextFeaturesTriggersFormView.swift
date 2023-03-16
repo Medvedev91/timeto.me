@@ -8,6 +8,7 @@ struct TextFeaturesTriggersFormView: View {
     private let onChange: (TextFeatures) -> Void
 
     @State private var isChecklistsPickerPresented = false
+    @State private var isShortcutsPickerPresented = false
 
     init(
             textFeatures: TextFeatures,
@@ -45,6 +46,34 @@ struct TextFeaturesTriggersFormView: View {
                                 selectedChecklists: state.textFeatures.checklists
                         ) { checklists in
                             onChange(vm.upChecklists(checklists: checklists))
+                        }
+                    }
+
+            MyListView__ItemView(
+                    isFirst: false,
+                    isLast: true,
+                    withTopDivider: true
+            ) {
+
+                MyListView__ItemView__ButtonView(
+                        text: state.titleShortcuts,
+                        withArrow: true,
+                        rightView: AnyView(
+                                MyListView__ItemView__ButtonView__RightText(
+                                        text: state.noteShortcuts,
+                                        paddingEnd: 2
+                                )
+                        )
+                ) {
+                    isShortcutsPickerPresented = true
+                }
+            }
+                    .sheetEnv(isPresented: $isShortcutsPickerPresented) {
+                        ShortcutsPickerSheet(
+                                isPresented: $isShortcutsPickerPresented,
+                                selectedShortcuts: state.textFeatures.shortcuts
+                        ) { shortcut in
+                            onChange(vm.upShortcuts(shortcuts: shortcut))
                         }
                     }
         }
