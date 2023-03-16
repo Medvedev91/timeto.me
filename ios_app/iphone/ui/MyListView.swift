@@ -266,3 +266,16 @@ struct MyListView__ItemView__ActionView: View {
                 .foregroundColor(.primary)
     }
 }
+
+struct MyListView__ItemView__ButtonView__RightText: View {
+
+    let text: String
+    var paddingEnd = MyListView.PADDING_INNER_HORIZONTAL
+    var textColor: Color? = nil
+
+    var body: some View {
+        Text(text)
+                .foregroundColor(textColor ?? Color(.myFormButtonRightNoteText))
+                .padding(.trailing, 10)
+    }
+}
