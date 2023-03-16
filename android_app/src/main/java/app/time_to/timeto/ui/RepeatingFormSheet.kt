@@ -84,7 +84,7 @@ fun RepeatingFormSheet(
 
             MyListView__Padding__SectionSection()
 
-            TextFeaturesFormView(state.textFeatures) {
+            TextFeaturesTriggersFormView(state.textFeatures) {
                 vm.upTextFeatures(it)
             }
 
