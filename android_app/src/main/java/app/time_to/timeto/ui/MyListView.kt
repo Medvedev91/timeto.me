@@ -302,13 +302,14 @@ fun MyListView__ItemView__ButtonView(
             Text(
                 text,
                 modifier = textModifier
-                    .padding(start = MyListView.PADDING_INNER_HORIZONTAL),
+                    .padding(start = MyListView.PADDING_INNER_HORIZONTAL, end = 10.dp),
                 color = c.text,
             )
 
-            SpacerW1()
-
-            rightView?.invoke()
+            Row(Modifier.weight(1f)) {
+                SpacerW1()
+                rightView?.invoke()
+            }
 
             if (withArrow) {
                 Icon(
