@@ -10,10 +10,13 @@ struct TextFeaturesTriggersFormView: View {
     @State private var isChecklistsPickerPresented = false
     @State private var isShortcutsPickerPresented = false
 
+    private let _textFeaturesState: TextFeatures
+
     init(
             textFeatures: TextFeatures,
             onChange: @escaping (TextFeatures) -> Void
     ) {
+        _textFeaturesState = textFeatures
         self.onChange = onChange
         _vm = State(initialValue: TextFeaturesFormVM(initTextFeatures: textFeatures))
     }
@@ -21,6 +24,11 @@ struct TextFeaturesTriggersFormView: View {
     var body: some View {
 
         VMView(vm: vm, stack: .VStack(spacing: 0)) { state in
+
+            EmptyView()
+                    .onChange(of: _textFeaturesState) { newTextFeatures in
+                        vm = TextFeaturesFormVM(initTextFeatures: newTextFeatures)
+                    }
 
             MyListView__ItemView(
                     isFirst: true,
