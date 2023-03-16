@@ -22,11 +22,11 @@ fun TextFeaturesTriggersFormView(
             isLast = false,
         ) {
             MyListView__ItemView__ButtonView(
-                text = state.titleChecklist,
+                text = state.checklistsTitle,
                 withArrow = true,
                 rightView = {
                     MyListView__ItemView__ButtonView__RightText(
-                        text = state.noteChecklists,
+                        text = state.checklistsNote,
                         paddingEnd = 2.dp,
                     )
                 }
@@ -48,11 +48,11 @@ fun TextFeaturesTriggersFormView(
             withTopDivider = true,
         ) {
             MyListView__ItemView__ButtonView(
-                text = state.titleShortcuts,
+                text = state.shortcutsTitle,
                 withArrow = true,
                 rightView = {
                     MyListView__ItemView__ButtonView__RightText(
-                        text = state.noteShortcuts,
+                        text = state.shortcutsNote,
                         paddingEnd = 2.dp,
                     )
                 }
