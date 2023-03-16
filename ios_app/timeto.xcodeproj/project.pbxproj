@@ -47,6 +47,8 @@
 		318215958A7A06F6610DF5AF /* TimetoAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821527096D1BDB0A35B178 /* TimetoAlert.swift */; };
 		318215D20ED732E4BF4F3071 /* ChecklistDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821A7EADEF749C7A5F04DE /* ChecklistDialog.swift */; };
 		31821611D065F54C0BC007A9 /* DaytimePickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821D4211F3426B1F444F81 /* DaytimePickerSheet.swift */; };
+		3182163121ABFB307798FDA9 /* ChecklistsPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821D2439CE2014EF5FF473 /* ChecklistsPickerSheet.swift */; };
+		3182165F04FA76ED88CD4696 /* TextFeaturesTriggersFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821CC8696F1EF2463FFE14 /* TextFeaturesTriggersFormView.swift */; };
 		318216CD611B132D9DE288F3 /* EventsHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821B4BCB049B516BF2DF2E /* EventsHistoryView.swift */; };
 		318216E60DD4CA4153065416 /* utils_apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E58DC92CD5673A6B49E /* utils_apple.swift */; };
 		318216F271691CC07FC67AFC /* ChecklistFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318212FEA97CBD2AEC3AA1D6 /* ChecklistFormSheet.swift */; };
@@ -151,8 +153,10 @@
 		31821C625A8A199EAEF17182 /* MailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
 		31821CAC31C48C0016357E8C /* TabsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsView.swift; sourceTree = "<group>"; };
 		31821CC7588164B713321141 /* TextField__VMState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField__VMState.swift; sourceTree = "<group>"; };
+		31821CC8696F1EF2463FFE14 /* TextFeaturesTriggersFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFeaturesTriggersFormView.swift; sourceTree = "<group>"; };
 		31821CEEF63544D48A45B8F4 /* W_TabTimerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W_TabTimerView.swift; sourceTree = "<group>"; };
 		31821CF31C64B32D614C6A9D /* EditActivitiesDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditActivitiesDialog.swift; sourceTree = "<group>"; };
+		31821D2439CE2014EF5FF473 /* ChecklistsPickerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChecklistsPickerSheet.swift; sourceTree = "<group>"; };
 		31821D4211F3426B1F444F81 /* DaytimePickerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaytimePickerSheet.swift; sourceTree = "<group>"; };
 		31821D5928C18299586075F4 /* AutoBackup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoBackup.swift; sourceTree = "<group>"; };
 		31821D7654D0C105DFC60DDD /* MyListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyListView.swift; sourceTree = "<group>"; };
@@ -313,6 +317,8 @@
 				31821E3EB266890584C3EF87 /* FoldersSettingsSheet.swift */,
 				31821514C5F55F9A34FBC8AD /* FolderFormSheet.swift */,
 				31821A15532BF8D598665449 /* ActivityPickerSheet.swift */,
+				31821CC8696F1EF2463FFE14 /* TextFeaturesTriggersFormView.swift */,
+				31821D2439CE2014EF5FF473 /* ChecklistsPickerSheet.swift */,
 			);
 			path = iphone;
 			sourceTree = "<group>";
@@ -525,6 +531,8 @@
 				318210C5F98B5CD4E8D8C104 /* FoldersSettingsSheet.swift in Sources */,
 				31821DF8D1DFB408872C85BD /* FolderFormSheet.swift in Sources */,
 				31821AFA9798F3945CA34D09 /* ActivityPickerSheet.swift in Sources */,
+				3182165F04FA76ED88CD4696 /* TextFeaturesTriggersFormView.swift in Sources */,
+				3182163121ABFB307798FDA9 /* ChecklistsPickerSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
