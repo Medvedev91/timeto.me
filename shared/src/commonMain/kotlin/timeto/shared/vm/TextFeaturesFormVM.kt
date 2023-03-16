@@ -17,11 +17,11 @@ class TextFeaturesFormVM(
         val textFeatures: TextFeatures,
     ) {
 
-        val titleChecklist = "Checklists"
-        val noteChecklists = textFeatures.checklists.takeIf { it.isNotEmpty() }?.joinToString(", ") { it.name } ?: "None"
+        val checklistsTitle = "Checklists"
+        val checklistsNote = textFeatures.checklists.takeIf { it.isNotEmpty() }?.joinToString(", ") { it.name } ?: "None"
 
-        val titleShortcuts = "Shortcuts"
-        val noteShortcuts = textFeatures.shortcuts.takeIf { it.isNotEmpty() }?.joinToString(", ") { it.name } ?: "None"
+        val shortcutsTitle = "Shortcuts"
+        val shortcutsNote = textFeatures.shortcuts.takeIf { it.isNotEmpty() }?.joinToString(", ") { it.name } ?: "None"
 
         val activityTitle = "Activity"
         val activityNote: String = run {
