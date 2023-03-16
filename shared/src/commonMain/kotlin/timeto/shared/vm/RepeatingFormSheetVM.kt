@@ -192,10 +192,6 @@ class RepeatingFormSheetVM(
         }
     }
 
-    fun setTriggers(newTriggers: List<Trigger>) = state.update {
-        it.copy(textFeatures = it.textFeatures.copy(triggers = newTriggers))
-    }
-
     fun toggleAutoFS() = state.update {
         it.copy(isAutoFS = !it.isAutoFS)
     }
