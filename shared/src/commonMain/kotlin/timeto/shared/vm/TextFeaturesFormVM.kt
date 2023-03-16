@@ -41,27 +41,22 @@ class TextFeaturesFormVM(
         )
     )
 
-    fun upChecklists(checklists: List<ChecklistModel>): TextFeatures {
-        val newTextFeatures = state.value.textFeatures.copy(checklists = checklists)
-        state.update { it.copy(textFeatures = newTextFeatures) }
-        return newTextFeatures
-    }
+    ///
 
-    fun upShortcuts(shortcuts: List<ShortcutModel>): TextFeatures {
-        val newTextFeatures = state.value.textFeatures.copy(shortcuts = shortcuts)
-        state.update { it.copy(textFeatures = newTextFeatures) }
-        return newTextFeatures
-    }
+    fun upChecklists(checklists: List<ChecklistModel>) =
+        upTextFeatures(state.value.textFeatures.copy(checklists = checklists))
 
-    fun upActivity(activity: ActivityModel): TextFeatures {
-        val newTextFeatures = state.value.textFeatures.copy(activity = activity)
-        state.update { it.copy(textFeatures = newTextFeatures) }
-        return newTextFeatures
-    }
+    fun upShortcuts(shortcuts: List<ShortcutModel>) =
+        upTextFeatures(state.value.textFeatures.copy(shortcuts = shortcuts))
 
-    fun upTimer(seconds: Int): TextFeatures {
-        val newTextFeatures = state.value.textFeatures.copy(timer = seconds)
-        state.update { it.copy(textFeatures = newTextFeatures) }
-        return newTextFeatures
+    fun upActivity(activity: ActivityModel) =
+        upTextFeatures(state.value.textFeatures.copy(activity = activity))
+
+    fun upTimer(seconds: Int) =
+        upTextFeatures(state.value.textFeatures.copy(timer = seconds))
+
+    private fun upTextFeatures(textFeatures: TextFeatures): TextFeatures {
+        state.update { it.copy(textFeatures = textFeatures) }
+        return textFeatures
     }
 }
