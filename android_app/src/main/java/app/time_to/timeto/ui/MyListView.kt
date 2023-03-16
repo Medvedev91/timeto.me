@@ -368,14 +368,14 @@ fun MyListView__ItemView__ActionView(
 fun MyListView__ItemView__ButtonView__RightText(
     text: String,
     paddingEnd: Dp = MyListView.PADDING_INNER_HORIZONTAL,
-    color: Color = c.text,
+    color: Color? = null,
 ) {
     Text(
         text,
         modifier = Modifier
             .padding(end = paddingEnd)
             .offset(),
-        color = color,
+        color = color ?: c.formButtonRightNoteText,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
     )
