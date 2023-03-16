@@ -2,7 +2,6 @@ package timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import timeto.shared.*
-import timeto.shared.db.ActivityModel
 import timeto.shared.db.RepeatingModel
 
 class RepeatingFormSheetVM(
@@ -21,17 +20,6 @@ class RepeatingFormSheetVM(
         val selectedDaysOfYear: List<RepeatingModel.Period.DaysOfYear.MonthDayItem>,
         val isAutoFS: Boolean,
     ) {
-
-        val activityTitle = "Activity"
-        val activityNote: String = run {
-            val activity = textFeatures.activity ?: return@run "Not Selected"
-            "${activity.name.textFeatures().textNoFeatures}  ${activity.emoji}"
-        }
-        val activityColorOrNull = if (textFeatures.activity == null) ColorNative.red else null
-
-        val timerTitle = "Timer"
-        val timerNote = textFeatures.timer?.toTimerHintNote(isShort = false) ?: "Not Selected"
-        val timerColorOrNull = if (textFeatures.timer == null) ColorNative.red else null
 
         val daytimeHeader = "Time of the Day"
         val daytimeNote = daytime?.let { daytimeToString(it) } ?: "None"
@@ -119,14 +107,6 @@ class RepeatingFormSheetVM(
 
     fun setTextValue(text: String) {
         state.update { it.copy(textFeatures = it.textFeatures.copy(textNoFeatures = text)) }
-    }
-
-    fun upActivity(activity: ActivityModel) {
-        state.update { it.copy(textFeatures = it.textFeatures.copy(activity = activity)) }
-    }
-
-    fun upTimer(seconds: Int) {
-        state.update { it.copy(textFeatures = it.textFeatures.copy(timer = seconds)) }
     }
 
     fun upTextFeatures(textFeatures: TextFeatures) {
