@@ -27,11 +27,11 @@ class RepeatingFormSheetVM(
             val activity = textFeatures.activity ?: return@run "Not Selected"
             "${activity.name.textFeatures().textNoFeatures}  ${activity.emoji}"
         }
-        val activityColor = if (textFeatures.activity == null) ColorNative.red else ColorNative.text
+        val activityColorOrNull = if (textFeatures.activity == null) ColorNative.red else null
 
         val timerTitle = "Timer"
         val timerNote = textFeatures.timer?.toTimerHintNote(isShort = false) ?: "Not Selected"
-        val timerColor = if (textFeatures.timer == null) ColorNative.red else ColorNative.text
+        val timerColorOrNull = if (textFeatures.timer == null) ColorNative.red else null
 
         val daytimeHeader = "Time of the Day"
         val daytimeNote = daytime?.let { daytimeToString(it) } ?: "None"

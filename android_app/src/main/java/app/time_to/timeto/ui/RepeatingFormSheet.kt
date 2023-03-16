@@ -104,7 +104,7 @@ fun RepeatingFormSheet(
                         MyListView__ItemView__ButtonView__RightText(
                             text = state.activityNote,
                             paddingEnd = 2.dp,
-                            color = state.activityColor.toColor(),
+                            color = state.activityColorOrNull?.toColor(),
                         )
                     }
                 ) {
@@ -130,7 +130,7 @@ fun RepeatingFormSheet(
                         MyListView__ItemView__ButtonView__RightText(
                             text = state.timerNote,
                             paddingEnd = 2.dp,
-                            color = state.timerColor.toColor(),
+                            color = state.timerColorOrNull?.toColor(),
                         )
                     }
                 ) {
