@@ -73,7 +73,7 @@ private val myLightColors = MyColors(
     datePickerTitleBg = Color(0xFFEEEEF3),
     bgButtonBlueInactive = Color(0xFFAAAAAA),
     textButtonBlueInactive = Color(0xEEFFFFFF),
-    bgFormSheet = tgLikeLightSheetBg
+    bgFormSheet = tgLikeLightSheetBg,
 )
 
 private val myDarkColors = MyColors(
@@ -93,7 +93,7 @@ private val myDarkColors = MyColors(
     datePickerTitleBg = Color(0xFF2A2A2B),
     bgButtonBlueInactive = Color(0xFF444444),
     textButtonBlueInactive = Color(0xAAFFFFFF),
-    bgFormSheet = Color(0xFF121214)
+    bgFormSheet = Color(0xFF121214),
 )
 
 ////
