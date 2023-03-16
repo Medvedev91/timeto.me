@@ -191,6 +191,27 @@ struct MyListView__ItemView__SwitchView: View {
     }
 }
 
+struct MyListView__ItemView__CheckboxView: View {
+
+    let text: String
+    let isChecked: Bool
+    let onClick: () -> Void
+
+    var body: some View {
+
+        MyListView__ItemView__ButtonView(
+                text: text,
+                rightView: AnyView(
+                        Image(systemName: "checkmark")
+                                .foregroundColor(isChecked ? .blue : .clear)
+                                .padding(.trailing, MyListView.PADDING_INNER_HORIZONTAL)
+                )
+        ) {
+            onClick()
+        }
+    }
+}
+
 ///
 /// Button
 
