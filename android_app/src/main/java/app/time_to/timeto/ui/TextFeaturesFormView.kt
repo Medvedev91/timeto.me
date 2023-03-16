@@ -8,7 +8,7 @@ import timeto.shared.TextFeatures
 import timeto.shared.vm.TextFeaturesFormVM
 
 @Composable
-fun TextFeaturesTriggersFormView(
+fun TextFeaturesFormView(
     textFeatures: TextFeatures,
     onChange: (TextFeatures) -> Unit,
 ) {
