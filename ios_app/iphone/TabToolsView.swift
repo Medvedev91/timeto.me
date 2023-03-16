@@ -143,10 +143,9 @@ struct TabToolsView: View {
                             MyListView__ItemView__ButtonView(
                                     text: "Day Start",
                                     rightView: AnyView(
-                                            Text(state.dayStartNote)
-                                                    .foregroundColor(.secondary)
-                                                    .font(.system(size: 15))
-                                                    .padding(.trailing, MyListView.PADDING_INNER_HORIZONTAL)
+                                            MyListView__ItemView__ButtonView__RightText(
+                                                    text: state.dayStartNote
+                                            )
                                     )
                             ) {
                                 isDayStartPresented = true
@@ -219,10 +218,9 @@ struct TabToolsView: View {
                             MyListView__ItemView__ButtonView(
                                     text: "Auto Backup",
                                     rightView: AnyView(
-                                            Text(autoBackupString)
-                                                    .foregroundColor(.secondary)
-                                                    .font(.system(size: 15))
-                                                    .padding(.trailing, MyListView.PADDING_INNER_HORIZONTAL)
+                                            MyListView__ItemView__ButtonView__RightText(
+                                                    text: autoBackupString
+                                            )
                                     )
                             ) {
                                 // todo do catch

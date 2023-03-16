@@ -84,10 +84,11 @@ struct RepeatingsFormSheet: View {
                                 text: state.activityTitle,
                                 withArrow: true,
                                 rightView: AnyView(
-                                        Text(state.activityNote)
-                                                .foregroundColor(state.activityColor.toColor())
-                                                .font(.system(size: 15))
-                                                .padding(.trailing, 10)
+                                        MyListView__ItemView__ButtonView__RightText(
+                                                text: state.activityNote,
+                                                paddingEnd: 2,
+                                                textColor: state.activityColorOrNull?.toColor()
+                                        )
                                 )
                         ) {
                             hideKeyboard()
@@ -113,10 +114,11 @@ struct RepeatingsFormSheet: View {
                                 text: state.timerTitle,
                                 withArrow: true,
                                 rightView: AnyView(
-                                        Text(state.timerNote)
-                                                .foregroundColor(state.timerColor.toColor())
-                                                .font(.system(size: 15))
-                                                .padding(.trailing, 10)
+                                        MyListView__ItemView__ButtonView__RightText(
+                                                text: state.timerNote,
+                                                paddingEnd: 2,
+                                                textColor: state.timerColorOrNull?.toColor()
+                                        )
                                 )
                         ) {
                             hideKeyboard()
@@ -146,10 +148,10 @@ struct RepeatingsFormSheet: View {
                                 text: state.daytimeHeader,
                                 withArrow: true,
                                 rightView: AnyView(
-                                        Text(state.daytimeNote)
-                                                .foregroundColor(.secondary)
-                                                .font(.system(size: 15))
-                                                .padding(.trailing, 10)
+                                        MyListView__ItemView__ButtonView__RightText(
+                                                text: state.daytimeNote,
+                                                paddingEnd: 2
+                                        )
                                 )
                         ) {
                             hideKeyboard()
