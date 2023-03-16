@@ -36,8 +36,10 @@ data class TextFeatures(
 
     fun textWithFeatures(): String {
         val strings = mutableListOf(textNoFeatures.trim())
-        if (triggers.isNotEmpty())
-            strings.add(triggers.joinToString(" ") { it.id })
+        if (checklists.isNotEmpty())
+            strings.add(checklists.joinToString(" ") { "#c${it.id}" })
+        if (shortcuts.isNotEmpty())
+            strings.add(shortcuts.joinToString(" ") { "#s${it.id}" })
         if (fromRepeating != null)
             strings.add("#r${fromRepeating.id}_${fromRepeating.day}_${fromRepeating.time ?: ""}")
         if (fromEvent != null)
