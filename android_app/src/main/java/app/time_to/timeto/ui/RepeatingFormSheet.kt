@@ -90,60 +90,8 @@ fun RepeatingFormSheet(
 
             MyListView__Padding__SectionSection()
 
-            MyListView__ItemView(
-                isFirst = true,
-                isLast = false,
-            ) {
-                MyListView__ItemView__ButtonView(
-                    text = state.activityTitle,
-                    withArrow = true,
-                    rightView = {
-                        MyListView__ItemView__ButtonView__RightText(
-                            text = state.activityNote,
-                            paddingEnd = 2.dp,
-                            color = state.activityColorOrNull?.toColor(),
-                        )
-                    }
-                ) {
-                    Sheet.show { layer ->
-                        ActivityPickerSheet(
-                            layer = layer,
-                        ) {
-                            vm.upActivity(it)
-                        }
-                    }
-                }
-            }
-
-            MyListView__ItemView(
-                isFirst = false,
-                isLast = true,
-                withTopDivider = true,
-            ) {
-                MyListView__ItemView__ButtonView(
-                    text = state.timerTitle,
-                    withArrow = true,
-                    rightView = {
-                        MyListView__ItemView__ButtonView__RightText(
-                            text = state.timerNote,
-                            paddingEnd = 2.dp,
-                            color = state.timerColorOrNull?.toColor(),
-                        )
-                    }
-                ) {
-                    keyboardController?.hide()
-                    Sheet.show { layer ->
-                        TimerPickerSheet(
-                            layer = layer,
-                            title = "Timer",
-                            doneText = "Done",
-                            defMinutes = 30,
-                            onPick = { seconds ->
-                                vm.upTimer(seconds)
-                            }
-                        )
-                    }
-                }
+            TextFeaturesTimerFormView(state.textFeatures) {
+                vm.upTextFeatures(it)
             }
 
             MyListView__Padding__SectionSection()
