@@ -34,7 +34,7 @@ fun TextFeaturesTriggersFormView(
                 Sheet.show { layer ->
                     ChecklistsPickerSheet(
                         layer = layer,
-                        selectedChecklists = textFeatures.checklists,
+                        selectedChecklists = state.textFeatures.checklists,
                     ) {
                         onChange(vm.upChecklists(it))
                     }
@@ -60,7 +60,7 @@ fun TextFeaturesTriggersFormView(
                 Sheet.show { layer ->
                     ShortcutsPickerSheet(
                         layer = layer,
-                        selectedShortcuts = textFeatures.shortcuts,
+                        selectedShortcuts = state.textFeatures.shortcuts,
                     ) {
                         onChange(vm.upShortcuts(it))
                     }

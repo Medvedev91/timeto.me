@@ -6,7 +6,7 @@ import timeto.shared.db.ChecklistModel
 import timeto.shared.db.ShortcutModel
 
 class TextFeaturesFormVM(
-    val textFeatures: TextFeatures,
+    initTextFeatures: TextFeatures,
 ) : __VM<TextFeaturesFormVM.State>() {
 
     data class State(
@@ -22,13 +22,19 @@ class TextFeaturesFormVM(
 
     override val state = MutableStateFlow(
         State(
-            textFeatures = textFeatures,
+            textFeatures = initTextFeatures,
         )
     )
 
-    fun upChecklists(checklists: List<ChecklistModel>) =
-        textFeatures.copy(checklists = checklists)
+    fun upChecklists(checklists: List<ChecklistModel>) : TextFeatures {
+        val newTextFeatures = state.value.textFeatures.copy(checklists = checklists)
+        state.update { it.copy(textFeatures = newTextFeatures) }
+        return newTextFeatures
+    }
 
-    fun upShortcuts(shortcuts: List<ShortcutModel>) =
-        textFeatures.copy(shortcuts = shortcuts)
+    fun upShortcuts(shortcuts: List<ShortcutModel>) : TextFeatures {
+        val newTextFeatures = state.value.textFeatures.copy(shortcuts = shortcuts)
+        state.update { it.copy(textFeatures = newTextFeatures) }
+        return newTextFeatures
+    }
 }
