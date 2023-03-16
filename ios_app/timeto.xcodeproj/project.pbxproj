@@ -66,6 +66,7 @@
 		31821B2BC67AB0C1C5A986D1 /* TabTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E772C640720D7220928 /* TabTimerView.swift */; };
 		31821BCAB8BA795D691FADF8 /* MyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821D7654D0C105DFC60DDD /* MyListView.swift */; };
 		31821C4D6DA83EF42B805658 /* MySpacerSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318212FFE80A0856A0A88DCF /* MySpacerSize.swift */; };
+		31821D021B3DC7EACD7E4EAA /* ShortcutsPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821F858C3344296F2CB750 /* ShortcutsPickerSheet.swift */; };
 		31821D2F481BE7580FE4DCC2 /* MyDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821155EAD516A3967CFF52 /* MyDivider.swift */; };
 		31821D960D04B6FF21EA9918 /* ActivityFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821794CA93E29D6889286D /* ActivityFormSheet.swift */; };
 		31821DF8D1DFB408872C85BD /* FolderFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821514C5F55F9A34FBC8AD /* FolderFormSheet.swift */; };
@@ -170,6 +171,7 @@
 		31821ED2142F08DDD1E0CC75 /* TimerFullScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerFullScreen.swift; sourceTree = "<group>"; };
 		31821F4527059D286AC0AF41 /* TaskFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskFormSheet.swift; sourceTree = "<group>"; };
 		31821F7CBA1480191F065D5E /* EventsListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsListView.swift; sourceTree = "<group>"; };
+		31821F858C3344296F2CB750 /* ShortcutsPickerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutsPickerSheet.swift; sourceTree = "<group>"; };
 		31821FC26DE90D545D9620B0 /* W_TickerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W_TickerDialog.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -319,6 +321,7 @@
 				31821A15532BF8D598665449 /* ActivityPickerSheet.swift */,
 				31821CC8696F1EF2463FFE14 /* TextFeaturesTriggersFormView.swift */,
 				31821D2439CE2014EF5FF473 /* ChecklistsPickerSheet.swift */,
+				31821F858C3344296F2CB750 /* ShortcutsPickerSheet.swift */,
 			);
 			path = iphone;
 			sourceTree = "<group>";
@@ -533,6 +536,7 @@
 				31821AFA9798F3945CA34D09 /* ActivityPickerSheet.swift in Sources */,
 				3182165F04FA76ED88CD4696 /* TextFeaturesTriggersFormView.swift in Sources */,
 				3182163121ABFB307798FDA9 /* ChecklistsPickerSheet.swift in Sources */,
+				31821D021B3DC7EACD7E4EAA /* ShortcutsPickerSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
