@@ -1,6 +1,9 @@
 package app.time_to.timeto.ui
 
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -240,6 +243,36 @@ fun MyListView__ItemView__RadioView(
                     .padding(end = 12.dp)
                     .size(26.dp),
             )
+        }
+    ) {
+        onClick()
+    }
+}
+
+@Composable
+fun MyListView__ItemView__CheckboxView(
+    text: String,
+    isChecked: Boolean,
+    onClick: () -> Unit,
+) {
+    MyListView__ItemView__ButtonView(
+        text = text,
+        rightView = {
+            AnimatedVisibility(
+                visible = isChecked,
+                enter = fadeIn(),
+                exit = fadeOut(),
+            ) {
+                Icon(
+                    painterResource(id = R.drawable.sf_checkmark_medium_medium),
+                    "Checkmark",
+                    tint = c.blue,
+                    modifier = Modifier
+                        .padding(end = MyListView.PADDING_INNER_HORIZONTAL)
+                        .size(20.dp)
+                        .padding(2.dp)
+                )
+            }
         }
     ) {
         onClick()
