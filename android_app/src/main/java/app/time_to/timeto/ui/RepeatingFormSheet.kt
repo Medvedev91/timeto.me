@@ -83,13 +83,11 @@ fun RepeatingFormSheet(
                 )
             }
 
-            TriggersView__FormView(
-                triggers = state.textFeatures.triggers,
-                onTriggersChanged = { vm.setTriggers(it) },
-                modifier = Modifier.padding(top = 18.dp),
-                contentPaddingHints = PaddingValues(horizontal = MyListView.PADDING_OUTER_HORIZONTAL),
-                defBg = if (MaterialTheme.colors.isLight) c.white else c.bgFormSheet,
-            )
+            MyListView__Padding__SectionSection()
+
+            TextFeaturesTriggersFormView(state.textFeatures) {
+                vm.upTextFeatures(it)
+            }
 
             MyListView__Padding__SectionSection()
 
