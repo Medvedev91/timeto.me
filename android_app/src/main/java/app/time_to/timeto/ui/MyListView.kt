@@ -21,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -374,5 +375,7 @@ fun MyListView__ItemView__ButtonView__RightText(
             .padding(end = paddingEnd)
             .offset(),
         color = color,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
     )
 }
