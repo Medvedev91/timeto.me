@@ -373,7 +373,6 @@ fun MyListView__ItemView__ButtonView__RightText(
         modifier = Modifier
             .padding(end = paddingEnd)
             .offset(),
-        fontSize = 14.sp,
         color = color,
     )
 }
