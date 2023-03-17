@@ -2,7 +2,8 @@ package app.time_to.timeto.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -28,43 +29,59 @@ fun TaskFormSheet(
         modifier = Modifier
             .background(c.bgFormSheet)
             .navigationBarsPadding()
-            .imePadding()
-            .padding(bottom = 24.dp),
+            .imePadding(),
     ) {
+
+        val scrollState = rememberScrollState()
 
         Sheet.HeaderView(
             onCancel = { layer.close() },
             title = state.headerTitle,
             doneText = state.headerDoneText,
             isDoneEnabled = state.isHeaderDoneEnabled,
-            scrollToHeader = 0,
+            scrollToHeader = scrollState.value,
         ) {
             vm.save {
                 layer.close()
             }
         }
 
-        MyListView__ItemView(
-            isFirst = true,
-            isLast = true,
+        Column(
+            modifier = Modifier
+                .verticalScroll(
+                    state = scrollState
+                )
+                .padding(bottom = 20.dp)
+                .navigationBarsPadding()
+                .imePadding()
         ) {
 
-            MyListView__ItemView__TextInputView(
-                placeholder = "Task",
-                text = state.inputTextValue,
-                onTextChanged = { vm.setInputTextValue(it) },
-                isAutofocus = true,
-                keyboardButton = ImeAction.Done,
-                keyboardEvent = { keyboardController?.hide() },
-            )
-        }
+            MyListView__ItemView(
+                isFirst = true,
+                isLast = true,
+            ) {
 
-        TriggersView__FormView(
-            triggers = state.textFeatures.triggers,
-            onTriggersChanged = { vm.setTriggers(it) },
-            modifier = Modifier.padding(top = 18.dp),
-            contentPaddingHints = PaddingValues(horizontal = MyListView.PADDING_OUTER_HORIZONTAL),
-            defBg = if (MaterialTheme.colors.isLight) c.white else c.bgFormSheet,
-        )
+                MyListView__ItemView__TextInputView(
+                    placeholder = "Task",
+                    text = state.inputTextValue,
+                    onTextChanged = { vm.setInputTextValue(it) },
+                    isAutofocus = true,
+                    keyboardButton = ImeAction.Done,
+                    keyboardEvent = { keyboardController?.hide() },
+                )
+            }
+
+            MyListView__Padding__SectionSection()
+
+            TextFeaturesTriggersFormView(state.textFeatures) {
+                vm.setTextFeatures(it)
+            }
+
+            MyListView__Padding__SectionSection()
+
+            TextFeaturesTimerFormView(state.textFeatures) {
+                vm.setTextFeatures(it)
+            }
+        }
     }
 }

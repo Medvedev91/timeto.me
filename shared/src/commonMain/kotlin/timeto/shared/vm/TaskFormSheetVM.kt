@@ -34,8 +34,8 @@ class TaskFormSheetVM(
         it.copy(textFeatures = it.textFeatures.copy(textNoFeatures = text))
     }
 
-    fun setTriggers(newTriggers: List<Trigger>) = state.update {
-        it.copy(textFeatures = it.textFeatures.copy(triggers = newTriggers))
+    fun setTextFeatures(newTextFeatures: TextFeatures) = state.update {
+        it.copy(textFeatures = newTextFeatures)
     }
 
     fun save(
