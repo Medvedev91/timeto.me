@@ -8,7 +8,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import app.time_to.timeto.toColor
 import timeto.shared.TextFeatures
-import timeto.shared.vm.ui.TextFeaturesFormUI
+import timeto.shared.vm.ui.TextFeaturesTimerFormUI
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -17,7 +17,7 @@ fun TextFeaturesTimerFormView(
     onChange: (TextFeatures) -> Unit,
 ) {
 
-    val formUI = remember(textFeatures) { TextFeaturesFormUI(textFeatures) }
+    val formUI = remember(textFeatures) { TextFeaturesTimerFormUI(textFeatures) }
 
     Column {
 
@@ -42,7 +42,7 @@ fun TextFeaturesTimerFormView(
                     ActivityPickerSheet(
                         layer = layer,
                     ) {
-                        onChange(formUI.upActivity(it))
+                        onChange(formUI.setActivity(it))
                     }
                 }
             }
@@ -72,7 +72,7 @@ fun TextFeaturesTimerFormView(
                         doneText = "Done",
                         defMinutes = 30,
                         onPick = { seconds ->
-                            onChange(formUI.upTimer(seconds))
+                            onChange(formUI.setTimer(seconds))
                         }
                     )
                 }

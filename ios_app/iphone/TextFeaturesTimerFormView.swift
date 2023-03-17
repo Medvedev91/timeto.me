@@ -3,7 +3,7 @@ import shared
 
 struct TextFeaturesTimerFormView: View {
 
-    private let formUI: TextFeaturesFormUI
+    private let formUI: TextFeaturesTimerFormUI
     private let onChange: (TextFeatures) -> Void
 
     @State private var isActivitySheetPresented = false
@@ -14,7 +14,7 @@ struct TextFeaturesTimerFormView: View {
             onChange: @escaping (TextFeatures) -> Void
     ) {
         self.onChange = onChange
-        formUI = TextFeaturesFormUI(textFeatures: textFeatures)
+        formUI = TextFeaturesTimerFormUI(textFeatures: textFeatures)
     }
 
     var body: some View {
@@ -44,7 +44,7 @@ struct TextFeaturesTimerFormView: View {
                             ActivityPickerSheet(
                                     isPresented: $isActivitySheetPresented
                             ) { activity in
-                                onChange(formUI.upActivity(activity: activity))
+                                onChange(formUI.setActivity(activity: activity))
                             }
                         }
             }
@@ -76,7 +76,7 @@ struct TextFeaturesTimerFormView: View {
                                     doneText: "Done",
                                     defMinutes: 30
                             ) { seconds in
-                                onChange(formUI.upTimer(seconds: seconds.toInt32()))
+                                onChange(formUI.setTimer(seconds: seconds.toInt32()))
                             }
                                     .presentationDetentsMediumIf16()
                         }
