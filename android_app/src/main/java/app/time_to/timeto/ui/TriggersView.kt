@@ -1,115 +1,25 @@
 package app.time_to.timeto.ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.time_to.timeto.*
 import app.time_to.timeto.R
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import app.time_to.timeto.toColor
 import timeto.shared.Trigger
-import timeto.shared.db.ChecklistModel
-import timeto.shared.db.ShortcutModel
-import java.util.*
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun TriggersView__FormView(
-    triggers: List<Trigger>,
-    onTriggersChanged: (List<Trigger>) -> Unit,
-    modifier: Modifier = Modifier,
-    contentPaddingHints: PaddingValues = PaddingValues(),
-    defBg: Color = c.background2
-) {
-    val scope = rememberCoroutineScope()
-
-    /**
-     * todo by VM state
-     */
-    val checklists = ChecklistModel.getAscFlow().collectAsState(emptyList()).value
-    val shortcuts = ShortcutModel.getAscFlow().collectAsState(emptyList()).value
-
-    val triggersSorted = (checklists.map { Trigger.Checklist(it) } + shortcuts.map { Trigger.Shortcut(it) })
-        .sortedWith(
-            compareBy(
-                { trigger -> !triggers.contains(trigger) },
-                { it.typeSortAsc },
-                { it.id },
-            )
-        )
-
-    Column {
-
-        if (triggersSorted.isNotEmpty()) {
-
-            val listState = rememberLazyListState()
-            LazyRow(
-                contentPadding = contentPaddingHints,
-                state = listState,
-                modifier = modifier
-            ) {
-                itemsIndexed(
-                    triggersSorted,
-                    key = { _, checklist -> checklist.id }
-                ) { _, trigger ->
-                    Box(
-                        modifier = Modifier
-                            .padding(end = if (trigger == triggersSorted.last()) 0.dp else 8.dp)
-                            .clip(RoundedCornerShape(99.dp))
-                            .background(c.blue)
-                            .padding(1.dp)
-                            .animateItemPlacement()
-                    ) {
-                        val isSelected = triggers.contains(trigger)
-                        Text(
-                            trigger.title,
-                            modifier = Modifier
-                                .clip(RoundedCornerShape(99.dp))
-                                .background(if (isSelected) c.blue else defBg)
-                                .clickable {
-                                    onTriggersChanged(
-                                        triggers
-                                            .toMutableList()
-                                            .apply {
-                                                if (isSelected) remove(trigger)
-                                                else add(trigger)
-                                            }
-                                    )
-
-                                    scope.launch {
-                                        delay(200)
-                                        listState.animateScrollToItem(0)
-                                    }
-                                }
-                                .padding(start = 8.dp, end = 8.dp, top = 4.dp, bottom = 5.dp),
-                            textAlign = TextAlign.Center,
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.W600,
-                            color = if (isSelected) c.white else c.blue,
-                        )
-                    }
-                }
-            }
-        }
-    }
-}
 
 @Composable
 fun TriggersView__ListView(
