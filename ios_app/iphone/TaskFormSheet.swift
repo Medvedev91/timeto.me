@@ -47,15 +47,13 @@ struct TaskFormSheet: View {
             }
                     .padding(.top, 10)
 
-            TriggersView__Form(
-                    triggers: state.textFeatures.triggers,
-                    onTriggersChanged: { newTriggers in
-                        vm.setTriggers(newTriggers: newTriggers)
-                    },
-                    spaceAround: MyListView.PADDING_OUTER_HORIZONTAL,
-                    bgColor: triggersBg,
-                    paddingTop: 20
-            )
+            MyListView__Padding__SectionSection()
+
+            TextFeaturesTriggersFormView(
+                    textFeatures: state.textFeatures
+            ) { textFeatures in
+                vm.setTextFeatures(newTextFeatures: textFeatures)
+            }
 
             Spacer()
         }
