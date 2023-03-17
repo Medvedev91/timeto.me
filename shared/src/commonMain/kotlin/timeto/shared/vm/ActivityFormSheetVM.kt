@@ -53,8 +53,8 @@ class ActivityFormSheetVM(
 
     fun setEmoji(newEmoji: String) = state.update { it.copy(emoji = newEmoji) }
 
-    fun setTriggers(newTriggers: List<Trigger>) = state.update {
-        it.copy(textFeatures = it.textFeatures.copy(triggers = newTriggers))
+    fun setTextFeatures(newTextFeatures: TextFeatures) = state.update {
+        it.copy(textFeatures = newTextFeatures)
     }
 
     fun toggleAutoFS() = state.update {
