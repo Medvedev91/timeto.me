@@ -2,10 +2,10 @@ package app.time_to.timeto.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
-import app.time_to.timeto.rememberVM
 import timeto.shared.TextFeatures
-import timeto.shared.vm.TextFeaturesFormVM
+import timeto.shared.vm.ui.TextFeaturesFormUI
 
 @Composable
 fun TextFeaturesTriggersFormView(
@@ -13,7 +13,7 @@ fun TextFeaturesTriggersFormView(
     onChange: (TextFeatures) -> Unit,
 ) {
 
-    val (vm, state) = rememberVM(textFeatures) { TextFeaturesFormVM(textFeatures) }
+    val formUI = remember(textFeatures) { TextFeaturesFormUI(textFeatures) }
 
     Column {
 
@@ -22,11 +22,11 @@ fun TextFeaturesTriggersFormView(
             isLast = false,
         ) {
             MyListView__ItemView__ButtonView(
-                text = state.checklistsTitle,
+                text = formUI.checklistsTitle,
                 withArrow = true,
                 rightView = {
                     MyListView__ItemView__ButtonView__RightText(
-                        text = state.checklistsNote,
+                        text = formUI.checklistsNote,
                         paddingEnd = 2.dp,
                     )
                 }
@@ -34,9 +34,9 @@ fun TextFeaturesTriggersFormView(
                 Sheet.show { layer ->
                     ChecklistsPickerSheet(
                         layer = layer,
-                        selectedChecklists = state.textFeatures.checklists,
+                        selectedChecklists = formUI.textFeatures.checklists,
                     ) {
-                        onChange(vm.upChecklists(it))
+                        onChange(formUI.upChecklists(it))
                     }
                 }
             }
@@ -48,11 +48,11 @@ fun TextFeaturesTriggersFormView(
             withTopDivider = true,
         ) {
             MyListView__ItemView__ButtonView(
-                text = state.shortcutsTitle,
+                text = formUI.shortcutsTitle,
                 withArrow = true,
                 rightView = {
                     MyListView__ItemView__ButtonView__RightText(
-                        text = state.shortcutsNote,
+                        text = formUI.shortcutsNote,
                         paddingEnd = 2.dp,
                     )
                 }
@@ -60,9 +60,9 @@ fun TextFeaturesTriggersFormView(
                 Sheet.show { layer ->
                     ShortcutsPickerSheet(
                         layer = layer,
-                        selectedShortcuts = state.textFeatures.shortcuts,
+                        selectedShortcuts = formUI.textFeatures.shortcuts,
                     ) {
-                        onChange(vm.upShortcuts(it))
+                        onChange(formUI.upShortcuts(it))
                     }
                 }
             }
