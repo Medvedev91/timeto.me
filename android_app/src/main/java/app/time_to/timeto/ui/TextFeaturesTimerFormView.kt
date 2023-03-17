@@ -2,13 +2,13 @@ package app.time_to.timeto.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
-import app.time_to.timeto.rememberVM
 import app.time_to.timeto.toColor
 import timeto.shared.TextFeatures
-import timeto.shared.vm.TextFeaturesFormVM
+import timeto.shared.vm.ui.TextFeaturesFormUI
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -17,7 +17,7 @@ fun TextFeaturesTimerFormView(
     onChange: (TextFeatures) -> Unit,
 ) {
 
-    val (vm, state) = rememberVM(textFeatures) { TextFeaturesFormVM(textFeatures) }
+    val formUI = remember(textFeatures) { TextFeaturesFormUI(textFeatures) }
 
     Column {
 
@@ -28,13 +28,13 @@ fun TextFeaturesTimerFormView(
             isLast = false,
         ) {
             MyListView__ItemView__ButtonView(
-                text = state.activityTitle,
+                text = formUI.activityTitle,
                 withArrow = true,
                 rightView = {
                     MyListView__ItemView__ButtonView__RightText(
-                        text = state.activityNote,
+                        text = formUI.activityNote,
                         paddingEnd = 2.dp,
-                        color = state.activityColorOrNull?.toColor(),
+                        color = formUI.activityColorOrNull?.toColor(),
                     )
                 }
             ) {
@@ -42,7 +42,7 @@ fun TextFeaturesTimerFormView(
                     ActivityPickerSheet(
                         layer = layer,
                     ) {
-                        onChange(vm.upActivity(it))
+                        onChange(formUI.upActivity(it))
                     }
                 }
             }
@@ -54,13 +54,13 @@ fun TextFeaturesTimerFormView(
             withTopDivider = true,
         ) {
             MyListView__ItemView__ButtonView(
-                text = state.timerTitle,
+                text = formUI.timerTitle,
                 withArrow = true,
                 rightView = {
                     MyListView__ItemView__ButtonView__RightText(
-                        text = state.timerNote,
+                        text = formUI.timerNote,
                         paddingEnd = 2.dp,
-                        color = state.timerColorOrNull?.toColor(),
+                        color = formUI.timerColorOrNull?.toColor(),
                     )
                 }
             ) {
@@ -72,7 +72,7 @@ fun TextFeaturesTimerFormView(
                         doneText = "Done",
                         defMinutes = 30,
                         onPick = { seconds ->
-                            onChange(vm.upTimer(seconds))
+                            onChange(formUI.upTimer(seconds))
                         }
                     )
                 }
