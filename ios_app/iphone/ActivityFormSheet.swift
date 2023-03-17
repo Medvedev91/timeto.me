@@ -67,15 +67,13 @@ struct ActivityFormSheet: View {
                             )
                         }
 
-                        TriggersView__Form(
-                                triggers: state.textFeatures.triggers,
-                                onTriggersChanged: { newTriggers in
-                                    vm.setTriggers(newTriggers: newTriggers)
-                                },
-                                spaceAround: 21,
-                                bgColor: .myDayNight(.white, .mySheetFormBg),
-                                paddingTop: 18
-                        )
+                        MyListView__Padding__SectionSection()
+
+                        TextFeaturesTriggersFormView(
+                                textFeatures: state.textFeatures
+                        ) { textFeatures in
+                            vm.setTextFeatures(newTextFeatures: textFeatures)
+                        }
 
                         MyListView__Padding__SectionSection()
                     }
