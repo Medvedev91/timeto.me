@@ -3,7 +3,7 @@ import shared
 
 struct TextFeaturesTriggersFormView: View {
 
-    private let formUI: TextFeaturesFormUI
+    private let formUI: TextFeaturesTriggersFormUI
     private let onChange: (TextFeatures) -> Void
 
     @State private var isChecklistsPickerPresented = false
@@ -14,7 +14,7 @@ struct TextFeaturesTriggersFormView: View {
             onChange: @escaping (TextFeatures) -> Void
     ) {
         self.onChange = onChange
-        formUI = TextFeaturesFormUI(textFeatures: textFeatures)
+        formUI = TextFeaturesTriggersFormUI(textFeatures: textFeatures)
     }
 
     var body: some View {
@@ -44,7 +44,7 @@ struct TextFeaturesTriggersFormView: View {
                                 isPresented: $isChecklistsPickerPresented,
                                 selectedChecklists: formUI.textFeatures.checklists
                         ) { checklists in
-                            onChange(formUI.upChecklists(checklists: checklists))
+                            onChange(formUI.setChecklists(checklists: checklists))
                         }
                     }
 
@@ -72,7 +72,7 @@ struct TextFeaturesTriggersFormView: View {
                                 isPresented: $isShortcutsPickerPresented,
                                 selectedShortcuts: formUI.textFeatures.shortcuts
                         ) { shortcut in
-                            onChange(formUI.upShortcuts(shortcuts: shortcut))
+                            onChange(formUI.setShortcuts(shortcuts: shortcut))
                         }
                     }
         }

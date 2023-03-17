@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
 import timeto.shared.TextFeatures
-import timeto.shared.vm.ui.TextFeaturesFormUI
+import timeto.shared.vm.ui.TextFeaturesTriggersFormUI
 
 @Composable
 fun TextFeaturesTriggersFormView(
@@ -13,7 +13,7 @@ fun TextFeaturesTriggersFormView(
     onChange: (TextFeatures) -> Unit,
 ) {
 
-    val formUI = remember(textFeatures) { TextFeaturesFormUI(textFeatures) }
+    val formUI = remember(textFeatures) { TextFeaturesTriggersFormUI(textFeatures) }
 
     Column {
 
@@ -36,7 +36,7 @@ fun TextFeaturesTriggersFormView(
                         layer = layer,
                         selectedChecklists = formUI.textFeatures.checklists,
                     ) {
-                        onChange(formUI.upChecklists(it))
+                        onChange(formUI.setChecklists(it))
                     }
                 }
             }
@@ -62,7 +62,7 @@ fun TextFeaturesTriggersFormView(
                         layer = layer,
                         selectedShortcuts = formUI.textFeatures.shortcuts,
                     ) {
-                        onChange(formUI.upShortcuts(it))
+                        onChange(formUI.setShortcuts(it))
                     }
                 }
             }
