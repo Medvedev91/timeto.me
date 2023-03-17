@@ -3,33 +3,23 @@ import shared
 
 struct TextFeaturesTimerFormView: View {
 
-    @State private var vm: TextFeaturesFormVM
-
+    private let formUI: TextFeaturesFormUI
     private let onChange: (TextFeatures) -> Void
 
     @State private var isActivitySheetPresented = false
     @State private var isTimerSheetPresented = false
 
-
-    private let _textFeaturesState: TextFeatures
-
     init(
             textFeatures: TextFeatures,
             onChange: @escaping (TextFeatures) -> Void
     ) {
-        _textFeaturesState = textFeatures
         self.onChange = onChange
-        _vm = State(initialValue: TextFeaturesFormVM(initTextFeatures: textFeatures))
+        formUI = TextFeaturesFormUI(textFeatures: textFeatures)
     }
 
     var body: some View {
 
-        VMView(vm: vm, stack: .VStack(spacing: 0)) { state in
-
-            EmptyView()
-                    .onChange(of: _textFeaturesState) { newTextFeatures in
-                        vm = TextFeaturesFormVM(initTextFeatures: newTextFeatures)
-                    }
+        VStack(spacing: 0) {
 
             MyListView__ItemView(
                     isFirst: true,
@@ -37,13 +27,13 @@ struct TextFeaturesTimerFormView: View {
             ) {
 
                 MyListView__ItemView__ButtonView(
-                        text: state.activityTitle,
+                        text: formUI.activityTitle,
                         withArrow: true,
                         rightView: AnyView(
                                 MyListView__ItemView__ButtonView__RightText(
-                                        text: state.activityNote,
+                                        text: formUI.activityNote,
                                         paddingEnd: 2,
-                                        textColor: state.activityColorOrNull?.toColor()
+                                        textColor: formUI.activityColorOrNull?.toColor()
                                 )
                         )
                 ) {
@@ -54,7 +44,7 @@ struct TextFeaturesTimerFormView: View {
                             ActivityPickerSheet(
                                     isPresented: $isActivitySheetPresented
                             ) { activity in
-                                vm.upActivity(activity: activity)
+                                onChange(formUI.upActivity(activity: activity))
                             }
                         }
             }
@@ -66,13 +56,13 @@ struct TextFeaturesTimerFormView: View {
             ) {
 
                 MyListView__ItemView__ButtonView(
-                        text: state.timerTitle,
+                        text: formUI.timerTitle,
                         withArrow: true,
                         rightView: AnyView(
                                 MyListView__ItemView__ButtonView__RightText(
-                                        text: state.timerNote,
+                                        text: formUI.timerNote,
                                         paddingEnd: 2,
-                                        textColor: state.timerColorOrNull?.toColor()
+                                        textColor: formUI.timerColorOrNull?.toColor()
                                 )
                         )
                 ) {
@@ -86,7 +76,7 @@ struct TextFeaturesTimerFormView: View {
                                     doneText: "Done",
                                     defMinutes: 30
                             ) { seconds in
-                                vm.upTimer(seconds: seconds.toInt32())
+                                onChange(formUI.upTimer(seconds: seconds.toInt32()))
                             }
                                     .presentationDetentsMediumIf16()
                         }
