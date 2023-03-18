@@ -7,7 +7,6 @@ import timeto.shared.ui.TimeUI
 
 data class TextFeatures(
     val textNoFeatures: String,
-    val triggers: List<Trigger>,
     val checklists: List<ChecklistModel>,
     val shortcuts: List<ShortcutModel>,
     val fromRepeating: FromRepeating?,
@@ -131,7 +130,6 @@ private fun parseLocal(initText: String): TextFeatures {
 
     return TextFeatures(
         textNoFeatures = textNoFeatures.removeDuplicateSpaces().trim(),
-        triggers = listOf(),
         checklists = checklists,
         shortcuts = shortcuts,
         fromRepeating = fromRepeating,
