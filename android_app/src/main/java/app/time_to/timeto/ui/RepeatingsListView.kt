@@ -149,8 +149,8 @@ fun RepeatingsListView() {
                         val badgesHPadding = horizontalPadding - 2.dp
                         val badgesTopPadding = 6.dp
 
-                        TriggersView__ListView(
-                            triggers = repeatingUI.triggers,
+                        TextFeaturesTriggersView(
+                            textFeatures = repeatingUI.textFeatures,
                             modifier = Modifier.padding(top = badgesTopPadding),
                             contentPadding = PaddingValues(horizontal = badgesHPadding)
                         )
