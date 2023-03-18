@@ -13,14 +13,9 @@ class EventsListVM : __VM<EventsListVM.State>() {
     ) {
         val deletionNote = "Are you sure you want to delete \"${event.text}\" event?"
         val dayLeftString = "${event.getLocalTime().localDay - UnixTime().localDay}d"
-        val listText: String
-        val triggers: List<Trigger>
 
-        init {
-            val textFeatures = event.text.textFeatures()
-            listText = textFeatures.textUi()
-            triggers = textFeatures.triggers
-        }
+        val textFeatures = event.text.textFeatures()
+        val listText = textFeatures.textUi()
 
         fun delete() {
             launchExDefault {
