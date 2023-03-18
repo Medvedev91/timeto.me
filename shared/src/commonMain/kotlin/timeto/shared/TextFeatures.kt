@@ -21,6 +21,27 @@ data class TextFeatures(
         else -> null
     }
 
+    val triggers: List<Trigger> by lazy {
+        val triggers = mutableListOf<Trigger>()
+        checklists.forEach { checklist ->
+            triggers.add(Trigger(
+                id = "c${checklist.id}",
+                title = checklist.name,
+                color = ColorNative.green,
+                performUI = { launchExDefault { checklist.performUI() } }
+            ))
+        }
+        shortcuts.forEach { shortcut ->
+            triggers.add(Trigger(
+                id = "s${shortcut.id}",
+                title = shortcut.name,
+                color = ColorNative.red,
+                performUI = { launchExDefault { shortcut.performUI() } }
+            ))
+        }
+        return@lazy triggers
+    }
+
     fun textUi(
         withActivityEmoji: Boolean = true,
         withTimer: Boolean = true,
@@ -55,6 +76,13 @@ data class TextFeatures(
     class FromRepeating(val id: Int, val day: Int, val time: Int?)
 
     class FromEvent(val time: Int)
+
+    class Trigger(
+        val id: String,
+        val title: String,
+        val color: ColorNative,
+        val performUI: () -> Unit,
+    )
 }
 
 fun String.textFeatures(): TextFeatures = parseLocal(this)
