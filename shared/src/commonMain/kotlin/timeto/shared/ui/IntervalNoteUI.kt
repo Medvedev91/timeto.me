@@ -9,12 +9,9 @@ class IntervalNoteUI(
 
     val text: String
     val leadingEmoji: String?
-    val triggers: List<Trigger>
+    val textFeatures = plainText.textFeatures()
 
     init {
-        val textFeatures = plainText.textFeatures()
-        triggers = textFeatures.triggers
-
         // todo refactor by text features repeatings/events
         val textUI = textFeatures.textUi()
         if (checkLeadingEmoji) {
