@@ -6,6 +6,7 @@ import kotlinx.coroutines.launch
 import timeto.shared.*
 import timeto.shared.db.ChecklistItemModel
 import timeto.shared.db.IntervalModel
+import timeto.shared.vm.ui.TimerDataUI
 import timeto.shared.vm.ui.toChecklistUI
 
 class FullscreenVM(
@@ -18,7 +19,7 @@ class FullscreenVM(
         val defColor: ColorNative,
         val idToUpdate: Long
     ) {
-        val timerData = TimerData(interval, defColor)
+        val timerData = TimerDataUI(interval, defColor)
 
         val activity = interval.getActivityDI()
         val textFeatures = (interval.note ?: activity.name).textFeatures()

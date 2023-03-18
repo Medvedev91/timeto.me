@@ -1,9 +1,13 @@
-package timeto.shared
+package timeto.shared.vm.ui
 
+import timeto.shared.BREAK_SECONDS
+import timeto.shared.ColorNative
 import timeto.shared.db.IntervalModel
+import timeto.shared.time
+import timeto.shared.toHms
 import kotlin.math.absoluteValue
 
-class TimerData(
+class TimerDataUI(
     interval: IntervalModel,
     defColor: ColorNative,
 ) {

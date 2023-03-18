@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timeto.shared.db.IntervalModel
 import timeto.shared.vm.__VM
+import timeto.shared.vm.ui.TimerDataUI
 
 class WatchTimerVM : __VM<WatchTimerVM.State>() {
 
@@ -19,7 +20,7 @@ class WatchTimerVM : __VM<WatchTimerVM.State>() {
         val isCountDown: Boolean,
         val lastInterval: IntervalModel,
     ) {
-        private val timerData = TimerData(lastInterval, ColorNative.text)
+        private val timerData = TimerDataUI(lastInterval, ColorNative.text)
         val timeNote = if (isCountDown) timerData.timer else timerData.timePassedNote
         val color = if (isCountDown) timerData.color else ColorNative.purple
     }

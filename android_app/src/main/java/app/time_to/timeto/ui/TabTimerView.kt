@@ -32,6 +32,7 @@ import kotlinx.coroutines.delay
 import timeto.shared.*
 import timeto.shared.db.IntervalModel
 import timeto.shared.vm.TabTimerVM
+import timeto.shared.vm.ui.TimerDataUI
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -428,7 +429,7 @@ private fun TimerView(
         nowTimeMillis = timeMls()
     }
 
-    val timerData = TimerData(interval, ColorNative.text)
+    val timerData = TimerDataUI(interval, ColorNative.text)
 
     var isCountdownOrPast by remember { mutableStateOf(true) }
     LaunchedEffect(interval.id) {
@@ -490,7 +491,7 @@ private fun TimerView(
                 Spacer(Modifier.weight(1f))
 
                 Text(
-                    text = if (isCountdownOrPast) timerData.timer else TimerData.secondsToString(time() - interval.id),
+                    text = if (isCountdownOrPast) timerData.timer else TimerDataUI.secondsToString(time() - interval.id),
                     fontSize = 50.sp,
                     fontWeight = FontWeight.ExtraBold,
                     modifier = Modifier

@@ -484,8 +484,8 @@ struct TabTimerView_ProgressView: View {
     @State private var timerHackToReload = UUID()
     @State private var isCountDown = true // Обратный отчет или сколько прошло
 
-    private var timerData: TimerData {
-        TimerData(interval: lastInterval, defColor: ColorNative.text)
+    private var timerData: TimerDataUI {
+        TimerDataUI(interval: lastInterval, defColor: ColorNative.text)
     }
 
     var body: some View {
@@ -538,7 +538,7 @@ struct TabTimerView_ProgressView: View {
 
                         Spacer(minLength: 0)
 
-                        Text(isCountDown ? timerData.timer : TimerData.companion.secondsToString(seconds: time().toInt32() - lastInterval.id))
+                        Text(isCountDown ? timerData.timer : TimerDataUI.companion.secondsToString(seconds: time().toInt32() - lastInterval.id))
                                 .font(.system(size: 53, design: .monospaced))
                                 //.font(Font.custom("San Francisco", size: 49).monospacedDigit())
                                 .fontWeight(.medium)
