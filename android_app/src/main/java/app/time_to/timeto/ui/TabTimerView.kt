@@ -185,8 +185,8 @@ fun TabTimerView() {
                                     PaddingValues(start = startPadding - 1.dp, end = endPadding)
                                 }
 
-                                TriggersView__ListView(
-                                    triggers = uiActivity.triggers,
+                                TextFeaturesTriggersView(
+                                    textFeatures = uiActivity.textFeatures,
                                     modifier = Modifier.padding(top = 8.dp, bottom = 4.dp),
                                     contentPadding = triggersListContentPaddings
                                 )
@@ -242,8 +242,8 @@ fun TabTimerView() {
                                         )
                                     }
 
-                                    TriggersView__ListView(
-                                        triggers = noteUI.triggers,
+                                    TextFeaturesTriggersView(
+                                        textFeatures = noteUI.textFeatures,
                                         modifier = Modifier.padding(top = 7.dp, bottom = 4.dp),
                                         contentPadding = triggersListContentPaddings
                                     )
