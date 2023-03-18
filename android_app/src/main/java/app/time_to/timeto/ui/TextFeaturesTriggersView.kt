@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.time_to.timeto.toColor
 import timeto.shared.TextFeatures
-import timeto.shared.vm.ui.TextFeaturesTriggersUI
 
 @Composable
 fun TextFeaturesTriggersView(
@@ -26,8 +25,7 @@ fun TextFeaturesTriggersView(
     contentPadding: PaddingValues = PaddingValues()
 ) {
 
-    val triggersUI = remember(textFeatures) { TextFeaturesTriggersUI(textFeatures) }
-    val triggers = triggersUI.triggers
+    val triggers = textFeatures.triggers
 
     if (triggers.isEmpty())
         return
