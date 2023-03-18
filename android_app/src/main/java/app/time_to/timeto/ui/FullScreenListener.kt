@@ -192,8 +192,8 @@ private fun FullScreenView__HeaderView(
             textAlign = TextAlign.Center
         )
 
-        TriggersView__ListView(
-            triggers = state.triggers,
+        TextFeaturesTriggersView(
+            textFeatures = state.textFeatures,
             modifier = Modifier.padding(top = 10.dp),
             contentPadding = PaddingValues(horizontal = 50.dp)
         )
