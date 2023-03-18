@@ -16,14 +16,14 @@ class FullscreenVM(
 
     data class State(
         val title: String,
-        val triggers: List<Trigger>,
+        val textFeatures: TextFeatures,
         val timerData: TimerData,
     ) {
 
         val checklistUI: ChecklistUI?
 
         init {
-            val checklist = triggers.filterIsInstance<Trigger.Checklist>().firstOrNull()?.checklist
+            val checklist = textFeatures.checklists.firstOrNull()
             checklistUI = if (checklist == null) null else {
                 val checklistItems = DI.checklistItems.filter { it.list_id == checklist.id }
                 checklist.toChecklistUI(checklistItems)
@@ -72,7 +72,7 @@ private fun prepState(
     val textFeatures = titlePlain.textFeatures()
     return FullscreenVM.State(
         title = textFeatures.textUi(),
-        triggers = textFeatures.triggers,
+        textFeatures = textFeatures,
         timerData = TimerData(lastInterval, defColor),
     )
 }
