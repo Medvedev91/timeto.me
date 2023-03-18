@@ -163,8 +163,8 @@ struct RepeatingsView__ItemView: View {
                     .padding(.leading, DEF_LIST_H_PADDING)
                     .padding(.trailing, DEF_LIST_H_PADDING)
 
-            TriggersView__List(triggers: repeatingUI.triggers)
-                    .padding(.top, repeatingUI.triggers.isEmpty ? 0 : 8)
+            TextFeaturesTriggersView(textFeatures: repeatingUI.textFeatures)
+                    .padding(.top, repeatingUI.textFeatures.triggers.isEmpty ? 0 : 8)
         }
                 .padding(.top, 10)
                 .padding(.bottom, 10)

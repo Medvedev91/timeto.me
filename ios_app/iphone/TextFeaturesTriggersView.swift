@@ -1,9 +1,9 @@
 import SwiftUI
 import shared
 
-struct TriggersView__List: View {
+struct TextFeaturesTriggersView: View {
 
-    let triggers: [Trigger]
+    let textFeatures: TextFeatures
     var spaceBetween = 8.0
     var paddingTop = 0.0
     var paddingBottom = 0.0
@@ -11,6 +11,8 @@ struct TriggersView__List: View {
     var contentPaddingEnd = 16.0
 
     var body: some View {
+
+        let triggers = textFeatures.triggers
 
         if triggers.isEmpty {
             EmptyView()
@@ -23,7 +25,7 @@ struct TriggersView__List: View {
                     MySpacerSize(width: contentPaddingStart)
 
                     ForEach(triggers, id: \.id) { trigger in
-                        TriggersView__ListItem(trigger: trigger)
+                        TextFeaturesTriggersView__ListItem(trigger: trigger)
                                 .padding(.trailing, triggers.last !== trigger ? spaceBetween : 0)
                     }
 
@@ -37,9 +39,9 @@ struct TriggersView__List: View {
     }
 }
 
-struct TriggersView__ListItem: View {
+struct TextFeaturesTriggersView__ListItem: View {
 
-    let trigger: Trigger
+    let trigger: TextFeatures.Trigger
 
     @State private var isChecklistPresented = false
     /// # PROVOKE_STATE_UPDATE
@@ -54,7 +56,7 @@ struct TriggersView__ListItem: View {
                     Text(trigger.title)
                             .padding(.horizontal, 8)
                             .padding(.vertical, 4)
-                            .background(trigger.getColor().toColor())
+                            .background(trigger.color.toColor())
                             .clipShape(Capsule())
                             .foregroundColor(.white)
                             .font(.system(size: 14))

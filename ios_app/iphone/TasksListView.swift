@@ -357,7 +357,7 @@ struct TasksView__TaskRowView: View {
                                     Spacer(minLength: 0)
                                 }
 
-                                TriggersView__List(triggers: taskUI.textFeatures.triggers)
+                                TextFeaturesTriggersView(textFeatures: taskUI.textFeatures)
                                         .padding(.top, taskUI.textFeatures.triggers.isEmpty ? 0 : vPadding)
                             }
                                     .padding(.vertical, 10)
@@ -571,7 +571,7 @@ private struct TasksListView__TmrwTaskView: View {
                 Spacer(minLength: 0)
             }
 
-            TriggersView__List(triggers: taskUI.textFeatures.triggers)
+            TextFeaturesTriggersView(textFeatures: taskUI.textFeatures)
                     .padding(.top, taskUI.textFeatures.triggers.isEmpty ? 0 : vPadding)
         }
                 .padding(.vertical, 10)

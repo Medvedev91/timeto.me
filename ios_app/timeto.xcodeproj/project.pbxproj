@@ -25,6 +25,7 @@
 		2CB73DE3292FACE00053B2D6 /* SearchEmojiSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB73DE2292FACE00053B2D6 /* SearchEmojiSheet.swift */; };
 		318210C5F98B5CD4E8D8C104 /* FoldersSettingsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E3EB266890584C3EF87 /* FoldersSettingsSheet.swift */; };
 		318210CF629A7E593B9F8FE4 /* ChecklistItemFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821290CB27918CD444FBB0 /* ChecklistItemFormSheet.swift */; };
+		318210D7F973F8F13061DAD6 /* TextFeaturesTriggersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318218084C84D03DF3D6BEB6 /* TextFeaturesTriggersView.swift */; };
 		318210E102D112C2860ADF9F /* DialogCloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E53EB27CE7F81AF0F69 /* DialogCloseButton.swift */; };
 		318210ECF60308ECF341FEA2 /* utils_ios.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182118D8EA3E0D889D4FDC3 /* utils_ios.swift */; };
 		318210F0EEFF944CD87E3A98 /* TabReadmeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821287721625075228B91E /* TabReadmeView.swift */; };
@@ -43,7 +44,6 @@
 		318214BD0E34368A953B17CD /* MyListSwipeToActionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821DC6AEBDF478C34116FE /* MyListSwipeToActionItem.swift */; };
 		318214C7567540476671C2FB /* W_TabTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821CEEF63544D48A45B8F4 /* W_TabTimerView.swift */; };
 		318214F11883D036EC488EA5 /* TaskFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821F4527059D286AC0AF41 /* TaskFormSheet.swift */; };
-		3182155E1C1E5D91279DE1A9 /* TriggersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318212D56D0EAA6EAEF424E4 /* TriggersView.swift */; };
 		318215958A7A06F6610DF5AF /* TimetoAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821527096D1BDB0A35B178 /* TimetoAlert.swift */; };
 		318215D20ED732E4BF4F3071 /* ChecklistDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821A7EADEF749C7A5F04DE /* ChecklistDialog.swift */; };
 		31821611D065F54C0BC007A9 /* DaytimePickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821D4211F3426B1F444F81 /* DaytimePickerSheet.swift */; };
@@ -129,7 +129,6 @@
 		31821287721625075228B91E /* TabReadmeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabReadmeView.swift; sourceTree = "<group>"; };
 		31821290CB27918CD444FBB0 /* ChecklistItemFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChecklistItemFormSheet.swift; sourceTree = "<group>"; };
 		318212B384624F1CF416C576 /* EventFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventFormSheet.swift; sourceTree = "<group>"; };
-		318212D56D0EAA6EAEF424E4 /* TriggersView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggersView.swift; sourceTree = "<group>"; };
 		318212FEA97CBD2AEC3AA1D6 /* ChecklistFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChecklistFormSheet.swift; sourceTree = "<group>"; };
 		318212FFE80A0856A0A88DCF /* MySpacerSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySpacerSize.swift; sourceTree = "<group>"; };
 		318213DE3B58FA098A8DBAE7 /* TaskSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskSheet.swift; sourceTree = "<group>"; };
@@ -141,6 +140,7 @@
 		3182161C9947F88C6A1D3B80 /* W_TabTasksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W_TabTasksView.swift; sourceTree = "<group>"; };
 		318216D54CC429737780D176 /* TextFieldClearButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldClearButtonView.swift; sourceTree = "<group>"; };
 		31821794CA93E29D6889286D /* ActivityFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityFormSheet.swift; sourceTree = "<group>"; };
+		318218084C84D03DF3D6BEB6 /* TextFeaturesTriggersView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFeaturesTriggersView.swift; sourceTree = "<group>"; };
 		3182189A26C9B48C0D2E8A4A /* KeyboardManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		318218D93C3456758557A6E0 /* ScrollViewWithVListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollViewWithVListener.swift; sourceTree = "<group>"; };
 		31821996D20B09EBA4F73C2B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -315,7 +315,6 @@
 				31821527096D1BDB0A35B178 /* TimetoAlert.swift */,
 				2C95BA7A280D74AA0027FC35 /* IOSApp.swift */,
 				318210AB991EB1C25EA1B565 /* TimetoSheet.swift */,
-				318212D56D0EAA6EAEF424E4 /* TriggersView.swift */,
 				318218DEA96CCDED8A4C448C /* ui */,
 				3182118D8EA3E0D889D4FDC3 /* utils_ios.swift */,
 				31821E3EB266890584C3EF87 /* FoldersSettingsSheet.swift */,
@@ -325,6 +324,7 @@
 				31821D2439CE2014EF5FF473 /* ChecklistsPickerSheet.swift */,
 				31821F858C3344296F2CB750 /* ShortcutsPickerSheet.swift */,
 				31821F29E288957ABB3DF794 /* TextFeaturesTimerFormView.swift */,
+				318218084C84D03DF3D6BEB6 /* TextFeaturesTriggersView.swift */,
 			);
 			path = iphone;
 			sourceTree = "<group>";
@@ -504,7 +504,6 @@
 				2C0BE02F295751B70099AD7C /* PickerStateView.swift in Sources */,
 				318216F271691CC07FC67AFC /* ChecklistFormSheet.swift in Sources */,
 				318215D20ED732E4BF4F3071 /* ChecklistDialog.swift in Sources */,
-				3182155E1C1E5D91279DE1A9 /* TriggersView.swift in Sources */,
 				318214F11883D036EC488EA5 /* TaskFormSheet.swift in Sources */,
 				318219E30EE52A96A502BF30 /* KeyboardManager.swift in Sources */,
 				2C2E93F8290117E300EAADBE /* TimerFullScreen.swift in Sources */,
@@ -541,6 +540,7 @@
 				3182163121ABFB307798FDA9 /* ChecklistsPickerSheet.swift in Sources */,
 				31821D021B3DC7EACD7E4EAA /* ShortcutsPickerSheet.swift in Sources */,
 				3182197D9BDC28A7649BA7E1 /* TextFeaturesTimerFormView.swift in Sources */,
+				318210D7F973F8F13061DAD6 /* TextFeaturesTriggersView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

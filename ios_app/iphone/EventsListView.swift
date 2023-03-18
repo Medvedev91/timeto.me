@@ -221,8 +221,8 @@ private struct EventItemView: View {
                     .padding(.leading, DEF_LIST_H_PADDING)
                     .padding(.trailing, DEF_LIST_H_PADDING)
 
-            TriggersView__List(triggers: uiEvent.triggers)
-                    .padding(.top, uiEvent.triggers.isEmpty ? 0 : 8)
+            TextFeaturesTriggersView(textFeatures: uiEvent.textFeatures)
+                    .padding(.top, uiEvent.textFeatures.triggers.isEmpty ? 0 : 8)
         }
                 .padding(.top, 10)
                 .padding(.bottom, 10)
