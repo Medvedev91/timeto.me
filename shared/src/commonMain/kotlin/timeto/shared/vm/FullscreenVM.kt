@@ -6,48 +6,59 @@ import kotlinx.coroutines.launch
 import timeto.shared.*
 import timeto.shared.db.ChecklistItemModel
 import timeto.shared.db.IntervalModel
-import timeto.shared.vm.ui.ChecklistUI
 import timeto.shared.vm.ui.toChecklistUI
 
-// todo Refactoring
 class FullscreenVM(
-    private val defColor: ColorNative,
+    defColor: ColorNative,
 ) : __VM<FullscreenVM.State>() {
 
     data class State(
-        val title: String,
-        val textFeatures: TextFeatures,
-        val timerData: TimerData,
+        val interval: IntervalModel,
+        val allChecklistItems: List<ChecklistItemModel>,
+        val defColor: ColorNative,
+        val idToUpdate: Long
     ) {
+        val timerData = TimerData(interval, defColor)
 
-        val checklistUI: ChecklistUI?
+        val activity = interval.getActivityDI()
+        val textFeatures = (interval.note ?: activity.name).textFeatures()
+        val title = textFeatures.textUi(withActivityEmoji = false)
 
-        init {
-            val checklist = textFeatures.checklists.firstOrNull()
-            checklistUI = if (checklist == null) null else {
-                val checklistItems = DI.checklistItems.filter { it.list_id == checklist.id }
-                checklist.toChecklistUI(checklistItems)
-            }
+        val checklistUI = textFeatures.checklists.firstOrNull()?.let { checklist ->
+            val items = allChecklistItems.filter { it.list_id == checklist.id }
+            checklist.toChecklistUI(items)
         }
     }
 
-    override val state = MutableStateFlow(prepState(DI.lastInterval, defColor))
+    override val state = MutableStateFlow(
+        State(
+            interval = DI.lastInterval,
+            allChecklistItems = DI.checklistItems,
+            defColor = defColor,
+            idToUpdate = 0,
+        )
+    )
 
     override fun onAppear() {
         val scope = scopeVM()
         IntervalModel.getLastOneOrNullFlow()
             .filterNotNull()
-            .onEachExIn(scope) {
-                upState(it)
+            .onEachExIn(scope) { interval ->
+                state.update { it.copy(interval = interval) }
             }
-        // todo
-        ChecklistItemModel.anyChangeFlow().onEachExIn(scope) {
-            delay(50L)
-            upState(DI.lastInterval)
-        }
+        ChecklistItemModel
+            .getAscFlow()
+            .onEachExIn(scope) { items ->
+                state.update { it.copy(allChecklistItems = items) }
+            }
         scope.launch {
             while (true) {
-                upState(DI.lastInterval)
+                state.update {
+                    it.copy(
+                        interval = DI.lastInterval,
+                        idToUpdate = timeMls(), // Force update
+                    )
+                }
                 delay(1_000L)
             }
         }
@@ -58,21 +69,4 @@ class FullscreenVM(
             IntervalModel.restartActualInterval()
         }
     }
-
-    private fun upState(interval: IntervalModel) {
-        state.update { prepState(interval, defColor) }
-    }
-}
-
-private fun prepState(
-    lastInterval: IntervalModel,
-    defColor: ColorNative,
-): FullscreenVM.State {
-    val titlePlain = lastInterval.note ?: lastInterval.getActivityDI().nameWithEmoji()
-    val textFeatures = titlePlain.textFeatures()
-    return FullscreenVM.State(
-        title = textFeatures.textUi(),
-        textFeatures = textFeatures,
-        timerData = TimerData(lastInterval, defColor),
-    )
 }
