@@ -14,16 +14,12 @@ class RepeatingsListVM : __VM<RepeatingsListVM.State>() {
         val dayLeftString: String
         val dayRightString = repeating.getNextDayString() + ", " + "${repeating.getNextDay() - UnixTime().localDay}d"
 
-        val listText: String
-        val triggers: List<Trigger>
+        val textFeatures = repeating.text.textFeatures()
+        val listText = textFeatures.textUi()
 
         init {
             val daytimeText = repeating.daytime?.let { " at ${daytimeToString(it)}" } ?: ""
             dayLeftString = repeating.getPeriod().title + daytimeText
-
-            val textFeatures = repeating.text.textFeatures()
-            listText = textFeatures.textUi()
-            triggers = textFeatures.triggers
         }
 
         fun delete() {
