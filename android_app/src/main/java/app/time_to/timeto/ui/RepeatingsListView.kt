@@ -151,7 +151,6 @@ fun RepeatingsListView() {
 
                         TriggersView__ListView(
                             triggers = repeatingUI.triggers,
-                            withOnClick = true,
                             modifier = Modifier.padding(top = badgesTopPadding),
                             contentPadding = PaddingValues(horizontal = badgesHPadding)
                         )

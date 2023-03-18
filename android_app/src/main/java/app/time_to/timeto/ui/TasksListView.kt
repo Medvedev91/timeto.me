@@ -351,7 +351,6 @@ fun TasksListView(
 
                                 TriggersView__ListView(
                                     triggers = taskUI.textFeatures.triggers,
-                                    withOnClick = true,
                                     modifier = Modifier.padding(top = vPadding),
                                     contentPadding = PaddingValues(horizontal = startPadding - 2.dp),
                                 )
@@ -449,7 +448,6 @@ private fun TasksListView__TmrwTaskView(
 
             TriggersView__ListView(
                 triggers = taskUI.textFeatures.triggers,
-                withOnClick = true,
                 modifier = Modifier.padding(top = vPadding),
                 contentPadding = PaddingValues(horizontal = startPadding - 2.dp),
             )

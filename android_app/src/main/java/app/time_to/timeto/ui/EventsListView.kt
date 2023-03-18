@@ -181,7 +181,6 @@ fun EventsListView() {
 
                         TriggersView__ListView(
                             triggers = uiEvent.triggers,
-                            withOnClick = true,
                             modifier = Modifier.padding(top = 6.dp),
                             contentPadding = PaddingValues(horizontal = horizontalPadding - 2.dp)
                         )

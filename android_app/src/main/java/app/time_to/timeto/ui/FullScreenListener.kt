@@ -194,7 +194,6 @@ private fun FullScreenView__HeaderView(
 
         TriggersView__ListView(
             triggers = state.triggers,
-            withOnClick = true,
             modifier = Modifier.padding(top = 10.dp),
             contentPadding = PaddingValues(horizontal = 50.dp)
         )
