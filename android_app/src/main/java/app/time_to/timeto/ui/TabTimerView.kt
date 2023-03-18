@@ -418,7 +418,6 @@ fun TabTimerView() {
 private fun TimerView(
     interval: IntervalModel,
 ) {
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
     val refreshMls = 200L
