@@ -22,24 +22,8 @@ data class TextFeatures(
     }
 
     val triggers: List<Trigger> by lazy {
-        val triggers = mutableListOf<Trigger>()
-        checklists.forEach { checklist ->
-            triggers.add(Trigger(
-                id = "c${checklist.id}",
-                title = checklist.name,
-                color = ColorNative.green,
-                performUI = { launchExDefault { checklist.performUI() } }
-            ))
-        }
-        shortcuts.forEach { shortcut ->
-            triggers.add(Trigger(
-                id = "s${shortcut.id}",
-                title = shortcut.name,
-                color = ColorNative.red,
-                performUI = { launchExDefault { shortcut.performUI() } }
-            ))
-        }
-        return@lazy triggers
+        checklists.map { Trigger.Checklist(it) } +
+        shortcuts.map { Trigger.Shortcut(it) }
     }
 
     fun textUi(
@@ -77,12 +61,27 @@ data class TextFeatures(
 
     class FromEvent(val time: Int)
 
-    class Trigger(
+    sealed class Trigger(
         val id: String,
         val title: String,
         val color: ColorNative,
-        val performUI: () -> Unit,
-    )
+    ) {
+
+        fun performUI() {
+            val _when = when (this) {
+                is Checklist -> launchExDefault { checklist.performUI() }
+                is Shortcut -> launchExDefault { shortcut.performUI() }
+            }
+        }
+
+        class Checklist(
+            val checklist: ChecklistModel
+        ) : Trigger("#c${checklist.id}", checklist.name, ColorNative.green)
+
+        class Shortcut(
+            val shortcut: ShortcutModel
+        ) : Trigger("#s${shortcut.id}", shortcut.name, ColorNative.red)
+    }
 }
 
 fun String.textFeatures(): TextFeatures = parseLocal(this)

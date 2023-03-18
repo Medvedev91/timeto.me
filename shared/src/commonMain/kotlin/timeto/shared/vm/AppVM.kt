@@ -115,7 +115,7 @@ private suspend fun showTriggersForInterval(
     fun fsOrTriggers(isFS: Boolean, features: TextFeatures) {
         if (isFS) {
             FullScreenUI.open()
-            features.triggers.firstOrNull { it !is Trigger.Checklist }?.performUI()
+            features.triggers.firstOrNull { it !is TextFeatures.Trigger.Checklist }?.performUI()
         } else
             features.triggers.firstOrNull()?.performUI()
     }
