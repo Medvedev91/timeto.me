@@ -2,10 +2,9 @@ package app.time_to.timeto.ui
 
 import android.app.Activity
 import android.view.WindowManager
+import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -92,42 +91,89 @@ fun FullScreenListener(
 private fun FullScreenView(
     layer: WrapperView.Layer,
 ) {
-    Box(
+    Column(
         modifier = Modifier
             .pointerInput(Unit) { }
             .fillMaxSize()
             .background(c.black)
-            .navigationBarsPadding()
-            .padding(top = 20.dp)
+            .navigationBarsPadding(),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
         val (vm, state) = rememberVM { FullscreenVM(ColorNative.white) }
+
+        Text(
+            text = state.title,
+            modifier = Modifier
+                .padding(top = 44.dp, start = 30.dp, end = 30.dp),
+            fontSize = 19.sp,
+            fontWeight = FontWeight.Normal,
+            color = c.white,
+            textAlign = TextAlign.Center
+        )
+
+        TextFeaturesTriggersView(
+            textFeatures = state.textFeatures,
+            modifier = Modifier.padding(top = 10.dp),
+            contentPadding = PaddingValues(horizontal = 50.dp)
+        )
+
+        val timerData = state.timerData
+        AnimatedVisibility(
+            timerData.title != null,
+            enter = fadeIn() + expandVertically(),
+            exit = fadeOut() + shrinkVertically(),
+        ) {
+
+            Text(
+                text = timerData.title ?: "",
+                fontSize = 21.sp,
+                modifier = Modifier
+                    .padding(top = 30.dp)
+                    .offset(y = 3.dp),
+                fontWeight = FontWeight.ExtraBold,
+                color = timerData.color.toColor(),
+                letterSpacing = 3.sp,
+            )
+        }
+
+        Text(
+            text = timerData.timer,
+            fontSize = 70.sp,
+            fontWeight = FontWeight.Black,
+            fontFamily = FontFamily.Monospace,
+            color = timerData.color.toColor(),
+        )
+
+        AnimatedVisibility(
+            timerData.title != null,
+            enter = fadeIn() + expandVertically(),
+            exit = fadeOut() + shrinkVertically(),
+        ) {
+            Text(
+                text = "Restart",
+                modifier = Modifier
+                    .clickable {
+                        vm.restart()
+                    },
+                fontSize = 19.sp,
+                fontWeight = FontWeight.Normal,
+                color = c.white,
+                textAlign = TextAlign.Center
+            )
+        }
 
         val checklistUI = state.checklistUI
         if (checklistUI != null) {
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.weight(1f),
             ) {
-
-                FullScreenView__HeaderView(
-                    state = state,
-                    modifier = Modifier,
-                )
-
-                FullScreenView__TimerView(
-                    vm = vm,
-                    state = state,
-                    layer = layer,
-                    isCompact = true,
-                    modifier = Modifier.padding(top = 20.dp),
-                )
 
                 LazyColumn(
                     modifier = Modifier
-                        .padding(top = 20.dp)
-                        .weight(1f),
+                        .padding(top = 20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     contentPadding = PaddingValues(bottom = 20.dp),
                 ) {
@@ -148,116 +194,21 @@ private fun FullScreenView(
                 }
             }
         } else {
-
-            FullScreenView__HeaderView(
-                state = state,
-                modifier = Modifier.align(Alignment.TopCenter),
-            )
-
-            FullScreenView__TimerView(
-                vm = vm,
-                state = state,
-                layer = layer,
-                isCompact = false,
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .padding(bottom = 50.dp),
-            )
+            SpacerW1()
         }
-    }
-}
 
-@Composable
-private fun FullScreenView__HeaderView(
-    state: FullscreenVM.State,
-    modifier: Modifier,
-) {
-    Column(
-        modifier = modifier
-    ) {
-
-        Text(
-            text = state.title,
+        Icon(
+            painterResource(id = R.drawable.sf_xmark_large_light),
+            contentDescription = "Close",
+            tint = c.white,
             modifier = Modifier
-                .padding(top = 30.dp, start = 30.dp, end = 30.dp),
-            fontSize = 22.sp,
-            fontWeight = FontWeight.Light,
-            color = c.white,
-            textAlign = TextAlign.Center
+                .alpha(0.9f)
+                .padding(bottom = 24.dp)
+                .size(32.dp)
+                .padding(7.dp)
+                .clickable {
+                    layer.close()
+                },
         )
-
-        TextFeaturesTriggersView(
-            textFeatures = state.textFeatures,
-            modifier = Modifier.padding(top = 10.dp),
-            contentPadding = PaddingValues(horizontal = 50.dp)
-        )
-    }
-}
-
-@Composable
-private fun FullScreenView__TimerView(
-    vm: FullscreenVM,
-    state: FullscreenVM.State,
-    layer: WrapperView.Layer,
-    isCompact: Boolean,
-    modifier: Modifier,
-) {
-    val timerData = state.timerData
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        Text(
-            text = timerData.title ?: "0",
-            fontSize = 30.sp,
-            modifier = Modifier
-                .alpha(if (timerData.title != null) 1f else 0f),
-            fontWeight = FontWeight.ExtraBold,
-            color = timerData.color.toColor(),
-            letterSpacing = 5.sp
-        )
-
-        val paddings: PaddingValues = if (isCompact)
-            PaddingValues(top = 5.dp, bottom = 15.dp)
-        else PaddingValues(top = 10.dp, bottom = 20.dp)
-
-        Text(
-            text = timerData.timer,
-            fontSize = 69.sp,
-            fontWeight = FontWeight.Medium,
-            fontFamily = FontFamily.Monospace,
-            color = timerData.color.toColor(),
-            modifier = Modifier.padding(paddings),
-        )
-
-        Row(
-            modifier = Modifier.alpha(.9f)
-        ) {
-
-            Icon(
-                painterResource(id = R.drawable.sf_arrow_counterclockwise_medium_regular),
-                contentDescription = "Restart",
-                tint = c.white,
-                modifier = Modifier
-                    .padding(end = 40.dp)
-                    .size(30.dp)
-                    .clickable {
-                        vm.restart()
-                    },
-            )
-
-            Icon(
-                painterResource(id = R.drawable.sf_xmark_large_light),
-                contentDescription = "Close",
-                tint = c.white,
-                modifier = Modifier
-                    .size(30.dp)
-                    .padding(1.dp)
-                    .clickable {
-                        layer.close()
-                    },
-            )
-        }
     }
 }
