@@ -23,7 +23,7 @@ class FullscreenVM(
 
         val activity = interval.getActivityDI()
         val textFeatures = (interval.note ?: activity.name).textFeatures()
-        val title = textFeatures.textUi(withActivityEmoji = false)
+        val title = textFeatures.textUi(withActivityEmoji = false, withTimer = false)
 
         val checklistUI = textFeatures.checklists.firstOrNull()?.let { checklist ->
             val items = allChecklistItems.filter { it.list_id == checklist.id }
