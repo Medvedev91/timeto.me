@@ -129,7 +129,7 @@ private fun FullScreenView(
                 text = timerData.title ?: "",
                 fontSize = 21.sp,
                 modifier = Modifier
-                    .padding(top = 30.dp)
+                    .padding(top = 36.dp)
                     .offset(y = 3.dp),
                 fontWeight = FontWeight.ExtraBold,
                 color = timerData.color.toColor(),
