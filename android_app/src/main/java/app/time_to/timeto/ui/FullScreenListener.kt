@@ -139,7 +139,7 @@ private fun FullScreenView(
 
         Text(
             text = timerData.timer,
-            fontSize = 70.sp,
+            fontSize = if (timerData.isCompact) 60.sp else 70.sp,
             fontWeight = FontWeight.Black,
             fontFamily = FontFamily.Monospace,
             color = timerData.color.toColor(),
