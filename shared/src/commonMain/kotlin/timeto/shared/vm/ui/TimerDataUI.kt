@@ -27,6 +27,7 @@ class TimerDataUI(
     val timePassedNote = secondsToString(time() - interval.id) // Time left
     val color: ColorNative
     val title: String?
+    val isCompact: Boolean
 
     init {
         val timeLeft = interval.id + interval.deadline - time()
@@ -51,5 +52,6 @@ class TimerDataUI(
         }
 
         timer = secondsToString(timeForTimer)
+        isCompact = timeForTimer >= (3_600 * 10)
     }
 }
