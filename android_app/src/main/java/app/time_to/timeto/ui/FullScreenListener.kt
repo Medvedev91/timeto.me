@@ -231,7 +231,9 @@ private fun FullScreenView__TimerView(
             modifier = Modifier.padding(paddings),
         )
 
-        Row {
+        Row(
+            modifier = Modifier.alpha(.9f)
+        ) {
 
             Icon(
                 painterResource(id = R.drawable.sf_arrow_counterclockwise_medium_regular),
@@ -251,6 +253,7 @@ private fun FullScreenView__TimerView(
                 tint = c.white,
                 modifier = Modifier
                     .size(30.dp)
+                    .padding(1.dp)
                     .clickable {
                         layer.close()
                     },
