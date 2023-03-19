@@ -119,6 +119,7 @@ private fun FullScreenView(
                 FullScreenView__TimerView(
                     vm = vm,
                     state = state,
+                    layer = layer,
                     isCompact = true,
                     modifier = Modifier.padding(top = 20.dp),
                 )
@@ -145,11 +146,6 @@ private fun FullScreenView(
                         }
                     }
                 }
-
-                Fullscreen__CloseView(
-                    layer = layer,
-                    modifier = Modifier,
-                )
             }
         } else {
 
@@ -161,13 +157,11 @@ private fun FullScreenView(
             FullScreenView__TimerView(
                 vm = vm,
                 state = state,
-                isCompact = false,
-                modifier = Modifier.align(Alignment.Center),
-            )
-
-            Fullscreen__CloseView(
                 layer = layer,
-                modifier = Modifier.align(Alignment.BottomCenter),
+                isCompact = false,
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(bottom = 50.dp),
             )
         }
     }
@@ -204,6 +198,7 @@ private fun FullScreenView__HeaderView(
 private fun FullScreenView__TimerView(
     vm: FullscreenVM,
     state: FullscreenVM.State,
+    layer: WrapperView.Layer,
     isCompact: Boolean,
     modifier: Modifier,
 ) {
@@ -236,35 +231,30 @@ private fun FullScreenView__TimerView(
             modifier = Modifier.padding(paddings),
         )
 
-        Text(
-            text = "Restart",
-            fontSize = 22.sp,
-            fontWeight = FontWeight.Light,
-            modifier = Modifier
-                .alpha(if (timerData.title != null) 1f else 0f)
-                .clickable(timerData.title != null) {
-                    vm.restart()
-                },
-            color = c.white,
-            letterSpacing = 2.sp,
-        )
-    }
-}
+        Row {
 
-@Composable
-private fun Fullscreen__CloseView(
-    layer: WrapperView.Layer,
-    modifier: Modifier,
-) {
-    Icon(
-        painterResource(id = R.drawable.sf_xmark_large_light),
-        contentDescription = "Close",
-        modifier = modifier
-            .padding(bottom = 34.dp)
-            .size(20.dp, 20.dp)
-            .clickable {
-                layer.close()
-            },
-        tint = c.white.copy(alpha = 0.9f)
-    )
+            Icon(
+                painterResource(id = R.drawable.sf_arrow_counterclockwise_medium_regular),
+                contentDescription = "Restart",
+                tint = c.white,
+                modifier = Modifier
+                    .padding(end = 40.dp)
+                    .size(30.dp)
+                    .clickable {
+                        vm.restart()
+                    },
+            )
+
+            Icon(
+                painterResource(id = R.drawable.sf_xmark_large_light),
+                contentDescription = "Close",
+                tint = c.white,
+                modifier = Modifier
+                    .size(30.dp)
+                    .clickable {
+                        layer.close()
+                    },
+            )
+        }
+    }
 }
