@@ -36,5 +36,10 @@ UPDATE ChecklistItemSQ
 SET check_time = ?
 WHERE id = ?;
 
+upCheckTimeByList:
+UPDATE ChecklistItemSQ
+SET check_time=?
+WHERE list_id=?;
+
 truncate:
 DELETE FROM ChecklistItemSQ;

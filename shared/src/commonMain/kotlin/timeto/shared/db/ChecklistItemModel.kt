@@ -44,6 +44,16 @@ data class ChecklistItemModel(
             )
         }
 
+        suspend fun toggleByList(
+            list: ChecklistModel,
+            checkOrUncheck: Boolean
+        ) = dbIO {
+            db.checklistItemQueries.upCheckTimeByList(
+                check_time = if (checkOrUncheck) time() else 0,
+                list_id = list.id
+            )
+        }
+
         ///
         /// Backupable Holder
 
