@@ -166,30 +166,101 @@ private fun FullScreenView(
         val checklistUI = state.checklistUI
         if (checklistUI != null) {
 
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.weight(1f),
+            Row(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(top = 20.dp, start = 80.dp, end = 80.dp),
             ) {
 
+                val checkboxSize = 18.dp
+                val checklistItemMinHeight = 38.dp
+                val checklistDividerPadding = 16.dp
+
                 LazyColumn(
-                    modifier = Modifier
-                        .padding(top = 20.dp),
+                    modifier = Modifier.weight(1f),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     contentPadding = PaddingValues(bottom = 20.dp),
                 ) {
+
                     checklistUI.itemsUI.forEach { itemUI ->
+
                         item {
-                            Text(
-                                text = itemUI.item.text + if (itemUI.item.isChecked()) "  ✅" else "",
-                                color = c.white,
+
+                            Row(
                                 modifier = Modifier
+                                    .defaultMinSize(minHeight = checklistItemMinHeight)
+                                    .fillMaxWidth()
                                     .clickable {
                                         itemUI.toggle()
-                                    }
-                                    .padding(horizontal = 20.dp, vertical = 6.dp),
-                                textAlign = TextAlign.Center,
-                            )
+                                    },
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Start,
+                            ) {
+
+                                Icon(
+                                    painterResource(
+                                        id = if (itemUI.item.isChecked)
+                                            R.drawable.sf_square_medium_regular
+                                        else
+                                            R.drawable.sf_checkmark_square_fill_medium_regular
+                                    ),
+                                    contentDescription = "Checkbox",
+                                    tint = c.white,
+                                    modifier = Modifier
+                                        .size(checkboxSize),
+                                )
+
+                                Text(
+                                    text = itemUI.item.text,
+                                    color = c.white,
+                                    modifier = Modifier
+                                        .padding(horizontal = checklistDividerPadding, vertical = 4.dp),
+                                    textAlign = TextAlign.Center,
+                                )
+                            }
                         }
+                    }
+                }
+
+                Row(
+                    modifier = Modifier
+                        .height(IntrinsicSize.Max)
+                ) {
+
+                    Box(
+                        modifier = Modifier
+                            .padding(vertical = 6.dp)
+                            .alpha(.5f)
+                            .background(c.white)
+                            .width(1.dp)
+                            .fillMaxHeight(),
+                    )
+
+                    Column {
+
+                        Icon(
+                            painterResource(id = R.drawable.sf_square_medium_regular),
+                            contentDescription = "Uncheck All",
+                            tint = c.white,
+                            modifier = Modifier
+                                .defaultMinSize(minHeight = checklistItemMinHeight)
+                                .clickable {
+                                }
+                                .padding(start = checklistDividerPadding)
+                                .size(checkboxSize),
+                        )
+
+                        Icon(
+                            painterResource(id = R.drawable.sf_checkmark_square_fill_medium_regular),
+                            contentDescription = "Check All",
+                            tint = c.white,
+                            modifier = Modifier
+                                .defaultMinSize(minHeight = checklistItemMinHeight)
+                                .clickable {
+                                }
+                                .padding(start = checklistDividerPadding)
+                                .size(checkboxSize),
+                        )
                     }
                 }
             }
@@ -197,7 +268,7 @@ private fun FullScreenView(
             SpacerW1()
         }
 
-        Row(Modifier.padding(horizontal = 60.dp)) {
+        Row(Modifier.padding(horizontal = 55.dp)) {
 
             Icon(
                 painterResource(id = R.drawable.sf_gearshape_medium_thin),
