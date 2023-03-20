@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.*
 import timeto.shared.DI
 import timeto.shared.db.ChecklistItemModel
 import timeto.shared.db.ChecklistModel
+import timeto.shared.launchExDefault
 import timeto.shared.onEachExIn
 
 // todo actions from view to vm
@@ -23,6 +24,12 @@ class ChecklistDialogVM(
         val scope = scopeVM()
         ChecklistItemModel.getAscFlow().onEachExIn(scope) { items ->
             state.update { it.copy(items = items.prepChecklistItems(checklist)) }
+        }
+    }
+
+    fun uncheck() {
+        launchExDefault {
+            ChecklistItemModel.toggleByList(checklist, false)
         }
     }
 }
