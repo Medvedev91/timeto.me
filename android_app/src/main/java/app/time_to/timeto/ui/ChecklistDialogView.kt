@@ -101,7 +101,7 @@ fun ChecklistDialogView(
                                 modifier = Modifier.align(Alignment.CenterEnd)
                             ) {
                                 AnimatedVisibility(
-                                    visible = item.isChecked(),
+                                    visible = item.isChecked,
                                     enter = fadeIn(),
                                     exit = fadeOut(),
                                 ) {
@@ -145,7 +145,7 @@ fun ChecklistDialogView(
         ) {
 
             AnimatedVisibility(
-                visible = checklistItems.any { it.isChecked() },
+                visible = checklistItems.any { it.isChecked },
                 enter = fadeIn(),
                 exit = fadeOut(),
             ) {
@@ -158,7 +158,7 @@ fun ChecklistDialogView(
                         .clickable {
                             scope.launchEx {
                                 checklistItems
-                                    .filter { it.isChecked() }
+                                    .filter { it.isChecked }
                                     .forEach { it.toggle() }
                             }
                         }

@@ -61,11 +61,11 @@ data class ChecklistItemModel(
         }
     }
 
-    fun isChecked() = check_time > 0
+    val isChecked = check_time > 0
 
     suspend fun toggle(): Unit = dbIO {
         db.checklistItemQueries.upCheckTimeById(
-            id = id, check_time = if (isChecked()) 0 else time()
+            id = id, check_time = if (isChecked) 0 else time()
         )
     }
 
