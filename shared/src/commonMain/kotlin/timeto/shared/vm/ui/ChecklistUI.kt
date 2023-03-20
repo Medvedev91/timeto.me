@@ -11,6 +11,14 @@ class ChecklistUI(
     val itemsUI: List<ItemUI>,
 ) {
 
+    fun toggle(checkOrUncheck: Boolean) {
+        launchExDefault {
+            ChecklistItemModel.toggleByList(checklist, checkOrUncheck)
+        }
+    }
+
+    ///
+
     class ItemUI(
         val item: ChecklistItemModel,
     ) {
@@ -18,12 +26,6 @@ class ChecklistUI(
             defaultScope().launchEx {
                 item.toggle()
             }
-        }
-    }
-
-    fun toggle(checkOrUncheck: Boolean) {
-        launchExDefault {
-            ChecklistItemModel.toggleByList(checklist, checkOrUncheck)
         }
     }
 }
