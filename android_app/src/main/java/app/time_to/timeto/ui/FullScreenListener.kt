@@ -245,6 +245,7 @@ private fun FullScreenView(
                             modifier = Modifier
                                 .defaultMinSize(minHeight = checklistItemMinHeight)
                                 .clickable {
+                                    checklistUI.toggle(false)
                                 }
                                 .padding(start = checklistDividerPadding)
                                 .size(checkboxSize),
@@ -257,6 +258,7 @@ private fun FullScreenView(
                             modifier = Modifier
                                 .defaultMinSize(minHeight = checklistItemMinHeight)
                                 .clickable {
+                                    checklistUI.toggle(true)
                                 }
                                 .padding(start = checklistDividerPadding)
                                 .size(checkboxSize),
