@@ -60,9 +60,7 @@ struct ChecklistDialog: View {
 
                 Spacer()
 
-                // @formatter:off
                 let isCheckedExists = !items.filter { item in item.isChecked() }.isEmpty
-                // @formatter:on
                 if isCheckedExists {
                     Button(
                             action: {
