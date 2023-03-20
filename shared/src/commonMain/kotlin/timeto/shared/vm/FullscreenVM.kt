@@ -29,6 +29,12 @@ class FullscreenVM(
             val items = allChecklistItems.filter { it.list_id == checklist.id }
             checklist.toChecklistUI(items)
         }
+
+        val triggers = textFeatures.triggers.filter {
+            val clt = (it as? TextFeatures.Trigger.Checklist) ?: return@filter true
+            val clUI = checklistUI ?: return@filter true
+            return@filter clt.checklist.id != clUI.checklist.id
+        }
     }
 
     override val state = MutableStateFlow(
