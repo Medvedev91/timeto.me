@@ -4,6 +4,7 @@ import android.app.Activity
 import android.view.WindowManager
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -146,23 +147,20 @@ private fun FullScreenView(
                 color = timerData.color.toColor(),
             )
 
-            AnimatedVisibility(
-                timerData.title != null,
-                enter = fadeIn() + expandVertically(),
-                exit = fadeOut() + shrinkVertically(),
-            ) {
-                Text(
-                    text = "Restart",
-                    modifier = Modifier
-                        .clickable {
-                            vm.restart()
-                        },
-                    fontSize = 19.sp,
-                    fontWeight = FontWeight.Normal,
-                    color = c.white,
-                    textAlign = TextAlign.Center
-                )
-            }
+            val isRestartShowed = timerData.title != null
+            val restartAlphaAnimation = animateFloatAsState(if (isRestartShowed) 1f else 0f)
+            Text(
+                text = "Restart",
+                modifier = Modifier
+                    .alpha(restartAlphaAnimation.value)
+                    .clickable(isRestartShowed) {
+                        vm.restart()
+                    },
+                fontSize = 19.sp,
+                fontWeight = FontWeight.Normal,
+                color = c.white,
+                textAlign = TextAlign.Center
+            )
 
             val checklistUI = state.checklistUI
             if (checklistUI != null) {
@@ -170,12 +168,12 @@ private fun FullScreenView(
                 Row(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(top = 20.dp, start = 84.dp, end = 84.dp),
+                        .padding(top = 20.dp, start = 90.dp, end = 90.dp),
                 ) {
 
                     val checkboxSize = 18.dp
                     val checklistItemMinHeight = 38.dp
-                    val checklistDividerPadding = 16.dp
+                    val checklistDividerPadding = 14.dp
 
                     LazyColumn(
                         modifier = Modifier.weight(1f),
@@ -216,7 +214,7 @@ private fun FullScreenView(
                                         color = c.white,
                                         modifier = Modifier
                                             .padding(vertical = 4.dp)
-                                            .padding(start = checklistDividerPadding, end = 4.dp),
+                                            .padding(start = checklistDividerPadding),
                                         textAlign = TextAlign.Start,
                                     )
                                 }
@@ -242,11 +240,13 @@ private fun FullScreenView(
 
                             val completionState = checklistUI.completionState
                             Icon(
-                                painterResource(id = when (completionState) {
-                                    is ChecklistUI.CompletionState.Completed -> R.drawable.sf_checkmark_square_fill_medium_regular
-                                    is ChecklistUI.CompletionState.Empty -> R.drawable.sf_square_medium_regular
-                                    is ChecklistUI.CompletionState.Partial -> R.drawable.sf_minus_square_fill_medium_medium
-                                }),
+                                painterResource(
+                                    id = when (completionState) {
+                                        is ChecklistUI.CompletionState.Completed -> R.drawable.sf_checkmark_square_fill_medium_regular
+                                        is ChecklistUI.CompletionState.Empty -> R.drawable.sf_square_medium_regular
+                                        is ChecklistUI.CompletionState.Partial -> R.drawable.sf_minus_square_fill_medium_medium
+                                    }
+                                ),
                                 contentDescription = completionState.actionDesc,
                                 tint = c.white,
                                 modifier = Modifier
@@ -269,7 +269,7 @@ private fun FullScreenView(
             Modifier
                 .fillMaxWidth()
                 .navigationBarsPadding()
-                .padding(horizontal = 55.dp)
+                .padding(horizontal = 52.dp)
                 .align(Alignment.BottomCenter),
         ) {
 
