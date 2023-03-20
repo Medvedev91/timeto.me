@@ -115,7 +115,7 @@ private fun FullScreenView(
             )
 
             TextFeaturesTriggersView(
-                textFeatures = state.textFeatures,
+                triggers = state.textFeatures.triggers,
                 modifier = Modifier.padding(top = 10.dp),
                 contentPadding = PaddingValues(horizontal = 50.dp)
             )

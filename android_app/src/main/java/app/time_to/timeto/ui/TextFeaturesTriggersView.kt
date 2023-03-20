@@ -19,12 +19,10 @@ import timeto.shared.TextFeatures
 
 @Composable
 fun TextFeaturesTriggersView(
-    textFeatures: TextFeatures,
+    triggers: List<TextFeatures.Trigger>,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues()
 ) {
-
-    val triggers = textFeatures.triggers
 
     if (triggers.isEmpty())
         return

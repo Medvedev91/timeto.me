@@ -180,7 +180,7 @@ fun EventsListView() {
                         )
 
                         TextFeaturesTriggersView(
-                            textFeatures = uiEvent.textFeatures,
+                            triggers = uiEvent.textFeatures.triggers,
                             modifier = Modifier.padding(top = 6.dp),
                             contentPadding = PaddingValues(horizontal = horizontalPadding - 2.dp)
                         )
