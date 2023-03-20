@@ -129,7 +129,7 @@ struct ChecklistView__ItemView: View {
                         HStack {
                             Text(item.text)
                             Spacer()
-                            if item.isChecked() {
+                            if item.isChecked {
                                 Image(systemName: "checkmark")
                                         .foregroundColor(.blue)
                                         .offset(x: 4)

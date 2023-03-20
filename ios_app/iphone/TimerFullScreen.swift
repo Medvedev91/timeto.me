@@ -56,7 +56,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                             itemUI.toggle()
                                         },
                                         label: {
-                                            Text(itemUI.item.text + (itemUI.item.isChecked() ? "  ✅" : ""))
+                                            Text(itemUI.item.text + (itemUI.item.isChecked ? "  ✅" : ""))
                                                     .padding(.vertical, 4)
                                                     .foregroundColor(.white)
                                                     .font(.system(size: 18))
