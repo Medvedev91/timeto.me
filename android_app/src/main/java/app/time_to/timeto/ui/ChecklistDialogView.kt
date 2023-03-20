@@ -35,7 +35,7 @@ fun ChecklistDialogView(
     onClose: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
-    val (_, state) = rememberVM { ChecklistDialogVM(checklist = checklist) }
+    val (vm, state) = rememberVM { ChecklistDialogVM(checklist = checklist) }
 
     val checklistItems = state.items
 
@@ -156,11 +156,7 @@ fun ChecklistDialogView(
                         .clip(MySquircleShape())
                         .background(c.background)
                         .clickable {
-                            scope.launchEx {
-                                checklistItems
-                                    .filter { it.isChecked }
-                                    .forEach { it.toggle() }
-                            }
+                            vm.uncheck()
                         }
                         .padding(bottom = 5.dp, top = 5.dp, start = 9.dp, end = 9.dp),
                     color = c.textSecondary,

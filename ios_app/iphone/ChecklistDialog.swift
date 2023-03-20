@@ -60,17 +60,11 @@ struct ChecklistDialog: View {
 
                 Spacer()
 
-                let isCheckedExists = !items.filter { item in item.isChecked() }.isEmpty
+                let isCheckedExists = !items.filter { item in item.isChecked }.isEmpty
                 if isCheckedExists {
                     Button(
                             action: {
-                                items.forEach { item in
-                                    if item.isChecked() {
-                                        item.toggle { _ in
-                                            // todo
-                                        }
-                                    }
-                                }
+                                vm.uncheck()
                             },
                             label: { Text("Uncheck") }
                     )
