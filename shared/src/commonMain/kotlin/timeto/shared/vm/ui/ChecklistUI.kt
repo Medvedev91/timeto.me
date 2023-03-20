@@ -11,6 +11,12 @@ class ChecklistUI(
     val itemsUI: List<ItemUI>,
 ) {
 
+    val completionState: CompletionState = when {
+        itemsUI.all { it.item.isChecked } -> CompletionState.Completed(checklist)
+        itemsUI.none { it.item.isChecked } -> CompletionState.Empty(checklist)
+        else -> CompletionState.Partial(checklist)
+    }
+
     fun toggle(checkOrUncheck: Boolean) {
         launchExDefault {
             ChecklistItemModel.toggleByList(checklist, checkOrUncheck)
@@ -27,6 +33,30 @@ class ChecklistUI(
                 item.toggle()
             }
         }
+    }
+
+    sealed class CompletionState(
+        val actionDesc: String,
+        val onClick: () -> Unit,
+    ) {
+
+        class Completed(checklist: ChecklistModel) : CompletionState("Uncheck All", {
+            launchExDefault {
+                ChecklistItemModel.toggleByList(checklist, false)
+            }
+        })
+
+        class Empty(checklist: ChecklistModel) : CompletionState("Check All", {
+            launchExDefault {
+                ChecklistItemModel.toggleByList(checklist, true)
+            }
+        })
+
+        class Partial(checklist: ChecklistModel) : CompletionState("Uncheck All", {
+            launchExDefault {
+                ChecklistItemModel.toggleByList(checklist, false)
+            }
+        })
     }
 }
 
