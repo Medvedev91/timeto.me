@@ -91,187 +91,194 @@ fun FullScreenListener(
 private fun FullScreenView(
     layer: WrapperView.Layer,
 ) {
-    Column(
-        modifier = Modifier
-            .pointerInput(Unit) { }
-            .fillMaxSize()
-            .background(c.black)
-            .navigationBarsPadding(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-
-        val (vm, state) = rememberVM { FullscreenVM(ColorNative.white) }
-
-        Text(
-            text = state.title,
+    Box {
+        Column(
             modifier = Modifier
-                .padding(top = 44.dp, start = 30.dp, end = 30.dp),
-            fontSize = 19.sp,
-            fontWeight = FontWeight.Normal,
-            color = c.white,
-            textAlign = TextAlign.Center
-        )
-
-        TextFeaturesTriggersView(
-            textFeatures = state.textFeatures,
-            modifier = Modifier.padding(top = 10.dp),
-            contentPadding = PaddingValues(horizontal = 50.dp)
-        )
-
-        val timerData = state.timerData
-        AnimatedVisibility(
-            timerData.title != null,
-            enter = fadeIn() + expandVertically(),
-            exit = fadeOut() + shrinkVertically(),
+                .pointerInput(Unit) { }
+                .fillMaxSize()
+                .background(c.black),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
-            Text(
-                text = timerData.title ?: "",
-                fontSize = 21.sp,
-                modifier = Modifier
-                    .padding(top = 36.dp)
-                    .offset(y = 3.dp),
-                fontWeight = FontWeight.ExtraBold,
-                color = timerData.color.toColor(),
-                letterSpacing = 3.sp,
-            )
-        }
+            val (vm, state) = rememberVM { FullscreenVM(ColorNative.white) }
 
-        Text(
-            text = timerData.timer,
-            fontSize = if (timerData.isCompact) 60.sp else 70.sp,
-            fontWeight = FontWeight.Black,
-            fontFamily = FontFamily.Monospace,
-            color = timerData.color.toColor(),
-        )
-
-        AnimatedVisibility(
-            timerData.title != null,
-            enter = fadeIn() + expandVertically(),
-            exit = fadeOut() + shrinkVertically(),
-        ) {
             Text(
-                text = "Restart",
+                text = state.title,
                 modifier = Modifier
-                    .clickable {
-                        vm.restart()
-                    },
+                    .padding(top = 44.dp, start = 30.dp, end = 30.dp),
                 fontSize = 19.sp,
                 fontWeight = FontWeight.Normal,
                 color = c.white,
                 textAlign = TextAlign.Center
             )
-        }
 
-        val checklistUI = state.checklistUI
-        if (checklistUI != null) {
+            TextFeaturesTriggersView(
+                textFeatures = state.textFeatures,
+                modifier = Modifier.padding(top = 10.dp),
+                contentPadding = PaddingValues(horizontal = 50.dp)
+            )
 
-            Row(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(top = 20.dp, start = 80.dp, end = 80.dp),
+            val timerData = state.timerData
+            AnimatedVisibility(
+                timerData.title != null,
+                enter = fadeIn() + expandVertically(),
+                exit = fadeOut() + shrinkVertically(),
             ) {
 
-                val checkboxSize = 18.dp
-                val checklistItemMinHeight = 38.dp
-                val checklistDividerPadding = 16.dp
+                Text(
+                    text = timerData.title ?: "",
+                    fontSize = 21.sp,
+                    modifier = Modifier
+                        .padding(top = 36.dp)
+                        .offset(y = 3.dp),
+                    fontWeight = FontWeight.ExtraBold,
+                    color = timerData.color.toColor(),
+                    letterSpacing = 3.sp,
+                )
+            }
 
-                LazyColumn(
-                    modifier = Modifier.weight(1f),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    contentPadding = PaddingValues(bottom = 20.dp),
-                ) {
+            Text(
+                text = timerData.timer,
+                fontSize = if (timerData.isCompact) 60.sp else 70.sp,
+                fontWeight = FontWeight.Black,
+                fontFamily = FontFamily.Monospace,
+                color = timerData.color.toColor(),
+            )
 
-                    checklistUI.itemsUI.forEach { itemUI ->
+            AnimatedVisibility(
+                timerData.title != null,
+                enter = fadeIn() + expandVertically(),
+                exit = fadeOut() + shrinkVertically(),
+            ) {
+                Text(
+                    text = "Restart",
+                    modifier = Modifier
+                        .clickable {
+                            vm.restart()
+                        },
+                    fontSize = 19.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = c.white,
+                    textAlign = TextAlign.Center
+                )
+            }
 
-                        item {
-
-                            Row(
-                                modifier = Modifier
-                                    .defaultMinSize(minHeight = checklistItemMinHeight)
-                                    .fillMaxWidth()
-                                    .clickable {
-                                        itemUI.toggle()
-                                    },
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Start,
-                            ) {
-
-                                Icon(
-                                    painterResource(
-                                        id = if (itemUI.item.isChecked)
-                                            R.drawable.sf_checkmark_square_fill_medium_regular
-                                        else
-                                            R.drawable.sf_square_medium_regular
-                                    ),
-                                    contentDescription = "Checkbox",
-                                    tint = c.white,
-                                    modifier = Modifier
-                                        .size(checkboxSize),
-                                )
-
-                                Text(
-                                    text = itemUI.item.text,
-                                    color = c.white,
-                                    modifier = Modifier
-                                        .padding(vertical = 4.dp)
-                                        .padding(start = checklistDividerPadding, end = 4.dp),
-                                    textAlign = TextAlign.Start,
-                                )
-                            }
-                        }
-                    }
-                }
+            val checklistUI = state.checklistUI
+            if (checklistUI != null) {
 
                 Row(
                     modifier = Modifier
-                        .height(IntrinsicSize.Max)
+                        .weight(1f)
+                        .padding(top = 20.dp, start = 84.dp, end = 84.dp),
                 ) {
 
-                    Box(
+                    val checkboxSize = 18.dp
+                    val checklistItemMinHeight = 38.dp
+                    val checklistDividerPadding = 16.dp
+
+                    LazyColumn(
+                        modifier = Modifier.weight(1f),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        contentPadding = PaddingValues(bottom = 120.dp),
+                    ) {
+
+                        checklistUI.itemsUI.forEach { itemUI ->
+
+                            item {
+
+                                Row(
+                                    modifier = Modifier
+                                        .defaultMinSize(minHeight = checklistItemMinHeight)
+                                        .fillMaxWidth()
+                                        .clickable {
+                                            itemUI.toggle()
+                                        },
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Start,
+                                ) {
+
+                                    Icon(
+                                        painterResource(
+                                            id = if (itemUI.item.isChecked)
+                                                R.drawable.sf_checkmark_square_fill_medium_regular
+                                            else
+                                                R.drawable.sf_square_medium_regular
+                                        ),
+                                        contentDescription = "Checkbox",
+                                        tint = c.white,
+                                        modifier = Modifier
+                                            .size(checkboxSize),
+                                    )
+
+                                    Text(
+                                        text = itemUI.item.text,
+                                        color = c.white,
+                                        modifier = Modifier
+                                            .padding(vertical = 4.dp)
+                                            .padding(start = checklistDividerPadding, end = 4.dp),
+                                        textAlign = TextAlign.Start,
+                                    )
+                                }
+                            }
+                        }
+                    }
+
+                    Row(
                         modifier = Modifier
-                            .padding(vertical = 6.dp)
-                            .alpha(.5f)
-                            .background(c.white)
-                            .width(1.dp)
-                            .fillMaxHeight(),
-                    )
+                            .height(IntrinsicSize.Max)
+                    ) {
 
-                    Column {
-
-                        Icon(
-                            painterResource(id = R.drawable.sf_square_medium_regular),
-                            contentDescription = "Uncheck All",
-                            tint = c.white,
+                        Box(
                             modifier = Modifier
-                                .defaultMinSize(minHeight = checklistItemMinHeight)
-                                .clickable {
-                                    checklistUI.toggle(false)
-                                }
-                                .padding(start = checklistDividerPadding)
-                                .size(checkboxSize),
+                                .padding(vertical = 6.dp)
+                                .alpha(.5f)
+                                .background(c.white)
+                                .width(1.dp)
+                                .fillMaxHeight(),
                         )
 
-                        Icon(
-                            painterResource(id = R.drawable.sf_checkmark_square_fill_medium_regular),
-                            contentDescription = "Check All",
-                            tint = c.white,
-                            modifier = Modifier
-                                .defaultMinSize(minHeight = checklistItemMinHeight)
-                                .clickable {
-                                    checklistUI.toggle(true)
-                                }
-                                .padding(start = checklistDividerPadding)
-                                .size(checkboxSize),
-                        )
+                        Column {
+
+                            Icon(
+                                painterResource(id = R.drawable.sf_square_medium_regular),
+                                contentDescription = "Uncheck All",
+                                tint = c.white,
+                                modifier = Modifier
+                                    .defaultMinSize(minHeight = checklistItemMinHeight)
+                                    .clickable {
+                                        checklistUI.toggle(false)
+                                    }
+                                    .padding(start = checklistDividerPadding)
+                                    .size(checkboxSize),
+                            )
+
+                            Icon(
+                                painterResource(id = R.drawable.sf_checkmark_square_fill_medium_regular),
+                                contentDescription = "Check All",
+                                tint = c.white,
+                                modifier = Modifier
+                                    .defaultMinSize(minHeight = checklistItemMinHeight)
+                                    .clickable {
+                                        checklistUI.toggle(true)
+                                    }
+                                    .padding(start = checklistDividerPadding)
+                                    .size(checkboxSize),
+                            )
+                        }
                     }
                 }
+            } else {
+                SpacerW1()
             }
-        } else {
-            SpacerW1()
         }
 
-        Row(Modifier.padding(horizontal = 55.dp)) {
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .navigationBarsPadding()
+                .padding(horizontal = 55.dp)
+                .align(Alignment.BottomCenter),
+        ) {
 
             Icon(
                 painterResource(id = R.drawable.sf_gearshape_medium_thin),
