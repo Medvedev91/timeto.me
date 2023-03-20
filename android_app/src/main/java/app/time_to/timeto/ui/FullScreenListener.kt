@@ -197,18 +197,37 @@ private fun FullScreenView(
             SpacerW1()
         }
 
-        Icon(
-            painterResource(id = R.drawable.sf_xmark_large_light),
-            contentDescription = "Close",
-            tint = c.white,
-            modifier = Modifier
-                .alpha(0.9f)
-                .padding(bottom = 24.dp)
-                .size(32.dp)
-                .padding(7.dp)
-                .clickable {
-                    layer.close()
-                },
-        )
+        Row(Modifier.padding(horizontal = 60.dp)) {
+
+            Icon(
+                painterResource(id = R.drawable.ic_round_settings_24),
+                contentDescription = "Settings",
+                tint = c.white,
+                modifier = Modifier
+                    .alpha(0.5f)
+                    .padding(bottom = 24.dp)
+                    .size(32.dp)
+                    .padding(1.dp)
+                    .clickable {
+                        // todo
+                    },
+            )
+
+            SpacerW1()
+
+            Icon(
+                painterResource(id = R.drawable.ic_round_cancel_24),
+                contentDescription = "Close",
+                tint = c.white,
+                modifier = Modifier
+                    .alpha(0.5f)
+                    .padding(bottom = 24.dp)
+                    .size(33.dp)
+                    .padding(1.dp)
+                    .clickable {
+                        layer.close()
+                    },
+            )
+        }
     }
 }
