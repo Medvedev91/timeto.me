@@ -17,12 +17,6 @@ class ChecklistUI(
         else -> CompletionState.Partial(checklist)
     }
 
-    fun toggle(checkOrUncheck: Boolean) {
-        launchExDefault {
-            ChecklistItemModel.toggleByList(checklist, checkOrUncheck)
-        }
-    }
-
     ///
 
     class ItemUI(
