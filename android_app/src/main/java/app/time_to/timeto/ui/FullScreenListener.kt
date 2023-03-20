@@ -200,9 +200,9 @@ private fun FullScreenView(
                                 Icon(
                                     painterResource(
                                         id = if (itemUI.item.isChecked)
-                                            R.drawable.sf_square_medium_regular
-                                        else
                                             R.drawable.sf_checkmark_square_fill_medium_regular
+                                        else
+                                            R.drawable.sf_square_medium_regular
                                     ),
                                     contentDescription = "Checkbox",
                                     tint = c.white,
