@@ -32,6 +32,7 @@ import timeto.shared.ColorNative
 import timeto.shared.FullScreenUI
 import timeto.shared.onEachExIn
 import timeto.shared.vm.FullscreenVM
+import timeto.shared.vm.ui.ChecklistUI
 
 @Composable
 fun FullScreenListener(
@@ -239,27 +240,19 @@ private fun FullScreenView(
 
                         Column {
 
+                            val completionState = checklistUI.completionState
                             Icon(
-                                painterResource(id = R.drawable.sf_square_medium_regular),
-                                contentDescription = "Uncheck All",
+                                painterResource(id = when (completionState) {
+                                    is ChecklistUI.CompletionState.Completed -> R.drawable.sf_checkmark_square_fill_medium_regular
+                                    is ChecklistUI.CompletionState.Empty -> R.drawable.sf_square_medium_regular
+                                    is ChecklistUI.CompletionState.Partial -> R.drawable.sf_minus_square_fill_medium_medium
+                                }),
+                                contentDescription = completionState.actionDesc,
                                 tint = c.white,
                                 modifier = Modifier
                                     .defaultMinSize(minHeight = checklistItemMinHeight)
                                     .clickable {
-                                        checklistUI.toggle(false)
-                                    }
-                                    .padding(start = checklistDividerPadding)
-                                    .size(checkboxSize),
-                            )
-
-                            Icon(
-                                painterResource(id = R.drawable.sf_checkmark_square_fill_medium_regular),
-                                contentDescription = "Check All",
-                                tint = c.white,
-                                modifier = Modifier
-                                    .defaultMinSize(minHeight = checklistItemMinHeight)
-                                    .clickable {
-                                        checklistUI.toggle(true)
+                                        completionState.onClick()
                                     }
                                     .padding(start = checklistDividerPadding)
                                     .size(checkboxSize),
