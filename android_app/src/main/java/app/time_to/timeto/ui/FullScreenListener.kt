@@ -281,7 +281,7 @@ private fun FullScreenView(
                     .alpha(0.5f)
                     .padding(bottom = 24.dp)
                     .size(32.dp)
-                    .padding(2.dp)
+                    .padding(3.dp)
                     .clickable {
                         // todo
                     },
@@ -297,7 +297,7 @@ private fun FullScreenView(
                     .alpha(0.5f)
                     .padding(bottom = 24.dp)
                     .size(33.dp)
-                    .padding(2.dp)
+                    .padding(3.dp)
                     .clickable {
                         layer.close()
                     },
