@@ -214,8 +214,9 @@ private fun FullScreenView(
                                     text = itemUI.item.text,
                                     color = c.white,
                                     modifier = Modifier
-                                        .padding(horizontal = checklistDividerPadding, vertical = 4.dp),
-                                    textAlign = TextAlign.Center,
+                                        .padding(vertical = 4.dp)
+                                        .padding(start = checklistDividerPadding, end = 4.dp),
+                                    textAlign = TextAlign.Start,
                                 )
                             }
                         }
