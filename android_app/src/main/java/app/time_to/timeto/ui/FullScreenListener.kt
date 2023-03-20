@@ -200,14 +200,14 @@ private fun FullScreenView(
         Row(Modifier.padding(horizontal = 60.dp)) {
 
             Icon(
-                painterResource(id = R.drawable.ic_round_settings_24),
+                painterResource(id = R.drawable.sf_gearshape_medium_thin),
                 contentDescription = "Settings",
                 tint = c.white,
                 modifier = Modifier
                     .alpha(0.5f)
                     .padding(bottom = 24.dp)
                     .size(32.dp)
-                    .padding(1.dp)
+                    .padding(2.dp)
                     .clickable {
                         // todo
                     },
@@ -216,14 +216,14 @@ private fun FullScreenView(
             SpacerW1()
 
             Icon(
-                painterResource(id = R.drawable.ic_round_cancel_24),
+                painterResource(id = R.drawable.sf_xmark_circle_medium_thin),
                 contentDescription = "Close",
                 tint = c.white,
                 modifier = Modifier
                     .alpha(0.5f)
                     .padding(bottom = 24.dp)
                     .size(33.dp)
-                    .padding(1.dp)
+                    .padding(2.dp)
                     .clickable {
                         layer.close()
                     },
