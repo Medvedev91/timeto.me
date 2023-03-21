@@ -16,6 +16,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
@@ -172,7 +173,7 @@ private fun FullScreenView(
                 Row(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(top = 50.dp, start = 85.dp, end = 85.dp),
+                        .padding(top = 50.dp, start = 80.dp, end = 80.dp),
                 ) {
 
                     val checkboxSize = 18.dp
@@ -193,9 +194,11 @@ private fun FullScreenView(
                                     modifier = Modifier
                                         .defaultMinSize(minHeight = checklistItemMinHeight)
                                         .fillMaxWidth()
+                                        .clip(MySquircleShape())
                                         .clickable {
                                             itemUI.toggle()
-                                        },
+                                        }
+                                        .padding(start = 8.dp),
                                     verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.Start,
                                 ) {
