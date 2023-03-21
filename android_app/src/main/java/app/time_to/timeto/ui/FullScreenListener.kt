@@ -279,22 +279,25 @@ private fun FullScreenView(
             Modifier
                 .fillMaxWidth()
                 .navigationBarsPadding()
-                .padding(horizontal = if (state.checklistUI != null) 48.dp else 52.dp)
+                .padding(horizontal = if (state.checklistUI != null) 36.dp else 40.dp)
+                .padding(bottom = 24.dp)
                 .align(Alignment.BottomCenter),
         ) {
+
+            val menuIconAlpha = 0.5f
+            val menuIconPadding = 15.dp
 
             Icon(
                 painterResource(id = R.drawable.sf_gearshape_medium_thin),
                 contentDescription = "Settings",
                 tint = c.white,
                 modifier = Modifier
-                    .alpha(0.5f)
-                    .padding(bottom = 24.dp)
-                    .size(32.dp)
-                    .padding(3.dp)
+                    .alpha(menuIconAlpha)
+                    .size(56.dp)
                     .clickable {
                         // todo
-                    },
+                    }
+                    .padding(menuIconPadding),
             )
 
             SpacerW1()
@@ -304,13 +307,12 @@ private fun FullScreenView(
                 contentDescription = "Close",
                 tint = c.white,
                 modifier = Modifier
-                    .alpha(0.5f)
-                    .padding(bottom = 24.dp)
-                    .size(33.dp)
-                    .padding(3.dp)
+                    .alpha(menuIconAlpha)
+                    .size(57.dp)
                     .clickable {
                         layer.close()
-                    },
+                    }
+                    .padding(menuIconPadding),
             )
         }
     }
