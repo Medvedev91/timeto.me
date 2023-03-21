@@ -45,6 +45,8 @@ fun FullScreenListener(
 ) {
     LaunchedEffect(Unit) {
 
+        val statusBarHeight = getStatusBarHeight(activity)
+
         FullScreenUI.state.onEachExIn(this) { toOpenOrClose ->
 
             /**
@@ -85,7 +87,7 @@ fun FullScreenListener(
                 alignment = Alignment.Center,
                 onClose = { FullScreenUI.close() },
                 content = { layer ->
-                    FullScreenView(layer)
+                    FullScreenView(layer, statusBarHeight)
                 }
             ).show()
         }
@@ -95,6 +97,7 @@ fun FullScreenListener(
 @Composable
 private fun FullScreenView(
     layer: WrapperView.Layer,
+    statusBarHeight: Dp,
 ) {
     val (vm, state) = rememberVM { FullscreenVM(ColorNative.white) }
 
@@ -104,14 +107,15 @@ private fun FullScreenView(
             modifier = Modifier
                 .pointerInput(Unit) { }
                 .fillMaxSize()
-                .background(c.black),
+                .background(c.black)
+                .padding(top = statusBarHeight + 30.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
             Text(
                 text = state.title,
                 modifier = Modifier
-                    .padding(top = 44.dp, start = 30.dp, end = 30.dp),
+                    .padding(start = 30.dp, end = 30.dp),
                 fontSize = 19.sp,
                 fontWeight = FontWeight.Normal,
                 color = c.white,
