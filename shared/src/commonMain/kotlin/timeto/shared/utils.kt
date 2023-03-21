@@ -469,10 +469,10 @@ class TimerPickerItem(
             if (note == null)
                 return activity.deadline
 
-            // If the contains the time, the time takes priority.
-            val timerTime = TimerTimeParser.findTime(note)
-            if (timerTime != null)
-                return timerTime.seconds
+            // If the note contains the time, it takes priority.
+            val textFeatures = note.textFeatures()
+            if (textFeatures.timer != null)
+                return textFeatures.timer
 
             // If the history contains the task
             val lastHotInterval = DI.hotIntervalsDesc.firstOrNull {
