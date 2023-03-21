@@ -280,7 +280,7 @@ private fun FullScreenView(
                 .fillMaxWidth()
                 .navigationBarsPadding()
                 .padding(horizontal = if (state.checklistUI != null) 36.dp else 40.dp)
-                .padding(bottom = 24.dp)
+                .padding(bottom = 14.dp)
                 .align(Alignment.BottomCenter),
         ) {
 
@@ -293,6 +293,7 @@ private fun FullScreenView(
                 tint = c.white,
                 modifier = Modifier
                     .alpha(menuIconAlpha)
+                    .clip(RoundedCornerShape(99.dp))
                     .size(56.dp)
                     .clickable {
                         // todo
@@ -308,6 +309,7 @@ private fun FullScreenView(
                 tint = c.white,
                 modifier = Modifier
                     .alpha(menuIconAlpha)
+                    .clip(RoundedCornerShape(99.dp))
                     .size(57.dp)
                     .clickable {
                         layer.close()
