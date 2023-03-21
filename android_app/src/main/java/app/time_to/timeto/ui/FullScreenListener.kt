@@ -24,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowInsetsCompat
@@ -33,6 +34,7 @@ import app.time_to.timeto.R
 import timeto.shared.ColorNative
 import timeto.shared.FullScreenUI
 import timeto.shared.onEachExIn
+import timeto.shared.reportApi
 import timeto.shared.vm.FullscreenVM
 import timeto.shared.vm.ui.ChecklistUI
 
@@ -318,4 +320,12 @@ private fun FullScreenView(
             )
         }
     }
+}
+
+private fun getStatusBarHeight(activity: Activity): Dp {
+    val resourceId = activity.resources.getIdentifier("status_bar_height", "dimen", "android")
+    if (resourceId > 0)
+        return pxToDp(activity.resources.getDimensionPixelSize(resourceId)).dp
+    reportApi("Invalid status_bar_height $resourceId")
+    return 0.dp
 }
