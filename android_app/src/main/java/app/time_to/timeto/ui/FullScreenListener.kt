@@ -4,12 +4,12 @@ import android.app.Activity
 import android.view.WindowManager
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -173,7 +173,7 @@ private fun FullScreenView(
                 Row(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(top = 50.dp, start = 80.dp, end = 80.dp),
+                        .padding(top = 50.dp, start = 76.dp, end = 76.dp),
                 ) {
 
                     val checkboxSize = 18.dp
@@ -246,6 +246,8 @@ private fun FullScreenView(
                         Column {
 
                             val completionState = checklistUI.completionState
+                            val checklistMenuInnerIconPadding = (checklistItemMinHeight - checkboxSize) / 2
+                            val checklistMenuStartIconPadding = 4.dp
                             Icon(
                                 painterResource(
                                     id = when (completionState) {
@@ -257,12 +259,13 @@ private fun FullScreenView(
                                 contentDescription = completionState.actionDesc,
                                 tint = c.white,
                                 modifier = Modifier
-                                    .defaultMinSize(minHeight = checklistItemMinHeight)
+                                    .padding(start = checklistMenuStartIconPadding)
+                                    .size(checklistItemMinHeight)
+                                    .clip(RoundedCornerShape(99.dp))
                                     .clickable {
                                         completionState.onClick()
                                     }
-                                    .padding(start = checklistDividerPadding)
-                                    .size(checkboxSize),
+                                    .padding(checklistMenuInnerIconPadding),
                             )
                         }
                     }
