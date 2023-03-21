@@ -88,9 +88,10 @@ fun <T> Flow<T>.onEachExIn(
 fun taskAutostartData(
     task: TaskModel,
 ): Pair<ActivityModel, Int>? {
-    val timerTime = TimerTimeParser.findTime(task.text) ?: return null
-    val emojiActivity = DI.activitiesSorted.firstOrNull { task.text.contains(it.emoji) } ?: return null
-    return emojiActivity to timerTime.seconds
+    val textFeatures = task.text.textFeatures()
+    val activity = textFeatures.activity ?: return null
+    val timerTime = textFeatures.timer ?: return null
+    return activity to timerTime
 }
 
 @Throws(SecureLocalStorage__Exception::class)
