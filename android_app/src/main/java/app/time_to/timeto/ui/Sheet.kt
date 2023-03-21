@@ -11,7 +11,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
@@ -28,6 +27,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import app.time_to.timeto.statusBarHeight
 import timeto.shared.min
 
 object Sheet {
@@ -60,10 +60,7 @@ object Sheet {
                      * by height wouldn't work on close click.
                      */
                     modifier = Modifier
-                        // Restriction max height
-                        .statusBarsPadding()
-                        .padding(top = topPadding)
-                        ////
+                        .padding(top = topPadding + statusBarHeight) // Restriction max height
                         .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
                         .pointerInput(Unit) { }
                 ) {

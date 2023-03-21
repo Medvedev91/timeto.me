@@ -1,5 +1,6 @@
 package app.time_to.timeto
 
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -11,6 +12,8 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import app.time_to.timeto.ui.*
@@ -20,6 +23,7 @@ import timeto.shared.vm.AppVM
 
 val LocalAutoBackup = compositionLocalOf<AutoBackup?> { throw Exception("LocalAutoBackup") }
 val wrapperViewLayers = mutableStateListOf<WrapperView.Layer>()
+var statusBarHeight = 0.dp
 
 class MainActivity : ComponentActivity() {
 
@@ -29,6 +33,8 @@ class MainActivity : ComponentActivity() {
         // Remove system paddings including status and navigation bars.
         // Needs android:windowSoftInputMode="adjustNothing" in the manifest.
         WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        statusBarHeight = getStatusBarHeight(this@MainActivity)
 
         setContent {
 
@@ -117,4 +123,13 @@ private fun UIListeners() {
             }
         }
     }
+}
+
+private fun getStatusBarHeight(activity: Activity): Dp {
+    val resources = activity.resources
+    val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+    if (resourceId > 0)
+        return pxToDp(resources.getDimensionPixelSize(resourceId)).dp
+    reportApi("Invalid status_bar_height $resourceId")
+    return 0.dp
 }

@@ -27,6 +27,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import app.time_to.timeto.R
 import app.time_to.timeto.rememberVM
+import app.time_to.timeto.statusBarHeight
 import timeto.shared.vm.TabsVM
 
 // todo
@@ -64,8 +65,7 @@ fun TabsView() {
                 navController,
                 modifier = Modifier
                     .background(c.background) // Fix on IME hide another background
-                    .statusBarsPadding()
-                    .padding(bottom = navHeight),
+                    .padding(top = statusBarHeight, bottom = navHeight),
                 startDestination = TabItem.Timer.route
             ) {
                 composable(TabItem.Timer.route) {
