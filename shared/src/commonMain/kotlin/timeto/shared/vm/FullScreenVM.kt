@@ -16,6 +16,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
     data class State(
         val interval: IntervalModel,
         val allChecklistItems: List<ChecklistItemModel>,
+        val withTimeOfTheDay: Boolean,
         val idToUpdate: Long,
     ) {
         val timerData = TimerDataUI(interval, ColorNative.white)
@@ -40,6 +41,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
         State(
             interval = DI.lastInterval,
             allChecklistItems = DI.checklistItems,
+            withTimeOfTheDay = KVModel.KEY.FULLSCREEN_SHOW_TIME_OF_THE_DAY.getFromDIOrNull().asFullScreenShowTimeOfTheDay(),
             idToUpdate = 0,
         )
     )
