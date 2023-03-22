@@ -35,6 +35,9 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
             val clUI = checklistUI ?: return@filter true
             return@filter clt.checklist.id != clUI.checklist.id
         }
+
+        val timeOfTheDay: String? = if (!withTimeOfTheDay) null else
+            UnixTime().getStringByComponents(listOf(UnixTime.StringComponent.hhmm24))
     }
 
     override val state = MutableStateFlow(
@@ -58,6 +61,9 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
             .onEachExIn(scope) { items ->
                 state.update { it.copy(allChecklistItems = items) }
             }
+        KVModel.KEY.FULLSCREEN_SHOW_TIME_OF_THE_DAY.getOrNullFlow().onEachExIn(scope) { kv ->
+            state.update { it.copy(withTimeOfTheDay = kv?.value.asFullScreenShowTimeOfTheDay()) }
+        }
         scope.launch {
             while (true) {
                 state.update {
