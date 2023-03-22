@@ -46,7 +46,8 @@ data class KVModel(
     enum class KEY {
 
         DAY_START_OFFSET_SECONDS,
-        EVENTS_HISTORY;
+        EVENTS_HISTORY,
+        FULLSCREEN_SHOW_TIME_OF_THE_DAY;
 
         fun getFromDIOrNull(): String? = DI.kv.firstOrNull { it.key == this.name }?.value
 
