@@ -14,7 +14,7 @@ class FullscreenVM : __VM<FullscreenVM.State>() {
     data class State(
         val interval: IntervalModel,
         val allChecklistItems: List<ChecklistItemModel>,
-        val idToUpdate: Long
+        val idToUpdate: Long,
     ) {
         val timerData = TimerDataUI(interval, ColorNative.white)
 
