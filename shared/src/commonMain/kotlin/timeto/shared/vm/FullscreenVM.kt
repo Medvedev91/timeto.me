@@ -59,7 +59,7 @@ class FullscreenVM : __VM<FullscreenVM.State>() {
                 state.update {
                     it.copy(
                         interval = DI.lastInterval,
-                        idToUpdate = timeMls(), // Force update
+                        idToUpdate = it.idToUpdate + 1, // Force update
                     )
                 }
                 delay(1_000L)
