@@ -36,9 +36,8 @@ class FullScreenSettingsSheetVM : __VM<FullScreenSettingsSheetVM.State>() {
         KVModel.getAllFlow().onEachExIn(scope) { allKV ->
             allKV.forEach { kv ->
                 when (kv.key) {
-                    KVModel.KEY.FULLSCREEN_SHOW_TIME_OF_THE_DAY.name -> {
+                    KVModel.KEY.FULLSCREEN_SHOW_TIME_OF_THE_DAY.name ->
                         state.update { it.copy(isShowTimeOfTheDay = kv.value.toBoolean10()) }
-                    }
                 }
             }
         }
