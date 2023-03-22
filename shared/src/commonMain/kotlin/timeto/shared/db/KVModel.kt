@@ -25,9 +25,6 @@ data class KVModel(
         fun getAllFlow() = db.kVQueries.getAll().asFlow()
             .mapToList().map { list -> list.map { it.toModel() } }
 
-        fun getByKeyOrNullFlow(key: KEY) = db.kVQueries.getByKey(key.name).asFlow()
-            .mapToOneOrNull().map { it?.toModel() }
-
         fun String?.asFullScreenShowTimeOfTheDay(): Boolean = this?.toBoolean10() ?: false
 
         ///

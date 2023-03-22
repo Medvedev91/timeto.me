@@ -58,7 +58,8 @@ class TabToolsVM : __VM<TabToolsVM.State>() {
             .onEachExIn(scope) { shortcuts -> state.update { it.copy(shortcuts = shortcuts) } }
         ChecklistModel.getAscFlow()
             .onEachExIn(scope) { checklists -> state.update { it.copy(checklists = checklists) } }
-        KVModel.getByKeyOrNullFlow(KVModel.KEY.DAY_START_OFFSET_SECONDS)
+        KVModel.KEY.DAY_START_OFFSET_SECONDS
+            .getOrNullFlow()
             .onEachExIn(scope) { kv ->
                 val seconds = kv?.value?.toInt() ?: KVModel.DAY_START_OFFSET_SECONDS_DEFAULT
                 state.update { it.copy(dayStartSeconds = seconds) }

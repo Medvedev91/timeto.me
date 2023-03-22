@@ -28,7 +28,8 @@ class EventsHistoryVM : __VM<EventsHistoryVM.State>() {
     }
 
     override fun onAppear() {
-        KVModel.getByKeyOrNullFlow(KVModel.KEY.EVENTS_HISTORY)
+        KVModel.KEY.EVENTS_HISTORY
+            .getOrNullFlow()
             .filterNotNull()
             .onEachExIn(scopeVM()) { kv ->
                 state.update {
