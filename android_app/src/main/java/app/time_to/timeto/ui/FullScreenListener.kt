@@ -30,7 +30,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import app.time_to.timeto.*
 import app.time_to.timeto.R
-import timeto.shared.ColorNative
 import timeto.shared.FullScreenUI
 import timeto.shared.onEachExIn
 import timeto.shared.vm.FullscreenVM
