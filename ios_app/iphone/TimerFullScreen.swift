@@ -33,7 +33,7 @@ private struct TimerFullScreen__ViewModifier: ViewModifier {
 
 private struct TimerFullScreen__FullScreenCoverView: View {
 
-    @State private var vm = FullscreenVM()
+    @State private var vm = FullScreenVM()
 
     var body: some View {
 
@@ -90,7 +90,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
 private struct TimerFullScreen__HeaderView: View {
 
-    let state: FullscreenVM.State
+    let state: FullScreenVM.State
 
     var body: some View {
 
@@ -109,8 +109,8 @@ private struct TimerFullScreen__HeaderView: View {
 
 private struct TimerFullScreen__TimerView: View {
 
-    let vm: FullscreenVM
-    let state: FullscreenVM.State
+    let vm: FullScreenVM
+    let state: FullScreenVM.State
     let isCompact: Bool
 
     var body: some View {

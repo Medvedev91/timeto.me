@@ -32,7 +32,7 @@ import app.time_to.timeto.*
 import app.time_to.timeto.R
 import timeto.shared.FullScreenUI
 import timeto.shared.onEachExIn
-import timeto.shared.vm.FullscreenVM
+import timeto.shared.vm.FullScreenVM
 import timeto.shared.vm.ui.ChecklistUI
 
 @Composable
@@ -93,7 +93,7 @@ fun FullScreenListener(
 private fun FullScreenView(
     layer: WrapperView.Layer,
 ) {
-    val (vm, state) = rememberVM { FullscreenVM() }
+    val (vm, state) = rememberVM { FullScreenVM() }
 
     Box {
 

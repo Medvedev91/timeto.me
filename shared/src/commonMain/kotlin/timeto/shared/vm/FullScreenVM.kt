@@ -9,7 +9,7 @@ import timeto.shared.db.IntervalModel
 import timeto.shared.vm.ui.TimerDataUI
 import timeto.shared.vm.ui.toChecklistUI
 
-class FullscreenVM : __VM<FullscreenVM.State>() {
+class FullScreenVM : __VM<FullScreenVM.State>() {
 
     data class State(
         val interval: IntervalModel,
