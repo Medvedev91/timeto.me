@@ -102,14 +102,25 @@ private fun FullScreenView(
                 .pointerInput(Unit) { }
                 .fillMaxSize()
                 .background(c.black)
-                .padding(top = statusBarHeight + 24.dp),
+                .padding(top = statusBarHeight),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+
+            val timeOfTheDay = state.timeOfTheDay
+            if (timeOfTheDay != null) {
+                Text(
+                    text = timeOfTheDay,
+                    modifier = Modifier
+                        .padding(top = 4.dp),
+                    fontWeight = FontWeight.Black,
+                    color = c.white,
+                )
+            }
 
             Text(
                 text = state.title,
                 modifier = Modifier
-                    .padding(start = 30.dp, end = 30.dp),
+                    .padding(top = 24.dp, start = 30.dp, end = 30.dp),
                 fontSize = 19.sp,
                 fontWeight = FontWeight.Normal,
                 color = c.white,
