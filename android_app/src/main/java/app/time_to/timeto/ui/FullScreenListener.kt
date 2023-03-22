@@ -124,7 +124,7 @@ private fun FullScreenView(
                 fontSize = 19.sp,
                 fontWeight = FontWeight.Normal,
                 color = c.white,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
 
             TextFeaturesTriggersView(
