@@ -5,7 +5,6 @@ import timeto.shared.db.KVModel
 import timeto.shared.db.KVModel.Companion.asFullScreenShowTimeOfTheDay
 import timeto.shared.launchExDefault
 import timeto.shared.onEachExIn
-import timeto.shared.toBoolean10
 import timeto.shared.toString10
 
 class FullScreenSettingsSheetVM : __VM<FullScreenSettingsSheetVM.State>() {
@@ -34,13 +33,8 @@ class FullScreenSettingsSheetVM : __VM<FullScreenSettingsSheetVM.State>() {
 
     override fun onAppear() {
         val scope = scopeVM()
-        KVModel.getAllFlow().onEachExIn(scope) { allKV ->
-            allKV.forEach { kv ->
-                when (kv.key) {
-                    KVModel.KEY.FULLSCREEN_SHOW_TIME_OF_THE_DAY.name ->
-                        state.update { it.copy(isShowTimeOfTheDay = kv.value.toBoolean10()) }
-                }
-            }
+        KVModel.KEY.FULLSCREEN_SHOW_TIME_OF_THE_DAY.getOrNullFlow().onEachExIn(scope) { kv ->
+            state.update { it.copy(isShowTimeOfTheDay = kv?.value.asFullScreenShowTimeOfTheDay()) }
         }
     }
 }
