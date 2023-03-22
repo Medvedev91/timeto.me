@@ -94,7 +94,7 @@ fun FullScreenListener(
 private fun FullScreenView(
     layer: WrapperView.Layer,
 ) {
-    val (vm, state) = rememberVM { FullscreenVM(ColorNative.white) }
+    val (vm, state) = rememberVM { FullscreenVM() }
 
     Box {
 

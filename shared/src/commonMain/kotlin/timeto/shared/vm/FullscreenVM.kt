@@ -9,17 +9,14 @@ import timeto.shared.db.IntervalModel
 import timeto.shared.vm.ui.TimerDataUI
 import timeto.shared.vm.ui.toChecklistUI
 
-class FullscreenVM(
-    defColor: ColorNative,
-) : __VM<FullscreenVM.State>() {
+class FullscreenVM : __VM<FullscreenVM.State>() {
 
     data class State(
         val interval: IntervalModel,
         val allChecklistItems: List<ChecklistItemModel>,
-        val defColor: ColorNative,
         val idToUpdate: Long
     ) {
-        val timerData = TimerDataUI(interval, defColor)
+        val timerData = TimerDataUI(interval, ColorNative.white)
 
         val activity = interval.getActivityDI()
         val textFeatures = (interval.note ?: activity.name).textFeatures()
@@ -41,7 +38,6 @@ class FullscreenVM(
         State(
             interval = DI.lastInterval,
             allChecklistItems = DI.checklistItems,
-            defColor = defColor,
             idToUpdate = 0,
         )
     )

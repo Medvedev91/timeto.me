@@ -33,7 +33,7 @@ private struct TimerFullScreen__ViewModifier: ViewModifier {
 
 private struct TimerFullScreen__FullScreenCoverView: View {
 
-    @State private var vm = FullscreenVM(defColor: .white)
+    @State private var vm = FullscreenVM()
 
     var body: some View {
 
