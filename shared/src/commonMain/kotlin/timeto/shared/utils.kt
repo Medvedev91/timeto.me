@@ -12,6 +12,7 @@ import kotlinx.datetime.*
 import kotlinx.serialization.json.*
 import timeto.dbsq.TimetoDB
 import timeto.shared.db.*
+import timeto.shared.db.KVModel.Companion.asDayStartOffsetSeconds
 
 const val EMOJI_CALENDAR = "🗓"
 const val EMOJI_REPEATING = "🔁"
@@ -407,8 +408,7 @@ fun time(): Int = Clock.System.now().epochSeconds.toInt()
 fun timeMls(): Long = Clock.System.now().toEpochMilliseconds()
 
 fun dayStartOffsetSeconds(): Int =
-    KVModel.KEY.DAY_START_OFFSET_SECONDS.getFromDIOrNull()?.toInt()
-    ?: KVModel.DAY_START_OFFSET_SECONDS_DEFAULT
+    KVModel.KEY.DAY_START_OFFSET_SECONDS.getFromDIOrNull().asDayStartOffsetSeconds()
 
 fun daytimeToString(daytime: Int): String {
     val (h, m) = daytime.toHms()

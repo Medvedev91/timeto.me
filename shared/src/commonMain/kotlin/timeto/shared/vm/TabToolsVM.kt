@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.*
 import timeto.shared.*
 import timeto.shared.db.ChecklistModel
 import timeto.shared.db.KVModel
+import timeto.shared.db.KVModel.Companion.asDayStartOffsetSeconds
 import timeto.shared.db.ShortcutModel
 
 class TabToolsVM : __VM<TabToolsVM.State>() {
@@ -61,7 +62,7 @@ class TabToolsVM : __VM<TabToolsVM.State>() {
         KVModel.KEY.DAY_START_OFFSET_SECONDS
             .getOrNullFlow()
             .onEachExIn(scope) { kv ->
-                val seconds = kv?.value?.toInt() ?: KVModel.DAY_START_OFFSET_SECONDS_DEFAULT
+                val seconds = kv?.value.asDayStartOffsetSeconds()
                 state.update { it.copy(dayStartSeconds = seconds) }
             }
         scope.launchEx {

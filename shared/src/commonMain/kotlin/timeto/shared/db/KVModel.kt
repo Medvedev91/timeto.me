@@ -16,14 +16,16 @@ data class KVModel(
 
     companion object : Backupable__Holder {
 
-        const val DAY_START_OFFSET_SECONDS_DEFAULT = 0
-
         suspend fun getAll() = dbIO {
             db.kVQueries.getAll().executeAsList().map { it.toModel() }
         }
 
         fun getAllFlow() = db.kVQueries.getAll().asFlow()
             .mapToList().map { list -> list.map { it.toModel() } }
+
+        ///
+
+        fun String?.asDayStartOffsetSeconds(): Int = this?.toInt() ?: 0
 
         fun String?.asFullScreenShowTimeOfTheDay(): Boolean = this?.toBoolean10() ?: false
 
