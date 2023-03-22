@@ -53,6 +53,9 @@ data class KVModel(
 
         fun getFromDIOrNull(): String? = DI.kv.firstOrNull { it.key == this.name }?.value
 
+        fun getOrNullFlow() = db.kVQueries.getByKey(this.name).asFlow()
+            .mapToOneOrNull().map { it?.toModel() }
+
         suspend fun upsert(value: String): Unit = dbIO {
             db.kVQueries.upsert(key = name, value_ = value)
         }
