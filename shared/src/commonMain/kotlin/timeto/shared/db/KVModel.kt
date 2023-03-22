@@ -28,6 +28,8 @@ data class KVModel(
         fun getByKeyOrNullFlow(key: KEY) = db.kVQueries.getByKey(key.name).asFlow()
             .mapToOneOrNull().map { it?.toModel() }
 
+        fun String?.asFullScreenShowTimeOfTheDay(): Boolean = this?.toBoolean10() ?: false
+
         ///
         /// Backupable Holder
 

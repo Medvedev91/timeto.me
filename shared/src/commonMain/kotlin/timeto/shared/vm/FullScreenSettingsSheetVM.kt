@@ -2,6 +2,7 @@ package timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import timeto.shared.db.KVModel
+import timeto.shared.db.KVModel.Companion.asFullScreenShowTimeOfTheDay
 import timeto.shared.launchExDefault
 import timeto.shared.onEachExIn
 import timeto.shared.toBoolean10
@@ -19,7 +20,7 @@ class FullScreenSettingsSheetVM : __VM<FullScreenSettingsSheetVM.State>() {
     override val state = MutableStateFlow(
         State(
             isShowTimeOfTheDay =
-            KVModel.KEY.FULLSCREEN_SHOW_TIME_OF_THE_DAY.getFromDIOrNull()?.toBoolean10() ?: false
+            KVModel.KEY.FULLSCREEN_SHOW_TIME_OF_THE_DAY.getFromDIOrNull().asFullScreenShowTimeOfTheDay()
         )
     )
 

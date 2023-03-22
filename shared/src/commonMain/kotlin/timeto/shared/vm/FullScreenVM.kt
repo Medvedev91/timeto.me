@@ -6,6 +6,8 @@ import kotlinx.coroutines.launch
 import timeto.shared.*
 import timeto.shared.db.ChecklistItemModel
 import timeto.shared.db.IntervalModel
+import timeto.shared.db.KVModel
+import timeto.shared.db.KVModel.Companion.asFullScreenShowTimeOfTheDay
 import timeto.shared.vm.ui.TimerDataUI
 import timeto.shared.vm.ui.toChecklistUI
 
