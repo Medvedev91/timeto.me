@@ -102,7 +102,7 @@ private fun FullScreenView(
                 .pointerInput(Unit) { }
                 .fillMaxSize()
                 .background(c.black)
-                .padding(top = statusBarHeight + 30.dp),
+                .padding(top = statusBarHeight + 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
