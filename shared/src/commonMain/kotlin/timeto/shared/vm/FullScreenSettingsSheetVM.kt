@@ -12,7 +12,7 @@ class FullScreenSettingsSheetVM : __VM<FullScreenSettingsSheetVM.State>() {
     data class State(
         val isShowTimeOfTheDay: Boolean,
     ) {
-        val headerTitle = "Settings"
+        val headerTitle = "Full Screen"
         val showTimeOfTheDayTitle = "Show Time of the Day"
     }
 
