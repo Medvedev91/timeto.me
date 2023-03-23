@@ -106,17 +106,6 @@ private fun FullScreenView(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
-            val timeOfTheDay = state.timeOfTheDay
-            if (timeOfTheDay != null) {
-                Text(
-                    text = timeOfTheDay,
-                    modifier = Modifier
-                        .padding(top = 4.dp),
-                    fontWeight = FontWeight.Black,
-                    color = c.white,
-                )
-            }
-
             Text(
                 text = state.title,
                 modifier = Modifier
@@ -287,12 +276,13 @@ private fun FullScreenView(
         }
 
         Row(
-            Modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .navigationBarsPadding()
                 .padding(horizontal = if (state.checklistUI != null) 36.dp else 40.dp)
                 .padding(bottom = 14.dp)
                 .align(Alignment.BottomCenter),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
 
             val menuIconAlpha = 0.5f
@@ -310,6 +300,16 @@ private fun FullScreenView(
                         // todo
                     }
                     .padding(menuIconPadding),
+            )
+
+            SpacerW1()
+
+            Text(
+                text = state.timeOfTheDay,
+                modifier = Modifier
+                    .alpha(menuIconAlpha),
+                fontFamily = FontFamily.Monospace,
+                color = c.white,
             )
 
             SpacerW1()
