@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -173,25 +174,35 @@ private fun FullScreenView(
 
                 Column(
                     modifier = Modifier
-                        .padding(top = 40.dp)
+                        .padding(top = 20.dp)
                         .weight(1f)
                 ) {
 
+                    val checklistVContentPadding = 10.dp
+                    val checklistScrollState = rememberLazyListState()
+                    val checklistDividerColor = c.white.copy(0.4f)
+
+                    Divider(
+                        color = animateColorAsState(
+                            if (checklistScrollState.canScrollBackward) checklistDividerColor else c.transparent,
+                            animationSpec = spring(stiffness = Spring.StiffnessLow),
+                        ).value
+                    )
+
                     Row(
                         modifier = Modifier
-                            .padding(start = 68.dp, end = 68.dp),
+                            .padding(start = 64.dp, end = 64.dp)
+                            .weight(1f),
                     ) {
 
                         val checkboxSize = 18.dp
                         val checklistItemMinHeight = 38.dp
                         val checklistDividerPadding = 14.dp
 
-                        val checklistScrollState = rememberLazyListState()
-
                         LazyColumn(
                             modifier = Modifier.weight(1f),
                             horizontalAlignment = Alignment.CenterHorizontally,
-                            contentPadding = PaddingValues(bottom = 20.dp),
+                            contentPadding = PaddingValues(vertical = checklistVContentPadding),
                             state = checklistScrollState,
                         ) {
 
@@ -240,6 +251,7 @@ private fun FullScreenView(
 
                         Row(
                             modifier = Modifier
+                                .padding(top = checklistVContentPadding)
                                 .height(IntrinsicSize.Max)
                         ) {
 
@@ -279,6 +291,13 @@ private fun FullScreenView(
                             }
                         }
                     }
+
+                    Divider(
+                        color = animateColorAsState(
+                            if (checklistScrollState.canScrollForward) checklistDividerColor else c.transparent,
+                            animationSpec = spring(stiffness = Spring.StiffnessLow),
+                        ).value
+                    )
                 }
             } else {
                 SpacerW1()
