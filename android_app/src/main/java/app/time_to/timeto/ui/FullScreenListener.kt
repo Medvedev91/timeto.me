@@ -173,7 +173,7 @@ private fun FullScreenView(
                 Row(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(top = 50.dp, start = 76.dp, end = 76.dp),
+                        .padding(top = 40.dp, start = 68.dp, end = 68.dp),
                 ) {
 
                     val checkboxSize = 18.dp
