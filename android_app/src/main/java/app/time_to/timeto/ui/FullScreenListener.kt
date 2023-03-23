@@ -273,60 +273,57 @@ private fun FullScreenView(
             } else {
                 SpacerW1()
             }
-        }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .navigationBarsPadding()
-                .padding(horizontal = if (state.checklistUI != null) 36.dp else 40.dp)
-                .padding(bottom = 14.dp)
-                .align(Alignment.BottomCenter),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-
-            val menuIconAlpha = 0.5f
-            val menuIconPadding = 15.dp
-
-            Icon(
-                painterResource(id = R.drawable.sf_gearshape_medium_thin),
-                contentDescription = "Settings",
-                tint = c.white,
+            Row(
                 modifier = Modifier
-                    .alpha(menuIconAlpha)
-                    .clip(RoundedCornerShape(99.dp))
-                    .size(56.dp)
-                    .clickable {
-                        // todo
-                    }
-                    .padding(menuIconPadding),
-            )
+                    .fillMaxWidth()
+                    .navigationBarsPadding(),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
 
-            SpacerW1()
+                val menuIconSize = 57.dp
+                val menuIconAlpha = 0.5f
+                val menuIconPadding = 15.dp
 
-            Text(
-                text = state.timeOfTheDay,
-                modifier = Modifier
-                    .alpha(menuIconAlpha),
-                fontFamily = FontFamily.Monospace,
-                color = c.white,
-            )
+                Icon(
+                    painterResource(id = R.drawable.sf_gearshape_medium_thin),
+                    contentDescription = "Settings",
+                    tint = c.white,
+                    modifier = Modifier
+                        .weight(1f)
+                        .alpha(menuIconAlpha)
+                        .clip(MySquircleShape())
+                        .size(menuIconSize)
+                        .clickable {
+                            // todo
+                        }
+                        .padding(menuIconPadding),
+                )
 
-            SpacerW1()
+                Text(
+                    text = state.timeOfTheDay,
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .alpha(menuIconAlpha),
+                    fontFamily = FontFamily.Monospace,
+                    color = c.white,
+                )
 
-            Icon(
-                painterResource(id = R.drawable.sf_xmark_circle_medium_thin),
-                contentDescription = "Close",
-                tint = c.white,
-                modifier = Modifier
-                    .alpha(menuIconAlpha)
-                    .clip(RoundedCornerShape(99.dp))
-                    .size(57.dp)
-                    .clickable {
-                        layer.close()
-                    }
-                    .padding(menuIconPadding),
-            )
+                Icon(
+                    painterResource(id = R.drawable.sf_xmark_circle_medium_thin),
+                    contentDescription = "Close",
+                    tint = c.white,
+                    modifier = Modifier
+                        .weight(1f)
+                        .alpha(menuIconAlpha)
+                        .clip(MySquircleShape())
+                        .size(menuIconSize)
+                        .clickable {
+                            layer.close()
+                        }
+                        .padding(menuIconPadding),
+                )
+            }
         }
     }
 }
