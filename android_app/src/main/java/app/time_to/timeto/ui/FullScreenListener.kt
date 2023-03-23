@@ -281,13 +281,13 @@ private fun FullScreenView(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
 
-                val menuIconSize = 57.dp
+                val menuIconSize = 58.dp
                 val menuIconAlpha = 0.5f
                 val menuIconPadding = 15.dp
 
                 Icon(
-                    painterResource(id = R.drawable.sf_gearshape_medium_thin),
-                    contentDescription = "Settings",
+                    painterResource(id = R.drawable.sf_ellipsis_circle_medium_thin),
+                    contentDescription = "Menu",
                     tint = c.white,
                     modifier = Modifier
                         .weight(1f)
