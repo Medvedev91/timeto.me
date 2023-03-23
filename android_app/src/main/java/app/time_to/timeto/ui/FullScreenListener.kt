@@ -307,9 +307,7 @@ private fun FullScreenView(
                     .clip(RoundedCornerShape(99.dp))
                     .size(56.dp)
                     .clickable {
-                        Sheet.show { layer ->
-                            FullScreenSettingsSheet(layer = layer)
-                        }
+                        // todo
                     }
                     .padding(menuIconPadding),
             )
