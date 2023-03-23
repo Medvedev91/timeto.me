@@ -9,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -170,103 +171,112 @@ private fun FullScreenView(
             val checklistUI = state.checklistUI
             if (checklistUI != null) {
 
-                Row(
+                Column(
                     modifier = Modifier
+                        .padding(top = 40.dp)
                         .weight(1f)
-                        .padding(top = 40.dp, start = 68.dp, end = 68.dp),
                 ) {
-
-                    val checkboxSize = 18.dp
-                    val checklistItemMinHeight = 38.dp
-                    val checklistDividerPadding = 14.dp
-
-                    LazyColumn(
-                        modifier = Modifier.weight(1f),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        contentPadding = PaddingValues(bottom = 20.dp),
-                    ) {
-
-                        checklistUI.itemsUI.forEach { itemUI ->
-
-                            item {
-
-                                Row(
-                                    modifier = Modifier
-                                        .defaultMinSize(minHeight = checklistItemMinHeight)
-                                        .fillMaxWidth()
-                                        .clip(MySquircleShape())
-                                        .clickable {
-                                            itemUI.toggle()
-                                        }
-                                        .padding(start = 8.dp),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.Start,
-                                ) {
-
-                                    Icon(
-                                        painterResource(
-                                            id = if (itemUI.item.isChecked)
-                                                R.drawable.sf_checkmark_square_fill_medium_regular
-                                            else
-                                                R.drawable.sf_square_medium_regular
-                                        ),
-                                        contentDescription = "Checkbox",
-                                        tint = c.white,
-                                        modifier = Modifier
-                                            .size(checkboxSize),
-                                    )
-
-                                    Text(
-                                        text = itemUI.item.text,
-                                        color = c.white,
-                                        modifier = Modifier
-                                            .padding(vertical = 4.dp)
-                                            .padding(start = checklistDividerPadding),
-                                        textAlign = TextAlign.Start,
-                                    )
-                                }
-                            }
-                        }
-                    }
 
                     Row(
                         modifier = Modifier
-                            .height(IntrinsicSize.Max)
+                            .padding(start = 68.dp, end = 68.dp),
                     ) {
 
-                        Box(
+                        val checkboxSize = 18.dp
+                        val checklistItemMinHeight = 38.dp
+                        val checklistDividerPadding = 14.dp
+
+                        val checklistScrollState = rememberLazyListState()
+
+                        LazyColumn(
+                            modifier = Modifier.weight(1f),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            contentPadding = PaddingValues(bottom = 20.dp),
+                            state = checklistScrollState,
+                        ) {
+
+                            checklistUI.itemsUI.forEach { itemUI ->
+
+                                item {
+
+                                    Row(
+                                        modifier = Modifier
+                                            .defaultMinSize(minHeight = checklistItemMinHeight)
+                                            .fillMaxWidth()
+                                            .clip(MySquircleShape())
+                                            .clickable {
+                                                itemUI.toggle()
+                                            }
+                                            .padding(start = 8.dp),
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.Start,
+                                    ) {
+
+                                        Icon(
+                                            painterResource(
+                                                id = if (itemUI.item.isChecked)
+                                                    R.drawable.sf_checkmark_square_fill_medium_regular
+                                                else
+                                                    R.drawable.sf_square_medium_regular
+                                            ),
+                                            contentDescription = "Checkbox",
+                                            tint = c.white,
+                                            modifier = Modifier
+                                                .size(checkboxSize),
+                                        )
+
+                                        Text(
+                                            text = itemUI.item.text,
+                                            color = c.white,
+                                            modifier = Modifier
+                                                .padding(vertical = 4.dp)
+                                                .padding(start = checklistDividerPadding),
+                                            textAlign = TextAlign.Start,
+                                        )
+                                    }
+                                }
+                            }
+                        }
+
+                        Row(
                             modifier = Modifier
-                                .padding(vertical = 6.dp)
-                                .alpha(.5f)
-                                .background(c.white)
-                                .width(1.dp)
-                                .fillMaxHeight(),
-                        )
+                                .height(IntrinsicSize.Max)
+                        ) {
 
-                        Column {
-
-                            val completionState = checklistUI.completionState
-                            val checklistMenuInnerIconPadding = (checklistItemMinHeight - checkboxSize) / 2
-                            val checklistMenuStartIconPadding = 4.dp
-                            Icon(
-                                painterResource(
-                                    id = when (completionState) {
-                                        is ChecklistUI.CompletionState.Completed -> R.drawable.sf_checkmark_square_fill_medium_regular
-                                        is ChecklistUI.CompletionState.Empty -> R.drawable.sf_square_medium_regular
-                                        is ChecklistUI.CompletionState.Partial -> R.drawable.sf_minus_square_fill_medium_medium
-                                    }
-                                ),
-                                contentDescription = completionState.actionDesc,
-                                tint = c.white,
+                            Box(
                                 modifier = Modifier
-                                    .padding(start = checklistMenuStartIconPadding)
-                                    .size(checklistItemMinHeight)
-                                    .clip(RoundedCornerShape(99.dp))
-                                    .clickable {
-                                        completionState.onClick()
-                                    }
-                                    .padding(checklistMenuInnerIconPadding),
+                                    .padding(vertical = 6.dp)
+                                    .alpha(.5f)
+                                    .background(c.white)
+                                    .width(1.dp)
+                                    .fillMaxHeight(),
                             )
+
+                            Column {
+
+                                val completionState = checklistUI.completionState
+                                val checklistMenuInnerIconPadding = (checklistItemMinHeight - checkboxSize) / 2
+                                val checklistMenuStartIconPadding = 4.dp
+                                Icon(
+                                    painterResource(
+                                        id = when (completionState) {
+                                            is ChecklistUI.CompletionState.Completed -> R.drawable.sf_checkmark_square_fill_medium_regular
+                                            is ChecklistUI.CompletionState.Empty -> R.drawable.sf_square_medium_regular
+                                            is ChecklistUI.CompletionState.Partial -> R.drawable.sf_minus_square_fill_medium_medium
+                                        }
+                                    ),
+                                    contentDescription = completionState.actionDesc,
+                                    tint = c.white,
+                                    modifier = Modifier
+                                        .padding(start = checklistMenuStartIconPadding)
+                                        .size(checklistItemMinHeight)
+                                        .clip(RoundedCornerShape(99.dp))
+                                        .clickable {
+                                            completionState.onClick()
+                                        }
+                                        .padding(checklistMenuInnerIconPadding),
+                                )
+                            }
                         }
                     }
                 }
