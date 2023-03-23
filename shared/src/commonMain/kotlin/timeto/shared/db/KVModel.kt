@@ -27,8 +27,6 @@ data class KVModel(
 
         fun String?.asDayStartOffsetSeconds(): Int = this?.toInt() ?: 0
 
-        fun String?.asFullScreenShowTimeOfTheDay(): Boolean = this?.toBoolean10() ?: false
-
         ///
         /// Backupable Holder
 
@@ -47,8 +45,7 @@ data class KVModel(
     enum class KEY {
 
         DAY_START_OFFSET_SECONDS,
-        EVENTS_HISTORY,
-        FULLSCREEN_SHOW_TIME_OF_THE_DAY;
+        EVENTS_HISTORY;
 
         fun getFromDIOrNull(): String? = DI.kv.firstOrNull { it.key == this.name }?.value
 

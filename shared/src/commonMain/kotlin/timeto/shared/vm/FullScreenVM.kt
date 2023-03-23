@@ -6,8 +6,6 @@ import kotlinx.coroutines.launch
 import timeto.shared.*
 import timeto.shared.db.ChecklistItemModel
 import timeto.shared.db.IntervalModel
-import timeto.shared.db.KVModel
-import timeto.shared.db.KVModel.Companion.asFullScreenShowTimeOfTheDay
 import timeto.shared.vm.ui.TimerDataUI
 import timeto.shared.vm.ui.toChecklistUI
 
@@ -16,7 +14,6 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
     data class State(
         val interval: IntervalModel,
         val allChecklistItems: List<ChecklistItemModel>,
-        val withTimeOfTheDay: Boolean,
         val idToUpdate: Long,
     ) {
         val timerData = TimerDataUI(interval, ColorNative.white)
@@ -36,7 +33,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
             return@filter clt.checklist.id != clUI.checklist.id
         }
 
-        val timeOfTheDay: String? = if (!withTimeOfTheDay) null else
+        val timeOfTheDay: String =
             UnixTime().getStringByComponents(listOf(UnixTime.StringComponent.hhmm24))
     }
 
@@ -44,7 +41,6 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
         State(
             interval = DI.lastInterval,
             allChecklistItems = DI.checklistItems,
-            withTimeOfTheDay = KVModel.KEY.FULLSCREEN_SHOW_TIME_OF_THE_DAY.getFromDIOrNull().asFullScreenShowTimeOfTheDay(),
             idToUpdate = 0,
         )
     )
@@ -61,9 +57,6 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
             .onEachExIn(scope) { items ->
                 state.update { it.copy(allChecklistItems = items) }
             }
-        KVModel.KEY.FULLSCREEN_SHOW_TIME_OF_THE_DAY.getOrNullFlow().onEachExIn(scope) { kv ->
-            state.update { it.copy(withTimeOfTheDay = kv?.value.asFullScreenShowTimeOfTheDay()) }
-        }
         scope.launch {
             while (true) {
                 state.update {
