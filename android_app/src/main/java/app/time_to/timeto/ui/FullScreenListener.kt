@@ -183,7 +183,7 @@ private fun FullScreenView(
                     LazyColumn(
                         modifier = Modifier.weight(1f),
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        contentPadding = PaddingValues(bottom = 120.dp),
+                        contentPadding = PaddingValues(bottom = 20.dp),
                     ) {
 
                         checklistUI.itemsUI.forEach { itemUI ->
