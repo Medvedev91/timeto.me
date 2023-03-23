@@ -111,8 +111,9 @@ private fun FullScreenView(
             Text(
                 text = state.title,
                 modifier = Modifier
-                    .padding(top = 24.dp, start = 30.dp, end = 30.dp),
-                fontSize = 19.sp,
+                    .padding(top = 8.dp, start = 30.dp, end = 30.dp)
+                    .offset(y = 6.dp),
+                fontSize = 18.sp,
                 fontWeight = FontWeight.Normal,
                 color = c.white,
                 textAlign = TextAlign.Center,
