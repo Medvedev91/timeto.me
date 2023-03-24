@@ -12,7 +12,7 @@ android {
         applicationId = "app.time_to.timeto"
         minSdk = 26
         targetSdk = 33
-        versionCode = 147
+        versionCode = 148
         versionName = "2023.03.24"
     }
 
