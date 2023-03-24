@@ -37,6 +37,11 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
             UnixTime().getStringByComponents(listOf(UnixTime.StringComponent.hhmm24))
 
         val battery = "${batteryLevelOrNull ?: "--"}"
+        val batteryBackground: ColorNative? = when {
+            isBatteryChargingOrNull == true -> ColorNative.green
+            batteryLevelOrNull in 0..20 -> ColorNative.red
+            else -> null
+        }
         val batteryColor: ColorNative = when (batteryLevelOrNull) {
             null -> ColorNative.white
             100 -> ColorNative.green
