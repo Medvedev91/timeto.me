@@ -330,14 +330,43 @@ private fun FullScreenView(
                         .padding(menuIconPadding),
                 )
 
-                Text(
-                    text = state.timeOfTheDay,
+                Column(
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
                         .alpha(menuIconAlpha),
-                    fontFamily = FontFamily.Monospace,
-                    color = c.white,
-                )
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+
+                    val batteryColor = state.batteryColor.toColor()
+
+                    Text(
+                        text = state.timeOfTheDay,
+                        color = batteryColor,
+                        fontSize = 14.sp,
+                    )
+
+                    Row(
+                        modifier = Modifier.padding(top = 1.dp, end = 2.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+
+                        Icon(
+                            painterResource(id = R.drawable.sf_bolt_fill_medium_light),
+                            contentDescription = "Battery",
+                            tint = batteryColor,
+                            modifier = Modifier
+                                .size(10.dp)
+                        )
+
+                        Text(
+                            text = state.battery,
+                            modifier = Modifier.padding(start = 1.dp),
+                            color = batteryColor,
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Light,
+                        )
+                    }
+                }
 
                 Icon(
                     painterResource(id = R.drawable.sf_xmark_circle_medium_thin),
