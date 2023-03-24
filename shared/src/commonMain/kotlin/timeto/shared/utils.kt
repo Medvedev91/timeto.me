@@ -20,6 +20,7 @@ const val EMOJI_REPEATING = "🔁"
 const val BREAK_SECONDS = 5 * 60
 
 internal lateinit var deviceData: DeviceData
+var batteryPrc: Int? = null
 
 fun zlog(message: Any?) = println(";; $message")
 
