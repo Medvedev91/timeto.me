@@ -331,6 +331,11 @@ private fun FullScreenView(
                 )
 
                 Column(
+                    modifier = Modifier
+                        .clip(MySquircleShape())
+                        .clickable {
+                            layer.close()
+                        },
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
 
