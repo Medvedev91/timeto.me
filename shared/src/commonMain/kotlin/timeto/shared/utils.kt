@@ -21,6 +21,7 @@ const val BREAK_SECONDS = 5 * 60
 
 internal lateinit var deviceData: DeviceData
 var batteryLevelOrNull: Int? = null
+var isBatteryChargingOrNull: Boolean? = null
 
 fun zlog(message: Any?) = println(";; $message")
 
