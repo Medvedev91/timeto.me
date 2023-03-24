@@ -36,8 +36,8 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
         val timeOfTheDay: String =
             UnixTime().getStringByComponents(listOf(UnixTime.StringComponent.hhmm24))
 
-        val battery = "${batteryPrc ?: "--"}"
-        val batteryColor: ColorNative = when (batteryPrc) {
+        val battery = "${batteryLevelOrNull ?: "--"}"
+        val batteryColor: ColorNative = when (batteryLevelOrNull) {
             null -> ColorNative.white
             100 -> ColorNative.green
             in 0..20 -> ColorNative.red
@@ -76,8 +76,8 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
                 delay(1_000L)
             }
         }
-        if (batteryPrc == null)
-            reportApi("batteryPrc null")
+        if (batteryLevelOrNull == null)
+            reportApi("batteryLevelOrNull null")
     }
 
     fun restart() {
