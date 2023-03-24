@@ -175,11 +175,11 @@ private fun FullScreenView(
 
                 Column(
                     modifier = Modifier
-                        .padding(top = 2.dp)
+                        .padding(top = 8.dp)
                         .weight(1f)
                 ) {
 
-                    val checklistVContentPadding = 8.dp
+                    val checklistVContentPadding = 12.dp
                     val checklistScrollState = rememberLazyListState()
                     val checklistDividerColor = c.white.copy(0.4f)
 
