@@ -35,6 +35,13 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
 
         val timeOfTheDay: String =
             UnixTime().getStringByComponents(listOf(UnixTime.StringComponent.hhmm24))
+
+        val battery = "${batteryPrc ?: "--"}"
+        val batteryColor: ColorNative = when (batteryPrc) {
+            null -> ColorNative.white
+            in 0..20 -> ColorNative.red
+            else -> ColorNative.white
+        }
     }
 
     override val state = MutableStateFlow(
@@ -68,6 +75,8 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
                 delay(1_000L)
             }
         }
+        if (batteryPrc == null)
+            reportApi("batteryPrc null")
     }
 
     fun restart() {
