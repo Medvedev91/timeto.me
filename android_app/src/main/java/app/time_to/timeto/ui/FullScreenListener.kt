@@ -331,19 +331,19 @@ private fun FullScreenView(
                 )
 
                 Column(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .alpha(menuIconAlpha),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
 
                     val batteryBackground = state.batteryBackground
                     val batteryBackgroundAnimation = animateColorAsState(
-                        batteryBackground?.toColor() ?: c.transparent
+                        batteryBackground?.toColor() ?: c.black
                     )
 
                     Text(
                         text = state.timeOfTheDay,
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .alpha(menuIconAlpha),
                         color = c.white,
                         fontSize = 14.sp,
                     )
@@ -352,7 +352,14 @@ private fun FullScreenView(
                         modifier = Modifier
                             .padding(end = 2.dp)
                             .clip(RoundedCornerShape(99.dp))
-                            .background(batteryBackgroundAnimation.value)
+                            // First alpha for background, then for content
+                            .background(
+                                batteryBackgroundAnimation.value.copy(
+                                    alpha = if (batteryBackground != null) 0.8f else menuIconAlpha
+                                )
+                            )
+                            .alpha(if (batteryBackground != null) 0.9f else menuIconAlpha)
+                            //
                             .padding(start = 4.dp, end = 5.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
