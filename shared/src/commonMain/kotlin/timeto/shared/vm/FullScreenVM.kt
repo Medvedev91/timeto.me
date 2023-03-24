@@ -39,6 +39,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
         val battery = "${batteryPrc ?: "--"}"
         val batteryColor: ColorNative = when (batteryPrc) {
             null -> ColorNative.white
+            100 -> ColorNative.green
             in 0..20 -> ColorNative.red
             else -> ColorNative.white
         }
