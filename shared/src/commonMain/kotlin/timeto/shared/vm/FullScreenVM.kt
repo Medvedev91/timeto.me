@@ -38,7 +38,9 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
 
         val battery = "${batteryLevelOrNull ?: "--"}"
         val batteryBackground: ColorNative? = when {
-            isBatteryChargingOrNull == true -> ColorNative.green
+            isBatteryChargingOrNull == true -> {
+                if (batteryLevelOrNull == 100) ColorNative.green else ColorNative.blue
+            }
             batteryLevelOrNull in 0..20 -> ColorNative.red
             else -> null
         }
