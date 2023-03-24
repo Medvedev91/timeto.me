@@ -42,12 +42,6 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
             batteryLevelOrNull in 0..20 -> ColorNative.red
             else -> null
         }
-        val batteryColor: ColorNative = when (batteryLevelOrNull) {
-            null -> ColorNative.white
-            100 -> ColorNative.green
-            in 0..20 -> ColorNative.red
-            else -> ColorNative.white
-        }
     }
 
     override val state = MutableStateFlow(

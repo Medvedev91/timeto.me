@@ -337,31 +337,38 @@ private fun FullScreenView(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
 
-                    val batteryColor = state.batteryColor.toColor()
+                    val batteryBackground = state.batteryBackground
+                    val batteryBackgroundAnimation = animateColorAsState(
+                        batteryBackground?.toColor() ?: c.transparent
+                    )
 
                     Text(
                         text = state.timeOfTheDay,
-                        color = batteryColor,
+                        color = c.white,
                         fontSize = 14.sp,
                     )
 
                     Row(
-                        modifier = Modifier.padding(top = 1.dp, end = 2.dp),
+                        modifier = Modifier
+                            .padding(end = 2.dp)
+                            .clip(RoundedCornerShape(99.dp))
+                            .background(batteryBackgroundAnimation.value)
+                            .padding(start = 4.dp, end = 5.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
 
                         Icon(
                             painterResource(id = R.drawable.sf_bolt_fill_medium_light),
                             contentDescription = "Battery",
-                            tint = batteryColor,
+                            tint = c.white,
                             modifier = Modifier
                                 .size(10.dp)
                         )
 
                         Text(
                             text = state.battery,
-                            modifier = Modifier.padding(start = 1.dp),
-                            color = batteryColor,
+                            modifier = Modifier,
+                            color = c.white,
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Light,
                         )
