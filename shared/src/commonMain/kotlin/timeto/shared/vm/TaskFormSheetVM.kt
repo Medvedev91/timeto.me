@@ -5,7 +5,7 @@ import timeto.shared.*
 import timeto.shared.db.TaskModel
 
 class TaskFormSheetVM(
-    val task: TaskModel,
+    val task: TaskModel?,
 ) : __VM<TaskFormSheetVM.State>() {
 
     data class State(
@@ -17,18 +17,13 @@ class TaskFormSheetVM(
         val isHeaderDoneEnabled = inputTextValue.isNotBlank()
     }
 
-    override val state: MutableStateFlow<State>
-
-    init {
-        val textFeatures = task.text.textFeatures()
-        state = MutableStateFlow(
-            State(
-                headerTitle = "Edit Task",
-                headerDoneText = "Done",
-                textFeatures = textFeatures,
-            )
+    override val state = MutableStateFlow(
+        State(
+            headerTitle = if (task != null) "Edit Task" else "New Task",
+            headerDoneText = if (task != null) "Done" else "Create",
+            textFeatures = (task?.text ?: "").textFeatures(),
         )
-    }
+    )
 
     fun setInputTextValue(text: String) = state.update {
         it.copy(textFeatures = it.textFeatures.copy(textNoFeatures = text))
@@ -42,9 +37,13 @@ class TaskFormSheetVM(
         onSuccess: () -> Unit,
     ) = scopeVM().launchEx {
         try {
-            // todo check if a text without features
+            // todo check if the text without features
             val textWithFeatures = state.value.textFeatures.textWithFeatures()
-            task.upTextWithValidation(textWithFeatures)
+            if (task != null) {
+                task.upTextWithValidation(textWithFeatures)
+            } else {
+                TaskModel.addWithValidation(textWithFeatures, DI.getTodayFolder())
+            }
             onSuccess()
         } catch (e: UIException) {
             showUiAlert(e.uiMessage)
