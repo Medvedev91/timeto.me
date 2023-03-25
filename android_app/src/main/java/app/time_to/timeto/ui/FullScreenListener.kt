@@ -108,16 +108,47 @@ private fun FullScreenView(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
-            Text(
-                text = state.title,
+            Column(
                 modifier = Modifier
                     .padding(top = 4.dp, start = 30.dp, end = 30.dp)
                     .offset(y = 6.dp),
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Normal,
-                color = c.white,
-                textAlign = TextAlign.Center,
-            )
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+
+                Text(
+                    text = state.title,
+                    modifier = Modifier
+                        .clickable {
+                            vm.toggleIsTaskCancelVisible()
+                        },
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = c.white,
+                    textAlign = TextAlign.Center,
+                )
+
+                AnimatedVisibility(
+                    state.isTaskCancelVisible,
+                    enter = fadeIn() + expandVertically(),
+                    exit = fadeOut() + shrinkVertically(),
+                ) {
+
+                    Text(
+                        "CANCEL",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 13.sp,
+                        color = c.white,
+                        modifier = Modifier
+                            .padding(top = 12.dp, bottom = 12.dp)
+                            .clip(RoundedCornerShape(99.dp))
+                            .background(c.blue)
+                            .clickable {
+                                vm.cancelTask()
+                            }
+                            .padding(horizontal = 8.dp, vertical = 2.dp),
+                    )
+                }
+            }
 
             TextFeaturesTriggersView(
                 triggers = state.triggers,
