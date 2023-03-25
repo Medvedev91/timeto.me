@@ -17,7 +17,7 @@ import timeto.shared.vm.TaskFormSheetVM
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TaskFormSheet(
-    task: TaskModel,
+    task: TaskModel?,
     layer: WrapperView.Layer,
 ) {
 
