@@ -24,9 +24,9 @@ class TimerDataUI(
     }
 
     val timer: String
+    val subtitle: String? // NULL / BREAK / OVERDUE
     val timePassedNote = secondsToString(time() - interval.id) // Time left
     val color: ColorNative
-    val title: String?
     val isCompact: Boolean
 
     init {
@@ -37,17 +37,17 @@ class TimerDataUI(
             timeLeft < -BREAK_SECONDS -> {
                 timeForTimer = -timeLeft - BREAK_SECONDS
                 color = ColorNative.red
-                title = "OVERDUE"
+                subtitle = "OVERDUE"
             }
             timeLeft <= 0 -> {
                 timeForTimer = timeLeft + BREAK_SECONDS
                 color = ColorNative.green
-                title = "BREAK"
+                subtitle = "BREAK"
             }
             else -> {
                 timeForTimer = timeLeft
                 color = defColor
-                title = null
+                subtitle = null
             }
         }
 

@@ -158,13 +158,13 @@ private fun FullScreenView(
 
             val timerData = state.timerData
             AnimatedVisibility(
-                timerData.title != null,
+                timerData.subtitle != null,
                 enter = fadeIn() + expandVertically(),
                 exit = fadeOut() + shrinkVertically(),
             ) {
 
                 Text(
-                    text = timerData.title ?: "",
+                    text = timerData.subtitle ?: "",
                     fontSize = 21.sp,
                     modifier = Modifier
                         .padding(top = 36.dp)
@@ -184,7 +184,7 @@ private fun FullScreenView(
             )
 
             AnimatedVisibility(
-                timerData.title != null,
+                timerData.subtitle != null,
                 enter = fadeIn() + expandVertically(),
                 exit = fadeOut() + shrinkVertically(),
             ) {
