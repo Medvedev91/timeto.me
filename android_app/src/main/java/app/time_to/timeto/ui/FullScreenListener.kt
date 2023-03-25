@@ -325,7 +325,12 @@ private fun FullScreenView(
                         .clip(MySquircleShape())
                         .size(menuIconSize)
                         .clickable {
-                            // todo
+                            Sheet.show { layer ->
+                                TaskFormSheet(
+                                    task = null,
+                                    layer = layer,
+                                )
+                            }
                         }
                         .padding(menuIconPadding),
                 )
