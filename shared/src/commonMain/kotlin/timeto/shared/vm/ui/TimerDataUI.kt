@@ -13,17 +13,6 @@ class TimerDataUI(
     defColor: ColorNative,
 ) {
 
-    companion object {
-
-        fun secondsToString(seconds: Int): String {
-            val hms = seconds.absoluteValue.toHms()
-            val h = if (hms[0] > 0) "${hms[0]}:" else ""
-            val m = hms[1].toString().padStart(2, '0') + ":"
-            val s = hms[2].toString().padStart(2, '0')
-            return "$h$m$s"
-        }
-    }
-
     val isCompact: Boolean
 
     val title: String // 12:34
@@ -52,4 +41,12 @@ class TimerDataUI(
         subtitle = tmpData.first
         subtitleColor = tmpData.second
     }
+}
+
+private fun secondsToString(seconds: Int): String {
+    val hms = seconds.absoluteValue.toHms()
+    val h = if (hms[0] > 0) "${hms[0]}:" else ""
+    val m = hms[1].toString().padStart(2, '0') + ":"
+    val s = hms[2].toString().padStart(2, '0')
+    return "$h$m$s"
 }
