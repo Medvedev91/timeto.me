@@ -188,7 +188,7 @@ private fun FullScreenView(
                         contentDescription = "Restart",
                         tint = c.white,
                         modifier = Modifier
-                            .padding(start = 16.dp)
+                            .padding(start = 20.dp)
                             .size(timerIconSize)
                             .clip(RoundedCornerShape(99.dp))
                             .clickable {
