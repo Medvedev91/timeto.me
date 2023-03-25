@@ -171,7 +171,13 @@ private fun FullScreenView(
                             .size(timerIconSize)
                             .clip(RoundedCornerShape(99.dp))
                             .clickable {
-                                // todo
+                                Sheet.show { layer ->
+                                    ActivityTimerSheet(
+                                        layer = layer,
+                                        activity = state.activity,
+                                        timerContext = state.activityTimerContext,
+                                    )
+                                }
                             }
                             .padding(timerIconPadding)
                             .padding(top = 3.dp),
