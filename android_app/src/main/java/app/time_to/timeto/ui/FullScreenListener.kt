@@ -170,17 +170,22 @@ private fun FullScreenView(
                         .padding(top = 36.dp)
                         .offset(y = 3.dp),
                     fontWeight = FontWeight.ExtraBold,
-                    color = timerData.color.toColor(),
+                    color = timerData.subtitleColor.toColor(),
                     letterSpacing = 3.sp,
                 )
             }
 
+            val timerTitleColor = animateColorAsState(timerData.titleColor.toColor())
             Text(
                 text = timerData.title,
+                modifier = Modifier
+                    .clickable {
+                        vm.toggleIsCountdown()
+                    },
                 fontSize = if (timerData.isCompact) 60.sp else 70.sp,
                 fontWeight = FontWeight.Black,
                 fontFamily = FontFamily.Monospace,
-                color = timerData.color.toColor(),
+                color = timerTitleColor.value,
             )
 
             AnimatedVisibility(
