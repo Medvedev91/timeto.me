@@ -441,10 +441,10 @@ private fun TimerView(
 
         val animateColor = animateColorAsState(targetValue = timerData.color.toColor())
 
-        val timerTitle = timerData.subtitle
-        if (timerTitle != null)
+        val timerSubtitle = timerData.subtitle
+        if (timerSubtitle != null)
             Text(
-                text = timerTitle,
+                text = timerSubtitle,
                 fontSize = 22.sp,
                 fontWeight = FontWeight.ExtraBold,
                 modifier = Modifier
