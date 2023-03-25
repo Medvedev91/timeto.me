@@ -25,6 +25,7 @@ class ActivityTimerSheetVM(
     init {
         val note = when (timerContext) {
             is TimerContext.Task -> timerContext.task.text
+            is TimerContext.Note -> timerContext.text
             null -> null
         }
 
@@ -52,6 +53,9 @@ class ActivityTimerSheetVM(
                 is TimerContext.Task -> {
                     timerContext.task.startInterval(deadline, activity)
                 }
+                is TimerContext.Note -> {
+                    IntervalModel.addWithValidation(deadline, activity, timerContext.text)
+                }
                 null -> {
                     val lastInterval = IntervalModel.getLastOneOrNull()!!
                     val note = if (lastInterval.activity_id == activity.id) lastInterval.note else null
@@ -73,6 +77,6 @@ class ActivityTimerSheetVM(
 
     sealed class TimerContext {
         class Task(val task: TaskModel) : TimerContext()
-        // todo simple note
+        class Note(val text: String) : TimerContext()
     }
 }
