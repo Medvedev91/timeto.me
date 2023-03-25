@@ -157,17 +157,40 @@ private fun FullScreenView(
                 enter = fadeIn() + expandVertically(),
                 exit = fadeOut() + shrinkVertically(),
             ) {
-                Text(
-                    text = "Restart",
-                    modifier = Modifier
-                        .clickable {
-                            vm.restart()
-                        },
-                    fontSize = 19.sp,
-                    fontWeight = FontWeight.Normal,
-                    color = c.white,
-                    textAlign = TextAlign.Center
-                )
+
+                Row {
+
+                    val timerIconSize = 52.dp
+                    val timerIconPadding = 8.dp
+
+                    Icon(
+                        painterResource(id = R.drawable.sf_timer_large_light),
+                        contentDescription = "Timer",
+                        tint = c.white,
+                        modifier = Modifier
+                            .size(timerIconSize)
+                            .clip(RoundedCornerShape(99.dp))
+                            .clickable {
+                                // todo
+                            }
+                            .padding(timerIconPadding)
+                            .padding(top = 3.dp),
+                    )
+
+                    Icon(
+                        painterResource(id = R.drawable.sf_arrow_counterclockwise_large_light),
+                        contentDescription = "Restart",
+                        tint = c.white,
+                        modifier = Modifier
+                            .padding(start = 16.dp)
+                            .size(timerIconSize)
+                            .clip(RoundedCornerShape(99.dp))
+                            .clickable {
+                                vm.restart()
+                            }
+                            .padding(timerIconPadding),
+                    )
+                }
             }
 
             val checklistUI = state.checklistUI
