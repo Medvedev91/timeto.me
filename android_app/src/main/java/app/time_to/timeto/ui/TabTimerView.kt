@@ -52,7 +52,7 @@ fun TabTimerView() {
                 .fillMaxSize()
         ) {
 
-            TimerView(state.lastInterval)
+            TimerView()
 
             LazyColumn(
                 contentPadding = PaddingValues(horizontal = 24.dp, vertical = 22.dp),
@@ -415,9 +415,8 @@ fun TabTimerView() {
 }
 
 @Composable
-private fun TimerView(
-    interval: IntervalModel,
-) {
+private fun TimerView() {
+
     val (vm, state) = rememberVM { TimerTabProgressVM() }
     val timerData = state.timerData
 
@@ -547,7 +546,7 @@ private fun TimerView(
                     val widthAnimate = animateFloatAsState(
                         state.progressRatio,
                         // To fast rollback on start
-                        if (time() > interval.id) tween(1000, easing = LinearEasing) else spring()
+                        if (time() > state.lastInterval.id) tween(1000, easing = LinearEasing) else spring()
                     )
 
                     val animateColorBar = animateColorAsState(state.progressColor.toColor())
