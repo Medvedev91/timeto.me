@@ -189,7 +189,7 @@ private fun FullScreenView(
             )
 
             AnimatedVisibility(
-                timerData.subtitle != null,
+                timerData.subtitle != null || !state.isCountdown,
                 enter = fadeIn() + expandVertically(),
                 exit = fadeOut() + shrinkVertically(),
             ) {
