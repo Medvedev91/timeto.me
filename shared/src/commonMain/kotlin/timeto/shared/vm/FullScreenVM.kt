@@ -15,9 +15,10 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
         val interval: IntervalModel,
         val allChecklistItems: List<ChecklistItemModel>,
         val isTaskCancelVisible: Boolean,
+        val isCountdown: Boolean,
         val idToUpdate: Long,
     ) {
-        val timerData = TimerDataUI(interval, true, ColorNative.white)
+        val timerData = TimerDataUI(interval, isCountdown, ColorNative.white)
 
         val activityTimerContext = if (interval.note != null)
             ActivityTimerSheetVM.TimerContext.Note(interval.note)
@@ -56,6 +57,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
             interval = DI.lastInterval,
             allChecklistItems = DI.checklistItems,
             isTaskCancelVisible = false,
+            isCountdown = true,
             idToUpdate = 0,
         )
     )
@@ -65,7 +67,9 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
         IntervalModel.getLastOneOrNullFlow()
             .filterNotNull()
             .onEachExIn(scope) { interval ->
-                state.update { it.copy(interval = interval) }
+                val isCountdown = if (interval.id == state.value.interval.id)
+                    state.value.isCountdown else true
+                state.update { it.copy(interval = interval, isCountdown = isCountdown) }
             }
         ChecklistItemModel
             .getAscFlow()
@@ -91,6 +95,10 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
         launchExDefault {
             IntervalModel.restartActualInterval()
         }
+    }
+
+    fun toggleIsCountdown() {
+        state.update { it.copy(isCountdown = it.isCountdown.not()) }
     }
 
     ///
