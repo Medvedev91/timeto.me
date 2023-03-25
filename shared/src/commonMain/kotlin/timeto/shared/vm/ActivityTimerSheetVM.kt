@@ -25,7 +25,7 @@ class ActivityTimerSheetVM(
     init {
         val note = when (timerContext) {
             is TimerContext.Task -> timerContext.task.text
-            else -> null
+            null -> null
         }
 
         val defSeconds = TimerPickerItem.calcDefSeconds(activity, note)
@@ -48,11 +48,11 @@ class ActivityTimerSheetVM(
         try {
             val deadline = state.value.timeItems[state.value.formTimeItemIdx].seconds
 
-            when (timerContext) {
+            val when_: Any = when (timerContext) {
                 is TimerContext.Task -> {
                     timerContext.task.startInterval(deadline, activity)
                 }
-                else -> {
+                null -> {
                     val lastInterval = IntervalModel.getLastOneOrNull()!!
                     val note = if (lastInterval.activity_id == activity.id) lastInterval.note else null
                     IntervalModel.addWithValidation(deadline, activity, note)
