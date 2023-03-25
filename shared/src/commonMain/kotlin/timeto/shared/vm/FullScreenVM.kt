@@ -14,6 +14,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
     data class State(
         val interval: IntervalModel,
         val allChecklistItems: List<ChecklistItemModel>,
+        val isTaskCancelVisible: Boolean,
         val idToUpdate: Long,
     ) {
         val timerData = TimerDataUI(interval, ColorNative.white)
@@ -54,6 +55,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
         State(
             interval = DI.lastInterval,
             allChecklistItems = DI.checklistItems,
+            isTaskCancelVisible = false,
             idToUpdate = 0,
         )
     )
@@ -88,6 +90,20 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
     fun restart() {
         launchExDefault {
             IntervalModel.restartActualInterval()
+        }
+    }
+
+    ///
+    /// Cancel
+
+    fun toggleIsTaskCancelVisible() {
+        state.update { it.copy(isTaskCancelVisible = !it.isTaskCancelVisible) }
+    }
+
+    fun cancelTask() {
+        launchExDefault {
+            IntervalModel.cancelCurrentInterval()
+            state.update { it.copy(isTaskCancelVisible = false) }
         }
     }
 }
