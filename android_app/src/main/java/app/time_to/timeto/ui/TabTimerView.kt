@@ -1,6 +1,6 @@
 package app.time_to.timeto.ui
 
-import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -27,11 +28,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.time_to.timeto.*
 import app.time_to.timeto.R
-import kotlinx.coroutines.delay
 import timeto.shared.*
 import timeto.shared.db.IntervalModel
 import timeto.shared.vm.TabTimerVM
-import timeto.shared.vm.ui.TimerDataUI
+import timeto.shared.vm.TimerTabProgressVM
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -418,61 +418,52 @@ fun TabTimerView() {
 private fun TimerView(
     interval: IntervalModel,
 ) {
-    val scope = rememberCoroutineScope()
-
-    val refreshMls = 200L
-
-    var nowTimeMillis by remember { mutableStateOf(timeMls()) }
-    LaunchedEffect(nowTimeMillis) {
-        delay(refreshMls)
-        nowTimeMillis = timeMls()
-    }
-
-    val timerData = TimerDataUI(interval, ColorNative.text)
-
-    var isCountdownOrPast by remember { mutableStateOf(true) }
-    LaunchedEffect(interval.id) {
-        isCountdownOrPast = true
-    }
+    val (vm, state) = rememberVM { TimerTabProgressVM() }
+    val timerData = state.timerData
 
     Box(
-        modifier = Modifier.padding(top = 6.dp)
+        modifier = Modifier
+            .padding(top = 6.dp),
     ) {
 
-        val animateColor = animateColorAsState(targetValue = timerData.color.toColor())
+        val subtitleColor = animateColorAsState(timerData.subtitleColor.toColor())
 
-        val timerSubtitle = timerData.subtitle
-        if (timerSubtitle != null)
+        AnimatedVisibility(
+            timerData.subtitle != null,
+            modifier = Modifier
+                .align(Alignment.TopCenter),
+            enter = fadeIn(),
+            exit = fadeOut(),
+        ) {
             Text(
-                text = timerSubtitle,
+                text = timerData.subtitle ?: " ",
                 fontSize = 22.sp,
                 fontWeight = FontWeight.ExtraBold,
-                modifier = Modifier
-                    .align(Alignment.TopCenter),
-                color = animateColor.value,
+                color = subtitleColor.value,
                 letterSpacing = 3.sp,
             )
+        }
 
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 28.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
             Row(
                 modifier = Modifier
                     .padding(bottom = 6.dp)
                     .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
 
-                Spacer(Modifier.weight(1f))
+                SpacerW1()
 
                 Icon(
                     painterResource(id = R.drawable.sf_arrow_counterclockwise_medium_regular),
                     "Restart",
-                    tint = animateColor.value,
+                    tint = subtitleColor.value,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                         .padding(top = 1.dp)
@@ -480,33 +471,33 @@ private fun TimerView(
                         .size(40.dp)
                         .clip(RoundedCornerShape(99.dp))
                         .clickable {
-                            scope.launchEx {
-                                IntervalModel.restartActualInterval()
-                            }
+                            vm.restart()
                         }
                         .padding(10.dp)
                 )
 
-                Spacer(Modifier.weight(1f))
+                SpacerW1()
 
                 Text(
-                    text = if (isCountdownOrPast) timerData.title else TimerDataUI.secondsToString(time() - interval.id),
+                    text = timerData.title,
                     fontSize = 50.sp,
                     fontWeight = FontWeight.ExtraBold,
                     modifier = Modifier
                         .clip(RoundedCornerShape(10.dp))
-                        .clickable { isCountdownOrPast = !isCountdownOrPast }
+                        .clickable {
+                            vm.toggleIsCountdown()
+                        }
                         .padding(horizontal = 6.dp),
                     fontFamily = FontFamily.Monospace,
-                    color = if (isCountdownOrPast) animateColor.value else c.purple
+                    color = timerData.titleColor.toColor()
                 )
 
-                Spacer(Modifier.weight(1f))
+                SpacerW1()
 
                 Icon(
                     painterResource(id = R.drawable.sf_up_left_medium_light),
                     "Fullscreen",
-                    tint = animateColor.value,
+                    tint = subtitleColor.value,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                         .padding(top = 1.dp)
@@ -519,7 +510,7 @@ private fun TimerView(
                         .padding(11.dp)
                 )
 
-                Spacer(Modifier.weight(1f))
+                SpacerW1()
             }
 
             val shape = RoundedCornerShape(99.dp)
@@ -553,24 +544,24 @@ private fun TimerView(
                         .clip(shape)
                 ) {
 
-                    val ratio: Float =
-                        (nowTimeMillis - interval.id * 1000L).toFloat() / (interval.deadline * 1000L).toFloat()
-
                     val widthAnimate = animateFloatAsState(
-                        ratio,
+                        state.progressRatio,
                         // To fast rollback on start
-                        if (time() > interval.id) tween(refreshMls.toInt(), easing = LinearEasing) else spring()
+                        if (time() > interval.id) tween(1000, easing = LinearEasing) else spring()
                     )
 
-                    val animateColorBar = animateColorAsState(
-                        targetValue = if (ratio < 1) c.blue else timerData.color.toColor()
-                    )
+                    val animateColorBar = animateColorAsState(state.progressColor.toColor())
 
                     Box(
                         modifier = Modifier
                             .fillMaxHeight()
-                            .fillMaxWidth(widthAnimate.value)
-                            .background(animateColorBar.value)
+                            .fillMaxWidth()
+                            .drawBehind {
+                                drawRect(
+                                    color = animateColorBar.value,
+                                    size = size.copy(size.width * widthAnimate.value)
+                                )
+                            }
                     )
                 }
             }
