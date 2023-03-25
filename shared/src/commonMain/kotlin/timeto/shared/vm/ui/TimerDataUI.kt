@@ -23,7 +23,7 @@ class TimerDataUI(
         }
     }
 
-    val timer: String
+    val title: String // 12:34
     val subtitle: String? // NULL / BREAK / OVERDUE
     val timePassedNote = secondsToString(time() - interval.id) // Time left
     val color: ColorNative
@@ -51,7 +51,7 @@ class TimerDataUI(
             }
         }
 
-        timer = secondsToString(timeForTimer)
+        title = secondsToString(timeForTimer)
         isCompact = timeForTimer >= (3_600 * 10)
     }
 }

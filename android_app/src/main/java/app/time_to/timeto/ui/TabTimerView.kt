@@ -491,7 +491,7 @@ private fun TimerView(
                 Spacer(Modifier.weight(1f))
 
                 Text(
-                    text = if (isCountdownOrPast) timerData.timer else TimerDataUI.secondsToString(time() - interval.id),
+                    text = if (isCountdownOrPast) timerData.title else TimerDataUI.secondsToString(time() - interval.id),
                     fontSize = 50.sp,
                     fontWeight = FontWeight.ExtraBold,
                     modifier = Modifier

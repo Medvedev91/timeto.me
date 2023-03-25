@@ -176,7 +176,7 @@ private fun FullScreenView(
             }
 
             Text(
-                text = timerData.timer,
+                text = timerData.title,
                 fontSize = if (timerData.isCompact) 60.sp else 70.sp,
                 fontWeight = FontWeight.Black,
                 fontFamily = FontFamily.Monospace,

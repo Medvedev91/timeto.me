@@ -21,7 +21,7 @@ class WatchTimerVM : __VM<WatchTimerVM.State>() {
         val lastInterval: IntervalModel,
     ) {
         private val timerData = TimerDataUI(lastInterval, ColorNative.text)
-        val timeNote = if (isCountDown) timerData.timer else timerData.timePassedNote
+        val timeNote = if (isCountDown) timerData.title else timerData.timePassedNote
         val color = if (isCountDown) timerData.color else ColorNative.purple
     }
 
