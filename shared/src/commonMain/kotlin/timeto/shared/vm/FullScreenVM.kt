@@ -17,7 +17,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
         val isTaskCancelVisible: Boolean,
         val idToUpdate: Long,
     ) {
-        val timerData = TimerDataUI(interval, ColorNative.white)
+        val timerData = TimerDataUI(interval, true, ColorNative.white)
 
         val activityTimerContext = if (interval.note != null)
             ActivityTimerSheetVM.TimerContext.Note(interval.note)
