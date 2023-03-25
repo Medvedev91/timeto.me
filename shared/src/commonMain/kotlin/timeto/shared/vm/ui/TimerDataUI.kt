@@ -9,6 +9,7 @@ import kotlin.math.absoluteValue
 
 class TimerDataUI(
     interval: IntervalModel,
+    isCountdown: Boolean,
     defColor: ColorNative,
 ) {
 
@@ -23,35 +24,32 @@ class TimerDataUI(
         }
     }
 
-    val title: String // 12:34
-    val subtitle: String? // NULL / BREAK / OVERDUE
-    val timePassedNote = secondsToString(time() - interval.id) // Time left
-    val color: ColorNative
     val isCompact: Boolean
 
-    init {
-        val timeLeft = interval.id + interval.deadline - time()
-        val timeForTimer: Int
+    val title: String // 12:34
+    val titleColor: ColorNative
 
-        when {
-            timeLeft < -BREAK_SECONDS -> {
-                timeForTimer = -timeLeft - BREAK_SECONDS
-                color = ColorNative.red
-                subtitle = "OVERDUE"
-            }
-            timeLeft <= 0 -> {
-                timeForTimer = timeLeft + BREAK_SECONDS
-                color = ColorNative.green
-                subtitle = "BREAK"
-            }
-            else -> {
-                timeForTimer = timeLeft
-                color = defColor
-                subtitle = null
-            }
+    val subtitle: String? // NULL / BREAK / OVERDUE
+    val subtitleColor: ColorNative
+
+    init {
+        val now = time()
+        val timeLeft = interval.id + interval.deadline - now
+
+        // Subtitle?, Subtitle Color, Countdown Time
+        val tmpData: Triple<String?, ColorNative, Int> = when {
+            timeLeft < -BREAK_SECONDS -> Triple("OVERDUE", ColorNative.red, -timeLeft - BREAK_SECONDS)
+            timeLeft <= 0 -> Triple("BREAK", ColorNative.green, timeLeft + BREAK_SECONDS)
+            else -> Triple(null, defColor, timeLeft)
         }
 
-        title = secondsToString(timeForTimer)
-        isCompact = timeForTimer >= (3_600 * 10)
+        val timeForTitle = if (isCountdown) tmpData.third else (now - interval.id)
+        isCompact = timeForTitle >= (3_600 * 10)
+
+        title = secondsToString(timeForTitle)
+        titleColor = if (isCountdown) tmpData.second else ColorNative.purple
+
+        subtitle = tmpData.first
+        subtitleColor = tmpData.second
     }
 }
