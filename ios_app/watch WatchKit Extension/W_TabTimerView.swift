@@ -43,10 +43,10 @@ struct W_TabTimerView: View {
 
         var body: some View {
             VMView(vm: vm, stack: .ZStack()) { state in
-                Text(state.timeNote)
+                Text(state.timerData.title)
                         .font(.system(size: 28, design: .monospaced))
                         .fontWeight(.medium)
-                        .foregroundColor(state.color.toColor())
+                        .foregroundColor(state.timerData.titleColor.toColor())
             }
                     .onTapGesture {
                         vm.toggleIsCountDown()
