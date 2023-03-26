@@ -16,8 +16,8 @@ data class TextFeatures(
 ) {
 
     val timeUI: TimeUI? = when {
-        fromRepeating?.time != null -> TimeUI(UnixTime(fromRepeating.time))
-        fromEvent != null -> TimeUI(UnixTime(fromEvent.time))
+        fromRepeating?.time != null -> TimeUI(UnixTime(fromRepeating.time), TimeUI.TYPE.REPEATING)
+        fromEvent != null -> TimeUI(UnixTime(fromEvent.time), TimeUI.TYPE.EVENT)
         else -> null
     }
 

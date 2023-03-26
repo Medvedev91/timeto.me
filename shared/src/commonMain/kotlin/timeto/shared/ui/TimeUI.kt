@@ -4,7 +4,8 @@ import timeto.shared.*
 import kotlin.math.absoluteValue
 
 class TimeUI(
-    val unixTime: UnixTime
+    val unixTime: UnixTime,
+    val type: TYPE,
 ) {
 
     val daytimeText = daytimeToString(unixTime.time - unixTime.localDayStartTime())
@@ -20,6 +21,10 @@ class TimeUI(
             timeLeftText = secondsOverdueToString(secondsLeft)
             color = ColorNative.red
         }
+    }
+
+    enum class TYPE {
+        EVENT, REPEATING,
     }
 }
 
