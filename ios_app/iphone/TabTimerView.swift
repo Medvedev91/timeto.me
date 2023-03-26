@@ -45,9 +45,7 @@ struct TabTimerView: View {
                             ///
                             /// Ordering is important, otherwise Edit would not be clicked.
 
-                            TabTimerView_ProgressView(
-                                    lastInterval: state.lastInterval
-                            )
+                            TabTimerView_ProgressView()
                                     .padding(.leading, 16)
                                     .padding(.trailing, 16)
                                     .frame(height: 120)
@@ -476,33 +474,23 @@ struct TabTimerView_ActivityRowView_ButtonStyle: ButtonStyle {
 ///
 struct TabTimerView_ProgressView: View {
 
-    let lastInterval: IntervalModel
-
-    ///
-
-    private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    @State private var timerHackToReload = UUID()
-    @State private var isCountDown = true // Обратный отчет или сколько прошло
-
-    private var timerData: TimerDataUI {
-        TimerDataUI(interval: lastInterval, defColor: ColorNative.text)
-    }
+    @State private var vm = TimerTabProgressVM()
 
     var body: some View {
 
         GeometryReader { geometry in
 
-            let timerColor = timerData.color.toColor()
+            VMView(vm: vm, stack: .ZStack()) { state in
 
-            ZStack {
+                let timerData = state.timerData
 
-                EmptyView().id(timerHackToReload)
+                let subtitleColor = timerData.subtitleColor.toColor()
 
                 VStack {
 
-                    if let title = timerData.title {
-                        Text(title)
-                                .foregroundColor(timerColor)
+                    if let subtitle = timerData.subtitle {
+                        Text(subtitle)
+                                .foregroundColor(subtitleColor)
                                 .font(.system(size: 20, weight: .bold))
                                 .tracking(2)
                     }
@@ -521,9 +509,7 @@ struct TabTimerView_ProgressView: View {
 
                         Button(
                                 action: {
-                                    IntervalModel.companion.restartActualInterval { _ in
-                                        // todo
-                                    }
+                                    vm.restart()
                                 },
                                 label: {
                                     Image(systemName: "arrow.counterclockwise")
@@ -531,19 +517,19 @@ struct TabTimerView_ProgressView: View {
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: 20)
                                             .padding(.bottom, 7)
-                                            .foregroundColor(timerColor)
+                                            .foregroundColor(subtitleColor)
                                             .font(Font.title.weight(.thin))
                                 }
                         )
 
                         Spacer(minLength: 0)
 
-                        Text(isCountDown ? timerData.timer : TimerDataUI.companion.secondsToString(seconds: time().toInt32() - lastInterval.id))
+                        Text(timerData.title)
                                 .font(.system(size: 53, design: .monospaced))
                                 //.font(Font.custom("San Francisco", size: 49).monospacedDigit())
                                 .fontWeight(.medium)
                                 //.padding(.vertical, -10) /// https://stackoverflow.com/q/61431791
-                                .foregroundColor(isCountDown ? timerColor : .purple)
+                                .foregroundColor(timerData.titleColor.toColor())
                                 .padding(.bottom, 8)
 
                         Spacer(minLength: 0)
@@ -557,7 +543,7 @@ struct TabTimerView_ProgressView: View {
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: 20)
-                                            .foregroundColor(timerColor)
+                                            .foregroundColor(subtitleColor)
                                             .rotationEffect(.degrees(-90))
                                             .padding(.bottom, 7)
                                             .font(Font.title.weight(.thin))
@@ -574,10 +560,6 @@ struct TabTimerView_ProgressView: View {
                         let fullWidth: Double = geometry.size.width
                         let borderWidth: Double = 0.5
 
-                        let timerSecondsForUi = time() - lastInterval.id.toInt()
-
-                        let blueRatio: Double = CGFloat(timerSecondsForUi) / CGFloat(lastInterval.deadline.toInt())
-
                         RoundedRectangle(cornerRadius: fullHeight)
                                 .fill(Color(.mySecondaryBackground))
                                 .frame(width: fullWidth, height: fullHeight)
@@ -587,9 +569,9 @@ struct TabTimerView_ProgressView: View {
                                 .frame(width: fullWidth, height: fullHeight)
 
                         Rectangle()
-                                .frame(width: min(blueRatio * fullWidth, fullWidth), height: fullHeight)
-                                .foregroundColor(blueRatio < 1 ? .blue : timerData.color.toColor())
-                                .animation(.linear(duration: (time() > lastInterval.id.toInt()) ? 0.99 : 0.2))
+                                .frame(width: Double(state.progressRatio) * fullWidth, height: fullHeight)
+                                .foregroundColor(state.progressColor.toColor())
+                                .animation(.linear(duration: (time() > state.lastInterval.id.toInt()) ? 0.99 : 0.2))
                     }
                             .cornerRadius(fullHeight)
                 }
@@ -597,19 +579,11 @@ struct TabTimerView_ProgressView: View {
                     /// onTapGesture() does not work without contentShape() on
                     /// click on empty area, e.g. on the side of the counter.
                     /// But it is difficult to click on "+".
-                    // .contentShape(Rectangle())
+                    .contentShape(Rectangle())
                     .onTapGesture {
                         withAnimation {
-                            isCountDown.toggle()
+                            vm.toggleIsCountdown()
                         }
-                    }
-                    ///
-                    .onReceive(timer) { _ in
-                        // No animation, otherwise it twitch on iOS 16+
-                        timerHackToReload = UUID()
-                    }
-                    .onChange(of: lastInterval.id) { newValue in
-                        isCountDown = true
                     }
         }
     }
