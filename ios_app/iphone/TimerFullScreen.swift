@@ -119,16 +119,16 @@ private struct TimerFullScreen__TimerView: View {
 
             let timerData = state.timerData
 
-            Text(timerData.title ?? "")
+            Text(timerData.subtitle ?? "")
                     .font(.system(size: 26, weight: .bold))
                     .tracking(5)
-                    .foregroundColor(timerData.color.toColor())
+                    .foregroundColor(timerData.subtitleColor.toColor())
                     .opacity(0.9)
                     .padding(.bottom, isCompact ? 5 : 20)
 
-            Text(timerData.timer)
+            Text(timerData.title)
                     .font(.system(size: 72, design: .monospaced))
-                    .foregroundColor(timerData.color.toColor())
+                    .foregroundColor(timerData.titleColor.toColor())
                     .opacity(0.9)
 
             Button(
