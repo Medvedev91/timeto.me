@@ -118,9 +118,11 @@ private fun FullScreenView(
                 Text(
                     text = state.title,
                     modifier = Modifier
+                        .clip(MySquircleShape())
                         .clickable {
                             vm.toggleIsTaskCancelVisible()
-                        },
+                        }
+                        .padding(horizontal = 8.dp),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Normal,
                     color = c.white,
@@ -175,17 +177,18 @@ private fun FullScreenView(
                 )
             }
 
-            val timerTitleColor = animateColorAsState(timerData.titleColor.toColor())
             Text(
                 text = timerData.title,
                 modifier = Modifier
+                    .clip(MySquircleShape())
                     .clickable {
                         vm.toggleIsCountdown()
-                    },
+                    }
+                    .padding(horizontal = 8.dp),
                 fontSize = if (timerData.isCompact) 60.sp else 70.sp,
                 fontWeight = FontWeight.Black,
                 fontFamily = FontFamily.Monospace,
-                color = timerTitleColor.value,
+                color = timerData.titleColor.toColor(),
             )
 
             AnimatedVisibility(
