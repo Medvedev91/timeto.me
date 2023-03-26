@@ -12,7 +12,7 @@ import timeto.shared.vm.ui.TimerDataUI
 class WatchTimerVM : __VM<WatchTimerVM.State>() {
 
     /**
-     * todo
+     * todo refactor
      * Don't use "data" class because the class has
      * calculated fields that don't trigger UI updates.
      */
@@ -20,9 +20,7 @@ class WatchTimerVM : __VM<WatchTimerVM.State>() {
         val isCountDown: Boolean,
         val lastInterval: IntervalModel,
     ) {
-        private val timerData = TimerDataUI(lastInterval, ColorNative.text)
-        val timeNote = if (isCountDown) timerData.title else timerData.timePassedNote
-        val color = if (isCountDown) timerData.color else ColorNative.purple
+        val timerData = TimerDataUI(lastInterval, isCountDown, ColorNative.text)
     }
 
     override val state = MutableStateFlow(
