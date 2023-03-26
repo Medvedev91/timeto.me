@@ -80,11 +80,10 @@ data class EventModel(
         }
     }
 
-    fun prepTextForTask(): String =
-        "$EMOJI_CALENDAR ${timeToString()}\n${text}"
-            .textFeatures()
-            .copy(fromEvent = TextFeatures.FromEvent(getLocalTime().time))
-            .textWithFeatures()
+    fun prepTextForTask(): String = text
+        .textFeatures()
+        .copy(fromEvent = TextFeatures.FromEvent(getLocalTime().time))
+        .textWithFeatures()
 
     fun getLocalTime() = UnixTime(utc_time - localUtcOffset)
 
