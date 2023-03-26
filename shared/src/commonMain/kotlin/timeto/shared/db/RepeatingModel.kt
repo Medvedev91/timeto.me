@@ -199,8 +199,7 @@ data class RepeatingModel(
         }
     }
 
-    fun prepTextForTask(day: Int): String =
-        "$EMOJI_REPEATING $text"
+    fun prepTextForTask(day: Int): String = text
             .textFeatures()
             .copy(
                 fromRepeating = TextFeatures.FromRepeating(
