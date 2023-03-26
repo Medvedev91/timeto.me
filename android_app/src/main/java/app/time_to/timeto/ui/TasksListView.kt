@@ -20,13 +20,17 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.*
 import app.time_to.timeto.*
+import app.time_to.timeto.R
 import kotlinx.coroutines.delay
 import timeto.shared.db.TaskFolderModel
 import timeto.shared.launchEx
+import timeto.shared.ui.TimeUI
 import timeto.shared.vm.TasksListVM
 
 private val TASKS_LIST_ITEM_MIN_HEIGHT = 42.dp
@@ -334,23 +338,55 @@ fun TasksListView(
                                                 top = 2.dp,
                                                 bottom = vPadding,
                                             ),
+                                        verticalAlignment = Alignment.CenterVertically,
                                     ) {
 
-                                        Text(
-                                            daytimeUI.daytimeText,
-                                            fontSize = 13.sp,
-                                            fontWeight = FontWeight.W300,
-                                            color = daytimeUI.color.toColor(),
-                                        )
+                                        when (daytimeUI.type) {
 
-                                        Text(
-                                            daytimeUI.timeLeftText,
-                                            modifier = Modifier
-                                                .padding(start = 8.dp),
-                                            fontSize = 13.sp,
-                                            fontWeight = FontWeight.W300,
-                                            color = daytimeUI.color.toColor(),
-                                        )
+                                            TimeUI.TYPE.EVENT -> {
+                                                Row(
+                                                    modifier = Modifier
+                                                        .offset(x = (-1).dp)
+                                                        .clip(MySquircleShape(len = 40f))
+                                                        .background(daytimeUI.color.toColor())
+                                                        .padding(start = 5.dp, end = 4.dp, top = 3.dp, bottom = 3.dp),
+                                                    verticalAlignment = Alignment.CenterVertically,
+                                                ) {
+                                                    Icon(
+                                                        painterResource(id = R.drawable.sf_calendar_medium_light),
+                                                        contentDescription = "Event",
+                                                        tint = c.white,
+                                                        modifier = Modifier
+                                                            .padding(end = 5.dp)
+                                                            .size(14.dp),
+                                                    )
+                                                    Text(
+                                                        daytimeUI.daytimeText,
+                                                        fontSize = 12.sp,
+                                                        color = c.white,
+                                                    )
+                                                }
+                                                Text(
+                                                    daytimeUI.timeLeftText,
+                                                    modifier = Modifier
+                                                        .padding(start = 6.dp),
+                                                    fontSize = 13.sp,
+                                                    fontWeight = FontWeight.W300,
+                                                    color = daytimeUI.color.toColor(),
+                                                    maxLines = 1,
+                                                    overflow = TextOverflow.Ellipsis,
+                                                )
+                                            }
+
+                                            TimeUI.TYPE.REPEATING -> {
+                                                Text(
+                                                    daytimeUI.daytimeText + "  " + daytimeUI.timeLeftText,
+                                                    fontSize = 13.sp,
+                                                    fontWeight = FontWeight.W300,
+                                                    color = daytimeUI.color.toColor(),
+                                                )
+                                            }
+                                        }
                                     }
                                 }
 
