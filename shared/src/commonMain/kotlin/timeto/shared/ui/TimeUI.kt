@@ -1,6 +1,7 @@
 package timeto.shared.ui
 
 import timeto.shared.*
+import timeto.shared.db.eventUiString
 import kotlin.math.absoluteValue
 
 class TimeUI(
@@ -8,7 +9,7 @@ class TimeUI(
     val type: TYPE,
 ) {
 
-    val daytimeText = daytimeToString(unixTime.time - unixTime.localDayStartTime())
+    val daytimeText: String
     val timeLeftText: String
     val color: ColorNative
 
@@ -16,10 +17,19 @@ class TimeUI(
         val secondsLeft = unixTime.time - time()
         if (secondsLeft > 0) {
             timeLeftText = secondsInToString(secondsLeft)
-            color = if (secondsLeft <= 3_600) ColorNative.blue else ColorNative.textSecondary
+            color = when {
+                type == TYPE.EVENT -> ColorNative.blue
+                secondsLeft <= 3_600 -> ColorNative.blue
+                else -> ColorNative.textSecondary
+            }
         } else {
             timeLeftText = secondsOverdueToString(secondsLeft)
             color = ColorNative.red
+        }
+
+        daytimeText = when (type) {
+            TYPE.EVENT -> unixTime.eventUiString(withDayOfWeek3 = false)
+            TYPE.REPEATING -> daytimeToString(unixTime.time - unixTime.localDayStartTime())
         }
     }
 
