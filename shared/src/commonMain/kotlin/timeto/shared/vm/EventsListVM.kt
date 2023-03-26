@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timeto.shared.*
 import timeto.shared.db.EventModel
+import timeto.shared.db.eventUiString
 
 class EventsListVM : __VM<EventsListVM.State>() {
 
@@ -15,6 +16,7 @@ class EventsListVM : __VM<EventsListVM.State>() {
         val dayLeftString = "${event.getLocalTime().localDay - UnixTime().localDay}d"
 
         val textFeatures = event.text.textFeatures()
+        val dateString = event.getLocalTime().eventUiString()
         val listText = textFeatures.textUi()
 
         fun delete() {

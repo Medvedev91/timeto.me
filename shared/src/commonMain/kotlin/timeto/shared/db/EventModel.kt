@@ -87,26 +87,6 @@ data class EventModel(
 
     fun getLocalTime() = UnixTime(utc_time - localUtcOffset)
 
-    // todo is24
-    fun timeToString(): String {
-        val components = mutableListOf(
-            UnixTime.StringComponent.dayOfMonth,
-            UnixTime.StringComponent.space,
-            UnixTime.StringComponent.month3,
-            UnixTime.StringComponent.comma,
-            UnixTime.StringComponent.space,
-            UnixTime.StringComponent.dayOfWeek3,
-        )
-        if ((utc_time % 86_400) != 0) // If not 00:00
-            components.addAll(
-                listOf(
-                    UnixTime.StringComponent.space,
-                    UnixTime.StringComponent.hhmm24
-                )
-            )
-        return getLocalTime().getStringByComponents(components)
-    }
-
     suspend fun upWithValidation(
         text: String,
         localTime: Int,

@@ -159,7 +159,7 @@ fun EventsListView() {
                             modifier = Modifier.padding(horizontal = horizontalPadding)
                         ) {
                             Text(
-                                uiEvent.event.timeToString(),
+                                uiEvent.dateString,
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.W300,
                                 color = c.textSecondary,
