@@ -265,7 +265,7 @@ private fun FullScreenView(
                     ) {
 
                         val checkboxSize = 18.dp
-                        val checklistItemMinHeight = 44.dp
+                        val checklistItemMinHeight = 42.dp
                         val checklistDividerPadding = 14.dp
 
                         LazyColumn(
