@@ -78,13 +78,19 @@ class TasksListVM(
         val curTimeString: String,
     )
 
-    class TmrwTaskUI(task: TaskModel) : timeto.shared.ui.TaskUI(task)
+    class TmrwTaskUI(
+        task: TaskModel
+    ) : timeto.shared.ui.TaskUI(task) {
+        val text = textFeatures.textUi()
+    }
 
     ///
 
     class TaskUI(
         task: TaskModel,
     ) : timeto.shared.ui.TaskUI(task) {
+
+        val text = textFeatures.textUi()
 
         fun start(
             onStarted: () -> Unit,

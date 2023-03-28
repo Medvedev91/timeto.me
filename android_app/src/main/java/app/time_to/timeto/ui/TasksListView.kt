@@ -391,7 +391,7 @@ fun TasksListView(
                                 }
 
                                 Text(
-                                    taskUI.listText,
+                                    taskUI.text,
                                     color = c.text,
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -488,7 +488,7 @@ private fun TasksListView__TmrwTaskView(
             }
 
             Text(
-                taskUI.listText,
+                taskUI.text,
                 color = c.text,
                 modifier = Modifier
                     .fillMaxWidth()
