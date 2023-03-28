@@ -23,8 +23,8 @@ fun <T : TaskUI> List<T>.sortedByFolder(
     return this
         .groupBy { taskUI ->
             taskUI.textFeatures.fromRepeating?.day
-                ?: taskUI.textFeatures.timeUI?.unixTime?.localDay
-                ?: taskUI.task.unixTime().localDay
+            ?: taskUI.textFeatures.timeUI?.unixTime?.localDay
+            ?: taskUI.task.unixTime().localDay
         }
         .toList()
         .sortedByDescending { it.first }
