@@ -17,7 +17,7 @@ data class TextFeatures(
 
     val timeUI: TimeUI? = when {
         fromRepeating?.time != null -> TimeUI(UnixTime(fromRepeating.time), TimeUI.TYPE.REPEATING)
-        fromEvent != null -> TimeUI(UnixTime(fromEvent.time), TimeUI.TYPE.EVENT)
+        fromEvent != null -> TimeUI(fromEvent.unixTime, TimeUI.TYPE.EVENT)
         else -> null
     }
 
@@ -47,7 +47,7 @@ data class TextFeatures(
         if (fromRepeating != null)
             strings.add("#r${fromRepeating.id}_${fromRepeating.day}_${fromRepeating.time ?: ""}")
         if (fromEvent != null)
-            strings.add("#e${fromEvent.time}")
+            strings.add("#e${fromEvent.unixTime.time}")
         if (activity != null)
             strings.add("#a${activity.id}")
         if (timer != null)
@@ -59,7 +59,7 @@ data class TextFeatures(
     // setting. "day" is used for sorting within "Today" tasks list.
     class FromRepeating(val id: Int, val day: Int, val time: Int?)
 
-    class FromEvent(val time: Int)
+    class FromEvent(val unixTime: UnixTime)
 
     sealed class Trigger(
         val id: String,
@@ -137,7 +137,7 @@ private fun parseLocal(initText: String): TextFeatures {
         .find(textNoFeatures)?.let { match ->
             val time = match.groupValues[1].toInt()
             match.clean()
-            return@let TextFeatures.FromEvent(time)
+            return@let TextFeatures.FromEvent(UnixTime(time))
         }
 
     val activity: ActivityModel? = activityRegex

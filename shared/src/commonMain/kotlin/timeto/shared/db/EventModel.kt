@@ -82,7 +82,7 @@ data class EventModel(
 
     fun prepTextForTask(): String = text
         .textFeatures()
-        .copy(fromEvent = TextFeatures.FromEvent(getLocalTime().time))
+        .copy(fromEvent = TextFeatures.FromEvent(getLocalTime()))
         .textWithFeatures()
 
     fun getLocalTime() = UnixTime(utc_time - localUtcOffset)
