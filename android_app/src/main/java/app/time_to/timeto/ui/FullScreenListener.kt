@@ -195,6 +195,8 @@ private fun FullScreenView(
                 timerData.subtitle != null || !state.isCountdown,
                 enter = fadeIn() + expandVertically(),
                 exit = fadeOut() + shrinkVertically(),
+                modifier = Modifier
+                    .offset(y = (-4).dp),
             ) {
 
                 Row {
@@ -227,7 +229,7 @@ private fun FullScreenView(
                         contentDescription = "Restart",
                         tint = c.white,
                         modifier = Modifier
-                            .padding(start = 20.dp)
+                            .padding(start = 16.dp)
                             .size(timerIconSize)
                             .clip(RoundedCornerShape(99.dp))
                             .clickable {
