@@ -7,7 +7,7 @@ import timeto.shared.db.EventModel
 import timeto.shared.db.RepeatingModel
 import timeto.shared.db.TaskFolderModel
 import timeto.shared.db.TaskModel
-import timeto.shared.ui.sortedByFolder
+import timeto.shared.vm.ui.sortedByFolder
 
 // todo live tmrw data?
 class TasksListVM(
@@ -67,8 +67,8 @@ class TasksListVM(
 
     private fun List<TaskModel>.toUiList() = this
         .filter { it.folder_id == folder.id }
-        .map { TaskUI(it) }
         .sortedByFolder(folder)
+        .map { TaskUI(it) }
 
     ///
     ///
@@ -79,17 +79,19 @@ class TasksListVM(
     )
 
     class TmrwTaskUI(
-        task: TaskModel
-    ) : timeto.shared.ui.TaskUI(task) {
+        val task: TaskModel
+    ) {
+        val textFeatures = task.text.textFeatures()
         val text = textFeatures.textUi()
     }
 
     ///
 
     class TaskUI(
-        task: TaskModel,
-    ) : timeto.shared.ui.TaskUI(task) {
+        val task: TaskModel,
+    ) {
 
+        val textFeatures = task.text.textFeatures()
         val text = textFeatures.textUi()
 
         fun start(
@@ -160,8 +162,8 @@ private fun prepTmrwData(
         }
 
     val resTasks = rawTasks
-        .map { TasksListVM.TmrwTaskUI(it) }
         .sortedByFolder(DI.getTodayFolder())
+        .map { TasksListVM.TmrwTaskUI(it) }
 
     val curTimeString = unixTmrwDS.getStringByComponents(
         listOf(

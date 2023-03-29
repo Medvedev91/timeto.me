@@ -5,14 +5,14 @@ import kotlinx.coroutines.flow.update
 import timeto.shared.db.TaskFolderModel
 import timeto.shared.db.TaskFolderModel.Companion.sortedFolders
 import timeto.shared.db.TaskModel
-import timeto.shared.ui.sortedByFolder
 import timeto.shared.vm.__VM
+import timeto.shared.vm.ui.sortedByFolder
 
 class WatchTabTasksVM : __VM<WatchTabTasksVM.State>() {
 
     class TaskUI(
-        task: TaskModel,
-    ) : timeto.shared.ui.TaskUI(task) {
+        val task: TaskModel,
+    ) {
 
         fun start(
             onStarted: () -> Unit,
@@ -61,8 +61,8 @@ class WatchTabTasksVM : __VM<WatchTabTasksVM.State>() {
                 title = folder.name,
                 tasks = allTasks
                     .filter { it.folder_id == folder.id }
-                    .map { TaskUI(it) }
                     .sortedByFolder(folder)
+                    .map { TaskUI(it) }
             )
         }
         state.update { it.copy(foldersUI = foldersUI) }
