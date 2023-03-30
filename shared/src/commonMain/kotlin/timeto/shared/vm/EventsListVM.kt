@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timeto.shared.*
 import timeto.shared.db.EventModel
-import timeto.shared.db.eventUiString
 
 class EventsListVM : __VM<EventsListVM.State>() {
 
