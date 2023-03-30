@@ -97,14 +97,14 @@ class HistoryVM : __VM<HistoryVM.State>() {
         val nextIntervalStart: Int,
     ) {
 
-        val dayText = UnixTime.byLocalDay(day).getStringByComponents(listOf(
+        val dayText = UnixTime.byLocalDay(day).getStringByComponents(
             UnixTime.StringComponent.dayOfMonth,
             UnixTime.StringComponent.space,
             UnixTime.StringComponent.month,
             UnixTime.StringComponent.comma,
             UnixTime.StringComponent.space,
             UnixTime.StringComponent.dayOfWeek3,
-        ))
+        )
     }
 
     /**
@@ -186,7 +186,7 @@ class HistoryVM : __VM<HistoryVM.State>() {
                     noteText = interval.note?.textFeatures()?.textUi(),
                     secondsForBar = barTimeFinish - sectionDayTimeStart.max(interval.id),
                     barTimeFinish = barTimeFinish,
-                    timeString = unixTime.getStringByComponents(listOf(UnixTime.StringComponent.hhmm24)),
+                    timeString = unixTime.getStringByComponents(UnixTime.StringComponent.hhmm24),
                     periodString = prepPeriodString(seconds),
                     color = activity.getColorRgba(),
                 )

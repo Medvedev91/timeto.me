@@ -74,7 +74,7 @@ data class UnixTime(
     }
 
     fun getStringByComponents(
-        components: List<StringComponent>,
+        vararg components: StringComponent,
     ): String {
         val dayTime = Instant.fromEpochSeconds(localDay * 86_400L).toLocalDateTime(TimeZone.UTC)
         return components.joinToString("") { component ->

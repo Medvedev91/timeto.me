@@ -153,7 +153,7 @@ fun UnixTime.eventUiString(
             )
         )
 
-    return this.getStringByComponents(components)
+    return this.getStringByComponents(*components.toTypedArray())
 }
 
 private fun validateText(text: String): String {

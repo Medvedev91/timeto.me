@@ -166,14 +166,12 @@ private fun prepTmrwData(
         .map { TasksListVM.TmrwTaskUI(it) }
 
     val curTimeString = unixTmrwDS.getStringByComponents(
-        listOf(
-            UnixTime.StringComponent.dayOfMonth,
-            UnixTime.StringComponent.space,
-            UnixTime.StringComponent.month,
-            UnixTime.StringComponent.comma,
-            UnixTime.StringComponent.space,
-            UnixTime.StringComponent.dayOfWeek,
-        )
+        UnixTime.StringComponent.dayOfMonth,
+        UnixTime.StringComponent.space,
+        UnixTime.StringComponent.month,
+        UnixTime.StringComponent.comma,
+        UnixTime.StringComponent.space,
+        UnixTime.StringComponent.dayOfWeek,
     )
 
     return TasksListVM.TmrwData(

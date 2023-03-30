@@ -54,16 +54,14 @@ class EventsListVM : __VM<EventsListVM.State>() {
 
 private fun getCurTimeString() = UnixTime()
     .getStringByComponents(
-        listOf(
-            UnixTime.StringComponent.dayOfMonth,
-            UnixTime.StringComponent.space,
-            UnixTime.StringComponent.month3,
-            UnixTime.StringComponent.comma,
-            UnixTime.StringComponent.space,
-            UnixTime.StringComponent.dayOfWeek3,
-            UnixTime.StringComponent.space,
-            UnixTime.StringComponent.hhmm24
-        )
+        UnixTime.StringComponent.dayOfMonth,
+        UnixTime.StringComponent.space,
+        UnixTime.StringComponent.month3,
+        UnixTime.StringComponent.comma,
+        UnixTime.StringComponent.space,
+        UnixTime.StringComponent.dayOfWeek3,
+        UnixTime.StringComponent.space,
+        UnixTime.StringComponent.hhmm24
     )
 
 private fun List<EventModel>.toUiList() = map { EventsListVM.UiEvent(it) }
