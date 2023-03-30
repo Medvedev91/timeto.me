@@ -347,7 +347,7 @@ fun TasksListView(
                                                 Row(
                                                     modifier = Modifier
                                                         .offset(x = (-1).dp)
-                                                        .clip(MySquircleShape(len = 40f))
+                                                        .clip(MySquircleShape(len = 30f))
                                                         .background(daytimeUI.color.toColor())
                                                         .padding(start = 5.dp, end = 4.dp, top = 3.dp, bottom = 3.dp),
                                                     verticalAlignment = Alignment.CenterVertically,
