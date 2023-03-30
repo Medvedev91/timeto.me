@@ -13,6 +13,7 @@ class TimeUI(
     val daytimeText: String
     val timeLeftText: String
     val color: ColorNative
+    val status: STATUS
 
     init {
         val secondsLeft = unixTime.time - time()
@@ -28,10 +29,20 @@ class TimeUI(
             color = ColorNative.red
         }
 
+        status = when {
+            secondsLeft > 3_600 -> STATUS.IN
+            secondsLeft > 0 -> STATUS.NEAR
+            else -> STATUS.OVERDUE
+        }
+
         daytimeText = when (type) {
             TYPE.EVENT -> unixTime.eventUiString(withDayOfWeek3 = false)
             TYPE.REPEATING -> daytimeToString(unixTime.time - unixTime.localDayStartTime())
         }
+    }
+
+    enum class STATUS {
+        IN, OVERDUE, NEAR
     }
 
     enum class TYPE {
