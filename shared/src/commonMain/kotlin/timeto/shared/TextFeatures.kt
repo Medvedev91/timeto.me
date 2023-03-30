@@ -3,7 +3,6 @@ package timeto.shared
 import timeto.shared.db.ActivityModel
 import timeto.shared.db.ChecklistModel
 import timeto.shared.db.ShortcutModel
-import timeto.shared.ui.TimeUI
 import kotlin.math.absoluteValue
 
 data class TextFeatures(
@@ -15,12 +14,6 @@ data class TextFeatures(
     val activity: ActivityModel?,
     val timer: Int?,
 ) {
-
-    val timeUI: TimeUI? = when {
-        fromRepeating?.time != null -> TimeUI(UnixTime(fromRepeating.time), false, TimeUI.TYPE.REPEATING)
-        fromEvent != null -> TimeUI(fromEvent.unixTime, true, TimeUI.TYPE.EVENT)
-        else -> null
-    }
 
     val timeData: TimeData? = when {
         fromRepeating?.time != null -> TimeData(UnixTime(fromRepeating.time), false, TimeData.TYPE.REPEATING)
