@@ -16,7 +16,7 @@ class EventsListVM : __VM<EventsListVM.State>() {
         val dayLeftString = "${event.getLocalTime().localDay - UnixTime().localDay}d"
 
         val textFeatures = event.text.textFeatures()
-        val dateString = event.getLocalTime().eventUiString()
+        val dateString = event.getLocalTime().eventListDateString()
         val listText = textFeatures.textUi()
 
         fun delete() {
@@ -51,6 +51,18 @@ class EventsListVM : __VM<EventsListVM.State>() {
             }
     }
 }
+
+private fun UnixTime.eventListDateString(): String =
+    this.getStringByComponents(
+        UnixTime.StringComponent.dayOfMonth,
+        UnixTime.StringComponent.space,
+        UnixTime.StringComponent.month3,
+        UnixTime.StringComponent.comma,
+        UnixTime.StringComponent.space,
+        UnixTime.StringComponent.dayOfWeek3,
+        UnixTime.StringComponent.space,
+        UnixTime.StringComponent.hhmm24,
+    )
 
 private fun getCurTimeString() = UnixTime()
     .getStringByComponents(
