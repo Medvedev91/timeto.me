@@ -4,6 +4,7 @@ import timeto.shared.db.ActivityModel
 import timeto.shared.db.ChecklistModel
 import timeto.shared.db.ShortcutModel
 import timeto.shared.ui.TimeUI
+import kotlin.math.absoluteValue
 
 data class TextFeatures(
     val textNoFeatures: String,
@@ -18,6 +19,12 @@ data class TextFeatures(
     val timeUI: TimeUI? = when {
         fromRepeating?.time != null -> TimeUI(UnixTime(fromRepeating.time), false, TimeUI.TYPE.REPEATING)
         fromEvent != null -> TimeUI(fromEvent.unixTime, true, TimeUI.TYPE.EVENT)
+        else -> null
+    }
+
+    val timeData: TimeData? = when {
+        fromRepeating?.time != null -> TimeData(UnixTime(fromRepeating.time), false, TimeData.TYPE.REPEATING)
+        fromEvent != null -> TimeData(fromEvent.unixTime, true, TimeData.TYPE.EVENT)
         else -> null
     }
 
@@ -81,6 +88,31 @@ data class TextFeatures(
         class Shortcut(
             val shortcut: ShortcutModel
         ) : Trigger("#s${shortcut.id}", shortcut.name, ColorNative.red)
+    }
+
+    class TimeData(
+        val unixTime: UnixTime,
+        val isImportant: Boolean,
+        val type: TYPE,
+    ) {
+
+        val secondsLeft: Int = unixTime.time - time()
+
+        val status: STATUS = when {
+            secondsLeft > 3_600 -> STATUS.IN
+            secondsLeft > 0 -> STATUS.NEAR
+            else -> STATUS.OVERDUE
+        }
+
+        fun timeLeftText(): String = when (status) {
+            STATUS.IN,
+            STATUS.NEAR -> secondsInToString(secondsLeft)
+            STATUS.OVERDUE -> secondsOverdueToString(secondsLeft)
+        }
+
+        enum class TYPE { EVENT, REPEATING }
+
+        enum class STATUS { IN, NEAR, OVERDUE }
     }
 }
 
@@ -165,3 +197,30 @@ private fun parseLocal(initText: String): TextFeatures {
         timer = timer,
     )
 }
+
+//////
+
+private fun secondsInToString(seconds: Int): String {
+    val (h, m) = seconds.toHms(roundToNextMinute = true)
+    val d = h / 24
+    return when {
+        d >= 1 -> "In ${d.toStringEndingDays()}"
+        h >= 5 -> "In ${h.toStringEndingHours()}"
+        h > 0 -> "In ${h.toStringEndingHours()}${if (m == 0) "" else " $m min"}"
+        else -> "In ${m.toStringEnding(true, "minute", "min")}"
+    }
+}
+
+private fun secondsOverdueToString(seconds: Int): String {
+    val (h, m) = seconds.absoluteValue.toHms()
+    val d = h / 24
+    return when {
+        d >= 1 -> d.toStringEndingDays() + " overdue"
+        h > 0 -> h.toStringEndingHours() + " overdue"
+        m == 0 -> "Now! 🙀"
+        else -> "$m min overdue"
+    }
+}
+
+private fun Int.toStringEndingHours() = toStringEnding(true, "hour", "hours")
+private fun Int.toStringEndingDays() = toStringEnding(true, "day", "days")
