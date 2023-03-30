@@ -64,8 +64,8 @@ private fun UnixTime.eventListDateString(): String =
         UnixTime.StringComponent.hhmm24,
     )
 
-private fun getCurTimeString() = UnixTime()
-    .getStringByComponents(
+private fun getCurTimeString() =
+    UnixTime().getStringByComponents(
         UnixTime.StringComponent.dayOfMonth,
         UnixTime.StringComponent.space,
         UnixTime.StringComponent.month3,
