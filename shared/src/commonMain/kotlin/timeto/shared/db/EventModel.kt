@@ -122,40 +122,6 @@ data class EventModel(
     }
 }
 
-// todo is24
-fun UnixTime.eventUiString(
-    withDayOfWeek3: Boolean = true
-): String {
-
-    val components = mutableListOf(
-        UnixTime.StringComponent.dayOfMonth,
-        UnixTime.StringComponent.space,
-        UnixTime.StringComponent.month3,
-    )
-
-    val withDaytime = this.time != this.localDayStartTime() // If not 00:00
-    if (withDaytime || withDayOfWeek3)
-        components.add(UnixTime.StringComponent.comma)
-
-    if (withDayOfWeek3)
-        components.addAll(
-            listOf(
-                UnixTime.StringComponent.space,
-                UnixTime.StringComponent.dayOfWeek3,
-            )
-        )
-
-    if (withDaytime)
-        components.addAll(
-            listOf(
-                UnixTime.StringComponent.space,
-                UnixTime.StringComponent.hhmm24,
-            )
-        )
-
-    return this.getStringByComponents(*components.toTypedArray())
-}
-
 private fun validateText(text: String): String {
     val validatedText = text.trim()
     if (validatedText.isEmpty())
