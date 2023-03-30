@@ -6,6 +6,7 @@ import kotlin.math.absoluteValue
 
 class TimeUI(
     val unixTime: UnixTime,
+    val isImportant: Boolean,
     val type: TYPE,
 ) {
 
