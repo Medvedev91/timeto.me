@@ -200,13 +200,13 @@ data class RepeatingModel(
     }
 
     fun prepTextForTask(day: Int): String = text
-            .textFeatures()
-            .copy(
-                fromRepeating = TextFeatures.FromRepeating(
-                    id = id, day = day, time = daytimeToTimeWithDayStart(day)
-                )
+        .textFeatures()
+        .copy(
+            fromRepeating = TextFeatures.FromRepeating(
+                id = id, day = day, time = daytimeToTimeWithDayStart(day)
             )
-            .textWithFeatures()
+        )
+        .textWithFeatures()
 
     fun getNextDayString(): String =
         UnixTime.byLocalDay(getNextDay())
