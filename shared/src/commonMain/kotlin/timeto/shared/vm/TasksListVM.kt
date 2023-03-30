@@ -3,6 +3,7 @@ package timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timeto.shared.*
+import timeto.shared.TextFeatures.TimeData
 import timeto.shared.db.EventModel
 import timeto.shared.db.RepeatingModel
 import timeto.shared.db.TaskFolderModel
@@ -81,8 +82,31 @@ class TasksListVM(
     class TmrwTaskUI(
         val task: TaskModel
     ) {
+
         val textFeatures = task.text.textFeatures()
         val text = textFeatures.textUi()
+
+        val timeUI = textFeatures.timeData?.let {
+            val text = it.unixTime.getStringByComponents(
+                UnixTime.StringComponent.dayOfMonth,
+                UnixTime.StringComponent.space,
+                UnixTime.StringComponent.month3,
+                UnixTime.StringComponent.comma,
+                UnixTime.StringComponent.space,
+                UnixTime.StringComponent.hhmm24,
+            )
+            val textColor = if (it.isImportant)
+                ColorNative.blue else ColorNative.textSecondary
+            TimeUI(
+                text = text,
+                textColor = textColor
+            )
+        }
+
+        class TimeUI(
+            val text: String,
+            val textColor: ColorNative,
+        )
     }
 
     ///
@@ -93,6 +117,7 @@ class TasksListVM(
 
         val textFeatures = task.text.textFeatures()
         val text = textFeatures.textUi()
+        val timeUI: TimeUI? = textFeatures.timeData?.let { TimeUI.prepItem(it) }
 
         fun start(
             onStarted: () -> Unit,
@@ -121,6 +146,59 @@ class TasksListVM(
             launchExDefault {
                 task.delete()
             }
+        }
+
+        sealed class TimeUI {
+
+            companion object {
+
+                fun prepItem(timeData: TimeData): TimeUI {
+                    val timeLeftText = timeData.timeLeftText()
+                    val unixTime = timeData.unixTime
+                    val textColor = when (timeData.status) {
+                        TimeData.STATUS.IN -> ColorNative.textSecondary
+                        TimeData.STATUS.NEAR -> ColorNative.blue
+                        TimeData.STATUS.OVERDUE -> ColorNative.red
+                    }
+
+                    if (timeData.isImportant) {
+                        val title = timeData.unixTime.getStringByComponents(
+                            UnixTime.StringComponent.dayOfMonth,
+                            UnixTime.StringComponent.space,
+                            UnixTime.StringComponent.month3,
+                            UnixTime.StringComponent.comma,
+                            UnixTime.StringComponent.space,
+                            UnixTime.StringComponent.hhmm24,
+                        )
+                        val backgroundColor = if (timeData.status == TimeData.STATUS.OVERDUE)
+                            ColorNative.red else ColorNative.blue // todo for .NEAR?
+                        return ImportantUI(
+                            title = title,
+                            backgroundColor = backgroundColor,
+                            timeLeftText = timeLeftText,
+                            timeLeftColor = textColor,
+                        )
+                    }
+
+                    val daytimeText = daytimeToString(unixTime.time - unixTime.localDayStartTime())
+                    return RegularUI(
+                        text = "$daytimeText  $timeLeftText",
+                        textColor = textColor,
+                    )
+                }
+            }
+
+            class ImportantUI(
+                val title: String,
+                val backgroundColor: ColorNative,
+                val timeLeftText: String,
+                val timeLeftColor: ColorNative,
+            ) : TimeUI()
+
+            class RegularUI(
+                val text: String,
+                val textColor: ColorNative,
+            ) : TimeUI()
         }
     }
 }

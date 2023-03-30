@@ -30,7 +30,6 @@ import app.time_to.timeto.R
 import kotlinx.coroutines.delay
 import timeto.shared.db.TaskFolderModel
 import timeto.shared.launchEx
-import timeto.shared.ui.TimeUI
 import timeto.shared.vm.TasksListVM
 
 private val TASKS_LIST_ITEM_MIN_HEIGHT = 42.dp
@@ -329,8 +328,8 @@ fun TasksListView(
 
                                 val vPadding = 6.dp
 
-                                val daytimeUI = taskUI.textFeatures.timeUI
-                                if (daytimeUI != null) {
+                                val timeUI = taskUI.timeUI
+                                if (timeUI != null) {
                                     Row(
                                         modifier = Modifier
                                             .padding(
@@ -341,14 +340,14 @@ fun TasksListView(
                                         verticalAlignment = Alignment.CenterVertically,
                                     ) {
 
-                                        when (daytimeUI.type) {
+                                        when (timeUI) {
 
-                                            TimeUI.TYPE.EVENT -> {
+                                            is TasksListVM.TaskUI.TimeUI.ImportantUI -> {
                                                 Row(
                                                     modifier = Modifier
                                                         .offset(x = (-1).dp)
                                                         .clip(MySquircleShape(len = 30f))
-                                                        .background(daytimeUI.color.toColor())
+                                                        .background(timeUI.backgroundColor.toColor())
                                                         .padding(start = 5.dp, end = 4.dp, top = 3.dp, bottom = 3.dp),
                                                     verticalAlignment = Alignment.CenterVertically,
                                                 ) {
@@ -361,29 +360,29 @@ fun TasksListView(
                                                             .size(14.dp),
                                                     )
                                                     Text(
-                                                        daytimeUI.daytimeText,
+                                                        timeUI.title,
                                                         fontSize = 12.sp,
                                                         color = c.white,
                                                     )
                                                 }
                                                 Text(
-                                                    daytimeUI.timeLeftText,
+                                                    timeUI.timeLeftText,
                                                     modifier = Modifier
                                                         .padding(start = 6.dp),
                                                     fontSize = 13.sp,
                                                     fontWeight = FontWeight.W300,
-                                                    color = daytimeUI.color.toColor(),
+                                                    color = timeUI.timeLeftColor.toColor(),
                                                     maxLines = 1,
                                                     overflow = TextOverflow.Ellipsis,
                                                 )
                                             }
 
-                                            TimeUI.TYPE.REPEATING -> {
+                                            is TasksListVM.TaskUI.TimeUI.RegularUI -> {
                                                 Text(
-                                                    daytimeUI.daytimeText + "  " + daytimeUI.timeLeftText,
+                                                    timeUI.text,
                                                     fontSize = 13.sp,
                                                     fontWeight = FontWeight.W300,
-                                                    color = daytimeUI.color.toColor(),
+                                                    color = timeUI.textColor.toColor(),
                                                 )
                                             }
                                         }
@@ -471,10 +470,10 @@ private fun TasksListView__TmrwTaskView(
 
             val vPadding = 6.dp
 
-            val daytimeUI = taskUI.textFeatures.timeUI
-            if (daytimeUI != null) {
+            val timeUI = taskUI.timeUI
+            if (timeUI != null) {
                 Text(
-                    daytimeUI.daytimeText,
+                    text = timeUI.text,
                     modifier = Modifier
                         .padding(
                             start = startPadding,
@@ -483,7 +482,7 @@ private fun TasksListView__TmrwTaskView(
                         ),
                     fontSize = 13.sp,
                     fontWeight = FontWeight.W300,
-                    color = daytimeUI.color.toColor(),
+                    color = timeUI.textColor.toColor(),
                 )
             }
 
