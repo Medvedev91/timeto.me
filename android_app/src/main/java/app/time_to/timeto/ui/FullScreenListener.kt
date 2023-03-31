@@ -9,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -370,8 +371,65 @@ private fun FullScreenView(
                         ).value
                     )
                 }
-            } else {
-                SpacerW1()
+            }
+
+            LazyColumn(
+                modifier = Modifier
+                    .weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                reverseLayout = true,
+                contentPadding = PaddingValues(vertical = 8.dp),
+            ) {
+                items(state.allTasksUI) { taskUI ->
+                    Row(
+                        modifier = Modifier
+                            .clip(MySquircleShape())
+                            .clickable {
+                                // todo
+                            }
+                            .padding(horizontal = 10.dp, vertical = 6.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+
+                        when (taskUI) {
+
+                            is FullScreenVM.TaskUI.ImportantTaskUI -> {
+                                Row(
+                                    modifier = Modifier
+                                        .padding(end = 6.dp)
+                                        .clip(MySquircleShape(len = 30f))
+                                        .background(taskUI.backgroundColor.toColor())
+                                        .padding(start = 4.dp, end = 4.dp, top = 2.dp, bottom = 2.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    Icon(
+                                        painterResource(id = R.drawable.sf_calendar_medium_light),
+                                        contentDescription = "Event",
+                                        tint = c.white,
+                                        modifier = Modifier
+                                            .padding(end = 5.dp)
+                                            .size(14.dp),
+                                    )
+                                    Text(
+                                        text = taskUI.text,
+                                        fontWeight = FontWeight.Light,
+                                        fontSize = 12.sp,
+                                        color = c.white,
+                                    )
+                                }
+                            }
+
+                            is FullScreenVM.TaskUI.RegularTaskUI -> {
+                                Text(
+                                    text = taskUI.text,
+                                    color = taskUI.textColor.toColor(),
+                                    fontWeight = FontWeight.Light,
+                                    fontSize = 13.sp,
+                                )
+                            }
+                        }
+                    }
+                }
             }
 
             Row(
