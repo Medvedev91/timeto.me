@@ -380,7 +380,7 @@ private fun FullScreenView(
                 reverseLayout = true,
                 contentPadding = PaddingValues(vertical = 8.dp),
             ) {
-                items(state.allTasksUI) { taskUI ->
+                items(state.visibleTasksUI) { taskUI ->
                     Row(
                         modifier = Modifier
                             .clip(MySquircleShape())
@@ -465,12 +465,26 @@ private fun FullScreenView(
 
                 Column(
                     modifier = Modifier
+                        .align(Alignment.Top)
                         .clip(MySquircleShape())
                         .clickable {
-                            layer.close()
+                            vm.toggleIsCompactTaskList()
                         },
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
+
+                    Icon(
+                        painterResource(
+                            id = if (state.isCompactTaskList) R.drawable.sf_chevron_compact_up_medium_thin
+                            else R.drawable.sf_chevron_compact_down_medium_thin
+                        ),
+                        contentDescription = if (state.isCompactTaskList) "Show All Tasks" else "Hide All Tasks",
+                        tint = c.white,
+                        modifier = Modifier
+                            .padding(bottom = 2.dp)
+                            .alpha(menuIconAlpha)
+                            .size(width = 20.dp, height = 10.dp)
+                    )
 
                     val batteryBackground = state.batteryBackground
                     val batteryBackgroundAnimation = animateColorAsState(
