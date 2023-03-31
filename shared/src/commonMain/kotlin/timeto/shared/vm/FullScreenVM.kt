@@ -53,6 +53,16 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
             batteryLevelOrNull in 0..20 -> ColorNative.red
             else -> null
         }
+
+        val visibleTasksUI: List<TaskUI> = run {
+            val importantTasksUI = allTasksUI.filterIsInstance<TaskUI.ImportantTaskUI>()
+            val firstTaskUI = allTasksUI.firstOrNull() ?: return@run importantTasksUI
+            if (importantTasksUI.any { it.task.id == firstTaskUI.task.id })
+                return@run importantTasksUI
+            val list = mutableListOf(firstTaskUI)
+            list.addAll(importantTasksUI)
+            return@run list
+        }
     }
 
     override val state = MutableStateFlow(
