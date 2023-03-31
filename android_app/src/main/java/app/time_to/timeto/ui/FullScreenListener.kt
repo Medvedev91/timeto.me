@@ -11,9 +11,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -84,7 +82,9 @@ fun FullScreenListener(
                 alignment = Alignment.Center,
                 onClose = { FullScreenUI.close() },
                 content = { layer ->
-                    FullScreenView(layer)
+                    MaterialTheme(colors = myDarkColors()) {
+                        FullScreenView(layer)
+                    }
                 }
             ).show()
         }
