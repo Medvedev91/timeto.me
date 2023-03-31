@@ -50,11 +50,10 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             val (vm, state) = rememberVM { AppVM() }
-            val isDayOrNight = !isSystemInDarkTheme()
+            val isLight = !isSystemInDarkTheme()
 
-            MaterialTheme(
-                colors = if (isDayOrNight) lightColors(primary = c.blue) else darkColors(primary = c.blue),
-            ) {
+            MaterialTheme(colors = if (isLight) myLightColors() else myDarkColors()) {
+
                 if (state.isAppReady) {
 
                     // c.transparent set the default background. WTF?!
@@ -62,7 +61,7 @@ class MainActivity : ComponentActivity() {
                     val navigationBgColor = c.tabsBackground.copy(alpha = 0.004f).toArgb()
                     fun upNavigationUI() {
                         window.navigationBarColor = navigationBgColor
-                        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = isDayOrNight
+                        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = isLight
                     }
                     upNavigationUI() // Setting background and icons initially in xml. Here after tabs appear.
 
