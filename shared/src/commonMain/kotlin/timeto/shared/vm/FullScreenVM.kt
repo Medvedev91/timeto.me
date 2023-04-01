@@ -18,7 +18,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
         val allChecklistItems: List<ChecklistItemModel>,
         val isTaskCancelVisible: Boolean,
         val isCountdown: Boolean,
-        val allTasksUI: List<TaskListItem>,
+        val tasksToday: List<TaskModel>,
         val isCompactTaskList: Boolean,
         val idToUpdate: Long,
     ) {
@@ -56,18 +56,30 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
         }
 
         val visibleTasksUI: List<TaskListItem> = run {
+            val taskFeaturesPairs = tasksToday.map { it to it.text.textFeatures() }
             if (!isCompactTaskList)
-                return@run allTasksUI
+                return@run taskFeaturesPairs.map { TaskListItem.prepTask(it.first, it.second) }
 
-            val importantTasksUI = allTasksUI.filterIsInstance<TaskListItem.ImportantTaskUI>()
-            val firstTaskUI = allTasksUI.firstOrNull() ?: return@run importantTasksUI
+            val importantPairs = taskFeaturesPairs.filter { it.second.timeData?.isImportant == true }
+            val actualPairs = taskFeaturesPairs.filter {
+                val time = it.second.timeData?.unixTime?.time ?: return@filter false
+                return@filter (time() + 3_600) > time
+            }
 
-            if (importantTasksUI.any { it.task.id == firstTaskUI.task.id })
-                return@run importantTasksUI
+            val taskItems = actualPairs
+                .map { TaskListItem.prepTask(it.first, it.second) }
+                .toMutableList()
 
-            val list = mutableListOf(firstTaskUI)
-            list.addAll(importantTasksUI)
-            return@run list
+            val actualTaskIds = actualPairs.map { it.first.id }.toSet()
+            val otherImportantPairs = importantPairs.filter { it.first.id !in actualTaskIds }
+            if (otherImportantPairs.isNotEmpty()) {
+                taskItems.add(TaskListItem.Separator())
+                taskItems.addAll(otherImportantPairs.map {
+                    TaskListItem.prepTask(it.first, it.second)
+                })
+            }
+
+            return@run taskItems
         }
     }
 
@@ -77,7 +89,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
             allChecklistItems = DI.checklistItems,
             isTaskCancelVisible = false,
             isCountdown = true,
-            allTasksUI = listOf(), // todo
+            tasksToday = listOf(), // todo
             isCompactTaskList = true,
             idToUpdate = 0,
         )
@@ -102,10 +114,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
             .map { it.filter { task -> task.isToday } }
             .onEachExIn(scope) { tasks ->
                 state.update {
-                    it.copy(allTasksUI = tasks
-                        .sortedByFolder(DI.getTodayFolder())
-                        .map { task -> TaskListItem.prepTask(task) }
-                    )
+                    it.copy(tasksToday = tasks.sortedByFolder(DI.getTodayFolder()))
                 }
             }
         scope.launch {
@@ -153,19 +162,19 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
 
     //////
 
-    sealed class TaskListItem(
-        val task: TaskModel,
-    ) {
+    sealed class TaskListItem {
 
         companion object {
 
-            fun prepTask(task: TaskModel): TaskListItem {
-                val textFeatures = task.text.textFeatures()
+            fun prepTask(
+                task: TaskModel,
+                textFeatures: TextFeatures
+            ): TaskListItem {
                 val timeData = textFeatures.timeData
                 val grayRgba = ColorRgba(150, 150, 150, 255) // todo
 
                 if (timeData == null) {
-                    return RegularTaskUI(
+                    return RegularTask(
                         task = task,
                         text = textFeatures.textNoFeatures,
                         textColor = grayRgba,
@@ -188,7 +197,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
                         TextFeatures.TimeData.STATUS.NEAR -> ColorRgba(0, 122, 255, 255) // todo
                         TextFeatures.TimeData.STATUS.OVERDUE -> ColorRgba(255, 59, 48) // todo
                     }
-                    return ImportantTaskUI(
+                    return ImportantTask(
                         task = task,
                         type = timeData.type,
                         text = "$dateText ${textFeatures.textNoFeatures} - $timeLeftText",
@@ -200,7 +209,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
                     TextFeatures.TimeData.STATUS.NEAR -> ColorRgba(0, 122, 255, 180) // todo
                     TextFeatures.TimeData.STATUS.OVERDUE -> ColorRgba(255, 59, 48, 160) // todo
                 }
-                return RegularTaskUI(
+                return RegularTask(
                     task = task,
                     text = "${textFeatures.textNoFeatures} - $timeLeftText",
                     textColor = textColor,
@@ -208,17 +217,19 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
             }
         }
 
-        class RegularTaskUI(
-            task: TaskModel,
+        class RegularTask(
+            val task: TaskModel,
             val text: String,
             val textColor: ColorRgba,
-        ) : TaskListItem(task)
+        ) : TaskListItem()
 
-        class ImportantTaskUI(
-            task: TaskModel,
+        class ImportantTask(
+            val task: TaskModel,
             val type: TextFeatures.TimeData.TYPE,
             val text: String,
             val backgroundColor: ColorRgba,
-        ) : TaskListItem(task)
+        ) : TaskListItem()
+
+        class Separator : TaskListItem()
     }
 }

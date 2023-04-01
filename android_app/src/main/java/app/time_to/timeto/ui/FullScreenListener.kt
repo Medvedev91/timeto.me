@@ -380,25 +380,35 @@ private fun FullScreenView(
                 reverseLayout = true,
                 contentPadding = PaddingValues(vertical = 8.dp),
             ) {
-                items(state.visibleTasksUI) { taskUI ->
-                    Row(
-                        modifier = Modifier
-                            .clip(MySquircleShape())
-                            .clickable {
-                                // todo
-                            }
-                            .padding(horizontal = 10.dp, vertical = 6.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
 
-                        when (taskUI) {
+                val taskItemHeight = 32.dp
 
-                            is FullScreenVM.TaskListItem.ImportantTaskUI -> {
+                items(state.visibleTasksUI) { taskItem ->
+
+                    when (taskItem) {
+
+                        is FullScreenVM.TaskListItem.ImportantTask -> {
+                            Row(
+                                modifier = Modifier
+                                    .height(taskItemHeight)
+                                    .clip(MySquircleShape())
+                                    .clickable {
+                                        taskItem.task.startIntervalForUI(
+                                            onStarted = {},
+                                            needSheet = {
+                                                Sheet.show { layer ->
+                                                    TaskSheet(layer, taskItem.task)
+                                                }
+                                            },
+                                        )
+                                    },
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
                                 Row(
                                     modifier = Modifier
-                                        .padding(end = 6.dp)
+                                        .padding(horizontal = 8.dp)
                                         .clip(MySquircleShape(len = 30f))
-                                        .background(taskUI.backgroundColor.toColor())
+                                        .background(taskItem.backgroundColor.toColor())
                                         .padding(start = 4.dp, end = 4.dp, top = 2.dp, bottom = 2.dp),
                                     verticalAlignment = Alignment.CenterVertically,
                                 ) {
@@ -411,22 +421,52 @@ private fun FullScreenView(
                                             .size(14.dp),
                                     )
                                     Text(
-                                        text = taskUI.text,
+                                        text = taskItem.text,
                                         fontWeight = FontWeight.Light,
                                         fontSize = 12.sp,
                                         color = c.white,
                                     )
                                 }
                             }
+                        }
 
-                            is FullScreenVM.TaskListItem.RegularTaskUI -> {
+                        is FullScreenVM.TaskListItem.RegularTask -> {
+                            Row(
+                                modifier = Modifier
+                                    .height(taskItemHeight)
+                                    .clip(MySquircleShape())
+                                    .clickable {
+                                        taskItem.task.startIntervalForUI(
+                                            onStarted = {},
+                                            needSheet = {
+                                                Sheet.show { layer ->
+                                                    TaskSheet(layer, taskItem.task)
+                                                }
+                                            },
+                                        )
+                                    }
+                                    .padding(horizontal = 10.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+
                                 Text(
-                                    text = taskUI.text,
-                                    color = taskUI.textColor.toColor(),
+                                    text = taskItem.text,
+                                    color = taskItem.textColor.toColor(),
                                     fontWeight = FontWeight.Light,
                                     fontSize = 13.sp,
                                 )
                             }
+                        }
+
+                        is FullScreenVM.TaskListItem.Separator -> {
+                            Icon(
+                                painterResource(R.drawable.sf_ellipsis_medium_thin),
+                                contentDescription = "Separator",
+                                tint = c.white,
+                                modifier = Modifier
+                                    .alpha(0.5f)
+                                    .size(width = 16.dp, height = 14.dp)
+                            )
                         }
                     }
                 }
