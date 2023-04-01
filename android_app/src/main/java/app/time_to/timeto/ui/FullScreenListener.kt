@@ -393,7 +393,7 @@ private fun FullScreenView(
 
                         when (taskUI) {
 
-                            is FullScreenVM.TaskUI.ImportantTaskUI -> {
+                            is FullScreenVM.TaskListItem.ImportantTaskUI -> {
                                 Row(
                                     modifier = Modifier
                                         .padding(end = 6.dp)
@@ -419,7 +419,7 @@ private fun FullScreenView(
                                 }
                             }
 
-                            is FullScreenVM.TaskUI.RegularTaskUI -> {
+                            is FullScreenVM.TaskListItem.RegularTaskUI -> {
                                 Text(
                                     text = taskUI.text,
                                     color = taskUI.textColor.toColor(),

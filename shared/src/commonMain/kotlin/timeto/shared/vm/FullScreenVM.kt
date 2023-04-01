@@ -18,7 +18,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
         val allChecklistItems: List<ChecklistItemModel>,
         val isTaskCancelVisible: Boolean,
         val isCountdown: Boolean,
-        val allTasksUI: List<TaskUI>,
+        val allTasksUI: List<TaskListItem>,
         val isCompactTaskList: Boolean,
         val idToUpdate: Long,
     ) {
@@ -55,11 +55,11 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
             else -> null
         }
 
-        val visibleTasksUI: List<TaskUI> = run {
+        val visibleTasksUI: List<TaskListItem> = run {
             if (!isCompactTaskList)
                 return@run allTasksUI
 
-            val importantTasksUI = allTasksUI.filterIsInstance<TaskUI.ImportantTaskUI>()
+            val importantTasksUI = allTasksUI.filterIsInstance<TaskListItem.ImportantTaskUI>()
             val firstTaskUI = allTasksUI.firstOrNull() ?: return@run importantTasksUI
 
             if (importantTasksUI.any { it.task.id == firstTaskUI.task.id })
@@ -104,7 +104,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
                 state.update {
                     it.copy(allTasksUI = tasks
                         .sortedByFolder(DI.getTodayFolder())
-                        .map { task -> TaskUI.prepTask(task) }
+                        .map { task -> TaskListItem.prepTask(task) }
                     )
                 }
             }
@@ -153,13 +153,13 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
 
     //////
 
-    sealed class TaskUI(
+    sealed class TaskListItem(
         val task: TaskModel,
     ) {
 
         companion object {
 
-            fun prepTask(task: TaskModel): TaskUI {
+            fun prepTask(task: TaskModel): TaskListItem {
                 val textFeatures = task.text.textFeatures()
                 val timeData = textFeatures.timeData
                 val grayRgba = ColorRgba(150, 150, 150, 255) // todo
@@ -212,13 +212,13 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
             task: TaskModel,
             val text: String,
             val textColor: ColorRgba,
-        ) : TaskUI(task)
+        ) : TaskListItem(task)
 
         class ImportantTaskUI(
             task: TaskModel,
             val type: TextFeatures.TimeData.TYPE,
             val text: String,
             val backgroundColor: ColorRgba,
-        ) : TaskUI(task)
+        ) : TaskListItem(task)
     }
 }
