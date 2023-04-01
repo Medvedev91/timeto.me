@@ -119,20 +119,6 @@ class TasksListVM(
         val text = textFeatures.textUi()
         val timeUI: TimeUI? = textFeatures.timeData?.let { TimeUI.prepItem(it) }
 
-        fun start(
-            onStarted: () -> Unit,
-            needSheet: () -> Unit, // todo data for sheet
-        ) {
-            val autostartData = taskAutostartData(task) ?: return needSheet()
-            launchExDefault {
-                task.startInterval(
-                    deadline = autostartData.second,
-                    activity = autostartData.first,
-                )
-                onStarted()
-            }
-        }
-
         fun upFolder(newFolder: TaskFolderModel) {
             launchExDefault {
                 task.upFolder(newFolder, replaceIfTmrw = true)

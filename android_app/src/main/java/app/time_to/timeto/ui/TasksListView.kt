@@ -303,7 +303,7 @@ fun TasksListView(
                             modifier = Modifier
                                 .background(c.background2)
                                 .clickable {
-                                    taskUI.start(
+                                    taskUI.task.startIntervalForUI(
                                         onStarted = {
                                             // Without scope: "Method setCurrentState must be called on the main thread"
                                             scope.launchEx {
