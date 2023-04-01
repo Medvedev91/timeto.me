@@ -108,6 +108,20 @@ data class TaskModel(
         }
     }
 
+    fun startIntervalForUI(
+        onStarted: () -> Unit,
+        needSheet: () -> Unit, // todo data for sheet
+    ) {
+        val autostartData = taskAutostartData(this) ?: return needSheet()
+        launchExDefault {
+            startInterval(
+                deadline = autostartData.second,
+                activity = autostartData.first,
+            )
+            onStarted()
+        }
+    }
+
     suspend fun upTextWithValidation(newText: String): Unit = dbIO {
         db.taskQueries.upTextById(
             id = id, text = validateText(newText)
