@@ -34,7 +34,7 @@ import app.time_to.timeto.R
 import timeto.shared.FullScreenUI
 import timeto.shared.onEachExIn
 import timeto.shared.vm.FullScreenVM
-import timeto.shared.vm.ui.ChecklistUI
+import timeto.shared.vm.data.ChecklistDataUI
 
 @Composable
 fun FullScreenListener(
@@ -344,9 +344,9 @@ private fun FullScreenView(
                                 Icon(
                                     painterResource(
                                         id = when (completionState) {
-                                            is ChecklistUI.CompletionState.Completed -> R.drawable.sf_checkmark_square_fill_medium_regular
-                                            is ChecklistUI.CompletionState.Empty -> R.drawable.sf_square_medium_regular
-                                            is ChecklistUI.CompletionState.Partial -> R.drawable.sf_minus_square_fill_medium_medium
+                                            is ChecklistDataUI.CompletionState.Completed -> R.drawable.sf_checkmark_square_fill_medium_regular
+                                            is ChecklistDataUI.CompletionState.Empty -> R.drawable.sf_square_medium_regular
+                                            is ChecklistDataUI.CompletionState.Partial -> R.drawable.sf_minus_square_fill_medium_medium
                                         }
                                     ),
                                     contentDescription = completionState.actionDesc,

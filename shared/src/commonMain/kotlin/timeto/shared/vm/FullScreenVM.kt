@@ -7,9 +7,9 @@ import timeto.shared.*
 import timeto.shared.db.ChecklistItemModel
 import timeto.shared.db.IntervalModel
 import timeto.shared.db.TaskModel
+import timeto.shared.vm.data.ChecklistDataUI
 import timeto.shared.vm.ui.TimerDataUI
 import timeto.shared.vm.ui.sortedByFolder
-import timeto.shared.vm.ui.toChecklistUI
 
 class FullScreenVM : __VM<FullScreenVM.State>() {
 
@@ -34,7 +34,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
 
         val checklistUI = textFeatures.checklists.firstOrNull()?.let { checklist ->
             val items = allChecklistItems.filter { it.list_id == checklist.id }
-            checklist.toChecklistUI(items)
+            ChecklistDataUI.build(checklist, items)
         }
 
         val triggers = textFeatures.triggers.filter {

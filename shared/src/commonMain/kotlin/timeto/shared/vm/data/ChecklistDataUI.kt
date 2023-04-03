@@ -1,4 +1,4 @@
-package timeto.shared.vm.ui
+package timeto.shared.vm.data
 
 import timeto.shared.db.ChecklistItemModel
 import timeto.shared.db.ChecklistModel
@@ -6,7 +6,7 @@ import timeto.shared.defaultScope
 import timeto.shared.launchEx
 import timeto.shared.launchExDefault
 
-class ChecklistUI(
+class ChecklistDataUI(
     val checklist: ChecklistModel,
     val itemsUI: List<ItemUI>,
 ) {
@@ -18,6 +18,17 @@ class ChecklistUI(
     }
 
     ///
+
+    companion object {
+
+        fun build(
+            checklist: ChecklistModel,
+            items: List<ChecklistItemModel>,
+        ) = ChecklistDataUI(
+            checklist = checklist,
+            itemsUI = items.map { ItemUI(it) },
+        )
+    }
 
     class ItemUI(
         val item: ChecklistItemModel,
@@ -53,10 +64,3 @@ class ChecklistUI(
         })
     }
 }
-
-fun ChecklistModel.toChecklistUI(
-    items: List<ChecklistItemModel>,
-) = ChecklistUI(
-    checklist = this,
-    itemsUI = items.map { ChecklistUI.ItemUI(it) },
-)
