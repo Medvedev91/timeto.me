@@ -457,17 +457,6 @@ private fun FullScreenView(
                                 )
                             }
                         }
-
-                        is FullScreenVM.TaskListItem.Separator -> {
-                            Icon(
-                                painterResource(R.drawable.sf_ellipsis_medium_thin),
-                                contentDescription = "Separator",
-                                tint = c.white,
-                                modifier = Modifier
-                                    .alpha(0.5f)
-                                    .size(width = 16.dp, height = 14.dp)
-                            )
-                        }
                     }
                 }
             }

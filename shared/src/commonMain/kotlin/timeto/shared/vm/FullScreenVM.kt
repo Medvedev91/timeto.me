@@ -56,30 +56,10 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
         }
 
         val visibleTasksUI: List<TaskListItem> = run {
-            val taskFeaturesPairs = tasksToday.map { it to it.text.textFeatures() }
-            if (!isCompactTaskList)
-                return@run taskFeaturesPairs.map { TaskListItem.prepTask(it.first, it.second) }
-
-            val importantPairs = taskFeaturesPairs.filter { it.second.timeData?.isImportant == true }
-            val actualPairs = taskFeaturesPairs.filter {
-                val time = it.second.timeData?.unixTime?.time ?: return@filter false
-                return@filter (time() + 3_600) > time
-            }
-
-            val taskItems = actualPairs
-                .map { TaskListItem.prepTask(it.first, it.second) }
-                .toMutableList()
-
-            val actualTaskIds = actualPairs.map { it.first.id }.toSet()
-            val otherImportantPairs = importantPairs.filter { it.first.id !in actualTaskIds }
-            if (otherImportantPairs.isNotEmpty()) {
-                taskItems.add(TaskListItem.Separator())
-                taskItems.addAll(otherImportantPairs.map {
-                    TaskListItem.prepTask(it.first, it.second)
-                })
-            }
-
-            return@run taskItems
+            val allItems = tasksToday.map { TaskListItem.prepTask(it, it.text.textFeatures()) }
+            return@run if (isCompactTaskList)
+                allItems.filterIsInstance<TaskListItem.ImportantTask>()
+            else allItems
         }
     }
 
@@ -229,7 +209,5 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
             val text: String,
             val backgroundColor: ColorRgba,
         ) : TaskListItem()
-
-        class Separator : TaskListItem()
     }
 }
