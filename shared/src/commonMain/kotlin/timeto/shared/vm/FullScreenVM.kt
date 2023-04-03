@@ -5,9 +5,10 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timeto.shared.*
 import timeto.shared.db.ChecklistItemModel
+import timeto.shared.db.ChecklistModel
 import timeto.shared.db.IntervalModel
 import timeto.shared.db.TaskModel
-import timeto.shared.vm.data.ChecklistDataUI
+import timeto.shared.vm.ui.ChecklistStateUI
 import timeto.shared.vm.ui.TimerDataUI
 import timeto.shared.vm.ui.sortedByFolder
 
@@ -32,9 +33,9 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
         val textFeatures = (interval.note ?: activity.name).textFeatures()
         val title = textFeatures.textUi(withActivityEmoji = false, withTimer = false)
 
-        val checklistUI = textFeatures.checklists.firstOrNull()?.let { checklist ->
+        val checklistUI: ChecklistUI? = textFeatures.checklists.firstOrNull()?.let { checklist ->
             val items = allChecklistItems.filter { it.list_id == checklist.id }
-            ChecklistDataUI.build(checklist, items)
+            ChecklistUI(checklist, items)
         }
 
         val triggers = textFeatures.triggers.filter {
@@ -141,6 +142,25 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
     }
 
     //////
+
+    class ChecklistUI(
+        val checklist: ChecklistModel,
+        val items: List<ChecklistItemModel>,
+    ) {
+
+        val stateUI = ChecklistStateUI.build(checklist, items)
+        val itemsUI = items.map { ItemUI(it) }
+
+        class ItemUI(
+            val item: ChecklistItemModel,
+        ) {
+            fun toggle() {
+                defaultScope().launchEx {
+                    item.toggle()
+                }
+            }
+        }
+    }
 
     sealed class TaskListItem {
 

@@ -34,7 +34,7 @@ import app.time_to.timeto.R
 import timeto.shared.FullScreenUI
 import timeto.shared.onEachExIn
 import timeto.shared.vm.FullScreenVM
-import timeto.shared.vm.data.ChecklistDataUI
+import timeto.shared.vm.ui.ChecklistStateUI
 
 @Composable
 fun FullScreenListener(
@@ -338,15 +338,15 @@ private fun FullScreenView(
 
                             Column {
 
-                                val completionState = checklistUI.completionState
+                                val completionState = checklistUI.stateUI
                                 val checklistMenuInnerIconPadding = (checklistItemMinHeight - checkboxSize) / 2
                                 val checklistMenuStartIconPadding = 4.dp
                                 Icon(
                                     painterResource(
                                         id = when (completionState) {
-                                            is ChecklistDataUI.CompletionState.Completed -> R.drawable.sf_checkmark_square_fill_medium_regular
-                                            is ChecklistDataUI.CompletionState.Empty -> R.drawable.sf_square_medium_regular
-                                            is ChecklistDataUI.CompletionState.Partial -> R.drawable.sf_minus_square_fill_medium_medium
+                                            is ChecklistStateUI.Completed -> R.drawable.sf_checkmark_square_fill_medium_regular
+                                            is ChecklistStateUI.Empty -> R.drawable.sf_square_medium_regular
+                                            is ChecklistStateUI.Partial -> R.drawable.sf_minus_square_fill_medium_medium
                                         }
                                     ),
                                     contentDescription = completionState.actionDesc,
