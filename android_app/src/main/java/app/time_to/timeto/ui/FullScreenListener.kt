@@ -381,7 +381,7 @@ private fun FullScreenView(
                 contentPadding = PaddingValues(vertical = 8.dp),
             ) {
 
-                val taskItemHeight = 32.dp
+                val taskItemHeight = 36.dp
 
                 items(state.visibleTasksUI) { taskItem ->
 
