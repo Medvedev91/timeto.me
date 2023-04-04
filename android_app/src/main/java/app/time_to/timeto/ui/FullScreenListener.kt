@@ -593,7 +593,7 @@ private fun FullScreenView(
 
                     val batteryBackground = state.batteryBackground
                     val batteryBackgroundAnimation = animateColorAsState(
-                        batteryBackground?.toColor() ?: c.black
+                        batteryBackground?.toColor() ?: c.transparent
                     )
 
                     Text(
@@ -610,11 +610,7 @@ private fun FullScreenView(
                             .padding(end = 2.dp)
                             .clip(RoundedCornerShape(99.dp))
                             // First alpha for background, then for content
-                            .background(
-                                batteryBackgroundAnimation.value.copy(
-                                    alpha = if (batteryBackground != null) 0.8f else menuIconAlpha
-                                )
-                            )
+                            .background(batteryBackgroundAnimation.value)
                             .alpha(if (batteryBackground != null) 0.9f else menuIconAlpha)
                             //
                             .padding(start = 4.dp, end = 5.dp),
