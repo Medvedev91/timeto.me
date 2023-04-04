@@ -408,7 +408,7 @@ private fun FullScreenView(
             Column(
                 modifier = Modifier
                     .animateContentSize(
-                        spring(stiffness = Spring.StiffnessMediumLow)
+                        spring(stiffness = Spring.StiffnessMedium)
                     )
                     .then(
                         if (state.isCompactTaskList)
@@ -425,14 +425,14 @@ private fun FullScreenView(
                 val taskListScrollState = rememberLazyListState()
 
                 val isNavDividerVisible =
+                    !state.isCompactTaskList ||
                     (checklistScrollState.canScrollBackward || checklistScrollState.canScrollForward) ||
-                    (taskListScrollState.canScrollBackward || taskListScrollState.canScrollForward) ||
-                    (!state.isCompactTaskList && state.checklistUI != null)
+                    (taskListScrollState.canScrollBackward || taskListScrollState.canScrollForward)
 
                 Divider(
                     color = animateColorAsState(
                         if (isNavDividerVisible) dividerColor else c.transparent,
-                        animationSpec = spring(stiffness = Spring.StiffnessLow),
+                        animationSpec = spring(stiffness = Spring.StiffnessMedium),
                     ).value,
                     thickness = dividerHeight
                 )
@@ -576,7 +576,8 @@ private fun FullScreenView(
                         .clip(MySquircleShape())
                         .clickable {
                             vm.toggleIsCompactTaskList()
-                        },
+                        }
+                        .padding(top = 4.dp, bottom = 2.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
 
@@ -588,9 +589,9 @@ private fun FullScreenView(
                         contentDescription = if (state.isCompactTaskList) "Show All Tasks" else "Hide All Tasks",
                         tint = c.white,
                         modifier = Modifier
-                            .padding(bottom = 2.dp)
+                            .padding(bottom = 3.dp)
                             .alpha(menuIconAlpha)
-                            .size(width = 20.dp, height = 10.dp)
+                            .size(width = 20.dp, height = 6.dp)
                     )
 
                     val batteryBackground = state.batteryBackground
