@@ -246,8 +246,7 @@ private fun FullScreenView(
             val checklistUI = state.checklistUI
             if (checklistUI != null) {
 
-                val isChecklistExpanded = state.isCompactTaskList || state.visibleTasksUI.isEmpty()
-                if (!isChecklistExpanded) {
+                if (!state.isCompactTaskList) {
 
                     Column(
                         modifier = Modifier
