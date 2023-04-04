@@ -243,6 +243,8 @@ private fun FullScreenView(
                 }
             }
 
+            val checklistScrollState = rememberLazyListState()
+
             val checklistUI = state.checklistUI
             if (checklistUI != null) {
 
@@ -283,7 +285,6 @@ private fun FullScreenView(
                     ) {
 
                         val checklistVContentPadding = 12.dp
-                        val checklistScrollState = rememberLazyListState()
 
                         Divider(
                             color = animateColorAsState(
@@ -400,8 +401,6 @@ private fun FullScreenView(
                 SpacerW1()
             }
 
-            // todo
-            // if (checklistScrollState.canScrollForward) checklistDividerColor else c.transparent
             val taskItemHeight = 36.dp
             val dividerHeight = 1.dp
             val taskListContentPadding = 4.dp
@@ -423,9 +422,13 @@ private fun FullScreenView(
                     )
             ) {
 
+                val isNavDividerVisible =
+                    (checklistScrollState.canScrollBackward || checklistScrollState.canScrollForward) ||
+                    (!state.isCompactTaskList && state.checklistUI != null)
+
                 Divider(
                     color = animateColorAsState(
-                        dividerColor,
+                        if (isNavDividerVisible) dividerColor else c.transparent,
                         animationSpec = spring(stiffness = Spring.StiffnessLow),
                     ).value,
                     thickness = dividerHeight
