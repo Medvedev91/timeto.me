@@ -396,6 +396,8 @@ private fun FullScreenView(
                         }
                     }
                 }
+            } else if (state.isCompactTaskList) {
+                SpacerW1()
             }
 
             // todo
