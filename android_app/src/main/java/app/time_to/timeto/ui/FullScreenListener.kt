@@ -426,15 +426,12 @@ private fun FullScreenView(
 
                 val isNavDividerVisible =
                     !state.isCompactTaskList ||
-                    (checklistScrollState.canScrollBackward || checklistScrollState.canScrollForward) ||
+                    state.checklistUI != null ||
                     (taskListScrollState.canScrollBackward || taskListScrollState.canScrollForward)
 
                 Divider(
-                    color = animateColorAsState(
-                        if (isNavDividerVisible) dividerColor else c.transparent,
-                        animationSpec = spring(stiffness = Spring.StiffnessMedium),
-                    ).value,
-                    thickness = dividerHeight
+                    color = if (isNavDividerVisible) dividerColor else c.transparent,
+                    thickness = dividerHeight,
                 )
 
                 LazyColumn(
