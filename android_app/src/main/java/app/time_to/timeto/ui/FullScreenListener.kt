@@ -515,6 +515,16 @@ private fun FullScreenView(
                                     )
                                 }
                             }
+
+                            is FullScreenVM.TaskListItem.NoTasksText -> {
+                                Text(
+                                    text = taskItem.text,
+                                    modifier = Modifier
+                                        .height(taskItemHeight),
+                                    color = c.textSecondary,
+                                    fontSize = 14.sp,
+                                )
+                            }
                         }
                     }
                 }

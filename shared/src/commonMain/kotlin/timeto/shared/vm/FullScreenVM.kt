@@ -58,9 +58,14 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
 
         val visibleTasksUI: List<TaskListItem> = run {
             val allItems = tasksToday.map { TaskListItem.prepTask(it, it.text.textFeatures()) }
-            return@run if (isCompactTaskList)
-                allItems.filterIsInstance<TaskListItem.ImportantTask>()
-            else allItems
+
+            if (isCompactTaskList)
+                return@run allItems.filterIsInstance<TaskListItem.ImportantTask>()
+
+            if (allItems.isEmpty())
+                return@run listOf(TaskListItem.NoTasksText("No Tasks for Today"))
+
+            allItems
         }
     }
 
@@ -233,5 +238,9 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
             val text: String,
             val backgroundColor: ColorRgba,
         ) : TaskListItem("it_${task.id}")
+
+        class NoTasksText(
+            val text: String
+        ) : TaskListItem("no_tasks_text")
     }
 }
