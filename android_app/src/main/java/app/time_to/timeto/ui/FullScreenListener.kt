@@ -569,12 +569,13 @@ private fun FullScreenView(
 
                 Column(
                     modifier = Modifier
+                        .offset(y = (-2).dp)
                         .align(Alignment.Top)
                         .clip(MySquircleShape())
                         .clickable {
                             vm.toggleIsCompactTaskList()
                         }
-                        .padding(top = 4.dp, bottom = 2.dp),
+                        .padding(top = 6.dp, bottom = 6.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
 
