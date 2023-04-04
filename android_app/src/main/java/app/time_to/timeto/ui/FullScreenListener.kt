@@ -98,6 +98,8 @@ private fun FullScreenView(
 ) {
     val (vm, state) = rememberVM { FullScreenVM() }
 
+    val dividerColor = c.white.copy(0.4f)
+
     Box {
 
         Column(
@@ -244,217 +246,275 @@ private fun FullScreenView(
             val checklistUI = state.checklistUI
             if (checklistUI != null) {
 
-                Column(
-                    modifier = Modifier
-                        .padding(top = 8.dp)
-                        .weight(1f)
-                ) {
+                val isChecklistExpanded = state.isCompactTaskList || state.visibleTasksUI.isEmpty()
+                if (!isChecklistExpanded) {
 
-                    val checklistVContentPadding = 12.dp
-                    val checklistScrollState = rememberLazyListState()
-                    val checklistDividerColor = c.white.copy(0.4f)
-
-                    Divider(
-                        color = animateColorAsState(
-                            if (checklistScrollState.canScrollBackward) checklistDividerColor else c.transparent,
-                            animationSpec = spring(stiffness = Spring.StiffnessLow),
-                        ).value
-                    )
-
-                    Row(
+                    Column(
                         modifier = Modifier
-                            .padding(start = 50.dp, end = 50.dp)
-                            .weight(1f),
+                            .clickable {
+                                vm.toggleIsCompactTaskList()
+                            }
+                            .fillMaxWidth()
+                            .padding(top = 12.dp, bottom = 16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
 
-                        val checkboxSize = 18.dp
-                        val checklistItemMinHeight = 42.dp
-                        val checklistDividerPadding = 14.dp
+                        Text(
+                            text = checklistUI.collapsedTitle,
+                            color = c.white,
+                            fontSize = 16.sp,
+                            maxLines = 1,
+                        )
 
-                        LazyColumn(
-                            modifier = Modifier.weight(1f),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            contentPadding = PaddingValues(vertical = checklistVContentPadding),
-                            state = checklistScrollState,
-                        ) {
+                        Icon(
+                            painterResource(R.drawable.sf_chevron_compact_down_medium_thin),
+                            contentDescription = "Expand Checklist",
+                            tint = c.white,
+                            modifier = Modifier
+                                .padding(top = 8.dp)
+                                .height(5.dp),
+                        )
+                    }
+                } else {
 
-                            checklistUI.itemsUI.forEach { itemUI ->
+                    Column(
+                        modifier = Modifier
+                            .padding(top = 8.dp)
+                            .weight(1f)
+                    ) {
 
-                                item {
+                        val checklistVContentPadding = 12.dp
+                        val checklistScrollState = rememberLazyListState()
 
-                                    Row(
-                                        modifier = Modifier
-                                            .defaultMinSize(minHeight = checklistItemMinHeight)
-                                            .fillMaxWidth()
-                                            .clip(MySquircleShape())
-                                            .clickable {
-                                                itemUI.toggle()
-                                            }
-                                            .padding(start = 8.dp),
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.Start,
-                                    ) {
-
-                                        Icon(
-                                            painterResource(
-                                                id = if (itemUI.item.isChecked)
-                                                    R.drawable.sf_checkmark_square_fill_medium_regular
-                                                else
-                                                    R.drawable.sf_square_medium_regular
-                                            ),
-                                            contentDescription = "Checkbox",
-                                            tint = c.white,
-                                            modifier = Modifier
-                                                .size(checkboxSize),
-                                        )
-
-                                        Text(
-                                            text = itemUI.item.text,
-                                            color = c.white,
-                                            modifier = Modifier
-                                                .padding(vertical = 4.dp)
-                                                .padding(start = checklistDividerPadding),
-                                            textAlign = TextAlign.Start,
-                                        )
-                                    }
-                                }
-                            }
-                        }
+                        Divider(
+                            color = animateColorAsState(
+                                if (checklistScrollState.canScrollBackward) dividerColor else c.transparent,
+                                animationSpec = spring(stiffness = Spring.StiffnessLow),
+                            ).value
+                        )
 
                         Row(
                             modifier = Modifier
-                                .padding(top = checklistVContentPadding)
-                                .height(IntrinsicSize.Max)
+                                .padding(start = 50.dp, end = 50.dp)
+                                .weight(1f),
                         ) {
 
-                            Box(
-                                modifier = Modifier
-                                    .padding(vertical = 6.dp)
-                                    .alpha(.5f)
-                                    .background(c.white)
-                                    .width(1.dp)
-                                    .fillMaxHeight(),
-                            )
+                            val checkboxSize = 18.dp
+                            val checklistItemMinHeight = 42.dp
+                            val checklistDividerPadding = 14.dp
 
-                            Column {
+                            LazyColumn(
+                                modifier = Modifier.weight(1f),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                contentPadding = PaddingValues(vertical = checklistVContentPadding),
+                                state = checklistScrollState,
+                            ) {
 
-                                val completionState = checklistUI.stateUI
-                                val checklistMenuInnerIconPadding = (checklistItemMinHeight - checkboxSize) / 2
-                                val checklistMenuStartIconPadding = 4.dp
-                                Icon(
-                                    painterResource(
-                                        id = when (completionState) {
-                                            is ChecklistStateUI.Completed -> R.drawable.sf_checkmark_square_fill_medium_regular
-                                            is ChecklistStateUI.Empty -> R.drawable.sf_square_medium_regular
-                                            is ChecklistStateUI.Partial -> R.drawable.sf_minus_square_fill_medium_medium
+                                checklistUI.itemsUI.forEach { itemUI ->
+
+                                    item {
+
+                                        Row(
+                                            modifier = Modifier
+                                                .defaultMinSize(minHeight = checklistItemMinHeight)
+                                                .fillMaxWidth()
+                                                .clip(MySquircleShape())
+                                                .clickable {
+                                                    itemUI.toggle()
+                                                }
+                                                .padding(start = 8.dp),
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            horizontalArrangement = Arrangement.Start,
+                                        ) {
+
+                                            Icon(
+                                                painterResource(
+                                                    id = if (itemUI.item.isChecked)
+                                                        R.drawable.sf_checkmark_square_fill_medium_regular
+                                                    else
+                                                        R.drawable.sf_square_medium_regular
+                                                ),
+                                                contentDescription = "Checkbox",
+                                                tint = c.white,
+                                                modifier = Modifier
+                                                    .size(checkboxSize),
+                                            )
+
+                                            Text(
+                                                text = itemUI.item.text,
+                                                color = c.white,
+                                                modifier = Modifier
+                                                    .padding(vertical = 4.dp)
+                                                    .padding(start = checklistDividerPadding),
+                                                textAlign = TextAlign.Start,
+                                            )
                                         }
-                                    ),
-                                    contentDescription = completionState.actionDesc,
-                                    tint = c.white,
-                                    modifier = Modifier
-                                        .padding(start = checklistMenuStartIconPadding)
-                                        .size(checklistItemMinHeight)
-                                        .clip(RoundedCornerShape(99.dp))
-                                        .clickable {
-                                            completionState.onClick()
-                                        }
-                                        .padding(checklistMenuInnerIconPadding),
-                                )
+                                    }
+                                }
                             }
-                        }
-                    }
 
-                    Divider(
-                        color = animateColorAsState(
-                            if (checklistScrollState.canScrollForward) checklistDividerColor else c.transparent,
-                            animationSpec = spring(stiffness = Spring.StiffnessLow),
-                        ).value
-                    )
-                }
-            }
-
-            LazyColumn(
-                modifier = Modifier
-                    .weight(1f),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                reverseLayout = true,
-                contentPadding = PaddingValues(vertical = 8.dp),
-            ) {
-
-                val taskItemHeight = 36.dp
-
-                items(state.visibleTasksUI) { taskItem ->
-
-                    when (taskItem) {
-
-                        is FullScreenVM.TaskListItem.ImportantTask -> {
                             Row(
                                 modifier = Modifier
-                                    .height(taskItemHeight)
-                                    .clip(MySquircleShape())
-                                    .clickable {
-                                        taskItem.task.startIntervalForUI(
-                                            onStarted = {},
-                                            needSheet = {
-                                                Sheet.show { layer ->
-                                                    TaskSheet(layer, taskItem.task)
-                                                }
-                                            },
-                                        )
-                                    },
-                                verticalAlignment = Alignment.CenterVertically,
+                                    .padding(top = checklistVContentPadding)
+                                    .height(IntrinsicSize.Max)
                             ) {
-                                Row(
+
+                                Box(
                                     modifier = Modifier
-                                        .padding(horizontal = 8.dp)
-                                        .clip(MySquircleShape(len = 30f))
-                                        .background(taskItem.backgroundColor.toColor())
-                                        .padding(start = 4.dp, end = 4.dp, top = 2.dp, bottom = 2.dp),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                ) {
+                                        .padding(vertical = 6.dp)
+                                        .alpha(.5f)
+                                        .background(c.white)
+                                        .width(1.dp)
+                                        .fillMaxHeight(),
+                                )
+
+                                Column {
+
+                                    val completionState = checklistUI.stateUI
+                                    val checklistMenuInnerIconPadding = (checklistItemMinHeight - checkboxSize) / 2
+                                    val checklistMenuStartIconPadding = 4.dp
                                     Icon(
-                                        painterResource(id = R.drawable.sf_calendar_medium_light),
-                                        contentDescription = "Event",
+                                        painterResource(
+                                            id = when (completionState) {
+                                                is ChecklistStateUI.Completed -> R.drawable.sf_checkmark_square_fill_medium_regular
+                                                is ChecklistStateUI.Empty -> R.drawable.sf_square_medium_regular
+                                                is ChecklistStateUI.Partial -> R.drawable.sf_minus_square_fill_medium_medium
+                                            }
+                                        ),
+                                        contentDescription = completionState.actionDesc,
                                         tint = c.white,
                                         modifier = Modifier
-                                            .padding(end = 5.dp)
-                                            .size(14.dp),
-                                    )
-                                    Text(
-                                        text = taskItem.text,
-                                        fontWeight = FontWeight.Light,
-                                        fontSize = 12.sp,
-                                        color = c.white,
+                                            .padding(start = checklistMenuStartIconPadding)
+                                            .size(checklistItemMinHeight)
+                                            .clip(RoundedCornerShape(99.dp))
+                                            .clickable {
+                                                completionState.onClick()
+                                            }
+                                            .padding(checklistMenuInnerIconPadding),
                                     )
                                 }
                             }
                         }
+                    }
+                }
+            }
 
-                        is FullScreenVM.TaskListItem.RegularTask -> {
-                            Row(
-                                modifier = Modifier
-                                    .height(taskItemHeight)
-                                    .clip(MySquircleShape())
-                                    .clickable {
-                                        taskItem.task.startIntervalForUI(
-                                            onStarted = {},
-                                            needSheet = {
-                                                Sheet.show { layer ->
-                                                    TaskSheet(layer, taskItem.task)
-                                                }
-                                            },
+            // todo
+            // if (checklistScrollState.canScrollForward) checklistDividerColor else c.transparent
+            val taskItemHeight = 36.dp
+            val dividerHeight = 1.dp
+            val taskListContentPadding = 4.dp
+
+            Column(
+                modifier = Modifier
+                    .animateContentSize(
+                        spring(stiffness = Spring.StiffnessMediumLow)
+                    )
+                    .then(
+                        if (state.isCompactTaskList)
+                            Modifier.height(
+                                taskItemHeight * state.visibleTasksUI.size
+                                + dividerHeight
+                                + taskListContentPadding * 2
+                            )
+                        else
+                            Modifier.weight(1f)
+                    )
+            ) {
+
+                Divider(
+                    color = animateColorAsState(
+                        dividerColor,
+                        animationSpec = spring(stiffness = Spring.StiffnessLow),
+                    ).value,
+                    thickness = dividerHeight
+                )
+
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    reverseLayout = true,
+                    contentPadding = PaddingValues(vertical = taskListContentPadding),
+                ) {
+
+                    items(
+                        items = state.visibleTasksUI,
+                        key = { it.id }
+                    ) { taskItem ->
+
+                        when (taskItem) {
+
+                            is FullScreenVM.TaskListItem.ImportantTask -> {
+                                Row(
+                                    modifier = Modifier
+                                        .height(taskItemHeight)
+                                        .clip(MySquircleShape())
+                                        .clickable {
+                                            taskItem.task.startIntervalForUI(
+                                                onStarted = {},
+                                                needSheet = {
+                                                    Sheet.show { layer ->
+                                                        TaskSheet(layer, taskItem.task)
+                                                    }
+                                                },
+                                            )
+                                        },
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    Row(
+                                        modifier = Modifier
+                                            .padding(horizontal = 8.dp)
+                                            .clip(MySquircleShape(len = 30f))
+                                            .background(taskItem.backgroundColor.toColor())
+                                            .padding(start = 4.dp, end = 4.dp, top = 2.dp, bottom = 2.dp),
+                                        verticalAlignment = Alignment.CenterVertically,
+                                    ) {
+                                        Icon(
+                                            painterResource(id = R.drawable.sf_calendar_medium_light),
+                                            contentDescription = "Event",
+                                            tint = c.white,
+                                            modifier = Modifier
+                                                .padding(end = 5.dp)
+                                                .size(14.dp),
+                                        )
+                                        Text(
+                                            text = taskItem.text,
+                                            fontWeight = FontWeight.Light,
+                                            fontSize = 12.sp,
+                                            color = c.white,
                                         )
                                     }
-                                    .padding(horizontal = 10.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
+                                }
+                            }
 
-                                Text(
-                                    text = taskItem.text,
-                                    color = taskItem.textColor.toColor(),
-                                    fontWeight = FontWeight.Light,
-                                    fontSize = 13.sp,
-                                )
+                            is FullScreenVM.TaskListItem.RegularTask -> {
+                                Row(
+                                    modifier = Modifier
+                                        .height(taskItemHeight)
+                                        .clip(MySquircleShape())
+                                        .clickable {
+                                            taskItem.task.startIntervalForUI(
+                                                onStarted = {},
+                                                needSheet = {
+                                                    Sheet.show { layer ->
+                                                        TaskSheet(layer, taskItem.task)
+                                                    }
+                                                },
+                                            )
+                                        }
+                                        .padding(horizontal = 10.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+
+                                    Text(
+                                        text = taskItem.text,
+                                        color = taskItem.textColor.toColor(),
+                                        fontWeight = FontWeight.Light,
+                                        fontSize = 13.sp,
+                                    )
+                                }
                             }
                         }
                     }
