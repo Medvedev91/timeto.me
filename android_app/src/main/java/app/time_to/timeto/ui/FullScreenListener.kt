@@ -295,7 +295,7 @@ private fun FullScreenView(
 
                         Row(
                             modifier = Modifier
-                                .padding(start = 50.dp, end = 50.dp)
+                                .padding(horizontal = 44.dp)
                                 .weight(1f),
                         ) {
 
