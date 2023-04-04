@@ -162,7 +162,9 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
         }
     }
 
-    sealed class TaskListItem {
+    sealed class TaskListItem(
+        val id: String,
+    ) {
 
         companion object {
 
@@ -221,13 +223,13 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
             val task: TaskModel,
             val text: String,
             val textColor: ColorRgba,
-        ) : TaskListItem()
+        ) : TaskListItem("rt_${task.id}")
 
         class ImportantTask(
             val task: TaskModel,
             val type: TextFeatures.TimeData.TYPE,
             val text: String,
             val backgroundColor: ColorRgba,
-        ) : TaskListItem()
+        ) : TaskListItem("it_${task.id}")
     }
 }
