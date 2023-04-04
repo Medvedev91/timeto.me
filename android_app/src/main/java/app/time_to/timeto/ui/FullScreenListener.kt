@@ -422,8 +422,11 @@ private fun FullScreenView(
                     )
             ) {
 
+                val taskListScrollState = rememberLazyListState()
+
                 val isNavDividerVisible =
                     (checklistScrollState.canScrollBackward || checklistScrollState.canScrollForward) ||
+                    (taskListScrollState.canScrollBackward || taskListScrollState.canScrollForward) ||
                     (!state.isCompactTaskList && state.checklistUI != null)
 
                 Divider(
@@ -440,6 +443,7 @@ private fun FullScreenView(
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     reverseLayout = true,
+                    state = taskListScrollState,
                     contentPadding = PaddingValues(vertical = taskListContentPadding),
                 ) {
 
