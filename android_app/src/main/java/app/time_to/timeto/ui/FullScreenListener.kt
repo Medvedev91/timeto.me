@@ -98,7 +98,9 @@ private fun FullScreenView(
 ) {
     val (vm, state) = rememberVM { FullScreenVM() }
 
+    val dividerHeight = 1.dp
     val dividerColor = c.white.copy(0.4f)
+    val dividerModifier = Modifier.padding(horizontal = 8.dp)
 
     Box {
 
@@ -246,9 +248,10 @@ private fun FullScreenView(
             val checklistScrollState = rememberLazyListState()
 
             val checklistUI = state.checklistUI
+            val isChecklistCollapsed = checklistUI != null && !state.isCompactTaskList
             if (checklistUI != null) {
 
-                if (!state.isCompactTaskList) {
+                if (isChecklistCollapsed) {
 
                     Column(
                         modifier = Modifier
@@ -287,6 +290,7 @@ private fun FullScreenView(
                         val checklistVContentPadding = 12.dp
 
                         Divider(
+                            modifier = dividerModifier,
                             color = animateColorAsState(
                                 if (checklistScrollState.canScrollBackward) dividerColor else c.transparent,
                                 animationSpec = spring(stiffness = Spring.StiffnessLow),
@@ -402,7 +406,6 @@ private fun FullScreenView(
             }
 
             val taskItemHeight = 36.dp
-            val dividerHeight = 1.dp
             val taskListContentPadding = 4.dp
 
             Column(
