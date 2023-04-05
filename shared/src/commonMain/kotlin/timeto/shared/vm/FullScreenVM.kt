@@ -88,7 +88,13 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
             .onEachExIn(scope) { interval ->
                 val isCountdown = if (interval.id == state.value.interval.id)
                     state.value.isCountdown else true
-                state.update { it.copy(interval = interval, isCountdown = isCountdown) }
+                state.update {
+                    it.copy(
+                        interval = interval,
+                        isCountdown = isCountdown,
+                        isCompactTaskList = true,
+                    )
+                }
             }
         ChecklistItemModel
             .getAscFlow()
