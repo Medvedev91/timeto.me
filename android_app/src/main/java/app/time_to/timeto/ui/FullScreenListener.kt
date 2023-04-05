@@ -433,6 +433,7 @@ private fun FullScreenView(
                     (taskListScrollState.canScrollBackward || taskListScrollState.canScrollForward)
 
                 Divider(
+                    modifier = dividerModifier,
                     color = if (isNavDividerVisible) dividerColor else c.transparent,
                     thickness = dividerHeight,
                 )
