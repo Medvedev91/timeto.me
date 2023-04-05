@@ -429,14 +429,14 @@ private fun FullScreenView(
 
                 val isNavDividerVisible =
                     (!state.isCompactTaskList && state.checklistUI != null) ||
-                    (checklistScrollState.canScrollBackward || checklistScrollState.canScrollForward) ||
-                    (taskListScrollState.canScrollBackward || taskListScrollState.canScrollForward)
+                    (state.checklistUI != null && (checklistScrollState.canScrollBackward || checklistScrollState.canScrollForward)) ||
+                    (!state.isCompactTaskList && (taskListScrollState.canScrollBackward || taskListScrollState.canScrollForward))
 
                 Divider(
                     modifier = dividerModifier,
                     color = animateColorAsState(
                         targetValue = if (isNavDividerVisible) dividerColor else c.transparent,
-                        animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
+                        animationSpec = spring(stiffness = Spring.StiffnessMedium),
                     ).value,
                     thickness = dividerHeight,
                 )
