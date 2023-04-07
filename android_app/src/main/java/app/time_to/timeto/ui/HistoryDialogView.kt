@@ -258,10 +258,10 @@ fun HistoryDialogView(
                                                 // Header indexes + sum of elements in them
                                                 val index = sectionsLater.count() - 1 + sectionsLater.sumOf { it.intervals.size }
                                                 val offset = -(listHeight
-                                                        - dpToPx((listContentPadding.calculateTopPadding() + listContentPadding.calculateBottomPadding()).value)
-                                                        - dpToPx(headerHeight.value)
-                                                        - dpToPx(headerVerticalPadding.value)
-                                                        )
+                                                               - dpToPx((listContentPadding.calculateTopPadding() + listContentPadding.calculateBottomPadding()).value)
+                                                               - dpToPx(headerHeight.value)
+                                                               - dpToPx(headerVerticalPadding.value)
+                                                              )
                                                 scrollState.animateScrollToItem(index, offset)
                                             }
                                         }
