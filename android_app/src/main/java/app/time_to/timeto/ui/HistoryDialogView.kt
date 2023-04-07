@@ -144,6 +144,7 @@ fun HistoryDialogView(
                                     textAlign = TextAlign.End,
                                     fontWeight = FontWeight.W600,
                                     fontSize = 13.sp,
+                                    color = c.textSecondary,
                                 )
                             }
                         }
@@ -204,7 +205,8 @@ fun HistoryDialogView(
                                         .padding(top = 4.dp)
                                         .fillMaxWidth(),
                                     textAlign = TextAlign.Start,
-                                    fontSize = 14.sp
+                                    fontSize = 14.sp,
+                                    color = c.textSecondary,
                                 )
 
                                 val intervalNote = intervalUI.noteText
