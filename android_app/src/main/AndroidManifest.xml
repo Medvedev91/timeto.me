@@ -18,7 +18,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.TimeTo"
-            android:windowSoftInputMode="adjustResize"> <!-- MainActivity docs -->
+            android:windowSoftInputMode="adjustResize"> <!-- Docs in MainActivity -->
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
