@@ -20,7 +20,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
         val isTaskCancelVisible: Boolean,
         val isCountdown: Boolean,
         val tasksToday: List<TaskModel>,
-        val isCompactTaskList: Boolean,
+        val isTaskListShowed: Boolean,
         val idToUpdate: Long,
     ) {
         val timerData = TimerDataUI(interval, isCountdown, ColorNative.white)
@@ -73,7 +73,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
             isTaskCancelVisible = false,
             isCountdown = true,
             tasksToday = listOf(), // todo
-            isCompactTaskList = true,
+            isTaskListShowed = false,
             idToUpdate = 0,
         )
     )
@@ -89,7 +89,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
                     it.copy(
                         interval = interval,
                         isCountdown = isCountdown,
-                        isCompactTaskList = true,
+                        isTaskListShowed = false,
                     )
                 }
             }
@@ -132,7 +132,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
     }
 
     fun toggleIsCompactTaskList() {
-        state.update { it.copy(isCompactTaskList = !it.isCompactTaskList) }
+        state.update { it.copy(isTaskListShowed = !it.isTaskListShowed) }
     }
 
     ///
