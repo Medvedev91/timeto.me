@@ -2,11 +2,16 @@ package app.time_to.timeto
 
 import android.app.Activity
 import android.content.*
+import android.content.pm.PackageManager
+import android.Manifest
 import android.net.Uri
 import android.os.BatteryManager
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -14,6 +19,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import app.time_to.timeto.ui.*
@@ -46,6 +52,9 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         statusBarHeight = getStatusBarHeight(this@MainActivity)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+            notificationsPermissionProcessing()
 
         setContent {
 
@@ -103,6 +112,29 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         NotificationCenter.cleanAllPushes()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun notificationsPermissionProcessing() {
+        when {
+            ContextCompat.checkSelfPermission(
+                this, Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED -> {
+            }
+            shouldShowRequestPermissionRationale(
+                Manifest.permission.POST_NOTIFICATIONS
+            ) -> {
+                // todo
+            }
+            else -> {
+                val requester = registerForActivityResult(
+                    ActivityResultContracts.RequestPermission()
+                ) { isGranted ->
+                    // todo vm.onNotificationsPermissionReady()?
+                }
+                requester.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
     }
 }
 
