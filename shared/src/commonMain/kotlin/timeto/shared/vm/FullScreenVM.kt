@@ -56,17 +56,14 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
             else -> null
         }
 
-        val visibleTasksUI: List<TaskListItem> = run {
-            val allItems = tasksToday.map { TaskListItem.prepTask(it, it.text.textFeatures()) }
-
-            if (isCompactTaskList)
-                return@run allItems.filterIsInstance<TaskListItem.ImportantTask>()
-
-            if (allItems.isEmpty())
-                return@run listOf(TaskListItem.NoTasksText("No Tasks for Today"))
-
-            allItems
+        val tasksAll: List<TaskListItem> = run {
+            val tasks = tasksToday.map { TaskListItem.prepTask(it, it.text.textFeatures()) }
+            if (tasks.isNotEmpty())
+                return@run tasks
+            return@run listOf(TaskListItem.NoTasksText("No Tasks for Today"))
         }
+
+        val tasksImportant = tasksAll.filterIsInstance<TaskListItem.ImportantTask>()
     }
 
     override val state = MutableStateFlow(
