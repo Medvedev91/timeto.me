@@ -479,6 +479,7 @@ private fun DayStartDialogView(
             "Day Start",
             fontSize = 24.sp,
             fontWeight = FontWeight.W500,
+            color = c.text,
         )
 
         val items = tabToolsState.dayStartListItems
