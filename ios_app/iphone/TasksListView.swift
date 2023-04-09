@@ -546,14 +546,14 @@ private struct TasksListView__TmrwTaskView: View {
 
             let vPadding = 8.0
 
-            if let timeUI = taskUI.textFeatures.timeUI {
+            if let timeUI = taskUI.timeUI {
                 HStack {
-                    Text(timeUI.daytimeText)
+                    Text(timeUI.text)
                             .padding(.leading, paddingStart)
                             .padding(.top, 1)
                             .padding(.bottom, vPadding)
                             .font(.system(size: 14, weight: .light))
-                            .foregroundColor(timeUI.color.toColor())
+                            .foregroundColor(timeUI.textColor.toColor())
                             .lineLimit(1)
                     Spacer()
                 }
@@ -561,7 +561,7 @@ private struct TasksListView__TmrwTaskView: View {
 
             HStack {
                 /// It can be multiline
-                Text(taskUI.listText)
+                Text(taskUI.text)
                         .padding(.leading, paddingStart)
                         .padding(.trailing, 16)
                         .lineSpacing(4)
