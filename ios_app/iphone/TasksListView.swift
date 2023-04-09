@@ -332,14 +332,51 @@ struct TasksView__TaskRowView: View {
 
                                 let vPadding = 8.0
 
-                                if let timeUI = taskUI.textFeatures.timeUI {
+                                if let timeUI = taskUI.timeUI as? TasksListVM.TaskUITimeUIImportantUI {
+
+                                    HStack(spacing: 0) {
+
+                                        HStack(spacing: 0) {
+
+                                            Image(systemName: "calendar")
+                                                    .foregroundColor(.white)
+                                                    .frame(width: 12, height: 12)
+                                                    .padding(.leading, 2)
+                                                    .padding(.trailing, 7)
+
+                                            Text(timeUI.title)
+                                                    .foregroundColor(.white)
+                                                    .font(.system(size: 13))
+                                        }
+                                                .padding(.leading, 6)
+                                                .padding(.trailing, 5)
+                                                .padding(.top, 4)
+                                                .padding(.bottom, 4)
+                                                .background(
+                                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                                .fill(timeUI.backgroundColor.toColor())
+                                                )
+
+                                        Text(timeUI.timeLeftText)
+                                                .foregroundColor(timeUI.timeLeftColor.toColor())
+                                                .font(.system(size: 14, weight: .light))
+                                                .padding(.leading, 8)
+                                                .lineLimit(1)
+
+                                        Spacer()
+                                    }
+                                            .padding(.top, 2)
+                                            .padding(.bottom, vPadding - 2)
+                                            .padding(.leading, paddingStart - 1)
+
+                                } else if let timeUI = taskUI.timeUI as? TasksListVM.TaskUITimeUIRegularUI {
                                     HStack {
-                                        Text(timeUI.daytimeText + "  " + timeUI.timeLeftText)
+                                        Text(timeUI.text)
                                                 .padding(.leading, paddingStart)
                                                 .padding(.top, 1)
                                                 .padding(.bottom, vPadding)
                                                 .font(.system(size: 14, weight: .light))
-                                                .foregroundColor(timeUI.color.toColor())
+                                                .foregroundColor(timeUI.textColor.toColor())
                                                 .lineLimit(1)
                                         Spacer()
                                     }
