@@ -201,7 +201,7 @@ private struct EventItemView: View {
         VStack(spacing: 0) {
 
             HStack {
-                Text(uiEvent.event.timeToString())
+                Text(uiEvent.dateString)
                         .font(.system(size: 14, weight: .light))
                         .foregroundColor(.secondary)
                 Spacer()
