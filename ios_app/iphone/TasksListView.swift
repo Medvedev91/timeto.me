@@ -271,7 +271,7 @@ struct TasksView__TaskRowView: View {
 
                 HStack {
 
-                    Text(taskUI.listText)
+                    Text(taskUI.text)
                             .padding(.leading, 12)
                             .padding(.trailing, 4)
                             .foregroundColor(.white)
@@ -347,7 +347,7 @@ struct TasksView__TaskRowView: View {
 
                                 HStack {
                                     /// It can be multiline
-                                    Text(taskUI.listText)
+                                    Text(taskUI.text)
                                             .padding(.leading, paddingStart)
                                             .padding(.trailing, 16)
                                             .lineSpacing(4)
@@ -398,7 +398,7 @@ struct TasksView__TaskRowView: View {
                             EventFormSheet(
                                     isPresented: $isAddCalendarSheetPresented,
                                     editedEvent: nil,
-                                    defText: taskUI.listText,
+                                    defText: taskUI.text,
                                     defDate: Date().startOfDay()
                             ) {
                                 taskUI.delete()
