@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.update
 import timeto.shared.db.TaskFolderModel
 import timeto.shared.db.TaskFolderModel.Companion.sortedFolders
 import timeto.shared.db.TaskModel
+import timeto.shared.TextFeatures.TimeData
 import timeto.shared.vm.__VM
 import timeto.shared.vm.ui.sortedByFolder
 
@@ -13,6 +14,24 @@ class WatchTabTasksVM : __VM<WatchTabTasksVM.State>() {
     class TaskUI(
         val task: TaskModel,
     ) {
+
+        val textFeatures = task.text.textFeatures()
+        val listText = textFeatures.textUi()
+
+        val timeUI: TimeUI? = textFeatures.timeData?.let { timeData ->
+            val unixTime = timeData.unixTime
+            val timeLeftText = timeData.timeLeftText()
+            val daytimeText = daytimeToString(unixTime.time - unixTime.localDayStartTime())
+            val textColor = when (timeData.status) {
+                TimeData.STATUS.IN -> ColorNative.textSecondary
+                TimeData.STATUS.NEAR -> ColorNative.blue
+                TimeData.STATUS.OVERDUE -> ColorNative.red
+            }
+            TimeUI(
+                text = "$daytimeText  $timeLeftText",
+                textColor = textColor,
+            )
+        }
 
         fun start(
             onStarted: () -> Unit,
@@ -28,6 +47,11 @@ class WatchTabTasksVM : __VM<WatchTabTasksVM.State>() {
                 onStarted()
             }
         }
+
+        class TimeUI(
+            val text: String,
+            val textColor: ColorNative,
+        )
     }
 
     data class FolderUI(

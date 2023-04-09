@@ -51,12 +51,12 @@ struct W_TabTasksView: View {
                         label: {
                             VStack(alignment: .leading, spacing: 0) {
 
-                                if let timeUI = taskUI.textFeatures.timeUI {
-                                    Text(timeUI.daytimeText + "  " + timeUI.timeLeftText)
+                                if let timeUI = taskUI.timeUI {
+                                    Text(timeUI.text)
                                             .padding(.top, 1)
                                             .padding(.bottom, 2)
                                             .font(.system(size: 14, weight: .light))
-                                            .foregroundColor(timeUI.color.toColor())
+                                            .foregroundColor(timeUI.textColor.toColor())
                                             .lineLimit(1)
                                 }
 
