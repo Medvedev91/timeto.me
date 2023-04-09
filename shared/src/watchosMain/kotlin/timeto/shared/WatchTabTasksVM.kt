@@ -23,7 +23,7 @@ class WatchTabTasksVM : __VM<WatchTabTasksVM.State>() {
                 WatchToIosSync.startTaskWithLocal(
                     activity = autostartData.first,
                     deadline = autostartData.second,
-                    task = task
+                    task = task,
                 )
                 onStarted()
             }
