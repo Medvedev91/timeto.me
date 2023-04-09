@@ -318,7 +318,7 @@ struct TasksView__TaskRowView: View {
                 Button(
                         action: {
                             hideKeyboard()
-                            taskUI.start(
+                            taskUI.task.startIntervalForUI(
                                     onStarted: {
                                         gotoTimer()
                                     },
