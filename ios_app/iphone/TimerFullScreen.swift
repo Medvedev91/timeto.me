@@ -52,7 +52,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                             },
                             label: {
                                 Text(state.title)
-                                        .font(.system(size: 18))
+                                        .font(.system(size: 20))
                                         .foregroundColor(.white)
                             }
                     )
@@ -79,7 +79,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                     }
                 }
 
-                let timerData  = state.timerData
+                let timerData = state.timerData
 
                 if let subtitle = timerData.subtitle {
                     Text(subtitle)
@@ -87,45 +87,49 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                             .tracking(5)
                             .foregroundColor(timerData.subtitleColor.toColor())
                             .padding(.top, 36)
-                            .padding(.bottom, 20)
+                            .offset(y: 3)
                 }
 
-                Spacer()
-            }
+                Text(timerData.title)
+                        .font(.system(size: 70, design: .monospaced))
+                        .fontWeight(.bold)
+                        .foregroundColor(timerData.titleColor.toColor())
+                        .opacity(0.9)
 
-            if let checklistUI = state.checklistUI {
-                VStack {
-                    TimerFullScreen__TimerView(vm: vm, state: state, isCompact: true)
-                            .padding(.top, 20)
-
+                if let checklistUI = state.checklistUI {
                     VStack {
-                        ScrollView {
-                            ForEach(checklistUI.itemsUI, id: \.item.id) { itemUI in
-                                Button(
-                                        action: {
-                                            itemUI.toggle()
-                                        },
-                                        label: {
-                                            Text(itemUI.item.text + (itemUI.item.isChecked ? "  ✅" : ""))
-                                                    .padding(.vertical, 4)
-                                                    .foregroundColor(.white)
-                                                    .font(.system(size: 18))
-                                        }
-                                )
-                            }
-                            Spacer()
-                        }
-                    }
-                            .padding(.top, 20)
+                        TimerFullScreen__TimerView(vm: vm, state: state, isCompact: true)
+                                .padding(.top, 20)
 
-                    TimerFullScreen__CloseView()
+                        VStack {
+                            ScrollView {
+                                ForEach(checklistUI.itemsUI, id: \.item.id) { itemUI in
+                                    Button(
+                                            action: {
+                                                itemUI.toggle()
+                                            },
+                                            label: {
+                                                Text(itemUI.item.text + (itemUI.item.isChecked ? "  ✅" : ""))
+                                                        .padding(.vertical, 4)
+                                                        .foregroundColor(.white)
+                                                        .font(.system(size: 18))
+                                            }
+                                    )
+                                }
+                                Spacer()
+                            }
+                        }
+                                .padding(.top, 20)
+
+                        TimerFullScreen__CloseView()
+                    }
+                } else {
+                    VStack {
+                        Spacer()
+                        TimerFullScreen__CloseView()
+                    }
+                    TimerFullScreen__TimerView(vm: vm, state: state, isCompact: false)
                 }
-            } else {
-                VStack {
-                    Spacer()
-                    TimerFullScreen__CloseView()
-                }
-                TimerFullScreen__TimerView(vm: vm, state: state, isCompact: false)
             }
         }
                 .onAppear {
@@ -148,11 +152,6 @@ private struct TimerFullScreen__TimerView: View {
         VStack(spacing: 0) {
 
             let timerData = state.timerData
-
-            Text(timerData.title)
-                    .font(.system(size: 72, design: .monospaced))
-                    .foregroundColor(timerData.titleColor.toColor())
-                    .opacity(0.9)
 
             Button(
                     action: {
