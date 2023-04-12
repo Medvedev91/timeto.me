@@ -111,36 +111,79 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                             .padding(.top, 10)
                 }
 
-                if let checklistUI = state.checklistUI {
-                    VStack {
-                        VStack {
-                            ScrollView {
-                                ForEach(checklistUI.itemsUI, id: \.item.id) { itemUI in
-                                    Button(
-                                            action: {
-                                                itemUI.toggle()
-                                            },
-                                            label: {
-                                                Text(itemUI.item.text + (itemUI.item.isChecked ? "  ✅" : ""))
-                                                        .padding(.vertical, 4)
-                                                        .foregroundColor(.white)
-                                                        .font(.system(size: 18))
-                                            }
-                                    )
+                let checklistUI = state.checklistUI
+                // todo test .clipToBounds()
+                ZStack(alignment: .bottom) {
+
+                    ///
+                    /// Compact Tasks Mode
+
+                    VStack(spacing: 0) {
+
+                        if !state.isTaskListShowed, let checklistUI = checklistUI {
+
+                            VStack {
+
+                                ScrollView {
+
+                                    ForEach(checklistUI.itemsUI, id: \.item.id) { itemUI in
+
+                                        Button(
+                                                action: {
+                                                    itemUI.toggle()
+                                                },
+                                                label: {
+                                                    Text(itemUI.item.text + (itemUI.item.isChecked ? "  ✅" : ""))
+                                                            .padding(.vertical, 4)
+                                                            .foregroundColor(.white)
+                                                            .font(.system(size: 18))
+                                                }
+                                        )
+                                    }
+
+                                    Spacer()
                                 }
-                                Spacer()
                             }
                         }
-                                .padding(.top, 20)
 
-                        TimerFullScreen__CloseView()
-                    }
-                } else {
-                    VStack {
-                        Spacer()
-                        TimerFullScreen__CloseView()
+                        if !state.isTaskListShowed {
+
+                        }
                     }
                 }
+                        .frame(height: .infinity)
+
+                HStack(spacing: 0) {
+
+                    let menuIconAlpha = 0.5
+
+                    Button(
+                            action: {
+                                //
+                            },
+                            label: {
+                                Image(systemName: "pencil.circle")
+                                        .foregroundColor(Color.white)
+                                        .opacity(menuIconAlpha)
+                                        .font(.system(size: 30, weight: .thin))
+                                        .frame(maxWidth: .infinity)
+                            }
+                    )
+
+                    Button(
+                            action: {
+                                FullScreenUI.shared.close()
+                            },
+                            label: {
+                                Image(systemName: "xmark.circle")
+                                        .foregroundColor(Color.white)
+                                        .opacity(menuIconAlpha)
+                                        .font(.system(size: 30, weight: .thin))
+                                        .frame(maxWidth: .infinity)
+                            }
+                    )
+                }
+                        .frame(width: .infinity)
             }
         }
                 .onAppear {
@@ -149,24 +192,5 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                 .onDisappear {
                     UIApplication.shared.isIdleTimerDisabled = false
                 }
-    }
-}
-
-private struct TimerFullScreen__CloseView: View {
-
-    var body: some View {
-
-        Button(
-                action: {
-                    FullScreenUI.shared.close()
-                },
-                label: {
-                    Image(systemName: "xmark")
-                            .font(.system(size: 26, weight: .thin))
-                            .foregroundColor(.white)
-                }
-        )
-                .padding(.bottom, 30)
-                .opacity(0.8)
     }
 }
