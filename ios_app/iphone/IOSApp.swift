@@ -14,6 +14,8 @@ struct IOSApp: App {
     private let scheduledNotificationsDataPublisher: AnyPublisher<NSArray, Never> =
             UtilsKt.scheduledNotificationsDataFlow.toPublisher()
 
+    private let batteryManager = BatteryManager() // Keep the object
+
     init() {
         UtilsPlatformKt.doInitKmmIos(deviceName: machineIdentifier())
     }
@@ -62,5 +64,70 @@ struct IOSApp: App {
                         UIApplication.shared.applicationIconBadgeNumber = 0
                     }
                 }
+    }
+}
+
+private class BatteryManager {
+
+    init() {
+        UIDevice.current.isBatteryMonitoringEnabled = true
+        BatteryManager.upBatteryState()
+        BatteryManager.upBatteryLevel()
+        NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(batteryStateDidChange(notification:)),
+                name: UIDevice.batteryStateDidChangeNotification,
+                object: nil
+        )
+        NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(batteryLevelDidChange(notification:)),
+                name: UIDevice.batteryLevelDidChangeNotification,
+                object: nil
+        )
+    }
+
+    @objc private func batteryStateDidChange(notification: Notification) {
+        BatteryManager.upBatteryState()
+    }
+
+    @objc private func batteryLevelDidChange(notification: Notification) {
+        BatteryManager.upBatteryLevel()
+    }
+
+    private static func isSimulator() -> Bool {
+        #if targetEnvironment(simulator)
+        return true
+        #else
+        return false
+        #endif
+    }
+
+    private static func upBatteryState() {
+        let state = UIDevice.current.batteryState
+        switch state {
+        case .unplugged:
+            UtilsKt.isBatteryChargingOrNull = false
+            break
+        case .charging,
+             .full:
+            UtilsKt.isBatteryChargingOrNull = true
+            break
+        case .unknown:
+            UtilsKt.isBatteryChargingOrNull = isSimulator() ? false : nil
+            break
+        @unknown default:
+            UtilsKt.isBatteryChargingOrNull = isSimulator() ? false : nil
+            break
+        }
+    }
+
+    private static func upBatteryLevel() {
+        let level = Int(UIDevice.current.batteryLevel * 100)
+        if level < 0 {
+            UtilsKt.batteryLevelOrNull = isSimulator() ? 100 : nil
+            return
+        }
+        UtilsKt.batteryLevelOrNull = level.toKotlinInt()
     }
 }
