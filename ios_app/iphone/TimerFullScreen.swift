@@ -147,11 +147,11 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                         }
 
                         if !state.isTaskListShowed {
-
+                            Spacer()
                         }
                     }
                 }
-                        .frame(height: .infinity)
+                        .frame(maxHeight: .infinity)
 
                 HStack(spacing: 0) {
 
@@ -167,6 +167,44 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                         .opacity(menuIconAlpha)
                                         .font(.system(size: 30, weight: .thin))
                                         .frame(maxWidth: .infinity)
+                            }
+                    )
+
+                    Button(
+                            action: {
+                                vm.toggleIsCompactTaskList()
+                            },
+                            label: {
+                                VStack(spacing: 0) {
+
+                                    Image(systemName: !state.isTaskListShowed ? "chevron.compact.up" : "chevron.compact.down")
+                                            .foregroundColor(Color.white)
+                                            .opacity(menuIconAlpha)
+                                            .font(.system(size: 30, weight: .thin))
+
+                                    Text(state.timeOfTheDay)
+                                            .padding(.horizontal, 16)
+                                            .opacity(menuIconAlpha)
+                                            .foregroundColor(Color.white)
+                                            .padding(.top, 4)
+                                            .font(.system(size: 15, weight: .medium))
+
+                                    HStack(spacing: 0) {
+
+                                        Image(systemName:  "bolt.fill")
+                                                .foregroundColor(Color.white)
+                                                .opacity(menuIconAlpha)
+                                                .font(.system(size: 12, weight: .ultraLight))
+
+                                        Text(state.battery)
+                                                .padding(.leading, 1)
+                                                .padding(.trailing, 6)
+                                                .opacity(menuIconAlpha)
+                                                .foregroundColor(Color.white)
+                                                .font(.system(size: 13, weight: .regular))
+                                    }
+                                            .padding(.top, 2)
+                                }
                             }
                     )
 
