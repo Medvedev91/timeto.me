@@ -79,6 +79,17 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                     }
                 }
 
+                let timerData  = state.timerData
+
+                if let subtitle = timerData.subtitle {
+                    Text(subtitle)
+                            .font(.system(size: 26, weight: .heavy))
+                            .tracking(5)
+                            .foregroundColor(timerData.subtitleColor.toColor())
+                            .padding(.top, 36)
+                            .padding(.bottom, 20)
+                }
+
                 Spacer()
             }
 
@@ -137,13 +148,6 @@ private struct TimerFullScreen__TimerView: View {
         VStack(spacing: 0) {
 
             let timerData = state.timerData
-
-            Text(timerData.subtitle ?? "")
-                    .font(.system(size: 26, weight: .bold))
-                    .tracking(5)
-                    .foregroundColor(timerData.subtitleColor.toColor())
-                    .opacity(0.9)
-                    .padding(.bottom, isCompact ? 5 : 20)
 
             Text(timerData.title)
                     .font(.system(size: 72, design: .monospaced))
