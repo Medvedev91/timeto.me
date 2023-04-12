@@ -96,11 +96,23 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                         .foregroundColor(timerData.titleColor.toColor())
                         .opacity(0.9)
 
+                if timerData.subtitle != nil || !state.isCountdown {
+                    Button(
+                            action: {
+                                vm.restart()
+                            },
+                            label: {
+                                Text("Restart")
+                                        .font(.system(size: 25, weight: .light))
+                                        .foregroundColor(.white)
+                                        .tracking(1)
+                            }
+                    )
+                            .padding(.top, 10)
+                }
+
                 if let checklistUI = state.checklistUI {
                     VStack {
-                        TimerFullScreen__TimerView(vm: vm, state: state, isCompact: true)
-                                .padding(.top, 20)
-
                         VStack {
                             ScrollView {
                                 ForEach(checklistUI.itemsUI, id: \.item.id) { itemUI in
@@ -128,7 +140,6 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                         Spacer()
                         TimerFullScreen__CloseView()
                     }
-                    TimerFullScreen__TimerView(vm: vm, state: state, isCompact: false)
                 }
             }
         }
@@ -138,39 +149,6 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                 .onDisappear {
                     UIApplication.shared.isIdleTimerDisabled = false
                 }
-    }
-}
-
-private struct TimerFullScreen__TimerView: View {
-
-    let vm: FullScreenVM
-    let state: FullScreenVM.State
-    let isCompact: Bool
-
-    var body: some View {
-
-        VStack(spacing: 0) {
-
-            let timerData = state.timerData
-
-            Button(
-                    action: {
-                        vm.restart()
-                    },
-                    label: {
-                        Text("Restart")
-                                .font(.system(size: 25, weight: .light))
-                                .foregroundColor(.white)
-                                .tracking(1)
-                    }
-            )
-                    ///
-                    .opacity(timerData.title == nil ? 0 : 1)
-                    .disabled(timerData.title == nil)
-                    ///
-                    .padding(.top, isCompact ? 5 : 20)
-        }
-                .padding(.bottom, 20)
     }
 }
 
