@@ -75,14 +75,12 @@ struct PieView: View {
                                     .font(.system(size: 14.5, weight: .light))
                         }
 
-                        if let title = selectedItem.title {
-                            Text(title)
-                                    .multilineTextAlignment(.center)
-                                    .lineLimit(2)
-                                    .lineSpacing(-6)
-                                    .minimumScaleFactor(0.8)
-                                    .frame(width: (geometry.size.width - 120.0) / ringRatio)
-                        }
+                        Text(selectedItem.title)
+                                .multilineTextAlignment(.center)
+                                .lineLimit(2)
+                                .lineSpacing(-6)
+                                .minimumScaleFactor(0.8)
+                                .frame(width: (geometry.size.width - 120.0) / ringRatio)
 
                         if let subtitleBottom = selectedItem.subtitleBottom {
                             Text(subtitleBottom)
