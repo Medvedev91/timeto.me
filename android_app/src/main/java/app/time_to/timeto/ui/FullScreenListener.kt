@@ -145,7 +145,7 @@ private fun FullScreenView(
                 ) {
 
                     Text(
-                        "CANCEL",
+                        state.cancelTaskText,
                         fontWeight = FontWeight.Bold,
                         fontSize = 13.sp,
                         color = c.white,
