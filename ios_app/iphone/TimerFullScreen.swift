@@ -42,9 +42,27 @@ private struct TimerFullScreen__FullScreenCoverView: View {
             Color.black.edgesIgnoringSafeArea(.all)
                     .statusBar(hidden: true)
 
+            VStack(spacing: 0) {
+
+                VStack(spacing: 0) {
+
+                    Button(
+                            action: {
+                                // todo
+                            },
+                            label: {
+                                Text(state.title)
+                                        .font(.system(size: 18))
+                                        .foregroundColor(.white)
+                            }
+                    )
+                }
+
+                Spacer()
+            }
+
             if let checklistUI = state.checklistUI {
                 VStack {
-                    TimerFullScreen__HeaderView(state: state)
                     TimerFullScreen__TimerView(vm: vm, state: state, isCompact: true)
                             .padding(.top, 20)
 
@@ -72,7 +90,6 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                 }
             } else {
                 VStack {
-                    TimerFullScreen__HeaderView(state: state)
                     Spacer()
                     TimerFullScreen__CloseView()
                 }
@@ -87,25 +104,6 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                 }
     }
 }
-
-private struct TimerFullScreen__HeaderView: View {
-
-    let state: FullScreenVM.State
-
-    var body: some View {
-
-        Text(state.title)
-                .foregroundColor(.white)
-                .font(.system(size: 22, weight: .light))
-                .tracking(0.4)
-                .padding(.top, 35)
-                .padding(.leading, 20)
-                .padding(.trailing, 20)
-                .opacity(0.9)
-                .multilineTextAlignment(.center)
-    }
-}
-
 
 private struct TimerFullScreen__TimerView: View {
 
