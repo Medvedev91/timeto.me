@@ -48,7 +48,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
                     Button(
                             action: {
-                                // todo
+                                vm.toggleIsTaskCancelVisible()
                             },
                             label: {
                                 Text(state.title)
@@ -56,6 +56,27 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                         .foregroundColor(.white)
                             }
                     )
+
+                    if (state.isTaskCancelVisible) {
+
+                        Button(
+                                action: {
+                                    vm.cancelTask()
+                                },
+                                label: {
+                                    Text(state.cancelTaskText)
+                                            .padding(.vertical, 4)
+                                            .padding(.horizontal, 8)
+                                            .font(.system(size: 14, weight: .bold))
+                                            .foregroundColor(.white)
+                                            .background(
+                                                    RoundedRectangle(cornerRadius: 99, style: .circular)
+                                                            .fill(.blue)
+                                            )
+                                            .padding(.vertical, 12)
+                                }
+                        )
+                    }
                 }
 
                 Spacer()
