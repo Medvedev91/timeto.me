@@ -9,7 +9,7 @@ struct TaskFormSheet: View {
     @State private var triggersBg = UIColor.myDayNight(.white, .mySheetFormBg)
 
     init(
-            task: TaskModel,
+            task: TaskModel?,
             isPresented: Binding<Bool>
     ) {
         _vm = State(initialValue: TaskFormSheetVM(task: task))
