@@ -50,16 +50,6 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
         val timeOfTheDay: String =
             UnixTime().getStringByComponents(UnixTime.StringComponent.hhmm24)
 
-        val batteryText = "${batteryLevelOrNull ?: "--"}"
-        val batteryTextColor = if (isBatteryChargingOrNull == true) ColorRgba.white else menuColor
-        val batteryBackground: ColorNative = when {
-            isBatteryChargingOrNull == true -> {
-                if (batteryLevelOrNull == 100) ColorNative.green else ColorNative.blue
-            }
-            batteryLevelOrNull in 0..20 -> ColorNative.red
-            else -> ColorNative.transparent
-        }
-
         val tasksAll: List<TaskListItem> = run {
             val tasks = tasksToday.map { TaskListItem.prepTask(it, it.text.textFeatures()) }
             if (tasks.isNotEmpty())
@@ -68,6 +58,27 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
         }
 
         val tasksImportant = tasksAll.filterIsInstance<TaskListItem.ImportantTask>()
+
+        val batteryText = "${batteryLevelOrNull ?: "--"}"
+        val batteryTextColor: ColorRgba
+        val batteryBackground: ColorNative
+
+        init {
+            when {
+                isBatteryChargingOrNull == true -> {
+                    batteryTextColor = ColorRgba.white
+                    batteryBackground = if (batteryLevelOrNull == 100) ColorNative.green else ColorNative.blue
+                }
+                batteryLevelOrNull in 0..20 -> {
+                    batteryTextColor = ColorRgba.white
+                    batteryBackground = ColorNative.red
+                }
+                else -> {
+                    batteryTextColor = menuColor
+                    batteryBackground = ColorNative.transparent
+                }
+            }
+        }
     }
 
     override val state = MutableStateFlow(
