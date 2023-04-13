@@ -2,6 +2,9 @@ import SwiftUI
 import Combine
 import shared
 
+private let taskItemHeight = 36.0
+private let taskListContentPadding = 4.0
+
 extension View {
 
     func attachTimerFullScreenView() -> some View {
@@ -148,7 +151,8 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                         }
 
                         if !state.isTaskListShowed {
-                            Spacer()
+                            TaskList(tasks: state.tasksImportant)
+                                    .background(Color.purple)
                         }
                     }
                 }
@@ -242,5 +246,53 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                 .onDisappear {
                     UIApplication.shared.isIdleTimerDisabled = false
                 }
+    }
+}
+
+private struct TaskList: View {
+
+    let tasks: [FullScreenVM.TaskListItem]
+
+    var body: some View {
+
+        ScrollView(showsIndicators: false) {
+
+            ForEach(tasks, id: \.self.id) { taskItem in
+
+                if let taskItem = taskItem as? FullScreenVM.TaskListItemImportantTask {
+
+                    HStack(spacing: 0) {
+
+                        HStack(spacing: 0) {
+
+                            Image(systemName: "calendar")
+                                    .foregroundColor(Color.white)
+                                    .font(.system(size: 15, weight: .light))
+                                    .padding(.trailing, 2)
+
+                            Text(taskItem.text)
+                                    .font(.system(size: 15))
+                                    .foregroundColor(Color.white)
+                        }
+                                .padding(.horizontal, 4)
+                                .padding(.vertical, 2)
+                                .background(
+                                        RoundedRectangle(cornerRadius: 6, style: .circular)
+                                                .fill(taskItem.backgroundColor.toColor())
+                                )
+                    }
+                            .frame(height: taskItemHeight)
+
+                } else if let taskItem = taskItem as? FullScreenVM.TaskListItemRegularTask {
+
+                    Text(taskItem.text)
+
+                } else if let taskItem = taskItem as? FullScreenVM.TaskListItemNoTasksText {
+
+                    Text(taskItem.text)
+                }
+            }
+        }
+                .frame(maxWidth: .infinity)
     }
 }
