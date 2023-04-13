@@ -155,6 +155,25 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                     .background(Color.purple)
                         }
                     }
+
+                    ///
+                    /// Full Tasks Mode
+
+                    VStack(spacing: 0) {
+
+                        if checklistUI != nil {
+
+                        }
+
+                        if state.isTaskListShowed {
+                            TaskList(
+                                    //                                    taskListScrollState = taskListScrollState,
+                                    //                                    isNavDividerVisible = isNavDividerVisible,
+                                    tasks: state.tasksAll
+                            )
+                                    .background(Color.purple)
+                        }
+                    }
                 }
                         .frame(maxHeight: .infinity)
 
@@ -255,44 +274,55 @@ private struct TaskList: View {
 
     var body: some View {
 
-        ScrollView(showsIndicators: false) {
+        GeometryReader { geometry in
 
-            ForEach(tasks, id: \.self.id) { taskItem in
+            ScrollView(showsIndicators: false) {
 
-                if let taskItem = taskItem as? FullScreenVM.TaskListItemImportantTask {
+                VStack(spacing: 0) {
 
-                    HStack(spacing: 0) {
+                    Spacer()
 
-                        HStack(spacing: 0) {
+                    ForEach(tasks, id: \.self.id) { taskItem in
 
-                            Image(systemName: "calendar")
-                                    .foregroundColor(Color.white)
-                                    .font(.system(size: 15, weight: .light))
-                                    .padding(.trailing, 2)
+                        if let taskItem = taskItem as? FullScreenVM.TaskListItemImportantTask {
+
+                            HStack(spacing: 0) {
+
+                                HStack(spacing: 0) {
+
+                                    Image(systemName: "calendar")
+                                            .foregroundColor(Color.white)
+                                            .font(.system(size: 15, weight: .light))
+                                            .padding(.trailing, 2)
+
+                                    Text(taskItem.text)
+                                            .font(.system(size: 15))
+                                            .foregroundColor(Color.white)
+                                }
+                                        .padding(.horizontal, 4)
+                                        .padding(.vertical, 2)
+                                        .background(
+                                                RoundedRectangle(cornerRadius: 6, style: .circular)
+                                                        .fill(taskItem.backgroundColor.toColor())
+                                        )
+                            }
+                                    .frame(height: taskItemHeight)
+
+                        } else if let taskItem = taskItem as? FullScreenVM.TaskListItemRegularTask {
 
                             Text(taskItem.text)
-                                    .font(.system(size: 15))
+                                    .foregroundColor(Color.white)
+
+                        } else if let taskItem = taskItem as? FullScreenVM.TaskListItemNoTasksText {
+
+                            Text(taskItem.text)
                                     .foregroundColor(Color.white)
                         }
-                                .padding(.horizontal, 4)
-                                .padding(.vertical, 2)
-                                .background(
-                                        RoundedRectangle(cornerRadius: 6, style: .circular)
-                                                .fill(taskItem.backgroundColor.toColor())
-                                )
                     }
-                            .frame(height: taskItemHeight)
-
-                } else if let taskItem = taskItem as? FullScreenVM.TaskListItemRegularTask {
-
-                    Text(taskItem.text)
-
-                } else if let taskItem = taskItem as? FullScreenVM.TaskListItemNoTasksText {
-
-                    Text(taskItem.text)
                 }
+                        .frame(minHeight: geometry.size.height)
             }
+                    .frame(maxWidth: .infinity)
         }
-                .frame(maxWidth: .infinity)
     }
 }
