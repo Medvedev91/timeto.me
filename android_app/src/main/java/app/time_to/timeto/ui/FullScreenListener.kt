@@ -436,11 +436,6 @@ private fun FullScreenView(
                             .size(width = 20.dp, height = 6.dp)
                     )
 
-                    val batteryBackground = state.batteryBackground
-                    val batteryBackgroundAnimation = animateColorAsState(
-                        batteryBackground?.toColor() ?: c.transparent
-                    )
-
                     Text(
                         text = state.timeOfTheDay,
                         modifier = Modifier
@@ -453,7 +448,7 @@ private fun FullScreenView(
                         modifier = Modifier
                             .padding(end = 2.dp)
                             .clip(RoundedCornerShape(99.dp))
-                            .background(batteryBackgroundAnimation.value)
+                            .background(animateColorAsState(state.batteryBackground.toColor()).value)
                             .padding(start = 4.dp, end = 5.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {

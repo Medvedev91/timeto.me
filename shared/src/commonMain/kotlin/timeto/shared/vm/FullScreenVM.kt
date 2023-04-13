@@ -52,12 +52,12 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
 
         val batteryText = "${batteryLevelOrNull ?: "--"}"
         val batteryTextColor = if (isBatteryChargingOrNull == true) ColorRgba.white else menuColor
-        val batteryBackground: ColorNative? = when {
+        val batteryBackground: ColorNative = when {
             isBatteryChargingOrNull == true -> {
                 if (batteryLevelOrNull == 100) ColorNative.green else ColorNative.blue
             }
             batteryLevelOrNull in 0..20 -> ColorNative.red
-            else -> null
+            else -> ColorNative.transparent
         }
 
         val tasksAll: List<TaskListItem> = run {
