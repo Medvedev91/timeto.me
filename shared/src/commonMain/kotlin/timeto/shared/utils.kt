@@ -217,6 +217,8 @@ data class ColorRgba(
 
     companion object {
 
+        val white = ColorRgba(255, 255, 255, 255)
+
         fun fromRgbaString(rgbaString: String): ColorRgba =
             rgbaString.split(',').map { it.toInt() }.let {
                 when (it.size) {
