@@ -188,17 +188,25 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
                                     HStack(spacing: 0) {
 
+                                        let batteryTextColor = state.batteryTextColor.toColor()
+
                                         Image(systemName:  "bolt.fill")
-                                                .foregroundColor(menuColor)
+                                                .foregroundColor(batteryTextColor)
                                                 .font(.system(size: 12, weight: .ultraLight))
 
                                         Text(state.batteryText)
                                                 .padding(.leading, 1)
-                                                .padding(.trailing, 6)
-                                                .foregroundColor(menuColor)
+                                                .foregroundColor(batteryTextColor)
                                                 .font(.system(size: 13, weight: .regular))
                                     }
                                             .padding(.top, 2)
+                                            .padding(.bottom, 1)
+                                            .padding(.leading, 3)
+                                            .padding(.trailing, 4)
+                                            .background(
+                                                    RoundedRectangle(cornerRadius: 99, style: .circular)
+                                                            .fill(state.batteryBackground.toColor())
+                                            )
                                 }
                             }
                     )
