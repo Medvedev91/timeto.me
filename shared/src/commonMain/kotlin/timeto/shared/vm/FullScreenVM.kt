@@ -50,7 +50,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
         val timeOfTheDay: String =
             UnixTime().getStringByComponents(UnixTime.StringComponent.hhmm24)
 
-        val battery = "${batteryLevelOrNull ?: "--"}"
+        val batteryText = "${batteryLevelOrNull ?: "--"}"
         val batteryBackground: ColorNative? = when {
             isBatteryChargingOrNull == true -> {
                 if (batteryLevelOrNull == 100) ColorNative.green else ColorNative.blue

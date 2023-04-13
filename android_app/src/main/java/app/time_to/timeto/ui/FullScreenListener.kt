@@ -470,7 +470,7 @@ private fun FullScreenView(
                         )
 
                         Text(
-                            text = state.battery,
+                            text = state.batteryText,
                             modifier = Modifier,
                             color = c.white,
                             fontSize = 12.sp,
