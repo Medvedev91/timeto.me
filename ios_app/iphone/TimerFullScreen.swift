@@ -200,7 +200,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
                                         let batteryTextColor = state.batteryTextColor.toColor()
 
-                                        Image(systemName:  "bolt.fill")
+                                        Image(systemName: "bolt.fill")
                                                 .foregroundColor(batteryTextColor)
                                                 .font(.system(size: 12, weight: .ultraLight))
 
