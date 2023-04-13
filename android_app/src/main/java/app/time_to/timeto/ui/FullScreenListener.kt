@@ -453,18 +453,17 @@ private fun FullScreenView(
                         modifier = Modifier
                             .padding(end = 2.dp)
                             .clip(RoundedCornerShape(99.dp))
-                            // First alpha for background, then for content
                             .background(batteryBackgroundAnimation.value)
-                            .alpha(if (batteryBackground != null) 0.9f else menuIconAlpha)
-                            //
                             .padding(start = 4.dp, end = 5.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
 
+                        val batteryTextColor = state.batteryTextColor.toColor()
+
                         Icon(
                             painterResource(id = R.drawable.sf_bolt_fill_medium_light),
                             contentDescription = "Battery",
-                            tint = c.white,
+                            tint = batteryTextColor,
                             modifier = Modifier
                                 .size(10.dp)
                         )
@@ -472,7 +471,7 @@ private fun FullScreenView(
                         Text(
                             text = state.batteryText,
                             modifier = Modifier,
-                            color = c.white,
+                            color = batteryTextColor,
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Light,
                         )
