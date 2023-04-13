@@ -155,7 +155,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
                 HStack(spacing: 0) {
 
-                    let menuIconAlpha = 0.5
+                    let menuColor = state.menuColor.toColor()
 
                     Button(
                             action: {
@@ -163,8 +163,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                             },
                             label: {
                                 Image(systemName: "pencil.circle")
-                                        .foregroundColor(Color.white)
-                                        .opacity(menuIconAlpha)
+                                        .foregroundColor(menuColor)
                                         .font(.system(size: 30, weight: .thin))
                                         .frame(maxWidth: .infinity)
                             }
@@ -178,29 +177,25 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                 VStack(spacing: 0) {
 
                                     Image(systemName: !state.isTaskListShowed ? "chevron.compact.up" : "chevron.compact.down")
-                                            .foregroundColor(Color.white)
-                                            .opacity(menuIconAlpha)
+                                            .foregroundColor(menuColor)
                                             .font(.system(size: 30, weight: .thin))
 
                                     Text(state.timeOfTheDay)
                                             .padding(.horizontal, 16)
-                                            .opacity(menuIconAlpha)
-                                            .foregroundColor(Color.white)
+                                            .foregroundColor(menuColor)
                                             .padding(.top, 4)
                                             .font(.system(size: 15, weight: .medium))
 
                                     HStack(spacing: 0) {
 
                                         Image(systemName:  "bolt.fill")
-                                                .foregroundColor(Color.white)
-                                                .opacity(menuIconAlpha)
+                                                .foregroundColor(menuColor)
                                                 .font(.system(size: 12, weight: .ultraLight))
 
-                                        Text(state.battery)
+                                        Text(state.batteryText)
                                                 .padding(.leading, 1)
                                                 .padding(.trailing, 6)
-                                                .opacity(menuIconAlpha)
-                                                .foregroundColor(Color.white)
+                                                .foregroundColor(menuColor)
                                                 .font(.system(size: 13, weight: .regular))
                                     }
                                             .padding(.top, 2)
@@ -214,8 +209,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                             },
                             label: {
                                 Image(systemName: "xmark.circle")
-                                        .foregroundColor(Color.white)
-                                        .opacity(menuIconAlpha)
+                                        .foregroundColor(menuColor)
                                         .font(.system(size: 30, weight: .thin))
                                         .frame(maxWidth: .infinity)
                             }
