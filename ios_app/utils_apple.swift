@@ -252,6 +252,8 @@ extension ColorNative {
             return .primary
         case .textsecondary:
             return .secondary
+        case .transparent:
+            return .clear
         default:
             fatalError("ColorNative.toColor()")
         }

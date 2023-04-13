@@ -235,7 +235,7 @@ data class ColorRgba(
 
 enum class ColorNative {
     red, green, blue, orange, purple, white,
-    text, textSecondary,
+    text, textSecondary, transparent,
 }
 
 //////
