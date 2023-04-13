@@ -34,6 +34,7 @@ private struct TimerFullScreen__ViewModifier: ViewModifier {
 private struct TimerFullScreen__FullScreenCoverView: View {
 
     @State private var vm = FullScreenVM()
+    @State private var isNewTaskPresented = false
 
     var body: some View {
 
@@ -159,7 +160,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
                     Button(
                             action: {
-                                //
+                                isNewTaskPresented = true
                             },
                             label: {
                                 Image(systemName: "pencil.circle")
@@ -168,6 +169,15 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                         .frame(maxWidth: .infinity)
                             }
                     )
+                            .sheetEnv(
+                                    isPresented: $isNewTaskPresented,
+                                    content: {
+                                        TaskFormSheet(
+                                                task: nil,
+                                                isPresented: $isNewTaskPresented
+                                        )
+                                    }
+                            )
 
                     Button(
                             action: {
