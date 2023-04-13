@@ -390,16 +390,15 @@ private fun FullScreenView(
             ) {
 
                 val menuIconSize = 58.dp
-                val menuIconAlpha = 0.5f
                 val menuIconPadding = 15.dp
+                val menuColor = state.menuColor.toColor()
 
                 Icon(
                     painterResource(id = R.drawable.sf_pencil_circle_medimu_thin),
                     contentDescription = "Menu",
-                    tint = c.white,
+                    tint = menuColor,
                     modifier = Modifier
                         .weight(1f)
-                        .alpha(menuIconAlpha)
                         .clip(MySquircleShape())
                         .size(menuIconSize)
                         .clickable {
@@ -431,10 +430,9 @@ private fun FullScreenView(
                             else R.drawable.sf_chevron_compact_down_medium_thin
                         ),
                         contentDescription = if (!state.isTaskListShowed) "Show All Tasks" else "Hide All Tasks",
-                        tint = c.white,
+                        tint = menuColor,
                         modifier = Modifier
                             .padding(bottom = 3.dp)
-                            .alpha(menuIconAlpha)
                             .size(width = 20.dp, height = 6.dp)
                     )
 
@@ -446,9 +444,8 @@ private fun FullScreenView(
                     Text(
                         text = state.timeOfTheDay,
                         modifier = Modifier
-                            .padding(horizontal = 16.dp)
-                            .alpha(menuIconAlpha),
-                        color = c.white,
+                            .padding(horizontal = 16.dp),
+                        color = menuColor,
                         fontSize = 14.sp,
                     )
 
@@ -485,10 +482,9 @@ private fun FullScreenView(
                 Icon(
                     painterResource(id = R.drawable.sf_xmark_circle_medium_thin),
                     contentDescription = "Close",
-                    tint = c.white,
+                    tint = menuColor,
                     modifier = Modifier
                         .weight(1f)
-                        .alpha(menuIconAlpha)
                         .clip(MySquircleShape())
                         .size(menuIconSize)
                         .clickable {

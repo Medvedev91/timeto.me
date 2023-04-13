@@ -23,7 +23,9 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
         val isTaskListShowed: Boolean,
         val idToUpdate: Long,
     ) {
+
         val cancelTaskText = "CANCEL"
+        val menuColor = ColorRgba(255, 255, 255, 128)
         val timerData = TimerDataUI(interval, isCountdown, ColorNative.white)
 
         val activityTimerContext = if (interval.note != null)
