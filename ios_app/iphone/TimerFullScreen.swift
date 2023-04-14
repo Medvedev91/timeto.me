@@ -129,29 +129,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                     VStack(spacing: 0) {
 
                         if !state.isTaskListShowed, let checklistUI = checklistUI {
-
-                            VStack {
-
-                                ScrollView {
-
-                                    ForEach(checklistUI.itemsUI, id: \.item.id) { itemUI in
-
-                                        Button(
-                                                action: {
-                                                    itemUI.toggle()
-                                                },
-                                                label: {
-                                                    Text(itemUI.item.text + (itemUI.item.isChecked ? "  ✅" : ""))
-                                                            .padding(.vertical, 4)
-                                                            .foregroundColor(.white)
-                                                            .font(.system(size: 18))
-                                                }
-                                        )
-                                    }
-
-                                    Spacer()
-                                }
-                            }
+                            ChecklistView(checklistUI: checklistUI)
                         } else {
                             Spacer(minLength: 0)
                         }
@@ -200,7 +178,6 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                     //                                    taskListScrollState = taskListScrollState,
                                     tasks: state.tasksAll
                             )
-                                    .background(Color.purple)
                         }
                     }
                 }
@@ -294,6 +271,86 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                 .onDisappear {
                     UIApplication.shared.isIdleTimerDisabled = false
                 }
+    }
+}
+
+private struct ChecklistView: View {
+
+    let checklistUI: FullScreenVM.ChecklistUI
+
+    @State private var vScroll = 0
+
+    var body: some View {
+
+        VStack(spacing: 0) {
+
+            Color(vScroll > 0 ? dividerColor : .clear)
+                    .frame(height: dividerHeight)
+                    .padding(.horizontal, dividerPadding)
+
+            HStack(alignment: .top, spacing: 0) {
+
+                let checkboxSize = 20.0
+                let checklistItemMinHeight = 44.0
+                let checklistDividerPadding = 10.0
+
+                ScrollViewWithVListener(showsIndicators: false, vScroll: $vScroll) {
+
+                    VStack(spacing: 0) {
+
+                        ForEach(checklistUI.itemsUI, id: \.item.id) { itemUI in
+
+                            Button(
+                                    action: {
+                                        itemUI.toggle()
+                                    },
+                                    label: {
+                                        HStack(spacing: 0) {
+
+                                            Image(systemName: itemUI.item.isChecked ? "checkmark.square.fill" : "square")
+                                                    .foregroundColor(Color.white)
+                                                    .font(.system(size: checkboxSize, weight: .regular))
+                                                    .padding(.trailing, checklistDividerPadding)
+
+                                            Text(itemUI.item.text)
+                                                    .padding(.vertical, 4)
+                                                    .foregroundColor(.white)
+                                                    .font(.system(size: 18))
+                                        }
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                                .frame(minHeight: checklistItemMinHeight)
+                                        //                                                .background(Color.red)
+                                    }
+                            )
+                        }
+                    }
+
+                    Spacer()
+                }
+
+                let stateUI = checklistUI.stateUI
+                let stateIconResource: String = {
+                    if stateUI is ChecklistStateUI.Completed { return "checkmark.square.fill" }
+                    if stateUI is ChecklistStateUI.Empty { return "square" }
+                    if stateUI is ChecklistStateUI.Partial { return "minus.square.fill" }
+                    fatalError()
+                }()
+                Button(
+                        action: {
+                            stateUI.onClick()
+                        },
+                        label: {
+                            Image(systemName: stateIconResource)
+                                    .foregroundColor(Color.white)
+                                    .font(.system(size: checkboxSize, weight: .regular))
+                                    .padding(.trailing, checklistDividerPadding)
+                        }
+                )
+                        .frame(height: checklistItemMinHeight)
+            }
+                    .padding(.horizontal, 50)
+        }
+                .padding(.top, 20)
     }
 }
 
