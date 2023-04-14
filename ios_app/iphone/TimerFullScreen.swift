@@ -311,7 +311,8 @@ private struct TaskList: View {
                         } else if let taskItem = taskItem as? FullScreenVM.TaskListItemRegularTask {
 
                             Text(taskItem.text)
-                                    .foregroundColor(Color.white)
+                                    .foregroundColor(taskItem.textColor.toColor())
+                                    .frame(height: taskItemHeight)
 
                         } else if let taskItem = taskItem as? FullScreenVM.TaskListItemNoTasksText {
 
