@@ -168,8 +168,28 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
                     VStack(spacing: 0) {
 
-                        if checklistUI != nil {
+                        if state.isTaskListShowed, let checklistUI = checklistUI {
 
+                            Button(
+                                    action: {
+                                        vm.toggleIsCompactTaskList()
+                                    },
+                                    label: {
+                                        VStack(spacing: 0) {
+
+                                            Text(checklistUI.collapsedTitle)
+                                                    .foregroundColor(Color.white)
+                                                    .font(.system(size: 18))
+
+                                            Image(systemName: "chevron.compact.down")
+                                                    .foregroundColor(Color.white)
+                                                    .font(.system(size: 30, weight: .thin))
+                                                    .padding(.top, 4)
+                                        }
+                                                .padding(.vertical, 20)
+                                                .frame(maxWidth: .infinity)
+                                    }
+                            )
                         }
 
                         if state.isTaskListShowed {
