@@ -289,33 +289,11 @@ private struct TaskList: View {
 
                         if let taskItem = taskItem as? FullScreenVM.TaskListItemImportantTask {
 
-                            HStack(spacing: 0) {
-
-                                HStack(spacing: 0) {
-
-                                    Image(systemName: "calendar")
-                                            .foregroundColor(Color.white)
-                                            .font(.system(size: 15, weight: .light))
-                                            .padding(.trailing, 2)
-
-                                    Text(taskItem.text)
-                                            .font(.system(size: 15))
-                                            .foregroundColor(Color.white)
-                                }
-                                        .padding(.horizontal, 4)
-                                        .padding(.vertical, 2)
-                                        .background(
-                                                RoundedRectangle(cornerRadius: 6, style: .circular)
-                                                        .fill(taskItem.backgroundColor.toColor())
-                                        )
-                            }
-                                    .frame(height: taskItemHeight)
+                            ImportantTaskItem(taskItem: taskItem)
 
                         } else if let taskItem = taskItem as? FullScreenVM.TaskListItemRegularTask {
 
-                            Text(taskItem.text)
-                                    .foregroundColor(taskItem.textColor.toColor())
-                                    .frame(height: taskItemHeight)
+                            RegularTaskItem(taskItem: taskItem)
 
                         } else if let taskItem = taskItem as? FullScreenVM.TaskListItemNoTasksText {
 
@@ -332,5 +310,90 @@ private struct TaskList: View {
             }
                     .frame(maxWidth: .infinity)
         }
+    }
+}
+
+private struct ImportantTaskItem: View {
+
+    let taskItem: FullScreenVM.TaskListItemImportantTask
+
+    @State private var isSheetPresented = false
+
+    var body: some View {
+
+        Button(
+                action: {
+                    taskItem.task.startIntervalForUI(
+                            onStarted: {},
+                            needSheet: {
+                                isSheetPresented = true
+                            }
+                    )
+                },
+                label: {
+                    HStack(spacing: 0) {
+
+                        HStack(spacing: 0) {
+
+                            Image(systemName: "calendar")
+                                    .foregroundColor(Color.white)
+                                    .font(.system(size: 15, weight: .light))
+                                    .padding(.trailing, 2)
+
+                            Text(taskItem.text)
+                                    .font(.system(size: 15))
+                                    .foregroundColor(Color.white)
+                        }
+                                .padding(.horizontal, 4)
+                                .padding(.vertical, 2)
+                                .background(
+                                        RoundedRectangle(cornerRadius: 6, style: .circular)
+                                                .fill(taskItem.backgroundColor.toColor())
+                                )
+                    }
+                            .frame(height: taskItemHeight)
+                }
+        )
+                .sheetEnv(isPresented: $isSheetPresented) {
+                    TaskSheet(
+                            isPresented: $isSheetPresented,
+                            task: taskItem.task
+                    ) {
+                        isSheetPresented = false
+                    }
+                }
+    }
+}
+
+private struct RegularTaskItem: View {
+
+    let taskItem: FullScreenVM.TaskListItemRegularTask
+
+    @State private var isSheetPresented = false
+
+    var body: some View {
+        Button(
+                action: {
+                    taskItem.task.startIntervalForUI(
+                            onStarted: {},
+                            needSheet: {
+                                isSheetPresented = true
+                            }
+                    )
+                },
+                label: {
+                    Text(taskItem.text)
+                            .foregroundColor(taskItem.textColor.toColor())
+                            .frame(height: taskItemHeight)
+                }
+        )
+                .sheetEnv(isPresented: $isSheetPresented) {
+                    TaskSheet(
+                            isPresented: $isSheetPresented,
+                            task: taskItem.task
+                    ) {
+                        isSheetPresented = false
+                    }
+                }
     }
 }
