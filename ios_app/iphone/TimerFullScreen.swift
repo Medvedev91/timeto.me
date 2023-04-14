@@ -2,6 +2,8 @@ import SwiftUI
 import Combine
 import shared
 
+private let dividerHeight = 1.0
+
 private let taskItemHeight = 36.0
 private let taskListContentPadding = 4.0
 
@@ -151,8 +153,11 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                         }
 
                         if !state.isTaskListShowed {
+                            let taskListHeight = taskItemHeight * state.tasksImportant.count.toDouble()
+                                    + dividerHeight
+                                    + taskListContentPadding * 2.0
                             TaskList(tasks: state.tasksImportant)
-                                    .background(Color.purple)
+                                    .frame(height: taskListHeight)
                         }
                     }
 
