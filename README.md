@@ -24,6 +24,10 @@ sdk.dir=/Users/__USER__/Library/Android/sdk
 
 `Settings -> Editor -> TODO -> + -> Pattern: \btrick\b.*   Foreground: F22613`
 
+# AppCode
+
+`Settings -> Editor -> Code Style -> Swift -> Wrapping and Braces -> Binary expressions -> check 'Align when multiline'`
+
 # Android Specific
 
 ### combinedClickable()
