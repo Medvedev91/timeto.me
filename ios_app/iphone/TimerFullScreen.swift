@@ -280,10 +280,10 @@ private struct TaskList: View {
 
                 VStack(spacing: 0) {
 
+                    Spacer(minLength: 0)
+
                     ZStack {}
                             .frame(height: taskListContentPadding)
-
-                    Spacer()
 
                     ForEach(tasks, id: \.self.id) { taskItem in
 
