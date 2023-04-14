@@ -292,7 +292,7 @@ private struct ChecklistView: View {
 
                 let checkboxSize = 20.0
                 let checklistItemMinHeight = 44.0
-                let checklistDividerPadding = 10.0
+                let checklistDividerPadding = 12.0
 
                 ScrollViewWithVListener(showsIndicators: false, vScroll: $vScroll) {
 
@@ -327,6 +327,13 @@ private struct ChecklistView: View {
 
                     Spacer()
                 }
+
+                let dividerGap = 8.0
+                Color(dividerColor)
+                        .frame(width: dividerHeight)
+                        .frame(height: checklistItemMinHeight - dividerGap)
+                        .padding(.top, dividerGap / 2)
+                        .padding(.trailing, checklistDividerPadding)
 
                 let stateUI = checklistUI.stateUI
                 let stateIconResource: String = {
