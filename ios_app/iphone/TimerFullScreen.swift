@@ -153,11 +153,8 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                         }
 
                         if !state.isTaskListShowed {
-                            let taskListHeight = taskItemHeight * state.tasksImportant.count.toDouble()
-                                    + dividerHeight
-                                    + taskListContentPadding * 2.0
                             TaskList(tasks: state.tasksImportant)
-                                    .frame(height: taskListHeight)
+                                    .frame(height: calcTaskListHeight(tasks: state.tasksImportant))
                         }
                     }
 
@@ -410,4 +407,12 @@ private struct RegularTaskItem: View {
                     }
                 }
     }
+}
+
+private func calcTaskListHeight(
+        tasks: [FullScreenVM.TaskListItem]
+) -> Double {
+    taskItemHeight * tasks.count.toDouble()
+    + dividerHeight
+    + taskListContentPadding * 2.0
 }
