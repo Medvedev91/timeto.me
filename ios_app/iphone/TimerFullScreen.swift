@@ -280,6 +280,9 @@ private struct TaskList: View {
 
                 VStack(spacing: 0) {
 
+                    ZStack {}
+                            .frame(height: taskListContentPadding)
+
                     Spacer()
 
                     ForEach(tasks, id: \.self.id) { taskItem in
@@ -321,6 +324,9 @@ private struct TaskList: View {
                                     .foregroundColor(Color.white)
                         }
                     }
+
+                    ZStack {}
+                            .frame(height: taskListContentPadding)
                 }
                         .frame(minHeight: geometry.size.height)
             }
