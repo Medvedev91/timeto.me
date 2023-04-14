@@ -2,6 +2,8 @@ import SwiftUI
 import Combine
 import shared
 
+private let dividerPadding = 8.0
+private let dividerColor = UIColor.systemGray4
 private let dividerHeight = 1 / UIScreen.main.scale
 
 private let taskItemHeight = 36.0
@@ -310,8 +312,9 @@ private struct TaskList: View {
 
                 VStack(spacing: 0) {
 
-                    Color(isNavDividerVisible ? .systemGray4 : .clear)
+                    Color(isNavDividerVisible ? dividerColor : .clear)
                             .frame(height: dividerHeight)
+                            .padding(.horizontal, dividerPadding)
 
                     ScrollView(showsIndicators: false) {
 
