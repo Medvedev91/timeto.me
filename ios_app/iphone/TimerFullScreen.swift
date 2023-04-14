@@ -2,7 +2,7 @@ import SwiftUI
 import Combine
 import shared
 
-private let dividerHeight = 1.0
+private let dividerHeight = 1 / UIScreen.main.scale
 
 private let taskItemHeight = 36.0
 private let taskListContentPadding = 4.0
@@ -153,7 +153,10 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                         }
 
                         if !state.isTaskListShowed {
-                            TaskList(tasks: state.tasksImportant)
+                            TaskList(
+                                    isNavDividerVisible: checklistUI != nil,
+                                    tasks: state.tasksImportant
+                            )
                                     .frame(height: calcTaskListHeight(tasks: state.tasksImportant))
                         }
                     }
@@ -169,8 +172,8 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
                         if state.isTaskListShowed {
                             TaskList(
+                                    isNavDividerVisible: checklistUI != nil,
                                     //                                    taskListScrollState = taskListScrollState,
-                                    //                                    isNavDividerVisible = isNavDividerVisible,
                                     tasks: state.tasksAll
                             )
                                     .background(Color.purple)
@@ -272,6 +275,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
 private struct TaskList: View {
 
+    let isNavDividerVisible: Bool
     let tasks: [FullScreenVM.TaskListItem]
 
     private let LIST_BOTTOM_ITEM_ID = "bottom_id"
@@ -282,43 +286,49 @@ private struct TaskList: View {
 
             ScrollViewReader { scrollProxy in
 
-                ScrollView(showsIndicators: false) {
+                VStack(spacing: 0) {
 
-                    VStack(spacing: 0) {
+                    Color(isNavDividerVisible ? .systemGray4 : .clear)
+                            .frame(height: dividerHeight)
 
-                        Spacer(minLength: 0)
+                    ScrollView(showsIndicators: false) {
 
-                        ZStack {}
-                                .frame(height: taskListContentPadding)
+                        VStack(spacing: 0) {
 
-                        ForEach(tasks, id: \.self.id) { taskItem in
+                            Spacer(minLength: 0)
 
-                            if let taskItem = taskItem as? FullScreenVM.TaskListItemImportantTask {
+                            ZStack {}
+                                    .frame(height: taskListContentPadding)
 
-                                ImportantTaskItem(taskItem: taskItem)
+                            ForEach(tasks, id: \.self.id) { taskItem in
 
-                            } else if let taskItem = taskItem as? FullScreenVM.TaskListItemRegularTask {
+                                if let taskItem = taskItem as? FullScreenVM.TaskListItemImportantTask {
 
-                                RegularTaskItem(taskItem: taskItem)
+                                    ImportantTaskItem(taskItem: taskItem)
 
-                            } else if let taskItem = taskItem as? FullScreenVM.TaskListItemNoTasksText {
+                                } else if let taskItem = taskItem as? FullScreenVM.TaskListItemRegularTask {
 
-                                Text(taskItem.text)
-                                        .frame(height: taskItemHeight)
-                                        .foregroundColor(Color.white)
+                                    RegularTaskItem(taskItem: taskItem)
+
+                                } else if let taskItem = taskItem as? FullScreenVM.TaskListItemNoTasksText {
+
+                                    Text(taskItem.text)
+                                            .frame(height: taskItemHeight)
+                                            .foregroundColor(Color.white)
+                                }
                             }
-                        }
 
-                        ZStack {}
-                                .frame(height: taskListContentPadding)
-                                .id(LIST_BOTTOM_ITEM_ID)
-                    }
-                            .frame(minHeight: geometry.size.height)
-                }
-                        .frame(maxWidth: .infinity)
-                        .onAppear {
-                            scrollProxy.scrollTo(LIST_BOTTOM_ITEM_ID)
+                            ZStack {}
+                                    .frame(height: taskListContentPadding)
+                                    .id(LIST_BOTTOM_ITEM_ID)
                         }
+                                .frame(minHeight: geometry.size.height)
+                    }
+                            .frame(maxWidth: .infinity)
+                            .onAppear {
+                                scrollProxy.scrollTo(LIST_BOTTOM_ITEM_ID)
+                            }
+                }
             }
         }
     }
