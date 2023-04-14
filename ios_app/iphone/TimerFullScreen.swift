@@ -277,43 +277,52 @@ private struct TaskList: View {
 
     let tasks: [FullScreenVM.TaskListItem]
 
+    private let LIST_BOTTOM_ITEM_ID = "bottom_id"
+
     var body: some View {
 
         GeometryReader { geometry in
 
-            ScrollView(showsIndicators: false) {
+            ScrollViewReader { scrollProxy in
 
-                VStack(spacing: 0) {
+                ScrollView(showsIndicators: false) {
 
-                    Spacer(minLength: 0)
+                    VStack(spacing: 0) {
 
-                    ZStack {}
-                            .frame(height: taskListContentPadding)
+                        Spacer(minLength: 0)
 
-                    ForEach(tasks, id: \.self.id) { taskItem in
+                        ZStack {}
+                                .frame(height: taskListContentPadding)
 
-                        if let taskItem = taskItem as? FullScreenVM.TaskListItemImportantTask {
+                        ForEach(tasks, id: \.self.id) { taskItem in
 
-                            ImportantTaskItem(taskItem: taskItem)
+                            if let taskItem = taskItem as? FullScreenVM.TaskListItemImportantTask {
 
-                        } else if let taskItem = taskItem as? FullScreenVM.TaskListItemRegularTask {
+                                ImportantTaskItem(taskItem: taskItem)
 
-                            RegularTaskItem(taskItem: taskItem)
+                            } else if let taskItem = taskItem as? FullScreenVM.TaskListItemRegularTask {
 
-                        } else if let taskItem = taskItem as? FullScreenVM.TaskListItemNoTasksText {
+                                RegularTaskItem(taskItem: taskItem)
 
-                            Text(taskItem.text)
-                                    .frame(height: taskItemHeight)
-                                    .foregroundColor(Color.white)
+                            } else if let taskItem = taskItem as? FullScreenVM.TaskListItemNoTasksText {
+
+                                Text(taskItem.text)
+                                        .frame(height: taskItemHeight)
+                                        .foregroundColor(Color.white)
+                            }
                         }
-                    }
 
-                    ZStack {}
-                            .frame(height: taskListContentPadding)
+                        ZStack {}
+                                .frame(height: taskListContentPadding)
+                                .id(LIST_BOTTOM_ITEM_ID)
+                    }
+                            .frame(minHeight: geometry.size.height)
                 }
-                        .frame(minHeight: geometry.size.height)
+                        .frame(maxWidth: .infinity)
+                        .onAppear {
+                            scrollProxy.scrollTo(LIST_BOTTOM_ITEM_ID)
+                        }
             }
-                    .frame(maxWidth: .infinity)
         }
     }
 }
