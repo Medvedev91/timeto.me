@@ -5,7 +5,7 @@ import timeto.shared.*
 import timeto.shared.db.EventModel
 
 /**
- * Different logic for platform. For iOS we use a Date() object
+ * Different logic for platform. For iOS, we use a Date() object
  * for date and time, for Android there are custom pickers.
  */
 class EventFormSheetVM(
