@@ -150,6 +150,8 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                     Spacer()
                                 }
                             }
+                        } else {
+                            Spacer(minLength: 0)
                         }
 
                         if !state.isTaskListShowed {
