@@ -29,7 +29,7 @@ fun TaskSheet(
     layerTaskSheet: WrapperView.Layer,
     task: TaskModel,
 ) {
-    val scope = rememberCoroutineScope()
+    val scopeTaskSheet = rememberCoroutineScope()
 
     val activityItemHeight = 42.dp
     val topContentPadding = 2.dp
@@ -64,15 +64,15 @@ fun TaskSheet(
                     modifier = Modifier
                         .height(activityItemHeight)
                         .clickable {
-                            layerTaskSheet.close()
                             Sheet.show { layerTimer ->
                                 ActivityTimerSheet(
                                     layer = layerTimer,
                                     activity = activity,
                                     timerContext = ActivityTimerSheetVM.TimerContext.Task(task)
                                 ) {
-                                    scope.launchEx {
+                                    scopeTaskSheet.launchEx {
                                         gotoTimer()
+                                        layerTaskSheet.close() // At the end to keep "scopeTaskSheet"
                                     }
                                 }
                             }
@@ -110,10 +110,10 @@ fun TaskSheet(
                                 .align(Alignment.CenterVertically)
                                 .background(if (inHistory) c.blue else c.transparent)
                                 .clickable {
-                                    layerTaskSheet.close()
                                     hintUI.startInterval {
-                                        scope.launchEx {
+                                        scopeTaskSheet.launchEx {
                                             gotoTimer()
+                                            layerTaskSheet.close() // At the end to keep "scopeTaskSheet"
                                         }
                                     }
                                 }
