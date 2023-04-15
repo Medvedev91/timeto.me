@@ -26,7 +26,7 @@ import timeto.shared.vm.TaskSheetVM
 
 @Composable
 fun TaskSheet(
-    layer: WrapperView.Layer,
+    layerTaskSheet: WrapperView.Layer,
     task: TaskModel,
 ) {
     val scope = rememberCoroutineScope()
@@ -64,10 +64,10 @@ fun TaskSheet(
                     modifier = Modifier
                         .height(activityItemHeight)
                         .clickable {
-                            layer.close()
-                            Sheet.show { layer ->
+                            layerTaskSheet.close()
+                            Sheet.show { layerTimer ->
                                 ActivityTimerSheet(
-                                    layer = layer,
+                                    layer = layerTimer,
                                     activity = activity,
                                     timerContext = ActivityTimerSheetVM.TimerContext.Task(task)
                                 ) {
@@ -110,7 +110,7 @@ fun TaskSheet(
                                 .align(Alignment.CenterVertically)
                                 .background(if (inHistory) c.blue else c.transparent)
                                 .clickable {
-                                    layer.close()
+                                    layerTaskSheet.close()
                                     hintUI.startInterval {
                                         scope.launchEx {
                                             gotoTimer()
