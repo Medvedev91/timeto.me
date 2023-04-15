@@ -98,11 +98,18 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                             .offset(y: 3)
                 }
 
-                Text(timerData.title)
-                        .font(.system(size: 70, design: .monospaced))
-                        .fontWeight(.bold)
-                        .foregroundColor(timerData.titleColor.toColor())
-                        .opacity(0.9)
+                Button(
+                        action: {
+                            vm.toggleIsCountdown()
+                        },
+                        label: {
+                            Text(timerData.title)
+                                    .font(.system(size: 70, design: .monospaced))
+                                    .fontWeight(.bold)
+                                    .foregroundColor(timerData.titleColor.toColor())
+                                    .opacity(0.9)
+                        }
+                )
 
                 if timerData.subtitle != nil || !state.isCountdown {
                     Button(
