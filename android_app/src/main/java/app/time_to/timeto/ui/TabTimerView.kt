@@ -446,22 +446,22 @@ private fun TimerView() {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 28.dp),
+                .padding(top = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
             Text(
                 text = timerData.title,
-                fontSize = 50.sp,
-                fontWeight = FontWeight.ExtraBold,
+                fontSize = if (timerData.isCompact) 50.sp else 54.sp,
+                fontWeight = FontWeight.Black,
+                fontFamily = FontFamily.Monospace,
                 modifier = Modifier
                     .clip(RoundedCornerShape(10.dp))
                     .clickable {
                         vm.toggleIsCountdown()
                     }
                     .padding(horizontal = 6.dp) // To ripple
-                    .padding(bottom = 6.dp),
-                fontFamily = FontFamily.Monospace,
+                    .padding(bottom = 4.dp),
                 color = timerData.titleColor.toColor()
             )
 
