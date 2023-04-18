@@ -414,8 +414,6 @@ private fun FullScreenView(
 
                 Column(
                     modifier = Modifier
-                        .offset(y = (-2).dp)
-                        .align(Alignment.Top)
                         .clip(MySquircleShape())
                         .clickable {
                             vm.toggleIsCompactTaskList()
@@ -423,18 +421,6 @@ private fun FullScreenView(
                         .padding(top = 6.dp, bottom = 6.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-
-                    Icon(
-                        painterResource(
-                            id = if (!state.isTaskListShowed) R.drawable.sf_chevron_compact_up_medium_thin
-                            else R.drawable.sf_chevron_compact_down_medium_thin
-                        ),
-                        contentDescription = if (!state.isTaskListShowed) "Show All Tasks" else "Hide All Tasks",
-                        tint = menuColor,
-                        modifier = Modifier
-                            .padding(bottom = 3.dp)
-                            .size(width = 20.dp, height = 6.dp)
-                    )
 
                     Text(
                         text = state.timeOfTheDay,
