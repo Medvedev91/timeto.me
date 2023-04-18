@@ -450,31 +450,20 @@ private fun TimerView() {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
-            Row(
+            Text(
+                text = timerData.title,
+                fontSize = 50.sp,
+                fontWeight = FontWeight.ExtraBold,
                 modifier = Modifier
-                    .padding(bottom = 6.dp)
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-
-                SpacerW1()
-
-                Text(
-                    text = timerData.title,
-                    fontSize = 50.sp,
-                    fontWeight = FontWeight.ExtraBold,
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(10.dp))
-                        .clickable {
-                            vm.toggleIsCountdown()
-                        }
-                        .padding(horizontal = 6.dp),
-                    fontFamily = FontFamily.Monospace,
-                    color = timerData.titleColor.toColor()
-                )
-
-                SpacerW1()
-            }
+                    .clip(RoundedCornerShape(10.dp))
+                    .clickable {
+                        vm.toggleIsCountdown()
+                    }
+                    .padding(horizontal = 6.dp) // To ripple
+                    .padding(bottom = 6.dp),
+                fontFamily = FontFamily.Monospace,
+                color = timerData.titleColor.toColor()
+            )
 
             val shape = RoundedCornerShape(99.dp)
 
