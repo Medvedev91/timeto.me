@@ -414,6 +414,7 @@ private fun FullScreenView(
 
                 Column(
                     modifier = Modifier
+                        .weight(1f)
                         .clip(MySquircleShape())
                         .clickable {
                             vm.toggleIsCompactTaskList()
@@ -427,7 +428,8 @@ private fun FullScreenView(
                         modifier = Modifier
                             .padding(horizontal = 16.dp),
                         color = menuColor,
-                        fontSize = 14.sp,
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.Bold,
                     )
 
                     Row(
@@ -446,6 +448,7 @@ private fun FullScreenView(
                             contentDescription = "Battery",
                             tint = batteryTextColor,
                             modifier = Modifier
+                                .offset(y = pxToDp(1).dp)
                                 .size(10.dp)
                         )
 
