@@ -459,24 +459,6 @@ private fun TimerView() {
 
                 SpacerW1()
 
-                Icon(
-                    painterResource(id = R.drawable.sf_arrow_counterclockwise_medium_regular),
-                    "Restart",
-                    tint = subtitleColor.value,
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .padding(top = 1.dp)
-                        .offset(x = 10.dp)
-                        .size(40.dp)
-                        .clip(RoundedCornerShape(99.dp))
-                        .clickable {
-                            vm.restart()
-                        }
-                        .padding(10.dp)
-                )
-
-                SpacerW1()
-
                 Text(
                     text = timerData.title,
                     fontSize = 50.sp,
@@ -489,24 +471,6 @@ private fun TimerView() {
                         .padding(horizontal = 6.dp),
                     fontFamily = FontFamily.Monospace,
                     color = timerData.titleColor.toColor()
-                )
-
-                SpacerW1()
-
-                Icon(
-                    painterResource(id = R.drawable.sf_up_left_medium_light),
-                    "Fullscreen",
-                    tint = subtitleColor.value,
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .padding(top = 1.dp)
-                        .offset(x = (-10).dp)
-                        .size(40.dp)
-                        .clip(RoundedCornerShape(99.dp))
-                        .clickable {
-                            FullScreenUI.open()
-                        }
-                        .padding(11.dp)
                 )
 
                 SpacerW1()
