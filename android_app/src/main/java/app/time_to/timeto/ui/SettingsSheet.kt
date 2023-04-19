@@ -38,7 +38,7 @@ import java.util.*
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun SettingsViewSheet(
+fun SettingsSheet(
     layer: WrapperView.Layer,
 ) {
     val context = LocalContext.current
