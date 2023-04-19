@@ -12,10 +12,8 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -27,7 +25,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.time_to.timeto.*
-import app.time_to.timeto.R
 import timeto.shared.*
 import timeto.shared.db.IntervalModel
 import timeto.shared.vm.TabTimerVM
@@ -343,6 +340,15 @@ fun TabTimerView() {
                         ) {
                             Sheet.show { layer ->
                                 EditActivitiesSheet(layer = layer)
+                            }
+                        }
+
+                        GrayTextButton(
+                            text = state.settingsText,
+                            modifier = Modifier.padding(start = 12.dp),
+                        ) {
+                            Sheet.show { layer ->
+                                SettingsSheet(layer = layer)
                             }
                         }
                     }
