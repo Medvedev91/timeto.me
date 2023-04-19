@@ -13,6 +13,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
@@ -37,7 +38,9 @@ import java.util.*
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun SettingsViewSheet() {
+fun SettingsViewSheet(
+    layer: WrapperView.Layer,
+) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
@@ -97,9 +100,20 @@ fun SettingsViewSheet() {
             .background(c.background),
     ) {
 
+        val scrollState = rememberLazyListState()
+
+        Sheet.HeaderView(
+            onCancel = { layer.close() },
+            title = state.headerTitle,
+            doneText = "--------",
+            isDoneEnabled = null,
+            scrollToHeader = if (scrollState.canScrollBackward) 99 else 0,
+        ) {}
+
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize(),
+            state = scrollState,
             contentPadding = PaddingValues(bottom = 25.dp),
         ) {
 

@@ -21,6 +21,8 @@ class TabToolsVM : __VM<TabToolsVM.State>() {
         val feedbackSubject: String,
     ) {
 
+        val headerTitle = "Settings"
+
         val openSourceUrl = "https://github.com/timeto-app/timeto-app"
         val feedbackEmail = "hi@timeto.me"
 
