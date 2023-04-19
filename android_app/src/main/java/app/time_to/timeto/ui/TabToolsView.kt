@@ -91,373 +91,383 @@ fun TabToolsView() {
         }
     }
 
-    LazyColumn(
+    Column(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxHeight()
             .background(c.background),
-        contentPadding = PaddingValues(bottom = 25.dp),
     ) {
 
-        item {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize(),
+            contentPadding = PaddingValues(bottom = 25.dp),
+        ) {
 
-            MyListView__Padding__SectionHeader()
+            item {
 
-            MyListView__HeaderView(
-                title = "CHECKLISTS",
-                rightView = {
-                    MyListView__HeaderView__RightIcon(
-                        iconId = R.drawable.ic_round_add_24,
-                        contentDescription = "New Checklist"
-                    ) {
-                        Dialog.show { layer ->
-                            ChecklistEditDialog(editedChecklist = null, onClose = layer::close)
-                        }
-                    }
-                }
-            )
-        }
+                MyListView__Padding__SectionHeader()
 
-        val checklists = state.checklists
-        if (checklists.isNotEmpty())
-            item { MyListView__Padding__HeaderSection() }
-
-        itemsIndexed(checklists, key = { _, checklist -> checklist.id }) { _, checklist ->
-
-            val isFirst = checklists.first() == checklist
-
-            MyListView__ItemView(
-                isFirst = isFirst,
-                isLast = checklists.last() == checklist,
-                withTopDivider = !isFirst,
-            ) {
-
-                SwipeToAction(
-                    isStartOrEnd = remember { mutableStateOf(null) },
-                    startView = {
-                        SwipeToAction__StartView(
-                            text = "Edit",
-                            bgColor = c.blue
-                        )
-                    },
-                    endView = { state ->
-                        SwipeToAction__DeleteView(
-                            state = state,
-                            note = checklist.name,
-                            deletionConfirmationNote = "Are you sure you want to delete \"${checklist.name}\" checklist?",
-                        ) {
-                            vibrateLong()
-                            scope.launchEx {
-                                checklist.deleteWithDependencies()
-                            }
-                        }
-                    },
-                    onStart = {
-                        Dialog.show { layer ->
-                            ChecklistEditDialog(editedChecklist = checklist, onClose = layer::close)
-                        }
-                        false
-                    },
-                    onEnd = {
-                        true
-                    },
-                    toVibrateStartEnd = listOf(true, false),
-                ) {
-
-                    MyListView__ItemView__ButtonView(
-                        text = checklist.name,
-                    ) {
-                        checklist.performUI()
-                    }
-                }
-            }
-        }
-
-        item {
-
-            MyListView__Padding__SectionHeader((-9).dp) // ~9.dp consume icon space
-
-            MyListView__HeaderView(
-                title = "SHORTCUTS",
-                rightView = {
-                    MyListView__HeaderView__RightIcon(
-                        iconId = R.drawable.ic_round_add_24,
-                        contentDescription = "New Shortcut"
-                    ) {
-                        Sheet.show { layer ->
-                            ShortcutFormSheet(layer = layer, editedShortcut = null)
-                        }
-                    }
-                }
-            )
-        }
-
-        val shortcuts = state.shortcuts
-        if (shortcuts.isNotEmpty())
-            item { MyListView__Padding__HeaderSection() }
-
-        itemsIndexed(shortcuts, key = { _, shortcut -> shortcut.id }) { _, shortcut ->
-
-            val isFirst = shortcuts.first() == shortcut
-
-            MyListView__ItemView(
-                isFirst = isFirst,
-                isLast = shortcuts.last() == shortcut,
-                withTopDivider = !isFirst,
-            ) {
-
-                SwipeToAction(
-                    isStartOrEnd = remember { mutableStateOf(null) },
-                    startView = {
-                        SwipeToAction__StartView(
-                            text = "Edit",
-                            bgColor = c.blue
-                        )
-                    },
-                    endView = { state ->
-                        SwipeToAction__DeleteView(
-                            state = state,
-                            note = shortcut.name,
-                            deletionConfirmationNote = "Are you sure you want to delete \"${shortcut.name}\" shortcut?",
-                        ) {
-                            vibrateLong()
-                            scope.launchEx {
-                                shortcut.delete()
-                            }
-                        }
-                    },
-                    onStart = {
-                        Sheet.show { layer ->
-                            ShortcutFormSheet(layer = layer, editedShortcut = shortcut)
-                        }
-                        false
-                    },
-                    onEnd = {
-                        true
-                    },
-                    toVibrateStartEnd = listOf(true, false),
-                ) {
-                    MyListView__ItemView__ButtonView(
-                        text = shortcut.name,
-                    ) {
-                        shortcut.performUI()
-                    }
-                }
-            }
-        }
-
-        item {
-
-            MyListView__Padding__SectionHeader()
-
-            MyListView__HeaderView(
-                "SETTINGS",
-            )
-
-            MyListView__Padding__HeaderSection()
-
-            MyListView__ItemView(
-                isFirst = true,
-                isLast = false,
-            ) {
-                MyListView__ItemView__ButtonView(
-                    text = "Folders",
-                    withArrow = true,
-                ) {
-                    Sheet.show { layer ->
-                        FoldersSettingsSheet(layer)
-                    }
-                }
-            }
-
-            //////
-
-            MyListView__ItemView(
-                isFirst = false,
-                isLast = true,
-                withTopDivider = true,
-            ) {
-
-                MyListView__ItemView__ButtonView(
-                    text = "Day Start",
-                    withArrow = false,
+                MyListView__HeaderView(
+                    title = "CHECKLISTS",
                     rightView = {
-                        MyListView__ItemView__ButtonView__RightText(
-                            text = state.dayStartNote
-                        )
+                        MyListView__HeaderView__RightIcon(
+                            iconId = R.drawable.ic_round_add_24,
+                            contentDescription = "New Checklist"
+                        ) {
+                            Dialog.show { layer ->
+                                ChecklistEditDialog(editedChecklist = null, onClose = layer::close)
+                            }
+                        }
                     }
+                )
+            }
+
+            val checklists = state.checklists
+            if (checklists.isNotEmpty())
+                item { MyListView__Padding__HeaderSection() }
+
+            itemsIndexed(checklists, key = { _, checklist -> checklist.id }) { _, checklist ->
+
+                val isFirst = checklists.first() == checklist
+
+                MyListView__ItemView(
+                    isFirst = isFirst,
+                    isLast = checklists.last() == checklist,
+                    withTopDivider = !isFirst,
                 ) {
-                    Dialog.show { layer ->
-                        DayStartDialogView(
-                            tabToolsVM = vm,
-                            tabToolsState = state,
-                            onClose = layer::close
-                        )
+
+                    SwipeToAction(
+                        isStartOrEnd = remember { mutableStateOf(null) },
+                        startView = {
+                            SwipeToAction__StartView(
+                                text = "Edit",
+                                bgColor = c.blue
+                            )
+                        },
+                        endView = { state ->
+                            SwipeToAction__DeleteView(
+                                state = state,
+                                note = checklist.name,
+                                deletionConfirmationNote = "Are you sure you want to delete \"${checklist.name}\" checklist?",
+                            ) {
+                                vibrateLong()
+                                scope.launchEx {
+                                    checklist.deleteWithDependencies()
+                                }
+                            }
+                        },
+                        onStart = {
+                            Dialog.show { layer ->
+                                ChecklistEditDialog(editedChecklist = checklist, onClose = layer::close)
+                            }
+                            false
+                        },
+                        onEnd = {
+                            true
+                        },
+                        toVibrateStartEnd = listOf(true, false),
+                    ) {
+
+                        MyListView__ItemView__ButtonView(
+                            text = checklist.name,
+                        ) {
+                            checklist.performUI()
+                        }
                     }
                 }
             }
-        }
 
-        item {
+            item {
 
-            MyListView__Padding__SectionHeader()
+                MyListView__Padding__SectionHeader((-9).dp) // ~9.dp consume icon space
 
-            MyListView__HeaderView(
-                "BACKUPS",
-            )
+                MyListView__HeaderView(
+                    title = "SHORTCUTS",
+                    rightView = {
+                        MyListView__HeaderView__RightIcon(
+                            iconId = R.drawable.ic_round_add_24,
+                            contentDescription = "New Shortcut"
+                        ) {
+                            Sheet.show { layer ->
+                                ShortcutFormSheet(layer = layer, editedShortcut = null)
+                            }
+                        }
+                    }
+                )
+            }
 
-            MyListView__Padding__HeaderSection()
+            val shortcuts = state.shortcuts
+            if (shortcuts.isNotEmpty())
+                item { MyListView__Padding__HeaderSection() }
 
-            MyListView__ItemView(
-                isFirst = true,
-                isLast = false,
-                withTopDivider = false,
-            ) {
+            itemsIndexed(shortcuts, key = { _, shortcut -> shortcut.id }) { _, shortcut ->
 
-                MyListView__ItemView__ButtonView(
-                    text = "Create",
+                val isFirst = shortcuts.first() == shortcut
+
+                MyListView__ItemView(
+                    isFirst = isFirst,
+                    isLast = shortcuts.last() == shortcut,
+                    withTopDivider = !isFirst,
                 ) {
-                    scope.launch {
-                        val date = DateFormat.format("yyyyMMdd_HHmmss", Date())
-                        launcherBackup.launch("timeto_${date}.json")
+
+                    SwipeToAction(
+                        isStartOrEnd = remember { mutableStateOf(null) },
+                        startView = {
+                            SwipeToAction__StartView(
+                                text = "Edit",
+                                bgColor = c.blue
+                            )
+                        },
+                        endView = { state ->
+                            SwipeToAction__DeleteView(
+                                state = state,
+                                note = shortcut.name,
+                                deletionConfirmationNote = "Are you sure you want to delete \"${shortcut.name}\" shortcut?",
+                            ) {
+                                vibrateLong()
+                                scope.launchEx {
+                                    shortcut.delete()
+                                }
+                            }
+                        },
+                        onStart = {
+                            Sheet.show { layer ->
+                                ShortcutFormSheet(layer = layer, editedShortcut = shortcut)
+                            }
+                            false
+                        },
+                        onEnd = {
+                            true
+                        },
+                        toVibrateStartEnd = listOf(true, false),
+                    ) {
+                        MyListView__ItemView__ButtonView(
+                            text = shortcut.name,
+                        ) {
+                            shortcut.performUI()
+                        }
                     }
                 }
             }
 
-            MyListView__ItemView(
-                isFirst = false,
-                isLast = false,
-                withTopDivider = true,
-            ) {
+            item {
 
-                MyListView__ItemView__ButtonView(
-                    text = "Restore",
+                MyListView__Padding__SectionHeader()
+
+                MyListView__HeaderView(
+                    "SETTINGS",
+                )
+
+                MyListView__Padding__HeaderSection()
+
+                MyListView__ItemView(
+                    isFirst = true,
+                    isLast = false,
                 ) {
-                    scope.launch {
-                        launcherRestore.launch("*/*")
+                    MyListView__ItemView__ButtonView(
+                        text = "Folders",
+                        withArrow = true,
+                    ) {
+                        Sheet.show { layer ->
+                            FoldersSettingsSheet(layer)
+                        }
                     }
                 }
-            }
 
-            MyListView__ItemView(
-                isFirst = false,
-                isLast = true,
-                withTopDivider = true,
-            ) {
+                //////
 
-                val autoBackup = LocalAutoBackup.current
-                if (autoBackup != null && isSDKQPlus()) {
-
-                    val dateStr = autoBackup.lastCacheDate.value?.let { date ->
-                        val calendar = Calendar.getInstance(Locale.ENGLISH)
-                        val format = "d MMM, E HH:mm" // todo is24
-                        calendar.timeInMillis = date.time
-                        DateFormat.format(format, calendar).toString()
-                    }
+                MyListView__ItemView(
+                    isFirst = false,
+                    isLast = true,
+                    withTopDivider = true,
+                ) {
 
                     MyListView__ItemView__ButtonView(
-                        text = "Auto Backup",
-                        withArrow = true,
+                        text = "Day Start",
+                        withArrow = false,
                         rightView = {
                             MyListView__ItemView__ButtonView__RightText(
-                                text = dateStr ?: "",
-                                paddingEnd = 4.dp,
+                                text = state.dayStartNote
                             )
                         }
                     ) {
-                        // todo doc about folder
-                        context.startActivity(Intent(DownloadManager.ACTION_VIEW_DOWNLOADS))
+                        Dialog.show { layer ->
+                            DayStartDialogView(
+                                tabToolsVM = vm,
+                                tabToolsState = state,
+                                onClose = layer::close
+                            )
+                        }
                     }
                 }
             }
-        }
 
-        item {
+            item {
 
-            MyListView__Padding__SectionHeader()
+                MyListView__Padding__SectionHeader()
 
-            MyListView__HeaderView(
-                title = "NOTIFICATIONS",
-            )
-
-            MyListView__Padding__HeaderSection()
-
-            MyListView__ItemView(
-                isFirst = true,
-                isLast = false,
-                withTopDivider = false,
-            ) {
-                MyListView__ItemView__ButtonView(text = "Time to Break") {
-                    context.startActivity(
-                        Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).apply {
-                            putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
-                            putExtra(Settings.EXTRA_CHANNEL_ID, NotificationCenter.channelTimeToBreak().id)
-                        }
-                    )
-                }
-            }
-
-            MyListView__ItemView(
-                isFirst = false,
-                isLast = true,
-                withTopDivider = true,
-            ) {
-                MyListView__ItemView__ButtonView(text = "Timer Overdue") {
-                    context.startActivity(
-                        Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).apply {
-                            putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
-                            putExtra(Settings.EXTRA_CHANNEL_ID, NotificationCenter.channelTimerOverdue().id)
-                        }
-                    )
-                }
-            }
-        }
-
-        item {
-
-            MyListView__Padding__SectionSection()
-
-            MyListView__ItemView(
-                isFirst = true,
-                isLast = false,
-                withTopDivider = false,
-            ) {
-                MyListView__ItemView__ButtonView(text = "Ask a Question") {
-                    context.startActivity(
-                        Intent(Intent.ACTION_VIEW).apply {
-                            data = Uri.parse("mailto:${state.feedbackEmail}?subject=${state.feedbackSubject}")
-                        }
-                    )
-                }
-            }
-
-            MyListView__ItemView(
-                isFirst = false,
-                isLast = true,
-                withTopDivider = true,
-            ) {
-                MyListView__ItemView__ButtonView(text = "Open Source") {
-                    context.startActivity(
-                        Intent(Intent.ACTION_VIEW).apply {
-                            data = Uri.parse(state.openSourceUrl)
-                        }
-                    )
-                }
-            }
-        }
-
-        item {
-
-            Row {
-
-                Text(
-                    text = "TimeTo for Android v${state.appVersion}",
-                    modifier = Modifier
-                        .padding(top = 24.dp)
-                        .weight(1f),
-                    color = c.textSecondary,
-                    fontSize = 15.sp,
-                    textAlign = TextAlign.Center,
+                MyListView__HeaderView(
+                    "BACKUPS",
                 )
+
+                MyListView__Padding__HeaderSection()
+
+                MyListView__ItemView(
+                    isFirst = true,
+                    isLast = false,
+                    withTopDivider = false,
+                ) {
+
+                    MyListView__ItemView__ButtonView(
+                        text = "Create",
+                    ) {
+                        scope.launch {
+                            val date = DateFormat.format("yyyyMMdd_HHmmss", Date())
+                            launcherBackup.launch("timeto_${date}.json")
+                        }
+                    }
+                }
+
+                MyListView__ItemView(
+                    isFirst = false,
+                    isLast = false,
+                    withTopDivider = true,
+                ) {
+
+                    MyListView__ItemView__ButtonView(
+                        text = "Restore",
+                    ) {
+                        scope.launch {
+                            launcherRestore.launch("*/*")
+                        }
+                    }
+                }
+
+                MyListView__ItemView(
+                    isFirst = false,
+                    isLast = true,
+                    withTopDivider = true,
+                ) {
+
+                    val autoBackup = LocalAutoBackup.current
+                    if (autoBackup != null && isSDKQPlus()) {
+
+                        val dateStr = autoBackup.lastCacheDate.value?.let { date ->
+                            val calendar = Calendar.getInstance(Locale.ENGLISH)
+                            val format = "d MMM, E HH:mm" // todo is24
+                            calendar.timeInMillis = date.time
+                            DateFormat.format(format, calendar).toString()
+                        }
+
+                        MyListView__ItemView__ButtonView(
+                            text = "Auto Backup",
+                            withArrow = true,
+                            rightView = {
+                                MyListView__ItemView__ButtonView__RightText(
+                                    text = dateStr ?: "",
+                                    paddingEnd = 4.dp,
+                                )
+                            }
+                        ) {
+                            // todo doc about folder
+                            context.startActivity(Intent(DownloadManager.ACTION_VIEW_DOWNLOADS))
+                        }
+                    }
+                }
+            }
+
+            item {
+
+                MyListView__Padding__SectionHeader()
+
+                MyListView__HeaderView(
+                    title = "NOTIFICATIONS",
+                )
+
+                MyListView__Padding__HeaderSection()
+
+                MyListView__ItemView(
+                    isFirst = true,
+                    isLast = false,
+                    withTopDivider = false,
+                ) {
+                    MyListView__ItemView__ButtonView(text = "Time to Break") {
+                        context.startActivity(
+                            Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).apply {
+                                putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+                                putExtra(Settings.EXTRA_CHANNEL_ID, NotificationCenter.channelTimeToBreak().id)
+                            }
+                        )
+                    }
+                }
+
+                MyListView__ItemView(
+                    isFirst = false,
+                    isLast = true,
+                    withTopDivider = true,
+                ) {
+                    MyListView__ItemView__ButtonView(text = "Timer Overdue") {
+                        context.startActivity(
+                            Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).apply {
+                                putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+                                putExtra(Settings.EXTRA_CHANNEL_ID, NotificationCenter.channelTimerOverdue().id)
+                            }
+                        )
+                    }
+                }
+            }
+
+            item {
+
+                MyListView__Padding__SectionSection()
+
+                MyListView__ItemView(
+                    isFirst = true,
+                    isLast = false,
+                    withTopDivider = false,
+                ) {
+                    MyListView__ItemView__ButtonView(text = "Ask a Question") {
+                        context.startActivity(
+                            Intent(Intent.ACTION_VIEW).apply {
+                                data = Uri.parse("mailto:${state.feedbackEmail}?subject=${state.feedbackSubject}")
+                            }
+                        )
+                    }
+                }
+
+                MyListView__ItemView(
+                    isFirst = false,
+                    isLast = true,
+                    withTopDivider = true,
+                ) {
+                    MyListView__ItemView__ButtonView(text = "Open Source") {
+                        context.startActivity(
+                            Intent(Intent.ACTION_VIEW).apply {
+                                data = Uri.parse(state.openSourceUrl)
+                            }
+                        )
+                    }
+                }
+            }
+
+            item {
+
+                Row {
+
+                    Text(
+                        text = "TimeTo for Android v${state.appVersion}",
+                        modifier = Modifier
+                            .padding(top = 24.dp)
+                            .weight(1f),
+                        color = c.textSecondary,
+                        fontSize = 15.sp,
+                        textAlign = TextAlign.Center,
+                    )
+                }
+            }
+
+            item {
+                Box(Modifier.fillMaxWidth().navigationBarsPadding())
             }
         }
     }
