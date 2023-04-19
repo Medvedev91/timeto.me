@@ -37,7 +37,7 @@ import java.util.*
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun TabToolsView() {
+fun SettingsViewSheet() {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
