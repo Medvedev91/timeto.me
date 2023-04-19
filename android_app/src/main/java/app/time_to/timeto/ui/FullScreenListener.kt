@@ -385,22 +385,20 @@ private fun FullScreenView(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .height(IntrinsicSize.Max)
                     .navigationBarsPadding(),
-                verticalAlignment = Alignment.CenterVertically,
+                verticalAlignment = Alignment.Bottom,
             ) {
 
                 val menuIconSize = 58.dp
                 val menuIconPadding = 15.dp
                 val menuColor = state.menuColor.toColor()
 
-                Icon(
-                    painterResource(id = R.drawable.sf_pencil_circle_medimu_thin),
-                    contentDescription = "Menu",
-                    tint = menuColor,
+                Box(
                     modifier = Modifier
                         .weight(1f)
+                        .fillMaxHeight()
                         .clip(MySquircleShape())
-                        .size(menuIconSize)
                         .clickable {
                             Sheet.show { layer ->
                                 TaskFormSheet(
@@ -408,9 +406,18 @@ private fun FullScreenView(
                                     layer = layer,
                                 )
                             }
-                        }
-                        .padding(menuIconPadding),
-                )
+                        },
+                    contentAlignment = Alignment.BottomCenter,
+                ) {
+                    Icon(
+                        painterResource(id = R.drawable.sf_pencil_circle_medimu_thin),
+                        contentDescription = "Menu", // todo
+                        tint = menuColor,
+                        modifier = Modifier
+                            .size(menuIconSize)
+                            .padding(menuIconPadding),
+                    )
+                }
 
                 Column(
                     modifier = Modifier
@@ -424,9 +431,16 @@ private fun FullScreenView(
                 ) {
 
                     Text(
-                        text = state.timeOfTheDay,
+                        text = state.tasksText,
                         modifier = Modifier
-                            .padding(horizontal = 16.dp),
+                            .padding(bottom = 20.dp),
+                        color = state.menuColor.toColor(),
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Light,
+                    )
+
+                    Text(
+                        text = state.timeOfTheDay,
                         color = menuColor,
                         fontSize = 15.sp,
                         fontWeight = FontWeight.Bold,
@@ -434,7 +448,7 @@ private fun FullScreenView(
 
                     Row(
                         modifier = Modifier
-                            .padding(end = 2.dp)
+                            .padding(end = 2.dp, bottom = 4.dp)
                             .clip(RoundedCornerShape(99.dp))
                             .background(animateColorAsState(state.batteryBackground.toColor()).value)
                             .padding(start = 4.dp, end = 5.dp),
@@ -462,19 +476,25 @@ private fun FullScreenView(
                     }
                 }
 
-                Icon(
-                    painterResource(id = R.drawable.sf_xmark_circle_medium_thin),
-                    contentDescription = "Close",
-                    tint = menuColor,
+                Box(
                     modifier = Modifier
                         .weight(1f)
+                        .fillMaxHeight()
                         .clip(MySquircleShape())
-                        .size(menuIconSize)
                         .clickable {
                             layer.close()
-                        }
-                        .padding(menuIconPadding),
-                )
+                        },
+                    contentAlignment = Alignment.BottomCenter,
+                ) {
+                    Icon(
+                        painterResource(id = R.drawable.sf_xmark_circle_medium_thin),
+                        contentDescription = "Close",
+                        tint = menuColor,
+                        modifier = Modifier
+                            .size(menuIconSize)
+                            .padding(menuIconPadding),
+                    )
+                }
             }
         }
     }
