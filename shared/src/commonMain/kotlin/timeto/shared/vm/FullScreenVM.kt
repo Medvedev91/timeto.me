@@ -57,6 +57,11 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
             return@run listOf(TaskListItem.NoTasksText("No Tasks for Today"))
         }
 
+        val tasksText = when (val size = tasksToday.size) {
+            0 -> "No tasks for today"
+            else -> size.toStringEnding(true, "task", "tasks")
+        }
+
         val tasksImportant = tasksAll.filterIsInstance<TaskListItem.ImportantTask>()
 
         val batteryText = "${batteryLevelOrNull ?: "--"}"
