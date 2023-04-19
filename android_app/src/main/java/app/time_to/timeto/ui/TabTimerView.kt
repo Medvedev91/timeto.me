@@ -325,49 +325,26 @@ fun TabTimerView() {
                         modifier = Modifier
                             .padding(top = 14.dp)
                             .fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
 
-                        Icon(
-                            painterResource(id = R.drawable.ic_round_add_24),
-                            "New activity",
-                            tint = c.textSecondary,
-                            modifier = Modifier
-                                .padding(top = 2.dp)
-                                .alpha(0.5f)
-                                .size(32.dp)
-                                .clip(RoundedCornerShape(99.dp))
-                                .background(c.background)
-                                .clickable {
-                                    Sheet.show { layer ->
-                                        ActivityFormSheet(
-                                            layer = layer,
-                                            editedActivity = null
-                                        )
-                                    }
-                                }
-                                .padding(4.dp)
-                        )
+                        GrayTextButton(
+                            text = state.newActivityText,
+                            modifier = Modifier.padding(start = 2.dp),
+                        ) {
+                            Sheet.show { layer ->
+                                ActivityFormSheet(layer = layer, editedActivity = null)
+                            }
+                        }
 
-                        Text(
-                            "Edit",
-                            modifier = Modifier
-                                .padding(top = 1.dp, start = 12.dp)
-                                .clip(MySquircleShape())
-                                .clickable {
-                                    Sheet.show { layer ->
-                                        EditActivitiesSheet(
-                                            layer = layer,
-                                        )
-                                    }
-                                }
-                                .padding(horizontal = 6.dp, vertical = 2.dp),
-                            style = TextStyle(
-                                color = c.textSecondary.copy(alpha = 0.6f),
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.Normal,
-                            )
-                        )
+                        GrayTextButton(
+                            text = state.sortActivitiesText,
+                            modifier = Modifier.padding(start = 12.dp),
+                        ) {
+                            Sheet.show { layer ->
+                                EditActivitiesSheet(layer = layer)
+                            }
+                        }
                     }
                 }
 
@@ -412,6 +389,26 @@ fun TabTimerView() {
             }
         }
     }
+}
+
+@Composable
+private fun GrayTextButton(
+    text: String,
+    modifier: Modifier,
+    onClick: () -> Unit,
+) {
+    Text(
+        text = text,
+        modifier = modifier
+            .clip(MySquircleShape())
+            .clickable {
+                onClick()
+            }
+            .padding(horizontal = 6.dp, vertical = 4.dp),
+        color = c.blue,
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Light,
+    )
 }
 
 @Composable
