@@ -62,25 +62,22 @@ fun TabsView() {
         CompositionLocalProvider(
             LocalTabsHeight provides navHeight
         ) {
-            Box {
-
-                NavHost(
-                    navController,
-                    modifier = Modifier
-                        .background(c.background) // Fix on IME hide another background
-                        .padding(top = statusBarHeight, bottom = navHeight),
-                    startDestination = TabItem.Timer.route
-                ) {
-                    composable(TabItem.Timer.route) {
-                        TabTimerView()
-                    }
-                    composable(TabItem.Tasks.route) {
-                        TabTasksView()
-                    }
-                    composable(TabItem.Focus.route) {
-                        // todo
-                        Text("")
-                    }
+            NavHost(
+                navController,
+                modifier = Modifier
+                    .background(c.background) // Fix on IME hide another background
+                    .padding(top = statusBarHeight, bottom = navHeight),
+                startDestination = TabItem.Timer.route
+            ) {
+                composable(TabItem.Timer.route) {
+                    TabTimerView()
+                }
+                composable(TabItem.Tasks.route) {
+                    TabTasksView()
+                }
+                composable(TabItem.Focus.route) {
+                    // todo
+                    Text("")
                 }
             }
         }
