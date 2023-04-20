@@ -4,7 +4,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -14,10 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -85,46 +80,6 @@ fun TabsView() {
                     composable(TabItem.Tools.route) {
                         TabToolsView()
                     }
-                }
-
-                Box(
-                    modifier = Modifier
-                        .padding(
-                            bottom = navHeight + 16.dp,
-                            end = 16.dp,
-                        )
-                        .align(Alignment.BottomEnd)
-                        .size(54.dp)
-                        .shadow(
-                            elevation = 4.dp,
-                            shape = RoundedCornerShape(99.dp),
-                            clip = true,
-                        )
-                        .background(c.dividerBackground2),
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.sf_arrow_up_left_and_arrow_down_right_large_medium),
-                        contentDescription = "Fullscreen",
-                        tint = c.white,
-                        modifier = Modifier
-                            .padding(pxToDp(1).dp)
-                            .clip(RoundedCornerShape(99.dp))
-                            .background(
-                                brush = Brush.linearGradient(
-                                    colors = listOf(
-                                        Color(0xFF008FFF), // todo dark theme
-                                        c.blue,
-                                    ),
-                                    start = Offset(0.0f, 0.0f),
-                                    end = Offset(dpToPx(54f).toFloat(), dpToPx(54f).toFloat()),
-                                )
-                            )
-                            .clickable {
-                                FullScreenUI.open()
-                            }
-                            .padding(18.dp)
-                            .rotate(90f),
-                    )
                 }
             }
         }
