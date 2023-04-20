@@ -446,7 +446,7 @@ class TimerPickerItem(
 
             val a = (1..10).map { it * 60 } + // 1 - 10 min by 1 min
                     (1..10).map { (600 + (it * 300)) } + // 15 min - 1 hour by 5 min
-                    (1..10).map { (3600 + (it * 600)) } + // 1 hour+ by 10 min
+                    (1..138).map { (3_600 + (it * 600)) } + // 1 hour+ by 10 min
                     defSeconds
 
             return a.toSet().sorted().mapIndexed { idx, seconds ->
