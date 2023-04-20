@@ -78,7 +78,8 @@ fun TabsView() {
                         TabTasksView()
                     }
                     composable(TabItem.Tools.route) {
-                        TabToolsView()
+                        // todo
+                        Text("")
                     }
                 }
             }
