@@ -77,7 +77,7 @@ fun TabsView() {
                     composable(TabItem.Tasks.route) {
                         TabTasksView()
                     }
-                    composable(TabItem.Tools.route) {
+                    composable(TabItem.Focus.route) {
                         // todo
                         Text("")
                     }
@@ -94,7 +94,7 @@ sealed class TabItem(
 ) {
     object Timer : TabItem("Timer", R.drawable.sf_timer_large_bold, "timer")
     object Tasks : TabItem("Tasks", R.drawable.sf_tray_full_medium_semibold, "tasks")
-    object Tools : TabItem("Tools", R.drawable.sf_gearshape_large_heavy, "tools")
+    object Focus : TabItem("Focus", R.drawable.sf_timelapse_small_black, "focus")
 }
 
 @Composable
@@ -105,7 +105,7 @@ private fun BottomNavigation(
     val items = listOf(
         TabItem.Timer,
         TabItem.Tasks,
-        TabItem.Tools,
+        TabItem.Focus,
     )
 
     val (_, state) = rememberVM { TabsVM() }
@@ -124,6 +124,7 @@ private fun BottomNavigation(
                     modifier = Modifier
                         .size(24.dp)
                         .padding(bottom = 2.dp)
+                        .rotate(if (item == TabItem.Focus) 90f else 0f)
                 )
             }
 
@@ -199,6 +200,11 @@ private fun BottomNavigation(
                 alwaysShowLabel = true,
                 selected = currentRoute == item.route,
                 onClick = {
+
+                    if (item == TabItem.Focus) {
+                        FullScreenUI.open()
+                        return@BottomNavigationItem
+                    }
 
                     if (item.route == TabItem.Tasks.route)
                         setTodayFolder?.invoke()
