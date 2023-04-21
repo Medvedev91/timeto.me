@@ -43,6 +43,9 @@ val TAB_TASKS_PADDING_END = 68.dp
 
 val taskListSectionPadding = 20.dp
 
+/**
+ * TRICK Used twice: as a tab and for focus mode
+ */
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TabTasksView(
