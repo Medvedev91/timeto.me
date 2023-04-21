@@ -307,14 +307,14 @@ private fun FullScreenView(
                             WrapperView.Layer(
                                 enterAnimation = slideInVertically(
                                     animationSpec = spring(
-                                        stiffness = Spring.StiffnessHigh,
+                                        stiffness = Spring.StiffnessMedium,
                                         visibilityThreshold = IntOffset.VisibilityThreshold
                                     ),
                                     initialOffsetY = { it }
                                 ),
                                 exitAnimation = slideOutVertically(
                                     animationSpec = spring(
-                                        stiffness = Spring.StiffnessHigh,
+                                        stiffness = Spring.StiffnessMedium,
                                         visibilityThreshold = IntOffset.VisibilityThreshold
                                     ),
                                     targetOffsetY = { it }
