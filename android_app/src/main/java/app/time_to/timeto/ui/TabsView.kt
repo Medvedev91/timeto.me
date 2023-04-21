@@ -17,7 +17,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -35,7 +34,7 @@ import timeto.shared.vm.TabsVM
 // https://stackoverflow.com/q/67059823
 var globalNav: NavHostController? = null
 
-val LocalTabsHeight = compositionLocalOf<Dp> { throw Exception("LocalTabsHeight") }
+val bottomNavigationHeight = 56.dp
 
 @Composable
 fun TabsView() {
@@ -59,26 +58,22 @@ fun TabsView() {
 
         val navHeight = navPadding.calculateBottomPadding()
 
-        CompositionLocalProvider(
-            LocalTabsHeight provides navHeight
+        NavHost(
+            navController,
+            modifier = Modifier
+                .background(c.background) // Fix on IME hide another background
+                .padding(top = statusBarHeight, bottom = navHeight),
+            startDestination = TabItem.Timer.route
         ) {
-            NavHost(
-                navController,
-                modifier = Modifier
-                    .background(c.background) // Fix on IME hide another background
-                    .padding(top = statusBarHeight, bottom = navHeight),
-                startDestination = TabItem.Timer.route
-            ) {
-                composable(TabItem.Timer.route) {
-                    TabTimerView()
-                }
-                composable(TabItem.Tasks.route) {
-                    TabTasksView()
-                }
-                composable(TabItem.Focus.route) {
-                    // todo
-                    Text("")
-                }
+            composable(TabItem.Timer.route) {
+                TabTimerView()
+            }
+            composable(TabItem.Tasks.route) {
+                TabTasksView()
+            }
+            composable(TabItem.Focus.route) {
+                // todo
+                Text("")
             }
         }
     }
