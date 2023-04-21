@@ -12,11 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import app.time_to.timeto.setFalse
 import app.time_to.timeto.setTrue
-import app.time_to.timeto.wrapperViewLayers
 import kotlinx.coroutines.delay
 import timeto.shared.launchExDefault
 
 object WrapperView {
+
+    private val wrapperViewLayers = mutableStateListOf<Layer>()
 
     class Layer(
         val enterAnimation: EnterTransition,

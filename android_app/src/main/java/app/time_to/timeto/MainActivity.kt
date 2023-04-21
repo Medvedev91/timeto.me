@@ -28,7 +28,6 @@ import timeto.shared.*
 import timeto.shared.vm.AppVM
 
 val LocalAutoBackup = compositionLocalOf<AutoBackup?> { throw Exception("LocalAutoBackup") }
-val wrapperViewLayers = mutableStateListOf<WrapperView.Layer>()
 var statusBarHeight = 0.dp
 
 class MainActivity : ComponentActivity() {
