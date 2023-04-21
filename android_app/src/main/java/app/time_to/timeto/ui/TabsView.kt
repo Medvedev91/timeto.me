@@ -69,7 +69,7 @@ fun TabsView() {
                 TabTimerView()
             }
             composable(TabItem.Tasks.route) {
-                TabTasksView()
+                TabTasksView(modifier = Modifier)
             }
             composable(TabItem.Focus.route) {
                 // todo

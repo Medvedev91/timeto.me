@@ -45,7 +45,9 @@ val taskListSectionPadding = 20.dp
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun TabTasksView() {
+fun TabTasksView(
+    modifier: Modifier,
+) {
     val (_, state) = rememberVM { TabTasksVM() }
 
     var activeSection by remember {
@@ -71,7 +73,7 @@ fun TabTasksView() {
     }
 
     Box(
-        Modifier
+        modifier = modifier
             .motionEventSpy { event ->
                 val dragItemValue = dragItem.value ?: return@motionEventSpy
 
