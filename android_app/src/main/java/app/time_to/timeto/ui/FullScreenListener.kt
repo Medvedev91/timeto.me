@@ -8,7 +8,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
@@ -251,137 +249,18 @@ private fun FullScreenView(
             }
 
             val checklistUI = state.checklistUI
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .clipToBounds(), // https://stackoverflow.com/a/71527654
-                contentAlignment = Alignment.BottomCenter,
-            ) {
-
-                ///
-                /// Compact Tasks Mode
-
-                Column(
-                    modifier = Modifier.fillMaxHeight(),
-                ) {
-
-                    val checklistScrollState = rememberLazyListState()
-
-                    AnimatedVisibility(
-                        visible = !state.isTaskListShowed,
-                        modifier = Modifier.weight(1f),
-                        enter = fadeIn(spring(stiffness = Spring.StiffnessMedium)),
-                        exit = fadeOut(spring(stiffness = Spring.StiffnessHigh)),
-                    ) {
-                        if (checklistUI != null) {
-                            ExpandedChecklist(
-                                checklistScrollState = checklistScrollState,
-                                checklistUI = checklistUI,
-                            )
-                        }
-                    }
-
-                    AnimatedVisibility(
-                        visible = !state.isTaskListShowed,
-                        modifier = Modifier.height(
-                            taskItemHeight * state.tasksImportant.size
-                            + dividerHeight
-                            + taskListContentPadding * 2
-                        ),
-                        enter = fadeIn(spring(stiffness = Spring.StiffnessMedium)),
-                        exit = fadeOut(spring(stiffness = Spring.StiffnessHigh)),
-                    ) {
-
-                        val taskListScrollState = rememberLazyListState()
-                        val isNavDividerVisible = state.checklistUI != null &&
-                                                  (checklistScrollState.canScrollBackward || checklistScrollState.canScrollForward)
-
-                        TaskList(
-                            taskListScrollState = taskListScrollState,
-                            isNavDividerVisible = isNavDividerVisible,
-                            tasks = state.tasksImportant,
-                        )
-                    }
-                }
-
-                ///
-                /// Full Tasks Mode
-
-                Column {
-
-                    if (checklistUI != null) {
-
-                        Column(
-                            // Fixed height to fix task list twitching while hiding
-                            modifier = Modifier
-                                .height(60.dp),
-                        ) {
-
-                            AnimatedVisibility(
-                                visible = state.isTaskListShowed,
-                                enter = fadeIn(spring(stiffness = Spring.StiffnessMedium)),
-                                exit = fadeOut(spring(stiffness = Spring.StiffnessMedium)),
-                            ) {
-
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxHeight()
-                                        .fillMaxWidth()
-                                        .clickable {
-                                            vm.toggleIsCompactTaskList()
-                                        },
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                    verticalArrangement = Arrangement.Center,
-                                ) {
-
-                                    Text(
-                                        text = checklistUI.collapsedTitle,
-                                        color = c.white,
-                                        fontSize = 16.sp,
-                                        maxLines = 1,
-                                    )
-
-                                    Icon(
-                                        painterResource(R.drawable.sf_chevron_compact_down_medium_thin),
-                                        contentDescription = "Expand Checklist",
-                                        tint = c.white,
-                                        modifier = Modifier
-                                            .padding(top = 8.dp)
-                                            .height(5.dp),
-                                    )
-                                }
-                            }
-                        }
-                    }
-
-                    AnimatedVisibility(
-                        visible = state.isTaskListShowed,
-                        modifier = Modifier.weight(1f),
-                        enter = fadeIn(spring(stiffness = Spring.StiffnessMedium)) +
-                                slideInVertically(
-                                    animationSpec = spring(stiffness = Spring.StiffnessMedium),
-                                    initialOffsetY = { it }
-                                ),
-                        exit = fadeOut(spring(stiffness = Spring.StiffnessMediumLow)) +
-                               slideOutVertically(
-                                   animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
-                                   targetOffsetY = { it + 20 }
-                               ),
-                    ) {
-
-                        val taskListScrollState = rememberLazyListState()
-                        val isNavDividerVisible =
-                            (checklistUI != null) ||
-                            (taskListScrollState.canScrollBackward || taskListScrollState.canScrollForward)
-
-                        TaskList(
-                            taskListScrollState = taskListScrollState,
-                            isNavDividerVisible = isNavDividerVisible,
-                            tasks = state.tasksAll,
-                        )
-                    }
-                }
+            if (checklistUI != null) {
+                ExpandedChecklist(
+                    checklistUI = checklistUI,
+                    modifier = Modifier.weight(1f),
+                )
+            } else {
+                SpacerW1()
             }
+
+            TaskList(
+                tasks = state.tasksImportant,
+            )
 
             Row(
                 modifier = Modifier
@@ -530,12 +409,13 @@ private fun FullScreenView(
 
 @Composable
 private fun ExpandedChecklist(
-    checklistScrollState: LazyListState,
     checklistUI: FullScreenVM.ChecklistUI,
+    modifier: Modifier,
 ) {
+    val checklistScrollState = rememberLazyListState()
+
     Column(
-        modifier = Modifier
-            .fillMaxHeight()
+        modifier = modifier
             .padding(top = 8.dp)
     ) {
 
@@ -545,7 +425,7 @@ private fun ExpandedChecklist(
             modifier = dividerModifier,
             color = animateColorAsState(
                 if (checklistScrollState.canScrollBackward) dividerColor else c.transparent,
-                animationSpec = spring(stiffness = Spring.StiffnessLow),
+                animationSpec = spring(stiffness = Spring.StiffnessMedium),
             ).value
         )
 
@@ -651,26 +531,31 @@ private fun ExpandedChecklist(
                 }
             }
         }
+
+        val isBottomChecklistVisible = checklistScrollState.canScrollBackward ||
+                                       checklistScrollState.canScrollForward
+        Divider(
+            modifier = dividerModifier,
+            color = if (isBottomChecklistVisible) dividerColor else c.transparent,
+            thickness = dividerHeight,
+        )
     }
 }
 
 @Composable
 private fun TaskList(
-    taskListScrollState: LazyListState,
-    isNavDividerVisible: Boolean,
     tasks: List<FullScreenVM.TaskListItem>,
 ) {
-
     Column(
         modifier = Modifier
+            .height(
+                // todo limit 5
+                taskItemHeight * tasks.size
+                + dividerHeight
+                + taskListContentPadding * 2
+            )
             .fillMaxHeight()
     ) {
-
-        Divider(
-            modifier = dividerModifier,
-            color = if (isNavDividerVisible) dividerColor else c.transparent,
-            thickness = dividerHeight,
-        )
 
         LazyColumn(
             modifier = Modifier
@@ -678,7 +563,6 @@ private fun TaskList(
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
             reverseLayout = true,
-            state = taskListScrollState,
             contentPadding = PaddingValues(vertical = taskListContentPadding),
         ) {
 
