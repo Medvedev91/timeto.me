@@ -105,7 +105,7 @@ fun TabTasksView() {
                 }
             }
             .background(c.background),
-        contentAlignment = Alignment.CenterEnd
+        contentAlignment = Alignment.CenterEnd,
     ) {
 
         when (val curSection = activeSection) {
