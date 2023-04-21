@@ -3,8 +3,6 @@ package app.time_to.timeto.ui
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
-import app.time_to.timeto.R
 import app.time_to.timeto.colorFromRgbaString
 
 //
@@ -30,6 +28,7 @@ class MyColors(
     val orange: Color,
     val text: Color, // https://material.io/design/color/text-legibility.html ~ 87%
     val textSecondary: Color, // ~ 60%
+    val background: Color, // TRICK Using R.color.my_dn_background overrides compos ;(
     val background2: Color,
     val backgroundEditable: Color,
     val tabsText: Color,
@@ -43,11 +42,6 @@ class MyColors(
     val bgFormSheet: Color,
     val formButtonRightNoteText: Color,
 ) {
-    // todo check performance
-    val background: Color
-        @Composable
-        get() = colorResource(R.color.my_dn_background)
-
     val red = Color(0xFFFF453A)
     val green = colorFromRgbaString("52,199,89") // AG Green Light
     val purple = colorFromRgbaString("175,82,222") // AG Purple Light
@@ -64,6 +58,7 @@ private val myLightColors = MyColors(
     orange = Color(0xFFFF9500), // AG Orange iOS Light
     text = Color(0xEE000000),
     textSecondary = Color(0xAA000000),
+    background = Color(0xFFEEEEF3), // TRICK Sync with light R.color.my_dn_background
     background2 = Color.White,
     backgroundEditable = Color(0xFFf1f8e9), // Light Green 50
     tabsText = Color(0x99000000),
@@ -83,6 +78,7 @@ private val myDarkColors = MyColors(
     orange = Color(0xFFFF9D0A), // AG Orange iOS Dark
     text = Color(0xEEFFFFFF),
     textSecondary = Color(0xAAFFFFFF),
+    background = Color(0xFF000000), // TRICK Sync with night R.color.my_dn_background
     background2 = Color(0xFF202022), // 0xFF1C1C1E
     backgroundEditable = Color(0xFF444444),
     tabsText = Color(0x77FFFFFF),
