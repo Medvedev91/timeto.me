@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- TRICK Sync with MyColors.background -->
     <color name="my_dn_background">#FFEEEEF3</color>
 </resources>
