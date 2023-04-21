@@ -40,8 +40,6 @@ class MyColors(
     val calendarIconBg: Color,
     val calendarIconColor: Color,
     val datePickerTitleBg: Color,
-    val bgButtonBlueInactive: Color,
-    val textButtonBlueInactive: Color,
     val bgFormSheet: Color,
     val formButtonRightNoteText: Color,
 ) {
@@ -76,8 +74,6 @@ private val myLightColors = MyColors(
     calendarIconBg = Color.White,
     calendarIconColor = Color(0xAA000000),
     datePickerTitleBg = Color(0xFFEEEEF3),
-    bgButtonBlueInactive = Color(0xFFAAAAAA),
-    textButtonBlueInactive = Color(0xEEFFFFFF),
     bgFormSheet = tgLikeLightSheetBg,
     formButtonRightNoteText = Color(0x88000000),
 )
@@ -97,8 +93,6 @@ private val myDarkColors = MyColors(
     calendarIconBg = Color(0x88202022),
     calendarIconColor = Color(0xFF777777),
     datePickerTitleBg = Color(0xFF2A2A2B),
-    bgButtonBlueInactive = Color(0xFF444444),
-    textButtonBlueInactive = Color(0xAAFFFFFF),
     bgFormSheet = Color(0xFF121214),
     formButtonRightNoteText = Color(0x88FFFFFF),
 )
