@@ -56,7 +56,6 @@ class MyColors(
     val white = Color.White
     val black = Color.Black
     val transparent = Color.Transparent
-
     val tasksTabDropFocused = green
 }
 
@@ -103,5 +102,3 @@ private val myDarkColors = MyColors(
     bgFormSheet = Color(0xFF121214),
     formButtonRightNoteText = Color(0x88FFFFFF),
 )
-
-////
