@@ -26,6 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowInsetsCompat
@@ -424,7 +425,34 @@ private fun FullScreenView(
                         .weight(1f)
                         .clip(MySquircleShape())
                         .clickable {
-                            vm.toggleIsCompactTaskList()
+                            WrapperView.Layer(
+                                enterAnimation = slideInVertically(
+                                    animationSpec = spring(
+                                        stiffness = Spring.StiffnessHigh,
+                                        visibilityThreshold = IntOffset.VisibilityThreshold
+                                    ),
+                                    initialOffsetY = { it }
+                                ),
+                                exitAnimation = slideOutVertically(
+                                    animationSpec = spring(
+                                        stiffness = Spring.StiffnessHigh,
+                                        visibilityThreshold = IntOffset.VisibilityThreshold
+                                    ),
+                                    targetOffsetY = { it }
+                                ),
+                                alignment = Alignment.BottomCenter,
+                                onClose = {},
+                                content = { layer ->
+                                    Box(
+                                        modifier = Modifier
+                                            .pointerInput(Unit) { }
+                                    ) {
+                                        MaterialTheme(colors = myDarkColors()) {
+                                            TasksSheet(layer = layer)
+                                        }
+                                    }
+                                }
+                            ).show()
                         }
                         .padding(top = 6.dp, bottom = 6.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -742,6 +770,60 @@ private fun TaskList(
                         )
                     }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun TasksSheet(
+    layer: WrapperView.Layer,
+) {
+    Column(
+        modifier = Modifier
+            .background(c.tabsBackground)
+            .navigationBarsPadding()
+            .fillMaxSize()
+    ) {
+
+        TabTasksView(modifier = Modifier.weight(1f))
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(bottomNavigationHeight)
+        ) {
+
+            Divider(
+                thickness = 1.dp,
+                color = c.dividerBackground2,
+            )
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clickable {
+                        layer.close()
+                    },
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+            ) {
+
+                Text(
+                    text = "focus",
+                    color = c.textSecondary,
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Light,
+                )
+
+                Icon(
+                    painterResource(R.drawable.sf_chevron_compact_down_medium_thin),
+                    contentDescription = "Focus",
+                    tint = c.textSecondary,
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .height(5.dp),
+                )
             }
         }
     }
