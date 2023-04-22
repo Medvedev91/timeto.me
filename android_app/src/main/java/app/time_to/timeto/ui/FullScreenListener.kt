@@ -250,7 +250,7 @@ private fun FullScreenView(
 
             val checklistUI = state.checklistUI
             if (checklistUI != null) {
-                ExpandedChecklist(
+                ChecklistView(
                     checklistUI = checklistUI,
                     modifier = Modifier.weight(1f),
                 )
@@ -406,7 +406,7 @@ private fun FullScreenView(
 }
 
 @Composable
-private fun ExpandedChecklist(
+private fun ChecklistView(
     checklistUI: FullScreenVM.ChecklistUI,
     modifier: Modifier,
 ) {
