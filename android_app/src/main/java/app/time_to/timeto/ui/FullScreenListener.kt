@@ -258,7 +258,7 @@ private fun FullScreenView(
                 SpacerW1()
             }
 
-            TaskList(tasks = state.importantTasks)
+            ImportantTasksView(tasks = state.importantTasks)
 
             Row(
                 modifier = Modifier
@@ -541,7 +541,7 @@ private fun ExpandedChecklist(
 }
 
 @Composable
-private fun TaskList(
+private fun ImportantTasksView(
     tasks: List<FullScreenVM.ImportantTask>,
 ) {
     Column(
