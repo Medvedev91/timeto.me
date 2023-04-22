@@ -289,7 +289,7 @@ private fun FullScreenView(
                 ) {
                     Icon(
                         painterResource(id = R.drawable.sf_timer_medium_thin),
-                        contentDescription = "Menu", // todo
+                        contentDescription = "Timer",
                         tint = menuColor,
                         modifier = Modifier
                             .size(menuIconSize)
