@@ -27,10 +27,6 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
         val menuColor = ColorRgba(255, 255, 255, 128)
         val timerData = TimerDataUI(interval, isCountdown, ColorNative.white)
 
-        val activityTimerContext = if (interval.note != null)
-            ActivityTimerSheetVM.TimerContext.Note(interval.note)
-        else null
-
         val activity = interval.getActivityDI()
         val textFeatures = (interval.note ?: activity.name).textFeatures()
         val title = textFeatures.textUi(withActivityEmoji = false, withTimer = false)
