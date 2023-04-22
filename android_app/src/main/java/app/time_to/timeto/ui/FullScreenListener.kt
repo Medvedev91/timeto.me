@@ -213,26 +213,6 @@ private fun FullScreenView(
                     val timerIconPadding = 8.dp
 
                     Icon(
-                        painterResource(id = R.drawable.sf_timer_large_light),
-                        contentDescription = "Timer",
-                        tint = c.white,
-                        modifier = Modifier
-                            .size(timerIconSize)
-                            .clip(RoundedCornerShape(99.dp))
-                            .clickable {
-                                Sheet.show { layer ->
-                                    ActivityTimerSheet(
-                                        layer = layer,
-                                        activity = state.activity,
-                                        timerContext = state.activityTimerContext,
-                                    )
-                                }
-                            }
-                            .padding(timerIconPadding)
-                            .padding(top = 3.dp),
-                    )
-
-                    Icon(
                         painterResource(id = R.drawable.sf_arrow_counterclockwise_large_light),
                         contentDescription = "Restart",
                         tint = c.white,
