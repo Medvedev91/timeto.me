@@ -203,29 +203,20 @@ private fun FullScreenView(
                 timerData.subtitle != null || !state.isCountdown,
                 enter = fadeIn() + expandVertically(),
                 exit = fadeOut() + shrinkVertically(),
-                modifier = Modifier
-                    .offset(y = (-4).dp),
             ) {
 
-                Row {
-
-                    val timerIconSize = 52.dp
-                    val timerIconPadding = 8.dp
-
-                    Icon(
-                        painterResource(id = R.drawable.sf_arrow_counterclockwise_large_light),
-                        contentDescription = "Restart",
-                        tint = c.white,
-                        modifier = Modifier
-                            .padding(start = 16.dp)
-                            .size(timerIconSize)
-                            .clip(RoundedCornerShape(99.dp))
-                            .clickable {
-                                vm.restart()
-                            }
-                            .padding(timerIconPadding),
-                    )
-                }
+                Text(
+                    text = "Restart",
+                    color = c.white,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Thin,
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(99.dp))
+                        .clickable {
+                            vm.restart()
+                        }
+                        .padding(vertical = 8.dp, horizontal = 20.dp),
+                )
             }
 
             val checklistUI = state.checklistUI
