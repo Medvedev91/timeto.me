@@ -67,10 +67,4 @@ class TimerTabProgressVM : __VM<TimerTabProgressVM.State>() {
     fun toggleIsCountdown() {
         state.update { it.copy(isCountdown = !it.isCountdown) }
     }
-
-    fun restart() {
-        launchExDefault {
-            IntervalModel.restartActualInterval()
-        }
-    }
 }
