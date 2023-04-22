@@ -210,7 +210,9 @@ private fun FullScreenView(
                     color = c.white,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Thin,
+                    letterSpacing = 1.sp,
                     modifier = Modifier
+                        .offset(y = (-4).dp)
                         .clip(RoundedCornerShape(99.dp))
                         .clickable {
                             vm.restart()
