@@ -49,19 +49,19 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
         val timeOfTheDay: String =
             UnixTime().getStringByComponents(UnixTime.StringComponent.hhmm24)
 
-        val tasksAll: List<TaskListItem> = run {
-            val tasks = tasksToday.map { TaskListItem.prepTask(it, it.text.textFeatures()) }
-            if (tasks.isNotEmpty())
-                return@run tasks
-            return@run listOf(TaskListItem.NoTasksText("No Tasks for Today"))
-        }
+        val importantTasks: List<ImportantTask> = tasksToday
+            .mapNotNull { task ->
+                val tf = task.text.textFeatures()
+                val timeData = tf.timeData ?: return@mapNotNull null
+                if (!timeData.isImportant)
+                    return@mapNotNull null
+                ImportantTask(task, textFeatures, timeData)
+            }
 
         val tasksText = when (val size = tasksToday.size) {
             0 -> "No tasks for today"
             else -> size.toStringEnding(true, "task", "tasks")
         }
-
-        val tasksImportant = tasksAll.filterIsInstance<TaskListItem.ImportantTask>()
 
         val batteryText = "${batteryLevelOrNull ?: "--"}"
         val batteryTextColor: ColorRgba
@@ -183,78 +183,30 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
         }
     }
 
-    sealed class TaskListItem(
-        val id: String,
+    class ImportantTask(
+        val task: TaskModel,
+        textFeatures: TextFeatures,
+        timeData: TextFeatures.TimeData,
     ) {
+        val type = timeData.type
+        val text: String
+        val backgroundColor: ColorRgba
 
-        companion object {
-
-            fun prepTask(
-                task: TaskModel,
-                textFeatures: TextFeatures
-            ): TaskListItem {
-                val timeData = textFeatures.timeData
-                val grayRgba = ColorRgba(150, 150, 150, 255) // todo
-
-                if (timeData == null) {
-                    return RegularTask(
-                        task = task,
-                        text = textFeatures.textNoFeatures,
-                        textColor = grayRgba,
-                    )
-                }
-
-                val timeLeftText = timeData.timeLeftText()
-
-                if (timeData.isImportant) {
-                    val dateText = timeData.unixTime.getStringByComponents(
-                        UnixTime.StringComponent.dayOfMonth,
-                        UnixTime.StringComponent.space,
-                        UnixTime.StringComponent.month3,
-                        UnixTime.StringComponent.comma,
-                        UnixTime.StringComponent.space,
-                        UnixTime.StringComponent.hhmm24,
-                    )
-                    val backgroundColor = when (timeData.status) {
-                        TextFeatures.TimeData.STATUS.IN, // todo?
-                        TextFeatures.TimeData.STATUS.NEAR -> ColorRgba(0, 122, 255, 255) // todo
-                        TextFeatures.TimeData.STATUS.OVERDUE -> ColorRgba(255, 59, 48) // todo
-                    }
-                    return ImportantTask(
-                        task = task,
-                        type = timeData.type,
-                        text = "$dateText ${textFeatures.textNoFeatures} - $timeLeftText",
-                        backgroundColor = backgroundColor,
-                    )
-                }
-                val textColor = when (timeData.status) {
-                    TextFeatures.TimeData.STATUS.IN -> grayRgba
-                    TextFeatures.TimeData.STATUS.NEAR -> ColorRgba(0, 122, 255, 180) // todo
-                    TextFeatures.TimeData.STATUS.OVERDUE -> ColorRgba(255, 59, 48, 160) // todo
-                }
-                return RegularTask(
-                    task = task,
-                    text = "${textFeatures.textNoFeatures} - $timeLeftText",
-                    textColor = textColor,
-                )
+        init {
+            val dateText = timeData.unixTime.getStringByComponents(
+                UnixTime.StringComponent.dayOfMonth,
+                UnixTime.StringComponent.space,
+                UnixTime.StringComponent.month3,
+                UnixTime.StringComponent.comma,
+                UnixTime.StringComponent.space,
+                UnixTime.StringComponent.hhmm24,
+            )
+            text = "$dateText ${textFeatures.textNoFeatures} - ${timeData.timeLeftText()}"
+            backgroundColor = when (timeData.status) {
+                TextFeatures.TimeData.STATUS.IN, // todo?
+                TextFeatures.TimeData.STATUS.NEAR -> ColorRgba(0, 122, 255, 255) // todo
+                TextFeatures.TimeData.STATUS.OVERDUE -> ColorRgba(255, 59, 48) // todo
             }
         }
-
-        class RegularTask(
-            val task: TaskModel,
-            val text: String,
-            val textColor: ColorRgba,
-        ) : TaskListItem("rt_${task.id}")
-
-        class ImportantTask(
-            val task: TaskModel,
-            val type: TextFeatures.TimeData.TYPE,
-            val text: String,
-            val backgroundColor: ColorRgba,
-        ) : TaskListItem("it_${task.id}")
-
-        class NoTasksText(
-            val text: String
-        ) : TaskListItem("no_tasks_text")
     }
 }

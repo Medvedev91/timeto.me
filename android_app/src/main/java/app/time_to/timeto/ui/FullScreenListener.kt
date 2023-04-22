@@ -258,9 +258,7 @@ private fun FullScreenView(
                 SpacerW1()
             }
 
-            TaskList(
-                tasks = state.tasksImportant,
-            )
+            TaskList(tasks = state.importantTasks)
 
             Row(
                 modifier = Modifier
@@ -544,7 +542,7 @@ private fun ExpandedChecklist(
 
 @Composable
 private fun TaskList(
-    tasks: List<FullScreenVM.TaskListItem>,
+    tasks: List<FullScreenVM.ImportantTask>,
 ) {
     Column(
         modifier = Modifier
@@ -568,89 +566,46 @@ private fun TaskList(
 
             items(
                 items = tasks,
-                key = { it.id }
+                key = { it.task.id }
             ) { taskItem ->
 
-                when (taskItem) {
-
-                    is FullScreenVM.TaskListItem.ImportantTask -> {
-                        Row(
-                            modifier = Modifier
-                                .height(taskItemHeight)
-                                .clip(MySquircleShape())
-                                .clickable {
-                                    taskItem.task.startIntervalForUI(
-                                        onStarted = {},
-                                        needSheet = {
-                                            Sheet.show { layer ->
-                                                TaskSheet(layer, taskItem.task)
-                                            }
-                                        },
-                                    )
+                Row(
+                    modifier = Modifier
+                        .height(taskItemHeight)
+                        .clip(MySquircleShape())
+                        .clickable {
+                            taskItem.task.startIntervalForUI(
+                                onStarted = {},
+                                needSheet = {
+                                    Sheet.show { layer ->
+                                        TaskSheet(layer, taskItem.task)
+                                    }
                                 },
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Row(
-                                modifier = Modifier
-                                    .padding(horizontal = 8.dp)
-                                    .clip(MySquircleShape(len = 30f))
-                                    .background(taskItem.backgroundColor.toColor())
-                                    .padding(start = 4.dp, end = 4.dp, top = 2.dp, bottom = 2.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                Icon(
-                                    painterResource(id = R.drawable.sf_calendar_medium_light),
-                                    contentDescription = "Event",
-                                    tint = c.white,
-                                    modifier = Modifier
-                                        .padding(end = 5.dp)
-                                        .size(14.dp),
-                                )
-                                Text(
-                                    text = taskItem.text,
-                                    fontWeight = FontWeight.Light,
-                                    fontSize = 12.sp,
-                                    color = c.white,
-                                )
-                            }
-                        }
-                    }
-
-                    is FullScreenVM.TaskListItem.RegularTask -> {
-                        Row(
-                            modifier = Modifier
-                                .height(taskItemHeight)
-                                .clip(MySquircleShape())
-                                .clickable {
-                                    taskItem.task.startIntervalForUI(
-                                        onStarted = {},
-                                        needSheet = {
-                                            Sheet.show { layer ->
-                                                TaskSheet(layer, taskItem.task)
-                                            }
-                                        },
-                                    )
-                                }
-                                .padding(horizontal = 10.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-
-                            Text(
-                                text = taskItem.text,
-                                color = taskItem.textColor.toColor(),
-                                fontWeight = FontWeight.Light,
-                                fontSize = 13.sp,
                             )
-                        }
-                    }
-
-                    is FullScreenVM.TaskListItem.NoTasksText -> {
+                        },
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .padding(horizontal = 8.dp)
+                            .clip(MySquircleShape(len = 30f))
+                            .background(taskItem.backgroundColor.toColor())
+                            .padding(start = 4.dp, end = 4.dp, top = 2.dp, bottom = 2.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Icon(
+                            painterResource(id = R.drawable.sf_calendar_medium_light),
+                            contentDescription = "Event",
+                            tint = c.white,
+                            modifier = Modifier
+                                .padding(end = 5.dp)
+                                .size(14.dp),
+                        )
                         Text(
                             text = taskItem.text,
-                            modifier = Modifier
-                                .height(taskItemHeight),
-                            color = c.textSecondary,
-                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Light,
+                            fontSize = 12.sp,
+                            color = c.white,
                         )
                     }
                 }
