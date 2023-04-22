@@ -91,7 +91,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
             allChecklistItems = DI.checklistItems,
             isTaskCancelVisible = false,
             isCountdown = true,
-            tasksToday = listOf(), // todo
+            tasksToday = DI.tasks.filter { it.isToday },
             idToUpdate = 0,
         )
     )
