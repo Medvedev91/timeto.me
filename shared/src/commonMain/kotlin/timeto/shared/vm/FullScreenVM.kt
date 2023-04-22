@@ -51,11 +51,11 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
 
         val importantTasks: List<ImportantTask> = tasksToday
             .mapNotNull { task ->
-                val tf = task.text.textFeatures()
-                val timeData = tf.timeData ?: return@mapNotNull null
+                val taskTextFeatures = task.text.textFeatures()
+                val timeData = taskTextFeatures.timeData ?: return@mapNotNull null
                 if (!timeData.isImportant)
                     return@mapNotNull null
-                ImportantTask(task, textFeatures, timeData)
+                ImportantTask(task, taskTextFeatures, timeData)
             }
 
         val tasksText = when (val size = tasksToday.size) {
