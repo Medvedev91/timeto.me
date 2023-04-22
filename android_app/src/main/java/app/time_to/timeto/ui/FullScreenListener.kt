@@ -288,7 +288,7 @@ private fun FullScreenView(
                     contentAlignment = Alignment.BottomCenter,
                 ) {
                     Icon(
-                        painterResource(id = R.drawable.sf_pencil_circle_medimu_thin),
+                        painterResource(id = R.drawable.sf_timer_medium_thin),
                         contentDescription = "Menu", // todo
                         tint = menuColor,
                         modifier = Modifier
