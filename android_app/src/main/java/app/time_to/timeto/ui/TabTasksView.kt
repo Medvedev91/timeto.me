@@ -14,7 +14,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.input.pointer.*
@@ -33,7 +32,6 @@ import kotlinx.coroutines.delay
 import timeto.shared.DI
 import timeto.shared.db.TaskFolderModel
 import timeto.shared.vm.TabTasksVM
-import java.util.*
 import kotlin.random.Random
 
 var setTodayFolder: (() -> Unit)? = null
