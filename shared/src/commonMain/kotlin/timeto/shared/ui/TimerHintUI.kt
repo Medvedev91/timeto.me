@@ -29,7 +29,12 @@ class TimerHintUI(
                     customLimit = customLimit,
                     primaryHints = primaryHints,
                 ).map { seconds ->
-                    TimerHintUI(seconds, activity, isShort, onStart)
+                    TimerHintUI(
+                        seconds = seconds,
+                        activity = activity,
+                        isShort = isShort,
+                        onStart = onStart,
+                    )
                 }
         }
     }
