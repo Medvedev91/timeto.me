@@ -26,22 +26,11 @@ class ActivitiesTimerSheetVM(
         }
     }
 
-    inner class ActivityUI(
+    class ActivityUI(
         val activity: ActivityModel,
-        val historySeconds: List<Int>,
+        val timerHints: List<TimerHintUI>,
     ) {
-
         val listText = activity.name.textFeatures().textUi()
-
-        val timerHints = TimerHintUI.buildList(
-            activity,
-            isShort = true,
-            historyLimit = 3,
-            customLimit = 6,
-            primaryHints = historySeconds,
-        ) { seconds ->
-            task.startInterval(seconds, activity)
-        }
     }
 
     data class State(
@@ -57,10 +46,18 @@ class ActivitiesTimerSheetVM(
         state = MutableStateFlow(
             State(
                 allActivities = DI.activitiesSorted.map { activity ->
-                    val historySeconds = primarySecondsMap[activity.id] ?: listOf()
+                    val primarySeconds = primarySecondsMap[activity.id] ?: listOf()
                     ActivityUI(
                         activity = activity,
-                        historySeconds = historySeconds,
+                        timerHints = TimerHintUI.buildList(
+                            activity,
+                            isShort = true,
+                            historyLimit = 3,
+                            customLimit = 6,
+                            primaryHints = primarySeconds,
+                        ) { seconds ->
+                            task.startInterval(seconds, activity)
+                        }
                     )
                 },
             )
