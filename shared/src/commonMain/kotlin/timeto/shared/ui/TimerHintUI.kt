@@ -7,6 +7,7 @@ import timeto.shared.toTimerHintNote
 class TimerHintUI(
     val seconds: Int,
     val activity: ActivityModel,
+    val isPrimary: Boolean,
     isShort: Boolean,
     private val onStart: suspend (Int) -> Unit,
 ) {
@@ -32,6 +33,7 @@ class TimerHintUI(
                     TimerHintUI(
                         seconds = seconds,
                         activity = activity,
+                        isPrimary = seconds in primaryHints,
                         isShort = isShort,
                         onStart = onStart,
                     )

@@ -102,7 +102,7 @@ fun TaskSheet(
                     )
 
                     activityUI.timerHints.forEach { hintUI ->
-                        val isPrimary = hintUI.seconds in activityUI.historySeconds
+                        val isPrimary = hintUI.isPrimary
                         val hPadding = if (isPrimary) 6.dp else 5.dp
                         Text(
                             text = hintUI.text,
