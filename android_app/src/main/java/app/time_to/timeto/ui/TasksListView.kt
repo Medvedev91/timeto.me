@@ -39,6 +39,7 @@ private val TASKS_LIST_ITEM_MIN_HEIGHT = 42.dp
 fun TasksListView(
     activeFolder: TaskFolderModel,
     dragItem: MutableState<DragItem?>,
+    onTaskStarted: () -> Unit,
 ) {
     val (vm, state) = rememberVM(activeFolder) { TasksListVM(activeFolder) }
     val tmrwData = state.tmrwData
@@ -305,14 +306,11 @@ fun TasksListView(
                                 .clickable {
                                     taskUI.task.startIntervalForUI(
                                         onStarted = {
-                                            // Without scope: "Method setCurrentState must be called on the main thread"
-                                            scope.launchEx {
-                                                gotoTimer()
-                                            }
+                                            onTaskStarted()
                                         },
                                         needSheet = {
                                             Sheet.show { layer ->
-                                                TaskSheet(layer, taskUI.task)
+                                                TaskSheet(layer, taskUI.task, onTaskStarted)
                                             }
                                         },
                                     )

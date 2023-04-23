@@ -551,7 +551,7 @@ private fun ImportantTasksView(
                                 onStarted = {},
                                 needSheet = {
                                     Sheet.show { layer ->
-                                        TaskSheet(layer, taskItem.task)
+                                        TaskSheet(layer, taskItem.task, onTaskStarted = {})
                                     }
                                 },
                             )
@@ -598,7 +598,10 @@ private fun TasksSheet(
             .fillMaxSize()
     ) {
 
-        TabTasksView(modifier = Modifier.weight(1f))
+        TabTasksView(
+            modifier = Modifier.weight(1f),
+            onTaskStarted = { layer.close() },
+        )
 
         Box(
             modifier = Modifier

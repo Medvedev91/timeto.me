@@ -28,6 +28,7 @@ import androidx.navigation.compose.rememberNavController
 import app.time_to.timeto.*
 import app.time_to.timeto.R
 import timeto.shared.FullScreenUI
+import timeto.shared.launchEx
 import timeto.shared.vm.TabsVM
 
 // todo
@@ -40,6 +41,9 @@ val bottomNavigationHeight = 56.dp
 fun TabsView() {
     val navController = rememberNavController()
     globalNav = navController
+
+    val scope = rememberCoroutineScope()
+
     Scaffold(
         modifier = Modifier
             .background(c.tabsBackground)
@@ -69,7 +73,14 @@ fun TabsView() {
                 TabTimerView()
             }
             composable(TabItem.Tasks.route) {
-                TabTasksView(modifier = Modifier)
+                TabTasksView(
+                    modifier = Modifier,
+                    onTaskStarted = {
+                        scope.launchEx {
+                            gotoTimer()
+                        }
+                    }
+                )
             }
             composable(TabItem.Focus.route) {
                 // todo
