@@ -219,6 +219,14 @@ data class ActivityModel(
 
     fun getData() = ActivityModel__Data.jParse(data_json)
 
+    suspend fun startInterval(
+        deadline: Int,
+    ): IntervalModel {
+        val lastInterval = IntervalModel.getLastOneOrNull()!!
+        val note = if (lastInterval.activity_id == this.id) lastInterval.note else null
+        return IntervalModel.addWithValidation(deadline, this, note)
+    }
+
     suspend fun upByIdWithValidation(
         name: String,
         emoji: String,
