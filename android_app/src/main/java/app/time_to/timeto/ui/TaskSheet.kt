@@ -102,14 +102,14 @@ fun TaskSheet(
                     )
 
                     activityUI.timerHints.forEach { hintUI ->
-                        val inHistory = hintUI.seconds in activityUI.historySeconds
-                        val hPadding = if (inHistory) 6.dp else 5.dp
+                        val isPrimary = hintUI.seconds in activityUI.historySeconds
+                        val hPadding = if (isPrimary) 6.dp else 5.dp
                         Text(
                             text = hintUI.text,
                             modifier = Modifier
                                 .clip(RoundedCornerShape(99.dp))
                                 .align(Alignment.CenterVertically)
-                                .background(if (inHistory) c.blue else c.transparent)
+                                .background(if (isPrimary) c.blue else c.transparent)
                                 .clickable {
                                     hintUI.startInterval {
                                         scopeTaskSheet.launchEx {
@@ -119,9 +119,9 @@ fun TaskSheet(
                                     }
                                 }
                                 .padding(start = hPadding, end = hPadding, top = 3.dp, bottom = 4.dp),
-                            color = if (inHistory) c.white else c.blue,
-                            fontSize = if (inHistory) 13.sp else 14.sp,
-                            fontWeight = if (inHistory) FontWeight.W500 else FontWeight.W300,
+                            color = if (isPrimary) c.white else c.blue,
+                            fontSize = if (isPrimary) 13.sp else 14.sp,
+                            fontWeight = if (isPrimary) FontWeight.W500 else FontWeight.W300,
                         )
                     }
                 }
