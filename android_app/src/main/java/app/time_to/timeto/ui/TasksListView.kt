@@ -310,7 +310,7 @@ fun TasksListView(
                                         },
                                         needSheet = {
                                             Sheet.show { layer ->
-                                                TaskSheet(layer, taskUI.task, onTaskStarted)
+                                                ActivitiesTimerSheet(layer, taskUI.task, onTaskStarted)
                                             }
                                         },
                                     )

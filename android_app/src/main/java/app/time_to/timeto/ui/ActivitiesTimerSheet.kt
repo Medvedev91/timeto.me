@@ -25,7 +25,7 @@ import timeto.shared.vm.ActivityTimerSheetVM
 import timeto.shared.vm.ActivitiesTimerSheetVM
 
 @Composable
-fun TaskSheet(
+fun ActivitiesTimerSheet(
     layerTaskSheet: WrapperView.Layer,
     task: TaskModel,
     onTaskStarted: () -> Unit,
