@@ -3,7 +3,7 @@ package timeto.shared
 import kotlinx.coroutines.flow.*
 import timeto.shared.db.ActivityModel
 import timeto.shared.db.TaskModel
-import timeto.shared.vm.TaskSheetVM
+import timeto.shared.vm.ActivitiesTimerSheetVM
 import timeto.shared.vm.__VM
 import timeto.shared.ui.TimerHintUI
 
@@ -40,7 +40,7 @@ class WatchTaskSheetVM(
     override val state: MutableStateFlow<State>
 
     init {
-        val historySecondsMap = TaskSheetVM.prepHistorySecondsMap(task.text)
+        val historySecondsMap = ActivitiesTimerSheetVM.prepHistorySecondsMap(task.text)
         // On the top activities with history
         val activitiesSorted = DI.activitiesSorted.sortedByDescending {
             historySecondsMap[it.id] != null

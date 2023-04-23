@@ -7,9 +7,9 @@ import timeto.shared.db.TaskModel
 import timeto.shared.textFeatures
 import timeto.shared.ui.TimerHintUI
 
-class TaskSheetVM(
+class ActivitiesTimerSheetVM(
     val task: TaskModel,
-) : __VM<TaskSheetVM.State>() {
+) : __VM<ActivitiesTimerSheetVM.State>() {
 
     companion object {
 

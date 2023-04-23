@@ -22,7 +22,7 @@ import app.time_to.timeto.*
 import timeto.shared.db.TaskModel
 import timeto.shared.launchEx
 import timeto.shared.vm.ActivityTimerSheetVM
-import timeto.shared.vm.TaskSheetVM
+import timeto.shared.vm.ActivitiesTimerSheetVM
 
 @Composable
 fun TaskSheet(
@@ -36,7 +36,7 @@ fun TaskSheet(
     val topContentPadding = 2.dp
     val bottomContentPadding = 20.dp
 
-    val (_, state) = rememberVM(task) { TaskSheetVM(task) }
+    val (_, state) = rememberVM(task) { ActivitiesTimerSheetVM(task) }
 
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
 
