@@ -51,13 +51,16 @@ class ActivitiesTimerSheetVM(
     override val state: MutableStateFlow<State>
 
     init {
-        val historySecondsMap = prepHistorySecondsMap(task.text)
+        val primarySecondsMap: Map<Int, List<Int>> /* `activity id` -> `seconds list` */ =
+            if (task != null) prepHistorySecondsMap(task.text) else mapOf()
+
         state = MutableStateFlow(
             State(
                 allActivities = DI.activitiesSorted.map { activity ->
+                    val historySeconds = primarySecondsMap[activity.id] ?: listOf()
                     ActivityUI(
                         activity = activity,
-                        historySeconds = historySecondsMap[activity.id] ?: listOf(),
+                        historySeconds = historySeconds,
                     )
                 },
             )
