@@ -350,11 +350,3 @@ sealed class DropItem(
         square: Square,
     ) : DropItem("Calendar", square)
 }
-
-////
-
-fun gotoTimer() {
-    globalNav!!.navigate(TabItem.Timer.route) {
-        popUpTo(0)
-    }
-}

@@ -20,7 +20,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -31,18 +30,12 @@ import timeto.shared.FullScreenUI
 import timeto.shared.launchEx
 import timeto.shared.vm.TabsVM
 
-// todo
-// https://stackoverflow.com/q/67059823
-var globalNav: NavHostController? = null
-
 val bottomNavigationHeight = 56.dp
 
 @Composable
 fun TabsView() {
-    val navController = rememberNavController()
-    globalNav = navController
-
     val scope = rememberCoroutineScope()
+    val navController = rememberNavController()
 
     Scaffold(
         modifier = Modifier
@@ -77,7 +70,9 @@ fun TabsView() {
                     modifier = Modifier,
                     onTaskStarted = {
                         scope.launchEx {
-                            gotoTimer()
+                            navController.navigate(TabItem.Timer.route) {
+                                popUpTo(0)
+                            }
                         }
                     }
                 )
