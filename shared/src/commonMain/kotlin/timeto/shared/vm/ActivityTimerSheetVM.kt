@@ -57,9 +57,7 @@ class ActivityTimerSheetVM(
                     IntervalModel.addWithValidation(deadline, activity, timerContext.text)
                 }
                 null -> {
-                    val lastInterval = IntervalModel.getLastOneOrNull()!!
-                    val note = if (lastInterval.activity_id == activity.id) lastInterval.note else null
-                    IntervalModel.addWithValidation(deadline, activity, note)
+                    activity.startInterval(deadline)
                 }
             }
 

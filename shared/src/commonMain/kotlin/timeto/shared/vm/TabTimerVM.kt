@@ -22,9 +22,7 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
             historyLimit = 2,
             customLimit = 5
         ) { seconds ->
-            val last = DI.lastInterval
-            val note = if (last.activity_id == activity.id) last.note else null
-            IntervalModel.addWithValidation(seconds, activity, note)
+            activity.startInterval(seconds)
         }
 
         val deletionHint: String

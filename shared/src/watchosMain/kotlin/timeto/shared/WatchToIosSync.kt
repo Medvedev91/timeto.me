@@ -51,19 +51,13 @@ object WatchToIosSync {
         activity: ActivityModel,
         deadline: Int,
     ): Unit = defaultScope().launchEx {
-        val last = DI.lastInterval
-        val note = if (last.activity_id == activity.id) last.note else null
-        IntervalModel.addWithValidation(
-            deadline = deadline,
-            activity = activity,
-            note = note,
-        )
+        val interval = activity.startInterval(deadline)
         launchEx {
             delay(LOCAL_DELAY_MLS)
             val map = mapOf(
                 "activity_id" to JsonPrimitive(activity.id),
                 "deadline" to JsonPrimitive(deadline),
-                "note" to JsonPrimitive(note),
+                "note" to JsonPrimitive(interval.note),
             )
             requestFromAppleWatch(
                 command = "start_interval",
