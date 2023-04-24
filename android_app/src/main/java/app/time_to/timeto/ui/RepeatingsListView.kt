@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.time_to.timeto.*
 import timeto.shared.vm.RepeatingsListVM
-import java.util.*
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
