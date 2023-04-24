@@ -19,7 +19,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.time_to.timeto.*
-import timeto.shared.db.TaskModel
 import timeto.shared.launchEx
 import timeto.shared.vm.ActivityTimerSheetVM
 import timeto.shared.vm.ActivitiesTimerSheetVM
@@ -27,7 +26,7 @@ import timeto.shared.vm.ActivitiesTimerSheetVM
 @Composable
 fun ActivitiesTimerSheet(
     layerTaskSheet: WrapperView.Layer,
-    task: TaskModel,
+    timerContext: ActivityTimerSheetVM.TimerContext?,
     onTaskStarted: () -> Unit,
 ) {
     val scopeTaskSheet = rememberCoroutineScope()
@@ -36,7 +35,7 @@ fun ActivitiesTimerSheet(
     val topContentPadding = 2.dp
     val bottomContentPadding = 20.dp
 
-    val (_, state) = rememberVM(task) { ActivitiesTimerSheetVM(task) }
+    val (_, state) = rememberVM(timerContext) { ActivitiesTimerSheetVM(timerContext) }
 
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
 
@@ -69,7 +68,7 @@ fun ActivitiesTimerSheet(
                                 ActivityTimerSheet(
                                     layer = layerTimer,
                                     activity = activity,
-                                    timerContext = ActivityTimerSheetVM.TimerContext.Task(task)
+                                    timerContext = timerContext,
                                 ) {
                                     scopeTaskSheet.launchEx {
                                         onTaskStarted()

@@ -3,12 +3,11 @@ package timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import timeto.shared.DI
 import timeto.shared.db.ActivityModel
-import timeto.shared.db.TaskModel
 import timeto.shared.textFeatures
 import timeto.shared.ui.TimerHintUI
 
 class ActivitiesTimerSheetVM(
-    val task: TaskModel,
+    timerContext: ActivityTimerSheetVM.TimerContext?,
 ) : __VM<ActivitiesTimerSheetVM.State>() {
 
     companion object {
@@ -41,7 +40,11 @@ class ActivitiesTimerSheetVM(
 
     init {
         val primarySecondsMap: Map<Int, List<Int>> /* `activity id` -> `seconds list` */ =
-            if (task != null) prepHistorySecondsMap(task.text) else mapOf()
+            when (timerContext) {
+                is ActivityTimerSheetVM.TimerContext.Task ->
+                    prepHistorySecondsMap(timerContext.task.text)
+                null -> mapOf()
+            }
 
         state = MutableStateFlow(
             State(
@@ -56,7 +59,11 @@ class ActivitiesTimerSheetVM(
                             customLimit = 6,
                             primaryHints = primarySeconds,
                         ) { seconds ->
-                            task.startInterval(seconds, activity)
+                            when (timerContext) {
+                                is ActivityTimerSheetVM.TimerContext.Task ->
+                                    timerContext.task.startInterval(seconds, activity)
+                                null -> activity.startInterval(seconds)
+                            }
                         }
                     )
                 },

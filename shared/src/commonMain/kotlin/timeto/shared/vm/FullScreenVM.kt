@@ -187,6 +187,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
         val type = timeData.type
         val text: String
         val backgroundColor: ColorRgba
+        val timerContext = ActivityTimerSheetVM.TimerContext.Task(task)
 
         init {
             val dateText = timeData.unixTime.getStringByComponents(

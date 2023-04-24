@@ -118,6 +118,7 @@ class TasksListVM(
         val textFeatures = task.text.textFeatures()
         val text = textFeatures.textUi()
         val timeUI: TimeUI? = textFeatures.timeData?.let { TimeUI.prepItem(it) }
+        val timerContext = ActivityTimerSheetVM.TimerContext.Task(task)
 
         fun upFolder(newFolder: TaskFolderModel) {
             launchExDefault {
