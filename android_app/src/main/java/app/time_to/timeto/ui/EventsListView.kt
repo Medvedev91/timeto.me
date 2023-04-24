@@ -176,7 +176,9 @@ fun EventsListView() {
 
                         Text(
                             uiEvent.listText,
-                            modifier = Modifier.padding(horizontal = horizontalPadding)
+                            modifier = Modifier
+                                .padding(horizontal = horizontalPadding),
+                            color = c.text,
                         )
 
                         TextFeaturesTriggersView(
