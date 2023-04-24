@@ -297,6 +297,7 @@ private fun FullScreenView(
                                         modifier = Modifier
                                             .pointerInput(Unit) { }
                                     ) {
+                                        // todo use parent theme
                                         MaterialTheme(colors = myDarkColors()) {
                                             TasksSheet(layer = layer)
                                         }
