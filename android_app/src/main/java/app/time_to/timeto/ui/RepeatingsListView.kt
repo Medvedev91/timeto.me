@@ -142,7 +142,8 @@ fun RepeatingsListView() {
                             repeatingUI.listText,
                             modifier = Modifier
                                 .padding(horizontal = horizontalPadding)
-                                .padding(top = 2.dp)
+                                .padding(top = 2.dp),
+                            color = c.text,
                         )
 
                         val badgesHPadding = horizontalPadding - 2.dp
