@@ -552,7 +552,11 @@ private fun ImportantTasksView(
                                 onStarted = {},
                                 needSheet = {
                                     Sheet.show { layer ->
-                                        ActivitiesTimerSheet(layer, taskItem.timerContext, onTaskStarted = {})
+                                        ActivitiesTimerSheet(
+                                            layerTaskSheet = layer,
+                                            timerContext = taskItem.timerContext,
+                                            onTaskStarted = {},
+                                        )
                                     }
                                 },
                             )
