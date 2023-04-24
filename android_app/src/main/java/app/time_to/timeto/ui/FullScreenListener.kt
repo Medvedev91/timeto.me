@@ -252,9 +252,10 @@ private fun FullScreenView(
                         .clip(MySquircleShape())
                         .clickable {
                             Sheet.show { layer ->
-                                TaskFormSheet(
-                                    task = null,
-                                    layer = layer,
+                                ActivitiesTimerSheet(
+                                    layerTaskSheet = layer,
+                                    timerContext = null,
+                                    onTaskStarted = {},
                                 )
                             }
                         },
