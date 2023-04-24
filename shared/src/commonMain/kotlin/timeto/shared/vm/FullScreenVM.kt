@@ -186,6 +186,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
     ) {
         val type = timeData.type
         val text: String
+        val borderColor: ColorRgba
         val backgroundColor: ColorRgba
         val timerContext = ActivityTimerSheetVM.TimerContext.Task(task)
 
@@ -200,9 +201,14 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
             )
             text = "$dateText ${textFeatures.textNoFeatures} - ${timeData.timeLeftText()}"
             backgroundColor = when (timeData.status) {
-                TextFeatures.TimeData.STATUS.IN, // todo?
+                TextFeatures.TimeData.STATUS.IN -> ColorRgba.black
                 TextFeatures.TimeData.STATUS.NEAR -> ColorRgba(0, 122, 255, 255) // todo
                 TextFeatures.TimeData.STATUS.OVERDUE -> ColorRgba(255, 59, 48) // todo
+            }
+            borderColor = when (timeData.status) {
+                TextFeatures.TimeData.STATUS.IN -> ColorRgba.white
+                TextFeatures.TimeData.STATUS.NEAR,
+                TextFeatures.TimeData.STATUS.OVERDUE -> backgroundColor
             }
         }
     }

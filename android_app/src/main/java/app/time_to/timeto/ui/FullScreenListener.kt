@@ -546,7 +546,8 @@ private fun ImportantTasksView(
                 Row(
                     modifier = Modifier
                         .height(taskItemHeight)
-                        .clip(MySquircleShape())
+                        .padding(vertical = 4.dp)
+                        .clip(RoundedCornerShape(99.dp))
                         .clickable {
                             taskItem.task.startIntervalForUI(
                                 onStarted = {},
@@ -560,32 +561,35 @@ private fun ImportantTasksView(
                                     }
                                 },
                             )
-                        },
+                        }
+                        .background(
+                            color = taskItem.borderColor.toColor(),
+                            shape = RoundedCornerShape(99.dp)
+                        )
+                        .padding(1.dp)
+                        .background(
+                            color = taskItem.backgroundColor.toColor(),
+                            shape = RoundedCornerShape(99.dp)
+                        )
+                        .padding(start = 8.dp, end = 8.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Row(
+
+                    Icon(
+                        painterResource(id = R.drawable.sf_calendar_medium_light),
+                        contentDescription = "Event",
+                        tint = c.white,
                         modifier = Modifier
-                            .padding(horizontal = 8.dp)
-                            .clip(MySquircleShape(len = 30f))
-                            .background(taskItem.backgroundColor.toColor())
-                            .padding(start = 4.dp, end = 4.dp, top = 2.dp, bottom = 2.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Icon(
-                            painterResource(id = R.drawable.sf_calendar_medium_light),
-                            contentDescription = "Event",
-                            tint = c.white,
-                            modifier = Modifier
-                                .padding(end = 5.dp)
-                                .size(14.dp),
-                        )
-                        Text(
-                            text = taskItem.text,
-                            fontWeight = FontWeight.Light,
-                            fontSize = 12.sp,
-                            color = c.white,
-                        )
-                    }
+                            .padding(end = 5.dp)
+                            .size(14.dp),
+                    )
+                    Text(
+                        text = taskItem.text,
+                        modifier = Modifier.padding(bottom = 1.dp),
+                        fontWeight = FontWeight.Light,
+                        fontSize = 12.sp,
+                        color = c.white,
+                    )
                 }
             }
         }
