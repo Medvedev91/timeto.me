@@ -587,7 +587,7 @@ private fun ImportantTasksView(
                     Text(
                         text = taskItem.text,
                         modifier = Modifier.padding(bottom = 1.dp),
-                        fontWeight = FontWeight.Light,
+                        fontWeight = FontWeight.Normal,
                         fontSize = 12.sp,
                         color = c.white,
                     )
