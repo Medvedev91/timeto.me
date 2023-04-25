@@ -57,7 +57,8 @@ fun TasksListView(
                 .fillMaxHeight()
                 .padding(start = TAB_TASKS_PADDING_START, end = TAB_TASKS_PADDING_END),
             reverseLayout = true,
-            contentPadding = PaddingValues(top = 12.dp),
+            // statusBarHeight for Focus todo only for focus
+            contentPadding = PaddingValues(top = 12.dp + statusBarHeight),
             state = listState,
         ) {
 
