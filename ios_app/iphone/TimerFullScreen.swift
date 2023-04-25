@@ -330,10 +330,10 @@ private struct ChecklistView: View {
     }
 }
 
-private struct TaskList: View {
+private struct ImportantTasksView: View {
 
     let isNavDividerVisible: Bool
-    let tasks: [FullScreenVM.TaskListItem]
+    let tasks: [FullScreenVM.ImportantTask]
 
     private let LIST_BOTTOM_ITEM_ID = "bottom_id"
 
