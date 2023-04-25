@@ -503,24 +503,7 @@ struct TabTimerView_ProgressView: View {
 
                     Spacer(minLength: 0)
 
-                    HStack {
-
-                        Spacer(minLength: 0)
-
-                        Button(
-                                action: {
-                                    vm.restart()
-                                },
-                                label: {
-                                    Image(systemName: "arrow.counterclockwise")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 20)
-                                            .padding(.bottom, 7)
-                                            .foregroundColor(subtitleColor)
-                                            .font(Font.title.weight(.thin))
-                                }
-                        )
+                    HStack(spacing: 0) {
 
                         Spacer(minLength: 0)
 
@@ -531,24 +514,6 @@ struct TabTimerView_ProgressView: View {
                                 //.padding(.vertical, -10) /// https://stackoverflow.com/q/61431791
                                 .foregroundColor(timerData.titleColor.toColor())
                                 .padding(.bottom, 8)
-
-                        Spacer(minLength: 0)
-
-                        Button(
-                                action: {
-                                    FullScreenUI.shared.open()
-                                },
-                                label: {
-                                    Image(systemName: "arrow.up.left.and.arrow.down.right")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 20)
-                                            .foregroundColor(subtitleColor)
-                                            .rotationEffect(.degrees(-90))
-                                            .padding(.bottom, 7)
-                                            .font(Font.title.weight(.thin))
-                                }
-                        )
 
                         Spacer(minLength: 0)
                     }
