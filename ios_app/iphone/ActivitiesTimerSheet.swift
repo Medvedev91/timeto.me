@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-struct TaskSheet: View {
+struct ActivitiesTimerSheet: View {
 
     @State private var vm: ActivitiesTimerSheetVM
 

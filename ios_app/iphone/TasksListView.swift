@@ -413,7 +413,7 @@ struct TasksView__TaskRowView: View {
                             return Color.clear
                         })
                         .sheetEnv(isPresented: $isSheetPresented) {
-                            TaskSheet(
+                            ActivitiesTimerSheet(
                                     isPresented: $isSheetPresented,
                                     timerContext: taskUI.timerContext
                             ) {

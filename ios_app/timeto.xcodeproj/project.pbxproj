@@ -71,7 +71,7 @@
 		31821D2F481BE7580FE4DCC2 /* MyDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821155EAD516A3967CFF52 /* MyDivider.swift */; };
 		31821D960D04B6FF21EA9918 /* ActivityFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821794CA93E29D6889286D /* ActivityFormSheet.swift */; };
 		31821DF8D1DFB408872C85BD /* FolderFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821514C5F55F9A34FBC8AD /* FolderFormSheet.swift */; };
-		31821DF974247D110D01C3A2 /* TaskSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318213DE3B58FA098A8DBAE7 /* TaskSheet.swift */; };
+		31821DF974247D110D01C3A2 /* ActivitiesTimerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318213DE3B58FA098A8DBAE7 /* ActivitiesTimerSheet.swift */; };
 		31821E89257A3F8032DE116A /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182118DB415E858D0B449DB /* ChartView.swift */; };
 		31821ED40BEA91336DBFE0B4 /* W_TickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821FC26DE90D545D9620B0 /* W_TickerDialog.swift */; };
 		31821F3DCAF6792F0E78CEBD /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821ACA6C9306A2CD2016A0 /* HistoryView.swift */; };
@@ -131,7 +131,7 @@
 		318212B384624F1CF416C576 /* EventFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventFormSheet.swift; sourceTree = "<group>"; };
 		318212FEA97CBD2AEC3AA1D6 /* ChecklistFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChecklistFormSheet.swift; sourceTree = "<group>"; };
 		318212FFE80A0856A0A88DCF /* MySpacerSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySpacerSize.swift; sourceTree = "<group>"; };
-		318213DE3B58FA098A8DBAE7 /* TaskSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskSheet.swift; sourceTree = "<group>"; };
+		318213DE3B58FA098A8DBAE7 /* ActivitiesTimerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesTimerSheet.swift; sourceTree = "<group>"; };
 		31821407A6DA0B853D8B1116 /* ActivityTimerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityTimerSheet.swift; sourceTree = "<group>"; };
 		31821514C5F55F9A34FBC8AD /* FolderFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderFormSheet.swift; sourceTree = "<group>"; };
 		3182151D618D3ED8AEE1B80A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -307,7 +307,7 @@
 				31821E772C640720D7220928 /* TabTimerView.swift */,
 				318215C1991B23DE1654074B /* TabToolsView.swift */,
 				31821F4527059D286AC0AF41 /* TaskFormSheet.swift */,
-				318213DE3B58FA098A8DBAE7 /* TaskSheet.swift */,
+				318213DE3B58FA098A8DBAE7 /* ActivitiesTimerSheet.swift */,
 				31821AD0C2CE87BF5AE03022 /* TasksListView.swift */,
 				31821CC7588164B713321141 /* TextField__VMState.swift */,
 				31821ED2142F08DDD1E0CC75 /* TimerFullScreen.swift */,
@@ -529,7 +529,7 @@
 				31821A329A5D1AE8F7CB0604 /* EventFormSheet.swift in Sources */,
 				318219E4F8AFEB280A077F74 /* utils_apple.swift in Sources */,
 				318210CF629A7E593B9F8FE4 /* ChecklistItemFormSheet.swift in Sources */,
-				31821DF974247D110D01C3A2 /* TaskSheet.swift in Sources */,
+				31821DF974247D110D01C3A2 /* ActivitiesTimerSheet.swift in Sources */,
 				31821611D065F54C0BC007A9 /* DaytimePickerSheet.swift in Sources */,
 				318212D55BBA074155F95EB0 /* TextField__VMState.swift in Sources */,
 				318215958A7A06F6610DF5AF /* TimetoAlert.swift in Sources */,

@@ -472,7 +472,7 @@ private struct ImportantTaskItem: View {
                 }
         )
                 .sheetEnv(isPresented: $isSheetPresented) {
-                    TaskSheet(
+                    ActivitiesTimerSheet(
                             isPresented: $isSheetPresented,
                             timerContext: importantTask.timerContext
                     ) {
