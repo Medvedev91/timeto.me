@@ -313,9 +313,9 @@ private fun FullScreenView(
                     Text(
                         text = state.tasksText,
                         modifier = Modifier
-                            .padding(bottom = 20.dp),
+                            .padding(bottom = 22.dp),
                         color = state.menuColor.toColor(),
-                        fontSize = 12.sp,
+                        fontSize = 13.sp,
                         fontWeight = FontWeight.Light,
                     )
 
