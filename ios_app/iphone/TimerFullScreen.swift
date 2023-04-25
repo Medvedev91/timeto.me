@@ -41,7 +41,7 @@ private struct TimerFullScreen__ViewModifier: ViewModifier {
 private struct TimerFullScreen__FullScreenCoverView: View {
 
     @State private var vm = FullScreenVM()
-    @State private var isNewTaskPresented = false
+    @State private var isTimerActivitiesPresented = false
 
     var body: some View {
 
@@ -196,7 +196,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
                     Button(
                             action: {
-                                isNewTaskPresented = true
+                                isTimerActivitiesPresented = true
                             },
                             label: {
                                 Image(systemName: "timer")
@@ -205,15 +205,14 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                         .frame(maxWidth: .infinity)
                             }
                     )
-                            .sheetEnv(
-                                    isPresented: $isNewTaskPresented,
-                                    content: {
-                                        TaskFormSheet(
-                                                task: nil,
-                                                isPresented: $isNewTaskPresented
-                                        )
-                                    }
-                            )
+                            .sheetEnv(isPresented: $isTimerActivitiesPresented) {
+                                ActivitiesTimerSheet(
+                                        isPresented: $isTimerActivitiesPresented,
+                                        timerContext: nil
+                                ) {
+                                    isTimerActivitiesPresented = false
+                                }
+                            }
 
                     Button(
                             action: {
