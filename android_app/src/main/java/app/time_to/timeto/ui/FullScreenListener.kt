@@ -329,7 +329,7 @@ private fun FullScreenView(
 
                     Row(
                         modifier = Modifier
-                            .padding(end = 2.dp, bottom = 4.dp)
+                            .padding(end = 2.dp, bottom = 3.dp)
                             .clip(RoundedCornerShape(99.dp))
                             .background(animateColorAsState(state.batteryBackground.toColor()).value)
                             .padding(start = 4.dp, end = 5.dp),
