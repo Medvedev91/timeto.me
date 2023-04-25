@@ -126,66 +126,26 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                             .padding(.top, 10)
                 }
 
-                let checklistUI = state.checklistUI
-                // todo test .clipToBounds()
                 ZStack(alignment: .bottom) {
 
-                    ///
-                    /// Compact Tasks Mode
+                    let checklistUI = state.checklistUI
 
                     VStack(spacing: 0) {
 
-                        if !state.isTaskListShowed, let checklistUI = checklistUI {
+                        if let checklistUI = checklistUI {
                             ChecklistView(checklistUI: checklistUI)
                         } else {
                             Spacer(minLength: 0)
                         }
 
-                        if !state.isTaskListShowed {
-                            TaskList(
-                                    isNavDividerVisible: checklistUI != nil,
-                                    tasks: state.tasksImportant
-                            )
-                                    .frame(height: calcTaskListHeight(tasks: state.tasksImportant))
-                        }
-                    }
-
-                    ///
-                    /// Full Tasks Mode
-
-                    VStack(spacing: 0) {
-
-                        if state.isTaskListShowed, let checklistUI = checklistUI {
-
-                            Button(
-                                    action: {
-                                        vm.toggleIsCompactTaskList()
-                                    },
-                                    label: {
-                                        VStack(spacing: 0) {
-
-                                            Text(checklistUI.collapsedTitle)
-                                                    .foregroundColor(Color.white)
-                                                    .font(.system(size: 18))
-
-                                            Image(systemName: "chevron.compact.down")
-                                                    .foregroundColor(Color.white)
-                                                    .font(.system(size: 30, weight: .thin))
-                                                    .padding(.top, 4)
-                                        }
-                                                .padding(.vertical, 20)
-                                                .frame(maxWidth: .infinity)
-                                    }
-                            )
-                        }
-
-                        if state.isTaskListShowed {
-                            TaskList(
-                                    isNavDividerVisible: checklistUI != nil,
-                                    //                                    taskListScrollState = taskListScrollState,
-                                    tasks: state.tasksAll
-                            )
-                        }
+                        let listHeight = taskItemHeight * state.importantTasks.count.toDouble()
+                                         + dividerHeight
+                                         + taskListContentPadding * 2.0
+                        ImportantTasksView(
+                                isNavDividerVisible: checklistUI != nil,
+                                tasks: state.importantTasks
+                        )
+                                .frame(height: listHeight)
                     }
                 }
                         .frame(maxHeight: .infinity)
@@ -395,22 +355,8 @@ private struct TaskList: View {
                             ZStack {}
                                     .frame(height: taskListContentPadding)
 
-                            ForEach(tasks, id: \.self.id) { taskItem in
-
-                                if let taskItem = taskItem as? FullScreenVM.TaskListItemImportantTask {
-
-                                    ImportantTaskItem(taskItem: taskItem)
-
-                                } else if let taskItem = taskItem as? FullScreenVM.TaskListItemRegularTask {
-
-                                    RegularTaskItem(taskItem: taskItem)
-
-                                } else if let taskItem = taskItem as? FullScreenVM.TaskListItemNoTasksText {
-
-                                    Text(taskItem.text)
-                                            .frame(height: taskItemHeight)
-                                            .foregroundColor(Color.white)
-                                }
+                            ForEach(tasks, id: \.self.task.id) { importantTask in
+                                ImportantTaskItem(importantTask: importantTask)
                             }
 
                             ZStack {}
@@ -431,7 +377,7 @@ private struct TaskList: View {
 
 private struct ImportantTaskItem: View {
 
-    let taskItem: FullScreenVM.TaskListItemImportantTask
+    let importantTask: FullScreenVM.ImportantTask
 
     @State private var isSheetPresented = false
 
@@ -439,7 +385,7 @@ private struct ImportantTaskItem: View {
 
         Button(
                 action: {
-                    taskItem.task.startIntervalForUI(
+                    importantTask.task.startIntervalForUI(
                             onStarted: {},
                             needSheet: {
                                 isSheetPresented = true
@@ -456,7 +402,7 @@ private struct ImportantTaskItem: View {
                                     .font(.system(size: 15, weight: .light))
                                     .padding(.trailing, 2)
 
-                            Text(taskItem.text)
+                            Text(importantTask.text)
                                     .font(.system(size: 15))
                                     .foregroundColor(Color.white)
                         }
@@ -464,7 +410,7 @@ private struct ImportantTaskItem: View {
                                 .padding(.vertical, 2)
                                 .background(
                                         RoundedRectangle(cornerRadius: 6, style: .circular)
-                                                .fill(taskItem.backgroundColor.toColor())
+                                                .fill(importantTask.backgroundColor.toColor())
                                 )
                     }
                             .frame(height: taskItemHeight)
@@ -479,45 +425,4 @@ private struct ImportantTaskItem: View {
                     }
                 }
     }
-}
-
-private struct RegularTaskItem: View {
-
-    let taskItem: FullScreenVM.TaskListItemRegularTask
-
-    @State private var isSheetPresented = false
-
-    var body: some View {
-        Button(
-                action: {
-                    taskItem.task.startIntervalForUI(
-                            onStarted: {},
-                            needSheet: {
-                                isSheetPresented = true
-                            }
-                    )
-                },
-                label: {
-                    Text(taskItem.text)
-                            .foregroundColor(taskItem.textColor.toColor())
-                            .frame(height: taskItemHeight)
-                }
-        )
-                .sheetEnv(isPresented: $isSheetPresented) {
-                    TaskSheet(
-                            isPresented: $isSheetPresented,
-                            task: taskItem.task
-                    ) {
-                        isSheetPresented = false
-                    }
-                }
-    }
-}
-
-private func calcTaskListHeight(
-        tasks: [FullScreenVM.TaskListItem]
-) -> Double {
-    taskItemHeight * tasks.count.toDouble()
-    + dividerHeight
-    + taskListContentPadding * 2.0
 }
