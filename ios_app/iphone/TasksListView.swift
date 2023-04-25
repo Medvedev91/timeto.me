@@ -415,7 +415,7 @@ struct TasksView__TaskRowView: View {
                         .sheetEnv(isPresented: $isSheetPresented) {
                             TaskSheet(
                                     isPresented: $isSheetPresented,
-                                    task: taskUI.task
+                                    timerContext: taskUI.timerContext
                             ) {
                                 isSheetPresented = false
                                 gotoTimer()
@@ -488,8 +488,7 @@ struct TasksView__TaskRowView: View {
 
 struct TasksView__TaskRowView__ActivityRowView: View {
 
-    var activityUI: TaskSheetVM.ActivityUI
-    let historySeconds: [Int]
+    var activityUI: ActivitiesTimerSheetVM.ActivityUI
     let onClickOnTimer: () -> Void
     let onStarted: () -> Void
 
@@ -522,7 +521,7 @@ struct TasksView__TaskRowView__ActivityRowView: View {
                             Spacer(minLength: 0)
 
                             ForEach(activityUI.timerHints, id: \.seconds) { hintUI in
-                                let isHistory = activityUI.historySeconds.contains(hintUI.seconds.toInt().toKotlinInt())
+                                let isPrimary = hintUI.isPrimary
                                 Button(
                                         action: {
                                             hintUI.startInterval {
@@ -531,15 +530,15 @@ struct TasksView__TaskRowView__ActivityRowView: View {
                                         },
                                         label: {
                                             Text(hintUI.text)
-                                                    .font(.system(size: isHistory ? 13 : 14, weight: isHistory ? .medium : .light))
-                                                    .foregroundColor(isHistory ? .white : .blue)
+                                                    .font(.system(size: isPrimary ? 13 : 14, weight: isPrimary ? .medium : .light))
+                                                    .foregroundColor(isPrimary ? .white : .blue)
                                                     .padding(.leading, 6)
-                                                    .padding(.trailing, isHistory ? 6 : 2)
+                                                    .padding(.trailing, isPrimary ? 6 : 2)
                                                     .padding(.top, 3)
                                                     .padding(.bottom, 3.5)
-                                                    .background(isHistory ? .blue : .clear)
+                                                    .background(isPrimary ? .blue : .clear)
                                                     .clipShape(Capsule())
-                                                    .padding(.leading, isHistory ? 4 : 0)
+                                                    .padding(.leading, isPrimary ? 4 : 0)
                                         }
                                 )
                                         .buttonStyle(.borderless)

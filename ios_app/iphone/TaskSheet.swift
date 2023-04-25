@@ -3,24 +3,24 @@ import shared
 
 struct TaskSheet: View {
 
-    @State private var vm: TaskSheetVM
+    @State private var vm: ActivitiesTimerSheetVM
 
     @State private var sheetActivity: ActivityModel? = nil
     @Binding private var isPresented: Bool
 
-    private let task: TaskModel
+    private let timerContext: ActivityTimerSheetVM.TimerContext?
     private let onStart: () -> Void
 
     init(
             isPresented: Binding<Bool>,
-            task: TaskModel,
+            timerContext: ActivityTimerSheetVM.TimerContext?,
             onStart: @escaping () -> Void
     ) {
         _isPresented = isPresented
-        self.task = task
+        self.timerContext = timerContext
         self.onStart = onStart
 
-        _vm = State(initialValue: TaskSheetVM(task: task))
+        _vm = State(initialValue: ActivitiesTimerSheetVM(timerContext: timerContext))
     }
 
     var body: some View {
@@ -41,7 +41,7 @@ struct TaskSheet: View {
                     ActivityTimerSheet(
                             activity: sheetActivity,
                             isPresented: $isPresented,
-                            timerContext: ActivityTimerSheetVM.TimerContextTask(task: task),
+                            timerContext: timerContext,
                             onStart: {
                                 onStart()
                             }
@@ -60,7 +60,6 @@ struct TaskSheet: View {
 
                                 TasksView__TaskRowView__ActivityRowView(
                                         activityUI: activityUI,
-                                        historySeconds: activityUI.historySeconds.map { $0.toInt() },
                                         onClickOnTimer: {
                                             sheetActivity = activityUI.activity
                                         },

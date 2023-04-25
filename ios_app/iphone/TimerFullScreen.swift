@@ -474,7 +474,7 @@ private struct ImportantTaskItem: View {
                 .sheetEnv(isPresented: $isSheetPresented) {
                     TaskSheet(
                             isPresented: $isSheetPresented,
-                            task: taskItem.task
+                            timerContext: importantTask.timerContext
                     ) {
                         isSheetPresented = false
                     }
