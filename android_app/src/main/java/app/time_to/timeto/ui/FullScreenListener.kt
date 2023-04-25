@@ -322,7 +322,7 @@ private fun FullScreenView(
                     Text(
                         text = state.timeOfTheDay,
                         color = menuColor,
-                        fontSize = 15.sp,
+                        fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                     )
 
