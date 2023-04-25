@@ -159,11 +159,15 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                 isTimerActivitiesPresented = true
                             },
                             label: {
-                                Image(systemName: "timer")
-                                        .padding(.bottom, 4)
-                                        .foregroundColor(menuColor)
-                                        .font(.system(size: 30, weight: .thin))
-                                        .frame(maxWidth: .infinity)
+                                VStack(spacing: 0) {
+                                    Spacer(minLength: 0)
+                                    Image(systemName: "timer")
+                                            .padding(.bottom, 4)
+                                            .foregroundColor(menuColor)
+                                            .font(.system(size: 30, weight: .thin))
+                                            .frame(maxWidth: .infinity)
+                                            .frame(alignment: .bottom)
+                                }
                             }
                     )
                             .sheetEnv(isPresented: $isTimerActivitiesPresented) {
@@ -185,8 +189,9 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
                                     Text(state.tasksText)
                                             .foregroundColor(menuColor)
-                                            .padding(.bottom, 22)
                                             .font(.system(size: 14, weight: .regular))
+
+                                    Spacer(minLength: 0)
 
                                     Text(state.timeOfTheDay)
                                             .padding(.horizontal, 16)
@@ -224,13 +229,18 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                 FullScreenUI.shared.close()
                             },
                             label: {
-                                Image(systemName: "xmark.circle")
-                                        .foregroundColor(menuColor)
-                                        .font(.system(size: 30, weight: .thin))
-                                        .frame(maxWidth: .infinity)
+                                VStack(spacing: 0) {
+                                    Spacer(minLength: 0)
+                                    Image(systemName: "xmark.circle")
+                                            .padding(.bottom, 4)
+                                            .foregroundColor(menuColor)
+                                            .font(.system(size: 30, weight: .thin))
+                                            .frame(maxWidth: .infinity)
+                                }
                             }
                     )
                 }
+                        .frame(height: 80)
                         .frame(width: .infinity)
             }
         }
