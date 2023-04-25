@@ -199,7 +199,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                 isNewTaskPresented = true
                             },
                             label: {
-                                Image(systemName: "pencil.circle")
+                                Image(systemName: "timer")
                                         .foregroundColor(menuColor)
                                         .font(.system(size: 30, weight: .thin))
                                         .frame(maxWidth: .infinity)
