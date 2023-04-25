@@ -368,7 +368,7 @@ private struct ImportantTasksView: View {
                             ZStack {}
                                     .frame(height: taskListContentPadding)
 
-                            ForEach(tasks, id: \.self.task.id) { importantTask in
+                            ForEach(tasks.reversed(), id: \.self.task.id) { importantTask in
                                 ImportantTaskItem(importantTask: importantTask)
                             }
 
