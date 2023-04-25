@@ -231,7 +231,8 @@ private fun FullScreenView(
                 SpacerW1()
             }
 
-            ImportantTasksView(tasks = state.importantTasks)
+            if (state.importantTasks.isNotEmpty())
+                ImportantTasksView(tasks = state.importantTasks)
 
             Row(
                 modifier = Modifier
