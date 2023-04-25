@@ -150,7 +150,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                 }
                         .frame(maxHeight: .infinity)
 
-                HStack(spacing: 0) {
+                HStack(alignment: .bottom, spacing: 0) {
 
                     let menuColor = state.menuColor.toColor()
 
@@ -160,6 +160,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                             },
                             label: {
                                 Image(systemName: "timer")
+                                        .padding(.bottom, 4)
                                         .foregroundColor(menuColor)
                                         .font(.system(size: 30, weight: .thin))
                                         .frame(maxWidth: .infinity)
@@ -179,17 +180,19 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                 vm.toggleIsCompactTaskList()
                             },
                             label: {
+
                                 VStack(spacing: 0) {
 
-                                    Image(systemName: !state.isTaskListShowed ? "chevron.compact.up" : "chevron.compact.down")
+                                    Text(state.tasksText)
                                             .foregroundColor(menuColor)
-                                            .font(.system(size: 30, weight: .thin))
+                                            .padding(.bottom, 22)
+                                            .font(.system(size: 14, weight: .regular))
 
                                     Text(state.timeOfTheDay)
                                             .padding(.horizontal, 16)
                                             .foregroundColor(menuColor)
                                             .padding(.top, 4)
-                                            .font(.system(size: 15, weight: .medium))
+                                            .font(.system(size: 16, weight: .bold))
 
                                     HStack(spacing: 0) {
 
@@ -200,9 +203,9 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                                 .font(.system(size: 12, weight: .ultraLight))
 
                                         Text(state.batteryText)
-                                                .padding(.leading, 1)
                                                 .foregroundColor(batteryTextColor)
                                                 .font(.system(size: 13, weight: .regular))
+                                                .padding(.trailing, 1)
                                     }
                                             .padding(.top, 2)
                                             .padding(.bottom, 1)
