@@ -106,6 +106,7 @@ fun ChartDialogView(
                                 fontSize = 14.sp,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
+                                color = c.text,
                             )
 
                             Row {
@@ -118,6 +119,7 @@ fun ChartDialogView(
                                     textAlign = TextAlign.Start,
                                     fontWeight = FontWeight.W300,
                                     fontSize = 12.sp,
+                                    color = c.text,
                                 )
 
 
@@ -128,6 +130,7 @@ fun ChartDialogView(
                                     textAlign = TextAlign.Start,
                                     fontWeight = FontWeight.W300,
                                     fontSize = 12.sp,
+                                    color = c.text,
                                 )
                             }
                         }
