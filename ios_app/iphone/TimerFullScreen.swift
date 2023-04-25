@@ -190,6 +190,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                     Text(state.tasksText)
                                             .foregroundColor(menuColor)
                                             .font(.system(size: 14, weight: .regular))
+                                            .padding(.top, 2)
 
                                     Spacer(minLength: 0)
 
@@ -413,18 +414,24 @@ private struct ImportantTaskItem: View {
                             Image(systemName: "calendar")
                                     .foregroundColor(Color.white)
                                     .font(.system(size: 15, weight: .light))
-                                    .padding(.trailing, 2)
+                                    .padding(.trailing, 3)
 
                             Text(importantTask.text)
                                     .font(.system(size: 15))
                                     .foregroundColor(Color.white)
                         }
-                                .padding(.horizontal, 4)
-                                .padding(.vertical, 2)
+                                .padding(.horizontal, 6)
+                                .frame(maxHeight: .infinity)
                                 .background(
-                                        RoundedRectangle(cornerRadius: 6, style: .circular)
+                                        RoundedRectangle(cornerRadius: 99, style: .circular)
                                                 .fill(importantTask.backgroundColor.toColor())
                                 )
+                                .padding(.all, 1)
+                                .background(
+                                        RoundedRectangle(cornerRadius: 99, style: .circular)
+                                                .fill(importantTask.borderColor.toColor())
+                                )
+                                .padding(.vertical, 4)
                     }
                             .frame(height: taskItemHeight)
                 }
