@@ -23,7 +23,8 @@ struct TabsView: View {
                     /// Repeated click on "Tasks"
                     if tabSelection == TabsView.TAB_ID_TASKS {
                         TabTasksView.lastInstance?.activeSection = TabTasksView_Section_Folder(folder: DI.getTodayFolder())
-                    } else if $0 == TabsView.TAB_ID_FOCUS {
+                    }
+                    if $0 == TabsView.TAB_ID_FOCUS {
                         FullScreenUI.shared.open()
                         let oldTabSelection = tabSelection
                         myAsyncAfter(0.2) {
