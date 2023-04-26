@@ -68,7 +68,6 @@ struct TabsView: View {
                 TabTasksView()
                         .tabItem {
                             Image(systemName: "tray.full")
-                                    // Иначе заполненное изображение т.е. tray.full.full
                                     .environment(\.symbolVariants, .none)
                             Text("Tasks")
                         }
