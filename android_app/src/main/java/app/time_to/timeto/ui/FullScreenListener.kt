@@ -24,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -548,7 +549,7 @@ private fun ImportantTasksView(
                 Row(
                     modifier = Modifier
                         .height(taskItemHeight)
-                        .padding(vertical = 4.dp)
+                        .padding(vertical = 4.dp, horizontal = 4.dp)
                         .clip(RoundedCornerShape(99.dp))
                         .clickable {
                             taskItem.task.startIntervalForUI(
@@ -591,6 +592,8 @@ private fun ImportantTasksView(
                         fontWeight = FontWeight.Normal,
                         fontSize = 12.sp,
                         color = c.white,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                     )
                 }
             }
