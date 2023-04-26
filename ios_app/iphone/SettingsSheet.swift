@@ -3,7 +3,7 @@ import UniformTypeIdentifiers
 import MessageUI
 import shared
 
-struct TabToolsView: View {
+struct SettingsSheet: View {
 
     @Binding var isPresented: Bool
 

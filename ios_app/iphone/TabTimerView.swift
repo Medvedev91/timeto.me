@@ -271,7 +271,7 @@ struct TabTimerView: View {
                         .sheetEnv(
                                 isPresented: $isSettingsSheetPresented
                         ) {
-                            TabToolsView(isPresented: $isSettingsSheetPresented)
+                            SettingsSheet(isPresented: $isSettingsSheetPresented)
                         }
                         .sheetEnv(isPresented: $isReadmePresented) {
                             TabReadmeView(isPresented: $isReadmePresented)
