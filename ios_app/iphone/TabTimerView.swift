@@ -203,29 +203,17 @@ struct TabTimerView: View {
 
                                     HStack(spacing: 16) {
 
-                                        Button(
-                                                action: {
-                                                    isAddActivityPresented.toggle()
-                                                },
-                                                label: {
-                                                    Text("New Activity")
-                                                }
-                                        )
-                                                .foregroundColor(.blue)
-                                                // Without it on the text click this button triggers
-                                                .buttonStyle(PlainButtonStyle())
+                                        MenuTextButton(text: state.newActivityText) {
+                                            isAddActivityPresented.toggle()
+                                        }
 
-                                        Button(
-                                                action: {
-                                                    isEditActivitiesPresented.toggle()
-                                                },
-                                                label: {
-                                                    Text("Edit")
-                                                }
-                                        )
-                                                .foregroundColor(.blue)
-                                                // Without it on the text click this button triggers
-                                                .buttonStyle(PlainButtonStyle())
+                                        MenuTextButton(text: state.sortActivitiesText) {
+                                            isEditActivitiesPresented.toggle()
+                                        }
+
+                                        MenuTextButton(text: state.settingsText) {
+                                            // todo
+                                        }
 
                                         Spacer()
                                     }
@@ -285,6 +273,25 @@ struct TabTimerView: View {
                         .navigationBarHidden(true)
             }
         }
+    }
+}
+
+private struct MenuTextButton: View {
+
+    let text: String
+    let onClick: () -> Void
+
+    var body: some View {
+        Button(
+                action: {
+                    onClick()
+                },
+                label: {
+                    Text(text)
+                            .foregroundColor(.blue)
+                            .padding(.vertical, 4)
+                }
+        )
     }
 }
 
