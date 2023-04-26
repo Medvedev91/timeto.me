@@ -42,6 +42,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
     @State private var vm = FullScreenVM()
     @State private var isTimerActivitiesPresented = false
+    @State private var isTasksSheetPresented = false
 
     var body: some View {
 
@@ -181,7 +182,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
                     Button(
                             action: {
-                                vm.toggleIsCompactTaskList()
+                                isTasksSheetPresented = true
                             },
                             label: {
 
@@ -244,6 +245,9 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                         .frame(height: 80)
                         .frame(width: .infinity)
             }
+                    .sheetEnv(isPresented: $isTasksSheetPresented) {
+                        TasksSheet(isPresented: $isTasksSheetPresented)
+                    }
         }
                 .onAppear {
                     UIApplication.shared.isIdleTimerDisabled = true
@@ -444,5 +448,41 @@ private struct ImportantTaskItem: View {
                         isSheetPresented = false
                     }
                 }
+    }
+}
+
+private struct TasksSheet: View {
+
+    @Binding var isPresented: Bool
+
+    var body: some View {
+
+        VStack(spacing: 0) {
+
+            TabTasksView()
+
+            VStack(spacing: 0) {
+
+                MyDivider()
+
+                Button(
+                        action: {
+                            isPresented = false
+                        },
+                        label: {
+                            Text("focus")
+                                    .foregroundColor(.white)
+                        }
+                )
+                        .padding(.top, 20)
+
+                Image(systemName: "chevron.compact.down")
+                        .padding(.top, 4)
+                        .padding(.bottom, 4)
+                        .foregroundColor(.white)
+                        .font(.system(size: 30, weight: .thin))
+            }
+        }
+                .background(Color(.myBackground))
     }
 }
