@@ -80,6 +80,7 @@ struct TabsView: View {
                         }
                         .tag(TabsView.TAB_ID_TASKS)
                         .badge(state.todayBadge.toInt())
+                        .ignoresSafeArea(.keyboard, edges: .bottom)
 
                 Text("")
                         .frame(maxWidth: .infinity, maxHeight: .infinity)

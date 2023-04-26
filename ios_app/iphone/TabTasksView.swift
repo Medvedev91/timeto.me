@@ -3,6 +3,7 @@ import shared
 
 private let tabWidth: CGFloat = 34
 
+// TRICK Using ignoresSafeArea() outside is mandatory
 struct TabTasksView: View {
 
     @State private var vm = TabTasksVM()
@@ -190,7 +191,6 @@ struct TabTasksView: View {
                         activeSection = TabTasksView_Section_Folder(folder: DI.getTodayFolder())
                     }
         }
-                .ignoresSafeArea(.keyboard, edges: .bottom)
                 .onAppear {
                     TabTasksView.lastInstance = self
                 }
