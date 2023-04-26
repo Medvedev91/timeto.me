@@ -134,19 +134,25 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                     VStack(spacing: 0) {
 
                         if let checklistUI = checklistUI {
-                            ChecklistView(checklistUI: checklistUI)
+                            VStack(spacing: 0) {
+                                ChecklistView(checklistUI: checklistUI)
+                                Color(dividerColor)
+                                        .frame(height: dividerHeight)
+                                        .padding(.horizontal, dividerPadding)
+                            }
                         } else {
                             Spacer(minLength: 0)
                         }
 
-                        let listHeight = taskItemHeight * state.importantTasks.count.toDouble()
-                                         + dividerHeight
-                                         + taskListContentPadding * 2.0
-                        ImportantTasksView(
-                                isNavDividerVisible: checklistUI != nil,
-                                tasks: state.importantTasks
-                        )
-                                .frame(height: listHeight)
+                        if !state.importantTasks.isEmpty {
+                            let listHeight = taskItemHeight * state.importantTasks.count.toDouble()
+                                             + dividerHeight
+                                             + taskListContentPadding * 2.0
+                            ImportantTasksView(
+                                    tasks: state.importantTasks
+                            )
+                                    .frame(height: listHeight)
+                        }
                     }
                 }
                         .frame(maxHeight: .infinity)
@@ -191,7 +197,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                     Text(state.tasksText)
                                             .foregroundColor(menuColor)
                                             .font(.system(size: 14, weight: .regular))
-                                            .padding(.top, 2)
+                                            .padding(.top, 8)
 
                                     Spacer(minLength: 0)
 
@@ -349,7 +355,6 @@ private struct ChecklistView: View {
 
 private struct ImportantTasksView: View {
 
-    let isNavDividerVisible: Bool
     let tasks: [FullScreenVM.ImportantTask]
 
     private let LIST_BOTTOM_ITEM_ID = "bottom_id"
@@ -360,36 +365,29 @@ private struct ImportantTasksView: View {
 
             ScrollViewReader { scrollProxy in
 
-                VStack(spacing: 0) {
+                ScrollView(showsIndicators: false) {
 
-                    Color(isNavDividerVisible ? dividerColor : .clear)
-                            .frame(height: dividerHeight)
-                            .padding(.horizontal, dividerPadding)
+                    VStack(spacing: 0) {
 
-                    ScrollView(showsIndicators: false) {
+                        Spacer(minLength: 0)
 
-                        VStack(spacing: 0) {
+                        ZStack {}
+                                .frame(height: taskListContentPadding)
 
-                            Spacer(minLength: 0)
-
-                            ZStack {}
-                                    .frame(height: taskListContentPadding)
-
-                            ForEach(tasks.reversed(), id: \.self.task.id) { importantTask in
-                                ImportantTaskItem(importantTask: importantTask)
-                            }
-
-                            ZStack {}
-                                    .frame(height: taskListContentPadding)
-                                    .id(LIST_BOTTOM_ITEM_ID)
+                        ForEach(tasks.reversed(), id: \.self.task.id) { importantTask in
+                            ImportantTaskItem(importantTask: importantTask)
                         }
-                                .frame(minHeight: geometry.size.height)
+
+                        ZStack {}
+                                .frame(height: taskListContentPadding)
+                                .id(LIST_BOTTOM_ITEM_ID)
                     }
-                            .frame(maxWidth: .infinity)
-                            .onAppear {
-                                scrollProxy.scrollTo(LIST_BOTTOM_ITEM_ID)
-                            }
+                            .frame(minHeight: geometry.size.height)
                 }
+                        .frame(maxWidth: .infinity)
+                        .onAppear {
+                            scrollProxy.scrollTo(LIST_BOTTOM_ITEM_ID)
+                        }
             }
         }
     }
