@@ -459,7 +459,11 @@ private struct TasksSheet: View {
 
         VStack(spacing: 0) {
 
-            TabTasksView()
+            TabTasksView(
+                    onTaskStarted: {
+                        isPresented = false
+                    }
+            )
 
             VStack(spacing: 0) {
 

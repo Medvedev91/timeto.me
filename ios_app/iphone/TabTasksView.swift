@@ -6,6 +6,10 @@ private let tabWidth: CGFloat = 34
 // TRICK Using ignoresSafeArea() outside is mandatory
 struct TabTasksView: View {
 
+    let onTaskStarted: () -> Void
+    
+    //////
+
     @State private var vm = TabTasksVM()
 
     static var lastInstance: TabTasksView? = nil

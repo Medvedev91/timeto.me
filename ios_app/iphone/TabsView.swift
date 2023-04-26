@@ -72,7 +72,11 @@ struct TabsView: View {
                         }
                         .tag(TabsView.TAB_ID_TIMER)
 
-                TabTasksView()
+                TabTasksView(
+                        onTaskStarted: {
+                            TabsView.lastInstance?.tabSelection = TabsView.TAB_ID_TIMER
+                        }
+                )
                         .tabItem {
                             Image(systemName: "tray.full")
                                     .environment(\.symbolVariants, .none)

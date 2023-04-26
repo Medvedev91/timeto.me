@@ -320,7 +320,7 @@ struct TasksView__TaskRowView: View {
                             hideKeyboard()
                             taskUI.task.startIntervalForUI(
                                     onStarted: {
-                                        gotoTimer()
+                                        tasksListView.tabTasksView.onTaskStarted()
                                     },
                                     needSheet: {
                                         isSheetPresented = true
@@ -418,7 +418,7 @@ struct TasksView__TaskRowView: View {
                                     timerContext: taskUI.timerContext
                             ) {
                                 isSheetPresented = false
-                                gotoTimer()
+                                tasksListView.tabTasksView.onTaskStarted()
                             }
                         }
             }
@@ -479,10 +479,6 @@ struct TasksView__TaskRowView: View {
                         xSwipeOffset = 0
                     }
                 }
-    }
-
-    private func gotoTimer() {
-        TabsView.lastInstance?.tabSelection = TabsView.TAB_ID_TIMER
     }
 }
 
