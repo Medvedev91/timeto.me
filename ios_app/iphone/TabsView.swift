@@ -13,7 +13,7 @@ struct TabsView: View {
 
     static let TAB_ID_TIMER = 1
     static let TAB_ID_TASKS = 2
-    static let TAB_ID_TOOLS = 3
+    static let TAB_ID_FOCUS = 3
     /// https://stackoverflow.com/a/65048085/5169420
     @State var tabSelection = TAB_ID_TIMER
     private var tabSelectionHandler: Binding<Int> {
@@ -23,7 +23,7 @@ struct TabsView: View {
                     /// Repeated click on "Tasks"
                     if tabSelection == TabsView.TAB_ID_TASKS {
                         TabTasksView.lastInstance?.activeSection = TabTasksView_Section_Folder(folder: DI.getTodayFolder())
-                    } else if $0 == TabsView.TAB_ID_TOOLS {
+                    } else if $0 == TabsView.TAB_ID_FOCUS {
                         FullScreenUI.shared.open()
                         let oldTabSelection = tabSelection
                         myAsyncAfter(0.2) {
@@ -87,7 +87,7 @@ struct TabsView: View {
                             Image(systemName: "timelapse")
                             Text("Focus")
                         }
-                        .tag(TabsView.TAB_ID_TOOLS)
+                        .tag(TabsView.TAB_ID_FOCUS)
             }
                     .onReceive(shortcutPublisher) { shortcut in
                         let swiftURL = URL(string: shortcut.uri)!
