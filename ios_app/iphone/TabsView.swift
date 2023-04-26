@@ -23,6 +23,12 @@ struct TabsView: View {
                     /// Repeated click on "Tasks"
                     if tabSelection == TabsView.TAB_ID_TASKS {
                         TabTasksView.lastInstance?.activeSection = TabTasksView_Section_Folder(folder: DI.getTodayFolder())
+                    } else if $0 == TabsView.TAB_ID_TOOLS {
+                        FullScreenUI.shared.open()
+                        let oldTabSelection = tabSelection
+                        myAsyncAfter(0.2) {
+                            tabSelection = oldTabSelection
+                        }
                     }
                     tabSelection = $0
                 }
@@ -74,16 +80,12 @@ struct TabsView: View {
                         .tag(TabsView.TAB_ID_TASKS)
                         .badge(state.todayBadge.toInt())
 
-                TabToolsView()
+                Text("")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(Color(.myBackground))
                         .tabItem {
-                            // 1. SF Symbols -> File -> Export Template
-                            // 2. Xcode -> Assets -> Symbol Image Set
-                            // Just export, import, up .font(...)
-                            //                        Image("my_wrench.and.screwdriver")
-                            //                                .font(.system(size: 20, weight: .semibold))
-                            Image(systemName: "gearshape")
-                                    .environment(\.symbolVariants, .none)
-                            Text("Tools")
+                            Image(systemName: "timelapse")
+                            Text("Focus")
                         }
                         .tag(TabsView.TAB_ID_TOOLS)
             }
