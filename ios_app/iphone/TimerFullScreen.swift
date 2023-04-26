@@ -248,6 +248,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                     .sheetEnv(isPresented: $isTasksSheetPresented) {
                         TasksSheet(isPresented: $isTasksSheetPresented)
                                 .ignoresSafeArea(.keyboard, edges: .bottom)
+                                .colorScheme(.dark)
                     }
         }
                 .onAppear {
