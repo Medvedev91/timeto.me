@@ -5,6 +5,8 @@ import shared
 
 struct TabToolsView: View {
 
+    @Binding var isPresented: Bool
+
     @State private var vm = TabToolsVM()
 
     @EnvironmentObject private var autoBackup: AutoBackup
@@ -27,13 +29,24 @@ struct TabToolsView: View {
 
     @State private var isAddShortcutPresented = false
 
+    @State private var sheetHeaderScroll = 0
+
     //////
 
     var body: some View {
 
-        VMView(vm: vm, stack: .ZStack()) { state in
+        VMView(vm: vm, stack: .VStack(spacing: 0)) { state in
 
-            ScrollView(.vertical, showsIndicators: false) {
+            SheetHeaderView(
+                    onCancel: { isPresented.toggle() },
+                    title: state.headerTitle,
+                    doneText: "------",
+                    isDoneEnabled: nil,
+                    scrollToHeader: sheetHeaderScroll
+            ) {
+            }
+
+            ScrollViewWithVListener(showsIndicators: false, vScroll: $sheetHeaderScroll) {
 
                 ///
                 /// Checklists

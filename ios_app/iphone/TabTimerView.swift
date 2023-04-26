@@ -18,6 +18,7 @@ struct TabTimerView: View {
 
     @State private var isAddActivityPresented = false
     @State private var isEditActivitiesPresented = false
+    @State private var isSettingsSheetPresented = false
     @State private var isSummaryPresented = false
     @State private var isHistoryPresented = false
 
@@ -212,7 +213,7 @@ struct TabTimerView: View {
                                         }
 
                                         MenuTextButton(text: state.settingsText) {
-                                            // todo
+                                            isSettingsSheetPresented.toggle()
                                         }
 
                                         Spacer()
@@ -266,6 +267,11 @@ struct TabTimerView: View {
                             EditActivitiesDialog(
                                     isPresented: $isEditActivitiesPresented
                             )
+                        }
+                        .sheetEnv(
+                                isPresented: $isSettingsSheetPresented
+                        ) {
+                            TabToolsView(isPresented: $isSettingsSheetPresented)
                         }
                         .sheetEnv(isPresented: $isReadmePresented) {
                             TabReadmeView(isPresented: $isReadmePresented)
