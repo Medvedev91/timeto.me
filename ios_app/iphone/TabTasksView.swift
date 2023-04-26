@@ -10,7 +10,7 @@ struct TabTasksView: View {
 
     static var lastInstance: TabTasksView? = nil
 
-    @State var activeSection: TabTasksView_Section?
+    @State var activeSection: TabTasksView_Section? = TabTasksView_Section_Folder(folder: DI.getTodayFolder())
 
     /// No more fits when the keyboard is open on the SE
     private let tabPadding: CGFloat = 15
@@ -23,10 +23,6 @@ struct TabTasksView: View {
     @State var activeDrag: DragItem? = nil
 
     @State private var dropCalendar = DropItem__Calendar()
-
-    init() {
-        _activeSection = State(initialValue: TabTasksView_Section_Folder(folder: DI.getTodayFolder()))
-    }
 
     func onDragMove(curDragItem: DragItem, value: DragGesture.Value) {
         let x = value.location.x
