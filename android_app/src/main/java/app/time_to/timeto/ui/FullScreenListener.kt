@@ -117,9 +117,14 @@ private fun FullScreenView(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
+            val timerData = state.timerData
+            val timerSubtitle = timerData.subtitle
+
+            val titleTopPadding = animateDpAsState(if (timerSubtitle == null) 4.dp else 0.dp)
+
             Column(
                 modifier = Modifier
-                    .padding(top = 4.dp, start = 30.dp, end = 30.dp)
+                    .padding(top = titleTopPadding.value, start = 30.dp, end = 30.dp)
                     .offset(y = 6.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -167,15 +172,14 @@ private fun FullScreenView(
                 contentPadding = PaddingValues(horizontal = 50.dp)
             )
 
-            val timerData = state.timerData
             AnimatedVisibility(
-                timerData.subtitle != null,
+                timerSubtitle != null,
                 enter = fadeIn() + expandVertically(),
                 exit = fadeOut() + shrinkVertically(),
             ) {
 
                 Text(
-                    text = timerData.subtitle ?: "",
+                    text = timerSubtitle ?: "",
                     fontSize = 21.sp,
                     modifier = Modifier
                         .padding(top = 36.dp)
@@ -201,7 +205,7 @@ private fun FullScreenView(
             )
 
             AnimatedVisibility(
-                timerData.subtitle != null || !state.isCountdown,
+                timerSubtitle != null || !state.isCountdown,
                 enter = fadeIn() + expandVertically(),
                 exit = fadeOut() + shrinkVertically(),
             ) {
