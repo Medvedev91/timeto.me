@@ -391,7 +391,6 @@ private fun ChecklistView(
 
     Column(
         modifier = modifier
-            .padding(top = 8.dp)
     ) {
 
         val checklistVContentPadding = 12.dp
@@ -406,7 +405,7 @@ private fun ChecklistView(
 
         Row(
             modifier = Modifier
-                .padding(horizontal = 40.dp)
+                .padding(horizontal = 32.dp)
                 .weight(1f),
         ) {
 
