@@ -396,7 +396,7 @@ private fun ChecklistView(
         modifier = modifier
     ) {
 
-        val checklistVContentPadding = 12.dp
+        val checklistVContentPadding = 8.dp
 
         Divider(
             modifier = dividerModifier,
