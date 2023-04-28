@@ -408,7 +408,7 @@ private fun ChecklistView(
 
         Row(
             modifier = Modifier
-                .padding(horizontal = 32.dp)
+                .padding(horizontal = 36.dp)
                 .weight(1f),
         ) {
 
