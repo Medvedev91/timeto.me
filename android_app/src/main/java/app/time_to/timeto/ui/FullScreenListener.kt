@@ -33,6 +33,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import app.time_to.timeto.*
 import app.time_to.timeto.R
 import timeto.shared.FullScreenUI
+import timeto.shared.min
 import timeto.shared.onEachExIn
 import timeto.shared.vm.FullScreenVM
 import timeto.shared.vm.ui.ChecklistStateUI
@@ -231,12 +232,27 @@ private fun FullScreenView(
                     checklistUI = checklistUI,
                     modifier = Modifier.weight(1f),
                 )
-            } else {
-                SpacerW1()
             }
 
-            if (state.importantTasks.isNotEmpty())
-                ImportantTasksView(tasks = state.importantTasks)
+            val isImportantTasksExists = state.importantTasks.isNotEmpty()
+            if (isImportantTasksExists) {
+                val importantTasksModifier = if (checklistUI == null)
+                    Modifier.weight(1f)
+                else
+                    Modifier.height(
+                        dividerHeight +
+                        (taskListContentPadding * 2) +
+                        // 4.1f for the smallest emulator
+                        (taskItemHeight * state.importantTasks.size.toFloat().min(4.1f))
+                    )
+                ImportantTasksView(
+                    tasks = state.importantTasks,
+                    modifier = importantTasksModifier,
+                )
+            }
+
+            if (!isImportantTasksExists && checklistUI == null)
+                SpacerW1()
 
             Row(
                 modifier = Modifier
@@ -522,82 +538,70 @@ private fun ChecklistView(
 @Composable
 private fun ImportantTasksView(
     tasks: List<FullScreenVM.ImportantTask>,
+    modifier: Modifier,
 ) {
-    Column(
-        modifier = Modifier
-            .height(
-                // todo limit 5
-                taskItemHeight * tasks.size
-                + dividerHeight
-                + taskListContentPadding * 2
-            )
-            .fillMaxHeight()
+    LazyColumn(
+        modifier = modifier
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        reverseLayout = true,
+        contentPadding = PaddingValues(vertical = taskListContentPadding),
     ) {
 
-        LazyColumn(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            reverseLayout = true,
-            contentPadding = PaddingValues(vertical = taskListContentPadding),
-        ) {
+        items(
+            items = tasks,
+            key = { it.task.id }
+        ) { taskItem ->
 
-            items(
-                items = tasks,
-                key = { it.task.id }
-            ) { taskItem ->
+            Row(
+                modifier = Modifier
+                    .height(taskItemHeight)
+                    .padding(vertical = 4.dp, horizontal = 8.dp)
+                    .clip(RoundedCornerShape(99.dp))
+                    .clickable {
+                        taskItem.task.startIntervalForUI(
+                            onStarted = {},
+                            needSheet = {
+                                Sheet.show { layer ->
+                                    ActivitiesTimerSheet(
+                                        layerTaskSheet = layer,
+                                        timerContext = taskItem.timerContext,
+                                        onTaskStarted = {},
+                                    )
+                                }
+                            },
+                        )
+                    }
+                    .background(
+                        color = taskItem.borderColor.toColor(),
+                        shape = RoundedCornerShape(99.dp)
+                    )
+                    .padding(1.dp)
+                    .background(
+                        color = taskItem.backgroundColor.toColor(),
+                        shape = RoundedCornerShape(99.dp)
+                    )
+                    .padding(start = 8.dp, end = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
 
-                Row(
+                Icon(
+                    painterResource(id = R.drawable.sf_calendar_medium_light),
+                    contentDescription = "Event",
+                    tint = c.white,
                     modifier = Modifier
-                        .height(taskItemHeight)
-                        .padding(vertical = 4.dp, horizontal = 4.dp)
-                        .clip(RoundedCornerShape(99.dp))
-                        .clickable {
-                            taskItem.task.startIntervalForUI(
-                                onStarted = {},
-                                needSheet = {
-                                    Sheet.show { layer ->
-                                        ActivitiesTimerSheet(
-                                            layerTaskSheet = layer,
-                                            timerContext = taskItem.timerContext,
-                                            onTaskStarted = {},
-                                        )
-                                    }
-                                },
-                            )
-                        }
-                        .background(
-                            color = taskItem.borderColor.toColor(),
-                            shape = RoundedCornerShape(99.dp)
-                        )
-                        .padding(1.dp)
-                        .background(
-                            color = taskItem.backgroundColor.toColor(),
-                            shape = RoundedCornerShape(99.dp)
-                        )
-                        .padding(start = 8.dp, end = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-
-                    Icon(
-                        painterResource(id = R.drawable.sf_calendar_medium_light),
-                        contentDescription = "Event",
-                        tint = c.white,
-                        modifier = Modifier
-                            .padding(end = 5.dp)
-                            .size(14.dp),
-                    )
-                    Text(
-                        text = taskItem.text,
-                        modifier = Modifier.padding(bottom = 1.dp),
-                        fontWeight = FontWeight.Normal,
-                        fontSize = 12.sp,
-                        color = c.white,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                }
+                        .padding(end = 5.dp)
+                        .size(14.dp),
+                )
+                Text(
+                    text = taskItem.text,
+                    modifier = Modifier.padding(bottom = 1.dp),
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 12.sp,
+                    color = c.white,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
             }
         }
     }
