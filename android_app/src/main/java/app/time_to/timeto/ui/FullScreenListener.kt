@@ -213,9 +213,8 @@ private fun FullScreenView(
                 Text(
                     text = "Restart",
                     color = c.white,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Thin,
-                    letterSpacing = 1.sp,
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Medium,
                     modifier = Modifier
                         .offset(y = (-4).dp)
                         .clip(RoundedCornerShape(99.dp))
