@@ -10,7 +10,6 @@ import timeto.shared.db.IntervalModel
 import timeto.shared.db.TaskModel
 import timeto.shared.vm.ui.ChecklistStateUI
 import timeto.shared.vm.ui.TimerDataUI
-import timeto.shared.vm.ui.sortedByFolder
 
 class FullScreenVM : __VM<FullScreenVM.State>() {
 
@@ -51,8 +50,9 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
                 val timeData = taskTextFeatures.timeData ?: return@mapNotNull null
                 if (!timeData.isImportant)
                     return@mapNotNull null
-                ImportantTask(task, taskTextFeatures, timeData)
+                ImportantTask(task, timeData, taskTextFeatures)
             }
+            .sortedBy { it.timeData.unixTime.time }
 
         val tasksText = when (val size = tasksToday.size) {
             0 -> "No tasks for today"
@@ -115,9 +115,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
             .getAscFlow()
             .map { it.filter { task -> task.isToday } }
             .onEachExIn(scope) { tasks ->
-                state.update {
-                    it.copy(tasksToday = tasks.sortedByFolder(DI.getTodayFolder()))
-                }
+                state.update { it.copy(tasksToday = tasks) }
             }
         scope.launch {
             while (true) {
@@ -181,8 +179,8 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
 
     class ImportantTask(
         val task: TaskModel,
+        val timeData: TextFeatures.TimeData,
         textFeatures: TextFeatures,
-        timeData: TextFeatures.TimeData,
     ) {
         val type = timeData.type
         val text: String
