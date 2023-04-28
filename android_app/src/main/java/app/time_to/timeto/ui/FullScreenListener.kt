@@ -206,17 +206,17 @@ private fun FullScreenView(
 
             AnimatedVisibility(
                 timerSubtitle != null || !state.isCountdown,
-                enter = fadeIn() + expandVertically(),
+                enter = fadeIn() + expandVertically(animationSpec = spring(stiffness = Spring.StiffnessMedium)),
                 exit = fadeOut() + shrinkVertically(),
             ) {
 
                 Text(
                     text = "Restart",
                     color = c.white,
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Medium,
+                    fontSize = 25.sp,
+                    fontWeight = FontWeight.Normal,
                     modifier = Modifier
-                        .offset(y = (-4).dp)
+                        .offset(y = if (timerSubtitle != null) (-10).dp else (-14).dp)
                         .clip(RoundedCornerShape(99.dp))
                         .clickable {
                             vm.restart()
