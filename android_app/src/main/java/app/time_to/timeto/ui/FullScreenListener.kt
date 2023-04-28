@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -226,21 +227,35 @@ private fun FullScreenView(
                 )
             }
 
+            val checklistScrollState = rememberLazyListState()
+            val importantTasksScrollState = rememberLazyListState()
+
             val checklistUI = state.checklistUI
+            val isImportantTasksExists = state.importantTasks.isNotEmpty()
+
             if (checklistUI != null) {
                 ChecklistView(
                     checklistUI = checklistUI,
                     modifier = Modifier.weight(1f),
+                    scrollState = checklistScrollState,
                 )
             }
 
-            val isImportantTasksExists = state.importantTasks.isNotEmpty()
+            val isMiddleDividerVisible =
+                (checklistUI != null && (checklistScrollState.canScrollBackward || checklistScrollState.canScrollForward)) ||
+                (isImportantTasksExists && (importantTasksScrollState.canScrollBackward || importantTasksScrollState.canScrollForward))
+
+            Divider(
+                modifier = dividerModifier,
+                color = if (isMiddleDividerVisible) dividerColor else c.transparent,
+                thickness = dividerHeight,
+            )
+
             if (isImportantTasksExists) {
                 val importantTasksModifier = if (checklistUI == null)
                     Modifier.weight(1f)
                 else
                     Modifier.height(
-                        dividerHeight +
                         (taskListContentPadding * 2) +
                         // 4.1f for the smallest emulator
                         (taskItemHeight * state.importantTasks.size.toFloat().min(4.1f))
@@ -248,6 +263,7 @@ private fun FullScreenView(
                 ImportantTasksView(
                     tasks = state.importantTasks,
                     modifier = importantTasksModifier,
+                    scrollState = importantTasksScrollState,
                 )
             }
 
@@ -405,12 +421,12 @@ private fun FullScreenView(
 private fun ChecklistView(
     checklistUI: FullScreenVM.ChecklistUI,
     modifier: Modifier,
+    scrollState: LazyListState,
 ) {
-    val checklistScrollState = rememberLazyListState()
 
     Column(
-        modifier = modifier
-            .fillMaxWidth(0.78f)
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
         val checklistVContentPadding = 8.dp
@@ -418,13 +434,14 @@ private fun ChecklistView(
         Divider(
             modifier = dividerModifier,
             color = animateColorAsState(
-                if (checklistScrollState.canScrollBackward) dividerColor else c.transparent,
+                if (scrollState.canScrollBackward) dividerColor else c.transparent,
                 animationSpec = spring(stiffness = Spring.StiffnessMedium),
             ).value
         )
 
         Row(
             modifier = Modifier
+                .fillMaxWidth(0.78f)
                 .weight(1f),
         ) {
 
@@ -434,9 +451,9 @@ private fun ChecklistView(
 
             LazyColumn(
                 modifier = Modifier.weight(1f),
-                horizontalAlignment = Alignment.CenterHorizontally,
+                state = scrollState,
                 contentPadding = PaddingValues(vertical = checklistVContentPadding),
-                state = checklistScrollState,
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
                 checklistUI.itemsUI.forEach { itemUI ->
@@ -524,14 +541,6 @@ private fun ChecklistView(
                 }
             }
         }
-
-        val isBottomChecklistVisible = checklistScrollState.canScrollBackward ||
-                                       checklistScrollState.canScrollForward
-        Divider(
-            modifier = dividerModifier,
-            color = if (isBottomChecklistVisible) dividerColor else c.transparent,
-            thickness = dividerHeight,
-        )
     }
 }
 
@@ -539,13 +548,15 @@ private fun ChecklistView(
 private fun ImportantTasksView(
     tasks: List<FullScreenVM.ImportantTask>,
     modifier: Modifier,
+    scrollState: LazyListState,
 ) {
     LazyColumn(
         modifier = modifier
             .fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        reverseLayout = true,
+        state = scrollState,
         contentPadding = PaddingValues(vertical = taskListContentPadding),
+        reverseLayout = true,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
         items(
