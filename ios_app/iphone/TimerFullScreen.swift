@@ -193,7 +193,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
                                     Text(state.tasksText)
                                             .foregroundColor(menuColor)
-                                            .font(.system(size: 14, weight: .regular))
+                                            .font(.system(size: 15, weight: .regular))
                                             .padding(.top, 8)
 
                                     Spacer(minLength: 0)
@@ -201,8 +201,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                     Text(state.timeOfTheDay)
                                             .padding(.horizontal, 16)
                                             .foregroundColor(menuColor)
-                                            .padding(.top, 4)
-                                            .font(.system(size: 16, weight: .bold))
+                                            .font(.system(size: 17, weight: .bold))
 
                                     HStack(spacing: 0) {
 
@@ -225,6 +224,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                                     RoundedRectangle(cornerRadius: 99, style: .circular)
                                                             .fill(state.batteryBackground.toColor())
                                             )
+                                            .padding(.bottom, 1)
                                 }
                             }
                     )
@@ -245,7 +245,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                             }
                     )
                 }
-                        .frame(height: 80)
+                        .frame(height: 85)
                         .frame(width: .infinity)
             }
                     .sheetEnv(isPresented: $isTasksSheetPresented) {
