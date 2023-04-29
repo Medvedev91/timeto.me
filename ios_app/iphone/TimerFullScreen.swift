@@ -128,6 +128,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                 }
 
                 let checklistUI = state.checklistUI
+                let isImportantTasksExists = !state.importantTasks.isEmpty
 
                 if let checklistUI = checklistUI {
                     VStack(spacing: 0) {
@@ -136,11 +137,9 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                 .frame(height: dividerHeight)
                                 .padding(.horizontal, dividerPadding)
                     }
-                } else {
-                    Spacer(minLength: 0)
                 }
 
-                if !state.importantTasks.isEmpty {
+                if isImportantTasksExists {
                     let listHeight: CGFloat =
                             checklistUI == nil ? .infinity :
                             (taskListContentPadding * 2.0) +
@@ -149,6 +148,10 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                             tasks: state.importantTasks
                     )
                             .frame(height: listHeight)
+                }
+
+                if !isImportantTasksExists && checklistUI == nil {
+                    Spacer(minLength: 0)
                 }
 
                 HStack(alignment: .bottom, spacing: 0) {
