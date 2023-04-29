@@ -182,11 +182,11 @@ private fun FullScreenView(
 
                 Text(
                     text = timerSubtitle ?: "",
-                    fontSize = 21.sp,
+                    fontSize = 26.sp,
                     modifier = Modifier
-                        .padding(top = 36.dp)
-                        .offset(y = 3.dp),
-                    fontWeight = FontWeight.ExtraBold,
+                        .padding(top = 30.dp)
+                        .offset(y = 4.dp),
+                    fontWeight = FontWeight.Black,
                     color = timerData.subtitleColor.toColor(),
                     letterSpacing = 3.sp,
                 )
@@ -214,11 +214,11 @@ private fun FullScreenView(
 
                 Text(
                     text = "Restart",
-                    color = c.white,
-                    fontSize = 25.sp,
+                    color = c.text,
+                    fontSize = 22.sp,
                     fontWeight = FontWeight.Normal,
                     modifier = Modifier
-                        .offset(y = if (timerSubtitle != null) (-4).dp else (-16).dp)
+                        .offset(y = if (timerSubtitle != null) (-6).dp else (-10).dp)
                         .clip(RoundedCornerShape(99.dp))
                         .clickable {
                             vm.restart()
@@ -436,7 +436,8 @@ private fun ChecklistView(
             color = animateColorAsState(
                 if (scrollState.canScrollBackward) dividerColor else c.transparent,
                 animationSpec = spring(stiffness = Spring.StiffnessMedium),
-            ).value
+            ).value,
+            thickness = dividerHeight,
         )
 
         Row(
@@ -641,8 +642,8 @@ private fun TasksSheet(
         ) {
 
             Divider(
-                thickness = 1.dp,
                 color = c.dividerBackground2,
+                thickness = dividerHeight,
             )
 
             Column(
