@@ -436,6 +436,7 @@ private struct ImportantTaskItem: View {
                                                 .fill(importantTask.borderColor.toColor())
                                 )
                                 .padding(.vertical, 4)
+                                .padding(.horizontal, dividerPadding)
                     }
                             .frame(height: taskItemHeight)
                 }
