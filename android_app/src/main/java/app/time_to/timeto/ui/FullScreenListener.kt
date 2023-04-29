@@ -218,7 +218,7 @@ private fun FullScreenView(
                     fontSize = 25.sp,
                     fontWeight = FontWeight.Normal,
                     modifier = Modifier
-                        .offset(y = if (timerSubtitle != null) (-10).dp else (-14).dp)
+                        .offset(y = if (timerSubtitle != null) (-4).dp else (-16).dp)
                         .clip(RoundedCornerShape(99.dp))
                         .clickable {
                             vm.restart()
