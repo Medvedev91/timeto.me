@@ -127,35 +127,29 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                             .padding(.top, 10)
                 }
 
-                ZStack(alignment: .bottom) {
+                let checklistUI = state.checklistUI
 
-                    let checklistUI = state.checklistUI
-
+                if let checklistUI = checklistUI {
                     VStack(spacing: 0) {
-
-                        if let checklistUI = checklistUI {
-                            VStack(spacing: 0) {
-                                ChecklistView(checklistUI: checklistUI)
-                                Color(dividerColor)
-                                        .frame(height: dividerHeight)
-                                        .padding(.horizontal, dividerPadding)
-                            }
-                        } else {
-                            Spacer(minLength: 0)
-                        }
-
-                        if !state.importantTasks.isEmpty {
-                            let listHeight = taskItemHeight * state.importantTasks.count.toDouble()
-                                             + dividerHeight
-                                             + taskListContentPadding * 2.0
-                            ImportantTasksView(
-                                    tasks: state.importantTasks
-                            )
-                                    .frame(height: listHeight)
-                        }
+                        ChecklistView(checklistUI: checklistUI)
+                        Color(dividerColor)
+                                .frame(height: dividerHeight)
+                                .padding(.horizontal, dividerPadding)
                     }
+                } else {
+                    Spacer(minLength: 0)
                 }
-                        .frame(maxHeight: .infinity)
+
+                if !state.importantTasks.isEmpty {
+                    let listHeight: CGFloat =
+                            checklistUI == nil ? .infinity :
+                            (taskListContentPadding * 2.0) +
+                            (taskItemHeight * state.importantTasks.count.toDouble().min(5.1))
+                    ImportantTasksView(
+                            tasks: state.importantTasks
+                    )
+                            .frame(height: listHeight)
+                }
 
                 HStack(alignment: .bottom, spacing: 0) {
 
