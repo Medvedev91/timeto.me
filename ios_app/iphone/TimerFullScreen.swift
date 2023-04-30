@@ -119,12 +119,10 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                             },
                             label: {
                                 Text("Restart")
-                                        .font(.system(size: 25, weight: .light))
+                                        .font(.system(size: 24, weight: .regular))
                                         .foregroundColor(.white)
-                                        .tracking(1)
                             }
                     )
-                            .padding(.top, 10)
                 }
 
                 let checklistUI = state.checklistUI
