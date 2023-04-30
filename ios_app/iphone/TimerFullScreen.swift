@@ -224,6 +224,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                             )
                                             .padding(.bottom, 1)
                                 }
+                                        .frame(maxWidth: .infinity)
                             }
                     )
 
