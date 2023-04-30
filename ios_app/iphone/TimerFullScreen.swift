@@ -45,6 +45,23 @@ private struct TimerFullScreen__FullScreenCoverView: View {
     @State private var isTasksSheetPresented = false
 
     var body: some View {
+        ZStack {
+            // Outside of the every-second updating view
+            ZStack {}
+                    .sheetEnv(isPresented: $isTimerActivitiesPresented) {
+                        ActivitiesTimerSheet(
+                                isPresented: $isTimerActivitiesPresented,
+                                timerContext: nil
+                        ) {
+                            isTimerActivitiesPresented = false
+                        }
+                    }
+                    .background(.red)
+            MyVmView
+        }
+    }
+
+    private var MyVmView: some View {
 
         VMView(vm: vm, stack: .ZStack()) { state in
 
@@ -172,14 +189,6 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                 }
                             }
                     )
-                            .sheetEnv(isPresented: $isTimerActivitiesPresented) {
-                                ActivitiesTimerSheet(
-                                        isPresented: $isTimerActivitiesPresented,
-                                        timerContext: nil
-                                ) {
-                                    isTimerActivitiesPresented = false
-                                }
-                            }
 
                     Button(
                             action: {
