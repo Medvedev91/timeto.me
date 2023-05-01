@@ -43,6 +43,9 @@ private val dividerModifier = Modifier.padding(horizontal = 8.dp)
 private val dividerColor = Color.White.copy(0.4f)
 private val dividerHeight = 1.dp
 
+private val menuIconSize = 58.dp
+private val menuIconPadding = 15.dp
+
 private val taskItemHeight = 36.dp
 private val taskListContentPadding = 4.dp
 
@@ -278,8 +281,6 @@ private fun FullScreenView(
                 verticalAlignment = Alignment.Bottom,
             ) {
 
-                val menuIconSize = 58.dp
-                val menuIconPadding = 15.dp
                 val menuColor = state.menuColor.toColor()
 
                 Box(
@@ -393,27 +394,41 @@ private fun FullScreenView(
                     }
                 }
 
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight()
-                        .clip(MySquircleShape())
-                        .clickable {
-                            layer.close()
-                        },
-                    contentAlignment = Alignment.BottomCenter,
+                MenuCloseButton(
+                    color = menuColor,
+                    contentAlignment = Alignment.BottomCenter
                 ) {
-                    Icon(
-                        painterResource(id = R.drawable.sf_xmark_circle_medium_thin),
-                        contentDescription = "Close",
-                        tint = menuColor,
-                        modifier = Modifier
-                            .size(menuIconSize)
-                            .padding(menuIconPadding),
-                    )
+                    layer.close()
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun RowScope.MenuCloseButton(
+    color: Color,
+    contentAlignment: Alignment,
+    onClick: () -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .weight(1f)
+            .fillMaxHeight()
+            .clip(MySquircleShape())
+            .clickable {
+                onClick()
+            },
+        contentAlignment = contentAlignment,
+    ) {
+        Icon(
+            painterResource(id = R.drawable.sf_xmark_circle_medium_thin),
+            contentDescription = "Close",
+            tint = color,
+            modifier = Modifier
+                .size(menuIconSize)
+                .padding(menuIconPadding),
+        )
     }
 }
 
