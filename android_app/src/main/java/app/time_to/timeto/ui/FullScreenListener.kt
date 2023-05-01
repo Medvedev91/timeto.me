@@ -36,6 +36,7 @@ import app.time_to.timeto.R
 import timeto.shared.FullScreenUI
 import timeto.shared.min
 import timeto.shared.onEachExIn
+import timeto.shared.vm.FullScreenTasksVM
 import timeto.shared.vm.FullScreenVM
 import timeto.shared.vm.ui.ChecklistStateUI
 
@@ -662,6 +663,8 @@ private fun TasksSheet(
             .fillMaxSize()
     ) {
 
+        val (_, state) = rememberVM { FullScreenTasksVM() }
+
         TabTasksView(
             modifier = Modifier.weight(1f),
             onTaskStarted = { layer.close() },
@@ -702,17 +705,18 @@ private fun TasksSheet(
                 ) {
 
                     Text(
-                        text = "00:00", // todo
-                        color = menuColor,
-                        fontSize = 16.sp,
+                        text = state.timerData.title,
+                        color = state.timerData.titleColor.toColor(),
+                        fontSize = 17.sp,
                         fontWeight = FontWeight.Bold,
                     )
 
                     Text(
-                        text = "Breakfast", // todo
-                        color = menuColor,
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Normal,
+                        text = state.title,
+                        modifier = Modifier.padding(bottom = 1.dp),
+                        color = state.timerData.subtitleColor.toColor(),
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Light,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
