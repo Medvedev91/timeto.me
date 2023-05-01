@@ -318,7 +318,10 @@ private fun FullScreenView(
                                     ) {
                                         // todo use parent theme
                                         MaterialTheme(colors = myDarkColors()) {
-                                            TasksSheet(layer = layer)
+                                            TasksSheet(
+                                                layer = layer,
+                                                menuColor = menuColor,
+                                            )
                                         }
                                     }
                                 }
@@ -650,10 +653,11 @@ private fun ImportantTasksView(
 @Composable
 private fun TasksSheet(
     layer: WrapperView.Layer,
+    menuColor: Color,
 ) {
     Column(
         modifier = Modifier
-            .background(c.tabsBackground)
+            .background(c.background)
             .navigationBarsPadding()
             .fillMaxSize()
     ) {
@@ -663,41 +667,61 @@ private fun TasksSheet(
             onTaskStarted = { layer.close() },
         )
 
+        Divider(
+            color = c.dividerBackground2,
+            thickness = dividerHeight,
+        )
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(bottomNavigationHeight)
         ) {
 
-            Divider(
-                color = c.dividerBackground2,
-                thickness = dividerHeight,
-            )
-
-            Column(
+            Row(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .clickable {
-                        layer.close()
-                    },
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
+                    .fillMaxSize(),
             ) {
 
-                Text(
-                    text = "focus",
-                    color = c.textSecondary,
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Light,
+                MenuTimerButton(
+                    color = menuColor,
+                    contentAlignment = Alignment.BottomCenter,
+                    onTaskStarted = { layer.close() }
                 )
 
-                Icon(
-                    painterResource(R.drawable.sf_chevron_compact_down_medium_thin),
-                    contentDescription = "Focus",
-                    tint = c.textSecondary,
+                Column(
                     modifier = Modifier
-                        .padding(top = 8.dp)
-                        .height(5.dp),
+                        .weight(1f)
+                        .fillMaxHeight()
+                        .clip(MySquircleShape())
+                        .clickable {
+                            layer.close()
+                        },
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                ) {
+
+                    Text(
+                        text = "00:00", // todo
+                        color = menuColor,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                    )
+
+                    Text(
+                        text = "Breakfast", // todo
+                        color = menuColor,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Normal,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+
+                MenuCloseButton(
+                    color = menuColor,
+                    contentAlignment = Alignment.BottomCenter,
+                    onClick = { layer.close() }
                 )
             }
         }
