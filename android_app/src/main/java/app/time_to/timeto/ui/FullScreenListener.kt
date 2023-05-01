@@ -283,31 +283,11 @@ private fun FullScreenView(
 
                 val menuColor = state.menuColor.toColor()
 
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight()
-                        .clip(MySquircleShape())
-                        .clickable {
-                            Sheet.show { layer ->
-                                ActivitiesTimerSheet(
-                                    layerTaskSheet = layer,
-                                    timerContext = null,
-                                    onTaskStarted = {},
-                                )
-                            }
-                        },
+                MenuTimerButton(
+                    color = menuColor,
                     contentAlignment = Alignment.BottomCenter,
-                ) {
-                    Icon(
-                        painterResource(id = R.drawable.sf_timer_medium_thin),
-                        contentDescription = "Timer",
-                        tint = menuColor,
-                        modifier = Modifier
-                            .size(menuIconSize)
-                            .padding(menuIconPadding),
-                    )
-                }
+                    onTaskStarted = {},
+                )
 
                 Column(
                     modifier = Modifier
@@ -402,6 +382,39 @@ private fun FullScreenView(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun RowScope.MenuTimerButton(
+    color: Color,
+    contentAlignment: Alignment,
+    onTaskStarted: () -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .weight(1f)
+            .fillMaxHeight()
+            .clip(MySquircleShape())
+            .clickable {
+                Sheet.show { layer ->
+                    ActivitiesTimerSheet(
+                        layerTaskSheet = layer,
+                        timerContext = null,
+                        onTaskStarted = { onTaskStarted() },
+                    )
+                }
+            },
+        contentAlignment = contentAlignment,
+    ) {
+        Icon(
+            painterResource(id = R.drawable.sf_timer_medium_thin),
+            contentDescription = "Timer",
+            tint = color,
+            modifier = Modifier
+                .size(menuIconSize)
+                .padding(menuIconPadding),
+        )
     }
 }
 
