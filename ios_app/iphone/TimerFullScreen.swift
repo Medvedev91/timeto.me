@@ -486,11 +486,22 @@ private struct TasksSheet: View {
 
             MyDivider()
 
+            // Outside of the every-second updating view
+            ZStack {}
+                    .sheetEnv(isPresented: $isTimerActivitiesPresented) {
+                        ActivitiesTimerSheet(
+                                isPresented: $isTimerActivitiesPresented,
+                                timerContext: nil
+                        ) {
+                            isTimerActivitiesPresented = false
+                        }
+                    }
+
             HStack(spacing: 0) {
 
                 Button(
                         action: {
-                            // isTimerActivitiesPresented = true
+                            isTimerActivitiesPresented = true
                         },
                         label: {
                             Image(systemName: "timer")
@@ -498,6 +509,28 @@ private struct TasksSheet: View {
                                     .foregroundColor(menuColor)
                                     .font(.system(size: 30, weight: .thin))
                                     .frame(maxWidth: .infinity)
+                        }
+                )
+
+                Button(
+                        action: {
+                            isPresented = false
+                        },
+                        label: {
+                            VMView(vm: vm, stack: .VStack(spacing: 0)) { state in
+
+                                let timerColor = state.timerData.titleColor.toColor()
+
+                                Text(state.timerData.title)
+                                        .padding(.top, 14)
+                                        .foregroundColor(timerColor)
+                                        .font(.system(size: 17, weight: .bold))
+
+                                Text(state.title)
+                                        .foregroundColor(timerColor)
+                                        .font(.system(size: 14, weight: .regular))
+                                        .padding(.top, 2)
+                            }
                         }
                 )
 
