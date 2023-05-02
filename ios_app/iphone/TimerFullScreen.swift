@@ -206,7 +206,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                     Text(state.tasksText)
                                             .foregroundColor(menuColor)
                                             .font(.system(size: 15, weight: .regular))
-                                            .padding(.top, 8)
+                                            .padding(.top, 10)
 
                                     Spacer(minLength: 0)
 
