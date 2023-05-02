@@ -258,7 +258,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                             }
                     )
                 }
-                        .frame(height: 85)
+                        .frame(height: 90)
                         .frame(width: .infinity)
             }
 
