@@ -163,6 +163,15 @@ data class IntervalModel(
 
     fun unixTime() = UnixTime(id)
 
+    fun getTriggers(): List<TextFeatures.Trigger> {
+        val triggers = mutableListOf<TextFeatures.Trigger>()
+        // Priority to note
+        if (note != null)
+            triggers.addAll(note.textFeatures().triggers)
+        triggers.addAll(getActivityDI().name.textFeatures().triggers)
+        return triggers
+    }
+
     fun getActivityDI() = DI.activitiesSorted.first { it.id == activity_id }
 
     suspend fun upActivity(newActivity: ActivityModel): Unit = dbIO {
