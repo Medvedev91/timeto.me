@@ -493,7 +493,7 @@ private struct TasksSheet: View {
                                 isPresented: $isTimerActivitiesPresented,
                                 timerContext: nil
                         ) {
-                            isTimerActivitiesPresented = false
+                            isPresented = false
                         }
                     }
 
