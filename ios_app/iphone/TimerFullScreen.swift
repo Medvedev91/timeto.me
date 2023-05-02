@@ -530,6 +530,7 @@ private struct TasksSheet: View {
                                         .foregroundColor(timerColor)
                                         .font(.system(size: 14, weight: .regular))
                                         .padding(.top, 2)
+                                        .lineLimit(1)
                             }
                         }
                 )
