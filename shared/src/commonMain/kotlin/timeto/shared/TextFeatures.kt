@@ -109,6 +109,9 @@ data class TextFeatures(
     }
 }
 
+fun List<TextFeatures.Trigger>.filterNoChecklists() =
+    this.filter { it !is TextFeatures.Trigger.Checklist }
+
 fun String.textFeatures(): TextFeatures = parseLocal(this)
 
 //////
