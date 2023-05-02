@@ -3,7 +3,7 @@ import Combine
 import shared
 
 private let dividerPadding = 8.0
-private let dividerColor = UIColor.systemGray4
+private let dividerColor: UIColor = .systemGray4
 private let dividerHeight = 1 / UIScreen.main.scale
 
 private let taskItemHeight = 36.0
@@ -157,9 +157,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                 if let checklistUI = checklistUI {
                     VStack(spacing: 0) {
                         ChecklistView(checklistUI: checklistUI)
-                        Color(dividerColor)
-                                .frame(height: dividerHeight)
-                                .padding(.horizontal, dividerPadding)
+                        FSDivider()
                     }
                 }
 
@@ -284,9 +282,7 @@ private struct ChecklistView: View {
 
         VStack(spacing: 0) {
 
-            Color(vScroll > 0 ? dividerColor : .clear)
-                    .frame(height: dividerHeight)
-                    .padding(.horizontal, dividerPadding)
+            FSDivider(isVisible: vScroll > 0)
 
             GeometryReader { proxy in
 
@@ -552,5 +548,16 @@ private struct TasksSheet: View {
         }
                 .ignoresSafeArea()
                 .background(Color(.myBackground))
+    }
+}
+
+private struct FSDivider: View {
+
+    var isVisible = true
+
+    var body: some View {
+        Color(isVisible ? dividerColor : .clear)
+                .frame(height: dividerHeight)
+                .padding(.horizontal, dividerPadding)
     }
 }
