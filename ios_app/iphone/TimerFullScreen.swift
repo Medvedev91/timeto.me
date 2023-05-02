@@ -56,7 +56,6 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                             isTimerActivitiesPresented = false
                         }
                     }
-                    .background(.red)
             myVmView
         }
     }
