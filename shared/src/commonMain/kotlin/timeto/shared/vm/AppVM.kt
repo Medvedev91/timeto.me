@@ -112,6 +112,12 @@ private suspend fun showTriggersForInterval(
     if ((lastInterval.id + 3) < time())
         return
 
+    val triggers = lastInterval.getTriggers()
+    if (FullScreenUI.isOpen()) {
+        triggers.filterNoChecklists().firstOrNull()?.performUI()
+        return
+    }
+
     fun fsOrTriggers(isFS: Boolean, features: TextFeatures) {
         if (isFS) {
             FullScreenUI.open()
