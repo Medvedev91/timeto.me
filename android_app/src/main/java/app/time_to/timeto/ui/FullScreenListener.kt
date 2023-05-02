@@ -50,6 +50,8 @@ private val menuIconPadding = 15.dp
 private val taskItemHeight = 36.dp
 private val taskListContentPadding = 4.dp
 
+private val menuColor = FullScreenVM.menuColor.toColor()
+
 @Composable
 fun FullScreenListener(
     activity: Activity,
@@ -282,10 +284,7 @@ private fun FullScreenView(
                 verticalAlignment = Alignment.Bottom,
             ) {
 
-                val menuColor = state.menuColor.toColor()
-
                 MenuTimerButton(
-                    color = menuColor,
                     contentAlignment = Alignment.BottomCenter,
                     onTaskStarted = {},
                 )
@@ -321,7 +320,6 @@ private fun FullScreenView(
                                         MaterialTheme(colors = myDarkColors()) {
                                             TasksSheet(
                                                 layer = layer,
-                                                menuColor = menuColor,
                                             )
                                         }
                                     }
@@ -336,7 +334,7 @@ private fun FullScreenView(
                         text = state.tasksText,
                         modifier = Modifier
                             .padding(bottom = 22.dp),
-                        color = state.menuColor.toColor(),
+                        color = menuColor,
                         fontSize = 13.sp,
                         fontWeight = FontWeight.Light,
                     )
@@ -379,7 +377,6 @@ private fun FullScreenView(
                 }
 
                 MenuCloseButton(
-                    color = menuColor,
                     contentAlignment = Alignment.BottomCenter
                 ) {
                     layer.close()
@@ -391,7 +388,6 @@ private fun FullScreenView(
 
 @Composable
 private fun RowScope.MenuTimerButton(
-    color: Color,
     contentAlignment: Alignment,
     onTaskStarted: () -> Unit,
 ) {
@@ -414,7 +410,7 @@ private fun RowScope.MenuTimerButton(
         Icon(
             painterResource(id = R.drawable.sf_timer_medium_thin),
             contentDescription = "Timer",
-            tint = color,
+            tint = menuColor,
             modifier = Modifier
                 .size(menuIconSize)
                 .padding(menuIconPadding),
@@ -424,7 +420,6 @@ private fun RowScope.MenuTimerButton(
 
 @Composable
 private fun RowScope.MenuCloseButton(
-    color: Color,
     contentAlignment: Alignment,
     onClick: () -> Unit,
 ) {
@@ -441,7 +436,7 @@ private fun RowScope.MenuCloseButton(
         Icon(
             painterResource(id = R.drawable.sf_xmark_circle_medium_thin),
             contentDescription = "Close",
-            tint = color,
+            tint = menuColor,
             modifier = Modifier
                 .size(menuIconSize)
                 .padding(menuIconPadding),
@@ -654,7 +649,6 @@ private fun ImportantTasksView(
 @Composable
 private fun TasksSheet(
     layer: WrapperView.Layer,
-    menuColor: Color,
 ) {
     Column(
         modifier = Modifier
@@ -687,7 +681,6 @@ private fun TasksSheet(
             ) {
 
                 MenuTimerButton(
-                    color = menuColor,
                     contentAlignment = Alignment.BottomCenter,
                     onTaskStarted = { layer.close() }
                 )
@@ -723,7 +716,6 @@ private fun TasksSheet(
                 }
 
                 MenuCloseButton(
-                    color = menuColor,
                     contentAlignment = Alignment.BottomCenter,
                     onClick = { layer.close() }
                 )

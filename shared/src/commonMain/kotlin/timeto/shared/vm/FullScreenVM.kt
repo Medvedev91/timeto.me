@@ -13,6 +13,10 @@ import timeto.shared.vm.ui.TimerDataUI
 
 class FullScreenVM : __VM<FullScreenVM.State>() {
 
+    companion object {
+        val menuColor = ColorRgba(255, 255, 255, 128)
+    }
+
     data class State(
         val interval: IntervalModel,
         val allChecklistItems: List<ChecklistItemModel>,
@@ -23,7 +27,6 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
     ) {
 
         val cancelTaskText = "CANCEL"
-        val menuColor = ColorRgba(255, 255, 255, 128)
         val timerData = TimerDataUI(interval, isCountdown, ColorNative.white)
 
         val activity = interval.getActivityDI()
