@@ -65,6 +65,8 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
         VMView(vm: vm, stack: .ZStack()) { state in
 
+            let menuColor = state.menuColor.toColor()
+
             Color.black.edgesIgnoringSafeArea(.all)
                     .statusBar(hidden: true)
 
@@ -171,8 +173,6 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
                 HStack(alignment: .bottom, spacing: 0) {
 
-                    let menuColor = state.menuColor.toColor()
-
                     Button(
                             action: {
                                 isTimerActivitiesPresented = true
@@ -257,7 +257,10 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                         .frame(width: .infinity)
             }
                     .sheetEnv(isPresented: $isTasksSheetPresented) {
-                        TasksSheet(isPresented: $isTasksSheetPresented)
+                        TasksSheet(
+                                isPresented: $isTasksSheetPresented,
+                                menuColor: menuColor
+                        )
                                 .ignoresSafeArea(.keyboard, edges: .bottom)
                                 .colorScheme(.dark)
                     }
@@ -467,6 +470,7 @@ private struct ImportantTaskItem: View {
 private struct TasksSheet: View {
 
     @Binding var isPresented: Bool
+    let menuColor: Color
 
     var body: some View {
 
@@ -478,28 +482,39 @@ private struct TasksSheet: View {
                     }
             )
 
-            VStack(spacing: 0) {
+            MyDivider()
 
-                MyDivider()
+            HStack(spacing: 0) {
+
+                Button(
+                        action: {
+                            // isTimerActivitiesPresented = true
+                        },
+                        label: {
+                            Image(systemName: "timer")
+                                    .padding(.top, 14)
+                                    .foregroundColor(menuColor)
+                                    .font(.system(size: 30, weight: .thin))
+                                    .frame(maxWidth: .infinity)
+                        }
+                )
 
                 Button(
                         action: {
                             isPresented = false
                         },
                         label: {
-                            Text("focus")
-                                    .foregroundColor(.white)
+                            Image(systemName: "xmark.circle")
+                                    .padding(.top, 14)
+                                    .foregroundColor(menuColor)
+                                    .font(.system(size: 30, weight: .thin))
+                                    .frame(maxWidth: .infinity)
                         }
                 )
-                        .padding(.top, 20)
-
-                Image(systemName: "chevron.compact.down")
-                        .padding(.top, 4)
-                        .padding(.bottom, 4)
-                        .foregroundColor(.white)
-                        .font(.system(size: 30, weight: .thin))
             }
+                    .frame(height: TabsView.tabHeight, alignment: .top)
         }
+                .ignoresSafeArea()
                 .background(Color(.myBackground))
     }
 }
