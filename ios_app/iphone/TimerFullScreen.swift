@@ -9,6 +9,8 @@ private let dividerHeight = 1 / UIScreen.main.scale
 private let taskItemHeight = 36.0
 private let taskListContentPadding = 4.0
 
+private let menuColor = FullScreenVM.companion.menuColor.toColor()
+
 extension View {
 
     func attachTimerFullScreenView() -> some View {
@@ -56,6 +58,14 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                             isTimerActivitiesPresented = false
                         }
                     }
+                    .sheetEnv(isPresented: $isTasksSheetPresented) {
+                        TasksSheet(
+                                isPresented: $isTasksSheetPresented
+                        )
+                                .ignoresSafeArea(.keyboard, edges: .bottom)
+                                .colorScheme(.dark)
+                    }
+
             myVmView
         }
     }
@@ -63,8 +73,6 @@ private struct TimerFullScreen__FullScreenCoverView: View {
     private var myVmView: some View {
 
         VMView(vm: vm, stack: .ZStack()) { state in
-
-            let menuColor = state.menuColor.toColor()
 
             Color.black.edgesIgnoringSafeArea(.all)
                     .statusBar(hidden: true)
@@ -255,14 +263,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                         .frame(height: 85)
                         .frame(width: .infinity)
             }
-                    .sheetEnv(isPresented: $isTasksSheetPresented) {
-                        TasksSheet(
-                                isPresented: $isTasksSheetPresented,
-                                menuColor: menuColor
-                        )
-                                .ignoresSafeArea(.keyboard, edges: .bottom)
-                                .colorScheme(.dark)
-                    }
+
         }
                 .onAppear {
                     UIApplication.shared.isIdleTimerDisabled = true
@@ -469,7 +470,9 @@ private struct ImportantTaskItem: View {
 private struct TasksSheet: View {
 
     @Binding var isPresented: Bool
-    let menuColor: Color
+
+    @State private var vm = FullScreenTasksVM()
+    @State private var isTimerActivitiesPresented = false
 
     var body: some View {
 
