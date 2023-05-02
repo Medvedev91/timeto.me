@@ -57,11 +57,11 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                         }
                     }
                     .background(.red)
-            MyVmView
+            myVmView
         }
     }
 
-    private var MyVmView: some View {
+    private var myVmView: some View {
 
         VMView(vm: vm, stack: .ZStack()) { state in
 
