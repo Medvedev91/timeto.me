@@ -125,6 +125,7 @@ fun getSoundTimeToBreakFileName(withExtension: Boolean): String =
 fun JsonObject.getInt(key: String): Int = this[key]!!.jsonPrimitive.int
 fun JsonObject.getString(key: String): String = this[key]!!.jsonPrimitive.content
 fun JsonObject.getStringOrNull(key: String): String? = this[key]!!.jsonPrimitive.contentOrNull
+fun JsonObject.getBoolean(key: String): Boolean = this[key]!!.jsonPrimitive.boolean
 fun JsonObject.getIntArray(key: String): List<Int> = this[key]!!.jsonArray.map { it.jsonPrimitive.int }
 
 fun JsonArray.getInt(index: Int): Int = this[index].jsonPrimitive.int
