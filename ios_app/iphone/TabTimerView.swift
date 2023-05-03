@@ -76,6 +76,29 @@ struct TabTimerView: View {
                             //////
                         }
 
+                        ///
+                        /// todo remove
+
+                        if let newAppData = state.newAppData {
+
+                            Text(newAppData.message)
+                                    .padding(.horizontal, 20)
+                                    .padding(.top, 24)
+                                    .multilineTextAlignment(.center)
+
+                            Button(
+                                    action: {
+                                        UIApplication.shared.open(URL(string: newAppData.btn_url)!)
+                                    },
+                                    label: {
+                                        Text(newAppData.btn_text)
+                                    }
+                            )
+                                    .padding(.top, 12)
+                        }
+
+                        //////
+
                         //
                         // List
 
