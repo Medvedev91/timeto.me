@@ -73,6 +73,12 @@ fun TaskFormSheet(
 
             MyListView__Padding__SectionSection()
 
+            TextFeaturesTimerFormView(state.textFeatures) {
+                vm.setTextFeatures(it)
+            }
+
+            MyListView__Padding__SectionSection()
+
             TextFeaturesTriggersFormView(state.textFeatures) {
                 vm.setTextFeatures(it)
             }
