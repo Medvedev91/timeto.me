@@ -60,8 +60,26 @@ data class TaskModel(
 
         //////
 
-        private fun validateText(text: String): String {
-            val validatedText = text.trim()
+        private fun validateText(textToValidate: String): String {
+            var textFeatures = textToValidate.textFeatures()
+
+            val timeParser = TimerTimeParser.parse(textFeatures.textNoFeatures)
+            if (timeParser != null) {
+                textFeatures = textFeatures.copy(
+                    timer = timeParser.seconds,
+                    textNoFeatures = textFeatures.textNoFeatures.replace(timeParser.match, ""),
+                )
+            }
+
+            val activity = DI.activitiesSorted.firstOrNull { it.emoji in textFeatures.textNoFeatures }
+            if (activity != null) {
+                textFeatures = textFeatures.copy(
+                    activity = activity,
+                    textNoFeatures = textFeatures.textNoFeatures.replace(activity.emoji, "")
+                )
+            }
+
+            val validatedText = textFeatures.textWithFeatures()
             if (validatedText.isEmpty())
                 throw UIException("Empty text")
             return validatedText
