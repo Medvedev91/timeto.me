@@ -40,7 +40,7 @@ class AppVM : __VM<AppVM.State>() {
                 if (activity != null)
                     newText = newText.replace(activity.emoji, "") + " #a${activity.id}"
 
-                val timeRes = TimerTimeParser.findTime(newText)
+                val timeRes = TimerTimeParser.parse(newText)
                 if (timeRes != null)
                     newText = newText.replace(timeRes.match, "") + " #t${timeRes.seconds}"
 
