@@ -496,15 +496,12 @@ class TimerPickerItem(
 
 object TimerTimeParser {
 
+    // Using IGNORE_CASE, not lowercase() to set to the "match" real string
     private val regex = "\\d+\\s?min".toRegex(RegexOption.IGNORE_CASE)
 
     fun findTime(
         text: String,
     ): Result? {
-        /**
-         * It's better to use IGNORE_CASE instead of transform to lowercase. Because it
-         * is better to set to the "match" real string, otherwise it is not clear behavior.
-         */
         val match = regex.find(text)?.value ?: return null
         val seconds = match.filter { it.isDigit() }.toInt() * 60
         return Result(seconds, match)
