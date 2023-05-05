@@ -12,12 +12,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="TimeTo"
         android:supportsRtl="true"
-        android:theme="@style/Theme.TimeTo">
+        android:theme="@style/Theme.Timetome">
 
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.TimeTo"
+            android:theme="@style/Theme.Timetome"
             android:windowSoftInputMode="adjustResize"> <!-- Docs in MainActivity -->
 
             <intent-filter>

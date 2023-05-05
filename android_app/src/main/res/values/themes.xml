@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Theme.TimeTo" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Timetome" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/my_dn_background</item>
         <!-- Status bar background + icons color -->
         <item name="android:statusBarColor">#00000000</item>
