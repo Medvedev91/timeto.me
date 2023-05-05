@@ -77,7 +77,7 @@ kotlin {
 }
 
 android {
-    namespace = "timeto.shared"
+    namespace = "me.timeto.shared"
     compileSdk = 33
     defaultConfig {
         minSdk = 26
