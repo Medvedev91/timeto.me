@@ -86,7 +86,7 @@ android {
 }
 
 sqldelight {
-    database("TimetoDB") {
-        packageName = "timeto.dbsq"
+    database("TimetomeDB") {
+        packageName = "me.timeto.appdbsq"
     }
 }

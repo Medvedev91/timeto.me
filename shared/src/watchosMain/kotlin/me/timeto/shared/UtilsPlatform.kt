@@ -7,7 +7,7 @@ import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 import com.squareup.sqldelight.drivers.native.wrapConnection
 import platform.Foundation.NSBundle
 import platform.WatchKit.WKInterfaceDevice
-import timeto.dbsq.TimetoDB
+import me.timeto.appdbsq.TimetomeDB
 import me.timeto.shared.db.DB_NAME
 
 internal actual val REPORT_API_TITLE = "⌚ Watch OS"
@@ -43,7 +43,7 @@ internal actual object SecureLocalStorage {
  * DO NOT CHANGE THE CODE! It is copy from "iosMain".
  */
 private fun createNativeDriver(
-    schema: SqlDriver.Schema = TimetoDB.Schema,
+    schema: SqlDriver.Schema = TimetomeDB.Schema,
 ) = NativeSqliteDriver(
     configuration = DatabaseConfiguration(
         name = DB_NAME,

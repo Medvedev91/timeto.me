@@ -3,10 +3,10 @@ package me.timeto.shared.db
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import timeto.dbsq.TimetoDB
+import me.timeto.appdbsq.TimetomeDB
 
-internal const val DB_NAME = "timeto.db"
-internal lateinit var db: TimetoDB
+internal const val DB_NAME = "timetome.db"
+internal lateinit var db: TimetomeDB
 
 internal suspend fun <T> dbIO(
     block: suspend CoroutineScope.() -> T

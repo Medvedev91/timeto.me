@@ -12,7 +12,7 @@ import platform.Foundation.*
 import platform.Security.*
 import platform.UIKit.UIDevice
 import platform.darwin.OSStatus
-import timeto.dbsq.TimetoDB
+import me.timeto.appdbsq.TimetomeDB
 import me.timeto.shared.db.*
 
 internal actual val REPORT_API_TITLE = " iOS"
@@ -141,7 +141,7 @@ fun String.toSwiftData(): NSData = (this as NSString).dataUsingEncoding(NSUTF8St
  * - When the database is changed, the irrelevant UI will be displayed.
  */
 private fun createNativeDriver(
-    schema: SqlDriver.Schema = TimetoDB.Schema,
+    schema: SqlDriver.Schema = TimetomeDB.Schema,
 ) = NativeSqliteDriver(
     configuration = DatabaseConfiguration(
         name = DB_NAME,

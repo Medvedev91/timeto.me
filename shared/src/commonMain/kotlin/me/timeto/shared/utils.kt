@@ -10,7 +10,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.*
 import kotlinx.serialization.json.*
-import timeto.dbsq.TimetoDB
+import me.timeto.appdbsq.TimetomeDB
 import me.timeto.shared.db.*
 import me.timeto.shared.db.KVModel.Companion.asDayStartOffsetSeconds
 
@@ -343,7 +343,7 @@ internal fun initKmm(
     sqlDriver: SqlDriver,
     deviceData_: DeviceData,
 ) {
-    db = TimetoDB(sqlDriver)
+    db = TimetomeDB(sqlDriver)
     deviceData = deviceData_
     initKmmDeferred = defaultScope().async { DI.init() }
 }

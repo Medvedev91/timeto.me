@@ -5,7 +5,7 @@ import android.os.Build
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.squareup.sqldelight.android.AndroidSqliteDriver
-import timeto.dbsq.TimetoDB
+import me.timeto.appdbsq.TimetomeDB
 import me.timeto.shared.db.DB_NAME
 import java.io.InputStreamReader
 
@@ -25,7 +25,7 @@ fun initKmmAndroid(application: Application, build: Int) {
         os = "android-${Build.VERSION.RELEASE}",
         device = deviceName,
     )
-    initKmm(AndroidSqliteDriver(TimetoDB.Schema, application, DB_NAME), deviceData)
+    initKmm(AndroidSqliteDriver(TimetomeDB.Schema, application, DB_NAME), deviceData)
 }
 
 actual fun getResourceContent(file: String, type: String) = androidApplication
