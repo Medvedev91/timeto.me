@@ -1,11 +1,11 @@
-package timeto.shared.vm
+package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonPrimitive
-import timeto.shared.*
+import me.timeto.shared.*
 
 class SearchEmojiSheetVM : __VM<SearchEmojiSheetVM.State>() {
 

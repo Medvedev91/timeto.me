@@ -1,4 +1,4 @@
-package timeto.shared.db
+package me.timeto.shared.db
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

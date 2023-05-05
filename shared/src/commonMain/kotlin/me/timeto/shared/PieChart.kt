@@ -1,4 +1,4 @@
-package timeto.shared
+package me.timeto.shared
 
 object PieChart {
 

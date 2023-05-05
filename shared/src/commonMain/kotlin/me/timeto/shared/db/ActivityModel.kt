@@ -1,11 +1,11 @@
-package timeto.shared.db
+package me.timeto.shared.db
 
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import dbsq.ActivitySQ
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.*
-import timeto.shared.*
+import me.timeto.shared.*
 import kotlin.math.max
 
 data class ActivityModel(

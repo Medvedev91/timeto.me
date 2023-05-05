@@ -1,11 +1,11 @@
-package timeto.shared
+package me.timeto.shared
 
 import kotlinx.coroutines.flow.*
-import timeto.shared.db.ActivityModel
-import timeto.shared.db.TaskModel
-import timeto.shared.vm.ActivitiesTimerSheetVM
-import timeto.shared.vm.__VM
-import timeto.shared.ui.TimerHintUI
+import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.db.TaskModel
+import me.timeto.shared.vm.ActivitiesTimerSheetVM
+import me.timeto.shared.vm.__VM
+import me.timeto.shared.ui.TimerHintUI
 
 class WatchTaskSheetVM(
     val task: TaskModel,

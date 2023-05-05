@@ -1,11 +1,11 @@
-package timeto.shared.vm
+package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
-import timeto.shared.*
-import timeto.shared.db.ChecklistModel
-import timeto.shared.db.KVModel
-import timeto.shared.db.KVModel.Companion.asDayStartOffsetSeconds
-import timeto.shared.db.ShortcutModel
+import me.timeto.shared.*
+import me.timeto.shared.db.ChecklistModel
+import me.timeto.shared.db.KVModel
+import me.timeto.shared.db.KVModel.Companion.asDayStartOffsetSeconds
+import me.timeto.shared.db.ShortcutModel
 
 class TabToolsVM : __VM<TabToolsVM.State>() {
 

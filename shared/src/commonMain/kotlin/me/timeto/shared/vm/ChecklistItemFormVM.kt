@@ -1,11 +1,11 @@
-package timeto.shared.vm
+package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
-import timeto.shared.UIException
-import timeto.shared.db.ChecklistItemModel
-import timeto.shared.db.ChecklistModel
-import timeto.shared.launchEx
-import timeto.shared.showUiAlert
+import me.timeto.shared.UIException
+import me.timeto.shared.db.ChecklistItemModel
+import me.timeto.shared.db.ChecklistModel
+import me.timeto.shared.launchEx
+import me.timeto.shared.showUiAlert
 
 class ChecklistItemFormVM(
     val checklist: ChecklistModel,

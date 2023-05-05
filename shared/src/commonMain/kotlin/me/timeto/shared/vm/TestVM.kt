@@ -1,4 +1,4 @@
-package timeto.shared.vm
+package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 

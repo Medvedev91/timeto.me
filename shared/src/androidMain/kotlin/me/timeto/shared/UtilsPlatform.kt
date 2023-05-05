@@ -1,4 +1,4 @@
-package timeto.shared
+package me.timeto.shared
 
 import android.app.Application
 import android.os.Build
@@ -6,7 +6,7 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import timeto.dbsq.TimetoDB
-import timeto.shared.db.DB_NAME
+import me.timeto.shared.db.DB_NAME
 import java.io.InputStreamReader
 
 private lateinit var androidApplication: Application

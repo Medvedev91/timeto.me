@@ -1,4 +1,4 @@
-package timeto.shared.db
+package me.timeto.shared.db
 
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.datetime.*
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
-import timeto.shared.*
+import me.timeto.shared.*
 import kotlin.math.absoluteValue
 import kotlin.math.max
 

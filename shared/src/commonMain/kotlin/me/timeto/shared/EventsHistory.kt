@@ -1,8 +1,8 @@
-package timeto.shared
+package me.timeto.shared
 
 import kotlinx.serialization.json.*
-import timeto.shared.db.EventModel
-import timeto.shared.db.KVModel
+import me.timeto.shared.db.EventModel
+import me.timeto.shared.db.KVModel
 
 data class EventsHistory(
     val items: MutableList<Item>

@@ -1,4 +1,4 @@
-package timeto.shared
+package me.timeto.shared
 
 import com.squareup.sqldelight.db.SqlDriver
 import io.ktor.client.*
@@ -11,8 +11,8 @@ import kotlinx.coroutines.flow.*
 import kotlinx.datetime.*
 import kotlinx.serialization.json.*
 import timeto.dbsq.TimetoDB
-import timeto.shared.db.*
-import timeto.shared.db.KVModel.Companion.asDayStartOffsetSeconds
+import me.timeto.shared.db.*
+import me.timeto.shared.db.KVModel.Companion.asDayStartOffsetSeconds
 
 const val EMOJI_CALENDAR = "🗓"
 const val EMOJI_REPEATING = "🔁"

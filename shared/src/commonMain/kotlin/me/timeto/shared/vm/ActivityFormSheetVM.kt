@@ -1,10 +1,10 @@
-package timeto.shared.vm
+package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
-import timeto.shared.*
-import timeto.shared.db.ActivityModel
-import timeto.shared.db.ActivityModel__Data
+import me.timeto.shared.*
+import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.db.ActivityModel__Data
 
 class ActivityFormSheetVM(
     val activity: ActivityModel?

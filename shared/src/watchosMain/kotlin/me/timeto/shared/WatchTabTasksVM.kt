@@ -1,13 +1,13 @@
-package timeto.shared
+package me.timeto.shared
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
-import timeto.shared.db.TaskFolderModel
-import timeto.shared.db.TaskFolderModel.Companion.sortedFolders
-import timeto.shared.db.TaskModel
-import timeto.shared.TextFeatures.TimeData
-import timeto.shared.vm.__VM
-import timeto.shared.vm.ui.sortedByFolder
+import me.timeto.shared.db.TaskFolderModel
+import me.timeto.shared.db.TaskFolderModel.Companion.sortedFolders
+import me.timeto.shared.db.TaskModel
+import me.timeto.shared.TextFeatures.TimeData
+import me.timeto.shared.vm.__VM
+import me.timeto.shared.vm.ui.sortedByFolder
 
 class WatchTabTasksVM : __VM<WatchTabTasksVM.State>() {
 

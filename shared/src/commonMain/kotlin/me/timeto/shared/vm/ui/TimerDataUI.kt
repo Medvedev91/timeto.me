@@ -1,10 +1,10 @@
-package timeto.shared.vm.ui
+package me.timeto.shared.vm.ui
 
-import timeto.shared.BREAK_SECONDS
-import timeto.shared.ColorNative
-import timeto.shared.db.IntervalModel
-import timeto.shared.time
-import timeto.shared.toHms
+import me.timeto.shared.BREAK_SECONDS
+import me.timeto.shared.ColorNative
+import me.timeto.shared.db.IntervalModel
+import me.timeto.shared.time
+import me.timeto.shared.toHms
 import kotlin.math.absoluteValue
 
 class TimerDataUI(

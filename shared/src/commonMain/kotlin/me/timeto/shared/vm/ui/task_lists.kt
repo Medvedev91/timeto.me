@@ -1,9 +1,9 @@
-package timeto.shared.vm.ui
+package me.timeto.shared.vm.ui
 
-import timeto.shared.TextFeatures
-import timeto.shared.db.TaskFolderModel
-import timeto.shared.db.TaskModel
-import timeto.shared.textFeatures
+import me.timeto.shared.TextFeatures
+import me.timeto.shared.db.TaskFolderModel
+import me.timeto.shared.db.TaskModel
+import me.timeto.shared.textFeatures
 
 fun List<TaskModel>.sortedByFolder(
     folder: TaskFolderModel,

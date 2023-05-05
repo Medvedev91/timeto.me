@@ -1,7 +1,7 @@
-package timeto.shared
+package me.timeto.shared
 
 import kotlinx.serialization.json.*
-import timeto.shared.db.*
+import me.timeto.shared.db.*
 
 object Backup {
 

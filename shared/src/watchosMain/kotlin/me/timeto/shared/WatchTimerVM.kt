@@ -1,13 +1,13 @@
-package timeto.shared
+package me.timeto.shared
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timeto.shared.db.IntervalModel
-import timeto.shared.vm.__VM
-import timeto.shared.vm.ui.TimerDataUI
+import me.timeto.shared.db.IntervalModel
+import me.timeto.shared.vm.__VM
+import me.timeto.shared.vm.ui.TimerDataUI
 
 class WatchTimerVM : __VM<WatchTimerVM.State>() {
 

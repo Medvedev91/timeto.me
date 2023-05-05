@@ -1,4 +1,4 @@
-package timeto.shared.vm
+package me.timeto.shared.vm
 
 import io.ktor.client.*
 import io.ktor.client.request.*
@@ -8,8 +8,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
-import timeto.shared.*
-import timeto.shared.db.*
+import me.timeto.shared.*
+import me.timeto.shared.db.*
 
 class AppVM : __VM<AppVM.State>() {
 

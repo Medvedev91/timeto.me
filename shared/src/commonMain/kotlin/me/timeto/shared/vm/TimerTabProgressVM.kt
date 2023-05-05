@@ -1,11 +1,11 @@
-package timeto.shared.vm
+package me.timeto.shared.vm
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import timeto.shared.*
-import timeto.shared.db.IntervalModel
-import timeto.shared.vm.ui.TimerDataUI
+import me.timeto.shared.*
+import me.timeto.shared.db.IntervalModel
+import me.timeto.shared.vm.ui.TimerDataUI
 
 class TimerTabProgressVM : __VM<TimerTabProgressVM.State>() {
 

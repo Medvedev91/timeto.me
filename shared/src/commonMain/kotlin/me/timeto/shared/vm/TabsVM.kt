@@ -1,9 +1,9 @@
-package timeto.shared.vm
+package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
-import timeto.shared.DI
-import timeto.shared.db.TaskModel
-import timeto.shared.onEachExIn
+import me.timeto.shared.DI
+import me.timeto.shared.db.TaskModel
+import me.timeto.shared.onEachExIn
 
 class TabsVM : __VM<TabsVM.State>() {
 

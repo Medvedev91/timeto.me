@@ -1,14 +1,14 @@
-package timeto.shared.vm
+package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import timeto.shared.*
-import timeto.shared.TextFeatures.TimeData
-import timeto.shared.db.EventModel
-import timeto.shared.db.RepeatingModel
-import timeto.shared.db.TaskFolderModel
-import timeto.shared.db.TaskModel
-import timeto.shared.vm.ui.sortedByFolder
+import me.timeto.shared.*
+import me.timeto.shared.TextFeatures.TimeData
+import me.timeto.shared.db.EventModel
+import me.timeto.shared.db.RepeatingModel
+import me.timeto.shared.db.TaskFolderModel
+import me.timeto.shared.db.TaskModel
+import me.timeto.shared.vm.ui.sortedByFolder
 
 // todo live tmrw data?
 class TasksListVM(

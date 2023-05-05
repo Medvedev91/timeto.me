@@ -1,9 +1,9 @@
-package timeto.shared.vm
+package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
-import timeto.shared.*
-import timeto.shared.db.TaskFolderModel
-import timeto.shared.db.TaskFolderModel.Companion.sortedFolders
+import me.timeto.shared.*
+import me.timeto.shared.db.TaskFolderModel
+import me.timeto.shared.db.TaskFolderModel.Companion.sortedFolders
 
 class FoldersSettingsVM : __VM<FoldersSettingsVM.State>() {
 

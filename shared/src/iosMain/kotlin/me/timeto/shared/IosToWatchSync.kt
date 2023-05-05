@@ -1,10 +1,10 @@
-package timeto.shared
+package me.timeto.shared
 
 import kotlinx.serialization.json.*
-import timeto.shared.db.IntervalModel
-import timeto.shared.db.TaskModel
+import me.timeto.shared.db.IntervalModel
+import me.timeto.shared.db.TaskModel
 import platform.WatchConnectivity.WCSession
-import timeto.shared.db.ActivityModel
+import me.timeto.shared.db.ActivityModel
 
 object IosToWatchSync {
 

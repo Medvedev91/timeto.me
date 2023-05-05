@@ -1,4 +1,4 @@
-package timeto.shared
+package me.timeto.shared
 
 import co.touchlab.sqliter.DatabaseConfiguration
 import co.touchlab.sqliter.JournalMode
@@ -13,7 +13,7 @@ import platform.Security.*
 import platform.UIKit.UIDevice
 import platform.darwin.OSStatus
 import timeto.dbsq.TimetoDB
-import timeto.shared.db.*
+import me.timeto.shared.db.*
 
 internal actual val REPORT_API_TITLE = " iOS"
 

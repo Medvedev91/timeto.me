@@ -1,10 +1,10 @@
-package timeto.shared.vm.ui
+package me.timeto.shared.vm.ui
 
-import timeto.shared.ColorNative
-import timeto.shared.TextFeatures
-import timeto.shared.db.ActivityModel
-import timeto.shared.textFeatures
-import timeto.shared.toTimerHintNote
+import me.timeto.shared.ColorNative
+import me.timeto.shared.TextFeatures
+import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.textFeatures
+import me.timeto.shared.toTimerHintNote
 
 class TextFeaturesTimerFormUI(
     val textFeatures: TextFeatures,

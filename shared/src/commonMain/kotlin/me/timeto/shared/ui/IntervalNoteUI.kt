@@ -1,6 +1,6 @@
-package timeto.shared.ui
+package me.timeto.shared.ui
 
-import timeto.shared.*
+import me.timeto.shared.*
 
 class IntervalNoteUI(
     plainText: String,

@@ -1,4 +1,4 @@
-package timeto.shared
+package me.timeto.shared
 
 import kotlinx.cinterop.UnsafeNumber
 import kotlinx.coroutines.delay
@@ -8,7 +8,7 @@ import platform.Foundation.NSUTF8StringEncoding
 import platform.Foundation.create
 import platform.Foundation.dataUsingEncoding
 import platform.WatchConnectivity.WCSession
-import timeto.shared.db.*
+import me.timeto.shared.db.*
 
 /**
  * I use application context for backup because of limits:

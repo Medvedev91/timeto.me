@@ -1,9 +1,9 @@
-package timeto.shared
+package me.timeto.shared
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
-import timeto.shared.db.IntervalModel
-import timeto.shared.vm.__VM
+import me.timeto.shared.db.IntervalModel
+import me.timeto.shared.vm.__VM
 
 class WatchAppVM : __VM<WatchAppVM.State>() {
 

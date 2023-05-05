@@ -1,4 +1,4 @@
-package timeto.shared
+package me.timeto.shared
 
 import co.touchlab.sqliter.DatabaseConfiguration
 import co.touchlab.sqliter.JournalMode
@@ -8,7 +8,7 @@ import com.squareup.sqldelight.drivers.native.wrapConnection
 import platform.Foundation.NSBundle
 import platform.WatchKit.WKInterfaceDevice
 import timeto.dbsq.TimetoDB
-import timeto.shared.db.DB_NAME
+import me.timeto.shared.db.DB_NAME
 
 internal actual val REPORT_API_TITLE = "⌚ Watch OS"
 

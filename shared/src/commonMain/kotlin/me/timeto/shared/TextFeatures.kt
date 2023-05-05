@@ -1,8 +1,8 @@
-package timeto.shared
+package me.timeto.shared
 
-import timeto.shared.db.ActivityModel
-import timeto.shared.db.ChecklistModel
-import timeto.shared.db.ShortcutModel
+import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.db.ChecklistModel
+import me.timeto.shared.db.ShortcutModel
 import kotlin.math.absoluteValue
 
 data class TextFeatures(

@@ -1,7 +1,7 @@
-package timeto.shared
+package me.timeto.shared
 
 import kotlinx.coroutines.flow.filter
-import timeto.shared.db.*
+import me.timeto.shared.db.*
 
 object DI {
 

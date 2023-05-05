@@ -1,10 +1,10 @@
-package timeto.shared.vm
+package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
-import timeto.shared.UIException
-import timeto.shared.db.ShortcutModel
-import timeto.shared.launchEx
-import timeto.shared.showUiAlert
+import me.timeto.shared.UIException
+import me.timeto.shared.db.ShortcutModel
+import me.timeto.shared.launchEx
+import me.timeto.shared.showUiAlert
 
 class ShortcutFormSheetVM(
     val shortcut: ShortcutModel?

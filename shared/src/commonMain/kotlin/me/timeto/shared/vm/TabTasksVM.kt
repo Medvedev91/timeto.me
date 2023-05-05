@@ -1,10 +1,10 @@
-package timeto.shared.vm
+package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
-import timeto.shared.DI
-import timeto.shared.db.TaskFolderModel
-import timeto.shared.db.TaskFolderModel.Companion.sortedFolders
-import timeto.shared.onEachExIn
+import me.timeto.shared.DI
+import me.timeto.shared.db.TaskFolderModel
+import me.timeto.shared.db.TaskFolderModel.Companion.sortedFolders
+import me.timeto.shared.onEachExIn
 
 class TabTasksVM : __VM<TabTasksVM.State>() {
 

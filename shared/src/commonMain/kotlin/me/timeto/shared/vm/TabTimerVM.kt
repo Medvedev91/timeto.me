@@ -1,4 +1,4 @@
-package timeto.shared.vm
+package me.timeto.shared.vm
 
 import io.ktor.client.*
 import io.ktor.client.request.*
@@ -7,11 +7,11 @@ import io.ktor.utils.io.core.*
 import kotlinx.coroutines.flow.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
-import timeto.shared.*
-import timeto.shared.db.ActivityModel
-import timeto.shared.db.IntervalModel
-import timeto.shared.ui.IntervalNoteUI
-import timeto.shared.ui.TimerHintUI
+import me.timeto.shared.*
+import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.db.IntervalModel
+import me.timeto.shared.ui.IntervalNoteUI
+import me.timeto.shared.ui.TimerHintUI
 
 class TabTimerVM : __VM<TabTimerVM.State>() {
 

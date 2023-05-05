@@ -1,8 +1,8 @@
-package timeto.shared.vm.ui
+package me.timeto.shared.vm.ui
 
-import timeto.shared.db.ChecklistItemModel
-import timeto.shared.db.ChecklistModel
-import timeto.shared.launchExDefault
+import me.timeto.shared.db.ChecklistItemModel
+import me.timeto.shared.db.ChecklistModel
+import me.timeto.shared.launchExDefault
 
 sealed class ChecklistStateUI(
     val actionDesc: String,

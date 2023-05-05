@@ -1,11 +1,11 @@
-package timeto.shared
+package me.timeto.shared
 
 import kotlinx.coroutines.flow.*
-import timeto.shared.db.ActivityModel
-import timeto.shared.db.IntervalModel
-import timeto.shared.ui.IntervalNoteUI
-import timeto.shared.vm.__VM
-import timeto.shared.ui.TimerHintUI
+import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.db.IntervalModel
+import me.timeto.shared.ui.IntervalNoteUI
+import me.timeto.shared.vm.__VM
+import me.timeto.shared.ui.TimerHintUI
 
 class WatchTabTimerVM : __VM<WatchTabTimerVM.State>() {
 

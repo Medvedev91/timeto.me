@@ -1,10 +1,10 @@
-package timeto.shared.vm
+package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
-import timeto.shared.DI
-import timeto.shared.db.ActivityModel
-import timeto.shared.textFeatures
-import timeto.shared.ui.TimerHintUI
+import me.timeto.shared.DI
+import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.textFeatures
+import me.timeto.shared.ui.TimerHintUI
 
 class ActivitiesTimerSheetVM(
     timerContext: ActivityTimerSheetVM.TimerContext?,

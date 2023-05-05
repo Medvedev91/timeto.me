@@ -1,8 +1,8 @@
-package timeto.shared.vm
+package me.timeto.shared.vm
 
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
-import timeto.shared.defaultScope
+import me.timeto.shared.defaultScope
 
 /**
  * WARNING Rules of use due to the specifics of implementation:

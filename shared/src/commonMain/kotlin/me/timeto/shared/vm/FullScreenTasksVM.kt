@@ -1,12 +1,12 @@
-package timeto.shared.vm
+package me.timeto.shared.vm
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import timeto.shared.ColorNative
-import timeto.shared.DI
-import timeto.shared.textFeatures
-import timeto.shared.vm.ui.TimerDataUI
+import me.timeto.shared.ColorNative
+import me.timeto.shared.DI
+import me.timeto.shared.textFeatures
+import me.timeto.shared.vm.ui.TimerDataUI
 
 class FullScreenTasksVM : __VM<FullScreenTasksVM.State>() {
 

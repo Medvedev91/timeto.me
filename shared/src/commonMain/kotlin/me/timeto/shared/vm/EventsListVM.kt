@@ -1,10 +1,10 @@
-package timeto.shared.vm
+package me.timeto.shared.vm
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import timeto.shared.*
-import timeto.shared.db.EventModel
+import me.timeto.shared.*
+import me.timeto.shared.db.EventModel
 
 class EventsListVM : __VM<EventsListVM.State>() {
 

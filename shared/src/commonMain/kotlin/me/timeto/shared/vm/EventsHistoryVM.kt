@@ -1,8 +1,8 @@
-package timeto.shared.vm
+package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
-import timeto.shared.*
-import timeto.shared.db.KVModel
+import me.timeto.shared.*
+import me.timeto.shared.db.KVModel
 
 class EventsHistoryVM : __VM<EventsHistoryVM.State>() {
 

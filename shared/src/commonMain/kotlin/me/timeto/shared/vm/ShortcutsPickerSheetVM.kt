@@ -1,8 +1,8 @@
-package timeto.shared.vm
+package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
-import timeto.shared.DI
-import timeto.shared.db.ShortcutModel
+import me.timeto.shared.DI
+import me.timeto.shared.db.ShortcutModel
 
 class ShortcutsPickerSheetVM(
     selectedShortcuts: List<ShortcutModel>,

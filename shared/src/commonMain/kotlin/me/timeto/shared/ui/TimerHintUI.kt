@@ -1,8 +1,8 @@
-package timeto.shared.ui
+package me.timeto.shared.ui
 
-import timeto.shared.db.ActivityModel
-import timeto.shared.launchExDefault
-import timeto.shared.toTimerHintNote
+import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.launchExDefault
+import me.timeto.shared.toTimerHintNote
 
 class TimerHintUI(
     val seconds: Int,

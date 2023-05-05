@@ -1,8 +1,8 @@
-package timeto.shared.vm
+package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
-import timeto.shared.*
-import timeto.shared.db.ActivityModel
+import me.timeto.shared.*
+import me.timeto.shared.db.ActivityModel
 
 class SortActivitiesVM : __VM<SortActivitiesVM.State>() {
 

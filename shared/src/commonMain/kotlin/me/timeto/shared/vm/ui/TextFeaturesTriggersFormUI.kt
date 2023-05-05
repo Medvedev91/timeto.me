@@ -1,8 +1,8 @@
-package timeto.shared.vm.ui
+package me.timeto.shared.vm.ui
 
-import timeto.shared.TextFeatures
-import timeto.shared.db.ChecklistModel
-import timeto.shared.db.ShortcutModel
+import me.timeto.shared.TextFeatures
+import me.timeto.shared.db.ChecklistModel
+import me.timeto.shared.db.ShortcutModel
 
 class TextFeaturesTriggersFormUI(
     val textFeatures: TextFeatures,

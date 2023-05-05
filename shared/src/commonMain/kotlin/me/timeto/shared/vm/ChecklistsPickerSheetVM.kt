@@ -1,8 +1,8 @@
-package timeto.shared.vm
+package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
-import timeto.shared.DI
-import timeto.shared.db.ChecklistModel
+import me.timeto.shared.DI
+import me.timeto.shared.db.ChecklistModel
 
 class ChecklistsPickerSheetVM(
     selectedChecklists: List<ChecklistModel>,
