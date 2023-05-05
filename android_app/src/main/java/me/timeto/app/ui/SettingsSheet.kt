@@ -1,4 +1,4 @@
-package app.time_to.timeto.ui
+package me.timeto.app.ui
 
 import android.app.DownloadManager
 import android.content.Intent

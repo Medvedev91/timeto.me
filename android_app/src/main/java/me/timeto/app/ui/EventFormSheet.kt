@@ -1,4 +1,4 @@
-package app.time_to.timeto.ui
+package me.timeto.app.ui
 
 import android.widget.CalendarView
 import androidx.compose.animation.animateColorAsState

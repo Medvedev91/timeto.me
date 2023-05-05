@@ -1,4 +1,4 @@
-package app.time_to.timeto.ui
+package me.timeto.app.ui
 
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Outline

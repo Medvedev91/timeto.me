@@ -1,4 +1,4 @@
-package app.time_to.timeto.ui
+package me.timeto.app.ui
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*

@@ -1,4 +1,4 @@
-package app.time_to.timeto
+package me.timeto.app
 
 import android.app.Notification
 import android.app.NotificationChannel
