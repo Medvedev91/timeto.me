@@ -26,7 +26,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
-import app.time_to.timeto.toUnixTime
+import me.timeto.app.R
+import me.timeto.app.toUnixTime
 import timeto.shared.UnixTime
 import timeto.shared.toHms
 import java.text.SimpleDateFormat
@@ -196,7 +197,7 @@ object Dialog {
                         }
 
                         Icon(
-                            painterResource(id = app.time_to.timeto.R.drawable.ic_round_close_24),
+                            painterResource(id = R.drawable.ic_round_close_24),
                             "Close",
                             tint = c.textSecondary,
                             modifier = Modifier

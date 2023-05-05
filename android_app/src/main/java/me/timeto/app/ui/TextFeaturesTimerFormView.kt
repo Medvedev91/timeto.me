@@ -6,7 +6,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
-import app.time_to.timeto.toColor
+import me.timeto.app.toColor
 import timeto.shared.TextFeatures
 import timeto.shared.vm.ui.TextFeaturesTimerFormUI
 

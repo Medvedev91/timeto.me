@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import app.time_to.timeto.ui.*
+import me.timeto.app.ui.*
 import kotlinx.coroutines.delay
 import timeto.shared.*
 import timeto.shared.vm.AppVM

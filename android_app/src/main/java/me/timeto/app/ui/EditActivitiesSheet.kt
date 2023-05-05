@@ -17,8 +17,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.time_to.timeto.R
-import app.time_to.timeto.rememberVM
+import me.timeto.app.R
+import me.timeto.app.rememberVM
 import timeto.shared.vm.SortActivitiesVM
 
 @Composable

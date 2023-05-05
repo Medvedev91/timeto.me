@@ -3,7 +3,7 @@ package me.timeto.app.ui
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import app.time_to.timeto.colorFromRgbaString
+import me.timeto.app.colorFromRgbaString
 
 //
 // https://sarunw.com/posts/dark-color-cheat-sheet/

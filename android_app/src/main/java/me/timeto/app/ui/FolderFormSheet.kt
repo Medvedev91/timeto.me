@@ -7,7 +7,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import app.time_to.timeto.rememberVM
+import me.timeto.app.rememberVM
 import timeto.shared.db.TaskFolderModel
 import timeto.shared.vm.FolderFormSheetVM
 

@@ -10,8 +10,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import app.time_to.timeto.setFalse
-import app.time_to.timeto.setTrue
+import me.timeto.app.setFalse
+import me.timeto.app.setTrue
 import kotlinx.coroutines.delay
 import timeto.shared.launchExDefault
 

@@ -14,7 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.time_to.timeto.toColor
+import me.timeto.app.toColor
 import timeto.shared.TextFeatures
 
 @Composable

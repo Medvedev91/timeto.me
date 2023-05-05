@@ -16,8 +16,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.time_to.timeto.R
-import app.time_to.timeto.rememberVM
+import me.timeto.app.R
+import me.timeto.app.rememberVM
 import timeto.shared.db.ActivityModel
 import timeto.shared.db.ActivityModel__Data.TimerHints.HINT_TYPE
 import timeto.shared.vm.ActivityFormSheetVM

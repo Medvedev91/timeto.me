@@ -28,8 +28,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.time_to.timeto.R
-import app.time_to.timeto.toColor
+import me.timeto.app.R
+import me.timeto.app.toColor
 import kotlinx.coroutines.delay
 import timeto.shared.ColorNative
 

@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import app.time_to.timeto.*
+import me.timeto.app.*
 import kotlin.math.absoluteValue
 
 @Composable

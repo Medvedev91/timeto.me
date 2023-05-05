@@ -18,7 +18,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.time_to.timeto.*
+import me.timeto.app.*
 import kotlinx.coroutines.launch
 import timeto.shared.UIConfirmationData
 import timeto.shared.showUiConfirmation

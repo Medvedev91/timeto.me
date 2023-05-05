@@ -18,7 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.time_to.timeto.*
+import me.timeto.app.*
 import timeto.shared.launchEx
 import timeto.shared.vm.ActivityTimerSheetVM
 import timeto.shared.vm.ActivitiesTimerSheetVM

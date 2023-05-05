@@ -17,8 +17,8 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.time_to.timeto.*
-import app.time_to.timeto.R
+import me.timeto.app.*
+import me.timeto.app.R
 import timeto.shared.db.ShortcutModel
 import timeto.shared.vm.ShortcutFormSheetVM
 

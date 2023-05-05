@@ -25,8 +25,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.time_to.timeto.*
-import app.time_to.timeto.R
+import me.timeto.app.*
+import me.timeto.app.R
 import timeto.shared.UnixTime
 import timeto.shared.vm.ChartVM
 import java.util.*

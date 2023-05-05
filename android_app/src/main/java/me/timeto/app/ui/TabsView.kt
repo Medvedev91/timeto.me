@@ -24,8 +24,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import app.time_to.timeto.*
-import app.time_to.timeto.R
+import me.timeto.app.*
+import me.timeto.app.R
 import timeto.shared.FullScreenUI
 import timeto.shared.launchEx
 import timeto.shared.vm.TabsVM

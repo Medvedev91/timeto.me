@@ -31,8 +31,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import app.time_to.timeto.*
-import app.time_to.timeto.R
+import me.timeto.app.*
+import me.timeto.app.R
 import timeto.shared.FullScreenUI
 import timeto.shared.min
 import timeto.shared.onEachExIn

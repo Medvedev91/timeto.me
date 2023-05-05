@@ -25,8 +25,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.*
-import app.time_to.timeto.*
-import app.time_to.timeto.R
+import me.timeto.app.*
+import me.timeto.app.R
 import kotlinx.coroutines.delay
 import timeto.shared.db.TaskFolderModel
 import timeto.shared.launchEx

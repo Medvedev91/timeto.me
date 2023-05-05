@@ -11,7 +11,7 @@ import android.os.Vibrator
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
-import app.time_to.timeto.ui.c
+import me.timeto.app.ui.c
 import timeto.shared.*
 import timeto.shared.vm.__VM
 import java.util.*

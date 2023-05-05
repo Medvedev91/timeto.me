@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import app.time_to.timeto.R
-import app.time_to.timeto.rememberVM
+import me.timeto.app.R
+import me.timeto.app.rememberVM
 import timeto.shared.vm.FoldersSettingsVM
 
 @OptIn(ExperimentalFoundationApi::class)

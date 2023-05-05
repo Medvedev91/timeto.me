@@ -7,8 +7,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import app.time_to.timeto.dpToPx
-import app.time_to.timeto.isSDKQPlus
+import me.timeto.app.dpToPx
+import me.timeto.app.isSDKQPlus
 
 @Composable
 fun DayTimePickerView(

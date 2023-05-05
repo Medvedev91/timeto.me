@@ -12,7 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.time_to.timeto.rememberVM
+import me.timeto.app.rememberVM
 import timeto.shared.db.ChecklistModel
 import timeto.shared.vm.ChecklistFormVM
 
