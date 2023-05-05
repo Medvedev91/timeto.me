@@ -8,8 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.timeto.app.rememberVM
-import timeto.shared.db.ActivityModel
-import timeto.shared.vm.ActivityPickerSheetVM
+import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.vm.ActivityPickerSheetVM
 
 @Composable
 fun ActivityPickerSheet(

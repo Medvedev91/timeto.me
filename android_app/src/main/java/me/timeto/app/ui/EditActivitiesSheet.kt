@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.R
 import me.timeto.app.rememberVM
-import timeto.shared.vm.SortActivitiesVM
+import me.timeto.shared.vm.SortActivitiesVM
 
 @Composable
 fun EditActivitiesSheet(

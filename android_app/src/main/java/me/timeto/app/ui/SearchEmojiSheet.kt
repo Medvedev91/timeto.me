@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.R
 import me.timeto.app.rememberVM
 import kotlinx.coroutines.delay
-import timeto.shared.vm.SearchEmojiSheetVM
+import me.timeto.shared.vm.SearchEmojiSheetVM
 
 @Composable
 fun SearchEmojiSheet(

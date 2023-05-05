@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import me.timeto.app.setFalse
 import me.timeto.app.setTrue
 import kotlinx.coroutines.delay
-import timeto.shared.launchExDefault
+import me.timeto.shared.launchExDefault
 
 object WrapperView {
 

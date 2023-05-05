@@ -22,8 +22,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.toColor
-import timeto.shared.PieChart
-import timeto.shared.min
+import me.timeto.shared.PieChart
+import me.timeto.shared.min
 import java.lang.Math.PI
 
 object WyouChart {

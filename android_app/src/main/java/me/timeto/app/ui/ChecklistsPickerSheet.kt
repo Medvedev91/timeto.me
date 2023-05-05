@@ -8,8 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.timeto.app.rememberVM
-import timeto.shared.db.ChecklistModel
-import timeto.shared.vm.ChecklistsPickerSheetVM
+import me.timeto.shared.db.ChecklistModel
+import me.timeto.shared.vm.ChecklistsPickerSheetVM
 
 @Composable
 fun ChecklistsPickerSheet(

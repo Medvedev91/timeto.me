@@ -14,7 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import me.timeto.app.R
 import me.timeto.app.rememberVM
-import timeto.shared.vm.FoldersSettingsVM
+import me.timeto.shared.vm.FoldersSettingsVM
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

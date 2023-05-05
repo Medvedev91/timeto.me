@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import kotlinx.coroutines.launch
-import timeto.shared.UIConfirmationData
-import timeto.shared.showUiConfirmation
+import me.timeto.shared.UIConfirmationData
+import me.timeto.shared.showUiConfirmation
 import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalMaterialApi::class)

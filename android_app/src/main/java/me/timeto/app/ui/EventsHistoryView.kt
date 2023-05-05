@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
-import timeto.shared.vm.EventsHistoryVM
+import me.timeto.shared.vm.EventsHistoryVM
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

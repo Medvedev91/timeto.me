@@ -7,8 +7,8 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import me.timeto.app.toColor
-import timeto.shared.TextFeatures
-import timeto.shared.vm.ui.TextFeaturesTimerFormUI
+import me.timeto.shared.TextFeatures
+import me.timeto.shared.vm.ui.TextFeaturesTimerFormUI
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

@@ -28,9 +28,9 @@ import androidx.compose.ui.unit.*
 import me.timeto.app.*
 import me.timeto.app.R
 import kotlinx.coroutines.delay
-import timeto.shared.db.TaskFolderModel
-import timeto.shared.launchEx
-import timeto.shared.vm.TasksListVM
+import me.timeto.shared.db.TaskFolderModel
+import me.timeto.shared.launchEx
+import me.timeto.shared.vm.TasksListVM
 
 private val TASKS_LIST_ITEM_MIN_HEIGHT = 42.dp
 

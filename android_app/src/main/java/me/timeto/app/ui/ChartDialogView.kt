@@ -27,8 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
-import timeto.shared.UnixTime
-import timeto.shared.vm.ChartVM
+import me.timeto.shared.UnixTime
+import me.timeto.shared.vm.ChartVM
 import java.util.*
 
 @Composable

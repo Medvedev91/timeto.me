@@ -28,8 +28,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.R
 import me.timeto.app.toUnixTime
-import timeto.shared.UnixTime
-import timeto.shared.toHms
+import me.timeto.shared.UnixTime
+import me.timeto.shared.toHms
 import java.text.SimpleDateFormat
 import java.util.*
 

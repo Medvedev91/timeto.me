@@ -33,12 +33,12 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import me.timeto.app.*
 import me.timeto.app.R
-import timeto.shared.FullScreenUI
-import timeto.shared.min
-import timeto.shared.onEachExIn
-import timeto.shared.vm.FullScreenTasksVM
-import timeto.shared.vm.FullScreenVM
-import timeto.shared.vm.ui.ChecklistStateUI
+import me.timeto.shared.FullScreenUI
+import me.timeto.shared.min
+import me.timeto.shared.onEachExIn
+import me.timeto.shared.vm.FullScreenTasksVM
+import me.timeto.shared.vm.FullScreenVM
+import me.timeto.shared.vm.ui.ChecklistStateUI
 
 private val dividerModifier = Modifier.padding(horizontal = 8.dp)
 private val dividerColor = Color.White.copy(0.4f)

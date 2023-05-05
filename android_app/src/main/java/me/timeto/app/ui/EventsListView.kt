@@ -15,7 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
-import timeto.shared.vm.EventsListVM
+import me.timeto.shared.vm.EventsListVM
 import java.util.*
 
 @OptIn(ExperimentalMaterialApi::class)

@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.*
-import timeto.shared.TimerPickerItem
-import timeto.shared.launchEx
+import me.timeto.shared.TimerPickerItem
+import me.timeto.shared.launchEx
 
 @Composable
 fun TimerPickerSheet(

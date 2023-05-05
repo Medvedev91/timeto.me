@@ -5,7 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
-import timeto.shared.reportApi
+import me.timeto.shared.reportApi
 
 class TimerNotificationReceiver : BroadcastReceiver() {
 

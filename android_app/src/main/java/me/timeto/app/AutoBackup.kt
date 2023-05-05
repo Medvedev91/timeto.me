@@ -6,7 +6,7 @@ import android.provider.MediaStore
 import android.text.format.DateFormat
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.mutableStateOf
-import timeto.shared.*
+import me.timeto.shared.*
 import java.util.*
 import kotlin.jvm.Throws
 

@@ -24,9 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
-import timeto.shared.db.ChecklistModel
-import timeto.shared.launchEx
-import timeto.shared.vm.ChecklistDialogVM
+import me.timeto.shared.db.ChecklistModel
+import me.timeto.shared.launchEx
+import me.timeto.shared.vm.ChecklistDialogVM
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

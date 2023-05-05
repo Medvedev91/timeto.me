@@ -24,8 +24,8 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.app.max
-import timeto.shared.*
-import timeto.shared.vm.HistoryVM
+import me.timeto.shared.*
+import me.timeto.shared.vm.HistoryVM
 
 @Composable
 fun HistoryDialogView(

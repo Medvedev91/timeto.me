@@ -24,8 +24,8 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import me.timeto.app.ui.*
 import kotlinx.coroutines.delay
-import timeto.shared.*
-import timeto.shared.vm.AppVM
+import me.timeto.shared.*
+import me.timeto.shared.vm.AppVM
 
 val LocalAutoBackup = compositionLocalOf<AutoBackup?> { throw Exception("LocalAutoBackup") }
 var statusBarHeight = 0.dp

@@ -29,9 +29,9 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
 import kotlinx.coroutines.delay
-import timeto.shared.DI
-import timeto.shared.db.TaskFolderModel
-import timeto.shared.vm.TabTasksVM
+import me.timeto.shared.DI
+import me.timeto.shared.db.TaskFolderModel
+import me.timeto.shared.vm.TabTasksVM
 import kotlin.random.Random
 
 var setTodayFolder: (() -> Unit)? = null

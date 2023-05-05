@@ -12,8 +12,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import me.timeto.app.ui.c
-import timeto.shared.*
-import timeto.shared.vm.__VM
+import me.timeto.shared.*
+import me.timeto.shared.vm.__VM
 import java.util.*
 
 fun isSDKQPlus() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q

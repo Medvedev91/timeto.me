@@ -15,7 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.toColor
-import timeto.shared.TextFeatures
+import me.timeto.shared.TextFeatures
 
 @Composable
 fun TextFeaturesTriggersView(

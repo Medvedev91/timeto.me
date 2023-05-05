@@ -19,9 +19,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
-import timeto.shared.launchEx
-import timeto.shared.vm.ActivityTimerSheetVM
-import timeto.shared.vm.ActivitiesTimerSheetVM
+import me.timeto.shared.launchEx
+import me.timeto.shared.vm.ActivityTimerSheetVM
+import me.timeto.shared.vm.ActivitiesTimerSheetVM
 
 @Composable
 fun ActivitiesTimerSheet(

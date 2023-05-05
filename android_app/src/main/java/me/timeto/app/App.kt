@@ -1,7 +1,7 @@
 package me.timeto.app
 
 import android.app.Application
-import timeto.shared.initKmmAndroid
+import me.timeto.shared.initKmmAndroid
 
 class App : Application() {
 

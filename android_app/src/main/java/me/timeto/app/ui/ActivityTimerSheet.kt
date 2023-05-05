@@ -17,9 +17,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.*
-import timeto.shared.db.ActivityModel
-import timeto.shared.launchEx
-import timeto.shared.vm.ActivityTimerSheetVM
+import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.launchEx
+import me.timeto.shared.vm.ActivityTimerSheetVM
 
 @Composable
 fun ActivityTimerSheet(

@@ -23,9 +23,9 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
 import kotlinx.coroutines.delay
-import timeto.shared.db.RepeatingModel
-import timeto.shared.launchEx
-import timeto.shared.vm.RepeatingFormSheetVM
+import me.timeto.shared.db.RepeatingModel
+import me.timeto.shared.launchEx
+import me.timeto.shared.vm.RepeatingFormSheetVM
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

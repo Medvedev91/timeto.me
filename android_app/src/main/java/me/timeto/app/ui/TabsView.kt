@@ -26,9 +26,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import me.timeto.app.*
 import me.timeto.app.R
-import timeto.shared.FullScreenUI
-import timeto.shared.launchEx
-import timeto.shared.vm.TabsVM
+import me.timeto.shared.FullScreenUI
+import me.timeto.shared.launchEx
+import me.timeto.shared.vm.TabsVM
 
 val bottomNavigationHeight = 56.dp
 

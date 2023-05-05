@@ -6,7 +6,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.media.AudioAttributes
 import android.net.Uri
-import timeto.shared.getSoundTimeToBreakFileName
+import me.timeto.shared.getSoundTimeToBreakFileName
 
 /**
  * WARNING

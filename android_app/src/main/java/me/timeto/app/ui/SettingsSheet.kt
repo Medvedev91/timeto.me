@@ -30,8 +30,8 @@ import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.*
 import me.timeto.app.R
 import kotlinx.coroutines.launch
-import timeto.shared.*
-import timeto.shared.vm.TabToolsVM
+import me.timeto.shared.*
+import me.timeto.shared.vm.TabToolsVM
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.*

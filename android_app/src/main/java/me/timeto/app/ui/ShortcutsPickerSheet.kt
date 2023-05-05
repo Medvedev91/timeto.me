@@ -8,8 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.timeto.app.rememberVM
-import timeto.shared.db.ShortcutModel
-import timeto.shared.vm.ShortcutsPickerSheetVM
+import me.timeto.shared.db.ShortcutModel
+import me.timeto.shared.vm.ShortcutsPickerSheetVM
 
 @Composable
 fun ShortcutsPickerSheet(

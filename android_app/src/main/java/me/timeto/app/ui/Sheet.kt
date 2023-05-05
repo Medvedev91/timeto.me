@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.statusBarHeight
-import timeto.shared.min
+import me.timeto.shared.min
 
 object Sheet {
 

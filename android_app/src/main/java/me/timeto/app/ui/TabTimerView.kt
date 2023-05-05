@@ -28,10 +28,10 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
-import timeto.shared.*
-import timeto.shared.db.IntervalModel
-import timeto.shared.vm.TabTimerVM
-import timeto.shared.vm.TimerTabProgressVM
+import me.timeto.shared.*
+import me.timeto.shared.db.IntervalModel
+import me.timeto.shared.vm.TabTimerVM
+import me.timeto.shared.vm.TimerTabProgressVM
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

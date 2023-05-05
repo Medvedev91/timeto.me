@@ -17,7 +17,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
-import timeto.shared.vm.RepeatingsListVM
+import me.timeto.shared.vm.RepeatingsListVM
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

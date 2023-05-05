@@ -19,8 +19,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
-import timeto.shared.db.ShortcutModel
-import timeto.shared.vm.ShortcutFormSheetVM
+import me.timeto.shared.db.ShortcutModel
+import me.timeto.shared.vm.ShortcutFormSheetVM
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

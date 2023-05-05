@@ -13,9 +13,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.rememberVM
-import timeto.shared.db.ChecklistItemModel
-import timeto.shared.db.ChecklistModel
-import timeto.shared.vm.ChecklistItemFormVM
+import me.timeto.shared.db.ChecklistItemModel
+import me.timeto.shared.db.ChecklistModel
+import me.timeto.shared.vm.ChecklistItemFormVM
 
 @Composable
 fun ChecklistItemEditDialog(

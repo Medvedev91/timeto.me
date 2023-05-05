@@ -24,9 +24,9 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.*
 import me.timeto.app.R
-import timeto.shared.UnixTime
-import timeto.shared.db.EventModel
-import timeto.shared.vm.EventFormSheetVM
+import me.timeto.shared.UnixTime
+import me.timeto.shared.db.EventModel
+import me.timeto.shared.vm.EventFormSheetVM
 import java.text.SimpleDateFormat
 import java.util.*
 

@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
-import timeto.shared.TextFeatures
-import timeto.shared.vm.ui.TextFeaturesTriggersFormUI
+import me.timeto.shared.TextFeatures
+import me.timeto.shared.vm.ui.TextFeaturesTriggersFormUI
 
 @Composable
 fun TextFeaturesTriggersFormView(
