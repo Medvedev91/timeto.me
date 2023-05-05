@@ -10,7 +10,7 @@
         android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="TimeTo"
+        android:label="timeto.me"
         android:supportsRtl="true"
         android:theme="@style/Theme.Timetome">
 
