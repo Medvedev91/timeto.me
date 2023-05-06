@@ -5,7 +5,7 @@ CREATE TABLE RepeatingSQ (
     type_id INTEGER AS Int NOT NULL,
     value TEXT NOT NULL,
     daytime INTEGER AS Int, -- Nullable!
-    auto_fs INTEGER AS Int NOT NULL
+    auto_focus INTEGER AS Int NOT NULL
 );
 
 getAsc:
@@ -27,7 +27,7 @@ LIMIT 1;
 
 insert:
 INSERT INTO RepeatingSQ
-(id, text, last_day, type_id, value, daytime, auto_fs)
+(id, text, last_day, type_id, value, daytime, auto_focus)
 VALUES
 (?, ?, ?, ?, ?, ?, ?);
 
@@ -37,7 +37,7 @@ WHERE id = ?;
 
 upById:
 UPDATE RepeatingSQ
-SET text=?, last_day=?, type_id=?, value=?, daytime=?, auto_fs=?
+SET text=?, last_day=?, type_id=?, value=?, daytime=?, auto_focus=?
 WHERE id=?;
 
 -- todo remove after migration

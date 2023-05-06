@@ -18,7 +18,7 @@ data class RepeatingModel(
     val type_id: Int,
     val value: String,
     val daytime: Int?,
-    val auto_fs: Int,
+    val auto_focus: Int,
 ) : Backupable__Item {
 
     companion object : Backupable__Holder {
@@ -55,7 +55,7 @@ data class RepeatingModel(
                     type_id = period.type.id,
                     value_ = period.value,
                     daytime = daytime,
-                    auto_fs = isAutoFs.toInt10(),
+                    auto_focus = isAutoFs.toInt10(),
                 )
             }
         }
@@ -91,7 +91,7 @@ data class RepeatingModel(
                 type_id = j.getInt(3),
                 value_ = j.getString(4),
                 daytime = j.getIntOrNull(5),
-                auto_fs = j.getInt(6),
+                auto_focus = j.getInt(6),
             )
         }
 
@@ -105,11 +105,11 @@ data class RepeatingModel(
         private fun RepeatingSQ.toModel() = RepeatingModel(
             id = id, text = text, last_day = last_day,
             type_id = type_id, value = value_, daytime = daytime,
-            auto_fs = auto_fs,
+            auto_focus = auto_focus,
         )
     }
 
-    val isAutoFs = auto_fs.toBoolean10()
+    val isAutoFs = auto_focus.toBoolean10()
 
     fun daytimeToTimeWithDayStart(today: Int): Int? {
         val daytime = daytime ?: return null
@@ -231,7 +231,7 @@ data class RepeatingModel(
             type_id = period.type.id,
             value_ = period.value,
             daytime = daytime,
-            auto_fs = isAutoFs.toInt10(),
+            auto_focus = isAutoFs.toInt10(),
         )
     }
 
@@ -245,7 +245,7 @@ data class RepeatingModel(
     override fun backupable__getId(): String = id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
-        id, text, last_day, type_id, value, daytime, auto_fs,
+        id, text, last_day, type_id, value, daytime, auto_focus,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
@@ -257,7 +257,7 @@ data class RepeatingModel(
             type_id = j.getInt(3),
             value_ = j.getString(4),
             daytime = j.getIntOrNull(5),
-            auto_fs = j.getInt(6),
+            auto_focus = j.getInt(6),
         )
     }
 
