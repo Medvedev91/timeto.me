@@ -19,7 +19,7 @@
 		2C82BF6728726E400041BCA3 /* W_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82BF6628726E400041BCA3 /* W_App.swift */; };
 		2C82BF6B28726E400041BCA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C82BF6A28726E400041BCA3 /* Assets.xcassets */; };
 		2C82BF6E28726E400041BCA3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C82BF6D28726E400041BCA3 /* Preview Assets.xcassets */; };
-		2C82BF7228726E400041BCA3 /* TimeTo.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 2C82BF5728726E3F0041BCA3 /* TimeTo.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2C82BF7228726E400041BCA3 /* timeto.me.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 2C82BF5728726E3F0041BCA3 /* timeto.me.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2C82BF7C287272520041BCA3 /* W_Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82BF7B287272520041BCA3 /* W_Delegate.swift */; };
 		2C95BA8D280D74AA0027FC35 /* IOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C95BA7A280D74AA0027FC35 /* IOSApp.swift */; };
 		2CB73DE3292FACE00053B2D6 /* SearchEmojiSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB73DE2292FACE00053B2D6 /* SearchEmojiSheet.swift */; };
@@ -95,7 +95,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				2C82BF7228726E400041BCA3 /* TimeTo.app in Embed Watch Content */,
+				2C82BF7228726E400041BCA3 /* timeto.me.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -109,7 +109,7 @@
 		2C2C419628C4CF2A00923267 /* timeto (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "timeto (iOS).entitlements"; sourceTree = "<group>"; };
 		2C2C419728C4D83400923267 /* timeto--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "timeto--iOS--Info.plist"; sourceTree = "<group>"; };
 		2C4044972951FCA800A24521 /* emojis.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = emojis.json; path = ../android_app/src/main/res/raw/emojis.json; sourceTree = "<group>"; };
-		2C82BF5728726E3F0041BCA3 /* TimeTo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeTo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C82BF5728726E3F0041BCA3 /* timeto.me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = timeto.me.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C82BF5928726E400041BCA3 /* WAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = WAssets.xcassets; sourceTree = "<group>"; };
 		2C82BF6428726E400041BCA3 /* W_TabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = W_TabsView.swift; sourceTree = "<group>"; };
 		2C82BF6628726E400041BCA3 /* W_App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = W_App.swift; sourceTree = "<group>"; };
@@ -254,7 +254,7 @@
 			isa = PBXGroup;
 			children = (
 				2C95BA82280D74AA0027FC35 /* TimeTo.app */,
-				2C82BF5728726E3F0041BCA3 /* TimeTo.app */,
+				2C82BF5728726E3F0041BCA3 /* timeto.me.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -347,7 +347,7 @@
 			);
 			name = watch;
 			productName = watch;
-			productReference = 2C82BF5728726E3F0041BCA3 /* TimeTo.app */;
+			productReference = 2C82BF5728726E3F0041BCA3 /* timeto.me.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2C95BA81280D74AA0027FC35 /* timeto (iOS) */ = {
@@ -572,7 +572,7 @@
 				INFOPLIST_KEY_CLKComplicationPrincipalClass = TimeTo.ComplicationController;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "app.time-to.timeto";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "me.timeto.app";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
@@ -587,8 +587,8 @@
 					"-framework",
 					shared,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "app.time-to.timeto.watchkitapp";
-				PRODUCT_NAME = TimeTo;
+				PRODUCT_BUNDLE_IDENTIFIER = me.timeto.app.watch;
+				PRODUCT_NAME = timeto.me;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -615,7 +615,7 @@
 				INFOPLIST_KEY_CLKComplicationPrincipalClass = TimeTo.ComplicationController;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "app.time-to.timeto";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "me.timeto.app";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
@@ -630,8 +630,8 @@
 					"-framework",
 					shared,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "app.time-to.timeto.watchkitapp";
-				PRODUCT_NAME = TimeTo;
+				PRODUCT_BUNDLE_IDENTIFIER = me.timeto.app.watch;
+				PRODUCT_NAME = timeto.me;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -766,7 +766,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "timeto--iOS--Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = TimeTo;
+				INFOPLIST_KEY_CFBundleDisplayName = timeto.me;
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -806,7 +806,7 @@
 					"-framework",
 					shared,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "app.time-to.timeto";
+				PRODUCT_BUNDLE_IDENTIFIER = me.timeto.app;
 				PRODUCT_NAME = TimeTo;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -828,7 +828,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "timeto--iOS--Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = TimeTo;
+				INFOPLIST_KEY_CFBundleDisplayName = timeto.me;
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -868,7 +868,7 @@
 					"-framework",
 					shared,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "app.time-to.timeto";
+				PRODUCT_BUNDLE_IDENTIFIER = me.timeto.app;
 				PRODUCT_NAME = TimeTo;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;

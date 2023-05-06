@@ -14,7 +14,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2C82BF5628726E3F0041BCA3"
-               BuildableName = "TimeTo.app"
+               BuildableName = "timeto.me.app"
                BlueprintName = "watch"
                ReferencedContainer = "container:timeto.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2C82BF5628726E3F0041BCA3"
-            BuildableName = "TimeTo.app"
+            BuildableName = "timeto.me.app"
             BlueprintName = "watch"
             ReferencedContainer = "container:timeto.xcodeproj">
          </BuildableReference>
