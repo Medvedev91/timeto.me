@@ -65,7 +65,7 @@ class AutoBackup {
     companion object {
 
         // # README_APP.md Auto Backup Folder Name
-        private const val AUTOBACKUPS_FOLDER_NAME = "TimeTo_autobackups"
+        private const val AUTOBACKUPS_FOLDER_NAME = "timetome_autobackups"
         private const val AUTOBACKUPS_PATH = "Download/$AUTOBACKUPS_FOLDER_NAME"
 
         @Throws // WARNING
