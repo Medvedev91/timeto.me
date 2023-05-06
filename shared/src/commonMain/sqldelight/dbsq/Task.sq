@@ -1,7 +1,7 @@
 CREATE TABLE TaskSQ (
     id INTEGER AS Int NOT NULL PRIMARY KEY,
-    text TEXT NOT NULL,
-    folder_id INTEGER AS Int NOT NULL
+    folder_id INTEGER AS Int NOT NULL,
+    text TEXT NOT NULL
 );
 
 anyChange: SELECT id FROM TaskSQ LIMIT 1;
