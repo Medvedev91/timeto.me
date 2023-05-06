@@ -4,12 +4,12 @@
 <dict>
 	<key>NSUbiquitousContainers</key>
 	<dict>
-		<key>iCloud.app.time-to.timeto</key>
+		<key>iCloud.me.timeto.app</key>
 		<dict>
 			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
 			<true/>
 			<key>NSUbiquitousContainerName</key>
-			<string>TimeTo</string>
+			<string>timeto.me</string>
 			<key>NSUbiquitousContainerSupportedFolderLevels</key>
 			<string>ANY</string>
 		</dict>

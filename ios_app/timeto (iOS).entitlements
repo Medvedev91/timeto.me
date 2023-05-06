@@ -4,7 +4,7 @@
 <dict>
 	<key>com.apple.developer.icloud-container-identifiers</key>
 	<array>
-		<string>iCloud.app.time-to.timeto</string>
+		<string>iCloud.me.timeto.app</string>
 	</array>
 	<key>com.apple.developer.icloud-services</key>
 	<array>
@@ -12,7 +12,7 @@
 	</array>
 	<key>com.apple.developer.ubiquity-container-identifiers</key>
 	<array>
-		<string>iCloud.app.time-to.timeto</string>
+		<string>iCloud.me.timeto.app</string>
 	</array>
 </dict>
 </plist>

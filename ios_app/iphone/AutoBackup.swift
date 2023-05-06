@@ -141,7 +141,7 @@ class AutoBackup: ObservableObject {
     ///
     static private func iCloudContainerUrl() -> URL? {
         // I don't understand the logic of getting the iCloud container, because it doesn't
-        // explicitly specify its address "iCloud.app.time-to.timeto", but somehow it works.
+        // explicitly specify its address "iCloud.me.timeto.app", but somehow it works.
         // Perhaps below "Documents" is the creation of the "Timeto" folder, which is forwarded
         // to iCloud on behalf of the application.
         guard let iCloudContainerUrl = FileManager.default.url(forUbiquityContainerIdentifier: nil) else {
