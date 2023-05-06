@@ -615,7 +615,7 @@
 				INFOPLIST_KEY_CLKComplicationPrincipalClass = TimeTo.ComplicationController;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "me.timeto.app";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = me.timeto.app;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
