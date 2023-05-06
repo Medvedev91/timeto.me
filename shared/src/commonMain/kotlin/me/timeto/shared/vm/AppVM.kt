@@ -31,29 +31,6 @@ class AppVM : __VM<AppVM.State>() {
             if (!DI.isLateInitInitialized())
                 fillInitData()
 
-            // todo migration from 143
-            val allActivities = ActivityModel.getAscSorted()
-            RepeatingModel.getAsc().forEach { repeating ->
-                var newText = repeating.text
-
-                val activity = allActivities.firstOrNull { it.emoji in repeating.text }
-                if (activity != null)
-                    newText = newText.replace(activity.emoji, "") + " #a${activity.id}"
-
-                val timeRes = TimerTimeParser.parse(newText)
-                if (timeRes != null)
-                    newText = newText.replace(timeRes.match, "") + " #t${timeRes.seconds}"
-
-                newText = newText.removeDuplicateSpaces()
-                if (newText == repeating.text)
-                    return@forEach
-                // todo remove from sq
-                db.repeatingQueries.upTextById(text = newText, id = repeating.id)
-                zlog(repeating.text)
-                zlog(newText)
-                zlog("---")
-            }
-
             state.update { it.copy(isAppReady = true) }
 
             ///
