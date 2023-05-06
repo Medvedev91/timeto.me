@@ -107,7 +107,7 @@ internal actual object SecureLocalStorage {
         CFBridgingRetain(this.toSwiftData())!!
 
     private fun SecureLocalStorage__Key.buildQueryName(): CFTypeRef =
-        "app.time-to.security-storage.$name".buildQueryString()
+        "me.timeto.app-security-storage.$name".buildQueryString()
 
     @Throws(SecureLocalStorage__Exception::class)
     private fun OSStatus.assertSuccess(errMessage: String) {
