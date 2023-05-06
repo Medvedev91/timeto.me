@@ -1,8 +1,8 @@
 CREATE TABLE IntervalSQ (
     id INTEGER AS Int NOT NULL PRIMARY KEY,
     deadline INTEGER AS Int NOT NULL,
-    note TEXT, -- Nullable!
-    activity_id INTEGER AS Int NOT NULL
+    activity_id INTEGER AS Int NOT NULL,
+    note TEXT -- Nullable!
 );
 
 anyChange: SELECT id FROM IntervalSQ LIMIT 1;
