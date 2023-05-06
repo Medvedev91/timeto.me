@@ -17,7 +17,7 @@ data class ActivityModel(
     val type_id: Int,
     val color_rgba: String,
     val data_json: String,
-    val auto_fs: Int,
+    val auto_focus: Int,
 ) : Backupable__Item {
 
     enum class TYPE(val id: Int) {
@@ -88,7 +88,7 @@ data class ActivityModel(
                     type_id = type.id,
                     color_rgba = colorRgba.toRgbaString(),
                     data_json = data.toJString(),
-                    auto_fs = isAutoFS.toInt10(),
+                    auto_focus = isAutoFS.toInt10(),
                 )
                 db.activityQueries.insert(activitySQ)
                 activitySQ.toModel()
@@ -180,7 +180,7 @@ data class ActivityModel(
         private fun ActivitySQ.toModel() = ActivityModel(
             id = id, name = name, emoji = emoji, deadline = deadline, sort = sort,
             type_id = type_id, color_rgba = color_rgba, data_json = data_json,
-            auto_fs = auto_fs,
+            auto_focus = auto_focus,
         )
 
         ///
@@ -201,13 +201,13 @@ data class ActivityModel(
                     color_rgba = j.getString(5),
                     data_json = j.getString(6),
                     emoji = j.getString(7),
-                    auto_fs = j.getInt(8),
+                    auto_focus = j.getInt(8),
                 )
             )
         }
     }
 
-    val isAutoFs = auto_fs.toBoolean10()
+    val isAutoFs = auto_focus.toBoolean10()
 
     fun nameWithEmoji() = "$name $emoji"
 
@@ -245,7 +245,7 @@ data class ActivityModel(
             color_rgba = color_rgba,
             data_json = data.toJString(),
             emoji = validateEmoji(emoji, exActivity = this@ActivityModel),
-            auto_fs = isAutoFS.toInt10(),
+            auto_focus = isAutoFS.toInt10(),
         )
     }
 
@@ -284,7 +284,7 @@ data class ActivityModel(
     override fun backupable__getId(): String = id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
-        id, name, deadline, sort, type_id, color_rgba, data_json, emoji, auto_fs
+        id, name, deadline, sort, type_id, color_rgba, data_json, emoji, auto_focus
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
@@ -298,7 +298,7 @@ data class ActivityModel(
             color_rgba = j.getString(5),
             data_json = j.getString(6),
             emoji = j.getString(7),
-            auto_fs = j.getInt(8),
+            auto_focus = j.getInt(8),
         )
     }
 
