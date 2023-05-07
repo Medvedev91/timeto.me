@@ -363,22 +363,13 @@ fun SettingsSheet(
                     withTopDivider = true,
                 ) {
 
-                    val autoBackup = LocalAutoBackup.current
-                    if (autoBackup != null && isSDKQPlus()) {
-
-                        val dateStr = autoBackup.lastCacheDate.value?.let { date ->
-                            val calendar = Calendar.getInstance(Locale.ENGLISH)
-                            val format = "d MMM, E HH:mm" // todo is24
-                            calendar.timeInMillis = date.time
-                            DateFormat.format(format, calendar).toString()
-                        }
-
+                    if (isSDKQPlus()) {
                         MyListView__ItemView__ButtonView(
                             text = "Auto Backup",
                             withArrow = true,
                             rightView = {
                                 MyListView__ItemView__ButtonView__RightText(
-                                    text = dateStr ?: "",
+                                    text = state.autoBackupTimeString,
                                     paddingEnd = 4.dp,
                                 )
                             }
