@@ -27,7 +27,6 @@ import kotlinx.coroutines.delay
 import me.timeto.shared.*
 import me.timeto.shared.vm.AppVM
 
-val LocalAutoBackup = compositionLocalOf<AutoBackup?> { throw Exception("LocalAutoBackup") }
 var statusBarHeight = 0.dp
 
 class MainActivity : ComponentActivity() {
@@ -73,35 +72,31 @@ class MainActivity : ComponentActivity() {
                     }
                     upNavigationUI() // Setting background and icons initially in xml. Here after tabs appear.
 
-                    CompositionLocalProvider(
-                        LocalAutoBackup provides if (isSDKQPlus()) remember { AutoBackup() } else null,
-                    ) {
+                    WrapperView.LayoutView {
+                        TabsView()
+                        UIListeners()
+                        FullScreenListener(activity = this, onClose = ::upNavigationUI)
+                    }
 
-                        WrapperView.LayoutView {
-                            TabsView()
-                            UIListeners()
-                            FullScreenListener(activity = this, onClose = ::upNavigationUI)
-                        }
-
-                        val autoBackup = LocalAutoBackup.current
-                        LaunchedEffect(Unit) {
+                    LaunchedEffect(Unit) {
+                        if (isSDKQPlus()) {
+                            autoBackupLastTimeCache.emit(AutoBackup.getLastDate()?.toUnixTime())
                             while (true) {
-                                if (isSDKQPlus())
-                                    autoBackup?.dailyBackupIfNeeded()
+                                AutoBackup.dailyBackupIfNeeded()
                                 delay(30_000L)
                             }
                         }
+                    }
 
-                        LaunchedEffect(Unit) {
-                            scheduledNotificationsDataFlow
-                                .onEachExIn(this) { notificationsData ->
-                                    NotificationCenter.cleanAllPushes()
-                                    notificationsData.forEach { scheduleNotification(it) }
-                                }
-                            // TRICK Run strictly after scheduledNotificationsDataFlow launch.
-                            // TRICK Without delay the first event does not handled. 1L enough.
-                            vm.onNotificationsPermissionReady(delayMls = 500L)
-                        }
+                    LaunchedEffect(Unit) {
+                        scheduledNotificationsDataFlow
+                            .onEachExIn(this) { notificationsData ->
+                                NotificationCenter.cleanAllPushes()
+                                notificationsData.forEach { scheduleNotification(it) }
+                            }
+                        // TRICK Run strictly after scheduledNotificationsDataFlow launch.
+                        // TRICK Without delay the first event does not handled. 1L enough.
+                        vm.onNotificationsPermissionReady(delayMls = 500L)
                     }
                 }
             }
