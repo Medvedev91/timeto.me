@@ -23,8 +23,6 @@ internal lateinit var deviceData: DeviceData
 var batteryLevelOrNull: Int? = null
 var isBatteryChargingOrNull: Boolean? = null
 
-val autoBackupLastTimeCache = MutableStateFlow<UnixTime?>(null)
-
 fun zlog(message: Any?) = println(";; $message")
 
 internal expect val REPORT_API_TITLE: String

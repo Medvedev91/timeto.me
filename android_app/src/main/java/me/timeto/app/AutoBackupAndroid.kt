@@ -47,7 +47,7 @@ object AutoBackupAndroid {
 
         //////
 
-        autoBackupLastTimeCache.emit(date.toUnixTime())
+        AutoBackup.upLastTimeCache(date.toUnixTime())
     }
 
     ///
