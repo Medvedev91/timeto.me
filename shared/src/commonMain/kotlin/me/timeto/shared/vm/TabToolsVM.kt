@@ -19,6 +19,7 @@ class TabToolsVM : __VM<TabToolsVM.State>() {
         val checklists: List<ChecklistModel>,
         val dayStartSeconds: Int,
         val feedbackSubject: String,
+        val autoBackupTimeString: String,
     ) {
 
         val headerTitle = "Settings"
@@ -52,6 +53,7 @@ class TabToolsVM : __VM<TabToolsVM.State>() {
             checklists = DI.checklists,
             dayStartSeconds = dayStartOffsetSeconds(),
             feedbackSubject = "Feedback",
+            autoBackupTimeString = prepAutoBackupTimeString(autoBackupLastTimeCache.value),
         )
     )
 
@@ -67,6 +69,9 @@ class TabToolsVM : __VM<TabToolsVM.State>() {
                 val seconds = kv?.value.asDayStartOffsetSeconds()
                 state.update { it.copy(dayStartSeconds = seconds) }
             }
+        autoBackupLastTimeCache.onEachExIn(scope) { unixTime ->
+            state.update { it.copy(autoBackupTimeString = prepAutoBackupTimeString(unixTime)) }
+        }
         scope.launchEx {
             val subject = SecureLocalStorage__Key.feedback_subject.getOrNull()
             if (subject != null)
