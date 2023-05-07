@@ -10,7 +10,7 @@ import java.util.*
 import kotlin.jvm.Throws
 
 @RequiresApi(Build.VERSION_CODES.Q) // Because of MediaStore.MediaColumns.RELATIVE_PATH
-object AutoBackup {
+object AutoBackupAndroid {
 
     suspend fun dailyBackupIfNeeded() {
         try {
