@@ -31,7 +31,7 @@ struct IOSApp: App {
                     TabsView()
                             .attachTimetoSheet()
                             .attachTimetoAlert()
-                            .attachAutoBackup()
+                            .attachAutoBackupIos()
                             .attachTimerFullScreenView()
                             .onReceive(scheduledNotificationsDataPublisher) {
                                 let center = UNUserNotificationCenter.current()

@@ -9,7 +9,7 @@ struct SettingsSheet: View {
 
     @State private var vm = TabToolsVM()
 
-    @EnvironmentObject private var autoBackup: AutoBackup
+    @EnvironmentObject private var autoBackup: AutoBackupIos
 
     @State private var isReadmePresented = false
 

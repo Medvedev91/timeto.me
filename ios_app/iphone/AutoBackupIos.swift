@@ -4,14 +4,14 @@ import shared
 
 extension View {
 
-    func attachAutoBackup() -> some View {
-        modifier(AutoBackup__Modifier())
+    func attachAutoBackupIos() -> some View {
+        modifier(AutoBackupIos__Modifier())
     }
 }
 
-private struct AutoBackup__Modifier: ViewModifier {
+private struct AutoBackupIos__Modifier: ViewModifier {
 
-    @StateObject private var autoBackup = AutoBackup()
+    @StateObject private var autoBackup = AutoBackupIos()
     @State private var autoBackupTimer = Timer.publish(every: 30, on: .main, in: .common).autoconnect()
 
     func body(content: Content) -> some View {
@@ -28,10 +28,10 @@ private struct AutoBackup__Modifier: ViewModifier {
     private func dailyBackupIfNeeded() {
         Task {
             do {
-                let lastBackupUnixDay = try AutoBackup.getLastDate()?.toUnixTime().localDay.toInt() ?? 0
+                let lastBackupUnixDay = try AutoBackupIos.getLastDate()?.toUnixTime().localDay.toInt() ?? 0
                 if lastBackupUnixDay < UnixTime(time: time().toInt32(), utcOffset: UtilsKt.localUtcOffset).localDay.toInt() {
                     try await autoBackup.newBackup()
-                    try AutoBackup.cleanOld()
+                    try AutoBackupIos.cleanOld()
                 }
             } catch {
                 zlog(error) // todo report
@@ -45,13 +45,13 @@ private struct AutoBackup__Modifier: ViewModifier {
 /// All operations with backups should be done through this class because of lastDate.
 /// You must always update lastDate on changes.
 ///
-class AutoBackup: ObservableObject {
+class AutoBackupIos: ObservableObject {
 
     @Published var lastDate: Date?
 
     init() {
         do {
-            lastDate = try AutoBackup.getLastDate()
+            lastDate = try AutoBackupIos.getLastDate()
         } catch {
             zlog(error) // todo report
         }
@@ -66,7 +66,7 @@ class AutoBackup: ObservableObject {
         let jString = try await Backup.shared.create(type: "autobackup", intervalsLimit: 999_999_999.toInt32()) // todo
 
         FileManager.default.createFile(
-                atPath: try AutoBackup.autoBackupsFolder().appendingPathComponent(fileName).path,
+                atPath: try AutoBackupIos.autoBackupsFolder().appendingPathComponent(fileName).path,
                 contents: jString.data(using: .utf8)
         )
         lastDate = date
