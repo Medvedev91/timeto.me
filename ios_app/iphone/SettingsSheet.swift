@@ -9,8 +9,6 @@ struct SettingsSheet: View {
 
     @State private var vm = TabToolsVM()
 
-    @EnvironmentObject private var autoBackup: AutoBackupIos
-
     @State private var isReadmePresented = false
 
     @State private var mailViewResult: Result<MFMailComposeResult, Error>? = nil
@@ -220,25 +218,17 @@ struct SettingsSheet: View {
                                 withTopDivider: true
                         ) {
 
-                            let autoBackupString: String = {
-                                guard let lastBackupDate = autoBackup.lastDate else {
-                                    return "None"
-                                }
-                                let formatter = DateFormatter()
-                                formatter.dateFormat = is12HoursFormat() ? "d MMM, hh:mm a" : "d MMM, HH:mm"
-                                return formatter.string(from: lastBackupDate)
-                            }()
                             MyListView__ItemView__ButtonView(
                                     text: "Auto Backup",
                                     rightView: AnyView(
                                             MyListView__ItemView__ButtonView__RightText(
-                                                    text: autoBackupString
+                                                    text: state.autoBackupTimeString
                                             )
                                     )
                             ) {
                                 // todo do catch
                                 // https://stackoverflow.com/a/64592118/5169420
-                                let path = try! AutoBackup.autoBackupsFolder()
+                                let path = try! AutoBackupIos.autoBackupsFolder()
                                         .absoluteString
                                         .replacingOccurrences(of: "file://", with: "shareddocuments://")
                                 UIApplication.shared.open(URL(string: path)!)

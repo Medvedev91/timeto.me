@@ -11,32 +11,16 @@ extension View {
 
 private struct AutoBackupIos__Modifier: ViewModifier {
 
-    @StateObject private var autoBackup = AutoBackupIos()
     @State private var autoBackupTimer = Timer.publish(every: 30, on: .main, in: .common).autoconnect()
 
     func body(content: Content) -> some View {
         content
-                .environmentObject(autoBackup)
                 .onReceive(autoBackupTimer) { _ in
-                    dailyBackupIfNeeded()
+                    AutoBackupIos.dailyBackupIfNeeded()
                 }
                 .onAppear {
-                    dailyBackupIfNeeded()
+                    AutoBackupIos.dailyBackupIfNeeded()
                 }
-    }
-
-    private func dailyBackupIfNeeded() {
-        Task {
-            do {
-                let lastBackupUnixDay = try AutoBackupIos.getLastDate()?.toUnixTime().localDay.toInt() ?? 0
-                if lastBackupUnixDay < UnixTime(time: time().toInt32(), utcOffset: UtilsKt.localUtcOffset).localDay.toInt() {
-                    try await autoBackup.newBackup()
-                    try AutoBackupIos.cleanOld()
-                }
-            } catch {
-                zlog(error) // todo report
-            }
-        }
     }
 }
 
@@ -45,19 +29,32 @@ private struct AutoBackupIos__Modifier: ViewModifier {
 /// All operations with backups should be done through this class because of lastDate.
 /// You must always update lastDate on changes.
 ///
-class AutoBackupIos: ObservableObject {
-
-    @Published var lastDate: Date?
+class AutoBackupIos {
 
     init() {
         do {
-            lastDate = try AutoBackupIos.getLastDate()
+            // todo do async
+            AutoBackup.shared.upLastTimeCache(unixTime: try AutoBackupIos.getLastDate()?.toUnixTime())
         } catch {
             zlog(error) // todo report
         }
     }
 
-    func newBackup() async throws {
+    static func dailyBackupIfNeeded() {
+        Task {
+            do {
+                let lastBackupUnixDay = try getLastDate()?.toUnixTime().localDay.toInt() ?? 0
+                if lastBackupUnixDay < UnixTime(time: time().toInt32(), utcOffset: UtilsKt.localUtcOffset).localDay.toInt() {
+                    try await newBackup()
+                    try cleanOld()
+                }
+            } catch {
+                zlog(error) // todo report
+            }
+        }
+    }
+
+    static func newBackup() async throws {
         let date = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy_MM_dd__HH_mm_ss" // WARNING Same logic in getLastDate()
@@ -69,7 +66,7 @@ class AutoBackupIos: ObservableObject {
                 atPath: try AutoBackupIos.autoBackupsFolder().appendingPathComponent(fileName).path,
                 contents: jString.data(using: .utf8)
         )
-        lastDate = date
+        AutoBackup.shared.upLastTimeCache(unixTime: date.toUnixTime())
     }
 
     static func getLastDate() throws -> Date? {
