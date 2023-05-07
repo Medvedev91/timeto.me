@@ -99,5 +99,22 @@ class TabToolsVM : __VM<TabToolsVM.State>() {
 
             return "${24 + h}:00".padStart(5, '0')
         }
+
+        private fun prepAutoBackupTimeString(
+            unixTime: UnixTime?
+        ): String {
+            if (unixTime == null)
+                return ""
+            return unixTime.getStringByComponents(
+                UnixTime.StringComponent.dayOfMonth,
+                UnixTime.StringComponent.space,
+                UnixTime.StringComponent.month3,
+                UnixTime.StringComponent.comma,
+                UnixTime.StringComponent.space,
+                UnixTime.StringComponent.dayOfWeek3,
+                UnixTime.StringComponent.space,
+                UnixTime.StringComponent.hhmm24
+            )
+        }
     }
 }
