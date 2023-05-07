@@ -51,7 +51,7 @@ class TabToolsVM : __VM<TabToolsVM.State>() {
             shortcuts = DI.shortcuts,
             checklists = DI.checklists,
             dayStartSeconds = dayStartOffsetSeconds(),
-            feedbackSubject = "Feedback"
+            feedbackSubject = "Feedback",
         )
     )
 
