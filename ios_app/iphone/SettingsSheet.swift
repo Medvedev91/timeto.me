@@ -190,11 +190,7 @@ struct SettingsSheet: View {
                             MyListView__ItemView__ButtonView(text: "Create") {
                                 Task {
                                     let jString = try await Backup.shared.create(type: "manual", intervalsLimit: 999_999_999.toInt32()) // todo
-
-                                    let formatter = DateFormatter()
-                                    formatter.dateFormat = "yyyyMMdd_HHmmss"
-                                    fileForExportName = "timeto_\(formatter.string(from: Date())).json"
-
+                                    fileForExportName = vm.prepBackupFileName()
                                     fileForExport = MyJsonFileDocument(initialText: jString)
                                     isFileExporterPresented = true
                                 }
