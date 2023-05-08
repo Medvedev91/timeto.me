@@ -89,6 +89,8 @@ class TabToolsVM : __VM<TabToolsVM.State>() {
         }
     }
 
+    fun prepBackupFileName(): String = "timetome_${Backup.prepFileName(UnixTime())}.json"
+
     companion object {
 
         private fun dayStartSecondsToString(seconds: Int): String {

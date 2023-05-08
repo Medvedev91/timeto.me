@@ -4,7 +4,6 @@ import android.app.DownloadManager
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
-import android.text.format.DateFormat
 import android.widget.NumberPicker
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -34,7 +33,6 @@ import me.timeto.shared.*
 import me.timeto.shared.vm.TabToolsVM
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import java.util.*
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -336,8 +334,7 @@ fun SettingsSheet(
                         text = "Create",
                     ) {
                         scope.launch {
-                            val date = DateFormat.format("yyyyMMdd_HHmmss", Date())
-                            launcherBackup.launch("timeto_${date}.json")
+                            launcherBackup.launch(vm.prepBackupFileName())
                         }
                     }
                 }
