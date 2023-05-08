@@ -3,7 +3,6 @@ package me.timeto.app
 import android.content.ContentValues
 import android.os.Build
 import android.provider.MediaStore
-import android.text.format.DateFormat
 import androidx.annotation.RequiresApi
 import me.timeto.shared.*
 import java.util.*
@@ -26,14 +25,12 @@ object AutoBackupAndroid {
 
     @Throws // WARNING
     suspend fun newBackup() {
-        val date = Date()
+        val unixTime = UnixTime()
         val jsonBytes = Backup.create("autobackup").toByteArray()
-
-        val dateFormat = "yyyy_MM_dd__HH_mm_ss" // WARNING Логика используется в getLastUnixDay()
-        val fileName = "${DateFormat.format(dateFormat, date)}.json"
+        val fileName = "${Backup.prepFileName(unixTime)}.json"
 
         ///
-        /// May throw IOException.
+        /// May throw IOException
 
         val values = ContentValues()
         values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
@@ -47,7 +44,7 @@ object AutoBackupAndroid {
 
         //////
 
-        AutoBackup.upLastTimeCache(date.toUnixTime())
+        AutoBackup.upLastTimeCache(unixTime)
     }
 
     ///
