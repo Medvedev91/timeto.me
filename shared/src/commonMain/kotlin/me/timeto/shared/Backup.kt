@@ -39,7 +39,7 @@ object Backup {
         val day = unixTime.dayOfMonth().toString().padStart(2, '0')
         val (h, m, s) = (unixTime.utcTime() % 86_400).toHms()
             .map { it.toString().padStart(2, '0') }
-        return "${year}_${month}_${day}__${h}_${m}_${s}"
+        return "${year}_${month}_${day}_${h}_${m}_${s}"
     }
 }
 
