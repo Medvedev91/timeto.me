@@ -24,7 +24,7 @@ class TabToolsVM : __VM<TabToolsVM.State>() {
 
         val headerTitle = "Settings"
 
-        val openSourceUrl = "https://github.com/timeto-app/timeto-app"
+        val openSourceUrl = "https://github.com/timetome-app/timetome-app"
         val feedbackEmail = "hi@timeto.me"
 
         val dayStartNote = dayStartSecondsToString(dayStartSeconds)
