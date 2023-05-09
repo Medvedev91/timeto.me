@@ -55,18 +55,12 @@ class AutoBackupIos {
     }
 
     static func newBackup() async throws {
-        let date = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy_MM_dd__HH_mm_ss" // WARNING Same logic in getLastDate()
-        let fileName = "\(formatter.string(from: date)).json"
-
-        let jString = try await Backup.shared.create(type: "autobackup", intervalsLimit: 999_999_999.toInt32()) // todo
-
+        let autoBackupData = try await AutoBackup.shared.buildAutoBackup()
         FileManager.default.createFile(
-                atPath: try AutoBackupIos.autoBackupsFolder().appendingPathComponent(fileName).path,
-                contents: jString.data(using: .utf8)
+                atPath: try AutoBackupIos.autoBackupsFolder().appendingPathComponent(autoBackupData.fileName).path,
+                contents: autoBackupData.jsonString.data(using: .utf8)
         )
-        AutoBackup.shared.upLastTimeCache(unixTime: date.toUnixTime())
+        AutoBackup.shared.upLastTimeCache(unixTime: autoBackupData.unixTime)
     }
 
     static func getLastDate() throws -> Date? {

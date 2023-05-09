@@ -25,26 +25,24 @@ object AutoBackupAndroid {
 
     @Throws // WARNING
     suspend fun newBackup() {
-        val unixTime = UnixTime()
-        val jsonBytes = Backup.create("autobackup").toByteArray()
-        val fileName = "${Backup.prepFileName(unixTime)}.json"
+        val autoBackupData = AutoBackup.buildAutoBackup()
 
         ///
         /// May throw IOException
 
         val values = ContentValues()
-        values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
+        values.put(MediaStore.MediaColumns.DISPLAY_NAME, autoBackupData.fileName)
         values.put(MediaStore.MediaColumns.RELATIVE_PATH, AUTOBACKUPS_PATH) // RELATIVE_PATH require Build.VERSION_CODES.Q+
         val fileUri = App.instance.contentResolver.insert(getVolume(), values)
                       ?: throw Exception("AutoBackup.newBackup() contentResolver.insert() nullable")
         val outputStream = App.instance.contentResolver.openOutputStream(fileUri)
                            ?: throw Exception("AutoBackup.newBackup() contentResolver.openOutputStream() nullable")
-        outputStream.write(jsonBytes)
+        outputStream.write(autoBackupData.jsonString.toByteArray())
         outputStream.close()
 
         //////
 
-        AutoBackup.upLastTimeCache(unixTime)
+        AutoBackup.upLastTimeCache(autoBackupData.unixTime)
     }
 
     ///
