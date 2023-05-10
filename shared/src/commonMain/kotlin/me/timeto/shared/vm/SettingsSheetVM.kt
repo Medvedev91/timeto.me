@@ -7,7 +7,7 @@ import me.timeto.shared.db.KVModel
 import me.timeto.shared.db.KVModel.Companion.asDayStartOffsetSeconds
 import me.timeto.shared.db.ShortcutModel
 
-class TabToolsVM : __VM<TabToolsVM.State>() {
+class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
 
     data class DayStartOffsetListItem(
         val seconds: Int,
