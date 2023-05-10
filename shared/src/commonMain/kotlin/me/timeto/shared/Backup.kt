@@ -1,5 +1,8 @@
 package me.timeto.shared
 
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toInstant
 import kotlinx.serialization.json.*
 import me.timeto.shared.db.*
 
@@ -40,6 +43,17 @@ object Backup {
         val (h, m, s) = (unixTime.utcTime() % 86_400).toHms()
             .map { it.toString().padStart(2, '0') }
         return "${prefix}${year}_${month}_${day}_${h}_${m}_${s}.json"
+    }
+
+    @Throws(Exception::class)
+    fun fileNameToUnixTime(fileName: String): UnixTime {
+        val fileName = fileName.replace("__", "_") // todo remove 10+ days after v196 release
+        val regex = "(\\d{4})_(\\d{2})_(\\d{2})_(\\d{2})_(\\d{2})_(\\d{2})\\.json$".toRegex()
+        val match = regex.find(fileName) ?: throw Exception("Backup.fileNameToUnixTime($fileName)")
+        val v = match.groupValues.drop(1).map { it.toInt() }
+        val dateTime = LocalDateTime(v[0], v[1], v[2], v[3], v[4], v[5], 0)
+        val time = dateTime.toInstant(TimeZone.currentSystemDefault()).epochSeconds.toInt()
+        return UnixTime(time)
     }
 }
 
