@@ -8,8 +8,11 @@ import me.timeto.shared.*
 import java.util.*
 import kotlin.jvm.Throws
 
-@RequiresApi(Build.VERSION_CODES.Q) // Because of MediaStore.MediaColumns.RELATIVE_PATH
+@RequiresApi(Build.VERSION_CODES.Q) // MediaStore.MediaColumns.RELATIVE_PATH
 object AutoBackupAndroid {
+
+    private const val AUTOBACKUPS_FOLDER_NAME = "timetome_autobackups"
+    private const val AUTOBACKUPS_PATH = "Download/$AUTOBACKUPS_FOLDER_NAME"
 
     suspend fun dailyBackupIfNeeded() {
         try {
@@ -23,20 +26,20 @@ object AutoBackupAndroid {
         }
     }
 
-    @Throws // WARNING
+    @Throws
     suspend fun newBackup() {
         val autoBackupData = AutoBackup.buildAutoBackup()
 
         ///
-        /// May throw IOException
+        /// IOException
 
         val values = ContentValues()
         values.put(MediaStore.MediaColumns.DISPLAY_NAME, autoBackupData.fileName)
         values.put(MediaStore.MediaColumns.RELATIVE_PATH, AUTOBACKUPS_PATH) // RELATIVE_PATH require Build.VERSION_CODES.Q+
         val fileUri = App.instance.contentResolver.insert(getVolume(), values)
-                      ?: throw Exception("AutoBackup.newBackup() contentResolver.insert() nullable")
+                      ?: throw Exception("AutoBackupAndroid.newBackup() contentResolver.insert() nullable")
         val outputStream = App.instance.contentResolver.openOutputStream(fileUri)
-                           ?: throw Exception("AutoBackup.newBackup() contentResolver.openOutputStream() nullable")
+                           ?: throw Exception("AutoBackupAndroid.newBackup() contentResolver.openOutputStream() nullable")
         outputStream.write(autoBackupData.jsonString.toByteArray())
         outputStream.close()
 
@@ -45,14 +48,7 @@ object AutoBackupAndroid {
         AutoBackup.upLastTimeCache(autoBackupData.unixTime)
     }
 
-    ///
-    ///
-
-    // # README_APP.md Auto Backup Folder Name
-    private const val AUTOBACKUPS_FOLDER_NAME = "timetome_autobackups"
-    private const val AUTOBACKUPS_PATH = "Download/$AUTOBACKUPS_FOLDER_NAME"
-
-    @Throws // WARNING
+    @Throws
     fun cleanOld() {
         getAutoBackupsSortedDesc()
             .drop(10)
@@ -66,13 +62,12 @@ object AutoBackupAndroid {
             }
     }
 
-    // # README_APP.md Auto Backup getVolume()
     private fun getVolume() = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL)
 
-    @Throws // WARNING
+    @Throws
     private fun getAutoBackupsSortedDesc(): List<MyFileData> {
         val cursor = App.instance.contentResolver.query(getVolume(), null, null, null, null)
-                     ?: throw Exception("AutoBackup.getAutoBackupsSortedDesc() cursor nullable")
+                     ?: throw Exception("AutoBackupAndroid.getAutoBackupsSortedDesc() cursor nullable")
         val files = mutableListOf<MyFileData>()
         cursor.use { cursor ->
             while (cursor.moveToNext()) {
@@ -93,11 +88,11 @@ object AutoBackupAndroid {
         return files.sortedByDescending { it.name }
     }
 
-    @Throws // WARNING
+    @Throws
     fun getLastDate(): Date? {
         val lastBackupFileName = getAutoBackupsSortedDesc().firstOrNull()?.name ?: return null
 
-        // Should be like 2022_09_07__19_08_39
+        // Should be like 2022_09_07_19_08_39
         val dateArray = lastBackupFileName.split(".").first().replace("__", "_").split("_")
         if (dateArray.size != 6)
             throw Exception("getLastUnixDay() dateArray.count != 6 $lastBackupFileName")
@@ -115,9 +110,6 @@ object AutoBackupAndroid {
         calendar[Calendar.SECOND] = dateArrayInts[5]
         return calendar.time
     }
-
-    ///
-    ///
 
     private class MyFileData(
         val id: String, // MediaStore.Files.FileColumns._ID
