@@ -49,7 +49,7 @@ class AutoBackupIos {
                     try cleanOld()
                 }
             } catch {
-                zlog(error) // todo report
+                reportApi("AutoBackupIos.dailyBackupIfNeeded()\n\(error)")
             }
         }
     }
