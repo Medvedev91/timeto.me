@@ -47,6 +47,12 @@ func setupWCSession(_ delegate: WCSessionDelegate) {
 ///
 ///
 
+func myAsync(_ function: @escaping () -> Void) {
+    DispatchQueue.main.async {
+        function()
+    }
+}
+
 func myAsyncAfter(
         _ seconds: CGFloat,
         work: @escaping () -> Void
