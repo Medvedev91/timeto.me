@@ -7,7 +7,7 @@ struct SettingsSheet: View {
 
     @Binding var isPresented: Bool
 
-    @State private var vm = TabToolsVM()
+    @State private var vm = SettingsSheetVM()
 
     @State private var isReadmePresented = false
 
@@ -164,8 +164,8 @@ struct SettingsSheet: View {
                                     .sheetEnv(isPresented: $isDayStartPresented) {
                                         DayStartDialog(
                                                 isPresented: $isDayStartPresented,
-                                                tabToolsVM: vm,
-                                                tabToolsState: state
+                                                settingsSheetVM: vm,
+                                                settingsSheetState: state
                                         )
                                     }
                         }
@@ -392,18 +392,18 @@ struct SettingsSheet: View {
 
         @Binding private var isPresented: Bool
         @State private var selectedDayStart: Int32 // WARNING Int32!
-        private let tabToolsVM: TabToolsVM
-        private let tabToolsState: TabToolsVM.State
+        private let settingsSheetVM: SettingsSheetVM
+        private let settingsSheetState: SettingsSheetVM.State
 
         init(
                 isPresented: Binding<Bool>,
-                tabToolsVM: TabToolsVM,
-                tabToolsState: TabToolsVM.State
+                settingsSheetVM: SettingsSheetVM,
+                settingsSheetState: SettingsSheetVM.State
         ) {
             _isPresented = isPresented
-            self.tabToolsVM = tabToolsVM
-            self.tabToolsState = tabToolsState
-            _selectedDayStart = State(initialValue: tabToolsState.dayStartSeconds)
+            self.settingsSheetVM = settingsSheetVM
+            self.settingsSheetState = settingsSheetState
+            _selectedDayStart = State(initialValue: settingsSheetState.dayStartSeconds)
         }
 
         var body: some View {
@@ -422,7 +422,7 @@ struct SettingsSheet: View {
 
                     Button(
                             action: {
-                                tabToolsVM.upDayStartOffsetSeconds(seconds: selectedDayStart) {
+                                settingsSheetVM.upDayStartOffsetSeconds(seconds: selectedDayStart) {
                                     isPresented = false
                                 }
                             },
@@ -441,7 +441,7 @@ struct SettingsSheet: View {
                         "",
                         selection: $selectedDayStart
                 ) {
-                    ForEach(tabToolsState.dayStartListItems, id: \.seconds) { item in
+                    ForEach(settingsSheetState.dayStartListItems, id: \.seconds) { item in
                         Text(item.note).tag(item.seconds)
                     }
                 }
