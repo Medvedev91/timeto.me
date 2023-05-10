@@ -21,7 +21,7 @@ object AutoBackupAndroid {
                 cleanOld()
             }
         } catch (e: Throwable) {
-            zlog(e) // todo report
+            reportApi("AutoBackupAndroid.dailyBackupIfNeeded()\n$e")
         }
     }
 
