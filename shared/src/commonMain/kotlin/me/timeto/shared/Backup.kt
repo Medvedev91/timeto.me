@@ -33,13 +33,13 @@ object Backup {
         }
     }
 
-    fun prepFileName(unixTime: UnixTime): String {
+    fun prepFileName(unixTime: UnixTime, prefix: String): String {
         val year = unixTime.year().toString()
         val month = unixTime.month().toString().padStart(2, '0')
         val day = unixTime.dayOfMonth().toString().padStart(2, '0')
         val (h, m, s) = (unixTime.utcTime() % 86_400).toHms()
             .map { it.toString().padStart(2, '0') }
-        return "${year}_${month}_${day}_${h}_${m}_${s}"
+        return "${prefix}${year}_${month}_${day}_${h}_${m}_${s}.json"
     }
 }
 

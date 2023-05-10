@@ -89,7 +89,7 @@ class TabToolsVM : __VM<TabToolsVM.State>() {
         }
     }
 
-    fun prepBackupFileName(): String = "timetome_${Backup.prepFileName(UnixTime())}.json"
+    fun prepBackupFileName() = Backup.prepFileName(UnixTime(), prefix = "timetome_")
 
     companion object {
 

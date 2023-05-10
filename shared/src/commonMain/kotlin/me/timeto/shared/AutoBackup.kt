@@ -16,7 +16,7 @@ object AutoBackup {
         return AutoBackupData(
             unixTime = unixTime,
             jsonString = Backup.create("autobackup"),
-            fileName = "${Backup.prepFileName(unixTime)}.json"
+            fileName = Backup.prepFileName(unixTime, prefix = "")
         )
     }
 
