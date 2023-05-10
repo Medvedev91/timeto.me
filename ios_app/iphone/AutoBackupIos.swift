@@ -19,6 +19,13 @@ private struct AutoBackupIos__Modifier: ViewModifier {
                     AutoBackupIos.dailyBackupIfNeeded()
                 }
                 .onAppear {
+                    myAsync {
+                        do {
+                            AutoBackup.shared.upLastTimeCache(unixTime: try AutoBackupIos.getLastTimeOrNull())
+                        } catch {
+                            reportApi("AutoBackupIos__Modifier\n\(error)")
+                        }
+                    }
                     AutoBackupIos.dailyBackupIfNeeded()
                 }
     }
@@ -30,15 +37,6 @@ private struct AutoBackupIos__Modifier: ViewModifier {
 /// You must always update lastDate on changes.
 ///
 class AutoBackupIos {
-
-    init() {
-        do {
-            // todo do async
-            AutoBackup.shared.upLastTimeCache(unixTime: try AutoBackupIos.getLastTimeOrNull())
-        } catch {
-            zlog(error) // todo report
-        }
-    }
 
     static func dailyBackupIfNeeded() {
         Task {
