@@ -47,7 +47,7 @@ internal actual object SecureLocalStorage {
     private val espMasterKey by lazy { MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC) }
     private val esp by lazy {
         EncryptedSharedPreferences.create(
-            "timeto_encrypted_shared_preferences",
+            "timetome_encrypted_shared_preferences",
             espMasterKey,
             androidApplication,
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
