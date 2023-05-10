@@ -80,7 +80,7 @@ class MainActivity : ComponentActivity() {
 
                     LaunchedEffect(Unit) {
                         if (isSDKQPlus()) {
-                            AutoBackup.upLastTimeCache(AutoBackupAndroid.getLastDate()?.toUnixTime())
+                            AutoBackup.upLastTimeCache(AutoBackupAndroid.getLastTime())
                             while (true) {
                                 AutoBackupAndroid.dailyBackupIfNeeded()
                                 delay(30_000L)

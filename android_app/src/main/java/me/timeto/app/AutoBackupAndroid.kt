@@ -5,7 +5,6 @@ import android.os.Build
 import android.provider.MediaStore
 import androidx.annotation.RequiresApi
 import me.timeto.shared.*
-import java.util.*
 import kotlin.jvm.Throws
 
 @RequiresApi(Build.VERSION_CODES.Q) // MediaStore.MediaColumns.RELATIVE_PATH
@@ -16,7 +15,7 @@ object AutoBackupAndroid {
 
     suspend fun dailyBackupIfNeeded() {
         try {
-            val lastBackupUnixDay = getLastDate()?.toUnixTime()?.localDay ?: 0
+            val lastBackupUnixDay = getLastTime()?.localDay ?: 0
             if (lastBackupUnixDay < UnixTime().localDay) {
                 newBackup()
                 cleanOld()
@@ -89,26 +88,9 @@ object AutoBackupAndroid {
     }
 
     @Throws
-    fun getLastDate(): Date? {
-        val lastBackupFileName = getAutoBackupsSortedDesc().firstOrNull()?.name ?: return null
-
-        // Should be like 2022_09_07_19_08_39
-        val dateArray = lastBackupFileName.split(".").first().replace("__", "_").split("_")
-        if (dateArray.size != 6)
-            throw Exception("getLastUnixDay() dateArray.count != 6 $lastBackupFileName")
-
-        val dateArrayInts = dateArray.map { it.toIntOrNull() ?: -1 }.toTypedArray()
-        if (dateArrayInts.any { it == -1 })
-            throw Exception("getLastUnixDay() dateArrayInts $lastBackupFileName")
-
-        val calendar = Calendar.getInstance()
-        calendar[Calendar.YEAR] = dateArrayInts[0]
-        calendar[Calendar.MONTH] = dateArrayInts[1] - 1
-        calendar[Calendar.DAY_OF_MONTH] = dateArrayInts[2]
-        calendar[Calendar.HOUR_OF_DAY] = dateArrayInts[3]
-        calendar[Calendar.MINUTE] = dateArrayInts[4]
-        calendar[Calendar.SECOND] = dateArrayInts[5]
-        return calendar.time
+    fun getLastTime(): UnixTime? {
+        val lastBackup = getAutoBackupsSortedDesc().firstOrNull()?.name ?: return null
+        return Backup.fileNameToUnixTime(lastBackup)
     }
 
     private class MyFileData(
