@@ -30,7 +30,7 @@ import me.timeto.app.*
 import me.timeto.app.R
 import kotlinx.coroutines.launch
 import me.timeto.shared.*
-import me.timeto.shared.vm.TabToolsVM
+import me.timeto.shared.vm.SettingsSheetVM
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -42,7 +42,7 @@ fun SettingsSheet(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    val (vm, state) = rememberVM { TabToolsVM() }
+    val (vm, state) = rememberVM { SettingsSheetVM() }
 
     val launcherBackup = rememberLauncherForActivityResult(
         ActivityResultContracts.CreateDocument()
@@ -305,8 +305,8 @@ fun SettingsSheet(
                     ) {
                         Dialog.show { layer ->
                             DayStartDialogView(
-                                tabToolsVM = vm,
-                                tabToolsState = state,
+                                settingsSheetVM = vm,
+                                settingsSheetState = state,
                                 onClose = layer::close
                             )
                         }
@@ -477,8 +477,8 @@ fun SettingsSheet(
 
 @Composable
 private fun DayStartDialogView(
-    tabToolsVM: TabToolsVM,
-    tabToolsState: TabToolsVM.State,
+    settingsSheetVM: SettingsSheetVM,
+    settingsSheetState: SettingsSheetVM.State,
     onClose: () -> Unit,
 ) {
     Column(
@@ -494,8 +494,8 @@ private fun DayStartDialogView(
             color = c.text,
         )
 
-        val items = tabToolsState.dayStartListItems
-        var selectedItem by remember { mutableStateOf(tabToolsState.dayStartSelectedIdx) }
+        val items = settingsSheetState.dayStartListItems
+        var selectedItem by remember { mutableStateOf(settingsSheetState.dayStartSelectedIdx) }
 
         AndroidView(
             modifier = Modifier
@@ -538,7 +538,7 @@ private fun DayStartDialogView(
             )
 
             MyButton("Save", true, c.blue) {
-                tabToolsVM.upDayStartOffsetSeconds(items[selectedItem].seconds) {
+                settingsSheetVM.upDayStartOffsetSeconds(items[selectedItem].seconds) {
                     onClose()
                 }
             }
