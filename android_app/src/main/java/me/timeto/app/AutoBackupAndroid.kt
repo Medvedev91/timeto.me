@@ -15,7 +15,7 @@ object AutoBackupAndroid {
 
     suspend fun dailyBackupIfNeeded() {
         try {
-            val lastBackupUnixDay = getLastTime()?.localDay ?: 0
+            val lastBackupUnixDay = getLastTimeOrNull()?.localDay ?: 0
             if (lastBackupUnixDay < UnixTime().localDay) {
                 newBackup()
                 cleanOld()
@@ -88,7 +88,7 @@ object AutoBackupAndroid {
     }
 
     @Throws
-    fun getLastTime(): UnixTime? {
+    fun getLastTimeOrNull(): UnixTime? {
         val lastBackup = getAutoBackupsSortedDesc().firstOrNull()?.name ?: return null
         return Backup.fileNameToUnixTime(lastBackup)
     }

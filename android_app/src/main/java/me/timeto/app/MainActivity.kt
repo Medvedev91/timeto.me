@@ -81,7 +81,7 @@ class MainActivity : ComponentActivity() {
                     LaunchedEffect(Unit) {
                         if (isSDKQPlus()) {
                             try {
-                                AutoBackup.upLastTimeCache(AutoBackupAndroid.getLastTime())
+                                AutoBackup.upLastTimeCache(AutoBackupAndroid.getLastTimeOrNull())
                             } catch (e: Throwable) {
                                 reportApi("MainActivity AutoBackup.upLastTimeCache()\n$e")
                             }
