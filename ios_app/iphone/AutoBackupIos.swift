@@ -34,7 +34,7 @@ class AutoBackupIos {
     init() {
         do {
             // todo do async
-            AutoBackup.shared.upLastTimeCache(unixTime: try AutoBackupIos.getLastDate()?.toUnixTime())
+            AutoBackup.shared.upLastTimeCache(unixTime: try AutoBackupIos.getLastTimeOrNull())
         } catch {
             zlog(error) // todo report
         }
@@ -43,7 +43,7 @@ class AutoBackupIos {
     static func dailyBackupIfNeeded() {
         Task {
             do {
-                let lastBackupUnixDay = try getLastDate()?.toUnixTime().localDay.toInt() ?? 0
+                let lastBackupUnixDay = try getLastTimeOrNull()?.localDay.toInt() ?? 0
                 if lastBackupUnixDay < UnixTime(time: time().toInt32(), utcOffset: UtilsKt.localUtcOffset).localDay.toInt() {
                     try await newBackup()
                     try cleanOld()
@@ -63,37 +63,11 @@ class AutoBackupIos {
         AutoBackup.shared.upLastTimeCache(unixTime: autoBackupData.unixTime)
     }
 
-    static func getLastDate() throws -> Date? {
-        guard let lastBackupFileName = try getAutoBackupsSortedDesc().first?.lastPathComponent else {
+    static func getLastTimeOrNull() throws -> UnixTime? {
+        guard let lastBackup = try getAutoBackupsSortedDesc().first?.lastPathComponent else {
             return nil
         }
-        // Should be like 2022_09_07__19_08_39
-        // todo by KMM
-        let dateString = String(lastBackupFileName.split(separator: ".").first!)
-                .replacingOccurrences(of: "__", with: "_")
-        let dateArray = dateString.split(separator: "_")
-        if dateArray.count != 6 {
-            throw MyError("getLastDate() dateArray.count != 6")
-        }
-        guard let year = Int(dateArray[0]),
-                let month = Int(dateArray[1]),
-                let day = Int(dateArray[2]),
-                let hour = Int(dateArray[3]),
-                let minute = Int(dateArray[4]),
-                let second = Int(dateArray[5])
-        else {
-            throw MyError("getLastDate() dateArray not Int")
-        }
-
-        var dc = DateComponents()
-        dc.year = year
-        dc.month = month
-        dc.day = day
-        dc.hour = hour
-        dc.minute = minute
-        dc.second = second
-
-        return Calendar(identifier: .gregorian).date(from: dc)!
+        return try Backup.shared.fileNameToUnixTime(fileName: lastBackup)
     }
 
     static func cleanOld() throws {
