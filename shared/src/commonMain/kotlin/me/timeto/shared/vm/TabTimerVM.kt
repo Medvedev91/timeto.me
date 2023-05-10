@@ -1,12 +1,6 @@
 package me.timeto.shared.vm
 
-import io.ktor.client.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import io.ktor.utils.io.core.*
 import kotlinx.coroutines.flow.*
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.jsonObject
 import me.timeto.shared.*
 import me.timeto.shared.db.ActivityModel
 import me.timeto.shared.db.IntervalModel
@@ -57,7 +51,6 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
     data class State(
         val activities: List<ActivityModel>,
         val lastInterval: IntervalModel,
-        val newAppData: NewAppData?,
     ) {
         val newActivityText = "New Activity"
         val sortActivitiesText = "Sort"
@@ -70,7 +63,6 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
         State(
             activities = DI.activitiesSorted,
             lastInterval = DI.lastInterval,
-            newAppData = null,
         )
     )
 
@@ -85,34 +77,7 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
             .onEachExIn(scope) { interval ->
                 state.update { it.copy(lastInterval = interval) }
             }
-
-        launchExDefault {
-            HttpClient().use { client ->
-                val httpResponse = client.get("https://api.timeto.me/new_app_message") {
-                    url {
-                        appendDeviceData()
-                    }
-                }
-                val plainJson = httpResponse.bodyAsText()
-                val j = Json.parseToJsonElement(plainJson).jsonObject
-                if (!j.getBoolean("is_active"))
-                    return@use
-                val newAppData = NewAppData(
-                    message = j.getString("message"),
-                    btn_text = j.getString("btn_text"),
-                    btn_url = j.getString("btn_url"),
-                )
-                state.update { it.copy(newAppData = newAppData) }
-            }
-        }
     }
-
-    // todo remove
-    data class NewAppData(
-        val message: String,
-        val btn_text: String,
-        val btn_url: String,
-    )
 }
 
 private fun List<ActivityModel>.toUiList(

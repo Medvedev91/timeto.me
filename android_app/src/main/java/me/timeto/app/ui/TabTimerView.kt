@@ -1,7 +1,5 @@
 package me.timeto.app.ui
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
@@ -16,7 +14,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -53,42 +50,6 @@ fun TabTimerView() {
         ) {
 
             TimerView()
-
-            ///
-            /// Todo remove
-
-            val newAppData = state.newAppData
-            if (newAppData != null) {
-                val context = LocalContext.current
-                Text(
-                    text = newAppData.message,
-                    modifier = Modifier
-                        .padding(top = 16.dp)
-                        .padding(horizontal = 24.dp),
-                    color = c.text,
-                    textAlign = TextAlign.Center,
-                )
-                Text(
-                    text = newAppData.btn_text,
-                    modifier = Modifier
-                        .padding(top = 8.dp)
-                        .align(Alignment.CenterHorizontally)
-                        .clip(RoundedCornerShape(99.dp))
-                        .background(c.blue)
-                        .padding(horizontal = 12.dp, vertical = 4.dp)
-                        .clickable {
-                            context.startActivity(
-                                Intent(Intent.ACTION_VIEW).apply {
-                                    data = Uri.parse(newAppData.btn_url)
-                                }
-                            )
-                        },
-                    fontSize = 14.sp,
-                    color = c.white,
-                )
-            }
-
-            //////
 
             LazyColumn(
                 contentPadding = PaddingValues(horizontal = 24.dp, vertical = 22.dp),
