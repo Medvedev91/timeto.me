@@ -17,6 +17,7 @@ class ActivityFormSheetVM(
         val activityData: ActivityModel__Data,
         val textFeatures: TextFeatures,
         val isAutoFS: Boolean,
+        val colorRgba: ColorRgba,
     ) {
         val inputNameValue = textFeatures.textNoFeatures
         val isHeaderDoneEnabled = (inputNameValue.isNotBlank() && emoji != null)
@@ -24,6 +25,7 @@ class ActivityFormSheetVM(
         val inputNamePlaceholder = "Activity Name"
         val emojiTitle = "Unique Emoji"
         val emojiNotSelected = "Not Selected"
+        val colorTitle = "Color"
         val timerHintsHeader = "TIMER HINTS"
         val autoFSTitle = Strings.AUTO_FS_FORM_TITLE
         val timerHintsCustomItems = activityData.timer_hints.custom_list.map { seconds ->
@@ -43,7 +45,8 @@ class ActivityFormSheetVM(
             emoji = activity?.emoji,
             activityData = activity?.getData() ?: ActivityModel__Data.buildDefault(),
             textFeatures = (activity?.name ?: "").textFeatures(),
-            isAutoFS = activity?.isAutoFs ?: false
+            isAutoFS = activity?.isAutoFs ?: false,
+            colorRgba = activity?.getColorRgba() ?: ActivityModel.nextColorDI(),
         )
     )
 
@@ -59,6 +62,10 @@ class ActivityFormSheetVM(
 
     fun toggleAutoFS() = state.update {
         it.copy(isAutoFS = !it.isAutoFS)
+    }
+
+    fun upColorRgba(colorRgba: ColorRgba) = state.update {
+        it.copy(colorRgba = colorRgba)
     }
 
     ///
@@ -107,6 +114,7 @@ class ActivityFormSheetVM(
             activityData.assertValidity()
 
             val isAutoFS = state.value.isAutoFS
+            val colorRgba = state.value.colorRgba
 
             if (activity != null) {
                 activity.upByIdWithValidation(
@@ -114,6 +122,7 @@ class ActivityFormSheetVM(
                     emoji = selectedEmoji,
                     data = activityData,
                     isAutoFS = isAutoFS,
+                    colorRgba = colorRgba,
                 )
             } else {
                 ActivityModel.addWithValidation(
@@ -122,7 +131,7 @@ class ActivityFormSheetVM(
                     deadline = 20 * 60,
                     sort = 0,
                     type = ActivityModel.TYPE.NORMAL,
-                    colorRgba = ActivityModel.nextColor(),
+                    colorRgba = colorRgba,
                     data = activityData,
                     isAutoFS = isAutoFS,
                 )
