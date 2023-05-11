@@ -167,8 +167,8 @@ data class ActivityModel(
             ColorRgba(198, 255, 0), // MD lime A_400
         )
 
-        suspend fun nextColor(): ColorRgba {
-            val activityColors = getAscSorted().map { activity ->
+        fun nextColorDI(): ColorRgba {
+            val activityColors = DI.activitiesSorted.map { activity ->
                 activity.getColorRgba().toRgbaString()
             }
             for (color in colors)
