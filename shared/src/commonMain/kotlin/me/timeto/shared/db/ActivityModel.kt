@@ -232,6 +232,7 @@ data class ActivityModel(
         emoji: String,
         data: ActivityModel__Data,
         isAutoFS: Boolean,
+        colorRgba: ColorRgba,
     ) = dbIO {
         if (isOther())
             throw UIException("It's impossible to change \"Other\" activity")
@@ -242,7 +243,7 @@ data class ActivityModel(
             deadline = deadline,
             sort = sort,
             type_id = type_id,
-            color_rgba = color_rgba,
+            color_rgba = colorRgba.toRgbaString(),
             data_json = data.toJString(),
             emoji = validateEmoji(emoji, exActivity = this@ActivityModel),
             auto_focus = isAutoFS.toInt10(),
