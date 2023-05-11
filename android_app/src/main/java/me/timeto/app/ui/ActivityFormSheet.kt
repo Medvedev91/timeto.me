@@ -1,12 +1,9 @@
 package me.timeto.app.ui
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -18,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.R
 import me.timeto.app.rememberVM
+import me.timeto.app.toColor
 import me.timeto.shared.db.ActivityModel
 import me.timeto.shared.db.ActivityModel__Data.TimerHints.HINT_TYPE
 import me.timeto.shared.vm.ActivityFormSheetVM
@@ -121,6 +119,35 @@ fun ActivityFormSheet(
                     Sheet.show { layer ->
                         SearchEmojiSheet(layer = layer) {
                             vm.setEmoji(it)
+                        }
+                    }
+                }
+            }
+
+            MyListView__ItemView(
+                isFirst = false,
+                isLast = false,
+                withTopDivider = true,
+            ) {
+                MyListView__ItemView__ButtonView(
+                    text = state.colorTitle,
+                    rightView = {
+                        Box(
+                            Modifier
+                                .padding(end = 12.dp)
+                                .size(30.dp)
+                                .border(1.dp, c.text.copy(0.1f), RoundedCornerShape(99.dp))
+                                .clip(RoundedCornerShape(99.dp))
+                                .background(state.colorRgba.toColor())
+                        )
+                    }
+                ) {
+                    Sheet.show { layer ->
+                        ColorPickerSheet(
+                            layer = layer,
+                            selectedColor = state.colorRgba,
+                        ) {
+                            vm.upColorRgba(it)
                         }
                     }
                 }
