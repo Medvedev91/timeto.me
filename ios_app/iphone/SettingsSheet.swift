@@ -285,7 +285,7 @@ struct SettingsSheet: View {
                 }
 
                 HStack {
-                    Text("timeto.me for ios v" + state.appVersion)
+                    Text("timeto.me for iOS v" + state.appVersion)
                             .foregroundColor(.secondary)
                             .font(.system(size: 16))
                 }

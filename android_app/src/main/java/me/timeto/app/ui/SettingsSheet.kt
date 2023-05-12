@@ -457,7 +457,7 @@ fun SettingsSheet(
                 Row {
 
                     Text(
-                        text = "timeto.me for android v${state.appVersion}",
+                        text = "timeto.me for Android v${state.appVersion}",
                         modifier = Modifier
                             .padding(top = 24.dp)
                             .weight(1f),
