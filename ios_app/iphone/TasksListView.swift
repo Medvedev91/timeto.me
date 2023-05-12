@@ -36,7 +36,7 @@ struct TasksListView: View {
                             Spacer()
 
                             if let tmrwData = state.tmrwData {
-                                let tmrwTasksUI = tmrwData.tasksUI
+                                let tmrwTasksUI = tmrwData.tasksUI.reversed()
                                 ForEach(tmrwTasksUI, id: \.task.id) { taskUI in
                                     let isFirst = tmrwTasksUI.first == taskUI
                                     let isLast = tmrwTasksUI.last == taskUI
