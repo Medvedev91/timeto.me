@@ -133,14 +133,15 @@ fun ColorPickerSheet(
 
             Row(
                 modifier = Modifier
-                    .padding(horizontal = 22.dp, vertical = 8.dp)
-                    .clip(MySquircleShape())
-                    .fillMaxWidth()
+                    .align(Alignment.CenterHorizontally)
+                    .padding(vertical = 8.dp)
+                    .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
+                    .clip(RoundedCornerShape(99.dp))
                     .background(Color(state.r.toInt(), state.g.toInt(), state.b.toInt()))
                     .clickable {
                         vm.toggleIsRgbSlidersShowed()
                     }
-                    .padding(horizontal = 12.dp, vertical = 8.dp),
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.Center,
             ) {
 
@@ -155,7 +156,7 @@ fun ColorPickerSheet(
                 visible = state.isRgbSlidersShowed,
             ) {
                 Column(
-                    modifier = Modifier.padding(top = 4.dp)
+                    modifier = Modifier.padding(top = 2.dp)
                 ) {
                     ColorSlider(state.r, c.red) { vm.upR(it) }
                     ColorSlider(state.g, c.green) { vm.upG(it) }
