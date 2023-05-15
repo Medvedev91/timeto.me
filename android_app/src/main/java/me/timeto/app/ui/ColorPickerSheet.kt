@@ -1,8 +1,6 @@
 package me.timeto.app.ui
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -152,7 +150,7 @@ fun ColorPickerSheet(
 
                 Text(
                     text = state.text,
-                    color = animateColorAsState(state.textColor.toColor()).value,
+                    color = state.textColor.toColor(),
                     fontSize = 15.sp,
                 )
             }
