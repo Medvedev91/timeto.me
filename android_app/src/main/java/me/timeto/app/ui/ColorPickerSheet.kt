@@ -1,6 +1,10 @@
 package me.timeto.app.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -175,6 +179,8 @@ fun ColorPickerSheet(
 
             AnimatedVisibility(
                 visible = state.isRgbSlidersShowed,
+                enter = expandVertically(spring(stiffness = Spring.StiffnessMedium)),
+                exit = shrinkVertically(spring(stiffness = Spring.StiffnessMedium)),
             ) {
                 Column(
                     modifier = Modifier.padding(top = 2.dp)
