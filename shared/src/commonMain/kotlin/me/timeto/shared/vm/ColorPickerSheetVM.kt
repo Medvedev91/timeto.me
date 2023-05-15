@@ -24,7 +24,7 @@ class ColorPickerSheetVM(
         val isRgbSlidersShowed: Boolean,
         val activityUIGroups: List<List<ActivityUI>>,
     ) {
-        val doneTitle = "Done"
+        val doneTitle = "Save"
 
         val circlesInRow = CIRCLES_IN_ROW
 
