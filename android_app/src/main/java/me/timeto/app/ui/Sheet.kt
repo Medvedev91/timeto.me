@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -78,6 +79,7 @@ object Sheet {
         doneText: String,
         isDoneEnabled: Boolean?, // null - hidden
         scrollToHeader: Int,
+        maxLines: Int = Int.MAX_VALUE,
         onDone: () -> Unit,
     ) {
 
@@ -116,6 +118,8 @@ object Sheet {
                         .weight(1f),
                     fontSize = 22.sp,
                     fontWeight = FontWeight.W500,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = maxLines,
                     color = c.text,
                     textAlign = TextAlign.Center,
                 )
