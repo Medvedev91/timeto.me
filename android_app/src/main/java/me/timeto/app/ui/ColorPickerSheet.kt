@@ -2,6 +2,7 @@ package me.timeto.app.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -175,7 +176,7 @@ private fun ColorSlider(
     onChange: (Float) -> Unit,
 ) {
     Slider(
-        value = value,
+        value = animateFloatAsState(value).value,
         onValueChange = { onChange(it) },
         modifier = Modifier.padding(horizontal = 16.dp),
         valueRange = 0f..255f,
