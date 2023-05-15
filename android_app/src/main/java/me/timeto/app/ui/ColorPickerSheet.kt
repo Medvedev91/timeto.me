@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import me.timeto.app.onePx
 import me.timeto.app.rememberVM
 import me.timeto.app.toColor
 import me.timeto.shared.ColorRgba
@@ -72,7 +73,7 @@ fun ColorPickerSheet(
                                         Modifier
                                             .padding(vertical = 4.dp)
                                             .size(40.dp)
-                                            .border(1.dp, c.text.copy(0.1f), RoundedCornerShape(99.dp))
+                                            .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
                                             .clip(RoundedCornerShape(99.dp))
                                             // todo remember map colorGroups for color.toColor() ?
                                             .background(colorRgba.toColor())
@@ -106,7 +107,7 @@ fun ColorPickerSheet(
                                     Modifier
                                         .padding(vertical = 4.dp)
                                         .size(40.dp)
-                                        .border(1.dp, c.text.copy(0.1f), RoundedCornerShape(99.dp))
+                                        .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
                                         .clip(RoundedCornerShape(99.dp))
                                         // todo remember map colorGroups for color.toColor() ?
                                         .background(activityUI.colorRgba.toColor())
