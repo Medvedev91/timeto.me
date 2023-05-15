@@ -30,6 +30,8 @@ class ColorPickerSheetVM(
         val rgbText = "RGB: ${r.toInt()},${g.toInt()},${b.toInt()}"
         val colorGroups = mdColors.chunked(CIRCLES_IN_ROW)
 
+        val textColor = if (listOf(r, g, b).average() < 180) ColorRgba.white else ColorRgba(80, 80, 80)
+
         fun getSelectedColor() = ColorRgba(r.toInt(), g.toInt(), b.toInt())
     }
 
