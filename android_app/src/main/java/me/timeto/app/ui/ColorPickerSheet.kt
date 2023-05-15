@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Slider
@@ -39,12 +40,14 @@ fun ColorPickerSheet(
             .background(c.background2)
     ) {
 
+        val scrollState = rememberLazyListState()
+
         Sheet.HeaderView(
             onCancel = { layer.close() },
             title = state.headerTitle,
             doneText = state.doneTitle,
             isDoneEnabled = true,
-            scrollToHeader = 99,
+            scrollToHeader = if (scrollState.canScrollBackward) 99 else 0,
             maxLines = 1,
         ) {
             onPick(state.getSelectedColor())
@@ -61,6 +64,7 @@ fun ColorPickerSheet(
             LazyColumn(
                 modifier = Modifier
                     .weight(1f),
+                state = scrollState,
                 contentPadding = PaddingValues(horizontal = circlesListHPadding, vertical = 8.dp)
             ) {
                 state.colorGroups.forEach { colors ->
