@@ -52,10 +52,12 @@ fun ColorPickerSheet(
                 .navigationBarsPadding()
         ) {
 
+            val circlesListHPadding = 15.dp
+
             LazyColumn(
                 modifier = Modifier
                     .weight(1f),
-                contentPadding = PaddingValues(horizontal = 15.dp, vertical = 8.dp)
+                contentPadding = PaddingValues(horizontal = circlesListHPadding, vertical = 8.dp)
             ) {
                 state.colorGroups.forEach { colors ->
                     item {
@@ -87,10 +89,50 @@ fun ColorPickerSheet(
 
             Divider()
 
+            Column(
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .padding(horizontal = circlesListHPadding),
+            ) {
+                state.activityUIGroups.forEach { activitiesUI ->
+                    Row {
+                        activitiesUI.forEach { activityUI ->
+                            Box(
+                                Modifier
+                                    .weight(1f),
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                Box(
+                                    Modifier
+                                        .padding(vertical = 4.dp)
+                                        .size(40.dp)
+                                        .border(1.dp, c.text.copy(0.1f), RoundedCornerShape(99.dp))
+                                        .clip(RoundedCornerShape(99.dp))
+                                        // todo remember map colorGroups for color.toColor() ?
+                                        .background(activityUI.colorRgba.toColor())
+                                        .clickable {
+                                            vm.upColorRgba(activityUI.colorRgba)
+                                        },
+                                    contentAlignment = Alignment.Center,
+                                ) {
+                                    Text(
+                                        text = activityUI.emoji,
+                                        fontSize = 18.sp,
+                                    )
+                                }
+                            }
+                        }
+
+                        val emptyCircles = state.circlesInRow - activitiesUI.size
+                        if (emptyCircles > 0)
+                            Box(Modifier.weight(emptyCircles.toFloat()))
+                    }
+                }
+            }
+
             Row(
                 modifier = Modifier
-                    .padding(horizontal = 22.dp)
-                    .padding(top = 16.dp, bottom = 8.dp)
+                    .padding(horizontal = 22.dp, vertical = 8.dp)
                     .clip(MySquircleShape())
                     .fillMaxWidth()
                     .background(Color(state.r.toInt(), state.g.toInt(), state.b.toInt()))
