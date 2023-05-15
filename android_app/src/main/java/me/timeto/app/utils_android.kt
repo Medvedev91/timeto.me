@@ -11,6 +11,7 @@ import android.os.Vibrator
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import me.timeto.app.ui.c
 import me.timeto.shared.*
 import me.timeto.shared.vm.__VM
@@ -24,6 +25,7 @@ private val density by lazy { Resources.getSystem().displayMetrics.density }
 fun dpToPx(dp: Float) = (dp * density).toInt()
 fun pxToDp(px: Int) = (px / density)
 fun pxToDp(px: Float) = (px / density)
+val onePx = pxToDp(1).dp
 
 fun Dp.max(dp: Dp) = if (this > dp) this else dp
 fun Dp.min(dp: Dp) = if (this < dp) this else dp
