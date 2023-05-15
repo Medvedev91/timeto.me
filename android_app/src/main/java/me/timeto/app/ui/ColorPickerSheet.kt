@@ -178,7 +178,7 @@ private fun ColorSlider(
     onChange: (Float) -> Unit,
 ) {
     Slider(
-        value = animateFloatAsState(value).value,
+        value = value, // Animation works bad with manual slide
         onValueChange = { onChange(it) },
         modifier = Modifier.padding(horizontal = 16.dp),
         valueRange = 0f..255f,
