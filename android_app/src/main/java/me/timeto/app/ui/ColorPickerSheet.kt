@@ -1,5 +1,6 @@
 package me.timeto.app.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -88,11 +89,14 @@ fun ColorPickerSheet(
 
             Row(
                 modifier = Modifier
-                    .padding(horizontal = 24.dp)
+                    .padding(horizontal = 22.dp)
                     .padding(top = 16.dp, bottom = 8.dp)
                     .clip(MySquircleShape())
                     .fillMaxWidth()
                     .background(Color(state.r.toInt(), state.g.toInt(), state.b.toInt()))
+                    .clickable {
+                        vm.toggleIsRgbSlidersShowed()
+                    }
                     .padding(horizontal = 12.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.Center,
             ) {
@@ -104,9 +108,17 @@ fun ColorPickerSheet(
                 )
             }
 
-            ColorSlider(state.r, c.red) { vm.upR(it) }
-            ColorSlider(state.g, c.green) { vm.upG(it) }
-            ColorSlider(state.b, c.blue) { vm.upB(it) }
+            AnimatedVisibility(
+                visible = state.isRgbSlidersShowed,
+            ) {
+                Column(
+                    modifier = Modifier.padding(top = 4.dp)
+                ) {
+                    ColorSlider(state.r, c.red) { vm.upR(it) }
+                    ColorSlider(state.g, c.green) { vm.upG(it) }
+                    ColorSlider(state.b, c.blue) { vm.upB(it) }
+                }
+            }
         }
     }
 }
@@ -120,7 +132,7 @@ private fun ColorSlider(
     Slider(
         value = value,
         onValueChange = { onChange(it) },
-        modifier = Modifier.padding(horizontal = 2.dp),
+        modifier = Modifier.padding(horizontal = 16.dp),
         valueRange = 0f..255f,
         colors = SliderDefaults.colors(
             thumbColor = color,
