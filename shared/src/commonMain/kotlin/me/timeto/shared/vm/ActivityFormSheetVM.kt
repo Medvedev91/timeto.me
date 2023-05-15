@@ -26,6 +26,7 @@ class ActivityFormSheetVM(
         val emojiTitle = "Unique Emoji"
         val emojiNotSelected = "Not Selected"
         val colorTitle = "Color"
+        val colorPickerSheetHeaderTitle = "${emoji ?: ""}  $inputNameValue".trim()
         val timerHintsHeader = "TIMER HINTS"
         val autoFSTitle = Strings.AUTO_FS_FORM_TITLE
         val timerHintsCustomItems = activityData.timer_hints.custom_list.map { seconds ->

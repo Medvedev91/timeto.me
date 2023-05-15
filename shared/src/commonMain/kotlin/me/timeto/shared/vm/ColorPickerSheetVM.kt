@@ -8,6 +8,7 @@ private const val CIRCLES_IN_ROW = 6
 
 class ColorPickerSheetVM(
     selectedColor: ColorRgba,
+    headerTitle: String,
 ) : __VM<ColorPickerSheetVM.State>() {
 
     class ActivityUI(
@@ -19,10 +20,10 @@ class ColorPickerSheetVM(
         val r: Float,
         val g: Float,
         val b: Float,
+        val headerTitle: String,
         val isRgbSlidersShowed: Boolean,
         val activityUIGroups: List<List<ActivityUI>>,
     ) {
-        val headerTitle = "Color"
         val doneTitle = "Done"
 
         val circlesInRow = CIRCLES_IN_ROW
@@ -40,6 +41,7 @@ class ColorPickerSheetVM(
             r = selectedColor.r.toFloat(),
             g = selectedColor.g.toFloat(),
             b = selectedColor.b.toFloat(),
+            headerTitle = headerTitle,
             isRgbSlidersShowed = false,
             activityUIGroups = DI.activitiesSorted
                 .map { ActivityUI(it.emoji, it.getColorRgba()) }

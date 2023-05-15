@@ -28,10 +28,11 @@ import me.timeto.shared.vm.ColorPickerSheetVM
 fun ColorPickerSheet(
     layer: WrapperView.Layer,
     selectedColor: ColorRgba,
+    headerTitle: String,
     onPick: (ColorRgba) -> Unit,
 ) {
 
-    val (vm, state) = rememberVM { ColorPickerSheetVM(selectedColor) }
+    val (vm, state) = rememberVM { ColorPickerSheetVM(selectedColor, headerTitle) }
 
     Column(
         modifier = Modifier
