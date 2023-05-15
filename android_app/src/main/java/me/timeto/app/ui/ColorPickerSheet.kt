@@ -91,7 +91,7 @@ fun ColorPickerSheet(
                 }
             }
 
-            Divider()
+            Divider(color = c.dividerBackground2)
 
             Column(
                 modifier = Modifier
