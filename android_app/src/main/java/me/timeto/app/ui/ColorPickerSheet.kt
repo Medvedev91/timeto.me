@@ -45,6 +45,7 @@ fun ColorPickerSheet(
             doneText = state.doneTitle,
             isDoneEnabled = true,
             scrollToHeader = 99,
+            maxLines = 1,
         ) {
             onPick(state.getSelectedColor())
             layer.close()
