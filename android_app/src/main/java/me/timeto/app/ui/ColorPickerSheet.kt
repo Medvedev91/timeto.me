@@ -2,6 +2,7 @@ package me.timeto.app.ui
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Slider
@@ -34,14 +35,12 @@ fun ColorPickerSheet(
             .background(c.background2)
     ) {
 
-        val scrollState = rememberScrollState()
-
         Sheet.HeaderView(
             onCancel = { layer.close() },
             title = state.headerTitle,
             doneText = state.doneTitle,
             isDoneEnabled = true,
-            scrollToHeader = scrollState.value,
+            scrollToHeader = 99,
         ) {
             onPick(state.getSelectedColor())
             layer.close()
@@ -52,27 +51,20 @@ fun ColorPickerSheet(
                 .navigationBarsPadding()
         ) {
 
-            Column(
+            LazyColumn(
                 modifier = Modifier
-                    .verticalScroll(
-                        state = scrollState
-                    )
-                    .weight(1f)
+                    .weight(1f),
+                contentPadding = PaddingValues(horizontal = 15.dp, vertical = 8.dp)
             ) {
-
-                Row(Modifier.height(8.dp)) {}
-
-                state.colorGroups.forEach { colorGroup ->
-                    Row(
-                        modifier = Modifier
-                            .padding(horizontal = 18.dp)
-                    ) {
-                        colorGroup.forEach { colors ->
-                            Column(
-                                modifier = Modifier.weight(1f),
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                            ) {
-                                colors.forEach { colorRgba ->
+                state.colorGroups.forEach { colors ->
+                    item {
+                        Row {
+                            colors.forEach { colorRgba ->
+                                Box(
+                                    Modifier
+                                        .weight(1f),
+                                    contentAlignment = Alignment.Center,
+                                ) {
                                     Box(
                                         Modifier
                                             .padding(vertical = 4.dp)
@@ -90,8 +82,6 @@ fun ColorPickerSheet(
                         }
                     }
                 }
-
-                Box(Modifier.size(8.dp))
             }
 
             Divider()
