@@ -8,7 +8,7 @@ private const val CIRCLES_IN_ROW = 6
 
 class ColorPickerSheetVM(
     selectedColor: ColorRgba,
-    headerTitle: String,
+    text: String,
 ) : __VM<ColorPickerSheetVM.State>() {
 
     class ActivityUI(
@@ -20,15 +20,16 @@ class ColorPickerSheetVM(
         val r: Float,
         val g: Float,
         val b: Float,
-        val headerTitle: String,
+        val text: String,
         val isRgbSlidersShowed: Boolean,
         val activityUIGroups: List<List<ActivityUI>>,
     ) {
+        val headerTitle = "Color"
         val doneTitle = "Save"
 
         val circlesInRow = CIRCLES_IN_ROW
 
-        val rgbText = "RGB: ${r.toInt()},${g.toInt()},${b.toInt()}"
+        val rgbText = "RGB: ${r.toInt()}, ${g.toInt()}, ${b.toInt()}"
         val colorGroups = mdColors.chunked(CIRCLES_IN_ROW)
 
         val textColor = if (listOf(r, g, b).average() < 180) ColorRgba.white else ColorRgba(80, 80, 80)
@@ -41,7 +42,7 @@ class ColorPickerSheetVM(
             r = selectedColor.r.toFloat(),
             g = selectedColor.g.toFloat(),
             b = selectedColor.b.toFloat(),
-            headerTitle = headerTitle,
+            text = text,
             isRgbSlidersShowed = false,
             activityUIGroups = DI.activitiesSorted
                 .map { ActivityUI(it.emoji, it.getColorRgba()) }

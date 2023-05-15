@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.onePx
@@ -28,11 +29,11 @@ import me.timeto.shared.vm.ColorPickerSheetVM
 fun ColorPickerSheet(
     layer: WrapperView.Layer,
     selectedColor: ColorRgba,
-    headerTitle: String,
+    text: String,
     onPick: (ColorRgba) -> Unit,
 ) {
 
-    val (vm, state) = rememberVM { ColorPickerSheetVM(selectedColor, headerTitle) }
+    val (vm, state) = rememberVM { ColorPickerSheetVM(selectedColor, text) }
 
     Column(
         modifier = Modifier
@@ -135,7 +136,7 @@ fun ColorPickerSheet(
                 }
             }
 
-            Row(
+            Column(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(vertical = 8.dp)
@@ -146,15 +147,29 @@ fun ColorPickerSheet(
                         vm.toggleIsRgbSlidersShowed()
                     }
                     .padding(horizontal = 16.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
                 Text(
-                    text = state.rgbText,
+                    text = state.text,
                     color = animateColorAsState(state.textColor.toColor()).value,
                     fontSize = 15.sp,
                 )
             }
+
+            Text(
+                text = state.rgbText,
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .clip(MySquircleShape())
+                    .clickable {
+                        vm.toggleIsRgbSlidersShowed()
+                    }
+                    .padding(horizontal = 6.dp, vertical = 3.dp),
+                color = c.blue,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Light,
+            )
 
             AnimatedVisibility(
                 visible = state.isRgbSlidersShowed,
