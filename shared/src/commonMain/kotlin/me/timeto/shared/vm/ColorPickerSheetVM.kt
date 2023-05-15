@@ -17,6 +17,7 @@ class ColorPickerSheetVM(
         val r: Float,
         val g: Float,
         val b: Float,
+        val isRgbSlidersShowed: Boolean,
         val activitiesUI: List<ActivityUI>,
     ) {
         val headerTitle = "Color"
@@ -33,6 +34,7 @@ class ColorPickerSheetVM(
             r = selectedColor.r.toFloat(),
             g = selectedColor.g.toFloat(),
             b = selectedColor.b.toFloat(),
+            isRgbSlidersShowed = false,
             activitiesUI = DI.activitiesSorted.map { ActivityUI(it.emoji, it.getColorRgba()) },
         )
     )
@@ -49,6 +51,10 @@ class ColorPickerSheetVM(
                 b = colorRgba.b.toFloat(),
             )
         }
+    }
+
+    fun toggleIsRgbSlidersShowed() {
+        state.update { it.copy(isRgbSlidersShowed = !it.isRgbSlidersShowed) }
     }
 }
 
