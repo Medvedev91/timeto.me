@@ -4,6 +4,8 @@ import kotlinx.coroutines.flow.*
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.DI
 
+private const val CIRCLES_IN_ROW = 6
+
 class ColorPickerSheetVM(
     selectedColor: ColorRgba,
 ) : __VM<ColorPickerSheetVM.State>() {
@@ -18,13 +20,15 @@ class ColorPickerSheetVM(
         val g: Float,
         val b: Float,
         val isRgbSlidersShowed: Boolean,
-        val activitiesUI: List<ActivityUI>,
+        val activityUIGroups: List<List<ActivityUI>>,
     ) {
         val headerTitle = "Color"
         val doneTitle = "Done"
 
+        val circlesInRow = CIRCLES_IN_ROW
+
         val rgbText = "RGB: ${r.toInt()},${g.toInt()},${b.toInt()}"
-        val colorGroups = mdColors.chunked(6)
+        val colorGroups = mdColors.chunked(CIRCLES_IN_ROW)
 
         fun getSelectedColor() = ColorRgba(r.toInt(), g.toInt(), b.toInt())
     }
@@ -35,7 +39,9 @@ class ColorPickerSheetVM(
             g = selectedColor.g.toFloat(),
             b = selectedColor.b.toFloat(),
             isRgbSlidersShowed = false,
-            activitiesUI = DI.activitiesSorted.map { ActivityUI(it.emoji, it.getColorRgba()) },
+            activityUIGroups = DI.activitiesSorted
+                .map { ActivityUI(it.emoji, it.getColorRgba()) }
+                .chunked(CIRCLES_IN_ROW),
         )
     )
 
