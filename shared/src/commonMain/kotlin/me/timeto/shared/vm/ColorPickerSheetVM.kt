@@ -2,15 +2,22 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.ColorRgba
+import me.timeto.shared.DI
 
 class ColorPickerSheetVM(
     selectedColor: ColorRgba,
 ) : __VM<ColorPickerSheetVM.State>() {
 
+    class ActivityUI(
+        val emoji: String,
+        val colorRgba: ColorRgba,
+    )
+
     data class State(
         val r: Float,
         val g: Float,
         val b: Float,
+        val activitiesUI: List<ActivityUI>,
     ) {
         val headerTitle = "Color"
         val doneTitle = "Done"
@@ -26,6 +33,7 @@ class ColorPickerSheetVM(
             r = selectedColor.r.toFloat(),
             g = selectedColor.g.toFloat(),
             b = selectedColor.b.toFloat(),
+            activitiesUI = DI.activitiesSorted.map { ActivityUI(it.emoji, it.getColorRgba()) },
         )
     )
 
