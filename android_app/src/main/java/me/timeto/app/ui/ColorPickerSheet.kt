@@ -142,10 +142,11 @@ fun ColorPickerSheet(
                 }
             }
 
-            Column(
+            Text(
+                text = state.text,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
-                    .padding(vertical = 8.dp)
+                    .padding(top = 8.dp, bottom = 6.dp)
                     .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
                     .clip(RoundedCornerShape(99.dp))
                     .background(Color(state.r.toInt(), state.g.toInt(), state.b.toInt()))
@@ -153,15 +154,9 @@ fun ColorPickerSheet(
                         vm.toggleIsRgbSlidersShowed()
                     }
                     .padding(horizontal = 16.dp, vertical = 8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-
-                Text(
-                    text = state.text,
-                    color = state.textColor.toColor(),
-                    fontSize = 15.sp,
-                )
-            }
+                color = state.textColor.toColor(),
+                fontSize = 15.sp,
+            )
 
             Text(
                 text = state.rgbText,
