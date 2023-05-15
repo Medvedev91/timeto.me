@@ -23,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -109,16 +110,15 @@ object Sheet {
                     fontSize = 17.sp,
                 )
 
-                SpacerW1()
-
                 Text(
-                    title,
+                    text = title,
+                    modifier = Modifier
+                        .weight(1f),
                     fontSize = 22.sp,
                     fontWeight = FontWeight.W500,
-                    color = c.text
+                    color = c.text,
+                    textAlign = TextAlign.Center,
                 )
-
-                SpacerW1()
 
                 Text(
                     doneText,
