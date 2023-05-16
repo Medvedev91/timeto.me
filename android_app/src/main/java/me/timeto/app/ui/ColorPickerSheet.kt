@@ -17,9 +17,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import me.timeto.app.R
 import me.timeto.app.onePx
 import me.timeto.app.rememberVM
 import me.timeto.app.toColor
@@ -132,14 +134,28 @@ fun ColorPickerSheet(
                                     .clip(RoundedCornerShape(99.dp))
                                     .background(colorHint.colorRgba.toColor())
                                     .clickable {
-                                        vm.upColorRgba(colorHint.colorRgba)
+                                        if (colorHint.emoji != null)
+                                            vm.upColorRgba(colorHint.colorRgba)
+                                        else
+                                            vm.toggleIsRgbSlidersShowed()
                                     },
                                 contentAlignment = Alignment.Center,
                             ) {
-                                Text(
-                                    text = colorHint.emoji,
-                                    fontSize = 16.sp,
-                                )
+                                val emoji = colorHint.emoji
+                                if (emoji != null)
+                                    Text(
+                                        text = emoji,
+                                        fontSize = 16.sp,
+                                    )
+                                else {
+                                    Icon(
+                                        painterResource(id = R.drawable.sf_slider_horizontal_3_medium_medium),
+                                        contentDescription = "RGB Picker",
+                                        modifier = Modifier
+                                            .size(16.dp),
+                                        tint = c.white,
+                                    )
+                                }
                             }
                         }
 
@@ -151,44 +167,23 @@ fun ColorPickerSheet(
                 }
             }
 
-            Text(
-                text = state.text,
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(top = 8.dp, bottom = 2.dp)
-                    .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
-                    .clip(RoundedCornerShape(99.dp))
-                    .background(Color(state.r.toInt(), state.g.toInt(), state.b.toInt()))
-                    .clickable {
-                        vm.toggleIsRgbSlidersShowed()
-                    }
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                color = state.textColor.toColor(),
-                fontSize = 15.sp,
-            )
-
-            Text(
-                text = state.rgbText,
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .clip(MySquircleShape())
-                    .clickable {
-                        vm.toggleIsRgbSlidersShowed()
-                    }
-                    .padding(horizontal = 6.dp, vertical = 3.dp),
-                color = c.blue,
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Light,
-            )
-
             AnimatedVisibility(
                 visible = state.isRgbSlidersShowed,
                 enter = expandVertically(spring(stiffness = Spring.StiffnessMedium)),
                 exit = shrinkVertically(spring(stiffness = Spring.StiffnessMedium)),
             ) {
-                Column(
-                    modifier = Modifier.padding(top = 2.dp)
-                ) {
+                Column {
+
+                    Text(
+                        text = state.rgbText,
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(top = 20.dp, bottom = 4.dp),
+                        color = c.blue,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Light,
+                    )
+
                     ColorSlider(state.r, c.red, state.isRgbSlidersAnimated) { vm.upR(it) }
                     ColorSlider(state.g, c.green, state.isRgbSlidersAnimated) { vm.upG(it) }
                     ColorSlider(state.b, c.blue, state.isRgbSlidersAnimated) { vm.upB(it) }

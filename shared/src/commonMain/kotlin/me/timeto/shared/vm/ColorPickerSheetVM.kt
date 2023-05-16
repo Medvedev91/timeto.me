@@ -53,6 +53,8 @@ class ColorPickerSheetVM(
 
         val colorHintGroups = DI.activitiesSorted
             .map { ColorHint(it.emoji, it.getColorRgba()) }
+            .toMutableList()
+            .apply { add(ColorHint(null, ColorRgba(r.toInt(), g.toInt(), b.toInt()))) }
             .chunked(CIRCLES_IN_ROW)
 
         val textColor = if (listOf(r, g, b).average() < 180) ColorRgba.white else ColorRgba(80, 80, 80)
