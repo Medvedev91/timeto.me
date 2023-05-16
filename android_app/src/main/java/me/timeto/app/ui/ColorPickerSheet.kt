@@ -1,11 +1,9 @@
 package me.timeto.app.ui
 
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -91,16 +89,24 @@ fun ColorPickerSheet(
                                                 vm.upColorRgba(colorItem.colorRgba)
                                             }
                                     ) {
-
-                                        if (colorItem.isSelected)
-                                            Icon(
-                                                Icons.Rounded.Done,
-                                                contentDescription = "Selected",
-                                                modifier = Modifier
-                                                    .align(Alignment.Center)
-                                                    .size(24.dp, 24.dp),
-                                                tint = c.white,
-                                            )
+                                        Column(
+                                            modifier = Modifier
+                                                .align(Alignment.Center)
+                                        ) {
+                                            AnimatedVisibility(
+                                                visible = colorItem.isSelected,
+                                                enter = fadeIn(),
+                                                exit = fadeOut(),
+                                            ) {
+                                                Icon(
+                                                    Icons.Rounded.Done,
+                                                    contentDescription = "Selected",
+                                                    modifier = Modifier
+                                                        .size(24.dp, 24.dp),
+                                                    tint = c.white,
+                                                )
+                                            }
+                                        }
                                     }
                                 }
                             }
