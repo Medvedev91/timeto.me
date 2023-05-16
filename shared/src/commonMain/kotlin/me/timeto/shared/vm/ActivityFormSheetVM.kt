@@ -42,7 +42,7 @@ class ActivityFormSheetVM(
     override val state = MutableStateFlow(
         State(
             headerTitle = if (activity != null) "Edit Activity" else "New Activity",
-            headerDoneText = if (activity != null) "Done" else "Create",
+            headerDoneText = if (activity != null) "Save" else "Create",
             emoji = activity?.emoji,
             activityData = activity?.getData() ?: ActivityModel__Data.buildDefault(),
             textFeatures = (activity?.name ?: "").textFeatures(),
