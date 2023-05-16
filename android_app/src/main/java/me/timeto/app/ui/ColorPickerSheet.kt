@@ -138,7 +138,7 @@ fun ColorPickerSheet(
                             ) {
                                 Text(
                                     text = activityUI.emoji,
-                                    fontSize = 18.sp,
+                                    fontSize = 16.sp,
                                 )
                             }
                         }
