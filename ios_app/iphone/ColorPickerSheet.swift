@@ -4,11 +4,11 @@ import shared
 struct ColorPickerSheet: View {
 
     @State private var vm: ColorPickerSheetVM
-    @Binding var isPresented: Bool
+    @Binding private var isPresented: Bool
 
-    let selectedColor: ColorRgba
-    let text: String
-    let onPick: (ColorRgba) -> Void
+    private let selectedColor: ColorRgba
+    private let text: String
+    private let onPick: (ColorRgba) -> Void
 
     init(
             isPresented: Binding<Bool>,
