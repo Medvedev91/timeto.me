@@ -34,7 +34,11 @@ class ColorPickerSheetVM(
 
         val circlesInRow = CIRCLES_IN_ROW
 
-        val rgbText = "RGB: ${r.toInt()}, ${g.toInt()}, ${b.toInt()}"
+        val rgbText: String = run {
+            val hex = "#${r.toHex()}${g.toHex()}${b.toHex()}".uppercase()
+            val rgb = "RGB:${r.toInt()},${g.toInt()},${b.toInt()}"
+            if (isRgbSlidersShowed) "$hex / $rgb" else hex
+        }
         val colorGroups: List<List<ColorItem>> = mdColors
             .map {
                 ColorItem(
@@ -47,6 +51,8 @@ class ColorPickerSheetVM(
         val textColor = if (listOf(r, g, b).average() < 180) ColorRgba.white else ColorRgba(80, 80, 80)
 
         fun getSelectedColor() = ColorRgba(r.toInt(), g.toInt(), b.toInt())
+
+        private fun Float.toHex() = toInt().toString(16).padStart(2, '0')
     }
 
     override val state = MutableStateFlow(
