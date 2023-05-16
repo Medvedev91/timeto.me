@@ -105,19 +105,19 @@ object Sheet {
                     "Cancel",
                     modifier = Modifier
                         .align(Alignment.CenterStart)
-                        .padding(start = 16.dp)
+                        .padding(start = 15.dp)
                         .clip(RoundedCornerShape(99.dp))
                         .clickable { onCancel() }
                         .padding(horizontal = 8.dp, vertical = 4.dp),
                     color = c.blue,
-                    fontSize = 17.sp,
+                    fontSize = 16.sp,
                 )
 
                 Text(
                     text = title,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 85.dp),
+                        .padding(start = 85.dp, end = 83.dp),
                     fontSize = 22.sp,
                     fontWeight = FontWeight.W500,
                     overflow = TextOverflow.Ellipsis,
