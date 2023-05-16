@@ -10,6 +10,7 @@ struct ActivityFormSheet: View {
 
     @State private var isAddCustomHintPresented = false
     @State private var isEmojiSheetPresented = false
+    @State private var isColorPickerSheetPresented = false
 
     @State private var sheetHeaderScroll = 0
 
@@ -108,6 +109,35 @@ struct ActivityFormSheet: View {
                                 .sheetEnv(isPresented: $isEmojiSheetPresented) {
                                     SearchEmojiSheet(isPresented: $isEmojiSheetPresented) { emoji in
                                         vm.setEmoji(newEmoji: emoji)
+                                    }
+                                }
+                    }
+
+                    MyListView__ItemView(
+                            isFirst: false,
+                            isLast: false,
+                            withTopDivider: true
+                    ) {
+
+                        MyListView__ItemView__ButtonView(
+                                text: state.colorTitle,
+                                withArrow: false,
+                                rightView: AnyView(
+                                        ColorPickerSheet__ColorCircleView(
+                                                color: state.colorRgba.toColor()
+                                        )
+                                                .padding(.trailing, 8)
+                                )
+                        ) {
+                            isColorPickerSheetPresented = true
+                        }
+                                .sheetEnv(isPresented: $isColorPickerSheetPresented) {
+                                    ColorPickerSheet(
+                                            isPresented: $isColorPickerSheetPresented,
+                                            selectedColor: state.colorRgba,
+                                            text: state.colorPickerSheetText
+                                    ) { colorRgba in
+                                        vm.upColorRgba(colorRgba: colorRgba)
                                     }
                                 }
                     }
