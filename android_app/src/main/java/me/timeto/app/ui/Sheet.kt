@@ -117,7 +117,7 @@ object Sheet {
                     text = title,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 85.dp, end = 83.dp),
+                        .padding(horizontal = 85.dp),
                     fontSize = 22.sp,
                     fontWeight = FontWeight.W500,
                     overflow = TextOverflow.Ellipsis,
