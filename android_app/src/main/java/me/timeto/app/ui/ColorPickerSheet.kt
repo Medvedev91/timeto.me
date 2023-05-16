@@ -156,7 +156,7 @@ fun ColorPickerSheet(
                 text = state.text,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
-                    .padding(top = 5.dp, bottom = 2.dp)
+                    .padding(top = 8.dp, bottom = 2.dp)
                     .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
                     .clip(RoundedCornerShape(99.dp))
                     .background(Color(state.r.toInt(), state.g.toInt(), state.b.toInt()))
