@@ -61,7 +61,7 @@ fun ColorPickerSheet(
                 .navigationBarsPadding()
         ) {
 
-            val circlesListHPadding = 15.dp
+            val circlesListHPadding = 22.dp
 
             LazyColumn(
                 modifier = Modifier
@@ -73,40 +73,35 @@ fun ColorPickerSheet(
                     item {
                         Row {
                             colors.forEach { colorItem ->
-                                Box(
-                                    Modifier
-                                        .weight(1f),
-                                    contentAlignment = Alignment.Center,
+
+                                if (colors.first() != colorItem)
+                                    SpacerW1()
+
+                                Column(
+                                    modifier = Modifier
+                                        .padding(vertical = 4.dp)
+                                        .size(40.dp)
+                                        .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
+                                        .clip(RoundedCornerShape(99.dp))
+                                        .background(colorItem.colorRgba.toColor())
+                                        .clickable {
+                                            vm.upColorRgba(colorItem.colorRgba)
+                                        },
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.Center,
                                 ) {
-                                    Box(
-                                        Modifier
-                                            .padding(vertical = 4.dp)
-                                            .size(40.dp)
-                                            .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
-                                            .clip(RoundedCornerShape(99.dp))
-                                            .background(colorItem.colorRgba.toColor())
-                                            .clickable {
-                                                vm.upColorRgba(colorItem.colorRgba)
-                                            }
+                                    AnimatedVisibility(
+                                        visible = colorItem.isSelected,
+                                        enter = fadeIn(),
+                                        exit = fadeOut(),
                                     ) {
-                                        Column(
+                                        Icon(
+                                            Icons.Rounded.Done,
+                                            contentDescription = "Selected",
                                             modifier = Modifier
-                                                .align(Alignment.Center)
-                                        ) {
-                                            AnimatedVisibility(
-                                                visible = colorItem.isSelected,
-                                                enter = fadeIn(),
-                                                exit = fadeOut(),
-                                            ) {
-                                                Icon(
-                                                    Icons.Rounded.Done,
-                                                    contentDescription = "Selected",
-                                                    modifier = Modifier
-                                                        .size(24.dp, 24.dp),
-                                                    tint = c.white,
-                                                )
-                                            }
-                                        }
+                                                .size(24.dp),
+                                            tint = c.white,
+                                        )
                                     }
                                 }
                             }
@@ -125,34 +120,33 @@ fun ColorPickerSheet(
                 state.activityUIGroups.forEach { activitiesUI ->
                     Row {
                         activitiesUI.forEach { activityUI ->
+
+                            if (activitiesUI.first() != activityUI)
+                                SpacerW1()
+
                             Box(
                                 Modifier
-                                    .weight(1f),
+                                    .padding(vertical = 4.dp)
+                                    .size(40.dp)
+                                    .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
+                                    .clip(RoundedCornerShape(99.dp))
+                                    .background(activityUI.colorRgba.toColor())
+                                    .clickable {
+                                        vm.upColorRgba(activityUI.colorRgba)
+                                    },
                                 contentAlignment = Alignment.Center,
                             ) {
-                                Box(
-                                    Modifier
-                                        .padding(vertical = 4.dp)
-                                        .size(40.dp)
-                                        .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
-                                        .clip(RoundedCornerShape(99.dp))
-                                        .background(activityUI.colorRgba.toColor())
-                                        .clickable {
-                                            vm.upColorRgba(activityUI.colorRgba)
-                                        },
-                                    contentAlignment = Alignment.Center,
-                                ) {
-                                    Text(
-                                        text = activityUI.emoji,
-                                        fontSize = 18.sp,
-                                    )
-                                }
+                                Text(
+                                    text = activityUI.emoji,
+                                    fontSize = 18.sp,
+                                )
                             }
                         }
 
-                        val emptyCircles = state.circlesInRow - activitiesUI.size
-                        if (emptyCircles > 0)
-                            Box(Modifier.weight(emptyCircles.toFloat()))
+                        for (i in 0 until (state.circlesInRow - activitiesUI.size)) {
+                            SpacerW1()
+                            Box(Modifier.width(40.dp))
+                        }
                     }
                 }
             }
