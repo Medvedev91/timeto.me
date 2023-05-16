@@ -8,7 +8,6 @@ private const val CIRCLES_IN_ROW = 6
 
 class ColorPickerSheetVM(
     selectedColor: ColorRgba,
-    text: String,
 ) : __VM<ColorPickerSheetVM.State>() {
 
     class ColorHint(
@@ -28,7 +27,6 @@ class ColorPickerSheetVM(
         val r: Float,
         val g: Float,
         val b: Float,
-        val text: String,
         val isRgbSlidersShowed: Boolean,
         val isRgbSlidersAnimated: Boolean,
     ) {
@@ -57,8 +55,6 @@ class ColorPickerSheetVM(
             .apply { add(ColorHint(null, ColorRgba(r.toInt(), g.toInt(), b.toInt()))) }
             .chunked(CIRCLES_IN_ROW)
 
-        val textColor = if (listOf(r, g, b).average() < 180) ColorRgba.white else ColorRgba(80, 80, 80)
-
         fun getSelectedColor() = ColorRgba(r.toInt(), g.toInt(), b.toInt())
 
         private fun Float.toHex() = toInt().toString(16).padStart(2, '0')
@@ -69,7 +65,6 @@ class ColorPickerSheetVM(
             r = selectedColor.r.toFloat(),
             g = selectedColor.g.toFloat(),
             b = selectedColor.b.toFloat(),
-            text = text,
             isRgbSlidersShowed = false,
             isRgbSlidersAnimated = true,
         )
