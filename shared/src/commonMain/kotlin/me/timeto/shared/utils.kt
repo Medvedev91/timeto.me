@@ -234,6 +234,9 @@ data class ColorRgba(
     }
 
     fun toRgbaString() = "$r,$g,$b,$a"
+
+    fun isEquals(r_: Int, g_: Int, b_: Int, a_: Int) =
+        r == r_ && g == g_ && b == b_ && a == a_
 }
 
 enum class ColorNative {
