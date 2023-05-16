@@ -103,7 +103,7 @@ fun ColorPickerSheet(
 
             Column(
                 modifier = Modifier
-                    .padding(top = 8.dp)
+                    .padding(top = 4.dp)
                     .padding(horizontal = circlesListHPadding),
             ) {
                 state.activityUIGroups.forEach { activitiesUI ->
@@ -146,7 +146,7 @@ fun ColorPickerSheet(
                 text = state.text,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
-                    .padding(top = 8.dp, bottom = 6.dp)
+                    .padding(top = 5.dp, bottom = 2.dp)
                     .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
                     .clip(RoundedCornerShape(99.dp))
                     .background(Color(state.r.toInt(), state.g.toInt(), state.b.toInt()))
