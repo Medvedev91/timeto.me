@@ -36,11 +36,12 @@ struct ColorPickerSheet: View {
 struct ColorPickerSheet__ColorCircleView: View {
 
     let color: Color
+    let size: CGFloat
 
     var body: some View {
         Circle()
                 .strokeBorder(Color(UIColor.lightGray), lineWidth: onePx)
-                .frame(width: 32, height: 32)
+                .frame(width: size, height: size)
                 .background(Circle().foregroundColor(color))
     }
 }

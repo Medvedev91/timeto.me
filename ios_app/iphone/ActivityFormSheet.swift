@@ -124,7 +124,8 @@ struct ActivityFormSheet: View {
                                 withArrow: false,
                                 rightView: AnyView(
                                         ColorPickerSheet__ColorCircleView(
-                                                color: state.colorRgba.toColor()
+                                                color: state.colorRgba.toColor(),
+                                                size: 32
                                         )
                                                 .padding(.trailing, 8)
                                 )
