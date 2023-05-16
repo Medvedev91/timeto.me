@@ -21,12 +21,16 @@ class ColorPickerSheetVM(
         val isSelected: Boolean,
     )
 
+    /**
+     * TRICK Up isRgbSlidersAnimated on rgb change
+     */
     data class State(
         val r: Float,
         val g: Float,
         val b: Float,
         val text: String,
         val isRgbSlidersShowed: Boolean,
+        val isRgbSlidersAnimated: Boolean,
         val activityUIGroups: List<List<ActivityUI>>,
     ) {
         val headerTitle = "Color"
@@ -62,15 +66,16 @@ class ColorPickerSheetVM(
             b = selectedColor.b.toFloat(),
             text = text,
             isRgbSlidersShowed = false,
+            isRgbSlidersAnimated = true,
             activityUIGroups = DI.activitiesSorted
                 .map { ActivityUI(it.emoji, it.getColorRgba()) }
                 .chunked(CIRCLES_IN_ROW),
         )
     )
 
-    fun upR(r: Float): Unit = state.update { it.copy(r = r) }
-    fun upG(g: Float): Unit = state.update { it.copy(g = g) }
-    fun upB(b: Float): Unit = state.update { it.copy(b = b) }
+    fun upR(r: Float): Unit = state.update { it.copy(r = r, isRgbSlidersAnimated = false) }
+    fun upG(g: Float): Unit = state.update { it.copy(g = g, isRgbSlidersAnimated = false) }
+    fun upB(b: Float): Unit = state.update { it.copy(b = b, isRgbSlidersAnimated = false) }
 
     fun upColorRgba(colorRgba: ColorRgba) {
         state.update {
@@ -78,6 +83,7 @@ class ColorPickerSheetVM(
                 r = colorRgba.r.toFloat(),
                 g = colorRgba.g.toFloat(),
                 b = colorRgba.b.toFloat(),
+                isRgbSlidersAnimated = true,
             )
         }
     }

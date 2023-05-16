@@ -2,6 +2,7 @@ package me.timeto.app.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
@@ -189,9 +190,9 @@ fun ColorPickerSheet(
                 Column(
                     modifier = Modifier.padding(top = 2.dp)
                 ) {
-                    ColorSlider(state.r, c.red) { vm.upR(it) }
-                    ColorSlider(state.g, c.green) { vm.upG(it) }
-                    ColorSlider(state.b, c.blue) { vm.upB(it) }
+                    ColorSlider(state.r, c.red, state.isRgbSlidersAnimated) { vm.upR(it) }
+                    ColorSlider(state.g, c.green, state.isRgbSlidersAnimated) { vm.upG(it) }
+                    ColorSlider(state.b, c.blue, state.isRgbSlidersAnimated) { vm.upB(it) }
                 }
             }
         }
@@ -202,10 +203,13 @@ fun ColorPickerSheet(
 private fun ColorSlider(
     value: Float,
     color: Color,
+    isAnimated: Boolean,
     onChange: (Float) -> Unit,
 ) {
+    val animatedValue = animateFloatAsState(value)
     Slider(
-        value = value, // Animation works bad with manual slide
+        // Animation works bad with manual slide
+        value = if (isAnimated) animatedValue.value else value,
         onValueChange = { onChange(it) },
         modifier = Modifier.padding(horizontal = 16.dp),
         valueRange = 0f..255f,
