@@ -10,10 +10,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
-import androidx.compose.material.Slider
-import androidx.compose.material.SliderDefaults
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Done
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -74,7 +73,7 @@ fun ColorPickerSheet(
                 state.colorGroups.forEach { colors ->
                     item {
                         Row {
-                            colors.forEach { colorRgba ->
+                            colors.forEach { colorItem ->
                                 Box(
                                     Modifier
                                         .weight(1f),
@@ -87,11 +86,22 @@ fun ColorPickerSheet(
                                             .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
                                             .clip(RoundedCornerShape(99.dp))
                                             // todo remember map colorGroups for color.toColor() ?
-                                            .background(colorRgba.toColor())
+                                            .background(colorItem.colorRgba.toColor())
                                             .clickable {
-                                                vm.upColorRgba(colorRgba)
+                                                vm.upColorRgba(colorItem.colorRgba)
                                             }
-                                    )
+                                    ) {
+
+                                        if (colorItem.isSelected)
+                                            Icon(
+                                                Icons.Rounded.Done,
+                                                contentDescription = "Selected",
+                                                modifier = Modifier
+                                                    .align(Alignment.Center)
+                                                    .size(24.dp, 24.dp),
+                                                tint = c.white,
+                                            )
+                                    }
                                 }
                             }
                         }

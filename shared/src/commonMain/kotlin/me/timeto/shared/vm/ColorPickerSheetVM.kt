@@ -16,6 +16,11 @@ class ColorPickerSheetVM(
         val colorRgba: ColorRgba,
     )
 
+    class ColorItem(
+        val colorRgba: ColorRgba,
+        val isSelected: Boolean,
+    )
+
     data class State(
         val r: Float,
         val g: Float,
@@ -30,7 +35,14 @@ class ColorPickerSheetVM(
         val circlesInRow = CIRCLES_IN_ROW
 
         val rgbText = "RGB: ${r.toInt()}, ${g.toInt()}, ${b.toInt()}"
-        val colorGroups = mdColors.chunked(CIRCLES_IN_ROW)
+        val colorGroups: List<List<ColorItem>> = mdColors
+            .map {
+                ColorItem(
+                    colorRgba = it,
+                    isSelected = it.isEquals(r.toInt(), g.toInt(), b.toInt(), 255),
+                )
+            }
+            .chunked(CIRCLES_IN_ROW)
 
         val textColor = if (listOf(r, g, b).average() < 180) ColorRgba.white else ColorRgba(80, 80, 80)
 
