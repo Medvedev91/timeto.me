@@ -25,7 +25,7 @@ class ColorPickerSheetVM(
         val activityUIGroups: List<List<ActivityUI>>,
     ) {
         val headerTitle = "Color"
-        val doneTitle = "Save"
+        val doneTitle = "Done"
 
         val circlesInRow = CIRCLES_IN_ROW
 
