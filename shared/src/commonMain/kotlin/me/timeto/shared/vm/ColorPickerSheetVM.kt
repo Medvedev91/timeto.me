@@ -12,7 +12,7 @@ class ColorPickerSheetVM(
 ) : __VM<ColorPickerSheetVM.State>() {
 
     class ColorHint(
-        val emoji: String,
+        val emoji: String?, // null - config icon
         val colorRgba: ColorRgba,
     )
 
