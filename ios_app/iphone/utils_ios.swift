@@ -7,6 +7,8 @@ import shared
 let DEF_LIST_H_PADDING = 16.0
 let DEF_LIST_V_PADDING = 12.0
 
+let onePx = 1 / UIScreen.main.scale
+
 func hideKeyboard() {
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
 }
