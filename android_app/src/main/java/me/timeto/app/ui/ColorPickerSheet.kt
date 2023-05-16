@@ -130,7 +130,6 @@ fun ColorPickerSheet(
                                         .size(40.dp)
                                         .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
                                         .clip(RoundedCornerShape(99.dp))
-                                        // todo remember map colorGroups for color.toColor() ?
                                         .background(activityUI.colorRgba.toColor())
                                         .clickable {
                                             vm.upColorRgba(activityUI.colorRgba)
