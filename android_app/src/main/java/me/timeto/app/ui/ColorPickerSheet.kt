@@ -168,7 +168,7 @@ fun ColorPickerSheet(
                     }
                     .padding(horizontal = 6.dp, vertical = 3.dp),
                 color = c.blue,
-                fontSize = 14.sp,
+                fontSize = 12.sp,
                 fontWeight = FontWeight.Light,
             )
 
