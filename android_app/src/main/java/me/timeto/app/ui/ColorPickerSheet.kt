@@ -117,11 +117,11 @@ fun ColorPickerSheet(
                     .padding(top = 4.dp)
                     .padding(horizontal = circlesListHPadding),
             ) {
-                state.activityUIGroups.forEach { activitiesUI ->
+                state.colorHintGroups.forEach { colorHints ->
                     Row {
-                        activitiesUI.forEach { activityUI ->
+                        colorHints.forEach { colorHint ->
 
-                            if (activitiesUI.first() != activityUI)
+                            if (colorHints.first() != colorHint)
                                 SpacerW1()
 
                             Box(
@@ -130,20 +130,20 @@ fun ColorPickerSheet(
                                     .size(40.dp)
                                     .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
                                     .clip(RoundedCornerShape(99.dp))
-                                    .background(activityUI.colorRgba.toColor())
+                                    .background(colorHint.colorRgba.toColor())
                                     .clickable {
-                                        vm.upColorRgba(activityUI.colorRgba)
+                                        vm.upColorRgba(colorHint.colorRgba)
                                     },
                                 contentAlignment = Alignment.Center,
                             ) {
                                 Text(
-                                    text = activityUI.emoji,
+                                    text = colorHint.emoji,
                                     fontSize = 16.sp,
                                 )
                             }
                         }
 
-                        for (i in 0 until (state.circlesInRow - activitiesUI.size)) {
+                        for (i in 0 until (state.circlesInRow - colorHints.size)) {
                             SpacerW1()
                             Box(Modifier.width(40.dp))
                         }

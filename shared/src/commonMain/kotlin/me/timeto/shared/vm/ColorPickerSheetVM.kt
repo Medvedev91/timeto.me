@@ -11,7 +11,7 @@ class ColorPickerSheetVM(
     text: String,
 ) : __VM<ColorPickerSheetVM.State>() {
 
-    class ActivityUI(
+    class ColorHint(
         val emoji: String,
         val colorRgba: ColorRgba,
     )
@@ -31,7 +31,6 @@ class ColorPickerSheetVM(
         val text: String,
         val isRgbSlidersShowed: Boolean,
         val isRgbSlidersAnimated: Boolean,
-        val activityUIGroups: List<List<ActivityUI>>,
     ) {
         val headerTitle = "Color"
         val doneTitle = "Done"
@@ -52,6 +51,10 @@ class ColorPickerSheetVM(
             }
             .chunked(CIRCLES_IN_ROW)
 
+        val colorHintGroups = DI.activitiesSorted
+            .map { ColorHint(it.emoji, it.getColorRgba()) }
+            .chunked(CIRCLES_IN_ROW)
+
         val textColor = if (listOf(r, g, b).average() < 180) ColorRgba.white else ColorRgba(80, 80, 80)
 
         fun getSelectedColor() = ColorRgba(r.toInt(), g.toInt(), b.toInt())
@@ -67,9 +70,6 @@ class ColorPickerSheetVM(
             text = text,
             isRgbSlidersShowed = false,
             isRgbSlidersAnimated = true,
-            activityUIGroups = DI.activitiesSorted
-                .map { ActivityUI(it.emoji, it.getColorRgba()) }
-                .chunked(CIRCLES_IN_ROW),
         )
     )
 
