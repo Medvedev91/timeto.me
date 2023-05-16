@@ -9,7 +9,7 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
@@ -96,14 +96,15 @@ object Sheet {
             contentAlignment = Alignment.BottomCenter // For divider
         ) {
 
-            Row(
+            Box(
                 modifier = Modifier
-                    .padding(top = 16.dp, bottom = 16.dp)
+                    .padding(top = 16.dp, bottom = 16.dp),
             ) {
 
                 Text(
                     "Cancel",
                     modifier = Modifier
+                        .align(Alignment.CenterStart)
                         .padding(start = 16.dp)
                         .clip(RoundedCornerShape(99.dp))
                         .clickable { onCancel() }
@@ -115,7 +116,8 @@ object Sheet {
                 Text(
                     text = title,
                     modifier = Modifier
-                        .weight(1f),
+                        .fillMaxWidth()
+                        .padding(horizontal = 85.dp),
                     fontSize = 22.sp,
                     fontWeight = FontWeight.W500,
                     overflow = TextOverflow.Ellipsis,
@@ -127,9 +129,10 @@ object Sheet {
                 Text(
                     doneText,
                     modifier = Modifier
+                        .align(Alignment.CenterEnd)
                         .padding(end = 16.dp)
                         .clip(RoundedCornerShape(99.dp))
-                        .clickable(enabled = isDoneEnabled == true) {
+                        .clickable(enabled = (isDoneEnabled == true)) {
                             onDone()
                         }
                         .padding(horizontal = 8.dp, vertical = 4.dp),
