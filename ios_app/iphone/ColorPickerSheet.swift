@@ -32,3 +32,15 @@ struct ColorPickerSheet: View {
                 .background(Color(.mySheetFormBg))
     }
 }
+
+struct ColorPickerSheet__ColorCircleView: View {
+
+    let color: Color
+
+    var body: some View {
+        Circle()
+                .strokeBorder(Color(UIColor.lightGray), lineWidth: onePx)
+                .frame(width: 32, height: 32)
+                .background(Circle().foregroundColor(color))
+    }
+}
