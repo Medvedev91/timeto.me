@@ -55,10 +55,7 @@ fun ColorPickerSheet(
             layer.close()
         }
 
-        Column(
-            modifier = Modifier
-                .navigationBarsPadding()
-        ) {
+        Column {
 
             val circlesListHPadding = 22.dp
 
@@ -107,6 +104,7 @@ fun ColorPickerSheet(
 
             Column(
                 modifier = Modifier
+                    .navigationBarsPadding()
                     .padding(top = 4.dp)
                     .padding(horizontal = circlesListHPadding),
             ) {
@@ -124,11 +122,8 @@ fun ColorPickerSheet(
                                     .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
                                     .clip(RoundedCornerShape(99.dp))
                                     .background(colorHint.colorRgba.toColor())
-                                    .clickable {
-                                        if (colorHint.emoji != null)
-                                            vm.upColorRgba(colorHint.colorRgba)
-                                        else
-                                            vm.toggleIsRgbSlidersShowed()
+                                    .clickable(colorHint.emoji == null) {
+                                        vm.toggleIsRgbSlidersShowed()
                                     },
                                 contentAlignment = Alignment.Center,
                             ) {
@@ -149,28 +144,28 @@ fun ColorPickerSheet(
                         }
                     }
                 }
-            }
 
-            AnimatedVisibility(
-                visible = state.isRgbSlidersShowed,
-                enter = expandVertically(spring(stiffness = Spring.StiffnessMedium)),
-                exit = shrinkVertically(spring(stiffness = Spring.StiffnessMedium)),
-            ) {
-                Column {
+                AnimatedVisibility(
+                    visible = state.isRgbSlidersShowed,
+                    enter = expandVertically(spring(stiffness = Spring.StiffnessMedium)),
+                    exit = shrinkVertically(spring(stiffness = Spring.StiffnessMedium)),
+                ) {
+                    Column {
 
-                    Text(
-                        text = state.rgbText,
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
-                            .padding(top = 20.dp, bottom = 4.dp),
-                        color = c.blue,
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Light,
-                    )
+                        Text(
+                            text = state.rgbText,
+                            modifier = Modifier
+                                .align(Alignment.CenterHorizontally)
+                                .padding(top = 20.dp, bottom = 4.dp),
+                            color = c.blue,
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Light,
+                        )
 
-                    ColorSlider(state.r, c.red, state.isRgbSlidersAnimated) { vm.upR(it) }
-                    ColorSlider(state.g, c.green, state.isRgbSlidersAnimated) { vm.upG(it) }
-                    ColorSlider(state.b, c.blue, state.isRgbSlidersAnimated) { vm.upB(it) }
+                        ColorSlider(state.r, c.red, state.isRgbSlidersAnimated) { vm.upR(it) }
+                        ColorSlider(state.g, c.green, state.isRgbSlidersAnimated) { vm.upG(it) }
+                        ColorSlider(state.b, c.blue, state.isRgbSlidersAnimated) { vm.upB(it) }
+                    }
                 }
             }
         }
