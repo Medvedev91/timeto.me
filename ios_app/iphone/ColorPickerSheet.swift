@@ -59,6 +59,11 @@ struct ColorPickerSheet: View {
                                                             color: color.colorRgba.toColor(),
                                                             size: 42
                                                     )
+                                                    if color.isSelected {
+                                                        Image(systemName: "checkmark")
+                                                                .font(.system(size: 18, weight: .medium))
+                                                                .foregroundColor(.white)
+                                                    }
                                                 }
                                                         .padding(.vertical, 4)
                                             }
