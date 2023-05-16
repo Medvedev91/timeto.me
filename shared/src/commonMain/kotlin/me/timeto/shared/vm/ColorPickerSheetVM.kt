@@ -35,11 +35,10 @@ class ColorPickerSheetVM(
 
         val circlesInRow = CIRCLES_IN_ROW
 
-        val rgbText: String = run {
-            val hex = "#${r.toHex()}${g.toHex()}${b.toHex()}".uppercase()
-            val rgb = "RGB:${r.toInt()},${g.toInt()},${b.toInt()}"
-            if (isRgbSlidersShowed) "$hex / $rgb" else hex
-        }
+        val rgbText =
+            "#${r.toHex()}${g.toHex()}${b.toHex()}".uppercase() + " / " +
+            "RGB: ${r.toInt()},${g.toInt()},${b.toInt()}"
+
         val colorGroups: List<List<ColorItem>> = mdColors
             .map {
                 ColorItem(
