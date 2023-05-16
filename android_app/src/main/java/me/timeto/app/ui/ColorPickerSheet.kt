@@ -17,11 +17,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import me.timeto.app.R
 import me.timeto.app.onePx
 import me.timeto.app.rememberVM
 import me.timeto.app.toColor
@@ -96,13 +94,7 @@ fun ColorPickerSheet(
                                         enter = fadeIn(),
                                         exit = fadeOut(),
                                     ) {
-                                        Icon(
-                                            Icons.Rounded.Done,
-                                            contentDescription = "Selected",
-                                            modifier = Modifier
-                                                .size(24.dp),
-                                            tint = c.white,
-                                        )
+                                        IconSelected()
                                     }
                                 }
                             }
@@ -146,15 +138,8 @@ fun ColorPickerSheet(
                                         text = emoji,
                                         fontSize = 16.sp,
                                     )
-                                else {
-                                    Icon(
-                                        painterResource(id = R.drawable.sf_slider_horizontal_3_medium_medium),
-                                        contentDescription = "RGB Picker",
-                                        modifier = Modifier
-                                            .size(16.dp),
-                                        tint = c.white,
-                                    )
-                                }
+                                else
+                                    IconSelected()
                             }
                         }
 
@@ -190,6 +175,17 @@ fun ColorPickerSheet(
             }
         }
     }
+}
+
+@Composable
+private fun IconSelected() {
+    Icon(
+        Icons.Rounded.Done,
+        contentDescription = "Selected",
+        modifier = Modifier
+            .size(24.dp),
+        tint = c.white,
+    )
 }
 
 @Composable
