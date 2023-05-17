@@ -10,10 +10,14 @@ class ColorPickerSheetVM(
     selectedColor: ColorRgba,
 ) : __VM<ColorPickerSheetVM.State>() {
 
-    class ColorHint(
-        val emoji: String?, // null - config icon
-        val colorRgba: ColorRgba,
-    )
+    sealed class MenuButton {
+
+        class Activity(
+            val id: Int,
+            val emoji: String,
+            val colorRgba: ColorRgba,
+        ) : MenuButton()
+    }
 
     class ColorItem(
         val colorRgba: ColorRgba,
@@ -48,10 +52,8 @@ class ColorPickerSheetVM(
             }
             .chunked(CIRCLES_IN_ROW)
 
-        val colorHintGroups = DI.activitiesSorted
-            .map { ColorHint(it.emoji, it.getColorRgba()) }
-            .toMutableList()
-            .apply { add(ColorHint(null, ColorRgba(r.toInt(), g.toInt(), b.toInt()))) }
+        val menuButtonGroups = DI.activitiesSorted
+            .map { MenuButton.Activity(it.id, it.emoji, it.getColorRgba()) }
             .chunked(CIRCLES_IN_ROW)
 
         fun getSelectedColor() = ColorRgba(r.toInt(), g.toInt(), b.toInt())

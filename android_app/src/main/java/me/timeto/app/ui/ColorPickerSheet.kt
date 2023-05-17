@@ -110,37 +110,29 @@ fun ColorPickerSheet(
                     .padding(top = 4.dp)
                     .padding(horizontal = circlesListHPadding),
             ) {
-                state.colorHintGroups.forEach { colorHints ->
+                state.menuButtonGroups.forEach { menuButtons ->
                     Row {
-                        colorHints.forEach { colorHint ->
+                        menuButtons.forEach { menuButton ->
 
-                            if (colorHints.first() != colorHint)
+                            if (menuButtons.first() != menuButton)
                                 SpacerW1()
 
-                            Box(
-                                Modifier
-                                    .padding(vertical = 4.dp)
-                                    .size(40.dp)
-                                    .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
-                                    .clip(RoundedCornerShape(99.dp))
-                                    .background(colorHint.colorRgba.toColor())
-                                    .clickable(colorHint.emoji == null) {
-                                        vm.toggleIsRgbSlidersShowed()
-                                    },
-                                contentAlignment = Alignment.Center,
-                            ) {
-                                val emoji = colorHint.emoji
-                                if (emoji != null)
-                                    Text(
-                                        text = emoji,
-                                        fontSize = 16.sp,
+                            when (menuButton) {
+                                is ColorPickerSheetVM.MenuButton.Activity -> {
+                                    ColorPickerSheet__CircleView(
+                                        color = menuButton.colorRgba.toColor(),
+                                        content = {
+                                            Text(
+                                                text = menuButton.emoji,
+                                                fontSize = 16.sp,
+                                            )
+                                        },
                                     )
-                                else
-                                    IconSelected()
+                                }
                             }
                         }
 
-                        for (i in 0 until (state.circlesInRow - colorHints.size)) {
+                        for (i in 0 until (state.circlesInRow - menuButtons.size)) {
                             SpacerW1()
                             Box(Modifier.width(circleSize))
                         }
