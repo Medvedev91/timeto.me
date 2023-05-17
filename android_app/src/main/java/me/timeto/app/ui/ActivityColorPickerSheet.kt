@@ -30,6 +30,7 @@ import me.timeto.shared.ColorRgba
 import me.timeto.shared.vm.ActivityColorPickerSheetVM
 
 private val circleSize = 40.dp
+private val circlesListHPadding = 22.dp
 
 @Composable
 fun ActivityColorPickerSheet(
@@ -61,8 +62,6 @@ fun ActivityColorPickerSheet(
         }
 
         Column {
-
-            val circlesListHPadding = 22.dp
 
             LazyColumn(
                 modifier = Modifier
