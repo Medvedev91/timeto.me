@@ -93,7 +93,13 @@ fun ColorPickerSheet(
                                         enter = fadeIn(),
                                         exit = fadeOut(),
                                     ) {
-                                        IconSelected()
+                                        Icon(
+                                            Icons.Rounded.Done,
+                                            contentDescription = "Selected",
+                                            modifier = Modifier
+                                                .size(24.dp),
+                                            tint = c.white,
+                                        )
                                     }
                                 }
                             }
@@ -186,17 +192,6 @@ fun ColorPickerSheet__CircleView(
     ) {
         content?.invoke()
     }
-}
-
-@Composable
-private fun IconSelected() {
-    Icon(
-        Icons.Rounded.Done,
-        contentDescription = "Selected",
-        modifier = Modifier
-            .size(24.dp),
-        tint = c.white,
-    )
 }
 
 @Composable
