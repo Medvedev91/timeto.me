@@ -29,7 +29,7 @@ import me.timeto.shared.vm.ColorPickerSheetVM
 private val circleSize = 40.dp
 
 @Composable
-fun ColorPickerSheet(
+fun ActivityColorPickerSheet(
     layer: WrapperView.Layer,
     selectedColor: ColorRgba,
     onPick: (ColorRgba) -> Unit,
@@ -125,7 +125,7 @@ fun ColorPickerSheet(
 
                             when (menuButton) {
                                 is ColorPickerSheetVM.MenuButton.Activity -> {
-                                    ColorPickerSheet__CircleView(
+                                    ActivityColorPickerSheet__CircleView(
                                         color = menuButton.colorRgba.toColor(),
                                         content = {
                                             Text(
@@ -173,7 +173,7 @@ fun ColorPickerSheet(
 }
 
 @Composable
-fun ColorPickerSheet__CircleView(
+fun ActivityColorPickerSheet__CircleView(
     color: Color,
     content: (@Composable () -> Unit)? = null,
     onClick: (() -> Unit)? = null,

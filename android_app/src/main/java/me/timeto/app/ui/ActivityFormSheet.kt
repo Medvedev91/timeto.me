@@ -143,7 +143,7 @@ fun ActivityFormSheet(
                     }
                 ) {
                     Sheet.show { layer ->
-                        ColorPickerSheet(
+                        ActivityColorPickerSheet(
                             layer = layer,
                             selectedColor = state.colorRgba,
                         ) {
