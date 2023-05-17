@@ -54,7 +54,7 @@ fun ActivityColorPickerSheet(
             title = state.headerTitle,
             doneText = state.doneTitle,
             isDoneEnabled = true,
-            scrollToHeader = if (scrollState.canScrollBackward) 99 else 0,
+            scrollToHeader = 0,
             maxLines = 1,
         ) {
             onPick(state.selectedColor)
@@ -63,55 +63,9 @@ fun ActivityColorPickerSheet(
 
         Column {
 
-            LazyColumn(
-                modifier = Modifier
-                    .weight(1f),
-                state = scrollState,
-                contentPadding = PaddingValues(horizontal = circlesListHPadding, vertical = 8.dp)
-            ) {
-                state.colorGroups.forEach { colors ->
-                    item {
-                        Row {
-                            colors.forEach { colorItem ->
-
-                                if (colors.first() != colorItem)
-                                    SpacerW1()
-
-                                ActivityColorPickerSheet__CircleView(
-                                    color = colorItem.colorRgba.toColor(),
-                                    size = circleSize,
-                                    padding = PaddingValues(vertical = 4.dp),
-                                    content = {
-                                        AnimatedVisibility(
-                                            visible = colorItem.isSelected,
-                                            enter = fadeIn(),
-                                            exit = fadeOut(),
-                                        ) {
-                                            Icon(
-                                                Icons.Rounded.Done,
-                                                contentDescription = "Selected",
-                                                modifier = Modifier
-                                                    .size(24.dp),
-                                                tint = c.white,
-                                            )
-                                        }
-                                    },
-                                    onClick = {
-                                        vm.upColorRgba(colorItem.colorRgba)
-                                    },
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-
-            Divider(color = c.dividerBackground2)
-
             Column(
                 modifier = Modifier
-                    .navigationBarsPadding()
-                    .padding(top = 4.dp)
+                    .padding(bottom = 8.dp)
                     .padding(horizontal = circlesListHPadding),
             ) {
                 state.menuButtonGroups.forEach { menuButtons ->
@@ -196,6 +150,57 @@ fun ActivityColorPickerSheet(
                     }
                 }
             }
+
+            Divider(color = c.dividerBackground2)
+
+            LazyColumn(
+                modifier = Modifier
+                    .weight(1f),
+                state = scrollState,
+                contentPadding = PaddingValues(horizontal = circlesListHPadding, vertical = 8.dp)
+            ) {
+
+                state.colorGroups.forEach { colors ->
+                    item {
+                        Row {
+                            colors.forEach { colorItem ->
+
+                                if (colors.first() != colorItem)
+                                    SpacerW1()
+
+                                ActivityColorPickerSheet__CircleView(
+                                    color = colorItem.colorRgba.toColor(),
+                                    size = circleSize,
+                                    padding = PaddingValues(vertical = 4.dp),
+                                    content = {
+                                        AnimatedVisibility(
+                                            visible = colorItem.isSelected,
+                                            enter = fadeIn(),
+                                            exit = fadeOut(),
+                                        ) {
+                                            Icon(
+                                                Icons.Rounded.Done,
+                                                contentDescription = "Selected",
+                                                modifier = Modifier
+                                                    .size(24.dp),
+                                                tint = c.white,
+                                            )
+                                        }
+                                    },
+                                    onClick = {
+                                        vm.upColorRgba(colorItem.colorRgba)
+                                    },
+                                )
+                            }
+                        }
+                    }
+                }
+
+                item {
+                    Box(Modifier.navigationBarsPadding())
+                }
+            }
+
         }
     }
 }
