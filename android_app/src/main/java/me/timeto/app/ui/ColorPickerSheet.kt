@@ -26,6 +26,8 @@ import me.timeto.app.toColor
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.vm.ColorPickerSheetVM
 
+private val circleSize = 40.dp
+
 @Composable
 fun ColorPickerSheet(
     layer: WrapperView.Layer,
@@ -76,7 +78,7 @@ fun ColorPickerSheet(
                                 Column(
                                     modifier = Modifier
                                         .padding(vertical = 4.dp)
-                                        .size(40.dp)
+                                        .size(circleSize)
                                         .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
                                         .clip(RoundedCornerShape(99.dp))
                                         .background(colorItem.colorRgba.toColor())
@@ -140,7 +142,7 @@ fun ColorPickerSheet(
 
                         for (i in 0 until (state.circlesInRow - colorHints.size)) {
                             SpacerW1()
-                            Box(Modifier.width(40.dp))
+                            Box(Modifier.width(circleSize))
                         }
                     }
                 }
@@ -169,6 +171,28 @@ fun ColorPickerSheet(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun ColorPickerSheet__CircleView(
+    color: Color,
+    content: (@Composable () -> Unit)? = null,
+    onClick: (() -> Unit)? = null,
+) {
+    Box(
+        Modifier
+            .padding(vertical = 4.dp)
+            .size(circleSize)
+            .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
+            .clip(RoundedCornerShape(99.dp))
+            .background(color)
+            .clickable(onClick != null) {
+                onClick?.invoke()
+            },
+        contentAlignment = Alignment.Center,
+    ) {
+        content?.invoke()
     }
 }
 
