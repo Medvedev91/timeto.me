@@ -145,7 +145,7 @@ fun ActivityFormSheet(
                     Sheet.show { layer ->
                         ActivityColorPickerSheet(
                             layer = layer,
-                            selectedColor = state.colorRgba,
+                            initData = vm.buildColorPickerInitData(),
                         ) {
                             vm.upColorRgba(it)
                         }

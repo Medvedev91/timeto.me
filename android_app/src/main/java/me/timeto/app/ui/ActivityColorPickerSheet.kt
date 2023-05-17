@@ -33,11 +33,11 @@ private val circleSize = 40.dp
 @Composable
 fun ActivityColorPickerSheet(
     layer: WrapperView.Layer,
-    selectedColor: ColorRgba,
+    initData: ActivityColorPickerSheetVM.InitData,
     onPick: (ColorRgba) -> Unit,
 ) {
 
-    val (vm, state) = rememberVM { ActivityColorPickerSheetVM(selectedColor) }
+    val (vm, state) = rememberVM { ActivityColorPickerSheetVM(initData) }
 
     Column(
         modifier = Modifier

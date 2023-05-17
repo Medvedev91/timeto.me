@@ -7,8 +7,13 @@ import me.timeto.shared.DI
 private const val CIRCLES_IN_ROW = 6
 
 class ActivityColorPickerSheetVM(
-    selectedColor: ColorRgba,
+    initData: InitData,
 ) : __VM<ActivityColorPickerSheetVM.State>() {
+
+    class InitData(
+        val activityId: Int?,
+        val selectedColor: ColorRgba,
+    )
 
     sealed class MenuButton {
 
@@ -70,9 +75,9 @@ class ActivityColorPickerSheetVM(
 
     override val state = MutableStateFlow(
         State(
-            r = selectedColor.r.toFloat(),
-            g = selectedColor.g.toFloat(),
-            b = selectedColor.b.toFloat(),
+            r = initData.selectedColor.r.toFloat(),
+            g = initData.selectedColor.g.toFloat(),
+            b = initData.selectedColor.b.toFloat(),
             isRgbSlidersShowed = false,
             isRgbSlidersAnimated = true,
         )

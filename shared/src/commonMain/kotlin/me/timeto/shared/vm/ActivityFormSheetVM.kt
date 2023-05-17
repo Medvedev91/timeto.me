@@ -100,6 +100,11 @@ class ActivityFormSheetVM(
         }
     }
 
+    fun buildColorPickerInitData() = ActivityColorPickerSheetVM.InitData(
+        activityId = activity?.id,
+        selectedColor = state.value.colorRgba,
+    )
+
     //////
 
     fun save(
