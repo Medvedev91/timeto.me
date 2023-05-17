@@ -137,6 +137,17 @@ fun ActivityColorPickerSheet(
                                         },
                                     )
                                 }
+                                is ActivityColorPickerSheetVM.MenuButton.NewActivity -> {
+                                    ActivityColorPickerSheet__CircleView(
+                                        color = state.selectedColor.toColor(),
+                                        content = {
+                                            Text(
+                                                text = menuButton.emoji ?: "",
+                                                fontSize = 16.sp,
+                                            )
+                                        },
+                                    )
+                                }
                                 is ActivityColorPickerSheetVM.MenuButton.RgbSlider -> {
                                     Icon(
                                         painterResource(R.drawable.sf_slider_horizontal_3_medium_medium),
