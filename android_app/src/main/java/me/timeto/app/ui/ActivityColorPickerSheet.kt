@@ -139,8 +139,11 @@ fun ActivityColorPickerSheet(
                             text = state.rgbText,
                             modifier = Modifier
                                 .align(Alignment.CenterHorizontally)
-                                .padding(top = 20.dp, bottom = 4.dp),
-                            color = c.blue,
+                                .padding(top = 18.dp, bottom = 4.dp)
+                                .clip(MySquircleShape())
+                                .background(state.selectedColor.toColor())
+                                .padding(vertical = 4.dp, horizontal = 8.dp),
+                            color = c.white,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Light,
                         )
