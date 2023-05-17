@@ -19,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.R
@@ -77,33 +78,28 @@ fun ActivityColorPickerSheet(
                                 if (colors.first() != colorItem)
                                     SpacerW1()
 
-                                Column(
-                                    modifier = Modifier
-                                        .padding(vertical = 4.dp)
-                                        .size(circleSize)
-                                        .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
-                                        .clip(RoundedCornerShape(99.dp))
-                                        .background(colorItem.colorRgba.toColor())
-                                        .clickable {
-                                            vm.upColorRgba(colorItem.colorRgba)
-                                        },
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                    verticalArrangement = Arrangement.Center,
-                                ) {
-                                    AnimatedVisibility(
-                                        visible = colorItem.isSelected,
-                                        enter = fadeIn(),
-                                        exit = fadeOut(),
-                                    ) {
-                                        Icon(
-                                            Icons.Rounded.Done,
-                                            contentDescription = "Selected",
-                                            modifier = Modifier
-                                                .size(24.dp),
-                                            tint = c.white,
-                                        )
-                                    }
-                                }
+                                ActivityColorPickerSheet__CircleView(
+                                    color = colorItem.colorRgba.toColor(),
+                                    size = circleSize,
+                                    content = {
+                                        AnimatedVisibility(
+                                            visible = colorItem.isSelected,
+                                            enter = fadeIn(),
+                                            exit = fadeOut(),
+                                        ) {
+                                            Icon(
+                                                Icons.Rounded.Done,
+                                                contentDescription = "Selected",
+                                                modifier = Modifier
+                                                    .size(24.dp),
+                                                tint = c.white,
+                                            )
+                                        }
+                                    },
+                                    onClick = {
+                                        vm.upColorRgba(colorItem.colorRgba)
+                                    },
+                                )
                             }
                         }
                     }
@@ -129,6 +125,7 @@ fun ActivityColorPickerSheet(
                                 is ActivityColorPickerSheetVM.MenuButton.Activity -> {
                                     ActivityColorPickerSheet__CircleView(
                                         color = menuButton.colorRgba.toColor(),
+                                        size = circleSize,
                                         content = {
                                             Text(
                                                 text = menuButton.emoji,
@@ -140,6 +137,7 @@ fun ActivityColorPickerSheet(
                                 is ActivityColorPickerSheetVM.MenuButton.NewActivity -> {
                                     ActivityColorPickerSheet__CircleView(
                                         color = state.selectedColor.toColor(),
+                                        size = circleSize,
                                         content = {
                                             Text(
                                                 text = menuButton.emoji ?: "",
@@ -203,13 +201,14 @@ fun ActivityColorPickerSheet(
 @Composable
 fun ActivityColorPickerSheet__CircleView(
     color: Color,
+    size: Dp,
     content: (@Composable () -> Unit)? = null,
     onClick: (() -> Unit)? = null,
 ) {
     Box(
         Modifier
             .padding(vertical = 4.dp)
-            .size(circleSize)
+            .size(size)
             .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
             .clip(RoundedCornerShape(99.dp))
             .background(color)
