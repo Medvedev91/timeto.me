@@ -226,9 +226,12 @@ fun ActivityColorPickerSheet__CircleView(
             .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
             .clip(RoundedCornerShape(99.dp))
             .background(color)
-            .clickable(onClick != null) {
-                onClick?.invoke()
-            },
+            // TRICK clickable(false) overrides parent click
+            .then(
+                if (onClick != null)
+                    Modifier.clickable { onClick() }
+                else Modifier
+            ),
         contentAlignment = Alignment.Center,
     ) {
         content?.invoke()
