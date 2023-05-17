@@ -31,6 +31,7 @@ import me.timeto.shared.vm.ActivityColorPickerSheetVM
 
 private val circleSize = 40.dp
 private val circlesListHPadding = 22.dp
+private val circlePaddingValues = PaddingValues(vertical = 4.dp)
 
 @Composable
 fun ActivityColorPickerSheet(
@@ -80,7 +81,7 @@ fun ActivityColorPickerSheet(
                                     ActivityColorPickerSheet__CircleView(
                                         color = menuButton.colorRgba.toColor(),
                                         size = circleSize,
-                                        padding = PaddingValues(vertical = 4.dp),
+                                        padding = circlePaddingValues,
                                         content = {
                                             Text(
                                                 text = menuButton.emoji,
@@ -93,7 +94,7 @@ fun ActivityColorPickerSheet(
                                     ActivityColorPickerSheet__CircleView(
                                         color = state.selectedColor.toColor(),
                                         size = circleSize,
-                                        padding = PaddingValues(vertical = 4.dp),
+                                        padding = circlePaddingValues,
                                         content = {
                                             Text(
                                                 text = menuButton.emoji ?: "",
@@ -171,7 +172,7 @@ fun ActivityColorPickerSheet(
                                 ActivityColorPickerSheet__CircleView(
                                     color = colorItem.colorRgba.toColor(),
                                     size = circleSize,
-                                    padding = PaddingValues(vertical = 4.dp),
+                                    padding = circlePaddingValues,
                                     content = {
                                         AnimatedVisibility(
                                             visible = colorItem.isSelected,
