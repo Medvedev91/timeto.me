@@ -130,8 +130,10 @@ fun ActivityColorPickerSheet(
 
                 AnimatedVisibility(
                     visible = state.isRgbSlidersShowed,
-                    enter = expandVertically(spring(stiffness = Spring.StiffnessMedium)),
-                    exit = shrinkVertically(spring(stiffness = Spring.StiffnessMedium)),
+                    enter = expandVertically(spring(stiffness = Spring.StiffnessMedium))
+                            + fadeIn(spring(stiffness = Spring.StiffnessMedium)),
+                    exit = shrinkVertically(spring(stiffness = Spring.StiffnessMedium))
+                           + fadeOut(spring(stiffness = Spring.StiffnessMedium)),
                 ) {
                     Column {
 
