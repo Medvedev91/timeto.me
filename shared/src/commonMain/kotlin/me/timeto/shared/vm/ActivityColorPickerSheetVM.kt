@@ -40,6 +40,7 @@ class ActivityColorPickerSheetVM(
         val b: Float,
         val isRgbSlidersShowed: Boolean,
         val isRgbSlidersAnimated: Boolean,
+        val initData: InitData,
     ) {
         val headerTitle = "Color"
         val doneTitle = "Done"
@@ -63,7 +64,14 @@ class ActivityColorPickerSheetVM(
         val menuButtonGroups: List<List<MenuButton>> = run {
             val list = mutableListOf<MenuButton>()
             DI.activitiesSorted.forEach {
-                list.add(MenuButton.Activity(it.id, it.emoji, it.getColorRgba()))
+                list.add(
+                    MenuButton.Activity(
+                        id = it.id,
+                        emoji = it.emoji,
+                        colorRgba = if (it.id == initData.activityId)
+                            selectedColor else it.getColorRgba()
+                    )
+                )
             }
             list.add(MenuButton.RgbSlider())
             return@run list.chunked(CIRCLES_IN_ROW)
@@ -79,6 +87,7 @@ class ActivityColorPickerSheetVM(
             b = initData.selectedColor.b.toFloat(),
             isRgbSlidersShowed = false,
             isRgbSlidersAnimated = true,
+            initData = initData,
         )
     )
 
