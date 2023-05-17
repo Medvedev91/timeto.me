@@ -17,9 +17,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import me.timeto.app.R
 import me.timeto.app.onePx
 import me.timeto.app.rememberVM
 import me.timeto.app.toColor
@@ -135,6 +137,21 @@ fun ActivityColorPickerSheet(
                                         },
                                     )
                                 }
+                                is ActivityColorPickerSheetVM.MenuButton.RgbSlider -> {
+                                    Icon(
+                                        painterResource(R.drawable.sf_slider_horizontal_3_medium_medium),
+                                        contentDescription = "Rgb Slider",
+                                        modifier = Modifier
+                                            .align(Alignment.CenterVertically)
+                                            .size(circleSize)
+                                            .clip(RoundedCornerShape(99.dp))
+                                            .clickable {
+                                                vm.toggleIsRgbSlidersShowed()
+                                            }
+                                            .padding(11.dp),
+                                        tint = c.textSecondary,
+                                    )
+                                }
                             }
                         }
 
@@ -206,7 +223,6 @@ private fun ColorSlider(
         // Animation works bad with manual slide
         value = if (isAnimated) animatedValue.value else value,
         onValueChange = { onChange(it) },
-        modifier = Modifier.padding(horizontal = 16.dp),
         valueRange = 0f..255f,
         colors = SliderDefaults.colors(
             thumbColor = color,

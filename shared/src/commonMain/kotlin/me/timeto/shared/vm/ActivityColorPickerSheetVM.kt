@@ -17,6 +17,8 @@ class ActivityColorPickerSheetVM(
             val emoji: String,
             val colorRgba: ColorRgba,
         ) : MenuButton()
+
+        class RgbSlider : MenuButton()
     }
 
     class ColorItem(
@@ -52,9 +54,14 @@ class ActivityColorPickerSheetVM(
             }
             .chunked(CIRCLES_IN_ROW)
 
-        val menuButtonGroups = DI.activitiesSorted
-            .map { MenuButton.Activity(it.id, it.emoji, it.getColorRgba()) }
-            .chunked(CIRCLES_IN_ROW)
+        val menuButtonGroups: List<List<MenuButton>> = run {
+            val list = mutableListOf<MenuButton>()
+            DI.activitiesSorted.forEach {
+                list.add(MenuButton.Activity(it.id, it.emoji, it.getColorRgba()))
+            }
+            list.add(MenuButton.RgbSlider())
+            return@run list.chunked(CIRCLES_IN_ROW)
+        }
 
         fun getSelectedColor() = ColorRgba(r.toInt(), g.toInt(), b.toInt())
 
