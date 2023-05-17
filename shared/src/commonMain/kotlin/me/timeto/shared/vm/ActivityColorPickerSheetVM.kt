@@ -6,9 +6,9 @@ import me.timeto.shared.DI
 
 private const val CIRCLES_IN_ROW = 6
 
-class ColorPickerSheetVM(
+class ActivityColorPickerSheetVM(
     selectedColor: ColorRgba,
-) : __VM<ColorPickerSheetVM.State>() {
+) : __VM<ActivityColorPickerSheetVM.State>() {
 
     sealed class MenuButton {
 

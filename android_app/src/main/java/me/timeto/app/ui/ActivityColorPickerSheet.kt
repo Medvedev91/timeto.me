@@ -24,7 +24,7 @@ import me.timeto.app.onePx
 import me.timeto.app.rememberVM
 import me.timeto.app.toColor
 import me.timeto.shared.ColorRgba
-import me.timeto.shared.vm.ColorPickerSheetVM
+import me.timeto.shared.vm.ActivityColorPickerSheetVM
 
 private val circleSize = 40.dp
 
@@ -35,7 +35,7 @@ fun ActivityColorPickerSheet(
     onPick: (ColorRgba) -> Unit,
 ) {
 
-    val (vm, state) = rememberVM { ColorPickerSheetVM(selectedColor) }
+    val (vm, state) = rememberVM { ActivityColorPickerSheetVM(selectedColor) }
 
     Column(
         modifier = Modifier
@@ -124,7 +124,7 @@ fun ActivityColorPickerSheet(
                                 SpacerW1()
 
                             when (menuButton) {
-                                is ColorPickerSheetVM.MenuButton.Activity -> {
+                                is ActivityColorPickerSheetVM.MenuButton.Activity -> {
                                     ActivityColorPickerSheet__CircleView(
                                         color = menuButton.colorRgba.toColor(),
                                         content = {
