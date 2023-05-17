@@ -45,6 +45,7 @@ class ActivityColorPickerSheetVM(
         val doneTitle = "Done"
 
         val circlesInRow = CIRCLES_IN_ROW
+        val selectedColor = ColorRgba(r.toInt(), g.toInt(), b.toInt())
 
         val rgbText =
             "#${r.toHex()}${g.toHex()}${b.toHex()}".uppercase() + " / " +
@@ -67,8 +68,6 @@ class ActivityColorPickerSheetVM(
             list.add(MenuButton.RgbSlider())
             return@run list.chunked(CIRCLES_IN_ROW)
         }
-
-        fun getSelectedColor() = ColorRgba(r.toInt(), g.toInt(), b.toInt())
 
         private fun Float.toHex() = toInt().toString(16).padStart(2, '0')
     }

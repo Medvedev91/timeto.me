@@ -55,7 +55,7 @@ fun ActivityColorPickerSheet(
             scrollToHeader = if (scrollState.canScrollBackward) 99 else 0,
             maxLines = 1,
         ) {
-            onPick(state.getSelectedColor())
+            onPick(state.selectedColor)
             layer.close()
         }
 
