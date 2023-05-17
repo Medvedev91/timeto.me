@@ -12,6 +12,7 @@ class ActivityColorPickerSheetVM(
 
     class InitData(
         val activityId: Int?,
+        val title: String,
         val activityEmoji: String?,
         val selectedColor: ColorRgba,
     )
@@ -47,7 +48,7 @@ class ActivityColorPickerSheetVM(
         val isRgbSlidersAnimated: Boolean,
         val initData: InitData,
     ) {
-        val headerTitle = "Color"
+        val headerTitle = initData.title
         val doneTitle = "Done"
 
         val circlesInRow = CIRCLES_IN_ROW

@@ -102,6 +102,13 @@ class ActivityFormSheetVM(
 
     fun buildColorPickerInitData() = ActivityColorPickerSheetVM.InitData(
         activityId = activity?.id,
+        title = run {
+            val emoji = state.value.emoji
+            val title = state.value.inputNameValue
+            if (emoji == null && title.isBlank())
+                return@run "New Activity"
+            return@run "${emoji ?: ""} $title".trim()
+        },
         activityEmoji = state.value.emoji,
         selectedColor = state.value.colorRgba,
     )
