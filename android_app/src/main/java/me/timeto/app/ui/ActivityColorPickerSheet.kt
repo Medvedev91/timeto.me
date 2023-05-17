@@ -81,6 +81,7 @@ fun ActivityColorPickerSheet(
                                 ActivityColorPickerSheet__CircleView(
                                     color = colorItem.colorRgba.toColor(),
                                     size = circleSize,
+                                    padding = PaddingValues(vertical = 4.dp),
                                     content = {
                                         AnimatedVisibility(
                                             visible = colorItem.isSelected,
@@ -126,6 +127,7 @@ fun ActivityColorPickerSheet(
                                     ActivityColorPickerSheet__CircleView(
                                         color = menuButton.colorRgba.toColor(),
                                         size = circleSize,
+                                        padding = PaddingValues(vertical = 4.dp),
                                         content = {
                                             Text(
                                                 text = menuButton.emoji,
@@ -138,6 +140,7 @@ fun ActivityColorPickerSheet(
                                     ActivityColorPickerSheet__CircleView(
                                         color = state.selectedColor.toColor(),
                                         size = circleSize,
+                                        padding = PaddingValues(vertical = 4.dp),
                                         content = {
                                             Text(
                                                 text = menuButton.emoji ?: "",
@@ -202,12 +205,13 @@ fun ActivityColorPickerSheet(
 fun ActivityColorPickerSheet__CircleView(
     color: Color,
     size: Dp,
+    padding: PaddingValues = PaddingValues(),
     content: (@Composable () -> Unit)? = null,
     onClick: (() -> Unit)? = null,
 ) {
     Box(
         Modifier
-            .padding(vertical = 4.dp)
+            .padding(padding)
             .size(size)
             .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
             .clip(RoundedCornerShape(99.dp))
