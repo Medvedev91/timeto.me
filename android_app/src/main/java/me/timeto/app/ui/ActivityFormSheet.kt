@@ -139,7 +139,7 @@ fun ActivityFormSheet(
                         )
                     }
                 ) {
-                    Sheet.show(topPadding = 4.dp) { layer ->
+                    Sheet.show { layer ->
                         ActivityColorPickerSheet(
                             layer = layer,
                             initData = vm.buildColorPickerInitData(),
