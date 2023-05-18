@@ -89,7 +89,8 @@ fun ActivityColorPickerSheet(
                     modifier = Modifier
                         .clip(MySquircleShape())
                         .background(state.selectedColor.toColor())
-                        .padding(horizontal = 12.dp, vertical = 6.dp),
+                        .padding(horizontal = 12.dp, vertical = 6.dp)
+                        .padding(end = 1.dp),
                     color = c.white,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -109,11 +110,10 @@ fun ActivityColorPickerSheet(
                         text = activityUI.text,
                         modifier = Modifier
                             .padding(top = 8.dp)
-                            .clip(MySquircleShape(len = 40f))
+                            .clip(MySquircleShape(len = 50f))
                             .background(activityUI.colorRgba.toColor())
-                            .padding(horizontal = 8.dp, vertical = 4.dp),
+                            .padding(start = 7.dp, end = 8.dp, top = 4.dp, bottom = 4.5.dp),
                         fontSize = 13.sp,
-                        fontWeight = FontWeight.Light,
                         color = c.white,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
