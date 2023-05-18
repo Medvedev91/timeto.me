@@ -19,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -75,6 +76,28 @@ fun ActivityColorPickerSheet(
                     .padding(start = sheetHPaddings, end = dividerPadding)
                     .weight(1f),
             ) {
+
+                Text(
+                    text = state.title,
+                    modifier = Modifier
+                        .offset(x = (-1).dp)
+                        .clip(MySquircleShape())
+                        .background(state.selectedColor.toColor())
+                        .padding(horizontal = 12.dp, vertical = 6.dp),
+                    color = c.white,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+
+                Text(
+                    text = state.otherActivitiesTitle,
+                    modifier = Modifier
+                        .padding(top = 16.dp),
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = c.textSecondary,
+                )
+
                 state.menuButtonGroups.forEach { menuButtons ->
                     Row {
                         menuButtons.forEach { menuButton ->
