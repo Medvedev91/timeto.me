@@ -54,7 +54,7 @@ fun ActivityColorPickerSheet(
             .background(c.background2)
     ) {
 
-        val scrollState = rememberLazyListState()
+        val circleScrollState = rememberLazyListState()
 
         Sheet.HeaderView(
             onCancel = { layer.close() },
@@ -67,6 +67,8 @@ fun ActivityColorPickerSheet(
             onPick(state.selectedColor)
             layer.close()
         }
+
+        DividerBg2(isVisible = (circleScrollState.canScrollBackward))
 
         Row(
             modifier = Modifier
@@ -127,7 +129,7 @@ fun ActivityColorPickerSheet(
             )
 
             LazyColumn(
-                state = scrollState,
+                state = circleScrollState,
                 contentPadding = PaddingValues(
                     start = dividerPadding - circlePadding,
                     end = sheetHPaddings - circlePadding
