@@ -44,9 +44,8 @@ class ActivityColorPickerSheetVM(
 
         val selectedColor = ColorRgba(r.toInt(), g.toInt(), b.toInt())
 
-        val rgbText =
-            "#${r.toHex()}${g.toHex()}${b.toHex()}".uppercase() + " / " +
-            "RGB: ${r.toInt()},${g.toInt()},${b.toInt()}"
+        val rgbText = "RGB: ${r.toInt()},${g.toInt()},${b.toInt()}" + " / " +
+                      "#${r.toHex()}${g.toHex()}${b.toHex()}".uppercase()
 
         val colorGroups: List<List<ColorItem>> = appleColors
             .map { listOf(it.light, it.default, it.dark) }
