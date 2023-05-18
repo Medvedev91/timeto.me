@@ -68,11 +68,11 @@ fun ActivityColorPickerSheet(
             layer.close()
         }
 
-        Row {
+        Row(Modifier.padding(top = 4.dp)) {
 
             Column(
                 modifier = Modifier
-                    .padding(top = 4.dp)
+                    .padding(top = 1.dp)
                     .padding(start = sheetHPaddings, end = dividerPadding)
                     .weight(1f),
             ) {
@@ -215,7 +215,6 @@ fun ActivityColorPickerSheet(
                                     ActivityColorPickerSheet__CircleView(
                                         color = colorItem.colorRgba.toColor(),
                                         size = circleSize,
-                                        padding = circlePaddingValues,
                                         content = {
                                             AnimatedVisibility(
                                                 visible = colorItem.isSelected,
