@@ -125,19 +125,6 @@ fun ActivityColorPickerSheet(
                                         },
                                     )
                                 }
-                                is ActivityColorPickerSheetVM.MenuButton.NewActivity -> {
-                                    ActivityColorPickerSheet__CircleView(
-                                        color = state.selectedColor.toColor(),
-                                        size = circleSize,
-                                        padding = circlePaddingValues,
-                                        content = {
-                                            Text(
-                                                text = menuButton.emoji ?: "",
-                                                fontSize = 16.sp,
-                                            )
-                                        },
-                                    )
-                                }
                             }
                         }
 
