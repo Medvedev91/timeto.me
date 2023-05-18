@@ -48,7 +48,6 @@ class ActivityColorPickerSheetVM(
         val title = initData.title
         val otherActivitiesTitle = "OTHER ACTIVITIES"
 
-        val circlesInRow = CIRCLES_IN_ROW
         val selectedColor = ColorRgba(r.toInt(), g.toInt(), b.toInt())
 
         val rgbText =

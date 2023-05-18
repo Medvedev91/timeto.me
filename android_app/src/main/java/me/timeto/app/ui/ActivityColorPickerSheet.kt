@@ -127,11 +127,6 @@ fun ActivityColorPickerSheet(
                                 }
                             }
                         }
-
-                        for (i in 0 until (state.circlesInRow - menuButtons.size)) {
-                            SpacerW1()
-                            Box(Modifier.width(circleSize))
-                        }
                     }
                 }
             }
