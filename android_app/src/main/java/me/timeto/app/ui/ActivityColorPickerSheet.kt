@@ -15,13 +15,17 @@ import androidx.compose.material.icons.rounded.Done
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import me.timeto.app.R
 import me.timeto.app.onePx
 import me.timeto.app.rememberVM
 import me.timeto.app.toColor
@@ -66,7 +70,11 @@ fun ActivityColorPickerSheet(
             layer.close()
         }
 
-        Row(Modifier.padding(top = 4.dp)) {
+        Row(
+            modifier = Modifier
+                .padding(top = 4.dp)
+                .weight(1f),
+        ) {
 
             Column(
                 modifier = Modifier
@@ -137,34 +145,6 @@ fun ActivityColorPickerSheet(
                             SpacerW1()
                             Box(Modifier.width(circleSize))
                         }
-                    }
-                }
-
-                AnimatedVisibility(
-                    visible = state.isRgbSlidersShowed,
-                    enter = expandVertically(spring(stiffness = Spring.StiffnessMedium))
-                            + fadeIn(spring(stiffness = Spring.StiffnessMedium)),
-                    exit = shrinkVertically(spring(stiffness = Spring.StiffnessMedium))
-                           + fadeOut(spring(stiffness = Spring.StiffnessHigh)),
-                ) {
-                    Column {
-
-                        Text(
-                            text = state.rgbText,
-                            modifier = Modifier
-                                .align(Alignment.CenterHorizontally)
-                                .padding(top = 18.dp, bottom = 4.dp)
-                                .clip(MySquircleShape())
-                                .background(state.selectedColor.toColor())
-                                .padding(vertical = 4.dp, horizontal = 8.dp),
-                            color = c.white,
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.Light,
-                        )
-
-                        ColorSlider(state.r, c.red, state.isRgbSlidersAnimated) { vm.upR(it) }
-                        ColorSlider(state.g, c.green, state.isRgbSlidersAnimated) { vm.upG(it) }
-                        ColorSlider(state.b, c.blue, state.isRgbSlidersAnimated) { vm.upB(it) }
                     }
                 }
             }
@@ -239,7 +219,67 @@ fun ActivityColorPickerSheet(
                     )
                 }
             }
+        }
 
+        Column {
+
+            AnimatedVisibility(
+                visible = state.isRgbSlidersShowed,
+                enter = expandVertically(spring(stiffness = Spring.StiffnessMedium))
+                        + fadeIn(spring(stiffness = Spring.StiffnessMedium)),
+                exit = shrinkVertically(spring(stiffness = Spring.StiffnessMedium))
+                       + fadeOut(spring(stiffness = Spring.StiffnessHigh)),
+            ) {
+                Column(
+                    modifier = Modifier
+                        .background(c.background2)
+                        .pointerInput(Unit) { }
+                        .navigationBarsPadding(),
+                ) {
+
+                    Divider(color = c.dividerBackground2)
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 18.dp, bottom = 4.dp),
+                    ) {
+
+                        Text(
+                            text = state.rgbText,
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                                .clip(MySquircleShape())
+                                .background(state.selectedColor.toColor())
+                                .padding(vertical = 4.dp, horizontal = 8.dp),
+                            color = c.white,
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Light,
+                        )
+
+                        Icon(
+                            painterResource(R.drawable.ic_round_close_24),
+                            "Hide",
+                            tint = c.textSecondary,
+                            modifier = Modifier
+                                .alpha(0.7f)
+                                .align(Alignment.CenterEnd)
+                                .padding(end = sheetHPaddings)
+                                .size(30.dp)
+                                .clip(RoundedCornerShape(99.dp))
+                                .background(c.background2)
+                                .clickable {
+                                    vm.toggleIsRgbSlidersShowed()
+                                }
+                                .padding(4.dp)
+                        )
+                    }
+
+                    ColorSlider(state.r, c.red, state.isRgbSlidersAnimated) { vm.upR(it) }
+                    ColorSlider(state.g, c.green, state.isRgbSlidersAnimated) { vm.upG(it) }
+                    ColorSlider(state.b, c.blue, state.isRgbSlidersAnimated) { vm.upB(it) }
+                }
+            }
         }
     }
 }
@@ -283,6 +323,7 @@ private fun ColorSlider(
         // Animation works bad with manual slide
         value = if (isAnimated) animatedValue.value else value,
         onValueChange = { onChange(it) },
+        modifier = Modifier.padding(horizontal = sheetHPaddings - 4.dp),
         valueRange = 0f..255f,
         colors = SliderDefaults.colors(
             thumbColor = color,
