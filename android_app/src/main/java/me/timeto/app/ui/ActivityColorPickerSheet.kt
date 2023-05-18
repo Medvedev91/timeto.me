@@ -90,17 +90,23 @@ fun ActivityColorPickerSheet(
                         .weight(1f)
                 ) {
 
-                    Text(
-                        text = state.title,
+                    Box(
                         modifier = Modifier
-                            .clip(MySquircleShape())
-                            .background(state.selectedColor.toColor())
-                            .padding(horizontal = 10.dp, vertical = 6.dp)
-                            .padding(end = 1.dp),
-                        color = c.white,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
+                            .height(circleSize),
+                        contentAlignment = Alignment.CenterStart,
+                    ) {
+                        Text(
+                            text = state.title,
+                            modifier = Modifier
+                                .clip(MySquircleShape())
+                                .background(state.selectedColor.toColor())
+                                .padding(horizontal = 10.dp, vertical = 6.dp)
+                                .padding(end = 1.dp),
+                            color = c.white,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    }
 
                     Text(
                         text = state.otherActivitiesTitle,
