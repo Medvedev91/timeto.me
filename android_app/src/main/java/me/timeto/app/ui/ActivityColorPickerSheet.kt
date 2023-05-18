@@ -158,46 +158,58 @@ fun ActivityColorPickerSheet(
                 }
             }
 
-            Divider(color = c.dividerBackground2)
+            val circlePadding = 4.dp
+
+            Box(
+                Modifier
+                    .width(onePx)
+                    .padding(vertical = circlePadding)
+                    .fillMaxHeight()
+                    .background(c.dividerBackground2)
+            )
 
             LazyColumn(
-                modifier = Modifier
-                    .weight(1f),
                 state = scrollState,
-                contentPadding = PaddingValues(end = circlesListHPadding)
+                contentPadding = PaddingValues(
+                    start = circlePadding,
+                    end = circlesListHPadding - circlePadding
+                )
             ) {
 
                 state.colorGroups.forEach { colors ->
                     item {
                         Row {
                             colors.forEach { colorItem ->
+                                Row(
+                                    modifier = Modifier
+                                        .size(circleSize + circlePadding * 2),
+                                    horizontalArrangement = Arrangement.Center,
+                                ) {
 
-                                if (colors.first() != colorItem)
-                                    SpacerW1()
-
-                                ActivityColorPickerSheet__CircleView(
-                                    color = colorItem.colorRgba.toColor(),
-                                    size = circleSize,
-                                    padding = circlePaddingValues,
-                                    content = {
-                                        AnimatedVisibility(
-                                            visible = colorItem.isSelected,
-                                            enter = fadeIn(),
-                                            exit = fadeOut(),
-                                        ) {
-                                            Icon(
-                                                Icons.Rounded.Done,
-                                                contentDescription = "Selected",
-                                                modifier = Modifier
-                                                    .size(24.dp),
-                                                tint = c.white,
-                                            )
-                                        }
-                                    },
-                                    onClick = {
-                                        vm.upColorRgba(colorItem.colorRgba)
-                                    },
-                                )
+                                    ActivityColorPickerSheet__CircleView(
+                                        color = colorItem.colorRgba.toColor(),
+                                        size = circleSize,
+                                        padding = circlePaddingValues,
+                                        content = {
+                                            AnimatedVisibility(
+                                                visible = colorItem.isSelected,
+                                                enter = fadeIn(),
+                                                exit = fadeOut(),
+                                            ) {
+                                                Icon(
+                                                    Icons.Rounded.Done,
+                                                    contentDescription = "Selected",
+                                                    modifier = Modifier
+                                                        .size(24.dp),
+                                                    tint = c.white,
+                                                )
+                                            }
+                                        },
+                                        onClick = {
+                                            vm.upColorRgba(colorItem.colorRgba)
+                                        },
+                                    )
+                                }
                             }
                         }
                     }
