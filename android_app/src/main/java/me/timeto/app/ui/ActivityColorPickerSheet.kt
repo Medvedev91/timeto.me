@@ -72,7 +72,6 @@ fun ActivityColorPickerSheet(
 
         Row(
             modifier = Modifier
-                .padding(top = 4.dp)
                 .weight(1f),
         ) {
 
@@ -131,8 +130,9 @@ fun ActivityColorPickerSheet(
             LazyColumn(
                 state = circleScrollState,
                 contentPadding = PaddingValues(
+                    top = 4.dp,
                     start = dividerPadding - circlePadding,
-                    end = sheetHPaddings - circlePadding
+                    end = sheetHPaddings - circlePadding,
                 )
             ) {
 
