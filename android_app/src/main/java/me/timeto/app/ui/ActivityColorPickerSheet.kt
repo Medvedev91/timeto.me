@@ -76,60 +76,69 @@ fun ActivityColorPickerSheet(
                 .weight(1f),
         ) {
 
-            Column(
+            Row(
                 modifier = Modifier
                     .verticalScroll(state = activitiesScrollState)
                     .padding(top = 4.dp)
-                    .padding(start = sheetHPaddings, end = dividerPadding)
+                    .padding(start = sheetHPaddings)
+                    .height(IntrinsicSize.Max)
                     .weight(1f),
             ) {
 
-                Text(
-                    text = state.title,
+                Column(
                     modifier = Modifier
-                        .clip(MySquircleShape())
-                        .background(state.selectedColor.toColor())
-                        .padding(horizontal = 12.dp, vertical = 6.dp)
-                        .padding(end = 1.dp),
-                    color = c.white,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
+                        .padding(end = dividerPadding)
+                        .weight(1f)
+                ) {
 
-                Text(
-                    text = state.otherActivitiesTitle,
-                    modifier = Modifier
-                        .padding(start = 4.dp, top = 20.dp),
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = c.textSecondary,
-                )
-
-                state.allActivities.forEach { activityUI ->
                     Text(
-                        text = activityUI.text,
+                        text = state.title,
                         modifier = Modifier
-                            .padding(top = 8.dp)
-                            .clip(MySquircleShape(len = 50f))
-                            .background(activityUI.colorRgba.toColor())
-                            .padding(start = 7.dp, end = 8.dp, top = 4.dp, bottom = 4.5.dp),
-                        fontSize = 13.sp,
+                            .clip(MySquircleShape())
+                            .background(state.selectedColor.toColor())
+                            .padding(horizontal = 12.dp, vertical = 6.dp)
+                            .padding(end = 1.dp),
                         color = c.white,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
+
+                    Text(
+                        text = state.otherActivitiesTitle,
+                        modifier = Modifier
+                            .padding(start = 4.dp, top = 20.dp),
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = c.textSecondary,
+                    )
+
+                    state.allActivities.forEach { activityUI ->
+                        Text(
+                            text = activityUI.text,
+                            modifier = Modifier
+                                .padding(top = 8.dp)
+                                .clip(MySquircleShape(len = 50f))
+                                .background(activityUI.colorRgba.toColor())
+                                .padding(start = 7.dp, end = 8.dp, top = 4.dp, bottom = 4.5.dp),
+                            fontSize = 13.sp,
+                            color = c.white,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    }
+
+                    Box(Modifier.navigationBarsPadding())
                 }
 
-                Box(Modifier.navigationBarsPadding())
+                Box(
+                    Modifier
+                        .width(onePx)
+                        .padding(top = circlePadding)
+                        .navigationBarsPadding()
+                        .fillMaxHeight()
+                        .background(c.dividerBg2)
+                )
             }
-
-            Box(
-                Modifier
-                    .width(onePx)
-                    .padding(vertical = circlePadding)
-                    .fillMaxHeight()
-                    .background(c.dividerBg2)
-            )
 
             LazyColumn(
                 state = circleScrollState,
