@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -36,6 +37,13 @@ fun MutableState<Boolean>.setTrue() {
 
 fun MutableState<Boolean>.setFalse() {
     value = false
+}
+
+fun Modifier.conditional(
+    condition: Boolean,
+    modifier: Modifier.() -> Modifier,
+): Modifier {
+    return if (condition) then(modifier(Modifier)) else this
 }
 
 ///
