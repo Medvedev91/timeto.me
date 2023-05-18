@@ -226,7 +226,19 @@ fun ActivityColorPickerSheet(
                 }
 
                 item {
-                    Box(Modifier.navigationBarsPadding())
+                    Text(
+                        text = "Custom",
+                        modifier = Modifier
+                            .padding(top = 2.dp)
+                            .navigationBarsPadding()
+                            .clip(MySquircleShape())
+                            .clickable {
+                                vm.toggleIsRgbSlidersShowed()
+                            }
+                            .padding(horizontal = circlePadding, vertical = 2.dp),
+                        color = c.blue,
+                        fontSize = 14.sp,
+                    )
                 }
             }
 
