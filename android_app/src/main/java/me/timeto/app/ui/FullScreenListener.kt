@@ -362,7 +362,7 @@ private fun FullScreenView(
                             contentDescription = "Battery",
                             tint = batteryTextColor,
                             modifier = Modifier
-                                .offset(y = pxToDp(1).dp)
+                                .offset(y = onePx)
                                 .size(10.dp)
                         )
 
