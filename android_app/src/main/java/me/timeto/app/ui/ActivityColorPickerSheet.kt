@@ -226,7 +226,7 @@ fun ActivityColorPickerSheet(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 18.dp, bottom = 4.dp),
+                            .padding(top = 14.dp, bottom = 4.dp),
                     ) {
 
                         Text(
