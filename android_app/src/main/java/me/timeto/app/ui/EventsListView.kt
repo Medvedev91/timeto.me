@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.shared.vm.EventsListVM
-import java.util.*
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
