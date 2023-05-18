@@ -1,5 +1,6 @@
 package me.timeto.app.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
@@ -211,6 +212,10 @@ fun ActivityColorPickerSheet(
         }
 
         Column {
+
+            BackHandler(state.isRgbSlidersShowed) {
+                vm.toggleIsRgbSlidersShowed()
+            }
 
             AnimatedVisibility(
                 visible = state.isRgbSlidersShowed,
