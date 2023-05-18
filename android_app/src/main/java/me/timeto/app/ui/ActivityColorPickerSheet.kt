@@ -31,10 +31,10 @@ import me.timeto.shared.GOLDEN_RATIO
 import me.timeto.shared.vm.ActivityColorPickerSheetVM
 
 private val circleSize = 40.dp
-private val circlesListHPadding = 22.dp
+private val sheetHPaddings = 22.dp
 
 private val circlePadding = 4.dp
-private val dividerPadding = ((circlesListHPadding - circlePadding).value / GOLDEN_RATIO).dp
+private val dividerPadding = (sheetHPaddings.value / GOLDEN_RATIO).dp
 
 private val circlePaddingValues = PaddingValues(vertical = 4.dp)
 
@@ -72,7 +72,7 @@ fun ActivityColorPickerSheet(
             Column(
                 modifier = Modifier
                     .padding(top = 4.dp)
-                    .padding(start = circlesListHPadding, end = dividerPadding)
+                    .padding(start = sheetHPaddings, end = dividerPadding)
                     .weight(1f),
             ) {
                 state.menuButtonGroups.forEach { menuButtons ->
@@ -163,8 +163,6 @@ fun ActivityColorPickerSheet(
                 }
             }
 
-            val circlePadding = 4.dp
-
             Box(
                 Modifier
                     .width(onePx)
@@ -176,8 +174,8 @@ fun ActivityColorPickerSheet(
             LazyColumn(
                 state = scrollState,
                 contentPadding = PaddingValues(
-                    start = dividerPadding,
-                    end = circlesListHPadding - circlePadding
+                    start = dividerPadding - circlePadding,
+                    end = sheetHPaddings - circlePadding
                 )
             ) {
 
