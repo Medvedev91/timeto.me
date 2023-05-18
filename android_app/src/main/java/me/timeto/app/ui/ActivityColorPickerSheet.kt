@@ -106,8 +106,8 @@ fun ActivityColorPickerSheet(
                     Text(
                         text = state.otherActivitiesTitle,
                         modifier = Modifier
-                            .padding(start = 4.dp, top = 20.dp),
-                        fontSize = 12.sp,
+                            .padding(start = 4.dp, top = 24.dp),
+                        fontSize = 11.sp,
                         fontWeight = FontWeight.Medium,
                         color = c.textSecondary,
                     )
