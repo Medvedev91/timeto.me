@@ -28,8 +28,6 @@ class ActivityColorPickerSheetVM(
         class NewActivity(
             val emoji: String?,
         ) : MenuButton()
-
-        class RgbSlider : MenuButton()
     }
 
     class ColorItem(
@@ -84,7 +82,6 @@ class ActivityColorPickerSheetVM(
             }
             if (initData.activityId == null)
                 list.add(MenuButton.NewActivity(initData.activityEmoji))
-            list.add(MenuButton.RgbSlider())
             return@run list.chunked(CIRCLES_IN_ROW)
         }
 

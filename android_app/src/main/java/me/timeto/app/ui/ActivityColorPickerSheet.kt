@@ -132,21 +132,6 @@ fun ActivityColorPickerSheet(
                                         },
                                     )
                                 }
-                                is ActivityColorPickerSheetVM.MenuButton.RgbSlider -> {
-                                    Icon(
-                                        painterResource(R.drawable.sf_slider_horizontal_3_medium_medium),
-                                        contentDescription = "Rgb Slider",
-                                        modifier = Modifier
-                                            .align(Alignment.CenterVertically)
-                                            .size(circleSize)
-                                            .clip(RoundedCornerShape(99.dp))
-                                            .clickable {
-                                                vm.toggleIsRgbSlidersShowed()
-                                            }
-                                            .padding(11.dp),
-                                        tint = c.textSecondary,
-                                    )
-                                }
                             }
                         }
 
