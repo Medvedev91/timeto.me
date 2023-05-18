@@ -5,5 +5,5 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun DividerBg2() {
-    Divider(color = c.dividerBackground2)
+    Divider(color = c.dividerBg2)
 }

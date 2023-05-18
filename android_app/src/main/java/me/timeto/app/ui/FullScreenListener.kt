@@ -665,7 +665,7 @@ private fun TasksSheet(
         )
 
         Divider(
-            color = c.dividerBackground2,
+            color = c.dividerBg2,
             thickness = dividerHeight,
         )
 

@@ -249,7 +249,7 @@ fun TabTimerView() {
 
                             if (uiActivity.withTopDivider)
                                 Divider(
-                                    color = c.dividerBackground2,
+                                    color = c.dividerBg2,
                                     modifier = Modifier
                                         .padding(start = startPadding),
                                     thickness = 0.5.dp

@@ -33,7 +33,7 @@ class MyColors(
     val backgroundEditable: Color,
     val tabsText: Color,
     val tabsBackground: Color,
-    val dividerBackground2: Color,
+    val dividerBg2: Color,
     val timerBarBorder: Color,
     val timerBarBackground: Color,
     val calendarIconBg: Color,
@@ -63,7 +63,7 @@ private val myLightColors = MyColors(
     backgroundEditable = Color(0xFFf1f8e9), // Light Green 50
     tabsText = Color(0x99000000),
     tabsBackground = Color.White,
-    dividerBackground2 = Color(0x13000000),
+    dividerBg2 = Color(0x13000000),
     timerBarBorder = Color(0xFFDDDDDD),
     timerBarBackground = Color.White,
     calendarIconBg = Color.White,
@@ -83,7 +83,7 @@ private val myDarkColors = MyColors(
     backgroundEditable = Color(0xFF444444),
     tabsText = Color(0x77FFFFFF),
     tabsBackground = Color(0xFF191919), // 0xFF131313
-    dividerBackground2 = Color(0x19FFFFFF),
+    dividerBg2 = Color(0x19FFFFFF),
     timerBarBorder = Color(0xFF393939),
     timerBarBackground = Color(0xFF1C1C1E),
     calendarIconBg = Color(0x88202022),

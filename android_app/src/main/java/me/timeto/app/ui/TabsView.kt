@@ -46,7 +46,7 @@ fun TabsView() {
                 BottomNavigation(navController = navController)
                 Divider(
                     thickness = 0.5.dp,
-                    color = c.dividerBackground2,
+                    color = c.dividerBg2,
                     modifier = Modifier.alpha(0.8f)
                 )
             }

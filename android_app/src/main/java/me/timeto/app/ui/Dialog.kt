@@ -113,7 +113,7 @@ object Dialog {
                                 .align(Alignment.BottomCenter)
                                 .fillMaxWidth()
                                 .height(0.8.dp),
-                            color = c.dividerBackground2,
+                            color = c.dividerBg2,
                         )
                     }
                 }

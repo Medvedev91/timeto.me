@@ -123,7 +123,7 @@ fun ActivityColorPickerSheet(
                     .width(onePx)
                     .padding(vertical = circlePadding)
                     .fillMaxHeight()
-                    .background(c.dividerBackground2)
+                    .background(c.dividerBg2)
             )
 
             LazyColumn(

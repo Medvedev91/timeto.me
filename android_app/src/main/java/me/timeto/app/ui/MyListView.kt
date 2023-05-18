@@ -139,7 +139,7 @@ fun MyListView__ItemView(
 
         if (withTopDivider)
             Divider(
-                color = c.dividerBackground2,
+                color = c.dividerBg2,
                 modifier = Modifier
                     .padding(dividerPadding),
                 thickness = 0.5.dp,
