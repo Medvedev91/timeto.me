@@ -3,6 +3,7 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.DI
+import me.timeto.shared.textFeatures
 
 private const val CIRCLES_IN_ROW = 6
 
@@ -17,14 +18,10 @@ class ActivityColorPickerSheetVM(
         val selectedColor: ColorRgba,
     )
 
-    sealed class MenuButton {
-
-        class Activity(
-            val id: Int,
-            val emoji: String,
-            val colorRgba: ColorRgba,
-        ) : MenuButton()
-    }
+    class ActivityUI(
+        val text: String,
+        val colorRgba: ColorRgba,
+    )
 
     class ColorItem(
         val colorRgba: ColorRgba,
@@ -63,19 +60,11 @@ class ActivityColorPickerSheetVM(
             }
             .chunked(CIRCLES_IN_ROW)
 
-        val menuButtonGroups: List<List<MenuButton>> = run {
-            val list = mutableListOf<MenuButton>()
-            DI.activitiesSorted.forEach {
-                list.add(
-                    MenuButton.Activity(
-                        id = it.id,
-                        emoji = it.emoji,
-                        colorRgba = if (it.id == initData.activityId)
-                            selectedColor else it.getColorRgba()
-                    )
-                )
-            }
-            return@run list.chunked(CIRCLES_IN_ROW)
+        val allActivities: List<ActivityUI> = DI.activitiesSorted.map {
+            ActivityUI(
+                text = "${it.emoji} ${it.name.textFeatures().textNoFeatures}",
+                colorRgba = it.getColorRgba(),
+            )
         }
 
         private fun Float.toHex() = toInt().toString(16).padStart(2, '0')

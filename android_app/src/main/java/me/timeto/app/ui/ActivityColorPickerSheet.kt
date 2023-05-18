@@ -39,8 +39,6 @@ private val sheetHPaddings = 22.dp
 private val circlePadding = 4.dp
 private val dividerPadding = (sheetHPaddings.value / GOLDEN_RATIO).dp
 
-private val circlePaddingValues = PaddingValues(vertical = 4.dp)
-
 @Composable
 fun ActivityColorPickerSheet(
     layer: WrapperView.Layer,
@@ -86,7 +84,6 @@ fun ActivityColorPickerSheet(
                 Text(
                     text = state.title,
                     modifier = Modifier
-                        .offset(x = (-1).dp)
                         .clip(MySquircleShape())
                         .background(state.selectedColor.toColor())
                         .padding(horizontal = 12.dp, vertical = 6.dp),
@@ -98,36 +95,26 @@ fun ActivityColorPickerSheet(
                 Text(
                     text = state.otherActivitiesTitle,
                     modifier = Modifier
-                        .padding(top = 16.dp),
+                        .padding(start = 4.dp, top = 20.dp),
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Medium,
                     color = c.textSecondary,
                 )
 
-                state.menuButtonGroups.forEach { menuButtons ->
-                    Row {
-                        menuButtons.forEach { menuButton ->
-
-                            if (menuButtons.first() != menuButton)
-                                SpacerW1()
-
-                            when (menuButton) {
-                                is ActivityColorPickerSheetVM.MenuButton.Activity -> {
-                                    ActivityColorPickerSheet__CircleView(
-                                        color = menuButton.colorRgba.toColor(),
-                                        size = circleSize,
-                                        padding = circlePaddingValues,
-                                        content = {
-                                            Text(
-                                                text = menuButton.emoji,
-                                                fontSize = 16.sp,
-                                            )
-                                        },
-                                    )
-                                }
-                            }
-                        }
-                    }
+                state.allActivities.forEach { activityUI ->
+                    Text(
+                        text = activityUI.text,
+                        modifier = Modifier
+                            .padding(top = 8.dp)
+                            .clip(MySquircleShape(len = 40f))
+                            .background(activityUI.colorRgba.toColor())
+                            .padding(horizontal = 8.dp, vertical = 4.dp),
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.Light,
+                        color = c.white,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
                 }
             }
 
