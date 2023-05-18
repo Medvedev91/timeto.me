@@ -55,6 +55,7 @@ fun ActivityColorPickerSheet(
     ) {
 
         val circleScrollState = rememberLazyListState()
+        val activitiesScrollState = rememberScrollState()
 
         Sheet.HeaderView(
             onCancel = { layer.close() },
@@ -68,7 +69,7 @@ fun ActivityColorPickerSheet(
             layer.close()
         }
 
-        DividerBg2(isVisible = (circleScrollState.canScrollBackward))
+        DividerBg2(isVisible = circleScrollState.canScrollBackward || activitiesScrollState.canScrollBackward)
 
         Row(
             modifier = Modifier
@@ -77,7 +78,8 @@ fun ActivityColorPickerSheet(
 
             Column(
                 modifier = Modifier
-                    .padding(top = 1.dp)
+                    .verticalScroll(state = activitiesScrollState)
+                    .padding(top = 4.dp)
                     .padding(start = sheetHPaddings, end = dividerPadding)
                     .weight(1f),
             ) {
@@ -117,6 +119,8 @@ fun ActivityColorPickerSheet(
                         overflow = TextOverflow.Ellipsis,
                     )
                 }
+
+                Box(Modifier.navigationBarsPadding())
             }
 
             Box(
