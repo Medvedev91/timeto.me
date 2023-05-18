@@ -206,7 +206,7 @@ fun ActivityColorPickerSheet(
                         .navigationBarsPadding(),
                 ) {
 
-                    Divider(color = c.dividerBackground2)
+                    DividerBg2()
 
                     Box(
                         modifier = Modifier
