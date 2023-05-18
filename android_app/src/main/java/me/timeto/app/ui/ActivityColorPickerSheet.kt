@@ -34,7 +34,7 @@ import me.timeto.shared.GOLDEN_RATIO
 import me.timeto.shared.vm.ActivityColorPickerSheetVM
 
 private val circleSize = 40.dp
-private val sheetHPaddings = 22.dp
+private val sheetHPaddings = 20.dp
 
 private val circlePadding = 4.dp
 private val dividerPadding = (sheetHPaddings.value / GOLDEN_RATIO).dp
