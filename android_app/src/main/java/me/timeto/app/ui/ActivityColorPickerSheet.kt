@@ -62,12 +62,13 @@ fun ActivityColorPickerSheet(
             layer.close()
         }
 
-        Column {
+        Row {
 
             Column(
                 modifier = Modifier
                     .padding(bottom = 8.dp)
-                    .padding(horizontal = circlesListHPadding),
+                    .padding(horizontal = circlesListHPadding)
+                    .weight(1f),
             ) {
                 state.menuButtonGroups.forEach { menuButtons ->
                     Row {
@@ -163,7 +164,7 @@ fun ActivityColorPickerSheet(
                 modifier = Modifier
                     .weight(1f),
                 state = scrollState,
-                contentPadding = PaddingValues(horizontal = circlesListHPadding, vertical = 8.dp)
+                contentPadding = PaddingValues(end = circlesListHPadding)
             ) {
 
                 state.colorGroups.forEach { colors ->
