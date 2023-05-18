@@ -12,9 +12,7 @@ class ActivityColorPickerSheetVM(
 ) : __VM<ActivityColorPickerSheetVM.State>() {
 
     class InitData(
-        val activityId: Int?,
         val title: String,
-        val activityEmoji: String?,
         val selectedColor: ColorRgba,
     )
 
