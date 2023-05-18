@@ -48,10 +48,11 @@ class ActivityColorPickerSheetVM(
         val isRgbSlidersAnimated: Boolean,
         val initData: InitData,
     ) {
-        val headerTitle = initData.title
+        val headerTitle = "Color"
         val doneTitle = "Done"
 
         val title = initData.title
+        val otherActivitiesTitle = "OTHER ACTIVITIES"
 
         val circlesInRow = CIRCLES_IN_ROW
         val selectedColor = ColorRgba(r.toInt(), g.toInt(), b.toInt())
