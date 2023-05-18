@@ -69,7 +69,7 @@ fun ActivityColorPickerSheet(
             layer.close()
         }
 
-        DividerBg2(isVisible = circleScrollState.canScrollBackward || activitiesScrollState.canScrollBackward)
+        DividerBg2(isVisible = (circleScrollState.canScrollBackward || activitiesScrollState.canScrollBackward))
 
         Row(
             modifier = Modifier
