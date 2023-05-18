@@ -116,8 +116,8 @@ fun ActivityColorPickerSheet(
                         Text(
                             text = activityUI.text,
                             modifier = Modifier
-                                .padding(top = 8.dp)
-                                .clip(MySquircleShape(len = 50f))
+                                .padding(top = 6.dp)
+                                .clip(MySquircleShape())
                                 .background(activityUI.colorRgba.toColor())
                                 .padding(start = 7.dp, end = 8.dp, top = 4.dp, bottom = 4.5.dp),
                             fontSize = 13.sp,
