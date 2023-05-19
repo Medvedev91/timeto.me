@@ -156,34 +156,35 @@ fun ActivityColorPickerSheet(
                 state.colorGroups.forEach { colors ->
                     Row {
                         colors.forEach { colorItem ->
-                            Row(
+                            Box(
                                 modifier = Modifier
                                     .size(circleSize + circlePadding * 2),
-                                horizontalArrangement = Arrangement.Center,
+                                contentAlignment = Alignment.Center,
                             ) {
 
                                 ActivityColorPickerSheet__CircleView(
                                     color = colorItem.colorRgba.toColor(),
                                     size = circleSize,
-                                    content = {
-                                        AnimatedVisibility(
-                                            visible = colorItem.isSelected,
-                                            enter = fadeIn(),
-                                            exit = fadeOut(),
-                                        ) {
-                                            Icon(
-                                                Icons.Rounded.Done,
-                                                contentDescription = "Selected",
-                                                modifier = Modifier
-                                                    .size(24.dp),
-                                                tint = c.white,
-                                            )
-                                        }
-                                    },
                                     onClick = {
                                         vm.upColorRgba(colorItem.colorRgba)
                                     },
                                 )
+
+                                Row {
+                                    AnimatedVisibility(
+                                        visible = colorItem.isSelected,
+                                        enter = fadeIn(),
+                                        exit = fadeOut(),
+                                    ) {
+                                        Icon(
+                                            Icons.Rounded.Done,
+                                            contentDescription = "Selected",
+                                            modifier = Modifier
+                                                .size(24.dp),
+                                            tint = c.white,
+                                        )
+                                    }
+                                }
                             }
                         }
                     }
@@ -277,7 +278,6 @@ fun ActivityColorPickerSheet(
 fun ActivityColorPickerSheet__CircleView(
     color: Color,
     size: Dp,
-    content: (@Composable () -> Unit)? = null,
     onClick: (() -> Unit)? = null,
 ) {
     Box(
@@ -292,10 +292,7 @@ fun ActivityColorPickerSheet__CircleView(
                     Modifier.clickable { onClick() }
                 else Modifier
             ),
-        contentAlignment = Alignment.Center,
-    ) {
-        content?.invoke()
-    }
+    )
 }
 
 @Composable
