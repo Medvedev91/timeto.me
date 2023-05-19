@@ -36,7 +36,7 @@ class ActivityColorPickerSheetVM(
         val isRgbSlidersAnimated: Boolean,
         val initData: InitData,
     ) {
-        val headerTitle = "Color"
+        val headerTitle = "Activity Color"
         val doneTitle = "Done"
 
         val title = initData.title
