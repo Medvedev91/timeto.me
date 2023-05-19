@@ -155,37 +155,31 @@ fun ActivityColorPickerSheet(
                 state.colorGroups.forEach { colors ->
                     Row {
                         colors.forEach { colorItem ->
-                            Box(
+                            Row(
                                 modifier = Modifier
-                                    .size(circleSize + circlePadding * 2),
-                                contentAlignment = Alignment.Center,
+                                    .size(circleSize + (circlePadding * 2))
+                                    .padding(circlePadding)
+                                    .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
+                                    .clip(RoundedCornerShape(99.dp))
+                                    .background(colorItem.colorRgba.toColor())
+                                    .clickable {
+                                        vm.upColorRgba(colorItem.colorRgba)
+                                    },
+                                horizontalArrangement = Arrangement.Center,
+                                verticalAlignment = Alignment.CenterVertically,
                             ) {
-
-                                Box(
-                                    modifier = Modifier
-                                        .size(circleSize)
-                                        .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
-                                        .clip(RoundedCornerShape(99.dp))
-                                        .background(colorItem.colorRgba.toColor())
-                                        .clickable {
-                                            vm.upColorRgba(colorItem.colorRgba)
-                                        }
-                                )
-
-                                Row {
-                                    AnimatedVisibility(
-                                        visible = colorItem.isSelected,
-                                        enter = fadeIn(),
-                                        exit = fadeOut(),
-                                    ) {
-                                        Icon(
-                                            Icons.Rounded.Done,
-                                            contentDescription = "Selected",
-                                            modifier = Modifier
-                                                .size(24.dp),
-                                            tint = c.white,
-                                        )
-                                    }
+                                AnimatedVisibility(
+                                    visible = colorItem.isSelected,
+                                    enter = fadeIn(),
+                                    exit = fadeOut(),
+                                ) {
+                                    Icon(
+                                        Icons.Rounded.Done,
+                                        contentDescription = "Selected",
+                                        modifier = Modifier
+                                            .size(24.dp),
+                                        tint = c.white,
+                                    )
                                 }
                             }
                         }
