@@ -3,26 +3,19 @@ import shared
 
 struct ColorPickerSheet: View {
 
-    @State private var vm: ColorPickerSheetVM
+    @State private var vm: ActivityColorPickerSheetVM
     @Binding private var isPresented: Bool
-
-    private let selectedColor: ColorRgba
-    private let text: String
     private let onPick: (ColorRgba) -> Void
 
     @State private var sheetHeaderScroll = 0
 
     init(
             isPresented: Binding<Bool>,
-            selectedColor: ColorRgba,
-            text: String,
+            initData: ActivityColorPickerSheetVM.InitData,
             onPick: @escaping (ColorRgba) -> Void
     ) {
-        vm = ColorPickerSheetVM(selectedColor: selectedColor, text: text)
+        vm = ActivityColorPickerSheetVM(initData: initData)
         _isPresented = isPresented
-
-        self.selectedColor = selectedColor
-        self.text = text
         self.onPick = onPick
     }
 
@@ -37,7 +30,7 @@ struct ColorPickerSheet: View {
                     isDoneEnabled: true,
                     scrollToHeader: sheetHeaderScroll
             ) {
-                onPick(state.getSelectedColor())
+                onPick(state.selectedColor)
                 isPresented = false
             }
 

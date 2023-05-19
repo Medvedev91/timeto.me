@@ -135,8 +135,7 @@ struct ActivityFormSheet: View {
                                 .sheetEnv(isPresented: $isColorPickerSheetPresented) {
                                     ColorPickerSheet(
                                             isPresented: $isColorPickerSheetPresented,
-                                            selectedColor: state.colorRgba,
-                                            text: state.colorPickerSheetText
+                                            initData: vm.buildColorPickerInitData()
                                     ) { colorRgba in
                                         vm.upColorRgba(colorRgba: colorRgba)
                                     }
