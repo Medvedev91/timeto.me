@@ -197,6 +197,16 @@ extension Double {
     func min(_ test: Double) -> Double {
         self < test ? self : test
     }
+
+    //////
+
+    func goldenRatioUp() -> Double {
+        self * Double(UtilsKt.GOLDEN_RATIO)
+    }
+
+    func goldenRatioDown() -> Double {
+        self / Double(UtilsKt.GOLDEN_RATIO)
+    }
 }
 
 ///
