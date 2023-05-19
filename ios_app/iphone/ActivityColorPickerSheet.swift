@@ -48,11 +48,35 @@ struct ActivityColorPickerSheet: View {
                     Row {
 
                         Column {
+
+                            Padding(vertical: circlePadding)
+
+                            Column {
+
+                                Spacer()
+
+                                Text(state.title)
+                                        .font(.system(size: 17, weight: .medium))
+                                        .foregroundColor(.white)
+                                        .lineLimit(1)
+                                        .padding(.leading, 11)
+                                        .padding(.trailing, 13)
+                                        .padding(.vertical, 8)
+                                        .background(
+                                                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                                        .fill(state.selectedColor.toColor())
+                                        )
+
+                                Spacer()
+                            }
+                                    .frame(height: circleSize)
+
                             Text("todo")
                             Text("todo 2")
                         }
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.leading, sheetHPaddings)
+                                .padding(.trailing, dividerPadding)
 
                         ZStack {}
                                 .frame(width: onePx)
