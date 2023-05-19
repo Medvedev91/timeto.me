@@ -14,6 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.R
+import me.timeto.app.onePx
 import me.timeto.app.rememberVM
 import me.timeto.app.toColor
 import me.timeto.shared.db.ActivityModel
@@ -132,12 +133,14 @@ fun ActivityFormSheet(
                 MyListView__ItemView__ButtonView(
                     text = state.colorTitle,
                     rightView = {
-                        Box(Modifier.padding(end = 12.dp)) {
-                            ActivityColorPickerSheet__CircleView(
-                                color = state.colorRgba.toColor(),
-                                size = 30.dp,
-                            )
-                        }
+                        Box(
+                            modifier = Modifier
+                                .padding(end = 12.dp)
+                                .size(30.dp)
+                                .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
+                                .clip(RoundedCornerShape(99.dp))
+                                .background(state.colorRgba.toColor())
+                        )
                     }
                 ) {
                     Sheet.show { layer ->

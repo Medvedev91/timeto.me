@@ -21,7 +21,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.goldenRatioDown
@@ -162,12 +161,15 @@ fun ActivityColorPickerSheet(
                                 contentAlignment = Alignment.Center,
                             ) {
 
-                                ActivityColorPickerSheet__CircleView(
-                                    color = colorItem.colorRgba.toColor(),
-                                    size = circleSize,
-                                    onClick = {
-                                        vm.upColorRgba(colorItem.colorRgba)
-                                    },
+                                Box(
+                                    modifier = Modifier
+                                        .size(circleSize)
+                                        .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
+                                        .clip(RoundedCornerShape(99.dp))
+                                        .background(colorItem.colorRgba.toColor())
+                                        .clickable {
+                                            vm.upColorRgba(colorItem.colorRgba)
+                                        }
                                 )
 
                                 Row {
@@ -271,28 +273,6 @@ fun ActivityColorPickerSheet(
             }
         }
     }
-}
-
-@Composable
-// todo refactor
-fun ActivityColorPickerSheet__CircleView(
-    color: Color,
-    size: Dp,
-    onClick: (() -> Unit)? = null,
-) {
-    Box(
-        Modifier
-            .size(size)
-            .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
-            .clip(RoundedCornerShape(99.dp))
-            .background(color)
-            // TRICK clickable(false) overrides parent click
-            .then(
-                if (onClick != null)
-                    Modifier.clickable { onClick() }
-                else Modifier
-            ),
-    )
 }
 
 @Composable
