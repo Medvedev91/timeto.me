@@ -14,6 +14,7 @@ struct ActivityColorPickerSheet: View {
     private let onPick: (ColorRgba) -> Void
 
     @State private var circlesScroll = 0
+    @State private var activitiesScroll = 0
 
     init(
             isPresented: Binding<Bool>,
@@ -42,7 +43,24 @@ struct ActivityColorPickerSheet: View {
 
             HStack(spacing: 0) {
 
-                Spacer(minLength: 0)
+                ScrollViewWithVListener(showsIndicators: false, vScroll: $activitiesScroll) {
+
+                    Row {
+
+                        Column {
+                            Text("todo")
+                            Text("todo 2")
+                        }
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.leading, sheetHPaddings)
+
+                        ZStack {}
+                                .frame(width: onePx)
+                                .frame(maxHeight: .infinity)
+                                .background(Color(.systemGray4))
+                                .padding(.top, circlePadding)
+                    }
+                }
 
                 ScrollViewWithVListener(showsIndicators: false, vScroll: $circlesScroll) {
 
@@ -83,6 +101,7 @@ struct ActivityColorPickerSheet: View {
 
                         ZStack {}.frame(height: 8)
                     }
+                            .padding(.leading, dividerPadding - circlePadding)
                             .padding(.trailing, sheetHPaddings - circlePadding)
                 }
             }
