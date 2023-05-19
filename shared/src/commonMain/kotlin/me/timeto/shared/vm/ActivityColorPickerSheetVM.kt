@@ -47,7 +47,7 @@ class ActivityColorPickerSheetVM(
         val rgbText = "RGB: ${r.toInt()},${g.toInt()},${b.toInt()}" + " / " +
                       "#${r.toHex()}${g.toHex()}${b.toHex()}".uppercase()
 
-        val colorGroups: List<List<ColorItem>> = appleColors
+        val colorGroups: List<List<ColorItem>> = AppleColors.all
             .map { listOf(it.light, it.default, it.dark) }
             .flatten()
             .map {
@@ -98,19 +98,3 @@ class ActivityColorPickerSheetVM(
         state.update { it.copy(isRgbSlidersShowed = !it.isRgbSlidersShowed) }
     }
 }
-
-// Mint, Teal and Cyan are almost the
-// same. Use Teal only, it is brighter.
-private val appleColors = listOf(
-    AppleColors.red,
-    AppleColors.orange,
-    AppleColors.yellow,
-    AppleColors.green,
-    AppleColors.teal,
-    AppleColors.blue,
-    AppleColors.indigo,
-    AppleColors.purple,
-    AppleColors.pink,
-    AppleColors.brown,
-    AppleColors.gray
-)
