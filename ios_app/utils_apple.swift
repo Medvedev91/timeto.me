@@ -71,7 +71,7 @@ func is12HoursFormat() -> Bool {
 }
 
 ///
-/// Column / Row
+/// Template Views
 
 struct Column<Content: View>: View {
 
@@ -92,6 +92,18 @@ struct Row<Content: View>: View {
         HStack(spacing: 0) {
             content()
         }
+    }
+}
+
+struct Padding: View {
+
+    var horizontal: Double = 0
+    var vertical: Double = 0
+
+    var body: some View {
+        ZStack {}
+                .frame(width: horizontal)
+                .frame(height: vertical)
     }
 }
 
