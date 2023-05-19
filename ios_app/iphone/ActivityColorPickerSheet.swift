@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-struct ColorPickerSheet: View {
+struct ActivityColorPickerSheet: View {
 
     @State private var vm: ActivityColorPickerSheetVM
     @Binding private var isPresented: Bool

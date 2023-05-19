@@ -65,7 +65,7 @@
 		31821AAC3BB87DE0D8E46697 /* TabTasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182118FAB48EDF7FE78201B /* TabTasksView.swift */; };
 		31821AFA9798F3945CA34D09 /* ActivityPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821A15532BF8D598665449 /* ActivityPickerSheet.swift */; };
 		31821B2BC67AB0C1C5A986D1 /* TabTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E772C640720D7220928 /* TabTimerView.swift */; };
-		31821BC7F849A5C918F61175 /* ColorPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318211488ABF627A2A9935A7 /* ColorPickerSheet.swift */; };
+		31821BC7F849A5C918F61175 /* ActivityColorPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318211488ABF627A2A9935A7 /* ActivityColorPickerSheet.swift */; };
 		31821BCAB8BA795D691FADF8 /* MyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821D7654D0C105DFC60DDD /* MyListView.swift */; };
 		31821C4D6DA83EF42B805658 /* MySpacerSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318212FFE80A0856A0A88DCF /* MySpacerSize.swift */; };
 		31821D021B3DC7EACD7E4EAA /* ShortcutsPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821F858C3344296F2CB750 /* ShortcutsPickerSheet.swift */; };
@@ -123,7 +123,7 @@
 		2CB73DE2292FACE00053B2D6 /* SearchEmojiSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEmojiSheet.swift; sourceTree = "<group>"; };
 		3182106A0DA4A0D8844CFA11 /* ShortcutFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutFormSheet.swift; sourceTree = "<group>"; };
 		318210AB991EB1C25EA1B565 /* TimetoSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetoSheet.swift; sourceTree = "<group>"; };
-		318211488ABF627A2A9935A7 /* ColorPickerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPickerSheet.swift; sourceTree = "<group>"; };
+		318211488ABF627A2A9935A7 /* ActivityColorPickerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityColorPickerSheet.swift; sourceTree = "<group>"; };
 		31821155EAD516A3967CFF52 /* MyDivider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDivider.swift; sourceTree = "<group>"; };
 		3182118D8EA3E0D889D4FDC3 /* utils_ios.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = utils_ios.swift; sourceTree = "<group>"; };
 		3182118DB415E858D0B449DB /* ChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
@@ -327,7 +327,7 @@
 				31821F858C3344296F2CB750 /* ShortcutsPickerSheet.swift */,
 				31821F29E288957ABB3DF794 /* TextFeaturesTimerFormView.swift */,
 				318218084C84D03DF3D6BEB6 /* TextFeaturesTriggersView.swift */,
-				318211488ABF627A2A9935A7 /* ColorPickerSheet.swift */,
+				318211488ABF627A2A9935A7 /* ActivityColorPickerSheet.swift */,
 			);
 			path = iphone;
 			sourceTree = "<group>";
@@ -544,7 +544,7 @@
 				31821D021B3DC7EACD7E4EAA /* ShortcutsPickerSheet.swift in Sources */,
 				3182197D9BDC28A7649BA7E1 /* TextFeaturesTimerFormView.swift in Sources */,
 				318210D7F973F8F13061DAD6 /* TextFeaturesTriggersView.swift in Sources */,
-				31821BC7F849A5C918F61175 /* ColorPickerSheet.swift in Sources */,
+				31821BC7F849A5C918F61175 /* ActivityColorPickerSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
