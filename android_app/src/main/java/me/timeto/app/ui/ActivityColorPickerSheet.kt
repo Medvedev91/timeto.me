@@ -33,7 +33,7 @@ import me.timeto.shared.vm.ActivityColorPickerSheetVM
 
 private val circleSize = 40.dp
 private val circlePadding = 4.dp
-private val sheetHPaddings = 20.dp
+private val sheetHPaddings = MyListView.PADDING_OUTER_HORIZONTAL
 private val dividerPadding = (sheetHPaddings.value / GOLDEN_RATIO).dp
 
 @Composable
@@ -273,6 +273,7 @@ fun ActivityColorPickerSheet(
 }
 
 @Composable
+// todo refactor
 fun ActivityColorPickerSheet__CircleView(
     color: Color,
     size: Dp,
