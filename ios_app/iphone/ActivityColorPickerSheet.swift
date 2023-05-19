@@ -71,7 +71,7 @@ struct ActivityColorPickerSheet: View {
                                                                 .foregroundColor(.white)
                                                     }
                                                 }
-                                                        .padding(.vertical, 4)
+                                                        .padding(.all, circlePadding)
                                             }
                                     )
                                             .frame(width: circleCellSize, height: circleCellSize)
