@@ -264,7 +264,7 @@ object AppleColors {
     val brown = AppleColor("Brown", ColorRgba(165, 132, 94), ColorRgba(181, 148, 105), ColorRgba(127, 101, 69))
 
     // Custom Gray
-    val gray = AppleColor("Brown", ColorRgba(142, 142, 147), ColorRgba(174, 174, 178), ColorRgba(72, 72, 74))
+    val gray = AppleColor("Gray", ColorRgba(142, 142, 147), ColorRgba(174, 174, 178), ColorRgba(72, 72, 74))
 
     val all = listOf(red, orange, yellow, green, mint, teal, cyan, blue, indigo, purple, pink, brown, gray)
 
