@@ -277,13 +277,11 @@ fun ActivityColorPickerSheet(
 fun ActivityColorPickerSheet__CircleView(
     color: Color,
     size: Dp,
-    padding: PaddingValues = PaddingValues(),
     content: (@Composable () -> Unit)? = null,
     onClick: (() -> Unit)? = null,
 ) {
     Box(
         Modifier
-            .padding(padding)
             .size(size)
             .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
             .clip(RoundedCornerShape(99.dp))

@@ -132,11 +132,12 @@ fun ActivityFormSheet(
                 MyListView__ItemView__ButtonView(
                     text = state.colorTitle,
                     rightView = {
-                        ActivityColorPickerSheet__CircleView(
-                            color = state.colorRgba.toColor(),
-                            padding = PaddingValues(end = 12.dp),
-                            size = 30.dp,
-                        )
+                        Box(Modifier.padding(end = 12.dp)) {
+                            ActivityColorPickerSheet__CircleView(
+                                color = state.colorRgba.toColor(),
+                                size = 30.dp,
+                            )
+                        }
                     }
                 ) {
                     Sheet.show { layer ->
