@@ -24,17 +24,17 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import me.timeto.app.goldenRatioDown
 import me.timeto.app.onePx
 import me.timeto.app.rememberVM
 import me.timeto.app.toColor
 import me.timeto.shared.ColorRgba
-import me.timeto.shared.GOLDEN_RATIO
 import me.timeto.shared.vm.ActivityColorPickerSheetVM
 
 private val circleSize = 40.dp
 private val circlePadding = 4.dp
 private val sheetHPaddings = MyListView.PADDING_OUTER_HORIZONTAL
-private val dividerPadding = (sheetHPaddings.value / GOLDEN_RATIO).dp
+private val dividerPadding = sheetHPaddings.goldenRatioDown()
 
 @Composable
 fun ActivityColorPickerSheet(
