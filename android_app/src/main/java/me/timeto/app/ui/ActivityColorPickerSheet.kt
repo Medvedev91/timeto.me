@@ -99,8 +99,9 @@ fun ActivityColorPickerSheet(
                             modifier = Modifier
                                 .clip(MySquircleShape(len = 65f))
                                 .background(state.selectedColor.toColor())
-                                .padding(start = 11.dp, end = 12.dp, top = 8.dp, bottom = 8.dp),
+                                .padding(start = 11.dp, end = 13.dp, top = 8.dp, bottom = 8.dp),
                             color = c.white,
+                            fontWeight = FontWeight.Medium,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                         )
