@@ -29,6 +29,8 @@ val onePx = pxToDp(1).dp
 
 fun Dp.max(dp: Dp) = if (this > dp) this else dp
 fun Dp.min(dp: Dp) = if (this < dp) this else dp
+fun Dp.goldenRatioUp() = this * GOLDEN_RATIO
+fun Dp.goldenRatioDown() = this / GOLDEN_RATIO
 
 fun MutableState<Boolean>.setTrue() {
     value = true
