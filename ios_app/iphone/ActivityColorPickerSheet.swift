@@ -11,7 +11,7 @@ struct ActivityColorPickerSheet: View {
     @Binding private var isPresented: Bool
     private let onPick: (ColorRgba) -> Void
 
-    @State private var sheetHeaderScroll = 0
+    @State private var circlesScroll = 0
 
     init(
             isPresented: Binding<Bool>,
@@ -32,7 +32,7 @@ struct ActivityColorPickerSheet: View {
                     title: state.headerTitle,
                     doneText: state.doneTitle,
                     isDoneEnabled: true,
-                    scrollToHeader: sheetHeaderScroll
+                    scrollToHeader: circlesScroll
             ) {
                 onPick(state.selectedColor)
                 isPresented = false
@@ -42,7 +42,7 @@ struct ActivityColorPickerSheet: View {
 
                 Spacer(minLength: 0)
 
-                ScrollViewWithVListener(showsIndicators: false, vScroll: $sheetHeaderScroll) {
+                ScrollViewWithVListener(showsIndicators: false, vScroll: $circlesScroll) {
 
                     VStack(spacing: 0) {
 
