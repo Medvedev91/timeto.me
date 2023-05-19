@@ -7,8 +7,6 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -54,7 +52,7 @@ fun ActivityColorPickerSheet(
             .background(c.background2)
     ) {
 
-        val circleScrollState = rememberLazyListState()
+        val circleScrollState = rememberScrollState()
         val activitiesScrollState = rememberScrollState()
 
         Sheet.HeaderView(
@@ -145,68 +143,65 @@ fun ActivityColorPickerSheet(
                 )
             }
 
-            LazyColumn(
-                state = circleScrollState,
-                contentPadding = PaddingValues(
-                    top = 4.dp,
-                    start = dividerPadding - circlePadding,
-                    end = sheetHPaddings - circlePadding,
-                )
+            Column(
+                modifier = Modifier
+                    .verticalScroll(state = circleScrollState)
+                    .padding(
+                        top = 4.dp,
+                        start = dividerPadding - circlePadding,
+                        end = sheetHPaddings - circlePadding,
+                    ),
             ) {
 
                 state.colorGroups.forEach { colors ->
-                    item {
-                        Row {
-                            colors.forEach { colorItem ->
-                                Row(
-                                    modifier = Modifier
-                                        .size(circleSize + circlePadding * 2),
-                                    horizontalArrangement = Arrangement.Center,
-                                ) {
+                    Row {
+                        colors.forEach { colorItem ->
+                            Row(
+                                modifier = Modifier
+                                    .size(circleSize + circlePadding * 2),
+                                horizontalArrangement = Arrangement.Center,
+                            ) {
 
-                                    ActivityColorPickerSheet__CircleView(
-                                        color = colorItem.colorRgba.toColor(),
-                                        size = circleSize,
-                                        content = {
-                                            AnimatedVisibility(
-                                                visible = colorItem.isSelected,
-                                                enter = fadeIn(),
-                                                exit = fadeOut(),
-                                            ) {
-                                                Icon(
-                                                    Icons.Rounded.Done,
-                                                    contentDescription = "Selected",
-                                                    modifier = Modifier
-                                                        .size(24.dp),
-                                                    tint = c.white,
-                                                )
-                                            }
-                                        },
-                                        onClick = {
-                                            vm.upColorRgba(colorItem.colorRgba)
-                                        },
-                                    )
-                                }
+                                ActivityColorPickerSheet__CircleView(
+                                    color = colorItem.colorRgba.toColor(),
+                                    size = circleSize,
+                                    content = {
+                                        AnimatedVisibility(
+                                            visible = colorItem.isSelected,
+                                            enter = fadeIn(),
+                                            exit = fadeOut(),
+                                        ) {
+                                            Icon(
+                                                Icons.Rounded.Done,
+                                                contentDescription = "Selected",
+                                                modifier = Modifier
+                                                    .size(24.dp),
+                                                tint = c.white,
+                                            )
+                                        }
+                                    },
+                                    onClick = {
+                                        vm.upColorRgba(colorItem.colorRgba)
+                                    },
+                                )
                             }
                         }
                     }
                 }
 
-                item {
-                    Text(
-                        text = "Custom",
-                        modifier = Modifier
-                            .padding(top = 2.dp, bottom = 8.dp)
-                            .navigationBarsPadding()
-                            .clip(MySquircleShape())
-                            .clickable {
-                                vm.toggleIsRgbSlidersShowed()
-                            }
-                            .padding(horizontal = circlePadding + 1.dp, vertical = 2.dp),
-                        color = c.blue,
-                        fontSize = 14.sp,
-                    )
-                }
+                Text(
+                    text = "Custom",
+                    modifier = Modifier
+                        .padding(top = 2.dp, bottom = 8.dp)
+                        .navigationBarsPadding()
+                        .clip(MySquircleShape())
+                        .clickable {
+                            vm.toggleIsRgbSlidersShowed()
+                        }
+                        .padding(horizontal = circlePadding + 1.dp, vertical = 2.dp),
+                    color = c.blue,
+                    fontSize = 14.sp,
+                )
             }
         }
 
