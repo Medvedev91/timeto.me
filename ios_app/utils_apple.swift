@@ -70,6 +70,33 @@ func is12HoursFormat() -> Bool {
     DateFormatter.dateFormat(fromTemplate: "j", options: 0, locale: Locale.current)?.range(of: "a") != nil
 }
 
+///
+/// Column / Row
+
+struct Column<Content: View>: View {
+
+    @ViewBuilder let content: () -> Content
+
+    var body: some View {
+        VStack(spacing: 0) {
+            content()
+        }
+    }
+}
+
+struct Row<Content: View>: View {
+
+    @ViewBuilder let content: () -> Content
+
+    var body: some View {
+        HStack(spacing: 0) {
+            content()
+        }
+    }
+}
+
+//////
+
 extension Date {
 
     /// For device time zone
