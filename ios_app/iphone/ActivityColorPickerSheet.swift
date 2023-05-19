@@ -35,7 +35,7 @@ struct ActivityColorPickerSheet: View {
                     title: state.headerTitle,
                     doneText: state.doneTitle,
                     isDoneEnabled: true,
-                    scrollToHeader: circlesScroll
+                    scrollToHeader: circlesScroll + activitiesScroll
             ) {
                 onPick(state.selectedColor)
                 isPresented = false
