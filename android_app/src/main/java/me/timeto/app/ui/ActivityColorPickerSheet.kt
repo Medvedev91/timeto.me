@@ -146,7 +146,6 @@ fun ActivityColorPickerSheet(
                 modifier = Modifier
                     .verticalScroll(state = circleScrollState)
                     .padding(
-                        top = 4.dp,
                         start = dividerPadding - circlePadding,
                         end = sheetHPaddings - circlePadding,
                     ),
@@ -189,7 +188,7 @@ fun ActivityColorPickerSheet(
                 Text(
                     text = "Custom",
                     modifier = Modifier
-                        .padding(top = 2.dp, bottom = 20.dp)
+                        .padding(top = 6.dp, bottom = 20.dp)
                         .navigationBarsPadding()
                         .clip(MySquircleShape())
                         .clickable {
