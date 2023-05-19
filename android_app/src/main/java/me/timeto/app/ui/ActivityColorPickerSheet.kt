@@ -95,7 +95,7 @@ fun ActivityColorPickerSheet(
                         Text(
                             text = state.title,
                             modifier = Modifier
-                                .clip(MySquircleShape(len = 65f))
+                                .clip(MySquircleShape(len = 70f))
                                 .background(state.selectedColor.toColor())
                                 .padding(start = 11.dp, end = 13.dp, top = 8.dp, bottom = 8.dp),
                             color = c.white,
