@@ -192,7 +192,7 @@ fun ActivityColorPickerSheet(
                 Text(
                     text = "Custom",
                     modifier = Modifier
-                        .padding(top = 2.dp, bottom = 8.dp)
+                        .padding(top = 2.dp, bottom = 20.dp)
                         .navigationBarsPadding()
                         .clip(MySquircleShape())
                         .clickable {
