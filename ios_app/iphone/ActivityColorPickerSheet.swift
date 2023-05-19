@@ -1,6 +1,10 @@
 import SwiftUI
 import shared
 
+private let circleSize = 42.0
+private let circlePadding = 4.0
+private let circleCellSize = circleSize + (circlePadding * 2.0)
+
 struct ActivityColorPickerSheet: View {
 
     @State private var vm: ActivityColorPickerSheetVM
@@ -34,25 +38,34 @@ struct ActivityColorPickerSheet: View {
                 isPresented = false
             }
 
-            ScrollViewWithVListener(showsIndicators: false, vScroll: $sheetHeaderScroll) {
-                VStack(spacing: 0) {
-                    ZStack {}.frame(height: 8)
-                    ForEach(state.colorGroups, id: \.self) { colors in
-                        HStack(spacing: 0) {
-                            ForEach(colors, id: \.self) { color in
-                                HStack(spacing: 0) {
-                                    Spacer(minLength: 0)
+            HStack(spacing: 0) {
+
+                Spacer(minLength: 0)
+
+                ScrollViewWithVListener(showsIndicators: false, vScroll: $sheetHeaderScroll) {
+
+                    VStack(spacing: 0) {
+
+                        ForEach(state.colorGroups, id: \.self) { colors in
+
+                            HStack(spacing: 0) {
+
+                                ForEach(colors, id: \.self) { colorItem in
+
                                     Button(
                                             action: {
-                                                vm.upColorRgba(colorRgba: color.colorRgba)
+                                                vm.upColorRgba(colorRgba: colorItem.colorRgba)
                                             },
                                             label: {
+
                                                 ZStack {
+
                                                     ColorPickerSheet__ColorCircleView(
-                                                            color: color.colorRgba.toColor(),
-                                                            size: 42
+                                                            color: colorItem.colorRgba.toColor(),
+                                                            size: circleSize
                                                     )
-                                                    if color.isSelected {
+
+                                                    if colorItem.isSelected {
                                                         Image(systemName: "checkmark")
                                                                 .font(.system(size: 18, weight: .medium))
                                                                 .foregroundColor(.white)
@@ -61,14 +74,15 @@ struct ActivityColorPickerSheet: View {
                                                         .padding(.vertical, 4)
                                             }
                                     )
-                                    Spacer(minLength: 0)
+                                            .frame(width: circleCellSize, height: circleCellSize)
                                 }
                             }
                         }
+
+                        ZStack {}.frame(height: 8)
                     }
-                    ZStack {}.frame(height: 8)
+                            .padding(.horizontal, 16)
                 }
-                        .padding(.horizontal, 16)
             }
         }
                 .background(Color.white)
