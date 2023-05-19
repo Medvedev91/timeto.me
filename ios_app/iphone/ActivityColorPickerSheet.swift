@@ -4,6 +4,8 @@ import shared
 private let circleSize = 42.0
 private let circlePadding = 4.0
 private let circleCellSize = circleSize + (circlePadding * 2.0)
+private let sheetHPaddings = MyListView.PADDING_OUTER_HORIZONTAL
+private let dividerPadding = sheetHPaddings.goldenRatioDown()
 
 struct ActivityColorPickerSheet: View {
 
@@ -81,7 +83,7 @@ struct ActivityColorPickerSheet: View {
 
                         ZStack {}.frame(height: 8)
                     }
-                            .padding(.horizontal, 16)
+                            .padding(.trailing, sheetHPaddings - circlePadding)
                 }
             }
         }
