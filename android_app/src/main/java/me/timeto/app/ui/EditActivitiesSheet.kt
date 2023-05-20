@@ -8,16 +8,17 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowDownward
+import androidx.compose.material.icons.rounded.ArrowUpward
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import me.timeto.app.R
 import me.timeto.app.rememberVM
 import me.timeto.shared.vm.SortActivitiesVM
 
@@ -81,7 +82,7 @@ fun EditActivitiesSheet(
                             )
 
                             Icon(
-                                painterResource(id = R.drawable.ic_round_arrow_downward_24),
+                                Icons.Rounded.ArrowDownward,
                                 "Down",
                                 tint = c.blue,
                                 modifier = Modifier
@@ -95,7 +96,7 @@ fun EditActivitiesSheet(
                             )
 
                             Icon(
-                                painterResource(id = R.drawable.ic_round_arrow_upward_24),
+                                Icons.Rounded.ArrowUpward,
                                 "Up",
                                 tint = c.blue,
                                 modifier = Modifier
