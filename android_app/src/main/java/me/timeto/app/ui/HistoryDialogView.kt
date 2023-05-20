@@ -14,6 +14,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.RemoveCircle
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -89,7 +90,7 @@ fun HistoryDialogView(
                                 AnimatedVisibility(isEditMode) {
                                     Row(modifier = Modifier.padding(top = 1.dp)) {
                                         Icon(
-                                            painterResource(id = R.drawable.ic_round_remove_circle_24),
+                                            Icons.Rounded.RemoveCircle,
                                             "Delete",
                                             tint = c.red,
                                             modifier = Modifier
