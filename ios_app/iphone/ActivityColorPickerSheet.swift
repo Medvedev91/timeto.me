@@ -28,7 +28,7 @@ struct ActivityColorPickerSheet: View {
 
     var body: some View {
 
-        VMView(vm: vm, stack: .VStack(spacing: 0)) { state in
+        VMView(vm: vm, stack: .VStack()) { state in
 
             SheetHeaderView(
                     onCancel: { isPresented.toggle() },
@@ -41,7 +41,7 @@ struct ActivityColorPickerSheet: View {
                 isPresented = false
             }
 
-            HStack(spacing: 0) {
+            HStack {
 
                 ScrollViewWithVListener(showsIndicators: false, vScroll: $activitiesScroll) {
 
@@ -101,11 +101,11 @@ struct ActivityColorPickerSheet: View {
 
                 ScrollViewWithVListener(showsIndicators: false, vScroll: $circlesScroll) {
 
-                    VStack(spacing: 0) {
+                    VStack {
 
                         ForEach(state.colorGroups, id: \.self) { colors in
 
-                            HStack(spacing: 0) {
+                            HStack {
 
                                 ForEach(colors, id: \.self) { colorItem in
 
