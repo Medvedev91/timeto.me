@@ -185,12 +185,53 @@ struct ActivityColorPickerSheet: View {
                             }
                                     .padding(.trailing, sheetHPadding + circlePadding + 2)
                         }
-                                .padding(.top, 8)
+                                .padding(.top, 12)
+                                .padding(.bottom, 8)
+
+                        ColorSliderView(value: Double(state.r), color: .red) { vm.upR(r: Float($0)) }
+                        ColorSliderView(value: Double(state.g), color: .green) { vm.upG(g: Float($0)) }
+                        ColorSliderView(value: Double(state.b), color: .blue) { vm.upB(b: Float($0)) }
                     }
                 }
             }
         }
                 .background(Color.white)
+    }
+}
+
+private struct ColorSliderView: View {
+
+    private let valueVM: Double
+    @State private var value: Double = 0
+    private let color: Color
+    private let onChange: (Double) -> Void
+
+    init(
+            value: Double,
+            color: Color,
+            onChange: @escaping (Double) -> Void
+    ) {
+        _value = State(initialValue: value)
+        valueVM = value
+        self.color = color
+        self.onChange = onChange
+    }
+
+    var body: some View {
+        Slider(value: $value, in: 0...255)
+                ///
+                .onChange(of: value) { newValue in
+                    onChange(newValue)
+                }
+                .onChange(of: valueVM) { newValue in
+                    withAnimation {
+                        value = newValue
+                    }
+                }
+                ///
+                .accentColor(color)
+                .padding(.horizontal, sheetHPadding)
+                .padding(.vertical, 6)
     }
 }
 
