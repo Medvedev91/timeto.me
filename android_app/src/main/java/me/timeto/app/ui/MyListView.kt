@@ -11,6 +11,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.RadioButtonChecked
+import androidx.compose.material.icons.filled.RadioButtonUnchecked
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -233,10 +236,8 @@ fun MyListView__ItemView__RadioView(
         text = text,
         rightView = {
             Icon(
-                painterResource(
-                    if (isActive) R.drawable.ic_baseline_radio_button_checked_24
-                    else R.drawable.ic_baseline_radio_button_unchecked_24
-                ),
+                if (isActive) Icons.Default.RadioButtonChecked
+                else Icons.Default.RadioButtonUnchecked,
                 "Toggle",
                 tint = c.blue,
                 modifier = Modifier
