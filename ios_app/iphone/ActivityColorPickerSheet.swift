@@ -70,6 +70,22 @@ struct ActivityColorPickerSheet: View {
                                     .font(.system(size: 12))
                                     .padding(.leading, 4)
                                     .padding(.top, 28)
+
+                            ForEach(state.allActivities, id: \.self) { activityUI in
+                                Text(activityUI.text)
+                                        .font(.system(size: 15))
+                                        .foregroundColor(.white)
+                                        .lineLimit(1)
+                                        .padding(.leading, 8)
+                                        .padding(.trailing, 9)
+                                        .padding(.top, 5)
+                                        .padding(.bottom, 5)
+                                        .background(
+                                                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                        .fill(activityUI.colorRgba.toColor())
+                                        )
+                                        .padding(.top, 8)
+                            }
                         }
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.leading, sheetHPaddings)
