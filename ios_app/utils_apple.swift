@@ -95,38 +95,7 @@ struct VStack<Content: View>: View {
     }
 }
 
-struct Column<Content: View>: View {
-
-    @ViewBuilder let content: () -> Content
-
-    var body: some View {
-        VStack(spacing: 0) {
-            content()
-        }
-    }
-}
-
-struct Row<Content: View>: View {
-
-    @ViewBuilder let content: () -> Content
-
-    var body: some View {
-        HStack(spacing: 0) {
-            content()
-        }
-    }
-}
-
-struct Box<Content: View>: View {
-
-    @ViewBuilder let content: () -> Content
-
-    var body: some View {
-        ZStack {
-            content()
-        }
-    }
-}
+//////
 
 struct Padding: View {
 

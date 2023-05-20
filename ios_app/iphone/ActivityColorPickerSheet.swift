@@ -45,9 +45,9 @@ struct ActivityColorPickerSheet: View {
 
                 ScrollViewWithVListener(showsIndicators: false, vScroll: $activitiesScroll) {
 
-                    Row {
+                    HStack {
 
-                        Column {
+                        VStack {
 
                             Padding(vertical: circlePadding)
 
