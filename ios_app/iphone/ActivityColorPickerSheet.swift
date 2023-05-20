@@ -51,8 +51,6 @@ struct ActivityColorPickerSheet: View {
 
                             VStack(alignment: .leading) {
 
-                                Padding(vertical: circlePadding)
-
                                 Text(state.title)
                                         .font(.system(size: 17, weight: .bold))
                                         .foregroundColor(.white)
@@ -99,6 +97,7 @@ struct ActivityColorPickerSheet: View {
                                     .background(Color(.systemGray4))
                                     .padding(.top, circlePadding)
                         }
+                                .padding(.top, circlePadding)
                     }
 
                     ScrollViewWithVListener(showsIndicators: false, vScroll: $circlesScroll) {
