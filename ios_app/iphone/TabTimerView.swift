@@ -107,7 +107,6 @@ struct TabTimerView: View {
                                         }
                                     }
                                 }
-                                        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                                 /*
                                     .onDelete { set in
                                         // to show the button
