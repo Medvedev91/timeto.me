@@ -47,12 +47,12 @@ struct ActivityColorPickerSheet: View {
 
                     HStack {
 
-                        VStack {
+                        VStack(alignment: .leading) {
 
                             Padding(vertical: circlePadding)
 
                             Text(state.title)
-                                    .font(.system(size: 17, weight: .medium))
+                                    .font(.system(size: 17, weight: .bold))
                                     .foregroundColor(.white)
                                     .lineLimit(1)
                                     .padding(.leading, 11)
@@ -64,8 +64,12 @@ struct ActivityColorPickerSheet: View {
                                     )
                                     .padding(.top, 2)
 
-                            Text("todo")
-                            Text("todo 2")
+                            Text(state.otherActivitiesTitle)
+                                    .foregroundColor(.secondary)
+                                    .fontWeight(.medium)
+                                    .font(.system(size: 12))
+                                    .padding(.leading, 4)
+                                    .padding(.top, 28)
                         }
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.leading, sheetHPaddings)
