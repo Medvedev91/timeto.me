@@ -101,7 +101,7 @@ struct ActivityColorPickerSheet: View {
 
                 ScrollViewWithVListener(showsIndicators: false, vScroll: $circlesScroll) {
 
-                    VStack {
+                    VStack(alignment: .leading) {
 
                         ForEach(state.colorGroups, id: \.self) { colors in
 
@@ -136,7 +136,15 @@ struct ActivityColorPickerSheet: View {
                             }
                         }
 
-                        ZStack {}.frame(height: 8)
+                        Button(
+                                action: {
+                                    vm.toggleIsRgbSlidersShowed()
+                                },
+                                label: { Text("Custom") }
+                        )
+                                .padding(.top, 6)
+                                .padding(.bottom, 20)
+                                .padding(.leading, circlePadding + 1)
                     }
                             .padding(.leading, dividerPadding - circlePadding)
                             .padding(.trailing, sheetHPaddings - circlePadding)
