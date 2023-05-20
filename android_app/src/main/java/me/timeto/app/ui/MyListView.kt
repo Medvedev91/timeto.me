@@ -1,6 +1,5 @@
 package me.timeto.app.ui
 
-import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -23,6 +22,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -90,12 +90,12 @@ fun MyListView__HeaderView(
 
 @Composable
 fun MyListView__HeaderView__RightIcon(
-    @DrawableRes iconId: Int,
+    icon: ImageVector,
     contentDescription: String,
     onClick: () -> Unit
 ) {
     Icon(
-        painterResource(id = iconId),
+        icon,
         contentDescription,
         tint = c.blue,
         modifier = Modifier

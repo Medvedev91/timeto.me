@@ -16,6 +16,8 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,7 +29,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.*
-import me.timeto.app.R
 import kotlinx.coroutines.launch
 import me.timeto.shared.*
 import me.timeto.shared.vm.SettingsSheetVM
@@ -123,7 +124,7 @@ fun SettingsSheet(
                     title = "CHECKLISTS",
                     rightView = {
                         MyListView__HeaderView__RightIcon(
-                            iconId = R.drawable.ic_round_add_24,
+                            icon = Icons.Rounded.Add,
                             contentDescription = "New Checklist"
                         ) {
                             Dialog.show { layer ->
@@ -197,7 +198,7 @@ fun SettingsSheet(
                     title = "SHORTCUTS",
                     rightView = {
                         MyListView__HeaderView__RightIcon(
-                            iconId = R.drawable.ic_round_add_24,
+                            icon = Icons.Rounded.Add,
                             contentDescription = "New Shortcut"
                         ) {
                             Sheet.show { layer ->
