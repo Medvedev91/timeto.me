@@ -26,7 +26,7 @@ struct ChartView: View {
                         .pickerStyle(SegmentedPickerStyle())
             }
 
-            HStack {
+            HStack(spacing: 10) {
 
                 Text("From")
 
@@ -96,7 +96,6 @@ struct ChartView: View {
                         .frame(maxWidth: .infinity) // Иначе, если всего один элемент не на всю ширину
                         .padding(.top, 4)
             }
-
         }
     }
 }
@@ -120,7 +119,7 @@ struct SummaryView_ItemCellView: View {
                 },
                 label: {
 
-                    HStack {
+                    HStack(spacing: 10) {
 
                         let lineHeight = 10.0
 
