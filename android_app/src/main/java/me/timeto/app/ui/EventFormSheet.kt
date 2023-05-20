@@ -10,20 +10,20 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.*
-import me.timeto.app.R
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.EventModel
 import me.timeto.shared.vm.EventFormSheetVM
@@ -106,7 +106,7 @@ fun EventFormSheet(
             ) {
 
                 Icon(
-                    painterResource(id = R.drawable.ic_round_close_24),
+                    Icons.Rounded.Close,
                     "Close",
                     tint = c.text.copy(alpha = 0.4f),
                     modifier = Modifier

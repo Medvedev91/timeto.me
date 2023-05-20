@@ -14,19 +14,19 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
-import me.timeto.app.R
 import me.timeto.shared.UnixTime
 import me.timeto.shared.vm.ChartVM
 import java.util.*
@@ -201,7 +201,7 @@ fun ChartDialogView(
 
                 Box(modifier = Modifier.weight(1f)) {
                     Icon(
-                        painterResource(id = R.drawable.ic_round_close_24),
+                        Icons.Rounded.Close,
                         "Close",
                         tint = c.textSecondary,
                         modifier = Modifier

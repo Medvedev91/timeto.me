@@ -13,6 +13,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -306,7 +307,7 @@ fun HistoryDialogView(
             Box(modifier = Modifier.weight(1f))
 
             Icon(
-                painterResource(id = R.drawable.ic_round_close_24),
+                Icons.Rounded.Close,
                 "Close",
                 tint = c.textSecondary.copy(alpha = 0.7f),
                 modifier = Modifier
