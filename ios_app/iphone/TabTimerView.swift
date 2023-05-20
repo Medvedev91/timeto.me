@@ -81,7 +81,6 @@ struct TabTimerView: View {
 
                         ScrollView(.vertical, showsIndicators: false) {
 
-                            // Might be useful https://stackoverflow.com/questions/63887188
                             VStack(spacing: 0) {
 
                                 ZStack {
