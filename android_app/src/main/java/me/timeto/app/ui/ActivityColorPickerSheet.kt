@@ -256,9 +256,9 @@ fun ActivityColorPickerSheet(
                         )
                     }
 
-                    ColorSlider(state.r, c.red, state.isRgbSlidersAnimated) { vm.upR(it) }
-                    ColorSlider(state.g, c.green, state.isRgbSlidersAnimated) { vm.upG(it) }
-                    ColorSlider(state.b, c.blue, state.isRgbSlidersAnimated) { vm.upB(it) }
+                    ColorSliderView(state.r, c.red, state.isRgbSlidersAnimated) { vm.upR(it) }
+                    ColorSliderView(state.g, c.green, state.isRgbSlidersAnimated) { vm.upG(it) }
+                    ColorSliderView(state.b, c.blue, state.isRgbSlidersAnimated) { vm.upB(it) }
                 }
             }
         }
@@ -266,7 +266,7 @@ fun ActivityColorPickerSheet(
 }
 
 @Composable
-private fun ColorSlider(
+private fun ColorSliderView(
     value: Float,
     color: Color,
     isAnimated: Boolean,
