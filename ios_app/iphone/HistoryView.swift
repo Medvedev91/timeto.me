@@ -66,7 +66,7 @@ struct HistoryView: View {
 
                                     let intervalUI = HistoryVM.IntervalUI.companion.build(interval: interval, section: section)
 
-                                    HStack(alignment: .top) {
+                                    HStack(alignment: .top, spacing: 10) {
 
                                         HStack(alignment: .center, spacing: 0) {
 
@@ -416,7 +416,7 @@ struct HistoryView: View {
             DatePicker(
                     "Start Date",
                     selection: $selectedDate,
-                    in: (minPickerDate ... Date()),
+                    in: (minPickerDate...Date()),
                     displayedComponents: [.date]
             )
                     .labelsHidden()
