@@ -196,7 +196,7 @@ struct ActivityColorPickerSheet: View {
                 }
             }
         }
-                .background(Color.white)
+                .background(Color(.mySecondaryBackground))
     }
 }
 
