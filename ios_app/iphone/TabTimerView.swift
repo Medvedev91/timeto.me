@@ -411,8 +411,7 @@ struct TabTimerView_ActivityRowView: View {
                                                         .padding(.trailing, 8)
                                                         .padding(.top, 3)
                                                         .padding(.bottom, 3)
-                                                        .background(.white)
-                                                        .clipShape(Capsule())
+                                                        .background(Capsule().fill(.white))
                                                         .padding(.leading, 8)
                                             }
                                     )
