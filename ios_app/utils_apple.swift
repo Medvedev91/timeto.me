@@ -71,7 +71,29 @@ func is12HoursFormat() -> Bool {
 }
 
 ///
-/// Template Views
+/// Custom HStack/VStack for default spacing
+
+struct HStack<Content: View>: View {
+
+    var alignment: VerticalAlignment = .center
+    var spacing: CGFloat? = 0
+    @ViewBuilder let content: () -> Content
+
+    var body: some View {
+        SwiftUI.HStack(alignment: alignment, spacing: spacing, content: content)
+    }
+}
+
+struct VStack<Content: View>: View {
+
+    var alignment: HorizontalAlignment = .center
+    var spacing: CGFloat? = 0
+    @ViewBuilder let content: () -> Content
+
+    var body: some View {
+        SwiftUI.VStack(alignment: alignment, spacing: spacing, content: content)
+    }
+}
 
 struct Column<Content: View>: View {
 
