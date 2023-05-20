@@ -86,6 +86,8 @@ struct ActivityColorPickerSheet: View {
                                             )
                                             .padding(.top, 8)
                                 }
+
+                                Padding(vertical: 20)
                             }
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .padding(.leading, sheetHPadding)
