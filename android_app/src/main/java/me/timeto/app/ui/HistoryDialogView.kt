@@ -11,6 +11,8 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -170,8 +172,8 @@ fun HistoryDialogView(
                                     .align(Alignment.CenterHorizontally)
                             ) {
                                 Icon(
-                                    painterResource(id = R.drawable.ic_round_add_24),
-                                    "Add activity",
+                                    Icons.Rounded.Add,
+                                    "Add Activity",
                                     tint = c.white,
                                     modifier = Modifier
                                         .padding(vertical = 4.dp)
