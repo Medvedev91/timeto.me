@@ -32,8 +32,8 @@ import me.timeto.shared.vm.ActivityColorPickerSheetVM
 
 private val circleSize = 40.dp
 private val circlePadding = 4.dp
-private val sheetHPaddings = MyListView.PADDING_OUTER_HORIZONTAL
-private val dividerPadding = sheetHPaddings.goldenRatioDown()
+private val sheetHPadding = MyListView.PADDING_OUTER_HORIZONTAL
+private val dividerPadding = sheetHPadding.goldenRatioDown()
 
 @Composable
 fun ActivityColorPickerSheet(
@@ -76,7 +76,7 @@ fun ActivityColorPickerSheet(
                 modifier = Modifier
                     .verticalScroll(state = activitiesScrollState)
                     .padding(top = 4.dp)
-                    .padding(start = sheetHPaddings)
+                    .padding(start = sheetHPadding)
                     .height(IntrinsicSize.Max)
                     .weight(1f),
             ) {
@@ -144,7 +144,7 @@ fun ActivityColorPickerSheet(
                     .verticalScroll(state = circleScrollState)
                     .padding(
                         start = dividerPadding - circlePadding,
-                        end = sheetHPaddings - circlePadding,
+                        end = sheetHPadding - circlePadding,
                     ),
             ) {
 
@@ -245,7 +245,7 @@ fun ActivityColorPickerSheet(
                             modifier = Modifier
                                 .alpha(0.7f)
                                 .align(Alignment.CenterEnd)
-                                .padding(end = sheetHPaddings)
+                                .padding(end = sheetHPadding)
                                 .size(30.dp)
                                 .clip(RoundedCornerShape(99.dp))
                                 .background(c.background2)
@@ -277,7 +277,7 @@ private fun ColorSlider(
         // Animation works bad with manual slide
         value = if (isAnimated) animatedValue.value else value,
         onValueChange = { onChange(it) },
-        modifier = Modifier.padding(horizontal = sheetHPaddings - 4.dp),
+        modifier = Modifier.padding(horizontal = sheetHPadding - 4.dp),
         valueRange = 0f..255f,
         colors = SliderDefaults.colors(
             thumbColor = color,
