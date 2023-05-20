@@ -154,21 +154,38 @@ struct ActivityColorPickerSheet: View {
                 }
 
                 if (state.isRgbSlidersShowed) {
+
                     VStack {
+
                         MyDivider()
-                        ZStack {
+
+                        ZStack(alignment: .center) {
+
                             Text(state.rgbText)
                                     .font(.system(size: 16))
                                     .foregroundColor(.white)
                                     .lineLimit(1)
                                     .padding(.horizontal, 8)
-                                    .padding(.vertical, 5)
+                                    .padding(.vertical, 4)
                                     .background(
                                             RoundedRectangle(cornerRadius: 8, style: .continuous)
                                                     .fill(state.selectedColor.toColor())
                                     )
-                                    .padding(.top, 8)
+
+                            HStack {
+                                Spacer()
+                                Button(
+                                        action: { vm.toggleIsRgbSlidersShowed() },
+                                        label: {
+                                            Image(systemName: "chevron.down")
+                                                    .font(.system(size: 18, weight: .medium))
+                                                    .foregroundColor(.secondary)
+                                        }
+                                )
+                            }
+                                    .padding(.trailing, sheetHPaddings + circlePadding + 2)
                         }
+                                .padding(.top, 8)
                     }
                 }
             }
