@@ -51,25 +51,18 @@ struct ActivityColorPickerSheet: View {
 
                             Padding(vertical: circlePadding)
 
-                            Column {
-
-                                Spacer()
-
-                                Text(state.title)
-                                        .font(.system(size: 17, weight: .medium))
-                                        .foregroundColor(.white)
-                                        .lineLimit(1)
-                                        .padding(.leading, 11)
-                                        .padding(.trailing, 13)
-                                        .padding(.vertical, 8)
-                                        .background(
-                                                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                                        .fill(state.selectedColor.toColor())
-                                        )
-
-                                Spacer()
-                            }
-                                    .frame(height: circleSize)
+                            Text(state.title)
+                                    .font(.system(size: 17, weight: .medium))
+                                    .foregroundColor(.white)
+                                    .lineLimit(1)
+                                    .padding(.leading, 11)
+                                    .padding(.trailing, 13)
+                                    .frame(height: circleSize - 4)
+                                    .background(
+                                            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                                    .fill(state.selectedColor.toColor())
+                                    )
+                                    .padding(.top, 2)
 
                             Text("todo")
                             Text("todo 2")
