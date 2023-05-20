@@ -41,113 +41,135 @@ struct ActivityColorPickerSheet: View {
                 isPresented = false
             }
 
-            HStack {
+            VStack {
 
-                ScrollViewWithVListener(showsIndicators: false, vScroll: $activitiesScroll) {
+                HStack {
 
-                    HStack {
+                    ScrollViewWithVListener(showsIndicators: false, vScroll: $activitiesScroll) {
+
+                        HStack {
+
+                            VStack(alignment: .leading) {
+
+                                Padding(vertical: circlePadding)
+
+                                Text(state.title)
+                                        .font(.system(size: 17, weight: .bold))
+                                        .foregroundColor(.white)
+                                        .lineLimit(1)
+                                        .padding(.leading, 11)
+                                        .padding(.trailing, 13)
+                                        .frame(height: circleSize - 4)
+                                        .background(
+                                                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                                        .fill(state.selectedColor.toColor())
+                                        )
+                                        .padding(.top, 2)
+
+                                Text(state.otherActivitiesTitle)
+                                        .foregroundColor(.secondary)
+                                        .fontWeight(.medium)
+                                        .font(.system(size: 12))
+                                        .padding(.leading, 4)
+                                        .padding(.top, 28)
+
+                                ForEach(state.allActivities, id: \.self) { activityUI in
+                                    Text(activityUI.text)
+                                            .font(.system(size: 15))
+                                            .foregroundColor(.white)
+                                            .lineLimit(1)
+                                            .padding(.leading, 8)
+                                            .padding(.trailing, 9)
+                                            .padding(.top, 5)
+                                            .padding(.bottom, 5)
+                                            .background(
+                                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                            .fill(activityUI.colorRgba.toColor())
+                                            )
+                                            .padding(.top, 8)
+                                }
+                            }
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.leading, sheetHPaddings)
+                                    .padding(.trailing, dividerPadding)
+
+                            ZStack {}
+                                    .frame(width: onePx)
+                                    .frame(maxHeight: .infinity)
+                                    .background(Color(.systemGray4))
+                                    .padding(.top, circlePadding)
+                        }
+                    }
+
+                    ScrollViewWithVListener(showsIndicators: false, vScroll: $circlesScroll) {
 
                         VStack(alignment: .leading) {
 
-                            Padding(vertical: circlePadding)
+                            ForEach(state.colorGroups, id: \.self) { colors in
 
-                            Text(state.title)
-                                    .font(.system(size: 17, weight: .bold))
-                                    .foregroundColor(.white)
-                                    .lineLimit(1)
-                                    .padding(.leading, 11)
-                                    .padding(.trailing, 13)
-                                    .frame(height: circleSize - 4)
-                                    .background(
-                                            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                                    .fill(state.selectedColor.toColor())
-                                    )
-                                    .padding(.top, 2)
+                                HStack {
 
-                            Text(state.otherActivitiesTitle)
-                                    .foregroundColor(.secondary)
-                                    .fontWeight(.medium)
-                                    .font(.system(size: 12))
-                                    .padding(.leading, 4)
-                                    .padding(.top, 28)
+                                    ForEach(colors, id: \.self) { colorItem in
 
-                            ForEach(state.allActivities, id: \.self) { activityUI in
-                                Text(activityUI.text)
-                                        .font(.system(size: 15))
-                                        .foregroundColor(.white)
-                                        .lineLimit(1)
-                                        .padding(.leading, 8)
-                                        .padding(.trailing, 9)
-                                        .padding(.top, 5)
-                                        .padding(.bottom, 5)
-                                        .background(
-                                                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                        .fill(activityUI.colorRgba.toColor())
+                                        Button(
+                                                action: {
+                                                    vm.upColorRgba(colorRgba: colorItem.colorRgba)
+                                                },
+                                                label: {
+
+                                                    ZStack {
+
+                                                        ColorPickerSheet__ColorCircleView(
+                                                                color: colorItem.colorRgba.toColor(),
+                                                                size: circleSize
+                                                        )
+
+                                                        if colorItem.isSelected {
+                                                            Image(systemName: "checkmark")
+                                                                    .font(.system(size: 18, weight: .medium))
+                                                                    .foregroundColor(.white)
+                                                        }
+                                                    }
+                                                            .padding(.all, circlePadding)
+                                                }
                                         )
-                                        .padding(.top, 8)
+                                                .frame(width: circleCellSize, height: circleCellSize)
+                                    }
+                                }
                             }
-                        }
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.leading, sheetHPaddings)
-                                .padding(.trailing, dividerPadding)
 
-                        ZStack {}
-                                .frame(width: onePx)
-                                .frame(maxHeight: .infinity)
-                                .background(Color(.systemGray4))
-                                .padding(.top, circlePadding)
+                            Button(
+                                    action: {
+                                        vm.toggleIsRgbSlidersShowed()
+                                    },
+                                    label: { Text("Custom") }
+                            )
+                                    .padding(.top, 6)
+                                    .padding(.bottom, 20)
+                                    .padding(.leading, circlePadding + 1)
+                        }
+                                .padding(.leading, dividerPadding - circlePadding)
+                                .padding(.trailing, sheetHPaddings - circlePadding)
                     }
                 }
 
-                ScrollViewWithVListener(showsIndicators: false, vScroll: $circlesScroll) {
-
-                    VStack(alignment: .leading) {
-
-                        ForEach(state.colorGroups, id: \.self) { colors in
-
-                            HStack {
-
-                                ForEach(colors, id: \.self) { colorItem in
-
-                                    Button(
-                                            action: {
-                                                vm.upColorRgba(colorRgba: colorItem.colorRgba)
-                                            },
-                                            label: {
-
-                                                ZStack {
-
-                                                    ColorPickerSheet__ColorCircleView(
-                                                            color: colorItem.colorRgba.toColor(),
-                                                            size: circleSize
-                                                    )
-
-                                                    if colorItem.isSelected {
-                                                        Image(systemName: "checkmark")
-                                                                .font(.system(size: 18, weight: .medium))
-                                                                .foregroundColor(.white)
-                                                    }
-                                                }
-                                                        .padding(.all, circlePadding)
-                                            }
+                if (state.isRgbSlidersShowed) {
+                    VStack {
+                        MyDivider()
+                        ZStack {
+                            Text(state.rgbText)
+                                    .font(.system(size: 16))
+                                    .foregroundColor(.white)
+                                    .lineLimit(1)
+                                    .padding(.horizontal, 8)
+                                    .padding(.vertical, 5)
+                                    .background(
+                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                    .fill(state.selectedColor.toColor())
                                     )
-                                            .frame(width: circleCellSize, height: circleCellSize)
-                                }
-                            }
+                                    .padding(.top, 8)
                         }
-
-                        Button(
-                                action: {
-                                    vm.toggleIsRgbSlidersShowed()
-                                },
-                                label: { Text("Custom") }
-                        )
-                                .padding(.top, 6)
-                                .padding(.bottom, 20)
-                                .padding(.leading, circlePadding + 1)
                     }
-                            .padding(.leading, dividerPadding - circlePadding)
-                            .padding(.trailing, sheetHPaddings - circlePadding)
                 }
             }
         }
