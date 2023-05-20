@@ -446,7 +446,7 @@ struct VMView<VMState: AnyObject, Content: View>: View {
 
     enum StackType {
         case ZStack(alignment: Alignment = .center)
-        case VStack(alignment: HorizontalAlignment = .center, spacing: CGFloat? = nil)
-        case HStack(alignment: VerticalAlignment = .center, spacing: CGFloat? = nil)
+        case VStack(alignment: HorizontalAlignment = .center, spacing: CGFloat? = 0)
+        case HStack(alignment: VerticalAlignment = .center, spacing: CGFloat? = 0)
     }
 }
