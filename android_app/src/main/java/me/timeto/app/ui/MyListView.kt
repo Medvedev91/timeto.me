@@ -13,6 +13,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.RadioButtonChecked
 import androidx.compose.material.icons.filled.RadioButtonUnchecked
+import androidx.compose.material.icons.rounded.KeyboardArrowRight
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -347,7 +348,7 @@ fun MyListView__ItemView__ButtonView(
 
             if (withArrow) {
                 Icon(
-                    painterResource(id = R.drawable.ic_round_keyboard_arrow_right_24),
+                    Icons.Rounded.KeyboardArrowRight,
                     "Select emoji",
                     tint = c.textSecondary.copy(alpha = 0.4f),
                     modifier = Modifier
