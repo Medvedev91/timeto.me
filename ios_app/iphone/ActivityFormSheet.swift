@@ -204,7 +204,7 @@ struct ActivityFormSheet: View {
 
                                                     let customItem = state.timerHintsCustomItems[idx]
 
-                                                    HStack {
+                                                    HStack(spacing: 10) {
 
                                                         Button(
                                                                 action: {
