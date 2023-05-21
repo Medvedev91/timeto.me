@@ -33,7 +33,6 @@ struct TabTimerView: View {
 
                 ZStack {
 
-                    // For List another setting background
                     Color(.myBackground).edgesIgnoringSafeArea(.all)
 
                     VStack(spacing: 0) {
