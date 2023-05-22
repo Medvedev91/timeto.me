@@ -120,10 +120,9 @@ struct ActivityColorPickerSheet: View {
 
                                                     ZStack {
 
-                                                        ColorPickerSheet__ColorCircleView(
-                                                                color: colorItem.colorRgba.toColor(),
-                                                                size: circleSize
-                                                        )
+                                                        Circle()
+                                                                .foregroundColor(colorItem.colorRgba.toColor())
+                                                                .frame(width: circleSize, height: circleSize)
 
                                                         if colorItem.isSelected {
                                                             Image(systemName: "checkmark")
@@ -233,18 +232,5 @@ private struct ColorSliderView: View {
                 .accentColor(color)
                 .padding(.horizontal, sheetHPadding)
                 .padding(.vertical, 6)
-    }
-}
-
-struct ColorPickerSheet__ColorCircleView: View {
-
-    let color: Color
-    let size: CGFloat
-
-    var body: some View {
-        Circle()
-                .strokeBorder(Color(UIColor.lightGray), lineWidth: onePx)
-                .frame(width: size, height: size)
-                .background(Circle().foregroundColor(color))
     }
 }

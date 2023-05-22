@@ -118,10 +118,9 @@ struct ActivityFormSheet: View {
                                 text: state.colorTitle,
                                 withArrow: false,
                                 rightView: AnyView(
-                                        ColorPickerSheet__ColorCircleView(
-                                                color: state.colorRgba.toColor(),
-                                                size: 32
-                                        )
+                                        Circle()
+                                                .foregroundColor(state.colorRgba.toColor())
+                                                .frame(width: 32, height: 32)
                                                 .padding(.trailing, 8)
                                 )
                         ) {
