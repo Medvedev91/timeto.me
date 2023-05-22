@@ -137,7 +137,6 @@ fun ActivityFormSheet(
                             modifier = Modifier
                                 .padding(end = 12.dp)
                                 .size(30.dp)
-                                .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
                                 .clip(RoundedCornerShape(99.dp))
                                 .background(state.colorRgba.toColor())
                         )

@@ -155,7 +155,6 @@ fun ActivityColorPickerSheet(
                                 modifier = Modifier
                                     .size(circleSize + (circlePadding * 2))
                                     .padding(circlePadding)
-                                    .border(onePx, c.text.copy(0.1f), RoundedCornerShape(99.dp))
                                     .clip(RoundedCornerShape(99.dp))
                                     .background(colorItem.colorRgba.toColor())
                                     .clickable {
