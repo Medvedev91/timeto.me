@@ -102,6 +102,7 @@ struct ActivityColorPickerSheet: View {
                                     .padding(.top, circlePadding)
                         }
                                 .padding(.top, circlePadding)
+                                .safeAreaPadding(.bottom)
                     }
 
                     ScrollViewWithVListener(showsIndicators: false, vScroll: $circlesScroll) {
@@ -153,6 +154,7 @@ struct ActivityColorPickerSheet: View {
                         }
                                 .padding(.leading, dividerPadding - circlePadding)
                                 .padding(.trailing, sheetHPadding - circlePadding)
+                                .safeAreaPadding(.bottom)
                     }
                 }
 
@@ -195,11 +197,13 @@ struct ActivityColorPickerSheet: View {
                         ColorSliderView(value: Double(state.g), color: .green) { vm.upG(g: Float($0)) }
                         ColorSliderView(value: Double(state.b), color: .blue) { vm.upB(b: Float($0)) }
                     }
+                            .safeAreaPadding(.bottom)
                             .background(Color(.mySecondaryBackground))
                             .transition(.move(edge: .bottom))
                 }
             }
         }
+                .ignoresSafeArea()
                 .background(Color(.mySecondaryBackground))
     }
 }
