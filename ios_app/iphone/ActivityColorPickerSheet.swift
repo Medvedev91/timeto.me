@@ -177,9 +177,9 @@ struct ActivityColorPickerSheet: View {
                                 Button(
                                         action: { vm.toggleIsRgbSlidersShowed() },
                                         label: {
-                                            Image(systemName: "chevron.down")
-                                                    .font(.system(size: 18, weight: .medium))
-                                                    .foregroundColor(.secondary)
+                                            Image(systemName: "chevron.down.circle.fill")
+                                                    .font(.system(size: 24, weight: .medium))
+                                                    .foregroundColor(Color(.systemGray2))
                                         }
                                 )
                             }
