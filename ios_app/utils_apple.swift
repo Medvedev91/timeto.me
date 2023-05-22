@@ -326,6 +326,29 @@ extension View {
     ) -> some View {
         if condition { transform(self) } else { self }
     }
+
+    /**
+     * https://stackoverflow.com/a/72435691
+     */
+    @ViewBuilder func cornerRadius(
+            _ radius: CGFloat,
+            onTop: Bool,
+            onBottom: Bool
+    ) -> some View {
+        self
+                .conditional(onTop) { view in
+                    view
+                            .padding(.bottom, radius)
+                            .cornerRadius(radius)
+                            .padding(.bottom, -radius)
+                }
+                .conditional(onBottom) { view in
+                    view
+                            .padding(.top, radius)
+                            .cornerRadius(radius)
+                            .padding(.top, -radius)
+                }
+    }
 }
 
 
