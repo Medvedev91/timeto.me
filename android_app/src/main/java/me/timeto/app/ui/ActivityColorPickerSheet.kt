@@ -240,9 +240,8 @@ fun ActivityColorPickerSheet(
                         Icon(
                             Icons.Rounded.ExpandCircleDown,
                             "Hide",
-                            tint = c.textSecondary,
+                            tint = c.iconButtonBgBg1,
                             modifier = Modifier
-                                .alpha(0.7f)
                                 .align(Alignment.CenterEnd)
                                 .padding(end = sheetHPadding)
                                 .size(30.dp)
