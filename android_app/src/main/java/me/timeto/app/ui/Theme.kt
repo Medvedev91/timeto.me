@@ -20,6 +20,7 @@ val c: MyColors
 
 @Composable
 fun myDarkColors() = darkColors(primary = c.blue)
+
 @Composable
 fun myLightColors() = lightColors(primary = c.blue)
 
