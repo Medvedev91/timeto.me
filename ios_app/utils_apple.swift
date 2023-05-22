@@ -368,6 +368,9 @@ private struct AnimateVmValueModifier<T: Equatable>: ViewModifier {
                         state = newValue
                     }
                 }
+                .onAppear {
+                    state = value
+                }
     }
 }
 
