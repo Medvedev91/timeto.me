@@ -132,14 +132,6 @@ struct ActivityFormSheet: View {
                         ) {
                             isColorPickerSheetPresented = true
                         }
-                                .sheetEnv(isPresented: $isColorPickerSheetPresented) {
-                                    ActivityColorPickerSheet(
-                                            isPresented: $isColorPickerSheetPresented,
-                                            initData: vm.buildColorPickerInitData()
-                                    ) { colorRgba in
-                                        vm.upColorRgba(colorRgba: colorRgba)
-                                    }
-                                }
                     }
 
                     MyListView__ItemView(
@@ -233,17 +225,6 @@ struct ActivityFormSheet: View {
                                                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                                     .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL)
                                                     .padding(.bottom, 14)
-                                                    .sheetEnv(isPresented: $isAddCustomHintPresented) {
-                                                        TimerPickerSheet(
-                                                                isPresented: $isAddCustomHintPresented,
-                                                                title: "Timer Hint",
-                                                                doneText: "Add",
-                                                                defMinutes: 30
-                                                        ) { seconds in
-                                                            vm.addCustomTimerHint(seconds: seconds.toInt32())
-                                                        }
-                                                                .presentationDetentsMediumIf16()
-                                                    }
                                         }
                                     }
                                 }
@@ -257,5 +238,24 @@ struct ActivityFormSheet: View {
             }
         }
                 .background(Color(.mySheetFormBg))
+                .sheetEnv(isPresented: $isColorPickerSheetPresented) {
+                    ActivityColorPickerSheet(
+                            isPresented: $isColorPickerSheetPresented,
+                            initData: vm.buildColorPickerInitData()
+                    ) { colorRgba in
+                        vm.upColorRgba(colorRgba: colorRgba)
+                    }
+                }
+                .sheetEnv(isPresented: $isAddCustomHintPresented) {
+                    TimerPickerSheet(
+                            isPresented: $isAddCustomHintPresented,
+                            title: "Timer Hint",
+                            doneText: "Add",
+                            defMinutes: 30
+                    ) { seconds in
+                        vm.addCustomTimerHint(seconds: seconds.toInt32())
+                    }
+                            .presentationDetentsMediumIf16()
+                }
     }
 }
