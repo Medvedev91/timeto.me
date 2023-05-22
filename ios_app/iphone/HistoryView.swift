@@ -73,7 +73,7 @@ struct HistoryView: View {
                                             if !intervalUI.isStartsPrevDay {
 
                                                 if isEditMode {
-                                                    HStack {
+                                                    HStack(spacing: 10) {
                                                         Button(
                                                                 action: {
                                                                     intervalUI.delete()
