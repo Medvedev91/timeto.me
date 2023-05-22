@@ -106,11 +106,6 @@ struct ActivityFormSheet: View {
                         ) {
                             isEmojiSheetPresented = true
                         }
-                                .sheetEnv(isPresented: $isEmojiSheetPresented) {
-                                    SearchEmojiSheet(isPresented: $isEmojiSheetPresented) { emoji in
-                                        vm.setEmoji(newEmoji: emoji)
-                                    }
-                                }
                     }
 
                     MyListView__ItemView(
@@ -256,6 +251,11 @@ struct ActivityFormSheet: View {
                         vm.addCustomTimerHint(seconds: seconds.toInt32())
                     }
                             .presentationDetentsMediumIf16()
+                }
+                .sheetEnv(isPresented: $isEmojiSheetPresented) {
+                    SearchEmojiSheet(isPresented: $isEmojiSheetPresented) { emoji in
+                        vm.setEmoji(newEmoji: emoji)
+                    }
                 }
     }
 }
