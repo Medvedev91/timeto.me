@@ -11,7 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Done
-import androidx.compose.material.icons.rounded.KeyboardArrowDown
+import androidx.compose.material.icons.rounded.ExpandCircleDown
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -238,7 +238,7 @@ fun ActivityColorPickerSheet(
                         )
 
                         Icon(
-                            Icons.Rounded.KeyboardArrowDown,
+                            Icons.Rounded.ExpandCircleDown,
                             "Hide",
                             tint = c.textSecondary,
                             modifier = Modifier
@@ -251,7 +251,6 @@ fun ActivityColorPickerSheet(
                                 .clickable {
                                     vm.toggleIsRgbSlidersShowed()
                                 }
-                                .padding(2.dp)
                         )
                     }
 
