@@ -320,15 +320,11 @@ extension ColorNative {
 /// https://www.avanderlee.com/swiftui/conditional-view-modifier/
 extension View {
 
-    @ViewBuilder func `if`<Content: View>(
+    @ViewBuilder func conditional<Content: View>(
             _ condition: Bool,
             transform: (Self) -> Content
     ) -> some View {
-        if condition {
-            transform(self)
-        } else {
-            self
-        }
+        if condition { transform(self) } else { self }
     }
 }
 
