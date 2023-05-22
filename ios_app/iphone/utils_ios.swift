@@ -203,3 +203,26 @@ private struct RoundedCorner: Shape {
         return Path(path.cgPath)
     }
 }
+
+///
+///
+
+private struct SafeAreaPaddingsModifier: ViewModifier {
+
+    @Environment(\.safeAreaInsets) private var safeAreaInsets
+
+    let edges: Edge.Set
+
+    func body(content: Content) -> some View {
+        content
+                .padding(.top, edges.contains(.top) ? safeAreaInsets.top : 0)
+                .padding(.bottom, edges.contains(.bottom) ? safeAreaInsets.bottom : 0)
+    }
+}
+
+extension View {
+
+    func safeAreaPadding(_ edges: Edge.Set) -> some View {
+        modifier(SafeAreaPaddingsModifier(edges: edges))
+    }
+}
