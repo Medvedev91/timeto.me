@@ -78,19 +78,6 @@ struct MyListView__ItemView<Content: View>: View {
 
     @ViewBuilder var content: () -> Content
 
-    private var corners: UIRectCorner {
-        var corners: UIRectCorner = []
-        if isFirst {
-            corners.insert(.topLeft)
-            corners.insert(.topRight)
-        }
-        if isLast {
-            corners.insert(.bottomLeft)
-            corners.insert(.bottomRight)
-        }
-        return corners
-    }
-
     var body: some View {
 
         ZStack(alignment: .top) {
@@ -103,7 +90,7 @@ struct MyListView__ItemView<Content: View>: View {
             }
         }
                 .background(Color(.mySecondaryBackground))
-                .timeToSheetCornerRadius(10, corners: corners)
+                .cornerRadius(10, onTop: isFirst, onBottom: isLast)
                 .padding(.leading, outerPaddingStart)
                 .padding(.trailing, outerPaddingEnd)
     }
