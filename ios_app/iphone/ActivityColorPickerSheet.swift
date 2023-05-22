@@ -16,6 +16,8 @@ struct ActivityColorPickerSheet: View {
     @State private var circlesScroll = 0
     @State private var activitiesScroll = 0
 
+    @State private var isRgbSlidersShowed = false
+
     init(
             isPresented: Binding<Bool>,
             initData: ActivityColorPickerSheetVM.InitData,
@@ -147,13 +149,14 @@ struct ActivityColorPickerSheet: View {
                                     .padding(.top, 6)
                                     .padding(.bottom, 20)
                                     .padding(.leading, circlePadding + 1)
+                                    .animateVmValue(value: state.isRgbSlidersShowed, state: $isRgbSlidersShowed)
                         }
                                 .padding(.leading, dividerPadding - circlePadding)
                                 .padding(.trailing, sheetHPadding - circlePadding)
                     }
                 }
 
-                if (state.isRgbSlidersShowed) {
+                if (isRgbSlidersShowed) {
 
                     VStack {
 
@@ -192,6 +195,9 @@ struct ActivityColorPickerSheet: View {
                         ColorSliderView(value: Double(state.g), color: .green) { vm.upG(g: Float($0)) }
                         ColorSliderView(value: Double(state.b), color: .blue) { vm.upB(b: Float($0)) }
                     }
+                            .background(Color(.mySecondaryBackground))
+                            .animation(.easeInOut(duration: 0.25))
+                            .transition(.move(edge: .bottom))
                 }
             }
         }
