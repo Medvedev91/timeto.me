@@ -74,6 +74,8 @@ extension UIColor {
     static var mySheetFormBg = myDayNightArgb(tgLikeLightBg, 0xFF121214)
 
     static var myFormButtonRightNoteText = myDayNightArgb(0x88000000, 0x88FFFFFF)
+
+    static var iconButtonBgBg1 = myDayNightArgb(0xFFAEAEB2, 0xFF636366)
 }
 
 extension View {
