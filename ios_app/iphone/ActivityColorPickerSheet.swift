@@ -179,7 +179,7 @@ struct ActivityColorPickerSheet: View {
                                         label: {
                                             Image(systemName: "chevron.down.circle.fill")
                                                     .font(.system(size: 24, weight: .medium))
-                                                    .foregroundColor(Color(.systemGray2))
+                                                    .foregroundColor(Color(.iconButtonBgBg1))
                                         }
                                 )
                             }
