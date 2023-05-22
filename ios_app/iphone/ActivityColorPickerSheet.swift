@@ -196,7 +196,6 @@ struct ActivityColorPickerSheet: View {
                         ColorSliderView(value: Double(state.b), color: .blue) { vm.upB(b: Float($0)) }
                     }
                             .background(Color(.mySecondaryBackground))
-                            .animation(.easeInOut(duration: 0.25))
                             .transition(.move(edge: .bottom))
                 }
             }
