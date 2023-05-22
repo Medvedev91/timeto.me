@@ -223,11 +223,7 @@ private struct ColorSliderView: View {
                 .onChange(of: value) { newValue in
                     onChange(newValue)
                 }
-                .onChange(of: valueVM) { newValue in
-                    withAnimation {
-                        value = newValue
-                    }
-                }
+                .animateVmValue(value: valueVM, state: $value)
                 ///
                 .accentColor(color)
                 .padding(.horizontal, sheetHPadding)
