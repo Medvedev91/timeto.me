@@ -360,11 +360,12 @@ private struct AnimateVmValueModifier<T: Equatable>: ViewModifier {
 
     let value: T
     @Binding var state: T
+    var animation: Animation = .spring(response: 0.250)
 
     func body(content: Content) -> some View {
         content
                 .onChange(of: value) { newValue in
-                    withAnimation {
+                    withAnimation(animation) {
                         state = newValue
                     }
                 }
