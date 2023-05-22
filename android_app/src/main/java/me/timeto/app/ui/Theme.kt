@@ -11,7 +11,7 @@ import me.timeto.app.colorFromRgbaString
 
 // Sources
 // MD https://material.io/resources/color/
-// AG https://developer.apple.com/design/human-interface-guidelines/foundations/color
+// AG https://developer.apple.com/design/human-interface-guidelines/color
 
 // todo check performance
 val c: MyColors
@@ -28,7 +28,7 @@ class MyColors(
     val orange: Color,
     val text: Color, // https://material.io/design/color/text-legibility.html ~ 87%
     val textSecondary: Color, // ~ 60%
-    val background: Color, // TRICK Using R.color.my_dn_background overrides compos ;(
+    val background: Color, // TRICK Using R.color.my_dn_background overrides compose ;(
     val background2: Color,
     val backgroundEditable: Color,
     val tabsText: Color,
