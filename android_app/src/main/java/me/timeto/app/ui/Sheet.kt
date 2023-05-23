@@ -82,6 +82,7 @@ object Sheet {
         doneText: String,
         isDoneEnabled: Boolean?, // null - hidden
         scrollToHeader: Int,
+        dividerColor: Color = c.dividerFormHeader,
         maxLines: Int = Int.MAX_VALUE,
         onDone: () -> Unit,
     ) {
@@ -150,13 +151,12 @@ object Sheet {
                 )
             }
 
-            val dividerFormHeaderColor = c.dividerFormHeader
             ZStack(
                 modifier = Modifier
                     .height(onePx)
                     .fillMaxWidth()
                     .drawBehind {
-                        drawRect(color = dividerFormHeaderColor.copy(alpha = alphaAnimate.value))
+                        drawRect(color = dividerColor.copy(alpha = alphaAnimate.value))
                     },
             )
         }
