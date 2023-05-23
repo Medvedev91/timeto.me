@@ -78,6 +78,8 @@ extension UIColor {
     static var iconButtonBg1 = myDayNightArgb(0xFFAEAEB2, 0xFF636366)
 
     static var dividerBg2 = UIColor.systemGray4
+
+    static var dividerFormHeader = UIColor.systemGray3
 }
 
 extension View {
