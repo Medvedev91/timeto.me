@@ -7,10 +7,10 @@ struct SheetHeaderView: View {
     let doneText: String
     let isDoneEnabled: Bool?
     let scrollToHeader: Int
+    var dividerColor = UIColor.myDayNightArgb(0xFFE9E9E9, 0xFF1F1F1F) // todo
     let onDone: () -> Void
 
     @State private var bg = UIColor.myDayNightArgb(0xFFF9F9F9, 0xFF191919)
-    @State private var bgDivider = UIColor.myDayNightArgb(0xFFE9E9E9, 0xFF1F1F1F)
 
     private var bgAlpha: Double {
         (Double(scrollToHeader) / 30).min(1.0).max(0.0)
@@ -55,7 +55,7 @@ struct SheetHeaderView: View {
                     .padding(.top, 18)
                     .padding(.bottom, 18)
 
-            Color(bgDivider)
+            Color(dividerColor)
                     .opacity(bgAlpha)
                     .frame(height: onePx)
         }
