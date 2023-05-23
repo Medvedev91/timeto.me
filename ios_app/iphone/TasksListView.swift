@@ -69,7 +69,7 @@ struct TasksListView: View {
                                             .id(taskUI.task.id)
                                 }
                             }
-                                    .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                                    .cornerRadius(10)
 
                             if let tmrwData = state.tmrwData {
                                 HStack {
