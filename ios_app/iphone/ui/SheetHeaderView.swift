@@ -7,7 +7,7 @@ struct SheetHeaderView: View {
     let doneText: String
     let isDoneEnabled: Bool?
     let scrollToHeader: Int
-    var dividerColor = UIColor.dividerFormHeader
+    var dividerColor = UIColor.formHeaderDivider
     let onDone: () -> Void
 
     @State private var bgColor = UIColor.myDayNightArgb(0xFFF9F9F9, 0xFF191919)

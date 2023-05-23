@@ -82,7 +82,7 @@ object Sheet {
         doneText: String,
         isDoneEnabled: Boolean?, // null - hidden
         scrollToHeader: Int,
-        dividerColor: Color = c.dividerFormHeader,
+        dividerColor: Color = c.formHeaderDivider,
         maxLines: Int = Int.MAX_VALUE,
         onDone: () -> Unit,
     ) {

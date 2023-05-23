@@ -79,7 +79,7 @@ extension UIColor {
 
     static var dividerBg2 = UIColor.systemGray4
 
-    static var dividerFormHeader = UIColor.systemGray3
+    static var formHeaderDivider = UIColor.systemGray3
 }
 
 extension View {
