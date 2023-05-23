@@ -42,7 +42,7 @@ class MyColors(
     val datePickerTitleBg: Color,
     val bgFormSheet: Color,
     val formButtonRightNoteText: Color,
-    val iconButtonBgBg1: Color, // AG systemGray2
+    val iconButtonBg1: Color, // AG systemGray2
 ) {
     val red = Color(0xFFFF453A)
     val green = colorFromRgbaString("52,199,89") // AG Green Light
@@ -73,7 +73,7 @@ private val myLightColors = MyColors(
     datePickerTitleBg = Color(0xFFEEEEF3),
     bgFormSheet = tgLikeLightSheetBg,
     formButtonRightNoteText = Color(0x88000000),
-    iconButtonBgBg1 = Color(0xFFAEAEB2),
+    iconButtonBg1 = Color(0xFFAEAEB2),
 )
 
 private val myDarkColors = MyColors(
@@ -94,5 +94,5 @@ private val myDarkColors = MyColors(
     datePickerTitleBg = Color(0xFF2A2A2B),
     bgFormSheet = Color(0xFF121214),
     formButtonRightNoteText = Color(0x88FFFFFF),
-    iconButtonBgBg1 = Color(0xFF636366),
+    iconButtonBg1 = Color(0xFF636366),
 )

@@ -15,7 +15,6 @@ import androidx.compose.material.icons.rounded.ExpandCircleDown
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
@@ -240,7 +239,7 @@ fun ActivityColorPickerSheet(
                         Icon(
                             Icons.Rounded.ExpandCircleDown,
                             "Hide",
-                            tint = c.iconButtonBgBg1,
+                            tint = c.iconButtonBg1,
                             modifier = Modifier
                                 .align(Alignment.CenterEnd)
                                 .padding(end = sheetHPadding)
