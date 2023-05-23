@@ -163,6 +163,12 @@ fun Int.min(value: Int) = if (this < value) this else value
 fun Float.min(v: Float) = if (this < v) this else v
 fun Float.max(v: Float) = if (this > v) this else v
 
+fun Int.limitMin(value: Int) = if (this < value) value else this
+fun Int.limitMax(value: Int) = if (this > value) value else this
+
+fun Float.limitMin(value: Float) = if (this < value) value else this
+fun Float.limitMax(value: Float) = if (this > value) value else this
+
 fun <T> MutableMap<T, Int>.plusOrSet(key: T, value: Int) {
     set(key, (get(key) ?: 0) + value)
 }
