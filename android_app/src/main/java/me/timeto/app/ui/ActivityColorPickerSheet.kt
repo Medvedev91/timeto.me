@@ -57,7 +57,8 @@ fun ActivityColorPickerSheet(
             title = state.headerTitle,
             doneText = state.doneTitle,
             isDoneEnabled = true,
-            scrollToHeader = if (circleScrollState.canScrollBackward || activitiesScrollState.canScrollBackward) 99 else 0,
+            scrollToHeader = (circleScrollState.value + activitiesScrollState.value) * 4,
+            dividerColor = c.dividerBg2,
             maxLines = 1,
         ) {
             onPick(state.selectedColor)
