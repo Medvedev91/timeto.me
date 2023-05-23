@@ -52,7 +52,7 @@ struct MyListView__HeaderView: View {
                     .fontWeight(.regular)
                     .font(.system(size: 13.5))
 
-            Spacer(minLength: 0)
+            Spacer()
 
             if let rightView = rightView {
                 rightView
@@ -222,7 +222,7 @@ struct MyListView__ItemView__ButtonView: View {
                         Text(text)
                                 .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL)
 
-                        Spacer(minLength: 0)
+                        Spacer()
 
                         if let rightView = rightView {
                             rightView
@@ -259,13 +259,13 @@ struct MyListView__ItemView__ActionView: View {
 
                     HStack(spacing: 0) {
 
-                        Spacer(minLength: 0)
+                        Spacer()
 
                         Text(text)
                                 .foregroundColor(textColor.toColor())
                                 .fontWeight(.medium)
 
-                        Spacer(minLength: 0)
+                        Spacer()
                     }
                             .frame(maxWidth: .infinity)
                             .frame(minHeight: MyListView.ITEM_MIN_HEIGHT)

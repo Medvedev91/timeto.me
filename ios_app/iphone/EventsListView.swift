@@ -215,7 +215,7 @@ private struct EventItemView: View {
             HStack {
                 Text(uiEvent.listText)
                         .myMultilineText()
-                Spacer(minLength: 0)
+                Spacer()
             }
                     .padding(.top, 4)
                     .padding(.leading, DEF_LIST_H_PADDING)

@@ -46,14 +46,14 @@ struct TimerPickerSheet: View {
                         label: { Text("Cancel") }
                 )
 
-                Spacer(minLength: 0)
+                Spacer()
 
                 Text(title)
                         .font(.title2)
                         .fontWeight(.semibold)
                         .multilineTextAlignment(.center)
 
-                Spacer(minLength: 0)
+                Spacer()
 
                 Button(
                         action: {

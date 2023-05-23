@@ -35,7 +35,7 @@ struct EditActivitiesDialog: View {
                 Text(activityUI.listText)
                         .lineLimit(1)
 
-                Spacer(minLength: 0)
+                Spacer()
 
                 Button(
                         action: {

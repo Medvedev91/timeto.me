@@ -173,7 +173,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                 }
 
                 if !isImportantTasksExists && checklistUI == nil {
-                    Spacer(minLength: 0)
+                    Spacer()
                 }
 
                 HStack(alignment: .bottom, spacing: 0) {
@@ -184,7 +184,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                             },
                             label: {
                                 VStack(spacing: 0) {
-                                    Spacer(minLength: 0)
+                                    Spacer()
                                     Image(systemName: "timer")
                                             .padding(.bottom, 4)
                                             .foregroundColor(menuColor)
@@ -208,7 +208,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                             .font(.system(size: 15, weight: .regular))
                                             .padding(.top, 10)
 
-                                    Spacer(minLength: 0)
+                                    Spacer()
 
                                     Text(state.timeOfTheDay)
                                             .padding(.horizontal, 16)
@@ -248,7 +248,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                             },
                             label: {
                                 VStack(spacing: 0) {
-                                    Spacer(minLength: 0)
+                                    Spacer()
                                     Image(systemName: "xmark.circle")
                                             .padding(.bottom, 4)
                                             .foregroundColor(menuColor)
@@ -380,7 +380,7 @@ private struct ImportantTasksView: View {
 
                     VStack(spacing: 0) {
 
-                        Spacer(minLength: 0)
+                        Spacer()
 
                         ZStack {}
                                 .frame(height: taskListContentPadding)

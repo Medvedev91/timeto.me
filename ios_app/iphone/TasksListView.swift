@@ -391,7 +391,7 @@ struct TasksView__TaskRowView: View {
                                             .multilineTextAlignment(.leading)
                                             .myMultilineText()
 
-                                    Spacer(minLength: 0)
+                                    Spacer()
                                 }
 
                                 TextFeaturesTriggersView(textFeatures: taskUI.textFeatures)
@@ -514,7 +514,7 @@ struct TasksView__TaskRowView__ActivityRowView: View {
                                     .truncationMode(.tail)
                                     .lineLimit(1)
 
-                            Spacer(minLength: 0)
+                            Spacer()
 
                             ForEach(activityUI.timerHints, id: \.seconds) { hintUI in
                                 let isPrimary = hintUI.isPrimary
@@ -600,7 +600,7 @@ private struct TasksListView__TmrwTaskView: View {
                         .multilineTextAlignment(.leading)
                         .myMultilineText()
 
-                Spacer(minLength: 0)
+                Spacer()
             }
 
             TextFeaturesTriggersView(textFeatures: taskUI.textFeatures)

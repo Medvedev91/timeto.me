@@ -346,7 +346,7 @@ struct TabTimerView_ActivityRowView: View {
                                     .truncationMode(.tail)
                                     .lineLimit(1)
 
-                            Spacer(minLength: 0)
+                            Spacer()
 
                             ForEach(
                                     activityUI.timerHints,
@@ -510,11 +510,11 @@ struct TabTimerView_ProgressView: View {
 
                 VStack(spacing: 0) {
 
-                    Spacer(minLength: 0)
+                    Spacer()
 
                     HStack(spacing: 0) {
 
-                        Spacer(minLength: 0)
+                        Spacer()
 
                         Text(timerData.title)
                                 .font(.system(size: 53, design: .monospaced))
@@ -524,7 +524,7 @@ struct TabTimerView_ProgressView: View {
                                 .foregroundColor(timerData.titleColor.toColor())
                                 .padding(.bottom, 8)
 
-                        Spacer(minLength: 0)
+                        Spacer()
                     }
 
                     let fullHeight: Double = 15.0

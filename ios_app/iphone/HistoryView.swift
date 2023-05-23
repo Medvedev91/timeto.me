@@ -96,7 +96,7 @@ struct HistoryView: View {
                                                             .frame(alignment: .leading)
                                                 }
 
-                                                Spacer(minLength: 0)
+                                                Spacer()
 
                                                 Text(intervalUI.timeString)
                                                         .foregroundColor(.primary)

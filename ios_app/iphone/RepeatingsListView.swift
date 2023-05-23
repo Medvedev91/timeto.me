@@ -157,7 +157,7 @@ struct RepeatingsView__ItemView: View {
             HStack {
                 Text(repeatingUI.listText)
                         .myMultilineText()
-                Spacer(minLength: 0)
+                Spacer()
             }
                     .padding(.top, 4)
                     .padding(.leading, DEF_LIST_H_PADDING)

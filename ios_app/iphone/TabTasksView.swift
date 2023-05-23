@@ -59,7 +59,7 @@ struct TabTasksView: View {
             HStack(spacing: 0) {
 
                 /// Because of upActiveSectionWithAnimation() without Spacer can be twitching
-                Spacer(minLength: 0)
+                Spacer()
 
                 if let section = activeSection as? TabTasksView_Section_Folder {
                     /// OMG! Dirty trick!
