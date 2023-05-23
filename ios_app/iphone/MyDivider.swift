@@ -6,7 +6,7 @@ struct MyDivider: View {
 
     var body: some View {
         Color(.systemGray4)
-                .frame(height: 1 / UIScreen.main.scale)
-                .offset(x: xOffset)
+                .frame(height: onePx)
+                .padding(.leading, xOffset)
     }
 }
