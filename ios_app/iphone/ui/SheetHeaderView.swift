@@ -10,7 +10,7 @@ struct SheetHeaderView: View {
     var dividerColor = UIColor.dividerFormHeader
     let onDone: () -> Void
 
-    @State private var bg = UIColor.myDayNightArgb(0xFFF9F9F9, 0xFF191919)
+    @State private var bgColor = UIColor.myDayNightArgb(0xFFF9F9F9, 0xFF191919)
 
     private var bgAlpha: Double {
         (Double(scrollToHeader) / 30).limitMinMax(0, 0)
@@ -59,6 +59,6 @@ struct SheetHeaderView: View {
                     .opacity(bgAlpha)
                     .frame(height: onePx)
         }
-                .background(Color(bg).opacity(bgAlpha))
+                .background(Color(bgColor).opacity(bgAlpha))
     }
 }
