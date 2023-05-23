@@ -12,10 +12,11 @@ import me.timeto.app.onePx
 
 @Composable
 fun DividerBg2(
+    modifier: Modifier = Modifier,
     isVisible: Boolean = true,
 ) {
     ZStack(
-        modifier = Modifier
+        modifier = modifier
             .alpha(animateFloatAsState(if (isVisible) 1f else 0f).value)
             .height(onePx)
             .fillMaxWidth()
