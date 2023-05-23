@@ -8,7 +8,10 @@ import android.content.res.Resources
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
@@ -139,4 +142,29 @@ fun vibrateOneShot(duration: Long) {
     val vibrator = App.instance.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     vibrator.vibrate(VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE))
     vibrateOneShotLastMillis = timeMls()
+}
+
+///
+///
+
+@Composable
+fun ZStack(
+    modifier: Modifier,
+) {
+    Box(modifier = modifier)
+}
+
+@Composable
+fun ZStack(
+    modifier: Modifier,
+    contentAlignment: Alignment = Alignment.TopStart,
+    propagateMinConstraints: Boolean = false,
+    content: @Composable BoxScope.() -> Unit,
+) {
+    Box(
+        modifier = modifier,
+        contentAlignment = contentAlignment,
+        propagateMinConstraints = propagateMinConstraints,
+        content = content,
+    )
 }
