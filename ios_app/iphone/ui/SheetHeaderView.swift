@@ -13,7 +13,7 @@ struct SheetHeaderView: View {
     @State private var bg = UIColor.myDayNightArgb(0xFFF9F9F9, 0xFF191919)
 
     private var bgAlpha: Double {
-        (Double(scrollToHeader) / 30).min(1.0).max(0.0)
+        (Double(scrollToHeader) / 30).limitMinMax(0, 0)
     }
 
     var body: some View {
