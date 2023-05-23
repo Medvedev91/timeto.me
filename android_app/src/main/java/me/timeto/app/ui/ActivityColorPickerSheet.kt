@@ -58,6 +58,7 @@ fun ActivityColorPickerSheet(
             doneText = state.doneTitle,
             isDoneEnabled = true,
             scrollToHeader = (circleScrollState.value + activitiesScrollState.value) * 4,
+            bgColor = c.background2,
             dividerColor = c.dividerBg2,
             maxLines = 1,
         ) {
