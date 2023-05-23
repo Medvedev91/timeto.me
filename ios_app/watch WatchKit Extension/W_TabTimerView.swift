@@ -98,8 +98,7 @@ struct W_TabTimerView: View {
                                                         .padding(.trailing, 8)
                                                         .padding(.top, 2)
                                                         .padding(.bottom, 3.5)
-                                                        .background(.white)
-                                                        .clipShape(Capsule())
+                                                        .background(Capsule().fill(.white))
                                                         .padding(.leading, 8)
 
                                             }

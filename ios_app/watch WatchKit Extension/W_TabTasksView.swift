@@ -134,7 +134,7 @@ struct W_TabTasksView: View {
                                                                         .font(.system(size: isHistory ? 12 : 13, weight: .medium))
                                                                         .foregroundColor(.white)
                                                                         .background(isHistory ? .blue : .clear)
-                                                                        .clipShape(Capsule(style: .continuous)) // .continuous из-за маленького padding
+                                                                        .cornerRadius(99)
                                                                         .lineLimit(1)
                                                             }
                                                     )
