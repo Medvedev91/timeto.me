@@ -56,8 +56,7 @@ struct TextFeaturesTriggersView__ListItem: View {
                     Text(trigger.title)
                             .padding(.horizontal, 8)
                             .padding(.vertical, 4)
-                            .background(trigger.color.toColor())
-                            .clipShape(Capsule())
+                            .background(Capsule().foregroundColor(trigger.color.toColor()))
                             .foregroundColor(.white)
                             .font(.system(size: 14))
 
