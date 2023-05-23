@@ -117,7 +117,7 @@ struct W_TabTasksView: View {
                                                 .truncationMode(.middle)
 
                                         if !activityUI.timerHints.isEmpty {
-                                            HStack(spacing: 10) {
+                                            HStack(spacing: 6) {
                                                 ForEach(activityUI.timerHints, id: \.seconds) { hintUI in
                                                     let isHistory = activityUI.historySeconds.contains(hintUI.seconds.toInt().toKotlinInt())
                                                     Button(
