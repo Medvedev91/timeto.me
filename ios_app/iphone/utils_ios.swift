@@ -80,6 +80,8 @@ extension UIColor {
     static var dividerBg2 = UIColor.systemGray4
 
     static var formHeaderDivider = UIColor.systemGray3
+
+    static var formHeaderBackground = myDayNightArgb(0xFFF9F9F9, 0xFF191919)
 }
 
 extension View {
