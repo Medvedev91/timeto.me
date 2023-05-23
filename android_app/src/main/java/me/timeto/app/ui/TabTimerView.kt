@@ -247,13 +247,10 @@ fun TabTimerView() {
                                 }
                             }
 
-                            if (uiActivity.withTopDivider)
-                                Divider(
-                                    color = c.dividerBg2,
-                                    modifier = Modifier
-                                        .padding(start = startPadding),
-                                    thickness = 0.5.dp
-                                )
+                            DividerBg2(
+                                modifier = Modifier.padding(start = startPadding),
+                                isVisible = uiActivity.withTopDivider,
+                            )
                         }
                     }
                 }
