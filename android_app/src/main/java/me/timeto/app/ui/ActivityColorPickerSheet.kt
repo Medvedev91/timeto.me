@@ -57,14 +57,12 @@ fun ActivityColorPickerSheet(
             title = state.headerTitle,
             doneText = state.doneTitle,
             isDoneEnabled = true,
-            scrollToHeader = 0,
+            scrollToHeader = if (circleScrollState.canScrollBackward || activitiesScrollState.canScrollBackward) 99 else 0,
             maxLines = 1,
         ) {
             onPick(state.selectedColor)
             layer.close()
         }
-
-        DividerBg2(isVisible = (circleScrollState.canScrollBackward || activitiesScrollState.canScrollBackward))
 
         Row(
             modifier = Modifier
