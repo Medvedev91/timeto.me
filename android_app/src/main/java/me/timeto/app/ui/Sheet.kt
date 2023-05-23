@@ -88,7 +88,6 @@ object Sheet {
 
         val isLight = MaterialTheme.colors.isLight
         val bgColor = remember(isLight) { if (isLight) Color(0xFFF9F9F9) else Color(0xFF191919) }
-        val dividerColor = remember(isLight) { if (isLight) Color(0xFFE9E9E9) else Color(0xFF1F1F1F) }
         val alphaAnimate = animateFloatAsState((scrollToHeader.toFloat() / 50).limitMinMax(0f, 1f))
 
         Box(
@@ -151,12 +150,13 @@ object Sheet {
                 )
             }
 
+            val dividerFormHeaderColor = c.dividerFormHeader
             ZStack(
                 modifier = Modifier
                     .height(onePx)
                     .fillMaxWidth()
                     .drawBehind {
-                        drawRect(color = dividerColor.copy(alpha = alphaAnimate.value))
+                        drawRect(color = dividerFormHeaderColor.copy(alpha = alphaAnimate.value))
                     },
             )
         }
