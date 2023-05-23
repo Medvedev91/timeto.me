@@ -77,7 +77,7 @@ struct W_TabTimerView: View {
 
                             if let noteUI = activityUI.noteUI {
 
-                                HStack(spacing: 0) {
+                                HStack {
 
                                     Text(noteUI.text)
                                             .font(.system(size: 14, weight: .light))
@@ -105,12 +105,12 @@ struct W_TabTimerView: View {
                                     )
                                             .buttonStyle(.borderless)
 
-                                    Spacer(minLength: 0)
+                                    Spacer()
                                 }
                             }
 
                             if !activityUI.timerHints.isEmpty {
-                                HStack {
+                                HStack(spacing: 10) {
                                     ForEach(activityUI.timerHints, id: \.seconds) { hintUI in
                                         Button(
                                                 action: {
