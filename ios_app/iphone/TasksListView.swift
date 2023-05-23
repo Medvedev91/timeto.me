@@ -533,7 +533,7 @@ struct TasksView__TaskRowView__ActivityRowView: View {
                                                     .padding(.top, 3)
                                                     .padding(.bottom, 3.5)
                                                     .background(isPrimary ? .blue : .clear)
-                                                    .clipShape(Capsule())
+                                                    .cornerRadius(99)
                                                     .padding(.leading, isPrimary ? 4 : 0)
                                         }
                                 )
