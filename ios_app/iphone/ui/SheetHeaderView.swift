@@ -57,7 +57,7 @@ struct SheetHeaderView: View {
 
             Color(bgDivider)
                     .opacity(bgAlpha)
-                    .frame(height: 1)
+                    .frame(height: onePx)
         }
                 .background(Color(bg).opacity(bgAlpha))
     }
