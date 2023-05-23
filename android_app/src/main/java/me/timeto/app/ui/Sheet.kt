@@ -82,13 +82,11 @@ object Sheet {
         doneText: String,
         isDoneEnabled: Boolean?, // null - hidden
         scrollToHeader: Int,
+        bgColor: Color = c.formHeaderBackground,
         dividerColor: Color = c.formHeaderDivider,
         maxLines: Int = Int.MAX_VALUE,
         onDone: () -> Unit,
     ) {
-
-        val isLight = MaterialTheme.colors.isLight
-        val bgColor = remember(isLight) { if (isLight) Color(0xFFF9F9F9) else Color(0xFF191919) }
         val alphaAnimate = animateFloatAsState((scrollToHeader.toFloat() / 50).limitMinMax(0f, 1f))
 
         Box(

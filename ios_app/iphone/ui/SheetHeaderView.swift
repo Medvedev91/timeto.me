@@ -7,10 +7,9 @@ struct SheetHeaderView: View {
     let doneText: String
     let isDoneEnabled: Bool?
     let scrollToHeader: Int
+    var bgColor = UIColor.formHeaderBackground
     var dividerColor = UIColor.formHeaderDivider
     let onDone: () -> Void
-
-    @State private var bgColor = UIColor.myDayNightArgb(0xFFF9F9F9, 0xFF191919)
 
     private var bgAlpha: Double {
         (Double(scrollToHeader) / 30).limitMinMax(0, 1)
