@@ -45,6 +45,11 @@ class MyColors(
     val bgFormSheet: Color,
     val formButtonRightNoteText: Color,
     val iconButtonBg1: Color, // AG systemGray2
+    val gray1: Color,
+    val gray2: Color,
+    val gray3: Color,
+    val gray4: Color,
+    val gray5: Color,
 ) {
     val red = Color(0xFFFF453A)
     val green = colorFromRgbaString("52,199,89") // AG Green Light
@@ -78,6 +83,11 @@ private val myLightColors = MyColors(
     bgFormSheet = tgLikeLightSheetBg,
     formButtonRightNoteText = Color(0x88000000),
     iconButtonBg1 = Color(0xFFAEAEB2),
+    gray1 = Color(142, 142, 147),
+    gray2 = Color(174, 174, 178),
+    gray3 = Color(199, 199, 204),
+    gray4 = Color(209, 209, 214),
+    gray5 = Color(229, 229, 234),
 )
 
 private val myDarkColors = MyColors(
@@ -101,4 +111,9 @@ private val myDarkColors = MyColors(
     bgFormSheet = Color(0xFF121214),
     formButtonRightNoteText = Color(0x88FFFFFF),
     iconButtonBg1 = Color(0xFF636366),
+    gray1 = Color(142, 142, 147),
+    gray2 = Color(99, 99, 102),
+    gray3 = Color(72, 72, 74),
+    gray4 = Color(58, 58, 60),
+    gray5 = Color(44, 44, 46),
 )
