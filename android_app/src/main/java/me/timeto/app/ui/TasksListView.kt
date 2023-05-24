@@ -404,12 +404,7 @@ fun TasksListView(
                             }
 
                             if (!isFirst)
-                                Divider(
-                                    color = c.dividerBg2,
-                                    modifier = Modifier
-                                        .padding(start = startPadding),
-                                    thickness = 0.5.dp
-                                )
+                                DividerBg2(Modifier.padding(start = startPadding))
                         }
                     }
                 }
