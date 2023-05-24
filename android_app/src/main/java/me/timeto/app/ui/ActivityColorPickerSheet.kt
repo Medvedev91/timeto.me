@@ -48,6 +48,7 @@ fun ActivityColorPickerSheet(
         modifier = Modifier
             .fillMaxHeight()
             .background(c.background2)
+            .navigationBarsPadding()
     ) {
 
         val circleScrollState = rememberScrollState()
@@ -197,6 +198,8 @@ fun ActivityColorPickerSheet(
             }
         }
 
+        DividerBg2()
+
         Column {
 
             BackHandler(state.isRgbSlidersShowed) {
@@ -213,11 +216,8 @@ fun ActivityColorPickerSheet(
                 Column(
                     modifier = Modifier
                         .background(c.background2)
-                        .pointerInput(Unit) { }
-                        .navigationBarsPadding(),
+                        .pointerInput(Unit) { },
                 ) {
-
-                    DividerBg2()
 
                     Box(
                         modifier = Modifier
