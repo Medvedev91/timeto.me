@@ -33,6 +33,15 @@ func machineIdentifier() -> String {
     }
 }
 
+func ForEachIndexedId<T, Content: View>(
+        _ items: Array<T>,
+        @ViewBuilder content: @escaping (Int, T) -> Content
+) -> some View {
+    ForEach(Array(items.enumerated()), id: \.offset) { index, item in
+        content(index, item)
+    }
+}
+
 /// Watch Connectivity
 func setupWCSession(_ delegate: WCSessionDelegate) {
     if WCSession.isSupported() {
