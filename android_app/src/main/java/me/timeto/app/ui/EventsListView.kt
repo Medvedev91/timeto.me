@@ -190,12 +190,7 @@ fun EventsListView() {
 
                 // Remember the list is reversed
                 if (index > 0)
-                    Divider(
-                        color = c.dividerBg2,
-                        modifier = Modifier
-                            .padding(start = 18.dp),
-                        thickness = 0.7.dp
-                    )
+                    DividerBg2(Modifier.padding(start = 18.dp))
             }
         }
     }
