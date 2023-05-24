@@ -181,10 +181,11 @@ fun ActivityColorPickerSheet(
                     }
                 }
 
+                // Small top padding to see on scroll
                 Text(
                     text = "Custom",
                     modifier = Modifier
-                        .padding(top = 6.dp, bottom = 20.dp)
+                        .padding(bottom = 20.dp)
                         .navigationBarsPadding()
                         .clip(MySquircleShape())
                         .clickable {
