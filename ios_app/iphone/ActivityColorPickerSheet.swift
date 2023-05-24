@@ -111,34 +111,15 @@ struct ActivityColorPickerSheet: View {
 
                         VStack(alignment: .leading) {
 
-                            ForEach(state.colorGroups, id: \.self) { colors in
+                            ForEachIndexedId(state.colorGroups) { _, colors in
 
                                 HStack {
 
-                                    ForEach(colors, id: \.self) { colorItem in
+                                    ForEachIndexedId(colors) { _, colorItem in
 
-                                        Button(
-                                                action: {
-                                                    vm.upColorRgba(colorRgba: colorItem.colorRgba)
-                                                },
-                                                label: {
-
-                                                    ZStack {
-
-                                                        Circle()
-                                                                .foregroundColor(colorItem.colorRgba.toColor())
-                                                                .frame(width: circleSize, height: circleSize)
-
-                                                        if colorItem.isSelected {
-                                                            Image(systemName: "checkmark")
-                                                                    .font(.system(size: 18, weight: .medium))
-                                                                    .foregroundColor(.white)
-                                                        }
-                                                    }
-                                                            .padding(.all, circlePadding)
-                                                }
-                                        )
-                                                .frame(width: circleCellSize, height: circleCellSize)
+                                        ColorCircleView(colorItem: colorItem) {
+                                            vm.upColorRgba(colorRgba: colorItem.colorRgba)
+                                        }
                                     }
                                 }
                             }
@@ -207,6 +188,43 @@ struct ActivityColorPickerSheet: View {
         }
                 .ignoresSafeArea()
                 .background(Color(.mySecondaryBackground))
+    }
+}
+
+private struct ColorCircleView: View {
+
+    let colorItem: ActivityColorPickerSheetVM.ColorItem
+    let onClick: () -> Void
+
+    @State private var isSelectedAnim = false
+
+    var body: some View {
+
+        Button(
+                action: {
+                    onClick()
+                },
+                label: {
+                    ZStack {
+
+                        Circle()
+                                .foregroundColor(colorItem.colorRgba.toColor())
+                                .frame(width: circleSize, height: circleSize)
+                                .zIndex(1)
+
+                        if isSelectedAnim {
+                            Image(systemName: "checkmark")
+                                    .font(.system(size: 18, weight: .medium))
+                                    .foregroundColor(.white)
+                                    .transition(.opacity)
+                                    .zIndex(2)
+                        }
+                    }
+                            .padding(.all, circlePadding)
+                }
+        )
+                .frame(width: circleCellSize, height: circleCellSize)
+                .animateVmValue(value: colorItem.isSelected, state: $isSelectedAnim)
     }
 }
 
