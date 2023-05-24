@@ -128,9 +128,12 @@ struct ActivityColorPickerSheet: View {
                                     action: {
                                         vm.toggleIsRgbSlidersShowed()
                                     },
-                                    label: { Text("Custom") }
+                                    label: {
+                                        Text("Custom")
+                                                .font(.system(size: 16))
+                                    }
                             )
-                                    .padding(.top, 6)
+                                    .padding(.top, 2)
                                     .padding(.bottom, 20)
                                     .padding(.leading, circlePadding + 1)
                                     .animateVmValue(value: state.isRgbSlidersShowed, state: $isRgbSlidersShowedAnim)
