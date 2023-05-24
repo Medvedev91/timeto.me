@@ -34,8 +34,6 @@ class MyColors(
     val backgroundEditable: Color,
     val tabsText: Color,
     val tabsBackground: Color,
-    val dividerBg2: Color,
-    val formHeaderDivider: Color,
     val formHeaderBackground: Color,
     val timerBarBorder: Color,
     val timerBarBackground: Color,
@@ -44,7 +42,6 @@ class MyColors(
     val datePickerTitleBg: Color,
     val bgFormSheet: Color,
     val formButtonRightNoteText: Color,
-    val iconButtonBg1: Color, // AG systemGray2
     val gray1: Color,
     val gray2: Color,
     val gray3: Color,
@@ -58,6 +55,9 @@ class MyColors(
     val black = Color.Black
     val transparent = Color.Transparent
     val tasksTabDropFocused = green
+    val iconButtonBg1 = gray2
+    val dividerBg2 = gray5
+    val formHeaderDivider = gray4
 }
 
 private val tgLikeLightSheetBg = Color(0xFFEFEFF3)
@@ -72,8 +72,6 @@ private val myLightColors = MyColors(
     backgroundEditable = Color(0xFFf1f8e9), // Light Green 50
     tabsText = Color(0x99000000),
     tabsBackground = Color.White,
-    dividerBg2 = Color(0xFFE5E5EA), // AG systemGray5
-    formHeaderDivider = Color(0xFFD1D1D6), // AG systemGray4
     formHeaderBackground = Color(0xFFF9F9F9),
     timerBarBorder = Color(0xFFDDDDDD),
     timerBarBackground = Color.White,
@@ -82,7 +80,6 @@ private val myLightColors = MyColors(
     datePickerTitleBg = Color(0xFFEEEEF3),
     bgFormSheet = tgLikeLightSheetBg,
     formButtonRightNoteText = Color(0x88000000),
-    iconButtonBg1 = Color(0xFFAEAEB2),
     gray1 = Color(142, 142, 147),
     gray2 = Color(174, 174, 178),
     gray3 = Color(199, 199, 204),
@@ -100,8 +97,6 @@ private val myDarkColors = MyColors(
     backgroundEditable = Color(0xFF444444),
     tabsText = Color(0x77FFFFFF),
     tabsBackground = Color(0xFF191919), // 0xFF131313
-    dividerBg2 = Color(0xFF2C2C2E), // AG systemGray5
-    formHeaderDivider = Color(0xFF3A3A3C), // AG systemGray4
     formHeaderBackground = Color(0xFF191919),
     timerBarBorder = Color(0xFF393939),
     timerBarBackground = Color(0xFF1C1C1E),
@@ -110,7 +105,6 @@ private val myDarkColors = MyColors(
     datePickerTitleBg = Color(0xFF2A2A2B),
     bgFormSheet = Color(0xFF121214),
     formButtonRightNoteText = Color(0x88FFFFFF),
-    iconButtonBg1 = Color(0xFF636366),
     gray1 = Color(142, 142, 147),
     gray2 = Color(99, 99, 102),
     gray3 = Color(72, 72, 74),
