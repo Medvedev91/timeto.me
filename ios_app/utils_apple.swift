@@ -391,7 +391,7 @@ private struct AnimateVmValueModifier<T: Equatable>: ViewModifier {
 
     let value: T
     @Binding var state: T
-    var animation: Animation = .spring(response: 0.250)
+    let animation: Animation
 
     func body(content: Content) -> some View {
         content
@@ -408,8 +408,12 @@ private struct AnimateVmValueModifier<T: Equatable>: ViewModifier {
 
 extension View {
 
-    func animateVmValue<T: Equatable>(value: T, state: Binding<T>) -> some View {
-        modifier(AnimateVmValueModifier(value: value, state: state))
+    func animateVmValue<T: Equatable>(
+            value: T,
+            state: Binding<T>,
+            animation: Animation = .spring(response: 0.250)
+    ) -> some View {
+        modifier(AnimateVmValueModifier(value: value, state: state, animation: animation))
     }
 }
 
