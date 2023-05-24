@@ -15,6 +15,7 @@ import androidx.compose.material.icons.rounded.ExpandCircleDown
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
@@ -104,6 +105,7 @@ fun ActivityColorPickerSheet(
                     Text(
                         text = state.otherActivitiesTitle,
                         modifier = Modifier
+                            .alpha(.9f)
                             .padding(start = 4.dp, top = 24.dp),
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Medium,
