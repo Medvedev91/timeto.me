@@ -82,6 +82,7 @@ object Sheet {
         doneText: String,
         isDoneEnabled: Boolean?, // null - hidden
         scrollToHeader: Int,
+        cancelText: String = "Cancel",
         bgColor: Color = c.formHeaderBackground,
         dividerColor: Color = c.formHeaderDivider,
         maxLines: Int = Int.MAX_VALUE,
@@ -103,7 +104,7 @@ object Sheet {
             ) {
 
                 Text(
-                    "Cancel",
+                    cancelText,
                     modifier = Modifier
                         .align(Alignment.CenterStart)
                         .padding(start = 15.dp)
