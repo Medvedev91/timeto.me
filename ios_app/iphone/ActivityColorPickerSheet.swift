@@ -59,14 +59,14 @@ struct ActivityColorPickerSheet: View {
                                         .font(.system(size: 17, weight: .bold))
                                         .foregroundColor(.white)
                                         .lineLimit(1)
-                                        .padding(.leading, 11)
-                                        .padding(.trailing, 13)
-                                        .frame(height: circleSize - 4)
+                                        .padding(.leading, 12)
+                                        .padding(.trailing, 14)
+                                        .frame(height: circleSize - 2)
                                         .background(
                                                 RoundedRectangle(cornerRadius: 12, style: .continuous)
                                                         .fill(state.selectedColor.toColor())
                                         )
-                                        .padding(.top, 2)
+                                        .padding(.top, 1)
 
                                 Text(state.otherActivitiesTitle)
                                         .foregroundColor(.secondary)
