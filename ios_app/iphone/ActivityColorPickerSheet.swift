@@ -148,7 +148,7 @@ struct ActivityColorPickerSheet: View {
 
                     VStack {
 
-                        DividerBg1()
+                        DividerBg2()
 
                         ZStack(alignment: .center) {
 

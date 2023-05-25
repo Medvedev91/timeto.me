@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct DividerBg1: View {
+struct DividerBg2: View {
 
     var body: some View {
         Color(.dividerBg2)
