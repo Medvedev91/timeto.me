@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
-import me.timeto.app.max
 import me.timeto.shared.*
 import me.timeto.shared.vm.HistoryVM
 
@@ -162,7 +161,7 @@ fun HistoryDialogView(
                                 modifier = Modifier
                                     .padding(horizontal = 12.dp, vertical = 4.dp)
                                     .width(10.dp)
-                                    .height(10.dp.max(timeHeight))
+                                    .height(10.dp.limitMin(timeHeight))
                                     .align(Alignment.CenterHorizontally)
                                     .clip(RoundedCornerShape(99.dp))
                                     .background(intervalUI.color.toColor())

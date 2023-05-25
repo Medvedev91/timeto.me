@@ -43,7 +43,7 @@ fun ActivitiesTimerSheet(
         modifier = Modifier
             .background(c.background2)
             .navigationBarsPadding()
-            .height((activityItemHeight * state.allActivities.size + topContentPadding + bottomContentPadding).min(screenHeight - 60.dp))
+            .height((activityItemHeight * state.allActivities.size + topContentPadding + bottomContentPadding).limitMax(screenHeight - 60.dp))
             .fillMaxWidth(),
         contentPadding = PaddingValues(top = topContentPadding, bottom = bottomContentPadding)
     ) {

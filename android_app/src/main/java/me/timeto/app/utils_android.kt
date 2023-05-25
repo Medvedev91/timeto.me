@@ -30,8 +30,8 @@ fun dpToPx(dp: Float) = (dp * density).toInt()
 fun pxToDp(px: Int) = (px / density)
 val onePx = pxToDp(1).dp
 
-fun Dp.max(dp: Dp) = if (this > dp) this else dp
-fun Dp.min(dp: Dp) = if (this < dp) this else dp
+fun Dp.limitMin(dp: Dp) = if (this < dp) dp else this
+fun Dp.limitMax(dp: Dp) = if (this > dp) dp else this
 fun Dp.goldenRatioUp() = this * GOLDEN_RATIO
 fun Dp.goldenRatioDown() = this / GOLDEN_RATIO
 
