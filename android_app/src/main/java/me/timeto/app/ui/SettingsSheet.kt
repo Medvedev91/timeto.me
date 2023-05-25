@@ -107,6 +107,7 @@ fun SettingsSheet(
             doneText = "--------",
             isDoneEnabled = null,
             scrollToHeader = if (scrollState.canScrollBackward) 99 else 0,
+            cancelText = "Back",
         ) {}
 
         LazyColumn(
