@@ -202,14 +202,6 @@ extension FixedWidthInteger {
 
 extension Int {
 
-    func max(_ test: Int) -> Int {
-        self > test ? self : test
-    }
-
-    func min(_ test: Int) -> Int {
-        self < test ? self : test
-    }
-
     func limitMin(_ value: Int) -> Int {
         self < value ? value : self
     }

@@ -113,7 +113,7 @@ struct HistoryView: View {
                                                     .fill(interval.getActivityDI().getColorRgba().toColor())
                                                     .frame(
                                                             width: 10,
-                                                            height: Double(10.max(intervalUI.secondsForBar.toInt() / 50))
+                                                            height: Double(10.limitMin(intervalUI.secondsForBar.toInt() / 50))
                                                     )
                                                     .padding(.leading, 5)
                                                     .padding(.trailing, 5)
