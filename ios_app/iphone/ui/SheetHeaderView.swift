@@ -7,6 +7,7 @@ struct SheetHeaderView: View {
     let doneText: String
     let isDoneEnabled: Bool?
     let scrollToHeader: Int
+    var cancelText: String = "Cancel"
     var bgColor = UIColor.formHeaderBackground
     var dividerColor = UIColor.formHeaderDivider
     let onDone: () -> Void
@@ -25,7 +26,7 @@ struct SheetHeaderView: View {
                         action: {
                             onCancel()
                         },
-                        label: { Text("Cancel") }
+                        label: { Text(cancelText) }
                 )
                         .padding(.leading, 25)
 
