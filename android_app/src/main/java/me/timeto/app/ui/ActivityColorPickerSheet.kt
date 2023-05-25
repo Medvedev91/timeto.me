@@ -181,7 +181,6 @@ fun ActivityColorPickerSheet(
                     }
                 }
 
-                // Small top padding to see on scroll
                 Text(
                     text = "Custom",
                     modifier = Modifier
