@@ -79,8 +79,8 @@ object Sheet {
     fun HeaderView(
         onCancel: () -> Unit,
         title: String,
-        doneText: String,
-        isDoneEnabled: Boolean?, // null - hidden
+        doneText: String?,
+        isDoneEnabled: Boolean,
         scrollToHeader: Int,
         cancelText: String = "Cancel",
         bgColor: Color = c.formHeaderBackground,
@@ -128,26 +128,24 @@ object Sheet {
                     textAlign = TextAlign.Center,
                 )
 
-                Text(
-                    doneText,
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .padding(end = 16.dp)
-                        .clip(RoundedCornerShape(99.dp))
-                        .clickable(enabled = (isDoneEnabled == true)) {
-                            onDone()
-                        }
-                        .padding(horizontal = 8.dp, vertical = 4.dp),
-                    color = animateColorAsState(
-                        targetValue = when (isDoneEnabled) {
-                            true -> c.blue
-                            false -> c.textSecondary.copy(alpha = 0.4f)
-                            null -> c.transparent
-                        }
-                    ).value,
-                    fontSize = 17.sp,
-                    fontWeight = FontWeight.W600
-                )
+                if (doneText != null)
+                    Text(
+                        doneText,
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd)
+                            .padding(end = 16.dp)
+                            .clip(RoundedCornerShape(99.dp))
+                            .clickable(enabled = isDoneEnabled) {
+                                onDone()
+                            }
+                            .padding(horizontal = 8.dp, vertical = 4.dp),
+                        color = animateColorAsState(
+                            targetValue = if (isDoneEnabled) c.blue
+                            else c.textSecondary.copy(alpha = 0.4f)
+                        ).value,
+                        fontSize = 17.sp,
+                        fontWeight = FontWeight.W600
+                    )
             }
 
             ZStack(

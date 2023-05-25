@@ -34,8 +34,8 @@ fun FoldersSettingsSheet(
         Sheet.HeaderView(
             onCancel = { layer.close() },
             title = state.headerTitle,
-            doneText = state.headerDoneText,
-            isDoneEnabled = true,
+            doneText = null,
+            isDoneEnabled = false,
             scrollToHeader = 0, // todo
             cancelText = "Back",
         ) {

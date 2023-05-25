@@ -104,8 +104,8 @@ fun SettingsSheet(
         Sheet.HeaderView(
             onCancel = { layer.close() },
             title = state.headerTitle,
-            doneText = "--------",
-            isDoneEnabled = null,
+            doneText = null,
+            isDoneEnabled = false,
             scrollToHeader = if (scrollState.canScrollBackward) 99 else 0,
             cancelText = "Back",
         ) {}

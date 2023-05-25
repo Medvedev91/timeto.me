@@ -30,8 +30,8 @@ fun ActivityPickerSheet(
         Sheet.HeaderView(
             onCancel = { layer.close() },
             title = state.headerTitle,
-            doneText = "-------",
-            isDoneEnabled = null,
+            doneText = null,
+            isDoneEnabled = false,
             scrollToHeader = scrollState.value,
         ) {
         }
