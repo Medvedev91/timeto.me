@@ -177,14 +177,14 @@ class HistoryVM : __VM<HistoryVM.State>() {
 
                 val finishTime = section.intervals.getNextOrNull(interval)?.id ?: section.nextIntervalStart
                 val seconds = finishTime - interval.id
-                val barTimeFinish = sectionDayTimeFinish.min(finishTime)
+                val barTimeFinish = sectionDayTimeFinish.limitMax(finishTime)
 
                 return IntervalUI(
                     interval = interval,
                     isStartsPrevDay = unixTime.localDay < section.day,
                     activityText = activity.nameWithEmoji().textFeatures().textUi(),
                     noteText = interval.note?.textFeatures()?.textUi(),
-                    secondsForBar = barTimeFinish - sectionDayTimeStart.max(interval.id),
+                    secondsForBar = barTimeFinish - sectionDayTimeStart.limitMin(interval.id),
                     barTimeFinish = barTimeFinish,
                     timeString = unixTime.getStringByComponents(UnixTime.StringComponent.hhmm24),
                     periodString = prepPeriodString(seconds),

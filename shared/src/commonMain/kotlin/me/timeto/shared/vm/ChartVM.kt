@@ -104,8 +104,8 @@ private suspend fun prepPieItems(
      * the data, especially relevant on the first day of the launch,
      * when the data only for the day but the period of 7 days.
      */
-    val realTimeStart = UnixTime.byLocalDay(formDayStart).time.max(DI.firstInterval.id)
-    val realTimeFinish = (UnixTime.byLocalDay(formDayFinish).inDays(1).time - 1).min(time())
+    val realTimeStart = UnixTime.byLocalDay(formDayStart).time.limitMin(DI.firstInterval.id)
+    val realTimeFinish = (UnixTime.byLocalDay(formDayFinish).inDays(1).time - 1).limitMax(time())
 
     ///
 
