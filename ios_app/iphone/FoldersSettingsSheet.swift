@@ -17,8 +17,8 @@ struct FoldersSettingsSheet: View {
             SheetHeaderView(
                     onCancel: { isPresented.toggle() },
                     title: state.headerTitle,
-                    doneText: state.headerDoneText,
-                    isDoneEnabled: true,
+                    doneText: nil,
+                    isDoneEnabled: false,
                     scrollToHeader: sheetHeaderScroll,
                     cancelText: "Back"
             ) {

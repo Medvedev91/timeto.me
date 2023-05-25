@@ -16,8 +16,8 @@ struct ActivityPickerSheet: View {
             SheetHeaderView(
                     onCancel: { isPresented.toggle() },
                     title: state.headerTitle,
-                    doneText: "-------",
-                    isDoneEnabled: nil,
+                    doneText: nil,
+                    isDoneEnabled: false,
                     scrollToHeader: sheetHeaderScroll
             ) {
             }
