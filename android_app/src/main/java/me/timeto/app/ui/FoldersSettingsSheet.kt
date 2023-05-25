@@ -37,6 +37,7 @@ fun FoldersSettingsSheet(
             doneText = state.headerDoneText,
             isDoneEnabled = true,
             scrollToHeader = 0, // todo
+            cancelText = "Back",
         ) {
             layer.close()
         }
