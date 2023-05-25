@@ -190,7 +190,7 @@ fun ActivityColorPickerSheet(
                         .clickable {
                             vm.toggleIsRgbSlidersShowed()
                         }
-                        .padding(horizontal = circlePadding + 1.dp, vertical = 2.dp),
+                        .padding(horizontal = circlePadding, vertical = 2.dp),
                     color = c.blue,
                     fontSize = 14.sp,
                 )

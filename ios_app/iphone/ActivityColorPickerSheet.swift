@@ -133,9 +133,9 @@ struct ActivityColorPickerSheet: View {
                                                 .font(.system(size: 16))
                                     }
                             )
-                                    .padding(.top, 2)
+                                    .padding(.top, 4)
                                     .padding(.bottom, 20)
-                                    .padding(.leading, circlePadding + 1)
+                                    .padding(.leading, circlePadding)
                                     .animateVmValue(value: state.isRgbSlidersShowed, state: $isRgbSlidersShowedAnim)
                         }
                                 .padding(.leading, dividerPadding - circlePadding)
