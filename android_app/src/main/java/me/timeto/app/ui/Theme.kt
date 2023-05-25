@@ -62,6 +62,17 @@ class MyColors(
 
 private val tgLikeLightSheetBg = Color(0xFFEFEFF3)
 
+private val gray1Light = Color(142, 142, 147)
+private val gray1Dark = Color(142, 142, 147)
+private val gray2Light = Color(174, 174, 178)
+private val gray2Dark = Color(99, 99, 102)
+private val gray3Light = Color(199, 199, 204)
+private val gray3Dark = Color(72, 72, 74)
+private val gray4Light = Color(209, 209, 214)
+private val gray4Dark = Color(58, 58, 60)
+private val gray5Light = Color(229, 229, 234)
+private val gray5Dark = Color(44, 44, 46)
+
 private val myLightColors = MyColors(
     blue = Color(0xFF007AFF),
     orange = Color(0xFFFF9500), // AG Orange iOS Light
@@ -80,11 +91,11 @@ private val myLightColors = MyColors(
     datePickerTitleBg = Color(0xFFEEEEF3),
     bgFormSheet = tgLikeLightSheetBg,
     formButtonRightNoteText = Color(0x88000000),
-    gray1 = Color(142, 142, 147),
-    gray2 = Color(174, 174, 178),
-    gray3 = Color(199, 199, 204),
-    gray4 = Color(209, 209, 214),
-    gray5 = Color(229, 229, 234),
+    gray1 = gray1Light,
+    gray2 = gray2Light,
+    gray3 = gray3Light,
+    gray4 = gray4Light,
+    gray5 = gray5Light,
 )
 
 private val myDarkColors = MyColors(
@@ -105,9 +116,9 @@ private val myDarkColors = MyColors(
     datePickerTitleBg = Color(0xFF2A2A2B),
     bgFormSheet = Color(0xFF121214),
     formButtonRightNoteText = Color(0x88FFFFFF),
-    gray1 = Color(142, 142, 147),
-    gray2 = Color(99, 99, 102),
-    gray3 = Color(72, 72, 74),
-    gray4 = Color(58, 58, 60),
-    gray5 = Color(44, 44, 46),
+    gray1 = gray1Dark,
+    gray2 = gray2Dark,
+    gray3 = gray3Dark,
+    gray4 = gray4Dark,
+    gray5 = gray5Dark,
 )
