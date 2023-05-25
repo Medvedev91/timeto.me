@@ -77,7 +77,7 @@ struct ActivityColorPickerSheet: View {
 
                                 ForEach(state.allActivities, id: \.self) { activityUI in
                                     Text(activityUI.text)
-                                            .font(.system(size: 15, weight: .medium))
+                                            .font(.system(size: 15, weight: .semibold))
                                             .foregroundColor(.white)
                                             .lineLimit(1)
                                             .padding(.leading, 9)

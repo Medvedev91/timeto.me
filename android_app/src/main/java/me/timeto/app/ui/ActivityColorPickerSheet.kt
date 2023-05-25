@@ -121,6 +121,7 @@ fun ActivityColorPickerSheet(
                                 .padding(start = 7.dp, end = 8.dp, top = 4.dp, bottom = 4.5.dp),
                             fontSize = 13.sp,
                             color = c.white,
+                            fontWeight = FontWeight.Medium,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                         )
