@@ -14,7 +14,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.R
-import me.timeto.app.onePx
 import me.timeto.app.rememberVM
 import me.timeto.app.toColor
 import me.timeto.shared.db.ActivityModel
