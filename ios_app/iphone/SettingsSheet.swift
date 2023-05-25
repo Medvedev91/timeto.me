@@ -40,7 +40,8 @@ struct SettingsSheet: View {
                     title: state.headerTitle,
                     doneText: "------",
                     isDoneEnabled: nil,
-                    scrollToHeader: sheetHeaderScroll
+                    scrollToHeader: sheetHeaderScroll,
+                    cancelText: "Back"
             ) {
             }
 
