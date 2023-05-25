@@ -38,9 +38,7 @@ fun FoldersSettingsSheet(
             isDoneEnabled = false,
             scrollToHeader = 0, // todo
             cancelText = "Back",
-        ) {
-            layer.close()
-        }
+        ) {}
 
         LazyColumn(
             state = scrollState,

@@ -33,8 +33,7 @@ fun ActivityPickerSheet(
             doneText = null,
             isDoneEnabled = false,
             scrollToHeader = scrollState.value,
-        ) {
-        }
+        ) {}
 
         Column(
             modifier = Modifier
@@ -46,7 +45,7 @@ fun ActivityPickerSheet(
                 .imePadding()
         ) {
 
-            Row(Modifier.height(20.dp)) {  }
+            Row(Modifier.height(20.dp)) { }
 
             val activitiesUI = state.activitiesUI
             activitiesUI.forEach { activityUI ->

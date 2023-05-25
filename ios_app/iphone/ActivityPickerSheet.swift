@@ -19,8 +19,7 @@ struct ActivityPickerSheet: View {
                     doneText: nil,
                     isDoneEnabled: false,
                     scrollToHeader: sheetHeaderScroll
-            ) {
-            }
+            ) {}
 
             ScrollViewWithVListener(showsIndicators: false, vScroll: $sheetHeaderScroll) {
 

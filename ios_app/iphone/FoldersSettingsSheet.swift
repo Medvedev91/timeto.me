@@ -21,9 +21,7 @@ struct FoldersSettingsSheet: View {
                     isDoneEnabled: false,
                     scrollToHeader: sheetHeaderScroll,
                     cancelText: "Back"
-            ) {
-                isPresented = false
-            }
+            ) {}
 
             ZStack {}.frame(height: 20)
 

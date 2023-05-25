@@ -42,8 +42,7 @@ struct SettingsSheet: View {
                     isDoneEnabled: false,
                     scrollToHeader: sheetHeaderScroll,
                     cancelText: "Back"
-            ) {
-            }
+            ) {}
 
             ScrollViewWithVListener(showsIndicators: false, vScroll: $sheetHeaderScroll) {
 
