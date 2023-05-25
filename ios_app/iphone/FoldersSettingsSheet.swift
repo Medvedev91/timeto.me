@@ -23,11 +23,11 @@ struct FoldersSettingsSheet: View {
                     cancelText: "Back"
             ) {}
 
-            ZStack {}.frame(height: 20)
-
             ScrollViewWithVListener(showsIndicators: false, vScroll: $sheetHeaderScroll) {
 
-                VStack(spacing: 0) {
+                VStack {
+
+                    Padding(vertical: 20)
 
                     let folders = state.folders
                     ForEach(folders, id: \.id) { folder in
