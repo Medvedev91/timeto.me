@@ -224,14 +224,6 @@ extension KotlinInt {
 
 extension Double {
 
-    func max(_ test: Double) -> Double {
-        self > test ? self : test
-    }
-
-    func min(_ test: Double) -> Double {
-        self < test ? self : test
-    }
-
     func limitMin(_ value: Double) -> Double {
         self < value ? value : self
     }

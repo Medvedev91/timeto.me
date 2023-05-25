@@ -165,7 +165,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                     let listHeight: CGFloat =
                             checklistUI == nil ? .infinity :
                             (taskListContentPadding * 2.0) +
-                            (taskItemHeight * state.importantTasks.count.toDouble().min(5.1))
+                            (taskItemHeight * state.importantTasks.count.toDouble().limitMax(5.1))
                     ImportantTasksView(
                             tasks: state.importantTasks
                     )
