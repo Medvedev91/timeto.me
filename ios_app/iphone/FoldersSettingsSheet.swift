@@ -19,7 +19,8 @@ struct FoldersSettingsSheet: View {
                     title: state.headerTitle,
                     doneText: state.headerDoneText,
                     isDoneEnabled: true,
-                    scrollToHeader: sheetHeaderScroll
+                    scrollToHeader: sheetHeaderScroll,
+                    cancelText: "Back"
             ) {
                 isPresented = false
             }
