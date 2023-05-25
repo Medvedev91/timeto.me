@@ -34,7 +34,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.shared.FullScreenUI
-import me.timeto.shared.min
+import me.timeto.shared.limitMax
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.vm.FullScreenTasksVM
 import me.timeto.shared.vm.FullScreenVM
@@ -264,7 +264,7 @@ private fun FullScreenView(
                     Modifier.height(
                         (taskListContentPadding * 2) +
                         // 4.1f for the smallest emulator
-                        (taskItemHeight * state.importantTasks.size.toFloat().min(4.1f))
+                        (taskItemHeight * state.importantTasks.size.toFloat().limitMax(4.1f))
                     )
                 ImportantTasksView(
                     tasks = state.importantTasks,

@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.toColor
 import me.timeto.shared.PieChart
-import me.timeto.shared.min
+import me.timeto.shared.limitMax
 import java.lang.Math.PI
 
 object WyouChart {
@@ -191,7 +191,7 @@ object WyouChart {
 
     private fun DrawScope.drawPie(data: PieChart.SliceViewData) {
 
-        val s = size.height.min(size.height)
+        val s = size.height.limitMax(size.height)
         val center = s * 0.5f
 
         val maxBorder = 30.0 // Increases the size of the segment on each side by half of itself

@@ -160,7 +160,6 @@ expect fun getResourceContent(file: String, type: String): String
 
 fun Int.max(value: Int) = if (this > value) this else value
 fun Int.min(value: Int) = if (this < value) this else value
-fun Float.min(v: Float) = if (this < v) this else v
 
 fun Int.limitMin(value: Int) = if (this < value) value else this
 fun Int.limitMax(value: Int) = if (this > value) value else this
