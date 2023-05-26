@@ -33,6 +33,7 @@ fun ActivityPickerSheet(
             doneText = null,
             isDoneEnabled = false,
             scrollState = scrollState,
+            cancelText = "Back",
         ) {}
 
         Column(

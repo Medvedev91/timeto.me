@@ -18,7 +18,8 @@ struct ActivityPickerSheet: View {
                     title: state.headerTitle,
                     doneText: nil,
                     isDoneEnabled: false,
-                    scrollToHeader: sheetHeaderScroll
+                    scrollToHeader: sheetHeaderScroll,
+                    cancelText: "Back"
             ) {}
 
             ScrollViewWithVListener(showsIndicators: false, vScroll: $sheetHeaderScroll) {
