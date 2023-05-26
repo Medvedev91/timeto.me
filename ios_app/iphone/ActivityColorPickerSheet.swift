@@ -103,7 +103,7 @@ struct ActivityColorPickerSheet: View {
                                     .background(Color(.systemGray4))
                                     .padding(.top, circlePadding)
                         }
-                                .padding(.top, circlePadding)
+                                .padding(.top, 8)
                                 .safeAreaPadding(.bottom)
                     }
 
@@ -122,6 +122,7 @@ struct ActivityColorPickerSheet: View {
                                         }
                                     }
                                 }
+                                        .padding(.top, 4)
                             }
 
                             Button(
