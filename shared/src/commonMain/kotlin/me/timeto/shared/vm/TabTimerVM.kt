@@ -94,7 +94,7 @@ private fun List<ActivityModel>.toUiList(
             activity = activity,
             noteUI = noteUI,
             isActive = isActive,
-            withTopDivider = (idx != 0) && (activeIdx != idx - 1),
+            withTopDivider = (idx != 0) && !isActive && (activeIdx != idx - 1),
         )
     }
 }
