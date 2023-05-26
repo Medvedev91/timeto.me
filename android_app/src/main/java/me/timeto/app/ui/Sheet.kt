@@ -171,7 +171,7 @@ object Sheet {
                             targetValue = if (isDoneEnabled) c.blue
                             else c.textSecondary.copy(alpha = 0.4f)
                         ).value,
-                        fontSize = 17.sp,
+                        fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                     )
             }
