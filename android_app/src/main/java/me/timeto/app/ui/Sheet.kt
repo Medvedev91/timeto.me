@@ -135,7 +135,7 @@ object Sheet {
                     cancelText,
                     modifier = Modifier
                         .align(Alignment.CenterStart)
-                        .padding(start = 15.dp)
+                        .padding(start = 16.dp)
                         .clip(RoundedCornerShape(99.dp))
                         .clickable { onCancel() }
                         .padding(horizontal = 8.dp, vertical = 4.dp),
@@ -161,7 +161,7 @@ object Sheet {
                         doneText,
                         modifier = Modifier
                             .align(Alignment.CenterEnd)
-                            .padding(end = 16.dp)
+                            .padding(end = 18.dp)
                             .clip(RoundedCornerShape(99.dp))
                             .clickable(enabled = isDoneEnabled) {
                                 onDone()
@@ -172,7 +172,7 @@ object Sheet {
                             else c.textSecondary.copy(alpha = 0.4f)
                         ).value,
                         fontSize = 17.sp,
-                        fontWeight = FontWeight.W600
+                        fontWeight = FontWeight.Bold,
                     )
             }
 

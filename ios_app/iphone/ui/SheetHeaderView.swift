@@ -28,7 +28,10 @@ struct SheetHeaderView: View {
                             action: {
                                 onCancel()
                             },
-                            label: { Text(cancelText) }
+                            label: {
+                                Text(cancelText)
+                                        .font(.system(size: 17))
+                            }
                     )
                             .padding(.leading, 25)
                     Spacer()
@@ -44,11 +47,11 @@ struct SheetHeaderView: View {
                                 },
                                 label: {
                                     Text(doneText)
-                                            .fontWeight(.bold)
-                                            .padding(.trailing, 25)
+                                            .font(.system(size: 17, weight: .bold))
                                 }
                         )
                                 .disabled(!isDoneEnabled)
+                                .padding(.trailing, 27)
                     }
                 }
 
