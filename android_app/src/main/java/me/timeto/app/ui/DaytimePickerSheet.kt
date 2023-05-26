@@ -36,7 +36,7 @@ fun DaytimePickerSheet(
             title = title,
             doneText = doneText,
             isDoneEnabled = true,
-            scrollToHeader = 0,
+            scrollState = null,
         ) {
             onPick((selectedHour.value * 3_600) + (selectedMinute.value * 60))
             layer.close()

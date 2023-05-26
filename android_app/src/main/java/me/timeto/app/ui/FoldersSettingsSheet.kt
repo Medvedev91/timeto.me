@@ -36,7 +36,7 @@ fun FoldersSettingsSheet(
             title = state.headerTitle,
             doneText = null,
             isDoneEnabled = false,
-            scrollToHeader = 0, // todo
+            scrollState = scrollState,
             cancelText = "Back",
         ) {}
 

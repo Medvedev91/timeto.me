@@ -33,7 +33,7 @@ fun ChecklistsPickerSheet(
             title = state.headerTitle,
             doneText = state.doneTitle,
             isDoneEnabled = true,
-            scrollToHeader = scrollState.value,
+            scrollState = scrollState,
         ) {
             onPick(vm.getSelectedChecklists())
             layer.close()
@@ -41,9 +41,7 @@ fun ChecklistsPickerSheet(
 
         Column(
             modifier = Modifier
-                .verticalScroll(
-                    state = scrollState
-                )
+                .verticalScroll(state = scrollState)
                 .padding(bottom = 20.dp)
                 .navigationBarsPadding()
                 .imePadding()

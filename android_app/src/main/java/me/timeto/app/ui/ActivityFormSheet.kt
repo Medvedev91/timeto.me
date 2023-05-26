@@ -41,7 +41,7 @@ fun ActivityFormSheet(
             title = state.headerTitle,
             doneText = state.headerDoneText,
             isDoneEnabled = state.isHeaderDoneEnabled,
-            scrollToHeader = scrollState.value,
+            scrollState = scrollState,
         ) {
             vm.save {
                 layer.close()
@@ -50,9 +50,7 @@ fun ActivityFormSheet(
 
         Column(
             modifier = Modifier
-                .verticalScroll(
-                    state = scrollState
-                )
+                .verticalScroll(state = scrollState)
                 .padding(bottom = 20.dp)
                 .navigationBarsPadding()
                 .imePadding()

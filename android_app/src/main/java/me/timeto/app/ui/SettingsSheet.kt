@@ -106,7 +106,7 @@ fun SettingsSheet(
             title = state.headerTitle,
             doneText = null,
             isDoneEnabled = false,
-            scrollToHeader = if (scrollState.canScrollBackward) 99 else 0,
+            scrollState = scrollState,
             cancelText = "Back",
         ) {}
 

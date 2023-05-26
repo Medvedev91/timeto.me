@@ -32,14 +32,12 @@ fun ActivityPickerSheet(
             title = state.headerTitle,
             doneText = null,
             isDoneEnabled = false,
-            scrollToHeader = scrollState.value,
+            scrollState = scrollState,
         ) {}
 
         Column(
             modifier = Modifier
-                .verticalScroll(
-                    state = scrollState
-                )
+                .verticalScroll(state = scrollState)
                 .padding(bottom = 20.dp)
                 .navigationBarsPadding()
                 .imePadding()

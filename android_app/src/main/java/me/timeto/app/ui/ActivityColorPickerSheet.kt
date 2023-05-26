@@ -13,20 +13,20 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material.icons.rounded.ExpandCircleDown
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import me.timeto.app.goldenRatioDown
-import me.timeto.app.onePx
-import me.timeto.app.rememberVM
-import me.timeto.app.toColor
-import me.timeto.shared.ColorRgba
+import me.timeto.app.*
+import me.timeto.shared.*
 import me.timeto.shared.vm.ActivityColorPickerSheetVM
 
 private val circleSize = 40.dp
@@ -58,7 +58,7 @@ fun ActivityColorPickerSheet(
             title = state.headerTitle,
             doneText = state.doneTitle,
             isDoneEnabled = true,
-            scrollToHeader = (circleScrollState.value + activitiesScrollState.value) * 4,
+            scrollState = null,
             bgColor = c.background2,
             dividerColor = c.dividerBg2,
             maxLines = 1,
@@ -66,6 +66,24 @@ fun ActivityColorPickerSheet(
             onPick(state.selectedColor)
             layer.close()
         }
+
+        val alphaAnimate = animateFloatAsState(remember {
+            derivedStateOf {
+                if (circleScrollState.canScrollBackward ||
+                    activitiesScrollState.canScrollBackward
+                ) 1f else 0f
+            }
+        }.value)
+
+        val dividerBg2 = c.dividerBg2
+        ZStack(
+            modifier = Modifier
+                .height(onePx)
+                .fillMaxWidth()
+                .drawBehind {
+                    drawRect(color = dividerBg2.copy(alpha = alphaAnimate.value))
+                },
+        )
 
         Row(
             modifier = Modifier
