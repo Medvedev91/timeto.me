@@ -183,6 +183,7 @@ struct ActivityColorPickerSheet: View {
                         ColorSliderView(value: Double(state.r), color: .red) { vm.upR(r: Float($0)) }
                         ColorSliderView(value: Double(state.g), color: .green) { vm.upG(g: Float($0)) }
                         ColorSliderView(value: Double(state.b), color: .blue) { vm.upB(b: Float($0)) }
+                                .padding(.bottom, 8)
                     }
                             .safeAreaPadding(.bottom)
                             .background(Color(.mySecondaryBackground))
