@@ -233,48 +233,56 @@ private fun FullScreenView(
                 )
             }
 
-            val checklistScrollState = rememberLazyListState()
-            val importantTasksScrollState = rememberLazyListState()
+            ZStack(
+                modifier = Modifier.weight(1f),
+            ) {
 
-            val checklistUI = state.checklistUI
-            val isImportantTasksExists = state.importantTasks.isNotEmpty()
+                VStack {
 
-            if (checklistUI != null) {
-                ChecklistView(
-                    checklistUI = checklistUI,
-                    modifier = Modifier.weight(1f),
-                    scrollState = checklistScrollState,
-                )
-            }
+                    val checklistScrollState = rememberLazyListState()
+                    val importantTasksScrollState = rememberLazyListState()
 
-            val isMiddleDividerVisible =
-                (checklistUI != null && (checklistScrollState.canScrollBackward || checklistScrollState.canScrollForward)) ||
-                (isImportantTasksExists && (importantTasksScrollState.canScrollBackward || importantTasksScrollState.canScrollForward))
+                    val checklistUI = state.checklistUI
+                    val isImportantTasksExists = state.importantTasks.isNotEmpty()
 
-            Divider(
-                modifier = dividerModifier,
-                color = if (isMiddleDividerVisible) dividerColor else c.transparent,
-                thickness = dividerHeight,
-            )
+                    if (checklistUI != null) {
+                        ChecklistView(
+                            checklistUI = checklistUI,
+                            modifier = Modifier.weight(1f),
+                            scrollState = checklistScrollState,
+                        )
+                    }
 
-            if (isImportantTasksExists) {
-                val importantTasksModifier = if (checklistUI == null)
-                    Modifier.weight(1f)
-                else
-                    Modifier.height(
-                        (taskListContentPadding * 2) +
-                        // 4.1f for the smallest emulator
-                        (taskItemHeight * state.importantTasks.size.toFloat().limitMax(4.1f))
+                    val isMiddleDividerVisible =
+                        (checklistUI != null && (checklistScrollState.canScrollBackward || checklistScrollState.canScrollForward)) ||
+                        (isImportantTasksExists && (importantTasksScrollState.canScrollBackward || importantTasksScrollState.canScrollForward))
+
+                    Divider(
+                        modifier = dividerModifier,
+                        color = if (isMiddleDividerVisible) dividerColor else c.transparent,
+                        thickness = dividerHeight,
                     )
-                ImportantTasksView(
-                    tasks = state.importantTasks,
-                    modifier = importantTasksModifier,
-                    scrollState = importantTasksScrollState,
-                )
-            }
 
-            if (!isImportantTasksExists && checklistUI == null)
-                SpacerW1()
+                    if (isImportantTasksExists) {
+                        val importantTasksModifier = if (checklistUI == null)
+                            Modifier.weight(1f)
+                        else
+                            Modifier.height(
+                                (taskListContentPadding * 2) +
+                                // 4.1f for the smallest emulator
+                                (taskItemHeight * state.importantTasks.size.toFloat().limitMax(4.1f))
+                            )
+                        ImportantTasksView(
+                            tasks = state.importantTasks,
+                            modifier = importantTasksModifier,
+                            scrollState = importantTasksScrollState,
+                        )
+                    }
+
+                    if (!isImportantTasksExists && checklistUI == null)
+                        SpacerW1()
+                }
+            }
 
             Row(
                 modifier = Modifier
