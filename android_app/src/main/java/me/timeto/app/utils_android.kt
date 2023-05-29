@@ -156,7 +156,7 @@ fun ZStack(
 
 @Composable
 fun ZStack(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     contentAlignment: Alignment = Alignment.TopStart,
     propagateMinConstraints: Boolean = false,
     content: @Composable BoxScope.() -> Unit,
