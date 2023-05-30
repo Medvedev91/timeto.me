@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
@@ -33,9 +34,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import me.timeto.app.*
 import me.timeto.app.R
-import me.timeto.shared.FullScreenUI
-import me.timeto.shared.limitMax
-import me.timeto.shared.onEachExIn
+import me.timeto.shared.*
 import me.timeto.shared.vm.FullScreenTasksVM
 import me.timeto.shared.vm.FullScreenVM
 import me.timeto.shared.vm.ui.ChecklistStateUI
@@ -730,4 +729,18 @@ private fun TasksSheet(
             }
         }
     }
+}
+
+@Composable
+private fun FocusDivider(
+    alphaAnimate: State<Float>,
+) {
+    ZStack(
+        modifier = Modifier
+            .height(onePx)
+            .fillMaxWidth()
+            .drawBehind {
+                drawRect(color = dividerColor.copy(alpha = alphaAnimate.value))
+            },
+    )
 }
