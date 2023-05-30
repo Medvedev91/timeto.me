@@ -253,25 +253,28 @@ enum class ColorNative {
  */
 object AppleColors {
 
-    val red = AppleColor("Red", ColorRgba(255, 59, 48), ColorRgba(255, 105, 97), ColorRgba(215, 0, 21))
-    val orange = AppleColor("Orange", ColorRgba(255, 149, 0), ColorRgba(255, 179, 64), ColorRgba(201, 52, 0))
-    val yellow = AppleColor("Yellow", ColorRgba(255, 204, 0), ColorRgba(255, 212, 38), ColorRgba(178, 80, 0))
-    val green = AppleColor("Green", ColorRgba(52, 199, 89), ColorRgba(48, 219, 91), ColorRgba(36, 138, 61))
-    val mint = AppleColor("Mint", ColorRgba(0, 199, 190), ColorRgba(102, 212, 207), ColorRgba(12, 129, 123))
-    val teal = AppleColor("Teal", ColorRgba(48, 176, 199), ColorRgba(93, 230, 255), ColorRgba(0, 130, 153))
-    val cyan = AppleColor("Cyan", ColorRgba(50, 173, 230), ColorRgba(112, 215, 255), ColorRgba(0, 113, 164))
-    val blue = AppleColor("Blue", ColorRgba(0, 122, 255), ColorRgba(64, 156, 255), ColorRgba(0, 64, 221))
-    val indigo = AppleColor("Indigo", ColorRgba(88, 86, 214), ColorRgba(125, 122, 255), ColorRgba(54, 52, 163))
-    val purple = AppleColor("Purple", ColorRgba(175, 82, 222), ColorRgba(218, 143, 255), ColorRgba(137, 68, 171))
-    val pink = AppleColor("Pink", ColorRgba(255, 45, 85), ColorRgba(255, 100, 130), ColorRgba(211, 15, 69))
-    val brown = AppleColor("Brown", ColorRgba(165, 132, 94), ColorRgba(181, 148, 105), ColorRgba(127, 101, 69))
+    object Palettes {
 
-    // Custom Gray
-    val gray = AppleColor("Gray", ColorRgba(142, 142, 147), ColorRgba(174, 174, 178), ColorRgba(72, 72, 74))
+        val red = Palette("Red", ColorRgba(255, 59, 48), ColorRgba(255, 105, 97), ColorRgba(215, 0, 21))
+        val orange = Palette("Orange", ColorRgba(255, 149, 0), ColorRgba(255, 179, 64), ColorRgba(201, 52, 0))
+        val yellow = Palette("Yellow", ColorRgba(255, 204, 0), ColorRgba(255, 212, 38), ColorRgba(178, 80, 0))
+        val green = Palette("Green", ColorRgba(52, 199, 89), ColorRgba(48, 219, 91), ColorRgba(36, 138, 61))
+        val mint = Palette("Mint", ColorRgba(0, 199, 190), ColorRgba(102, 212, 207), ColorRgba(12, 129, 123))
+        val teal = Palette("Teal", ColorRgba(48, 176, 199), ColorRgba(93, 230, 255), ColorRgba(0, 130, 153))
+        val cyan = Palette("Cyan", ColorRgba(50, 173, 230), ColorRgba(112, 215, 255), ColorRgba(0, 113, 164))
+        val blue = Palette("Blue", ColorRgba(0, 122, 255), ColorRgba(64, 156, 255), ColorRgba(0, 64, 221))
+        val indigo = Palette("Indigo", ColorRgba(88, 86, 214), ColorRgba(125, 122, 255), ColorRgba(54, 52, 163))
+        val purple = Palette("Purple", ColorRgba(175, 82, 222), ColorRgba(218, 143, 255), ColorRgba(137, 68, 171))
+        val pink = Palette("Pink", ColorRgba(255, 45, 85), ColorRgba(255, 100, 130), ColorRgba(211, 15, 69))
+        val brown = Palette("Brown", ColorRgba(165, 132, 94), ColorRgba(181, 148, 105), ColorRgba(127, 101, 69))
 
-    val all = listOf(red, orange, yellow, green, mint, teal, cyan, blue, indigo, purple, pink, brown, gray)
+        // Custom Gray
+        val gray = Palette("Gray", ColorRgba(142, 142, 147), ColorRgba(174, 174, 178), ColorRgba(72, 72, 74))
 
-    class AppleColor(
+        val all = listOf(red, orange, yellow, green, mint, teal, cyan, blue, indigo, purple, pink, brown, gray)
+    }
+
+    class Palette(
         val name: String,
         val default: ColorRgba,
         val light: ColorRgba,
