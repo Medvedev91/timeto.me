@@ -737,6 +737,7 @@ private fun FocusDivider(
 ) {
     ZStack(
         modifier = Modifier
+            .padding(horizontal = 8.dp)
             .height(onePx)
             .fillMaxWidth()
             .drawBehind {
