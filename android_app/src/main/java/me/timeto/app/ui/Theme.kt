@@ -4,6 +4,8 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import me.timeto.app.colorFromRgbaString
+import me.timeto.app.toColor
+import me.timeto.shared.AppleColors
 
 //
 // https://sarunw.com/posts/dark-color-cheat-sheet/
@@ -62,17 +64,6 @@ class MyColors(
 
 private val tgLikeLightSheetBg = Color(0xFFEFEFF3)
 
-private val gray1Light = Color(142, 142, 147)
-private val gray1Dark = Color(142, 142, 147)
-private val gray2Light = Color(174, 174, 178)
-private val gray2Dark = Color(99, 99, 102)
-private val gray3Light = Color(199, 199, 204)
-private val gray3Dark = Color(72, 72, 74)
-private val gray4Light = Color(209, 209, 214)
-private val gray4Dark = Color(58, 58, 60)
-private val gray5Light = Color(229, 229, 234)
-private val gray5Dark = Color(44, 44, 46)
-
 private val myLightColors = MyColors(
     blue = Color(0xFF007AFF),
     orange = Color(0xFFFF9500), // AG Orange iOS Light
@@ -83,7 +74,7 @@ private val myLightColors = MyColors(
     backgroundEditable = Color(0xFFf1f8e9), // Light Green 50
     tabsText = Color(0x99000000),
     tabsBackground = Color.White,
-    dividerBg2 = gray5Light,
+    dividerBg2 = AppleColors.gray5Light.toColor(),
     formHeaderBackground = Color(0xFFF9F9F9),
     timerBarBorder = Color(0xFFDDDDDD),
     timerBarBackground = Color.White,
@@ -92,11 +83,11 @@ private val myLightColors = MyColors(
     datePickerTitleBg = Color(0xFFEEEEF3),
     bgFormSheet = tgLikeLightSheetBg,
     formButtonRightNoteText = Color(0x88000000),
-    gray1 = gray1Light,
-    gray2 = gray2Light,
-    gray3 = gray3Light,
-    gray4 = gray4Light,
-    gray5 = gray5Light,
+    gray1 = AppleColors.gray1Light.toColor(),
+    gray2 = AppleColors.gray2Light.toColor(),
+    gray3 = AppleColors.gray3Light.toColor(),
+    gray4 = AppleColors.gray4Light.toColor(),
+    gray5 = AppleColors.gray5Light.toColor(),
 )
 
 private val myDarkColors = MyColors(
@@ -109,7 +100,7 @@ private val myDarkColors = MyColors(
     backgroundEditable = Color(0xFF444444),
     tabsText = Color(0x77FFFFFF),
     tabsBackground = Color(0xFF191919), // 0xFF131313
-    dividerBg2 = gray4Dark,
+    dividerBg2 = AppleColors.gray4Dark.toColor(),
     formHeaderBackground = Color(0xFF191919),
     timerBarBorder = Color(0xFF393939),
     timerBarBackground = Color(0xFF1C1C1E),
@@ -118,9 +109,9 @@ private val myDarkColors = MyColors(
     datePickerTitleBg = Color(0xFF2A2A2B),
     bgFormSheet = Color(0xFF121214),
     formButtonRightNoteText = Color(0x88FFFFFF),
-    gray1 = gray1Dark,
-    gray2 = gray2Dark,
-    gray3 = gray3Dark,
-    gray4 = gray4Dark,
-    gray5 = gray5Dark,
+    gray1 = AppleColors.gray1Dark.toColor(),
+    gray2 = AppleColors.gray2Dark.toColor(),
+    gray3 = AppleColors.gray3Dark.toColor(),
+    gray4 = AppleColors.gray4Dark.toColor(),
+    gray5 = AppleColors.gray5Dark.toColor(),
 )
