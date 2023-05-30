@@ -735,10 +735,11 @@ private fun TasksSheet(
 @Composable
 private fun FocusDivider(
     alphaAnimate: State<Float>,
+    padding: PaddingValues = PaddingValues(horizontal = 8.dp),
 ) {
     ZStack(
         modifier = Modifier
-            .padding(horizontal = 8.dp)
+            .padding(padding)
             .height(onePx)
             .fillMaxWidth()
             .drawBehind {
