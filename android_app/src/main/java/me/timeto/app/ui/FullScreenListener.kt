@@ -40,7 +40,7 @@ import me.timeto.shared.vm.FullScreenVM
 import me.timeto.shared.vm.ui.ChecklistStateUI
 
 private val dividerModifier = Modifier.padding(horizontal = 8.dp)
-private val dividerColor = Color.White.copy(0.4f)
+private val dividerColor = AppleColors.gray3Dark.toColor()
 private val dividerHeight = 1.dp
 
 private val menuIconSize = 58.dp
