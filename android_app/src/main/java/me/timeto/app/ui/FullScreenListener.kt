@@ -465,13 +465,12 @@ private fun ChecklistView(
 
         val checklistVContentPadding = 8.dp
 
-        Divider(
-            modifier = dividerModifier,
-            color = animateColorAsState(
-                if (scrollState.canScrollBackward) dividerColor else c.transparent,
-                animationSpec = spring(stiffness = Spring.StiffnessMedium),
-            ).value,
-            thickness = dividerHeight,
+        FocusDivider(
+            animateFloatAsState(
+                remember {
+                    derivedStateOf { if (scrollState.canScrollBackward) 1f else 0f }
+                }.value
+            )
         )
 
         Row(
