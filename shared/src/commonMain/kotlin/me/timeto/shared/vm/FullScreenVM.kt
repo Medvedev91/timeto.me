@@ -23,6 +23,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
         val isTaskCancelVisible: Boolean,
         val isCountdown: Boolean,
         val tasksToday: List<TaskModel>,
+        val isTabTasksVisible: Boolean,
         val idToUpdate: Long,
     ) {
 
@@ -93,6 +94,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
             isTaskCancelVisible = false,
             isCountdown = true,
             tasksToday = DI.tasks.filter { it.isToday },
+            isTabTasksVisible = false,
             idToUpdate = 0,
         )
     )
@@ -145,6 +147,10 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
 
     fun toggleIsCountdown() {
         state.update { it.copy(isCountdown = it.isCountdown.not()) }
+    }
+
+    fun toggleIsTabTasksVisible() {
+        state.update { it.copy(isTabTasksVisible = it.isTabTasksVisible.not()) }
     }
 
     ///
