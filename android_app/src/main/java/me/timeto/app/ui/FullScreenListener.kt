@@ -252,14 +252,17 @@ private fun FullScreenView(
                         )
                     }
 
-                    val isMiddleDividerVisible =
-                        (checklistUI != null && (checklistScrollState.canScrollBackward || checklistScrollState.canScrollForward)) ||
-                        (isImportantTasksExists && (importantTasksScrollState.canScrollBackward || importantTasksScrollState.canScrollForward))
-
-                    Divider(
-                        modifier = dividerModifier,
-                        color = if (isMiddleDividerVisible) dividerColor else c.transparent,
-                        thickness = dividerHeight,
+                    FocusDivider(
+                        animateFloatAsState(
+                            remember {
+                                derivedStateOf {
+                                    val isMiddleDividerVisible =
+                                        (checklistUI != null && (checklistScrollState.canScrollBackward || checklistScrollState.canScrollForward)) ||
+                                        (isImportantTasksExists && (importantTasksScrollState.canScrollBackward || importantTasksScrollState.canScrollForward))
+                                    if (isMiddleDividerVisible) 1f else 0f
+                                }
+                            }.value
+                        )
                     )
 
                     if (isImportantTasksExists) {
