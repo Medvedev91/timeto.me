@@ -253,6 +253,17 @@ enum class ColorNative {
  */
 object AppleColors {
 
+    val gray1Light = ColorRgba(142, 142, 147)
+    val gray1Dark = ColorRgba(142, 142, 147)
+    val gray2Light = ColorRgba(174, 174, 178)
+    val gray2Dark = ColorRgba(99, 99, 102)
+    val gray3Light = ColorRgba(199, 199, 204)
+    val gray3Dark = ColorRgba(72, 72, 74)
+    val gray4Light = ColorRgba(209, 209, 214)
+    val gray4Dark = ColorRgba(58, 58, 60)
+    val gray5Light = ColorRgba(229, 229, 234)
+    val gray5Dark = ColorRgba(44, 44, 46)
+
     object Palettes {
 
         val red = Palette("Red", ColorRgba(255, 59, 48), ColorRgba(255, 105, 97), ColorRgba(215, 0, 21))
