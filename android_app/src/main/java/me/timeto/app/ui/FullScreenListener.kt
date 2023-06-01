@@ -126,11 +126,9 @@ private fun FullScreenView(
             val timerData = state.timerData
             val timerSubtitle = timerData.subtitle
 
-            val titleTopPadding = animateDpAsState(if (timerSubtitle == null) 4.dp else 0.dp)
-
             Column(
                 modifier = Modifier
-                    .padding(top = titleTopPadding.value, start = 30.dp, end = 30.dp)
+                    .padding(horizontal = 30.dp)
                     .offset(y = 6.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
