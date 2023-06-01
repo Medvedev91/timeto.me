@@ -35,12 +35,10 @@ import androidx.core.view.WindowInsetsControllerCompat
 import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.shared.*
-import me.timeto.shared.vm.FullScreenTasksVM
 import me.timeto.shared.vm.FullScreenVM
 import me.timeto.shared.vm.ui.ChecklistStateUI
 
 private val dividerColor = AppleColors.gray4Dark.toColor()
-private val dividerHeight = 1.dp
 
 private val menuIconSize = 58.dp
 private val menuIconPadding = 15.dp
@@ -281,6 +279,35 @@ private fun FullScreenView(
                     if (!isImportantTasksExists && checklistUI == null)
                         SpacerW1()
                 }
+
+                VStack {
+
+                    AnimatedVisibility(
+                        state.isTabTasksVisible,
+                        enter = fadeIn(animationSpec = spring(stiffness = Spring.StiffnessMedium)) +
+                                slideInVertically(
+                                    animationSpec = spring(
+                                        stiffness = Spring.StiffnessHigh,
+                                        visibilityThreshold = IntOffset.VisibilityThreshold
+                                    ),
+                                    initialOffsetY = { it / 2 }
+                                ),
+                        exit = fadeOut(animationSpec = spring(stiffness = Spring.StiffnessMedium)),
+                    ) {
+
+                        VStack {
+
+                            FocusDivider(remember { mutableStateOf(1f) }, PaddingValues())
+
+                            TabTasksView(
+                                modifier = Modifier.weight(1f),
+                                onTaskStarted = {
+                                    vm.toggleIsTabTasksVisible()
+                                },
+                            )
+                        }
+                    }
+                }
             }
 
             Row(
@@ -301,37 +328,7 @@ private fun FullScreenView(
                         .weight(1f)
                         .clip(MySquircleShape())
                         .clickable {
-                            WrapperView.Layer(
-                                enterAnimation = slideInVertically(
-                                    animationSpec = spring(
-                                        stiffness = Spring.StiffnessMedium,
-                                        visibilityThreshold = IntOffset.VisibilityThreshold
-                                    ),
-                                    initialOffsetY = { it }
-                                ),
-                                exitAnimation = slideOutVertically(
-                                    animationSpec = spring(
-                                        stiffness = Spring.StiffnessMedium,
-                                        visibilityThreshold = IntOffset.VisibilityThreshold
-                                    ),
-                                    targetOffsetY = { it }
-                                ),
-                                alignment = Alignment.BottomCenter,
-                                onClose = {},
-                                content = { layer ->
-                                    Box(
-                                        modifier = Modifier
-                                            .pointerInput(Unit) { }
-                                    ) {
-                                        // todo use parent theme
-                                        MaterialTheme(colors = myDarkColors()) {
-                                            TasksSheet(
-                                                layer = layer,
-                                            )
-                                        }
-                                    }
-                                }
-                            ).show()
+                            vm.toggleIsTabTasksVisible()
                         }
                         .padding(top = 6.dp, bottom = 6.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -646,84 +643,6 @@ private fun ImportantTasksView(
                     color = c.white,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun TasksSheet(
-    layer: WrapperView.Layer,
-) {
-    Column(
-        modifier = Modifier
-            .background(c.background)
-            .navigationBarsPadding()
-            .fillMaxSize()
-    ) {
-
-        val (_, state) = rememberVM { FullScreenTasksVM() }
-
-        TabTasksView(
-            modifier = Modifier.weight(1f),
-            onTaskStarted = { layer.close() },
-        )
-
-        Divider(
-            color = c.dividerBg2,
-            thickness = dividerHeight,
-        )
-
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(bottomNavigationHeight)
-        ) {
-
-            Row(
-                modifier = Modifier
-                    .fillMaxSize(),
-            ) {
-
-                MenuTimerButton(
-                    contentAlignment = Alignment.BottomCenter,
-                    onTaskStarted = { layer.close() }
-                )
-
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight()
-                        .clip(MySquircleShape())
-                        .clickable {
-                            layer.close()
-                        },
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                ) {
-
-                    Text(
-                        text = state.timerData.title,
-                        color = state.timerData.titleColor.toColor(),
-                        fontSize = 17.sp,
-                        fontWeight = FontWeight.Bold,
-                    )
-
-                    Text(
-                        text = state.title,
-                        modifier = Modifier.padding(bottom = 1.dp),
-                        color = state.timerData.subtitleColor.toColor(),
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Light,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                }
-
-                MenuCloseButton(
-                    contentAlignment = Alignment.BottomCenter,
-                    onClick = { layer.close() }
                 )
             }
         }
