@@ -112,6 +112,8 @@ private fun FullScreenView(
 ) {
     val (vm, state) = rememberVM { FullScreenVM() }
 
+    val checklistUI = state.checklistUI
+
     Box(
         modifier = Modifier
             .background(c.black)
@@ -246,7 +248,6 @@ private fun FullScreenView(
                     val checklistScrollState = rememberLazyListState()
                     val importantTasksScrollState = rememberLazyListState()
 
-                    val checklistUI = state.checklistUI
                     val isImportantTasksExists = state.importantTasks.isNotEmpty()
 
                     if (checklistUI != null) {
@@ -303,7 +304,24 @@ private fun FullScreenView(
                         exit = fadeOut(animationSpec = spring(stiffness = Spring.StiffnessMedium)),
                     ) {
 
-                        VStack {
+                        VStack(
+                            modifier = Modifier
+                                .background(c.black),
+                        ) {
+
+                            if (checklistUI != null) {
+                                Text(
+                                    text = checklistUI.titleToExpand,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .clickable {
+                                            vm.toggleIsTabTasksVisible()
+                                        }
+                                        .padding(top = 6.dp, bottom = 12.dp),
+                                    textAlign = TextAlign.Center,
+                                    color = c.white,
+                                )
+                            }
 
                             FocusDivider(remember { mutableStateOf(1f) }, PaddingValues())
 
