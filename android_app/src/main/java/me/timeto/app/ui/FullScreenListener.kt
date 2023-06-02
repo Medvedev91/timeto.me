@@ -28,7 +28,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowInsetsCompat
@@ -41,8 +40,10 @@ import me.timeto.shared.vm.ui.ChecklistStateUI
 
 private val dividerColor = AppleColors.gray4Dark.toColor()
 
-private val menuIconSize = 58.dp
-private val menuIconPadding = 15.dp
+private val menuIconSize = bottomNavigationHeight
+private val menuIconPadding = 14.dp
+
+private val taskCountsHeight = 36.dp
 
 private val taskItemHeight = 36.dp
 private val taskListContentPadding = 4.dp
@@ -111,13 +112,16 @@ private fun FullScreenView(
 ) {
     val (vm, state) = rememberVM { FullScreenVM() }
 
-    Box {
+    Box(
+        modifier = Modifier
+            .background(c.black)
+            .navigationBarsPadding()
+    ) {
 
         Column(
             modifier = Modifier
                 .pointerInput(Unit) { }
                 .fillMaxSize()
-                .background(c.black)
                 .padding(top = statusBarHeight),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -234,7 +238,10 @@ private fun FullScreenView(
                     .clipToBounds(),
             ) {
 
-                VStack {
+                VStack(
+                    modifier = Modifier
+                        .padding(bottom = bottomNavigationHeight + taskCountsHeight)
+                ) {
 
                     val checklistScrollState = rememberLazyListState()
                     val importantTasksScrollState = rememberLazyListState()
@@ -283,28 +290,17 @@ private fun FullScreenView(
                         SpacerW1()
                 }
 
-                VStack {
+                VStack(
+                    modifier = Modifier
+                        .padding(bottom = bottomNavigationHeight)
+                ) {
 
                     // Keep in mind .clipToBounds()
 
                     AnimatedVisibility(
                         state.isTabTasksVisible,
-                        enter = fadeIn(animationSpec = spring(stiffness = Spring.StiffnessMedium)) +
-                                slideInVertically(
-                                    animationSpec = spring(
-                                        stiffness = Spring.StiffnessHigh,
-                                        visibilityThreshold = IntOffset.VisibilityThreshold
-                                    ),
-                                    initialOffsetY = { it / 2 },
-                                ),
-                        exit = fadeOut(animationSpec = spring(stiffness = Spring.StiffnessMedium)) +
-                               slideOutVertically(
-                                   animationSpec = spring(
-                                       stiffness = Spring.StiffnessMediumLow,
-                                       visibilityThreshold = IntOffset.VisibilityThreshold
-                                   ),
-                                   targetOffsetY = { it / 2 },
-                               ),
+                        enter = fadeIn(animationSpec = spring(stiffness = Spring.StiffnessHigh)),
+                        exit = fadeOut(animationSpec = spring(stiffness = Spring.StiffnessMedium)),
                     ) {
 
                         VStack {
@@ -321,47 +317,63 @@ private fun FullScreenView(
                     }
                 }
             }
+        }
 
-            //
-            // Navigation
+        //
+        // Navigation
 
-            Row(
+        Row(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+                .height(IntrinsicSize.Max),
+            verticalAlignment = Alignment.Bottom,
+        ) {
+
+            MenuTimerButton(
+                contentAlignment = Alignment.BottomCenter,
+                onTaskStarted = {},
+            )
+
+            val menuTasksBackground = animateColorAsState(
+                if (state.isTabTasksVisible) c.gray5 else c.black
+            )
+
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(IntrinsicSize.Max)
-                    .navigationBarsPadding(),
-                verticalAlignment = Alignment.Bottom,
+                    .weight(1f)
+                    .clip(MySquircleShape())
+                    .clickable {
+                        vm.toggleIsTabTasksVisible()
+                    },
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
-                MenuTimerButton(
-                    contentAlignment = Alignment.BottomCenter,
-                    onTaskStarted = {},
-                )
-
-                val menuTasksBackground = animateColorAsState(
-                    if (state.isTabTasksVisible) c.gray5 else c.black
-                )
-
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .clip(MySquircleShape())
-                        .clickable {
-                            vm.toggleIsTabTasksVisible()
-                        }
-                        .background(menuTasksBackground.value)
-                        .padding(top = 6.dp, bottom = 6.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                AnimatedVisibility(
+                    !state.isTabTasksVisible,
+                    enter = fadeIn() + expandVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh)),
+                    exit = fadeOut() + shrinkVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh)),
                 ) {
-
                     Text(
                         text = state.tasksText,
                         modifier = Modifier
-                            .padding(bottom = 22.dp),
+                            .height(taskCountsHeight)
+                            .padding(top = 6.dp),
                         color = menuColor,
                         fontSize = 13.sp,
                         fontWeight = FontWeight.Light,
                     )
+                }
+
+                VStack(
+                    modifier = Modifier
+                        .height(bottomNavigationHeight)
+                        .fillMaxWidth()
+                        .clip(MySquircleShape())
+                        .background(menuTasksBackground.value),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
 
                     Text(
                         text = state.timeOfTheDay,
@@ -372,7 +384,7 @@ private fun FullScreenView(
 
                     Row(
                         modifier = Modifier
-                            .padding(end = 2.dp, bottom = 4.dp)
+                            .padding(end = 2.dp, bottom = 1.dp)
                             .clip(RoundedCornerShape(99.dp))
                             .background(animateColorAsState(state.batteryBackground.toColor()).value)
                             .padding(start = 4.dp, end = 5.dp),
@@ -399,12 +411,12 @@ private fun FullScreenView(
                         )
                     }
                 }
+            }
 
-                MenuCloseButton(
-                    contentAlignment = Alignment.BottomCenter
-                ) {
-                    layer.close()
-                }
+            MenuCloseButton(
+                contentAlignment = Alignment.BottomCenter
+            ) {
+                layer.close()
             }
         }
     }
