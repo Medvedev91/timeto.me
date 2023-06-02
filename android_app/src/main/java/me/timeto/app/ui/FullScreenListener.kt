@@ -322,6 +322,9 @@ private fun FullScreenView(
                 }
             }
 
+            //
+            // Navigation
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -335,6 +338,10 @@ private fun FullScreenView(
                     onTaskStarted = {},
                 )
 
+                val menuTasksBackground = animateColorAsState(
+                    if (state.isTabTasksVisible) c.gray5 else c.black
+                )
+
                 Column(
                     modifier = Modifier
                         .weight(1f)
@@ -342,6 +349,7 @@ private fun FullScreenView(
                         .clickable {
                             vm.toggleIsTabTasksVisible()
                         }
+                        .background(menuTasksBackground.value)
                         .padding(top = 6.dp, bottom = 6.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
