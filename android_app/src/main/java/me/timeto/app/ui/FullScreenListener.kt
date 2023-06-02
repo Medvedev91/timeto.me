@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -228,7 +229,9 @@ private fun FullScreenView(
             }
 
             ZStack(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .weight(1f)
+                    .clipToBounds(),
             ) {
 
                 VStack {
@@ -282,6 +285,8 @@ private fun FullScreenView(
 
                 VStack {
 
+                    // Keep in mind .clipToBounds()
+
                     AnimatedVisibility(
                         state.isTabTasksVisible,
                         enter = fadeIn(animationSpec = spring(stiffness = Spring.StiffnessMedium)) +
@@ -290,9 +295,16 @@ private fun FullScreenView(
                                         stiffness = Spring.StiffnessHigh,
                                         visibilityThreshold = IntOffset.VisibilityThreshold
                                     ),
-                                    initialOffsetY = { it / 2 }
+                                    initialOffsetY = { it / 2 },
                                 ),
-                        exit = fadeOut(animationSpec = spring(stiffness = Spring.StiffnessMedium)),
+                        exit = fadeOut(animationSpec = spring(stiffness = Spring.StiffnessMedium)) +
+                               slideOutVertically(
+                                   animationSpec = spring(
+                                       stiffness = Spring.StiffnessMediumLow,
+                                       visibilityThreshold = IntOffset.VisibilityThreshold
+                                   ),
+                                   targetOffsetY = { it / 2 },
+                               ),
                     ) {
 
                         VStack {
