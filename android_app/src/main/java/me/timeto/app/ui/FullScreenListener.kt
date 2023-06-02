@@ -327,6 +327,7 @@ private fun FullScreenView(
 
                             TabTasksView(
                                 modifier = Modifier.weight(1f),
+                                withRepeatings = false,
                                 onTaskStarted = {
                                     vm.toggleIsTabTasksVisible()
                                 },

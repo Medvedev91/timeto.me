@@ -68,6 +68,7 @@ fun TabsView() {
             composable(TabItem.Tasks.route) {
                 TabTasksView(
                     modifier = Modifier,
+                    withRepeatings = true,
                     onTaskStarted = {
                         scope.launchEx {
                             navController.navigate(TabItem.Timer.route) {
