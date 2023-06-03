@@ -58,7 +58,7 @@ struct PickerStable: UIViewRepresentable {
         context.coordinator.titleForRow = titleForRow
         context.coordinator.rowCount = rowCount
 
-        //only update selection if it has been changed
+        // Only update selection if it has been changed
         if context.coordinator.initialSelection != selection {
             uiView.selectRow(selection, inComponent: 0, animated: true)
             context.coordinator.initialSelection = selection
