@@ -475,7 +475,7 @@ extension Kotlinx_coroutines_coreFlow {
 struct VMView<VMState: AnyObject, Content: View>: View {
 
     private let vm: __VM<VMState>
-    @State private var state: VMState?
+    @State private var state: VMState
     private let publisher: AnyPublisher<VMState, Never>
     @ViewBuilder private let content: (VMState) -> Content
     private let stack: StackType
@@ -486,6 +486,7 @@ struct VMView<VMState: AnyObject, Content: View>: View {
             @ViewBuilder content: @escaping (VMState) -> Content
     ) {
         self.vm = vm
+        state = vm.state.value as! VMState
         publisher = vm.state.toPublisher()
         self.stack = stack
         self.content = content
@@ -493,17 +494,13 @@ struct VMView<VMState: AnyObject, Content: View>: View {
 
     var body: some View {
         ZStack {
-            if let state = state {
-                switch stack {
-                case .ZStack(let p1):
-                    ZStack(alignment: p1) { content(state) }
-                case .VStack(let p1, let p2):
-                    VStack(alignment: p1, spacing: p2) { content(state) }
-                case .HStack(let p1, let p2):
-                    HStack(alignment: p1, spacing: p2) { content(state) }
-                }
-            } else {
-                EmptyView()
+            switch stack {
+            case .ZStack(let p1):
+                ZStack(alignment: p1) { content(state) }
+            case .VStack(let p1, let p2):
+                VStack(alignment: p1, spacing: p2) { content(state) }
+            case .HStack(let p1, let p2):
+                HStack(alignment: p1, spacing: p2) { content(state) }
             }
         }
                 /// In onAppear() because init() is called frequently even the
