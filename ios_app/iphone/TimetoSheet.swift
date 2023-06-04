@@ -1,8 +1,5 @@
 import SwiftUI
 
-///
-/// You probably want to change this struct
-
 private struct TimetoSheetFullscreen: View {
 
     let wrapper: TimetoSheetWrapper
