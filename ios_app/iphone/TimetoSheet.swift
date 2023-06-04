@@ -37,9 +37,9 @@ private struct TimetoSheetFullscreen: View {
                         isShown = true
                     }
                 }
-                .onChange(of: isPresented) { _ in
+                .onChange(of: isPresented) { newValue in
                     withAnimation(.spring(response: 0.250)) {
-                        isShown = isPresented
+                        isShown = newValue
                     }
                 }
     }
