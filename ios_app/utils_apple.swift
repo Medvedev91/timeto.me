@@ -427,14 +427,6 @@ extension View {
     }
 }
 
-/// https://stackoverflow.com/a/32306142/5169420
-extension StringProtocol {
-
-    func index<S: StringProtocol>(of string: S, options: String.CompareOptions = []) -> Index? {
-        range(of: string, options: options)?.lowerBound
-    }
-}
-
 /// https://stackoverflow.com/a/62588295/5169420
 /// Made for scroll calculation for RepeatingFormSheet
 struct ViewOffsetKey: PreferenceKey {
