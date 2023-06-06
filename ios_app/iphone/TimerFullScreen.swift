@@ -33,6 +33,7 @@ private struct TimerFullScreen__ViewModifier: ViewModifier {
                 /// Скрывание status bar в .statusBar(...)
                 .fullScreenCover(isPresented: $isPresented) {
                     TimerFullScreen__FullScreenCoverView()
+                            .attachTimetoSheet()
                 }
                 .onReceive(statePublisher) { newValue in
                     isPresented = newValue.boolValue
@@ -46,18 +47,12 @@ private struct TimerFullScreen__FullScreenCoverView: View {
     @State private var isTimerActivitiesPresented = false
     @State private var isTasksSheetPresented = false
 
+    @EnvironmentObject private var timetoSheet: TimetoSheet
+
     var body: some View {
         ZStack {
             // Outside of the every-second updating view
             ZStack {}
-                    .sheetEnv(isPresented: $isTimerActivitiesPresented) {
-                        ActivitiesTimerSheet(
-                                isPresented: $isTimerActivitiesPresented,
-                                timerContext: nil
-                        ) {
-                            isTimerActivitiesPresented = false
-                        }
-                    }
                     .sheetEnv(isPresented: $isTasksSheetPresented) {
                         TasksSheet(
                                 isPresented: $isTasksSheetPresented
@@ -180,7 +175,22 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
                     Button(
                             action: {
-                                isTimerActivitiesPresented = true
+                                timetoSheet.items.append(
+                                        TimetoSheet__Item(
+                                                isPresented: $isTimerActivitiesPresented,
+                                                content: {
+                                                    AnyView(
+                                                            ActivitiesTimerSheet(
+                                                                    isPresented: $isTimerActivitiesPresented,
+                                                                    timerContext: nil
+                                                            ) {
+                                                                isTimerActivitiesPresented = false
+                                                            }
+                                                                    .cornerRadius(10, onTop: true, onBottom: false)
+                                                    )
+                                                }
+                                        )
+                                )
                             },
                             label: {
                                 VStack(spacing: 0) {
