@@ -194,6 +194,8 @@ struct TasksListView: View {
 
 struct TasksView__TaskRowView: View {
 
+    @EnvironmentObject private var timetoSheet: TimetoSheet
+
     private let taskUI: TasksListVM.TaskUI
 
     let tasksListView: TasksListView
@@ -323,7 +325,14 @@ struct TasksView__TaskRowView: View {
                                         tasksListView.tabTasksView.onTaskStarted()
                                     },
                                     needSheet: {
-                                        isSheetPresented = true
+                                        timetoSheet.showActivitiesTimerSheet(
+                                                isPresented: $isSheetPresented,
+                                                timerContext: taskUI.timerContext,
+                                                onStart: {
+                                                    isSheetPresented = false
+                                                    tasksListView.tabTasksView.onTaskStarted()
+                                                }
+                                        )
                                     }
                             )
                         },
@@ -412,15 +421,6 @@ struct TasksView__TaskRowView: View {
                             }
                             return Color.clear
                         })
-                        .sheetEnv(isPresented: $isSheetPresented) {
-                            ActivitiesTimerSheet(
-                                    isPresented: $isSheetPresented,
-                                    timerContext: taskUI.timerContext
-                            ) {
-                                isSheetPresented = false
-                                tasksListView.tabTasksView.onTaskStarted()
-                            }
-                        }
             }
 
             if (withDivider) {
