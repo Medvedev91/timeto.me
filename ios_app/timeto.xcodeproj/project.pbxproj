@@ -31,7 +31,6 @@
 		318210F0EEFF944CD87E3A98 /* TabReadmeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821287721625075228B91E /* TabReadmeView.swift */; };
 		318211C63D2C7A7AC48659E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821996D20B09EBA4F73C2B /* AppDelegate.swift */; };
 		318211D5994178629ED2FA09 /* W_TabTasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182161C9947F88C6A1D3B80 /* W_TabTasksView.swift */; };
-		3182124C36EC06178E174B66 /* PickerStable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821F7D41016839094C42C8 /* PickerStable.swift */; };
 		31821286152F9C43BA2C4B7B /* TimetoSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318210AB991EB1C25EA1B565 /* TimetoSheet.swift */; };
 		318212C07B5351BA8C7C9671 /* PieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E01EC49E0964E5CB2F5 /* PieView.swift */; };
 		318212D55BBA074155F95EB0 /* TextField__VMState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821CC7588164B713321141 /* TextField__VMState.swift */; };
@@ -178,7 +177,6 @@
 		31821F29E288957ABB3DF794 /* TextFeaturesTimerFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFeaturesTimerFormView.swift; sourceTree = "<group>"; };
 		31821F4527059D286AC0AF41 /* TaskFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskFormSheet.swift; sourceTree = "<group>"; };
 		31821F7CBA1480191F065D5E /* EventsListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsListView.swift; sourceTree = "<group>"; };
-		31821F7D41016839094C42C8 /* PickerStable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerStable.swift; sourceTree = "<group>"; };
 		31821F858C3344296F2CB750 /* ShortcutsPickerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutsPickerSheet.swift; sourceTree = "<group>"; };
 		31821FC26DE90D545D9620B0 /* W_TickerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W_TickerDialog.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -333,7 +331,6 @@
 				318218084C84D03DF3D6BEB6 /* TextFeaturesTriggersView.swift */,
 				318211488ABF627A2A9935A7 /* ActivityColorPickerSheet.swift */,
 				31821737F4708A13AAC9CEB3 /* DividerBg2.swift */,
-				31821F7D41016839094C42C8 /* PickerStable.swift */,
 			);
 			path = iphone;
 			sourceTree = "<group>";
@@ -552,7 +549,6 @@
 				318210D7F973F8F13061DAD6 /* TextFeaturesTriggersView.swift in Sources */,
 				31821BC7F849A5C918F61175 /* ActivityColorPickerSheet.swift in Sources */,
 				31821D173BC3AC7067128A32 /* DividerBg2.swift in Sources */,
-				3182124C36EC06178E174B66 /* PickerStable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
