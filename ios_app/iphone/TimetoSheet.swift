@@ -1,12 +1,32 @@
 import SwiftUI
 
-private struct TimetoSheetFullscreen: View {
+class TimetoSheet: ObservableObject {
+    @Published var items = [TimetoSheet__Item<AnyView>]()
+}
 
-    let wrapper: TimetoSheetWrapper
+extension View {
+
+    func attachTimetoSheet() -> some View {
+        modifier(TimetoSheet__Modifier())
+    }
+}
+
+///
+///
+
+struct TimetoSheet__Item<Content: View>: View, Identifiable {
+
+    @EnvironmentObject private var timetoSheet: TimetoSheet
+
     @Binding var isPresented: Bool
     @State var isShown = false
 
+    @ViewBuilder var content: () -> Content
+
+    let id = UUID().uuidString
+
     var body: some View {
+
         ZStack(alignment: .bottom) {
 
             if isShown {
@@ -21,88 +41,40 @@ private struct TimetoSheetFullscreen: View {
 
             ZStack {
                 if isShown {
-                    wrapper
-                            .content()
+                    content()
                             .transition(.move(edge: .bottom))
+                            .onDisappear {
+                                timetoSheet.items.removeAll { $0.id == id }
+                            }
                 }
             }
         }
                 .ignoresSafeArea()
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
                 .onAppear {
-                    withAnimation(.spring(response: 0.250)) {
-                        isShown = true
+                    withAnimation(.spring(response: 0.150)) {
+                        isPresented = true
                     }
                 }
                 .onChange(of: isPresented) { newValue in
-                    withAnimation(.spring(response: 0.250)) {
+                    withAnimation(.spring(response: 0.150)) {
                         isShown = newValue
                     }
                 }
     }
 }
 
-///
-///
+private struct TimetoSheet__Modifier: ViewModifier {
 
-private class TimetoSheetWrappers: ObservableObject {
-    @Published var wrappers = [TimetoSheetWrapper]()
-}
-
-private struct TimetoSheetModifier: ViewModifier {
-
-    @StateObject private var wrappers = TimetoSheetWrappers()
+    @StateObject private var timetoSheet = TimetoSheet()
 
     func body(content: Content) -> some View {
         ZStack {
             content
-            ForEach(wrappers.wrappers) { wrapper in
-                TimetoSheetFullscreen(wrapper: wrapper, isPresented: wrapper.$isPresented)
+            ForEach(timetoSheet.items) { wrapper in
+                wrapper
             }
         }
-                .environmentObject(wrappers)
-    }
-}
-
-private struct TimetoSheetWrapper: View, Identifiable {
-
-    @EnvironmentObject private var wrappers: TimetoSheetWrappers
-
-    @Binding var isPresented: Bool
-    @ViewBuilder let content: () -> AnyView
-    @ViewBuilder let parent: () -> AnyView
-
-    @State var id = UUID().uuidString
-
-    var body: some View {
-        ZStack {
-            parent()
-                    .onChange(of: isPresented) { _ in
-                        if isPresented && wrappers.wrappers.filter { $0.id == id }.isEmpty {
-                            wrappers.wrappers.append(self)
-                        }
-                    }
-                    .onDisappear {
-                        wrappers.wrappers.removeAll { $0.id == id }
-                    }
-        }
-    }
-}
-
-extension View {
-
-    func attachTimetoSheet() -> some View {
-        modifier(TimetoSheetModifier())
-    }
-
-    func timetoSheet<Content: View>(
-            isPresented: Binding<Bool>,
-            @ViewBuilder content: @escaping () -> Content
-    ) -> some View {
-        TimetoSheetWrapper(
-                isPresented: isPresented,
-                content: { AnyView(content()) },
-                parent: { AnyView(self) }
-        )
+                .environmentObject(timetoSheet)
     }
 }
