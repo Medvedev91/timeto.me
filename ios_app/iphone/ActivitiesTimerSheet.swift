@@ -15,7 +15,7 @@ extension TimetoSheet {
                             AnyView(
                                     ActivitiesTimerSheet(
                                             isPresented: isPresented,
-                                            timerContext: nil
+                                            timerContext: timerContext
                                     ) {
                                         isPresented.wrappedValue = false
                                     }
