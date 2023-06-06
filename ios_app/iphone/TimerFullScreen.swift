@@ -469,7 +469,6 @@ private struct TasksSheet: View {
     @Binding var isPresented: Bool
 
     @State private var vm = FullScreenTasksVM()
-    @State private var isTimerActivitiesPresented = false
 
     var body: some View {
 
@@ -483,31 +482,7 @@ private struct TasksSheet: View {
 
             MyDivider()
 
-            // Outside of the every-second updating view
-            ZStack {}
-                    .sheetEnv(isPresented: $isTimerActivitiesPresented) {
-                        ActivitiesTimerSheet(
-                                isPresented: $isTimerActivitiesPresented,
-                                timerContext: nil
-                        ) {
-                            isPresented = false
-                        }
-                    }
-
             HStack(spacing: 0) {
-
-                Button(
-                        action: {
-                            isTimerActivitiesPresented = true
-                        },
-                        label: {
-                            Image(systemName: "timer")
-                                    .padding(.top, 14)
-                                    .foregroundColor(menuColor)
-                                    .font(.system(size: 30, weight: .thin))
-                                    .frame(maxWidth: .infinity)
-                        }
-                )
 
                 Button(
                         action: {
