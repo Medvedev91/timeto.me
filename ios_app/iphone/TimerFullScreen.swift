@@ -175,21 +175,12 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
                     Button(
                             action: {
-                                timetoSheet.items.append(
-                                        TimetoSheet__Item(
-                                                isPresented: $isTimerActivitiesPresented,
-                                                content: {
-                                                    AnyView(
-                                                            ActivitiesTimerSheet(
-                                                                    isPresented: $isTimerActivitiesPresented,
-                                                                    timerContext: nil
-                                                            ) {
-                                                                isTimerActivitiesPresented = false
-                                                            }
-                                                                    .cornerRadius(10, onTop: true, onBottom: false)
-                                                    )
-                                                }
-                                        )
+                                timetoSheet.showActivitiesTimerSheet(
+                                        isPresented: $isTimerActivitiesPresented,
+                                        timerContext: nil,
+                                        onStart: {
+                                            isTimerActivitiesPresented = false
+                                        }
                                 )
                             },
                             label: {
