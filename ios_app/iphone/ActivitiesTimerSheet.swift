@@ -27,7 +27,7 @@ extension TimetoSheet {
     }
 }
 
-struct ActivitiesTimerSheet: View {
+private struct ActivitiesTimerSheet: View {
 
     @State private var vm: ActivitiesTimerSheetVM
 
