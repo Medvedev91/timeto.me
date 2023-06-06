@@ -1,6 +1,32 @@
 import SwiftUI
 import shared
 
+extension TimetoSheet {
+
+    func showActivitiesTimerSheet(
+            isPresented: Binding<Bool>,
+            timerContext: ActivityTimerSheetVM.TimerContext?,
+            onStart: @escaping () -> Void
+    ) {
+        items.append(
+                TimetoSheet__Item(
+                        isPresented: isPresented,
+                        content: {
+                            AnyView(
+                                    ActivitiesTimerSheet(
+                                            isPresented: isPresented,
+                                            timerContext: nil
+                                    ) {
+                                        isPresented.wrappedValue = false
+                                    }
+                                            .cornerRadius(10, onTop: true, onBottom: false)
+                            )
+                        }
+                )
+        )
+    }
+}
+
 struct ActivitiesTimerSheet: View {
 
     @State private var vm: ActivitiesTimerSheetVM
@@ -33,52 +59,55 @@ struct ActivitiesTimerSheet: View {
                 40.0 + DI.activitiesSorted.count.toDouble() * TasksView__TaskRowView__ActivityRowView__ButtonStyle.LIST_ITEM_HEIGHT
         )
 
-        VMView(vm: vm) { state in
+        ScrollView {
 
-            ZStack {
+            VMView(vm: vm) { state in
 
-                if let sheetActivity = sheetActivity {
-                    ActivityTimerSheet(
-                            activity: sheetActivity,
-                            isPresented: $isPresented,
-                            timerContext: timerContext,
-                            onStart: {
-                                onStart()
+                ZStack {
+
+                    if let sheetActivity = sheetActivity {
+                        ActivityTimerSheet(
+                                activity: sheetActivity,
+                                isPresented: $isPresented,
+                                timerContext: timerContext,
+                                onStart: {
+                                    onStart()
+                                }
+                        )
+                    } else {
+
+                        ScrollView {
+
+                            VStack(spacing: 0) {
+
+                                ZStack {
+                                }
+                                        .frame(height: 10)
+
+                                ForEach(state.allActivities, id: \.activity.id) { activityUI in
+
+                                    TasksView__TaskRowView__ActivityRowView(
+                                            activityUI: activityUI,
+                                            onClickOnTimer: {
+                                                sheetActivity = activityUI.activity
+                                            },
+                                            onStarted: {
+                                                onStart()
+                                            }
+                                    )
+                                }
+                                        .buttonStyle(TasksView__TaskRowView__ActivityRowView__ButtonStyle())
+
+                                ZStack {
+                                }
+                                        .frame(height: 30)
                             }
-                    )
-                } else {
-
-                    ScrollView {
-
-                        VStack(spacing: 0) {
-
-                            ZStack {
-                            }
-                                    .frame(height: 10)
-
-                            ForEach(state.allActivities, id: \.activity.id) { activityUI in
-
-                                TasksView__TaskRowView__ActivityRowView(
-                                        activityUI: activityUI,
-                                        onClickOnTimer: {
-                                            sheetActivity = activityUI.activity
-                                        },
-                                        onStarted: {
-                                            onStart()
-                                        }
-                                )
-                            }
-                                    .buttonStyle(TasksView__TaskRowView__ActivityRowView__ButtonStyle())
-
-                            ZStack {
-                            }
-                                    .frame(height: 30)
                         }
                     }
                 }
             }
         }
-                .presentationDetentsHeightIf16(sheetHeight, withDragIndicator: true)
+                .frame(maxHeight: sheetHeight)
                 .background(Color(.mySecondaryBackground))
                 .listStyle(.plain)
                 .listSectionSeparatorTint(.clear)
