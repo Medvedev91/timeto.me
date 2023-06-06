@@ -42,6 +42,8 @@ struct TimetoSheet__Item<Content: View>: View, Identifiable {
             ZStack {
                 if isShown {
                     content()
+                            .padding(.top, 10.0)
+                            .safeAreaPadding(.top)
                             .transition(.move(edge: .bottom))
                             .onDisappear {
                                 timetoSheet.items.removeAll { $0.id == id }
