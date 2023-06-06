@@ -411,6 +411,8 @@ private struct ImportantTaskItem: View {
 
     @State private var isSheetPresented = false
 
+    @EnvironmentObject private var timetoSheet: TimetoSheet
+
     var body: some View {
 
         Button(
@@ -418,7 +420,13 @@ private struct ImportantTaskItem: View {
                     importantTask.task.startIntervalForUI(
                             onStarted: {},
                             needSheet: {
-                                isSheetPresented = true
+                                timetoSheet.showActivitiesTimerSheet(
+                                        isPresented: $isSheetPresented,
+                                        timerContext: importantTask.timerContext,
+                                        onStart: {
+                                            isSheetPresented = false
+                                        }
+                                )
                             }
                     )
                 },
@@ -453,14 +461,6 @@ private struct ImportantTaskItem: View {
                             .frame(height: taskItemHeight)
                 }
         )
-                .sheetEnv(isPresented: $isSheetPresented) {
-                    ActivitiesTimerSheet(
-                            isPresented: $isSheetPresented,
-                            timerContext: importantTask.timerContext
-                    ) {
-                        isSheetPresented = false
-                    }
-                }
     }
 }
 
