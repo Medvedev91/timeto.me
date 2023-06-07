@@ -182,7 +182,7 @@ private fun FullScreenView(
             )
 
             AnimatedVisibility(
-                timerSubtitle != null,
+                timerSubtitle != null && !state.isTabTasksVisible,
                 enter = fadeIn() + expandVertically(),
                 exit = fadeOut() + shrinkVertically(),
             ) {
@@ -225,7 +225,11 @@ private fun FullScreenView(
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Normal,
                     modifier = Modifier
-                        .offset(y = if (timerSubtitle != null) (-6).dp else (-10).dp)
+                        .offset(
+                            y = animateDpAsState(
+                                if (timerSubtitle != null && !state.isTabTasksVisible) (-6).dp else (-10).dp
+                            ).value
+                        )
                         .clip(RoundedCornerShape(99.dp))
                         .clickable {
                             vm.restart()
