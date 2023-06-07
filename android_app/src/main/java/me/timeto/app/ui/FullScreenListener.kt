@@ -20,6 +20,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
@@ -308,33 +309,51 @@ private fun FullScreenView(
                         exit = fadeOut(animationSpec = spring(stiffness = Spring.StiffnessMedium)),
                     ) {
 
-                        VStack(
-                            modifier = Modifier
-                                .background(c.black),
-                        ) {
+                        ZStack {
 
-                            if (checklistUI != null) {
-                                Text(
-                                    text = checklistUI.titleToExpand,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .clickable {
-                                            vm.toggleIsTabTasksVisible()
-                                        }
-                                        .padding(top = 6.dp, bottom = 12.dp),
-                                    textAlign = TextAlign.Center,
-                                    color = c.white,
+                            VStack(
+                                modifier = Modifier
+                                    .background(c.black),
+                            ) {
+
+                                if (checklistUI != null) {
+                                    Text(
+                                        text = checklistUI.titleToExpand,
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .clickable {
+                                                vm.toggleIsTabTasksVisible()
+                                            }
+                                            .padding(top = 6.dp, bottom = 12.dp),
+                                        textAlign = TextAlign.Center,
+                                        color = c.white,
+                                    )
+                                }
+
+                                FocusDivider(remember { mutableStateOf(1f) }, PaddingValues())
+
+                                TabTasksView(
+                                    modifier = Modifier.weight(1f),
+                                    withRepeatings = false,
+                                    onTaskStarted = {
+                                        vm.toggleIsTabTasksVisible()
+                                    },
                                 )
                             }
 
-                            FocusDivider(remember { mutableStateOf(1f) }, PaddingValues())
-
-                            TabTasksView(
-                                modifier = Modifier.weight(1f),
-                                withRepeatings = false,
-                                onTaskStarted = {
-                                    vm.toggleIsTabTasksVisible()
-                                },
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(4.dp)
+                                    .align(Alignment.BottomCenter)
+                                    .background(
+                                        Brush.verticalGradient(
+                                            colorStops = arrayOf(
+                                                0.0f to Color.Transparent,
+                                                1f to Color.Black,
+                                            )
+                                        )
+                                    )
                             )
                         }
                     }
