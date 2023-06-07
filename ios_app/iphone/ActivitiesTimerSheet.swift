@@ -59,49 +59,46 @@ private struct ActivitiesTimerSheet: View {
                 40.0 + DI.activitiesSorted.count.toDouble() * TasksView__TaskRowView__ActivityRowView__ButtonStyle.LIST_ITEM_HEIGHT
         )
 
-        ScrollView {
+        VMView(vm: vm) { state in
 
-            VMView(vm: vm) { state in
+            ZStack {
 
-                ZStack {
-
-                    if let sheetActivity = sheetActivity {
-                        ActivityTimerSheet(
-                                activity: sheetActivity,
-                                isPresented: $isPresented,
-                                timerContext: timerContext,
-                                onStart: {
-                                    onStart()
-                                }
-                        )
-                    } else {
-
-                        ScrollView {
-
-                            VStack(spacing: 0) {
-
-                                ZStack {
-                                }
-                                        .frame(height: 10)
-
-                                ForEach(state.allActivities, id: \.activity.id) { activityUI in
-
-                                    TasksView__TaskRowView__ActivityRowView(
-                                            activityUI: activityUI,
-                                            onClickOnTimer: {
-                                                sheetActivity = activityUI.activity
-                                            },
-                                            onStarted: {
-                                                onStart()
-                                            }
-                                    )
-                                }
-                                        .buttonStyle(TasksView__TaskRowView__ActivityRowView__ButtonStyle())
-
-                                ZStack {
-                                }
-                                        .frame(height: 30)
+                if let sheetActivity = sheetActivity {
+                    ActivityTimerSheet(
+                            activity: sheetActivity,
+                            isPresented: $isPresented,
+                            timerContext: timerContext,
+                            onStart: {
+                                onStart()
                             }
+                    )
+                } else {
+
+                    ScrollView {
+
+                        VStack(spacing: 0) {
+
+                            ZStack {
+                            }
+                                    .frame(height: 10)
+
+                            ForEach(state.allActivities, id: \.activity.id) { activityUI in
+
+                                TasksView__TaskRowView__ActivityRowView(
+                                        activityUI: activityUI,
+                                        onClickOnTimer: {
+                                            sheetActivity = activityUI.activity
+                                        },
+                                        onStarted: {
+                                            onStart()
+                                        }
+                                )
+                            }
+                                    .buttonStyle(TasksView__TaskRowView__ActivityRowView__ButtonStyle())
+
+                            ZStack {
+                            }
+                                    .frame(height: 30)
                         }
                     }
                 }
