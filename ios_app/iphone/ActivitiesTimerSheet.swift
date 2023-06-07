@@ -18,6 +18,7 @@ extension TimetoSheet {
                                             timerContext: timerContext
                                     ) {
                                         isPresented.wrappedValue = false
+                                        onStart()
                                     }
                                             .cornerRadius(10, onTop: true, onBottom: false)
                             )
