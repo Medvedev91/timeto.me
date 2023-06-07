@@ -118,7 +118,9 @@ extension View {
                 isPresented: isPresented,
                 onDismiss: onDismiss,
                 content: {
-                    content().attachTimetoAlert()
+                    content()
+                            .attachTimetoAlert()
+                            .attachTimetoSheet()
                 }
         )
     }
