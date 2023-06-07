@@ -4,7 +4,6 @@ import shared
 
 private let dividerPadding = 8.0
 private let dividerColor: UIColor = .systemGray4
-private let dividerHeight = 1 / UIScreen.main.scale
 
 private let taskItemHeight = 36.0
 private let taskListContentPadding = 4.0
@@ -331,7 +330,7 @@ private struct ChecklistView: View {
 
                         let dividerGap = 8.0
                         Color(dividerColor)
-                                .frame(width: dividerHeight)
+                                .frame(width: onePx)
                                 .frame(height: checklistItemMinHeight - dividerGap)
                                 .padding(.top, dividerGap / 2)
                                 .padding(.trailing, checklistDividerPadding)
@@ -533,7 +532,7 @@ private struct FSDivider: View {
 
     var body: some View {
         Color(isVisible ? dividerColor : .clear)
-                .frame(height: dividerHeight)
+                .frame(height: onePx)
                 .padding(.horizontal, dividerPadding)
     }
 }
