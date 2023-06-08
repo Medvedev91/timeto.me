@@ -260,6 +260,8 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                         .frame(height: bottomNavigationHeight)
                             }
                                     .frame(maxWidth: .infinity)
+                                    .background(state.isTabTasksVisible ? Color(.systemGray5) : .black)
+                                    .cornerRadius(10, onTop: true, onBottom: true)
                         }
                 )
 
