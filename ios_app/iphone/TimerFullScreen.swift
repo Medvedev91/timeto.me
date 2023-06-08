@@ -44,27 +44,10 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
     @State private var vm = FullScreenVM()
     @State private var isTimerActivitiesPresented = false
-    @State private var isTasksSheetPresented = false
 
     @EnvironmentObject private var timetoSheet: TimetoSheet
 
     var body: some View {
-        ZStack {
-            // Outside of the every-second updating view
-            ZStack {}
-                    .sheetEnv(isPresented: $isTasksSheetPresented) {
-                        TasksSheet(
-                                isPresented: $isTasksSheetPresented
-                        )
-                                .ignoresSafeArea(.keyboard, edges: .bottom)
-                                .colorScheme(.dark)
-                    }
-
-            myVmView
-        }
-    }
-
-    private var myVmView: some View {
 
         VMView(vm: vm, stack: .ZStack()) { state in
 
@@ -145,29 +128,46 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                     )
                 }
 
-                let checklistUI = state.checklistUI
-                let isImportantTasksExists = !state.importantTasks.isEmpty
+                ZStack {
 
-                if let checklistUI = checklistUI {
-                    VStack(spacing: 0) {
-                        ChecklistView(checklistUI: checklistUI)
-                        FSDivider()
+                    VStack {
+
+                        let checklistUI = state.checklistUI
+                        let isImportantTasksExists = !state.importantTasks.isEmpty
+
+                        if let checklistUI = checklistUI {
+                            VStack(spacing: 0) {
+                                ChecklistView(checklistUI: checklistUI)
+                                FSDivider()
+                            }
+                        }
+
+                        if isImportantTasksExists {
+                            let listHeight: CGFloat =
+                                    checklistUI == nil ? .infinity :
+                                    (taskListContentPadding * 2.0) +
+                                    (taskItemHeight * state.importantTasks.count.toDouble().limitMax(5.1))
+                            ImportantTasksView(
+                                    tasks: state.importantTasks
+                            )
+                                    .frame(height: listHeight)
+                        }
+
+                        if !isImportantTasksExists && checklistUI == nil {
+                            Spacer()
+                        }
                     }
-                }
 
-                if isImportantTasksExists {
-                    let listHeight: CGFloat =
-                            checklistUI == nil ? .infinity :
-                            (taskListContentPadding * 2.0) +
-                            (taskItemHeight * state.importantTasks.count.toDouble().limitMax(5.1))
-                    ImportantTasksView(
-                            tasks: state.importantTasks
-                    )
-                            .frame(height: listHeight)
-                }
-
-                if !isImportantTasksExists && checklistUI == nil {
-                    Spacer()
+                    if (state.isTabTasksVisible) {
+                        VStack {
+                            TabTasksView(
+                                    onTaskStarted: {
+                                        vm.toggleIsTabTasksVisible()
+                                    }
+                            )
+                                    .colorScheme(.dark)
+                        }
+                    }
                 }
 
                 //
@@ -200,7 +200,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
                     Button(
                             action: {
-                                isTasksSheetPresented = true
+                                vm.toggleIsTabTasksVisible()
                             },
                             label: {
 
@@ -463,69 +463,6 @@ private struct ImportantTaskItem: View {
                             .frame(height: taskItemHeight)
                 }
         )
-    }
-}
-
-private struct TasksSheet: View {
-
-    @Binding var isPresented: Bool
-
-    @State private var vm = FullScreenTasksVM()
-
-    var body: some View {
-
-        VStack(spacing: 0) {
-
-            TabTasksView(
-                    onTaskStarted: {
-                        isPresented = false
-                    }
-            )
-
-            MyDivider()
-
-            HStack(spacing: 0) {
-
-                Button(
-                        action: {
-                            isPresented = false
-                        },
-                        label: {
-                            VMView(vm: vm, stack: .VStack(spacing: 0)) { state in
-
-                                let timerColor = state.timerData.titleColor.toColor()
-
-                                Text(state.timerData.title)
-                                        .padding(.top, 14)
-                                        .foregroundColor(timerColor)
-                                        .font(.system(size: 17, weight: .bold))
-
-                                Text(state.title)
-                                        .foregroundColor(timerColor)
-                                        .font(.system(size: 14, weight: .regular))
-                                        .padding(.top, 2)
-                                        .lineLimit(1)
-                            }
-                        }
-                )
-
-                Button(
-                        action: {
-                            isPresented = false
-                        },
-                        label: {
-                            Image(systemName: "xmark.circle")
-                                    .padding(.top, 14)
-                                    .foregroundColor(menuColor)
-                                    .font(.system(size: 30, weight: .thin))
-                                    .frame(maxWidth: .infinity)
-                        }
-                )
-            }
-                    .frame(height: TabsView.tabHeight, alignment: .top)
-        }
-                .ignoresSafeArea()
-                .background(Color(.myBackground))
     }
 }
 
