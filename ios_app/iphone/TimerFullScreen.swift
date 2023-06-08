@@ -170,6 +170,9 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                     Spacer()
                 }
 
+                //
+                // Navigation
+
                 HStack(alignment: .bottom, spacing: 0) {
 
                     Button(
