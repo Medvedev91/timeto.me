@@ -102,7 +102,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
                 let timerData = state.timerData
 
-                if let subtitle = timerData.subtitle {
+                if let subtitle = timerData.subtitle, !state.isTabTasksVisible {
                     Text(subtitle)
                             .font(.system(size: 26, weight: .heavy))
                             .tracking(5)
