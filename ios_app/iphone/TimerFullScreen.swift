@@ -207,7 +207,6 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                         .frame(maxWidth: .infinity)
                                         .frame(alignment: .bottom)
                             }
-                                    .frame(height: navAndTasksTextHeight)
                         }
                 )
 
@@ -220,11 +219,13 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                             VStack {
 
                                 if (!state.isTabTasksVisible) {
+
                                     Text(state.tasksText)
-                                            .frame(height: taskCountsHeight)
                                             .foregroundColor(menuColor)
                                             .font(.system(size: 15, weight: .regular))
                                             .padding(.top, 10)
+
+                                    Spacer()
                                 }
 
                                 VStack(alignment: .center) {
@@ -275,11 +276,10 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                         .font(.system(size: 30, weight: .thin))
                                         .frame(maxWidth: .infinity)
                             }
-                                    .frame(height: navAndTasksTextHeight)
                         }
                 )
             }
-                    .frame(width: .infinity)
+                    .frame(width: .infinity, height: state.isTabTasksVisible ? bottomNavigationHeight : navAndTasksTextHeight)
         }
                 .onAppear {
                     UIApplication.shared.isIdleTimerDisabled = true
