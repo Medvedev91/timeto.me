@@ -6,8 +6,9 @@ private let tabWidth: CGFloat = 34
 // TRICK Using ignoresSafeArea() outside is mandatory
 struct TabTasksView: View {
 
+    let withRepeatings: Bool
     let onTaskStarted: () -> Void
-    
+
     //////
 
     @State private var vm = TabTasksVM()
@@ -124,43 +125,44 @@ struct TabTasksView: View {
                                     }
                             )
 
-                    Spacer()
-                            .frame(height: tabPadding)
-
-
                     //
                     // Repeating
 
-                    let isActiveRepeating = activeSection is TabTasksView_Section_Repeating
+                    if withRepeatings {
 
-                    Button(
-                            action: {
-                                upActiveSectionWithAnimation(TabTasksView_Section_Repeating())
-                            },
-                            label: {
-                                Image(systemName: "repeat")
-                                        .padding(.top, 9)
-                                        .padding(.bottom, 9)
-                                        .foregroundColor(isActiveRepeating ? .white : .primary)
-                                        .opacity(isActiveRepeating ? 1 : 0.7)
+                        Spacer()
+                                .frame(height: tabPadding)
 
-                            }
-                    )
-                            .background(
+                        let isActiveRepeating = activeSection is TabTasksView_Section_Repeating
 
-                                    ZStack {
+                        Button(
+                                action: {
+                                    upActiveSectionWithAnimation(TabTasksView_Section_Repeating())
+                                },
+                                label: {
+                                    Image(systemName: "repeat")
+                                            .padding(.top, 9)
+                                            .padding(.bottom, 9)
+                                            .foregroundColor(isActiveRepeating ? .white : .primary)
+                                            .opacity(isActiveRepeating ? 1 : 0.7)
 
-                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                .fill(isActiveRepeating ? .blue : Color(.mySecondaryBackground))
+                                }
+                        )
+                                .background(
 
-                                        if !isActiveRepeating {
+                                        ZStack {
+
                                             RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                    .stroke(Color(.systemGray6))
-                                        }
-                                    }
-                                            .frame(width: tabWidth)
-                            )
+                                                    .fill(isActiveRepeating ? .blue : Color(.mySecondaryBackground))
 
+                                            if !isActiveRepeating {
+                                                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                        .stroke(Color(.systemGray6))
+                                            }
+                                        }
+                                                .frame(width: tabWidth)
+                                )
+                    }
 
                     //
                     // Folders

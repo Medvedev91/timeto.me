@@ -190,6 +190,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                             }
 
                             TabTasksView(
+                                    withRepeatings: false,
                                     onTaskStarted: {
                                         vm.toggleIsTabTasksVisible()
                                     }
