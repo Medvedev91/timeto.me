@@ -35,6 +35,7 @@ private struct TimerFullScreen__ViewModifier: ViewModifier {
                 .fullScreenCover(isPresented: $isPresented) {
                     TimerFullScreen__FullScreenCoverView()
                             .attachTimetoSheet()
+                            .ignoresSafeArea(.keyboard, edges: .bottom)
                 }
                 .onReceive(statePublisher) { newValue in
                     isPresented = newValue.boolValue
