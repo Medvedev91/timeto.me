@@ -5,6 +5,8 @@ import shared
 private let dividerPadding = 8.0
 private let dividerColor: UIColor = .systemGray4
 
+private let taskCountsHeight = 36.0
+
 private let taskItemHeight = 36.0
 private let taskListContentPadding = 4.0
 
@@ -206,10 +208,13 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
                                 VStack(spacing: 0) {
 
-                                    Text(state.tasksText)
-                                            .foregroundColor(menuColor)
-                                            .font(.system(size: 15, weight: .regular))
-                                            .padding(.top, 10)
+                                    if (!state.isTabTasksVisible) {
+                                        Text(state.tasksText)
+                                                .frame(height: taskCountsHeight)
+                                                .foregroundColor(menuColor)
+                                                .font(.system(size: 15, weight: .regular))
+                                                .padding(.top, 10)
+                                    }
 
                                     Spacer()
 
