@@ -140,9 +140,10 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
                 ZStack {
 
+                    let checklistUI = state.checklistUI
+
                     VStack {
 
-                        let checklistUI = state.checklistUI
                         let isImportantTasksExists = !state.importantTasks.isEmpty
 
                         if let checklistUI = checklistUI {
@@ -171,6 +172,23 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
                     if (state.isTabTasksVisible) {
                         VStack {
+                            if let checklistUI = checklistUI {
+                                Button(
+                                        action: {
+                                            vm.toggleIsTabTasksVisible()
+                                        },
+                                        label: {
+                                            Text(checklistUI.titleToExpand)
+                                                    .foregroundColor(.white)
+                                                    .frame(maxWidth: .infinity)
+                                                    .padding(.top, 6)
+                                                    .padding(.bottom, 12)
+                                        }
+                                )
+                                        .background(.black)
+                                MyDivider()
+                            }
+
                             TabTasksView(
                                     onTaskStarted: {
                                         vm.toggleIsTabTasksVisible()
