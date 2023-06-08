@@ -2,8 +2,12 @@ import SwiftUI
 import Combine
 import shared
 
+private let bottomNavigationHeight = 56.0 // todo
+
 private let dividerPadding = 8.0
 private let dividerColor: UIColor = .systemGray4
+
+private let menuIconSize = bottomNavigationHeight
 
 private let taskCountsHeight = 36.0
 
@@ -52,7 +56,9 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
     var body: some View {
 
-        VMView(vm: vm, stack: .ZStack()) { state in
+        VMView(vm: vm, stack: .ZStack(alignment: .bottom)) { state in
+
+            let navAndTasksTextHeight = bottomNavigationHeight + taskCountsHeight
 
             Color.black.edgesIgnoringSafeArea(.all)
                     .statusBar(hidden: true)
@@ -160,6 +166,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                             Spacer()
                         }
                     }
+                            .padding(.bottom, navAndTasksTextHeight)
 
                     if (state.isTabTasksVisible) {
                         VStack {
@@ -170,57 +177,59 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                             )
                                     .colorScheme(.dark)
                         }
+                                .padding(.bottom, bottomNavigationHeight)
                     }
                 }
+            }
 
-                //
-                // Navigation
+            //
+            // Navigation
 
-                HStack(alignment: .bottom, spacing: 0) {
+            HStack(alignment: .bottom) {
 
-                    Button(
-                            action: {
-                                timetoSheet.showActivitiesTimerSheet(
-                                        isPresented: $isTimerActivitiesPresented,
-                                        timerContext: nil,
-                                        onStart: {
-                                            isTimerActivitiesPresented = false
-                                        }
-                                )
-                            },
-                            label: {
-                                VStack(spacing: 0) {
-                                    Spacer()
-                                    Image(systemName: "timer")
-                                            .padding(.bottom, 4)
-                                            .foregroundColor(menuColor)
-                                            .font(.system(size: 30, weight: .thin))
-                                            .frame(maxWidth: .infinity)
-                                            .frame(alignment: .bottom)
-                                }
-                            }
-                    )
-
-                    Button(
-                            action: {
-                                vm.toggleIsTabTasksVisible()
-                            },
-                            label: {
-
-                                VStack(spacing: 0) {
-
-                                    if (!state.isTabTasksVisible) {
-                                        Text(state.tasksText)
-                                                .frame(height: taskCountsHeight)
-                                                .foregroundColor(menuColor)
-                                                .font(.system(size: 15, weight: .regular))
-                                                .padding(.top, 10)
+                Button(
+                        action: {
+                            timetoSheet.showActivitiesTimerSheet(
+                                    isPresented: $isTimerActivitiesPresented,
+                                    timerContext: nil,
+                                    onStart: {
+                                        isTimerActivitiesPresented = false
                                     }
+                            )
+                        },
+                        label: {
+                            VStack(spacing: 0) {
+                                Spacer()
+                                Image(systemName: "timer")
+                                        .frame(height: menuIconSize)
+                                        .foregroundColor(menuColor)
+                                        .font(.system(size: 30, weight: .thin))
+                                        .frame(maxWidth: .infinity)
+                                        .frame(alignment: .bottom)
+                            }
+                                    .frame(height: navAndTasksTextHeight)
+                        }
+                )
 
-                                    Spacer()
+                Button(
+                        action: {
+                            vm.toggleIsTabTasksVisible()
+                        },
+                        label: {
+
+                            VStack {
+
+                                if (!state.isTabTasksVisible) {
+                                    Text(state.tasksText)
+                                            .frame(height: taskCountsHeight)
+                                            .foregroundColor(menuColor)
+                                            .font(.system(size: 15, weight: .regular))
+                                            .padding(.top, 10)
+                                }
+
+                                VStack(alignment: .center) {
 
                                     Text(state.timeOfTheDay)
-                                            .padding(.horizontal, 16)
                                             .foregroundColor(menuColor)
                                             .font(.system(size: 17, weight: .bold))
 
@@ -245,32 +254,32 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                                     RoundedRectangle(cornerRadius: 99, style: .circular)
                                                             .fill(state.batteryBackground.toColor())
                                             )
-                                            .padding(.bottom, 1)
                                 }
+                                        .padding(.top, 2)
+                                        .frame(height: bottomNavigationHeight)
+                            }
+                                    .frame(maxWidth: .infinity)
+                        }
+                )
+
+                Button(
+                        action: {
+                            FullScreenUI.shared.close()
+                        },
+                        label: {
+                            VStack(spacing: 0) {
+                                Spacer()
+                                Image(systemName: "xmark.circle")
+                                        .frame(height: menuIconSize)
+                                        .foregroundColor(menuColor)
+                                        .font(.system(size: 30, weight: .thin))
                                         .frame(maxWidth: .infinity)
                             }
-                    )
-
-                    Button(
-                            action: {
-                                FullScreenUI.shared.close()
-                            },
-                            label: {
-                                VStack(spacing: 0) {
-                                    Spacer()
-                                    Image(systemName: "xmark.circle")
-                                            .padding(.bottom, 4)
-                                            .foregroundColor(menuColor)
-                                            .font(.system(size: 30, weight: .thin))
-                                            .frame(maxWidth: .infinity)
-                                }
-                            }
-                    )
-                }
-                        .frame(height: 90)
-                        .frame(width: .infinity)
+                                    .frame(height: navAndTasksTextHeight)
+                        }
+                )
             }
-
+                    .frame(width: .infinity)
         }
                 .onAppear {
                     UIApplication.shared.isIdleTimerDisabled = true
