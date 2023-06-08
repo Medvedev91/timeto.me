@@ -38,6 +38,7 @@ private struct TimerFullScreen__ViewModifier: ViewModifier {
                 /// Скрывание status bar в .statusBar(...)
                 .fullScreenCover(isPresented: $isPresented) {
                     TimerFullScreen__FullScreenCoverView()
+                            .colorScheme(.dark)
                             .attachTimetoSheet()
                             .ignoresSafeArea(.keyboard, edges: .bottom)
                 }
@@ -175,7 +176,6 @@ private struct TimerFullScreen__FullScreenCoverView: View {
                                         vm.toggleIsTabTasksVisible()
                                     }
                             )
-                                    .colorScheme(.dark)
                         }
                                 .padding(.bottom, bottomNavigationHeight)
                     }
