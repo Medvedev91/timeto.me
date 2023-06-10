@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -25,10 +26,13 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
+import me.timeto.app.R
 import me.timeto.shared.*
 import me.timeto.shared.db.IntervalModel
 import me.timeto.shared.vm.TabTimerVM
 import me.timeto.shared.vm.TimerTabProgressVM
+
+private val timerFont = FontFamily(Font(R.font.notosansmono_extrabold))
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -453,8 +457,8 @@ private fun TimerView() {
             Text(
                 text = timerData.title,
                 fontSize = if (timerData.isCompact) 50.sp else 54.sp,
-                fontWeight = FontWeight.Black,
-                fontFamily = FontFamily.Monospace,
+                fontWeight = FontWeight.ExtraBold,
+                fontFamily = timerFont,
                 modifier = Modifier
                     .clip(RoundedCornerShape(10.dp))
                     .clickable {
