@@ -58,7 +58,7 @@ fun TabsView() {
         NavHost(
             navController,
             modifier = Modifier
-                .background(c.background) // Fix on IME hide another background
+                .background(c.bg) // Fix on IME hide another background
                 .padding(top = statusBarHeight, bottom = navHeight),
             startDestination = TabItem.Timer.route
         ) {
