@@ -476,8 +476,8 @@ private fun TimerView() {
                 contentAlignment = Alignment.CenterStart,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(15.dp)
-                    .padding(horizontal = 24.5.dp)
+                    .height(16.dp)
+                    .padding(horizontal = 34.dp)
             ) {
 
                 Box(
