@@ -3,6 +3,7 @@ package me.timeto.app.ui
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -482,14 +483,7 @@ private fun TimerView() {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .clip(shape)
-                        .background(c.timerBarBorder)
-                )
-
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(0.5.dp) // for border
+                        .border(onePx, c.timerBarBorder, shape)
                         .clip(shape)
                         .background(c.timerBarBackground)
                 )
