@@ -31,6 +31,7 @@ class MyColors(
     val orange: Color,
     val text: Color, // https://material.io/design/color/text-legibility.html ~ 87%
     val textSecondary: Color, // ~ 60%
+    val bg: Color, // TRICK Using R.color.my_dn_background overrides compose ;(
     val background: Color, // TRICK Using R.color.my_dn_background overrides compose ;(
     val background2: Color,
     val backgroundEditable: Color,
@@ -69,6 +70,7 @@ private val myLightColors = MyColors(
     orange = Color(0xFFFF9500), // AG Orange iOS Light
     text = Color(0xEE000000),
     textSecondary = Color(0xAA000000),
+    bg = Color(0xFFFFFFFF), // TRICK Sync with light R.color.my_dn_background
     background = Color(0xFFEEEEF3), // TRICK Sync with light R.color.my_dn_background
     background2 = Color.White,
     backgroundEditable = Color(0xFFf1f8e9), // Light Green 50
@@ -95,6 +97,7 @@ private val myDarkColors = MyColors(
     orange = Color(0xFFFF9D0A), // AG Orange iOS Dark
     text = Color(0xEEFFFFFF),
     textSecondary = Color(0xAAFFFFFF),
+    bg = Color(0xFF000000), // TRICK Sync with night R.color.my_dn_background
     background = Color(0xFF000000), // TRICK Sync with night R.color.my_dn_background
     background2 = Color(0xFF202022), // 0xFF1C1C1E
     backgroundEditable = Color(0xFF444444),
