@@ -426,10 +426,7 @@ private fun TimerView() {
     val (vm, state) = rememberVM { TimerTabProgressVM() }
     val timerData = state.timerData
 
-    Box(
-        modifier = Modifier
-            .padding(top = 6.dp),
-    ) {
+    Box {
 
         val subtitleColor = animateColorAsState(timerData.subtitleColor.toColor())
 
@@ -459,17 +456,17 @@ private fun TimerView() {
 
             Text(
                 text = timerData.title,
-                fontSize = if (timerData.isCompact) 50.sp else 54.sp,
+                fontSize = if (timerData.isCompact) 50.sp else 56.sp,
                 fontWeight = FontWeight.ExtraBold,
                 fontFamily = timerTitleFont,
                 modifier = Modifier
-                    .clip(RoundedCornerShape(10.dp))
+                    .clip(MySquircleShape(80f))
                     .clickable {
                         vm.toggleIsCountdown()
                     }
-                    .padding(horizontal = 6.dp) // To ripple
-                    .padding(bottom = 4.dp),
-                color = timerData.titleColor.toColor()
+                    .padding(horizontal = 12.dp) // To ripple
+                    .padding(bottom = 2.dp),
+                color = timerData.titleColor.toColor(),
             )
 
             val shape = RoundedCornerShape(99.dp)
