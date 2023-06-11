@@ -33,7 +33,7 @@ import me.timeto.shared.db.IntervalModel
 import me.timeto.shared.vm.TabTimerVM
 import me.timeto.shared.vm.TimerTabProgressVM
 
-private val timerFont = FontFamily(Font(R.font.notosansmono_extrabold))
+private val timerTitleFont = FontFamily(Font(R.font.notosansmono_extrabold))
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -459,7 +459,7 @@ private fun TimerView() {
                 text = timerData.title,
                 fontSize = if (timerData.isCompact) 50.sp else 54.sp,
                 fontWeight = FontWeight.ExtraBold,
-                fontFamily = timerFont,
+                fontFamily = timerTitleFont,
                 modifier = Modifier
                     .clip(RoundedCornerShape(10.dp))
                     .clickable {
