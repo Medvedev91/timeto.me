@@ -425,8 +425,12 @@ private fun TimerView() {
 
     val (vm, state) = rememberVM { TimerTabProgressVM() }
     val timerData = state.timerData
+    val progressHeight = 16.dp
 
-    Box {
+    Box(
+        modifier = Modifier
+            .height(136.dp)
+    ) {
 
         val subtitleColor = animateColorAsState(timerData.subtitleColor.toColor())
 
@@ -447,72 +451,67 @@ private fun TimerView() {
             )
         }
 
-        Column(
+        Text(
+            text = timerData.title,
+            fontSize = if (timerData.isCompact) 50.sp else 56.sp,
+            fontWeight = FontWeight.ExtraBold,
+            fontFamily = timerTitleFont,
             modifier = Modifier
+                .padding(bottom = progressHeight)
+                .align(Alignment.BottomCenter)
+                .clip(MySquircleShape(80f))
+                .clickable {
+                    vm.toggleIsCountdown()
+                }
+                .padding(horizontal = 12.dp) // To ripple
+                .padding(bottom = 2.dp),
+            color = timerData.titleColor.toColor(),
+        )
+
+        val shape = RoundedCornerShape(99.dp)
+
+        Box(
+            contentAlignment = Alignment.CenterStart,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
                 .fillMaxWidth()
-                .padding(top = 24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+                .height(progressHeight)
+                .padding(horizontal = 34.dp)
         ) {
 
-            Text(
-                text = timerData.title,
-                fontSize = if (timerData.isCompact) 50.sp else 56.sp,
-                fontWeight = FontWeight.ExtraBold,
-                fontFamily = timerTitleFont,
+            Box(
                 modifier = Modifier
-                    .clip(MySquircleShape(80f))
-                    .clickable {
-                        vm.toggleIsCountdown()
-                    }
-                    .padding(horizontal = 12.dp) // To ripple
-                    .padding(bottom = 2.dp),
-                color = timerData.titleColor.toColor(),
+                    .fillMaxSize()
+                    .border(onePx, c.timerBarBorder, shape)
+                    .clip(shape)
+                    .background(c.timerBarBackground)
             )
 
-            val shape = RoundedCornerShape(99.dp)
-
             Box(
-                contentAlignment = Alignment.CenterStart,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(16.dp)
-                    .padding(horizontal = 34.dp)
+                    .fillMaxSize()
+                    .clip(shape)
             ) {
 
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .border(onePx, c.timerBarBorder, shape)
-                        .clip(shape)
-                        .background(c.timerBarBackground)
+                val widthAnimate = animateFloatAsState(
+                    state.progressRatio,
+                    // To fast rollback on start
+                    if (time() > state.lastInterval.id) tween(1000, easing = LinearEasing) else spring()
                 )
 
+                val animateColorBar = animateColorAsState(state.progressColor.toColor())
+
                 Box(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .clip(shape)
-                ) {
-
-                    val widthAnimate = animateFloatAsState(
-                        state.progressRatio,
-                        // To fast rollback on start
-                        if (time() > state.lastInterval.id) tween(1000, easing = LinearEasing) else spring()
-                    )
-
-                    val animateColorBar = animateColorAsState(state.progressColor.toColor())
-
-                    Box(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .fillMaxWidth()
-                            .drawBehind {
-                                drawRect(
-                                    color = animateColorBar.value,
-                                    size = size.copy(size.width * widthAnimate.value)
-                                )
-                            }
-                    )
-                }
+                        .fillMaxHeight()
+                        .fillMaxWidth()
+                        .drawBehind {
+                            drawRect(
+                                color = animateColorBar.value,
+                                size = size.copy(size.width * widthAnimate.value)
+                            )
+                        }
+                )
             }
         }
     }
