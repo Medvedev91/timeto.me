@@ -437,9 +437,10 @@ private fun TimerView() {
         AnimatedVisibility(
             timerData.subtitle != null,
             modifier = Modifier
+                .padding(top = 13.dp)
                 .align(Alignment.TopCenter),
-            enter = fadeIn(),
-            exit = fadeOut(),
+            enter = fadeIn(animationSpec = spring(stiffness = Spring.StiffnessMediumLow)),
+            exit = fadeOut(animationSpec = spring(stiffness = Spring.StiffnessMediumLow)),
         ) {
             Text(
                 text = timerData.subtitle ?: " ",
@@ -451,13 +452,18 @@ private fun TimerView() {
             )
         }
 
+        val titleBottomPadding = animateDpAsState(
+            if (timerData.subtitle == null) progressHeight - 1.dp else progressHeight - 6.dp,
+            animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
+        )
+
         Text(
             text = timerData.title,
-            fontSize = if (timerData.isCompact) 50.sp else 56.sp,
+            fontSize = if (timerData.isCompact) 50.sp else 55.sp,
             fontWeight = FontWeight.ExtraBold,
             fontFamily = timerTitleFont,
             modifier = Modifier
-                .padding(bottom = progressHeight)
+                .padding(bottom = titleBottomPadding.value)
                 .align(Alignment.BottomCenter)
                 .clip(MySquircleShape(80f))
                 .clickable {
