@@ -34,6 +34,7 @@ import me.timeto.shared.vm.TabTimerVM
 import me.timeto.shared.vm.TimerTabProgressVM
 
 private val timerTitleFont = FontFamily(Font(R.font.notosansmono_extrabold))
+private val timerSubtitleFont = FontFamily(Font(R.font.notosansmono_black))
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -441,10 +442,11 @@ private fun TimerView() {
         ) {
             Text(
                 text = timerData.subtitle ?: " ",
-                fontSize = 22.sp,
-                fontWeight = FontWeight.ExtraBold,
+                fontSize = 26.sp,
+                fontWeight = FontWeight.Black,
+                fontFamily = timerSubtitleFont,
                 color = subtitleColor.value,
-                letterSpacing = 3.sp,
+                letterSpacing = 1.sp,
             )
         }
 
