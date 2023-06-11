@@ -65,9 +65,10 @@ class MyColors(
 }
 
 private val tgLikeLightSheetBg = Color(0xFFEFEFF3)
+private val blueLight = Color(0xFF007AFF)
 
 private val myLightColors = MyColors(
-    blue = Color(0xFF007AFF),
+    blue = blueLight,
     orange = Color(0xFFFF9500), // AG Orange iOS Light
     text = Color(0xEE000000),
     textSecondary = Color(0xAA000000),
