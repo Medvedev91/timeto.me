@@ -48,7 +48,7 @@ fun TabTimerView() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(c.background),
+            .background(c.bg),
     ) {
 
         Column(
@@ -59,32 +59,24 @@ fun TabTimerView() {
             TimerView()
 
             LazyColumn(
-                contentPadding = PaddingValues(horizontal = 24.dp, vertical = 22.dp),
+                contentPadding = PaddingValues(horizontal = 21.dp, vertical = 28.dp),
             ) {
 
                 val activitiesUI = state.activitiesUI
                 itemsIndexed(
                     activitiesUI,
                     key = { _, i -> i.activity.id }
-                ) { index, uiActivity ->
+                ) { _, uiActivity ->
 
-                    val isLast = index == activitiesUI.size - 1
                     val isActive = uiActivity.isActive
                     val bgAnimate = animateColorAsState(
                         if (isActive) c.blue else c.background2,
                         spring(stiffness = Spring.StiffnessMediumLow)
                     )
 
-                    val clip = when {
-                        index == 0 && isLast -> MySquircleShape()
-                        index == 0 -> MySquircleShape(angles = listOf(true, true, false, false))
-                        isLast -> MySquircleShape(angles = listOf(false, false, true, true))
-                        else -> RoundedCornerShape(0.dp)
-                    }
-
                     SwipeToAction(
                         isStartOrEnd = remember { mutableStateOf(null) },
-                        modifier = Modifier.clip(clip),
+                        modifier = Modifier.clip(MySquircleShape(len = 70f)),
                         ignoreOneAction = remember { mutableStateOf(false) },
                         startView = {
                             SwipeToAction__StartView(
@@ -127,14 +119,12 @@ fun TabTimerView() {
                                             timerContext = null
                                         )
                                     }
-                                },
+                                }
+                                .padding(horizontal = 12.dp),
                             contentAlignment = Alignment.TopCenter,
                         ) {
 
-                            val emojiHPadding = 8.dp
-                            val emojiWidth = 30.dp
-                            val startPadding = emojiWidth + (emojiHPadding * 2)
-                            val endPadding = 12.dp
+                            val emojiWidth = 44.dp
 
                             Column(
                                 modifier = Modifier
@@ -145,27 +135,26 @@ fun TabTimerView() {
 
                                 Row(
                                     modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(end = endPadding - 2.dp),
+                                        .fillMaxWidth(),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
 
                                     Text(
                                         text = uiActivity.activity.emoji,
                                         modifier = Modifier
-                                            .padding(horizontal = emojiHPadding)
                                             .width(emojiWidth),
-                                        textAlign = TextAlign.Center,
-                                        fontSize = 20.sp,
+                                        textAlign = TextAlign.Start,
+                                        fontSize = 22.sp,
                                     )
 
                                     Text(
                                         text = uiActivity.listText,
                                         modifier = Modifier
-                                            .weight(1f)
-                                            .padding(end = 4.dp),
+                                            .weight(1f),
                                         color = if (isActive) c.white else c.text,
                                         overflow = TextOverflow.Ellipsis,
+                                        fontSize = 16.sp,
+                                        fontWeight = FontWeight.Normal,
                                         maxLines = 1,
                                     )
 
@@ -177,7 +166,7 @@ fun TabTimerView() {
                                                 .clickable {
                                                     hintUI.startInterval()
                                                 }
-                                                .padding(horizontal = 3.dp, vertical = 3.dp),
+                                                .padding(horizontal = 4.dp, vertical = 3.dp),
                                             color = if (isActive) c.white else c.blue,
                                             fontSize = 14.sp,
                                             fontWeight = FontWeight.W300,
@@ -186,7 +175,7 @@ fun TabTimerView() {
                                 }
 
                                 val triggersListContentPaddings = remember {
-                                    PaddingValues(start = startPadding - 1.dp, end = endPadding)
+                                    PaddingValues(start = emojiWidth - 1.dp)
                                 }
 
                                 TextFeaturesTriggersView(
@@ -200,7 +189,7 @@ fun TabTimerView() {
 
                                     Row(
                                         modifier = Modifier
-                                            .padding(top = 6.dp, bottom = 2.dp, end = endPadding),
+                                            .padding(top = 6.dp, bottom = 2.dp),
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
 
@@ -254,8 +243,8 @@ fun TabTimerView() {
                                 }
                             }
 
-                            DividerBg2(
-                                modifier = Modifier.padding(start = startPadding),
+                            DividerBg(
+                                modifier = Modifier.padding(start = emojiWidth, end = 4.dp),
                                 isVisible = uiActivity.withTopDivider,
                             )
                         }
@@ -455,13 +444,13 @@ private fun TimerView() {
         }
 
         val titleBottomPadding = animateDpAsState(
-            if (timerData.subtitle == null) progressHeight - 1.dp else progressHeight - 6.dp,
+            if (timerData.subtitle == null) progressHeight - 2.dp else progressHeight - 7.dp,
             animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
         )
 
         Text(
             text = timerData.title,
-            fontSize = if (timerData.isCompact) 50.sp else 55.sp,
+            fontSize = 56.sp,
             fontWeight = FontWeight.ExtraBold,
             fontFamily = timerTitleFont,
             modifier = Modifier
