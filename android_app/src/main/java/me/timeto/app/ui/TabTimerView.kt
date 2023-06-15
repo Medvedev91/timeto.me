@@ -189,20 +189,9 @@ fun TabTimerView() {
 
                                     Row(
                                         modifier = Modifier
-                                            .padding(top = 6.dp, bottom = 2.dp),
+                                            .padding(top = 6.dp, bottom = 2.dp, start = emojiWidth),
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
-
-                                        val leadingEmoji = noteUI.leadingEmoji
-                                        if (leadingEmoji != null)
-                                            Text(
-                                                text = leadingEmoji,
-                                                modifier = Modifier
-                                                    .padding(horizontal = emojiHPadding)
-                                                    .width(emojiWidth),
-                                                fontSize = 14.sp,
-                                                textAlign = TextAlign.Center,
-                                            )
 
                                         Text(
                                             noteUI.text,
@@ -211,7 +200,6 @@ fun TabTimerView() {
                                             color = c.white,
                                             modifier = Modifier
                                                 .weight(1f, false)
-                                                .padding(start = if (leadingEmoji != null) 0.dp else startPadding)
                                         )
 
                                         Text(
