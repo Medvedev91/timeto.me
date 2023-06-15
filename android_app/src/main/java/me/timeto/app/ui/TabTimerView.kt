@@ -189,7 +189,7 @@ fun TabTimerView() {
 
                                     Row(
                                         modifier = Modifier
-                                            .padding(top = 6.dp, bottom = 2.dp, start = emojiWidth),
+                                            .padding(top = 4.dp, bottom = 2.dp, start = emojiWidth),
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
 
