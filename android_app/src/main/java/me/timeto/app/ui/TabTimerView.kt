@@ -242,14 +242,18 @@ fun TabTimerView() {
                 item {
 
                     Row(
-                        modifier = Modifier.padding(top = 20.dp)
+                        modifier = Modifier
+                            .padding(top = 20.dp)
+                            .padding(horizontal = 4.dp)
                     ) {
+
+                        val squircleShape = MySquircleShape()
 
                         Box(
                             modifier = Modifier
                                 .weight(1f)
-                                .clip(MySquircleShape())
-                                .background(c.background2)
+                                .border(onePx, c.dividerBg, squircleShape)
+                                .clip(squircleShape)
                                 .clickable {
                                     Dialog.show(
                                         modifier = Modifier.fillMaxHeight(0.95f),
@@ -262,20 +266,20 @@ fun TabTimerView() {
                             Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(horizontal = 18.dp, vertical = 12.dp),
+                                    .padding(vertical = 10.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Text("Chart", color = c.text)
                             }
                         }
 
-                        Box(modifier = Modifier.width(15.dp))
+                        Box(modifier = Modifier.width(25.dp))
 
                         Box(
                             modifier = Modifier
                                 .weight(1f)
-                                .clip(MySquircleShape())
-                                .background(c.background2)
+                                .border(onePx, c.dividerBg, squircleShape)
+                                .clip(squircleShape)
                                 .clickable {
                                     Dialog.show(
                                         modifier = Modifier.fillMaxHeight(0.95f),
@@ -288,7 +292,7 @@ fun TabTimerView() {
                             Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(horizontal = 18.dp, vertical = 12.dp),
+                                    .padding(vertical = 10.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Text("History", color = c.text)
@@ -301,7 +305,7 @@ fun TabTimerView() {
 
                     Row(
                         modifier = Modifier
-                            .padding(top = 14.dp)
+                            .padding(top = 18.dp)
                             .fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
