@@ -7,7 +7,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -67,8 +66,6 @@ fun TasksListView(
                 val focusManager = LocalFocusManager.current
                 val focusRequester = remember { FocusRequester() }
 
-                val isLight = MaterialTheme.colors.isLight
-
                 Column(
                     modifier = Modifier
                         .pointerInput(Unit) { } // Ignore clicks through
@@ -80,14 +77,9 @@ fun TasksListView(
 
                     Row(
                         modifier = Modifier
-                            .border(
-                                width = 0.5.dp,
-                                // Border has almost the same color for the light theme
-                                color = if (isLight) c.background else c.white.copy(alpha = 0.4f),
-                                shape = MySquircleShape()
-                            )
+                            .padding(start = 12.dp, end = 10.dp)
+                            .border(width = onePx, color = c.dividerBg, shape = squircleShape)
                             .clip(MySquircleShape())
-                            .background(if (isLight) c.background2.copy(alpha = 0.9f) else c.background.copy(alpha = 0.85f))
                             .height(IntrinsicSize.Min), // To use fillMaxHeight() inside
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -202,21 +194,14 @@ fun TasksListView(
                 tasksUI,
                 key = { taskUI -> taskUI.task.id }
             ) { taskUI ->
-                val startPadding = 18.dp
+                val startPadding = 16.dp
 
-                val isLast = taskUI == tasksUI.lastOrNull()
                 val isFirst = taskUI == tasksUI.firstOrNull()
-                val clip = when {
-                    isFirst && isLast -> MySquircleShape()
-                    isFirst -> MySquircleShape(angles = listOf(false, false, true, true))
-                    isLast -> MySquircleShape(angles = listOf(true, true, false, false))
-                    else -> RoundedCornerShape(0.dp)
-                }
 
                 Box(
                     modifier = Modifier
-                        .clip(clip)
-                        .background(c.background2)
+                        .clip(squircleShape)
+                        .background(c.bg)
                     // .animateItemPlacement() // Slow rendering on IME open
                 ) {
 
@@ -302,7 +287,7 @@ fun TasksListView(
 
                         Box(
                             modifier = Modifier
-                                .background(c.background2)
+                                .background(c.bg)
                                 .clickable {
                                     taskUI.task.startIntervalForUI(
                                         onStarted = {
@@ -403,7 +388,7 @@ fun TasksListView(
                             }
 
                             if (!isFirst)
-                                DividerBg2(Modifier.padding(start = startPadding))
+                                DividerBg(Modifier.padding(start = startPadding))
                         }
                     }
                 }

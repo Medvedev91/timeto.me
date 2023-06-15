@@ -5,6 +5,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -36,10 +37,12 @@ import kotlin.random.Random
 
 var setTodayFolder: (() -> Unit)? = null
 
-val TAB_TASKS_PADDING_START = 24.dp
-val TAB_TASKS_PADDING_END = 68.dp
+val TAB_TASKS_PADDING_START = 16.dp
+val TAB_TASKS_PADDING_END = 60.dp
 
 val taskListSectionPadding = 20.dp
+
+private val tabShape = MySquircleShape(50f)
 
 /**
  * TRICK Used twice: as a tab and for focus mode
@@ -109,7 +112,7 @@ fun TabTasksView(
                     }
                 }
             }
-            .background(c.background),
+            .background(c.bg),
         contentAlignment = Alignment.CenterEnd,
     ) {
 
@@ -136,8 +139,6 @@ fun TabTasksView(
             LazyColumn(
                 contentPadding = PaddingValues(bottom = tabSpace)
             ) {
-
-                val tabShape = MySquircleShape(50f)
 
                 item {
                     val isActive = activeSection is Section_Calendar
@@ -185,7 +186,6 @@ fun TabTasksView(
                                 dropItem.upSquareByCoordinates(c)
                             }
                             .clip(MySquircleShape(40f, -4f))
-                            .background(c.calendarIconBg)
                             .clickable {
                                 activeSection = Section_Calendar()
                             },
@@ -203,7 +203,7 @@ fun TabTasksView(
                 if (withRepeatings) {
                     item {
                         val isActive = activeSection is Section_Repeating
-                        val backgroundColor = animateColorAsState(if (isActive) c.blue else c.background2, spring(stiffness = Spring.StiffnessMedium))
+                        val backgroundColor = animateColorAsState(if (isActive) c.blue else c.bg, spring(stiffness = Spring.StiffnessMedium))
                         val textColor = animateColorAsState(if (isActive) activeTextColor else inactiveTextColor, spring(stiffness = Spring.StiffnessMedium))
 
                         Box(
@@ -211,6 +211,7 @@ fun TabTasksView(
                                 .padding(top = 10.dp)
                                 .width(buttonWidth)
                                 .height(buttonWidth)
+                                .border(onePx, c.dividerBg, tabShape)
                                 .clip(tabShape)
                                 .background(backgroundColor.value)
                                 .clickable {
@@ -247,7 +248,7 @@ fun TabTasksView(
                             isFocusedToDrop -> c.tasksTabDropFocused
                             isAllowedToDrop -> c.purple
                             isActive -> c.blue
-                            else -> c.background2
+                            else -> c.bg
                         },
                         spring(stiffness = Spring.StiffnessMedium)
                     )
@@ -285,6 +286,7 @@ fun TabTasksView(
                             .onGloballyPositioned { c ->
                                 dropItem.upSquareByCoordinates(c)
                             }
+                            .border(onePx, c.dividerBg, tabShape)
                             .clip(tabShape)
                             .background(backgroundColor.value)
                     ) {
