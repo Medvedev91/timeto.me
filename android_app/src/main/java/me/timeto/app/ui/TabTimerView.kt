@@ -247,8 +247,6 @@ fun TabTimerView() {
                             .padding(horizontal = 4.dp)
                     ) {
 
-                        val squircleShape = MySquircleShape()
-
                         Box(
                             modifier = Modifier
                                 .weight(1f)

@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import me.timeto.app.ui.MySquircleShape
 import me.timeto.app.ui.c
 import me.timeto.shared.*
 import me.timeto.shared.vm.__VM
@@ -33,6 +34,8 @@ fun Dp.limitMin(dp: Dp) = if (this < dp) dp else this
 fun Dp.limitMax(dp: Dp) = if (this > dp) dp else this
 fun Dp.goldenRatioUp() = this * GOLDEN_RATIO
 fun Dp.goldenRatioDown() = this / GOLDEN_RATIO
+
+val squircleShape = MySquircleShape()
 
 fun MutableState<Boolean>.setTrue() {
     value = true
