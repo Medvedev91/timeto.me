@@ -37,8 +37,10 @@ import kotlin.random.Random
 
 var setTodayFolder: (() -> Unit)? = null
 
-val TAB_TASKS_PADDING_HALF_H = 14.dp
-val TAB_TASKS_PADDING_END = 60.dp
+val TAB_TASKS_PADDING_HALF_H = 12.dp
+private val SECTION_BUTTON_WIDTH = 35.dp
+private val SECTION_BUTTONS_END_PADDING = TAB_TASKS_PADDING_HALF_H
+val TAB_TASKS_PADDING_END = SECTION_BUTTONS_END_PADDING + SECTION_BUTTON_WIDTH + TAB_TASKS_PADDING_HALF_H
 
 val taskListSectionPadding = 20.dp
 
@@ -122,13 +124,12 @@ fun TabTasksView(
             is Section_Repeating -> RepeatingsListView()
         }
 
-        val buttonWidth = 35.dp
         val tabSpace = 11.dp
 
         Column(
             modifier = Modifier
-                .padding(end = 12.dp)
-                .width(buttonWidth)
+                .padding(end = SECTION_BUTTONS_END_PADDING)
+                .width(SECTION_BUTTON_WIDTH)
                 .fillMaxHeight(),
             verticalArrangement = Arrangement.Center
         ) {
@@ -209,8 +210,8 @@ fun TabTasksView(
                         Box(
                             modifier = Modifier
                                 .padding(top = 10.dp)
-                                .width(buttonWidth)
-                                .height(buttonWidth)
+                                .width(SECTION_BUTTON_WIDTH)
+                                .height(SECTION_BUTTON_WIDTH)
                                 .border(onePx, c.dividerBg, tabShape)
                                 .clip(tabShape)
                                 .background(backgroundColor.value)

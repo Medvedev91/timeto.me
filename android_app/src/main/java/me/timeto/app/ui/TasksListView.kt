@@ -77,7 +77,7 @@ fun TasksListView(
 
                     Row(
                         modifier = Modifier
-                            .padding(start = 12.dp, end = 10.dp)
+                            .padding(horizontal = TAB_TASKS_PADDING_HALF_H - 2.dp)
                             .border(width = onePx, color = c.dividerBg, shape = squircleShape)
                             .clip(MySquircleShape())
                             .height(IntrinsicSize.Min), // To use fillMaxHeight() inside
@@ -194,8 +194,6 @@ fun TasksListView(
                 tasksUI,
                 key = { taskUI -> taskUI.task.id }
             ) { taskUI ->
-                val startPadding = 16.dp
-
                 val isFirst = taskUI == tasksUI.firstOrNull()
 
                 Box(
@@ -316,7 +314,7 @@ fun TasksListView(
                                     Row(
                                         modifier = Modifier
                                             .padding(
-                                                start = startPadding,
+                                                start = TAB_TASKS_PADDING_HALF_H,
                                                 top = 2.dp,
                                                 bottom = vPadding,
                                             ),
@@ -377,18 +375,23 @@ fun TasksListView(
                                     color = c.text,
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .padding(horizontal = startPadding),
+                                        .padding(horizontal = TAB_TASKS_PADDING_HALF_H),
                                 )
 
                                 TextFeaturesTriggersView(
                                     triggers = taskUI.textFeatures.triggers,
                                     modifier = Modifier.padding(top = vPadding),
-                                    contentPadding = PaddingValues(horizontal = startPadding - 2.dp),
+                                    contentPadding = PaddingValues(horizontal = TAB_TASKS_PADDING_HALF_H - 2.dp),
                                 )
                             }
 
                             if (!isFirst)
-                                DividerBg(Modifier.padding(start = startPadding))
+                                DividerBg(
+                                    Modifier.padding(
+                                        start = TAB_TASKS_PADDING_HALF_H,
+                                        end = TAB_TASKS_PADDING_HALF_H,
+                                    )
+                                )
                         }
                     }
                 }
