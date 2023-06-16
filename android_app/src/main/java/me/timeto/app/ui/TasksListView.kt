@@ -54,7 +54,7 @@ fun TasksListView(
         LazyColumn(
             modifier = Modifier
                 .fillMaxHeight()
-                .padding(start = TAB_TASKS_PADDING_START, end = TAB_TASKS_PADDING_END),
+                .padding(start = TAB_TASKS_PADDING_HALF_H, end = TAB_TASKS_PADDING_END),
             reverseLayout = true,
             contentPadding = PaddingValues(top = taskListSectionPadding),
             state = listState,

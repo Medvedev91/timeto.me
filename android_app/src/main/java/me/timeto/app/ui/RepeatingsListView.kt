@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -28,7 +27,7 @@ fun RepeatingsListView() {
     LazyColumn(
         reverseLayout = true,
         contentPadding = PaddingValues(
-            start = TAB_TASKS_PADDING_START,
+            start = TAB_TASKS_PADDING_HALF_H,
             end = TAB_TASKS_PADDING_END,
             bottom = taskListSectionPadding,
             top = taskListSectionPadding

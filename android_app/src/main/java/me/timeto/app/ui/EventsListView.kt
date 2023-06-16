@@ -41,14 +41,14 @@ fun EventsListView() {
             Column {
 
                 EventsHistoryView(
-                    spaceAround = TAB_TASKS_PADDING_START + 1.dp,
+                    spaceAround = TAB_TASKS_PADDING_HALF_H + 1.dp,
                     paddingTop = taskListSectionPadding
                 )
 
                 Box(
                     Modifier
                         .padding(
-                            start = TAB_TASKS_PADDING_START,
+                            start = TAB_TASKS_PADDING_HALF_H,
                             top = 16.dp,
                             bottom = taskListSectionPadding
                         )
@@ -91,7 +91,7 @@ fun EventsListView() {
         item {
             Box(
                 modifier = Modifier
-                    .padding(start = TAB_TASKS_PADDING_START)
+                    .padding(start = TAB_TASKS_PADDING_HALF_H)
                     .fillMaxWidth()
                     .padding(top = taskListSectionPadding),
                 contentAlignment = Alignment.Center
@@ -118,7 +118,7 @@ fun EventsListView() {
 
             Box(
                 modifier = Modifier
-                    .padding(start = TAB_TASKS_PADDING_START)
+                    .padding(start = TAB_TASKS_PADDING_HALF_H)
                     .clip(clip)
                     .background(c.background2),
                 contentAlignment = Alignment.BottomCenter

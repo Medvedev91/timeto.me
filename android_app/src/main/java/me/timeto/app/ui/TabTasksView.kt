@@ -37,7 +37,7 @@ import kotlin.random.Random
 
 var setTodayFolder: (() -> Unit)? = null
 
-val TAB_TASKS_PADDING_START = 16.dp
+val TAB_TASKS_PADDING_HALF_H = 14.dp
 val TAB_TASKS_PADDING_END = 60.dp
 
 val taskListSectionPadding = 20.dp
