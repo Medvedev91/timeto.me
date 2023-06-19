@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,6 +37,7 @@ fun Dp.goldenRatioUp() = this * GOLDEN_RATIO
 fun Dp.goldenRatioDown() = this / GOLDEN_RATIO
 
 val squircleShape = MySquircleShape()
+val roundedShape = RoundedCornerShape(99.dp)
 
 fun MutableState<Boolean>.setTrue() {
     value = true
