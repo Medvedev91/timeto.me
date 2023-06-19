@@ -1,10 +1,8 @@
 package me.timeto.app.ui
 
-import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -30,8 +28,6 @@ import kotlinx.coroutines.delay
 import me.timeto.shared.db.TaskFolderModel
 import me.timeto.shared.launchEx
 import me.timeto.shared.vm.TasksListVM
-
-private val TASKS_LIST_ITEM_MIN_HEIGHT = 42.dp
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalLayoutApi::class)
 @Composable
@@ -99,7 +95,7 @@ fun TasksListView(
                             decorationBox = { innerTextField ->
                                 Box(
                                     modifier = Modifier
-                                        .defaultMinSize(minHeight = TASKS_LIST_ITEM_MIN_HEIGHT)
+                                        .defaultMinSize(minHeight = 42.dp)
                                         .padding(start = 14.dp, end = 4.dp),
                                     contentAlignment = Alignment.CenterStart
                                 ) {
@@ -134,11 +130,6 @@ fun TasksListView(
 
                                     vm.addTask {
                                         scope.launchEx {
-                                            listState.animateScrollBy(
-                                                -dpToPx(TASKS_LIST_ITEM_MIN_HEIGHT.value).toFloat(),
-                                                animationSpec = spring(stiffness = Spring.StiffnessMediumLow)
-                                            )
-                                            // In case if it's higher than TASKS_LIST_ITEM_MIN_HEIGHT
                                             listState.animateScrollToItem(0)
                                         }
                                         scope.launchEx {                                             // WTF Without delay() does not clear before close.
