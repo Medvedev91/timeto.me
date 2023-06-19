@@ -294,11 +294,11 @@ fun TasksListView(
 
                             Column(
                                 modifier = Modifier
-                                    .padding(vertical = 8.dp),
+                                    .padding(top = 12.dp, bottom = 13.dp),
                                 verticalArrangement = Arrangement.Center
                             ) {
 
-                                val vPadding = 6.dp
+                                val vPadding = 4.dp
 
                                 val timeUI = taskUI.timeUI
                                 if (timeUI != null) {
@@ -306,7 +306,6 @@ fun TasksListView(
                                         modifier = Modifier
                                             .padding(
                                                 start = TAB_TASKS_PADDING_HALF_H,
-                                                top = 2.dp,
                                                 bottom = vPadding,
                                             ),
                                         verticalAlignment = Alignment.CenterVertically,
@@ -371,7 +370,7 @@ fun TasksListView(
 
                                 TextFeaturesTriggersView(
                                     triggers = taskUI.textFeatures.triggers,
-                                    modifier = Modifier.padding(top = vPadding),
+                                    modifier = Modifier.padding(top = vPadding + 2.dp),
                                     contentPadding = PaddingValues(horizontal = TAB_TASKS_PADDING_HALF_H - 2.dp),
                                 )
                             }
