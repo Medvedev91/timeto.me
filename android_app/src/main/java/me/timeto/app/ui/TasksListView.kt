@@ -403,14 +403,11 @@ fun TasksListView(
                     key = { taskUI -> "tmrw_${taskUI.task.id}" }
                 ) { taskUI ->
 
-                    // Reversed
                     val isFirst = taskUI == tmrwTasksUI.lastOrNull()
-                    val isLast = taskUI == tmrwTasksUI.firstOrNull()
 
                     TasksListView__TmrwTaskView(
                         taskUI = taskUI,
                         isFirst = isFirst,
-                        isLast = isLast,
                     )
                 }
             }
@@ -422,54 +419,52 @@ fun TasksListView(
 private fun TasksListView__TmrwTaskView(
     taskUI: TasksListVM.TmrwTaskUI,
     isFirst: Boolean,
-    isLast: Boolean,
 ) {
-    val startPadding = 18.dp
-
-    MyListView__ItemView(
-        isFirst = isFirst,
-        isLast = isLast,
-        withTopDivider = !isFirst,
-        outerPadding = PaddingValues(0.dp)
+    Column(
+        verticalArrangement = Arrangement.Center
     ) {
 
-        Column(
-            modifier = Modifier
-                .padding(vertical = 8.dp),
-            verticalArrangement = Arrangement.Center
-        ) {
-
-            val vPadding = 6.dp
-
-            val timeUI = taskUI.timeUI
-            if (timeUI != null) {
-                Text(
-                    text = timeUI.text,
-                    modifier = Modifier
-                        .padding(
-                            start = startPadding,
-                            top = 2.dp,
-                            bottom = vPadding,
-                        ),
-                    fontSize = 13.sp,
-                    fontWeight = FontWeight.W300,
-                    color = timeUI.textColor.toColor(),
+        if (!isFirst)
+            DividerBg(
+                Modifier.padding(
+                    start = TAB_TASKS_PADDING_HALF_H,
+                    end = TAB_TASKS_PADDING_HALF_H,
                 )
-            }
-
-            Text(
-                taskUI.text,
-                color = c.text,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = startPadding),
             )
 
-            TextFeaturesTriggersView(
-                triggers = taskUI.textFeatures.triggers,
-                modifier = Modifier.padding(top = vPadding),
-                contentPadding = PaddingValues(horizontal = startPadding - 2.dp),
+        Box(Modifier.height(8.dp))
+
+        val vPadding = 3.dp
+
+        val timeUI = taskUI.timeUI
+        if (timeUI != null) {
+            Text(
+                text = timeUI.text,
+                modifier = Modifier
+                    .padding(
+                        start = TAB_TASKS_PADDING_HALF_H,
+                        bottom = vPadding,
+                    ),
+                fontSize = 13.sp,
+                fontWeight = FontWeight.W300,
+                color = timeUI.textColor.toColor(),
             )
         }
+
+        Text(
+            taskUI.text,
+            color = c.text,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = TAB_TASKS_PADDING_HALF_H),
+        )
+
+        TextFeaturesTriggersView(
+            triggers = taskUI.textFeatures.triggers,
+            modifier = Modifier.padding(top = vPadding),
+            contentPadding = PaddingValues(horizontal = TAB_TASKS_PADDING_HALF_H - 2.dp),
+        )
+
+        Box(Modifier.height(8.dp))
     }
 }
