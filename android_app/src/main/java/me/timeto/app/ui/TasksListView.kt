@@ -116,7 +116,7 @@ fun TasksListView(
 
                         Box(
                             modifier = Modifier
-                                .padding(top = 5.dp, bottom = 5.dp, end = 5.dp)
+                                .padding(top = 4.dp, bottom = 4.dp, end = 4.dp)
                                 .fillMaxHeight()
                                 .clip(roundedShape)
                                 .background(c.blue)
