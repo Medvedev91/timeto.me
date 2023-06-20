@@ -1,10 +1,10 @@
 package me.timeto.app.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -37,39 +38,42 @@ fun RepeatingsListView() {
 
         item {
 
-            MyButton(
-                text = "New Repeating Task",
-                isEnabled = true,
-                backgroundColor = c.blue,
+            Text(
+                "New Repeating Task",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = taskListSectionPadding),
-                extraPaddings = 0 to 3,
-                fontSize = 16.sp
-            ) {
-                Sheet.show { layer ->
-                    RepeatingFormSheet(
-                        layer = layer,
-                        editedRepeating = null
-                    )
-                }
-            }
+                    .padding(horizontal = TAB_TASKS_PADDING_HALF_H - 3.dp)
+                    .padding(top = taskListSectionPadding)
+                    .clip(squircleShape)
+                    .background(c.blue)
+                    .clickable {
+                        Sheet.show { layer ->
+                            RepeatingFormSheet(
+                                layer = layer,
+                                editedRepeating = null
+                            )
+                        }
+                    }
+                    .padding(
+                        vertical = 10.dp
+                    ),
+                color = c.white,
+                fontWeight = FontWeight.W500,
+                fontSize = 16.sp,
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
         }
 
-        itemsIndexed(state.repeatingsUI, key = { _, i -> i.repeating.id }) { index, repeatingUI ->
-            val isLast = index == state.repeatingsUI.size - 1
-
-            // Remember that the list is reversed
-            val clip = when {
-                index == 0 && isLast -> MySquircleShape()
-                index == 0 -> MySquircleShape(angles = listOf(false, false, true, true))
-                isLast -> MySquircleShape(angles = listOf(true, true, false, false))
-                else -> RoundedCornerShape(0.dp)
-            }
+        itemsIndexed(
+            state.repeatingsUI,
+            key = { _, i -> i.repeating.id }
+        ) { index, repeatingUI ->
 
             SwipeToAction(
                 isStartOrEnd = remember { mutableStateOf(null) },
-                modifier = Modifier.clip(clip),
+                modifier = Modifier.clip(squircleShape),
                 startView = { SwipeToAction__StartView("Edit", c.blue) },
                 endView = { state ->
                     SwipeToAction__DeleteView(
@@ -99,11 +103,9 @@ fun RepeatingsListView() {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(c.background2),
+                        .background(c.bg),
                     contentAlignment = Alignment.BottomCenter
                 ) {
-
-                    val horizontalPadding = 18.dp
 
                     Column(
                         modifier = Modifier
@@ -114,7 +116,7 @@ fun RepeatingsListView() {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = horizontalPadding),
+                                .padding(horizontal = TAB_TASKS_PADDING_HALF_H),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
 
@@ -140,12 +142,12 @@ fun RepeatingsListView() {
                         Text(
                             repeatingUI.listText,
                             modifier = Modifier
-                                .padding(horizontal = horizontalPadding)
+                                .padding(horizontal = TAB_TASKS_PADDING_HALF_H)
                                 .padding(top = 2.dp),
                             color = c.text,
                         )
 
-                        val badgesHPadding = horizontalPadding - 2.dp
+                        val badgesHPadding = TAB_TASKS_PADDING_HALF_H - 2.dp
                         val badgesTopPadding = 6.dp
 
                         TextFeaturesTriggersView(
@@ -157,7 +159,7 @@ fun RepeatingsListView() {
 
                     // Remember that the list is reversed
                     if (index > 0)
-                        DividerBg2(Modifier.padding(start = 18.dp))
+                        DividerBg(Modifier.padding(start = TAB_TASKS_PADDING_HALF_H))
                 }
             }
         }
