@@ -1,11 +1,11 @@
 package me.timeto.app.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -27,7 +27,7 @@ fun EventsListView() {
         reverseLayout = true,
         contentPadding = PaddingValues(
             end = TAB_TASKS_PADDING_END,
-            top = taskListSectionPadding
+            top = taskListSectionPadding,
         ),
         modifier = Modifier.fillMaxHeight()
     ) {
@@ -41,20 +41,21 @@ fun EventsListView() {
             Column {
 
                 EventsHistoryView(
-                    spaceAround = TAB_TASKS_PADDING_HALF_H + 1.dp,
-                    paddingTop = taskListSectionPadding
+                    spaceAround = TAB_TASKS_PADDING_HALF_H * 2 - 2.dp,
+                    paddingTop = taskListSectionPadding,
                 )
 
                 Box(
                     Modifier
                         .padding(
-                            start = TAB_TASKS_PADDING_HALF_H,
+                            start = TAB_TASKS_PADDING_HALF_H * 2 - 4.dp,
+                            end = TAB_TASKS_PADDING_HALF_H - 4.dp,
                             top = 16.dp,
-                            bottom = taskListSectionPadding
+                            bottom = taskListSectionPadding,
                         )
                         .height(minHeight)
-                        .clip(MySquircleShape())
-                        .background(c.background2)
+                        .border(onePx, c.dividerBg, tabTasksInputShape)
+                        .background(c.bg)
                         .clickable {
                             EventFormSheet__show(editedEvent = null) {}
                         }
@@ -75,7 +76,7 @@ fun EventsListView() {
                         modifier = Modifier
                             .fillMaxHeight()
                             .padding(end = saveBtnPadding)
-                            .clip(MySquircleShape(45f))
+                            .clip(squircleShape)
                             .background(c.blue.copy(alpha = 0.5f))
                             .padding(horizontal = 12.dp)
                             .align(Alignment.CenterEnd)
@@ -105,22 +106,15 @@ fun EventsListView() {
             }
         }
 
-        itemsIndexed(state.uiEvents, key = { _, uiEvent -> uiEvent.event.id }) { index, uiEvent ->
-            val isLast = index == state.uiEvents.size - 1
-
-            // Remember the list is reversed
-            val clip = when {
-                index == 0 && isLast -> MySquircleShape()
-                index == 0 -> MySquircleShape(angles = listOf(false, false, true, true))
-                isLast -> MySquircleShape(angles = listOf(true, true, false, false))
-                else -> RoundedCornerShape(0.dp)
-            }
-
+        itemsIndexed(
+            state.uiEvents,
+            key = { _, uiEvent -> uiEvent.event.id }
+        ) { index, uiEvent ->
             Box(
                 modifier = Modifier
                     .padding(start = TAB_TASKS_PADDING_HALF_H)
-                    .clip(clip)
-                    .background(c.background2),
+                    .clip(squircleShape)
+                    .background(c.bg),
                 contentAlignment = Alignment.BottomCenter
             ) {
 
@@ -146,16 +140,15 @@ fun EventsListView() {
                     },
                     toVibrateStartEnd = listOf(true, false),
                 ) {
-                    val horizontalPadding = 18.dp
 
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(c.background2)
+                            .background(c.bg)
                             .padding(vertical = 10.dp)
                     ) {
                         Row(
-                            modifier = Modifier.padding(horizontal = horizontalPadding)
+                            modifier = Modifier.padding(horizontal = TAB_TASKS_PADDING_HALF_H)
                         ) {
                             Text(
                                 uiEvent.dateString,
@@ -176,21 +169,21 @@ fun EventsListView() {
                         Text(
                             uiEvent.listText,
                             modifier = Modifier
-                                .padding(horizontal = horizontalPadding),
+                                .padding(horizontal = TAB_TASKS_PADDING_HALF_H),
                             color = c.text,
                         )
 
                         TextFeaturesTriggersView(
                             triggers = uiEvent.textFeatures.triggers,
                             modifier = Modifier.padding(top = 6.dp),
-                            contentPadding = PaddingValues(horizontal = horizontalPadding - 2.dp)
+                            contentPadding = PaddingValues(horizontal = TAB_TASKS_PADDING_HALF_H - 2.dp),
                         )
                     }
                 }
 
                 // Remember the list is reversed
                 if (index > 0)
-                    DividerBg2(Modifier.padding(start = 18.dp))
+                    DividerBg(Modifier.padding(start = TAB_TASKS_PADDING_HALF_H))
             }
         }
     }
