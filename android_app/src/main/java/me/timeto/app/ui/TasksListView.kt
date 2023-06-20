@@ -29,6 +29,8 @@ import me.timeto.shared.db.TaskFolderModel
 import me.timeto.shared.launchEx
 import me.timeto.shared.vm.TasksListVM
 
+private val inputShape = MySquircleShape(len = 70f)
+
 @OptIn(ExperimentalMaterialApi::class, ExperimentalLayoutApi::class)
 @Composable
 fun TasksListView(
@@ -73,8 +75,8 @@ fun TasksListView(
 
                     Row(
                         modifier = Modifier
-                            .padding(horizontal = TAB_TASKS_PADDING_HALF_H - 6.dp)
-                            .border(width = onePx, color = c.dividerBg, shape = roundedShape)
+                            .padding(horizontal = TAB_TASKS_PADDING_HALF_H - 4.dp)
+                            .border(width = onePx, color = c.dividerBg, shape = inputShape)
                             .height(IntrinsicSize.Min), // To use fillMaxHeight() inside
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -94,8 +96,8 @@ fun TasksListView(
                             decorationBox = { innerTextField ->
                                 Box(
                                     modifier = Modifier
-                                        .defaultMinSize(minHeight = 40.dp)
-                                        .padding(start = 16.dp, end = 4.dp),
+                                        .defaultMinSize(minHeight = 42.dp)
+                                        .padding(start = 14.dp, end = 4.dp),
                                     contentAlignment = Alignment.CenterStart
                                 ) {
                                     if (state.addFormInputTextValue.isEmpty())
@@ -116,9 +118,9 @@ fun TasksListView(
 
                         Box(
                             modifier = Modifier
-                                .padding(top = 4.dp, bottom = 4.dp, end = 4.dp)
+                                .padding(top = 5.dp, bottom = 5.dp, end = 5.dp)
                                 .fillMaxHeight()
-                                .clip(roundedShape)
+                                .clip(squircleShape)
                                 .background(c.blue)
                                 .clickable {
                                     if (vm.isAddFormInputEmpty()) {
