@@ -42,7 +42,7 @@ fun RepeatingsListView() {
                 "New Repeating Task",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = TAB_TASKS_PADDING_HALF_H - 3.dp)
+                    .padding(horizontal = TAB_TASKS_PADDING_HALF_H - 4.dp)
                     .padding(top = taskListSectionPadding)
                     .clip(squircleShape)
                     .background(c.blue)
