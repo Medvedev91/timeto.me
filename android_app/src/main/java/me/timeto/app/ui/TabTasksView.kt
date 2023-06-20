@@ -37,6 +37,8 @@ import kotlin.random.Random
 
 var setTodayFolder: (() -> Unit)? = null
 
+val tabTasksInputShape = MySquircleShape(len = 70f)
+
 val TAB_TASKS_PADDING_HALF_H = 12.dp
 private val SECTION_BUTTON_WIDTH = 35.dp
 private val SECTION_BUTTONS_END_PADDING = TAB_TASKS_PADDING_HALF_H
