@@ -132,7 +132,8 @@ fun TasksListView(
                                         scope.launchEx {
                                             listState.animateScrollToItem(0)
                                         }
-                                        scope.launchEx {                                             // WTF Without delay() does not clear before close.
+                                        scope.launchEx {
+                                            // WTF Without delay() does not clear before close.
                                             // clearFocus() to change isFocused as fast as possible.
                                             // During delay() adding animation.
                                             delay(250)
