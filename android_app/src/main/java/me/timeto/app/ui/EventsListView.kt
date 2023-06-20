@@ -55,6 +55,7 @@ fun EventsListView() {
                         )
                         .height(minHeight)
                         .border(onePx, c.dividerBg, tabTasksInputShape)
+                        .clip(tabTasksInputShape)
                         .background(c.bg)
                         .clickable {
                             EventFormSheet__show(editedEvent = null) {}
