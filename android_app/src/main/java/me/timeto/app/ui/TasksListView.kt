@@ -116,7 +116,7 @@ fun TasksListView(
 
                         Box(
                             modifier = Modifier
-                                .padding(top = 5.dp, bottom = 5.dp, end = 5.dp)
+                                .padding(top = 4.dp, bottom = 4.dp, end = 4.dp)
                                 .fillMaxHeight()
                                 .clip(squircleShape)
                                 .background(c.blue)
@@ -147,8 +147,8 @@ fun TasksListView(
                             Text(
                                 "SAVE",
                                 color = c.white,
-                                fontSize = 13.sp,
-                                fontWeight = FontWeight.W600
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.W600,
                             )
                         }
                     }
