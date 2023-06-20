@@ -73,9 +73,8 @@ fun TasksListView(
 
                     Row(
                         modifier = Modifier
-                            .padding(horizontal = TAB_TASKS_PADDING_HALF_H - 2.dp)
-                            .border(width = onePx, color = c.dividerBg, shape = squircleShape)
-                            .clip(MySquircleShape())
+                            .padding(horizontal = TAB_TASKS_PADDING_HALF_H - 4.dp)
+                            .border(width = onePx, color = c.dividerBg, shape = roundedShape)
                             .height(IntrinsicSize.Min), // To use fillMaxHeight() inside
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -95,8 +94,8 @@ fun TasksListView(
                             decorationBox = { innerTextField ->
                                 Box(
                                     modifier = Modifier
-                                        .defaultMinSize(minHeight = 42.dp)
-                                        .padding(start = 14.dp, end = 4.dp),
+                                        .defaultMinSize(minHeight = 40.dp)
+                                        .padding(start = 16.dp, end = 4.dp),
                                     contentAlignment = Alignment.CenterStart
                                 ) {
                                     if (state.addFormInputTextValue.isEmpty())
@@ -119,7 +118,7 @@ fun TasksListView(
                             modifier = Modifier
                                 .padding(top = 5.dp, bottom = 5.dp, end = 5.dp)
                                 .fillMaxHeight()
-                                .clip(MySquircleShape(45f))
+                                .clip(roundedShape)
                                 .background(c.blue)
                                 .clickable {
                                     if (vm.isAddFormInputEmpty()) {
@@ -148,7 +147,7 @@ fun TasksListView(
                             Text(
                                 "SAVE",
                                 color = c.white,
-                                fontSize = 14.sp,
+                                fontSize = 13.sp,
                                 fontWeight = FontWeight.W600
                             )
                         }
@@ -295,11 +294,11 @@ fun TasksListView(
 
                             Column(
                                 modifier = Modifier
-                                    .padding(top = 12.dp, bottom = 13.dp),
+                                    .padding(top = 11.dp, bottom = 11.dp),
                                 verticalArrangement = Arrangement.Center
                             ) {
 
-                                val vPadding = 4.dp
+                                val vPadding = 3.dp
 
                                 val timeUI = taskUI.timeUI
                                 if (timeUI != null) {
