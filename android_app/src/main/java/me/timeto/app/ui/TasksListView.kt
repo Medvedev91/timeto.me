@@ -372,7 +372,7 @@ fun TasksListView(
 
                                 TextFeaturesTriggersView(
                                     triggers = taskUI.textFeatures.triggers,
-                                    modifier = Modifier.padding(top = vPadding + 2.dp),
+                                    modifier = Modifier.padding(top = vPadding + 3.dp, bottom = 2.dp),
                                     contentPadding = PaddingValues(horizontal = TAB_TASKS_PADDING_HALF_H - 2.dp),
                                 )
                             }
