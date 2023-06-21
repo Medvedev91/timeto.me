@@ -67,6 +67,8 @@ extension UIColor {
 
     //////
 
+    static var bg: UIColor = myDayNight(.white, .black)
+
     static var myBackground: UIColor = myDayNight(UIColor(argb: tgLikeLightBg), .black)
 
     static var mySecondaryBackground = myDayNightArgb(0xFFFFFFFF, 0xFF1C1C1E)
