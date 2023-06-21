@@ -71,8 +71,10 @@ extension UIColor {
 
     static var timerBarBackground: UIColor = myDayNightArgb(0xFFE3F2FD, 0xFF1C1C1E)
 
+    // todo remove
     static var myBackground: UIColor = myDayNight(UIColor(argb: tgLikeLightBg), .black)
 
+    // todo remove
     static var mySecondaryBackground = myDayNightArgb(0xFFFFFFFF, 0xFF1C1C1E)
 
     static var mySheetFormBg = myDayNightArgb(tgLikeLightBg, 0xFF121214)
