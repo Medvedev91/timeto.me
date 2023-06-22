@@ -320,6 +320,8 @@ struct TabTimerView_ActivityRowView: View {
                 }
             }
                     .padding(.horizontal, 21)
+                    // todo remove after removing MyListSwipeToActionItem()
+                    .background(Color(.bg))
         }
     }
 
@@ -472,7 +474,7 @@ struct TabTimerView_ActivityRowView_ButtonStyle: ButtonStyle {
     let isActive: Bool
 
     func makeBody(configuration: Self.Configuration) -> some View {
-        let bgColor = isActive ? Color.blue : Color(.mySecondaryBackground)
+        let bgColor = isActive ? Color.blue : Color(.bg)
         return configuration
                 .label
                 .background(
