@@ -139,9 +139,9 @@ struct TabTimerView: View {
                                                         .padding(.vertical, 10)
                                                         .foregroundColor(.primary)
                                                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                                        .background(
+                                                        .overlay(
                                                                 RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                                        .fill(Color(.mySecondaryBackground))
+                                                                        .stroke(Color(.dividerBg), lineWidth: onePx)
                                                         )
                                                         // Exactly here, otherwise re-rendering every second because of
                                                         // TabTimerView_ProgressView. This leads to twitch when scrolling.
@@ -170,9 +170,9 @@ struct TabTimerView: View {
                                                         .padding(.vertical, 10)
                                                         .foregroundColor(.primary)
                                                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                                        .background(
+                                                        .overlay(
                                                                 RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                                        .fill(Color(.mySecondaryBackground))
+                                                                        .stroke(Color(.dividerBg), lineWidth: onePx)
                                                         )
                                                         // Exactly here, otherwise re-rendering every second because of
                                                         // TabTimerView_ProgressView. This leads to twitch when scrolling.
@@ -188,7 +188,8 @@ struct TabTimerView: View {
                                     )
                                 }
                                         .frame(width: .infinity)
-                                        .padding(.top, 16)
+                                        .padding(.top, 24)
+                                        .padding(.horizontal, 24)
                                         .listRowBackground(Color(.clear))
 
                                 VStack {
