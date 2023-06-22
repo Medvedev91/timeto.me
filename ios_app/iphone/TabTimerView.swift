@@ -50,8 +50,6 @@ struct TabTimerView: View {
                             TabTimerView_ProgressView(
                                     isDayOrNight: colorScheme == .light
                             )
-                                    .padding(.leading, 16)
-                                    .padding(.trailing, 16)
                                     .frame(height: 120)
 
                             HStack {
@@ -508,13 +506,12 @@ struct TabTimerView_ProgressView: View {
                     if let subtitle = timerData.subtitle {
                         Text(subtitle)
                                 .foregroundColor(subtitleColor)
-                                .font(.system(size: 20, weight: .bold))
-                                .tracking(2)
+                                .font(.system(size: 28, weight: .heavy))
                     }
 
                     Spacer()
                 }
-                        .padding(.top, 6)
+                        .padding(.top, 4)
 
                 VStack(spacing: 0) {
 
@@ -525,30 +522,28 @@ struct TabTimerView_ProgressView: View {
                         Spacer()
 
                         Text(timerData.title)
-                                .font(.system(size: 53, design: .monospaced))
-                                //.font(Font.custom("San Francisco", size: 49).monospacedDigit())
-                                .fontWeight(.medium)
-                                //.padding(.vertical, -10) /// https://stackoverflow.com/q/61431791
+                                .font(.system(size: 60, design: .monospaced))
+                                .fontWeight(.heavy)
                                 .foregroundColor(timerData.titleColor.toColor())
-                                .padding(.bottom, 8)
+                                .padding(.bottom, timerData.subtitle != nil ? 0 : 8)
 
                         Spacer()
                     }
 
-                    let fullHeight: Double = 15.0
+                    let fullHeight: Double = 17.0
+                    let hPadding = 34.0
 
                     ZStack(alignment: .leading) {
 
-                        let fullWidth: Double = geometry.size.width
-                        let borderWidth: Double = 0.5
+                        let fullWidth: Double = geometry.size.width - (hPadding * 2)
 
                         RoundedRectangle(cornerRadius: fullHeight)
-                                .fill(Color(.mySecondaryBackground))
-                                .frame(width: fullWidth, height: fullHeight)
+                                .fill(Color(.timerBarBackground))
+                                .frame(maxWidth: .infinity, maxHeight: fullHeight)
 
                         RoundedRectangle(cornerRadius: fullHeight)
-                                .stroke(Color(.tertiaryLabel), lineWidth: borderWidth)
-                                .frame(width: fullWidth, height: fullHeight)
+                                .stroke(Color(.timerBarBorder), lineWidth: onePx)
+                                .frame(maxWidth: .infinity, maxHeight: fullHeight)
 
                         Rectangle()
                                 .frame(width: Double(state.progressRatio) * fullWidth, height: fullHeight)
@@ -556,6 +551,8 @@ struct TabTimerView_ProgressView: View {
                                 .animation(.linear(duration: (time() > state.lastInterval.id.toInt()) ? 0.99 : 0.2))
                     }
                             .cornerRadius(fullHeight)
+                            .padding(.leading, hPadding)
+                            .padding(.trailing, hPadding)
                 }
             }
                     /// onTapGesture() does not work without contentShape() on

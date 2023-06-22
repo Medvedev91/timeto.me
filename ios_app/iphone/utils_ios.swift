@@ -69,6 +69,8 @@ extension UIColor {
 
     static var bg: UIColor = myDayNight(.white, .black)
 
+    static var timerBarBorder: UIColor = myDayNightArgb(0xFFBBDEFB, 0xFF2C2C2E)
+
     static var timerBarBackground: UIColor = myDayNightArgb(0xFFE3F2FD, 0xFF1C1C1E)
 
     // todo remove
