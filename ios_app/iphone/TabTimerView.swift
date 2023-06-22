@@ -235,6 +235,7 @@ struct TabTimerView: View {
                                         .lineSpacing(4)
                                         .myMultilineText()
                                         .padding(.top, 26)
+                                        .padding(.horizontal, 26)
 
                                 ZStack {
                                 }
