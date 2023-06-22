@@ -29,6 +29,7 @@
 		318210E102D112C2860ADF9F /* DialogCloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E53EB27CE7F81AF0F69 /* DialogCloseButton.swift */; };
 		318210ECF60308ECF341FEA2 /* utils_ios.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182118D8EA3E0D889D4FDC3 /* utils_ios.swift */; };
 		318210F0EEFF944CD87E3A98 /* TabReadmeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821287721625075228B91E /* TabReadmeView.swift */; };
+		3182115F28EDF1E93DC73694 /* DividerBg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821D886EB022A0AD988588 /* DividerBg.swift */; };
 		318211C63D2C7A7AC48659E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821996D20B09EBA4F73C2B /* AppDelegate.swift */; };
 		318211D5994178629ED2FA09 /* W_TabTasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182161C9947F88C6A1D3B80 /* W_TabTasksView.swift */; };
 		31821286152F9C43BA2C4B7B /* TimetoSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318210AB991EB1C25EA1B565 /* TimetoSheet.swift */; };
@@ -167,6 +168,7 @@
 		31821D5928C18299586075F4 /* AutoBackupIos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoBackupIos.swift; sourceTree = "<group>"; };
 		31821D7654D0C105DFC60DDD /* MyListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyListView.swift; sourceTree = "<group>"; };
 		31821D879F9361C3DD65EAC9 /* RepeatingFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepeatingFormSheet.swift; sourceTree = "<group>"; };
+		31821D886EB022A0AD988588 /* DividerBg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DividerBg.swift; sourceTree = "<group>"; };
 		31821DC6AEBDF478C34116FE /* MyListSwipeToActionItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyListSwipeToActionItem.swift; sourceTree = "<group>"; };
 		31821E01EC49E0964E5CB2F5 /* PieView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieView.swift; sourceTree = "<group>"; };
 		31821E3EB266890584C3EF87 /* FoldersSettingsSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoldersSettingsSheet.swift; sourceTree = "<group>"; };
@@ -331,6 +333,7 @@
 				318218084C84D03DF3D6BEB6 /* TextFeaturesTriggersView.swift */,
 				318211488ABF627A2A9935A7 /* ActivityColorPickerSheet.swift */,
 				31821737F4708A13AAC9CEB3 /* DividerBg2.swift */,
+				31821D886EB022A0AD988588 /* DividerBg.swift */,
 			);
 			path = iphone;
 			sourceTree = "<group>";
@@ -549,6 +552,7 @@
 				318210D7F973F8F13061DAD6 /* TextFeaturesTriggersView.swift in Sources */,
 				31821BC7F849A5C918F61175 /* ActivityColorPickerSheet.swift in Sources */,
 				31821D173BC3AC7067128A32 /* DividerBg2.swift in Sources */,
+				3182115F28EDF1E93DC73694 /* DividerBg.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
