@@ -4,9 +4,9 @@ import shared
 ///
 /// Related code
 
-private let emojiHPadding = 8.0 // ------↴
-private let emojiWidth = 30.0 // ↴       ↓
-private let emojiStartPadding = 30.0 + (8.0 * 2)
+private let emojiHPadding = 10.0
+private let emojiWidth = 30.0
+private let emojiStartPadding = emojiWidth + (emojiHPadding * 2)
 
 //////
 
@@ -93,19 +93,11 @@ struct TabTimerView: View {
                                     let activitiesUI = state.activitiesUI
 
                                     ForEach(activitiesUI, id: \.activity.id) { activityUI in
-                                        MyListView__ItemView(
-                                                isFirst: activitiesUI.first == activityUI,
-                                                isLast: activitiesUI.last == activityUI,
-                                                withTopDivider: activityUI.withTopDivider,
-                                                dividerPaddingStart: emojiStartPadding,
-                                                outerPaddingStart: 0,
-                                                outerPaddingEnd: 0
-                                        ) {
-                                            TabTimerView_ActivityRowView(
-                                                    activityUI: activityUI,
-                                                    lastInterval: state.lastInterval
-                                            )
-                                        }
+                                        TabTimerView_ActivityRowView(
+                                                activityUI: activityUI,
+                                                lastInterval: state.lastInterval,
+                                                withTopDivider: activityUI.withTopDivider
+                                        )
                                     }
                                 }
                                 /*
@@ -248,7 +240,6 @@ struct TabTimerView: View {
                                         .frame(height: 20)
                             }
                         }
-                                .padding(.horizontal, 16)
                     }
                 }
                         .sheetEnv(
@@ -304,6 +295,7 @@ struct TabTimerView_ActivityRowView: View {
 
     var activityUI: TabTimerVM.ActivityUI
     var lastInterval: IntervalModel
+    var withTopDivider: Bool
 
     @State private var isSetTimerPresented = false
     @State private var isEditSheetPresented = false
@@ -319,7 +311,13 @@ struct TabTimerView_ActivityRowView: View {
                     activityUI.delete()
                 }
         ) {
-            AnyView(safeView)
+            ZStack(alignment: .top) {
+                AnyView(safeView)
+                if withTopDivider {
+                    DividerBg(xOffset: emojiStartPadding)
+                }
+            }
+                    .padding(.horizontal, 21)
         }
     }
 
@@ -341,7 +339,7 @@ struct TabTimerView_ActivityRowView: View {
                             Text(activityUI.activity.emoji)
                                     .frame(width: emojiWidth)
                                     .padding(.horizontal, emojiHPadding)
-                                    .font(.system(size: 22))
+                                    .font(.system(size: 28))
 
                             Text(activityUI.listText)
                                     .foregroundColor(isActive ? .white : Color(.label))
@@ -457,6 +455,7 @@ struct TabTimerView_ActivityRowView: View {
                     }
                 }
                 .buttonStyle(TabTimerView_ActivityRowView_ButtonStyle(isActive: activityUI.isActive))
+                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
     }
 }
 
