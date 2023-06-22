@@ -343,7 +343,7 @@ struct TabTimerView_ActivityRowView: View {
                             Text(activityUI.activity.emoji)
                                     .frame(width: emojiWidth)
                                     .padding(.horizontal, emojiHPadding)
-                                    .font(.system(size: 28))
+                                    .font(.system(size: 26))
 
                             Text(activityUI.listText)
                                     .foregroundColor(isActive ? .white : Color(.label))
