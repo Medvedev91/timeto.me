@@ -39,16 +39,12 @@ struct TasksListView: View {
                                 let tmrwTasksUI = tmrwData.tasksUI.reversed()
                                 ForEach(tmrwTasksUI, id: \.task.id) { taskUI in
                                     let isFirst = tmrwTasksUI.first == taskUI
-                                    let isLast = tmrwTasksUI.last == taskUI
-                                    MyListView__ItemView(
-                                            isFirst: isFirst,
-                                            isLast: isLast,
-                                            withTopDivider: !isFirst,
-                                            outerPaddingStart: 0,
-                                            outerPaddingEnd: 0
-                                    ) {
+                                    ZStack(alignment: .top) {
                                         TasksListView__TmrwTaskView(taskUI: taskUI)
                                                 .id("tmrw \(taskUI.task.id)")
+                                        if !isFirst {
+                                            DividerBg(xOffset: TAB_TASKS_PADDING_HALF_H)
+                                        }
                                     }
                                 }
 
@@ -576,8 +572,6 @@ private struct TasksListView__TmrwTaskView: View {
 
     var body: some View {
 
-        let paddingStart = 16.0
-
         VStack(spacing: 0) {
 
             let vPadding = 8.0
@@ -585,7 +579,7 @@ private struct TasksListView__TmrwTaskView: View {
             if let timeUI = taskUI.timeUI {
                 HStack {
                     Text(timeUI.text)
-                            .padding(.leading, paddingStart)
+                            .padding(.leading, TAB_TASKS_PADDING_HALF_H)
                             .padding(.top, 1)
                             .padding(.bottom, vPadding)
                             .font(.system(size: 14, weight: .light))
@@ -598,7 +592,7 @@ private struct TasksListView__TmrwTaskView: View {
             HStack {
                 /// It can be multiline
                 Text(taskUI.text)
-                        .padding(.leading, paddingStart)
+                        .padding(.leading, TAB_TASKS_PADDING_HALF_H)
                         .padding(.trailing, 16)
                         .lineSpacing(4)
                         .multilineTextAlignment(.leading)
@@ -607,7 +601,10 @@ private struct TasksListView__TmrwTaskView: View {
                 Spacer()
             }
 
-            TextFeaturesTriggersView(textFeatures: taskUI.textFeatures)
+            TextFeaturesTriggersView(
+                    textFeatures: taskUI.textFeatures,
+                    contentPaddingStart: TAB_TASKS_PADDING_HALF_H - 1.0
+            )
                     .padding(.top, taskUI.textFeatures.triggers.isEmpty ? 0 : vPadding)
         }
                 .padding(.vertical, 10)
