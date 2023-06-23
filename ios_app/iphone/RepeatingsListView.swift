@@ -29,14 +29,11 @@ struct RepeatingsListView: View {
                                 let repeatingsUI = state.repeatingsUI.reversed()
                                 ForEach(repeatingsUI, id: \.repeating.id) { repeatingUI in
                                     let isFirst = repeatingsUI.first == repeatingUI
-                                    MyListView__ItemView(
-                                            isFirst: isFirst,
-                                            isLast: repeatingsUI.last == repeatingUI,
-                                            withTopDivider: !isFirst,
-                                            outerPaddingStart: 0,
-                                            outerPaddingEnd: 0
-                                    ) {
+                                    ZStack(alignment: .top) {
                                         RepeatingsView__ItemView(repeatingUI: repeatingUI)
+                                        if !isFirst {
+                                            DividerBg(xOffset: TAB_TASKS_PADDING_HALF_H)
+                                        }
                                     }
                                 }
                             }
@@ -83,8 +80,8 @@ struct RepeatingsListView: View {
                             }
                 }
             }
-                    .padding(.leading, MyListView.PADDING_OUTER_HORIZONTAL)
-                    .padding(.trailing, 20)
+                    .padding(.leading, TAB_TASKS_PADDING_HALF_H)
+                    .padding(.trailing, TAB_TASKS_PADDING_HALF_H)
         }
     }
 
@@ -133,7 +130,10 @@ struct RepeatingsView__ItemView: View {
                 }
         ) {
             AnyView(safeView)
+                    // todo remove after removing MyListSwipeToActionItem()
+                    .background(Color(.bg))
         }
+                .clipShape(roundedShape)
     }
 
     private var safeView: some View {
@@ -151,8 +151,8 @@ struct RepeatingsView__ItemView: View {
                         .font(.system(size: 14, weight: .light))
                         .foregroundColor(.secondary)
             }
-                    .padding(.leading, DEF_LIST_H_PADDING)
-                    .padding(.trailing, DEF_LIST_H_PADDING)
+                    .padding(.leading, TAB_TASKS_PADDING_HALF_H)
+                    .padding(.trailing, TAB_TASKS_PADDING_HALF_H)
 
             HStack {
                 Text(repeatingUI.listText)
@@ -160,10 +160,13 @@ struct RepeatingsView__ItemView: View {
                 Spacer()
             }
                     .padding(.top, 4)
-                    .padding(.leading, DEF_LIST_H_PADDING)
-                    .padding(.trailing, DEF_LIST_H_PADDING)
+                    .padding(.leading, TAB_TASKS_PADDING_HALF_H)
+                    .padding(.trailing, TAB_TASKS_PADDING_HALF_H)
 
-            TextFeaturesTriggersView(textFeatures: repeatingUI.textFeatures)
+            TextFeaturesTriggersView(
+                    textFeatures: repeatingUI.textFeatures,
+                    contentPaddingStart: TAB_TASKS_PADDING_HALF_H - 1.0
+            )
                     .padding(.top, repeatingUI.textFeatures.triggers.isEmpty ? 0 : 8)
         }
                 .padding(.top, 10)
@@ -180,11 +183,5 @@ struct RepeatingsView__ItemView: View {
                         }
                 )
                 .id("\(repeatingUI.repeating.id) \(repeatingUI.repeating.text)") /// #TruncationDynamic
-    }
-
-    private struct MyButtonStyle: ButtonStyle {
-        func makeBody(configuration: Self.Configuration) -> some View {
-            configuration.label.background(configuration.isPressed ? Color(.systemGray5) : Color(.mySecondaryBackground))
-        }
     }
 }
