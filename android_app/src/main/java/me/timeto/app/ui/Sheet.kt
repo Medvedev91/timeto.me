@@ -77,8 +77,9 @@ object Sheet {
         ).show()
     }
 
+    // todo remove
     @Composable
-    fun HeaderView(
+    fun HeaderViewOld(
         onCancel: () -> Unit,
         title: String,
         doneText: String?,

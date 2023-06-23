@@ -31,7 +31,7 @@ fun DaytimePickerSheet(
         Modifier.background(c.background2)
     ) {
 
-        Sheet.HeaderView(
+        Sheet.HeaderViewOld(
             onCancel = { layer.close() },
             title = title,
             doneText = doneText,

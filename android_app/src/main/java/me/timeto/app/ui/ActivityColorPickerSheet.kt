@@ -53,7 +53,7 @@ fun ActivityColorPickerSheet(
         val circleScrollState = rememberScrollState()
         val activitiesScrollState = rememberScrollState()
 
-        Sheet.HeaderView(
+        Sheet.HeaderViewOld(
             onCancel = { layer.close() },
             title = state.headerTitle,
             doneText = state.doneTitle,

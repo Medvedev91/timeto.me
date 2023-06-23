@@ -34,7 +34,7 @@ fun TaskFormSheet(
 
         val scrollState = rememberScrollState()
 
-        Sheet.HeaderView(
+        Sheet.HeaderViewOld(
             onCancel = { layer.close() },
             title = state.headerTitle,
             doneText = state.headerDoneText,

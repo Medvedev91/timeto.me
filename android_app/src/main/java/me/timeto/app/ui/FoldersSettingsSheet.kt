@@ -31,7 +31,7 @@ fun FoldersSettingsSheet(
 
         val scrollState = rememberLazyListState()
 
-        Sheet.HeaderView(
+        Sheet.HeaderViewOld(
             onCancel = { layer.close() },
             title = state.headerTitle,
             doneText = null,
