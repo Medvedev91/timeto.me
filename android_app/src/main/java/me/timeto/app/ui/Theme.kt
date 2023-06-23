@@ -32,12 +32,15 @@ class MyColors(
     val text: Color, // https://material.io/design/color/text-legibility.html ~ 87%
     val textSecondary: Color, // ~ 60%
     val bg: Color, // TRICK Using R.color.my_dn_background overrides compose ;(
+    // todo remove
     val background: Color, // TRICK Using R.color.my_dn_background overrides compose ;(
+    // todo remove
     val background2: Color,
     val backgroundEditable: Color,
     val tabsText: Color,
     val tabsBackground: Color,
     val dividerBg: Color,
+    // todo remove
     val dividerBg2: Color,
     val formHeaderBackground: Color,
     val timerBarBorder: Color,
