@@ -124,7 +124,8 @@ struct TasksListView: View {
                                         .padding(.trailing, 5)
                                         .buttonStyle(PlainButtonStyle())
                             }
-                                    .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color(.mySecondaryBackground)))
+                                    .overlay(roundedShape.stroke(Color(.dividerBg), lineWidth: onePx))
+                                    .padding(.horizontal, TAB_TASKS_PADDING_HALF_H - 4)
                                     .padding(.top, 20)
                                     .padding(.bottom, 20)
 
