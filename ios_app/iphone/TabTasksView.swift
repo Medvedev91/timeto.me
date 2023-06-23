@@ -1,6 +1,8 @@
 import SwiftUI
 import shared
 
+let TAB_TASKS_PADDING_HALF_H = 12.0
+
 private let tabWidth: CGFloat = 34
 
 // TRICK Using ignoresSafeArea() outside is mandatory

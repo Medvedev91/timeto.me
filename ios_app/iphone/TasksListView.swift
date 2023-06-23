@@ -145,8 +145,8 @@ struct TasksListView: View {
                             }
                 }
             }
-                    .padding(.leading, 16)
-                    .padding(.trailing, 20)
+                    .padding(.leading, TAB_TASKS_PADDING_HALF_H)
+                    .padding(.trailing, TAB_TASKS_PADDING_HALF_H)
         }
     }
 
@@ -314,8 +314,6 @@ struct TasksView__TaskRowView: View {
 
             //////
 
-            let paddingStart = 16.0
-
             ZStack {
 
                 Button(
@@ -377,12 +375,12 @@ struct TasksView__TaskRowView: View {
                                     }
                                             .padding(.top, 2)
                                             .padding(.bottom, vPadding - 2)
-                                            .padding(.leading, paddingStart - 1)
+                                            .padding(.leading, TAB_TASKS_PADDING_HALF_H - 1)
 
                                 } else if let timeUI = taskUI.timeUI as? TasksListVM.TaskUITimeUIRegularUI {
                                     HStack {
                                         Text(timeUI.text)
-                                                .padding(.leading, paddingStart)
+                                                .padding(.leading, TAB_TASKS_PADDING_HALF_H)
                                                 .padding(.top, 1)
                                                 .padding(.bottom, vPadding)
                                                 .font(.system(size: 14, weight: .light))
@@ -395,8 +393,8 @@ struct TasksView__TaskRowView: View {
                                 HStack {
                                     /// It can be multiline
                                     Text(taskUI.text)
-                                            .padding(.leading, paddingStart)
-                                            .padding(.trailing, 16)
+                                            .padding(.leading, TAB_TASKS_PADDING_HALF_H)
+                                            .padding(.trailing, TAB_TASKS_PADDING_HALF_H)
                                             .lineSpacing(4)
                                             .multilineTextAlignment(.leading)
                                             .myMultilineText()
@@ -404,7 +402,10 @@ struct TasksView__TaskRowView: View {
                                     Spacer()
                                 }
 
-                                TextFeaturesTriggersView(textFeatures: taskUI.textFeatures)
+                                TextFeaturesTriggersView(
+                                        textFeatures: taskUI.textFeatures,
+                                        contentPaddingStart: TAB_TASKS_PADDING_HALF_H - 1.0
+                                )
                                         .padding(.top, taskUI.textFeatures.triggers.isEmpty ? 0 : vPadding)
                             }
                                     .padding(.vertical, 10)
@@ -425,7 +426,7 @@ struct TasksView__TaskRowView: View {
             }
 
             if (withDivider) {
-                DividerBg(xOffset: paddingStart)
+                DividerBg(xOffset: TAB_TASKS_PADDING_HALF_H)
             }
         }
                 .clipShape(roundedShape)
