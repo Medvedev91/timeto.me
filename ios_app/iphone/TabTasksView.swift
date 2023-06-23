@@ -54,7 +54,7 @@ struct TabTasksView: View {
 
         VMView(vm: vm, stack: .ZStack()) { state in
 
-            Color(.myBackground)
+            Color(.bg)
                     .ignoresSafeArea()
 
             HStack(spacing: 0) {
@@ -153,12 +153,10 @@ struct TabTasksView: View {
                                         ZStack {
 
                                             RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                    .fill(isActiveRepeating ? .blue : Color(.mySecondaryBackground))
+                                                    .fill(isActiveRepeating ? .blue : Color(.bg))
 
-                                            if !isActiveRepeating {
-                                                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                        .stroke(Color(.systemGray6))
-                                            }
+                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                    .stroke(isActiveRepeating ? .blue : Color(.dividerBg), lineWidth: onePx)
                                         }
                                                 .frame(width: tabWidth)
                                 )
@@ -257,7 +255,7 @@ private struct TabTasksView__FolderView: View {
                         if isAllowedForDrop {
                             return .purple
                         }
-                        return isActive ? .blue : Color(.mySecondaryBackground)
+                        return isActive ? .blue : Color(.bg)
                     }()
 
                     VStack(spacing: 0) {
@@ -276,10 +274,9 @@ private struct TabTasksView__FolderView: View {
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 8, style: .continuous)
                                                 .fill(bgColor)
-                                        if !isActive {
-                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                    .stroke(Color(.systemGray6))
-                                        }
+
+                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                .stroke(isActive ? .blue : Color(.dividerBg), lineWidth: onePx)
                                     }
                             )
                             .background(GeometryReader { geometry -> Color in
