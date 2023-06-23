@@ -134,7 +134,6 @@ struct RepeatingsView__ItemView: View {
                     // todo remove after removing MyListSwipeToActionItem()
                     .background(Color(.bg))
         }
-                .clipShape(roundedShape)
     }
 
     private var safeView: some View {
