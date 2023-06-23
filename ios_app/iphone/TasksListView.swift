@@ -69,7 +69,6 @@ struct TasksListView: View {
                                             .id(taskUI.task.id)
                                 }
                             }
-                                    .cornerRadius(10)
 
                             if let tmrwData = state.tmrwData {
                                 HStack {
@@ -233,7 +232,9 @@ struct TasksView__TaskRowView: View {
 
     struct MyButtonStyle: ButtonStyle {
         func makeBody(configuration: Self.Configuration) -> some View {
-            configuration.label.background(configuration.isPressed ? Color(.systemGray5) : Color(.mySecondaryBackground))
+            configuration
+                    .label
+                    .background(configuration.isPressed ? Color(.systemGray5) : Color(.bg))
         }
     }
 
@@ -424,10 +425,10 @@ struct TasksView__TaskRowView: View {
             }
 
             if (withDivider) {
-                MyDivider(xOffset: paddingStart)
+                DividerBg(xOffset: paddingStart)
             }
         }
-                .background(Color(.mySecondaryBackground))
+                .clipShape(roundedShape)
                 .id("\(taskUI.task.id) \(taskUI.task.text)") /// #TruncationDynamic
                 .sheetEnv(
                         isPresented: $isAddCalendarSheetPresented,
@@ -560,9 +561,10 @@ struct TasksView__TaskRowView__ActivityRowView__ButtonStyle: ButtonStyle {
     static let LIST_ITEM_HEIGHT = 44.0 // Based on @Environment(\.defaultMinListRowHeight)
 
     func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
+        configuration
+                .label
                 .frame(height: TasksView__TaskRowView__ActivityRowView__ButtonStyle.LIST_ITEM_HEIGHT)
-                .background(configuration.isPressed ? Color(.systemGray4) : Color(.mySecondaryBackground))
+                .background(configuration.isPressed ? Color(.systemGray4) : Color(.bg))
     }
 }
 
