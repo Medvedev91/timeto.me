@@ -55,7 +55,7 @@ struct EventsListView: View {
                                     .padding(.leading, MyListView.PADDING_OUTER_HORIZONTAL)
 
                             EventsHistoryView(
-                                    spaceAround: MyListView.PADDING_OUTER_HORIZONTAL + 1,
+                                    spaceAround: TAB_TASKS_PADDING_HALF_H,
                                     paddingTop: 20
                             ) { historyItem in
                                 showAddCalendar(
@@ -90,10 +90,10 @@ struct EventsListView: View {
                             }
                                     .padding(.top, 5)
                                     .padding(.bottom, 5)
-                                    .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color(.mySecondaryBackground)))
+                                    .overlay(roundedShape.stroke(Color(.dividerBg), lineWidth: onePx))
                                     .padding(.top, 19)
                                     .padding(.bottom, 20)
-                                    .padding(.leading, MyListView.PADDING_OUTER_HORIZONTAL)
+                                    .padding(.leading, TAB_TASKS_PADDING_HALF_H)
 
                             HStack {
                             }
