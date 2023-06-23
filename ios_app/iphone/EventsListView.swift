@@ -35,13 +35,11 @@ struct EventsListView: View {
                                 let uiEvents = state.uiEvents.reversed()
                                 ForEach(uiEvents, id: \.event.id) { uiEvent in
                                     let isFirst = uiEvents.first == uiEvent
-                                    MyListView__ItemView(
-                                            isFirst: isFirst,
-                                            isLast: uiEvents.last == uiEvent,
-                                            withTopDivider: !isFirst,
-                                            outerPaddingEnd: 0
-                                    ) {
+                                    ZStack(alignment: .top) {
                                         EventItemView(uiEvent: uiEvent)
+                                        if !isFirst {
+                                            DividerBg(xOffset: TAB_TASKS_PADDING_HALF_H)
+                                        }
                                     }
                                 }
                             }
@@ -101,6 +99,7 @@ struct EventsListView: View {
                             }
                                     .id(LIST_BOTTOM_ITEM_ID)
                         }
+                                .padding(.horizontal, TAB_TASKS_PADDING_HALF_H)
                                 .sheetEnv(
                                         isPresented: $isAddCalendarPresented
                                 ) {
@@ -193,6 +192,8 @@ private struct EventItemView: View {
                 }
         ) {
             AnyView(safeView)
+                    // todo remove after removing MyListSwipeToActionItem()
+                    .background(Color(.bg))
         }
     }
 
@@ -209,8 +210,8 @@ private struct EventItemView: View {
                         .font(.system(size: 14, weight: .light))
                         .foregroundColor(.secondary)
             }
-                    .padding(.leading, DEF_LIST_H_PADDING)
-                    .padding(.trailing, DEF_LIST_H_PADDING)
+                    .padding(.leading, TAB_TASKS_PADDING_HALF_H)
+                    .padding(.trailing, TAB_TASKS_PADDING_HALF_H)
 
             HStack {
                 Text(uiEvent.listText)
@@ -218,10 +219,13 @@ private struct EventItemView: View {
                 Spacer()
             }
                     .padding(.top, 4)
-                    .padding(.leading, DEF_LIST_H_PADDING)
-                    .padding(.trailing, DEF_LIST_H_PADDING)
+                    .padding(.leading, TAB_TASKS_PADDING_HALF_H)
+                    .padding(.trailing, TAB_TASKS_PADDING_HALF_H)
 
-            TextFeaturesTriggersView(textFeatures: uiEvent.textFeatures)
+            TextFeaturesTriggersView(
+                    textFeatures: uiEvent.textFeatures,
+                    contentPaddingStart: TAB_TASKS_PADDING_HALF_H - 1.0
+            )
                     .padding(.top, uiEvent.textFeatures.triggers.isEmpty ? 0 : 8)
         }
                 .padding(.top, 10)
