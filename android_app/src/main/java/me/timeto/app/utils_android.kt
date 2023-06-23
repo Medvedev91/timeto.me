@@ -167,6 +167,21 @@ fun VStack(
 }
 
 @Composable
+fun HStack(
+    modifier: Modifier = Modifier,
+    verticalAlignment: Alignment.Vertical = Alignment.Top,
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
+    content: @Composable RowScope.() -> Unit,
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = verticalAlignment,
+        horizontalArrangement = horizontalArrangement,
+        content = content,
+    )
+}
+
+@Composable
 fun ZStack(
     modifier: Modifier,
 ) {
