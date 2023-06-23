@@ -51,7 +51,7 @@ struct RepeatingsListView: View {
                                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                                                 .foregroundColor(.white)
                                                 .background(
-                                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                        roundedShape
                                                                 .fill(.blue)
                                                 )
                                     }
@@ -68,6 +68,7 @@ struct RepeatingsListView: View {
                                         }
                                     }
                                     .padding(.bottom, 20)
+                                    .padding(.horizontal, TAB_TASKS_PADDING_HALF_H - 4.0)
 
                             HStack {
                             }
