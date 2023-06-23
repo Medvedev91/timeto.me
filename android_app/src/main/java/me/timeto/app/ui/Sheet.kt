@@ -188,3 +188,76 @@ object Sheet {
         }
     }
 }
+
+@Composable
+fun Sheet__HeaderView(
+    title: String,
+    scrollState: ScrollableState?,
+) {
+    val alphaValue = remember {
+        derivedStateOf {
+            val animRatio = 50f
+            when (scrollState) {
+                null -> 0f
+                is LazyListState -> {
+                    val offset = scrollState.firstVisibleItemScrollOffset
+                    when {
+                        scrollState.firstVisibleItemIndex > 0 -> 1f
+                        offset == 0 -> 0f
+                        offset > animRatio -> 1f
+                        else -> offset / animRatio
+                    }
+                }
+                is ScrollState -> {
+                    val offset = scrollState.value
+                    when {
+                        offset == 0 -> 0f
+                        offset > animRatio -> 1f
+                        else -> offset / animRatio
+                    }
+                }
+                else -> throw Exception("todo Sheet__HeaderView")
+            }
+        }
+    }
+    val alphaAnimate = animateFloatAsState(alphaValue.value)
+    val bgColor = c.bg
+    val dividerBgColor = c.dividerBg
+
+    Box(
+        modifier = Modifier
+            .drawBehind {
+                drawRect(color = bgColor.copy(alpha = alphaAnimate.value))
+            },
+        contentAlignment = Alignment.BottomCenter // For divider
+    ) {
+
+        Box(
+            modifier = Modifier
+                .padding(top = 16.dp, bottom = 16.dp),
+        ) {
+
+            Text(
+                text = title,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                fontSize = 22.sp,
+                fontWeight = FontWeight.SemiBold,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
+                color = c.text,
+                textAlign = TextAlign.Center,
+            )
+        }
+
+        ZStack(
+            modifier = Modifier
+                .height(onePx)
+                .fillMaxWidth()
+                .drawBehind {
+                    drawRect(color = dividerBgColor.copy(alpha = alphaAnimate.value))
+                },
+        )
+    }
+}
