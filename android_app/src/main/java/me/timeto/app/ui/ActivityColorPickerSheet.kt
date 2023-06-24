@@ -45,7 +45,7 @@ fun ActivityColorPickerSheet(
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .background(c.background2)
+            .background(c.bg)
     ) {
 
         val circleScrollState = rememberScrollState()
@@ -220,7 +220,7 @@ fun ActivityColorPickerSheet(
                     ) {
                         Column(
                             modifier = Modifier
-                                .background(c.background2)
+                                .background(c.bg)
                                 .pointerInput(Unit) { },
                         ) {
 
