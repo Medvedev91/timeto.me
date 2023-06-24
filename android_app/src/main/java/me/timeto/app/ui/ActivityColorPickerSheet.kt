@@ -47,25 +47,15 @@ fun ActivityColorPickerSheet(
         modifier = Modifier
             .fillMaxHeight()
             .background(c.background2)
-            .navigationBarsPadding()
     ) {
 
         val circleScrollState = rememberScrollState()
         val activitiesScrollState = rememberScrollState()
 
-        Sheet.HeaderViewOld(
-            onCancel = { layer.close() },
+        Sheet__HeaderView(
             title = state.headerTitle,
-            doneText = state.doneTitle,
-            isDoneEnabled = true,
             scrollState = null,
-            bgColor = c.background2,
-            dividerColor = c.dividerBg2,
-            maxLines = 1,
-        ) {
-            onPick(state.selectedColor)
-            layer.close()
-        }
+        )
 
         val alphaAnimate = animateFloatAsState(remember {
             derivedStateOf {
@@ -75,13 +65,13 @@ fun ActivityColorPickerSheet(
             }
         }.value)
 
-        val dividerBg2 = c.dividerBg2
+        val dividerBg = c.dividerBg
         ZStack(
             modifier = Modifier
                 .height(onePx)
                 .fillMaxWidth()
                 .drawBehind {
-                    drawRect(color = dividerBg2.copy(alpha = alphaAnimate.value))
+                    drawRect(color = dividerBg.copy(alpha = alphaAnimate.value))
                 },
         )
 
@@ -99,9 +89,11 @@ fun ActivityColorPickerSheet(
                     .weight(1f),
             ) {
 
+                val activitiesBottomPadding = 16.dp
+
                 Column(
                     modifier = Modifier
-                        .padding(end = dividerPadding)
+                        .padding(end = dividerPadding, bottom = activitiesBottomPadding)
                         .weight(1f)
                 ) {
 
@@ -144,17 +136,14 @@ fun ActivityColorPickerSheet(
                             overflow = TextOverflow.Ellipsis,
                         )
                     }
-
-                    Box(Modifier.navigationBarsPadding())
                 }
 
                 Box(
                     Modifier
                         .width(onePx)
-                        .padding(top = circlePadding)
-                        .navigationBarsPadding()
+                        .padding(top = circlePadding, bottom = activitiesBottomPadding)
                         .fillMaxHeight()
-                        .background(c.dividerBg2)
+                        .background(c.dividerBg)
                 )
             }
 
@@ -205,7 +194,6 @@ fun ActivityColorPickerSheet(
                     text = "Custom",
                     modifier = Modifier
                         .padding(bottom = 20.dp)
-                        .navigationBarsPadding()
                         .clip(MySquircleShape())
                         .clickable {
                             vm.toggleIsRgbSlidersShowed()
@@ -216,8 +204,6 @@ fun ActivityColorPickerSheet(
                 )
             }
         }
-
-        DividerBg2()
 
         Column {
 
@@ -237,6 +223,8 @@ fun ActivityColorPickerSheet(
                         .background(c.background2)
                         .pointerInput(Unit) { },
                 ) {
+
+                    DividerBg()
 
                     Box(
                         modifier = Modifier
@@ -278,6 +266,18 @@ fun ActivityColorPickerSheet(
                 }
             }
         }
+
+        Sheet__BottomViewDefault(
+            primaryText = state.doneTitle,
+            primaryAction = {
+                onPick(state.selectedColor)
+                layer.close()
+            },
+            secondaryText = "Cancel",
+            secondaryAction = {
+                layer.close()
+            }
+        )
     }
 }
 
