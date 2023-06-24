@@ -276,9 +276,11 @@ fun Sheet__BottomViewDefault(
     primaryAction: () -> Unit,
     secondaryText: String,
     secondaryAction: () -> Unit,
+    topContent: (@Composable () -> Unit)? = null,
     startContent: (@Composable () -> Unit)? = null,
 ) {
     Sheet__BottomView {
+        topContent?.invoke()
         HStack(
             verticalAlignment = Alignment.CenterVertically,
         ) {
