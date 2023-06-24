@@ -192,53 +192,6 @@ fun ActivityColorPickerSheet(
             }
         }
 
-        Column {
-
-            BackHandler(state.isRgbSlidersShowed) {
-                vm.toggleIsRgbSlidersShowed()
-            }
-
-            AnimatedVisibility(
-                visible = state.isRgbSlidersShowed,
-                enter = expandVertically(spring(stiffness = Spring.StiffnessMedium))
-                        + fadeIn(spring(stiffness = Spring.StiffnessMedium)),
-                exit = shrinkVertically(spring(stiffness = Spring.StiffnessMedium))
-                       + fadeOut(spring(stiffness = Spring.StiffnessHigh)),
-            ) {
-                Column(
-                    modifier = Modifier
-                        .background(c.background2)
-                        .pointerInput(Unit) { },
-                ) {
-
-                    DividerBg()
-
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 10.dp, bottom = 4.dp),
-                    ) {
-
-                        Text(
-                            text = state.rgbText,
-                            modifier = Modifier
-                                .align(Alignment.Center)
-                                .clip(MySquircleShape())
-                                .background(state.selectedColor.toColor())
-                                .padding(vertical = 4.dp, horizontal = 8.dp),
-                            color = c.white,
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.Light,
-                        )
-                    }
-
-                    ColorSliderView(state.r, c.red, state.isRgbSlidersAnimated) { vm.upR(it) }
-                    ColorSliderView(state.g, c.green, state.isRgbSlidersAnimated) { vm.upG(it) }
-                    ColorSliderView(state.b, c.blue, state.isRgbSlidersAnimated) { vm.upB(it) }
-                }
-            }
-        }
-
         val rgbButtonColor = animateColorAsState(if (state.isRgbSlidersShowed) c.blue else c.transparent)
 
         Sheet__BottomViewDefault(
@@ -251,6 +204,53 @@ fun ActivityColorPickerSheet(
             secondaryAction = {
                 layer.close()
             },
+            topContent = {
+
+                Column {
+
+                    BackHandler(state.isRgbSlidersShowed) {
+                        vm.toggleIsRgbSlidersShowed()
+                    }
+
+                    AnimatedVisibility(
+                        visible = state.isRgbSlidersShowed,
+                        enter = expandVertically(spring(stiffness = Spring.StiffnessMedium))
+                                + fadeIn(spring(stiffness = Spring.StiffnessMedium)),
+                        exit = shrinkVertically(spring(stiffness = Spring.StiffnessMedium))
+                               + fadeOut(spring(stiffness = Spring.StiffnessHigh)),
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .background(c.background2)
+                                .pointerInput(Unit) { },
+                        ) {
+
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 10.dp, bottom = 4.dp),
+                            ) {
+
+                                Text(
+                                    text = state.rgbText,
+                                    modifier = Modifier
+                                        .align(Alignment.Center)
+                                        .clip(MySquircleShape())
+                                        .background(state.selectedColor.toColor())
+                                        .padding(vertical = 4.dp, horizontal = 8.dp),
+                                    color = c.white,
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.Light,
+                                )
+                            }
+
+                            ColorSliderView(state.r, c.red, state.isRgbSlidersAnimated) { vm.upR(it) }
+                            ColorSliderView(state.g, c.green, state.isRgbSlidersAnimated) { vm.upG(it) }
+                            ColorSliderView(state.b, c.blue, state.isRgbSlidersAnimated) { vm.upB(it) }
+                        }
+                    }
+                }
+            },
             startContent = {
                 Icon(
                     if (state.isRgbSlidersShowed) Icons.Rounded.ExpandMore else Icons.Rounded.Tune,
@@ -258,7 +258,7 @@ fun ActivityColorPickerSheet(
                     tint = if (state.isRgbSlidersShowed) c.white else c.gray2,
                     modifier = Modifier
                         .padding(start = sheetHPadding - 2.dp)
-                        .size(34.dp)
+                        .size(33.dp)
                         .clip(RoundedCornerShape(99.dp))
                         .drawBehind {
                             drawCircle(rgbButtonColor.value)
@@ -285,7 +285,7 @@ private fun ColorSliderView(
         // Animation works bad with manual slide
         value = if (isAnimated) animatedValue.value else value,
         onValueChange = { onChange(it) },
-        modifier = Modifier.padding(horizontal = sheetHPadding - 4.dp),
+        modifier = Modifier.padding(horizontal = sheetHPadding - 6.dp),
         valueRange = 0f..255f,
         colors = SliderDefaults.colors(
             thumbColor = color,
