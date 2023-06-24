@@ -8,12 +8,10 @@ import androidx.compose.animation.core.spring
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.ScrollableState
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
@@ -33,9 +31,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import me.timeto.app.ZStack
-import me.timeto.app.onePx
-import me.timeto.app.statusBarHeight
+import me.timeto.app.*
 
 object Sheet {
 
@@ -254,5 +250,114 @@ fun Sheet__HeaderView(
                     drawRect(color = dividerBgColor.copy(alpha = alphaAnimate.value))
                 },
         )
+    }
+}
+
+///
+/// Sheet__BottomView
+
+@Composable
+fun Sheet__BottomView(
+    content: @Composable () -> Unit,
+) {
+    VStack(
+        modifier = Modifier
+            .background(c.bg)
+            .navigationBarsPadding(),
+    ) {
+        DividerBg()
+        content()
+    }
+}
+
+@Composable
+fun Sheet__BottomViewDefault(
+    primaryText: String,
+    primaryAction: () -> Unit,
+    secondaryText: String,
+    secondaryAction: () -> Unit,
+    startContent: (@Composable () -> Unit)? = null,
+) {
+    Sheet__BottomView {
+        HStack {
+            startContent?.invoke()
+            SpacerW1()
+            HStack(
+                modifier = Modifier
+                    .padding(
+                        top = 10.dp,
+                        end = MyListView.PADDING_OUTER_HORIZONTAL,
+                        bottom = 10.dp,
+                    )
+            ) {
+                Sheet__BottomView__SecondaryButton(secondaryText) {
+                    secondaryAction()
+                }
+                Sheet__BottomView__PrimaryButton(primaryText) {
+                    primaryAction()
+                }
+            }
+        }
+    }
+}
+
+///
+
+@Composable
+fun Sheet__BottomView__Button(
+    text: String,
+    modifier: Modifier,
+    backgroundColor: Color,
+    fontColor: Color,
+    fontWeight: FontWeight,
+    onClick: () -> Unit,
+) {
+    Text(
+        text = text,
+        modifier = modifier
+            .clip(roundedShape)
+            .background(backgroundColor)
+            .clickable {
+                onClick()
+            }
+            .padding(horizontal = 14.dp)
+            .padding(top = 6.dp, bottom = 7.dp),
+        color = fontColor,
+        fontSize = 15.sp,
+        fontWeight = fontWeight,
+    )
+}
+
+@Composable
+fun Sheet__BottomView__PrimaryButton(
+    text: String,
+    onClick: () -> Unit,
+) {
+    Sheet__BottomView__Button(
+        text = text,
+        modifier = Modifier,
+        backgroundColor = c.blue,
+        fontColor = c.white,
+        fontWeight = FontWeight.SemiBold,
+    ) {
+        onClick()
+    }
+}
+
+@Composable
+fun Sheet__BottomView__SecondaryButton(
+    text: String,
+    withPaddingRight: Boolean = true,
+    onClick: () -> Unit,
+) {
+    Sheet__BottomView__Button(
+        text = text,
+        modifier = Modifier
+            .padding(end = if (withPaddingRight) 6.dp else 0.dp),
+        backgroundColor = c.transparent,
+        fontColor = c.textSecondary,
+        fontWeight = FontWeight.Light,
+    ) {
+        onClick()
     }
 }
