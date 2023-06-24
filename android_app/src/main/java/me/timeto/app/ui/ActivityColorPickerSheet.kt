@@ -82,7 +82,7 @@ fun ActivityColorPickerSheet(
             Row(
                 modifier = Modifier
                     .verticalScroll(state = activitiesScrollState)
-                    .padding(top = 8.dp)
+                    .padding(top = 4.dp)
                     .padding(start = sheetHPadding)
                     .height(IntrinsicSize.Max)
                     .weight(1f),
@@ -150,7 +150,6 @@ fun ActivityColorPickerSheet(
                 modifier = Modifier
                     .verticalScroll(state = circleScrollState)
                     .padding(
-                        top = 4.dp,
                         start = dividerPadding - circlePadding,
                         end = sheetHPadding - circlePadding,
                         bottom = 20.dp,
