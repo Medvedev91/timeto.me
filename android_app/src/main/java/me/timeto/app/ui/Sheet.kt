@@ -242,7 +242,7 @@ fun Sheet__HeaderView(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
-                fontSize = 22.sp,
+                fontSize = 23.sp,
                 fontWeight = FontWeight.SemiBold,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
