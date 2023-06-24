@@ -10,8 +10,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Done
-import androidx.compose.material.icons.rounded.ExpandCircleDown
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
@@ -154,6 +153,7 @@ fun ActivityColorPickerSheet(
                         top = 4.dp,
                         start = dividerPadding - circlePadding,
                         end = sheetHPadding - circlePadding,
+                        bottom = 20.dp,
                     ),
             ) {
 
@@ -189,19 +189,6 @@ fun ActivityColorPickerSheet(
                         }
                     }
                 }
-
-                Text(
-                    text = "Custom",
-                    modifier = Modifier
-                        .padding(bottom = 20.dp)
-                        .clip(MySquircleShape())
-                        .clickable {
-                            vm.toggleIsRgbSlidersShowed()
-                        }
-                        .padding(horizontal = circlePadding, vertical = 2.dp),
-                    color = c.blue,
-                    fontSize = 14.sp,
-                )
             }
         }
 
@@ -243,21 +230,6 @@ fun ActivityColorPickerSheet(
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Light,
                         )
-
-                        Icon(
-                            Icons.Rounded.ExpandCircleDown,
-                            "Hide",
-                            tint = c.iconButtonBg1,
-                            modifier = Modifier
-                                .align(Alignment.CenterEnd)
-                                .padding(end = sheetHPadding)
-                                .size(30.dp)
-                                .clip(RoundedCornerShape(99.dp))
-                                .background(c.background2)
-                                .clickable {
-                                    vm.toggleIsRgbSlidersShowed()
-                                }
-                        )
                     }
 
                     ColorSliderView(state.r, c.red, state.isRgbSlidersAnimated) { vm.upR(it) }
@@ -266,6 +238,8 @@ fun ActivityColorPickerSheet(
                 }
             }
         }
+
+        val rgbButtonColor = animateColorAsState(if (state.isRgbSlidersShowed) c.blue else c.transparent)
 
         Sheet__BottomViewDefault(
             primaryText = state.doneTitle,
@@ -276,6 +250,24 @@ fun ActivityColorPickerSheet(
             secondaryText = "Cancel",
             secondaryAction = {
                 layer.close()
+            },
+            startContent = {
+                Icon(
+                    if (state.isRgbSlidersShowed) Icons.Rounded.ExpandMore else Icons.Rounded.Tune,
+                    "RGB Picker",
+                    tint = if (state.isRgbSlidersShowed) c.white else c.gray2,
+                    modifier = Modifier
+                        .padding(start = sheetHPadding - 2.dp)
+                        .size(34.dp)
+                        .clip(RoundedCornerShape(99.dp))
+                        .drawBehind {
+                            drawCircle(rgbButtonColor.value)
+                        }
+                        .clickable {
+                            vm.toggleIsRgbSlidersShowed()
+                        }
+                        .padding(if (state.isRgbSlidersShowed) 4.dp else 4.dp)
+                )
             }
         )
     }
