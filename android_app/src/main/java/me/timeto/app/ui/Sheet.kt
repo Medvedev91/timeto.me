@@ -279,7 +279,9 @@ fun Sheet__BottomViewDefault(
     startContent: (@Composable () -> Unit)? = null,
 ) {
     Sheet__BottomView {
-        HStack {
+        HStack(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
             startContent?.invoke()
             SpacerW1()
             HStack(
