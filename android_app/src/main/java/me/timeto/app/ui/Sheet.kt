@@ -224,35 +224,30 @@ fun Sheet__HeaderView(
     val bgColor = c.bg
     val dividerBgColor = c.dividerBg
 
-    Box(
+    ZStack(
         modifier = Modifier
             .drawBehind {
                 drawRect(color = bgColor.copy(alpha = alphaAnimate.value))
             },
-        contentAlignment = Alignment.BottomCenter // For divider
     ) {
 
-        Box(
+        Text(
+            text = title,
             modifier = Modifier
-                .padding(top = 16.dp, bottom = 16.dp),
-        ) {
-
-            Text(
-                text = title,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                fontSize = 23.sp,
-                fontWeight = FontWeight.SemiBold,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1,
-                color = c.text,
-                textAlign = TextAlign.Center,
-            )
-        }
+                .padding(top = 16.dp, bottom = 16.dp)
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            fontSize = 23.sp,
+            fontWeight = FontWeight.SemiBold,
+            overflow = TextOverflow.Ellipsis,
+            maxLines = 1,
+            color = c.text,
+            textAlign = TextAlign.Center,
+        )
 
         ZStack(
             modifier = Modifier
+                .align(Alignment.BottomCenter)
                 .height(onePx)
                 .fillMaxWidth()
                 .drawBehind {
