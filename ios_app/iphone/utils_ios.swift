@@ -83,16 +83,20 @@ extension UIColor {
     // todo remove
     static var mySecondaryBackground = myDayNightArgb(0xFFFFFFFF, 0xFF1C1C1E)
 
+    // todo remove?
     static var mySheetFormBg = myDayNightArgb(tgLikeLightBg, 0xFF121214)
 
     static var myFormButtonRightNoteText = myDayNightArgb(0x88000000, 0x88FFFFFF)
 
     static var iconButtonBg1 = myDayNightArgb(0xFFAEAEB2, 0xFF636366)
 
+    // todo remove?
     static var dividerBg2 = UIColor.systemGray4
 
+    // todo remove?
     static var formHeaderDivider = UIColor.systemGray3
 
+    // todo remove?
     static var formHeaderBackground = myDayNightArgb(0xFFF9F9F9, 0xFF191919)
 }
 
