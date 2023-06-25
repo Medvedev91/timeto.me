@@ -7,21 +7,18 @@ import me.timeto.shared.*
 import me.timeto.shared.db.IntervalModel
 import me.timeto.shared.vm.ui.TimerDataUI
 
-class TimerTabProgressVM(
-    isDayOrNight: Boolean,
-) : __VM<TimerTabProgressVM.State>() {
+class TimerTabProgressVM : __VM<TimerTabProgressVM.State>() {
 
     data class State(
         val lastInterval: IntervalModel,
         val isCountdown: Boolean,
-        val isDayOrNight: Boolean,
         val idToUpdate: Int,
     ) {
 
         val timerData = TimerDataUI(
             interval = lastInterval,
             isCountdown = isCountdown,
-            defColor = if (isDayOrNight) ColorNative.blue else ColorNative.white
+            defColor = ColorNative.timerTitleDefault,
         )
 
         val progressRatio: Float
@@ -43,7 +40,6 @@ class TimerTabProgressVM(
         State(
             lastInterval = DI.lastInterval,
             isCountdown = true,
-            isDayOrNight = isDayOrNight,
             idToUpdate = 0,
         )
     )

@@ -12,8 +12,6 @@ private let emojiStartPadding = emojiWidth + (emojiHPadding * 2)
 
 struct TabTimerView: View {
 
-    @Environment(\.colorScheme) private var colorScheme
-
     @State private var vm = TabTimerVM()
 
     @State private var isReadmePresented = false
@@ -47,9 +45,7 @@ struct TabTimerView: View {
                             ///
                             /// Ordering is important, otherwise Edit would not be clicked.
 
-                            TabTimerView_ProgressView(
-                                    isDayOrNight: colorScheme == .light
-                            )
+                            TabTimerView_ProgressView()
                                     .frame(height: 120)
 
                             HStack {
@@ -488,11 +484,7 @@ struct TabTimerView_ActivityRowView_ButtonStyle: ButtonStyle {
 ///
 struct TabTimerView_ProgressView: View {
 
-    @State private var vm: TimerTabProgressVM
-
-    init(isDayOrNight: Bool) {
-        _vm = State(initialValue: TimerTabProgressVM(isDayOrNight: isDayOrNight))
-    }
+    @State private var vm = TimerTabProgressVM()
 
     var body: some View {
 

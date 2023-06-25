@@ -403,8 +403,7 @@ private fun GrayTextButton(
 @Composable
 private fun TimerView() {
 
-    val isDayOrNight = !isSystemInDarkTheme()
-    val (vm, state) = rememberVM { TimerTabProgressVM(isDayOrNight) }
+    val (vm, state) = rememberVM { TimerTabProgressVM() }
     val timerData = state.timerData
     val progressHeight = 16.dp
 
