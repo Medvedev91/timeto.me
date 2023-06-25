@@ -45,6 +45,7 @@ class MyColors(
     val formHeaderBackground: Color,
     val timerBarBorder: Color,
     val timerBarBackground: Color,
+    val timerTitleDefault: Color,
     val calendarIconColor: Color,
     val datePickerTitleBg: Color,
     val bgFormSheet: Color,
@@ -85,6 +86,7 @@ private val myLightColors = MyColors(
     formHeaderBackground = Color(0xFFF9F9F9),
     timerBarBorder = Color(0xFFBBDEFB), // Material Blue 100
     timerBarBackground = Color(0xFFE3F2FD), // Material Blue 50
+    timerTitleDefault = blueLight,
     calendarIconColor = Color(0xAA000000),
     datePickerTitleBg = Color(0xFFEEEEF3),
     bgFormSheet = tgLikeLightSheetBg,
@@ -112,6 +114,7 @@ private val myDarkColors = MyColors(
     formHeaderBackground = Color(0xFF191919),
     timerBarBorder = AppleColors.gray5Dark.toColor(),
     timerBarBackground = Color(0xFF1C1C1E),
+    timerTitleDefault = Color.White,
     calendarIconColor = Color(0xFF777777),
     datePickerTitleBg = Color(0xFF2A2A2B),
     bgFormSheet = Color(0xFF121214),
