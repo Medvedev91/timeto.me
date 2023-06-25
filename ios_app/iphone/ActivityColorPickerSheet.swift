@@ -76,19 +76,26 @@ struct ActivityColorPickerSheet: View {
                                         .padding(.top, 28)
 
                                 ForEach(state.allActivities, id: \.self) { activityUI in
-                                    Text(activityUI.text)
-                                            .font(.system(size: 15, weight: .semibold))
-                                            .foregroundColor(.white)
-                                            .lineLimit(1)
-                                            .padding(.leading, 9)
-                                            .padding(.trailing, 10)
-                                            .padding(.top, 6)
-                                            .padding(.bottom, 6)
-                                            .background(
-                                                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                                            .fill(activityUI.colorRgba.toColor())
-                                            )
-                                            .padding(.top, 8)
+                                    Button(
+                                            action: {
+                                                vm.upColorRgba(colorRgba: activityUI.colorRgba)
+                                            },
+                                            label: {
+                                                Text(activityUI.text)
+                                                        .font(.system(size: 15, weight: .semibold))
+                                                        .foregroundColor(.white)
+                                                        .lineLimit(1)
+                                                        .padding(.leading, 9)
+                                                        .padding(.trailing, 10)
+                                                        .padding(.top, 6)
+                                                        .padding(.bottom, 6)
+                                                        .background(
+                                                                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                                                        .fill(activityUI.colorRgba.toColor())
+                                                        )
+                                                        .padding(.top, 8)
+                                            }
+                                    )
                                 }
 
                                 Padding(vertical: 20)
