@@ -70,6 +70,7 @@ fun ColorNative.toColor() = when (this) {
     ColorNative.text -> c.text
     ColorNative.textSecondary -> c.textSecondary
     ColorNative.transparent -> c.transparent
+    ColorNative.timerTitleDefault -> c.timerTitleDefault
 }
 
 fun colorFromRgbaString(colorRgba: String) = colorRgba
