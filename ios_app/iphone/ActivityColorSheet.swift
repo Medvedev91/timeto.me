@@ -193,13 +193,13 @@ struct ActivityColorSheet: View {
                                 .padding(.bottom, 8)
                     }
                             .safeAreaPadding(.bottom)
-                            .background(Color(.mySecondaryBackground))
+                            .background(Color(.bg))
                             .transition(.move(edge: .bottom))
                 }
             }
         }
                 .ignoresSafeArea()
-                .background(Color(.mySecondaryBackground))
+                .background(Color(.bg))
     }
 }
 
