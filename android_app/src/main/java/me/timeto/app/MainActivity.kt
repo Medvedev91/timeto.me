@@ -75,7 +75,7 @@ class MainActivity : ComponentActivity() {
                     WrapperView.LayoutView {
                         TabsView()
                         UIListeners()
-                        FullScreenListener(activity = this, onClose = ::upNavigationUI)
+                        FocusModeListener(activity = this, onClose = ::upNavigationUI)
                     }
 
                     LaunchedEffect(Unit) {

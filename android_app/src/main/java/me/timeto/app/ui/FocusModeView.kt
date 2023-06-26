@@ -52,7 +52,7 @@ private val taskListContentPadding = 4.dp
 private val menuColor = FocusModeVM.menuColor.toColor()
 
 @Composable
-fun FullScreenListener(
+fun FocusModeListener(
     activity: Activity,
     onClose: () -> Unit,
 ) {
@@ -99,7 +99,7 @@ fun FullScreenListener(
                 onClose = { FullScreenUI.close() },
                 content = { layer ->
                     MaterialTheme(colors = myDarkColors()) {
-                        FullScreenView(layer)
+                        FocusModeView(layer)
                     }
                 }
             ).show()
@@ -108,7 +108,7 @@ fun FullScreenListener(
 }
 
 @Composable
-private fun FullScreenView(
+private fun FocusModeView(
     layer: WrapperView.Layer,
 ) {
     val (vm, state) = rememberVM { FocusModeVM() }
