@@ -41,7 +41,7 @@ fun ActivitiesTimerSheet(
 
     LazyColumn(
         modifier = Modifier
-            .background(c.background2)
+            .background(c.bgSheet)
             .navigationBarsPadding()
             .height((activityItemHeight * state.allActivities.size + topContentPadding + bottomContentPadding).limitMax(screenHeight - 60.dp))
             .fillMaxWidth(),
