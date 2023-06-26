@@ -61,7 +61,7 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
             .sortedBy { it.timeData.unixTime.time }
 
         val tasksText = when (val size = tasksToday.size) {
-            0 -> "No tasks for today"
+            0 -> "No Tasks"
             else -> size.toStringEnding(true, "task", "tasks")
         }
 
