@@ -7,7 +7,7 @@ private let circleCellSize = circleSize + (circlePadding * 2.0)
 private let sheetHPadding = MyListView.PADDING_OUTER_HORIZONTAL
 private let dividerPadding = sheetHPadding.goldenRatioDown()
 
-struct ActivityColorPickerSheet: View {
+struct ActivityColorSheet: View {
 
     @State private var vm: ActivityColorPickerSheetVM
     @Binding private var isPresented: Bool

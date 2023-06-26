@@ -233,7 +233,7 @@ struct ActivityFormSheet: View {
         }
                 .background(Color(.mySheetFormBg))
                 .sheetEnv(isPresented: $isColorPickerSheetPresented) {
-                    ActivityColorPickerSheet(
+                    ActivityColorSheet(
                             isPresented: $isColorPickerSheetPresented,
                             initData: vm.buildColorPickerInitData()
                     ) { colorRgba in
