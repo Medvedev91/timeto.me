@@ -9,7 +9,7 @@ private let dividerPadding = sheetHPadding.goldenRatioDown()
 
 struct ActivityColorSheet: View {
 
-    @State private var vm: ActivityColorPickerSheetVM
+    @State private var vm: ActivityColorSheetVM
     @Binding private var isPresented: Bool
     private let onPick: (ColorRgba) -> Void
 
@@ -20,10 +20,10 @@ struct ActivityColorSheet: View {
 
     init(
             isPresented: Binding<Bool>,
-            initData: ActivityColorPickerSheetVM.InitData,
+            initData: ActivityColorSheetVM.InitData,
             onPick: @escaping (ColorRgba) -> Void
     ) {
-        vm = ActivityColorPickerSheetVM(initData: initData)
+        vm = ActivityColorSheetVM(initData: initData)
         _isPresented = isPresented
         self.onPick = onPick
     }
@@ -205,7 +205,7 @@ struct ActivityColorSheet: View {
 
 private struct ColorCircleView: View {
 
-    let colorItem: ActivityColorPickerSheetVM.ColorItem
+    let colorItem: ActivityColorSheetVM.ColorItem
     let onClick: () -> Void
 
     @State private var isSelectedAnim = false

@@ -100,7 +100,7 @@ class ActivityFormSheetVM(
         }
     }
 
-    fun buildColorPickerInitData() = ActivityColorPickerSheetVM.InitData(
+    fun buildColorPickerInitData() = ActivityColorSheetVM.InitData(
         title = run {
             val emoji = state.value.emoji
             val title = state.value.inputNameValue

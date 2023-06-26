@@ -6,9 +6,9 @@ import me.timeto.shared.ColorRgba
 import me.timeto.shared.DI
 import me.timeto.shared.textFeatures
 
-class ActivityColorPickerSheetVM(
+class ActivityColorSheetVM(
     initData: InitData,
-) : __VM<ActivityColorPickerSheetVM.State>() {
+) : __VM<ActivityColorSheetVM.State>() {
 
     class InitData(
         val title: String,
