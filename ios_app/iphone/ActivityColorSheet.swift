@@ -62,10 +62,7 @@ struct ActivityColorSheet: View {
                                         .padding(.leading, 12)
                                         .padding(.trailing, 14)
                                         .frame(height: circleSize - 2)
-                                        .background(
-                                                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                                        .fill(state.selectedColor.toColor())
-                                        )
+                                        .background(roundedShape.fill(state.selectedColor.toColor()))
                                         .padding(.top, 1)
 
                                 Text(state.otherActivitiesTitle)
