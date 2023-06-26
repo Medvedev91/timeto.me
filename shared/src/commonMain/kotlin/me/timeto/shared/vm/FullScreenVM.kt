@@ -213,8 +213,8 @@ class FullScreenVM : __VM<FullScreenVM.State>() {
             text = "$dateText ${textFeatures.textNoFeatures} - ${timeData.timeLeftText()}"
             backgroundColor = when (timeData.status) {
                 TextFeatures.TimeData.STATUS.IN -> ColorRgba.black
-                TextFeatures.TimeData.STATUS.NEAR -> ColorRgba(0, 122, 255, 255) // todo
-                TextFeatures.TimeData.STATUS.OVERDUE -> ColorRgba(255, 59, 48) // todo
+                TextFeatures.TimeData.STATUS.NEAR -> AppleColors.Palettes.blue.default
+                TextFeatures.TimeData.STATUS.OVERDUE -> AppleColors.Palettes.red.default
             }
             borderColor = when (timeData.status) {
                 TextFeatures.TimeData.STATUS.IN -> ColorRgba.white
