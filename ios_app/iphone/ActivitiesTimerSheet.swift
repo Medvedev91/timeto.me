@@ -28,6 +28,8 @@ extension TimetoSheet {
     }
 }
 
+private let bgColor = Color(.bgSheet)
+
 private struct ActivitiesTimerSheet: View {
 
     @State private var vm: ActivitiesTimerSheetVM
@@ -77,11 +79,9 @@ private struct ActivitiesTimerSheet: View {
 
                     ScrollView {
 
-                        VStack(spacing: 0) {
+                        VStack {
 
-                            ZStack {
-                            }
-                                    .frame(height: 10)
+                            Padding(vertical: 2)
 
                             ForEach(state.allActivities, id: \.activity.id) { activityUI in
 
@@ -95,22 +95,30 @@ private struct ActivitiesTimerSheet: View {
                                         }
                                 )
                             }
-                                    .buttonStyle(TasksView__TaskRowView__ActivityRowView__ButtonStyle())
+                                    .buttonStyle(MyButtonStyle())
 
-                            ZStack {
-                            }
-                                    .frame(height: 30)
+                            Padding(vertical: 30)
                         }
                     }
                 }
             }
         }
                 .frame(maxHeight: sheetHeight)
-                .background(Color(.mySecondaryBackground))
+                .background(bgColor)
                 .listStyle(.plain)
                 .listSectionSeparatorTint(.clear)
                 .onDisappear {
                     sheetActivity = nil
                 }
+    }
+}
+
+private struct MyButtonStyle: ButtonStyle {
+
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration
+                .label
+                .frame(height: 44.0) // Based on @Environment(\.defaultMinListRowHeight)
+                .background(configuration.isPressed ? Color(.systemGray5) : bgColor)
     }
 }
