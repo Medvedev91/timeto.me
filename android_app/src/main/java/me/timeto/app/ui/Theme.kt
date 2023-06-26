@@ -32,6 +32,7 @@ class MyColors(
     val text: Color, // https://material.io/design/color/text-legibility.html ~ 87%
     val textSecondary: Color, // ~ 60%
     val bg: Color, // TRICK Using R.color.my_dn_background overrides compose ;(
+    val bgSheet: Color,
     // todo remove
     val background: Color, // TRICK Using R.color.my_dn_background overrides compose ;(
     // todo remove
@@ -49,6 +50,7 @@ class MyColors(
     val timerTitleDefault: Color,
     val calendarIconColor: Color,
     val datePickerTitleBg: Color,
+    // todo rename to bgForm?
     val bgFormSheet: Color,
     val formButtonRightNoteText: Color,
     val gray1: Color,
@@ -69,6 +71,7 @@ class MyColors(
 }
 
 private val tgLikeLightSheetBg = Color(0xFFEFEFF3)
+private val bgFormDarkMode = Color(0xFF121214)
 private val blueLight = Color(0xFF007AFF)
 
 private val myLightColors = MyColors(
@@ -77,6 +80,7 @@ private val myLightColors = MyColors(
     text = Color(0xEE000000),
     textSecondary = Color(0xAA000000),
     bg = Color(0xFFFFFFFF), // TRICK Sync with light R.color.my_dn_background
+    bgSheet = Color.White,
     background = Color(0xFFEEEEF3), // TRICK Sync with light R.color.my_dn_background
     background2 = Color.White,
     backgroundEditable = Color(0xFFf1f8e9), // Light Green 50
@@ -105,6 +109,7 @@ private val myDarkColors = MyColors(
     text = Color(0xEEFFFFFF),
     textSecondary = Color(0xAAFFFFFF),
     bg = Color(0xFF000000), // TRICK Sync with night R.color.my_dn_background
+    bgSheet = bgFormDarkMode,
     background = Color(0xFF000000), // TRICK Sync with night R.color.my_dn_background
     background2 = Color(0xFF202022), // 0xFF1C1C1E
     backgroundEditable = Color(0xFF444444),
@@ -118,7 +123,7 @@ private val myDarkColors = MyColors(
     timerTitleDefault = Color.White,
     calendarIconColor = Color(0xFF777777),
     datePickerTitleBg = Color(0xFF2A2A2B),
-    bgFormSheet = Color(0xFF121214),
+    bgFormSheet = bgFormDarkMode,
     formButtonRightNoteText = Color(0x88FFFFFF),
     gray1 = AppleColors.gray1Dark.toColor(),
     gray2 = AppleColors.gray2Dark.toColor(),
