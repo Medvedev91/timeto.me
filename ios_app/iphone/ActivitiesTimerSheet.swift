@@ -29,6 +29,9 @@ extension TimetoSheet {
 }
 
 private let bgColor = Color(.bgSheet)
+private let itemHeight = 46.0
+private let topPadding = 2.0
+private let bottomPadding = 30.0
 
 private struct ActivitiesTimerSheet: View {
 
@@ -59,7 +62,7 @@ private struct ActivitiesTimerSheet: View {
             /// If height too small - invalid UI
                 ActivityTimerSheet.RECOMMENDED_HEIGHT,
             /// Do not be afraid of too much height because the native sheet will cut
-                40.0 + DI.activitiesSorted.count.toDouble() * TasksView__TaskRowView__ActivityRowView__ButtonStyle.LIST_ITEM_HEIGHT
+                bottomPadding * topPadding + (DI.activitiesSorted.count.toDouble() * itemHeight)
         )
 
         VMView(vm: vm) { state in
@@ -81,7 +84,7 @@ private struct ActivitiesTimerSheet: View {
 
                         VStack {
 
-                            Padding(vertical: 2)
+                            Padding(vertical: topPadding)
 
                             ForEach(state.allActivities, id: \.activity.id) { activityUI in
 
@@ -97,7 +100,7 @@ private struct ActivitiesTimerSheet: View {
                             }
                                     .buttonStyle(MyButtonStyle())
 
-                            Padding(vertical: 30)
+                            Padding(vertical: bottomPadding)
                         }
                     }
                 }
@@ -118,7 +121,7 @@ private struct MyButtonStyle: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration
                 .label
-                .frame(height: 44.0) // Based on @Environment(\.defaultMinListRowHeight)
+                .frame(height: itemHeight)
                 .background(configuration.isPressed ? Color(.systemGray5) : bgColor)
     }
 }
