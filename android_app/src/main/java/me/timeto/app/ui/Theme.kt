@@ -66,7 +66,7 @@ class MyColors(
     val black = Color.Black
     val transparent = Color.Transparent
     val tasksTabDropFocused = green
-    val iconButtonBg1 = gray2 // todo remove?
+    val iconButtonBg = gray2
     val formHeaderDivider = gray4
 }
 
