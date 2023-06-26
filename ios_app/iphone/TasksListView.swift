@@ -551,21 +551,6 @@ struct TasksView__TaskRowView__ActivityRowView: View {
     }
 }
 
-///
-/// Custom cell's implementation because the listRowBackground() hide touch effect
-///
-struct TasksView__TaskRowView__ActivityRowView__ButtonStyle: ButtonStyle {
-
-    static let LIST_ITEM_HEIGHT = 44.0 // Based on @Environment(\.defaultMinListRowHeight)
-
-    func makeBody(configuration: Self.Configuration) -> some View {
-        configuration
-                .label
-                .frame(height: TasksView__TaskRowView__ActivityRowView__ButtonStyle.LIST_ITEM_HEIGHT)
-                .background(configuration.isPressed ? Color(.systemGray4) : Color(.bg))
-    }
-}
-
 private struct TasksListView__TmrwTaskView: View {
 
     let taskUI: TasksListVM.TmrwTaskUI
