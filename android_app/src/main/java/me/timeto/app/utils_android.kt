@@ -67,6 +67,7 @@ fun ColorNative.toColor() = when (this) {
     ColorNative.orange -> c.orange
     ColorNative.purple -> c.purple
     ColorNative.white -> c.white
+    ColorNative.black -> c.black
     ColorNative.text -> c.text
     ColorNative.textSecondary -> c.textSecondary
     ColorNative.transparent -> c.transparent

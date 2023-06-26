@@ -329,6 +329,8 @@ extension ColorNative {
             return .purple
         case .white:
             return .white
+        case .black:
+            return .black
         case .text:
             return .primary
         case .textsecondary:
