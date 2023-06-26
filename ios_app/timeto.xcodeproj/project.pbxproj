@@ -57,6 +57,7 @@
 		31821874203EAD4F021DAD0E /* AutoBackupIos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821D5928C18299586075F4 /* AutoBackupIos.swift */; };
 		318218EA86BCB1BC8830D2E7 /* TabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821CAC31C48C0016357E8C /* TabsView.swift */; };
 		3182197D9BDC28A7649BA7E1 /* TextFeaturesTimerFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821F29E288957ABB3DF794 /* TextFeaturesTimerFormView.swift */; };
+		3182199F1FA4EF9D78D19E95 /* Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821110E735778C88CDF821 /* Sheet.swift */; };
 		318219D2BBD9BE5D46C83469 /* EditActivitiesDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821CF31C64B32D614C6A9D /* EditActivitiesDialog.swift */; };
 		318219E30EE52A96A502BF30 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182189A26C9B48C0D2E8A4A /* KeyboardManager.swift */; };
 		318219E4F8AFEB280A077F74 /* utils_apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E58DC92CD5673A6B49E /* utils_apple.swift */; };
@@ -125,6 +126,7 @@
 		2CB73DE2292FACE00053B2D6 /* SearchEmojiSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEmojiSheet.swift; sourceTree = "<group>"; };
 		3182106A0DA4A0D8844CFA11 /* ShortcutFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutFormSheet.swift; sourceTree = "<group>"; };
 		318210AB991EB1C25EA1B565 /* TimetoSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetoSheet.swift; sourceTree = "<group>"; };
+		31821110E735778C88CDF821 /* Sheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
 		318211488ABF627A2A9935A7 /* ActivityColorSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityColorSheet.swift; sourceTree = "<group>"; };
 		31821155EAD516A3967CFF52 /* MyDivider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDivider.swift; sourceTree = "<group>"; };
 		3182118D8EA3E0D889D4FDC3 /* utils_ios.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = utils_ios.swift; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 				318211488ABF627A2A9935A7 /* ActivityColorSheet.swift */,
 				31821737F4708A13AAC9CEB3 /* DividerBg2.swift */,
 				31821D886EB022A0AD988588 /* DividerBg.swift */,
+				31821110E735778C88CDF821 /* Sheet.swift */,
 			);
 			path = iphone;
 			sourceTree = "<group>";
@@ -553,6 +556,7 @@
 				31821BC7F849A5C918F61175 /* ActivityColorSheet.swift in Sources */,
 				31821D173BC3AC7067128A32 /* DividerBg2.swift in Sources */,
 				3182115F28EDF1E93DC73694 /* DividerBg.swift in Sources */,
+				3182199F1FA4EF9D78D19E95 /* Sheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
