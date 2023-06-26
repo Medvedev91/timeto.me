@@ -45,7 +45,7 @@ fun ActivityColorSheet(
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .background(c.bg)
+            .background(c.bgSheet)
     ) {
 
         val circleScrollState = rememberScrollState()

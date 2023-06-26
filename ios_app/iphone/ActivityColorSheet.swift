@@ -196,7 +196,7 @@ struct ActivityColorSheet: View {
             }
         }
                 .ignoresSafeArea()
-                .background(Color(.bg))
+                .background(Color(.bgSheet))
     }
 }
 
