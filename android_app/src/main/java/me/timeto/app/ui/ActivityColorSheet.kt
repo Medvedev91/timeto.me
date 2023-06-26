@@ -41,11 +41,12 @@ fun ActivityColorSheet(
 ) {
 
     val (vm, state) = rememberVM { ActivityColorSheetVM(initData) }
+    val bgColor = c.bgSheet
 
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .background(c.bgSheet)
+            .background(bgColor)
     ) {
 
         val circleScrollState = rememberScrollState()
@@ -54,6 +55,7 @@ fun ActivityColorSheet(
         Sheet__HeaderView(
             title = state.headerTitle,
             scrollState = null,
+            bgColor = bgColor,
         )
 
         val alphaAnimate = animateFloatAsState(remember {

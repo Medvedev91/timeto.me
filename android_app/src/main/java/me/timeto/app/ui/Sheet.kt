@@ -189,6 +189,7 @@ object Sheet {
 fun Sheet__HeaderView(
     title: String,
     scrollState: ScrollableState?,
+    bgColor: Color,
 ) {
     val alphaValue = remember {
         derivedStateOf {
@@ -217,7 +218,6 @@ fun Sheet__HeaderView(
         }
     }
     val alphaAnimate = animateFloatAsState(alphaValue.value)
-    val bgColor = c.bg
     val dividerBgColor = c.dividerBg
 
     ZStack(
