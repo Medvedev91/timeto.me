@@ -34,7 +34,7 @@ private val sheetHPadding = MyListView.PADDING_OUTER_HORIZONTAL
 private val dividerPadding = sheetHPadding.goldenRatioDown()
 
 @Composable
-fun ActivityColorPickerSheet(
+fun ActivityColorSheet(
     layer: WrapperView.Layer,
     initData: ActivityColorPickerSheetVM.InitData,
     onPick: (ColorRgba) -> Unit,

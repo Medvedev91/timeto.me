@@ -140,7 +140,7 @@ fun ActivityFormSheet(
                     }
                 ) {
                     Sheet.show { layer ->
-                        ActivityColorPickerSheet(
+                        ActivityColorSheet(
                             layer = layer,
                             initData = vm.buildColorPickerInitData(),
                         ) {
