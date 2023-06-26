@@ -125,11 +125,9 @@ fun ActivitiesTimerSheet(
                     }
                 }
 
-                Divider(
-                    color = c.dividerBg2,
+                DividerBg(
                     modifier = Modifier
                         .padding(start = startPadding),
-                    thickness = 0.5.dp
                 )
             }
         }
