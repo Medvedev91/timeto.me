@@ -49,6 +49,7 @@ func cosDegrees(_ degrees: Double) -> Double {
 /// Sheet uses default colors. Set by hardcode.
 extension UIColor {
 
+    // todo remove
     private static let tgLikeLightBg: UInt = 0xFFEFEFF3
     private static let bgFormDarkMode: UInt = 0xFF121214
 

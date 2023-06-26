@@ -70,6 +70,7 @@ class MyColors(
     val formHeaderDivider = gray4
 }
 
+// todo remove
 private val tgLikeLightSheetBg = Color(0xFFEFEFF3)
 private val bgFormDarkMode = Color(0xFF121214)
 private val blueLight = Color(0xFF007AFF)
