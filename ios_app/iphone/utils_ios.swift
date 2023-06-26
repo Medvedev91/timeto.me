@@ -50,6 +50,7 @@ func cosDegrees(_ degrees: Double) -> Double {
 extension UIColor {
 
     private static let tgLikeLightBg: UInt = 0xFFEFEFF3
+    private static let bgFormDarkMode: UInt = 0xFF121214
 
     //////
 
@@ -71,6 +72,8 @@ extension UIColor {
 
     static var bg: UIColor = myDayNight(.white, .black)
 
+    static var bgSheet = myDayNightArgb(0xFFFFFFFF, bgFormDarkMode)
+
     static var dividerBg = myDayNightArgb(0xFFD1D1D6, 0xFF3A3A3C)
 
     static var timerBarBorder: UIColor = myDayNightArgb(0xFFBBDEFB, 0xFF2C2C2E)
@@ -83,8 +86,8 @@ extension UIColor {
     // todo remove
     static var mySecondaryBackground = myDayNightArgb(0xFFFFFFFF, 0xFF1C1C1E)
 
-    // todo remove?
-    static var mySheetFormBg = myDayNightArgb(tgLikeLightBg, 0xFF121214)
+    // todo rename like android
+    static var mySheetFormBg = myDayNightArgb(tgLikeLightBg, bgFormDarkMode)
 
     static var myFormButtonRightNoteText = myDayNightArgb(0x88000000, 0x88FFFFFF)
 
