@@ -18,15 +18,15 @@ private let menuColor = FocusModeVM.companion.menuColor.toColor()
 
 extension View {
 
-    func attachTimerFullScreenView() -> some View {
-        modifier(TimerFullScreen__ViewModifier())
+    func attachFocusModeView() -> some View {
+        modifier(FocusModeView__ViewModifier())
     }
 }
 
 ///
 ///
 
-private struct TimerFullScreen__ViewModifier: ViewModifier {
+private struct FocusModeView__ViewModifier: ViewModifier {
 
     @State private var isPresented = false
 
@@ -37,7 +37,7 @@ private struct TimerFullScreen__ViewModifier: ViewModifier {
         content
                 /// Скрывание status bar в .statusBar(...)
                 .fullScreenCover(isPresented: $isPresented) {
-                    TimerFullScreen__FullScreenCoverView()
+                    FocusModeView__CoverView()
                             .colorScheme(.dark)
                             .attachTimetoSheet()
                             .ignoresSafeArea(.keyboard, edges: .bottom)
@@ -48,7 +48,7 @@ private struct TimerFullScreen__ViewModifier: ViewModifier {
     }
 }
 
-private struct TimerFullScreen__FullScreenCoverView: View {
+private struct FocusModeView__CoverView: View {
 
     @State private var vm = FocusModeVM()
     @State private var isTimerActivitiesPresented = false

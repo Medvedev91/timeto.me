@@ -32,7 +32,7 @@ struct IOSApp: App {
                             .attachTimetoSheet()
                             .attachTimetoAlert()
                             .attachAutoBackupIos()
-                            .attachTimerFullScreenView()
+                            .attachFocusModeView()
                             .onReceive(scheduledNotificationsDataPublisher) {
                                 let center = UNUserNotificationCenter.current()
                                 center.removeAllPendingNotificationRequests()
