@@ -394,7 +394,7 @@ private struct ChecklistView: View {
                         )
                                 .frame(height: checklistItemMinHeight)
                     }
-                            .frame(width: proxy.size.width * 0.74)
+                            .frame(width: proxy.size.width * 0.75)
                 }
                         .frame(maxWidth: .infinity)
             }
