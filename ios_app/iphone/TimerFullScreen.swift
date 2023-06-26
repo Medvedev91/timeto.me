@@ -14,7 +14,7 @@ private let taskCountsHeight = 36.0
 private let taskItemHeight = 36.0
 private let taskListContentPadding = 4.0
 
-private let menuColor = FullScreenVM.companion.menuColor.toColor()
+private let menuColor = FocusModeVM.companion.menuColor.toColor()
 
 extension View {
 
@@ -50,7 +50,7 @@ private struct TimerFullScreen__ViewModifier: ViewModifier {
 
 private struct TimerFullScreen__FullScreenCoverView: View {
 
-    @State private var vm = FullScreenVM()
+    @State private var vm = FocusModeVM()
     @State private var isTimerActivitiesPresented = false
 
     @EnvironmentObject private var timetoSheet: TimetoSheet
@@ -313,7 +313,7 @@ private struct TimerFullScreen__FullScreenCoverView: View {
 
 private struct ChecklistView: View {
 
-    let checklistUI: FullScreenVM.ChecklistUI
+    let checklistUI: FocusModeVM.ChecklistUI
 
     @State private var vScroll = 0
 
@@ -405,7 +405,7 @@ private struct ChecklistView: View {
 
 private struct ImportantTasksView: View {
 
-    let tasks: [FullScreenVM.ImportantTask]
+    let tasks: [FocusModeVM.ImportantTask]
 
     private let LIST_BOTTOM_ITEM_ID = "bottom_id"
 
@@ -445,7 +445,7 @@ private struct ImportantTasksView: View {
 
 private struct ImportantTaskItem: View {
 
-    let importantTask: FullScreenVM.ImportantTask
+    let importantTask: FocusModeVM.ImportantTask
 
     @State private var isSheetPresented = false
 

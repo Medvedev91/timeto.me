@@ -36,7 +36,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.shared.*
-import me.timeto.shared.vm.FullScreenVM
+import me.timeto.shared.vm.FocusModeVM
 import me.timeto.shared.vm.ui.ChecklistStateUI
 
 private val dividerColor = AppleColors.gray4Dark.toColor()
@@ -49,7 +49,7 @@ private val taskCountsHeight = 36.dp
 private val taskItemHeight = 36.dp
 private val taskListContentPadding = 4.dp
 
-private val menuColor = FullScreenVM.menuColor.toColor()
+private val menuColor = FocusModeVM.menuColor.toColor()
 
 @Composable
 fun FullScreenListener(
@@ -111,7 +111,7 @@ fun FullScreenListener(
 private fun FullScreenView(
     layer: WrapperView.Layer,
 ) {
-    val (vm, state) = rememberVM { FullScreenVM() }
+    val (vm, state) = rememberVM { FocusModeVM() }
 
     val checklistUI = state.checklistUI
 
@@ -524,7 +524,7 @@ private fun RowScope.MenuCloseButton(
 
 @Composable
 private fun ChecklistView(
-    checklistUI: FullScreenVM.ChecklistUI,
+    checklistUI: FocusModeVM.ChecklistUI,
     modifier: Modifier,
     scrollState: LazyListState,
 ) {
@@ -651,7 +651,7 @@ private fun ChecklistView(
 
 @Composable
 private fun ImportantTasksView(
-    tasks: List<FullScreenVM.ImportantTask>,
+    tasks: List<FocusModeVM.ImportantTask>,
     modifier: Modifier,
     scrollState: LazyListState,
 ) {
