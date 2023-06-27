@@ -109,6 +109,7 @@ class FocusModeVM : __VM<FocusModeVM.State>() {
                     it.copy(
                         interval = interval,
                         isCountdown = if (isNewInterval) true else it.isCountdown,
+                        isTabTasksVisible = if (isNewInterval) false else it.isTabTasksVisible,
                     )
                 }
             }
