@@ -27,3 +27,119 @@ struct Sheet__HeaderView: View {
                 .background(bgColor.opacity(bgAlpha))
     }
 }
+
+///
+/// Sheet__BottomView
+
+struct Sheet__BottomView<Content: View>: View {
+
+    @ViewBuilder let content: () -> Content
+
+    var body: some View {
+
+        VStack {
+            DividerBg()
+            content()
+        }
+                .background(Color(.bg))
+    }
+}
+
+struct Sheet__BottomViewDefault<Content: View>: View {
+
+    let primaryText: String
+    let primaryAction: () -> Void
+    let secondaryText: String
+    let secondaryAction: () -> Void
+    let topContent: (() -> Content)? = nil
+    let startContent: (() -> Content)? = nil
+
+    var body: some View {
+
+        Sheet__BottomView {
+            if let topContent = topContent {
+                topContent()
+            }
+            HStack(alignment: .center) {
+                if let startContent = startContent {
+                    startContent()
+                }
+                Spacer()
+                HStack {
+                    Sheet__BottomView__SecondaryButton(text: secondaryText) {
+                        secondaryAction()
+                    }
+                    Sheet__BottomView__PrimaryButton(text: primaryText) {
+                        primaryAction()
+                    }
+                }
+                        .padding(.top, 10)
+                        .padding(.trailing, MyListView.PADDING_OUTER_HORIZONTAL)
+                        .padding(.bottom, 10)
+            }
+        }
+    }
+}
+
+struct Sheet__BottomView__Button: View {
+
+    let text: String
+    let backgroundColor: Color
+    let fontColor: Color
+    let fontWeight: Font.Weight
+    let onClick: () -> Void
+
+    var body: some View {
+
+        Button(
+                action: {
+                    onClick()
+                },
+                label: {
+                    Text(text)
+                            .padding(.horizontal, 13)
+                            .padding(.top, 7)
+                            .padding(.bottom, 8)
+                            .foregroundColor(fontColor)
+                            .font(.system(size: 16, weight: fontWeight))
+                }
+        )
+                .background(roundedShape.fill(backgroundColor))
+    }
+}
+
+struct Sheet__BottomView__PrimaryButton: View {
+
+    let text: String
+    let onClick: () -> Void
+
+    var body: some View {
+        Sheet__BottomView__Button(
+                text: text,
+                backgroundColor: .blue,
+                fontColor: .white,
+                fontWeight: .semibold
+        ) {
+            onClick()
+        }
+    }
+}
+
+struct Sheet__BottomView__SecondaryButton: View {
+
+    let text: String
+    let withPaddingRight: Bool = true
+    let onClick: () -> Void
+
+    var body: some View {
+        Sheet__BottomView__Button(
+                text: text,
+                backgroundColor: .clear,
+                fontColor: .secondary,
+                fontWeight: .light
+        ) {
+            onClick()
+        }
+                .padding(.trailing, withPaddingRight ? 6.0 : 0.0)
+    }
+}
