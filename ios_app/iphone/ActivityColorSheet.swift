@@ -33,18 +33,11 @@ struct ActivityColorSheet: View {
 
         VMView(vm: vm, stack: .VStack()) { state in
 
-            SheetHeaderView(
-                    onCancel: { isPresented.toggle() },
+            Sheet__HeaderView(
                     title: state.headerTitle,
-                    doneText: state.doneTitle,
-                    isDoneEnabled: true,
-                    scrollToHeader: (circlesScroll + activitiesScroll) * 4, // x4 speed up
-                    bgColor: .mySecondaryBackground,
-                    dividerColor: .dividerBg2
-            ) {
-                onPick(state.selectedColor)
-                isPresented = false
-            }
+                    scrollToHeader: (circlesScroll + activitiesScroll) * 4, // x4 speed uph
+                    bgColor: bgColor
+            )
 
             VStack {
 
@@ -194,6 +187,19 @@ struct ActivityColorSheet: View {
                             .background(Color(.bg))
                             .transition(.move(edge: .bottom))
                 }
+
+                Sheet__BottomViewDefault<AnyView>(
+                        primaryText: state.doneTitle,
+                        primaryAction: {
+                            onPick(state.selectedColor)
+                            isPresented = false
+                        },
+                        secondaryText: "Cancel",
+                        secondaryAction: {
+                            isPresented = false
+                        }
+                )
+                        .safeAreaPadding(.bottom)
             }
         }
                 .ignoresSafeArea()
