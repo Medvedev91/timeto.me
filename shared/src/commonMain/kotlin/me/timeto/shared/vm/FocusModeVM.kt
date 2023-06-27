@@ -104,12 +104,11 @@ class FocusModeVM : __VM<FocusModeVM.State>() {
         IntervalModel.getLastOneOrNullFlow()
             .filterNotNull()
             .onEachExIn(scope) { interval ->
-                val isCountdown = if (interval.id == state.value.interval.id)
-                    state.value.isCountdown else true
                 state.update {
+                    val isNewInterval = it.interval.id != interval.id
                     it.copy(
                         interval = interval,
-                        isCountdown = isCountdown,
+                        isCountdown = if (isNewInterval) true else it.isCountdown,
                     )
                 }
             }
