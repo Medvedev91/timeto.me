@@ -34,14 +34,14 @@ private struct FocusModeView__ViewModifier: ViewModifier {
 
     func body(content: Content) -> some View {
 
-        content
-                /// Скрывание status bar в .statusBar(...)
-                .fullScreenCover(isPresented: $isPresented) {
-                    FocusModeView__CoverView()
-                            .colorScheme(.dark)
-                            .attachTimetoSheet()
-                            .ignoresSafeArea(.keyboard, edges: .bottom)
-                }
+        ZStack {
+            content
+            if isPresented {
+                FocusModeView__CoverView()
+                        .colorScheme(.dark)
+                        .ignoresSafeArea(.keyboard, edges: .bottom)
+            }
+        }
                 .onReceive(statePublisher) { newValue in
                     isPresented = newValue.boolValue
                 }
@@ -195,6 +195,7 @@ private struct FocusModeView__CoverView: View {
                                         vm.toggleIsTabTasksVisible()
                                     }
                             )
+                                    .clipped() // Fix list offset on IME open
                         }
                                 .padding(.bottom, bottomNavigationHeight)
                     }
