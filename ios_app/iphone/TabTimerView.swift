@@ -455,7 +455,7 @@ struct TabTimerView_ActivityRowView: View {
                     }
                 }
                 .buttonStyle(TabTimerView_ActivityRowView_ButtonStyle(isActive: activityUI.isActive))
-                .clipShape(roundedShape)
+                .clipShape(squircleShape)
     }
 }
 

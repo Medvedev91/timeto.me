@@ -9,7 +9,7 @@ let DEF_LIST_V_PADDING = 12.0
 
 let onePx = 1 / UIScreen.main.scale
 
-let roundedShape = RoundedRectangle(cornerRadius: 12, style: .continuous)
+let squircleShape = RoundedRectangle(cornerRadius: 12, style: .continuous)
 
 func hideKeyboard() {
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)

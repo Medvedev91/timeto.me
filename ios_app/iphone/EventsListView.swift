@@ -90,7 +90,7 @@ struct EventsListView: View {
                             }
                                     .padding(.top, 5)
                                     .padding(.bottom, 5)
-                                    .overlay(roundedShape.stroke(Color(.dividerBg), lineWidth: onePx))
+                                    .overlay(squircleShape.stroke(Color(.dividerBg), lineWidth: onePx))
                                     .padding(.top, 19)
                                     .padding(.bottom, 20)
                                     .padding(.leading, TAB_TASKS_PADDING_HALF_H)

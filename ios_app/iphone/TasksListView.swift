@@ -120,7 +120,7 @@ struct TasksListView: View {
                                         .padding(.trailing, 5)
                                         .buttonStyle(PlainButtonStyle())
                             }
-                                    .overlay(roundedShape.stroke(Color(.dividerBg), lineWidth: onePx))
+                                    .overlay(squircleShape.stroke(Color(.dividerBg), lineWidth: onePx))
                                     .padding(.horizontal, TAB_TASKS_PADDING_HALF_H - 4)
                                     .padding(.top, 20)
                                     .padding(.bottom, 20)
@@ -426,7 +426,7 @@ struct TasksView__TaskRowView: View {
                 DividerBg(xOffset: TAB_TASKS_PADDING_HALF_H)
             }
         }
-                .clipShape(roundedShape)
+                .clipShape(squircleShape)
                 .id("\(taskUI.task.id) \(taskUI.task.text)") /// #TruncationDynamic
                 .sheetEnv(
                         isPresented: $isAddCalendarSheetPresented,

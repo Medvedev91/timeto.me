@@ -50,10 +50,7 @@ struct RepeatingsListView: View {
                                                 .font(.system(size: 15, weight: .bold))
                                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                                                 .foregroundColor(.white)
-                                                .background(
-                                                        roundedShape
-                                                                .fill(.blue)
-                                                )
+                                                .background(squircleShape.fill(.blue))
                                     }
                             )
                                     .frame(height: minListRowHeight)
