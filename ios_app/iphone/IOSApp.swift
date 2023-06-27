@@ -29,10 +29,10 @@ struct IOSApp: App {
                 if state.isAppReady {
 
                     TabsView()
+                            .attachFocusModeView()
                             .attachTimetoSheet()
                             .attachTimetoAlert()
                             .attachAutoBackupIos()
-                            .attachFocusModeView()
                             .onReceive(scheduledNotificationsDataPublisher) {
                                 let center = UNUserNotificationCenter.current()
                                 center.removeAllPendingNotificationRequests()
