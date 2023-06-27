@@ -335,9 +335,7 @@ private fun FocusModeView(
                                 TabTasksView(
                                     modifier = Modifier.weight(1f),
                                     withRepeatings = false,
-                                    onTaskStarted = {
-                                        vm.toggleIsTabTasksVisible()
-                                    },
+                                    onTaskStarted = {},
                                 )
                             }
 
