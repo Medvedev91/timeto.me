@@ -329,7 +329,7 @@ private struct ChecklistView: View {
                     HStack(alignment: .top, spacing: 0) {
 
                         let checkboxSize = 20.0
-                        let checklistItemMinHeight = 44.0
+                        let checklistItemMinHeight = 46.0
                         let checklistDividerPadding = 12.0
 
                         ScrollViewWithVListener(showsIndicators: false, vScroll: $vScroll) {
