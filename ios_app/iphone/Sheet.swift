@@ -45,14 +45,14 @@ struct Sheet__BottomView<Content: View>: View {
     }
 }
 
-struct Sheet__BottomViewDefault<Content: View>: View {
+struct Sheet__BottomViewDefault<Content>: View where Content : View {
 
     let primaryText: String
     let primaryAction: () -> Void
     let secondaryText: String
     let secondaryAction: () -> Void
-    let topContent: (() -> Content)? = nil
-    let startContent: (() -> Content)? = nil
+    var topContent: (() -> Content)? = nil
+    var startContent: (() -> Content)? = nil
 
     var body: some View {
 
