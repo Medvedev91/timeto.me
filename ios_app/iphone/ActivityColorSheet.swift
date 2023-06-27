@@ -122,24 +122,10 @@ struct ActivityColorSheet: View {
                                 }
                                         .padding(.top, 4)
                             }
-
-                            Button(
-                                    action: {
-                                        vm.toggleIsRgbSlidersShowed()
-                                    },
-                                    label: {
-                                        Text("Custom")
-                                                .font(.system(size: 16))
-                                    }
-                            )
-                                    .padding(.top, 4)
-                                    .padding(.bottom, 20)
-                                    .padding(.leading, circlePadding)
-                                    .animateVmValue(value: state.isRgbSlidersShowed, state: $isRgbSlidersShowedAnim)
                         }
                                 .padding(.leading, dividerPadding - circlePadding)
                                 .padding(.trailing, sheetHPadding - circlePadding)
-                                .safeAreaPadding(.bottom)
+                                .padding(.bottom, 16)
                     }
                 }
 
@@ -173,19 +159,6 @@ struct ActivityColorSheet: View {
                                                             RoundedRectangle(cornerRadius: 8, style: .continuous)
                                                                     .fill(state.selectedColor.toColor())
                                                     )
-
-                                            HStack {
-                                                Spacer()
-                                                Button(
-                                                        action: { vm.toggleIsRgbSlidersShowed() },
-                                                        label: {
-                                                            Image(systemName: "chevron.down.circle.fill")
-                                                                    .font(.system(size: 24, weight: .medium))
-                                                                    .foregroundColor(Color(.iconButtonBg1))
-                                                        }
-                                                )
-                                            }
-                                                    .padding(.trailing, sheetHPadding + circlePadding + 2)
                                         }
                                                 .padding(.top, 12)
                                                 .padding(.bottom, 8)
@@ -203,6 +176,29 @@ struct ActivityColorSheet: View {
                                 }
                             }
                                     .clipped()
+                        },
+                        startContent: {
+
+                            ZStack {
+
+                                Button(
+                                        action: {
+                                            vm.toggleIsRgbSlidersShowed()
+                                        },
+                                        label: {
+                                            ZStack {
+                                                Image(systemName: isRgbSlidersShowedAnim ? "chevron.down" : "slider.horizontal.3")
+                                                        .font(.system(size: isRgbSlidersShowedAnim ? 16 : 22, weight: .medium))
+                                                        .foregroundColor(Color(isRgbSlidersShowedAnim ? .white : .systemGray2))
+                                                        .offset(y: isRgbSlidersShowedAnim ? 1 : 0)
+                                            }
+                                                    .frame(width: 34, height: 34)
+                                                    .background(roundedShape.fill(isRgbSlidersShowedAnim ? .blue : .clear))
+                                        }
+                                )
+                            }
+                                    .animateVmValue(value: state.isRgbSlidersShowed, state: $isRgbSlidersShowedAnim)
+                                    .padding(.leading, sheetHPadding)
                         }
                 )
                         .safeAreaPadding(.bottom)
