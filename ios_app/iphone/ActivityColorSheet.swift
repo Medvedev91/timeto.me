@@ -143,52 +143,7 @@ struct ActivityColorSheet: View {
                     }
                 }
 
-                if (isRgbSlidersShowedAnim) {
-
-                    VStack {
-
-                        DividerBg2()
-
-                        ZStack(alignment: .center) {
-
-                            Text(state.rgbText)
-                                    .font(.system(size: 16))
-                                    .foregroundColor(.white)
-                                    .lineLimit(1)
-                                    .padding(.horizontal, 8)
-                                    .padding(.vertical, 4)
-                                    .background(
-                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                    .fill(state.selectedColor.toColor())
-                                    )
-
-                            HStack {
-                                Spacer()
-                                Button(
-                                        action: { vm.toggleIsRgbSlidersShowed() },
-                                        label: {
-                                            Image(systemName: "chevron.down.circle.fill")
-                                                    .font(.system(size: 24, weight: .medium))
-                                                    .foregroundColor(Color(.iconButtonBg1))
-                                        }
-                                )
-                            }
-                                    .padding(.trailing, sheetHPadding + circlePadding + 2)
-                        }
-                                .padding(.top, 12)
-                                .padding(.bottom, 8)
-
-                        ColorSliderView(value: Double(state.r), color: .red) { vm.upR(r: Float($0)) }
-                        ColorSliderView(value: Double(state.g), color: .green) { vm.upG(g: Float($0)) }
-                        ColorSliderView(value: Double(state.b), color: .blue) { vm.upB(b: Float($0)) }
-                                .padding(.bottom, 8)
-                    }
-                            .safeAreaPadding(.bottom)
-                            .background(Color(.bg))
-                            .transition(.move(edge: .bottom))
-                }
-
-                Sheet__BottomViewDefault<AnyView>(
+                Sheet__BottomViewDefault(
                         primaryText: state.doneTitle,
                         primaryAction: {
                             onPick(state.selectedColor)
@@ -197,6 +152,57 @@ struct ActivityColorSheet: View {
                         secondaryText: "Cancel",
                         secondaryAction: {
                             isPresented = false
+                        },
+                        topContent: {
+
+                            ZStack {
+
+                                if (isRgbSlidersShowedAnim) {
+
+                                    VStack {
+
+                                        ZStack(alignment: .center) {
+
+                                            Text(state.rgbText)
+                                                    .font(.system(size: 16))
+                                                    .foregroundColor(.white)
+                                                    .lineLimit(1)
+                                                    .padding(.horizontal, 8)
+                                                    .padding(.vertical, 4)
+                                                    .background(
+                                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                                    .fill(state.selectedColor.toColor())
+                                                    )
+
+                                            HStack {
+                                                Spacer()
+                                                Button(
+                                                        action: { vm.toggleIsRgbSlidersShowed() },
+                                                        label: {
+                                                            Image(systemName: "chevron.down.circle.fill")
+                                                                    .font(.system(size: 24, weight: .medium))
+                                                                    .foregroundColor(Color(.iconButtonBg1))
+                                                        }
+                                                )
+                                            }
+                                                    .padding(.trailing, sheetHPadding + circlePadding + 2)
+                                        }
+                                                .padding(.top, 12)
+                                                .padding(.bottom, 8)
+
+                                        ColorSliderView(value: Double(state.r), color: .red) { vm.upR(r: Float($0)) }
+                                        ColorSliderView(value: Double(state.g), color: .green) { vm.upG(g: Float($0)) }
+                                        ColorSliderView(value: Double(state.b), color: .blue) { vm.upB(b: Float($0)) }
+                                                .padding(.bottom, 8)
+                                    }
+                                            .background(Color(.bg))
+                                            .transition(.move(edge: .bottom))
+                                } else {
+                                    // Otherwise vertical scale animation
+                                    Color.clear.frame(height: 0)
+                                }
+                            }
+                                    .clipped()
                         }
                 )
                         .safeAreaPadding(.bottom)
