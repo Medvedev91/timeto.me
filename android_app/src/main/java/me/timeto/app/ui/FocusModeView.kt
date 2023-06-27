@@ -544,7 +544,7 @@ private fun ChecklistView(
 
         Row(
             modifier = Modifier
-                .fillMaxWidth(0.78f)
+                .fillMaxWidth(0.80f)
                 .weight(1f),
         ) {
 
