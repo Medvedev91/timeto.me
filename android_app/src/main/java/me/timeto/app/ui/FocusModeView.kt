@@ -257,7 +257,7 @@ private fun FocusModeView(
                                 if (timerSubtitle != null && !state.isTabTasksVisible) (-6).dp else (-10).dp
                             ).value
                         )
-                        .clip(RoundedCornerShape(99.dp))
+                        .clip(roundedShape)
                         .clickable {
                             vm.restart()
                         }
