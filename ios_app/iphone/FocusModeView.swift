@@ -64,9 +64,9 @@ private struct FocusModeView__CoverView: View {
             Color.black.edgesIgnoringSafeArea(.all)
                     .statusBar(hidden: true)
 
-            VStack(spacing: 0) {
+            VStack {
 
-                VStack(spacing: 0) {
+                VStack {
 
                     Text(state.title)
                             .font(.system(size: 20))
