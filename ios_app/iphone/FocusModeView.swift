@@ -68,18 +68,11 @@ private struct FocusModeView__CoverView: View {
 
                 VStack(spacing: 0) {
 
-                    Button(
-                            action: {
-                                vm.toggleIsTaskCancelVisible()
-                            },
-                            label: {
-                                Text(state.title)
-                                        .font(.system(size: 20))
-                                        .foregroundColor(.white)
-                            }
-                    )
+                    Text(state.title)
+                            .font(.system(size: 20))
+                            .foregroundColor(.white)
 
-                    if (state.isTaskCancelVisible) {
+                    if (!state.isCountdown) {
 
                         Button(
                                 action: {
@@ -91,11 +84,9 @@ private struct FocusModeView__CoverView: View {
                                             .padding(.horizontal, 8)
                                             .font(.system(size: 14, weight: .bold))
                                             .foregroundColor(.white)
-                                            .background(
-                                                    RoundedRectangle(cornerRadius: 99, style: .circular)
-                                                            .fill(.blue)
-                                            )
-                                            .padding(.vertical, 12)
+                                            .background(roundedShape.fill(.blue))
+                                            .padding(.top, 12)
+                                            .padding(.bottom, 4)
                                 }
                         )
                     }

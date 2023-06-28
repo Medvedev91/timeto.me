@@ -142,10 +142,7 @@ private fun FocusModeView(
                 Text(
                     text = state.title,
                     modifier = Modifier
-                        .clip(MySquircleShape())
-                        .clickable {
-                            vm.toggleIsTaskCancelVisible()
-                        }
+                        .clip(squircleShape)
                         .padding(horizontal = 8.dp),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Normal,
@@ -154,7 +151,7 @@ private fun FocusModeView(
                 )
 
                 AnimatedVisibility(
-                    state.isTaskCancelVisible,
+                    !state.isCountdown,
                     enter = fadeIn() + expandVertically(),
                     exit = fadeOut() + shrinkVertically(),
                 ) {
@@ -165,8 +162,8 @@ private fun FocusModeView(
                         fontSize = 13.sp,
                         color = c.white,
                         modifier = Modifier
-                            .padding(top = 12.dp, bottom = 12.dp)
-                            .clip(RoundedCornerShape(99.dp))
+                            .padding(top = 12.dp, bottom = 4.dp)
+                            .clip(roundedShape)
                             .background(c.blue)
                             .clickable {
                                 vm.cancelTask()
