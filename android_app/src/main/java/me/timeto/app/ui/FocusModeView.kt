@@ -134,21 +134,43 @@ private fun FocusModeView(
 
             Column(
                 modifier = Modifier
-                    .padding(horizontal = 30.dp)
+                    .padding(horizontal = 24.dp)
                     .offset(y = 6.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
-                Text(
-                    text = state.title,
+                HStack(
                     modifier = Modifier
                         .clip(squircleShape)
-                        .padding(horizontal = 8.dp),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Normal,
-                    color = c.white,
-                    textAlign = TextAlign.Center,
-                )
+                        .clickable {
+                            vm.toggleIsPurple()
+                        }
+                        .padding(horizontal = 10.dp),
+                ) {
+
+                    AnimatedVisibility(
+                        state.isPurple,
+                        enter = fadeIn() + expandHorizontally(expandFrom = Alignment.Start, clip = false),
+                        exit = fadeOut() + shrinkHorizontally(shrinkTowards = Alignment.Start, clip = false),
+                    ) {
+                        Text(
+                            text = state.activity.emoji,
+                            modifier = Modifier.padding(end = 6.dp),
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Normal,
+                            color = c.white,
+                            textAlign = TextAlign.Center,
+                        )
+                    }
+
+                    Text(
+                        text = state.title,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Normal,
+                        color = c.white,
+                        textAlign = TextAlign.Center,
+                    )
+                }
 
                 AnimatedVisibility(
                     state.isPurple,
