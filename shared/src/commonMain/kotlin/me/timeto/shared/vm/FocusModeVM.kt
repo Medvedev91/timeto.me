@@ -20,14 +20,14 @@ class FocusModeVM : __VM<FocusModeVM.State>() {
     data class State(
         val interval: IntervalModel,
         val allChecklistItems: List<ChecklistItemModel>,
-        val isCountdown: Boolean,
+        val isPurple: Boolean,
         val tasksToday: List<TaskModel>,
         val isTabTasksVisible: Boolean,
         val idToUpdate: Long,
     ) {
 
         val cancelTaskText = "CANCEL"
-        val timerData = TimerDataUI(interval, isCountdown, ColorNative.white)
+        val timerData = TimerDataUI(interval, !isPurple, ColorNative.white)
 
         val activity = interval.getActivityDI()
 
@@ -90,7 +90,7 @@ class FocusModeVM : __VM<FocusModeVM.State>() {
         State(
             interval = DI.lastInterval,
             allChecklistItems = DI.checklistItems,
-            isCountdown = true,
+            isPurple = false,
             tasksToday = DI.tasks.filter { it.isToday },
             isTabTasksVisible = false,
             idToUpdate = 0,
@@ -106,7 +106,7 @@ class FocusModeVM : __VM<FocusModeVM.State>() {
                     val isNewInterval = it.interval.id != interval.id
                     it.copy(
                         interval = interval,
-                        isCountdown = if (isNewInterval) true else it.isCountdown,
+                        isPurple = if (isNewInterval) false else it.isPurple,
                         isTabTasksVisible = if (isNewInterval) false else it.isTabTasksVisible,
                     )
                 }
@@ -143,8 +143,8 @@ class FocusModeVM : __VM<FocusModeVM.State>() {
         }
     }
 
-    fun toggleIsCountdown() {
-        state.update { it.copy(isCountdown = it.isCountdown.not()) }
+    fun toggleIsPurple() {
+        state.update { it.copy(isPurple = !it.isPurple) }
     }
 
     fun toggleIsTabTasksVisible() {

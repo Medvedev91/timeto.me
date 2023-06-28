@@ -151,7 +151,7 @@ private fun FocusModeView(
                 )
 
                 AnimatedVisibility(
-                    !state.isCountdown,
+                    state.isPurple,
                     enter = fadeIn() + expandVertically(),
                     exit = fadeOut() + shrinkVertically(),
                 ) {
@@ -202,7 +202,7 @@ private fun FocusModeView(
                 modifier = Modifier
                     .clip(MySquircleShape())
                     .clickable {
-                        vm.toggleIsCountdown()
+                        vm.toggleIsPurple()
                     }
                     .padding(horizontal = 8.dp),
                 fontSize = if (timerData.isCompact) 60.sp else 70.sp,
@@ -212,7 +212,7 @@ private fun FocusModeView(
             )
 
             AnimatedVisibility(
-                timerSubtitle != null || !state.isCountdown,
+                timerSubtitle != null || state.isPurple,
                 enter = fadeIn() + expandVertically(animationSpec = spring(stiffness = Spring.StiffnessMedium)),
                 exit = fadeOut() + shrinkVertically(),
             ) {

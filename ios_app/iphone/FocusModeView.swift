@@ -72,7 +72,7 @@ private struct FocusModeView__CoverView: View {
                             .font(.system(size: 20))
                             .foregroundColor(.white)
 
-                    if (!state.isCountdown) {
+                    if (state.isPurple) {
 
                         Button(
                                 action: {
@@ -105,7 +105,7 @@ private struct FocusModeView__CoverView: View {
 
                 Button(
                         action: {
-                            vm.toggleIsCountdown()
+                            vm.toggleIsPurple()
                         },
                         label: {
                             Text(timerData.title)
@@ -116,7 +116,7 @@ private struct FocusModeView__CoverView: View {
                         }
                 )
 
-                if timerData.subtitle != nil || !state.isCountdown {
+                if timerData.subtitle != nil || state.isPurple {
                     Button(
                             action: {
                                 vm.restart()
