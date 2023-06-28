@@ -173,27 +173,31 @@ private fun FocusModeView(
                     )
 
                     AnimatedVisibility(
-                        state.isPurple,
+                        state.isPurple && (state.cancelTaskText != null),
                         modifier = Modifier.offset(y = 2.dp - onePx),
                         enter = fadeIn() + expandHorizontally(expandFrom = Alignment.End, clip = false),
                         exit = fadeOut() + shrinkHorizontally(shrinkTowards = Alignment.End, clip = false),
                     ) {
 
-                        Text(
-                            state.cancelTaskText,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 12.sp,
-                            color = c.white,
-                            modifier = Modifier
-                                .padding(start = 8.dp)
-                                .clip(roundedShape)
-                                .background(c.blue)
-                                .clickable {
-                                    vm.cancelTask()
-                                }
-                                .padding(horizontal = 6.dp)
-                                .padding(top = 1.dp, bottom = 2.dp),
-                        )
+                        val cancelTaskText = state.cancelTaskText
+                        // Condition to ignore animation with empty text
+                        if (cancelTaskText != null) {
+                            Text(
+                                cancelTaskText,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 12.sp,
+                                color = c.white,
+                                modifier = Modifier
+                                    .padding(start = 8.dp)
+                                    .clip(roundedShape)
+                                    .background(c.blue)
+                                    .clickable {
+                                        vm.cancelTask()
+                                    }
+                                    .padding(horizontal = 6.dp)
+                                    .padding(top = 1.dp, bottom = 2.dp),
+                            )
+                        }
                     }
                 }
             }
