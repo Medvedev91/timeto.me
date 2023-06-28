@@ -140,18 +140,13 @@ private fun FocusModeView(
             ) {
 
                 HStack(
-                    modifier = Modifier
-                        .clip(squircleShape)
-                        .clickable {
-                            vm.toggleIsPurple()
-                        },
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
 
                     AnimatedVisibility(
                         state.isPurple,
-                        enter = fadeIn() + expandHorizontally(expandFrom = Alignment.Start, clip = false),
-                        exit = fadeOut() + shrinkHorizontally(shrinkTowards = Alignment.Start, clip = false),
+                        enter = fadeIn(animSpecFloatMedium) + expandHorizontally(animSpecIntSizeMedium, expandFrom = Alignment.Start, clip = false),
+                        exit = fadeOut(animSpecFloatMedium) + shrinkHorizontally(animSpecIntSizeMedium, shrinkTowards = Alignment.Start, clip = false),
                     ) {
                         Text(
                             text = state.activity.emoji,
@@ -175,8 +170,8 @@ private fun FocusModeView(
                     AnimatedVisibility(
                         state.isPurple && (state.cancelTaskText != null),
                         modifier = Modifier.offset(y = 2.dp - onePx),
-                        enter = fadeIn() + expandHorizontally(expandFrom = Alignment.End, clip = false),
-                        exit = fadeOut() + shrinkHorizontally(shrinkTowards = Alignment.End, clip = false),
+                        enter = fadeIn(animSpecFloatMedium) + expandHorizontally(animSpecIntSizeMedium, expandFrom = Alignment.End, clip = false),
+                        exit = fadeOut(animSpecFloatMedium) + shrinkHorizontally(animSpecIntSizeMedium, shrinkTowards = Alignment.End, clip = false),
                     ) {
 
                         val cancelTaskText = state.cancelTaskText
