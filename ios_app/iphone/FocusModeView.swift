@@ -71,6 +71,7 @@ private struct FocusModeView__CoverView: View {
                     Text(state.title)
                             .font(.system(size: 20))
                             .foregroundColor(.white)
+                            .multilineTextAlignment(.center)
 
                     if let cancelTaskText = state.cancelTaskText, state.isPurple {
 
@@ -91,6 +92,7 @@ private struct FocusModeView__CoverView: View {
                                 .padding(.leading, 8)
                     }
                 }
+                        .padding(.horizontal, 20)
 
                 let timerData = state.timerData
 
