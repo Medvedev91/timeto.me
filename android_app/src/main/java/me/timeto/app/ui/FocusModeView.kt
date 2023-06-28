@@ -134,7 +134,7 @@ private fun FocusModeView(
 
             Column(
                 modifier = Modifier
-                    .padding(horizontal = 28.dp)
+                    .padding(horizontal = 20.dp)
                     .offset(y = 6.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -174,7 +174,7 @@ private fun FocusModeView(
 
                     AnimatedVisibility(
                         state.isPurple,
-                        modifier = Modifier.offset(y = 2.dp),
+                        modifier = Modifier.offset(y = 2.dp - onePx),
                         enter = fadeIn() + expandHorizontally(expandFrom = Alignment.End, clip = false),
                         exit = fadeOut() + shrinkHorizontally(shrinkTowards = Alignment.End, clip = false),
                     ) {
@@ -191,7 +191,8 @@ private fun FocusModeView(
                                 .clickable {
                                     vm.cancelTask()
                                 }
-                                .padding(horizontal = 6.dp, vertical = 2.dp),
+                                .padding(horizontal = 6.dp)
+                                .padding(top = 1.dp, bottom = 2.dp),
                         )
                     }
                 }
