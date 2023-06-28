@@ -65,11 +65,17 @@ private struct FocusModeView__CoverView: View {
 
             Color.black.edgesIgnoringSafeArea(.all)
                     .statusBar(hidden: true)
-                    .animateVmValue(value: state.isPurple, state: $isPurpleAnim)
+                    .animateVmValue(value: state.isPurple, state: $isPurpleAnim, animation: .spring(response: 0.2))
 
             VStack {
 
                 HStack(alignment: .center) {
+
+                    if isPurpleAnim {
+                        Text(state.activity.emoji)
+                                .font(.system(size: 20))
+                                .padding(.trailing, 6)
+                    }
 
                     Text(state.title)
                             .font(.system(size: 20))
