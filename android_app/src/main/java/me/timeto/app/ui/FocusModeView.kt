@@ -134,7 +134,7 @@ private fun FocusModeView(
 
             Column(
                 modifier = Modifier
-                    .padding(horizontal = 24.dp)
+                    .padding(horizontal = 28.dp)
                     .offset(y = 6.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -144,8 +144,8 @@ private fun FocusModeView(
                         .clip(squircleShape)
                         .clickable {
                             vm.toggleIsPurple()
-                        }
-                        .padding(horizontal = 10.dp),
+                        },
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
 
                     AnimatedVisibility(
@@ -165,33 +165,35 @@ private fun FocusModeView(
 
                     Text(
                         text = state.title,
+                        modifier = Modifier.weight(1f, fill = false),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Normal,
                         color = c.white,
                         textAlign = TextAlign.Center,
                     )
-                }
 
-                AnimatedVisibility(
-                    state.isPurple,
-                    enter = fadeIn() + expandVertically(),
-                    exit = fadeOut() + shrinkVertically(),
-                ) {
+                    AnimatedVisibility(
+                        state.isPurple,
+                        modifier = Modifier.offset(y = 2.dp),
+                        enter = fadeIn() + expandHorizontally(expandFrom = Alignment.End, clip = false),
+                        exit = fadeOut() + shrinkHorizontally(shrinkTowards = Alignment.End, clip = false),
+                    ) {
 
-                    Text(
-                        state.cancelTaskText,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 13.sp,
-                        color = c.white,
-                        modifier = Modifier
-                            .padding(top = 12.dp, bottom = 4.dp)
-                            .clip(roundedShape)
-                            .background(c.blue)
-                            .clickable {
-                                vm.cancelTask()
-                            }
-                            .padding(horizontal = 8.dp, vertical = 2.dp),
-                    )
+                        Text(
+                            state.cancelTaskText,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 12.sp,
+                            color = c.white,
+                            modifier = Modifier
+                                .padding(start = 8.dp)
+                                .clip(roundedShape)
+                                .background(c.blue)
+                                .clickable {
+                                    vm.cancelTask()
+                                }
+                                .padding(horizontal = 6.dp, vertical = 2.dp),
+                        )
+                    }
                 }
             }
 
@@ -222,7 +224,7 @@ private fun FocusModeView(
             Text(
                 text = timerData.title,
                 modifier = Modifier
-                    .clip(MySquircleShape())
+                    .clip(squircleShape)
                     .clickable {
                         vm.toggleIsPurple()
                     }
