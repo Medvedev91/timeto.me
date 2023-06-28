@@ -66,29 +66,29 @@ private struct FocusModeView__CoverView: View {
 
             VStack {
 
-                VStack {
+                HStack(alignment: .center) {
 
                     Text(state.title)
                             .font(.system(size: 20))
                             .foregroundColor(.white)
 
-                    if (state.isPurple) {
+                    if let cancelTaskText = state.cancelTaskText, state.isPurple {
 
                         Button(
                                 action: {
                                     vm.cancelTask()
                                 },
                                 label: {
-                                    Text(state.cancelTaskText)
-                                            .padding(.vertical, 4)
+                                    Text(cancelTaskText)
+                                            .padding(.vertical, 3)
                                             .padding(.horizontal, 8)
                                             .font(.system(size: 14, weight: .bold))
                                             .foregroundColor(.white)
                                             .background(roundedShape.fill(.blue))
-                                            .padding(.top, 12)
-                                            .padding(.bottom, 4)
                                 }
                         )
+                                .offset(y: 1)
+                                .padding(.leading, 8)
                     }
                 }
 
