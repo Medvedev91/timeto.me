@@ -8,6 +8,9 @@ import android.content.res.Resources
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
+import androidx.compose.animation.core.FiniteAnimationSpec
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
@@ -15,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import me.timeto.app.ui.MySquircleShape
 import me.timeto.app.ui.c
@@ -38,6 +42,9 @@ fun Dp.goldenRatioDown() = this / GOLDEN_RATIO
 
 val squircleShape = MySquircleShape()
 val roundedShape = RoundedCornerShape(99.dp)
+
+val animSpecIntSizeMedium: FiniteAnimationSpec<IntSize> = spring(stiffness = Spring.StiffnessMedium)
+val animSpecFloatMedium: FiniteAnimationSpec<Float> = spring(stiffness = Spring.StiffnessMedium)
 
 fun MutableState<Boolean>.setTrue() {
     value = true
