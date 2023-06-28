@@ -55,6 +55,8 @@ private struct FocusModeView__CoverView: View {
 
     @EnvironmentObject private var timetoSheet: TimetoSheet
 
+    @State private var isPurpleAnim = true
+
     var body: some View {
 
         VMView(vm: vm, stack: .ZStack(alignment: .bottom)) { state in
@@ -63,6 +65,7 @@ private struct FocusModeView__CoverView: View {
 
             Color.black.edgesIgnoringSafeArea(.all)
                     .statusBar(hidden: true)
+                    .animateVmValue(value: state.isPurple, state: $isPurpleAnim)
 
             VStack {
 
@@ -73,7 +76,7 @@ private struct FocusModeView__CoverView: View {
                             .foregroundColor(.white)
                             .multilineTextAlignment(.center)
 
-                    if let cancelTaskText = state.cancelTaskText, state.isPurple {
+                    if let cancelTaskText = state.cancelTaskText, isPurpleAnim {
 
                         Button(
                                 action: {
