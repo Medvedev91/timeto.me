@@ -35,7 +35,7 @@ struct TabTimerView: View {
 
                     Color(.bg).edgesIgnoringSafeArea(.all)
 
-                    VStack(spacing: 0) {
+                    VStack {
 
                         //
                         // Progress
@@ -78,13 +78,13 @@ struct TabTimerView: View {
 
                         ScrollView(.vertical, showsIndicators: false) {
 
-                            VStack(spacing: 0) {
+                            VStack {
 
                                 ZStack {
                                 }
                                         .frame(height: 20)
 
-                                VStack(spacing: 0) {
+                                VStack {
 
                                     let activitiesUI = state.activitiesUI
 
@@ -334,7 +334,7 @@ struct TabTimerView_ActivityRowView: View {
 
                     VStack(alignment: .leading, spacing: 0) {
 
-                        HStack(spacing: 0) {
+                        HStack {
 
                             Text(activityUI.activity.emoji)
                                     .frame(width: emojiWidth)
@@ -380,7 +380,7 @@ struct TabTimerView_ActivityRowView: View {
 
                             VStack(alignment: .leading, spacing: 0) {
 
-                                HStack(spacing: 0) {
+                                HStack {
 
                                     if let leadingEmoji = noteUI.leadingEmoji {
                                         Text(leadingEmoji)
@@ -508,11 +508,11 @@ struct TabTimerView_ProgressView: View {
                 }
                         .padding(.top, 4)
 
-                VStack(spacing: 0) {
+                VStack {
 
                     Spacer()
 
-                    HStack(spacing: 0) {
+                    HStack {
 
                         Spacer()
 
