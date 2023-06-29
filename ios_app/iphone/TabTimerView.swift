@@ -429,7 +429,7 @@ struct TabTimerView_ActivityRowView: View {
                             }
                         }
                     }
-                            .padding(.vertical, 12)
+                            .padding(.vertical, 11)
                             /// #TruncationDynamic + README_APP.md
                             .id("\(activityUI.activity.id) \(lastInterval.note)")
                 }
