@@ -77,7 +77,7 @@ object IosToWatchSync {
         }
 
         if (command == "cancel") {
-            IntervalModel.cancelCurrentInterval()
+            IntervalModel.pauseLastInterval()
             onFinish("{}")
             return@launchExDefault
         }

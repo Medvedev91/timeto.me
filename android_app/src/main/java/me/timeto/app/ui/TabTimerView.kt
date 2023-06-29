@@ -216,7 +216,7 @@ fun TabTimerView() {
                                                 .clickable {
                                                     scope.launchEx {
                                                         vibrateLong()
-                                                        IntervalModel.cancelCurrentInterval()
+                                                        IntervalModel.pauseLastInterval()
                                                     }
                                                 }
                                                 .padding(start = 7.dp, end = 7.dp, bottom = 1.dp),

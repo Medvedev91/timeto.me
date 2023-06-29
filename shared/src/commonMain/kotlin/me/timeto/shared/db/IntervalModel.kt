@@ -125,8 +125,7 @@ data class IntervalModel(
             )
         }
 
-        // todo rename to last
-        suspend fun cancelCurrentInterval(): Unit = dbIO {
+        suspend fun pauseLastInterval(): Unit = dbIO {
             db.transaction {
                 val lastInterval = db.intervalQueries.getDesc(limit = 1).executeAsOne().toModel()
                 if (lastInterval.note != null)

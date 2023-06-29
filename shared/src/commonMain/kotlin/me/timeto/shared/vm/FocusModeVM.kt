@@ -153,7 +153,7 @@ class FocusModeVM : __VM<FocusModeVM.State>() {
 
     fun cancelTask() {
         launchExDefault {
-            IntervalModel.cancelCurrentInterval()
+            IntervalModel.pauseLastInterval()
         }
     }
 

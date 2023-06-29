@@ -398,7 +398,7 @@ struct TabTimerView_ActivityRowView: View {
 
                                     Button(
                                             action: {
-                                                IntervalModel.companion.cancelCurrentInterval { _ in
+                                                IntervalModel.companion.pauseLastInterval { _ in
                                                     // todo
                                                 }
                                             },
