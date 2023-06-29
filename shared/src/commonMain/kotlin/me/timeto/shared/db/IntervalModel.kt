@@ -128,11 +128,19 @@ data class IntervalModel(
         suspend fun pauseLastInterval(): Unit = dbIO {
             db.transaction {
                 val lastInterval = db.intervalQueries.getDesc(limit = 1).executeAsOne().toModel()
-                if (lastInterval.note != null)
-                    TaskModel.addWithValidation_transactionRequired(
-                        text = lastInterval.note,
-                        folder = DI.getTodayFolder(),
-                    )
+                val activity = lastInterval.getActivityDI()
+                val timeLeft = lastInterval.id + lastInterval.deadline - time()
+                val timer: Int? = if (timeLeft > 0) timeLeft else null
+                val text = lastInterval.note ?: activity.name
+                val tf = text.textFeatures().copy(
+                    activity = activity,
+                    timer = timer,
+                    isPaused = true,
+                )
+                TaskModel.addWithValidation_transactionRequired(
+                    text = tf.textWithFeatures(),
+                    folder = DI.getTodayFolder(),
+                )
                 addWithValidationNeedTransaction(DEADLINE_AFTER_PAUSE, ActivityModel.getOther(), null)
             }
         }
