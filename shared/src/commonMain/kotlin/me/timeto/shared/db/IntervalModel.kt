@@ -20,7 +20,7 @@ data class IntervalModel(
 
         const val HOT_INTERVALS_LIMIT = 200 // todo 200? Remember limit for WatchToIosSync
 
-        const val DEADLINE_AFTER_CANCEL = 5 * 60
+        const val DEADLINE_AFTER_PAUSE = 5 * 60
 
         fun anyChangeFlow() = db.intervalQueries.anyChange().asFlow()
 
@@ -133,7 +133,7 @@ data class IntervalModel(
                         text = lastInterval.note,
                         folder = DI.getTodayFolder(),
                     )
-                addWithValidationNeedTransaction(DEADLINE_AFTER_CANCEL, ActivityModel.getOther(), null)
+                addWithValidationNeedTransaction(DEADLINE_AFTER_PAUSE, ActivityModel.getOther(), null)
             }
         }
 

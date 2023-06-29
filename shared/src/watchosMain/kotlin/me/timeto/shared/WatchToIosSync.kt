@@ -34,7 +34,7 @@ object WatchToIosSync {
 
     fun cancelWithLocal(): Unit = defaultScope().launchEx {
         IntervalModel.addWithValidation(
-            deadline = IntervalModel.DEADLINE_AFTER_CANCEL,
+            deadline = IntervalModel.DEADLINE_AFTER_PAUSE,
             activity = ActivityModel.getOther(),
             note = null,
         )
