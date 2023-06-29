@@ -298,6 +298,8 @@ struct TabTimerView_ActivityRowView: View {
     @State private var isSetTimerPresented = false
     @State private var isEditSheetPresented = false
 
+    @State private var isPauseEnabledAnim = false
+
     var body: some View {
         MyListSwipeToActionItem(
                 deletionHint: activityUI.deletionHint,
@@ -319,6 +321,7 @@ struct TabTimerView_ActivityRowView: View {
                     // todo remove after removing MyListSwipeToActionItem()
                     .background(Color(.bg))
         }
+                .animateVmValue(value: activityUI.isPauseEnabled, state: $isPauseEnabledAnim, animation: .spring(response: 0.3))
     }
 
     private var safeView: some View {
@@ -364,6 +367,24 @@ struct TabTimerView_ActivityRowView: View {
                                                     .padding(.trailing, 4)
                                         }
                                 )
+                            }
+
+                            if isPauseEnabledAnim {
+
+                                Button(
+                                        action: {
+                                            activityUI.pauseLastInterval()
+                                        },
+                                        label: {
+                                            Image(systemName: "pause.fill")
+                                                    .foregroundColor(.blue)
+                                                    .font(.system(size: 16))
+                                        }
+                                )
+                                        .frame(width: 30, height: 30)
+                                        .background(roundedShape.fill(.white))
+                                        .padding(.leading, 8)
+                                        .transition(.opacity.combined(with: .scale(scale: 0.5)))
                             }
                         }
                                 .padding(.trailing, endPadding - 2)
