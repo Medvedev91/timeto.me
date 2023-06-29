@@ -13,6 +13,7 @@ data class TextFeatures(
     val fromEvent: FromEvent?,
     val activity: ActivityModel?,
     val timer: Int?,
+    val isPaused: Boolean,
 ) {
 
     val timeData: TimeData? = when {
@@ -35,6 +36,8 @@ data class TextFeatures(
             a.add(activity.emoji)
         if (timer != null && withTimer)
             a.add(timer.toTimerHintNote(isShort = false))
+        if (isPaused)
+            a.add(0, "⏸️")
         return a.joinToString(" ")
     }
 
@@ -52,6 +55,8 @@ data class TextFeatures(
             strings.add("#a${activity.id}")
         if (timer != null)
             strings.add("#t$timer")
+        if (isPaused)
+            strings.add(isPausedTag)
         return strings.joinToString(" ")
     }
 
@@ -122,6 +127,7 @@ private val fromRepeatingRegex = "#r(\\d{10})_(\\d{5})_(\\d{10})?".toRegex()
 private val fromEventRegex = "#e(\\d{10})".toRegex()
 private val activityRegex = "#a(\\d{10})".toRegex()
 private val timerRegex = "#t(\\d+)".toRegex()
+private const val isPausedTag = "#is_paused"
 
 private fun parseLocal(initText: String): TextFeatures {
 
@@ -183,6 +189,10 @@ private fun parseLocal(initText: String): TextFeatures {
             return@let time
         }
 
+    val isPaused = textNoFeatures.contains(isPausedTag)
+    if (isPaused)
+        textNoFeatures = textNoFeatures.replace(isPausedTag, "")
+
     return TextFeatures(
         textNoFeatures = textNoFeatures.removeDuplicateSpaces().trim(),
         checklists = checklists,
@@ -191,6 +201,7 @@ private fun parseLocal(initText: String): TextFeatures {
         fromEvent = fromEvent,
         activity = activity,
         timer = timer,
+        isPaused = isPaused,
     )
 }
 
