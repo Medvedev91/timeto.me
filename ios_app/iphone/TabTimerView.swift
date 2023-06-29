@@ -299,6 +299,7 @@ struct TabTimerView_ActivityRowView: View {
     @State private var isEditSheetPresented = false
 
     @State private var isPauseEnabledAnim = false
+    @State private var isActiveAnim = false
 
     var body: some View {
         MyListSwipeToActionItem(
@@ -322,6 +323,7 @@ struct TabTimerView_ActivityRowView: View {
                     .background(Color(.bg))
         }
                 .animateVmValue(value: activityUI.isPauseEnabled, state: $isPauseEnabledAnim, animation: .spring(response: 0.3))
+                .animateVmValue(value: activityUI.isActive, state: $isActiveAnim)
     }
 
     private var safeView: some View {
@@ -332,7 +334,6 @@ struct TabTimerView_ActivityRowView: View {
                 },
                 label: {
 
-                    let isActive = activityUI.isActive
                     let endPadding = 12.0
 
                     VStack(alignment: .leading, spacing: 0) {
@@ -345,7 +346,7 @@ struct TabTimerView_ActivityRowView: View {
                                     .font(.system(size: 26))
 
                             Text(activityUI.listText)
-                                    .foregroundColor(isActive ? .white : Color(.label))
+                                    .foregroundColor(isActiveAnim ? .white : Color(.label))
                                     .truncationMode(.tail)
                                     .lineLimit(1)
 
@@ -363,7 +364,7 @@ struct TabTimerView_ActivityRowView: View {
                                             Text(hintUI.text)
                                                     .offset(y: onePx)
                                                     .font(.system(size: 15, weight: .light))
-                                                    .foregroundColor(isActive ? .white : .blue)
+                                                    .foregroundColor(isActiveAnim ? .white : .blue)
                                                     .padding(.leading, 4)
                                                     .padding(.trailing, 4)
                                         }
@@ -385,7 +386,7 @@ struct TabTimerView_ActivityRowView: View {
                                         .frame(width: 30, height: 30)
                                         .background(roundedShape.fill(.white))
                                         .padding(.leading, 6)
-                                        .transition(.opacity.combined(with: .scale(scale: 0.5)))
+                                        .transition(.opacity)
                             }
                         }
                                 .padding(.trailing, endPadding - 2)
@@ -477,7 +478,7 @@ struct TabTimerView_ActivityRowView: View {
                     ) {
                     }
                 }
-                .buttonStyle(TabTimerView_ActivityRowView_ButtonStyle(isActive: activityUI.isActive))
+                .buttonStyle(TabTimerView_ActivityRowView_ButtonStyle(isActive: isActiveAnim))
                 .clipShape(squircleShape)
     }
 }
