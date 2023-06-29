@@ -361,7 +361,8 @@ struct TabTimerView_ActivityRowView: View {
                                         },
                                         label: {
                                             Text(hintUI.text)
-                                                    .font(.system(size: 14, weight: .light))
+                                                    .offset(y: onePx)
+                                                    .font(.system(size: 15, weight: .light))
                                                     .foregroundColor(isActive ? .white : .blue)
                                                     .padding(.leading, 4)
                                                     .padding(.trailing, 4)
@@ -383,7 +384,7 @@ struct TabTimerView_ActivityRowView: View {
                                 )
                                         .frame(width: 30, height: 30)
                                         .background(roundedShape.fill(.white))
-                                        .padding(.leading, 8)
+                                        .padding(.leading, 6)
                                         .transition(.opacity.combined(with: .scale(scale: 0.5)))
                             }
                         }
@@ -419,6 +420,7 @@ struct TabTimerView_ActivityRowView: View {
 
                                     Button(
                                             action: {
+                                                // todo
                                                 IntervalModel.companion.pauseLastInterval { _ in
                                                     // todo
                                                 }
