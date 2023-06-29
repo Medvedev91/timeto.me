@@ -31,6 +31,8 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
         val textFeatures = activity.name.textFeatures()
         val listText = textFeatures.textUi()
 
+        val isPauseEnabled = isActive && !activity.isOther()
+
         init {
             val nameWithEmojiNoTriggers = activity.nameWithEmoji().textFeatures().textUi()
             deletionHint = nameWithEmojiNoTriggers
