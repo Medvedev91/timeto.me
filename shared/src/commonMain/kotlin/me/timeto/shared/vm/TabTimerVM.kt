@@ -48,6 +48,12 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
                 }
             }
         }
+
+        fun pauseLastInterval() {
+            launchExDefault {
+                IntervalModel.pauseLastInterval()
+            }
+        }
     }
 
     data class State(
