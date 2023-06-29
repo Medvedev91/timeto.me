@@ -418,26 +418,6 @@ struct TabTimerView_ActivityRowView: View {
                                             .foregroundColor(Color(.white))
                                             .font(.system(size: 14, weight: .thin))
                                             .padding(.leading, noteUI.leadingEmoji != nil ? 0.0 : emojiStartPadding)
-
-                                    Button(
-                                            action: {
-                                                // todo
-                                                IntervalModel.companion.pauseLastInterval { _ in
-                                                    // todo
-                                                }
-                                            },
-                                            label: {
-                                                Text("cancel")
-                                                        .font(.system(size: 13, weight: .medium))
-                                                        .foregroundColor(.blue)
-                                                        .padding(.leading, 7)
-                                                        .padding(.trailing, 8)
-                                                        .padding(.top, 3)
-                                                        .padding(.bottom, 3)
-                                                        .background(Capsule().fill(.white))
-                                                        .padding(.leading, 8)
-                                            }
-                                    )
                                 }
                                         .padding(.top, 6)
                                         .padding(.bottom, 2)
