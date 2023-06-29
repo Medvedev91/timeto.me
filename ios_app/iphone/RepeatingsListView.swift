@@ -161,7 +161,7 @@ struct RepeatingsView__ItemView: View {
                     .padding(.trailing, TAB_TASKS_PADDING_HALF_H)
 
             TextFeaturesTriggersView(
-                    textFeatures: repeatingUI.textFeatures,
+                    triggers: repeatingUI.textFeatures.triggers,
                     contentPaddingStart: TAB_TASKS_PADDING_HALF_H - 1.0
             )
                     .padding(.top, repeatingUI.textFeatures.triggers.isEmpty ? 0 : 8)

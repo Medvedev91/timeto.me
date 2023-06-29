@@ -223,7 +223,7 @@ private struct EventItemView: View {
                     .padding(.trailing, TAB_TASKS_PADDING_HALF_H)
 
             TextFeaturesTriggersView(
-                    textFeatures: uiEvent.textFeatures,
+                    triggers: uiEvent.textFeatures.triggers,
                     contentPaddingStart: TAB_TASKS_PADDING_HALF_H - 1.0
             )
                     .padding(.top, uiEvent.textFeatures.triggers.isEmpty ? 0 : 8)

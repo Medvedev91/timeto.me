@@ -400,7 +400,7 @@ struct TasksView__TaskRowView: View {
                                 }
 
                                 TextFeaturesTriggersView(
-                                        textFeatures: taskUI.textFeatures,
+                                        triggers: taskUI.textFeatures.triggers,
                                         contentPaddingStart: TAB_TASKS_PADDING_HALF_H - 1.0
                                 )
                                         .padding(.top, taskUI.textFeatures.triggers.isEmpty ? 0 : vPadding)
@@ -587,7 +587,7 @@ private struct TasksListView__TmrwTaskView: View {
             }
 
             TextFeaturesTriggersView(
-                    textFeatures: taskUI.textFeatures,
+                    triggers: taskUI.textFeatures.triggers,
                     contentPaddingStart: TAB_TASKS_PADDING_HALF_H - 1.0
             )
                     .padding(.top, taskUI.textFeatures.triggers.isEmpty ? 0 : vPadding)

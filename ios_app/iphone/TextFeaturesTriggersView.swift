@@ -3,7 +3,7 @@ import shared
 
 struct TextFeaturesTriggersView: View {
 
-    let textFeatures: TextFeatures
+    let triggers: [TextFeatures.Trigger]
     var spaceBetween = 8.0
     var paddingTop = 0.0
     var paddingBottom = 0.0
@@ -11,8 +11,6 @@ struct TextFeaturesTriggersView: View {
     var contentPaddingEnd = 16.0
 
     var body: some View {
-
-        let triggers = textFeatures.triggers
 
         if triggers.isEmpty {
             EmptyView()

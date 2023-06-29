@@ -392,7 +392,7 @@ struct TabTimerView_ActivityRowView: View {
                                 .padding(.trailing, endPadding - 2)
 
                         TextFeaturesTriggersView(
-                                textFeatures: activityUI.textFeatures,
+                                triggers: activityUI.textFeatures.triggers,
                                 paddingTop: 8.0,
                                 paddingBottom: 4.0,
                                 contentPaddingStart: emojiStartPadding - 1,
@@ -424,7 +424,7 @@ struct TabTimerView_ActivityRowView: View {
                                         .padding(.trailing, endPadding - 2)
 
                                 TextFeaturesTriggersView(
-                                        textFeatures: noteUI.textFeatures,
+                                        triggers: noteUI.textFeatures.triggers,
                                         paddingTop: 6.0,
                                         paddingBottom: 4.0,
                                         contentPaddingStart: emojiStartPadding - 1,
