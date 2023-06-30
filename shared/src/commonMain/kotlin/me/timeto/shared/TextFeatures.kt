@@ -33,12 +33,12 @@ data class TextFeatures(
         timerPrefix: String = "",
     ): String {
         val a = mutableListOf(textNoFeatures)
+        if (isPaused)
+            a.add(0, "⏸️")
         if (activity != null && withActivityEmoji)
             a.add(activity.emoji)
         if (timer != null && withTimer)
             a.add(timerPrefix + timer.toTimerHintNote(isShort = false))
-        if (isPaused)
-            a.add(0, "⏸️")
         return a.joinToString(" ")
     }
 
