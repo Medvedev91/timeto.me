@@ -392,46 +392,12 @@ struct TabTimerView_ActivityRowView: View {
                                 .padding(.trailing, endPadding - 2)
 
                         TextFeaturesTriggersView(
-                                triggers: activityUI.textFeatures.triggers,
+                                triggers: activityUI.triggers,
                                 paddingTop: 8.0,
                                 paddingBottom: 4.0,
                                 contentPaddingStart: emojiStartPadding - 1,
                                 contentPaddingEnd: endPadding
                         )
-
-                        if let noteUI = activityUI.noteUI {
-
-                            VStack(alignment: .leading, spacing: 0) {
-
-                                HStack {
-
-                                    if let leadingEmoji = noteUI.leadingEmoji {
-                                        Text(leadingEmoji)
-                                                .foregroundColor(Color(.white))
-                                                .font(.system(size: 14, weight: .thin))
-                                                .frame(width: emojiWidth)
-                                                .padding(.horizontal, emojiHPadding)
-                                    }
-
-                                    Text(noteUI.text)
-                                            .myMultilineText()
-                                            .foregroundColor(Color(.white))
-                                            .font(.system(size: 14, weight: .thin))
-                                            .padding(.leading, noteUI.leadingEmoji != nil ? 0.0 : emojiStartPadding)
-                                }
-                                        .padding(.top, 6)
-                                        .padding(.bottom, 2)
-                                        .padding(.trailing, endPadding - 2)
-
-                                TextFeaturesTriggersView(
-                                        triggers: noteUI.textFeatures.triggers,
-                                        paddingTop: 6.0,
-                                        paddingBottom: 4.0,
-                                        contentPaddingStart: emojiStartPadding - 1,
-                                        contentPaddingEnd: endPadding
-                                )
-                            }
-                        }
                     }
                             .padding(.vertical, 11)
                             /// #TruncationDynamic + README_APP.md
