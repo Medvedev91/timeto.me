@@ -182,7 +182,7 @@ fun TabTimerView() {
                                             contentDescription = "Pause",
                                             tint = c.blue,
                                             modifier = Modifier
-                                                .padding(start = 4.dp)
+                                                .padding(start = 5.dp)
                                                 .size(28.dp)
                                                 .clip(roundedShape)
                                                 .clickable {
