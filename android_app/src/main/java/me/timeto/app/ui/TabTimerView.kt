@@ -119,7 +119,7 @@ fun TabTimerView() {
                                         ActivityTimerSheet(
                                             layer = layer,
                                             activity = uiActivity.activity,
-                                            timerContext = null
+                                            timerContext = null,
                                         )
                                     }
                                 }
@@ -131,13 +131,13 @@ fun TabTimerView() {
                                 modifier = Modifier
                                     .defaultMinSize(minHeight = 46.dp)
                                     .padding(top = 10.dp, bottom = 10.dp),
-                                verticalArrangement = Arrangement.Center
+                                verticalArrangement = Arrangement.Center,
                             ) {
 
                                 Row(
                                     modifier = Modifier
                                         .fillMaxWidth(),
-                                    verticalAlignment = Alignment.CenterVertically
+                                    verticalAlignment = Alignment.CenterVertically,
                                 ) {
 
                                     Text(
