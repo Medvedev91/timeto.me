@@ -31,7 +31,6 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.shared.*
-import me.timeto.shared.db.IntervalModel
 import me.timeto.shared.vm.TabTimerVM
 import me.timeto.shared.vm.TimerTabProgressVM
 
@@ -222,26 +221,6 @@ fun TabTimerView() {
                                             color = c.white,
                                             modifier = Modifier
                                                 .weight(1f, false)
-                                        )
-
-                                        Text(
-                                            "cancel",
-                                            fontWeight = FontWeight.W500,
-                                            fontSize = 13.sp,
-                                            color = c.blue,
-                                            maxLines = 1,
-                                            modifier = Modifier
-                                                .offset(y = 0.5.dp)
-                                                .padding(start = 8.dp, top = 0.5.dp)
-                                                .clip(roundedShape)
-                                                .background(c.white)
-                                                .clickable {
-                                                    scope.launchEx {
-                                                        vibrateLong()
-                                                        IntervalModel.pauseLastInterval()
-                                                    }
-                                                }
-                                                .padding(start = 7.dp, end = 7.dp, bottom = 1.dp),
                                         )
                                     }
 
