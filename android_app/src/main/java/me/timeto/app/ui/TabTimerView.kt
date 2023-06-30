@@ -37,6 +37,8 @@ import me.timeto.shared.vm.TimerTabProgressVM
 private val timerTitleFont = FontFamily(Font(R.font.notosansmono_extrabold))
 private val timerSubtitleFont = FontFamily(Font(R.font.notosansmono_black))
 
+private val activityItemShape = MySquircleShape(len = 70f)
+
 private val emojiWidth = 44.dp
 private val triggersListContentPaddings = PaddingValues(start = emojiWidth - 1.dp)
 
@@ -77,7 +79,7 @@ fun TabTimerView() {
 
                     SwipeToAction(
                         isStartOrEnd = remember { mutableStateOf(null) },
-                        modifier = Modifier.clip(MySquircleShape(len = 70f)),
+                        modifier = Modifier.clip(activityItemShape),
                         ignoreOneAction = remember { mutableStateOf(false) },
                         startView = {
                             SwipeToAction__StartView(
