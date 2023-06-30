@@ -37,6 +37,9 @@ import me.timeto.shared.vm.TimerTabProgressVM
 private val timerTitleFont = FontFamily(Font(R.font.notosansmono_extrabold))
 private val timerSubtitleFont = FontFamily(Font(R.font.notosansmono_black))
 
+private val emojiWidth = 44.dp
+private val triggersListContentPaddings = PaddingValues(start = emojiWidth - 1.dp)
+
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TabTimerView() {
@@ -122,8 +125,6 @@ fun TabTimerView() {
                             contentAlignment = Alignment.TopCenter,
                         ) {
 
-                            val emojiWidth = 44.dp
-
                             Column(
                                 modifier = Modifier
                                     .defaultMinSize(minHeight = 46.dp)
@@ -191,10 +192,6 @@ fun TabTimerView() {
                                                 .padding(4.dp + onePx),
                                         )
                                     }
-                                }
-
-                                val triggersListContentPaddings = remember {
-                                    PaddingValues(start = emojiWidth - 1.dp)
                                 }
 
                                 TextFeaturesTriggersView(
