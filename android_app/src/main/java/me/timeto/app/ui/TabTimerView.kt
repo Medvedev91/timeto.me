@@ -123,7 +123,7 @@ fun TabTimerView() {
                                         )
                                     }
                                 }
-                                .padding(horizontal = 12.dp),
+                                .padding(start = 11.dp, end = 11.dp),
                             contentAlignment = Alignment.TopCenter,
                         ) {
 
@@ -176,6 +176,7 @@ fun TabTimerView() {
                                         Text(
                                             text = hintUI.text,
                                             modifier = Modifier
+                                                .padding(top = 1.dp)
                                                 .clip(roundedShape)
                                                 .clickable {
                                                     hintUI.startInterval()
@@ -197,7 +198,7 @@ fun TabTimerView() {
                                             contentDescription = "Pause",
                                             tint = c.blue,
                                             modifier = Modifier
-                                                .padding(start = 5.dp)
+                                                .padding(start = 6.dp, end = onePx)
                                                 .size(28.dp)
                                                 .clip(roundedShape)
                                                 .clickable {
