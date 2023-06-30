@@ -10,6 +10,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Pause
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -169,6 +171,27 @@ fun TabTimerView() {
                                             color = if (isActive) c.white else c.blue,
                                             fontSize = 14.sp,
                                             fontWeight = FontWeight.W300,
+                                        )
+                                    }
+
+                                    AnimatedVisibility(
+                                        uiActivity.isPauseEnabled,
+                                        enter = fadeInMedium + expandHorizontallyMedium,
+                                        exit = fadeOutMedium + shrinkHorizontallyMedium,
+                                    ) {
+                                        Icon(
+                                            Icons.Rounded.Pause,
+                                            contentDescription = "Pause",
+                                            tint = c.blue,
+                                            modifier = Modifier
+                                                .padding(start = 4.dp)
+                                                .size(28.dp)
+                                                .clip(roundedShape)
+                                                .clickable {
+                                                    uiActivity.pauseLastInterval()
+                                                }
+                                                .background(c.white)
+                                                .padding(4.dp),
                                         )
                                     }
                                 }
