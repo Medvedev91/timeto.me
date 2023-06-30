@@ -4,17 +4,17 @@ import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.ActivityModel
 import me.timeto.shared.db.IntervalModel
-import me.timeto.shared.ui.IntervalNoteUI
 import me.timeto.shared.ui.TimerHintUI
 
 class TabTimerVM : __VM<TabTimerVM.State>() {
 
     class ActivityUI(
         val activity: ActivityModel,
-        val noteUI: IntervalNoteUI?,
-        val isActive: Boolean,
+        val lastInterval: IntervalModel,
         val withTopDivider: Boolean,
     ) {
+
+        val isActive = activity.id == lastInterval.activity_id
 
         val timerHints = TimerHintUI.buildList(
             activity,
@@ -28,8 +28,8 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
         val deletionHint: String
         val deletionConfirmation: String
 
-        val textFeatures = activity.name.textFeatures()
-        val listText = textFeatures.textUi()
+        val listText: String
+        val triggers: List<TextFeatures.Trigger>
 
         val isPauseEnabled = isActive && !activity.isOther()
 
@@ -37,6 +37,18 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
             val nameWithEmojiNoTriggers = activity.nameWithEmoji().textFeatures().textUi()
             deletionHint = nameWithEmojiNoTriggers
             deletionConfirmation = "Are you sure you want to delete \"$nameWithEmojiNoTriggers\" activity?"
+
+            // listText/triggers
+            val tfActivity = activity.name.textFeatures()
+            val note = lastInterval.note
+            if (isActive && note != null) {
+                val tfNote = note.textFeatures()
+                listText = tfNote.textNoFeatures
+                triggers = (tfNote.triggers + tfActivity.triggers).distinctBy { it.id }
+            } else {
+                listText = tfActivity.textNoFeatures
+                triggers = tfActivity.triggers
+            }
         }
 
         fun delete() {
@@ -95,13 +107,9 @@ private fun List<ActivityModel>.toUiList(
     val activeIdx = sorted.indexOfFirst { it.id == lastInterval.activity_id }
     return sorted.mapIndexed { idx, activity ->
         val isActive = (idx == activeIdx)
-        val noteUI = if (isActive && lastInterval.note != null)
-            IntervalNoteUI(lastInterval.note, checkLeadingEmoji = true)
-        else null
         TabTimerVM.ActivityUI(
             activity = activity,
-            noteUI = noteUI,
-            isActive = isActive,
+            lastInterval = lastInterval,
             withTopDivider = (idx != 0) && !isActive && (activeIdx != idx - 1),
         )
     }
