@@ -29,6 +29,7 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
         val deletionConfirmation: String
 
         val listText: String
+        val listNote: String?
         val triggers: List<TextFeatures.Trigger>
 
         val isPauseEnabled = isActive && !activity.isOther()
@@ -38,19 +39,16 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
             deletionHint = nameWithEmojiNoTriggers
             deletionConfirmation = "Are you sure you want to delete \"$nameWithEmojiNoTriggers\" activity?"
 
-            // listText/triggers
+            // listText/listNote/triggers
             val tfActivity = activity.name.textFeatures()
-            val note = lastInterval.note
-            if (isActive && note != null) {
-                val tfNote = note.textFeatures()
-                listText = tfNote.textUi(
-                    withActivityEmoji = false,
-                    withTimer = true,
-                    timerPrefix = "- ",
-                )
+            listText = tfActivity.textNoFeatures
+            val lastIntervalNote = lastInterval.note
+            if (isActive && lastIntervalNote != null) {
+                val tfNote = lastIntervalNote.textFeatures()
+                listNote = tfNote.textNoFeatures
                 triggers = (tfNote.triggers + tfActivity.triggers).distinctBy { it.id }
             } else {
-                listText = tfActivity.textNoFeatures
+                listNote = null
                 triggers = tfActivity.triggers
             }
         }
