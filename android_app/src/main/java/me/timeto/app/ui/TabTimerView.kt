@@ -129,8 +129,8 @@ fun TabTimerView() {
 
                             Column(
                                 modifier = Modifier
-                                    .defaultMinSize(minHeight = 46.dp)
-                                    .padding(top = 10.dp, bottom = 10.dp),
+                                    .defaultMinSize(minHeight = 50.dp)
+                                    .padding(top = 8.dp, bottom = 8.dp),
                                 verticalArrangement = Arrangement.Center,
                             ) {
 
@@ -148,16 +148,29 @@ fun TabTimerView() {
                                         fontSize = 22.sp,
                                     )
 
-                                    Text(
-                                        text = uiActivity.listText,
+                                    VStack(
                                         modifier = Modifier
                                             .weight(1f),
-                                        color = if (isActive) c.white else c.text,
-                                        overflow = TextOverflow.Ellipsis,
-                                        fontSize = 16.sp,
-                                        fontWeight = FontWeight.Normal,
-                                        maxLines = 1,
-                                    )
+                                    ) {
+                                        Text(
+                                            text = uiActivity.listText,
+                                            color = if (isActive) c.white else c.text,
+                                            fontSize = 16.sp,
+                                            fontWeight = FontWeight.Normal,
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis,
+                                        )
+                                        if (uiActivity.listNote != null)
+                                            Text(
+                                                text = uiActivity.listNote ?: "",
+                                                modifier = Modifier.padding(bottom = onePx * 2),
+                                                color = c.white,
+                                                fontSize = 14.sp,
+                                                fontWeight = FontWeight.Light,
+                                                maxLines = 1,
+                                                overflow = TextOverflow.Ellipsis,
+                                            )
+                                    }
 
                                     uiActivity.timerHints.forEach { hintUI ->
                                         Text(
