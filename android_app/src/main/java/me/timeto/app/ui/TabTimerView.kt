@@ -195,36 +195,10 @@ fun TabTimerView() {
                                 }
 
                                 TextFeaturesTriggersView(
-                                    triggers = uiActivity.textFeatures.triggers,
-                                    modifier = Modifier.padding(top = 8.dp, bottom = 4.dp),
+                                    triggers = uiActivity.triggers,
+                                    modifier = Modifier.padding(top = 4.dp, bottom = 4.dp),
                                     contentPadding = triggersListContentPaddings
                                 )
-
-                                val noteUI = uiActivity.noteUI
-                                if (noteUI != null) {
-
-                                    Row(
-                                        modifier = Modifier
-                                            .padding(top = 4.dp, bottom = 2.dp, start = emojiWidth),
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-
-                                        Text(
-                                            noteUI.text,
-                                            fontWeight = FontWeight.W300,
-                                            fontSize = 14.sp,
-                                            color = c.white,
-                                            modifier = Modifier
-                                                .weight(1f, false)
-                                        )
-                                    }
-
-                                    TextFeaturesTriggersView(
-                                        triggers = noteUI.textFeatures.triggers,
-                                        modifier = Modifier.padding(top = 7.dp, bottom = 4.dp),
-                                        contentPadding = triggersListContentPaddings
-                                    )
-                                }
                             }
 
                             DividerBg(
