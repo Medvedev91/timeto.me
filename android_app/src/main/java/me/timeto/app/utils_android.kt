@@ -11,6 +11,10 @@ import android.os.Vibrator
 import androidx.compose.animation.core.FiniteAnimationSpec
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
+import androidx.compose.animation.expandHorizontally
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
@@ -43,9 +47,6 @@ fun Dp.goldenRatioDown() = this / GOLDEN_RATIO
 val squircleShape = MySquircleShape()
 val roundedShape = RoundedCornerShape(99.dp)
 
-val animSpecIntSizeMedium: FiniteAnimationSpec<IntSize> = spring(stiffness = Spring.StiffnessMedium)
-val animSpecFloatMedium: FiniteAnimationSpec<Float> = spring(stiffness = Spring.StiffnessMedium)
-
 fun MutableState<Boolean>.setTrue() {
     value = true
 }
@@ -60,6 +61,18 @@ fun Modifier.conditional(
 ): Modifier {
     return if (condition) then(modifier(Modifier)) else this
 }
+
+///
+/// Animation
+
+val animSpecIntSizeMedium: FiniteAnimationSpec<IntSize> = spring(stiffness = Spring.StiffnessMedium)
+val animSpecFloatMedium: FiniteAnimationSpec<Float> = spring(stiffness = Spring.StiffnessMedium)
+
+val fadeInMedium = fadeIn(spring(stiffness = Spring.StiffnessMedium))
+val fadeOutMedium = fadeOut(spring(stiffness = Spring.StiffnessMedium))
+
+val expandHorizontallyMedium = expandHorizontally(spring(stiffness = Spring.StiffnessMedium))
+val shrinkHorizontallyMedium = shrinkHorizontally(spring(stiffness = Spring.StiffnessMedium))
 
 ///
 /// Color
