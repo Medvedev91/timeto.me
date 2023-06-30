@@ -163,7 +163,7 @@ fun TabTimerView() {
                                         Text(
                                             text = hintUI.text,
                                             modifier = Modifier
-                                                .clip(RoundedCornerShape(99.dp))
+                                                .clip(roundedShape)
                                                 .clickable {
                                                     hintUI.startInterval()
                                                 }
@@ -233,7 +233,7 @@ fun TabTimerView() {
                                             modifier = Modifier
                                                 .offset(y = 0.5.dp)
                                                 .padding(start = 8.dp, top = 0.5.dp)
-                                                .clip(RoundedCornerShape(99.dp))
+                                                .clip(roundedShape)
                                                 .background(c.white)
                                                 .clickable {
                                                     scope.launchEx {
