@@ -30,12 +30,13 @@ data class TextFeatures(
     fun textUi(
         withActivityEmoji: Boolean = true,
         withTimer: Boolean = true,
+        timerPrefix: String = "",
     ): String {
         val a = mutableListOf(textNoFeatures)
         if (activity != null && withActivityEmoji)
             a.add(activity.emoji)
         if (timer != null && withTimer)
-            a.add(timer.toTimerHintNote(isShort = false))
+            a.add(timerPrefix + timer.toTimerHintNote(isShort = false))
         if (isPaused)
             a.add(0, "⏸️")
         return a.joinToString(" ")
