@@ -43,8 +43,6 @@ fun TabTimerView() {
 
     val (_, state) = rememberVM { TabTimerVM() }
 
-    val scope = rememberCoroutineScope()
-
     Box(
         modifier = Modifier
             .fillMaxSize()
