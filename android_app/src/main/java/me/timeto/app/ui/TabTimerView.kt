@@ -191,7 +191,7 @@ fun TabTimerView() {
                                                     uiActivity.pauseLastInterval()
                                                 }
                                                 .background(c.white)
-                                                .padding(4.dp),
+                                                .padding(4.dp + onePx),
                                         )
                                     }
                                 }
