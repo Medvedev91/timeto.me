@@ -51,6 +51,9 @@ private val taskListContentPadding = 4.dp
 
 private val menuColor = FocusModeVM.menuColor.toColor()
 
+private val layerAnimIn = fadeIn(spring(stiffness = Spring.StiffnessHigh))
+private val layerAnimOut = fadeOut(spring(stiffness = Spring.StiffnessHigh))
+
 @Composable
 fun FocusModeListener(
     activity: Activity,
@@ -93,8 +96,8 @@ fun FocusModeListener(
             //////
 
             WrapperView.Layer(
-                enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessHigh)),
-                exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessHigh)),
+                enterAnimation = layerAnimIn,
+                exitAnimation = layerAnimOut,
                 alignment = Alignment.Center,
                 onClose = { FullScreenUI.close() },
                 content = { layer ->
