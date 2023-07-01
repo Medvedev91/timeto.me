@@ -71,7 +71,7 @@ fun TabTimerView() {
                     key = { _, i -> i.activity.id }
                 ) { _, uiActivity ->
 
-                    val isActive = uiActivity.isActive
+                    val isActive = uiActivity.data.isActive
                     val bgAnimate = animateColorAsState(
                         if (isActive) c.blue else c.bg,
                         spring(stiffness = Spring.StiffnessMediumLow)
@@ -153,16 +153,16 @@ fun TabTimerView() {
                                             .weight(1f),
                                     ) {
                                         Text(
-                                            text = uiActivity.listText,
+                                            text = uiActivity.data.listText,
                                             color = if (isActive) c.white else c.text,
                                             fontSize = 16.sp,
                                             fontWeight = FontWeight.Normal,
                                             maxLines = 1,
                                             overflow = TextOverflow.Ellipsis,
                                         )
-                                        if (uiActivity.listNote != null)
+                                        if (uiActivity.data.listNote != null)
                                             Text(
-                                                text = uiActivity.listNote ?: "",
+                                                text = uiActivity.data.listNote ?: "",
                                                 modifier = Modifier.padding(bottom = onePx * 2),
                                                 color = c.white,
                                                 fontSize = 14.sp,
@@ -187,7 +187,7 @@ fun TabTimerView() {
                                     }
 
                                     AnimatedVisibility(
-                                        uiActivity.isPauseEnabled,
+                                        uiActivity.data.isPauseEnabled,
                                         enter = fadeInMedium + expandHorizontallyMedium,
                                         exit = fadeOutMedium + shrinkHorizontallyMedium,
                                     ) {
@@ -209,7 +209,7 @@ fun TabTimerView() {
                                 }
 
                                 TextFeaturesTriggersView(
-                                    triggers = uiActivity.triggers,
+                                    triggers = uiActivity.data.triggers,
                                     modifier = Modifier.padding(top = 4.dp, bottom = 4.dp),
                                     contentPadding = triggersListContentPaddings
                                 )
