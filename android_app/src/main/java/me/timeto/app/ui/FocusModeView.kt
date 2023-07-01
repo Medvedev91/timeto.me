@@ -591,7 +591,7 @@ private fun ChecklistView(
                             modifier = Modifier
                                 .defaultMinSize(minHeight = checklistItemMinHeight)
                                 .fillMaxWidth()
-                                .clip(MySquircleShape())
+                                .clip(squircleShape)
                                 .clickable {
                                     itemUI.toggle()
                                 }
