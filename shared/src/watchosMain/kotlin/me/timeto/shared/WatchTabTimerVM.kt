@@ -1,6 +1,7 @@
 package me.timeto.shared
 
 import kotlinx.coroutines.flow.*
+import me.timeto.shared.data.TimerTabActivityData
 import me.timeto.shared.db.ActivityModel
 import me.timeto.shared.db.IntervalModel
 import me.timeto.shared.ui.IntervalNoteUI
@@ -11,11 +12,10 @@ class WatchTabTimerVM : __VM<WatchTabTimerVM.State>() {
 
     class ActivityUI(
         val activity: ActivityModel,
-        val noteUI: IntervalNoteUI?,
-        val isActive: Boolean,
+        val lastInterval: IntervalModel,
     ) {
 
-        val listTitle = activity.nameWithEmoji().textFeatures().textUi()
+        val data = TimerTabActivityData(activity, lastInterval)
 
         val timerHints = TimerHintUI.buildList(
             activity,
@@ -79,8 +79,7 @@ private fun List<ActivityModel>.toUiList(
         else null
         WatchTabTimerVM.ActivityUI(
             activity = activity,
-            noteUI = noteUI,
-            isActive = isActive,
+            lastInterval = lastInterval,
         )
     }
 }

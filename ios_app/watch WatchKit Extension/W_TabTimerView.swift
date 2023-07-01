@@ -70,7 +70,7 @@ struct W_TabTimerView: View {
                     label: {
                         VStack(spacing: 0) {
 
-                            Text(activityUI.listTitle)
+                            Text(activityUI.data.listText)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .lineLimit(1)
                                     .truncationMode(.middle)
@@ -138,7 +138,7 @@ struct W_TabTimerView: View {
                     .background(
                             RoundedRectangle(cornerRadius: 10, style: .continuous)
                                     // На глаз с элементами из списка задач
-                                    .fill(activityUI.isActive ? .blue : defBgColor)
+                                    .fill(activityUI.data.isActive ? .blue : defBgColor)
                     )
                     .sheet(isPresented: $isTickerPresented) {
                         W_TickerDialog(
