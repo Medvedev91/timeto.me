@@ -77,28 +77,35 @@ private struct FocusModeView__CoverView: View {
                                 .padding(.trailing, 6)
                     }
 
-                    Text(state.title)
-                            .font(.system(size: 20))
-                            .foregroundColor(.white)
-                            .multilineTextAlignment(.center)
+                    Button(
+                            action: {
+                                vm.toggleIsPurple()
+                            },
+                            label: {
+                                Text(state.title)
+                                        .font(.system(size: 20))
+                                        .foregroundColor(.white)
+                                        .multilineTextAlignment(.center)
+                            }
+                    )
 
-                    if let cancelTaskText = state.cancelTaskText, isPurpleAnim {
+                    if isPurpleAnim {
 
                         Button(
                                 action: {
-                                    vm.cancelTask()
+                                    vm.pauseTask()
                                 },
                                 label: {
-                                    Text(cancelTaskText)
-                                            .padding(.vertical, 3)
-                                            .padding(.horizontal, 8)
-                                            .font(.system(size: 14, weight: .bold))
-                                            .foregroundColor(.white)
-                                            .background(roundedShape.fill(.blue))
+                                    Image(systemName: "pause.fill")
+                                            .foregroundColor(.blue)
+                                            .font(.system(size: 14))
                                 }
                         )
-                                .offset(y: 1)
-                                .padding(.leading, 8)
+                                .frame(width: 24, height: 24)
+                                .background(roundedShape.fill(.white))
+                                .padding(.leading, 10)
+                                .transition(.opacity)
+                                .offset(y: onePx)
                     }
                 }
                         .padding(.horizontal, 20)
