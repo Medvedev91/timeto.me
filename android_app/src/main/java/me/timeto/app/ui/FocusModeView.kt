@@ -13,6 +13,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Pause
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -181,31 +183,25 @@ private fun FocusModeView(
                     )
 
                     AnimatedVisibility(
-                        state.isPurple && (state.cancelTaskText != null),
+                        state.isPurple,
                         modifier = Modifier.offset(y = 2.dp - onePx),
                         enter = titlePauseAnimEnter,
                         exit = titlePauseAnimExit,
                     ) {
-
-                        val cancelTaskText = state.cancelTaskText
-                        // Condition to ignore animation with empty text
-                        if (cancelTaskText != null) {
-                            Text(
-                                cancelTaskText,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 12.sp,
-                                color = c.white,
-                                modifier = Modifier
-                                    .padding(start = 8.dp)
-                                    .clip(roundedShape)
-                                    .background(c.blue)
-                                    .clickable {
-                                        vm.cancelTask()
-                                    }
-                                    .padding(horizontal = 6.dp)
-                                    .padding(top = 1.dp, bottom = 2.dp),
-                            )
-                        }
+                        Icon(
+                            Icons.Rounded.Pause,
+                            contentDescription = "Pause",
+                            tint = c.black,
+                            modifier = Modifier
+                                .padding(start = 8.dp)
+                                .size(24.dp)
+                                .clip(roundedShape)
+                                .clickable {
+                                    vm.cancelTask()
+                                }
+                                .background(c.white)
+                                .padding(4.dp),
+                        )
                     }
                 }
             }
