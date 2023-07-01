@@ -5,6 +5,7 @@ import me.timeto.shared.*
 import me.timeto.shared.db.ActivityModel
 import me.timeto.shared.db.IntervalModel
 import me.timeto.shared.ui.TimerHintUI
+import me.timeto.shared.data.TimerTabActivityData
 
 class TabTimerVM : __VM<TabTimerVM.State>() {
 
@@ -14,7 +15,7 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
         val withTopDivider: Boolean,
     ) {
 
-        val isActive = activity.id == lastInterval.activity_id
+        val data = TimerTabActivityData(activity, lastInterval)
 
         val timerHints = TimerHintUI.buildList(
             activity,
@@ -28,33 +29,10 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
         val deletionHint: String
         val deletionConfirmation: String
 
-        val listText: String
-        val listNote: String?
-        val triggers: List<TextFeatures.Trigger>
-
-        val isPauseEnabled = isActive && !activity.isOther()
-
         init {
             val nameWithEmojiNoTriggers = activity.nameWithEmoji().textFeatures().textUi()
             deletionHint = nameWithEmojiNoTriggers
             deletionConfirmation = "Are you sure you want to delete \"$nameWithEmojiNoTriggers\" activity?"
-
-            // listText/listNote/triggers
-            val tfActivity = activity.name.textFeatures()
-            listText = tfActivity.textNoFeatures
-            val lastIntervalNote = lastInterval.note
-            if (isActive && lastIntervalNote != null) {
-                val tfNote = lastIntervalNote.textFeatures()
-                listNote = tfNote.textUi(
-                    withActivityEmoji = false,
-                    withTimer = true,
-                    timerPrefix = "- ",
-                )
-                triggers = (tfNote.triggers + tfActivity.triggers).distinctBy { it.id }
-            } else {
-                listNote = null
-                triggers = tfActivity.triggers
-            }
         }
 
         fun delete() {
