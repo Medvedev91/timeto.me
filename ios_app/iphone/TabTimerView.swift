@@ -322,8 +322,8 @@ struct TabTimerView_ActivityRowView: View {
                     // todo remove after removing MyListSwipeToActionItem()
                     .background(Color(.bg))
         }
-                .animateVmValue(value: activityUI.isPauseEnabled, state: $isPauseEnabledAnim, animation: .spring(response: 0.3))
-                .animateVmValue(value: activityUI.isActive, state: $isActiveAnim)
+                .animateVmValue(value: activityUI.data.isPauseEnabled, state: $isPauseEnabledAnim, animation: .spring(response: 0.3))
+                .animateVmValue(value: activityUI.data.isActive, state: $isActiveAnim)
     }
 
     private var safeView: some View {
@@ -347,13 +347,13 @@ struct TabTimerView_ActivityRowView: View {
 
                             VStack {
 
-                                Text(activityUI.listText)
+                                Text(activityUI.data.listText)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .foregroundColor(isActiveAnim ? .white : Color(.label))
                                         .truncationMode(.tail)
                                         .lineLimit(1)
 
-                                if let listNote = activityUI.listNote {
+                                if let listNote = activityUI.data.listNote {
                                     Text(listNote)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                             .padding(.top, onePx)
@@ -405,7 +405,7 @@ struct TabTimerView_ActivityRowView: View {
                                 .padding(.trailing, endPadding - 2)
 
                         TextFeaturesTriggersView(
-                                triggers: activityUI.triggers,
+                                triggers: activityUI.data.triggers,
                                 paddingTop: 8.0,
                                 paddingBottom: 4.0,
                                 contentPaddingStart: emojiStartPadding - 1,
