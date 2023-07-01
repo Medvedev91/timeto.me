@@ -101,7 +101,7 @@ struct ActivityColorSheet: View {
                                     .background(Color(.systemGray4))
                                     .padding(.top, circlePadding)
                         }
-                                .padding(.top, 8)
+                                .padding(.top, 4)
                                 .safeAreaPadding(.bottom)
                     }
 
@@ -120,7 +120,6 @@ struct ActivityColorSheet: View {
                                         }
                                     }
                                 }
-                                        .padding(.top, 4)
                             }
                         }
                                 .padding(.leading, dividerPadding - circlePadding)
