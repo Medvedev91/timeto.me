@@ -65,7 +65,7 @@ private struct FocusModeView__CoverView: View {
 
             Color.black.edgesIgnoringSafeArea(.all)
                     .statusBar(hidden: true)
-                    .animateVmValue(value: state.isPurple, state: $isPurpleAnim, animation: .spring(response: 0.2))
+                    .animateVmValue(value: state.isPurple, state: $isPurpleAnim)
 
             VStack {
 
@@ -73,6 +73,7 @@ private struct FocusModeView__CoverView: View {
 
                     if isPurpleAnim {
                         Text(state.activity.emoji)
+                                .transition(.move(edge: .trailing).combined(with: .opacity))
                                 .font(.system(size: 20))
                                 .padding(.trailing, 6)
                     }
@@ -104,7 +105,7 @@ private struct FocusModeView__CoverView: View {
                                 .frame(width: 24, height: 24)
                                 .background(roundedShape.fill(.white))
                                 .padding(.leading, 10)
-                                .transition(.opacity)
+                                .transition(.move(edge: .leading).combined(with: .opacity))
                                 .offset(y: onePx)
                     }
                 }
