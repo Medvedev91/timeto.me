@@ -58,6 +58,9 @@ private val navigationBarColor = Color(0x01000000).toArgb()
 
 private val menuButtonModifier = Modifier.size(menuIconSize).padding(menuIconPadding)
 
+private val titleEmojiAnimEnter = fadeIn(animSpecFloatMedium) + expandHorizontally(animSpecIntSizeMedium, expandFrom = Alignment.Start, clip = false)
+private val titleEmojiAnimExit = fadeOut(animSpecFloatMedium) + shrinkHorizontally(animSpecIntSizeMedium, shrinkTowards = Alignment.Start, clip = false)
+
 @Composable
 fun FocusModeListener(
     activity: Activity,
@@ -152,8 +155,8 @@ private fun FocusModeView(
 
                     AnimatedVisibility(
                         state.isPurple,
-                        enter = fadeIn(animSpecFloatMedium) + expandHorizontally(animSpecIntSizeMedium, expandFrom = Alignment.Start, clip = false),
-                        exit = fadeOut(animSpecFloatMedium) + shrinkHorizontally(animSpecIntSizeMedium, shrinkTowards = Alignment.Start, clip = false),
+                        enter = titleEmojiAnimEnter,
+                        exit = titleEmojiAnimExit,
                     ) {
                         Text(
                             text = state.activity.emoji,
