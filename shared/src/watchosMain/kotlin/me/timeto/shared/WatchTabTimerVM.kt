@@ -4,7 +4,6 @@ import kotlinx.coroutines.flow.*
 import me.timeto.shared.data.TimerTabActivityData
 import me.timeto.shared.db.ActivityModel
 import me.timeto.shared.db.IntervalModel
-import me.timeto.shared.ui.IntervalNoteUI
 import me.timeto.shared.vm.__VM
 import me.timeto.shared.ui.TimerHintUI
 
@@ -71,12 +70,7 @@ private fun List<ActivityModel>.toUiList(
 ): List<WatchTabTimerVM.ActivityUI> {
     // On top the active activity :)
     val sorted = this.sortedByDescending { it.id == lastInterval.activity_id }
-    val activeIdx = sorted.indexOfFirst { it.id == lastInterval.activity_id }
     return sorted.mapIndexed { idx, activity ->
-        val isActive = (idx == activeIdx)
-        val noteUI = if (isActive && lastInterval.note != null)
-            IntervalNoteUI(lastInterval.note, checkLeadingEmoji = false)
-        else null
         WatchTabTimerVM.ActivityUI(
             activity = activity,
             lastInterval = lastInterval,
