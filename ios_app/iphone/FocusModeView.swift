@@ -114,12 +114,19 @@ private struct FocusModeView__CoverView: View {
                 let timerData = state.timerData
 
                 if let subtitle = timerData.subtitle, !state.isTabTasksVisible {
-                    Text(subtitle)
-                            .font(.system(size: 26, weight: .heavy))
-                            .tracking(5)
-                            .foregroundColor(timerData.subtitleColor.toColor())
-                            .padding(.top, 36)
-                            .offset(y: 3)
+                    Button(
+                            action: {
+                                vm.toggleIsPurple()
+                            },
+                            label: {
+                                Text(subtitle)
+                                        .font(.system(size: 26, weight: .heavy))
+                                        .tracking(5)
+                                        .foregroundColor(timerData.subtitleColor.toColor())
+                                        .padding(.top, 36)
+                                        .offset(y: 3)
+                            }
+                    )
                 }
 
                 Button(
