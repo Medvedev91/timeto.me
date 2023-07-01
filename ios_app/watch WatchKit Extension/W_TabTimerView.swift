@@ -68,45 +68,18 @@ struct W_TabTimerView: View {
                         isTickerPresented = true
                     },
                     label: {
-                        VStack(spacing: 0) {
+                        VStack {
 
                             Text(activityUI.data.listText)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .lineLimit(1)
                                     .truncationMode(.middle)
 
-                            if let noteUI = activityUI.noteUI {
+                            if let listNote = activityUI.data.listNote {
 
-                                HStack {
-
-                                    Text(noteUI.text)
-                                            .font(.system(size: 14, weight: .light))
-                                            .lineLimit(1)
-                                            .truncationMode(.middle)
-
-                                    Button(
-                                            action: {
-                                                withAnimation {
-                                                    WatchToIosSync.shared.cancelWithLocal()
-                                                }
-                                            },
-                                            label: {
-                                                Text("cancel")
-                                                        .font(.system(size: 13, weight: .medium))
-                                                        .foregroundColor(.blue)
-                                                        .padding(.leading, 7)
-                                                        .padding(.trailing, 8)
-                                                        .padding(.top, 2)
-                                                        .padding(.bottom, 3.5)
-                                                        .background(Capsule().fill(.white))
-                                                        .padding(.leading, 8)
-
-                                            }
-                                    )
-                                            .buttonStyle(.borderless)
-
-                                    Spacer()
-                                }
+                                Text(listNote)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .font(.system(size: 14, weight: .light))
                             }
 
                             if !activityUI.timerHints.isEmpty {
