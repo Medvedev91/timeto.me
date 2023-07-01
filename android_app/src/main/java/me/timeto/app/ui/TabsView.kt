@@ -26,7 +26,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import me.timeto.app.*
 import me.timeto.app.R
-import me.timeto.shared.FullScreenUI
+import me.timeto.shared.FocusModeUI
 import me.timeto.shared.launchEx
 import me.timeto.shared.vm.TabsVM
 
@@ -201,7 +201,7 @@ private fun BottomNavigation(
                 onClick = {
 
                     if (item == TabItem.Focus) {
-                        FullScreenUI.open()
+                        FocusModeUI.open()
                         return@BottomNavigationItem
                     }
 

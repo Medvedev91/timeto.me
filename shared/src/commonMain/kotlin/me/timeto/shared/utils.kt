@@ -476,7 +476,7 @@ fun daytimeToString(daytime: Int): String {
 
 //////
 
-object FullScreenUI {
+object FocusModeUI {
 
     val state = MutableStateFlow(false)
 

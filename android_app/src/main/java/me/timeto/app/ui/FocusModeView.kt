@@ -73,7 +73,7 @@ fun FocusModeListener(
 ) {
     LaunchedEffect(Unit) {
 
-        FullScreenUI.state.onEachExIn(this) { toOpenOrClose ->
+        FocusModeUI.state.onEachExIn(this) { toOpenOrClose ->
 
             /**
              * https://developer.android.com/develop/ui/views/layout/immersive#kotlin
@@ -111,7 +111,7 @@ fun FocusModeListener(
                 enterAnimation = layerAnimIn,
                 exitAnimation = layerAnimOut,
                 alignment = Alignment.Center,
-                onClose = { FullScreenUI.close() },
+                onClose = { FocusModeUI.close() },
                 content = { layer ->
                     MaterialTheme(colors = myDarkColors()) {
                         FocusModeView(layer)

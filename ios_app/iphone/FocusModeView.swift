@@ -30,7 +30,7 @@ private struct FocusModeView__ViewModifier: ViewModifier {
 
     @State private var isPresented = false
 
-    private let statePublisher: AnyPublisher<KotlinBoolean, Never> = FullScreenUI.shared.state.toPublisher()
+    private let statePublisher: AnyPublisher<KotlinBoolean, Never> = FocusModeUI.shared.state.toPublisher()
 
     func body(content: Content) -> some View {
 
@@ -295,7 +295,7 @@ private struct FocusModeView__CoverView: View {
 
                 Button(
                         action: {
-                            FullScreenUI.shared.close()
+                            FocusModeUI.shared.close()
                         },
                         label: {
                             VStack(spacing: 0) {

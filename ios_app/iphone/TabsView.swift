@@ -25,7 +25,7 @@ struct TabsView: View {
                         TabTasksView.lastInstance?.activeSection = TabTasksView_Section_Folder(folder: DI.getTodayFolder())
                     }
                     if $0 == TabsView.TAB_ID_FOCUS {
-                        FullScreenUI.shared.open()
+                        FocusModeUI.shared.open()
                         let oldTabSelection = tabSelection
                         myAsyncAfter(0.2) {
                             tabSelection = oldTabSelection
