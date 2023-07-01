@@ -197,7 +197,7 @@ private fun FocusModeView(
                                 .size(24.dp)
                                 .clip(roundedShape)
                                 .clickable {
-                                    vm.cancelTask()
+                                    vm.pauseTask()
                                 }
                                 .background(c.white)
                                 .padding(4.dp),

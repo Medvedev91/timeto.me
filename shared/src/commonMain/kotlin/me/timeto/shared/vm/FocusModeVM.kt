@@ -150,7 +150,7 @@ class FocusModeVM : __VM<FocusModeVM.State>() {
         state.update { it.copy(isTabTasksVisible = it.isTabTasksVisible.not()) }
     }
 
-    fun cancelTask() {
+    fun pauseTask() {
         launchExDefault {
             IntervalModel.pauseLastInterval()
         }
