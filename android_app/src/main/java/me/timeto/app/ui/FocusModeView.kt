@@ -61,6 +61,9 @@ private val menuButtonModifier = Modifier.size(menuIconSize).padding(menuIconPad
 private val titleEmojiAnimEnter = fadeIn(animSpecFloatMedium) + expandHorizontally(animSpecIntSizeMedium, expandFrom = Alignment.Start, clip = false)
 private val titleEmojiAnimExit = fadeOut(animSpecFloatMedium) + shrinkHorizontally(animSpecIntSizeMedium, shrinkTowards = Alignment.Start, clip = false)
 
+private val titlePauseAnimEnter = fadeIn(animSpecFloatMedium) + expandHorizontally(animSpecIntSizeMedium, expandFrom = Alignment.End, clip = false)
+private val titlePauseAnimExit = fadeOut(animSpecFloatMedium) + shrinkHorizontally(animSpecIntSizeMedium, shrinkTowards = Alignment.End, clip = false)
+
 @Composable
 fun FocusModeListener(
     activity: Activity,
@@ -180,8 +183,8 @@ private fun FocusModeView(
                     AnimatedVisibility(
                         state.isPurple && (state.cancelTaskText != null),
                         modifier = Modifier.offset(y = 2.dp - onePx),
-                        enter = fadeIn(animSpecFloatMedium) + expandHorizontally(animSpecIntSizeMedium, expandFrom = Alignment.End, clip = false),
-                        exit = fadeOut(animSpecFloatMedium) + shrinkHorizontally(animSpecIntSizeMedium, shrinkTowards = Alignment.End, clip = false),
+                        enter = titlePauseAnimEnter,
+                        exit = titlePauseAnimExit,
                     ) {
 
                         val cancelTaskText = state.cancelTaskText
