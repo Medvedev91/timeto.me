@@ -345,10 +345,23 @@ struct TabTimerView_ActivityRowView: View {
                                     .padding(.horizontal, emojiHPadding)
                                     .font(.system(size: 26))
 
-                            Text(activityUI.listText)
-                                    .foregroundColor(isActiveAnim ? .white : Color(.label))
-                                    .truncationMode(.tail)
-                                    .lineLimit(1)
+                            VStack {
+
+                                Text(activityUI.listText)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .foregroundColor(isActiveAnim ? .white : Color(.label))
+                                        .truncationMode(.tail)
+                                        .lineLimit(1)
+
+                                if let listNote = activityUI.listNote {
+                                    Text(listNote)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .padding(.top, onePx)
+                                            .padding(.bottom, onePx)
+                                            .foregroundColor(.white)
+                                            .font(.system(size: 14, weight: .light))
+                                }
+                            }
 
                             Spacer()
 
