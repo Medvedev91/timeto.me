@@ -22,6 +22,9 @@ func zlog(_ message: Any?) {
 
 //////
 
+let roundedShape = RoundedRectangle(cornerRadius: 99, style: .circular)
+let squircleShape = RoundedRectangle(cornerRadius: 12, style: .continuous)
+
 /// Based on https://stackoverflow.com/a/26962452/5169420
 func machineIdentifier() -> String {
     var systemInfo = utsname()
