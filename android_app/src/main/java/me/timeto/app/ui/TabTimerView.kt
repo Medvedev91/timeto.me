@@ -167,8 +167,6 @@ fun TabTimerView() {
                                                 color = c.white,
                                                 fontSize = 14.sp,
                                                 fontWeight = FontWeight.Light,
-                                                maxLines = 1,
-                                                overflow = TextOverflow.Ellipsis,
                                             )
                                     }
 
