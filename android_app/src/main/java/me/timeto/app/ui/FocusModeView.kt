@@ -229,7 +229,12 @@ private fun FocusModeView(
                     fontSize = 26.sp,
                     modifier = Modifier
                         .padding(top = 30.dp)
-                        .offset(y = 4.dp),
+                        .offset(y = 4.dp)
+                        .clip(squircleShape)
+                        .clickable {
+                            vm.toggleIsPurple()
+                        }
+                        .padding(horizontal = 8.dp),
                     fontWeight = FontWeight.Black,
                     color = timerData.subtitleColor.toColor(),
                     letterSpacing = 3.sp,
