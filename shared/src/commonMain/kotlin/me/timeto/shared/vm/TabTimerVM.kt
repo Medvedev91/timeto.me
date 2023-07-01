@@ -45,7 +45,11 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
             val lastIntervalNote = lastInterval.note
             if (isActive && lastIntervalNote != null) {
                 val tfNote = lastIntervalNote.textFeatures()
-                listNote = tfNote.textNoFeatures
+                listNote = tfNote.textUi(
+                    withActivityEmoji = false,
+                    withTimer = true,
+                    timerPrefix = "- ",
+                )
                 triggers = (tfNote.triggers + tfActivity.triggers).distinctBy { it.id }
             } else {
                 listNote = null
