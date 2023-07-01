@@ -56,6 +56,8 @@ private val layerAnimOut = fadeOut(spring(stiffness = Spring.StiffnessHigh))
 
 private val navigationBarColor = Color(0x01000000).toArgb()
 
+private val menuButtonModifier = Modifier.size(menuIconSize).padding(menuIconPadding)
+
 @Composable
 fun FocusModeListener(
     activity: Activity,
@@ -513,9 +515,7 @@ private fun RowScope.MenuTimerButton(
             painterResource(id = R.drawable.sf_timer_medium_thin),
             contentDescription = "Timer",
             tint = menuColor,
-            modifier = Modifier
-                .size(menuIconSize)
-                .padding(menuIconPadding),
+            modifier = menuButtonModifier,
         )
     }
 }
@@ -539,9 +539,7 @@ private fun RowScope.MenuCloseButton(
             painterResource(id = R.drawable.sf_xmark_circle_medium_thin),
             contentDescription = "Close",
             tint = menuColor,
-            modifier = Modifier
-                .size(menuIconSize)
-                .padding(menuIconPadding),
+            modifier = menuButtonModifier,
         )
     }
 }
