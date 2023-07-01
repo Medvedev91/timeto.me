@@ -70,16 +70,39 @@ struct W_TabTimerView: View {
                     label: {
                         VStack {
 
-                            Text(activityUI.data.listText)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .lineLimit(1)
-                                    .truncationMode(.middle)
+                            HStack(alignment: .center) {
 
-                            if let listNote = activityUI.data.listNote {
+                                VStack {
+                                    Text(activityUI.data.listText)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .lineLimit(1)
+                                            .truncationMode(.middle)
 
-                                Text(listNote)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .font(.system(size: 14, weight: .light))
+                                    if let listNote = activityUI.data.listNote {
+
+                                        Text(listNote)
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                                .font(.system(size: 14, weight: .light))
+                                    }
+                                }
+
+                                if activityUI.data.isPauseEnabled {
+
+                                    Button(
+                                            action: {
+                                                WatchToIosSync.shared.cancelWithLocal()
+                                            },
+                                            label: {
+                                                Image(systemName: "pause.fill")
+                                                        .foregroundColor(.blue)
+                                                        .font(.system(size: 16))
+                                            }
+                                    )
+                                            .buttonStyle(.borderless)
+                                            .frame(width: 30, height: 30)
+                                            .background(roundedShape.fill(.white))
+                                            .padding(.leading, 6)
+                                }
                             }
 
                             if !activityUI.timerHints.isEmpty {
