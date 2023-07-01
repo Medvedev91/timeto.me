@@ -32,7 +32,7 @@ object WatchToIosSync {
         )
     }
 
-    fun cancelWithLocal(): Unit = defaultScope().launchEx {
+    fun pauseWithLocal(): Unit = defaultScope().launchEx {
         IntervalModel.addWithValidation(
             deadline = IntervalModel.DEADLINE_AFTER_PAUSE,
             activity = ActivityModel.getOther(),
@@ -41,7 +41,7 @@ object WatchToIosSync {
         launchEx {
             delay(LOCAL_DELAY_MLS)
             requestFromAppleWatch(
-                command = "cancel",
+                command = "pause",
                 jData = JsonObject(mapOf())
             )
         }

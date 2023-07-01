@@ -90,7 +90,7 @@ struct W_TabTimerView: View {
 
                                     Button(
                                             action: {
-                                                WatchToIosSync.shared.cancelWithLocal()
+                                                WatchToIosSync.shared.pauseWithLocal()
                                             },
                                             label: {
                                                 Image(systemName: "pause.fill")
