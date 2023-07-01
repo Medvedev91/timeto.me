@@ -165,7 +165,7 @@ private fun FocusModeView(
                     ) {
                         Text(
                             text = state.activity.emoji,
-                            modifier = Modifier.padding(end = 6.dp),
+                            modifier = Modifier.padding(end = 2.dp),
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Normal,
                             color = c.white,
@@ -175,7 +175,13 @@ private fun FocusModeView(
 
                     Text(
                         text = state.title,
-                        modifier = Modifier.weight(1f, fill = false),
+                        modifier = Modifier
+                            .weight(1f, fill = false)
+                            .clip(squircleShape)
+                            .clickable {
+                                vm.toggleIsPurple()
+                            }
+                            .padding(horizontal = 8.dp),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Normal,
                         color = c.white,
@@ -193,7 +199,7 @@ private fun FocusModeView(
                             contentDescription = "Pause",
                             tint = c.black,
                             modifier = Modifier
-                                .padding(start = 8.dp)
+                                .padding(start = 4.dp)
                                 .size(24.dp)
                                 .clip(roundedShape)
                                 .clickable {
