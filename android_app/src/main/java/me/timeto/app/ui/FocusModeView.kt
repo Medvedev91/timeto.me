@@ -195,7 +195,7 @@ private fun FocusModeView(
                         exit = titlePauseAnimExit,
                     ) {
                         Icon(
-                            Icons.Rounded.Pause,
+                            painterResource(R.drawable.sf_medium_regular_pause_fill),
                             contentDescription = "Pause",
                             tint = c.black,
                             modifier = Modifier
@@ -206,7 +206,7 @@ private fun FocusModeView(
                                     vm.pauseTask()
                                 }
                                 .background(c.white)
-                                .padding(4.dp),
+                                .padding(7.dp),
                         )
                     }
                 }

@@ -10,13 +10,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Pause
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -192,7 +191,7 @@ fun TabTimerView() {
                                         exit = fadeOutMedium + shrinkHorizontallyMedium,
                                     ) {
                                         Icon(
-                                            Icons.Rounded.Pause,
+                                            painterResource(R.drawable.sf_medium_regular_pause_fill),
                                             contentDescription = "Pause",
                                             tint = c.blue,
                                             modifier = Modifier
@@ -203,7 +202,7 @@ fun TabTimerView() {
                                                     uiActivity.pauseLastInterval()
                                                 }
                                                 .background(c.white)
-                                                .padding(4.dp + onePx),
+                                                .padding(8.dp + onePx),
                                         )
                                     }
                                 }
