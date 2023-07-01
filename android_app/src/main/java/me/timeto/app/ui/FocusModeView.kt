@@ -54,6 +54,8 @@ private val menuColor = FocusModeVM.menuColor.toColor()
 private val layerAnimIn = fadeIn(spring(stiffness = Spring.StiffnessHigh))
 private val layerAnimOut = fadeOut(spring(stiffness = Spring.StiffnessHigh))
 
+private val navigationBarColor = Color(0x01000000).toArgb()
+
 @Composable
 fun FocusModeListener(
     activity: Activity,
@@ -90,7 +92,7 @@ fun FocusModeListener(
 
             controller.hide(barTypes)
             window.addFlags(flagKeepScreenOn)
-            window.navigationBarColor = Color(0x01000000).toArgb()
+            window.navigationBarColor = navigationBarColor
             WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = false
 
             //////
