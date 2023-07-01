@@ -26,7 +26,6 @@ class FocusModeVM : __VM<FocusModeVM.State>() {
         val idToUpdate: Long,
     ) {
 
-        val cancelTaskText: String? = if (interval.note != null) "return to tasks" else null
         val timerData = TimerDataUI(interval, !isPurple, ColorNative.white)
 
         val activity = interval.getActivityDI()
