@@ -31,7 +31,7 @@ class TimerTabProgressVM : __VM<TimerTabProgressVM.State>() {
                 progressColor = ColorNative.blue
             } else {
                 progressRatio = 1f
-                progressColor = timerData.subtitleColor
+                progressColor = timerData.color
             }
         }
     }

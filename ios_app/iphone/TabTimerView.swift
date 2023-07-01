@@ -477,7 +477,7 @@ struct TabTimerView_ProgressView: View {
 
                 let timerData = state.timerData
 
-                let subtitleColor = timerData.subtitleColor.toColor()
+                let subtitleColor = timerData.color.toColor()
 
                 VStack {
 
@@ -502,7 +502,7 @@ struct TabTimerView_ProgressView: View {
                         Text(timerData.title)
                                 .font(.system(size: 60, design: .monospaced))
                                 .fontWeight(.heavy)
-                                .foregroundColor(timerData.titleColor.toColor())
+                                .foregroundColor(timerData.color.toColor())
                                 .padding(.bottom, timerData.subtitle != nil ? 0 : 8)
 
                         Spacer()

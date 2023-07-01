@@ -236,7 +236,7 @@ private fun FocusModeView(
                         }
                         .padding(horizontal = 8.dp),
                     fontWeight = FontWeight.Black,
-                    color = timerData.subtitleColor.toColor(),
+                    color = timerData.color.toColor(),
                     letterSpacing = 3.sp,
                 )
             }
@@ -252,7 +252,7 @@ private fun FocusModeView(
                 fontSize = if (timerData.isCompact) 60.sp else 70.sp,
                 fontWeight = FontWeight.Black,
                 fontFamily = FontFamily.Monospace,
-                color = timerData.titleColor.toColor(),
+                color = timerData.color.toColor(),
             )
 
             AnimatedVisibility(

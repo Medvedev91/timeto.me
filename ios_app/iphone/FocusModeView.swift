@@ -122,7 +122,7 @@ private struct FocusModeView__CoverView: View {
                                 Text(subtitle)
                                         .font(.system(size: 26, weight: .heavy))
                                         .tracking(5)
-                                        .foregroundColor(timerData.subtitleColor.toColor())
+                                        .foregroundColor(timerData.color.toColor())
                                         .padding(.top, 36)
                                         .offset(y: 3)
                             }
@@ -137,7 +137,7 @@ private struct FocusModeView__CoverView: View {
                             Text(timerData.title)
                                     .font(.system(size: 70, design: .monospaced))
                                     .fontWeight(.bold)
-                                    .foregroundColor(timerData.titleColor.toColor())
+                                    .foregroundColor(timerData.color.toColor())
                                     .opacity(0.9)
                         }
                 )

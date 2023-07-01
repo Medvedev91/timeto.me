@@ -16,10 +16,8 @@ class TimerDataUI(
     val isCompact: Boolean
 
     val title: String // 12:34
-    val titleColor: ColorNative
-
     val subtitle: String? // NULL / BREAK / OVERDUE
-    val subtitleColor: ColorNative
+    val color: ColorNative
 
     init {
         val now = time()
@@ -36,10 +34,8 @@ class TimerDataUI(
         isCompact = timeForTitle >= (3_600 * 10)
 
         title = secondsToString(timeForTitle)
-        titleColor = if (isCountdown) tmpData.second else ColorNative.purple
-
         subtitle = tmpData.first
-        subtitleColor = tmpData.second
+        color = if (isCountdown) tmpData.second else ColorNative.purple
     }
 }
 

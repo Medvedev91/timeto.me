@@ -46,7 +46,7 @@ struct W_TabTimerView: View {
                 Text(state.timerData.title)
                         .font(.system(size: 28, design: .monospaced))
                         .fontWeight(.medium)
-                        .foregroundColor(state.timerData.titleColor.toColor())
+                        .foregroundColor(state.timerData.color.toColor())
             }
                     .onTapGesture {
                         vm.toggleIsCountDown()

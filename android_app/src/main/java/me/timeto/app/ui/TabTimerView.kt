@@ -395,7 +395,7 @@ private fun TimerView() {
             .height(136.dp)
     ) {
 
-        val subtitleColor = animateColorAsState(timerData.subtitleColor.toColor())
+        val subtitleColor = animateColorAsState(timerData.color.toColor())
 
         AnimatedVisibility(
             timerData.subtitle != null,
@@ -434,7 +434,7 @@ private fun TimerView() {
                 }
                 .padding(horizontal = 12.dp) // To ripple
                 .padding(bottom = 2.dp),
-            color = timerData.titleColor.toColor(),
+            color = timerData.color.toColor(),
         )
 
         val shape = RoundedCornerShape(99.dp)
