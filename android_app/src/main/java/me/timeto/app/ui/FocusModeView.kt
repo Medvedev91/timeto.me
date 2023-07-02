@@ -49,6 +49,9 @@ private val taskCountsHeight = 36.dp
 private val taskItemHeight = 36.dp
 private val taskListContentPadding = 4.dp
 
+private val hintFontSize = 18.sp
+private val hintPaddings = PaddingValues(horizontal = 8.dp, vertical = 4.dp)
+
 private val menuColor = FocusModeVM.menuColor.toColor()
 
 private val layerAnimIn = fadeIn(spring(stiffness = Spring.StiffnessHigh))
@@ -255,27 +258,97 @@ private fun FocusModeView(
 
             AnimatedVisibility(
                 timerSubtitle != null || state.isPurple,
+                modifier = Modifier
+                    .offset(
+                        y = animateDpAsState(
+                            if (timerSubtitle != null && !state.isTabTasksVisible) (-1).dp else (-8).dp
+                        ).value
+                    ),
                 enter = fadeIn() + expandVertically(animationSpec = spring(stiffness = Spring.StiffnessMedium)),
                 exit = fadeOut() + shrinkVertically(),
             ) {
 
-                Text(
-                    text = "Restart",
-                    color = c.text,
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Normal,
-                    modifier = Modifier
-                        .offset(
-                            y = animateDpAsState(
-                                if (timerSubtitle != null && !state.isTabTasksVisible) (-6).dp else (-10).dp
-                            ).value
+                HStack(
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+
+                    //
+                    // Hints
+
+                    state.timerHints.forEach { hintUI ->
+                        Text(
+                            text = hintUI.text,
+                            modifier = Modifier
+                                .clip(roundedShape)
+                                .clickable {
+                                    hintUI.startInterval()
+                                }
+                                .padding(hintPaddings),
+                            fontSize = hintFontSize,
+                            color = c.white,
                         )
-                        .clip(roundedShape)
-                        .clickable {
-                            vm.restart()
-                        }
-                        .padding(vertical = 8.dp, horizontal = 20.dp),
-                )
+                    }
+
+                    //
+                    // Timer
+
+                    HStack(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .clip(roundedShape)
+                            .clickable {
+                                Sheet.show { layerTimer ->
+                                    ActivityTimerSheet(
+                                        layer = layerTimer,
+                                        activity = state.activity,
+                                        timerContext = null,
+                                    ) {}
+                                }
+                            }
+                            .padding(hintPaddings),
+                    ) {
+
+                        Icon(
+                            painterResource(id = R.drawable.sf_timer_medium_medium),
+                            contentDescription = "Timer",
+                            tint = c.white,
+                            modifier = Modifier
+                                .offset(y = onePx * 2)
+                                .size(14.dp)
+                        )
+                    }
+
+                    //
+                    // Restart
+
+                    HStack(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .clip(roundedShape)
+                            .clickable {
+                                vm.restart()
+                            }
+                            .padding(hintPaddings),
+                    ) {
+
+                        Icon(
+                            painterResource(id = R.drawable.sf_arrow_counterclockwise_medium_medium),
+                            contentDescription = "Restart",
+                            tint = c.white,
+                            modifier = Modifier
+                                .offset(y = onePx * 2)
+                                .size(14.dp),
+                        )
+
+                        Text(
+                            text = state.restartText,
+                            modifier = Modifier
+                                .padding(start = 2.dp),
+                            fontSize = hintFontSize,
+                            color = c.white,
+                        )
+                    }
+                }
             }
 
             ZStack(
