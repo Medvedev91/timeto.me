@@ -13,8 +13,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Pause
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -672,7 +670,7 @@ private fun ChecklistView(
                         modifier = Modifier
                             .padding(start = checklistMenuStartIconPadding)
                             .size(checklistItemMinHeight)
-                            .clip(RoundedCornerShape(99.dp))
+                            .clip(roundedShape)
                             .clickable {
                                 completionState.onClick()
                             }
