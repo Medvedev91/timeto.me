@@ -128,16 +128,29 @@ data class TaskModel(
 
     fun startIntervalForUI(
         onStarted: () -> Unit,
-        needSheet: () -> Unit, // todo data for sheet
+        activitiesSheet: () -> Unit, // todo data for sheet
+        timerSheet: (activity: ActivityModel) -> Unit,
     ) {
-        val autostartData = taskAutostartData(this) ?: return needSheet()
-        launchExDefault {
-            startInterval(
-                deadline = autostartData.second,
-                activity = autostartData.first,
-            )
-            onStarted()
+        val tf = this.text.textFeatures()
+        val (activity, timer) = tf.activity to tf.timer
+
+        if (activity != null && timer != null) {
+            launchExDefault {
+                startInterval(
+                    deadline = timer,
+                    activity = activity,
+                )
+                onStarted()
+            }
+            return
         }
+
+        if (activity != null) {
+            timerSheet(activity)
+            return
+        }
+
+        activitiesSheet()
     }
 
     suspend fun upTextWithValidation(newText: String): Unit = dbIO {
