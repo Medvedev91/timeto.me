@@ -21,7 +21,7 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
             activity,
             isShort = true,
             historyLimit = 2,
-            customLimit = 5
+            customLimit = 5,
         ) { seconds ->
             activity.startInterval(seconds)
         }
