@@ -712,13 +712,22 @@ private fun ImportantTasksView(
                     .clickable {
                         taskItem.task.startIntervalForUI(
                             onStarted = {},
-                            needSheet = {
+                            activitiesSheet = {
                                 Sheet.show { layer ->
                                     ActivitiesTimerSheet(
                                         layerTaskSheet = layer,
                                         timerContext = taskItem.timerContext,
                                         onTaskStarted = {},
                                     )
+                                }
+                            },
+                            timerSheet = { activity ->
+                                Sheet.show { layerTimer ->
+                                    ActivityTimerSheet(
+                                        layer = layerTimer,
+                                        activity = activity,
+                                        timerContext = taskItem.timerContext,
+                                    ) {}
                                 }
                             },
                         )
