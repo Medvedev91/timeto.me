@@ -320,11 +320,22 @@ struct TasksView__TaskRowView: View {
                                     onStarted: {
                                         tasksListView.tabTasksView.onTaskStarted()
                                     },
-                                    needSheet: {
+                                    activitiesSheet: {
                                         timetoSheet.showActivitiesTimerSheet(
                                                 isPresented: $isSheetPresented,
                                                 timerContext: taskUI.timerContext,
                                                 selectedActivity: nil,
+                                                onStart: {
+                                                    isSheetPresented = false
+                                                    tasksListView.tabTasksView.onTaskStarted()
+                                                }
+                                        )
+                                    },
+                                    timerSheet: { activity in
+                                        timetoSheet.showActivitiesTimerSheet(
+                                                isPresented: $isSheetPresented,
+                                                timerContext: taskUI.timerContext,
+                                                selectedActivity: activity,
                                                 onStart: {
                                                     isSheetPresented = false
                                                     tasksListView.tabTasksView.onTaskStarted()

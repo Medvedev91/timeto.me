@@ -474,11 +474,21 @@ private struct ImportantTaskItem: View {
                 action: {
                     importantTask.task.startIntervalForUI(
                             onStarted: {},
-                            needSheet: {
+                            activitiesSheet: {
                                 timetoSheet.showActivitiesTimerSheet(
                                         isPresented: $isSheetPresented,
                                         timerContext: importantTask.timerContext,
                                         selectedActivity: nil,
+                                        onStart: {
+                                            isSheetPresented = false
+                                        }
+                                )
+                            },
+                            timerSheet: { activity in
+                                timetoSheet.showActivitiesTimerSheet(
+                                        isPresented: $isSheetPresented,
+                                        timerContext: importantTask.timerContext,
+                                        selectedActivity: activity,
                                         onStart: {
                                             isSheetPresented = false
                                         }
