@@ -6,6 +6,7 @@ extension TimetoSheet {
     func showActivitiesTimerSheet(
             isPresented: Binding<Bool>,
             timerContext: ActivityTimerSheetVM.TimerContext?,
+            selectedActivity: ActivityModel?,
             onStart: @escaping () -> Void
     ) {
         items.append(
@@ -15,7 +16,8 @@ extension TimetoSheet {
                             AnyView(
                                     ActivitiesTimerSheet(
                                             isPresented: isPresented,
-                                            timerContext: timerContext
+                                            timerContext: timerContext,
+                                            selectedActivity: selectedActivity
                                     ) {
                                         isPresented.wrappedValue = false
                                         onStart()
@@ -37,7 +39,7 @@ private struct ActivitiesTimerSheet: View {
 
     @State private var vm: ActivitiesTimerSheetVM
 
-    @State private var sheetActivity: ActivityModel? = nil
+    @State private var sheetActivity: ActivityModel?
     @Binding private var isPresented: Bool
 
     private let timerContext: ActivityTimerSheetVM.TimerContext?
@@ -46,6 +48,7 @@ private struct ActivitiesTimerSheet: View {
     init(
             isPresented: Binding<Bool>,
             timerContext: ActivityTimerSheetVM.TimerContext?,
+            selectedActivity: ActivityModel?,
             onStart: @escaping () -> Void
     ) {
         _isPresented = isPresented
@@ -53,6 +56,7 @@ private struct ActivitiesTimerSheet: View {
         self.onStart = onStart
 
         _vm = State(initialValue: ActivitiesTimerSheetVM(timerContext: timerContext))
+        _sheetActivity = State(initialValue: selectedActivity)
     }
 
     var body: some View {

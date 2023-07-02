@@ -227,6 +227,7 @@ private struct FocusModeView__CoverView: View {
                             timetoSheet.showActivitiesTimerSheet(
                                     isPresented: $isTimerActivitiesPresented,
                                     timerContext: nil,
+                                    selectedActivity: nil,
                                     onStart: {
                                         isTimerActivitiesPresented = false
                                     }
@@ -477,6 +478,7 @@ private struct ImportantTaskItem: View {
                                 timetoSheet.showActivitiesTimerSheet(
                                         isPresented: $isSheetPresented,
                                         timerContext: importantTask.timerContext,
+                                        selectedActivity: nil,
                                         onStart: {
                                             isSheetPresented = false
                                         }

@@ -324,6 +324,7 @@ struct TasksView__TaskRowView: View {
                                         timetoSheet.showActivitiesTimerSheet(
                                                 isPresented: $isSheetPresented,
                                                 timerContext: taskUI.timerContext,
+                                                selectedActivity: nil,
                                                 onStart: {
                                                     isSheetPresented = false
                                                     tasksListView.tabTasksView.onTaskStarted()
