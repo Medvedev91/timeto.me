@@ -193,7 +193,7 @@ private fun FocusModeView(
                         exit = titlePauseAnimExit,
                     ) {
                         Icon(
-                            painterResource(R.drawable.sf_medium_regular_pause_fill),
+                            painterResource(R.drawable.sf_pause_fill_medium_regular),
                             contentDescription = "Pause",
                             tint = c.black,
                             modifier = Modifier

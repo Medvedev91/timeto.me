@@ -191,7 +191,7 @@ fun TabTimerView() {
                                         exit = fadeOutMedium + shrinkHorizontallyMedium,
                                     ) {
                                         Icon(
-                                            painterResource(R.drawable.sf_medium_regular_pause_fill),
+                                            painterResource(R.drawable.sf_pause_fill_medium_regular),
                                             contentDescription = "Pause",
                                             tint = c.blue,
                                             modifier = Modifier
