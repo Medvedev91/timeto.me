@@ -8,6 +8,7 @@ import me.timeto.shared.db.ChecklistItemModel
 import me.timeto.shared.db.ChecklistModel
 import me.timeto.shared.db.IntervalModel
 import me.timeto.shared.db.TaskModel
+import me.timeto.shared.ui.TimerHintUI
 import me.timeto.shared.vm.ui.ChecklistStateUI
 import me.timeto.shared.vm.ui.TimerDataUI
 
@@ -31,6 +32,14 @@ class FocusModeVM : __VM<FocusModeVM.State>() {
         val activity = interval.getActivityDI()
 
         val restartText = interval.deadline.toTimerHintNote(isShort = true)
+        val timerHints = TimerHintUI.buildList(
+            activity,
+            isShort = true,
+            historyLimit = 3,
+            customLimit = 4,
+        ) { seconds ->
+            activity.startInterval(seconds)
+        }
 
         // todo or use interval.getTriggers()
         val textFeatures = (interval.note ?: activity.name).textFeatures()
