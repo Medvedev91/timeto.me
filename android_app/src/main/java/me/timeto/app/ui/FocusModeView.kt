@@ -67,6 +67,9 @@ private val titleEmojiAnimExit = fadeOut(animSpecFloatMedium) + shrinkHorizontal
 private val titlePauseAnimEnter = fadeIn(animSpecFloatMedium) + expandHorizontally(animSpecIntSizeMedium, expandFrom = Alignment.End, clip = false)
 private val titlePauseAnimExit = fadeOut(animSpecFloatMedium) + shrinkHorizontally(animSpecIntSizeMedium, shrinkTowards = Alignment.End, clip = false)
 
+private val hintsAnimEnter = fadeIn() + expandVertically(animationSpec = spring(stiffness = Spring.StiffnessMedium))
+private val hintsAnimExit = fadeOut() + shrinkVertically()
+
 @Composable
 fun FocusModeListener(
     activity: Activity,
@@ -257,23 +260,14 @@ private fun FocusModeView(
             )
 
             AnimatedVisibility(
-                timerSubtitle != null || state.isPurple,
-                modifier = Modifier
-                    .offset(
-                        y = animateDpAsState(
-                            if (timerSubtitle != null && !state.isTabTasksVisible) (-1).dp else (-8).dp
-                        ).value
-                    ),
-                enter = fadeIn() + expandVertically(animationSpec = spring(stiffness = Spring.StiffnessMedium)),
-                exit = fadeOut() + shrinkVertically(),
+                state.isPurple,
+                enter = hintsAnimEnter,
+                exit = hintsAnimExit,
             ) {
 
                 HStack(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-
-                    //
-                    // Hints
 
                     state.timerHints.forEach { hintUI ->
                         Text(
@@ -289,12 +283,10 @@ private fun FocusModeView(
                         )
                     }
 
-                    //
-                    // Timer
-
                     HStack(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
+                            .padding(start = 2.dp)
                             .clip(roundedShape)
                             .clickable {
                                 Sheet.show { layerTimer ->
@@ -313,17 +305,33 @@ private fun FocusModeView(
                             contentDescription = "Timer",
                             tint = c.white,
                             modifier = Modifier
-                                .offset(y = onePx * 2)
-                                .size(14.dp)
+                                .offset(y = onePx)
+                                .size(16.dp)
                         )
                     }
+                }
+            }
 
-                    //
-                    // Restart
+            AnimatedVisibility(
+                timerSubtitle != null || state.isPurple,
+                modifier = Modifier
+                    .offset(
+                        y = animateDpAsState(
+                            if (timerSubtitle != null && !state.isTabTasksVisible) (-1).dp else (-8).dp
+                        ).value
+                    ),
+                enter = hintsAnimEnter,
+                exit = hintsAnimExit,
+            ) {
+
+                VStack(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
 
                     HStack(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
+                            .padding(top = 2.dp)
                             .clip(roundedShape)
                             .clickable {
                                 vm.restart()
@@ -336,15 +344,16 @@ private fun FocusModeView(
                             contentDescription = "Restart",
                             tint = c.white,
                             modifier = Modifier
-                                .offset(y = onePx * 2)
-                                .size(14.dp),
+//                                .offset(y = onePx)
+                                .size(18.dp),
                         )
 
                         Text(
                             text = state.restartText,
                             modifier = Modifier
-                                .padding(start = 2.dp),
-                            fontSize = hintFontSize,
+                                .padding(start = 4.dp),
+                            fontSize = 22.sp,
+                            fontWeight = FontWeight.Bold,
                             color = c.white,
                         )
                     }
