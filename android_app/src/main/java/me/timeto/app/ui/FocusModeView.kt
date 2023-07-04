@@ -415,7 +415,7 @@ private fun FocusModeView(
                     Row(
                         modifier = Modifier
                             .padding(end = 2.dp, bottom = 1.dp)
-                            .clip(RoundedCornerShape(99.dp))
+                            .clip(roundedShape)
                             .background(animateColorAsState(state.batteryBackground.toColor()).value)
                             .padding(start = 4.dp, end = 5.dp),
                         verticalAlignment = Alignment.CenterVertically,
@@ -657,7 +657,7 @@ private fun ImportantTasksView(
                 modifier = Modifier
                     .height(taskItemHeight)
                     .padding(vertical = 4.dp, horizontal = 8.dp)
-                    .clip(RoundedCornerShape(99.dp))
+                    .clip(roundedShape)
                     .clickable {
                         taskItem.task.startIntervalForUI(
                             onStarted = {},
@@ -683,12 +683,12 @@ private fun ImportantTasksView(
                     }
                     .background(
                         color = taskItem.borderColor.toColor(),
-                        shape = RoundedCornerShape(99.dp)
+                        shape = roundedShape
                     )
                     .padding(1.dp)
                     .background(
                         color = taskItem.backgroundColor.toColor(),
-                        shape = RoundedCornerShape(99.dp)
+                        shape = roundedShape
                     )
                     .padding(start = 8.dp, end = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
