@@ -14,7 +14,7 @@ class TimerDataUI(
 ) {
 
     val isCompact: Boolean
-
+    val status: STATUS
     val title: String // 12:34
     val subtitle: String? // NULL / BREAK / OVERDUE
     val color: ColorNative
@@ -23,19 +23,30 @@ class TimerDataUI(
         val now = time()
         val timeLeft = interval.id + interval.deadline - now
 
-        // Subtitle?, Subtitle Color, Countdown Time
-        val tmpData: Triple<String?, ColorNative, Int> = when {
-            timeLeft < -BREAK_SECONDS -> Triple("OVERDUE", ColorNative.red, -timeLeft - BREAK_SECONDS)
-            timeLeft <= 0 -> Triple("BREAK", ColorNative.green, timeLeft + BREAK_SECONDS)
-            else -> Triple(null, defColor, timeLeft)
+        class TmpDTO(val subtitle: String?, val color: ColorNative, val timeLeft: Int, val status: STATUS)
+
+        val tmpData: TmpDTO = when {
+            timeLeft < -BREAK_SECONDS -> TmpDTO("OVERDUE", ColorNative.red, -timeLeft - BREAK_SECONDS, STATUS.OVERDUE)
+            timeLeft <= 0 -> TmpDTO("BREAK", ColorNative.green, timeLeft + BREAK_SECONDS, STATUS.BREAK)
+            else -> TmpDTO(null, defColor, timeLeft, STATUS.WORK)
         }
 
-        val timeForTitle = if (isCountdown) tmpData.third else (now - interval.id)
+        val timeForTitle = if (isCountdown) tmpData.timeLeft else (now - interval.id)
         isCompact = timeForTitle >= (3_600 * 10)
 
+        status = tmpData.status
         title = secondsToString(timeForTitle)
-        subtitle = tmpData.first
-        color = if (isCountdown) tmpData.second else ColorNative.purple
+        subtitle = tmpData.subtitle
+        color = if (isCountdown) tmpData.color else ColorNative.purple
+    }
+
+    enum class STATUS {
+
+        WORK, BREAK, OVERDUE;
+
+        fun isWork() = this == WORK
+        fun isBreak() = this == BREAK
+        fun isOverdue() = this == OVERDUE
     }
 }
 
