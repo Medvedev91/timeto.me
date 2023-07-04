@@ -28,6 +28,7 @@ class FocusModeVM : __VM<FocusModeVM.State>() {
     ) {
 
         val timerData = TimerDataUI(interval, !isPurple, ColorNative.white)
+        val isTimerButtonsVisible = isPurple || !timerData.status.isWork()
 
         val activity = interval.getActivityDI()
 
