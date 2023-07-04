@@ -36,8 +36,8 @@ class FocusModeVM : __VM<FocusModeVM.State>() {
         val timerHints = TimerHintUI.buildList(
             activity,
             isShort = true,
-            historyLimit = 3,
-            customLimit = 4,
+            historyLimit = 4,
+            customLimit = 5,
         ) { seconds ->
             activity.startInterval(seconds)
         }
