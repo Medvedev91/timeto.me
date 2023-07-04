@@ -21,6 +21,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
@@ -61,6 +63,8 @@ fun Modifier.conditional(
 ): Modifier {
     return if (condition) then(modifier(Modifier)) else this
 }
+
+val timerFont = FontFamily(Font(R.font.timer_font))
 
 ///
 /// Animation
