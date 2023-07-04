@@ -25,7 +25,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -49,7 +48,6 @@ private val taskCountsHeight = 36.dp
 private val taskItemHeight = 36.dp
 private val taskListContentPadding = 4.dp
 
-private val hintFontSize = 18.sp
 private val hintPaddings = PaddingValues(horizontal = 8.dp, vertical = 4.dp)
 
 private val menuColor = FocusModeVM.menuColor.toColor()
@@ -64,11 +62,10 @@ private val menuButtonModifier = Modifier.size(menuIconSize).padding(menuIconPad
 private val titleEmojiAnimEnter = fadeIn(animSpecFloatMedium) + expandHorizontally(animSpecIntSizeMedium, expandFrom = Alignment.Start, clip = false)
 private val titleEmojiAnimExit = fadeOut(animSpecFloatMedium) + shrinkHorizontally(animSpecIntSizeMedium, shrinkTowards = Alignment.Start, clip = false)
 
-private val titlePauseAnimEnter = fadeIn(animSpecFloatMedium) + expandHorizontally(animSpecIntSizeMedium, expandFrom = Alignment.End, clip = false)
-private val titlePauseAnimExit = fadeOut(animSpecFloatMedium) + shrinkHorizontally(animSpecIntSizeMedium, shrinkTowards = Alignment.End, clip = false)
+private val hintsAnimEnter = fadeIn(spring(stiffness = Spring.StiffnessMedium)) + expandVertically(spring(stiffness = Spring.StiffnessMedium))
+private val hintsAnimExit = fadeOut(spring(stiffness = Spring.StiffnessMedium)) + shrinkVertically(spring(stiffness = Spring.StiffnessMedium))
 
-private val hintsAnimEnter = fadeIn() + expandVertically(animationSpec = spring(stiffness = Spring.StiffnessMedium))
-private val hintsAnimExit = fadeOut() + shrinkVertically()
+private val timerButtonsHeight = 32.dp
 
 @Composable
 fun FocusModeListener(
@@ -148,13 +145,10 @@ private fun FocusModeView(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
-            val timerData = state.timerData
-            val timerSubtitle = timerData.subtitle
-
             Column(
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
-                    .offset(y = 6.dp),
+                    .offset(y = 2.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
@@ -186,33 +180,11 @@ private fun FocusModeView(
                                 vm.toggleIsPurple()
                             }
                             .padding(horizontal = 8.dp),
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Normal,
+                        fontSize = 19.sp,
+                        fontWeight = FontWeight.Medium,
                         color = c.white,
                         textAlign = TextAlign.Center,
                     )
-
-                    AnimatedVisibility(
-                        state.isPurple,
-                        modifier = Modifier.offset(y = 2.dp - onePx),
-                        enter = titlePauseAnimEnter,
-                        exit = titlePauseAnimExit,
-                    ) {
-                        Icon(
-                            painterResource(R.drawable.sf_pause_fill_medium_regular),
-                            contentDescription = "Pause",
-                            tint = c.black,
-                            modifier = Modifier
-                                .padding(start = 4.dp)
-                                .size(24.dp)
-                                .clip(roundedShape)
-                                .clickable {
-                                    vm.pauseTask()
-                                }
-                                .background(c.white)
-                                .padding(7.dp),
-                        )
-                    }
                 }
             }
 
@@ -222,45 +194,23 @@ private fun FocusModeView(
                 contentPadding = PaddingValues(horizontal = 50.dp)
             )
 
-            AnimatedVisibility(
-                timerSubtitle != null && !state.isTabTasksVisible,
-                enter = fadeIn() + expandVertically(),
-                exit = fadeOut() + shrinkVertically(),
-            ) {
-
-                Text(
-                    text = timerSubtitle ?: "",
-                    fontSize = 26.sp,
-                    modifier = Modifier
-                        .padding(top = 30.dp)
-                        .offset(y = 4.dp)
-                        .clip(squircleShape)
-                        .clickable {
-                            vm.toggleIsPurple()
-                        }
-                        .padding(horizontal = 8.dp),
-                    fontWeight = FontWeight.Black,
-                    color = timerData.color.toColor(),
-                    letterSpacing = 3.sp,
-                )
-            }
-
             Text(
-                text = timerData.title,
+                text = state.timerData.title,
                 modifier = Modifier
                     .clip(squircleShape)
                     .clickable {
                         vm.toggleIsPurple()
                     }
-                    .padding(horizontal = 8.dp),
-                fontSize = if (timerData.isCompact) 60.sp else 70.sp,
-                fontWeight = FontWeight.Black,
-                fontFamily = FontFamily.Monospace,
-                color = timerData.color.toColor(),
+                    .padding(horizontal = 8.dp, vertical = 16.dp),
+                fontSize = if (state.timerData.isCompact) 30.sp else 36.sp,
+                fontFamily = timerFont,
+                color = state.timerData.color.toColor(),
             )
 
             AnimatedVisibility(
                 state.isPurple,
+                modifier = Modifier
+                    .offset(y = (-7).dp),
                 enter = hintsAnimEnter,
                 exit = hintsAnimExit,
             ) {
@@ -278,7 +228,7 @@ private fun FocusModeView(
                                     hintUI.startInterval()
                                 }
                                 .padding(hintPaddings),
-                            fontSize = hintFontSize,
+                            fontSize = 16.sp,
                             color = c.white,
                         )
                     }
@@ -306,55 +256,66 @@ private fun FocusModeView(
                             tint = c.white,
                             modifier = Modifier
                                 .offset(y = onePx)
-                                .size(16.dp)
+                                .size(15.dp)
                         )
                     }
                 }
             }
 
             AnimatedVisibility(
-                timerSubtitle != null || state.isPurple,
-                modifier = Modifier
-                    .offset(
-                        y = animateDpAsState(
-                            if (timerSubtitle != null && !state.isTabTasksVisible) (-1).dp else (-8).dp
-                        ).value
-                    ),
+                state.isTimerButtonsVisible,
                 enter = hintsAnimEnter,
                 exit = hintsAnimExit,
             ) {
 
-                VStack(
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                HStack(
+                    modifier = Modifier
+                        .padding(top = 2.dp)
                 ) {
+
+                    Icon(
+                        painterResource(R.drawable.sf_pause_fill_medium_regular),
+                        contentDescription = "Pause",
+                        tint = c.black,
+                        modifier = Modifier
+                            .size(timerButtonsHeight)
+                            .clip(roundedShape)
+                            .clickable {
+                                vm.pauseTask()
+                            }
+                            .background(c.white)
+                            .padding(10.dp),
+                    )
 
                     HStack(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
-                            .padding(top = 2.dp)
+                            .padding(start = 10.dp)
+                            .height(timerButtonsHeight)
                             .clip(roundedShape)
+                            .background(c.white)
                             .clickable {
                                 vm.restart()
                             }
-                            .padding(hintPaddings),
+                            .padding(horizontal = 10.dp),
                     ) {
 
                         Icon(
-                            painterResource(id = R.drawable.sf_arrow_counterclockwise_medium_medium),
+                            painterResource(id = R.drawable.sf_clock_arrow_circlepath_small_heavy),
                             contentDescription = "Restart",
-                            tint = c.white,
+                            tint = c.black,
                             modifier = Modifier
-//                                .offset(y = onePx)
+                                .padding(bottom = 1.dp)
                                 .size(18.dp),
                         )
 
                         Text(
                             text = state.restartText,
                             modifier = Modifier
-                                .padding(start = 4.dp),
-                            fontSize = 22.sp,
+                                .padding(start = 4.dp, bottom = 2.dp),
+                            fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
-                            color = c.white,
+                            color = c.black,
                         )
                     }
                 }
