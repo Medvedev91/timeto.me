@@ -48,8 +48,6 @@ private val taskCountsHeight = 36.dp
 private val taskItemHeight = 36.dp
 private val taskListContentPadding = 4.dp
 
-private val hintPaddings = PaddingValues(horizontal = 8.dp, vertical = 4.dp)
-
 private val menuColor = FocusModeVM.menuColor.toColor()
 
 private val layerAnimIn = fadeIn(spring(stiffness = Spring.StiffnessHigh))
@@ -206,61 +204,6 @@ private fun FocusModeView(
                 fontFamily = timerFont,
                 color = state.timerData.color.toColor(),
             )
-
-            AnimatedVisibility(
-                state.isPurple,
-                modifier = Modifier
-                    .offset(y = (-7).dp),
-                enter = hintsAnimEnter,
-                exit = hintsAnimExit,
-            ) {
-
-                HStack(
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-
-                    state.timerHints.forEach { hintUI ->
-                        Text(
-                            text = hintUI.text,
-                            modifier = Modifier
-                                .clip(roundedShape)
-                                .clickable {
-                                    hintUI.startInterval()
-                                }
-                                .padding(hintPaddings),
-                            fontSize = 16.sp,
-                            color = c.white,
-                        )
-                    }
-
-                    HStack(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .padding(start = 2.dp)
-                            .clip(roundedShape)
-                            .clickable {
-                                Sheet.show { layerTimer ->
-                                    ActivityTimerSheet(
-                                        layer = layerTimer,
-                                        activity = state.activity,
-                                        timerContext = null,
-                                    ) {}
-                                }
-                            }
-                            .padding(hintPaddings),
-                    ) {
-
-                        Icon(
-                            painterResource(id = R.drawable.sf_timer_medium_medium),
-                            contentDescription = "Timer",
-                            tint = c.white,
-                            modifier = Modifier
-                                .offset(y = onePx)
-                                .size(15.dp)
-                        )
-                    }
-                }
-            }
 
             AnimatedVisibility(
                 state.isTimerButtonsVisible,

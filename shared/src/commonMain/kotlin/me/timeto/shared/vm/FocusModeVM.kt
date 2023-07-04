@@ -33,14 +33,6 @@ class FocusModeVM : __VM<FocusModeVM.State>() {
         val activity = interval.getActivityDI()
 
         val restartText = interval.deadline.toTimerHintNote(isShort = true)
-        val timerHints = TimerHintUI.buildList(
-            activity,
-            isShort = true,
-            historyLimit = 4,
-            customLimit = 5,
-        ) { seconds ->
-            activity.startInterval(seconds)
-        }
 
         // todo or use interval.getTriggers()
         val textFeatures = (interval.note ?: activity.name).textFeatures()
