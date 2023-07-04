@@ -57,9 +57,6 @@ private val navigationBarColor = Color(0x01000000).toArgb()
 
 private val menuButtonModifier = Modifier.size(menuIconSize).padding(menuIconPadding)
 
-private val titleEmojiAnimEnter = fadeIn(animSpecFloatMedium) + expandHorizontally(animSpecIntSizeMedium, expandFrom = Alignment.Start, clip = false)
-private val titleEmojiAnimExit = fadeOut(animSpecFloatMedium) + shrinkHorizontally(animSpecIntSizeMedium, shrinkTowards = Alignment.Start, clip = false)
-
 private val hintsAnimEnter = fadeIn(spring(stiffness = Spring.StiffnessMedium)) + expandVertically(spring(stiffness = Spring.StiffnessMedium))
 private val hintsAnimExit = fadeOut(spring(stiffness = Spring.StiffnessMedium)) + shrinkVertically(spring(stiffness = Spring.StiffnessMedium))
 
@@ -143,48 +140,16 @@ private fun FocusModeView(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
-            Column(
+            Text(
+                text = state.title,
                 modifier = Modifier
-                    .padding(horizontal = 20.dp)
+                    .padding(horizontal = 24.dp)
                     .offset(y = 2.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-
-                HStack(
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-
-                    AnimatedVisibility(
-                        state.isPurple,
-                        enter = titleEmojiAnimEnter,
-                        exit = titleEmojiAnimExit,
-                    ) {
-                        Text(
-                            text = state.activity.emoji,
-                            modifier = Modifier.padding(end = 2.dp),
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Normal,
-                            color = c.white,
-                            textAlign = TextAlign.Center,
-                        )
-                    }
-
-                    Text(
-                        text = state.title,
-                        modifier = Modifier
-                            .weight(1f, fill = false)
-                            .clip(squircleShape)
-                            .clickable {
-                                vm.toggleIsPurple()
-                            }
-                            .padding(horizontal = 8.dp),
-                        fontSize = 19.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = c.white,
-                        textAlign = TextAlign.Center,
-                    )
-                }
-            }
+                fontSize = 19.sp,
+                fontWeight = FontWeight.Medium,
+                color = c.white,
+                textAlign = TextAlign.Center,
+            )
 
             TextFeaturesTriggersView(
                 triggers = state.triggers,
