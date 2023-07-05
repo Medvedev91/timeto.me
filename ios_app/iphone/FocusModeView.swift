@@ -69,65 +69,13 @@ private struct FocusModeView__CoverView: View {
 
             VStack {
 
-                HStack(alignment: .center) {
-
-                    if isPurpleAnim {
-                        Text(state.activity.emoji)
-                                .transition(.move(edge: .trailing).combined(with: .opacity))
-                                .font(.system(size: 20))
-                                .padding(.trailing, 6)
-                    }
-
-                    Button(
-                            action: {
-                                vm.toggleIsPurple()
-                            },
-                            label: {
-                                Text(state.title)
-                                        .font(.system(size: 20))
-                                        .foregroundColor(.white)
-                                        .multilineTextAlignment(.center)
-                            }
-                    )
-
-                    if isPurpleAnim {
-
-                        Button(
-                                action: {
-                                    vm.pauseTask()
-                                },
-                                label: {
-                                    Image(systemName: "pause.fill")
-                                            .foregroundColor(.blue)
-                                            .font(.system(size: 14))
-                                }
-                        )
-                                .frame(width: 24, height: 24)
-                                .background(roundedShape.fill(.white))
-                                .padding(.leading, 10)
-                                .transition(.move(edge: .leading).combined(with: .opacity))
-                                .offset(y: onePx)
-                    }
-                }
+                Text(state.title)
+                        .font(.system(size: 20, weight: .medium))
+                        .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
                         .padding(.horizontal, 20)
 
                 let timerData = state.timerData
-
-                if let subtitle = timerData.subtitle, !state.isTabTasksVisible {
-                    Button(
-                            action: {
-                                vm.toggleIsPurple()
-                            },
-                            label: {
-                                Text(subtitle)
-                                        .font(.system(size: 26, weight: .heavy))
-                                        .tracking(5)
-                                        .foregroundColor(timerData.color.toColor())
-                                        .padding(.top, 36)
-                                        .offset(y: 3)
-                            }
-                    )
-                }
 
                 Button(
                         action: {
@@ -142,17 +90,49 @@ private struct FocusModeView__CoverView: View {
                         }
                 )
 
-                if timerData.subtitle != nil || state.isPurple {
-                    Button(
-                            action: {
-                                vm.restart()
-                            },
-                            label: {
-                                Text("Restart")
-                                        .font(.system(size: 24, weight: .regular))
-                                        .foregroundColor(.white)
-                            }
-                    )
+                if state.isTimerButtonsVisible {
+
+                    let timerButtonsHeight = 32.0
+
+                    HStack {
+
+                        Button(
+                                action: {
+                                    vm.pauseTask()
+                                },
+                                label: {
+                                    Image(systemName: "pause.fill")
+                                            .foregroundColor(.black)
+                                            .font(.system(size: 16))
+                                }
+                        )
+                                .frame(width: timerButtonsHeight, height: timerButtonsHeight)
+                                .background(roundedShape.fill(.white))
+
+                        Button(
+                                action: {
+                                    vm.restart()
+                                },
+                                label: {
+                                    HStack {
+
+                                        Image(systemName: "clock.arrow.circlepath")
+                                                .foregroundColor(.black)
+                                                .font(.system(size: 16, weight: .heavy))
+
+                                        Text(state.restartText)
+                                                .padding(.leading, 2)
+                                                .padding(.trailing, 2)
+                                                .font(.system(size: 19, weight: .bold))
+                                                .foregroundColor(.black)
+                                    }
+                                }
+                        )
+                                .padding(.horizontal, 8)
+                                .frame(height: timerButtonsHeight)
+                                .background(roundedShape.fill(.white))
+                                .padding(.leading, 10)
+                    }
                 }
 
                 ZStack {
