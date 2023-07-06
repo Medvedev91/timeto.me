@@ -139,6 +139,8 @@ private fun FocusModeView(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
+            val timerColor = animateColorAsState(state.timerData.color.toColor()).value
+
             Text(
                 text = state.title,
                 modifier = Modifier
@@ -146,7 +148,7 @@ private fun FocusModeView(
                     .offset(y = 1.dp),
                 fontSize = 19.sp,
                 fontWeight = FontWeight.Medium,
-                color = c.white,
+                color = timerColor,
                 textAlign = TextAlign.Center,
             )
 
@@ -166,7 +168,7 @@ private fun FocusModeView(
                     .padding(horizontal = 8.dp, vertical = 16.dp),
                 fontSize = if (state.timerData.isCompact) 30.sp else 36.sp,
                 fontFamily = timerFont,
-                color = state.timerData.color.toColor(),
+                color = timerColor,
             )
 
             AnimatedVisibility(
