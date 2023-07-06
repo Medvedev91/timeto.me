@@ -56,8 +56,8 @@ private val navigationBarColor = Color(0x01000000).toArgb()
 
 private val menuButtonModifier = Modifier.size(menuIconSize).padding(menuIconPadding)
 
-private val hintsAnimEnter = fadeIn(spring(stiffness = Spring.StiffnessMedium)) + expandVertically(spring(stiffness = Spring.StiffnessMedium))
-private val hintsAnimExit = fadeOut(spring(stiffness = Spring.StiffnessMedium)) + shrinkVertically(spring(stiffness = Spring.StiffnessMedium))
+private val timerButtonsAnimEnter = fadeIn(spring(stiffness = Spring.StiffnessMediumLow)) + expandVertically(spring(stiffness = Spring.StiffnessMedium))
+private val timerButtonsAnimExit = fadeOut(spring(stiffness = Spring.StiffnessHigh)) + shrinkVertically(spring(stiffness = Spring.StiffnessMedium))
 
 private val timerButtonsHeight = 32.dp
 
@@ -171,8 +171,8 @@ private fun FocusModeView(
 
             AnimatedVisibility(
                 state.isTimerButtonsVisible,
-                enter = hintsAnimEnter,
-                exit = hintsAnimExit,
+                enter = timerButtonsAnimEnter,
+                exit = timerButtonsAnimExit,
             ) {
 
                 HStack(
