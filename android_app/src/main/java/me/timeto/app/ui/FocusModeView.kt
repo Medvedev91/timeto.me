@@ -143,7 +143,7 @@ private fun FocusModeView(
                 text = state.title,
                 modifier = Modifier
                     .padding(horizontal = 24.dp)
-                    .offset(y = 2.dp),
+                    .offset(y = 1.dp),
                 fontSize = 19.sp,
                 fontWeight = FontWeight.Medium,
                 color = c.white,
