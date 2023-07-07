@@ -204,7 +204,7 @@ private fun FocusModeView(
                             .clip(roundedShape)
                             .background(c.white)
                             .clickable {
-                                vm.restart()
+                                state.timerData.restart()
                             }
                             .padding(horizontal = 10.dp),
                     ) {

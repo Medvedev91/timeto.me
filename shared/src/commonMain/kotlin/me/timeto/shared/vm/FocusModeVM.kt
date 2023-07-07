@@ -138,12 +138,6 @@ class FocusModeVM : __VM<FocusModeVM.State>() {
             reportApi("batteryLevelOrNull null")
     }
 
-    fun restart() {
-        launchExDefault {
-            IntervalModel.restartActualInterval()
-        }
-    }
-
     fun toggleIsPurple() {
         state.update { it.copy(isPurple = !it.isPurple) }
     }

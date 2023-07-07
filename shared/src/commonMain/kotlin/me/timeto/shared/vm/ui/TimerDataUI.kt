@@ -38,6 +38,12 @@ class TimerDataUI(
         color = if (isCountdown) tmpData.color else ColorNative.purple
     }
 
+    fun restart() {
+        launchExDefault {
+            IntervalModel.restartActualInterval()
+        }
+    }
+
     enum class STATUS {
 
         WORK, BREAK, OVERDUE;

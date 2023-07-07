@@ -234,7 +234,7 @@ fun TabTimerView() {
                                                     .border(1.dp, c.white, roundedShape)
                                                     .background(c.blue)
                                                     .clickable {
-//                                                    vm.restart()
+                                                        timerState.timerData.restart()
                                                     }
                                                     .padding(start = 7.dp, end = 6.dp),
                                             ) {
