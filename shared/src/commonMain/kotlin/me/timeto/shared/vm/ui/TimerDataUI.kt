@@ -10,7 +10,6 @@ class TimerDataUI(
     defColor: ColorNative,
 ) {
 
-    val isCompact: Boolean
     val status: STATUS
     val title: String // 12:34
     val subtitle: String? // NULL / BREAK / OVERDUE
@@ -30,7 +29,6 @@ class TimerDataUI(
         }
 
         val timeForTitle = if (isCountdown) tmpData.timeLeft else (now - interval.id)
-        isCompact = timeForTitle >= (3_600 * 10)
 
         status = tmpData.status
         title = secondsToString(timeForTitle)

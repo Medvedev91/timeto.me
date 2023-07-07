@@ -166,7 +166,7 @@ private fun FocusModeView(
                         vm.toggleIsPurple()
                     }
                     .padding(horizontal = 8.dp, vertical = 16.dp),
-                fontSize = if (state.timerData.isCompact) 30.sp else 36.sp,
+                fontSize = 36.sp, // todo compact if long
                 fontFamily = timerFont,
                 color = timerColor,
             )
