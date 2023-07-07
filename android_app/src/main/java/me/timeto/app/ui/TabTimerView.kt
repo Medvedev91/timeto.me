@@ -8,19 +8,15 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -29,14 +25,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
-import me.timeto.shared.*
 import me.timeto.shared.vm.TabTimerVM
 import me.timeto.shared.vm.TimerTabProgressVM
 
-private val timerTitleFont = FontFamily(Font(R.font.notosansmono_extrabold))
-private val timerSubtitleFont = FontFamily(Font(R.font.notosansmono_black))
+private val timerButtonsHeight = 26.dp
 
-private val activityItemShape = MySquircleShape(len = 70f)
+private val activityItemShape = MySquircleShape(len = 80f, angleParam = 2f)
 
 private val emojiWidth = 44.dp
 private val triggersListContentPaddings = PaddingValues(start = emojiWidth - 1.dp)
@@ -58,10 +52,8 @@ fun TabTimerView() {
                 .fillMaxSize()
         ) {
 
-            TimerView()
-
             LazyColumn(
-                contentPadding = PaddingValues(horizontal = 21.dp, vertical = 28.dp),
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 48.dp),
             ) {
 
                 val activitiesUI = state.activitiesUI
@@ -122,7 +114,7 @@ fun TabTimerView() {
                                         )
                                     }
                                 }
-                                .padding(start = 11.dp, end = 11.dp),
+                                .padding(start = 14.dp, end = 14.dp),
                             contentAlignment = Alignment.TopCenter,
                         ) {
 
@@ -144,25 +136,28 @@ fun TabTimerView() {
                                         modifier = Modifier
                                             .width(emojiWidth),
                                         textAlign = TextAlign.Start,
-                                        fontSize = 22.sp,
+                                        fontSize = if (isActive) 20.sp else 22.sp, // todo animation
                                     )
 
                                     VStack(
                                         modifier = Modifier
                                             .weight(1f),
                                     ) {
+
                                         Text(
                                             text = uiActivity.data.listText,
                                             color = if (isActive) c.white else c.text,
                                             fontSize = 16.sp,
-                                            fontWeight = FontWeight.Normal,
                                             maxLines = 1,
                                             overflow = TextOverflow.Ellipsis,
                                         )
-                                        if (uiActivity.data.listNote != null)
+
+                                        val listNote = uiActivity.data.listNote
+                                        if (listNote != null)
                                             Text(
-                                                text = uiActivity.data.listNote ?: "",
-                                                modifier = Modifier.padding(bottom = onePx * 2),
+                                                text = listNote,
+                                                modifier = Modifier
+                                                    .offset(y = (-2).dp),
                                                 color = c.white,
                                                 fontSize = 14.sp,
                                                 fontWeight = FontWeight.Light,
@@ -181,28 +176,7 @@ fun TabTimerView() {
                                                 .padding(horizontal = 4.dp, vertical = 3.dp),
                                             color = if (isActive) c.white else c.blue,
                                             fontSize = 14.sp,
-                                            fontWeight = FontWeight.W300,
-                                        )
-                                    }
-
-                                    AnimatedVisibility(
-                                        uiActivity.data.isPauseEnabled,
-                                        enter = fadeInMedium + expandHorizontallyMedium,
-                                        exit = fadeOutMedium + shrinkHorizontallyMedium,
-                                    ) {
-                                        Icon(
-                                            painterResource(R.drawable.sf_pause_fill_medium_regular),
-                                            contentDescription = "Pause",
-                                            tint = c.blue,
-                                            modifier = Modifier
-                                                .padding(start = 6.dp, end = onePx)
-                                                .size(28.dp)
-                                                .clip(roundedShape)
-                                                .clickable {
-                                                    uiActivity.pauseLastInterval()
-                                                }
-                                                .background(c.white)
-                                                .padding(8.dp + onePx),
+                                            fontWeight = FontWeight.Light,
                                         )
                                     }
                                 }
@@ -212,6 +186,81 @@ fun TabTimerView() {
                                     modifier = Modifier.padding(top = 4.dp, bottom = 4.dp),
                                     contentPadding = triggersListContentPaddings
                                 )
+
+                                if (isActive) {
+
+                                    val (_, timerState) = rememberVM { TimerTabProgressVM() }
+
+                                    HStack(
+                                        modifier = Modifier
+                                            .padding(top = 8.dp, bottom = 6.dp),
+                                        verticalAlignment = Alignment.Bottom,
+                                    ) {
+
+                                        Text(
+                                            text = timerState.timerData.title,
+                                            fontFamily = timerFont,
+                                            fontSize = 29.sp,
+                                            color = c.white,
+                                        )
+
+                                        SpacerW1()
+
+                                        HStack(
+                                            modifier = Modifier.padding(top = 8.dp)
+                                        ) {
+
+                                            Icon(
+                                                painterResource(R.drawable.sf_pause_small_medium),
+                                                contentDescription = "Pause",
+                                                tint = c.white, // todo
+                                                modifier = Modifier
+                                                    .size(timerButtonsHeight)
+                                                    .clip(roundedShape)
+                                                    .border(1.dp, c.white, roundedShape)
+                                                    .clickable {
+                                                        uiActivity.pauseLastInterval()
+                                                    }
+                                                    .background(c.blue)
+                                                    .padding(8.dp),
+                                            )
+
+                                            HStack(
+                                                verticalAlignment = Alignment.CenterVertically,
+                                                modifier = Modifier
+                                                    .padding(start = 8.dp)
+                                                    .height(timerButtonsHeight)
+                                                    .clip(roundedShape)
+                                                    .border(1.dp, c.white, roundedShape)
+                                                    .background(c.blue)
+                                                    .clickable {
+//                                                    vm.restart()
+                                                    }
+                                                    .padding(start = 7.dp, end = 6.dp),
+                                            ) {
+
+                                                Icon(
+                                                    painterResource(id = R.drawable.sf_clock_arrow_circlepath_small_light),
+                                                    contentDescription = "Restart",
+                                                    tint = c.white,
+                                                    modifier = Modifier
+                                                        .size(15.dp),
+                                                )
+
+                                                Text(
+                                                    // todo
+//                                                text = state.restartText,
+                                                    text = "25m",
+                                                    modifier = Modifier
+                                                        .padding(start = 3.dp, bottom = 1.dp),
+                                                    fontSize = 14.sp,
+                                                    fontWeight = FontWeight.Light,
+                                                    color = c.white,
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
                             }
 
                             DividerBg(
@@ -381,107 +430,4 @@ private fun GrayTextButton(
         fontSize = 14.sp,
         fontWeight = FontWeight.Light,
     )
-}
-
-@Composable
-private fun TimerView() {
-
-    val (vm, state) = rememberVM { TimerTabProgressVM() }
-    val timerData = state.timerData
-    val progressHeight = 16.dp
-
-    Box(
-        modifier = Modifier
-            .height(136.dp)
-    ) {
-
-        val subtitleColor = animateColorAsState(timerData.color.toColor())
-
-        AnimatedVisibility(
-            timerData.subtitle != null,
-            modifier = Modifier
-                .padding(top = 13.dp)
-                .align(Alignment.TopCenter),
-            enter = fadeIn(animationSpec = spring(stiffness = Spring.StiffnessMediumLow)),
-            exit = fadeOut(animationSpec = spring(stiffness = Spring.StiffnessMediumLow)),
-        ) {
-            Text(
-                text = timerData.subtitle ?: " ",
-                fontSize = 26.sp,
-                fontWeight = FontWeight.Black,
-                fontFamily = timerSubtitleFont,
-                color = subtitleColor.value,
-                letterSpacing = 1.sp,
-            )
-        }
-
-        val titleBottomPadding = animateDpAsState(
-            if (timerData.subtitle == null) progressHeight - 2.dp else progressHeight - 7.dp,
-            animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
-        )
-
-        Text(
-            text = timerData.title,
-            fontSize = 56.sp,
-            fontWeight = FontWeight.ExtraBold,
-            fontFamily = timerTitleFont,
-            modifier = Modifier
-                .padding(bottom = titleBottomPadding.value)
-                .align(Alignment.BottomCenter)
-                .clip(MySquircleShape(80f))
-                .clickable {
-                    vm.toggleIsCountdown()
-                }
-                .padding(horizontal = 12.dp) // To ripple
-                .padding(bottom = 2.dp),
-            color = timerData.color.toColor(),
-        )
-
-        val shape = RoundedCornerShape(99.dp)
-
-        Box(
-            contentAlignment = Alignment.CenterStart,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-                .height(progressHeight)
-                .padding(horizontal = 34.dp)
-        ) {
-
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .border(onePx, c.timerBarBorder, shape)
-                    .clip(shape)
-                    .background(c.timerBarBackground)
-            )
-
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clip(shape)
-            ) {
-
-                val widthAnimate = animateFloatAsState(
-                    state.progressRatio,
-                    // To fast rollback on start
-                    if (time() > state.lastInterval.id) tween(1000, easing = LinearEasing) else spring()
-                )
-
-                val animateColorBar = animateColorAsState(state.progressColor.toColor())
-
-                Box(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .fillMaxWidth()
-                        .drawBehind {
-                            drawRect(
-                                color = animateColorBar.value,
-                                size = size.copy(size.width * widthAnimate.value)
-                            )
-                        }
-                )
-            }
-        }
-    }
 }
