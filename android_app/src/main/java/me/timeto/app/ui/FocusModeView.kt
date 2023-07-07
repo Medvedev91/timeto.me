@@ -219,7 +219,7 @@ private fun FocusModeView(
                         )
 
                         Text(
-                            text = state.restartText,
+                            text = state.timerData.restartText,
                             modifier = Modifier
                                 .padding(start = 4.dp, bottom = 2.dp),
                             fontSize = 18.sp,

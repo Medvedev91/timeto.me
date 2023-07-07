@@ -1,10 +1,7 @@
 package me.timeto.shared.vm.ui
 
-import me.timeto.shared.BREAK_SECONDS
-import me.timeto.shared.ColorNative
+import me.timeto.shared.*
 import me.timeto.shared.db.IntervalModel
-import me.timeto.shared.time
-import me.timeto.shared.toHms
 import kotlin.math.absoluteValue
 
 class TimerDataUI(
@@ -18,6 +15,7 @@ class TimerDataUI(
     val title: String // 12:34
     val subtitle: String? // NULL / BREAK / OVERDUE
     val color: ColorNative
+    val restartText = interval.deadline.toTimerHintNote(isShort = true)
 
     init {
         val now = time()
