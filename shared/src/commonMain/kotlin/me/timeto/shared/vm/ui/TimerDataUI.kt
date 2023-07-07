@@ -6,7 +6,7 @@ import kotlin.math.absoluteValue
 
 class TimerDataUI(
     interval: IntervalModel,
-    isCountdown: Boolean,
+    isPurple: Boolean,
     defColor: ColorNative,
 ) {
 
@@ -28,12 +28,12 @@ class TimerDataUI(
             else -> TmpDTO(null, defColor, timeLeft, STATUS.WORK)
         }
 
-        val timeForTitle = if (isCountdown) tmpData.timeLeft else (now - interval.id)
+        val timeForTitle = if (isPurple) (now - interval.id) else tmpData.timeLeft
 
         status = tmpData.status
         title = secondsToString(timeForTitle)
         subtitle = tmpData.subtitle
-        color = if (isCountdown) tmpData.color else ColorNative.purple
+        color = if (isPurple) ColorNative.purple else tmpData.color
     }
 
     fun restart() {

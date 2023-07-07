@@ -20,7 +20,7 @@ class WatchTimerVM : __VM<WatchTimerVM.State>() {
         val isCountDown: Boolean,
         val lastInterval: IntervalModel,
     ) {
-        val timerData = TimerDataUI(lastInterval, isCountDown, ColorNative.text)
+        val timerData = TimerDataUI(lastInterval, !isCountDown, ColorNative.text)
     }
 
     override val state = MutableStateFlow(

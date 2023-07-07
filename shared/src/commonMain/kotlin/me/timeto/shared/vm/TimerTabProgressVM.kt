@@ -17,7 +17,7 @@ class TimerTabProgressVM : __VM<TimerTabProgressVM.State>() {
 
         val timerData = TimerDataUI(
             interval = lastInterval,
-            isCountdown = isCountdown,
+            isPurple = !isCountdown,
             defColor = ColorNative.timerTitleDefault,
         )
 
