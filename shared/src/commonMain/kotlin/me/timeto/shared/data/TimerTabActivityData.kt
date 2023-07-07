@@ -15,7 +15,6 @@ class TimerTabActivityData(
     val listText: String
     val listNote: String?
     val triggers: List<TextFeatures.Trigger>
-    val isPauseEnabled = isActive && !activity.isOther()
 
     init {
         val tfActivity = activity.name.textFeatures()
