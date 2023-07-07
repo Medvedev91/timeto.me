@@ -248,9 +248,7 @@ fun TabTimerView() {
                                                 )
 
                                                 Text(
-                                                    // todo
-//                                                text = state.restartText,
-                                                    text = "25m",
+                                                    text = timerState.timerData.restartText,
                                                     modifier = Modifier
                                                         .padding(start = 3.dp, bottom = 1.dp),
                                                     fontSize = 14.sp,
