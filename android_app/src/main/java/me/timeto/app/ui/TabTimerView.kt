@@ -213,17 +213,6 @@ fun TabTimerView() {
                                             color = c.white,
                                         )
 
-                                        Text(
-                                            text = timerData.subtitle?.lowercase() ?: "",
-                                            modifier = Modifier
-                                                .offset(y = (-8).dp)
-                                                .padding(end = 4.dp)
-                                                .align(Alignment.TopEnd),
-                                            fontSize = 14.sp,
-                                            fontWeight = FontWeight.Light,
-                                            color = c.white,
-                                        )
-
                                         HStack(
                                             modifier = Modifier
                                                 .padding(top = 8.dp)
