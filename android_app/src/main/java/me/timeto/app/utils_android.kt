@@ -8,13 +8,6 @@ import android.content.res.Resources
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
-import androidx.compose.animation.core.FiniteAnimationSpec
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.expandHorizontally
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
@@ -24,7 +17,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import me.timeto.app.ui.MySquircleShape
 import me.timeto.app.ui.c
@@ -65,18 +57,6 @@ fun Modifier.conditional(
 }
 
 val timerFont = FontFamily(Font(R.font.timer_font))
-
-///
-/// Animation
-
-val animSpecIntSizeMedium: FiniteAnimationSpec<IntSize> = spring(stiffness = Spring.StiffnessMedium)
-val animSpecFloatMedium: FiniteAnimationSpec<Float> = spring(stiffness = Spring.StiffnessMedium)
-
-val fadeInMedium = fadeIn(spring(stiffness = Spring.StiffnessMedium))
-val fadeOutMedium = fadeOut(spring(stiffness = Spring.StiffnessMedium))
-
-val expandHorizontallyMedium = expandHorizontally(spring(stiffness = Spring.StiffnessMedium))
-val shrinkHorizontallyMedium = shrinkHorizontally(spring(stiffness = Spring.StiffnessMedium))
 
 ///
 /// Color
