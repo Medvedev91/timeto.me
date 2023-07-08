@@ -12,7 +12,6 @@ class TimerTabActivityData(
     lastInterval: IntervalModel,
 ) {
 
-    val isActive = activity.id == lastInterval.activity_id
     val timerData: TimerDataUI? = run {
         if (activity.id != lastInterval.activity_id)
             return@run null
@@ -31,7 +30,7 @@ class TimerTabActivityData(
         val tfActivity = activity.name.textFeatures()
         listText = tfActivity.textNoFeatures
         val lastIntervalNote = lastInterval.note
-        if (isActive && lastIntervalNote != null) {
+        if (timerData != null && lastIntervalNote != null) {
             val tfNote = lastIntervalNote.textFeatures()
             listNote = tfNote.textUi(
                 withActivityEmoji = false,
