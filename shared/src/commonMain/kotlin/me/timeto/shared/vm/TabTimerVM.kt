@@ -1,6 +1,8 @@
 package me.timeto.shared.vm
 
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import me.timeto.shared.*
 import me.timeto.shared.db.ActivityModel
 import me.timeto.shared.db.IntervalModel
@@ -82,6 +84,14 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
             .onEachExIn(scope) { interval ->
                 state.update { it.copy(lastInterval = interval) }
             }
+        scope.launch {
+            while (true) {
+                delay(1_000L)
+                state.update {
+                    it.copy(idToUpdate = it.idToUpdate + 1)
+                }
+            }
+        }
     }
 }
 

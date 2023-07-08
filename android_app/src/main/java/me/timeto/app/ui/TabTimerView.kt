@@ -62,9 +62,10 @@ fun TabTimerView() {
                     key = { _, i -> i.activity.id }
                 ) { _, uiActivity ->
 
-                    val isActive = uiActivity.data.isActive
+                    val timerData = uiActivity.data.timerData
+                    val isActive = timerData != null
                     val bgAnimate = animateColorAsState(
-                        if (isActive) c.blue else c.bg,
+                        timerData?.color?.toColor() ?: c.bg,
                         spring(stiffness = Spring.StiffnessMediumLow)
                     )
 
@@ -187,9 +188,7 @@ fun TabTimerView() {
                                     contentPadding = triggersListContentPaddings
                                 )
 
-                                if (isActive) {
-
-                                    val (_, timerState) = rememberVM { TimerTabProgressVM() }
+                                if (timerData != null) {
 
                                     HStack(
                                         modifier = Modifier
@@ -198,7 +197,7 @@ fun TabTimerView() {
                                     ) {
 
                                         Text(
-                                            text = timerState.timerData.title,
+                                            text = timerData.title,
                                             fontFamily = timerFont,
                                             fontSize = 29.sp,
                                             color = c.white,
@@ -221,7 +220,6 @@ fun TabTimerView() {
                                                     .clickable {
                                                         uiActivity.pauseLastInterval()
                                                     }
-                                                    .background(c.blue)
                                                     .padding(8.dp),
                                             )
 
@@ -232,9 +230,8 @@ fun TabTimerView() {
                                                     .height(timerButtonsHeight)
                                                     .clip(roundedShape)
                                                     .border(1.dp, c.white, roundedShape)
-                                                    .background(c.blue)
                                                     .clickable {
-                                                        timerState.timerData.restart()
+                                                        timerData.restart()
                                                     }
                                                     .padding(start = 7.dp, end = 6.dp),
                                             ) {
@@ -248,7 +245,7 @@ fun TabTimerView() {
                                                 )
 
                                                 Text(
-                                                    text = timerState.timerData.restartText,
+                                                    text = timerData.restartText,
                                                     modifier = Modifier
                                                         .padding(start = 3.dp, bottom = 1.dp),
                                                     fontSize = 14.sp,
