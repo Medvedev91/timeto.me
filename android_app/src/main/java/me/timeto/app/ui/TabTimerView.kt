@@ -195,10 +195,21 @@ fun TabTimerView() {
                                             .fillMaxWidth(),
                                     ) {
 
+                                        val timerDataTitleLen = timerData.title.length
+                                        val timerTitleFontWeight = animateIntAsState(
+                                            when {
+                                                timerDataTitleLen <= 5 -> 29
+                                                timerDataTitleLen <= 7 -> 24
+                                                else -> 20
+                                            }
+                                        ).value
+
                                         Text(
                                             text = timerData.title,
+                                            modifier = Modifier
+                                                .align(Alignment.BottomStart),
                                             fontFamily = timerFont,
-                                            fontSize = 29.sp,
+                                            fontSize = timerTitleFontWeight.sp,
                                             color = c.white,
                                         )
 
