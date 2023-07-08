@@ -18,7 +18,7 @@ class TimerTabActivityData(
         TimerDataUI(
             interval = lastInterval,
             isPurple = false,
-            defColor = ColorNative.timerTitleDefault,
+            defColor = ColorNative.white,
         )
     }
 
