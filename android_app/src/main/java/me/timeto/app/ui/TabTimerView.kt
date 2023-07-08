@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.shared.vm.TabTimerVM
-import me.timeto.shared.vm.TimerTabProgressVM
 
 private val timerButtonsHeight = 26.dp
 
