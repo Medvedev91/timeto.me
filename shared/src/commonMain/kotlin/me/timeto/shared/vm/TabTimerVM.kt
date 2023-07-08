@@ -55,6 +55,7 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
     data class State(
         val activities: List<ActivityModel>,
         val lastInterval: IntervalModel,
+        val idToUpdate: Int = 0,
     ) {
         val newActivityText = "New Activity"
         val sortActivitiesText = "Sort"
