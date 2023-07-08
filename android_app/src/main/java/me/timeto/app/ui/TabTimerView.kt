@@ -189,10 +189,10 @@ fun TabTimerView() {
 
                                 if (timerData != null) {
 
-                                    HStack(
+                                    ZStack(
                                         modifier = Modifier
-                                            .padding(top = 8.dp, bottom = 6.dp),
-                                        verticalAlignment = Alignment.Bottom,
+                                            .padding(top = 8.dp, bottom = 6.dp)
+                                            .fillMaxWidth(),
                                     ) {
 
                                         Text(
@@ -202,16 +202,16 @@ fun TabTimerView() {
                                             color = c.white,
                                         )
 
-                                        SpacerW1()
-
                                         HStack(
-                                            modifier = Modifier.padding(top = 8.dp)
+                                            modifier = Modifier
+                                                .padding(top = 8.dp)
+                                                .align(Alignment.BottomEnd),
                                         ) {
 
                                             Icon(
                                                 painterResource(R.drawable.sf_pause_small_medium),
                                                 contentDescription = "Pause",
-                                                tint = c.white, // todo
+                                                tint = c.white,
                                                 modifier = Modifier
                                                     .size(timerButtonsHeight)
                                                     .clip(roundedShape)
