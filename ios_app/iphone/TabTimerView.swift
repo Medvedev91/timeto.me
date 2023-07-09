@@ -328,7 +328,7 @@ struct TabTimerView_ActivityRowView: View {
 
                     let endPadding = 12.0
 
-                    VStack(alignment: .leading, spacing: 0) {
+                    VStack(alignment: .leading) {
 
                         HStack {
 
@@ -357,10 +357,7 @@ struct TabTimerView_ActivityRowView: View {
 
                             Spacer()
 
-                            ForEach(
-                                    activityUI.timerHints,
-                                    id: \.self
-                            ) { hintUI in
+                            ForEach(activityUI.timerHints, id: \.self) { hintUI in
                                 Button(
                                         action: {
                                             hintUI.startInterval {}
