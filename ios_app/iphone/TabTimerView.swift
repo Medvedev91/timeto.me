@@ -42,12 +42,6 @@ struct TabTimerView: View {
 
                         ZStack(alignment: .top) {
 
-                            ///
-                            /// Ordering is important, otherwise Edit would not be clicked.
-
-                            TabTimerView_ProgressView()
-                                    .frame(height: 120)
-
                             HStack {
 
                                 // todo
@@ -459,89 +453,5 @@ struct TabTimerView_ActivityRowView_ButtonStyle: ButtonStyle {
                 .background(
                         configuration.isPressed ? Color(.systemGray4) : bgColor
                 )
-    }
-}
-
-///
-/// Separate class because of picker that triggers on timer changes.
-///
-struct TabTimerView_ProgressView: View {
-
-    @State private var vm = TimerTabProgressVM()
-
-    var body: some View {
-
-        GeometryReader { geometry in
-
-            VMView(vm: vm, stack: .ZStack()) { state in
-
-                let timerData = state.timerData
-
-                let subtitleColor = timerData.color.toColor()
-
-                VStack {
-
-                    if let subtitle = timerData.subtitle {
-                        Text(subtitle)
-                                .foregroundColor(subtitleColor)
-                                .font(.system(size: 28, weight: .heavy))
-                    }
-
-                    Spacer()
-                }
-                        .padding(.top, 4)
-
-                VStack {
-
-                    Spacer()
-
-                    HStack {
-
-                        Spacer()
-
-                        Text(timerData.title)
-                                .font(.system(size: 60, design: .monospaced))
-                                .fontWeight(.heavy)
-                                .foregroundColor(timerData.color.toColor())
-                                .padding(.bottom, timerData.subtitle != nil ? 0 : 8)
-
-                        Spacer()
-                    }
-
-                    let fullHeight: Double = 17.0
-                    let hPadding = 34.0
-
-                    ZStack(alignment: .leading) {
-
-                        let fullWidth: Double = geometry.size.width - (hPadding * 2)
-
-                        RoundedRectangle(cornerRadius: fullHeight)
-                                .fill(Color(.timerBarBackground))
-                                .frame(maxWidth: .infinity, maxHeight: fullHeight)
-
-                        RoundedRectangle(cornerRadius: fullHeight)
-                                .stroke(Color(.timerBarBorder), lineWidth: onePx)
-                                .frame(maxWidth: .infinity, maxHeight: fullHeight)
-
-                        Rectangle()
-                                .frame(width: Double(state.progressRatio) * fullWidth, height: fullHeight)
-                                .foregroundColor(state.progressColor.toColor())
-                                .animation(.linear(duration: (time() > state.lastInterval.id.toInt()) ? 0.99 : 0.2))
-                    }
-                            .cornerRadius(fullHeight)
-                            .padding(.leading, hPadding)
-                            .padding(.trailing, hPadding)
-                }
-            }
-                    /// onTapGesture() does not work without contentShape() on
-                    /// click on empty area, e.g. on the side of the counter.
-                    /// But it is difficult to click on "+".
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        withAnimation {
-                            vm.toggleIsCountdown()
-                        }
-                    }
-        }
     }
 }
