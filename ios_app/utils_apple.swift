@@ -340,12 +340,6 @@ extension ColorNative {
             return .secondary
         case .transparent:
             return .clear
-        case .timertitledefault:
-            #if os(iOS)
-            return Color(UIColor.myDayNight(UIColor(.blue), .white))
-            #else
-            return .white
-            #endif
         default:
             fatalError("ColorNative.toColor()")
         }
