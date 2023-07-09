@@ -111,7 +111,7 @@ private struct FocusModeView__CoverView: View {
 
                         Button(
                                 action: {
-                                    vm.restart()
+                                    state.timerData.restart()
                                 },
                                 label: {
                                     HStack {
@@ -120,7 +120,7 @@ private struct FocusModeView__CoverView: View {
                                                 .foregroundColor(.black)
                                                 .font(.system(size: 16, weight: .heavy))
 
-                                        Text(state.restartText)
+                                        Text(state.timerData.restartText)
                                                 .padding(.leading, 2)
                                                 .padding(.trailing, 2)
                                                 .font(.system(size: 19, weight: .bold))
