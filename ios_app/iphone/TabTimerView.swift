@@ -431,7 +431,7 @@ struct TabTimerView_ActivityRowView: View {
                     ) {
                     }
                 }
-                .buttonStyle(TabTimerView_ActivityRowView_ButtonStyle(isActive: isActiveAnim))
+                .buttonStyle(ActivityButtonStyle(isActive: isActiveAnim))
                 .clipShape(squircleShape)
     }
 }
@@ -442,7 +442,7 @@ struct TabTimerView_ActivityRowView: View {
 /// Dirty magic! While using inside halfSheet the buttons
 /// don't work, .buttonStyle(.borderless) on halfSheet helps.
 ///
-struct TabTimerView_ActivityRowView_ButtonStyle: ButtonStyle {
+struct ActivityButtonStyle: ButtonStyle {
 
     let isActive: Bool
 
@@ -450,8 +450,6 @@ struct TabTimerView_ActivityRowView_ButtonStyle: ButtonStyle {
         let bgColor = isActive ? Color.blue : Color(.bg)
         return configuration
                 .label
-                .background(
-                        configuration.isPressed ? Color(.systemGray4) : bgColor
-                )
+                .background(configuration.isPressed ? Color(.systemGray4) : bgColor)
     }
 }
