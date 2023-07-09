@@ -292,7 +292,6 @@ struct TabTimerView_ActivityRowView: View {
     @State private var isSetTimerPresented = false
     @State private var isEditSheetPresented = false
 
-    @State private var isPauseEnabledAnim = false
     @State private var isActiveAnim = false
 
     var body: some View {
@@ -316,8 +315,7 @@ struct TabTimerView_ActivityRowView: View {
                     // todo remove after removing MyListSwipeToActionItem()
                     .background(Color(.bg))
         }
-                .animateVmValue(value: activityUI.data.isPauseEnabled, state: $isPauseEnabledAnim, animation: .spring(response: 0.3))
-                .animateVmValue(value: activityUI.data.isActive, state: $isActiveAnim)
+                .animateVmValue(value: activityUI.data.timerData != nil, state: $isActiveAnim)
     }
 
     private var safeView: some View {
@@ -376,24 +374,6 @@ struct TabTimerView_ActivityRowView: View {
                                                     .padding(.trailing, 4)
                                         }
                                 )
-                            }
-
-                            if isPauseEnabledAnim {
-
-                                Button(
-                                        action: {
-                                            activityUI.pauseLastInterval()
-                                        },
-                                        label: {
-                                            Image(systemName: "pause.fill")
-                                                    .foregroundColor(.blue)
-                                                    .font(.system(size: 16))
-                                        }
-                                )
-                                        .frame(width: 30, height: 30)
-                                        .background(roundedShape.fill(.white))
-                                        .padding(.leading, 6)
-                                        .transition(.opacity)
                             }
                         }
                                 .padding(.trailing, endPadding - 2)
