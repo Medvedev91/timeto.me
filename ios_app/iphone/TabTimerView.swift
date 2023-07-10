@@ -379,6 +379,19 @@ struct TabTimerView_ActivityRowView: View {
                                 contentPaddingStart: emojiStartPadding - 1,
                                 contentPaddingEnd: endPadding
                         )
+
+                        if let timerData = activityUI.data.timerData {
+
+                            ZStack {
+
+                                Text(timerData.title)
+                                        .padding(.leading, 10)
+                                        .font(Font.custom("NotoSansMono-ExtraBold", size: 34))
+                                        .foregroundColor(.white)
+                            }
+                                    .padding(.top, 4)
+                                    .padding(.bottom, 2)
+                        }
                     }
                             .padding(.vertical, 11)
                             /// #TruncationDynamic + README_APP.md
