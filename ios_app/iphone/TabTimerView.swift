@@ -1,14 +1,9 @@
 import SwiftUI
 import shared
 
-///
-/// Related code
-
 private let emojiHPadding = 10.0
 private let emojiWidth = 30.0
 private let emojiStartPadding = emojiWidth + (emojiHPadding * 2)
-
-//////
 
 struct TabTimerView: View {
 
