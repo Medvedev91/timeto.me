@@ -5,6 +5,8 @@ private let emojiHPadding = 10.0
 private let emojiWidth = 30.0
 private let emojiStartPadding = emojiWidth + (emojiHPadding * 2)
 
+private let activityItemShape = RoundedRectangle(cornerRadius: 16, style: .continuous)
+
 struct TabTimerView: View {
 
     @State private var vm = TabTimerVM()
@@ -404,7 +406,7 @@ struct TabTimerView_ActivityRowView: View {
                     }
                 }
                 .buttonStyle(ActivityButtonStyle(isActive: isActiveAnim))
-                .clipShape(squircleShape)
+                .clipShape(activityItemShape)
     }
 }
 
