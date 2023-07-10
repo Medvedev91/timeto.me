@@ -5,7 +5,7 @@ private let emojiHPadding = 10.0
 private let emojiWidth = 30.0
 private let emojiStartPadding = emojiWidth + (emojiHPadding * 2)
 
-private let activityItemShape = RoundedRectangle(cornerRadius: 16, style: .continuous)
+private let activityItemShape = RoundedRectangle(cornerRadius: 20, style: .continuous)
 
 struct TabTimerView: View {
 
