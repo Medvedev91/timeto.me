@@ -69,13 +69,14 @@ private struct FocusModeView__CoverView: View {
 
             VStack {
 
+                let timerData = state.timerData
+                let timerColor = timerData.color.toColor()
+
                 Text(state.title)
                         .font(.system(size: 22, weight: .medium))
-                        .foregroundColor(.white)
+                        .foregroundColor(timerColor)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 20)
-
-                let timerData = state.timerData
 
                 Button(
                         action: {
@@ -84,7 +85,7 @@ private struct FocusModeView__CoverView: View {
                         label: {
                             Text(timerData.title)
                                     .font(getTimerFont(size: 44))
-                                    .foregroundColor(timerData.color.toColor())
+                                    .foregroundColor(timerColor)
                         }
                 )
                         .padding(.top, 12)
