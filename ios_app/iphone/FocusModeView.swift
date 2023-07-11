@@ -70,7 +70,7 @@ private struct FocusModeView__CoverView: View {
             VStack {
 
                 Text(state.title)
-                        .font(.system(size: 20, weight: .medium))
+                        .font(.system(size: 22, weight: .medium))
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 20)
@@ -83,12 +83,11 @@ private struct FocusModeView__CoverView: View {
                         },
                         label: {
                             Text(timerData.title)
-                                    .font(.system(size: 70, design: .monospaced))
-                                    .fontWeight(.bold)
+                                    .font(getTimerFont(size: 44))
                                     .foregroundColor(timerData.color.toColor())
-                                    .opacity(0.9)
                         }
                 )
+                        .padding(.top, 12)
 
                 if state.isTimerButtonsVisible {
 
@@ -133,6 +132,7 @@ private struct FocusModeView__CoverView: View {
                                 .background(roundedShape.fill(.white))
                                 .padding(.leading, 10)
                     }
+                            .padding(.top, 16)
                 }
 
                 ZStack {
