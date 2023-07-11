@@ -393,7 +393,7 @@ struct TabTimerView_ActivityRowView: View {
 
                                 Text(timerData.title)
                                         .padding(.leading, 10)
-                                        .font(Font.custom("NotoSansMono-ExtraBold", size: timerTitleFontWeight))
+                                        .font(getTimerFont(size: timerTitleFontWeight))
                                         .foregroundColor(.white)
 
                                 HStack {
