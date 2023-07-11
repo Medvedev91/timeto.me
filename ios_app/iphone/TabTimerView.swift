@@ -1,8 +1,8 @@
 import SwiftUI
 import shared
 
-private let emojiHPadding = 10.0
-private let emojiWidth = 30.0
+private let emojiHPadding = 12.0
+private let emojiWidth = 36.0
 private let emojiStartPadding = emojiWidth + (emojiHPadding * 2)
 
 private let activityItemShape = RoundedRectangle(cornerRadius: 16, style: .continuous)
@@ -308,7 +308,7 @@ struct TabTimerView_ActivityRowView: View {
                     DividerBg(xOffset: emojiStartPadding)
                 }
             }
-                    .padding(.horizontal, 21)
+                    .padding(.horizontal, 16)
                     // todo remove after removing MyListSwipeToActionItem()
                     .background(Color(.bg))
         }
@@ -323,7 +323,7 @@ struct TabTimerView_ActivityRowView: View {
                 },
                 label: {
 
-                    let endPadding = 12.0
+                    let hPadding = 16.0
 
                     VStack(alignment: .leading) {
 
@@ -332,7 +332,7 @@ struct TabTimerView_ActivityRowView: View {
                             Text(activityUI.activity.emoji)
                                     .frame(width: emojiWidth)
                                     .padding(.horizontal, emojiHPadding)
-                                    .font(.system(size: 26))
+                                    .font(.system(size: isActiveAnim ? 22 : 26))
 
                             VStack {
 
@@ -370,14 +370,14 @@ struct TabTimerView_ActivityRowView: View {
                                 )
                             }
                         }
-                                .padding(.trailing, endPadding - 2)
+                                .padding(.trailing, hPadding - 2)
 
                         TextFeaturesTriggersView(
                                 triggers: activityUI.data.triggers,
                                 paddingTop: 8.0,
                                 paddingBottom: 4.0,
                                 contentPaddingStart: emojiStartPadding - 1,
-                                contentPaddingEnd: endPadding
+                                contentPaddingEnd: hPadding
                         )
 
                         if let timerData = activityUI.data.timerData {
@@ -392,7 +392,7 @@ struct TabTimerView_ActivityRowView: View {
                                 }()
 
                                 Text(timerData.title)
-                                        .padding(.leading, 10)
+                                        .padding(.leading, hPadding)
                                         .font(getTimerFont(size: timerTitleFontWeight))
                                         .foregroundColor(.white)
 
@@ -444,7 +444,7 @@ struct TabTimerView_ActivityRowView: View {
                                     }
                                 }
                             }
-                                    .padding(.top, 4)
+                                    .padding(.top, 6)
                                     .padding(.bottom, 2)
                         }
                     }
