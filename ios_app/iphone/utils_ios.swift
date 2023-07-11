@@ -75,10 +75,6 @@ extension UIColor {
 
     static var dividerBg = myDayNightArgb(0xFFD1D1D6, 0xFF3A3A3C)
 
-    static var timerBarBorder: UIColor = myDayNightArgb(0xFFBBDEFB, 0xFF2C2C2E)
-
-    static var timerBarBackground: UIColor = myDayNightArgb(0xFFE3F2FD, 0xFF1C1C1E)
-
     // todo remove
     static var myBackground: UIColor = myDayNight(UIColor(argb: tgLikeLightBg), .black)
 
