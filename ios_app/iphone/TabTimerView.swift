@@ -382,12 +382,67 @@ struct TabTimerView_ActivityRowView: View {
 
                         if let timerData = activityUI.data.timerData {
 
-                            ZStack {
+                            ZStack(alignment: .bottomLeading) {
+
+                                let timerDataTitleLen = timerData.title.count
+                                let timerTitleFontWeight: CGFloat = {
+                                    if timerDataTitleLen <= 5 { return 34 }
+                                    if timerDataTitleLen <= 7 { return 30 }
+                                    return 24
+                                }()
 
                                 Text(timerData.title)
                                         .padding(.leading, 10)
-                                        .font(Font.custom("NotoSansMono-ExtraBold", size: 34))
+                                        .font(Font.custom("NotoSansMono-ExtraBold", size: timerTitleFontWeight))
                                         .foregroundColor(.white)
+
+                                HStack {
+
+                                    Spacer()
+
+                                    HStack {
+
+                                        let timerButtonsHeight = 26.0
+
+                                        Button(
+                                                action: {
+                                                    activityUI.pauseLastInterval()
+                                                },
+                                                label: {
+                                                    Image(systemName: "pause")
+                                                            .foregroundColor(.white)
+                                                            .font(.system(size: 14, weight: .regular))
+                                                }
+                                        )
+                                                .frame(width: timerButtonsHeight, height: timerButtonsHeight)
+                                                .overlay(roundedShape.stroke(Color.white, lineWidth: 1))
+
+                                        Button(
+                                                action: {
+                                                    timerData.restart()
+                                                },
+                                                label: {
+                                                    HStack {
+
+                                                        Image(systemName: "clock.arrow.circlepath")
+                                                                .foregroundColor(.white)
+                                                                .font(.system(size: 16, weight: .light))
+
+                                                        Text(timerData.restartText)
+                                                                .padding(.leading, 2)
+                                                                .padding(.trailing, 2)
+                                                                .font(.system(size: 15, weight: .light))
+                                                                .foregroundColor(.white)
+                                                    }
+                                                }
+                                        )
+                                                .padding(.horizontal, 5)
+                                                .frame(height: timerButtonsHeight)
+                                                .overlay(roundedShape.stroke(Color.white, lineWidth: 1))
+                                                .padding(.leading, 8)
+                                                .padding(.trailing, 12)
+                                    }
+                                }
                             }
                                     .padding(.top, 4)
                                     .padding(.bottom, 2)
