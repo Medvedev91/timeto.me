@@ -49,7 +49,7 @@ struct W_TabTimerView: View {
                         .foregroundColor(state.timerData.color.toColor())
             }
                     .onTapGesture {
-                        vm.toggleIsCountDown()
+                        vm.toggleIsPurple()
                     }
         }
     }

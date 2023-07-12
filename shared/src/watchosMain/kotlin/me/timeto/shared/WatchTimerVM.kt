@@ -11,16 +11,17 @@ import me.timeto.shared.vm.ui.TimerDataUI
 
 class WatchTimerVM : __VM<WatchTimerVM.State>() {
 
-    class State(
-        val isCountDown: Boolean,
+    data class State(
+        val isPurple: Boolean,
         val lastInterval: IntervalModel,
+        val idToUpdate: Int = 0,
     ) {
-        val timerData = TimerDataUI(lastInterval, !isCountDown, ColorNative.text)
+        val timerData = TimerDataUI(lastInterval, isPurple, ColorNative.text)
     }
 
     override val state = MutableStateFlow(
         State(
-            isCountDown = true,
+            isPurple = false,
             lastInterval = DI.lastInterval
         )
     )
@@ -30,32 +31,17 @@ class WatchTimerVM : __VM<WatchTimerVM.State>() {
         IntervalModel.getLastOneOrNullFlow()
             .filterNotNull()
             .onEachExIn(scope) { newInterval ->
-                state.update {
-                    State(
-                        isCountDown = true,
-                        lastInterval = newInterval,
-                    )
-                }
+                state.update { it.copy(isPurple = false, lastInterval = newInterval) }
             }
         scope.launch {
             while (true) {
                 delay(1_000L)
-                state.update {
-                    State(
-                        isCountDown = it.isCountDown,
-                        lastInterval = it.lastInterval,
-                    )
-                }
+                state.update { it.copy(idToUpdate = it.idToUpdate + 1) }
             }
         }
     }
 
-    fun toggleIsCountDown() {
-        state.update {
-            State(
-                isCountDown = !it.isCountDown,
-                lastInterval = it.lastInterval,
-            )
-        }
+    fun toggleIsPurple() {
+        state.update { it.copy(isPurple = !it.isPurple) }
     }
 }
