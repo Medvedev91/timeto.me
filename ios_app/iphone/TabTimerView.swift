@@ -290,6 +290,7 @@ struct TabTimerView_ActivityRowView: View {
     @State private var isEditSheetPresented = false
 
     @State private var isActiveAnim = false
+    @State private var bgColorAnim = Color(.bg)
 
     var body: some View {
         MyListSwipeToActionItem(
@@ -313,6 +314,7 @@ struct TabTimerView_ActivityRowView: View {
                     .background(Color(.bg))
         }
                 .animateVmValue(value: activityUI.data.timerData != nil, state: $isActiveAnim)
+                .animateVmValue(value: activityUI.data.timerData?.color.toColor() ?? Color(.bg), state: $bgColorAnim)
     }
 
     private var safeView: some View {
@@ -473,7 +475,7 @@ struct TabTimerView_ActivityRowView: View {
                     ) {
                     }
                 }
-                .buttonStyle(ActivityButtonStyle(isActive: isActiveAnim))
+                .buttonStyle(ActivityButtonStyle(bgColor: bgColorAnim))
                 .clipShape(activityItemShape)
     }
 }
@@ -486,11 +488,10 @@ struct TabTimerView_ActivityRowView: View {
 ///
 struct ActivityButtonStyle: ButtonStyle {
 
-    let isActive: Bool
+    let bgColor: Color
 
     func makeBody(configuration: Self.Configuration) -> some View {
-        let bgColor = isActive ? Color.blue : Color(.bg)
-        return configuration
+        configuration
                 .label
                 .background(configuration.isPressed ? Color(.systemGray4) : bgColor)
     }
