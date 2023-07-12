@@ -10,6 +10,7 @@ import me.timeto.shared.vm.ui.TimerDataUI
 class TimerTabActivityData(
     activity: ActivityModel,
     lastInterval: IntervalModel,
+    isPurple: Boolean,
 ) {
 
     val timerData: TimerDataUI? = run {
@@ -17,7 +18,7 @@ class TimerTabActivityData(
             return@run null
         TimerDataUI(
             interval = lastInterval,
-            isPurple = false,
+            isPurple = isPurple,
             defColor = ColorNative.blue,
         )
     }

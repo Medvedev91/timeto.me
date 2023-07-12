@@ -15,9 +15,10 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
         val activity: ActivityModel,
         val lastInterval: IntervalModel,
         val withTopDivider: Boolean,
+        val isPurple: Boolean,
     ) {
 
-        val data = TimerTabActivityData(activity, lastInterval)
+        val data = TimerTabActivityData(activity, lastInterval, isPurple)
 
         val timerHints = TimerHintUI.buildList(
             activity,
@@ -57,19 +58,21 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
     data class State(
         val activities: List<ActivityModel>,
         val lastInterval: IntervalModel,
+        val isPurple: Boolean,
         val idToUpdate: Int = 0,
     ) {
         val newActivityText = "New Activity"
         val sortActivitiesText = "Sort"
         val settingsText = "Settings"
 
-        val activitiesUI = activities.toUiList(lastInterval)
+        val activitiesUI = activities.toUiList(lastInterval, isPurple)
     }
 
     override val state = MutableStateFlow(
         State(
             activities = DI.activitiesSorted,
             lastInterval = DI.lastInterval,
+            isPurple = false,
         )
     )
 
@@ -82,7 +85,7 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
         IntervalModel.getLastOneOrNullFlow()
             .filterNotNull()
             .onEachExIn(scope) { interval ->
-                state.update { it.copy(lastInterval = interval) }
+                state.update { it.copy(lastInterval = interval, isPurple = false) }
             }
         scope.launch {
             while (true) {
@@ -93,10 +96,15 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
             }
         }
     }
+
+    fun toggleIsPurple() {
+        state.update { it.copy(isPurple = !it.isPurple) }
+    }
 }
 
 private fun List<ActivityModel>.toUiList(
-    lastInterval: IntervalModel
+    lastInterval: IntervalModel,
+    isPurple: Boolean,
 ): List<TabTimerVM.ActivityUI> {
     val sorted = this.sortedWith(compareBy({ it.sort }, { it.id }))
     val activeIdx = sorted.indexOfFirst { it.id == lastInterval.activity_id }
@@ -106,6 +114,7 @@ private fun List<ActivityModel>.toUiList(
             activity = activity,
             lastInterval = lastInterval,
             withTopDivider = (idx != 0) && !isActive && (activeIdx != idx - 1),
+            isPurple = isPurple,
         )
     }
 }
