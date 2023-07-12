@@ -8,7 +8,6 @@ import me.timeto.shared.db.ChecklistItemModel
 import me.timeto.shared.db.ChecklistModel
 import me.timeto.shared.db.IntervalModel
 import me.timeto.shared.db.TaskModel
-import me.timeto.shared.ui.TimerHintUI
 import me.timeto.shared.vm.ui.ChecklistStateUI
 import me.timeto.shared.vm.ui.TimerDataUI
 
