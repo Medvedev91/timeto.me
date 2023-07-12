@@ -81,6 +81,7 @@ struct TabTimerView: View {
 
                                     ForEach(activitiesUI, id: \.activity.id) { activityUI in
                                         TabTimerView_ActivityRowView(
+                                                vm: vm,
                                                 activityUI: activityUI,
                                                 lastInterval: state.lastInterval,
                                                 withTopDivider: activityUI.withTopDivider
@@ -282,6 +283,7 @@ private struct MenuTextButton: View {
 
 struct TabTimerView_ActivityRowView: View {
 
+    var vm: TabTimerVM
     var activityUI: TabTimerVM.ActivityUI
     var lastInterval: IntervalModel
     var withTopDivider: Bool
@@ -393,10 +395,17 @@ struct TabTimerView_ActivityRowView: View {
                                     return 24
                                 }()
 
-                                Text(timerData.title)
-                                        .padding(.leading, hPadding)
-                                        .font(getTimerFont(size: timerTitleFontWeight))
-                                        .foregroundColor(.white)
+                                Button(
+                                        action: {
+                                            vm.toggleIsPurple()
+                                        },
+                                        label: {
+                                            Text(timerData.title)
+                                                    .padding(.leading, hPadding)
+                                                    .font(getTimerFont(size: timerTitleFontWeight))
+                                                    .foregroundColor(.white)
+                                        }
+                                )
 
                                 HStack {
 
