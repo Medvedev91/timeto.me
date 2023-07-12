@@ -1,6 +1,37 @@
 import SwiftUI
 import shared
 
+extension TimetoSheet {
+
+    func showActivityTimerSheet(
+            activity: ActivityModel,
+            isPresented: Binding<Bool>,
+            timerContext: ActivityTimerSheetVM.TimerContext?,
+            onStart: @escaping () -> ()
+    ) {
+        items.append(
+                TimetoSheet__Item(
+                        isPresented: isPresented,
+                        content: {
+                            AnyView(
+                                    ActivityTimerSheet(
+                                            activity: activity,
+                                            isPresented: isPresented,
+                                            timerContext: timerContext,
+                                            onStart: {
+                                                onStart()
+                                            }
+                                    )
+                                            .background(Color(.mySecondaryBackground))
+                                            .cornerRadius(10, onTop: true, onBottom: false)
+                                            .frame(height: ActivityTimerSheet.RECOMMENDED_HEIGHT)
+                            )
+                        }
+                )
+        )
+    }
+}
+
 struct ActivityTimerSheet: View {
 
     @State private var vm: ActivityTimerSheetVM
