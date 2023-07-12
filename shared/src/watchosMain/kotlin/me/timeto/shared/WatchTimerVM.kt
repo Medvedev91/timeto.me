@@ -11,11 +11,6 @@ import me.timeto.shared.vm.ui.TimerDataUI
 
 class WatchTimerVM : __VM<WatchTimerVM.State>() {
 
-    /**
-     * todo refactor
-     * Don't use "data" class because the class has
-     * calculated fields that don't trigger UI updates.
-     */
     class State(
         val isCountDown: Boolean,
         val lastInterval: IntervalModel,
