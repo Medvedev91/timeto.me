@@ -226,8 +226,8 @@ fun TabTimerView() {
                                                 tint = c.white,
                                                 modifier = Modifier
                                                     .size(timerButtonsHeight)
-                                                    .clip(roundedShape)
                                                     .border(1.dp, c.white, roundedShape)
+                                                    .clip(roundedShape)
                                                     .clickable {
                                                         uiActivity.pauseLastInterval()
                                                     }
@@ -239,8 +239,8 @@ fun TabTimerView() {
                                                 modifier = Modifier
                                                     .padding(start = 8.dp)
                                                     .height(timerButtonsHeight)
-                                                    .clip(roundedShape)
                                                     .border(1.dp, c.white, roundedShape)
+                                                    .clip(roundedShape)
                                                     .clickable {
                                                         timerData.restart()
                                                     }
