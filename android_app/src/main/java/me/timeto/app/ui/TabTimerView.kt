@@ -205,7 +205,6 @@ fun TabTimerView() {
                                         Text(
                                             text = timerData.title,
                                             modifier = Modifier
-                                                .clip(squircleShape)
                                                 .clickable {
                                                     vm.toggleIsPurple()
                                                 }
