@@ -38,7 +38,7 @@ private val triggersListContentPaddings = PaddingValues(start = emojiWidth - 1.d
 @Composable
 fun TabTimerView() {
 
-    val (_, state) = rememberVM { TabTimerVM() }
+    val (vm, state) = rememberVM { TabTimerVM() }
 
     Box(
         modifier = Modifier
@@ -205,6 +205,10 @@ fun TabTimerView() {
                                         Text(
                                             text = timerData.title,
                                             modifier = Modifier
+                                                .clip(squircleShape)
+                                                .clickable {
+                                                    vm.toggleIsPurple()
+                                                }
                                                 .align(Alignment.BottomStart),
                                             fontFamily = timerFont,
                                             fontSize = timerTitleFontWeight,
