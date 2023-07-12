@@ -63,6 +63,10 @@ struct W_TabTimerView: View {
         let defBgColor = Color(rgba: [34, 34, 35])
 
         var body: some View {
+
+            let timerData = activityUI.data.timerData
+            let isActive = timerData != nil
+
             Button(
                     action: {
                         isTickerPresented = true
@@ -86,7 +90,7 @@ struct W_TabTimerView: View {
                                     }
                                 }
 
-                                if activityUI.data.isPauseEnabled {
+                                if let timerData = timerData {
 
                                     Button(
                                             action: {
@@ -131,11 +135,7 @@ struct W_TabTimerView: View {
                     .padding([.horizontal], 8)
                     .padding([.vertical], 4)
                     .buttonStyle(.plain)
-                    .background(
-                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                    // На глаз с элементами из списка задач
-                                    .fill(activityUI.data.isActive ? .blue : defBgColor)
-                    )
+                    .background(squircleShape.fill(isActive ? .blue : defBgColor))
                     .sheet(isPresented: $isTickerPresented) {
                         W_TickerDialog(
                                 activity: activityUI.activity,
