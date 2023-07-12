@@ -294,6 +294,8 @@ struct TabTimerView_ActivityRowView: View {
     @State private var isActiveAnim = false
     @State private var bgColorAnim = Color(.bg)
 
+    @EnvironmentObject private var timetoSheet: TimetoSheet
+
     var body: some View {
         MyListSwipeToActionItem(
                 deletionHint: activityUI.deletionHint,
@@ -323,7 +325,15 @@ struct TabTimerView_ActivityRowView: View {
 
         Button(
                 action: {
-                    isSetTimerPresented.toggle()
+                    timetoSheet.showActivityTimerSheet(
+                            activity: activityUI.activity,
+                            isPresented: $isSetTimerPresented,
+                            timerContext: nil,
+                            onStart: {
+                                isSetTimerPresented.toggle()
+                                /// With animation twitching emoji
+                            }
+                    )
                 },
                 label: {
 
@@ -464,19 +474,6 @@ struct TabTimerView_ActivityRowView: View {
                             .id("\(activityUI.activity.id) \(lastInterval.note)")
                 }
         )
-                .sheetEnv(isPresented: $isSetTimerPresented) {
-                    ActivityTimerSheet(
-                            activity: activityUI.activity,
-                            isPresented: $isSetTimerPresented,
-                            timerContext: nil,
-                            onStart: {
-                                isSetTimerPresented.toggle()
-                                /// With animation twitching emoji
-                            }
-                    )
-                            .background(Color(.mySecondaryBackground))
-                            .presentationDetentsHeightIf16(ActivityTimerSheet.RECOMMENDED_HEIGHT, withDragIndicator: true)
-                }
                 .sheetEnv(isPresented: $isEditSheetPresented) {
                     ActivityFormSheet(
                             isPresented: $isEditSheetPresented,
