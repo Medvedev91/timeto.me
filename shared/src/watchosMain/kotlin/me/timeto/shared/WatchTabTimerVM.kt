@@ -12,9 +12,10 @@ class WatchTabTimerVM : __VM<WatchTabTimerVM.State>() {
     class ActivityUI(
         val activity: ActivityModel,
         val lastInterval: IntervalModel,
+        val isPurple: Boolean,
     ) {
 
-        val data = TimerTabActivityData(activity, lastInterval)
+        val data = TimerTabActivityData(activity, lastInterval, isPurple)
 
         val timerHints = TimerHintUI.buildList(
             activity,
@@ -30,43 +31,38 @@ class WatchTabTimerVM : __VM<WatchTabTimerVM.State>() {
     }
 
     data class State(
+        val activities: List<ActivityModel>,
         val lastInterval: IntervalModel,
-        val activitiesUI: List<ActivityUI>,
-    )
+        val isPurple: Boolean,
+    ) {
+        val activitiesUI = activities.toUiList(lastInterval, isPurple)
+    }
 
     override val state = MutableStateFlow(
-        prepState(DI.lastInterval, DI.activitiesSorted)
+        State(
+            activities = DI.activitiesSorted,
+            lastInterval = DI.lastInterval,
+            isPurple = false,
+        )
     )
 
     override fun onAppear() {
         val scope = scopeVM()
-        IntervalModel.getLastOneOrNullFlow()
-            .filterNotNull()
-            .onEachExIn(scope) { lastInterval ->
-                state.update {
-                    prepState(lastInterval, ActivityModel.getAscSorted())
-                }
-            }
-        // In case if hints would change
         ActivityModel.getAscSortedFlow()
             .onEachExIn(scope) { activities ->
-                state.update {
-                    prepState(IntervalModel.getLastOneOrNull()!!, activities)
-                }
+                state.update { it.copy(activities = activities) }
+            }
+        IntervalModel.getLastOneOrNullFlow()
+            .filterNotNull()
+            .onEachExIn(scope) { interval ->
+                state.update { it.copy(lastInterval = interval, isPurple = false) }
             }
     }
 }
 
-private fun prepState(
-    lastInterval: IntervalModel,
-    activities: List<ActivityModel>,
-) = WatchTabTimerVM.State(
-    lastInterval = lastInterval,
-    activitiesUI = activities.toUiList(lastInterval)
-)
-
 private fun List<ActivityModel>.toUiList(
-    lastInterval: IntervalModel
+    lastInterval: IntervalModel,
+    isPurple: Boolean,
 ): List<WatchTabTimerVM.ActivityUI> {
     // On top the active activity :)
     val sorted = this.sortedByDescending { it.id == lastInterval.activity_id }
@@ -74,6 +70,7 @@ private fun List<ActivityModel>.toUiList(
         WatchTabTimerVM.ActivityUI(
             activity = activity,
             lastInterval = lastInterval,
+            isPurple = isPurple,
         )
     }
 }
