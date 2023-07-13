@@ -88,7 +88,7 @@ private struct FocusModeView__CoverView: View {
                                     .foregroundColor(timerColor)
                         }
                 )
-                        .padding(.top, 12)
+                        .padding(.top, 16)
 
                 if state.isTimerButtonsVisible {
 
