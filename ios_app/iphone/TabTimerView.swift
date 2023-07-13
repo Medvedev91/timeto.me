@@ -492,7 +492,7 @@ struct TabTimerView_ActivityRowView: View {
 /// Dirty magic! While using inside halfSheet the buttons
 /// don't work, .buttonStyle(.borderless) on halfSheet helps.
 ///
-struct ActivityButtonStyle: ButtonStyle {
+private struct ActivityButtonStyle: ButtonStyle {
 
     let bgColor: Color
 
