@@ -236,21 +236,25 @@ struct SettingsSheet: View {
                     ///
                     /// Mics
 
-                    /*
-                    Button("Readme") {
-                        isReadmePresented = true
-                    }
-                            .sheetEnv(isPresented: $isReadmePresented) {
-                                TabReadmeView(isPresented: $isReadmePresented)
-                            }
-                            .foregroundColor(.primary)
-                     */
-
                     MyListView__Padding__SectionHeader()
 
                     MyListView__ItemView(
                             isFirst: true,
-                            isLast: false
+                            isLast: false,
+                            withTopDivider: false
+                    ) {
+                        MyListView__ItemView__ButtonView(text: "How to Use") {
+                            isReadmePresented.toggle()
+                        }
+                    }
+                            .sheetEnv(isPresented: $isReadmePresented) {
+                                ReadmeSheet(isPresented: $isReadmePresented)
+                            }
+
+                    MyListView__ItemView(
+                            isFirst: false,
+                            isLast: false,
+                            withTopDivider: true
                     ) {
                         MyListView__ItemView__ButtonView(text: "Ask a Question") {
                             if (MFMailComposeViewController.canSendMail()) {
