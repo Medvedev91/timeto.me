@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.ActivityModel
 
-class SortActivitiesVM : __VM<SortActivitiesVM.State>() {
+class EditActivitiesVM : __VM<EditActivitiesVM.State>() {
 
     class ActivityUI(
         val activity: ActivityModel,
@@ -69,4 +69,4 @@ class SortActivitiesVM : __VM<SortActivitiesVM.State>() {
 }
 
 private fun List<ActivityModel>.toUiList() = this
-    .map { SortActivitiesVM.ActivityUI(it) }
+    .map { EditActivitiesVM.ActivityUI(it) }

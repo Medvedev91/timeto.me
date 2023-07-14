@@ -5,7 +5,7 @@ struct EditActivitiesDialog: View {
 
     @Binding var isPresented: Bool
 
-    @State private var vm = SortActivitiesVM()
+    @State private var vm = EditActivitiesVM()
 
     @State private var isAddActivityPresented = false
 
@@ -56,8 +56,8 @@ struct EditActivitiesDialog: View {
 
     private struct ActivityItemView: View {
 
-        var vm: SortActivitiesVM
-        var activityUI: SortActivitiesVM.ActivityUI
+        var vm: EditActivitiesVM
+        var activityUI: EditActivitiesVM.ActivityUI
 
         var body: some View {
 

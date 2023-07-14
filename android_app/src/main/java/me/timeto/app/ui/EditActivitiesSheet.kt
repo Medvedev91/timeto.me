@@ -20,14 +20,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.rememberVM
-import me.timeto.shared.vm.SortActivitiesVM
+import me.timeto.shared.vm.EditActivitiesVM
 
 @Composable
 fun EditActivitiesSheet(
     layer: WrapperView.Layer
 ) {
 
-    val (vm, state) = rememberVM { SortActivitiesVM() }
+    val (vm, state) = rememberVM { EditActivitiesVM() }
 
     Box(
         modifier = Modifier
