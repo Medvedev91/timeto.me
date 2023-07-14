@@ -1,9 +1,9 @@
 import SwiftUI
 import shared
 
-private let emojiHPadding = 12.0
-private let emojiWidth = 36.0
-private let emojiStartPadding = emojiWidth + (emojiHPadding * 2)
+private let emojiWidth = 56.0
+private let activitiesInnerHPadding = 12.0
+private let timerHintHPadding = 4.0
 
 private let activityItemShape = RoundedRectangle(cornerRadius: 16, style: .continuous)
 
@@ -178,10 +178,11 @@ private struct ActivityRowView: View {
             ZStack(alignment: .top) {
                 AnyView(safeView)
                 if withTopDivider {
-                    DividerBg(xOffset: emojiStartPadding)
+                    DividerBg(xOffset: emojiWidth)
+                            .padding(.trailing, activitiesInnerHPadding + timerHintHPadding)
                 }
             }
-                    .padding(.horizontal, 16)
+                    .padding(.horizontal, 12)
                     // todo remove after removing MyListSwipeToActionItem()
                     .background(Color(.bg))
         }
@@ -205,16 +206,13 @@ private struct ActivityRowView: View {
                 },
                 label: {
 
-                    let hPadding = 16.0
-
                     VStack(alignment: .leading) {
 
                         HStack {
 
                             Text(activityUI.activity.emoji)
                                     .frame(width: emojiWidth)
-                                    .padding(.horizontal, emojiHPadding)
-                                    .font(.system(size: isActiveAnim ? 22 : 26))
+                                    .font(.system(size: isActiveAnim ? 23 : 26))
 
                             VStack {
 
@@ -246,20 +244,19 @@ private struct ActivityRowView: View {
                                                     .offset(y: onePx)
                                                     .font(.system(size: 15, weight: .light))
                                                     .foregroundColor(isActiveAnim ? .white : .blue)
-                                                    .padding(.leading, 4)
-                                                    .padding(.trailing, 4)
+                                                    .padding(.horizontal, timerHintHPadding)
                                         }
                                 )
                             }
                         }
-                                .padding(.trailing, hPadding - 2)
+                                .padding(.trailing, activitiesInnerHPadding)
 
                         TextFeaturesTriggersView(
                                 triggers: activityUI.data.triggers,
                                 paddingTop: 8.0,
                                 paddingBottom: 4.0,
-                                contentPaddingStart: emojiStartPadding - 1,
-                                contentPaddingEnd: hPadding
+                                contentPaddingStart: emojiWidth - 1,
+                                contentPaddingEnd: activitiesInnerHPadding
                         )
 
                         if let timerData = activityUI.data.timerData {
@@ -279,7 +276,7 @@ private struct ActivityRowView: View {
                                         },
                                         label: {
                                             Text(timerData.title)
-                                                    .padding(.leading, hPadding)
+                                                    .padding(.leading, activitiesInnerHPadding - 1)
                                                     .font(getTimerFont(size: timerTitleFontWeight))
                                                     .foregroundColor(.white)
                                         }
@@ -329,7 +326,7 @@ private struct ActivityRowView: View {
                                                 .frame(height: timerButtonsHeight)
                                                 .overlay(roundedShape.stroke(Color.white, lineWidth: 1))
                                                 .padding(.leading, 8)
-                                                .padding(.trailing, 12)
+                                                .padding(.trailing, activitiesInnerHPadding)
                                     }
                                 }
                             }
