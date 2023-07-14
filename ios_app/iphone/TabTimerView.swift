@@ -34,6 +34,42 @@ struct TabTimerView: View {
 
                     VStack {
 
+                        HStack(spacing: 16) {
+
+                            MenuButton(sfName: "line.3.horizontal") { isSettingsSheetPresented.toggle() }
+
+                            Spacer()
+
+                            MenuButton(sfName: "chart.pie") { isSummaryPresented.toggle() }
+                                    .sheetEnv(isPresented: $isSummaryPresented) {
+                                        VStack {
+
+                                            ChartView()
+                                                    .padding(.top, 15)
+
+                                            Button(
+                                                    action: { isSummaryPresented.toggle() },
+                                                    label: { Text("close").fontWeight(.light) }
+                                            )
+                                                    .padding(.bottom, 4)
+                                        }
+                                    }
+
+                            MenuButton(sfName: "list.bullet") { isHistoryPresented.toggle() }
+                                    .sheetEnv(isPresented: $isHistoryPresented) {
+                                        ZStack {
+                                            Color(.myBackground).edgesIgnoringSafeArea(.all)
+                                            HistoryView(isHistoryPresented: $isHistoryPresented)
+                                        }
+                                                // todo
+                                                .interactiveDismissDisabled()
+                                    }
+
+                            MenuButton(sfName: "square.and.pencil") { isEditActivitiesPresented.toggle() }
+                        }
+                                .padding(.horizontal, 24)
+                                .padding(.top, 8)
+
                         //
                         // Progress
 
@@ -484,5 +520,25 @@ private struct ActivityButtonStyle: ButtonStyle {
         configuration
                 .label
                 .background(configuration.isPressed ? Color(.systemGray4) : bgColor)
+    }
+}
+
+private struct MenuButton: View {
+
+    let sfName: String
+    let onClick: () -> Void
+
+    var body: some View {
+
+        Button(
+                action: {
+                    onClick()
+                },
+                label: {
+                    Image(systemName: sfName)
+                            .foregroundColor(.blue)
+                            .font(.system(size: 22, weight: .thin))
+                }
+        )
     }
 }
