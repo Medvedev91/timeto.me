@@ -13,7 +13,6 @@ struct TabTimerView: View {
 
     @State private var isReadmePresented = false
 
-    @State private var isAddActivityPresented = false
     @State private var isEditActivitiesPresented = false
     @State private var isSettingsSheetPresented = false
     @State private var isSummaryPresented = false
@@ -71,36 +70,6 @@ struct TabTimerView: View {
                                 .padding(.top, 8)
 
                         //
-                        // Progress
-
-                        ZStack(alignment: .top) {
-
-                            HStack {
-
-                                // todo
-                                //                            EditButton()
-                                //                                    .padding(.leading, 20)
-
-                                //                            if !isShowReadmeOnMain.toBoolean() {
-                                Spacer()
-                                //                            }
-
-                                /*
-                            if isShowReadmeOnMain.toBoolean() {
-                                Spacer()
-                                Button("Readme") {
-                                    isReadmePresented = true
-                                }
-                                        .padding(.trailing, 20)
-                            }
-                             */
-                            }
-                                    .padding(.top, 6)
-
-                            //////
-                        }
-
-                        //
                         // List
 
                         ScrollView(.vertical, showsIndicators: false) {
@@ -152,99 +121,6 @@ struct TabTimerView: View {
                                     }
                                      */
 
-                                HStack(spacing: 20) {
-
-                                    Button(
-                                            action: {
-                                                isSummaryPresented.toggle()
-                                            },
-                                            label: {
-                                                Text("Chart")
-                                                        .padding(.vertical, 10)
-                                                        .foregroundColor(.primary)
-                                                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                                        .overlay(
-                                                                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                                        .stroke(Color(.dividerBg), lineWidth: onePx)
-                                                        )
-                                                        // Exactly here, otherwise re-rendering every second because of
-                                                        // TabTimerView_ProgressView. This leads to twitch when scrolling.
-                                                        .sheetEnv(isPresented: $isSummaryPresented) {
-                                                            VStack {
-
-                                                                ChartView()
-                                                                        .padding(.top, 15)
-
-                                                                Button(
-                                                                        action: { isSummaryPresented.toggle() },
-                                                                        label: { Text("close").fontWeight(.light) }
-                                                                )
-                                                                        .padding(.bottom, 4)
-                                                            }
-                                                        }
-                                            }
-                                    )
-
-                                    Button(
-                                            action: {
-                                                isHistoryPresented.toggle()
-                                            },
-                                            label: {
-                                                Text("History")
-                                                        .padding(.vertical, 10)
-                                                        .foregroundColor(.primary)
-                                                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                                        .overlay(
-                                                                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                                        .stroke(Color(.dividerBg), lineWidth: onePx)
-                                                        )
-                                                        // Exactly here, otherwise re-rendering every second because of
-                                                        // TabTimerView_ProgressView. This leads to twitch when scrolling.
-                                                        .sheetEnv(isPresented: $isHistoryPresented) {
-                                                            ZStack {
-                                                                Color(.myBackground).edgesIgnoringSafeArea(.all)
-                                                                HistoryView(isHistoryPresented: $isHistoryPresented)
-                                                            }
-                                                                    // todo
-                                                                    .interactiveDismissDisabled()
-                                                        }
-                                            }
-                                    )
-                                }
-                                        .frame(width: .infinity)
-                                        .padding(.top, 24)
-                                        .padding(.horizontal, 24)
-                                        .listRowBackground(Color(.clear))
-
-                                VStack {
-
-                                    HStack(spacing: 16) {
-
-                                        MenuTextButton(text: state.newActivityText) {
-                                            isAddActivityPresented.toggle()
-                                        }
-
-                                        MenuTextButton(text: state.sortActivitiesText) {
-                                            isEditActivitiesPresented.toggle()
-                                        }
-
-                                        MenuTextButton(text: state.settingsText) {
-                                            isSettingsSheetPresented.toggle()
-                                        }
-
-                                        Spacer()
-                                    }
-                                            .padding(.bottom, 20)
-                                }
-                                        .frame(width: .infinity)
-                                        .listRowBackground(Color(.clear))
-                                        .foregroundColor(.secondary)
-                                        .font(.system(size: 15))
-                                        .lineSpacing(4)
-                                        .myMultilineText()
-                                        .padding(.top, 26)
-                                        .padding(.horizontal, 26)
-
                                 ZStack {
                                 }
                                         .frame(height: 20)
@@ -252,15 +128,6 @@ struct TabTimerView: View {
                         }
                     }
                 }
-                        .sheetEnv(
-                                isPresented: $isAddActivityPresented
-                        ) {
-                            ActivityFormSheet(
-                                    isPresented: $isAddActivityPresented,
-                                    editedActivity: nil
-                            ) {
-                            }
-                        }
                         .sheetEnv(
                                 isPresented: $isEditActivitiesPresented
                         ) {
@@ -279,25 +146,6 @@ struct TabTimerView: View {
                         .navigationBarHidden(true)
             }
         }
-    }
-}
-
-private struct MenuTextButton: View {
-
-    let text: String
-    let onClick: () -> Void
-
-    var body: some View {
-        Button(
-                action: {
-                    onClick()
-                },
-                label: {
-                    Text(text)
-                            .foregroundColor(.blue)
-                            .padding(.vertical, 4)
-                }
-        )
     }
 }
 
