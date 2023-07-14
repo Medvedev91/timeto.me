@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-private let emojiWidth = 54.0
+private let emojiWidth = 56.0
 private let activitiesInnerHPadding = 12.0
 private let timerHintHPadding = 5.0
 
@@ -216,7 +216,7 @@ private struct ActivityRowView: View {
                         HStack {
 
                             Text(activityUI.activity.emoji)
-                                    .padding(.trailing, 2)
+                                    .padding(.trailing, 4)
                                     .frame(width: emojiWidth)
                                     .font(.system(size: isActiveAnim ? 24 : 26))
 
