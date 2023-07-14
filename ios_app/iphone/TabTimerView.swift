@@ -85,7 +85,7 @@ struct TabTimerView: View {
                                     let activitiesUI = state.activitiesUI
 
                                     ForEach(activitiesUI, id: \.activity.id) { activityUI in
-                                        TabTimerView_ActivityRowView(
+                                        ActivityRowView(
                                                 vm: vm,
                                                 activityUI: activityUI,
                                                 lastInterval: state.lastInterval,
@@ -149,7 +149,7 @@ struct TabTimerView: View {
     }
 }
 
-struct TabTimerView_ActivityRowView: View {
+private struct ActivityRowView: View {
 
     var vm: TabTimerVM
     var activityUI: TabTimerVM.ActivityUI
