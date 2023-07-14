@@ -1,9 +1,9 @@
 import SwiftUI
 import shared
 
-private let emojiWidth = 52.0
+private let emojiWidth = 54.0
 private let activitiesInnerHPadding = 12.0
-private let timerHintHPadding = 4.0
+private let timerHintHPadding = 5.0
 
 private let activityItemShape = RoundedRectangle(cornerRadius: 14, style: .continuous)
 
@@ -69,7 +69,7 @@ struct TabTimerView: View {
 
                             MenuButton(sfName: "square.and.pencil") { isEditActivitiesPresented.toggle() }
                         }
-                                .padding(.horizontal, 20)
+                                .padding(.horizontal, 18)
                                 .padding(.top, 8)
                                 .padding(.bottom, 8)
 
@@ -216,6 +216,7 @@ private struct ActivityRowView: View {
                         HStack {
 
                             Text(activityUI.activity.emoji)
+                                    .padding(.trailing, 2)
                                     .frame(width: emojiWidth)
                                     .font(.system(size: isActiveAnim ? 24 : 26))
 
