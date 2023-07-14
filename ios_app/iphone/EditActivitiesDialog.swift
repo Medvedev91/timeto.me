@@ -7,6 +7,8 @@ struct EditActivitiesDialog: View {
 
     @State private var vm = SortActivitiesVM()
 
+    @State private var isAddActivityPresented = false
+
     var body: some View {
 
         VMView(vm: vm, stack: .ZStack(alignment: .bottomTrailing)) { state in
@@ -17,7 +19,36 @@ struct EditActivitiesDialog: View {
                 }
             }
 
-            DialogCloseButton(isPresented: $isPresented, bgColor: Color(.myBackground))
+            HStack(alignment: .bottom) {
+
+                Button(
+                        action: {
+                            isAddActivityPresented = true
+                        },
+                        label: {
+                            Text("New Activity")
+                                    .foregroundColor(.white)
+                                    .padding(.horizontal, 10)
+                                    .padding(.vertical, 4)
+                        }
+                )
+                        .background(roundedShape.fill(.blue))
+                        .padding(.leading, 24)
+                        .padding(.bottom, 8)
+                        .safeAreaPadding(.bottom)
+                        .sheetEnv(
+                                isPresented: $isAddActivityPresented
+                        ) {
+                            ActivityFormSheet(
+                                    isPresented: $isAddActivityPresented,
+                                    editedActivity: nil
+                            ) {}
+                        }
+
+                Spacer()
+
+                DialogCloseButton(isPresented: $isPresented, bgColor: Color(.myBackground))
+            }
         }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .ignoresSafeArea()
