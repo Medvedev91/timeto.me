@@ -228,7 +228,7 @@ struct TabTimerView: View {
                         .sheetEnv(
                                 isPresented: $isEditActivitiesPresented
                         ) {
-                            EditActivitiesDialog(
+                            EditActivitiesSheet(
                                     isPresented: $isEditActivitiesPresented
                             )
                         }

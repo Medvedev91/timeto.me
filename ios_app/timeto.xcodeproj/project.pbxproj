@@ -60,7 +60,7 @@
 		318218EA86BCB1BC8830D2E7 /* TabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821CAC31C48C0016357E8C /* TabsView.swift */; };
 		3182197D9BDC28A7649BA7E1 /* TextFeaturesTimerFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821F29E288957ABB3DF794 /* TextFeaturesTimerFormView.swift */; };
 		3182199F1FA4EF9D78D19E95 /* Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821110E735778C88CDF821 /* Sheet.swift */; };
-		318219D2BBD9BE5D46C83469 /* EditActivitiesDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821CF31C64B32D614C6A9D /* EditActivitiesDialog.swift */; };
+		318219D2BBD9BE5D46C83469 /* EditActivitiesSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821CF31C64B32D614C6A9D /* EditActivitiesSheet.swift */; };
 		318219E30EE52A96A502BF30 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182189A26C9B48C0D2E8A4A /* KeyboardManager.swift */; };
 		318219E4F8AFEB280A077F74 /* utils_apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E58DC92CD5673A6B49E /* utils_apple.swift */; };
 		31821A329A5D1AE8F7CB0604 /* EventFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318212B384624F1CF416C576 /* EventFormSheet.swift */; };
@@ -168,7 +168,7 @@
 		31821CC7588164B713321141 /* TextField__VMState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField__VMState.swift; sourceTree = "<group>"; };
 		31821CC8696F1EF2463FFE14 /* TextFeaturesTriggersFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFeaturesTriggersFormView.swift; sourceTree = "<group>"; };
 		31821CEEF63544D48A45B8F4 /* W_TabTimerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W_TabTimerView.swift; sourceTree = "<group>"; };
-		31821CF31C64B32D614C6A9D /* EditActivitiesDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditActivitiesDialog.swift; sourceTree = "<group>"; };
+		31821CF31C64B32D614C6A9D /* EditActivitiesSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditActivitiesSheet.swift; sourceTree = "<group>"; };
 		31821D2439CE2014EF5FF473 /* ChecklistsPickerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChecklistsPickerSheet.swift; sourceTree = "<group>"; };
 		31821D4211F3426B1F444F81 /* DaytimePickerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaytimePickerSheet.swift; sourceTree = "<group>"; };
 		31821D5928C18299586075F4 /* AutoBackupIos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoBackupIos.swift; sourceTree = "<group>"; };
@@ -298,7 +298,7 @@
 				2C0BE02C295732110099AD7C /* DayPickerStateView.swift */,
 				31821D4211F3426B1F444F81 /* DaytimePickerSheet.swift */,
 				31821E53EB27CE7F81AF0F69 /* DialogCloseButton.swift */,
-				31821CF31C64B32D614C6A9D /* EditActivitiesDialog.swift */,
+				31821CF31C64B32D614C6A9D /* EditActivitiesSheet.swift */,
 				318212B384624F1CF416C576 /* EventFormSheet.swift */,
 				31821B4BCB049B516BF2DF2E /* EventsHistoryView.swift */,
 				31821F7CBA1480191F065D5E /* EventsListView.swift */,
@@ -537,7 +537,7 @@
 				2C0BE02D295732110099AD7C /* DayPickerStateView.swift in Sources */,
 				31821A947CB3AFF5CE923090 /* ShortcutFormSheet.swift in Sources */,
 				318210ECF60308ECF341FEA2 /* utils_ios.swift in Sources */,
-				318219D2BBD9BE5D46C83469 /* EditActivitiesDialog.swift in Sources */,
+				318219D2BBD9BE5D46C83469 /* EditActivitiesSheet.swift in Sources */,
 				318210E102D112C2860ADF9F /* DialogCloseButton.swift in Sources */,
 				31821C4D6DA83EF42B805658 /* MySpacerSize.swift in Sources */,
 				3182144AE3592F81006F06BC /* TextFieldClearButtonView.swift in Sources */,

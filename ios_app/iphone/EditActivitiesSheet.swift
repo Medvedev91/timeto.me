@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-struct EditActivitiesDialog: View {
+struct EditActivitiesSheet: View {
 
     @Binding var isPresented: Bool
 
