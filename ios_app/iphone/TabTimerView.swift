@@ -31,6 +31,9 @@ struct TabTimerView: View {
 
                     Color(.bg).edgesIgnoringSafeArea(.all)
 
+                    //
+                    // Top Menu Bar
+
                     VStack {
 
                         HStack(spacing: 16) {
@@ -68,6 +71,7 @@ struct TabTimerView: View {
                         }
                                 .padding(.horizontal, 24)
                                 .padding(.top, 8)
+                                .padding(.bottom, 8)
 
                         //
                         // List
