@@ -217,7 +217,7 @@ private struct ActivityRowView: View {
 
                             Text(activityUI.activity.emoji)
                                     .frame(width: emojiWidth)
-                                    .font(.system(size: isActiveAnim ? 23 : 26))
+                                    .font(.system(size: isActiveAnim ? 24 : 26))
 
                             VStack {
 
