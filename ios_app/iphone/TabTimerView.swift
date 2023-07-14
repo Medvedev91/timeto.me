@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-private let emojiWidth = 56.0
+private let emojiWidth = 52.0
 private let activitiesInnerHPadding = 12.0
 private let timerHintHPadding = 4.0
 
