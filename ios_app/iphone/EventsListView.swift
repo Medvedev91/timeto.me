@@ -38,7 +38,8 @@ struct EventsListView: View {
                                     ZStack(alignment: .top) {
                                         EventItemView(uiEvent: uiEvent)
                                         if !isFirst {
-                                            DividerBg(xOffset: TAB_TASKS_PADDING_HALF_H)
+                                            DividerBg()
+                                                    .padding(.leading, TAB_TASKS_PADDING_HALF_H)
                                         }
                                     }
                                 }

@@ -178,7 +178,8 @@ private struct ActivityRowView: View {
             ZStack(alignment: .top) {
                 AnyView(safeView)
                 if withTopDivider {
-                    DividerBg(xOffset: emojiWidth)
+                    DividerBg()
+                            .padding(.leading, emojiWidth)
                             .padding(.trailing, activitiesInnerHPadding + timerHintHPadding)
                 }
             }

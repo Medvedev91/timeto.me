@@ -43,7 +43,8 @@ struct TasksListView: View {
                                         TasksListView__TmrwTaskView(taskUI: taskUI)
                                                 .id("tmrw \(taskUI.task.id)")
                                         if !isFirst {
-                                            DividerBg(xOffset: TAB_TASKS_PADDING_HALF_H)
+                                            DividerBg()
+                                                    .padding(.leading, TAB_TASKS_PADDING_HALF_H)
                                         }
                                     }
                                 }
@@ -435,7 +436,8 @@ struct TasksView__TaskRowView: View {
             }
 
             if (withDivider) {
-                DividerBg(xOffset: TAB_TASKS_PADDING_HALF_H)
+                DividerBg()
+                        .padding(.leading, TAB_TASKS_PADDING_HALF_H)
             }
         }
                 .clipShape(squircleShape)

@@ -32,7 +32,8 @@ struct RepeatingsListView: View {
                                     ZStack(alignment: .top) {
                                         RepeatingsView__ItemView(repeatingUI: repeatingUI)
                                         if !isFirst {
-                                            DividerBg(xOffset: TAB_TASKS_PADDING_HALF_H)
+                                            DividerBg()
+                                                    .padding(.leading, TAB_TASKS_PADDING_HALF_H)
                                         }
                                     }
                                 }
