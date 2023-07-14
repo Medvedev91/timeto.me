@@ -5,7 +5,7 @@ private let emojiWidth = 52.0
 private let activitiesInnerHPadding = 12.0
 private let timerHintHPadding = 4.0
 
-private let activityItemShape = RoundedRectangle(cornerRadius: 16, style: .continuous)
+private let activityItemShape = RoundedRectangle(cornerRadius: 14, style: .continuous)
 
 struct TabTimerView: View {
 
