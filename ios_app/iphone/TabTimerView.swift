@@ -3,9 +3,6 @@ import shared
 
 private let emojiWidth = 56.0
 private let activitiesInnerHPadding = 12.0
-private let timerHintHPadding = 5.0
-
-private let activityItemShape = RoundedRectangle(cornerRadius: 14, style: .continuous)
 
 struct TabTimerView: View {
 
@@ -185,10 +182,8 @@ private struct ActivityRowView: View {
                 if withTopDivider {
                     DividerBg()
                             .padding(.leading, emojiWidth)
-                            .padding(.trailing, activitiesInnerHPadding + timerHintHPadding)
                 }
             }
-                    .padding(.horizontal, 12)
                     // todo remove after removing MyListSwipeToActionItem()
                     .background(Color(.bg))
         }
@@ -251,7 +246,7 @@ private struct ActivityRowView: View {
                                                     .offset(y: onePx)
                                                     .font(.system(size: 15, weight: .light))
                                                     .foregroundColor(isActiveAnim ? .white : .blue)
-                                                    .padding(.horizontal, timerHintHPadding)
+                                                    .padding(.horizontal, 4)
                                         }
                                 )
                             }
@@ -272,9 +267,8 @@ private struct ActivityRowView: View {
 
                                 let timerDataTitleLen = timerData.title.count
                                 let timerTitleFontWeight: CGFloat = {
-                                    if timerDataTitleLen <= 5 { return 34 }
-                                    if timerDataTitleLen <= 7 { return 30 }
-                                    return 24
+                                    if timerDataTitleLen <= 7 { return 35 }
+                                    return 30
                                 }()
 
                                 Button(
@@ -354,7 +348,6 @@ private struct ActivityRowView: View {
                     }
                 }
                 .buttonStyle(ActivityButtonStyle(bgColor: bgColorAnim))
-                .clipShape(activityItemShape)
     }
 }
 
