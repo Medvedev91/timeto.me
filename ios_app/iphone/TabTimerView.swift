@@ -227,10 +227,9 @@ private struct ActivityRowView: View {
                                 if let listNote = activityUI.data.listNote {
                                     Text(listNote)
                                             .frame(maxWidth: .infinity, alignment: .leading)
-                                            .padding(.top, onePx)
                                             .padding(.bottom, onePx)
                                             .foregroundColor(.white)
-                                            .font(.system(size: 14, weight: .light))
+                                            .font(.system(size: 15, weight: .light))
                                 }
                             }
 
