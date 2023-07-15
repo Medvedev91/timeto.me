@@ -69,7 +69,8 @@ struct TabTimerView: View {
 
                             MenuButton(sfName: "square.and.pencil") { isEditActivitiesPresented.toggle() }
                         }
-                                .padding(.horizontal, 18)
+                                .padding(.leading, 15)
+                                .padding(.trailing, 14)
                                 .padding(.top, 8)
                                 .padding(.bottom, 8)
 
