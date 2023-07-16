@@ -33,11 +33,7 @@ class TimerTabActivityData(
         val lastIntervalNote = lastInterval.note
         if (timerData != null && lastIntervalNote != null) {
             val tfNote = lastIntervalNote.textFeatures()
-            listNote = tfNote.textUi(
-                withActivityEmoji = false,
-                withTimer = true,
-                timerPrefix = "- ",
-            )
+            listNote = tfNote.textNoFeatures
             triggers = (tfNote.triggers + tfActivity.triggers).distinctBy { it.id }
         } else {
             listNote = null
