@@ -213,17 +213,17 @@ private struct ActivityRowView: View {
 
                             Text(activityUI.activity.emoji)
                                     .frame(width: emojiWidth)
-                                    .font(.system(size: isActiveAnim ? 24 : 25))
+                                    .font(.system(size: 25))
                                     .animation(nil, value: isActiveAnim)
 
                             VStack {
 
                                 HStack {
 
-                                    let textFontSize = 17.0
+                                    let textFontSize = isActiveAnim ? 18.0 : 17.0
 
                                     Text(activityUI.data.text)
-                                            .font(.system(size: textFontSize, weight: isActiveAnim ? .medium : .regular))
+                                            .font(.system(size: textFontSize, weight: isActiveAnim ? .semibold : .regular))
                                             .animation(nil, value: isActiveAnim)
                                             .foregroundColor(isActiveAnim ? .white : Color(.label))
                                             .truncationMode(.tail)
@@ -239,7 +239,7 @@ private struct ActivityRowView: View {
                                         let noteFontSize = 15.0
 
                                         Text(listNote)
-                                                .padding(.bottom, onePx)
+                                                .offset(y: -1)
                                                 .foregroundColor(.white)
                                                 .font(.system(size: noteFontSize, weight: .light))
 
@@ -274,6 +274,7 @@ private struct ActivityRowView: View {
 
                                 let timerDataTitleLen = timerData.title.count
                                 let timerTitleFontWeight: CGFloat = {
+                                    if timerDataTitleLen <= 5 { return 38 }
                                     if timerDataTitleLen <= 7 { return 35 }
                                     return 30
                                 }()
@@ -296,7 +297,7 @@ private struct ActivityRowView: View {
 
                                     HStack {
 
-                                        let timerButtonsHeight = 27.0
+                                        let timerButtonsHeight = 30.0
 
                                         Button(
                                                 action: {
@@ -336,13 +337,14 @@ private struct ActivityRowView: View {
                                                 .padding(.leading, 8)
                                                 .padding(.trailing, activitiesInnerHPadding - 2)
                                     }
+                                            .padding(.bottom, 1)
                                 }
                             }
-                                    .padding(.top, activityUI.data.note != nil ? 7 : 5)
+                                    .padding(.top, 8)
                                     .padding(.bottom, 1)
                         }
                     }
-                            .padding(.top, isActiveAnim ? 9 : 10)
+                            .padding(.top, 10)
                             .padding(.bottom, 10)
                             /// #TruncationDynamic + README_APP.md
                             .id("\(activityUI.activity.id) \(lastInterval.note)")
