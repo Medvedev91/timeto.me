@@ -70,6 +70,7 @@ data class TextFeatures(
     sealed class Trigger(
         val id: String,
         val title: String,
+        val emoji: String,
         val color: ColorNative,
     ) {
 
@@ -82,11 +83,11 @@ data class TextFeatures(
 
         class Checklist(
             val checklist: ChecklistModel
-        ) : Trigger("#c${checklist.id}", checklist.name, ColorNative.green)
+        ) : Trigger("#c${checklist.id}", checklist.name, "✅", ColorNative.green)
 
         class Shortcut(
             val shortcut: ShortcutModel
-        ) : Trigger("#s${shortcut.id}", shortcut.name, ColorNative.red)
+        ) : Trigger("#s${shortcut.id}", shortcut.name, "↗️", ColorNative.red)
     }
 
     class TimeData(
