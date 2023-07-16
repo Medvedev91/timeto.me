@@ -227,7 +227,7 @@ private struct ActivityRowView: View {
                                             .truncationMode(.tail)
                                             .lineLimit(1)
 
-                                    TriggersListIconsView(triggers: activityUI.data.triggers)
+                                    TriggersListIconsView(triggers: activityUI.data.triggers, fontSize: 17)
                                 }
                                         .frame(maxWidth: .infinity, alignment: .leading)
 
