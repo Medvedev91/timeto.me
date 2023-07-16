@@ -234,11 +234,18 @@ private struct ActivityRowView: View {
                                         .frame(maxWidth: .infinity, alignment: .leading)
 
                                 if let listNote = activityUI.data.note {
-                                    Text(listNote)
+                                    HStack {
+
+                                        let noteFontSize = 15.0
+
+                                        Text(listNote)
+                                                .padding(.bottom, onePx)
+                                                .foregroundColor(.white)
+                                                .font(.system(size: noteFontSize, weight: .light))
+
+                                        TriggersListIconsView(triggers: activityUI.data.noteTriggers, fontSize: noteFontSize)
+                                    }
                                             .frame(maxWidth: .infinity, alignment: .leading)
-                                            .padding(.bottom, onePx)
-                                            .foregroundColor(.white)
-                                            .font(.system(size: 15, weight: .light))
                                 }
                             }
 
@@ -260,14 +267,6 @@ private struct ActivityRowView: View {
                             }
                         }
                                 .padding(.trailing, activitiesInnerHPadding)
-
-                        TextFeaturesTriggersView(
-                                triggers: activityUI.data.triggers,
-                                paddingTop: 8.0,
-                                paddingBottom: 4.0,
-                                contentPaddingStart: emojiWidth - 1,
-                                contentPaddingEnd: activitiesInnerHPadding
-                        )
 
                         if let timerData = activityUI.data.timerData {
 
