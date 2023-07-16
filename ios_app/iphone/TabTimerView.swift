@@ -233,13 +233,12 @@ private struct ActivityRowView: View {
                                 }
                                         .frame(maxWidth: .infinity, alignment: .leading)
 
-                                if let listNote = activityUI.data.note {
+                                if let note = activityUI.data.note {
                                     HStack {
 
                                         let noteFontSize = 15.0
 
-                                        Text(listNote)
-                                                .offset(y: -1)
+                                        Text(note)
                                                 .foregroundColor(.white)
                                                 .font(.system(size: noteFontSize, weight: .light))
 
