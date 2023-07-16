@@ -218,13 +218,18 @@ private struct ActivityRowView: View {
 
                             VStack {
 
-                                Text(activityUI.data.listText)
-                                        .font(.system(size: 17, weight: isActiveAnim ? .medium : .regular))
-                                        .animation(nil, value: isActiveAnim)
+                                HStack {
+
+                                    Text(activityUI.data.listText)
+                                            .font(.system(size: 17, weight: isActiveAnim ? .medium : .regular))
+                                            .animation(nil, value: isActiveAnim)
+                                            .foregroundColor(isActiveAnim ? .white : Color(.label))
+                                            .truncationMode(.tail)
+                                            .lineLimit(1)
+
+                                    TriggersListIconsView(triggers: activityUI.data.triggers)
+                                }
                                         .frame(maxWidth: .infinity, alignment: .leading)
-                                        .foregroundColor(isActiveAnim ? .white : Color(.label))
-                                        .truncationMode(.tail)
-                                        .lineLimit(1)
 
                                 if let listNote = activityUI.data.listNote {
                                     Text(listNote)
