@@ -77,12 +77,12 @@ struct W_TabTimerView: View {
                             HStack(alignment: .center) {
 
                                 VStack {
-                                    Text(activityUI.data.listText)
+                                    Text(activityUI.data.text)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                             .lineLimit(1)
                                             .truncationMode(.middle)
 
-                                    if let listNote = activityUI.data.listNote {
+                                    if let listNote = activityUI.data.note {
 
                                         Text(listNote)
                                                 .frame(maxWidth: .infinity, alignment: .leading)

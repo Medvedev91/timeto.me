@@ -220,18 +220,18 @@ private struct ActivityRowView: View {
 
                                 HStack {
 
-                                    Text(activityUI.data.listText)
+                                    Text(activityUI.data.text)
                                             .font(.system(size: 17, weight: isActiveAnim ? .medium : .regular))
                                             .animation(nil, value: isActiveAnim)
                                             .foregroundColor(isActiveAnim ? .white : Color(.label))
                                             .truncationMode(.tail)
                                             .lineLimit(1)
 
-                                    TriggersListIconsView(triggers: activityUI.data.triggers, fontSize: 17)
+                                    TriggersListIconsView(triggers: activityUI.data.textTriggers, fontSize: 17)
                                 }
                                         .frame(maxWidth: .infinity, alignment: .leading)
 
-                                if let listNote = activityUI.data.listNote {
+                                if let listNote = activityUI.data.note {
                                     Text(listNote)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                             .padding(.bottom, onePx)
@@ -337,7 +337,7 @@ private struct ActivityRowView: View {
                                     }
                                 }
                             }
-                                    .padding(.top, activityUI.data.listNote != nil ? 7 : 5)
+                                    .padding(.top, activityUI.data.note != nil ? 7 : 5)
                                     .padding(.bottom, 1)
                         }
                     }
