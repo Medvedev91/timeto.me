@@ -23,21 +23,24 @@ class TimerTabActivityData(
         )
     }
 
-    val listText: String
-    val listNote: String?
-    val triggers: List<TextFeatures.Trigger>
+    val text: String
+    val textTriggers: List<TextFeatures.Trigger>
+
+    val note: String?
+    val noteTriggers: List<TextFeatures.Trigger>
 
     init {
         val tfActivity = activity.name.textFeatures()
-        listText = tfActivity.textNoFeatures
+        text = tfActivity.textNoFeatures
+        textTriggers = tfActivity.triggers
         val lastIntervalNote = lastInterval.note
         if (timerData != null && lastIntervalNote != null) {
             val tfNote = lastIntervalNote.textFeatures()
-            listNote = tfNote.textNoFeatures
-            triggers = (tfNote.triggers + tfActivity.triggers).distinctBy { it.id }
+            note = tfNote.textNoFeatures
+            noteTriggers = tfNote.triggers
         } else {
-            listNote = null
-            triggers = tfActivity.triggers
+            note = null
+            noteTriggers = listOf()
         }
     }
 }
