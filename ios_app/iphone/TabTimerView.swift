@@ -336,7 +336,7 @@ private struct ActivityRowView: View {
                                     .padding(.bottom, 1)
                         }
                     }
-                            .padding(.top, 10)
+                            .padding(.top, isActiveAnim ? 9 : 10)
                             .padding(.bottom, 10)
                             /// #TruncationDynamic + README_APP.md
                             .id("\(activityUI.activity.id) \(lastInterval.note)")
