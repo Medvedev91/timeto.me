@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-private let emojiWidth = 56.0
+private let emojiWidth = 58.0
 private let activitiesInnerHPadding = 12.0
 
 struct TabTimerView: View {
@@ -212,9 +212,9 @@ private struct ActivityRowView: View {
                         HStack {
 
                             Text(activityUI.activity.emoji)
-                                    .padding(.trailing, 4)
                                     .frame(width: emojiWidth)
-                                    .font(.system(size: isActiveAnim ? 24 : 26))
+                                    .font(.system(size: isActiveAnim ? 24 : 25))
+                                    .animation(nil, value: isActiveAnim)
 
                             VStack {
 
@@ -332,11 +332,12 @@ private struct ActivityRowView: View {
                                     }
                                 }
                             }
-                                    .padding(.top, 6)
-                                    .padding(.bottom, 2)
+                                    .padding(.top, activityUI.data.listNote != nil ? 7 : 5)
+                                    .padding(.bottom, 1)
                         }
                     }
-                            .padding(.vertical, 10)
+                            .padding(.top, 10)
+                            .padding(.bottom, 10)
                             /// #TruncationDynamic + README_APP.md
                             .id("\(activityUI.activity.id) \(lastInterval.note)")
                 }
