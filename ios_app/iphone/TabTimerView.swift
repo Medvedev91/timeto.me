@@ -219,6 +219,8 @@ private struct ActivityRowView: View {
                             VStack {
 
                                 Text(activityUI.data.listText)
+                                        .font(.system(size: 17, weight: isActiveAnim ? .medium : .regular))
+                                        .animation(nil, value: isActiveAnim)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .foregroundColor(isActiveAnim ? .white : Color(.label))
                                         .truncationMode(.tail)
