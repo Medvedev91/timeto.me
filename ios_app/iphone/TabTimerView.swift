@@ -290,7 +290,7 @@ private struct ActivityRowView: View {
 
                                     HStack {
 
-                                        let timerButtonsHeight = 26.0
+                                        let timerButtonsHeight = 27.0
 
                                         Button(
                                                 action: {
@@ -328,7 +328,7 @@ private struct ActivityRowView: View {
                                                 .frame(height: timerButtonsHeight)
                                                 .overlay(roundedShape.stroke(Color.white, lineWidth: 1))
                                                 .padding(.leading, 8)
-                                                .padding(.trailing, activitiesInnerHPadding)
+                                                .padding(.trailing, activitiesInnerHPadding - 2)
                                     }
                                 }
                             }
