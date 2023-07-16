@@ -229,7 +229,7 @@ private struct ActivityRowView: View {
                                             .truncationMode(.tail)
                                             .lineLimit(1)
 
-                                    TriggersListIconsView(triggers: activityUI.data.textTriggers, fontSize: textFontSize)
+                                    TriggersListIconsView(triggers: activityUI.data.textTriggers, fontSize: textFontSize - 2)
                                 }
                                         .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -243,7 +243,7 @@ private struct ActivityRowView: View {
                                                 .foregroundColor(.white)
                                                 .font(.system(size: noteFontSize, weight: .light))
 
-                                        TriggersListIconsView(triggers: activityUI.data.noteTriggers, fontSize: noteFontSize)
+                                        TriggersListIconsView(triggers: activityUI.data.noteTriggers, fontSize: noteFontSize - 2)
                                     }
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                 }
