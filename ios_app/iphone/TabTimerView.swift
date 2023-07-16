@@ -331,7 +331,7 @@ private struct ActivityRowView: View {
                                                     }
                                                 }
                                         )
-                                                .padding(.horizontal, 5)
+                                                .padding(.horizontal, 6)
                                                 .frame(height: timerButtonsHeight)
                                                 .overlay(roundedShape.stroke(Color.white, lineWidth: 1))
                                                 .padding(.leading, 8)
