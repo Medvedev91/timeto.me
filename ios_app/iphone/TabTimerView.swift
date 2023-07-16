@@ -220,14 +220,16 @@ private struct ActivityRowView: View {
 
                                 HStack {
 
+                                    let textFontSize = 17.0
+
                                     Text(activityUI.data.text)
-                                            .font(.system(size: 17, weight: isActiveAnim ? .medium : .regular))
+                                            .font(.system(size: textFontSize, weight: isActiveAnim ? .medium : .regular))
                                             .animation(nil, value: isActiveAnim)
                                             .foregroundColor(isActiveAnim ? .white : Color(.label))
                                             .truncationMode(.tail)
                                             .lineLimit(1)
 
-                                    TriggersListIconsView(triggers: activityUI.data.textTriggers, fontSize: 17)
+                                    TriggersListIconsView(triggers: activityUI.data.textTriggers, fontSize: textFontSize)
                                 }
                                         .frame(maxWidth: .infinity, alignment: .leading)
 
