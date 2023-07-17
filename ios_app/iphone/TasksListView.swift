@@ -584,22 +584,17 @@ private struct TasksListView__TmrwTaskView: View {
             }
 
             HStack {
-                /// It can be multiline
+
                 Text(taskUI.text)
-                        .padding(.leading, TAB_TASKS_PADDING_HALF_H)
-                        .padding(.trailing, 16)
                         .lineSpacing(4)
                         .multilineTextAlignment(.leading)
                         .myMultilineText()
 
-                Spacer()
+                TriggersListIconsView(triggers: taskUI.textFeatures.triggers, fontSize: 15)
             }
-
-            TextFeaturesTriggersView(
-                    triggers: taskUI.textFeatures.triggers,
-                    contentPaddingStart: TAB_TASKS_PADDING_HALF_H - 1.0
-            )
-                    .padding(.top, taskUI.textFeatures.triggers.isEmpty ? 0 : vPadding)
+                    .padding(.leading, TAB_TASKS_PADDING_HALF_H)
+                    .padding(.trailing, TAB_TASKS_PADDING_HALF_H)
+                    .frame(maxWidth: .infinity, alignment: .leading)
         }
                 .padding(.vertical, 10)
     }
