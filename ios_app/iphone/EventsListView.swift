@@ -215,19 +215,18 @@ private struct EventItemView: View {
                     .padding(.trailing, TAB_TASKS_PADDING_HALF_H)
 
             HStack {
+
                 Text(uiEvent.listText)
+                        .lineSpacing(4)
+                        .multilineTextAlignment(.leading)
                         .myMultilineText()
-                Spacer()
+
+                TriggersListIconsView(triggers: uiEvent.textFeatures.triggers, fontSize: 15)
             }
                     .padding(.top, 4)
                     .padding(.leading, TAB_TASKS_PADDING_HALF_H)
                     .padding(.trailing, TAB_TASKS_PADDING_HALF_H)
-
-            TextFeaturesTriggersView(
-                    triggers: uiEvent.textFeatures.triggers,
-                    contentPaddingStart: TAB_TASKS_PADDING_HALF_H - 1.0
-            )
-                    .padding(.top, uiEvent.textFeatures.triggers.isEmpty ? 0 : 8)
+                    .frame(maxWidth: .infinity, alignment: .leading)
         }
                 .padding(.top, 10)
                 .padding(.bottom, 10)
