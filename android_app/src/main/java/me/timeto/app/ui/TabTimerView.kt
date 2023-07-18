@@ -30,7 +30,6 @@ import me.timeto.shared.vm.TabTimerVM
 private val timerButtonsHeight = 26.dp
 
 private val emojiWidth = 52.dp
-private val triggersListContentPaddings = PaddingValues(start = emojiWidth - 1.dp)
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -141,25 +140,37 @@ fun TabTimerView() {
                                         modifier = Modifier
                                             .weight(1f),
                                     ) {
-
-                                        Text(
-                                            text = uiActivity.data.text,
-                                            color = if (isActive) c.white else c.text,
-                                            fontSize = 16.sp,
-                                            maxLines = 1,
-                                            overflow = TextOverflow.Ellipsis,
-                                        )
+                                        HStack {
+                                            Text(
+                                                text = uiActivity.data.text,
+                                                color = if (isActive) c.white else c.text,
+                                                fontSize = 16.sp,
+                                                maxLines = 1,
+                                                overflow = TextOverflow.Ellipsis,
+                                            )
+                                            TriggersListIconsView(
+                                                triggers = uiActivity.data.textTriggers,
+                                                fontSize = 15.sp,
+                                            )
+                                        }
 
                                         val listNote = uiActivity.data.note
                                         if (listNote != null)
-                                            Text(
-                                                text = listNote,
+                                            HStack(
                                                 modifier = Modifier
-                                                    .offset(y = (-2).dp),
-                                                color = c.white,
-                                                fontSize = 14.sp,
-                                                fontWeight = FontWeight.Light,
-                                            )
+                                                    .offset(y = (-2).dp)
+                                            ) {
+                                                Text(
+                                                    text = listNote,
+                                                    color = c.white,
+                                                    fontSize = 14.sp,
+                                                    fontWeight = FontWeight.Light,
+                                                )
+                                                TriggersListIconsView(
+                                                    triggers = uiActivity.data.noteTriggers,
+                                                    fontSize = 12.sp,
+                                                )
+                                            }
                                     }
 
                                     uiActivity.timerHints.forEach { hintUI ->
@@ -178,12 +189,6 @@ fun TabTimerView() {
                                         )
                                     }
                                 }
-
-                                TextFeaturesTriggersView(
-                                    triggers = uiActivity.data.triggers,
-                                    modifier = Modifier.padding(top = 4.dp, bottom = 4.dp),
-                                    contentPadding = triggersListContentPaddings
-                                )
 
                                 if (timerData != null) {
 
