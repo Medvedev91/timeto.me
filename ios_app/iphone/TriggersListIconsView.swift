@@ -13,29 +13,19 @@ struct TriggersListIconsView: View {
         } else {
             HStack {
                 ForEach(triggers, id: \.id) { trigger in
-                    TriggerIcon(trigger: trigger, fontSize: fontSize)
+                    Button(
+                            action: {
+                                trigger.performUI()
+                            },
+                            label: {
+                                Text(trigger.emoji)
+                                        .font(.system(size: fontSize))
+                                        .padding(.horizontal, 3)
+                            }
+                    )
                 }
             }
                     .padding(.leading, 3)
         }
-    }
-}
-
-private struct TriggerIcon: View {
-
-    let trigger: TextFeatures.Trigger
-    let fontSize: CGFloat
-
-    var body: some View {
-        Button(
-                action: {
-                    trigger.performUI()
-                },
-                label: {
-                    Text(trigger.emoji)
-                            .font(.system(size: fontSize))
-                            .padding(.horizontal, 3)
-                }
-        )
     }
 }
