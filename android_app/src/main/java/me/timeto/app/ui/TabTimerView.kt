@@ -27,7 +27,7 @@ import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.shared.vm.TabTimerVM
 
-private val timerButtonsHeight = 26.dp
+private val timerButtonsHeight = 28.dp
 
 private val emojiWidth = 52.dp
 
@@ -194,15 +194,15 @@ fun TabTimerView() {
 
                                     ZStack(
                                         modifier = Modifier
-                                            .padding(top = 10.dp, bottom = 2.dp, start = 12.dp, end = 10.dp)
+                                            .padding(top = 8.dp, bottom = 2.dp, start = 12.dp, end = 10.dp)
                                             .fillMaxWidth(),
                                     ) {
 
                                         val timerDataTitleLen = timerData.title.length
                                         val timerTitleFontSize = when {
-                                            timerDataTitleLen <= 5 -> 29.sp
-                                            timerDataTitleLen <= 7 -> 24.sp
-                                            else -> 20.sp
+                                            timerDataTitleLen <= 5 -> 34.sp
+                                            timerDataTitleLen <= 7 -> 32.sp
+                                            else -> 28.sp
                                         }
 
                                         Text(
