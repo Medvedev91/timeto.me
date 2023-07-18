@@ -29,9 +29,7 @@ import me.timeto.shared.vm.TabTimerVM
 
 private val timerButtonsHeight = 26.dp
 
-private val activityItemShape = MySquircleShape(len = 80f, angleParam = 2f)
-
-private val emojiWidth = 44.dp
+private val emojiWidth = 52.dp
 private val triggersListContentPaddings = PaddingValues(start = emojiWidth - 1.dp)
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -52,7 +50,7 @@ fun TabTimerView() {
         ) {
 
             LazyColumn(
-                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 48.dp),
+                contentPadding = PaddingValues(vertical = 48.dp),
             ) {
 
                 val activitiesUI = state.activitiesUI
@@ -70,7 +68,7 @@ fun TabTimerView() {
 
                     SwipeToAction(
                         isStartOrEnd = remember { mutableStateOf(null) },
-                        modifier = Modifier.clip(activityItemShape),
+                        modifier = Modifier,
                         ignoreOneAction = remember { mutableStateOf(false) },
                         startView = {
                             SwipeToAction__StartView(
@@ -113,8 +111,7 @@ fun TabTimerView() {
                                             timerContext = null,
                                         )
                                     }
-                                }
-                                .padding(start = 14.dp, end = 14.dp),
+                                },
                             contentAlignment = Alignment.TopCenter,
                         ) {
 
@@ -127,7 +124,8 @@ fun TabTimerView() {
 
                                 Row(
                                     modifier = Modifier
-                                        .fillMaxWidth(),
+                                        .fillMaxWidth()
+                                        .padding(end = 10.dp),
                                     verticalAlignment = Alignment.CenterVertically,
                                 ) {
 
@@ -135,8 +133,8 @@ fun TabTimerView() {
                                         text = uiActivity.activity.emoji,
                                         modifier = Modifier
                                             .width(emojiWidth),
-                                        textAlign = TextAlign.Start,
-                                        fontSize = if (isActive) 20.sp else 22.sp, // todo animation
+                                        textAlign = TextAlign.Center,
+                                        fontSize = if (isActive) 20.sp else 22.sp,
                                     )
 
                                     VStack(
@@ -191,7 +189,7 @@ fun TabTimerView() {
 
                                     ZStack(
                                         modifier = Modifier
-                                            .padding(top = 8.dp, bottom = 6.dp)
+                                            .padding(top = 10.dp, bottom = 2.dp, start = 12.dp, end = 10.dp)
                                             .fillMaxWidth(),
                                     ) {
 
@@ -270,7 +268,7 @@ fun TabTimerView() {
                             }
 
                             DividerBg(
-                                modifier = Modifier.padding(start = emojiWidth, end = 4.dp),
+                                modifier = Modifier.padding(start = emojiWidth),
                                 isVisible = uiActivity.withTopDivider,
                             )
                         }
