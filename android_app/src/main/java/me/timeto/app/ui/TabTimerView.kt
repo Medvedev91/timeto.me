@@ -159,7 +159,7 @@ fun TabTimerView() {
                                         if (listNote != null)
                                             HStack(
                                                 modifier = Modifier
-                                                    .offset(y = (-2).dp)
+                                                    .offset(y = (-1).dp)
                                             ) {
                                                 Text(
                                                     text = listNote,
