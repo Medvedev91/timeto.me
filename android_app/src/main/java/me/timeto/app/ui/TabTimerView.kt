@@ -199,7 +199,7 @@ fun TabTimerView() {
                                     ) {
 
                                         val timerDataTitleLen = timerData.title.length
-                                        val timerTitleFontWeight = when {
+                                        val timerTitleFontSize = when {
                                             timerDataTitleLen <= 5 -> 29.sp
                                             timerDataTitleLen <= 7 -> 24.sp
                                             else -> 20.sp
@@ -213,7 +213,7 @@ fun TabTimerView() {
                                                 }
                                                 .align(Alignment.BottomStart),
                                             fontFamily = timerFont,
-                                            fontSize = timerTitleFontWeight,
+                                            fontSize = timerTitleFontSize,
                                             color = c.white,
                                         )
 
