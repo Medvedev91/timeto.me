@@ -303,10 +303,10 @@ private struct ActivityRowView: View {
                                                     Image(systemName: "pause")
                                                             .foregroundColor(.white)
                                                             .font(.system(size: 14, weight: .regular))
+                                                            .frame(width: timerButtonsHeight, height: timerButtonsHeight)
+                                                            .overlay(roundedShape.stroke(Color.white, lineWidth: 1))
                                                 }
                                         )
-                                                .frame(width: timerButtonsHeight, height: timerButtonsHeight)
-                                                .overlay(roundedShape.stroke(Color.white, lineWidth: 1))
 
                                         Button(
                                                 action: {
@@ -325,11 +325,11 @@ private struct ActivityRowView: View {
                                                                 .font(.system(size: 15, weight: .light))
                                                                 .foregroundColor(.white)
                                                     }
+                                                            .padding(.horizontal, 6)
+                                                            .frame(height: timerButtonsHeight)
+                                                            .overlay(roundedShape.stroke(Color.white, lineWidth: 1))
                                                 }
                                         )
-                                                .padding(.horizontal, 6)
-                                                .frame(height: timerButtonsHeight)
-                                                .overlay(roundedShape.stroke(Color.white, lineWidth: 1))
                                                 .padding(.leading, 8)
                                                 .padding(.trailing, activitiesInnerHPadding - 2)
                                     }
