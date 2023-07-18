@@ -145,14 +145,14 @@ fun TabTimerView() {
                                     ) {
 
                                         Text(
-                                            text = uiActivity.data.listText,
+                                            text = uiActivity.data.text,
                                             color = if (isActive) c.white else c.text,
                                             fontSize = 16.sp,
                                             maxLines = 1,
                                             overflow = TextOverflow.Ellipsis,
                                         )
 
-                                        val listNote = uiActivity.data.listNote
+                                        val listNote = uiActivity.data.note
                                         if (listNote != null)
                                             Text(
                                                 text = listNote,
