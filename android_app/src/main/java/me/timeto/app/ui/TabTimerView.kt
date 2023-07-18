@@ -144,7 +144,8 @@ fun TabTimerView() {
                                             Text(
                                                 text = uiActivity.data.text,
                                                 color = if (isActive) c.white else c.text,
-                                                fontSize = 16.sp,
+                                                fontSize = if (isActive) 17.sp else 16.sp,
+                                                fontWeight = if (isActive) FontWeight.Medium else FontWeight.Normal,
                                                 maxLines = 1,
                                                 overflow = TextOverflow.Ellipsis,
                                             )
