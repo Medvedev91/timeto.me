@@ -29,7 +29,7 @@ import me.timeto.shared.vm.TabTimerVM
 
 private val timerButtonsHeight = 28.dp
 
-private val emojiWidth = 52.dp
+private val emojiWidth = 56.dp
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
