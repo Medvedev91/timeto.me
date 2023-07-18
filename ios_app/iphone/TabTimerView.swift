@@ -78,9 +78,7 @@ struct TabTimerView: View {
 
                             VStack {
 
-                                ZStack {
-                                }
-                                        .frame(height: 20)
+                                MySpacerSize(height: 21)
 
                                 VStack {
 
@@ -123,9 +121,7 @@ struct TabTimerView: View {
                                     }
                                      */
 
-                                ZStack {
-                                }
-                                        .frame(height: 20)
+                                MySpacerSize(height: 21)
                             }
                         }
                     }
