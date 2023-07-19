@@ -73,7 +73,7 @@ private struct FocusModeView__CoverView: View {
                 let timerColor = timerData.color.toColor()
 
                 Text(state.title)
-                        .font(.system(size: 21, weight: .medium))
+                        .font(.system(size: 21, weight: .semibold))
                         .foregroundColor(timerColor)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 20)
