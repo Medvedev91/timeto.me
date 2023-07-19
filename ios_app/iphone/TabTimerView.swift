@@ -185,7 +185,7 @@ private struct ActivityRowView: View {
                                     .frame(width: emojiWidth)
                                     .font(.system(size: 25))
                                     .animation(nil, value: isActiveAnim)
-                                    .shadow(color: .white.opacity(0.5), radius: 1)
+                                    .shadow(color: .white.opacity(0.4), radius: 1)
 
                             VStack {
 
