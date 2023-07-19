@@ -378,12 +378,6 @@ fun TasksListView(
                                         .fillMaxWidth()
                                         .padding(horizontal = TAB_TASKS_PADDING_HALF_H),
                                 )
-
-                                TextFeaturesTriggersView(
-                                    triggers = taskUI.textFeatures.triggers,
-                                    modifier = Modifier.padding(top = vPadding + 3.dp, bottom = 2.dp),
-                                    contentPadding = PaddingValues(horizontal = TAB_TASKS_PADDING_HALF_H - 2.dp),
-                                )
                             }
 
                             if (!isFirst)
@@ -468,12 +462,6 @@ private fun TasksListView__TmrwTaskView(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = TAB_TASKS_PADDING_HALF_H),
-        )
-
-        TextFeaturesTriggersView(
-            triggers = taskUI.textFeatures.triggers,
-            modifier = Modifier.padding(top = vPadding),
-            contentPadding = PaddingValues(horizontal = TAB_TASKS_PADDING_HALF_H - 2.dp),
         )
 
         Box(Modifier.height(8.dp))

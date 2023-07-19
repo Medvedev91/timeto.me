@@ -173,12 +173,6 @@ fun EventsListView() {
                                 .padding(horizontal = TAB_TASKS_PADDING_HALF_H),
                             color = c.text,
                         )
-
-                        TextFeaturesTriggersView(
-                            triggers = uiEvent.textFeatures.triggers,
-                            modifier = Modifier.padding(top = 6.dp),
-                            contentPadding = PaddingValues(horizontal = TAB_TASKS_PADDING_HALF_H - 2.dp),
-                        )
                     }
                 }
 

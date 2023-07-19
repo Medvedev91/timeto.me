@@ -146,15 +146,6 @@ fun RepeatingsListView() {
                                 .padding(top = 2.dp),
                             color = c.text,
                         )
-
-                        val badgesHPadding = TAB_TASKS_PADDING_HALF_H - 2.dp
-                        val badgesTopPadding = 6.dp
-
-                        TextFeaturesTriggersView(
-                            triggers = repeatingUI.textFeatures.triggers,
-                            modifier = Modifier.padding(top = badgesTopPadding),
-                            contentPadding = PaddingValues(horizontal = badgesHPadding)
-                        )
                     }
 
                     // Remember that the list is reversed
