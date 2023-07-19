@@ -140,38 +140,26 @@ fun TabTimerView() {
                                         modifier = Modifier
                                             .weight(1f),
                                     ) {
-                                        HStack {
-                                            Text(
-                                                text = uiActivity.data.text,
-                                                color = if (isActive) c.white else c.text,
-                                                fontSize = if (isActive) 17.sp else 16.sp,
-                                                fontWeight = if (isActive) FontWeight.Medium else FontWeight.Normal,
-                                                maxLines = 1,
-                                                overflow = TextOverflow.Ellipsis,
-                                            )
-                                            TriggersListIconsView(
-                                                triggers = uiActivity.data.textTriggers,
-                                                fontSize = 15.sp,
-                                            )
-                                        }
+
+                                        Text(
+                                            text = uiActivity.data.text,
+                                            color = if (isActive) c.white else c.text,
+                                            fontSize = if (isActive) 17.sp else 16.sp,
+                                            fontWeight = if (isActive) FontWeight.Medium else FontWeight.Normal,
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis,
+                                        )
 
                                         val listNote = uiActivity.data.note
                                         if (listNote != null)
-                                            HStack(
+                                            Text(
+                                                text = listNote,
                                                 modifier = Modifier
-                                                    .offset(y = (-1).dp)
-                                            ) {
-                                                Text(
-                                                    text = listNote,
-                                                    color = c.white,
-                                                    fontSize = 14.sp,
-                                                    fontWeight = FontWeight.Light,
-                                                )
-                                                TriggersListIconsView(
-                                                    triggers = uiActivity.data.noteTriggers,
-                                                    fontSize = 12.sp,
-                                                )
-                                            }
+                                                    .offset(y = (-1).dp),
+                                                color = c.white,
+                                                fontSize = 14.sp,
+                                                fontWeight = FontWeight.Light,
+                                            )
                                     }
 
                                     uiActivity.timerHints.forEach { hintUI ->
