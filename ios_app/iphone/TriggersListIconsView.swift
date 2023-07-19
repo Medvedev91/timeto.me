@@ -13,16 +13,9 @@ struct TriggersListIconsView: View {
         } else {
             HStack {
                 ForEach(triggers, id: \.id) { trigger in
-                    Button(
-                            action: {
-                                trigger.performUI()
-                            },
-                            label: {
-                                Text(trigger.emoji)
-                                        .font(.system(size: fontSize))
-                                        .padding(.horizontal, 3)
-                            }
-                    )
+                    Text(trigger.emoji)
+                            .font(.system(size: fontSize))
+                            .padding(.horizontal, 3)
                 }
             }
                     .padding(.leading, 3)
