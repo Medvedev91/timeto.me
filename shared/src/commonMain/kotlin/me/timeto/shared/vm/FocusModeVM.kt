@@ -33,7 +33,11 @@ class FocusModeVM : __VM<FocusModeVM.State>() {
 
         // todo or use interval.getTriggers()
         val textFeatures = (interval.note ?: activity.name).textFeatures()
-        val title = textFeatures.textUi(withActivityEmoji = false, withTimer = false)
+        val title = textFeatures.textUi(
+            withActivityEmoji = false,
+            withTimer = false,
+            withTriggers = false,
+        )
 
         val checklistUI: ChecklistUI? = textFeatures.checklists.firstOrNull()?.let { checklist ->
             val items = allChecklistItems.filter { it.list_id == checklist.id }
