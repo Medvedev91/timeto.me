@@ -3,6 +3,7 @@ import shared
 
 private let emojiWidth = 58.0
 private let activitiesInnerHPadding = 12.0
+private let timerHintsHPadding = 4.0
 
 struct TabTimerView: View {
 
@@ -222,7 +223,7 @@ private struct ActivityRowView: View {
                                                     .offset(y: onePx)
                                                     .font(.system(size: 15, weight: .light))
                                                     .foregroundColor(isActiveAnim ? .white : .blue)
-                                                    .padding(.horizontal, 4)
+                                                    .padding(.horizontal, timerHintsHPadding)
                                         }
                                 )
                             }
