@@ -39,6 +39,9 @@ data class TextFeatures(
             a.add(activity.emoji)
         if (timer != null && withTimer)
             a.add(timerPrefix + timer.toTimerHintNote(isShort = false))
+        triggers.forEach {
+            a.add(it.emoji)
+        }
         return a.joinToString(" ")
     }
 
