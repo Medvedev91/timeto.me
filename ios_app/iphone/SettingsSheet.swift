@@ -33,7 +33,7 @@ struct SettingsSheet: View {
 
     var body: some View {
 
-        VMView(vm: vm, stack: .VStack(spacing: 0)) { state in
+        VMView(vm: vm, stack: .VStack()) { state in
 
             SheetHeaderView(
                     onCancel: { isPresented.toggle() },
@@ -46,12 +46,12 @@ struct SettingsSheet: View {
 
             ScrollViewWithVListener(showsIndicators: false, vScroll: $sheetHeaderScroll) {
 
-                ///
-                /// Checklists
+                VStack {
 
-                VStack(spacing: 0) {
+                    ///
+                    /// Checklists
 
-                    VStack(spacing: 0) {
+                    VStack {
 
                         MyListView__Padding__SectionHeader()
 
@@ -87,7 +87,7 @@ struct SettingsSheet: View {
                     ///
                     /// Shortcuts
 
-                    VStack(spacing: 0) {
+                    VStack {
 
                         MyListView__Padding__SectionHeader()
 
@@ -123,7 +123,7 @@ struct SettingsSheet: View {
                     ///
                     /// Settings
 
-                    VStack(spacing: 0) {
+                    VStack {
 
                         MyListView__Padding__SectionHeader()
 
@@ -174,7 +174,7 @@ struct SettingsSheet: View {
                     ///
                     /// Backup
 
-                    VStack(spacing: 0) {
+                    VStack {
 
                         MyListView__Padding__SectionHeader()
 
