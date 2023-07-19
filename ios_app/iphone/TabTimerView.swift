@@ -33,16 +33,28 @@ struct TabTimerView: View {
 
                     VStack {
 
-                        HStack(spacing: 16) {
+                        HStack {
 
-                            MenuButton(sfName: "line.3.horizontal") { isSettingsSheetPresented.toggle() }
+                            Button(
+                                    action: {
+                                        isSettingsSheetPresented.toggle()
+                                    },
+                                    label: {
+                                        Image(systemName: "line.3.horizontal")
+                                                .foregroundColor(.blue)
+                                                .font(.system(size: 22, weight: .thin))
+                                    }
+                            )
+                                    .padding(.leading, 15)
 
                             Spacer()
 
-                            MenuButton(sfName: "square.and.pencil") { isEditActivitiesPresented.toggle() }
+                            Button(
+                                    action: { isEditActivitiesPresented.toggle() },
+                                    label: { Text("Edit").font(.system(size: 15, weight: .light)) }
+                            )
+                                    .padding(.trailing, activitiesInnerHPadding + timerHintsHPadding)
                         }
-                                .padding(.leading, 15)
-                                .padding(.trailing, 14)
                                 .padding(.top, 8)
                                 .padding(.bottom, 8)
 
@@ -337,25 +349,5 @@ private struct ActivityButtonStyle: ButtonStyle {
         configuration
                 .label
                 .background(configuration.isPressed ? Color(.systemGray4) : bgColor)
-    }
-}
-
-private struct MenuButton: View {
-
-    let sfName: String
-    let onClick: () -> Void
-
-    var body: some View {
-
-        Button(
-                action: {
-                    onClick()
-                },
-                label: {
-                    Image(systemName: sfName)
-                            .foregroundColor(.blue)
-                            .font(.system(size: 22, weight: .thin))
-                }
-        )
     }
 }
