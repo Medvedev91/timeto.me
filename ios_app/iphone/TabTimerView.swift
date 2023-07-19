@@ -225,22 +225,13 @@ private struct ActivityRowView: View {
                                             .foregroundColor(isActiveAnim ? .white : Color(.label))
                                             .truncationMode(.tail)
                                             .lineLimit(1)
-
-                                    TriggersListIconsView(triggers: activityUI.data.textTriggers, fontSize: textFontSize - 2)
                                 }
                                         .frame(maxWidth: .infinity, alignment: .leading)
 
                                 if let note = activityUI.data.note {
-                                    HStack {
-
-                                        let noteFontSize = 15.0
-
-                                        Text(note)
-                                                .foregroundColor(.white)
-                                                .font(.system(size: noteFontSize, weight: .light))
-
-                                        TriggersListIconsView(triggers: activityUI.data.noteTriggers, fontSize: noteFontSize - 2)
-                                    }
+                                    Text(note)
+                                            .foregroundColor(.white)
+                                            .font(.system(size: 15, weight: .light))
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                 }
                             }
