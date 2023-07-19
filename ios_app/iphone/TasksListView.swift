@@ -400,15 +400,10 @@ struct TasksView__TaskRowView: View {
                                     }
                                 }
 
-                                HStack {
-
-                                    Text(taskUI.text)
-                                            .lineSpacing(4)
-                                            .multilineTextAlignment(.leading)
-                                            .myMultilineText()
-
-                                    TriggersListIconsView(triggers: taskUI.textFeatures.triggers, fontSize: 15)
-                                }
+                                Text(taskUI.text)
+                                        .lineSpacing(4)
+                                        .multilineTextAlignment(.leading)
+                                        .myMultilineText()
                                         .padding(.leading, TAB_TASKS_PADDING_HALF_H)
                                         .padding(.trailing, TAB_TASKS_PADDING_HALF_H)
                                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -583,15 +578,10 @@ private struct TasksListView__TmrwTaskView: View {
                 }
             }
 
-            HStack {
-
-                Text(taskUI.text)
-                        .lineSpacing(4)
-                        .multilineTextAlignment(.leading)
-                        .myMultilineText()
-
-                TriggersListIconsView(triggers: taskUI.textFeatures.triggers, fontSize: 15)
-            }
+            Text(taskUI.text)
+                    .lineSpacing(4)
+                    .multilineTextAlignment(.leading)
+                    .myMultilineText()
                     .padding(.leading, TAB_TASKS_PADDING_HALF_H)
                     .padding(.trailing, TAB_TASKS_PADDING_HALF_H)
                     .frame(maxWidth: .infinity, alignment: .leading)

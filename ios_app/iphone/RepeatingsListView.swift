@@ -152,15 +152,10 @@ struct RepeatingsView__ItemView: View {
                     .padding(.leading, TAB_TASKS_PADDING_HALF_H)
                     .padding(.trailing, TAB_TASKS_PADDING_HALF_H)
 
-            HStack {
-
-                Text(repeatingUI.listText)
-                        .lineSpacing(4)
-                        .multilineTextAlignment(.leading)
-                        .myMultilineText()
-
-                TriggersListIconsView(triggers: repeatingUI.textFeatures.triggers, fontSize: 15)
-            }
+            Text(repeatingUI.listText)
+                    .lineSpacing(4)
+                    .multilineTextAlignment(.leading)
+                    .myMultilineText()
                     .padding(.top, 4)
                     .padding(.leading, TAB_TASKS_PADDING_HALF_H)
                     .padding(.trailing, TAB_TASKS_PADDING_HALF_H)

@@ -46,7 +46,6 @@
 		318214BD0E34368A953B17CD /* MyListSwipeToActionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821DC6AEBDF478C34116FE /* MyListSwipeToActionItem.swift */; };
 		318214C7567540476671C2FB /* W_TabTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821CEEF63544D48A45B8F4 /* W_TabTimerView.swift */; };
 		318214F11883D036EC488EA5 /* TaskFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821F4527059D286AC0AF41 /* TaskFormSheet.swift */; };
-		31821541E124C5490E14471E /* TriggersListIconsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182186AE53259DB90A600F6 /* TriggersListIconsView.swift */; };
 		318215958A7A06F6610DF5AF /* TimetoAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821527096D1BDB0A35B178 /* TimetoAlert.swift */; };
 		318215D20ED732E4BF4F3071 /* ChecklistDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821A7EADEF749C7A5F04DE /* ChecklistDialog.swift */; };
 		31821611D065F54C0BC007A9 /* DaytimePickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821D4211F3426B1F444F81 /* DaytimePickerSheet.swift */; };
@@ -149,7 +148,6 @@
 		3182161C9947F88C6A1D3B80 /* W_TabTasksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W_TabTasksView.swift; sourceTree = "<group>"; };
 		318216D54CC429737780D176 /* TextFieldClearButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldClearButtonView.swift; sourceTree = "<group>"; };
 		31821794CA93E29D6889286D /* ActivityFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityFormSheet.swift; sourceTree = "<group>"; };
-		3182186AE53259DB90A600F6 /* TriggersListIconsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggersListIconsView.swift; sourceTree = "<group>"; };
 		3182189A26C9B48C0D2E8A4A /* KeyboardManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		318218D93C3456758557A6E0 /* ScrollViewWithVListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollViewWithVListener.swift; sourceTree = "<group>"; };
 		31821996D20B09EBA4F73C2B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -339,7 +337,6 @@
 				31821D886EB022A0AD988588 /* DividerBg.swift */,
 				31821110E735778C88CDF821 /* Sheet.swift */,
 				2C5BD61A2A6076F000AD4042 /* ReadmeSheet.swift */,
-				3182186AE53259DB90A600F6 /* TriggersListIconsView.swift */,
 			);
 			path = iphone;
 			sourceTree = "<group>";
@@ -560,7 +557,6 @@
 				31821BC7F849A5C918F61175 /* ActivityColorSheet.swift in Sources */,
 				3182115F28EDF1E93DC73694 /* DividerBg.swift in Sources */,
 				3182199F1FA4EF9D78D19E95 /* Sheet.swift in Sources */,
-				31821541E124C5490E14471E /* TriggersListIconsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
