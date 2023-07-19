@@ -27,6 +27,9 @@ struct SettingsSheet: View {
 
     @State private var isAddShortcutPresented = false
 
+    @State private var isChartPresented = false
+    @State private var isHistoryPresented = false
+
     @State private var sheetHeaderScroll = 0
 
     //////
@@ -47,6 +50,57 @@ struct SettingsSheet: View {
             ScrollViewWithVListener(showsIndicators: false, vScroll: $sheetHeaderScroll) {
 
                 VStack {
+
+                    VStack {
+
+                        MyListView__Padding__SectionHeader()
+
+                        MyListView__ItemView(
+                                isFirst: true,
+                                isLast: false
+                        ) {
+                            MyListView__ItemView__ButtonView(
+                                    text: "Chart",
+                                    withArrow: true
+                            ) {
+                                isChartPresented = true
+                            }
+                                    .sheetEnv(isPresented: $isChartPresented) {
+                                        VStack {
+
+                                            ChartView()
+                                                    .padding(.top, 15)
+
+                                            Button(
+                                                    action: { isChartPresented.toggle() },
+                                                    label: { Text("close").fontWeight(.light) }
+                                            )
+                                                    .padding(.bottom, 4)
+                                        }
+                                    }
+                        }
+
+                        MyListView__ItemView(
+                                isFirst: false,
+                                isLast: true,
+                                withTopDivider: true
+                        ) {
+                            MyListView__ItemView__ButtonView(
+                                    text: "History",
+                                    withArrow: true
+                            ) {
+                                isHistoryPresented = true
+                            }
+                                    .sheetEnv(isPresented: $isHistoryPresented) {
+                                        ZStack {
+                                            Color(.myBackground).edgesIgnoringSafeArea(.all)
+                                            HistoryView(isHistoryPresented: $isHistoryPresented)
+                                        }
+                                                // todo
+                                                .interactiveDismissDisabled()
+                                    }
+                        }
+                    }
 
                     ///
                     /// Checklists

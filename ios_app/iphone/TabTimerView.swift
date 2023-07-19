@@ -12,7 +12,6 @@ struct TabTimerView: View {
 
     @State private var isEditActivitiesPresented = false
     @State private var isSettingsSheetPresented = false
-    @State private var isSummaryPresented = false
     @State private var isHistoryPresented = false
 
     var body: some View {
@@ -38,31 +37,6 @@ struct TabTimerView: View {
                             MenuButton(sfName: "line.3.horizontal") { isSettingsSheetPresented.toggle() }
 
                             Spacer()
-
-                            MenuButton(sfName: "chart.pie") { isSummaryPresented.toggle() }
-                                    .sheetEnv(isPresented: $isSummaryPresented) {
-                                        VStack {
-
-                                            ChartView()
-                                                    .padding(.top, 15)
-
-                                            Button(
-                                                    action: { isSummaryPresented.toggle() },
-                                                    label: { Text("close").fontWeight(.light) }
-                                            )
-                                                    .padding(.bottom, 4)
-                                        }
-                                    }
-
-                            MenuButton(sfName: "list.bullet") { isHistoryPresented.toggle() }
-                                    .sheetEnv(isPresented: $isHistoryPresented) {
-                                        ZStack {
-                                            Color(.myBackground).edgesIgnoringSafeArea(.all)
-                                            HistoryView(isHistoryPresented: $isHistoryPresented)
-                                        }
-                                                // todo
-                                                .interactiveDismissDisabled()
-                                    }
 
                             MenuButton(sfName: "square.and.pencil") { isEditActivitiesPresented.toggle() }
                         }
