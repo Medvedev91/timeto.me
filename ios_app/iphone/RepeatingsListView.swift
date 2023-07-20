@@ -79,7 +79,6 @@ struct RepeatingsListView: View {
                             }
                 }
             }
-                    .padding(.leading, TAB_TASKS_PADDING_HALF_H)
                     .padding(.trailing, TAB_TASKS_PADDING_HALF_H)
         }
     }
@@ -149,18 +148,21 @@ struct RepeatingsView__ItemView: View {
                         .font(.system(size: 14, weight: .light))
                         .foregroundColor(.secondary)
             }
-                    .padding(.leading, TAB_TASKS_PADDING_HALF_H)
-                    .padding(.trailing, TAB_TASKS_PADDING_HALF_H)
 
-            Text(repeatingUI.listText)
-                    .lineSpacing(4)
-                    .multilineTextAlignment(.leading)
-                    .myMultilineText()
+            HStack {
+
+                Text(repeatingUI.listText)
+                        .lineSpacing(4)
+                        .multilineTextAlignment(.leading)
+                        .myMultilineText()
+
+                Spacer()
+
+                TriggersListIconsView(triggers: repeatingUI.textFeatures.triggers, fontSize: 15)
+            }
                     .padding(.top, 4)
-                    .padding(.leading, TAB_TASKS_PADDING_HALF_H)
-                    .padding(.trailing, TAB_TASKS_PADDING_HALF_H)
-                    .frame(maxWidth: .infinity, alignment: .leading)
         }
+                .padding(.leading, TAB_TASKS_PADDING_HALF_H)
                 .padding(.top, 10)
                 .padding(.bottom, 10)
                 .foregroundColor(.primary)
