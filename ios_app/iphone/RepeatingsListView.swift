@@ -33,9 +33,9 @@ struct RepeatingsListView: View {
                                         RepeatingsView__ItemView(repeatingUI: repeatingUI)
                                         if !isFirst {
                                             DividerBg()
-                                                    .padding(.leading, TAB_TASKS_PADDING_HALF_H)
                                         }
                                     }
+                                            .padding(.leading, TAB_TASKS_PADDING_HALF_H)
                                 }
                             }
                                     .padding(.bottom, 20)
@@ -162,7 +162,6 @@ struct RepeatingsView__ItemView: View {
             }
                     .padding(.top, 4)
         }
-                .padding(.leading, TAB_TASKS_PADDING_HALF_H)
                 .padding(.top, 10)
                 .padding(.bottom, 10)
                 .foregroundColor(.primary)
