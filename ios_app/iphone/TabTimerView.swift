@@ -252,19 +252,25 @@ private struct ActivityRowView: View {
 
                                     let textFontSize = isActiveAnim ? 18.0 : 17.0
 
-                                    Text(activityUI.data.text)
-                                            .font(.system(size: textFontSize, weight: isActiveAnim ? .semibold : .regular))
-                                            .animation(nil, value: isActiveAnim)
-                                            .foregroundColor(isActiveAnim ? .white : Color(.label))
-                                            .truncationMode(.tail)
-                                            .lineLimit(1)
+                                    HStack {
+                                        Text(activityUI.data.text)
+                                                .font(.system(size: textFontSize, weight: isActiveAnim ? .semibold : .regular))
+                                                .animation(nil, value: isActiveAnim)
+                                                .foregroundColor(isActiveAnim ? .white : Color(.label))
+                                                .truncationMode(.tail)
+                                                .lineLimit(1)
+                                        TriggersListIconsView(triggers: activityUI.data.textTriggers, fontSize: textFontSize - 2)
+                                    }
                                 }
                                         .frame(maxWidth: .infinity, alignment: .leading)
 
                                 if let note = activityUI.data.note {
-                                    Text(note)
-                                            .foregroundColor(.white)
-                                            .font(.system(size: 15, weight: .light))
+                                    HStack {
+                                        Text(note)
+                                                .foregroundColor(.white)
+                                                .font(.system(size: 15, weight: .light))
+                                        TriggersListIconsView(triggers: activityUI.data.noteTriggers, fontSize: 13)
+                                    }
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                 }
                             }
