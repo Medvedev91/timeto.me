@@ -59,7 +59,7 @@ struct TabTasksView: View {
             Color(.bg)
                     .ignoresSafeArea()
 
-            HStack(spacing: 0) {
+            HStack {
 
                 /// Because of upActiveSectionWithAnimation() without Spacer can be twitching
                 Spacer()
@@ -260,7 +260,7 @@ private struct TabTasksView__FolderView: View {
                         return isActive ? .blue : Color(.bg)
                     }()
 
-                    VStack(spacing: 0) {
+                    VStack {
 
                         Text(nameN)
                                 .textCase(.uppercase)
