@@ -399,13 +399,18 @@ struct TasksView__TaskRowView: View {
                                     }
                                 }
 
-                                Text(taskUI.text)
-                                        .lineSpacing(4)
-                                        .multilineTextAlignment(.leading)
-                                        .myMultilineText()
+                                HStack {
+
+                                    Text(taskUI.text)
+                                            .lineSpacing(4)
+                                            .multilineTextAlignment(.leading)
+                                            .myMultilineText()
+
+                                    Spacer()
+
+                                    TriggersListIconsView(triggers: taskUI.textFeatures.triggers, fontSize: 15)
+                                }
                                         .padding(.leading, TAB_TASKS_PADDING_HALF_H)
-                                        .padding(.trailing, TAB_TASKS_PADDING_HALF_H)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
                             }
                                     .padding(.vertical, 10)
                         }
@@ -576,13 +581,18 @@ private struct TasksListView__TmrwTaskView: View {
                 }
             }
 
-            Text(taskUI.text)
-                    .lineSpacing(4)
-                    .multilineTextAlignment(.leading)
-                    .myMultilineText()
+            HStack {
+
+                Text(taskUI.text)
+                        .lineSpacing(4)
+                        .multilineTextAlignment(.leading)
+                        .myMultilineText()
+
+                Spacer()
+
+                TriggersListIconsView(triggers: taskUI.textFeatures.triggers, fontSize: 15)
+            }
                     .padding(.leading, TAB_TASKS_PADDING_HALF_H)
-                    .padding(.trailing, TAB_TASKS_PADDING_HALF_H)
-                    .frame(maxWidth: .infinity, alignment: .leading)
         }
                 .padding(.vertical, 10)
     }
