@@ -571,7 +571,6 @@ private struct TasksListView__TmrwTaskView: View {
             if let timeUI = taskUI.timeUI {
                 HStack {
                     Text(timeUI.text)
-                            .padding(.leading, TAB_TASKS_PADDING_HALF_H)
                             .padding(.top, 1)
                             .padding(.bottom, vPadding)
                             .font(.system(size: 14, weight: .light))
@@ -592,8 +591,8 @@ private struct TasksListView__TmrwTaskView: View {
 
                 TriggersListIconsView(triggers: taskUI.textFeatures.triggers, fontSize: 15)
             }
-                    .padding(.leading, TAB_TASKS_PADDING_HALF_H)
         }
+                .padding(.leading, TAB_TASKS_PADDING_HALF_H)
                 .padding(.vertical, 10)
     }
 }
