@@ -181,8 +181,7 @@ struct TabTasksView: View {
                         )
                     }
                 }
-                        .padding(.trailing, 3)
-                        .offset(x: -6)
+                        .padding(.trailing, 10)
             }
                     .onAppear {
                         UITableView.appearance().sectionFooterHeight = 0
