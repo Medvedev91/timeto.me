@@ -1,6 +1,7 @@
 package me.timeto.shared.data
 
 import me.timeto.shared.ColorNative
+import me.timeto.shared.TextFeatures
 import me.timeto.shared.db.ActivityModel
 import me.timeto.shared.db.IntervalModel
 import me.timeto.shared.textFeatures
@@ -23,16 +24,23 @@ class TimerTabActivityData(
     }
 
     val text: String
+    val textTriggers: List<TextFeatures.Trigger>
+
     val note: String?
+    val noteTriggers: List<TextFeatures.Trigger>
 
     init {
-        val tfActivity = activity.name.textFeatures()
-        text = tfActivity.textUi()
+        val activityTf = activity.name.textFeatures()
+        text = activityTf.textUi()
+        textTriggers = activityTf.triggers
         val lastIntervalNote = lastInterval.note
-        note = if (timerData != null && lastIntervalNote != null) {
-            lastIntervalNote
-                .textFeatures()
-                .textUi(withActivityEmoji = false, withTimer = false)
-        } else null
+        if (timerData != null && lastIntervalNote != null) {
+            val noteTf = lastIntervalNote.textFeatures()
+            note = noteTf.textUi(withActivityEmoji = false, withTimer = false)
+            noteTriggers = noteTf.triggers
+        } else {
+            note = null
+            noteTriggers = listOf()
+        }
     }
 }
