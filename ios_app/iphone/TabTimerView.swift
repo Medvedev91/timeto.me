@@ -13,6 +13,8 @@ struct TabTimerView: View {
 
     @State private var isEditActivitiesPresented = false
     @State private var isSettingsSheetPresented = false
+
+    @State private var isChartPresented = false
     @State private var isHistoryPresented = false
 
     var body: some View {
@@ -49,11 +51,38 @@ struct TabTimerView: View {
 
                             Spacer()
 
-                            Button(
-                                    action: { isEditActivitiesPresented.toggle() },
-                                    label: { Text("Edit").font(.system(size: 15, weight: .light)) }
-                            )
-                                    .padding(.trailing, activitiesInnerHPadding + timerHintsHPadding)
+                            TopMenuTextButton(text: "Chart") {
+                                isChartPresented = true
+                            }
+                                    .sheetEnv(isPresented: $isChartPresented) {
+                                        VStack {
+
+                                            ChartView()
+                                                    .padding(.top, 15)
+
+                                            Button(
+                                                    action: { isChartPresented.toggle() },
+                                                    label: { Text("close").fontWeight(.light) }
+                                            )
+                                                    .padding(.bottom, 4)
+                                        }
+                                    }
+
+                            TopMenuTextButton(text: "History") {
+                                isHistoryPresented = true
+                            }
+                                    .sheetEnv(isPresented: $isHistoryPresented) {
+                                        ZStack {
+                                            Color(.myBackground).edgesIgnoringSafeArea(.all)
+                                            HistoryView(isHistoryPresented: $isHistoryPresented)
+                                        }
+                                                // todo
+                                                .interactiveDismissDisabled()
+                                    }
+
+                            TopMenuTextButton(text: "Edit") {
+                                isEditActivitiesPresented = true
+                            }
                         }
                                 .padding(.top, 8)
                                 .padding(.bottom, 8)
@@ -131,6 +160,23 @@ struct TabTimerView: View {
                         .navigationBarHidden(true)
             }
         }
+    }
+}
+
+private struct TopMenuTextButton: View {
+
+    let text: String
+    let onClick: () -> Void
+
+    var body: some View {
+        Button(
+                action: { onClick() },
+                label: {
+                    Text(text)
+                            .font(.system(size: 16, weight: .light))
+                }
+        )
+                .padding(.trailing, activitiesInnerHPadding + timerHintsHPadding)
     }
 }
 
