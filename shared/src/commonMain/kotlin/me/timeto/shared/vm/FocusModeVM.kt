@@ -36,7 +36,6 @@ class FocusModeVM : __VM<FocusModeVM.State>() {
         val title = textFeatures.textUi(
             withActivityEmoji = false,
             withTimer = false,
-            withTriggers = false,
         )
 
         val checklistUI: ChecklistUI? = textFeatures.checklists.firstOrNull()?.let { checklist ->

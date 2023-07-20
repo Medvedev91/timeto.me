@@ -29,7 +29,6 @@ data class TextFeatures(
 
     fun textUi(
         withActivityEmoji: Boolean = true,
-        withTriggers: Boolean = true,
         withTimer: Boolean = true,
         timerPrefix: String = "",
     ): String {
@@ -40,10 +39,6 @@ data class TextFeatures(
             a.add(activity.emoji)
         if (timer != null && withTimer)
             a.add(timerPrefix + timer.toTimerHintNote(isShort = false))
-        if (withTriggers)
-            triggers.forEach {
-                a.add(it.emoji)
-            }
         return a.joinToString(" ")
     }
 
