@@ -100,7 +100,6 @@ struct EventsListView: View {
                             }
                                     .id(LIST_BOTTOM_ITEM_ID)
                         }
-                                .padding(.horizontal, TAB_TASKS_PADDING_HALF_H)
                                 .sheetEnv(
                                         isPresented: $isAddCalendarPresented
                                 ) {
@@ -193,6 +192,7 @@ private struct EventItemView: View {
                 }
         ) {
             AnyView(safeView)
+                    .padding(.leading, TAB_TASKS_PADDING_HALF_H)
                     // todo remove after removing MyListSwipeToActionItem()
                     .background(Color(.bg))
         }
@@ -211,17 +211,19 @@ private struct EventItemView: View {
                         .font(.system(size: 14, weight: .light))
                         .foregroundColor(.secondary)
             }
-                    .padding(.leading, TAB_TASKS_PADDING_HALF_H)
-                    .padding(.trailing, TAB_TASKS_PADDING_HALF_H)
 
-            Text(uiEvent.listText)
-                    .lineSpacing(4)
-                    .multilineTextAlignment(.leading)
-                    .myMultilineText()
+            HStack {
+
+                Text(uiEvent.listText)
+                        .lineSpacing(4)
+                        .multilineTextAlignment(.leading)
+                        .myMultilineText()
+
+                Spacer()
+
+                TriggersListIconsView(triggers: uiEvent.textFeatures.triggers, fontSize: 15)
+            }
                     .padding(.top, 4)
-                    .padding(.leading, TAB_TASKS_PADDING_HALF_H)
-                    .padding(.trailing, TAB_TASKS_PADDING_HALF_H)
-                    .frame(maxWidth: .infinity, alignment: .leading)
         }
                 .padding(.top, 10)
                 .padding(.bottom, 10)
