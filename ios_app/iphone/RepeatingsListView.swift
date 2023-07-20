@@ -21,11 +21,11 @@ struct RepeatingsListView: View {
 
                     ScrollView(.vertical, showsIndicators: false) {
 
-                        VStack(spacing: 0) {
+                        VStack {
 
                             Spacer()
 
-                            VStack(spacing: 0) {
+                            VStack {
                                 let repeatingsUI = state.repeatingsUI.reversed()
                                 ForEach(repeatingsUI, id: \.repeating.id) { repeatingUI in
                                     let isFirst = repeatingsUI.first == repeatingUI
@@ -136,7 +136,7 @@ struct RepeatingsView__ItemView: View {
 
     private var safeView: some View {
 
-        VStack(spacing: 0) {
+        VStack {
 
             HStack {
                 Text(repeatingUI.dayLeftString)
