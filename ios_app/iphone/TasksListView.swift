@@ -143,7 +143,6 @@ struct TasksListView: View {
                             }
                 }
             }
-                    .padding(.leading, TAB_TASKS_PADDING_HALF_H)
                     .padding(.trailing, TAB_TASKS_PADDING_HALF_H)
         }
     }
@@ -430,7 +429,6 @@ struct TasksView__TaskRowView: View {
                         .padding(.leading, TAB_TASKS_PADDING_HALF_H)
             }
         }
-                .clipShape(squircleShape)
                 .id("\(taskUI.task.id) \(taskUI.task.text)") /// #TruncationDynamic
                 .sheetEnv(
                         isPresented: $isAddCalendarSheetPresented,

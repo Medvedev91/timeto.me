@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-let TAB_TASKS_PADDING_HALF_H = 12.0
+let TAB_TASKS_PADDING_HALF_H = 16.0
 
 private let tabWidth: CGFloat = 34
 
