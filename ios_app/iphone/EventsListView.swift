@@ -27,11 +27,11 @@ struct EventsListView: View {
 
                     ScrollView(.vertical, showsIndicators: false) {
 
-                        VStack(spacing: 0) {
+                        VStack {
 
                             Spacer()
 
-                            VStack(spacing: 0) {
+                            VStack {
                                 let uiEvents = state.uiEvents.reversed()
                                 ForEach(uiEvents, id: \.event.id) { uiEvent in
                                     let isFirst = uiEvents.first == uiEvent
@@ -200,7 +200,7 @@ private struct EventItemView: View {
 
     private var safeView: some View {
 
-        VStack(spacing: 0) {
+        VStack {
 
             HStack {
                 Text(uiEvent.dateString)
