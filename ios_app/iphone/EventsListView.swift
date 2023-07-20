@@ -39,7 +39,7 @@ struct EventsListView: View {
                                         EventItemView(uiEvent: uiEvent)
                                         if !isFirst {
                                             DividerBg()
-                                                    .padding(.leading, TAB_TASKS_PADDING_HALF_H)
+                                                    .padding(.leading, TAB_TASKS_H_PADDING)
                                         }
                                     }
                                 }
@@ -56,7 +56,7 @@ struct EventsListView: View {
                                     .padding(.leading, MyListView.PADDING_OUTER_HORIZONTAL)
 
                             EventsHistoryView(
-                                    spaceAround: TAB_TASKS_PADDING_HALF_H,
+                                    spaceAround: TAB_TASKS_H_PADDING,
                                     paddingTop: 20
                             ) { historyItem in
                                 showAddCalendar(
@@ -94,7 +94,7 @@ struct EventsListView: View {
                                     .overlay(squircleShape.stroke(Color(.dividerBg), lineWidth: onePx))
                                     .padding(.top, 19)
                                     .padding(.bottom, 20)
-                                    .padding(.leading, TAB_TASKS_PADDING_HALF_H)
+                                    .padding(.leading, TAB_TASKS_H_PADDING)
 
                             HStack {
                             }
@@ -192,7 +192,7 @@ private struct EventItemView: View {
                 }
         ) {
             AnyView(safeView)
-                    .padding(.leading, TAB_TASKS_PADDING_HALF_H)
+                    .padding(.leading, TAB_TASKS_H_PADDING)
                     // todo remove after removing MyListSwipeToActionItem()
                     .background(Color(.bg))
         }

@@ -33,7 +33,7 @@ struct RepeatingsListView: View {
                                         RepeatingsView__ItemView(repeatingUI: repeatingUI)
                                         if !isFirst {
                                             DividerBg()
-                                                    .padding(.leading, TAB_TASKS_PADDING_HALF_H)
+                                                    .padding(.leading, TAB_TASKS_H_PADDING)
                                         }
                                     }
                                 }
@@ -66,7 +66,7 @@ struct RepeatingsListView: View {
                                         }
                                     }
                                     .padding(.bottom, 20)
-                                    .padding(.horizontal, TAB_TASKS_PADDING_HALF_H - 4.0)
+                                    .padding(.horizontal, TAB_TASKS_H_PADDING - 4.0)
 
                             HStack {
                             }
@@ -79,7 +79,7 @@ struct RepeatingsListView: View {
                             }
                 }
             }
-                    .padding(.trailing, TAB_TASKS_PADDING_HALF_H)
+                    .padding(.trailing, TAB_TASKS_H_PADDING)
         }
     }
 
@@ -128,7 +128,7 @@ struct RepeatingsView__ItemView: View {
                 }
         ) {
             AnyView(safeView)
-                    .padding(.leading, TAB_TASKS_PADDING_HALF_H)
+                    .padding(.leading, TAB_TASKS_H_PADDING)
                     // todo remove after removing MyListSwipeToActionItem()
                     .background(Color(.bg))
         }
