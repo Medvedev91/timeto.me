@@ -266,6 +266,16 @@ private struct ActivityRowView: View {
 
                                 if let note = activityUI.data.note {
                                     HStack {
+                                        if let noteIcon = activityUI.data.noteIcon {
+                                            let systemName: String = {
+                                                if noteIcon == .event { return "calendar" }
+                                                fatalError()
+                                            }()
+                                            Image(systemName: systemName)
+                                                    .foregroundColor(.white)
+                                                    .font(.system(size: 14, weight: .regular))
+                                                    .padding(.trailing, 4)
+                                        }
                                         Text(note)
                                                 .foregroundColor(.white)
                                                 .font(.system(size: 15, weight: .light))
