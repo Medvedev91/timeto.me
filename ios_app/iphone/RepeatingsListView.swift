@@ -66,7 +66,7 @@ struct RepeatingsListView: View {
                                         }
                                     }
                                     .padding(.bottom, 20)
-                                    .padding(.horizontal, TAB_TASKS_H_PADDING - 4.0)
+                                    .padding(.leading, TAB_TASKS_H_PADDING - 2.0)
 
                             HStack {
                             }
