@@ -122,7 +122,7 @@ struct TasksListView: View {
                                         .buttonStyle(PlainButtonStyle())
                             }
                                     .overlay(squircleShape.stroke(Color(.dividerBg), lineWidth: onePx))
-                                    .padding(.horizontal, TAB_TASKS_H_PADDING - 4)
+                                    .padding(.leading, TAB_TASKS_H_PADDING - 2)
                                     .padding(.top, 20)
                                     .padding(.bottom, 20)
 
