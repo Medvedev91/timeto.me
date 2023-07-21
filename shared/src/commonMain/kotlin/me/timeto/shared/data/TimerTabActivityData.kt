@@ -29,6 +29,7 @@ class TimerTabActivityData(
 
     val note: String?
     val noteTriggers: List<TextFeatures.Trigger>
+    val noteIcon: NoteIcon?
 
     init {
         val activityTf = activity.name.textFeatures()
@@ -57,9 +58,18 @@ class TimerTabActivityData(
             }
             note = notePrefix + noteTf.textUi(withActivityEmoji = false, withTimer = false)
             noteTriggers = noteTf.triggers
+            noteIcon = when {
+                noteTf.fromEvent != null -> NoteIcon.event
+                else -> null
+            }
         } else {
             note = null
             noteTriggers = listOf()
+            noteIcon = null
         }
+    }
+
+    enum class NoteIcon {
+        event
     }
 }
