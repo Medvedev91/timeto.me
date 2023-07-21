@@ -2,6 +2,7 @@ package me.timeto.shared.data
 
 import me.timeto.shared.ColorNative
 import me.timeto.shared.TextFeatures
+import me.timeto.shared.UnixTime
 import me.timeto.shared.db.ActivityModel
 import me.timeto.shared.db.IntervalModel
 import me.timeto.shared.textFeatures
@@ -36,7 +37,25 @@ class TimerTabActivityData(
         val lastIntervalNote = lastInterval.note
         if (timerData != null && lastIntervalNote != null) {
             val noteTf = lastIntervalNote.textFeatures()
-            note = noteTf.textUi(withActivityEmoji = false, withTimer = false)
+            var notePrefix = ""
+            if (noteTf.fromEvent != null) {
+                val unixTime = noteTf.fromEvent.unixTime
+                val timeComponents = mutableListOf<UnixTime.StringComponent>()
+                if (unixTime.localDay != UnixTime().localDay) {
+                    timeComponents.addAll(
+                        listOf(
+                            UnixTime.StringComponent.dayOfMonth,
+                            UnixTime.StringComponent.space,
+                            UnixTime.StringComponent.month3,
+                            UnixTime.StringComponent.comma,
+                            UnixTime.StringComponent.space,
+                        )
+                    )
+                }
+                timeComponents.add(UnixTime.StringComponent.hhmm24)
+                notePrefix = unixTime.getStringByComponents(*timeComponents.toTypedArray()) + " "
+            }
+            note = notePrefix + noteTf.textUi(withActivityEmoji = false, withTimer = false)
             noteTriggers = noteTf.triggers
         } else {
             note = null
