@@ -119,7 +119,7 @@ data class TaskModel(
             IntervalModel.addWithValidationNeedTransaction(
                 deadline = deadline,
                 activity = activity,
-                note = text.textFeatures().copy(isPaused = false).textWithFeatures(),
+                note = text,
                 id = intervalId,
             )
             db.taskQueries.deleteById(id)
