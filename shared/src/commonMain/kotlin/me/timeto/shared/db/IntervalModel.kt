@@ -129,8 +129,10 @@ data class IntervalModel(
             db.transaction {
                 val lastInterval = db.intervalQueries.getDesc(limit = 1).executeAsOne().toModel()
                 val activity = lastInterval.getActivityDI()
-                val timeLeft = lastInterval.id + lastInterval.deadline - time()
-                val timer: Int? = if (timeLeft > 0) timeLeft else null
+                val timer: Int? = run {
+                    val timeLeft = lastInterval.id + lastInterval.deadline - time()
+                    if (timeLeft > 0) timeLeft else null
+                }
                 val text = lastInterval.note ?: activity.name
                 val tf = text.textFeatures().copy(
                     activity = activity,
