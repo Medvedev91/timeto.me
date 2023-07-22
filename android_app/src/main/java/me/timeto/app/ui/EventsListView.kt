@@ -41,15 +41,15 @@ fun EventsListView() {
             Column {
 
                 EventsHistoryView(
-                    spaceAround = TAB_TASKS_PADDING_HALF_H * 2 - 2.dp,
+                    spaceAround = TAB_TASKS_H_PADDING * 2 - 2.dp,
                     paddingTop = taskListSectionPadding,
                 )
 
                 Box(
                     Modifier
                         .padding(
-                            start = TAB_TASKS_PADDING_HALF_H * 2 - 4.dp,
-                            end = TAB_TASKS_PADDING_HALF_H - 4.dp,
+                            start = TAB_TASKS_H_PADDING * 2 - 4.dp,
+                            end = TAB_TASKS_H_PADDING - 4.dp,
                             top = 16.dp,
                             bottom = taskListSectionPadding,
                         )
@@ -93,7 +93,7 @@ fun EventsListView() {
         item {
             Box(
                 modifier = Modifier
-                    .padding(start = TAB_TASKS_PADDING_HALF_H)
+                    .padding(start = TAB_TASKS_H_PADDING)
                     .fillMaxWidth()
                     .padding(top = taskListSectionPadding),
                 contentAlignment = Alignment.Center
@@ -113,7 +113,7 @@ fun EventsListView() {
         ) { index, uiEvent ->
             Box(
                 modifier = Modifier
-                    .padding(start = TAB_TASKS_PADDING_HALF_H)
+                    .padding(start = TAB_TASKS_H_PADDING)
                     .clip(squircleShape)
                     .background(c.bg),
                 contentAlignment = Alignment.BottomCenter
@@ -149,7 +149,7 @@ fun EventsListView() {
                             .padding(vertical = 10.dp)
                     ) {
                         Row(
-                            modifier = Modifier.padding(horizontal = TAB_TASKS_PADDING_HALF_H)
+                            modifier = Modifier.padding(horizontal = TAB_TASKS_H_PADDING)
                         ) {
                             Text(
                                 uiEvent.dateString,
@@ -169,7 +169,7 @@ fun EventsListView() {
 
                         HStack(
                             modifier = Modifier
-                                .padding(horizontal = TAB_TASKS_PADDING_HALF_H),
+                                .padding(horizontal = TAB_TASKS_H_PADDING),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             Text(
@@ -185,7 +185,7 @@ fun EventsListView() {
 
                 // Remember the list is reversed
                 if (index > 0)
-                    DividerBg(Modifier.padding(start = TAB_TASKS_PADDING_HALF_H))
+                    DividerBg(Modifier.padding(start = TAB_TASKS_H_PADDING))
             }
         }
     }

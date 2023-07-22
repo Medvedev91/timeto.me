@@ -50,7 +50,7 @@ fun TasksListView(
         LazyColumn(
             modifier = Modifier
                 .fillMaxHeight()
-                .padding(start = TAB_TASKS_PADDING_HALF_H, end = TAB_TASKS_PADDING_END),
+                .padding(start = TAB_TASKS_H_PADDING, end = TAB_TASKS_PADDING_END),
             reverseLayout = true,
             contentPadding = PaddingValues(top = taskListSectionPadding),
             state = listState,
@@ -73,7 +73,7 @@ fun TasksListView(
 
                     Row(
                         modifier = Modifier
-                            .padding(horizontal = TAB_TASKS_PADDING_HALF_H - 4.dp)
+                            .padding(horizontal = TAB_TASKS_H_PADDING - 4.dp)
                             .border(width = onePx, color = c.dividerBg, shape = tabTasksInputShape)
                             .height(IntrinsicSize.Min), // To use fillMaxHeight() inside
                         verticalAlignment = Alignment.CenterVertically
@@ -316,7 +316,7 @@ fun TasksListView(
                                     Row(
                                         modifier = Modifier
                                             .padding(
-                                                start = TAB_TASKS_PADDING_HALF_H,
+                                                start = TAB_TASKS_H_PADDING,
                                                 bottom = vPadding,
                                             ),
                                         verticalAlignment = Alignment.CenterVertically,
@@ -373,7 +373,7 @@ fun TasksListView(
 
                                 HStack(
                                     modifier = Modifier
-                                        .padding(horizontal = TAB_TASKS_PADDING_HALF_H),
+                                        .padding(horizontal = TAB_TASKS_H_PADDING),
                                     verticalAlignment = Alignment.CenterVertically,
                                 ) {
                                     Text(
@@ -389,8 +389,8 @@ fun TasksListView(
                             if (!isFirst)
                                 DividerBg(
                                     Modifier.padding(
-                                        start = TAB_TASKS_PADDING_HALF_H,
-                                        end = TAB_TASKS_PADDING_HALF_H,
+                                        start = TAB_TASKS_H_PADDING,
+                                        end = TAB_TASKS_H_PADDING,
                                     )
                                 )
                         }
@@ -438,8 +438,8 @@ private fun TasksListView__TmrwTaskView(
         if (!isFirst)
             DividerBg(
                 Modifier.padding(
-                    start = TAB_TASKS_PADDING_HALF_H,
-                    end = TAB_TASKS_PADDING_HALF_H,
+                    start = TAB_TASKS_H_PADDING,
+                    end = TAB_TASKS_H_PADDING,
                 )
             )
 
@@ -453,7 +453,7 @@ private fun TasksListView__TmrwTaskView(
                 text = timeUI.text,
                 modifier = Modifier
                     .padding(
-                        start = TAB_TASKS_PADDING_HALF_H,
+                        start = TAB_TASKS_H_PADDING,
                         bottom = vPadding,
                     ),
                 fontSize = 13.sp,
@@ -464,7 +464,7 @@ private fun TasksListView__TmrwTaskView(
 
         HStack(
             modifier = Modifier
-                .padding(horizontal = TAB_TASKS_PADDING_HALF_H),
+                .padding(horizontal = TAB_TASKS_H_PADDING),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(

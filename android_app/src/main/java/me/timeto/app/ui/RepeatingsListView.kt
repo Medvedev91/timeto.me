@@ -28,7 +28,7 @@ fun RepeatingsListView() {
     LazyColumn(
         reverseLayout = true,
         contentPadding = PaddingValues(
-            start = TAB_TASKS_PADDING_HALF_H,
+            start = TAB_TASKS_H_PADDING,
             end = TAB_TASKS_PADDING_END,
             bottom = taskListSectionPadding,
             top = taskListSectionPadding
@@ -42,7 +42,7 @@ fun RepeatingsListView() {
                 "New Repeating Task",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = TAB_TASKS_PADDING_HALF_H - 4.dp)
+                    .padding(horizontal = TAB_TASKS_H_PADDING - 4.dp)
                     .padding(top = taskListSectionPadding)
                     .clip(squircleShape)
                     .background(c.blue)
@@ -116,7 +116,7 @@ fun RepeatingsListView() {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = TAB_TASKS_PADDING_HALF_H),
+                                .padding(horizontal = TAB_TASKS_H_PADDING),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
 
@@ -141,7 +141,7 @@ fun RepeatingsListView() {
 
                         HStack(
                             modifier = Modifier
-                                .padding(horizontal = TAB_TASKS_PADDING_HALF_H),
+                                .padding(horizontal = TAB_TASKS_H_PADDING),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             Text(
@@ -157,7 +157,7 @@ fun RepeatingsListView() {
 
                     // Remember that the list is reversed
                     if (index > 0)
-                        DividerBg(Modifier.padding(start = TAB_TASKS_PADDING_HALF_H))
+                        DividerBg(Modifier.padding(start = TAB_TASKS_H_PADDING))
                 }
             }
         }
