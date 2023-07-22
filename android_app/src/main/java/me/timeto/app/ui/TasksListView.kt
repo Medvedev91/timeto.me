@@ -50,7 +50,7 @@ fun TasksListView(
         LazyColumn(
             modifier = Modifier
                 .fillMaxHeight()
-                .padding(start = TAB_TASKS_H_PADDING, end = TAB_TASKS_PADDING_END),
+                .padding(end = TAB_TASKS_PADDING_END),
             reverseLayout = true,
             contentPadding = PaddingValues(top = taskListSectionPadding),
             state = listState,
@@ -73,7 +73,7 @@ fun TasksListView(
 
                     Row(
                         modifier = Modifier
-                            .padding(horizontal = TAB_TASKS_H_PADDING - 4.dp)
+                            .padding(start = TAB_TASKS_H_PADDING - 2.dp)
                             .border(width = onePx, color = c.dividerBg, shape = tabTasksInputShape)
                             .height(IntrinsicSize.Min), // To use fillMaxHeight() inside
                         verticalAlignment = Alignment.CenterVertically
@@ -189,7 +189,6 @@ fun TasksListView(
 
                 Box(
                     modifier = Modifier
-                        .clip(squircleShape)
                         .background(c.bg)
                     // .animateItemPlacement() // Slow rendering on IME open
                 ) {
@@ -299,7 +298,8 @@ fun TasksListView(
                                             }
                                         },
                                     )
-                                },
+                                }
+                                .padding(start = TAB_TASKS_H_PADDING),
                             contentAlignment = Alignment.BottomCenter
                         ) {
 
@@ -315,10 +315,7 @@ fun TasksListView(
                                 if (timeUI != null) {
                                     Row(
                                         modifier = Modifier
-                                            .padding(
-                                                start = TAB_TASKS_H_PADDING,
-                                                bottom = vPadding,
-                                            ),
+                                            .padding(bottom = vPadding),
                                         verticalAlignment = Alignment.CenterVertically,
                                     ) {
 
@@ -372,8 +369,6 @@ fun TasksListView(
                                 }
 
                                 HStack(
-                                    modifier = Modifier
-                                        .padding(horizontal = TAB_TASKS_H_PADDING),
                                     verticalAlignment = Alignment.CenterVertically,
                                 ) {
                                     Text(
@@ -387,12 +382,7 @@ fun TasksListView(
                             }
 
                             if (!isFirst)
-                                DividerBg(
-                                    Modifier.padding(
-                                        start = TAB_TASKS_H_PADDING,
-                                        end = TAB_TASKS_H_PADDING,
-                                    )
-                                )
+                                DividerBg()
                         }
                     }
                 }
@@ -432,16 +422,13 @@ private fun TasksListView__TmrwTaskView(
     isFirst: Boolean,
 ) {
     Column(
-        verticalArrangement = Arrangement.Center
+        modifier = Modifier
+            .padding(start = TAB_TASKS_H_PADDING),
+        verticalArrangement = Arrangement.Center,
     ) {
 
         if (!isFirst)
-            DividerBg(
-                Modifier.padding(
-                    start = TAB_TASKS_H_PADDING,
-                    end = TAB_TASKS_H_PADDING,
-                )
-            )
+            DividerBg()
 
         Box(Modifier.height(8.dp))
 
@@ -452,10 +439,7 @@ private fun TasksListView__TmrwTaskView(
             Text(
                 text = timeUI.text,
                 modifier = Modifier
-                    .padding(
-                        start = TAB_TASKS_H_PADDING,
-                        bottom = vPadding,
-                    ),
+                    .padding(bottom = vPadding),
                 fontSize = 13.sp,
                 fontWeight = FontWeight.W300,
                 color = timeUI.textColor.toColor(),
@@ -463,8 +447,6 @@ private fun TasksListView__TmrwTaskView(
         }
 
         HStack(
-            modifier = Modifier
-                .padding(horizontal = TAB_TASKS_H_PADDING),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
