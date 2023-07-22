@@ -371,13 +371,19 @@ fun TasksListView(
                                     }
                                 }
 
-                                Text(
-                                    taskUI.text,
-                                    color = c.text,
+                                HStack(
                                     modifier = Modifier
-                                        .fillMaxWidth()
                                         .padding(horizontal = TAB_TASKS_PADDING_HALF_H),
-                                )
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    Text(
+                                        taskUI.text,
+                                        color = c.text,
+                                        modifier = Modifier
+                                            .weight(1f),
+                                    )
+                                    TriggersListIconsView(taskUI.textFeatures.triggers, 14.sp)
+                                }
                             }
 
                             if (!isFirst)
@@ -456,13 +462,19 @@ private fun TasksListView__TmrwTaskView(
             )
         }
 
-        Text(
-            taskUI.text,
-            color = c.text,
+        HStack(
             modifier = Modifier
-                .fillMaxWidth()
                 .padding(horizontal = TAB_TASKS_PADDING_HALF_H),
-        )
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                taskUI.text,
+                color = c.text,
+                modifier = Modifier
+                    .weight(1f),
+            )
+            TriggersListIconsView(taskUI.textFeatures.triggers, 14.sp)
+        }
 
         Box(Modifier.height(8.dp))
     }
