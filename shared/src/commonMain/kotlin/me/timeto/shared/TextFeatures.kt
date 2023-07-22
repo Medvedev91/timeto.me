@@ -29,11 +29,12 @@ data class TextFeatures(
 
     fun textUi(
         withActivityEmoji: Boolean = true,
+        withPausedEmoji: Boolean = false,
         withTimer: Boolean = true,
         timerPrefix: String = "",
     ): String {
         val a = mutableListOf(textNoFeatures)
-        if (paused != null)
+        if (paused != null && withPausedEmoji)
             a.add(0, "⏸️")
         if (activity != null && withActivityEmoji)
             a.add(activity.emoji)

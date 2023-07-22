@@ -116,7 +116,7 @@ class TasksListVM(
     ) {
 
         val textFeatures = task.text.textFeatures()
-        val text = textFeatures.textUi()
+        val text = textFeatures.textUi(withPausedEmoji = true)
         val timeUI: TimeUI? = textFeatures.timeData?.let { TimeUI.prepItem(it) }
         val timerContext = ActivityTimerSheetVM.TimerContext.Task(task)
 
