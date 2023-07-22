@@ -111,6 +111,8 @@ data class ActivityModel(
                         continue
                     if (hints.contains(interval.deadline))
                         continue
+                    if (interval.note?.textFeatures()?.paused != null)
+                        continue
                     hints.add(interval.deadline)
                 }
                 // todo check
@@ -223,7 +225,9 @@ data class ActivityModel(
         deadline: Int,
     ): IntervalModel {
         val lastInterval = IntervalModel.getLastOneOrNull()!!
-        val note = if (lastInterval.activity_id == this.id) lastInterval.note else null
+        val note = if (lastInterval.activity_id == this.id)
+            lastInterval.note?.textFeatures()?.copy(paused = null)?.textWithFeatures()
+        else null
         return IntervalModel.addWithValidation(deadline, this, note)
     }
 

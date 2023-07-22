@@ -13,7 +13,7 @@ data class TextFeatures(
     val fromEvent: FromEvent?,
     val activity: ActivityModel?,
     val timer: Int?,
-    val isPaused: Boolean,
+    val paused: Paused?,
 ) {
 
     val timeData: TimeData? = when {
@@ -33,7 +33,7 @@ data class TextFeatures(
         timerPrefix: String = "",
     ): String {
         val a = mutableListOf(textNoFeatures)
-        if (isPaused)
+        if (paused != null)
             a.add(0, "⏸️")
         if (activity != null && withActivityEmoji)
             a.add(activity.emoji)
@@ -56,8 +56,8 @@ data class TextFeatures(
             strings.add("#a${activity.id}")
         if (timer != null)
             strings.add("#t$timer")
-        if (isPaused)
-            strings.add(isPausedTag)
+        if (paused != null)
+            strings.add("#paused${paused.intervalId}_${paused.timer}")
         return strings.joinToString(" ")
     }
 
@@ -66,6 +66,8 @@ data class TextFeatures(
     class FromRepeating(val id: Int, val day: Int, val time: Int?)
 
     class FromEvent(val unixTime: UnixTime)
+
+    class Paused(val intervalId: Int, val timer: Int)
 
     sealed class Trigger(
         val id: String,
@@ -129,7 +131,7 @@ private val fromRepeatingRegex = "#r(\\d{10})_(\\d{5})_(\\d{10})?".toRegex()
 private val fromEventRegex = "#e(\\d{10})".toRegex()
 private val activityRegex = "#a(\\d{10})".toRegex()
 private val timerRegex = "#t(\\d+)".toRegex()
-private const val isPausedTag = "#is_paused"
+private val pausedRegex = "#paused(\\d{10})_(\\d+)".toRegex()
 
 private fun parseLocal(initText: String): TextFeatures {
 
@@ -191,9 +193,13 @@ private fun parseLocal(initText: String): TextFeatures {
             return@let time
         }
 
-    val isPaused = textNoFeatures.contains(isPausedTag)
-    if (isPaused)
-        textNoFeatures = textNoFeatures.replace(isPausedTag, "")
+    val paused: TextFeatures.Paused? = pausedRegex
+        .find(textNoFeatures)?.let { match ->
+            val intervalId = match.groupValues[1].toInt()
+            val intervalTimer = match.groupValues[2].toInt()
+            match.clean()
+            return@let TextFeatures.Paused(intervalId, intervalTimer)
+        }
 
     return TextFeatures(
         textNoFeatures = textNoFeatures.removeDuplicateSpaces().trim(),
@@ -203,7 +209,7 @@ private fun parseLocal(initText: String): TextFeatures {
         fromEvent = fromEvent,
         activity = activity,
         timer = timer,
-        isPaused = isPaused,
+        paused = paused,
     )
 }
 

@@ -114,17 +114,6 @@ data class IntervalModel(
 
         //////
 
-        // todo rename to last
-        // todo use transaction
-        suspend fun restartActualInterval() {
-            val interval = getLastOneOrNull()!!
-            addWithValidation(
-                interval.deadline,
-                interval.getActivityDI(),
-                interval.note
-            )
-        }
-
         suspend fun pauseLastInterval(): Unit = dbIO {
             db.transaction {
                 val lastInterval = db.intervalQueries.getDesc(limit = 1).executeAsOne().toModel()
@@ -133,11 +122,13 @@ data class IntervalModel(
                     val timeLeft = lastInterval.id + lastInterval.deadline - time()
                     if (timeLeft > 0) timeLeft else null
                 }
+                val paused = lastInterval.note?.textFeatures()?.paused
+                             ?: TextFeatures.Paused(lastInterval.id, lastInterval.deadline)
                 val text = lastInterval.note ?: activity.name
                 val tf = text.textFeatures().copy(
                     activity = activity,
                     timer = timer,
-                    isPaused = true,
+                    paused = paused,
                 )
                 TaskModel.addWithValidation_transactionRequired(
                     text = tf.textWithFeatures(),

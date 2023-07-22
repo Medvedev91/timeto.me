@@ -14,7 +14,9 @@ class TimerDataUI(
     val title: String // 12:34
     val subtitle: String? // NULL / BREAK / OVERDUE
     val color: ColorNative
-    val restartText = interval.deadline.toTimerHintNote(isShort = true)
+
+    private val restartTimer = interval.note?.textFeatures()?.paused?.timer ?: interval.deadline
+    val restartText = restartTimer.toTimerHintNote(isShort = true)
 
     init {
         val now = time()
@@ -38,7 +40,8 @@ class TimerDataUI(
 
     fun restart() {
         launchExDefault {
-            IntervalModel.restartActualInterval()
+            val lastInterval = IntervalModel.getLastOneOrNull()!!
+            lastInterval.getActivityDI().startInterval(restartTimer)
         }
     }
 
