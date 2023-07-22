@@ -167,12 +167,19 @@ fun EventsListView() {
                             )
                         }
 
-                        Text(
-                            uiEvent.listText,
+                        HStack(
                             modifier = Modifier
                                 .padding(horizontal = TAB_TASKS_PADDING_HALF_H),
-                            color = c.text,
-                        )
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text(
+                                uiEvent.listText,
+                                modifier = Modifier
+                                    .weight(1f),
+                                color = c.text,
+                            )
+                            TriggersListIconsView(uiEvent.textFeatures.triggers, 14.sp)
+                        }
                     }
                 }
 
