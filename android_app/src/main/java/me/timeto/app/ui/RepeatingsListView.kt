@@ -139,13 +139,20 @@ fun RepeatingsListView() {
                             )
                         }
 
-                        Text(
-                            repeatingUI.listText,
+                        HStack(
                             modifier = Modifier
-                                .padding(horizontal = TAB_TASKS_PADDING_HALF_H)
-                                .padding(top = 2.dp),
-                            color = c.text,
-                        )
+                                .padding(horizontal = TAB_TASKS_PADDING_HALF_H),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text(
+                                repeatingUI.listText,
+                                modifier = Modifier
+                                    .padding(top = 2.dp)
+                                    .weight(1f),
+                                color = c.text,
+                            )
+                            TriggersListIconsView(repeatingUI.textFeatures.triggers, 14.sp)
+                        }
                     }
 
                     // Remember that the list is reversed
