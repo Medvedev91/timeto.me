@@ -41,15 +41,14 @@ fun EventsListView() {
             Column {
 
                 EventsHistoryView(
-                    spaceAround = TAB_TASKS_H_PADDING * 2 - 2.dp,
+                    spaceAround = TAB_TASKS_H_PADDING - 2.dp,
                     paddingTop = taskListSectionPadding,
                 )
 
                 Box(
                     Modifier
                         .padding(
-                            start = TAB_TASKS_H_PADDING * 2 - 4.dp,
-                            end = TAB_TASKS_H_PADDING - 4.dp,
+                            start = TAB_TASKS_H_PADDING - 2.dp,
                             top = 16.dp,
                             bottom = taskListSectionPadding,
                         )
@@ -111,46 +110,45 @@ fun EventsListView() {
             state.uiEvents,
             key = { _, uiEvent -> uiEvent.event.id }
         ) { index, uiEvent ->
-            Box(
-                modifier = Modifier
-                    .padding(start = TAB_TASKS_H_PADDING)
-                    .clip(squircleShape)
-                    .background(c.bg),
-                contentAlignment = Alignment.BottomCenter
+
+            SwipeToAction(
+                isStartOrEnd = remember { mutableStateOf(null) },
+                startView = { SwipeToAction__StartView("Edit", c.blue) },
+                endView = { state ->
+                    SwipeToAction__DeleteView(
+                        state = state,
+                        note = uiEvent.event.text,
+                        deletionConfirmationNote = uiEvent.deletionNote,
+                    ) {
+                        vibrateLong()
+                        uiEvent.delete()
+                    }
+                },
+                onStart = {
+                    EventFormSheet__show(editedEvent = uiEvent.event) {}
+                    false
+                },
+                onEnd = {
+                    true
+                },
+                toVibrateStartEnd = listOf(true, false),
             ) {
 
-                SwipeToAction(
-                    isStartOrEnd = remember { mutableStateOf(null) },
-                    startView = { SwipeToAction__StartView("Edit", c.blue) },
-                    endView = { state ->
-                        SwipeToAction__DeleteView(
-                            state = state,
-                            note = uiEvent.event.text,
-                            deletionConfirmationNote = uiEvent.deletionNote,
-                        ) {
-                            vibrateLong()
-                            uiEvent.delete()
-                        }
-                    },
-                    onStart = {
-                        EventFormSheet__show(editedEvent = uiEvent.event) {}
-                        false
-                    },
-                    onEnd = {
-                        true
-                    },
-                    toVibrateStartEnd = listOf(true, false),
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(c.bg)
+                        .padding(start = TAB_TASKS_H_PADDING),
+                    contentAlignment = Alignment.BottomCenter
                 ) {
 
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(c.bg)
                             .padding(vertical = 10.dp)
                     ) {
-                        Row(
-                            modifier = Modifier.padding(horizontal = TAB_TASKS_H_PADDING)
-                        ) {
+
+                        Row {
                             Text(
                                 uiEvent.dateString,
                                 fontSize = 14.sp,
@@ -168,8 +166,6 @@ fun EventsListView() {
                         }
 
                         HStack(
-                            modifier = Modifier
-                                .padding(horizontal = TAB_TASKS_H_PADDING),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             Text(
@@ -181,11 +177,11 @@ fun EventsListView() {
                             TriggersListIconsView(uiEvent.textFeatures.triggers, 14.sp)
                         }
                     }
-                }
 
-                // Remember the list is reversed
-                if (index > 0)
-                    DividerBg(Modifier.padding(start = TAB_TASKS_H_PADDING))
+                    // Remember the list is reversed
+                    if (index > 0)
+                        DividerBg()
+                }
             }
         }
     }
