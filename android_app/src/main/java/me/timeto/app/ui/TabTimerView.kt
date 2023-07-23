@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,19 +53,20 @@ fun TabTimerView() {
         ) {
 
             Icon(
-                Icons.Rounded.Menu,
+                painterResource(R.drawable.sf_line_3_horizontal_small_light),
                 contentDescription = "Menu",
                 tint = c.blue,
                 modifier = Modifier
-                    .padding(start = 13.dp)
+                    .padding(start = 12.dp)
+                    .offset(y = 2.dp)
                     .clip(roundedShape)
                     .clickable {
                         Sheet.show { layer ->
                             SettingsSheet(layer = layer)
                         }
                     }
-                    .size(31.dp)
-                    .padding(4.dp)
+                    .size(32.dp)
+                    .padding(6.dp)
             )
 
             SpacerW1()
