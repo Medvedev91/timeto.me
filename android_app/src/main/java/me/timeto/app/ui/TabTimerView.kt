@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
+import me.timeto.shared.data.TimerTabActivityData
 import me.timeto.shared.vm.TabTimerVM
 
 private val timerButtonsHeight = 28.dp
@@ -163,6 +164,20 @@ fun TabTimerView() {
                                                     .offset(y = (-1).dp),
                                                 verticalAlignment = Alignment.CenterVertically,
                                             ) {
+                                                val noteIcon = activityUI.data.noteIcon
+                                                if (noteIcon != null) {
+                                                    val noteIconResId: Int = when (noteIcon) {
+                                                        TimerTabActivityData.NoteIcon.event -> R.drawable.sf_calendar_medium_light
+                                                    }
+                                                    Icon(
+                                                        painterResource(noteIconResId),
+                                                        contentDescription = "Event",
+                                                        tint = c.white,
+                                                        modifier = Modifier
+                                                            .padding(end = 5.dp)
+                                                            .size(14.dp),
+                                                    )
+                                                }
                                                 Text(
                                                     text = listNote,
                                                     modifier = Modifier
