@@ -13,6 +13,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -131,6 +132,12 @@ fun TabTimerView() {
 
                                     Text(
                                         text = activityUI.activity.emoji,
+                                        style = TextStyle(
+                                            shadow = Shadow(
+                                                color = c.white,
+                                                blurRadius = 2f,
+                                            )
+                                        ),
                                         modifier = Modifier
                                             .width(emojiWidth),
                                         textAlign = TextAlign.Center,
