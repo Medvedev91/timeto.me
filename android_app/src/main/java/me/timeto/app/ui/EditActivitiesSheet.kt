@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.rememberVM
+import me.timeto.app.roundedShape
 import me.timeto.shared.vm.EditActivitiesVM
 
 @Composable
@@ -117,11 +118,27 @@ fun EditActivitiesSheet(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(end = 21.dp, bottom = 20.dp)
+                .padding(start = 18.dp, end = 8.dp, bottom = 20.dp)
                 .align(Alignment.BottomCenter),
             horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.CenterVertically
         ) {
+
+            Text(
+                "New Activity",
+                modifier = Modifier
+                    .clip(roundedShape)
+                    .background(c.blue)
+                    .clickable {
+                        Sheet.show { layer ->
+                            ActivityFormSheet(layer = layer, editedActivity = null)
+                        }
+                    }
+                    .padding(bottom = 5.dp, top = 5.dp, start = 12.dp, end = 12.dp),
+                color = c.white,
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Medium,
+            )
 
             SpacerW1()
 
