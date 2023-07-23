@@ -441,7 +441,7 @@ struct TasksView__TaskRowView: View {
                             EventFormSheet(
                                     isPresented: $isAddCalendarSheetPresented,
                                     editedEvent: nil,
-                                    defText: taskUI.text,
+                                    defText: taskUI.task.text,
                                     defDate: Date().startOfDay()
                             ) {
                                 taskUI.delete()
