@@ -61,10 +61,6 @@ class TabTimerVM : __VM<TabTimerVM.State>() {
         val isPurple: Boolean,
         val idToUpdate: Int = 0,
     ) {
-        val newActivityText = "New Activity"
-        val sortActivitiesText = "Sort"
-        val settingsText = "Settings"
-
         val activitiesUI = activities.toUiList(lastInterval, isPurple)
     }
 
