@@ -192,7 +192,7 @@ fun TasksListView(
                 val isEditOrDelete = remember { mutableStateOf<Boolean?>(null) }
                 val stateOffsetAbsDp = remember { mutableStateOf(0.dp) }
 
-                val localDragItem = remember {
+                val localDragItem = remember(tasksUI) {
                     DragItem(
                         mutableStateOf(null),
                         { drop ->
