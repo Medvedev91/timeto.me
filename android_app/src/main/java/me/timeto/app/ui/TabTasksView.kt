@@ -41,7 +41,7 @@ val tabTasksInputShape = MySquircleShape(len = 70f)
 
 val TAB_TASKS_H_PADDING = 16.dp
 private val SECTION_BUTTON_WIDTH = 35.dp
-private val SECTION_BUTTONS_END_PADDING = TAB_TASKS_H_PADDING
+private val SECTION_BUTTONS_END_PADDING = TAB_TASKS_H_PADDING.goldenRatioDown()
 val TAB_TASKS_PADDING_END = SECTION_BUTTONS_END_PADDING + SECTION_BUTTON_WIDTH + TAB_TASKS_H_PADDING
 
 val taskListSectionPadding = 20.dp
