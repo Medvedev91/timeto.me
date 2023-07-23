@@ -430,6 +430,18 @@ fun SettingsSheet(
                     isLast = false,
                     withTopDivider = false,
                 ) {
+                    MyListView__ItemView__ButtonView(text = "How to Use") {
+                        Sheet.show { layer ->
+                            ReadmeSheet(layer)
+                        }
+                    }
+                }
+
+                MyListView__ItemView(
+                    isFirst = false,
+                    isLast = false,
+                    withTopDivider = true,
+                ) {
                     MyListView__ItemView__ButtonView(text = "Ask a Question") {
                         context.startActivity(
                             Intent(Intent.ACTION_VIEW).apply {

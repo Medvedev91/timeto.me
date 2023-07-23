@@ -401,45 +401,6 @@ fun TabTimerView() {
                         }
                     }
                 }
-
-                item {
-
-                    @Composable
-                    fun prepTextStyle(fontWeight: FontWeight = FontWeight.Normal) = LocalTextStyle.current.merge(
-                        TextStyle(
-                            color = c.textSecondary.copy(alpha = 0.6f),
-                            fontSize = 13.sp,
-                            fontWeight = fontWeight,
-                            lineHeight = 17.sp,
-                        )
-                    )
-
-                    Text(
-                        "Set a timer for each task to stay focused.",
-                        modifier = Modifier.padding(top = 12.dp, start = 8.dp, end = 8.dp),
-                        style = prepTextStyle(fontWeight = FontWeight.Bold)
-                    )
-
-                    Text(
-                        "No \"stop\" option is the main feature of this app. Once you have completed one activity, you have to set a timer for the next one, even if it's a \"sleeping\" activity.",
-                        modifier = Modifier.padding(top = 8.dp, start = 8.dp, end = 8.dp),
-                        style = prepTextStyle()
-                    )
-
-                    val s8 = buildAnnotatedString {
-                        append("This time-tracking approach provides real 24/7 data on how long everything takes. You can see it on the ")
-                        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                            append("Chart")
-                        }
-                        append(". ")
-                    }
-
-                    Text(
-                        text = s8,
-                        modifier = Modifier.padding(top = 8.dp, start = 8.dp, end = 8.dp),
-                        style = prepTextStyle(),
-                    )
-                }
             }
         }
     }
