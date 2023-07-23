@@ -27,7 +27,7 @@ import me.timeto.shared.data.TimerTabActivityData
 import me.timeto.shared.vm.TabTimerVM
 
 private val timerButtonsHeight = 28.dp
-
+private var topMenuTextButtonHPadding = 8.dp
 private val emojiWidth = 56.dp
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -41,6 +41,29 @@ fun TabTimerView() {
             .fillMaxSize()
             .background(c.bg),
     ) {
+
+        Row(
+            modifier = Modifier
+                .padding(vertical = 8.dp)
+                .padding(end = topMenuTextButtonHPadding)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+
+            SpacerW1()
+
+            GrayTextButton(state.sortActivitiesText) {
+                Sheet.show { layer ->
+                    EditActivitiesSheet(layer = layer)
+                }
+            }
+
+            GrayTextButton(state.settingsText) {
+                Sheet.show { layer ->
+                    SettingsSheet(layer = layer)
+                }
+            }
+        }
 
         LazyColumn(
             contentPadding = PaddingValues(vertical = 48.dp),
@@ -355,35 +378,6 @@ fun TabTimerView() {
                     }
                 }
             }
-
-            item {
-
-                Row(
-                    modifier = Modifier
-                        .padding(top = 18.dp)
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-
-                    GrayTextButton(
-                        text = state.sortActivitiesText,
-                        modifier = Modifier.padding(start = 12.dp),
-                    ) {
-                        Sheet.show { layer ->
-                            EditActivitiesSheet(layer = layer)
-                        }
-                    }
-
-                    GrayTextButton(
-                        text = state.settingsText,
-                        modifier = Modifier.padding(start = 12.dp),
-                    ) {
-                        Sheet.show { layer ->
-                            SettingsSheet(layer = layer)
-                        }
-                    }
-                }
-            }
         }
     }
 }
@@ -391,19 +385,18 @@ fun TabTimerView() {
 @Composable
 private fun GrayTextButton(
     text: String,
-    modifier: Modifier,
     onClick: () -> Unit,
 ) {
     Text(
         text = text,
-        modifier = modifier
-            .clip(MySquircleShape())
+        modifier = Modifier
+            .clip(squircleShape)
             .clickable {
                 onClick()
             }
-            .padding(horizontal = 6.dp, vertical = 4.dp),
+            .padding(horizontal = topMenuTextButtonHPadding, vertical = 4.dp),
         color = c.blue,
-        fontSize = 14.sp,
+        fontSize = 15.sp,
         fontWeight = FontWeight.Light,
     )
 }
