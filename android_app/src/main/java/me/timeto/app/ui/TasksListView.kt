@@ -41,376 +41,370 @@ fun TasksListView(
 
     val scope = rememberCoroutineScope()
 
-    Box(
-        contentAlignment = Alignment.BottomCenter,
+    val listState = rememberLazyListState()
+
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxHeight(),
+        reverseLayout = true,
+        contentPadding = PaddingValues(top = taskListSectionPadding, end = TAB_TASKS_PADDING_END),
+        state = listState,
     ) {
 
-        val listState = rememberLazyListState()
+        item {
 
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxHeight()
-                .padding(end = TAB_TASKS_PADDING_END),
-            reverseLayout = true,
-            contentPadding = PaddingValues(top = taskListSectionPadding),
-            state = listState,
-        ) {
+            var isFocused by remember { mutableStateOf(false) }
+            val focusManager = LocalFocusManager.current
+            val focusRequester = remember { FocusRequester() }
 
-            item {
+            Column(
+                modifier = Modifier
+                    .pointerInput(Unit) { } // Ignore clicks through
+                    .padding(
+                        top = taskListSectionPadding,
+                        bottom = taskListSectionPadding,
+                    )
+            ) {
 
-                var isFocused by remember { mutableStateOf(false) }
-                val focusManager = LocalFocusManager.current
-                val focusRequester = remember { FocusRequester() }
-
-                Column(
+                Row(
                     modifier = Modifier
-                        .pointerInput(Unit) { } // Ignore clicks through
-                        .padding(
-                            top = taskListSectionPadding,
-                            bottom = taskListSectionPadding,
-                        )
+                        .padding(start = TAB_TASKS_H_PADDING - 2.dp)
+                        .border(width = onePx, color = c.dividerBg, shape = tabTasksInputShape)
+                        .height(IntrinsicSize.Min), // To use fillMaxHeight() inside
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
 
-                    Row(
+                    BasicTextField__VMState(
+                        text = state.addFormInputTextValue,
+                        onValueChange = {
+                            vm.setAddFormInputTextValue(it)
+                        },
+                        keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
+                        singleLine = false,
+                        cursorBrush = SolidColor(MaterialTheme.colors.primary),
+                        textStyle = LocalTextStyle.current.copy(
+                            color = MaterialTheme.colors.onSurface,
+                            fontSize = 16.sp
+                        ),
+                        decorationBox = { innerTextField ->
+                            Box(
+                                modifier = Modifier
+                                    .defaultMinSize(minHeight = 42.dp)
+                                    .padding(start = 14.dp, end = 4.dp),
+                                contentAlignment = Alignment.CenterStart
+                            ) {
+                                if (state.addFormInputTextValue.isEmpty())
+                                    Text(
+                                        text = "Task",
+                                        color = c.text.copy(alpha = 0.5f)
+                                    )
+                                innerTextField()
+                            }
+                        },
                         modifier = Modifier
-                            .padding(start = TAB_TASKS_H_PADDING - 2.dp)
-                            .border(width = onePx, color = c.dividerBg, shape = tabTasksInputShape)
-                            .height(IntrinsicSize.Min), // To use fillMaxHeight() inside
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
+                            .focusRequester(focusRequester)
+                            .weight(1f)
+                            .onFocusChanged {
+                                isFocused = it.isFocused
+                            }
+                    )
 
-                        BasicTextField__VMState(
-                            text = state.addFormInputTextValue,
-                            onValueChange = {
-                                vm.setAddFormInputTextValue(it)
-                            },
-                            keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
-                            singleLine = false,
-                            cursorBrush = SolidColor(MaterialTheme.colors.primary),
-                            textStyle = LocalTextStyle.current.copy(
-                                color = MaterialTheme.colors.onSurface,
-                                fontSize = 16.sp
-                            ),
-                            decorationBox = { innerTextField ->
-                                Box(
-                                    modifier = Modifier
-                                        .defaultMinSize(minHeight = 42.dp)
-                                        .padding(start = 14.dp, end = 4.dp),
-                                    contentAlignment = Alignment.CenterStart
-                                ) {
-                                    if (state.addFormInputTextValue.isEmpty())
-                                        Text(
-                                            text = "Task",
-                                            color = c.text.copy(alpha = 0.5f)
-                                        )
-                                    innerTextField()
-                                }
-                            },
-                            modifier = Modifier
-                                .focusRequester(focusRequester)
-                                .weight(1f)
-                                .onFocusChanged {
-                                    isFocused = it.isFocused
-                                }
-                        )
-
-                        Box(
-                            modifier = Modifier
-                                .padding(top = 4.dp, bottom = 4.dp, end = 4.dp)
-                                .fillMaxHeight()
-                                .clip(squircleShape)
-                                .background(c.blue)
-                                .clickable {
-                                    if (vm.isAddFormInputEmpty()) {
-                                        if (isFocused) focusManager.clearFocus()
-                                        else focusRequester.requestFocus()
-                                        return@clickable
-                                    }
-
-                                    vm.addTask {
-                                        scope.launchEx {
-                                            listState.animateScrollToItem(0)
-                                        }
-                                        scope.launchEx {
-                                            // WTF Without delay() does not clear before close.
-                                            // clearFocus() to change isFocused as fast as possible.
-                                            // During delay() adding animation.
-                                            delay(250)
-                                            focusManager.clearFocus()
-                                            ////
-                                        }
-                                    }
-                                }
-                                .padding(horizontal = 12.dp),
-                            contentAlignment = Alignment.CenterStart
-                        ) {
-                            Text(
-                                "SAVE",
-                                color = c.white,
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.W600,
-                            )
-                        }
-                    }
-
-                    if (isFocused && WindowInsets.isImeVisible)
-                        Box(
-                            modifier = Modifier
-                                .consumeWindowInsets(PaddingValues(bottom = bottomNavigationHeight))
-                                .imePadding()
-                        )
-                }
-            }
-
-            if (tmrwData != null) {
-                item {
                     Box(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = taskListSectionPadding),
-                        contentAlignment = Alignment.Center
+                            .padding(top = 4.dp, bottom = 4.dp, end = 4.dp)
+                            .fillMaxHeight()
+                            .clip(squircleShape)
+                            .background(c.blue)
+                            .clickable {
+                                if (vm.isAddFormInputEmpty()) {
+                                    if (isFocused) focusManager.clearFocus()
+                                    else focusRequester.requestFocus()
+                                    return@clickable
+                                }
+
+                                vm.addTask {
+                                    scope.launchEx {
+                                        listState.animateScrollToItem(0)
+                                    }
+                                    scope.launchEx {
+                                        // WTF Without delay() does not clear before close.
+                                        // clearFocus() to change isFocused as fast as possible.
+                                        // During delay() adding animation.
+                                        delay(250)
+                                        focusManager.clearFocus()
+                                        ////
+                                    }
+                                }
+                            }
+                            .padding(horizontal = 12.dp),
+                        contentAlignment = Alignment.CenterStart
                     ) {
                         Text(
-                            tmrwData.curTimeString,
+                            "SAVE",
+                            color = c.white,
                             fontSize = 14.sp,
-                            fontWeight = FontWeight.W300,
-                            color = c.textSecondary,
+                            fontWeight = FontWeight.W600,
                         )
                     }
                 }
+
+                if (isFocused && WindowInsets.isImeVisible)
+                    Box(
+                        modifier = Modifier
+                            .consumeWindowInsets(PaddingValues(bottom = bottomNavigationHeight))
+                            .imePadding()
+                    )
             }
+        }
 
-            val tasksUI = state.tasksUI
-            items(
-                tasksUI,
-                key = { taskUI -> taskUI.task.id }
-            ) { taskUI ->
-                val isFirst = taskUI == tasksUI.firstOrNull()
-
+        if (tmrwData != null) {
+            item {
                 Box(
                     modifier = Modifier
-                        .background(c.bg)
-                    // .animateItemPlacement() // Slow rendering on IME open
+                        .fillMaxWidth()
+                        .padding(top = taskListSectionPadding),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        tmrwData.curTimeString,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.W300,
+                        color = c.textSecondary,
+                    )
+                }
+            }
+        }
+
+        val tasksUI = state.tasksUI
+        items(
+            tasksUI,
+            key = { taskUI -> taskUI.task.id }
+        ) { taskUI ->
+            val isFirst = taskUI == tasksUI.firstOrNull()
+
+            Box(
+                modifier = Modifier
+                    .background(c.bg)
+                // .animateItemPlacement() // Slow rendering on IME open
+            ) {
+
+                val ignoreOneSwipeToAction = remember { mutableStateOf(false) }
+                val isEditOrDelete = remember { mutableStateOf<Boolean?>(null) }
+                val stateOffsetAbsDp = remember { mutableStateOf(0.dp) }
+
+                val localDragItem = remember {
+                    DragItem(
+                        mutableStateOf(null),
+                        { drop ->
+                            when (drop) {
+                                is DropItem.Type__Calendar -> true
+                                is DropItem.Type__Folder -> drop.folder.id != taskUI.task.folder_id
+                            }
+                        }
+                    ) { drop ->
+                        // Otherwise, the mod of editing is activated, so the keyboard is started.
+                        // And since the task is transferred, sometimes just opens the keyboard.
+                        ignoreOneSwipeToAction.value = true
+                        scope.launchEx {
+                            when (drop) {
+                                is DropItem.Type__Calendar -> {
+                                    vibrateShort()
+                                    EventFormSheet__show(
+                                        editedEvent = null,
+                                        defText = taskUI.task.text,
+                                    ) {
+                                        taskUI.delete()
+                                    }
+                                }
+                                is DropItem.Type__Folder -> {
+                                    vibrateLong()
+                                    taskUI.upFolder(drop.folder)
+                                }
+                            }
+                        }
+                    }
+                }
+
+                LaunchedEffect(isEditOrDelete.value, stateOffsetAbsDp.value) {
+                    dragItem.value = if (isEditOrDelete.value == true && stateOffsetAbsDp.value > 10.dp)
+                        localDragItem
+                    else null
+                }
+                DisposableEffect(Unit) {
+                    onDispose {
+                        dragItem.value = null
+                    }
+                }
+
+                SwipeToAction(
+                    isStartOrEnd = isEditOrDelete,
+                    ignoreOneAction = ignoreOneSwipeToAction,
+                    startView = {
+                        val dropItem = localDragItem.focusedDrop.value
+                        SwipeToAction__StartView(
+                            text = if (dropItem != null) "Move to ${dropItem.name}" else "Edit",
+                            bgColor = if (dropItem != null) c.tasksTabDropFocused else c.blue
+                        )
+                    },
+                    endView = { state ->
+                        SwipeToAction__DeleteView(state, taskUI.task.text) {
+                            vibrateLong()
+                            taskUI.delete()
+                        }
+                    },
+                    onStart = {
+                        Sheet.show { layer ->
+                            TaskFormSheet(
+                                task = taskUI.task,
+                                layer = layer,
+                            )
+                        }
+                        false
+                    },
+                    onEnd = {
+                        true
+                    },
+                    toVibrateStartEnd = listOf(true, false),
+                    stateOffsetAbsDp = stateOffsetAbsDp,
                 ) {
 
-                    val ignoreOneSwipeToAction = remember { mutableStateOf(false) }
-                    val isEditOrDelete = remember { mutableStateOf<Boolean?>(null) }
-                    val stateOffsetAbsDp = remember { mutableStateOf(0.dp) }
-
-                    val localDragItem = remember {
-                        DragItem(
-                            mutableStateOf(null),
-                            { drop ->
-                                when (drop) {
-                                    is DropItem.Type__Calendar -> true
-                                    is DropItem.Type__Folder -> drop.folder.id != taskUI.task.folder_id
-                                }
-                            }
-                        ) { drop ->
-                            // Otherwise, the mod of editing is activated, so the keyboard is started.
-                            // And since the task is transferred, sometimes just opens the keyboard.
-                            ignoreOneSwipeToAction.value = true
-                            scope.launchEx {
-                                when (drop) {
-                                    is DropItem.Type__Calendar -> {
-                                        vibrateShort()
-                                        EventFormSheet__show(
-                                            editedEvent = null,
-                                            defText = taskUI.task.text,
-                                        ) {
-                                            taskUI.delete()
+                    Box(
+                        modifier = Modifier
+                            .background(c.bg)
+                            .clickable {
+                                taskUI.task.startIntervalForUI(
+                                    onStarted = {
+                                        onTaskStarted()
+                                    },
+                                    activitiesSheet = {
+                                        Sheet.show { layer ->
+                                            ActivitiesTimerSheet(layer, taskUI.timerContext, onTaskStarted)
                                         }
-                                    }
-                                    is DropItem.Type__Folder -> {
-                                        vibrateLong()
-                                        taskUI.upFolder(drop.folder)
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    LaunchedEffect(isEditOrDelete.value, stateOffsetAbsDp.value) {
-                        dragItem.value = if (isEditOrDelete.value == true && stateOffsetAbsDp.value > 10.dp)
-                            localDragItem
-                        else null
-                    }
-                    DisposableEffect(Unit) {
-                        onDispose {
-                            dragItem.value = null
-                        }
-                    }
-
-                    SwipeToAction(
-                        isStartOrEnd = isEditOrDelete,
-                        ignoreOneAction = ignoreOneSwipeToAction,
-                        startView = {
-                            val dropItem = localDragItem.focusedDrop.value
-                            SwipeToAction__StartView(
-                                text = if (dropItem != null) "Move to ${dropItem.name}" else "Edit",
-                                bgColor = if (dropItem != null) c.tasksTabDropFocused else c.blue
-                            )
-                        },
-                        endView = { state ->
-                            SwipeToAction__DeleteView(state, taskUI.task.text) {
-                                vibrateLong()
-                                taskUI.delete()
-                            }
-                        },
-                        onStart = {
-                            Sheet.show { layer ->
-                                TaskFormSheet(
-                                    task = taskUI.task,
-                                    layer = layer,
+                                    },
+                                    timerSheet = { activity ->
+                                        Sheet.show { layerTimer ->
+                                            ActivityTimerSheet(
+                                                layer = layerTimer,
+                                                activity = activity,
+                                                timerContext = taskUI.timerContext,
+                                            ) {
+                                                onTaskStarted()
+                                            }
+                                        }
+                                    },
                                 )
                             }
-                            false
-                        },
-                        onEnd = {
-                            true
-                        },
-                        toVibrateStartEnd = listOf(true, false),
-                        stateOffsetAbsDp = stateOffsetAbsDp,
+                            .padding(start = TAB_TASKS_H_PADDING),
+                        contentAlignment = Alignment.BottomCenter
                     ) {
 
-                        Box(
+                        Column(
                             modifier = Modifier
-                                .background(c.bg)
-                                .clickable {
-                                    taskUI.task.startIntervalForUI(
-                                        onStarted = {
-                                            onTaskStarted()
-                                        },
-                                        activitiesSheet = {
-                                            Sheet.show { layer ->
-                                                ActivitiesTimerSheet(layer, taskUI.timerContext, onTaskStarted)
-                                            }
-                                        },
-                                        timerSheet = { activity ->
-                                            Sheet.show { layerTimer ->
-                                                ActivityTimerSheet(
-                                                    layer = layerTimer,
-                                                    activity = activity,
-                                                    timerContext = taskUI.timerContext,
-                                                ) {
-                                                    onTaskStarted()
-                                                }
-                                            }
-                                        },
-                                    )
-                                }
-                                .padding(start = TAB_TASKS_H_PADDING),
-                            contentAlignment = Alignment.BottomCenter
+                                .padding(top = 11.dp, bottom = 11.dp),
+                            verticalArrangement = Arrangement.Center
                         ) {
 
-                            Column(
-                                modifier = Modifier
-                                    .padding(top = 11.dp, bottom = 11.dp),
-                                verticalArrangement = Arrangement.Center
-                            ) {
+                            val vPadding = 3.dp
 
-                                val vPadding = 3.dp
+                            val timeUI = taskUI.timeUI
+                            if (timeUI != null) {
+                                Row(
+                                    modifier = Modifier
+                                        .padding(bottom = vPadding),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
 
-                                val timeUI = taskUI.timeUI
-                                if (timeUI != null) {
-                                    Row(
-                                        modifier = Modifier
-                                            .padding(bottom = vPadding),
-                                        verticalAlignment = Alignment.CenterVertically,
-                                    ) {
+                                    when (timeUI) {
 
-                                        when (timeUI) {
-
-                                            is TasksListVM.TaskUI.TimeUI.ImportantUI -> {
-                                                Row(
+                                        is TasksListVM.TaskUI.TimeUI.ImportantUI -> {
+                                            Row(
+                                                modifier = Modifier
+                                                    .offset(x = (-1).dp)
+                                                    .clip(MySquircleShape(len = 30f))
+                                                    .background(timeUI.backgroundColor.toColor())
+                                                    .padding(start = 5.dp, end = 4.dp, top = 3.dp, bottom = 3.dp),
+                                                verticalAlignment = Alignment.CenterVertically,
+                                            ) {
+                                                Icon(
+                                                    painterResource(id = R.drawable.sf_calendar_medium_light),
+                                                    contentDescription = "Event",
+                                                    tint = c.white,
                                                     modifier = Modifier
-                                                        .offset(x = (-1).dp)
-                                                        .clip(MySquircleShape(len = 30f))
-                                                        .background(timeUI.backgroundColor.toColor())
-                                                        .padding(start = 5.dp, end = 4.dp, top = 3.dp, bottom = 3.dp),
-                                                    verticalAlignment = Alignment.CenterVertically,
-                                                ) {
-                                                    Icon(
-                                                        painterResource(id = R.drawable.sf_calendar_medium_light),
-                                                        contentDescription = "Event",
-                                                        tint = c.white,
-                                                        modifier = Modifier
-                                                            .padding(end = 5.dp)
-                                                            .size(14.dp),
-                                                    )
-                                                    Text(
-                                                        timeUI.title,
-                                                        fontSize = 12.sp,
-                                                        color = c.white,
-                                                    )
-                                                }
+                                                        .padding(end = 5.dp)
+                                                        .size(14.dp),
+                                                )
                                                 Text(
-                                                    timeUI.timeLeftText,
-                                                    modifier = Modifier
-                                                        .padding(start = 6.dp),
-                                                    fontSize = 13.sp,
-                                                    fontWeight = FontWeight.W300,
-                                                    color = timeUI.timeLeftColor.toColor(),
-                                                    maxLines = 1,
-                                                    overflow = TextOverflow.Ellipsis,
+                                                    timeUI.title,
+                                                    fontSize = 12.sp,
+                                                    color = c.white,
                                                 )
                                             }
+                                            Text(
+                                                timeUI.timeLeftText,
+                                                modifier = Modifier
+                                                    .padding(start = 6.dp),
+                                                fontSize = 13.sp,
+                                                fontWeight = FontWeight.W300,
+                                                color = timeUI.timeLeftColor.toColor(),
+                                                maxLines = 1,
+                                                overflow = TextOverflow.Ellipsis,
+                                            )
+                                        }
 
-                                            is TasksListVM.TaskUI.TimeUI.RegularUI -> {
-                                                Text(
-                                                    timeUI.text,
-                                                    fontSize = 13.sp,
-                                                    fontWeight = FontWeight.W300,
-                                                    color = timeUI.textColor.toColor(),
-                                                )
-                                            }
+                                        is TasksListVM.TaskUI.TimeUI.RegularUI -> {
+                                            Text(
+                                                timeUI.text,
+                                                fontSize = 13.sp,
+                                                fontWeight = FontWeight.W300,
+                                                color = timeUI.textColor.toColor(),
+                                            )
                                         }
                                     }
                                 }
-
-                                HStack(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                ) {
-                                    Text(
-                                        taskUI.text,
-                                        color = c.text,
-                                        modifier = Modifier
-                                            .weight(1f),
-                                    )
-                                    TriggersListIconsView(taskUI.textFeatures.triggers, 14.sp)
-                                }
                             }
 
-                            if (!isFirst)
-                                DividerBg()
+                            HStack(
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Text(
+                                    taskUI.text,
+                                    color = c.text,
+                                    modifier = Modifier
+                                        .weight(1f),
+                                )
+                                TriggersListIconsView(taskUI.textFeatures.triggers, 14.sp)
+                            }
                         }
+
+                        if (!isFirst)
+                            DividerBg()
                     }
                 }
             }
+        }
 
-            if (tmrwData != null) {
+        if (tmrwData != null) {
 
-                item {
-                    Divider(
-                        Modifier
-                            .padding(horizontal = 80.dp)
-                            .padding(top = 22.dp, bottom = if (tasksUI.isEmpty()) 0.dp else 18.dp)
-                    )
-                }
+            item {
+                Divider(
+                    Modifier
+                        .padding(horizontal = 80.dp)
+                        .padding(top = 22.dp, bottom = if (tasksUI.isEmpty()) 0.dp else 18.dp)
+                )
+            }
 
-                val tmrwTasksUI = tmrwData.tasksUI
-                items(
-                    tmrwTasksUI,
-                    key = { taskUI -> "tmrw_${taskUI.task.id}" }
-                ) { taskUI ->
+            val tmrwTasksUI = tmrwData.tasksUI
+            items(
+                tmrwTasksUI,
+                key = { taskUI -> "tmrw_${taskUI.task.id}" }
+            ) { taskUI ->
 
-                    val isFirst = taskUI == tmrwTasksUI.lastOrNull()
+                val isFirst = taskUI == tmrwTasksUI.lastOrNull()
 
-                    TasksListView__TmrwTaskView(
-                        taskUI = taskUI,
-                        isFirst = isFirst,
-                    )
-                }
+                TasksListView__TmrwTaskView(
+                    taskUI = taskUI,
+                    isFirst = isFirst,
+                )
             }
         }
     }
