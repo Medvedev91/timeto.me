@@ -53,7 +53,7 @@ fun TabTimerView() {
         ) {
 
             Icon(
-                painterResource(R.drawable.sf_line_3_horizontal_small_light),
+                painterResource(R.drawable.sf_line_3_horizontal_small_thin),
                 contentDescription = "Menu",
                 tint = c.blue,
                 modifier = Modifier
@@ -66,7 +66,7 @@ fun TabTimerView() {
                         }
                     }
                     .size(32.dp)
-                    .padding(6.dp)
+                    .padding(5.dp)
             )
 
             SpacerW1()
