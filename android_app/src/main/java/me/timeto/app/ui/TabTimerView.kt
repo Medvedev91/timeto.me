@@ -95,7 +95,7 @@ fun TabTimerView() {
         }
 
         LazyColumn(
-            contentPadding = PaddingValues(vertical = 48.dp),
+            contentPadding = PaddingValues(vertical = 14.dp),
         ) {
 
             val activitiesUI = state.activitiesUI
