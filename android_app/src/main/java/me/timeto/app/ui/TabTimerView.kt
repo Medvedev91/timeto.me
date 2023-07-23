@@ -52,13 +52,13 @@ fun TabTimerView() {
 
             SpacerW1()
 
-            GrayTextButton(state.sortActivitiesText) {
+            TopMenuTextButton(state.sortActivitiesText) {
                 Sheet.show { layer ->
                     EditActivitiesSheet(layer = layer)
                 }
             }
 
-            GrayTextButton(state.settingsText) {
+            TopMenuTextButton(state.settingsText) {
                 Sheet.show { layer ->
                     SettingsSheet(layer = layer)
                 }
@@ -383,7 +383,7 @@ fun TabTimerView() {
 }
 
 @Composable
-private fun GrayTextButton(
+private fun TopMenuTextButton(
     text: String,
     onClick: () -> Unit,
 ) {
