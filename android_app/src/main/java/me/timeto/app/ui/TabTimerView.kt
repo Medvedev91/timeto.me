@@ -56,9 +56,9 @@ fun TabTimerView() {
                 itemsIndexed(
                     activitiesUI,
                     key = { _, i -> i.activity.id }
-                ) { _, uiActivity ->
+                ) { _, activityUI ->
 
-                    val timerData = uiActivity.data.timerData
+                    val timerData = activityUI.data.timerData
                     val isActive = timerData != null
                     val bgAnimate = animateColorAsState(
                         timerData?.color?.toColor() ?: c.bg,
@@ -78,17 +78,17 @@ fun TabTimerView() {
                         endView = { state ->
                             SwipeToAction__DeleteView(
                                 state = state,
-                                note = uiActivity.deletionHint,
-                                deletionConfirmationNote = uiActivity.deletionConfirmation,
+                                note = activityUI.deletionHint,
+                                deletionConfirmationNote = activityUI.deletionConfirmation,
                             ) {
-                                uiActivity.delete()
+                                activityUI.delete()
                             }
                         },
                         onStart = {
                             Sheet.show { layer ->
                                 ActivityFormSheet(
                                     layer = layer,
-                                    editedActivity = uiActivity.activity,
+                                    editedActivity = activityUI.activity,
                                 )
                             }
                             false
@@ -106,7 +106,7 @@ fun TabTimerView() {
                                     Sheet.show { layer ->
                                         ActivityTimerSheet(
                                             layer = layer,
-                                            activity = uiActivity.activity,
+                                            activity = activityUI.activity,
                                             timerContext = null,
                                         )
                                     }
@@ -129,7 +129,7 @@ fun TabTimerView() {
                                 ) {
 
                                     Text(
-                                        text = uiActivity.activity.emoji,
+                                        text = activityUI.activity.emoji,
                                         modifier = Modifier
                                             .width(emojiWidth),
                                         textAlign = TextAlign.Center,
@@ -144,7 +144,7 @@ fun TabTimerView() {
                                         HStack {
                                             val textFontSize = if (isActive) 17 else 16
                                             Text(
-                                                text = uiActivity.data.text,
+                                                text = activityUI.data.text,
                                                 modifier = Modifier
                                                     .weight(1f, fill = false),
                                                 color = if (isActive) c.white else c.text,
@@ -153,10 +153,10 @@ fun TabTimerView() {
                                                 maxLines = 1,
                                                 overflow = TextOverflow.Ellipsis,
                                             )
-                                            TriggersListIconsView(uiActivity.data.textTriggers, (textFontSize - 2).sp)
+                                            TriggersListIconsView(activityUI.data.textTriggers, (textFontSize - 2).sp)
                                         }
 
-                                        val listNote = uiActivity.data.note
+                                        val listNote = activityUI.data.note
                                         if (listNote != null)
                                             HStack(
                                                 modifier = Modifier
@@ -171,11 +171,11 @@ fun TabTimerView() {
                                                     fontSize = 14.sp,
                                                     fontWeight = FontWeight.Light,
                                                 )
-                                                TriggersListIconsView(uiActivity.data.noteTriggers, 12.sp)
+                                                TriggersListIconsView(activityUI.data.noteTriggers, 12.sp)
                                             }
                                     }
 
-                                    uiActivity.timerHints.forEach { hintUI ->
+                                    activityUI.timerHints.forEach { hintUI ->
                                         Text(
                                             text = hintUI.text,
                                             modifier = Modifier
@@ -234,7 +234,7 @@ fun TabTimerView() {
                                                     .border(1.dp, c.white, roundedShape)
                                                     .clip(roundedShape)
                                                     .clickable {
-                                                        uiActivity.pauseLastInterval()
+                                                        activityUI.pauseLastInterval()
                                                     }
                                                     .padding(8.dp),
                                             )
@@ -276,7 +276,7 @@ fun TabTimerView() {
 
                             DividerBg(
                                 modifier = Modifier.padding(start = emojiWidth),
-                                isVisible = uiActivity.withTopDivider,
+                                isVisible = activityUI.withTopDivider,
                             )
                         }
                     }
