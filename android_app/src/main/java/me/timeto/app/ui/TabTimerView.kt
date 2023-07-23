@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,8 +29,10 @@ import me.timeto.shared.data.TimerTabActivityData
 import me.timeto.shared.vm.TabTimerVM
 
 private val timerButtonsHeight = 28.dp
-private var topMenuTextButtonHPadding = 8.dp
 private val emojiWidth = 56.dp
+private val activitiesInnerHPadding = 12.dp
+private val timerHintsHPadding = 4.dp
+private val menuTextButtonHPadding = (activitiesInnerHPadding + timerHintsHPadding) / 2
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -45,10 +49,26 @@ fun TabTimerView() {
         Row(
             modifier = Modifier
                 .padding(vertical = 8.dp)
-                .padding(end = topMenuTextButtonHPadding)
+                .padding(end = menuTextButtonHPadding)
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
+
+            Icon(
+                Icons.Rounded.Menu,
+                contentDescription = "Menu",
+                tint = c.blue,
+                modifier = Modifier
+                    .padding(start = 13.dp)
+                    .clip(roundedShape)
+                    .clickable {
+                        Sheet.show { layer ->
+                            SettingsSheet(layer = layer)
+                        }
+                    }
+                    .size(31.dp)
+                    .padding(4.dp)
+            )
 
             SpacerW1()
 
@@ -151,7 +171,7 @@ fun TabTimerView() {
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(end = 10.dp),
+                                    .padding(end = activitiesInnerHPadding),
                                 verticalAlignment = Alignment.CenterVertically,
                             ) {
 
@@ -231,7 +251,7 @@ fun TabTimerView() {
                                             .clickable {
                                                 hintUI.startInterval()
                                             }
-                                            .padding(horizontal = 4.dp, vertical = 3.dp),
+                                            .padding(horizontal = timerHintsHPadding, vertical = 3.dp),
                                         color = if (isActive) c.white else c.blue,
                                         fontSize = 14.sp,
                                         fontWeight = FontWeight.Light,
@@ -344,7 +364,7 @@ private fun TopMenuTextButton(
             .clickable {
                 onClick()
             }
-            .padding(horizontal = topMenuTextButtonHPadding, vertical = 4.dp),
+            .padding(horizontal = menuTextButtonHPadding, vertical = 4.dp),
         color = c.blue,
         fontSize = 15.sp,
         fontWeight = FontWeight.Light,
