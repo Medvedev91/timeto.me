@@ -52,15 +52,25 @@ fun TabTimerView() {
 
             SpacerW1()
 
-            TopMenuTextButton(state.sortActivitiesText) {
-                Sheet.show { layer ->
-                    EditActivitiesSheet(layer = layer)
+            TopMenuTextButton("Chart") {
+                Dialog.show(
+                    modifier = Modifier.fillMaxHeight(0.95f),
+                ) { layer ->
+                    ChartDialogView(layer::close)
                 }
             }
 
-            TopMenuTextButton(state.settingsText) {
+            TopMenuTextButton("History") {
+                Dialog.show(
+                    modifier = Modifier.fillMaxHeight(0.95f),
+                ) { layer ->
+                    HistoryDialogView(layer::close)
+                }
+            }
+
+            TopMenuTextButton("Edit") {
                 Sheet.show { layer ->
-                    SettingsSheet(layer = layer)
+                    EditActivitiesSheet(layer = layer)
                 }
             }
         }
@@ -315,66 +325,6 @@ fun TabTimerView() {
                             modifier = Modifier.padding(start = emojiWidth),
                             isVisible = activityUI.withTopDivider,
                         )
-                    }
-                }
-            }
-
-            item {
-
-                Row(
-                    modifier = Modifier
-                        .padding(top = 20.dp)
-                        .padding(horizontal = 4.dp)
-                ) {
-
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .border(onePx, c.dividerBg, squircleShape)
-                            .clip(squircleShape)
-                            .clickable {
-                                Dialog.show(
-                                    modifier = Modifier.fillMaxHeight(0.95f),
-                                ) { layer ->
-                                    ChartDialogView(layer::close)
-                                }
-                            },
-                        contentAlignment = Alignment.BottomCenter,
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 10.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text("Chart", color = c.text)
-                        }
-                    }
-
-                    Box(modifier = Modifier.width(25.dp))
-
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .border(onePx, c.dividerBg, squircleShape)
-                            .clip(squircleShape)
-                            .clickable {
-                                Dialog.show(
-                                    modifier = Modifier.fillMaxHeight(0.95f),
-                                ) { layer ->
-                                    HistoryDialogView(layer::close)
-                                }
-                            },
-                        contentAlignment = Alignment.BottomCenter,
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 10.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text("History", color = c.text)
-                        }
                     }
                 }
             }
