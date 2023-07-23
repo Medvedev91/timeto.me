@@ -4,6 +4,7 @@ import shared
 let TAB_TASKS_H_PADDING = 16.0
 
 private let tabWidth: CGFloat = 34
+private let SECTION_BUTTONS_END_PADDING = TAB_TASKS_H_PADDING.goldenRatioDown()
 
 // TRICK Using ignoresSafeArea() outside is mandatory
 struct TabTasksView: View {
@@ -181,7 +182,7 @@ struct TabTasksView: View {
                         )
                     }
                 }
-                        .padding(.trailing, 10)
+                        .padding(.trailing, SECTION_BUTTONS_END_PADDING)
             }
                     .onAppear {
                         UITableView.appearance().sectionFooterHeight = 0
