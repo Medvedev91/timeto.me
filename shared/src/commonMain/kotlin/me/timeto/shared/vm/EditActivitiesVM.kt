@@ -9,7 +9,6 @@ class EditActivitiesVM : __VM<EditActivitiesVM.State>() {
     class ActivityUI(
         val activity: ActivityModel,
     ) {
-
         val listText = activity.nameWithEmoji().textFeatures().textUi()
     }
 
