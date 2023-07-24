@@ -25,7 +25,7 @@ class WatchTabTimerVM : __VM<WatchTabTimerVM.State>() {
         ) { seconds ->
             WatchToIosSync.startIntervalWithLocal(
                 activity = activity,
-                deadline = seconds,
+                timer = seconds,
             )
         }
     }

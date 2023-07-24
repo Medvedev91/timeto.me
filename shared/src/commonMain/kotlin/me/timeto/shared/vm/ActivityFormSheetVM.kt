@@ -139,7 +139,7 @@ class ActivityFormSheetVM(
                 ActivityModel.addWithValidation(
                     name = nameWithFeatures,
                     emoji = selectedEmoji,
-                    deadline = 20 * 60,
+                    timer = 20 * 60,
                     sort = 0,
                     type = ActivityModel.TYPE.NORMAL,
                     colorRgba = colorRgba,

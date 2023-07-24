@@ -111,13 +111,13 @@ data class TaskModel(
     fun unixTime(utcOffset: Int = localUtcOffset) = UnixTime(id, utcOffset = utcOffset)
 
     suspend fun startInterval(
-        deadline: Int,
+        timer: Int,
         activity: ActivityModel,
         intervalId: Int = time(),
     ) = dbIO {
         db.transaction {
             IntervalModel.addWithValidationNeedTransaction(
-                deadline = deadline,
+                timer = timer,
                 activity = activity,
                 note = text,
                 id = intervalId,
@@ -137,7 +137,7 @@ data class TaskModel(
         if (activity != null && timer != null) {
             launchExDefault {
                 startInterval(
-                    deadline = timer,
+                    timer = timer,
                     activity = activity,
                 )
                 onStarted()

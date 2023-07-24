@@ -45,14 +45,14 @@ class ActivityTimerSheetVM(
         onSuccess: () -> Unit,
     ) = scopeVM().launchEx {
         try {
-            val deadline = state.value.timeItems[state.value.formTimeItemIdx].seconds
+            val timer = state.value.timeItems[state.value.formTimeItemIdx].seconds
 
             val when_: Any = when (timerContext) {
                 is TimerContext.Task -> {
-                    timerContext.task.startInterval(deadline, activity)
+                    timerContext.task.startInterval(timer, activity)
                 }
                 null -> {
-                    activity.startInterval(deadline)
+                    activity.startInterval(timer)
                 }
             }
 

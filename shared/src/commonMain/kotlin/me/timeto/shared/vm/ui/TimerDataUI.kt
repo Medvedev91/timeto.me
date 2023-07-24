@@ -15,12 +15,12 @@ class TimerDataUI(
     val subtitle: String? // NULL / BREAK / OVERDUE
     val color: ColorNative
 
-    private val restartTimer = interval.note?.textFeatures()?.paused?.timer ?: interval.deadline
+    private val restartTimer = interval.note?.textFeatures()?.paused?.timer ?: interval.timer
     val restartText = restartTimer.toTimerHintNote(isShort = true)
 
     init {
         val now = time()
-        val timeLeft = interval.id + interval.deadline - now
+        val timeLeft = interval.id + interval.timer - now
 
         class TmpDTO(val subtitle: String?, val color: ColorNative, val timeLeft: Int, val status: STATUS)
 

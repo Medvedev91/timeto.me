@@ -1,6 +1,6 @@
 CREATE TABLE IntervalSQ (
     id INTEGER AS Int NOT NULL PRIMARY KEY,
-    deadline INTEGER AS Int NOT NULL,
+    timer INTEGER AS Int NOT NULL,
     activity_id INTEGER AS Int NOT NULL,
     note TEXT -- Nullable!
 );
@@ -47,7 +47,7 @@ WHERE id = :oldId;
 
 upById:
 UPDATE IntervalSQ
-SET deadline = ?, note = ?, activity_id = ?
+SET timer = ?, note = ?, activity_id = ?
 WHERE id = ?;
 
 upActivityIdById:

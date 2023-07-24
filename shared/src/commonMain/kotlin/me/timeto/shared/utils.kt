@@ -324,11 +324,11 @@ data class ScheduledNotificationData(
 
 suspend fun rescheduleNotifications() {
     val lastInterval = IntervalModel.getLastOneOrNull()!!
-    val inSeconds = (lastInterval.id + lastInterval.deadline) - time()
+    val inSeconds = (lastInterval.id + lastInterval.timer) - time()
     if (inSeconds <= 0)
         return
 
-    val totalMinutes = lastInterval.deadline / 60
+    val totalMinutes = lastInterval.timer / 60
     scheduledNotificationsDataFlow.emit(
         listOf(
             ScheduledNotificationData(
@@ -527,7 +527,7 @@ class TimerPickerItem(
             note: String?,
         ): Int {
             if (note == null)
-                return activity.deadline
+                return activity.timer
 
             // If the note contains the time, it takes priority.
             val textFeatures = note.textFeatures()
@@ -539,9 +539,9 @@ class TimerPickerItem(
                 it.activity_id == activity.id && note.lowercase() == it.note?.lowercase()
             }
             if (lastHotInterval != null)
-                return lastHotInterval.deadline
+                return lastHotInterval.timer
 
-            return activity.deadline
+            return activity.timer
         }
     }
 }

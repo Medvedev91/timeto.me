@@ -19,7 +19,7 @@ class ActivitiesTimerSheetVM(
                 .filter { taskText.lowercase() == it.note?.lowercase() }
                 .groupBy { it.activity_id }
                 .map {
-                    it.key to it.value.map { it.deadline }.distinct()
+                    it.key to it.value.map { it.timer }.distinct()
                 }
                 .toMap()
         }

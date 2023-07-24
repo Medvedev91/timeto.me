@@ -43,13 +43,13 @@ struct W_TickerDialog: View {
                         if let task = task {
                             WatchToIosSync.shared.startTaskWithLocal(
                                     activity: activity,
-                                    deadline: formSeconds,
+                                    timer: formSeconds,
                                     task: task
                             )
                         } else {
                             WatchToIosSync.shared.startIntervalWithLocal(
                                     activity: activity,
-                                    deadline: formSeconds
+                                    timer: formSeconds
                             )
                         }
                         preAdd()

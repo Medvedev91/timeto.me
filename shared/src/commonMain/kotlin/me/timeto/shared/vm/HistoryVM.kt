@@ -78,7 +78,7 @@ class HistoryVM : __VM<HistoryVM.State>() {
                         throw UIException("Time is unavailable")
 
                     IntervalModel.addWithValidation(
-                        deadline = activity.deadline,
+                        timer = activity.timer,
                         note = null,
                         activity = activity,
                         id = timestamp,

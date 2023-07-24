@@ -52,11 +52,11 @@ object IosToWatchSync {
         val jData = jRequest["data"]!!.jsonObject
 
         if (command == "start_interval") {
-            val deadline = jData["deadline"]!!.jsonPrimitive.int
+            val timer = jData["timer"]!!.jsonPrimitive.int
             val activity = ActivityModel.getByIdOrNull(jData["activity_id"]!!.jsonPrimitive.int)!!
             val note = jData["note"]?.jsonPrimitive?.contentOrNull
             IntervalModel.addWithValidation(
-                deadline = deadline,
+                timer = timer,
                 activity = activity,
                 note = note,
             )
@@ -65,11 +65,11 @@ object IosToWatchSync {
         }
 
         if (command == "start_task") {
-            val deadline = jData["deadline"]!!.jsonPrimitive.int
+            val timer = jData["timer"]!!.jsonPrimitive.int
             val activity = ActivityModel.getByIdOrNull(jData["activity_id"]!!.jsonPrimitive.int)!!
             val task = TaskModel.getByIdOrNull(jData["task_id"]!!.jsonPrimitive.int)!!
             task.startInterval(
-                deadline = deadline,
+                timer = timer,
                 activity = activity,
             )
             onFinish("{}")

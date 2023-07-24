@@ -34,7 +34,7 @@ object WatchToIosSync {
 
     fun pauseWithLocal(): Unit = defaultScope().launchEx {
         IntervalModel.addWithValidation(
-            deadline = IntervalModel.DEADLINE_AFTER_PAUSE,
+            timer = IntervalModel.TIMER_AFTER_PAUSE,
             activity = ActivityModel.getOther(),
             note = null,
         )
@@ -49,14 +49,14 @@ object WatchToIosSync {
 
     fun startIntervalWithLocal(
         activity: ActivityModel,
-        deadline: Int,
+        timer: Int,
     ): Unit = defaultScope().launchEx {
-        val interval = activity.startInterval(deadline)
+        val interval = activity.startInterval(timer)
         launchEx {
             delay(LOCAL_DELAY_MLS)
             val map = mapOf(
                 "activity_id" to JsonPrimitive(activity.id),
-                "deadline" to JsonPrimitive(deadline),
+                "timer" to JsonPrimitive(timer),
                 "note" to JsonPrimitive(interval.note),
             )
             requestFromAppleWatch(
@@ -68,15 +68,15 @@ object WatchToIosSync {
 
     fun startTaskWithLocal(
         activity: ActivityModel,
-        deadline: Int,
+        timer: Int,
         task: TaskModel,
     ): Unit = defaultScope().launchEx {
-        task.startInterval(deadline, activity)
+        task.startInterval(timer, activity)
         launchEx {
             delay(LOCAL_DELAY_MLS)
             val map = mapOf(
                 "activity_id" to JsonPrimitive(activity.id),
-                "deadline" to JsonPrimitive(deadline),
+                "timer" to JsonPrimitive(timer),
                 "task_id" to JsonPrimitive(task.id),
             )
             requestFromAppleWatch(

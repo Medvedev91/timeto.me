@@ -27,7 +27,7 @@ class WatchTaskSheetVM(
         ) { seconds ->
             WatchToIosSync.startTaskWithLocal(
                 activity = activity,
-                deadline = seconds,
+                timer = seconds,
                 task = task
             )
         }

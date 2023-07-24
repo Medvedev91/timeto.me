@@ -12,7 +12,7 @@ data class ActivityModel(
     val id: Int,
     val name: String,
     val emoji: String,
-    val deadline: Int,
+    val timer: Int,
     val sort: Int,
     val type_id: Int,
     val color_rgba: String,
@@ -61,7 +61,7 @@ data class ActivityModel(
         suspend fun addWithValidation(
             name: String,
             emoji: String,
-            deadline: Int,
+            timer: Int,
             sort: Int,
             type: TYPE,
             colorRgba: ColorRgba,
@@ -83,7 +83,7 @@ data class ActivityModel(
                     id = nextId,
                     name = validateName(name),
                     emoji = validatedEmoji,
-                    deadline = deadline,
+                    timer = timer,
                     sort = sort,
                     type_id = type.id,
                     color_rgba = colorRgba.toRgbaString(),
@@ -109,11 +109,11 @@ data class ActivityModel(
                 for (interval in intervals) {
                     if (interval.activity_id != activity.id)
                         continue
-                    if (hints.contains(interval.deadline))
+                    if (hints.contains(interval.timer))
                         continue
                     if (interval.note?.textFeatures()?.paused != null)
                         continue
-                    hints.add(interval.deadline)
+                    hints.add(interval.timer)
                 }
                 // todo check
                 val oldData = activity.getData()
@@ -180,7 +180,7 @@ data class ActivityModel(
         }
 
         private fun ActivitySQ.toModel() = ActivityModel(
-            id = id, name = name, emoji = emoji, deadline = deadline, sort = sort,
+            id = id, name = name, emoji = emoji, timer = timer, sort = sort,
             type_id = type_id, color_rgba = color_rgba, data_json = data_json,
             auto_focus = auto_focus,
         )
@@ -197,7 +197,7 @@ data class ActivityModel(
                 ActivitySQ(
                     id = j.getInt(0),
                     name = j.getString(1),
-                    deadline = j.getInt(2),
+                    timer = j.getInt(2),
                     sort = j.getInt(3),
                     type_id = j.getInt(4),
                     color_rgba = j.getString(5),
@@ -222,13 +222,13 @@ data class ActivityModel(
     fun getData() = ActivityModel__Data.jParse(data_json)
 
     suspend fun startInterval(
-        deadline: Int,
+        timer: Int,
     ): IntervalModel {
         val lastInterval = IntervalModel.getLastOneOrNull()!!
         val note = if (lastInterval.activity_id == this.id)
             lastInterval.note?.textFeatures()?.copy(paused = null)?.textWithFeatures()
         else null
-        return IntervalModel.addWithValidation(deadline, this, note)
+        return IntervalModel.addWithValidation(timer, this, note)
     }
 
     suspend fun upByIdWithValidation(
@@ -244,7 +244,7 @@ data class ActivityModel(
         db.activityQueries.upById(
             id = id,
             name = validateName(name),
-            deadline = deadline,
+            timer = timer,
             sort = sort,
             type_id = type_id,
             color_rgba = colorRgba.toRgbaString(),
@@ -289,7 +289,7 @@ data class ActivityModel(
     override fun backupable__getId(): String = id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
-        id, name, deadline, sort, type_id, color_rgba, data_json, emoji, auto_focus
+        id, name, timer, sort, type_id, color_rgba, data_json, emoji, auto_focus
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
@@ -297,7 +297,7 @@ data class ActivityModel(
         db.activityQueries.upById(
             id = j.getInt(0),
             name = j.getString(1),
-            deadline = j.getInt(2),
+            timer = j.getInt(2),
             sort = j.getInt(3),
             type_id = j.getInt(4),
             color_rgba = j.getString(5),

@@ -11,7 +11,7 @@ import me.timeto.shared.*
 
 data class IntervalModel(
     val id: Int,
-    val deadline: Int,
+    val timer: Int,
     val note: String?,
     val activity_id: Int,
 ) : Backupable__Item {
@@ -20,7 +20,7 @@ data class IntervalModel(
 
         const val HOT_INTERVALS_LIMIT = 200 // todo 200? Remember limit for WatchToIosSync
 
-        const val DEADLINE_AFTER_PAUSE = 5 * 60
+        const val TIMER_AFTER_PAUSE = 5 * 60
 
         fun anyChangeFlow() = db.intervalQueries.anyChange().asFlow()
 
@@ -80,14 +80,14 @@ data class IntervalModel(
         /// Add
 
         suspend fun addWithValidation(
-            deadline: Int,
+            timer: Int,
             activity: ActivityModel,
             note: String?,
             id: Int = time(),
         ): IntervalModel = dbIO {
             db.transactionWithResult {
                 addWithValidationNeedTransaction(
-                    deadline = deadline,
+                    timer = timer,
                     activity = activity,
                     note = note,
                     id = id,
@@ -96,7 +96,7 @@ data class IntervalModel(
         }
 
         fun addWithValidationNeedTransaction(
-            deadline: Int,
+            timer: Int,
             activity: ActivityModel,
             note: String?,
             id: Int = time(),
@@ -104,7 +104,7 @@ data class IntervalModel(
             db.intervalQueries.deleteById(id)
             val intervalSQ = IntervalSQ(
                 id = id,
-                deadline = deadline,
+                timer = timer,
                 activity_id = activity.id,
                 note = note?.trim()?.takeIf { it.isNotBlank() },
             )
@@ -119,11 +119,11 @@ data class IntervalModel(
                 val lastInterval = db.intervalQueries.getDesc(limit = 1).executeAsOne().toModel()
                 val activity = lastInterval.getActivityDI()
                 val timer: Int? = run {
-                    val timeLeft = lastInterval.id + lastInterval.deadline - time()
+                    val timeLeft = lastInterval.id + lastInterval.timer - time()
                     if (timeLeft > 0) timeLeft else null
                 }
                 val paused = lastInterval.note?.textFeatures()?.paused
-                             ?: TextFeatures.Paused(lastInterval.id, lastInterval.deadline)
+                             ?: TextFeatures.Paused(lastInterval.id, lastInterval.timer)
                 val text = lastInterval.note ?: activity.name
                 val tf = text.textFeatures().copy(
                     activity = activity,
@@ -134,12 +134,12 @@ data class IntervalModel(
                     text = tf.textWithFeatures(),
                     folder = DI.getTodayFolder(),
                 )
-                addWithValidationNeedTransaction(DEADLINE_AFTER_PAUSE, ActivityModel.getOther(), null)
+                addWithValidationNeedTransaction(TIMER_AFTER_PAUSE, ActivityModel.getOther(), null)
             }
         }
 
         private fun IntervalSQ.toModel() = IntervalModel(
-            id = id, deadline = deadline, note = note, activity_id = activity_id
+            id = id, timer = timer, note = note, activity_id = activity_id
         )
 
         ///
@@ -153,7 +153,7 @@ data class IntervalModel(
             db.intervalQueries.insert(
                 IntervalSQ(
                     id = j.getInt(0),
-                    deadline = j.getInt(1),
+                    timer = j.getInt(1),
                     note = j.getStringOrNull(2),
                     activity_id = j.getInt(3),
                 )
@@ -196,14 +196,14 @@ data class IntervalModel(
     override fun backupable__getId(): String = id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
-        id, deadline, note, activity_id
+        id, timer, note, activity_id
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
         val j = json.jsonArray
         db.intervalQueries.upById(
             id = j.getInt(0),
-            deadline = j.getInt(1),
+            timer = j.getInt(1),
             note = j.getStringOrNull(2),
             activity_id = j.getInt(3),
         )
