@@ -66,7 +66,7 @@ fun TabTimerView() {
                         }
                     }
                     .size(32.dp)
-                    .padding(5.dp)
+                    .padding(6.dp)
             )
 
             SpacerW1()
