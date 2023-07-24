@@ -102,7 +102,7 @@ private fun List<ActivityModel>.toUiList(
     lastInterval: IntervalModel,
     isPurple: Boolean,
 ): List<TabTimerVM.ActivityUI> {
-    val sorted = this.sortedWith(compareBy({ it.sort }, { it.id }))
+    val sorted = this.sortedWith(compareBy({ it.sort }, { -it.id }))
     val activeIdx = sorted.indexOfFirst { it.id == lastInterval.activity_id }
     return sorted.mapIndexed { idx, activity ->
         val isActive = (idx == activeIdx)
