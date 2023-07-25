@@ -151,7 +151,7 @@ struct TabTimerView: View {
                             }
                                     .padding(.top, 8)
 
-                            MySpacerSize(height: 21)
+                            MySpacerSize(height: 24)
                         }
                     }
                 }
