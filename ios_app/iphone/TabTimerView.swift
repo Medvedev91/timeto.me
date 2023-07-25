@@ -415,12 +415,6 @@ private struct ActivityRowView: View {
     }
 }
 
-///
-/// Custom cell's implementation because the listRowBackground() hide touch effect
-///
-/// Dirty magic! While using inside halfSheet the buttons
-/// don't work, .buttonStyle(.borderless) on halfSheet helps.
-///
 private struct ActivityButtonStyle: ButtonStyle {
 
     let bgColor: Color
