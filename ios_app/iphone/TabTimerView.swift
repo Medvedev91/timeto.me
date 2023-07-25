@@ -61,7 +61,7 @@ struct TabTimerView: View {
                                     .padding(.trailing, activitiesInnerHPadding + timerHintsHPadding)
                         }
                                 .padding(.top, 12)
-                                .padding(.bottom, 8)
+                                .padding(.bottom, 10)
 
                         //
                         // List
