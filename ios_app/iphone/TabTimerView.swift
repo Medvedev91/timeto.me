@@ -116,11 +116,11 @@ struct TabTimerView: View {
 
                             HStack {
 
-                                ChartHistoryButton(text: "Chart", iconName: "chart.pie", extraTrailingPadding: 1) {
+                                ChartHistoryButton(text: "Chart", iconName: "chart.pie") {
                                     isChartPresented = true
                                 }
                                         .padding(.leading, 18)
-                                        //                                        .padding(.trailing, 1)
+                                        .padding(.trailing, activitiesInnerHPadding + timerHintsHPadding)
                                         .sheetEnv(isPresented: $isChartPresented) {
                                             VStack {
 
@@ -135,7 +135,7 @@ struct TabTimerView: View {
                                             }
                                         }
 
-                                ChartHistoryButton(text: "History", iconName: "list.bullet.rectangle", extraTrailingPadding: -2) {
+                                ChartHistoryButton(text: "History", iconName: "list.bullet.rectangle") {
                                     isHistoryPresented = true
                                 }
                                         .sheetEnv(isPresented: $isHistoryPresented) {
@@ -180,7 +180,6 @@ private struct ChartHistoryButton: View {
 
     let text: String
     let iconName: String
-    var extraTrailingPadding: CGFloat = 0
     let onClick: () -> Void
 
     var body: some View {
@@ -196,7 +195,6 @@ private struct ChartHistoryButton: View {
                     }
                 }
         )
-                .padding(.trailing, activitiesInnerHPadding + timerHintsHPadding + extraTrailingPadding)
     }
 }
 
