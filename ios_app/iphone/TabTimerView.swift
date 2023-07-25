@@ -51,41 +51,17 @@ struct TabTimerView: View {
 
                             Spacer()
 
-                            TopMenuTextButton(text: "Chart") {
-                                isChartPresented = true
-                            }
-                                    .sheetEnv(isPresented: $isChartPresented) {
-                                        VStack {
-
-                                            ChartView()
-                                                    .padding(.top, 15)
-
-                                            Button(
-                                                    action: { isChartPresented.toggle() },
-                                                    label: { Text("close").fontWeight(.light) }
-                                            )
-                                                    .padding(.bottom, 4)
-                                        }
+                            Button(
+                                    action: { isEditActivitiesPresented = true },
+                                    label: {
+                                        Text("Edit")
+                                                .font(.system(size: 17, weight: .light))
                                     }
-
-                            TopMenuTextButton(text: "History") {
-                                isHistoryPresented = true
-                            }
-                                    .sheetEnv(isPresented: $isHistoryPresented) {
-                                        ZStack {
-                                            Color(.myBackground).edgesIgnoringSafeArea(.all)
-                                            HistoryView(isHistoryPresented: $isHistoryPresented)
-                                        }
-                                                // todo
-                                                .interactiveDismissDisabled()
-                                    }
-
-                            TopMenuTextButton(text: "Edit") {
-                                isEditActivitiesPresented = true
-                            }
+                            )
+                                    .padding(.trailing, activitiesInnerHPadding + timerHintsHPadding)
                         }
                                 .padding(.top, 8)
-                                .padding(.bottom, 8)
+                                .padding(.bottom, 10)
 
                         //
                         // List
@@ -136,9 +112,46 @@ struct TabTimerView: View {
                                         }
                                     }
                                      */
-
-                                MySpacerSize(height: 21)
                             }
+
+                            HStack {
+
+                                ChartHistoryButton(text: "Chart", iconName: "chart.pie", extraTrailingPadding: 1) {
+                                    isChartPresented = true
+                                }
+                                        .padding(.leading, 18)
+                                        //                                        .padding(.trailing, 1)
+                                        .sheetEnv(isPresented: $isChartPresented) {
+                                            VStack {
+
+                                                ChartView()
+                                                        .padding(.top, 15)
+
+                                                Button(
+                                                        action: { isChartPresented.toggle() },
+                                                        label: { Text("close").fontWeight(.light) }
+                                                )
+                                                        .padding(.bottom, 4)
+                                            }
+                                        }
+
+                                ChartHistoryButton(text: "History", iconName: "list.bullet.rectangle", extraTrailingPadding: -2) {
+                                    isHistoryPresented = true
+                                }
+                                        .sheetEnv(isPresented: $isHistoryPresented) {
+                                            ZStack {
+                                                Color(.myBackground).edgesIgnoringSafeArea(.all)
+                                                HistoryView(isHistoryPresented: $isHistoryPresented)
+                                            }
+                                                    // todo
+                                                    .interactiveDismissDisabled()
+                                        }
+
+                                Spacer()
+                            }
+                                    .padding(.top, 8)
+
+                            MySpacerSize(height: 21)
                         }
                     }
                 }
@@ -163,20 +176,27 @@ struct TabTimerView: View {
     }
 }
 
-private struct TopMenuTextButton: View {
+private struct ChartHistoryButton: View {
 
     let text: String
+    let iconName: String
+    var extraTrailingPadding: CGFloat = 0
     let onClick: () -> Void
 
     var body: some View {
         Button(
                 action: { onClick() },
                 label: {
-                    Text(text)
-                            .font(.system(size: 16, weight: .light))
+                    HStack {
+                        Image(systemName: iconName)
+                                .font(.system(size: 17, weight: .thin))
+                                .padding(.trailing, 3 + onePx)
+                        Text(text)
+                                .font(.system(size: 17, weight: .light))
+                    }
                 }
         )
-                .padding(.trailing, activitiesInnerHPadding + timerHintsHPadding)
+                .padding(.trailing, activitiesInnerHPadding + timerHintsHPadding + extraTrailingPadding)
     }
 }
 
