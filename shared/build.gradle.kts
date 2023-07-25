@@ -26,7 +26,7 @@ kotlin {
     sourceSets {
 
         val ktor_version = "2.1.3"
-        val sqldelight_version = "1.5.5" // TRICK Sync with project build.gradle.kts
+        val sqldelight_version = "1.5.5" // TRICK Sync with /build.gradle.kts
 
         val commonMain by getting {
             dependencies {
