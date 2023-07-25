@@ -61,7 +61,7 @@ struct TabTimerView: View {
                                     .padding(.trailing, activitiesInnerHPadding + timerHintsHPadding)
                         }
                                 .padding(.top, 12)
-                                .padding(.bottom, 10)
+                                .padding(.bottom, 8)
 
                         //
                         // List
@@ -70,7 +70,7 @@ struct TabTimerView: View {
 
                             VStack {
 
-                                MySpacerSize(height: 21)
+                                MySpacerSize(height: 20)
 
                                 VStack {
 
