@@ -44,10 +44,10 @@ struct TabTimerView: View {
                                     label: {
                                         Image(systemName: "line.3.horizontal")
                                                 .foregroundColor(.blue)
-                                                .font(.system(size: 22, weight: .thin))
+                                                .font(.system(size: 23, weight: .thin))
                                     }
                             )
-                                    .padding(.leading, 15)
+                                    .padding(.leading, 15 - onePx)
 
                             Spacer()
 
