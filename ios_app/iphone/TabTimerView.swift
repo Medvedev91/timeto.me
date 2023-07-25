@@ -411,7 +411,7 @@ private struct ActivityRowView: View {
                     ) {
                     }
                 }
-                .buttonStyle(ActivityButtonStyle(bgColor: bgColorAnim))
+                .buttonStyle(ActivityButtonStyle(bgColor: bgColorAnim, isActive: isActiveAnim))
     }
 }
 
@@ -424,10 +424,15 @@ private struct ActivityRowView: View {
 private struct ActivityButtonStyle: ButtonStyle {
 
     let bgColor: Color
+    let isActive: Bool
 
     func makeBody(configuration: Self.Configuration) -> some View {
-        configuration
-                .label
-                .background(configuration.isPressed ? Color(.systemGray4) : bgColor)
+        configuration.label.background(calcColor(configuration: configuration))
+    }
+
+    private func calcColor(configuration: Self.Configuration) -> Color {
+        if !configuration.isPressed { return bgColor }
+        if isActive { return bgColor.opacity(0.8) }
+        return Color(.systemGray5)
     }
 }
