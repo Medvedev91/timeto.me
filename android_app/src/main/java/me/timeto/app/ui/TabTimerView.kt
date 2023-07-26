@@ -1,5 +1,6 @@
 package me.timeto.app.ui
 
+import androidx.annotation.DrawableRes
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
@@ -19,6 +20,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
@@ -46,8 +48,7 @@ fun TabTimerView() {
 
         Row(
             modifier = Modifier
-                .padding(vertical = 8.dp)
-                .padding(end = menuTextButtonHPadding)
+                .padding(top = 12.dp, bottom = 10.dp, end = menuTextButtonHPadding)
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -58,7 +59,7 @@ fun TabTimerView() {
                 tint = c.blue,
                 modifier = Modifier
                     .padding(start = 12.dp)
-                    .offset(y = 2.dp)
+                    .offset(y = 1.dp)
                     .clip(roundedShape)
                     .clickable {
                         Sheet.show { layer ->
@@ -71,27 +72,20 @@ fun TabTimerView() {
 
             SpacerW1()
 
-            ChartHistoryButton("Chart") {
-                Dialog.show(
-                    modifier = Modifier.fillMaxHeight(0.95f),
-                ) { layer ->
-                    ChartDialogView(layer::close)
-                }
-            }
-
-            ChartHistoryButton("History") {
-                Dialog.show(
-                    modifier = Modifier.fillMaxHeight(0.95f),
-                ) { layer ->
-                    HistoryDialogView(layer::close)
-                }
-            }
-
-            ChartHistoryButton("Edit") {
-                Sheet.show { layer ->
-                    EditActivitiesSheet(layer = layer)
-                }
-            }
+            Text(
+                text = "Edit",
+                modifier = Modifier
+                    .clip(squircleShape)
+                    .clickable {
+                        Sheet.show { layer ->
+                            EditActivitiesSheet(layer = layer)
+                        }
+                    }
+                    .padding(horizontal = menuTextButtonHPadding, vertical = 4.dp),
+                color = c.blue,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Light,
+            )
         }
 
         LazyColumn(
@@ -347,6 +341,38 @@ fun TabTimerView() {
                     }
                 }
             }
+
+            item {
+
+                HStack(
+                    modifier = Modifier
+                        .padding(top = 12.dp, start = 10.dp),
+                ) {
+
+                    ChartHistoryButton(
+                        text = "Chart",
+                        iconResId = R.drawable.sf_chart_pie_small_thin,
+                    ) {
+                        Dialog.show(
+                            modifier = Modifier.fillMaxHeight(0.95f),
+                        ) { layer ->
+                            ChartDialogView(layer::close)
+                        }
+                    }
+
+                    ChartHistoryButton(
+                        "History",
+                        iconResId = R.drawable.sf_list_bullet_rectangle_small_thin,
+                        iconSize = 20.dp,
+                    ) {
+                        Dialog.show(
+                            modifier = Modifier.fillMaxHeight(0.95f),
+                        ) { layer ->
+                            HistoryDialogView(layer::close)
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -354,18 +380,34 @@ fun TabTimerView() {
 @Composable
 private fun ChartHistoryButton(
     text: String,
+    @DrawableRes iconResId: Int,
+    iconSize: Dp = 18.dp,
     onClick: () -> Unit,
 ) {
-    Text(
-        text = text,
+    HStack(
         modifier = Modifier
             .clip(squircleShape)
             .clickable {
                 onClick()
             }
             .padding(horizontal = menuTextButtonHPadding, vertical = 4.dp),
-        color = c.blue,
-        fontSize = 15.sp,
-        fontWeight = FontWeight.Light,
-    )
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+
+        Icon(
+            painterResource(iconResId),
+            contentDescription = text,
+            tint = c.blue,
+            modifier = Modifier
+                .padding(end = 5.dp)
+                .size(iconSize)
+        )
+
+        Text(
+            text = text,
+            color = c.blue,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Light,
+        )
+    }
 }
