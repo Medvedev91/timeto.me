@@ -116,7 +116,7 @@ struct TabTimerView: View {
 
                             HStack {
 
-                                ChartHistoryButton(text: "Chart", iconName: "chart.pie", iconSize: 17) {
+                                ChartHistoryButton(text: "Chart", iconName: "chart.pie", iconSize: 18) {
                                     isChartPresented = true
                                 }
                                         .padding(.leading, 18)
