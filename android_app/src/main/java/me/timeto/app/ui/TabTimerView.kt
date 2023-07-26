@@ -71,7 +71,7 @@ fun TabTimerView() {
 
             SpacerW1()
 
-            TopMenuTextButton("Chart") {
+            ChartHistoryButton("Chart") {
                 Dialog.show(
                     modifier = Modifier.fillMaxHeight(0.95f),
                 ) { layer ->
@@ -79,7 +79,7 @@ fun TabTimerView() {
                 }
             }
 
-            TopMenuTextButton("History") {
+            ChartHistoryButton("History") {
                 Dialog.show(
                     modifier = Modifier.fillMaxHeight(0.95f),
                 ) { layer ->
@@ -87,7 +87,7 @@ fun TabTimerView() {
                 }
             }
 
-            TopMenuTextButton("Edit") {
+            ChartHistoryButton("Edit") {
                 Sheet.show { layer ->
                     EditActivitiesSheet(layer = layer)
                 }
@@ -352,7 +352,7 @@ fun TabTimerView() {
 }
 
 @Composable
-private fun TopMenuTextButton(
+private fun ChartHistoryButton(
     text: String,
     onClick: () -> Unit,
 ) {
