@@ -139,97 +139,10 @@ fun TabTasksView(
             val inactiveTextColor = c.textSecondary
 
             LazyColumn(
-                contentPadding = PaddingValues(bottom = tabSpace)
+                reverseLayout = true,
             ) {
 
-                item {
-                    val isActive = activeSection is Section_Calendar
-
-                    val dropItem = remember { DropItem.Type__Calendar(DropItem.Square(0, 0, 0, 0)) }
-                    DisposableEffect(Unit) {
-                        dropItems.add(dropItem)
-                        onDispose { dropItems.remove(dropItem) }
-                    }
-                    val isAllowedToDrop = dragItem.value?.isDropAllowed?.invoke(dropItem) ?: false
-                    val isFocusedToDrop = dragItem.value?.focusedDrop?.value == dropItem
-
-                    val textColor = animateColorAsState(
-                        when {
-                            isFocusedToDrop -> c.tasksTabDropFocused
-                            isAllowedToDrop -> c.purple
-                            isActive -> c.blue
-                            else -> c.calendarIconColor
-                        },
-                        spring(stiffness = Spring.StiffnessMedium)
-                    )
-
-                    val rotationMaxAngle = 5f
-                    var rotationAngle by remember { mutableStateOf(0f) }
-                    val rotationAngleAnimate by animateFloatAsState(
-                        targetValue = rotationAngle,
-                        animationSpec = tween(durationMillis = Random.nextInt(80, 130), easing = LinearEasing),
-                        finishedListener = {
-                            if (isAllowedToDrop)
-                                rotationAngle = if (rotationAngle < 0) rotationMaxAngle else -rotationMaxAngle
-                        }
-                    )
-                    LaunchedEffect(isAllowedToDrop) {
-                        if (isAllowedToDrop)
-                            delay(Random.nextInt(0, 100).toLong())
-                        rotationAngle = if (isAllowedToDrop) (if (Random.nextBoolean()) rotationMaxAngle else -rotationMaxAngle) else 0f
-                    }
-
-                    Box(
-                        modifier = Modifier
-                            .padding(horizontal = 1.dp)
-                            .fillMaxWidth()
-                            .rotate(rotationAngleAnimate)
-                            .onGloballyPositioned { c ->
-                                dropItem.upSquareByCoordinates(c)
-                            }
-                            .clip(MySquircleShape(40f, -4f))
-                            .clickable {
-                                activeSection = Section_Calendar()
-                            },
-                    ) {
-                        Icon(
-                            painterResource(id = R.drawable.sf_calendar_medium_light),
-                            contentDescription = "Calendar",
-                            tint = textColor.value,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                        )
-                    }
-                }
-
-                item {
-                    val isActive = activeSection is Section_Repeating
-                    val backgroundColor = animateColorAsState(if (isActive) c.blue else c.bg, spring(stiffness = Spring.StiffnessMedium))
-                    val textColor = animateColorAsState(if (isActive) activeTextColor else inactiveTextColor, spring(stiffness = Spring.StiffnessMedium))
-
-                    Box(
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .width(SECTION_BUTTON_WIDTH)
-                            .height(SECTION_BUTTON_WIDTH)
-                            .border(onePx, c.dividerBg, tabShape)
-                            .clip(tabShape)
-                            .background(backgroundColor.value)
-                            .clickable {
-                                activeSection = Section_Repeating()
-                            },
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            painterResource(id = R.drawable.sf_repeat_medium_semibold),
-                            contentDescription = "Repeating",
-                            tint = textColor.value,
-                            modifier = Modifier.size(17.5.dp)
-                        )
-                    }
-                }
-
-                items(state.folders.reversed()) { folder ->
+                items(state.folders) { folder ->
                     val dropItem = remember {
                         DropItem.Type__Folder(folder, DropItem.Square(0, 0, 0, 0))
                     }
@@ -305,6 +218,93 @@ fun TabTasksView(
                             lineHeight = 16.5.sp,
                             fontWeight = FontWeight.W600,
                             fontFamily = FontFamily.Monospace
+                        )
+                    }
+                }
+
+                item {
+                    val isActive = activeSection is Section_Repeating
+                    val backgroundColor = animateColorAsState(if (isActive) c.blue else c.bg, spring(stiffness = Spring.StiffnessMedium))
+                    val textColor = animateColorAsState(if (isActive) activeTextColor else inactiveTextColor, spring(stiffness = Spring.StiffnessMedium))
+
+                    Box(
+                        modifier = Modifier
+                            .padding(top = 10.dp)
+                            .width(SECTION_BUTTON_WIDTH)
+                            .height(SECTION_BUTTON_WIDTH)
+                            .border(onePx, c.dividerBg, tabShape)
+                            .clip(tabShape)
+                            .background(backgroundColor.value)
+                            .clickable {
+                                activeSection = Section_Repeating()
+                            },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            painterResource(id = R.drawable.sf_repeat_medium_semibold),
+                            contentDescription = "Repeating",
+                            tint = textColor.value,
+                            modifier = Modifier.size(17.5.dp)
+                        )
+                    }
+                }
+
+                item {
+                    val isActive = activeSection is Section_Calendar
+
+                    val dropItem = remember { DropItem.Type__Calendar(DropItem.Square(0, 0, 0, 0)) }
+                    DisposableEffect(Unit) {
+                        dropItems.add(dropItem)
+                        onDispose { dropItems.remove(dropItem) }
+                    }
+                    val isAllowedToDrop = dragItem.value?.isDropAllowed?.invoke(dropItem) ?: false
+                    val isFocusedToDrop = dragItem.value?.focusedDrop?.value == dropItem
+
+                    val textColor = animateColorAsState(
+                        when {
+                            isFocusedToDrop -> c.tasksTabDropFocused
+                            isAllowedToDrop -> c.purple
+                            isActive -> c.blue
+                            else -> c.calendarIconColor
+                        },
+                        spring(stiffness = Spring.StiffnessMedium)
+                    )
+
+                    val rotationMaxAngle = 5f
+                    var rotationAngle by remember { mutableStateOf(0f) }
+                    val rotationAngleAnimate by animateFloatAsState(
+                        targetValue = rotationAngle,
+                        animationSpec = tween(durationMillis = Random.nextInt(80, 130), easing = LinearEasing),
+                        finishedListener = {
+                            if (isAllowedToDrop)
+                                rotationAngle = if (rotationAngle < 0) rotationMaxAngle else -rotationMaxAngle
+                        }
+                    )
+                    LaunchedEffect(isAllowedToDrop) {
+                        if (isAllowedToDrop)
+                            delay(Random.nextInt(0, 100).toLong())
+                        rotationAngle = if (isAllowedToDrop) (if (Random.nextBoolean()) rotationMaxAngle else -rotationMaxAngle) else 0f
+                    }
+
+                    Box(
+                        modifier = Modifier
+                            .padding(horizontal = 1.dp)
+                            .fillMaxWidth()
+                            .rotate(rotationAngleAnimate)
+                            .onGloballyPositioned { c ->
+                                dropItem.upSquareByCoordinates(c)
+                            }
+                            .clip(MySquircleShape(40f, -4f))
+                            .clickable {
+                                activeSection = Section_Calendar()
+                            },
+                    ) {
+                        Icon(
+                            painterResource(id = R.drawable.sf_calendar_medium_light),
+                            contentDescription = "Calendar",
+                            tint = textColor.value,
+                            modifier = Modifier
+                                .fillMaxWidth()
                         )
                     }
                 }
