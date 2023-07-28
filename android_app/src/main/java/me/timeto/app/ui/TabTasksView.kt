@@ -55,7 +55,6 @@ private val tabShape = MySquircleShape(50f)
 @Composable
 fun TabTasksView(
     modifier: Modifier,
-    withRepeatings: Boolean,
     onTaskStarted: () -> Unit,
 ) {
     val (_, state) = rememberVM { TabTasksVM() }
@@ -203,32 +202,30 @@ fun TabTasksView(
                     }
                 }
 
-                if (withRepeatings) {
-                    item {
-                        val isActive = activeSection is Section_Repeating
-                        val backgroundColor = animateColorAsState(if (isActive) c.blue else c.bg, spring(stiffness = Spring.StiffnessMedium))
-                        val textColor = animateColorAsState(if (isActive) activeTextColor else inactiveTextColor, spring(stiffness = Spring.StiffnessMedium))
+                item {
+                    val isActive = activeSection is Section_Repeating
+                    val backgroundColor = animateColorAsState(if (isActive) c.blue else c.bg, spring(stiffness = Spring.StiffnessMedium))
+                    val textColor = animateColorAsState(if (isActive) activeTextColor else inactiveTextColor, spring(stiffness = Spring.StiffnessMedium))
 
-                        Box(
-                            modifier = Modifier
-                                .padding(top = 10.dp)
-                                .width(SECTION_BUTTON_WIDTH)
-                                .height(SECTION_BUTTON_WIDTH)
-                                .border(onePx, c.dividerBg, tabShape)
-                                .clip(tabShape)
-                                .background(backgroundColor.value)
-                                .clickable {
-                                    activeSection = Section_Repeating()
-                                },
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                painterResource(id = R.drawable.sf_repeat_medium_semibold),
-                                contentDescription = "Repeating",
-                                tint = textColor.value,
-                                modifier = Modifier.size(17.5.dp)
-                            )
-                        }
+                    Box(
+                        modifier = Modifier
+                            .padding(top = 10.dp)
+                            .width(SECTION_BUTTON_WIDTH)
+                            .height(SECTION_BUTTON_WIDTH)
+                            .border(onePx, c.dividerBg, tabShape)
+                            .clip(tabShape)
+                            .background(backgroundColor.value)
+                            .clickable {
+                                activeSection = Section_Repeating()
+                            },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            painterResource(id = R.drawable.sf_repeat_medium_semibold),
+                            contentDescription = "Repeating",
+                            tint = textColor.value,
+                            modifier = Modifier.size(17.5.dp)
+                        )
                     }
                 }
 
