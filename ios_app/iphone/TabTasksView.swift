@@ -9,7 +9,6 @@ private let SECTION_BUTTONS_END_PADDING = TAB_TASKS_H_PADDING.goldenRatioDown()
 // TRICK Using ignoresSafeArea() outside is mandatory
 struct TabTasksView: View {
 
-    let withRepeatings: Bool
     let onTaskStarted: () -> Void
 
     //////
@@ -131,39 +130,36 @@ struct TabTasksView: View {
                     //
                     // Repeating
 
-                    if withRepeatings {
+                    Spacer()
+                            .frame(height: tabPadding)
 
-                        Spacer()
-                                .frame(height: tabPadding)
+                    let isActiveRepeating = activeSection is TabTasksView_Section_Repeating
 
-                        let isActiveRepeating = activeSection is TabTasksView_Section_Repeating
+                    Button(
+                            action: {
+                                upActiveSectionWithAnimation(TabTasksView_Section_Repeating())
+                            },
+                            label: {
+                                Image(systemName: "repeat")
+                                        .padding(.top, 9)
+                                        .padding(.bottom, 9)
+                                        .foregroundColor(isActiveRepeating ? .white : .primary)
+                                        .opacity(isActiveRepeating ? 1 : 0.7)
 
-                        Button(
-                                action: {
-                                    upActiveSectionWithAnimation(TabTasksView_Section_Repeating())
-                                },
-                                label: {
-                                    Image(systemName: "repeat")
-                                            .padding(.top, 9)
-                                            .padding(.bottom, 9)
-                                            .foregroundColor(isActiveRepeating ? .white : .primary)
-                                            .opacity(isActiveRepeating ? 1 : 0.7)
+                            }
+                    )
+                            .background(
 
-                                }
-                        )
-                                .background(
+                                    ZStack {
 
-                                        ZStack {
+                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                .fill(isActiveRepeating ? .blue : Color(.bg))
 
-                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                    .fill(isActiveRepeating ? .blue : Color(.bg))
-
-                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                    .stroke(isActiveRepeating ? .blue : Color(.dividerBg), lineWidth: onePx)
-                                        }
-                                                .frame(width: tabWidth)
-                                )
-                    }
+                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                .stroke(isActiveRepeating ? .blue : Color(.dividerBg), lineWidth: onePx)
+                                    }
+                                            .frame(width: tabWidth)
+                            )
 
                     //
                     // Folders

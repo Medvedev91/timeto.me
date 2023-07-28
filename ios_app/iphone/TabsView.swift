@@ -73,7 +73,6 @@ struct TabsView: View {
                         .tag(TabsView.TAB_ID_TIMER)
 
                 TabTasksView(
-                        withRepeatings: true,
                         onTaskStarted: {
                             TabsView.lastInstance?.tabSelection = TabsView.TAB_ID_TIMER
                         }

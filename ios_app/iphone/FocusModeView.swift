@@ -188,7 +188,6 @@ private struct FocusModeView__CoverView: View {
                             }
 
                             TabTasksView(
-                                    withRepeatings: false,
                                     onTaskStarted: {}
                             )
                                     .clipped() // Fix list offset on IME open
