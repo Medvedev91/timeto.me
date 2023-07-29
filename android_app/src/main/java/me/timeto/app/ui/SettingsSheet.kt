@@ -139,7 +139,7 @@ fun SettingsSheet(
 
             item {
 
-                MyListView__Padding__SectionHeader()
+                MyListView__Padding__SectionSection()
 
                 MyListView__ItemView(
                     isFirst = true,
