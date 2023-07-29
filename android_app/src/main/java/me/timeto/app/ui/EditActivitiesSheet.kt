@@ -10,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowDownward
 import androidx.compose.material.icons.rounded.ArrowUpward
+import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -63,6 +64,15 @@ fun EditActivitiesSheet(
                     ) {
 
                         Row(
+                            modifier = Modifier
+                                .clickable {
+                                    Sheet.show { layer ->
+                                        ActivityFormSheet(
+                                            layer = layer,
+                                            activity = activityUI.activity,
+                                        )
+                                    }
+                                },
                             verticalAlignment = Alignment.CenterVertically
                         ) {
 
@@ -79,6 +89,16 @@ fun EditActivitiesSheet(
                                 color = c.text,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
+                            )
+
+                            Icon(
+                                Icons.Rounded.Edit,
+                                "Edit",
+                                tint = c.blue,
+                                modifier = Modifier
+                                    .padding(start = 5.dp)
+                                    .size(24.dp)
+                                    .padding(2.dp)
                             )
 
                             Icon(
