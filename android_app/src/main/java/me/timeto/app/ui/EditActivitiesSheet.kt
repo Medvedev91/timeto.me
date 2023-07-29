@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -89,7 +88,7 @@ fun EditActivitiesSheet(
                                 modifier = Modifier
                                     .padding(start = 5.dp)
                                     .size(24.dp)
-                                    .clip(RoundedCornerShape(99.dp))
+                                    .clip(roundedShape)
                                     .clickable {
                                         vm.down(activityUI)
                                     }
@@ -103,7 +102,7 @@ fun EditActivitiesSheet(
                                 modifier = Modifier
                                     .padding(start = 4.dp, end = 8.dp)
                                     .size(24.dp)
-                                    .clip(RoundedCornerShape(99.dp))
+                                    .clip(roundedShape)
                                     .clickable {
                                         vm.up(activityUI)
                                     }
