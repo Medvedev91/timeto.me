@@ -225,9 +225,25 @@ struct ActivityFormSheet: View {
                             }
                         }
                     }
+                }
 
-                    Spacer()
-                            .frame(minHeight: 20)
+                if vm.activity != nil {
+
+                    MyListView__Padding__SectionSection()
+
+                    MyListView__ItemView(
+                            isFirst: true,
+                            isLast: true
+                    ) {
+
+                        MyListView__ItemView__ActionView(
+                                text: state.deleteText
+                        ) {
+                            vm.delete {
+                                isPresented = false
+                            }
+                        }
+                    }
                 }
             }
         }
