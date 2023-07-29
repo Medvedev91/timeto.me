@@ -70,13 +70,13 @@ class FolderFormSheetVM(
                     buttonText = "Delete",
                     isRed = true,
                 ) {
-                    try {
-                        launchExDefault {
+                    launchExDefault {
+                        try {
                             folder.backupable__delete()
                             onSuccess()
+                        } catch (e: UIException) {
+                            showUiAlert(e.uiMessage)
                         }
-                    } catch (e: UIException) {
-                        showUiAlert(e.uiMessage)
                     }
                 }
             )
