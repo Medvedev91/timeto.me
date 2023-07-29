@@ -128,7 +128,7 @@ fun TabTimerView() {
                         Sheet.show { layer ->
                             ActivityFormSheet(
                                 layer = layer,
-                                editedActivity = activityUI.activity,
+                                activity = activityUI.activity,
                             )
                         }
                         false

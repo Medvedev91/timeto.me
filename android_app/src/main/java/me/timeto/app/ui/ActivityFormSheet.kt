@@ -23,10 +23,10 @@ import me.timeto.shared.vm.ActivityFormSheetVM
 @Composable
 fun ActivityFormSheet(
     layer: WrapperView.Layer,
-    editedActivity: ActivityModel?,
+    activity: ActivityModel?,
 ) {
 
-    val (vm, state) = rememberVM(editedActivity) { ActivityFormSheetVM(editedActivity) }
+    val (vm, state) = rememberVM(activity) { ActivityFormSheetVM(activity) }
 
     Column(
         modifier = Modifier

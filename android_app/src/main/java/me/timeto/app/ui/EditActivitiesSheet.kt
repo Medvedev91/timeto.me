@@ -131,7 +131,7 @@ fun EditActivitiesSheet(
                     .background(c.blue)
                     .clickable {
                         Sheet.show { layer ->
-                            ActivityFormSheet(layer = layer, editedActivity = null)
+                            ActivityFormSheet(layer = layer, activity = null)
                         }
                     }
                     .padding(bottom = 5.dp, top = 5.dp, start = 12.dp, end = 12.dp),
