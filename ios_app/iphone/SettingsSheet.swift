@@ -19,6 +19,10 @@ struct SettingsSheet: View {
     @State private var isFoldersSettingsPresented = false
     @State private var isDayStartPresented = false
 
+    @State private var isEditActivitiesPresented = false
+    @State private var isChartPresented = false
+    @State private var isHistoryPresented = false
+
     @State private var isFileExporterPresented = false
     @State private var fileForExport: MyJsonFileDocument? = nil
     @State private var fileForExportName: String? = nil
@@ -47,6 +51,75 @@ struct SettingsSheet: View {
             ScrollViewWithVListener(showsIndicators: false, vScroll: $sheetHeaderScroll) {
 
                 VStack {
+
+                    VStack {
+
+                        ZStack {}.frame(height: 16)
+
+                        MyListView__ItemView(
+                                isFirst: true,
+                                isLast: true
+                        ) {
+                            MyListView__ItemView__ButtonView(
+                                    text: "Activities"
+                            ) {
+                                isEditActivitiesPresented = true
+                            }
+                                    .sheetEnv(
+                                            isPresented: $isEditActivitiesPresented
+                                    ) {
+                                        EditActivitiesSheet(
+                                                isPresented: $isEditActivitiesPresented
+                                        )
+                                    }
+                        }
+
+                        MyListView__Padding__SectionSection()
+
+                        MyListView__ItemView(
+                                isFirst: true,
+                                isLast: false
+                        ) {
+                            MyListView__ItemView__ButtonView(
+                                    text: "Chart"
+                            ) {
+                                isChartPresented = true
+                            }
+                                    .sheetEnv(isPresented: $isChartPresented) {
+                                        VStack {
+
+                                            ChartView()
+                                                    .padding(.top, 15)
+
+                                            Button(
+                                                    action: { isChartPresented.toggle() },
+                                                    label: { Text("close").fontWeight(.light) }
+                                            )
+                                                    .padding(.bottom, 4)
+                                        }
+                                    }
+                        }
+
+                        MyListView__ItemView(
+                                isFirst: false,
+                                isLast: true,
+                                withTopDivider: true
+                        ) {
+                            MyListView__ItemView__ButtonView(
+                                    text: "History"
+                            ) {
+                                isHistoryPresented = true
+                            }
+                                    .sheetEnv(isPresented: $isHistoryPresented) {
+                                        ZStack {
+                                            Color(.myBackground).edgesIgnoringSafeArea(.all)
+                                            HistoryView(isHistoryPresented: $isHistoryPresented)
+                                        }
+                                                // todo
+                                                .interactiveDismissDisabled()
+                                    }
+                        }
+                    }
 
                     ///
                     /// Checklists
