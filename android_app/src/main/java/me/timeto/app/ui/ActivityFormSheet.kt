@@ -277,6 +277,24 @@ fun ActivityFormSheet(
                     }
                 }
             }
+
+            if (activity != null) {
+
+                MyListView__Padding__SectionSection()
+
+                MyListView__ItemView(
+                    isFirst = true,
+                    isLast = true,
+                ) {
+                    MyListView__ItemView__ActionView(
+                        text = state.deleteText,
+                    ) {
+                        vm.delete {
+                            layer.close()
+                        }
+                    }
+                }
+            }
         }
     }
 }
