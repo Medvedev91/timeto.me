@@ -41,7 +41,7 @@ struct EditActivitiesSheet: View {
                         ) {
                             ActivityFormSheet(
                                     isPresented: $isAddActivityPresented,
-                                    editedActivity: nil
+                                    activity: nil
                             ) {}
                         }
 
@@ -85,7 +85,7 @@ struct EditActivitiesSheet: View {
                         .sheetEnv(isPresented: $isEditSheetPresented) {
                             ActivityFormSheet(
                                     isPresented: $isEditSheetPresented,
-                                    editedActivity: activityUI.activity
+                                    activity: activityUI.activity
                             ) {
                             }
                         }

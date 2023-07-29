@@ -16,12 +16,12 @@ struct ActivityFormSheet: View {
 
     init(
             isPresented: Binding<Bool>,
-            editedActivity: ActivityModel?,
+            activity: ActivityModel?,
             onSave: @escaping () -> Void
     ) {
         self.onSave = onSave
         _isPresented = isPresented
-        vm = ActivityFormSheetVM(activity: editedActivity)
+        vm = ActivityFormSheetVM(activity: activity)
     }
 
     var body: some View {

@@ -408,7 +408,7 @@ private struct ActivityRowView: View {
                 .sheetEnv(isPresented: $isEditSheetPresented) {
                     ActivityFormSheet(
                             isPresented: $isEditSheetPresented,
-                            editedActivity: activityUI.activity
+                            activity: activityUI.activity
                     ) {
                     }
                 }
