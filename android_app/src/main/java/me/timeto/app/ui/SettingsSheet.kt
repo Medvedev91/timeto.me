@@ -119,6 +119,26 @@ fun SettingsSheet(
 
             item {
 
+                Box(Modifier.height(16.dp))
+
+                MyListView__ItemView(
+                    isFirst = true,
+                    isLast = true,
+                    withTopDivider = false,
+                ) {
+
+                    MyListView__ItemView__ButtonView(
+                        text = "Activities",
+                    ) {
+                        Sheet.show { layer ->
+                            EditActivitiesSheet(layer = layer)
+                        }
+                    }
+                }
+            }
+
+            item {
+
                 MyListView__Padding__SectionHeader()
 
                 MyListView__HeaderView(
