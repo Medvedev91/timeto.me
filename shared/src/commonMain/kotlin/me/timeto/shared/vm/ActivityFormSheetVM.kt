@@ -28,6 +28,7 @@ class ActivityFormSheetVM(
         val colorTitle = "Color"
         val timerHintsHeader = "TIMER HINTS"
         val autoFSTitle = Strings.AUTO_FS_FORM_TITLE
+        val deleteText = "Delete Activity"
         val timerHintsCustomItems = activityData.timer_hints.custom_list.map { seconds ->
             TimerHintCustomItem(seconds = seconds, text = seconds.toTimerHintNote(isShort = false))
         }
@@ -148,6 +149,38 @@ class ActivityFormSheetVM(
                 )
             }
             onSuccess()
+        } catch (e: UIException) {
+            showUiAlert(e.uiMessage)
+        }
+    }
+
+    fun delete(
+        onSuccess: () -> Unit
+    ) = launchExDefault {
+        try {
+            val activity = activity
+            if (activity == null) {
+                reportApi("ActivityFormSheetVM no activity. WTF??!!")
+                return@launchExDefault
+            }
+
+            val nameUi = activity.nameWithEmoji().textFeatures().textUi()
+            showUiConfirmation(
+                UIConfirmationData(
+                    text = "Are you sure you want to delete \"$nameUi\" activity?",
+                    buttonText = "Delete",
+                    isRed = true,
+                ) {
+                    launchExDefault {
+                        try {
+                            activity.delete()
+                            onSuccess()
+                        } catch (e: UIException) {
+                            showUiAlert(e.uiMessage)
+                        }
+                    }
+                }
+            )
         } catch (e: UIException) {
             showUiAlert(e.uiMessage)
         }
