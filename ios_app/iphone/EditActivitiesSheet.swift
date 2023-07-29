@@ -59,6 +59,8 @@ struct EditActivitiesSheet: View {
         var vm: EditActivitiesVM
         var activityUI: EditActivitiesVM.ActivityUI
 
+        @State private var isEditSheetPresented = false
+
         var body: some View {
 
             HStack(spacing: 8) {
@@ -67,6 +69,26 @@ struct EditActivitiesSheet: View {
                         .lineLimit(1)
 
                 Spacer()
+
+                Button(
+                        action: {
+                            isEditSheetPresented = true
+                        },
+                        label: {
+                            Image(systemName: "pencil")
+                                    .font(.system(size: 16))
+                                    .foregroundColor(.blue)
+                        }
+                )
+                        .buttonStyle(.plain)
+                        .padding(.leading, 8)
+                        .sheetEnv(isPresented: $isEditSheetPresented) {
+                            ActivityFormSheet(
+                                    isPresented: $isEditSheetPresented,
+                                    editedActivity: activityUI.activity
+                            ) {
+                            }
+                        }
 
                 Button(
                         action: {
