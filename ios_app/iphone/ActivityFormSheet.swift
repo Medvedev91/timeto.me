@@ -26,7 +26,7 @@ struct ActivityFormSheet: View {
 
     var body: some View {
 
-        VMView(vm: vm, stack: .VStack(spacing: 0)) { state in
+        VMView(vm: vm, stack: .VStack()) { state in
 
             SheetHeaderView(
                     onCancel: { isPresented.toggle() },
@@ -43,9 +43,9 @@ struct ActivityFormSheet: View {
 
             ScrollViewWithVListener(showsIndicators: false, vScroll: $sheetHeaderScroll) {
 
-                VStack(spacing: 0) {
+                VStack {
 
-                    VStack(spacing: 0) {
+                    VStack {
 
                         MyListView__Padding__SectionHeader()
 
@@ -89,7 +89,7 @@ struct ActivityFormSheet: View {
                                 withArrow: true,
                                 rightView: AnyView(
 
-                                        HStack(spacing: 0) {
+                                        HStack {
 
                                             if let selectedEmoji = state.emoji {
                                                 Text(selectedEmoji)
@@ -149,7 +149,7 @@ struct ActivityFormSheet: View {
 
                     MyListView__Padding__HeaderSection()
 
-                    VStack(spacing: 0) {
+                    VStack {
 
                         let hintsTypeName: [(title: String, type: ActivityModel__Data.TimerHintsHINT_TYPE)] = [
                             ("By History", .history),
@@ -168,7 +168,7 @@ struct ActivityFormSheet: View {
                                     withTopDivider: !isFirst
                             ) {
 
-                                VStack(spacing: 0) {
+                                VStack {
 
                                     MyListView__ItemView__RadioView(
                                             text: pair.title,
