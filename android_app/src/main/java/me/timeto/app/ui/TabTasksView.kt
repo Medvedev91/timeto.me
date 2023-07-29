@@ -48,9 +48,6 @@ val taskListSectionPadding = 20.dp
 
 private val tabShape = MySquircleShape(50f)
 
-/**
- * TRICK Used twice: as a tab and for focus mode
- */
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TabTasksView(
