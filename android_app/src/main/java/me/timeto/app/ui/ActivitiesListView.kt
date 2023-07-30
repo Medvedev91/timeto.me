@@ -28,12 +28,16 @@ private val bgAnimateSpec: AnimationSpec<Color> = spring(stiffness = Spring.Stif
 
 @Composable
 fun ActivitiesListView(
+    modifier: Modifier,
     onTaskStarted: () -> Unit,
 ) {
 
     val (_, state) = rememberVM { ActivitiesListVM() }
 
-    Column {
+    Column(
+        modifier = modifier
+            .background(c.bg),
+    ) {
 
         state.activitiesUI.forEach { activityUI ->
 
