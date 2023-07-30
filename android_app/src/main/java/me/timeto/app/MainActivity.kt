@@ -27,7 +27,7 @@ import kotlinx.coroutines.delay
 import me.timeto.shared.*
 import me.timeto.shared.vm.AppVM
 
-var statusBarHeight = 0.dp
+var statusBarHeight = 0.dp // todo remove?
 
 class MainActivity : ComponentActivity() {
 
