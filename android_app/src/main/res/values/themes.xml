@@ -11,9 +11,10 @@
         <!-- Status bar icons color -->
         <item name="android:windowLightStatusBar">false</item>
 
-        <!-- Navigation bar background TRICK #00000000 Does not work! WTF? -->
+        <!-- Navigation bar background -->
+        <!-- todo Use "android:enforceNavigationBarContrast false" since api 29 instead of #01000000 -->
         <item name="android:navigationBarColor">#01000000</item>
-        <!-- Navigation icons color (changing programmatically) -->
+        <!-- Navigation icons color -->
         <item name="android:windowLightNavigationBar" tools:targetApi="27">false</item>
 
         <!-- Docs in MainActivity.kt -->
