@@ -298,11 +298,7 @@ private fun FocusModeView(
 
                     // Keep in mind .clipToBounds()
 
-                    AnimatedVisibility(
-                        state.isTabTasksVisible,
-                        enter = fadeIn(animationSpec = spring(stiffness = Spring.StiffnessHigh)),
-                        exit = fadeOut(animationSpec = spring(stiffness = Spring.StiffnessMedium)),
-                    ) {
+                    if (state.isTabTasksVisible) {
 
                         ZStack {
 
