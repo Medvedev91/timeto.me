@@ -4,10 +4,10 @@
         <item name="android:windowBackground">@color/my_dn_background</item>
         <!-- Status bar background + icons color -->
         <item name="android:statusBarColor">#00000000</item>
-        <item name="android:windowLightStatusBar">@bool/my_day_or_night</item>
+        <item name="android:windowLightStatusBar">false</item>
         <!-- Navigation bar background + icons color (changing programmatically) -->
         <item name="android:navigationBarColor">@color/my_dn_background</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="27">@bool/my_day_or_night</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">false</item>
         <!-- Docs in MainActivity.kt -->
         <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="27">shortEdges</item>
     </style>
