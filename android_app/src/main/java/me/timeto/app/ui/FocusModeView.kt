@@ -355,10 +355,30 @@ private fun FocusModeView() {
             verticalAlignment = Alignment.Bottom,
         ) {
 
-            MenuTimerButton(
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight()
+                    .clip(squircleShape)
+                    .motionEventSpy { event ->
+                        if (event.action == MotionEvent.ACTION_DOWN)
+                            Sheet.show { layer ->
+                                ActivitiesTimerSheet(
+                                    layerTaskSheet = layer,
+                                    timerContext = null,
+                                    onTaskStarted = {},
+                                )
+                            }
+                    },
                 contentAlignment = Alignment.BottomCenter,
-                onTaskStarted = {},
-            )
+            ) {
+                Icon(
+                    painterResource(id = R.drawable.sf_timer_medium_thin),
+                    contentDescription = "Timer",
+                    tint = menuColor,
+                    modifier = menuButtonModifier,
+                )
+            }
 
             val menuTasksBackground = animateColorAsState(
                 if (state.isTabTasksVisible) c.gray5 else c.black
@@ -460,38 +480,6 @@ private fun FocusModeView() {
                 )
             }
         }
-    }
-}
-
-@OptIn(ExperimentalComposeUiApi::class)
-@Composable
-private fun RowScope.MenuTimerButton(
-    contentAlignment: Alignment,
-    onTaskStarted: () -> Unit,
-) {
-    Box(
-        modifier = Modifier
-            .weight(1f)
-            .fillMaxHeight()
-            .clip(squircleShape)
-            .motionEventSpy { event ->
-                if (event.action == MotionEvent.ACTION_DOWN)
-                    Sheet.show { layer ->
-                        ActivitiesTimerSheet(
-                            layerTaskSheet = layer,
-                            timerContext = null,
-                            onTaskStarted = { onTaskStarted() },
-                        )
-                    }
-            },
-        contentAlignment = contentAlignment,
-    ) {
-        Icon(
-            painterResource(id = R.drawable.sf_timer_medium_thin),
-            contentDescription = "Timer",
-            tint = menuColor,
-            modifier = menuButtonModifier,
-        )
     }
 }
 
