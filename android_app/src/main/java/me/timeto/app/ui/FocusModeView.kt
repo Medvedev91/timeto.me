@@ -397,7 +397,7 @@ private fun FocusModeView(
                     modifier = Modifier
                         .height(bottomNavigationHeight)
                         .fillMaxWidth()
-                        .clip(MySquircleShape())
+                        .clip(squircleShape)
                         .background(menuTasksBackground.value),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
