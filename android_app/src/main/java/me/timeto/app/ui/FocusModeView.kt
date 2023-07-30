@@ -446,10 +446,11 @@ private fun FocusModeView(
                     .weight(1f)
                     .fillMaxHeight()
                     .clip(squircleShape)
-                    .clickable {
-                        Sheet.show { layer ->
-                            SettingsSheet(layer = layer)
-                        }
+                    .motionEventSpy { event ->
+                        if (event.action == MotionEvent.ACTION_DOWN)
+                            Sheet.show { layer ->
+                                SettingsSheet(layer = layer)
+                            }
                     },
                 contentAlignment = Alignment.BottomCenter,
             ) {
