@@ -27,7 +27,9 @@ private val emojiWidth = 56.dp
 private val bgAnimateSpec: AnimationSpec<Color> = spring(stiffness = Spring.StiffnessMediumLow)
 
 @Composable
-fun ActivitiesListView() {
+fun ActivitiesListView(
+    onTaskStarted: () -> Unit,
+) {
 
     val (_, state) = rememberVM { ActivitiesListVM() }
 
@@ -48,6 +50,9 @@ fun ActivitiesListView() {
                                 layer = layer,
                                 activity = activityUI.activity,
                                 timerContext = null,
+                                onStarted = {
+                                    onTaskStarted()
+                                },
                             )
                         }
                     },
@@ -101,6 +106,7 @@ fun ActivitiesListView() {
                                 .clip(roundedShape)
                                 .clickable {
                                     hintUI.startInterval()
+                                    onTaskStarted()
                                 }
                                 .padding(horizontal = 4.dp, vertical = 3.dp),
                             color = if (isActive) c.white else c.blue,
