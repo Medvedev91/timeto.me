@@ -497,8 +497,8 @@ private fun RowScope.MenuCloseButton(
         contentAlignment = contentAlignment,
     ) {
         Icon(
-            painterResource(id = R.drawable.sf_xmark_circle_medium_thin),
-            contentDescription = "Close",
+            painterResource(id = R.drawable.sf_ellipsis_circle_medium_thin),
+            contentDescription = "Menu",
             tint = menuColor,
             modifier = menuButtonModifier,
         )
