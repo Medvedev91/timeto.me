@@ -8,7 +8,7 @@
         <!-- Navigation bar background + icons color (changing programmatically) -->
         <item name="android:navigationBarColor">@color/my_dn_background</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="27">@bool/my_day_or_night</item>
-        <!-- Docs in FullScreenView.kt -->
+        <!-- Docs in MainActivity.kt -->
         <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="27">shortEdges</item>
     </style>
 
