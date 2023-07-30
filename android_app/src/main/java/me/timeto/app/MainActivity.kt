@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.BatteryManager
 import android.os.Build
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
@@ -19,6 +20,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import me.timeto.app.ui.*
 import kotlinx.coroutines.delay
@@ -46,8 +48,23 @@ class MainActivity : ComponentActivity() {
         // Remove system paddings including status and navigation bars.
         // Needs android:windowSoftInputMode="adjustNothing" in the manifest.
         WindowCompat.setDecorFitsSystemWindows(window, false)
-
         statusBarHeight = getStatusBarHeight(this@MainActivity)
+
+        /**
+         * https://developer.android.com/develop/ui/views/layout/immersive#kotlin
+         *
+         * No systemBars(), because on Redmi the first touch opens navbar.
+         *
+         * Needs "android:windowLayoutInDisplayCutoutMode shortEdges" in manifest
+         * to hide dark space on the top while WindowInsetsCompat.Type.statusBars()
+         * like https://stackoverflow.com/q/72179274 in "2. Completely black...".
+         * https://developer.android.com/develop/ui/views/layout/display-cutout
+         */
+        val barTypes = WindowInsetsCompat.Type.statusBars()
+        val controller = WindowInsetsControllerCompat(window, window.decorView)
+        val flagKeepScreenOn = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+        controller.hide(barTypes)
+        window.addFlags(flagKeepScreenOn)
         window.navigationBarColor = 0x01000000
         WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = false
 
