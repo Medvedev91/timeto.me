@@ -112,7 +112,7 @@ fun FocusModeListener(
                 onClose = { FocusModeUI.close() },
                 content = { layer ->
                     MaterialTheme(colors = myDarkColors()) {
-                        FocusModeView()
+                        MainView()
                     }
                 }
             ).show()
@@ -122,7 +122,7 @@ fun FocusModeListener(
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-private fun FocusModeView() {
+private fun MainView() {
     val (vm, state) = rememberVM { FocusModeVM() }
 
     val checklistUI = state.checklistUI
