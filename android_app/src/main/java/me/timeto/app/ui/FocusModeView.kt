@@ -1,6 +1,7 @@
 package me.timeto.app.ui
 
 import android.app.Activity
+import android.view.MotionEvent
 import android.view.WindowManager
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
@@ -14,14 +15,13 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.clipToBounds
-import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.*
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -372,9 +372,10 @@ private fun FocusModeView(
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .clip(MySquircleShape())
-                    .clickable {
-                        vm.toggleIsTabTasksVisible()
+                    .clip(squircleShape)
+                    .motionEventSpy { event ->
+                        if (event.action == MotionEvent.ACTION_DOWN)
+                            vm.toggleIsTabTasksVisible()
                     },
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
