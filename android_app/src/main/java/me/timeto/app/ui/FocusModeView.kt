@@ -59,6 +59,9 @@ private val menuButtonModifier = Modifier.size(menuIconSize).padding(menuIconPad
 private val timerButtonsAnimEnter = fadeIn(spring(stiffness = Spring.StiffnessMediumLow)) + expandVertically(spring(stiffness = Spring.StiffnessMedium))
 private val timerButtonsAnimExit = fadeOut(spring(stiffness = Spring.StiffnessHigh)) + shrinkVertically(spring(stiffness = Spring.StiffnessMedium))
 
+private val tasksTextAnimEnter = fadeIn() + expandVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
+private val tasksTextAnimExit = fadeOut() + shrinkVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
+
 private val timerButtonsHeight = 32.dp
 
 @Composable
@@ -382,8 +385,8 @@ private fun FocusModeView(
 
                 AnimatedVisibility(
                     !state.isTabTasksVisible,
-                    enter = fadeIn() + expandVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh)),
-                    exit = fadeOut() + shrinkVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh)),
+                    enter = tasksTextAnimEnter,
+                    exit = tasksTextAnimExit,
                 ) {
                     Text(
                         text = state.tasksText,
