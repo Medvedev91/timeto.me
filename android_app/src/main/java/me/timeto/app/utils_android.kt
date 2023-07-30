@@ -218,11 +218,11 @@ object c {
     val orange = Color(0xFFFF9D0A) // AG Orange iOS Dark
     val text = Color(0xEEFFFFFF)
     val textSecondary = Color(0xAAFFFFFF)
-    val bg = Color(0xFF000000) // TRICK Sync with night R.color.my_dn_background
+    val bg = Color(0xFF000000)
     val bgSheet = bgFormDarkMode
 
     // todo remove
-    val background = Color(0xFF000000) // TRICK Sync with night R.color.my_dn_background
+    val background = Color(0xFF000000)
 
     // todo remove
     val background2 = Color(0xFF202022) // 0xFF1C1C1E
