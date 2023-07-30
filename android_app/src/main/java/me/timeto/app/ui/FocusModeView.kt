@@ -167,8 +167,8 @@ private fun FocusModeView() {
                     .clickable {
                         vm.toggleIsPurple()
                     }
-                    .padding(horizontal = 8.dp, vertical = 16.dp),
-                fontSize = 36.sp, // todo compact if long
+                    .padding(horizontal = 8.dp, vertical = 12.dp),
+                fontSize = 40.sp, // todo compact if long
                 fontFamily = timerFont,
                 color = timerColor,
             )
