@@ -13,66 +13,45 @@ import me.timeto.shared.AppleColors
 // MD https://material.io/resources/color/
 // AG https://developer.apple.com/design/human-interface-guidelines/color
 
-private val bgFormDarkMode = Color(0xFF121214) // todo remove?
+object c {
 
-val c = MyColors(
-    blue = Color(0xFF0A84FF),
-    orange = Color(0xFFFF9D0A), // AG Orange iOS Dark
-    text = Color(0xEEFFFFFF),
-    textSecondary = Color(0xAAFFFFFF),
-    bg = Color(0xFF000000), // TRICK Sync with night R.color.my_dn_background
-    bgSheet = bgFormDarkMode,
-    background = Color(0xFF000000), // TRICK Sync with night R.color.my_dn_background
-    background2 = Color(0xFF202022), // 0xFF1C1C1E
-    backgroundEditable = Color(0xFF444444),
-    tabsText = Color(0x77FFFFFF),
-    tabsBackground = Color(0xFF191919), // 0xFF131313
-    dividerBg = AppleColors.gray5Dark.toColor(),
-    dividerBg2 = AppleColors.gray4Dark.toColor(),
-    formHeaderBackground = Color(0xFF191919),
-    timerTitleDefault = Color.White,
-    calendarIconColor = Color(0xFF777777),
-    datePickerTitleBg = Color(0xFF2A2A2B),
-    bgFormSheet = bgFormDarkMode,
-    formButtonRightNoteText = Color(0x88FFFFFF),
-    gray1 = AppleColors.gray1Dark.toColor(),
-    gray2 = AppleColors.gray2Dark.toColor(),
-    gray3 = AppleColors.gray3Dark.toColor(),
-    gray4 = AppleColors.gray4Dark.toColor(),
-    gray5 = AppleColors.gray5Dark.toColor(),
-)
+    private val bgFormDarkMode = Color(0xFF121214) // todo remove?
 
-class MyColors(
-    val blue: Color, // Not Color(0xFF0055FF)
-    val orange: Color,
-    val text: Color, // https://material.io/design/color/text-legibility.html ~ 87%
-    val textSecondary: Color, // ~ 60%
-    val bg: Color, // TRICK Using R.color.my_dn_background overrides compose ;(
-    val bgSheet: Color,
+    val blue = Color(0xFF0A84FF)
+    val orange = Color(0xFFFF9D0A) // AG Orange iOS Dark
+    val text = Color(0xEEFFFFFF)
+    val textSecondary = Color(0xAAFFFFFF)
+    val bg = Color(0xFF000000) // TRICK Sync with night R.color.my_dn_background
+    val bgSheet = bgFormDarkMode
+
     // todo remove
-    val background: Color, // TRICK Using R.color.my_dn_background overrides compose ;(
+    val background = Color(0xFF000000) // TRICK Sync with night R.color.my_dn_background
+
     // todo remove
-    val background2: Color,
-    val backgroundEditable: Color,
-    val tabsText: Color,
-    val tabsBackground: Color,
-    val dividerBg: Color,
+    val background2 = Color(0xFF202022) // 0xFF1C1C1E
+    val backgroundEditable = Color(0xFF444444)
+    val tabsText = Color(0x77FFFFFF)
+    val tabsBackground = Color(0xFF191919) // 0xFF131313
+    val dividerBg = AppleColors.gray5Dark.toColor()
+
     // todo remove
-    val dividerBg2: Color,
+    val dividerBg2 = AppleColors.gray4Dark.toColor()
+
     // todo remove?
-    val formHeaderBackground: Color,
-    val timerTitleDefault: Color,
-    val calendarIconColor: Color,
-    val datePickerTitleBg: Color,
+    val formHeaderBackground = Color(0xFF191919)
+    val timerTitleDefault = Color.White
+    val calendarIconColor = Color(0xFF777777)
+    val datePickerTitleBg = Color(0xFF2A2A2B)
+
     // todo rename to bgForm?
-    val bgFormSheet: Color,
-    val formButtonRightNoteText: Color,
-    val gray1: Color,
-    val gray2: Color,
-    val gray3: Color,
-    val gray4: Color,
-    val gray5: Color,
-) {
+    val bgFormSheet = bgFormDarkMode
+    val formButtonRightNoteText = Color(0x88FFFFFF)
+    val gray1 = AppleColors.gray1Dark.toColor()
+    val gray2 = AppleColors.gray2Dark.toColor()
+    val gray3 = AppleColors.gray3Dark.toColor()
+    val gray4 = AppleColors.gray4Dark.toColor()
+    val gray5 = AppleColors.gray5Dark.toColor()
+
     val red = Color(0xFFFF453A)
     val green = colorFromRgbaString("52,199,89") // AG Green Light
     val purple = colorFromRgbaString("175,82,222") // AG Purple Light
