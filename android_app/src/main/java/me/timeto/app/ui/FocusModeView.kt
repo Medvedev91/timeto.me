@@ -236,8 +236,7 @@ private fun FocusModeView(
 
             ZStack(
                 modifier = Modifier
-                    .weight(1f)
-                    .clipToBounds(),
+                    .weight(1f),
             ) {
 
                 VStack(
@@ -295,8 +294,6 @@ private fun FocusModeView(
                     modifier = Modifier
                         .padding(bottom = bottomNavigationHeight)
                 ) {
-
-                    // Keep in mind .clipToBounds()
 
                     if (state.isTabTasksVisible) {
 
