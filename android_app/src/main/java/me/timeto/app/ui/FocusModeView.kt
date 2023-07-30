@@ -120,6 +120,7 @@ fun FocusModeListener(
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun FocusModeView(
     layer: WrapperView.Layer,
@@ -456,6 +457,7 @@ private fun FocusModeView(
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun RowScope.MenuTimerButton(
     contentAlignment: Alignment,
