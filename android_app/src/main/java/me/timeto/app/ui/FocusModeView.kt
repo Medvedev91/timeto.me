@@ -444,7 +444,9 @@ private fun FocusModeView(
             MenuCloseButton(
                 contentAlignment = Alignment.BottomCenter
             ) {
-                layer.close()
+                Sheet.show { layer ->
+                    SettingsSheet(layer = layer)
+                }
             }
         }
     }
