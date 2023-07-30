@@ -6,8 +6,9 @@
         <!-- Status bar background + icons color -->
         <item name="android:statusBarColor">#00000000</item>
         <item name="android:windowLightStatusBar">false</item>
-        <!-- Navigation bar background + icons color (changing programmatically) -->
-        <item name="android:navigationBarColor">#FF000000</item>
+        <!-- Navigation bar background TRICK #00000000 Does not work! WTF? -->
+        <item name="android:navigationBarColor">#01000000</item>
+        <!-- Navigation icons color (changing programmatically) -->
         <item name="android:windowLightNavigationBar" tools:targetApi="27">false</item>
         <!-- Docs in MainActivity.kt -->
         <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="27">shortEdges</item>
