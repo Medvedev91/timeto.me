@@ -2,6 +2,7 @@
 
     <style name="Theme.Timetome" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowBackground">#FF000000</item>
+        <item name="android:windowSplashScreenBackground" tools:targetApi="31">#FF000000</item>
         <!-- Status bar background + icons color -->
         <item name="android:statusBarColor">#00000000</item>
         <item name="android:windowLightStatusBar">false</item>
