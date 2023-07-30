@@ -63,8 +63,8 @@ class MainActivity : ComponentActivity() {
         val barTypes = WindowInsetsCompat.Type.statusBars()
         val controller = WindowInsetsControllerCompat(window, window.decorView)
         val flagKeepScreenOn = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-        controller.hide(barTypes)
-        window.addFlags(flagKeepScreenOn)
+        controller.hide(barTypes) // To show: controller.show(barTypes)
+        window.addFlags(flagKeepScreenOn) // To disable: window.clearFlags(flagKeepScreenOn)
         window.navigationBarColor = 0x01000000
         WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = false
 
