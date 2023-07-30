@@ -66,7 +66,6 @@ class MainActivity : ComponentActivity() {
         controller.hide(barTypes) // To show: controller.show(barTypes)
         window.addFlags(flagKeepScreenOn) // To disable: window.clearFlags(flagKeepScreenOn)
         window.navigationBarColor = 0x01000000
-        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = false
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
             notificationsPermissionProcessing()
