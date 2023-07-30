@@ -490,7 +490,7 @@ private fun RowScope.MenuCloseButton(
         modifier = Modifier
             .weight(1f)
             .fillMaxHeight()
-            .clip(MySquircleShape())
+            .clip(squircleShape)
             .clickable {
                 onClick()
             },
