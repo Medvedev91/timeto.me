@@ -58,7 +58,7 @@ class MainActivity : ComponentActivity() {
 
             val (vm, state) = rememberVM { AppVM() }
 
-            MaterialTheme {
+            MaterialTheme(colors = darkColors()) {
 
                 if (state.isAppReady) {
 
