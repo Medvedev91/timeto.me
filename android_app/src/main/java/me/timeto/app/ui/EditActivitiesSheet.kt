@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import me.timeto.app.c
 import me.timeto.app.rememberVM
 import me.timeto.app.roundedShape
 import me.timeto.shared.vm.EditActivitiesVM

@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.R
 import me.timeto.app.toColor
 import kotlinx.coroutines.delay
+import me.timeto.app.c
 import me.timeto.shared.ColorNative
 
 object MyListView {

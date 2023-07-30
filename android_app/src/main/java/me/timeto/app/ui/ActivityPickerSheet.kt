@@ -7,6 +7,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import me.timeto.app.c
 import me.timeto.app.rememberVM
 import me.timeto.shared.db.ActivityModel
 import me.timeto.shared.vm.ActivityPickerSheetVM

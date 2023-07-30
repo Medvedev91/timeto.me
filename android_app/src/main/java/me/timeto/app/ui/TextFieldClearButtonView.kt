@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import me.timeto.app.R
+import me.timeto.app.c
 
 @Composable
 fun TextFieldClearButtonView(
