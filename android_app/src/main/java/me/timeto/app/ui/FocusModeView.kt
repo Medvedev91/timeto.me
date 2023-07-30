@@ -441,12 +441,24 @@ private fun FocusModeView(
                 }
             }
 
-            MenuCloseButton(
-                contentAlignment = Alignment.BottomCenter
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight()
+                    .clip(squircleShape)
+                    .clickable {
+                        Sheet.show { layer ->
+                            SettingsSheet(layer = layer)
+                        }
+                    },
+                contentAlignment = Alignment.BottomCenter,
             ) {
-                Sheet.show { layer ->
-                    SettingsSheet(layer = layer)
-                }
+                Icon(
+                    painterResource(id = R.drawable.sf_ellipsis_circle_medium_thin),
+                    contentDescription = "Menu",
+                    tint = menuColor,
+                    modifier = menuButtonModifier,
+                )
             }
         }
     }
@@ -477,30 +489,6 @@ private fun RowScope.MenuTimerButton(
         Icon(
             painterResource(id = R.drawable.sf_timer_medium_thin),
             contentDescription = "Timer",
-            tint = menuColor,
-            modifier = menuButtonModifier,
-        )
-    }
-}
-
-@Composable
-private fun RowScope.MenuCloseButton(
-    contentAlignment: Alignment,
-    onClick: () -> Unit,
-) {
-    Box(
-        modifier = Modifier
-            .weight(1f)
-            .fillMaxHeight()
-            .clip(squircleShape)
-            .clickable {
-                onClick()
-            },
-        contentAlignment = contentAlignment,
-    ) {
-        Icon(
-            painterResource(id = R.drawable.sf_ellipsis_circle_medium_thin),
-            contentDescription = "Menu",
             tint = menuColor,
             modifier = menuButtonModifier,
         )
