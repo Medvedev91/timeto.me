@@ -476,14 +476,15 @@ private fun RowScope.MenuTimerButton(
             .weight(1f)
             .fillMaxHeight()
             .clip(squircleShape)
-            .clickable {
-                Sheet.show { layer ->
-                    ActivitiesTimerSheet(
-                        layerTaskSheet = layer,
-                        timerContext = null,
-                        onTaskStarted = { onTaskStarted() },
-                    )
-                }
+            .motionEventSpy { event ->
+                if (event.action == MotionEvent.ACTION_DOWN)
+                    Sheet.show { layer ->
+                        ActivitiesTimerSheet(
+                            layerTaskSheet = layer,
+                            timerContext = null,
+                            onTaskStarted = { onTaskStarted() },
+                        )
+                    }
             },
         contentAlignment = contentAlignment,
     ) {
