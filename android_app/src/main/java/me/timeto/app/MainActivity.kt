@@ -12,10 +12,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -50,6 +48,8 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         statusBarHeight = getStatusBarHeight(this@MainActivity)
+        window.navigationBarColor = 0x01000000
+        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = false
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
             notificationsPermissionProcessing()
@@ -57,25 +57,15 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             val (vm, state) = rememberVM { AppVM() }
-            val isLight = !isSystemInDarkTheme()
 
-            MaterialTheme(colors = if (isLight) myLightColors() else myDarkColors()) {
+            MaterialTheme(colors = myDarkColors()) {
 
                 if (state.isAppReady) {
-
-                    // c.transparent set the default background. WTF?!
-                    // 0.004 based on Color(0x01......).alpha -> 0.003921569
-                    val navigationBgColor = c.tabsBackground.copy(alpha = 0.004f).toArgb()
-                    fun upNavigationUI() {
-                        window.navigationBarColor = navigationBgColor
-                        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = isLight
-                    }
-                    upNavigationUI() // Setting background and icons initially in xml. Here after tabs appear.
 
                     WrapperView.LayoutView {
                         TabsView()
                         UIListeners()
-                        FocusModeListener(activity = this, onClose = ::upNavigationUI)
+                        FocusModeListener(activity = this, onClose = {})
                     }
 
                     LaunchedEffect(Unit) {
