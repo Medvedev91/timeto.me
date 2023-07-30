@@ -20,12 +20,6 @@ val c: MyColors
     @Composable
     get() = if (MaterialTheme.colors.isLight) myLightColors else myDarkColors
 
-@Composable
-fun myDarkColors() = darkColors(primary = c.blue)
-
-@Composable
-fun myLightColors() = lightColors(primary = c.blue)
-
 class MyColors(
     val blue: Color, // Not Color(0xFF0055FF)
     val orange: Color,

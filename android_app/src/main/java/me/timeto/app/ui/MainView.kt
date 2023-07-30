@@ -111,7 +111,7 @@ fun FocusModeListener(
                 alignment = Alignment.Center,
                 onClose = { FocusModeUI.close() },
                 content = { layer ->
-                    MaterialTheme(colors = myDarkColors()) {
+                    MaterialTheme {
                         MainView()
                     }
                 }
