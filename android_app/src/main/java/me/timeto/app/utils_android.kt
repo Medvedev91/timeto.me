@@ -227,8 +227,6 @@ object c {
     // todo remove
     val background2 = Color(0xFF202022) // 0xFF1C1C1E
     val backgroundEditable = Color(0xFF444444)
-    val tabsText = Color(0x77FFFFFF)
-    val tabsBackground = Color(0xFF191919) // 0xFF131313
     val dividerBg = AppleColors.gray5Dark.toColor()
 
     // todo remove

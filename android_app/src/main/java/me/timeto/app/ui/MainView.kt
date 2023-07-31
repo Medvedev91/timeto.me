@@ -34,6 +34,8 @@ import me.timeto.shared.vm.ui.ChecklistStateUI
 
 private val dividerColor = AppleColors.gray4Dark.toColor()
 
+val bottomNavigationHeight = 56.dp
+
 private val menuIconSize = bottomNavigationHeight
 private val menuIconPadding = 14.dp
 
