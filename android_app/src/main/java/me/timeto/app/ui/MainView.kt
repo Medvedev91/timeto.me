@@ -1,8 +1,6 @@
 package me.timeto.app.ui
 
-import android.app.Activity
 import android.view.MotionEvent
-import android.view.WindowManager
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
@@ -20,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.*
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
@@ -29,8 +26,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.shared.*
@@ -49,11 +44,6 @@ private val taskListContentPadding = 4.dp
 
 private val menuColor = FocusModeVM.menuColor.toColor()
 
-private val layerAnimIn = fadeIn(spring(stiffness = Spring.StiffnessHigh))
-private val layerAnimOut = fadeOut(spring(stiffness = Spring.StiffnessHigh))
-
-private val navigationBarColor = Color(0x01000000).toArgb()
-
 private val menuButtonModifier = Modifier.size(menuIconSize).padding(menuIconPadding)
 
 private val timerButtonsAnimEnter = fadeIn(spring(stiffness = Spring.StiffnessMediumLow)) + expandVertically(spring(stiffness = Spring.StiffnessMedium))
@@ -64,65 +54,9 @@ private val tasksTextAnimExit = fadeOut() + shrinkVertically(animationSpec = spr
 
 private val timerButtonsHeight = 32.dp
 
-@Composable
-fun FocusModeListener(
-    activity: Activity,
-    onClose: () -> Unit,
-) {
-    LaunchedEffect(Unit) {
-
-        FocusModeUI.state.onEachExIn(this) { toOpenOrClose ->
-
-            /**
-             * https://developer.android.com/develop/ui/views/layout/immersive#kotlin
-             *
-             * No systemBars(), because on Redmi the first touch opens navbar.
-             *
-             * Needs "android:windowLayoutInDisplayCutoutMode shortEdges" in manifest
-             * to hide dark space on the top while WindowInsetsCompat.Type.statusBars()
-             * like https://stackoverflow.com/q/72179274 in "2. Completely black...".
-             * https://developer.android.com/develop/ui/views/layout/display-cutout
-             */
-            val barTypes = WindowInsetsCompat.Type.statusBars()
-            val window = activity.window
-            val controller = WindowInsetsControllerCompat(window, window.decorView)
-            val flagKeepScreenOn = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-
-            ///
-            /// Open / Close
-
-            if (!toOpenOrClose) {
-                controller.show(barTypes)
-                window.clearFlags(flagKeepScreenOn)
-                onClose()
-                return@onEachExIn
-            }
-
-            controller.hide(barTypes)
-            window.addFlags(flagKeepScreenOn)
-            window.navigationBarColor = navigationBarColor
-            WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = false
-
-            //////
-
-            WrapperView.Layer(
-                enterAnimation = layerAnimIn,
-                exitAnimation = layerAnimOut,
-                alignment = Alignment.Center,
-                onClose = { FocusModeUI.close() },
-                content = { layer ->
-                    MaterialTheme {
-                        MainView()
-                    }
-                }
-            ).show()
-        }
-    }
-}
-
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-private fun MainView() {
+fun MainView() {
     val (vm, state) = rememberVM { FocusModeVM() }
 
     val checklistUI = state.checklistUI

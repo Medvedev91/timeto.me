@@ -78,9 +78,8 @@ class MainActivity : ComponentActivity() {
                 if (state.isAppReady) {
 
                     WrapperView.LayoutView {
-                        TabsView()
+                        MainView()
                         UIListeners()
-                        FocusModeListener(activity = this, onClose = {})
                     }
 
                     LaunchedEffect(Unit) {
