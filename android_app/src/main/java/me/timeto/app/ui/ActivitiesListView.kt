@@ -25,6 +25,11 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.shared.vm.ActivitiesListVM
 
+private val END_H_PADDING = 12.dp
+private val TIMER_HINT_H_PADDING = 4.dp
+
+val ActivitiesListView__END_H_PADDING = END_H_PADDING + TIMER_HINT_H_PADDING
+
 private val emojiWidth = 56.dp
 private val bgAnimateSpec: AnimationSpec<Color> = spring(stiffness = Spring.StiffnessMediumLow)
 
@@ -73,7 +78,7 @@ fun ActivitiesListView(
                     modifier = Modifier
                         .height(48.dp)
                         .fillMaxWidth()
-                        .padding(end = 12.dp),
+                        .padding(end = END_H_PADDING),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
 
@@ -118,7 +123,7 @@ fun ActivitiesListView(
                                     hintUI.startInterval()
                                     onTaskStarted()
                                 }
-                                .padding(horizontal = 4.dp, vertical = 3.dp),
+                                .padding(horizontal = TIMER_HINT_H_PADDING, vertical = 3.dp),
                             color = if (isActive) c.white else c.blue,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Light,
