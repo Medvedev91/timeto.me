@@ -32,6 +32,7 @@ private val bgAnimateSpec: AnimationSpec<Color> = spring(stiffness = Spring.Stif
 fun ActivitiesListView(
     modifier: Modifier,
     onTaskStarted: () -> Unit,
+    bottomView: (@Composable () -> Unit)? = null,
 ) {
 
     val (_, state) = rememberVM { ActivitiesListVM() }
@@ -131,5 +132,10 @@ fun ActivitiesListView(
                 )
             }
         }
+
+        if (bottomView != null)
+            item {
+                bottomView()
+            }
     }
 }
