@@ -33,6 +33,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 
+private val sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
+
 object Sheet {
 
     fun show(
@@ -64,7 +66,7 @@ object Sheet {
                      */
                     modifier = Modifier
                         .padding(top = topPadding + statusBarHeight) // Restriction max height
-                        .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
+                        .clip(sheetShape)
                         .pointerInput(Unit) { }
                 ) {
                     content(layer)
