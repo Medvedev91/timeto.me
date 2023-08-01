@@ -226,7 +226,6 @@ object c {
 
     // todo remove
     val background2 = Color(0xFF202022) // 0xFF1C1C1E
-    val backgroundEditable = Color(0xFF444444)
     val dividerBg = AppleColors.gray5Dark.toColor()
 
     // todo remove
@@ -234,7 +233,6 @@ object c {
 
     // todo remove?
     val formHeaderBackground = Color(0xFF191919)
-    val timerTitleDefault = Color.White
     val calendarIconColor = Color(0xFF777777)
     val datePickerTitleBg = Color(0xFF2A2A2B)
 
@@ -254,6 +252,5 @@ object c {
     val black = Color.Black
     val transparent = Color.Transparent
     val tasksTabDropFocused = green
-    val iconButtonBg = gray2
     val formHeaderDivider = gray4
 }
