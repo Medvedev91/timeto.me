@@ -298,13 +298,7 @@ fun MainView() {
                     .clip(squircleShape)
                     .motionEventSpy { event ->
                         if (event.action == MotionEvent.ACTION_DOWN)
-                            Sheet.show { layer ->
-                                ActivitiesTimerSheet(
-                                    layerTaskSheet = layer,
-                                    timerContext = null,
-                                    onTaskStarted = {},
-                                )
-                            }
+                            ActivitiesTimerSheet__show(timerContext = null, onTaskStarted = {})
                     },
                 contentAlignment = Alignment.BottomCenter,
             ) {
@@ -575,13 +569,10 @@ private fun ImportantTasksView(
                         taskItem.task.startIntervalForUI(
                             onStarted = {},
                             activitiesSheet = {
-                                Sheet.show { layer ->
-                                    ActivitiesTimerSheet(
-                                        layerTaskSheet = layer,
-                                        timerContext = taskItem.timerContext,
-                                        onTaskStarted = {},
-                                    )
-                                }
+                                ActivitiesTimerSheet__show(
+                                    timerContext = taskItem.timerContext,
+                                    onTaskStarted = {},
+                                )
                             },
                             timerSheet = { activity ->
                                 Sheet.show { layerTimer ->

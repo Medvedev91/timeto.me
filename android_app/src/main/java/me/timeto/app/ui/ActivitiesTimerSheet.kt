@@ -22,9 +22,22 @@ import me.timeto.shared.launchEx
 import me.timeto.shared.vm.ActivityTimerSheetVM
 import me.timeto.shared.vm.ActivitiesTimerSheetVM
 
+fun ActivitiesTimerSheet__show(
+    timerContext: ActivityTimerSheetVM.TimerContext?,
+    onTaskStarted: () -> Unit,
+) {
+    Sheet.show { layer ->
+        ActivitiesTimerSheet(
+            layerActivitiesSheet = layer,
+            timerContext = timerContext,
+            onTaskStarted = onTaskStarted,
+        )
+    }
+}
+
 @Composable
-fun ActivitiesTimerSheet(
-    layerTaskSheet: WrapperView.Layer,
+private fun ActivitiesTimerSheet(
+    layerActivitiesSheet: WrapperView.Layer,
     timerContext: ActivityTimerSheetVM.TimerContext?,
     onTaskStarted: () -> Unit,
 ) {
@@ -71,7 +84,7 @@ fun ActivitiesTimerSheet(
                                 ) {
                                     scopeTaskSheet.launchEx {
                                         onTaskStarted()
-                                        layerTaskSheet.close() // At the end to keep "scopeTaskSheet"
+                                        layerActivitiesSheet.close() // At the end to keep "scopeTaskSheet"
                                     }
                                 }
                             }
@@ -112,7 +125,7 @@ fun ActivitiesTimerSheet(
                                     hintUI.startInterval {
                                         scopeTaskSheet.launchEx {
                                             onTaskStarted()
-                                            layerTaskSheet.close() // At the end to keep "scopeTaskSheet"
+                                            layerActivitiesSheet.close() // At the end to keep "scopeTaskSheet"
                                         }
                                     }
                                 }
