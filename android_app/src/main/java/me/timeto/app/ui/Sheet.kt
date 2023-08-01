@@ -1,12 +1,10 @@
 package me.timeto.app.ui
 
-import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.VisibilityThreshold
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -39,23 +37,25 @@ object Sheet {
 
     fun show(
         topPadding: Dp = 20.dp,
+        enterAnimation: EnterTransition = slideInVertically(
+            animationSpec = spring(
+                stiffness = Spring.StiffnessMedium,
+                visibilityThreshold = IntOffset.VisibilityThreshold
+            ),
+            initialOffsetY = { it }
+        ),
+        exitAnimation: ExitTransition = slideOutVertically(
+            animationSpec = spring(
+                stiffness = Spring.StiffnessMedium,
+                visibilityThreshold = IntOffset.VisibilityThreshold
+            ),
+            targetOffsetY = { it }
+        ),
         content: @Composable (WrapperView.Layer) -> Unit,
     ) {
         WrapperView.Layer(
-            enterAnimation = slideInVertically(
-                animationSpec = spring(
-                    stiffness = Spring.StiffnessMedium,
-                    visibilityThreshold = IntOffset.VisibilityThreshold
-                ),
-                initialOffsetY = { it }
-            ),
-            exitAnimation = slideOutVertically(
-                animationSpec = spring(
-                    stiffness = Spring.StiffnessMedium,
-                    visibilityThreshold = IntOffset.VisibilityThreshold
-                ),
-                targetOffsetY = { it }
-            ),
+            enterAnimation = enterAnimation,
+            exitAnimation = exitAnimation,
             alignment = Alignment.BottomCenter,
             onClose = {},
             content = { layer ->
