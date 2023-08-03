@@ -83,45 +83,14 @@ class AppVM : __VM<AppVM.State>() {
     }
 }
 
-private suspend fun showTriggersForInterval(
+private fun showTriggersForInterval(
     lastInterval: IntervalModel
 ) {
     if ((lastInterval.id + 3) < time())
         return
 
     val triggers = lastInterval.getTriggers()
-    if (FocusModeUI.isOpen()) {
-        triggers.filterNoChecklists().firstOrNull()?.performUI()
-        return
-    }
-
-    fun fsOrTriggers(isFS: Boolean, features: TextFeatures) {
-        if (isFS) {
-            FocusModeUI.open()
-            features.triggers.filterNoChecklists().firstOrNull()?.performUI()
-        } else
-            features.triggers.firstOrNull()?.performUI()
-    }
-
-    val activity = lastInterval.getActivityDI()
-    val isActivityAutoFS = activity.isAutoFs
-
-    val note = lastInterval.note
-    if (note != null) {
-        val noteFeatures = note.textFeatures()
-
-        val fromRepeating = noteFeatures.fromRepeating
-        if (fromRepeating != null) {
-            val isFS = RepeatingModel.getByIdOrNull(fromRepeating.id)?.isAutoFs ?: false
-            fsOrTriggers(isFS, noteFeatures)
-            return
-        }
-
-        fsOrTriggers(isActivityAutoFS, noteFeatures)
-        return
-    }
-
-    fsOrTriggers(isActivityAutoFS, activity.name.textFeatures())
+    triggers.firstOrNull { it is TextFeatures.Trigger.Shortcut }?.performUI()
 }
 
 ///
