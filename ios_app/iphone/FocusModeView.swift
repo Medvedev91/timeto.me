@@ -14,7 +14,7 @@ private let taskCountsHeight = 36.0
 private let taskItemHeight = 36.0
 private let taskListContentPadding = 4.0
 
-private let menuColor = FocusModeVM.companion.menuColor.toColor()
+private let menuColor = MainVM.companion.menuColor.toColor()
 
 extension View {
 
@@ -50,7 +50,7 @@ private struct FocusModeView__ViewModifier: ViewModifier {
 
 private struct FocusModeView__CoverView: View {
 
-    @State private var vm = FocusModeVM()
+    @State private var vm = MainVM()
     @State private var isTimerActivitiesPresented = false
 
     @EnvironmentObject private var timetoSheet: TimetoSheet
@@ -310,7 +310,7 @@ private struct FocusModeView__CoverView: View {
 
 private struct ChecklistView: View {
 
-    let checklistUI: FocusModeVM.ChecklistUI
+    let checklistUI: MainVM.ChecklistUI
 
     @State private var vScroll = 0
 
@@ -402,7 +402,7 @@ private struct ChecklistView: View {
 
 private struct ImportantTasksView: View {
 
-    let tasks: [FocusModeVM.ImportantTask]
+    let tasks: [MainVM.ImportantTask]
 
     private let LIST_BOTTOM_ITEM_ID = "bottom_id"
 
@@ -442,7 +442,7 @@ private struct ImportantTasksView: View {
 
 private struct ImportantTaskItem: View {
 
-    let importantTask: FocusModeVM.ImportantTask
+    let importantTask: MainVM.ImportantTask
 
     @State private var isSheetPresented = false
 
