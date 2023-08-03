@@ -11,7 +11,7 @@ import me.timeto.shared.db.TaskModel
 import me.timeto.shared.vm.ui.ChecklistStateUI
 import me.timeto.shared.vm.ui.TimerDataUI
 
-class FocusModeVM : __VM<FocusModeVM.State>() {
+class MainVM : __VM<MainVM.State>() {
 
     companion object {
         val menuColor = ColorRgba(255, 255, 255, 128)

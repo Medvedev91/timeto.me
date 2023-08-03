@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.shared.*
-import me.timeto.shared.vm.FocusModeVM
+import me.timeto.shared.vm.MainVM
 import me.timeto.shared.vm.ui.ChecklistStateUI
 
 private val dividerColor = AppleColors.gray4Dark.toColor()
@@ -44,7 +44,7 @@ private val taskCountsHeight = 36.dp
 private val taskItemHeight = 36.dp
 private val taskListContentPadding = 4.dp
 
-private val menuColor = FocusModeVM.menuColor.toColor()
+private val menuColor = MainVM.menuColor.toColor()
 
 private val menuButtonModifier = Modifier.size(menuIconSize).padding(menuIconPadding)
 
@@ -59,7 +59,7 @@ private val timerButtonsHeight = 32.dp
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun MainView() {
-    val (vm, state) = rememberVM { FocusModeVM() }
+    val (vm, state) = rememberVM { MainVM() }
 
     val checklistUI = state.checklistUI
 
@@ -413,7 +413,7 @@ fun MainView() {
 
 @Composable
 private fun ChecklistView(
-    checklistUI: FocusModeVM.ChecklistUI,
+    checklistUI: MainVM.ChecklistUI,
     modifier: Modifier,
     scrollState: LazyListState,
 ) {
@@ -540,7 +540,7 @@ private fun ChecklistView(
 
 @Composable
 private fun ImportantTasksView(
-    tasks: List<FocusModeVM.ImportantTask>,
+    tasks: List<MainVM.ImportantTask>,
     modifier: Modifier,
     scrollState: LazyListState,
 ) {
