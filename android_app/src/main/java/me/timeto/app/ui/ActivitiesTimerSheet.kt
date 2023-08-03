@@ -137,7 +137,7 @@ private fun ActivitiesTimerSheet(
                     }
                 }
 
-                DividerBg(
+                DividerFg(
                     modifier = Modifier
                         .padding(start = startPadding),
                 )
