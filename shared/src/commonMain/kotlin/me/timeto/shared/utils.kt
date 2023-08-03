@@ -14,9 +14,6 @@ import me.timeto.appdbsq.TimetomeDB
 import me.timeto.shared.db.*
 import me.timeto.shared.db.KVModel.Companion.asDayStartOffsetSeconds
 
-const val EMOJI_CALENDAR = "🗓"
-const val EMOJI_REPEATING = "🔁"
-
 const val BREAK_SECONDS = 5 * 60
 const val GOLDEN_RATIO = 1.618f
 
