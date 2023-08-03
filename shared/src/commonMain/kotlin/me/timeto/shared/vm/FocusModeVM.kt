@@ -22,7 +22,7 @@ class FocusModeVM : __VM<FocusModeVM.State>() {
         val allChecklistItems: List<ChecklistItemModel>,
         val isPurple: Boolean,
         val tasksToday: List<TaskModel>,
-        val isTabTasksVisible: Boolean,
+        val isTasksVisible: Boolean,
         val idToUpdate: Long,
     ) {
 
@@ -95,7 +95,7 @@ class FocusModeVM : __VM<FocusModeVM.State>() {
             allChecklistItems = DI.checklistItems,
             isPurple = false,
             tasksToday = DI.tasks.filter { it.isToday },
-            isTabTasksVisible = false,
+            isTasksVisible = false,
             idToUpdate = 0,
         )
     )
@@ -110,7 +110,7 @@ class FocusModeVM : __VM<FocusModeVM.State>() {
                     it.copy(
                         interval = interval,
                         isPurple = if (isNewInterval) false else it.isPurple,
-                        isTabTasksVisible = if (isNewInterval) false else it.isTabTasksVisible,
+                        isTasksVisible = if (isNewInterval) false else it.isTasksVisible,
                     )
                 }
             }
@@ -144,8 +144,8 @@ class FocusModeVM : __VM<FocusModeVM.State>() {
         state.update { it.copy(isPurple = !it.isPurple) }
     }
 
-    fun toggleIsTabTasksVisible() {
-        state.update { it.copy(isTabTasksVisible = it.isTabTasksVisible.not()) }
+    fun toggleIsTasksVisible() {
+        state.update { it.copy(isTasksVisible = !it.isTasksVisible) }
     }
 
     fun pauseTask() {

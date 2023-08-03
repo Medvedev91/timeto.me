@@ -229,7 +229,7 @@ fun MainView() {
                         .padding(bottom = bottomNavigationHeight)
                 ) {
 
-                    if (state.isTabTasksVisible) {
+                    if (state.isTasksVisible) {
 
                         ZStack {
 
@@ -244,7 +244,7 @@ fun MainView() {
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .clickable {
-                                                vm.toggleIsTabTasksVisible()
+                                                vm.toggleIsTasksVisible()
                                             }
                                             .padding(top = 6.dp, bottom = 12.dp),
                                         textAlign = TextAlign.Center,
@@ -310,23 +310,19 @@ fun MainView() {
                 )
             }
 
-            val menuTasksBackground = animateColorAsState(
-                if (state.isTabTasksVisible) c.gray5 else c.black
-            )
-
             Column(
                 modifier = Modifier
                     .weight(1f)
                     .clip(squircleShape)
                     .motionEventSpy { event ->
                         if (event.action == MotionEvent.ACTION_DOWN)
-                            vm.toggleIsTabTasksVisible()
+                            vm.toggleIsTasksVisible()
                     },
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
                 AnimatedVisibility(
-                    !state.isTabTasksVisible,
+                    !state.isTasksVisible,
                     enter = tasksTextAnimEnter,
                     exit = tasksTextAnimExit,
                 ) {
@@ -341,12 +337,14 @@ fun MainView() {
                     )
                 }
 
+                val menuTasksBg = animateColorAsState(if (state.isTasksVisible) c.gray5 else c.black)
+
                 VStack(
                     modifier = Modifier
                         .height(bottomNavigationHeight)
                         .fillMaxWidth()
                         .clip(squircleShape)
-                        .background(menuTasksBackground.value),
+                        .background(menuTasksBg.value),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
