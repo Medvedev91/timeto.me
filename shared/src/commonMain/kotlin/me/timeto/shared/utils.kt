@@ -475,17 +475,6 @@ fun daytimeToString(daytime: Int): String {
 
 //////
 
-object FocusModeUI {
-
-    val state = MutableStateFlow(false)
-
-    fun isOpen() = state.value
-
-    fun open() = state.update { true }
-
-    fun close() = state.update { false }
-}
-
 class TimerPickerItem(
     val idx: Int,
     val seconds: Int,
