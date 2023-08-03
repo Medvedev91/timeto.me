@@ -15,6 +15,8 @@ import me.timeto.app.setTrue
 import kotlinx.coroutines.delay
 import me.timeto.shared.launchExDefault
 
+private val shadeColor = Color(0x99000000)
+
 object WrapperView {
 
     private val wrapperViewLayers = mutableStateListOf<Layer>()
@@ -69,7 +71,7 @@ object WrapperView {
                             Box(
                                 modifier = Modifier
                                     .fillMaxSize()
-                                    .background(Color(0x55000000))
+                                    .background(shadeColor)
                                     .clickable { layer.close() }
                             )
                         }
