@@ -50,22 +50,6 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         statusBarHeight = getStatusBarHeight(this@MainActivity)
 
-        /**
-         * https://developer.android.com/develop/ui/views/layout/immersive#kotlin
-         *
-         * No systemBars(), because on Redmi the first touch opens navbar.
-         *
-         * Needs "android:windowLayoutInDisplayCutoutMode shortEdges" in manifest
-         * to hide dark space on the top while WindowInsetsCompat.Type.statusBars()
-         * like https://stackoverflow.com/q/72179274 in "2. Completely black...".
-         * https://developer.android.com/develop/ui/views/layout/display-cutout
-         */
-        val barTypes = WindowInsetsCompat.Type.statusBars()
-        val controller = WindowInsetsControllerCompat(window, window.decorView)
-        val flagKeepScreenOn = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-        controller.hide(barTypes) // To show: controller.show(barTypes)
-        window.addFlags(flagKeepScreenOn) // To disable: window.clearFlags(flagKeepScreenOn)
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
             notificationsPermissionProcessing()
 
@@ -114,6 +98,22 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         NotificationCenter.cleanAllPushes()
+
+        /**
+         * https://developer.android.com/develop/ui/views/layout/immersive#kotlin
+         *
+         * No systemBars(), because on Redmi the first touch opens navbar.
+         *
+         * Needs "android:windowLayoutInDisplayCutoutMode shortEdges" in manifest
+         * to hide dark space on the top while WindowInsetsCompat.Type.statusBars()
+         * like https://stackoverflow.com/q/72179274 in "2. Completely black...".
+         * https://developer.android.com/develop/ui/views/layout/display-cutout
+         */
+        val statusBars = WindowInsetsCompat.Type.statusBars()
+        val controller = WindowInsetsControllerCompat(window, window.decorView)
+        controller.hide(statusBars) // To show: controller.show(statusBars)
+        val flagKeepScreenOn = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+        window.addFlags(flagKeepScreenOn) // To disable: window.clearFlags(flagKeepScreenOn)
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
