@@ -220,6 +220,7 @@ object c {
     val textSecondary = Color(0xAAFFFFFF)
     val bg = Color(0xFF000000)
     val bgSheet = bgFormDarkMode
+    val fg = Color(0xFF242426)
 
     // todo remove
     val background = Color(0xFF000000)
