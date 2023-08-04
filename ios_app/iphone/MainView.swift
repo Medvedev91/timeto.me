@@ -179,9 +179,7 @@ struct MainView: View {
                                 MyDivider()
                             }
 
-                            TabTasksView(
-                                    onTaskStarted: {}
-                            )
+                            TabTasksView()
                                     .clipped() // Fix list offset on IME open
                         }
                                 .padding(.bottom, bottomNavigationHeight)

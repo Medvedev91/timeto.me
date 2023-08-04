@@ -50,7 +50,6 @@ private val tabShape = MySquircleShape(50f)
 @Composable
 fun TabTasksView(
     modifier: Modifier,
-    onTaskStarted: () -> Unit,
 ) {
     val (_, state) = rememberVM { TabTasksVM() }
 
@@ -107,7 +106,7 @@ fun TabTasksView(
     ) {
 
         when (val curSection = activeSection) {
-            is Section_Folder -> TasksListView(curSection.folder, dragItem, onTaskStarted)
+            is Section_Folder -> TasksListView(curSection.folder, dragItem)
             is Section_Calendar -> EventsListView()
             is Section_Repeating -> RepeatingsListView()
         }

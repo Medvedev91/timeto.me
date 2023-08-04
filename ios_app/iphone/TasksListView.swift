@@ -317,9 +317,7 @@ struct TasksView__TaskRowView: View {
                         action: {
                             hideKeyboard()
                             taskUI.task.startIntervalForUI(
-                                    onStarted: {
-                                        tasksListView.tabTasksView.onTaskStarted()
-                                    },
+                                    onStarted: {},
                                     activitiesSheet: {
                                         timetoSheet.showActivitiesTimerSheet(
                                                 isPresented: $isSheetPresented,
@@ -327,7 +325,6 @@ struct TasksView__TaskRowView: View {
                                                 selectedActivity: nil,
                                                 onStart: {
                                                     isSheetPresented = false
-                                                    tasksListView.tabTasksView.onTaskStarted()
                                                 }
                                         )
                                     },
@@ -338,7 +335,6 @@ struct TasksView__TaskRowView: View {
                                                 selectedActivity: activity,
                                                 onStart: {
                                                     isSheetPresented = false
-                                                    tasksListView.tabTasksView.onTaskStarted()
                                                 }
                                         )
                                     }

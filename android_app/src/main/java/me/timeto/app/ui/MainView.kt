@@ -259,10 +259,7 @@ fun MainView() {
                                     vm.toggleIsTasksVisible()
                                 }
 
-                                TabTasksView(
-                                    modifier = Modifier.weight(1f),
-                                    onTaskStarted = {},
-                                )
+                                TabTasksView(Modifier.weight(1f))
                             }
 
                             Box(
@@ -303,7 +300,7 @@ fun MainView() {
                     .clip(squircleShape)
                     .motionEventSpy { event ->
                         if (event.action == MotionEvent.ACTION_DOWN)
-                            ActivitiesTimerSheet__show(timerContext = null, onTaskStarted = {})
+                            ActivitiesTimerSheet__show(timerContext = null)
                     },
                 contentAlignment = Alignment.BottomCenter,
             ) {
@@ -572,10 +569,7 @@ private fun ImportantTasksView(
                         taskItem.task.startIntervalForUI(
                             onStarted = {},
                             activitiesSheet = {
-                                ActivitiesTimerSheet__show(
-                                    timerContext = taskItem.timerContext,
-                                    onTaskStarted = {},
-                                )
+                                ActivitiesTimerSheet__show(taskItem.timerContext)
                             },
                             timerSheet = { activity ->
                                 Sheet.show { layerTimer ->

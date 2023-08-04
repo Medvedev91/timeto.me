@@ -9,8 +9,6 @@ private let SECTION_BUTTONS_END_PADDING = TAB_TASKS_H_PADDING.goldenRatioDown()
 // TRICK Using ignoresSafeArea() outside is mandatory
 struct TabTasksView: View {
 
-    let onTaskStarted: () -> Void
-
     //////
 
     @State private var vm = TabTasksVM()

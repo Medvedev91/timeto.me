@@ -18,19 +18,16 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
-import me.timeto.shared.launchEx
 import me.timeto.shared.vm.ActivityTimerSheetVM
 import me.timeto.shared.vm.ActivitiesTimerSheetVM
 
 fun ActivitiesTimerSheet__show(
     timerContext: ActivityTimerSheetVM.TimerContext?,
-    onTaskStarted: () -> Unit,
 ) {
     Sheet.show { layer ->
         ActivitiesTimerSheet(
             layerActivitiesSheet = layer,
             timerContext = timerContext,
-            onTaskStarted = onTaskStarted,
         )
     }
 }
@@ -39,10 +36,7 @@ fun ActivitiesTimerSheet__show(
 private fun ActivitiesTimerSheet(
     layerActivitiesSheet: WrapperView.Layer,
     timerContext: ActivityTimerSheetVM.TimerContext?,
-    onTaskStarted: () -> Unit,
 ) {
-    val scopeTaskSheet = rememberCoroutineScope()
-
     val activityItemHeight = 42.dp
     val topContentPadding = 2.dp
     val bottomContentPadding = 20.dp
@@ -82,10 +76,7 @@ private fun ActivitiesTimerSheet(
                                     activity = activity,
                                     timerContext = timerContext,
                                 ) {
-                                    scopeTaskSheet.launchEx {
-                                        onTaskStarted()
-                                        layerActivitiesSheet.close() // At the end to keep "scopeTaskSheet"
-                                    }
+                                    layerActivitiesSheet.close()
                                 }
                             }
                         }
@@ -123,10 +114,7 @@ private fun ActivitiesTimerSheet(
                                 .background(if (isPrimary) c.blue else c.transparent)
                                 .clickable {
                                     hintUI.startInterval {
-                                        scopeTaskSheet.launchEx {
-                                            onTaskStarted()
-                                            layerActivitiesSheet.close() // At the end to keep "scopeTaskSheet"
-                                        }
+                                        layerActivitiesSheet.close()
                                     }
                                 }
                                 .padding(start = hPadding, end = hPadding, top = 3.dp, bottom = 4.dp),

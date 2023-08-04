@@ -34,7 +34,6 @@ import me.timeto.shared.vm.TasksListVM
 fun TasksListView(
     activeFolder: TaskFolderModel,
     dragItem: MutableState<DragItem?>,
-    onTaskStarted: () -> Unit,
 ) {
     val (vm, state) = rememberVM(activeFolder) { TasksListVM(activeFolder) }
     val tmrwData = state.tmrwData
@@ -273,11 +272,9 @@ fun TasksListView(
                             .background(c.bg)
                             .clickable {
                                 taskUI.task.startIntervalForUI(
-                                    onStarted = {
-                                        onTaskStarted()
-                                    },
+                                    onStarted = {},
                                     activitiesSheet = {
-                                        ActivitiesTimerSheet__show(taskUI.timerContext, onTaskStarted)
+                                        ActivitiesTimerSheet__show(taskUI.timerContext)
                                     },
                                     timerSheet = { activity ->
                                         Sheet.show { layerTimer ->
@@ -285,9 +282,7 @@ fun TasksListView(
                                                 layer = layerTimer,
                                                 activity = activity,
                                                 timerContext = taskUI.timerContext,
-                                            ) {
-                                                onTaskStarted()
-                                            }
+                                            ) {}
                                         }
                                     },
                                 )
