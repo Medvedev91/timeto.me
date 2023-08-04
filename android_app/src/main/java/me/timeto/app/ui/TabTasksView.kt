@@ -35,8 +35,6 @@ import me.timeto.shared.db.TaskFolderModel
 import me.timeto.shared.vm.TabTasksVM
 import kotlin.random.Random
 
-var setTodayFolder: (() -> Unit)? = null
-
 val tabTasksInputShape = MySquircleShape(len = 70f)
 
 val TAB_TASKS_H_PADDING = 16.dp
@@ -60,17 +58,9 @@ fun TabTasksView(
         mutableStateOf<Section?>(Section_Folder(DI.getTodayFolder()))
     }
 
-    ///
-    /// Navigation
-
-    setTodayFolder = {
+    BackHandler((activeSection as? Section_Folder)?.folder?.isToday != true) {
         activeSection = Section_Folder(DI.getTodayFolder())
     }
-    BackHandler((activeSection as? Section_Folder)?.folder?.isToday != true) {
-        setTodayFolder!!()
-    }
-
-    //////
 
     val dragItem = remember { mutableStateOf<DragItem?>(null) }
     val dropItems = remember { mutableListOf<DropItem>() }
