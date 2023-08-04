@@ -134,7 +134,7 @@ class MyInAppNotificationDelegate: NSObject, ObservableObject, UNUserNotificatio
         // .sound
         // .list /// Keep in notification center
         // .badge /// Set badge on app icon
-        completionHandler(FocusModeUI.shared.isOpen() ? [.banner, .sound] : [.banner])
+        completionHandler([.banner, .sound])
     }
 
     ///
