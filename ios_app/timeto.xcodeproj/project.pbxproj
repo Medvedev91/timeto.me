@@ -67,7 +67,6 @@
 		31821A947CB3AFF5CE923090 /* ShortcutFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182106A0DA4A0D8844CFA11 /* ShortcutFormSheet.swift */; };
 		31821AAC3BB87DE0D8E46697 /* TabTasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182118FAB48EDF7FE78201B /* TabTasksView.swift */; };
 		31821AFA9798F3945CA34D09 /* ActivityPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821A15532BF8D598665449 /* ActivityPickerSheet.swift */; };
-		31821B2BC67AB0C1C5A986D1 /* TabTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E772C640720D7220928 /* TabTimerView.swift */; };
 		31821BC7F849A5C918F61175 /* ActivityColorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318211488ABF627A2A9935A7 /* ActivityColorSheet.swift */; };
 		31821BCAB8BA795D691FADF8 /* MyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821D7654D0C105DFC60DDD /* MyListView.swift */; };
 		31821C0BB92532D84114C15C /* TriggersListIconsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182157C5CB954867515B4BA /* TriggersListIconsView.swift */; };
@@ -178,7 +177,6 @@
 		31821E3EB266890584C3EF87 /* FoldersSettingsSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoldersSettingsSheet.swift; sourceTree = "<group>"; };
 		31821E53EB27CE7F81AF0F69 /* DialogCloseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogCloseButton.swift; sourceTree = "<group>"; };
 		31821E58DC92CD5673A6B49E /* utils_apple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = utils_apple.swift; sourceTree = "<group>"; };
-		31821E772C640720D7220928 /* TabTimerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabTimerView.swift; sourceTree = "<group>"; };
 		31821ED2142F08DDD1E0CC75 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		31821F29E288957ABB3DF794 /* TextFeaturesTimerFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFeaturesTimerFormView.swift; sourceTree = "<group>"; };
 		31821F4527059D286AC0AF41 /* TaskFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskFormSheet.swift; sourceTree = "<group>"; };
@@ -315,7 +313,6 @@
 				31821287721625075228B91E /* TabReadmeView.swift */,
 				31821CAC31C48C0016357E8C /* TabsView.swift */,
 				3182118FAB48EDF7FE78201B /* TabTasksView.swift */,
-				31821E772C640720D7220928 /* TabTimerView.swift */,
 				318215C1991B23DE1654074B /* SettingsSheet.swift */,
 				31821F4527059D286AC0AF41 /* TaskFormSheet.swift */,
 				318213DE3B58FA098A8DBAE7 /* ActivitiesTimerSheet.swift */,
@@ -527,7 +524,6 @@
 				318213413EE00D5D8F3FA396 /* EventsListView.swift in Sources */,
 				31821AAC3BB87DE0D8E46697 /* TabTasksView.swift in Sources */,
 				2C5BD61B2A6076F000AD4042 /* ReadmeSheet.swift in Sources */,
-				31821B2BC67AB0C1C5A986D1 /* TabTimerView.swift in Sources */,
 				318210F0EEFF944CD87E3A98 /* TabReadmeView.swift in Sources */,
 				318213FBF8D67B0E8E5463AC /* RepeatingsListView.swift in Sources */,
 				3182132BB1D4C32160A2EBCE /* TasksListView.swift in Sources */,
