@@ -422,12 +422,12 @@ struct SettingsSheet: View {
                         //////
 
                         // todo is it actual?
-                        TabsView.lastInstance!.loadingView = AnyView(Text("Loading"))
+                        MainView.lastInstance!.loadingView = AnyView(Text("Loading"))
                         Task {
                             do {
                                 try await Backup.shared.restore(jString: jString)
                                 // todo I do not know how to restart the app
-                                TabsView.lastInstance!.loadingView = AnyView(Text("Please restart the app"))
+                                MainView.lastInstance!.loadingView = AnyView(Text("Please restart the app"))
                             } catch {
                                 // todo UI error
                                 reportApi("iOS restore exception\n" + error.myMessage())

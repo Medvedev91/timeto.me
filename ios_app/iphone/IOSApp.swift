@@ -28,8 +28,7 @@ struct IOSApp: App {
 
                 if state.isAppReady {
 
-                    TabsView()
-                            .attachFocusModeView()
+                    MainView()
                             .attachTimetoSheet()
                             .attachTimetoAlert()
                             .attachAutoBackupIos()

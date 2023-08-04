@@ -2,7 +2,7 @@ import SwiftUI
 import Combine
 import shared
 
-private let bottomNavigationHeight = 56.0 // todo
+let bottomNavigationHeight = 56.0 // todo
 
 private let dividerPadding = 8.0
 private let dividerColor: UIColor = .systemGray4
@@ -16,52 +16,43 @@ private let taskListContentPadding = 4.0
 
 private let menuColor = MainVM.companion.menuColor.toColor()
 
-extension View {
+private let navAndTasksTextHeight = bottomNavigationHeight + taskCountsHeight
 
-    func attachFocusModeView() -> some View {
-        modifier(FocusModeView__ViewModifier())
-    }
-}
-
-///
-///
-
-private struct FocusModeView__ViewModifier: ViewModifier {
-
-    @State private var isPresented = false
-
-    private let statePublisher: AnyPublisher<KotlinBoolean, Never> = FocusModeUI.shared.state.toPublisher()
-
-    func body(content: Content) -> some View {
-
-        ZStack {
-            content
-            if isPresented {
-                FocusModeView__CoverView()
-                        .colorScheme(.dark)
-                        .ignoresSafeArea(.keyboard, edges: .bottom)
-            }
-        }
-                .onReceive(statePublisher) { newValue in
-                    isPresented = newValue.boolValue
-                }
-    }
-}
-
-private struct FocusModeView__CoverView: View {
+struct MainView: View {
 
     @State private var vm = MainVM()
     @State private var isTimerActivitiesPresented = false
+
+    @State private var isSettingsSheetPresented = false
 
     @EnvironmentObject private var timetoSheet: TimetoSheet
 
     @State private var isPurpleAnim = true
 
+    static var lastInstance: MainView? = nil
+
+    @State var loadingView: AnyView?
+
+    @State private var triggersChecklist: ChecklistModel?
+    @State private var isTriggersChecklistPresented = false
+
+    private let shortcutPublisher: AnyPublisher<ShortcutModel, Never> = UtilsKt.uiShortcutFlow.toPublisher()
+    private let checklistPublisher: AnyPublisher<ChecklistModel, Never> = UtilsKt.uiChecklistFlow.toPublisher()
+
     var body: some View {
+        if let loadingView = loadingView {
+            loadingView
+        } else {
+            mainBody
+        }
+    }
+
+    private var mainBody: some View {
 
         VMView(vm: vm, stack: .ZStack(alignment: .bottom)) { state in
 
-            let navAndTasksTextHeight = bottomNavigationHeight + taskCountsHeight
+            /// # PROVOKE_STATE_UPDATE
+            EmptyView().id("MainView checklist \(triggersChecklist?.id ?? 0)")
 
             Color.black.edgesIgnoringSafeArea(.all)
                     .statusBar(hidden: true)
@@ -168,12 +159,13 @@ private struct FocusModeView__CoverView: View {
                     }
                             .padding(.bottom, navAndTasksTextHeight)
 
-                    if (state.isTabTasksVisible) {
+                    if (state.isTasksVisible) {
+
                         VStack {
                             if let checklistUI = checklistUI {
                                 Button(
                                         action: {
-                                            vm.toggleIsTabTasksVisible()
+                                            vm.toggleIsTasksVisible()
                                         },
                                         label: {
                                             Text(checklistUI.titleToExpand)
@@ -228,13 +220,13 @@ private struct FocusModeView__CoverView: View {
 
                 Button(
                         action: {
-                            vm.toggleIsTabTasksVisible()
+                            vm.toggleIsTasksVisible()
                         },
                         label: {
 
                             VStack {
 
-                                if (!state.isTabTasksVisible) {
+                                if (!state.isTasksVisible) {
 
                                     Text(state.tasksText)
                                             .foregroundColor(menuColor)
@@ -276,19 +268,19 @@ private struct FocusModeView__CoverView: View {
                                         .frame(height: bottomNavigationHeight)
                             }
                                     .frame(maxWidth: .infinity)
-                                    .background(state.isTabTasksVisible ? Color(.systemGray5) : .black)
+                                    .background(state.isTasksVisible ? Color(.systemGray5) : .black)
                                     .cornerRadius(10, onTop: true, onBottom: true)
                         }
                 )
 
                 Button(
                         action: {
-                            FocusModeUI.shared.close()
+                            isSettingsSheetPresented = true
                         },
                         label: {
                             VStack(spacing: 0) {
                                 Spacer()
-                                Image(systemName: "xmark.circle")
+                                Image(systemName: "ellipsis.circle")
                                         .frame(height: menuIconSize)
                                         .foregroundColor(menuColor)
                                         .font(.system(size: 30, weight: .thin))
@@ -297,10 +289,34 @@ private struct FocusModeView__CoverView: View {
                         }
                 )
             }
-                    .frame(width: .infinity, height: state.isTabTasksVisible ? bottomNavigationHeight : navAndTasksTextHeight)
+                    .frame(width: .infinity, height: state.isTasksVisible ? bottomNavigationHeight : navAndTasksTextHeight)
         }
+                .ignoresSafeArea(.keyboard, edges: .bottom)
+                .onReceive(shortcutPublisher) { shortcut in
+                    let swiftURL = URL(string: shortcut.uri)!
+                    if !UIApplication.shared.canOpenURL(swiftURL) {
+                        UtilsKt.showUiAlert(message: "Invalid shortcut link", reportApiText: nil)
+                        return
+                    }
+                    UIApplication.shared.open(swiftURL)
+                }
+                .onReceive(checklistPublisher) { checklist in
+                    triggersChecklist = checklist
+                    isTriggersChecklistPresented = true
+                }
+                .sheetEnv(isPresented: $isTriggersChecklistPresented) {
+                    if let checklist = triggersChecklist {
+                        ChecklistDialog(isPresented: $isTriggersChecklistPresented, checklist: checklist)
+                    }
+                }
+                .sheetEnv(
+                        isPresented: $isSettingsSheetPresented
+                ) {
+                    SettingsSheet(isPresented: $isSettingsSheetPresented)
+                }
                 .onAppear {
                     UIApplication.shared.isIdleTimerDisabled = true
+                    MainView.lastInstance = self
                 }
                 .onDisappear {
                     UIApplication.shared.isIdleTimerDisabled = false
