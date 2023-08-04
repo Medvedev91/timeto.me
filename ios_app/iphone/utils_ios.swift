@@ -136,18 +136,6 @@ class MyInAppNotificationDelegate: NSObject, ObservableObject, UNUserNotificatio
         // .badge /// Set badge on app icon
         completionHandler([.banner, .sound])
     }
-
-    ///
-    /// On click on push
-    ///
-    func userNotificationCenter(
-            _ center: UNUserNotificationCenter,
-            didReceive response: UNNotificationResponse,
-            withCompletionHandler completionHandler: @escaping () -> ()
-    ) {
-        TabsView.lastInstance?.tabSelection = TabsView.TAB_ID_TIMER
-        completionHandler() // todo What is it? What if remove.
-    }
 }
 
 ///
