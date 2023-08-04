@@ -77,6 +77,7 @@ private struct TimetoSheet__Modifier: ViewModifier {
                 wrapper
             }
         }
+                .colorScheme(.dark)
                 .environmentObject(timetoSheet)
     }
 }
