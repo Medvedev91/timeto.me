@@ -1,6 +1,7 @@
 package me.timeto.app.ui
 
 import android.view.MotionEvent
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
@@ -253,6 +254,10 @@ fun MainView() {
                                 }
 
                                 FocusDivider(remember { mutableStateOf(1f) }, PaddingValues())
+
+                                BackHandler {
+                                    vm.toggleIsTasksVisible()
+                                }
 
                                 TabTasksView(
                                     modifier = Modifier.weight(1f),
