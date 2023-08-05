@@ -41,7 +41,7 @@ class AppVM : __VM<AppVM.State>() {
                 .onEachExIn(this) { lastInterval ->
                     ActivityModel.syncTimeHints()
                     rescheduleNotifications()
-                    showTriggersForInterval(lastInterval)
+                    performShortcut(lastInterval, secondsLimit = 3)
                 }
 
             launchEx {
@@ -83,15 +83,16 @@ class AppVM : __VM<AppVM.State>() {
     }
 }
 
-private fun showTriggersForInterval(
-    lastInterval: IntervalModel
+private fun performShortcut(
+    interval: IntervalModel,
+    secondsLimit: Int,
 ) {
-    if ((lastInterval.id + 3) < time())
+    if ((interval.id + secondsLimit) < time())
         return
 
     val shortcut: ShortcutModel? =
-        lastInterval.note?.textFeatures()?.shortcuts?.firstOrNull()
-        ?: lastInterval.getActivityDI().name.textFeatures().shortcuts.firstOrNull()
+        interval.note?.textFeatures()?.shortcuts?.firstOrNull()
+        ?: interval.getActivityDI().name.textFeatures().shortcuts.firstOrNull()
 
     shortcut?.performUI()
 }
