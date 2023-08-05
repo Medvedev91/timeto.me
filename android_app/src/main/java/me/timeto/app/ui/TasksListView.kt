@@ -242,7 +242,7 @@ fun TasksListView(
                         val dropItem = localDragItem.focusedDrop.value
                         SwipeToAction__StartView(
                             text = if (dropItem != null) "Move to ${dropItem.name}" else "Edit",
-                            bgColor = if (dropItem != null) c.tasksTabDropFocused else c.blue
+                            bgColor = if (dropItem != null) c.tasksDropFocused else c.blue
                         )
                     },
                     endView = { state ->

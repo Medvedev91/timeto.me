@@ -253,6 +253,6 @@ object c {
     val white = Color.White
     val black = Color.Black
     val transparent = Color.Transparent
-    val tasksTabDropFocused = green
+    val tasksDropFocused = green
     val formHeaderDivider = gray4
 }

@@ -144,7 +144,7 @@ fun TasksView(
                     val isActive = (activeSection as? Section_Folder)?.folder?.id == folder.id
                     val backgroundColor = animateColorAsState(
                         when {
-                            isFocusedToDrop -> c.tasksTabDropFocused
+                            isFocusedToDrop -> c.tasksDropFocused
                             isAllowedToDrop -> c.purple
                             isActive -> c.blue
                             else -> c.bg
@@ -248,7 +248,7 @@ fun TasksView(
 
                     val textColor = animateColorAsState(
                         when {
-                            isFocusedToDrop -> c.tasksTabDropFocused
+                            isFocusedToDrop -> c.tasksDropFocused
                             isAllowedToDrop -> c.purple
                             isActive -> c.blue
                             else -> c.calendarIconColor
