@@ -89,8 +89,11 @@ private fun showTriggersForInterval(
     if ((lastInterval.id + 3) < time())
         return
 
-    val triggers = lastInterval.getTriggers()
-    triggers.firstOrNull { it is TextFeatures.Trigger.Shortcut }?.performUI()
+    val shortcut: ShortcutModel? =
+        lastInterval.note?.textFeatures()?.shortcuts?.firstOrNull()
+        ?: lastInterval.getActivityDI().name.textFeatures().shortcuts.firstOrNull()
+
+    shortcut?.performUI()
 }
 
 ///
