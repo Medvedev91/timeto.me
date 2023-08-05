@@ -383,6 +383,8 @@ val uiShortcutFlow = MutableSharedFlow<ShortcutModel>()
 
 val uiChecklistFlow = MutableSharedFlow<ChecklistModel>()
 
+val keepScreenOnStateFlow = MutableStateFlow(false)
+
 ///
 /// KMM init/await
 

@@ -42,6 +42,7 @@ class AppVM : __VM<AppVM.State>() {
                     ActivityModel.syncTimeHints()
                     rescheduleNotifications()
                     performShortcut(lastInterval, secondsLimit = 3)
+                    keepScreenOnStateFlow.emit(lastInterval.getActivityDI().keepScreenOn)
                 }
 
             launchEx {
