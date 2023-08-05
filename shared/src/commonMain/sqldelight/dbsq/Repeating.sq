@@ -4,7 +4,7 @@ CREATE TABLE RepeatingSQ (
     last_day INTEGER AS Int NOT NULL,
     type_id INTEGER AS Int NOT NULL,
     value TEXT NOT NULL,
-    daytime INTEGER AS Int, -- Nullable!
+    daytime INTEGER AS Int, -- TRICK Nullable!
     auto_focus INTEGER AS Int NOT NULL
 );
 
