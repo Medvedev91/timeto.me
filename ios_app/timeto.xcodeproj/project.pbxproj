@@ -54,7 +54,6 @@
 		318216CD611B132D9DE288F3 /* EventsHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821B4BCB049B516BF2DF2E /* EventsHistoryView.swift */; };
 		318216E60DD4CA4153065416 /* utils_apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E58DC92CD5673A6B49E /* utils_apple.swift */; };
 		318216F271691CC07FC67AFC /* ChecklistFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318212FEA97CBD2AEC3AA1D6 /* ChecklistFormSheet.swift */; };
-		3182185DFB576215349F8005 /* ActivityTimerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821407A6DA0B853D8B1116 /* ActivityTimerSheet.swift */; };
 		31821874203EAD4F021DAD0E /* AutoBackupIos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821D5928C18299586075F4 /* AutoBackupIos.swift */; };
 		3182197D9BDC28A7649BA7E1 /* TextFeaturesTimerFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821F29E288957ABB3DF794 /* TextFeaturesTimerFormView.swift */; };
 		3182199F1FA4EF9D78D19E95 /* Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821110E735778C88CDF821 /* Sheet.swift */; };
@@ -139,7 +138,6 @@
 		318212FEA97CBD2AEC3AA1D6 /* ChecklistFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChecklistFormSheet.swift; sourceTree = "<group>"; };
 		318212FFE80A0856A0A88DCF /* MySpacerSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySpacerSize.swift; sourceTree = "<group>"; };
 		318213DE3B58FA098A8DBAE7 /* ActivitiesTimerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesTimerSheet.swift; sourceTree = "<group>"; };
-		31821407A6DA0B853D8B1116 /* ActivityTimerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityTimerSheet.swift; sourceTree = "<group>"; };
 		31821514C5F55F9A34FBC8AD /* FolderFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderFormSheet.swift; sourceTree = "<group>"; };
 		3182151D618D3ED8AEE1B80A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		31821527096D1BDB0A35B178 /* TimetoAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetoAlert.swift; sourceTree = "<group>"; };
@@ -281,7 +279,6 @@
 			isa = PBXGroup;
 			children = (
 				31821794CA93E29D6889286D /* ActivityFormSheet.swift */,
-				31821407A6DA0B853D8B1116 /* ActivityTimerSheet.swift */,
 				31821996D20B09EBA4F73C2B /* AppDelegate.swift */,
 				3182151D618D3ED8AEE1B80A /* Assets.xcassets */,
 				31821D5928C18299586075F4 /* AutoBackupIos.swift */,
@@ -504,7 +501,6 @@
 				31821A46712E80148E00481B /* MailView.swift in Sources */,
 				2C2E93F92905759100EAADBE /* TimerPickerSheet.swift in Sources */,
 				31821E89257A3F8032DE116A /* ChartView.swift in Sources */,
-				3182185DFB576215349F8005 /* ActivityTimerSheet.swift in Sources */,
 				2CB73DE3292FACE00053B2D6 /* SearchEmojiSheet.swift in Sources */,
 				31821286152F9C43BA2C4B7B /* TimetoSheet.swift in Sources */,
 				318212C07B5351BA8C7C9671 /* PieView.swift in Sources */,
