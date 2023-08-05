@@ -29,7 +29,7 @@ struct RepeatingsFormSheet: View {
 
     var body: some View {
 
-        VMView(vm: vm, stack: .VStack(spacing: 0)) { state in
+        VMView(vm: vm, stack: .VStack()) { state in
 
             SheetHeaderView(
                     onCancel: { isPresented.toggle() },
@@ -46,7 +46,7 @@ struct RepeatingsFormSheet: View {
 
             ScrollViewWithVListener(showsIndicators: false, vScroll: $sheetHeaderScroll) {
 
-                VStack(spacing: 0) {
+                VStack {
 
                     MyListView__ItemView(
                             isFirst: true,
@@ -132,7 +132,7 @@ struct RepeatingsFormSheet: View {
                                 withTopDivider: !isFirst
                         ) {
 
-                            VStack(spacing: 0) {
+                            VStack {
 
                                 let isActive = state.activePeriodIndex?.toInt() == periodIndex
 
@@ -346,7 +346,7 @@ private struct AddDayOfYearSheet: View {
 
     var body: some View {
 
-        VStack(spacing: 0) {
+        VStack {
 
             SheetHeaderView(
                     onCancel: { isPresented.toggle() },
