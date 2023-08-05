@@ -90,6 +90,15 @@ class MainActivity : ComponentActivity() {
                         // TRICK Without delay the first event does not handled. 1L enough.
                         vm.onNotificationsPermissionReady(delayMls = 500L)
                     }
+
+                    LaunchedEffect(Unit) {
+                        keepScreenOnStateFlow
+                            .onEachExIn(this) { keepScreenOn ->
+                                val flag = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                                if (keepScreenOn) window.addFlags(flag)
+                                else window.clearFlags(flag)
+                            }
+                    }
                 }
             }
         }
@@ -112,8 +121,6 @@ class MainActivity : ComponentActivity() {
         val statusBars = WindowInsetsCompat.Type.statusBars()
         val controller = WindowInsetsControllerCompat(window, window.decorView)
         controller.hide(statusBars) // To show: controller.show(statusBars)
-        val flagKeepScreenOn = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-        window.addFlags(flagKeepScreenOn) // To disable: window.clearFlags(flagKeepScreenOn)
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
