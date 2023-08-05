@@ -96,7 +96,7 @@ fun RepeatingFormSheet(
 
             MyListView__ItemView(
                 isFirst = true,
-                isLast = false,
+                isLast = true,
             ) {
                 MyListView__ItemView__ButtonView(
                     text = state.daytimeHeader,
@@ -121,19 +121,6 @@ fun RepeatingFormSheet(
                             }
                         )
                     }
-                }
-            }
-
-            MyListView__ItemView(
-                isFirst = false,
-                isLast = true,
-                withTopDivider = true,
-            ) {
-                MyListView__ItemView__SwitchView(
-                    text = state.autoFSTitle,
-                    isActive = state.isAutoFS,
-                ) {
-                    vm.toggleAutoFS()
                 }
             }
 

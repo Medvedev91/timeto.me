@@ -217,15 +217,15 @@ private suspend fun fillInitData() {
 
     val defData = ActivityModel__Data.buildDefault()
     val aNormal = ActivityModel.TYPE.NORMAL
-    val actMed = ActivityModel.addWithValidation("Meditation", "🧘‍♀️", 20 * 60, 1, aNormal, cYellow, defData, false)
-    val actWork = ActivityModel.addWithValidation("Work", "📁", 40 * 60, 2, aNormal, cBlue, defData, false)
-    ActivityModel.addWithValidation("Hobby", "🎸", 3600, 3, aNormal, cRed, defData, false)
-    val actPd = ActivityModel.addWithValidation("Personal development", "📖", 30 * 60, 4, aNormal, cPurple, defData, false)
+    val actMed = ActivityModel.addWithValidation("Meditation", "🧘‍♀️", 20 * 60, 1, aNormal, cYellow, defData, true)
+    val actWork = ActivityModel.addWithValidation("Work", "📁", 40 * 60, 2, aNormal, cBlue, defData, true)
+    ActivityModel.addWithValidation("Hobby", "🎸", 3600, 3, aNormal, cRed, defData, true)
+    val actPd = ActivityModel.addWithValidation("Personal development", "📖", 30 * 60, 4, aNormal, cPurple, defData, true)
     val actEx = ActivityModel.addWithValidation("Exercises / Health", "💪", 20 * 60, 5, aNormal, colorsWheel.next(), defData, false)
     ActivityModel.addWithValidation("Walk", "👟", 30 * 60, 6, aNormal, colorsWheel.next(), defData, false)
-    val actGr = ActivityModel.addWithValidation("Getting ready", "🚀", 30 * 60, 7, aNormal, colorsWheel.next(), defData, false)
+    val actGr = ActivityModel.addWithValidation("Getting ready", "🚀", 30 * 60, 7, aNormal, colorsWheel.next(), defData, true)
     ActivityModel.addWithValidation("Sleep / Rest", "😴", 8 * 3600, 8, aNormal, cGreen, defData, false)
-    val actOther = ActivityModel.addWithValidation("Other", "💡", 3600, 9, ActivityModel.TYPE.OTHER, colorsWheel.next(), defData, false)
+    val actOther = ActivityModel.addWithValidation("Other", "💡", 3600, 9, ActivityModel.TYPE.OTHER, colorsWheel.next(), defData, true)
 
     val interval = IntervalModel.addWithValidation(30 * 60, actPd, null)
     DI.fillLateInit(interval, interval) // To 100% ensure
@@ -233,9 +233,9 @@ private suspend fun fillInitData() {
     val todayDay = UnixTime().localDay
     fun prepRep(title: String, activity: ActivityModel, timerMin: Int): String =
         title.textFeatures().copy(activity = activity, timer = timerMin * 60).textWithFeatures()
-    RepeatingModel.addWithValidation(prepRep("Exercises", actEx, 30), RepeatingModel.Period.EveryNDays(1), todayDay, null, false)
-    RepeatingModel.addWithValidation(prepRep("Meditation", actMed, 20), RepeatingModel.Period.EveryNDays(1), todayDay, null, false)
-    RepeatingModel.addWithValidation(prepRep("Small tasks", actOther, 30), RepeatingModel.Period.EveryNDays(1), todayDay, null, false)
-    RepeatingModel.addWithValidation(prepRep("Getting ready", actGr, 20), RepeatingModel.Period.EveryNDays(1), todayDay, null, false)
-    RepeatingModel.addWithValidation(prepRep("Weekly plan", actWork, 20), RepeatingModel.Period.DaysOfWeek(listOf(0)), todayDay, null, false)
+    RepeatingModel.addWithValidation(prepRep("Exercises", actEx, 30), RepeatingModel.Period.EveryNDays(1), todayDay, null)
+    RepeatingModel.addWithValidation(prepRep("Meditation", actMed, 20), RepeatingModel.Period.EveryNDays(1), todayDay, null)
+    RepeatingModel.addWithValidation(prepRep("Small tasks", actOther, 30), RepeatingModel.Period.EveryNDays(1), todayDay, null)
+    RepeatingModel.addWithValidation(prepRep("Getting ready", actGr, 20), RepeatingModel.Period.EveryNDays(1), todayDay, null)
+    RepeatingModel.addWithValidation(prepRep("Weekly plan", actWork, 20), RepeatingModel.Period.DaysOfWeek(listOf(0)), todayDay, null)
 }

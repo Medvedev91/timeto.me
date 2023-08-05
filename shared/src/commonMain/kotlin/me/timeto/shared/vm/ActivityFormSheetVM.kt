@@ -16,7 +16,7 @@ class ActivityFormSheetVM(
         val emoji: String?,
         val activityData: ActivityModel__Data,
         val textFeatures: TextFeatures,
-        val isAutoFS: Boolean,
+        val keepScreenOn: Boolean,
         val colorRgba: ColorRgba,
     ) {
         val inputNameValue = textFeatures.textNoFeatures
@@ -27,7 +27,7 @@ class ActivityFormSheetVM(
         val emojiNotSelected = "Not Selected"
         val colorTitle = "Color"
         val timerHintsHeader = "TIMER HINTS"
-        val autoFSTitle = Strings.AUTO_FS_FORM_TITLE
+        val keepScreenOnTitle = "Keep Screen On"
         val deleteText = "Delete Activity"
         val timerHintsCustomItems = activityData.timer_hints.custom_list.map { seconds ->
             TimerHintCustomItem(seconds = seconds, text = seconds.toTimerHintNote(isShort = false))
@@ -46,7 +46,7 @@ class ActivityFormSheetVM(
             emoji = activity?.emoji,
             activityData = activity?.getData() ?: ActivityModel__Data.buildDefault(),
             textFeatures = (activity?.name ?: "").textFeatures(),
-            isAutoFS = activity?.isAutoFs ?: false,
+            keepScreenOn = activity?.keepScreenOn ?: false,
             colorRgba = activity?.getColorRgba() ?: ActivityModel.nextColorDI(),
         )
     )
@@ -61,8 +61,8 @@ class ActivityFormSheetVM(
         it.copy(textFeatures = newTextFeatures)
     }
 
-    fun toggleAutoFS() = state.update {
-        it.copy(isAutoFS = !it.isAutoFS)
+    fun toggleKeepScreenOn() = state.update {
+        it.copy(keepScreenOn = !it.keepScreenOn)
     }
 
     fun upColorRgba(colorRgba: ColorRgba) = state.update {
@@ -125,7 +125,7 @@ class ActivityFormSheetVM(
             val activityData = state.value.activityData
             activityData.assertValidity()
 
-            val isAutoFS = state.value.isAutoFS
+            val keepScreenOn = state.value.keepScreenOn
             val colorRgba = state.value.colorRgba
 
             if (activity != null) {
@@ -133,7 +133,7 @@ class ActivityFormSheetVM(
                     name = nameWithFeatures,
                     emoji = selectedEmoji,
                     data = activityData,
-                    isAutoFS = isAutoFS,
+                    keepScreenOn = keepScreenOn,
                     colorRgba = colorRgba,
                 )
             } else {
@@ -145,7 +145,7 @@ class ActivityFormSheetVM(
                     type = ActivityModel.TYPE.NORMAL,
                     colorRgba = colorRgba,
                     data = activityData,
-                    isAutoFS = isAutoFS,
+                    keepScreenOn = keepScreenOn,
                 )
             }
             onSuccess()

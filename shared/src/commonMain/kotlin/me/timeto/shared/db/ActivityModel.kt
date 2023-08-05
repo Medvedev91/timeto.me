@@ -17,7 +17,7 @@ data class ActivityModel(
     val type_id: Int,
     val color_rgba: String,
     val data_json: String,
-    val auto_focus: Int,
+    val keep_screen_on: Int,
 ) : Backupable__Item {
 
     enum class TYPE(val id: Int) {
@@ -66,7 +66,7 @@ data class ActivityModel(
             type: TYPE,
             colorRgba: ColorRgba,
             data: ActivityModel__Data,
-            isAutoFS: Boolean,
+            keepScreenOn: Boolean,
         ): ActivityModel = dbIO {
 
             if (type == TYPE.OTHER && getAscSorted().find { it.getType() == TYPE.OTHER } != null)
@@ -88,7 +88,7 @@ data class ActivityModel(
                     type_id = type.id,
                     color_rgba = colorRgba.toRgbaString(),
                     data_json = data.toJString(),
-                    auto_focus = isAutoFS.toInt10(),
+                    keep_screen_on = keepScreenOn.toInt10(),
                 )
                 db.activityQueries.insert(activitySQ)
                 activitySQ.toModel()
@@ -182,7 +182,7 @@ data class ActivityModel(
         private fun ActivitySQ.toModel() = ActivityModel(
             id = id, name = name, emoji = emoji, timer = timer, sort = sort,
             type_id = type_id, color_rgba = color_rgba, data_json = data_json,
-            auto_focus = auto_focus,
+            keep_screen_on = keep_screen_on,
         )
 
         ///
@@ -203,13 +203,13 @@ data class ActivityModel(
                     color_rgba = j.getString(5),
                     data_json = j.getString(6),
                     emoji = j.getString(7),
-                    auto_focus = j.getInt(8),
+                    keep_screen_on = j.getInt(8),
                 )
             )
         }
     }
 
-    val isAutoFs = auto_focus.toBoolean10()
+    val keepScreenOn = keep_screen_on.toBoolean10()
 
     fun nameWithEmoji() = "$name $emoji"
 
@@ -235,7 +235,7 @@ data class ActivityModel(
         name: String,
         emoji: String,
         data: ActivityModel__Data,
-        isAutoFS: Boolean,
+        keepScreenOn: Boolean,
         colorRgba: ColorRgba,
     ) = dbIO {
         if (isOther())
@@ -250,7 +250,7 @@ data class ActivityModel(
             color_rgba = colorRgba.toRgbaString(),
             data_json = data.toJString(),
             emoji = validateEmoji(emoji, exActivity = this@ActivityModel),
-            auto_focus = isAutoFS.toInt10(),
+            keep_screen_on = keepScreenOn.toInt10(),
         )
     }
 
@@ -289,7 +289,7 @@ data class ActivityModel(
     override fun backupable__getId(): String = id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
-        id, name, timer, sort, type_id, color_rgba, data_json, emoji, auto_focus
+        id, name, timer, sort, type_id, color_rgba, data_json, emoji, keep_screen_on
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
@@ -303,7 +303,7 @@ data class ActivityModel(
             color_rgba = j.getString(5),
             data_json = j.getString(6),
             emoji = j.getString(7),
-            auto_focus = j.getInt(8),
+            keep_screen_on = j.getInt(8),
         )
     }
 

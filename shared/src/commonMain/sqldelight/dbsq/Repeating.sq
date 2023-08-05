@@ -4,8 +4,7 @@ CREATE TABLE RepeatingSQ (
     last_day INTEGER AS Int NOT NULL,
     type_id INTEGER AS Int NOT NULL,
     value TEXT NOT NULL,
-    daytime INTEGER AS Int, -- TRICK Nullable!
-    auto_focus INTEGER AS Int NOT NULL
+    daytime INTEGER AS Int -- TRICK Nullable!
 );
 
 getAsc:
@@ -27,9 +26,9 @@ LIMIT 1;
 
 insert:
 INSERT INTO RepeatingSQ
-(id, text, last_day, type_id, value, daytime, auto_focus)
+(id, text, last_day, type_id, value, daytime)
 VALUES
-(?, ?, ?, ?, ?, ?, ?);
+(?, ?, ?, ?, ?, ?);
 
 deleteById:
 DELETE FROM RepeatingSQ
@@ -37,7 +36,7 @@ WHERE id = ?;
 
 upById:
 UPDATE RepeatingSQ
-SET text=?, last_day=?, type_id=?, value=?, daytime=?, auto_focus=?
+SET text=?, last_day=?, type_id=?, value=?, daytime=?
 WHERE id=?;
 
 upLastDayById:

@@ -18,7 +18,6 @@ class RepeatingFormSheetVM(
         val selectedWeekDays: List<Boolean>,
         val selectedDaysOfMonth: Set<Int>,
         val selectedDaysOfYear: List<RepeatingModel.Period.DaysOfYear.MonthDayItem>,
-        val isAutoFS: Boolean,
     ) {
 
         val daytimeHeader = "Time of the Day"
@@ -31,8 +30,6 @@ class RepeatingFormSheetVM(
                                   activePeriodIndex != null &&
                                   textFeatures.activity != null &&
                                   textFeatures.timer != null
-
-        val autoFSTitle = Strings.AUTO_FS_FORM_TITLE
 
         // TRICK The order is hardcoded in ui
         val periods = listOf(
@@ -100,7 +97,6 @@ class RepeatingFormSheetVM(
                 selectedWeekDays = selectedWeekDays,
                 selectedDaysOfMonth = selectedDaysOfMonth,
                 selectedDaysOfYear = selectedDaysOfYear,
-                isAutoFS = repeating?.isAutoFs ?: false
             )
         )
     }
@@ -172,10 +168,6 @@ class RepeatingFormSheetVM(
         }
     }
 
-    fun toggleAutoFS() = state.update {
-        it.copy(isAutoFS = !it.isAutoFS)
-    }
-
     fun save(
         onSuccess: () -> Unit
     ) = scopeVM().launchEx {
@@ -195,14 +187,11 @@ class RepeatingFormSheetVM(
                 else -> throw Exception()
             }
 
-            val isAutoFS = state.value.isAutoFS
-
             if (repeating != null) {
                 repeating.upWithValidation(
                     text = nameWithFeatures,
                     period = period,
                     daytime = state.value.daytime,
-                    isAutoFs = isAutoFS,
                 )
             } else
                 RepeatingModel.addWithValidation(
@@ -210,7 +199,6 @@ class RepeatingFormSheetVM(
                     period = period,
                     lastDay = UnixTime().localDay,
                     daytime = state.value.daytime,
-                    isAutoFs = isAutoFS,
                 )
             onSuccess()
         } catch (e: UIException) {

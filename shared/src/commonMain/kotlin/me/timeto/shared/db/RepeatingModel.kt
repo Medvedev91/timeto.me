@@ -18,7 +18,6 @@ data class RepeatingModel(
     val type_id: Int,
     val value: String,
     val daytime: Int?,
-    val auto_focus: Int,
 ) : Backupable__Item {
 
     companion object : Backupable__Holder {
@@ -45,7 +44,6 @@ data class RepeatingModel(
             period: Period,
             lastDay: Int,
             daytime: Int?,
-            isAutoFs: Boolean,
         ) = dbIO {
             db.transaction {
                 db.repeatingQueries.insert(
@@ -55,7 +53,6 @@ data class RepeatingModel(
                     type_id = period.type.id,
                     value_ = period.value,
                     daytime = daytime,
-                    auto_focus = isAutoFs.toInt10(),
                 )
             }
         }
@@ -91,7 +88,6 @@ data class RepeatingModel(
                 type_id = j.getInt(3),
                 value_ = j.getString(4),
                 daytime = j.getIntOrNull(5),
-                auto_focus = j.getInt(6),
             )
         }
 
@@ -105,11 +101,8 @@ data class RepeatingModel(
         private fun RepeatingSQ.toModel() = RepeatingModel(
             id = id, text = text, last_day = last_day,
             type_id = type_id, value = value_, daytime = daytime,
-            auto_focus = auto_focus,
         )
     }
-
-    val isAutoFs = auto_focus.toBoolean10()
 
     fun daytimeToTimeWithDayStart(today: Int): Int? {
         val daytime = daytime ?: return null
@@ -222,7 +215,6 @@ data class RepeatingModel(
         text: String,
         period: Period,
         daytime: Int?,
-        isAutoFs: Boolean,
     ): Unit = dbIO {
         db.repeatingQueries.upById(
             id = id,
@@ -231,7 +223,6 @@ data class RepeatingModel(
             type_id = period.type.id,
             value_ = period.value,
             daytime = daytime,
-            auto_focus = isAutoFs.toInt10(),
         )
     }
 
@@ -245,7 +236,7 @@ data class RepeatingModel(
     override fun backupable__getId(): String = id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
-        id, text, last_day, type_id, value, daytime, auto_focus,
+        id, text, last_day, type_id, value, daytime,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
@@ -257,7 +248,6 @@ data class RepeatingModel(
             type_id = j.getInt(3),
             value_ = j.getString(4),
             daytime = j.getIntOrNull(5),
-            auto_focus = j.getInt(6),
         )
     }
 

@@ -83,7 +83,7 @@ struct RepeatingsFormSheet: View {
 
                     MyListView__ItemView(
                             isFirst: true,
-                            isLast: false
+                            isLast: true
                     ) {
 
                         MyListView__ItemView__ButtonView(
@@ -113,20 +113,7 @@ struct RepeatingsFormSheet: View {
                                 }
                     }
 
-                    VStack(spacing: 0) {
-
-                        MyListView__ItemView(
-                                isFirst: false,
-                                isLast: true,
-                                withTopDivider: true
-                        ) {
-                            MyListView__ItemView__SwitchView(
-                                    text: state.autoFSTitle,
-                                    isActive: state.isAutoFS
-                            ) {
-                                vm.toggleAutoFS()
-                            }
-                        }
+                    VStack {
 
                         MyListView__Padding__SectionHeader()
 

@@ -157,10 +157,10 @@ fun ActivityFormSheet(
                 withTopDivider = true,
             ) {
                 MyListView__ItemView__SwitchView(
-                    text = state.autoFSTitle,
-                    isActive = state.isAutoFS,
+                    text = state.keepScreenOnTitle,
+                    isActive = state.keepScreenOn,
                 ) {
-                    vm.toggleAutoFS()
+                    vm.toggleKeepScreenOn()
                 }
             }
 
