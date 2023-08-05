@@ -259,7 +259,7 @@ fun MainView() {
                                     vm.toggleIsTasksVisible()
                                 }
 
-                                TabTasksView(Modifier.weight(1f))
+                                TasksView(Modifier.weight(1f))
                             }
 
                             Box(

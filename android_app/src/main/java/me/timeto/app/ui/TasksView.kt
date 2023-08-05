@@ -48,7 +48,7 @@ private val tabShape = MySquircleShape(50f)
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun TabTasksView(
+fun TasksView(
     modifier: Modifier,
 ) {
     val (_, state) = rememberVM { TabTasksVM() }
