@@ -6,7 +6,6 @@ let TAB_TASKS_H_PADDING = 16.0
 private let tabWidth: CGFloat = 34
 private let SECTION_BUTTONS_END_PADDING = TAB_TASKS_H_PADDING.goldenRatioDown()
 
-// TRICK Using ignoresSafeArea() outside is mandatory
 struct TabTasksView: View {
 
     //////
