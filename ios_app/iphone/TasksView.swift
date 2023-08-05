@@ -6,13 +6,13 @@ let TAB_TASKS_H_PADDING = 16.0
 private let tabWidth: CGFloat = 34
 private let SECTION_BUTTONS_END_PADDING = TAB_TASKS_H_PADDING.goldenRatioDown()
 
-struct TabTasksView: View {
+struct TasksView: View {
 
     //////
 
     @State private var vm = TabTasksVM()
 
-    static var lastInstance: TabTasksView? = nil
+    static var lastInstance: TasksView? = nil
 
     @State var activeSection: TabTasksView_Section? = TabTasksView_Section_Folder(folder: DI.getTodayFolder())
 
@@ -187,7 +187,7 @@ struct TabTasksView: View {
                     }
         }
                 .onAppear {
-                    TabTasksView.lastInstance = self
+                    TasksView.lastInstance = self
                 }
     }
 
@@ -217,14 +217,14 @@ private struct TabTasksView__FolderView: View {
 
     private let isActive: Bool
     private let folder: TaskFolderModel
-    private let tabTasksView: TabTasksView
+    private let tabTasksView: TasksView
 
     @State private var drop: DropItem__Folder
 
     init(
             isActive: Bool,
             folder: TaskFolderModel,
-            tabTasksView: TabTasksView
+            tabTasksView: TasksView
     ) {
         self.isActive = isActive
         self.folder = folder

@@ -6,7 +6,7 @@ struct TasksListView: View {
     @State private var vm: TasksListVM
 
     private let activeFolder: TaskFolderModel
-    let tabTasksView: TabTasksView
+    let tabTasksView: TasksView
 
     /// hideKeyboard() is more reliable than false
     @FocusState private var isAddFormFocused: Bool
@@ -15,7 +15,7 @@ struct TasksListView: View {
 
     @StateObject private var keyboardManager = KeyboardManager()
 
-    init(activeFolder: TaskFolderModel, tabTasksView: TabTasksView) {
+    init(activeFolder: TaskFolderModel, tabTasksView: TasksView) {
         self.tabTasksView = tabTasksView
         self.activeFolder = activeFolder
         _vm = State(initialValue: TasksListVM(folder: activeFolder))
