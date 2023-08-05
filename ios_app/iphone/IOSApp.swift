@@ -14,6 +14,9 @@ struct IOSApp: App {
     private let scheduledNotificationsDataPublisher: AnyPublisher<NSArray, Never> =
             UtilsKt.scheduledNotificationsDataFlow.toPublisher()
 
+    private let keepScreenOnDataPublisher: AnyPublisher<KotlinBoolean, Never> =
+            UtilsKt.keepScreenOnStateFlow.toPublisher()
+
     private let batteryManager = BatteryManager() // Keep the object
 
     init() {
@@ -37,6 +40,9 @@ struct IOSApp: App {
                                 center.removeAllPendingNotificationRequests()
                                 let dataItems = $0 as! [ScheduledNotificationData]
                                 dataItems.forEach { data in schedulePush(data: data) }
+                            }
+                            .onReceive(keepScreenOnDataPublisher) { keepScreenOn in
+                                UIApplication.shared.isIdleTimerDisabled = (keepScreenOn == true)
                             }
                             .onAppear {
                                 /// Use together

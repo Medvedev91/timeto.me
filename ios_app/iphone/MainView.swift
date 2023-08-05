@@ -313,11 +313,7 @@ struct MainView: View {
                     SettingsSheet(isPresented: $isSettingsSheetPresented)
                 }
                 .onAppear {
-                    UIApplication.shared.isIdleTimerDisabled = true
                     MainView.lastInstance = self
-                }
-                .onDisappear {
-                    UIApplication.shared.isIdleTimerDisabled = false
                 }
     }
 }
