@@ -31,8 +31,6 @@ struct MainView: View {
 
     static var lastInstance: MainView? = nil
 
-    @State var loadingView: AnyView?
-
     @State private var triggersChecklist: ChecklistModel?
     @State private var isTriggersChecklistPresented = false
 
@@ -40,14 +38,6 @@ struct MainView: View {
     private let checklistPublisher: AnyPublisher<ChecklistModel, Never> = UtilsKt.uiChecklistFlow.toPublisher()
 
     var body: some View {
-        if let loadingView = loadingView {
-            loadingView
-        } else {
-            mainBody
-        }
-    }
-
-    private var mainBody: some View {
 
         VMView(vm: vm, stack: .ZStack(alignment: .bottom)) { state in
 
