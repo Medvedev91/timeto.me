@@ -30,6 +30,7 @@ object Backup {
         return JsonObject(map).toString()
     }
 
+    @Throws(Exception::class)
     fun restore(jString: String) {
         db.transaction {
             //
