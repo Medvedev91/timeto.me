@@ -32,7 +32,32 @@ object Backup {
 
     fun restore(jString: String) {
         db.transaction {
-            restoreV1NeedTransaction(jString)
+            //
+            // TRICK Do not use coroutines inside, it crashes transaction.
+
+            val json = Json.parseToJsonElement(jString)
+
+            db.taskQueries.truncate()
+            db.taskFolderQueries.truncate()
+            db.intervalQueries.truncate()
+            db.activityQueries.truncate()
+            db.eventQueries.truncate()
+            db.repeatingQueries.truncate()
+            db.checklistItemQueries.truncate()
+            db.checklistQueries.truncate()
+            db.shortcutQueries.truncate()
+            db.kVQueries.truncate()
+
+            json.mapJsonArray("activities") { ActivityModel.backupable__restore(it) }
+            json.mapJsonArray("intervals") { IntervalModel.backupable__restore(it) }
+            json.mapJsonArray("task_folders") { TaskFolderModel.backupable__restore(it) }
+            json.mapJsonArray("tasks") { TaskModel.backupable__restore(it) }
+            json.mapJsonArray("checklists") { ChecklistModel.backupable__restore(it) }
+            json.mapJsonArray("checklist_items") { ChecklistItemModel.backupable__restore(it) }
+            json.mapJsonArray("shortcuts") { ShortcutModel.backupable__restore(it) }
+            json.mapJsonArray("repeatings") { RepeatingModel.backupable__restore(it) }
+            json.mapJsonArray("events") { EventModel.backupable__restore(it) }
+            json.mapJsonArray("kv") { KVModel.backupable__restore(it) }
         }
     }
 
@@ -55,36 +80,6 @@ object Backup {
         val time = dateTime.toInstant(TimeZone.currentSystemDefault()).epochSeconds.toInt()
         return UnixTime(time)
     }
-}
-
-/**
- * TRICK
- * Do not use coroutines inside, it crashes transaction.
- */
-private fun restoreV1NeedTransaction(jString: String) {
-    val json = Json.parseToJsonElement(jString)
-
-    db.taskQueries.truncate()
-    db.taskFolderQueries.truncate()
-    db.intervalQueries.truncate()
-    db.activityQueries.truncate()
-    db.eventQueries.truncate()
-    db.repeatingQueries.truncate()
-    db.checklistItemQueries.truncate()
-    db.checklistQueries.truncate()
-    db.shortcutQueries.truncate()
-    db.kVQueries.truncate()
-
-    json.mapJsonArray("activities") { ActivityModel.backupable__restore(it) }
-    json.mapJsonArray("intervals") { IntervalModel.backupable__restore(it) }
-    json.mapJsonArray("task_folders") { TaskFolderModel.backupable__restore(it) }
-    json.mapJsonArray("tasks") { TaskModel.backupable__restore(it) }
-    json.mapJsonArray("checklists") { ChecklistModel.backupable__restore(it) }
-    json.mapJsonArray("checklist_items") { ChecklistItemModel.backupable__restore(it) }
-    json.mapJsonArray("shortcuts") { ShortcutModel.backupable__restore(it) }
-    json.mapJsonArray("repeatings") { RepeatingModel.backupable__restore(it) }
-    json.mapJsonArray("events") { EventModel.backupable__restore(it) }
-    json.mapJsonArray("kv") { KVModel.backupable__restore(it) }
 }
 
 private inline fun JsonElement.mapJsonArray(
