@@ -58,7 +58,7 @@ object Backup {
 }
 
 /**
- * WARNING
+ * TRICK
  * Do not use coroutines inside, it crashes transaction.
  */
 private fun restoreV1NeedTransaction(jString: String) {
