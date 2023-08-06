@@ -408,35 +408,25 @@ struct SettingsSheet: View {
                     }
                 }
                 .fileImporter(isPresented: $isFileImporterPresented, allowedContentTypes: [.json]) { res in
-                    /// todo handling errors logic.
                     do {
                         let fileUrl = try res.get()
 
                         ///
                         /// https://stackoverflow.com/a/64351217
                         if !fileUrl.startAccessingSecurityScopedResource() {
-                            fatalError() // todo
+                            throw MyError("iOS restore !fileUrl.startAccessingSecurityScopedResource()")
                         }
-                        let jString = String(data: try! Data(contentsOf: fileUrl), encoding: .utf8)!
+                        guard let jString = String(data: try Data(contentsOf: fileUrl), encoding: .utf8) else {
+                            throw MyError("iOS restore jString null")
+                        }
                         fileUrl.stopAccessingSecurityScopedResource()
                         //////
 
-                        // todo is it actual?
-                        MainView.lastInstance!.loadingView = AnyView(Text("Loading"))
-                        Task {
-                            do {
-                                try await Backup.shared.restore(jString: jString)
-                                // todo I do not know how to restart the app
-                                MainView.lastInstance!.loadingView = AnyView(Text("Please restart the app"))
-                            } catch {
-                                // todo UI error
-                                reportApi("iOS restore exception\n" + error.myMessage())
-                            }
-                        }
-                        //////
+                        try Backup.shared.restore(jString: jString)
+
+                        isPresented = false
                     } catch {
-                        // todo message and log
-                        print(error.myMessage())
+                        UtilsKt.showUiAlert(message: "Error", reportApiText: "iOS restore exception\n" + error.myMessage())
                     }
                 }
     }
