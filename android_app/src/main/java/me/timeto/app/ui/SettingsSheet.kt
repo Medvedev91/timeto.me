@@ -79,14 +79,9 @@ fun SettingsSheet(
                     stringBuilder.append("\n").append(receiveString)
                 }
                 inputStream!!.close()
-
                 val jString = stringBuilder.toString()
-
                 Backup.restore(jString)
-
-                context.startActivity(Intent(context, MainActivity::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                })
+                layer.close()
             } catch (e: Exception) {
                 showUiAlert("Error", "launcherRestore exception:\n$e")
             }
