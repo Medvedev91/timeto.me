@@ -218,8 +218,6 @@ object c {
 
     // todo remove
     val background2 = Color(0xFF202022) // 0xFF1C1C1E
-    val dividerBg = AppleColors.gray5Dark.toColor()
-    val dividerFg = AppleColors.gray4Dark.toColor()
 
     // todo remove
     val dividerBg2 = AppleColors.gray4Dark.toColor()
@@ -250,6 +248,9 @@ object c {
 
     val bg = ColorRgba.bg.toColor()
     val fg = ColorRgba.fg.toColor()
+
+    val dividerBg = ColorRgba.dividerBg.toColor()
+    val dividerFg = ColorRgba.dividerFg.toColor()
 
     val gray1 = AppleColors.gray1Dark.toColor()
     val gray2 = AppleColors.gray2Dark.toColor()
