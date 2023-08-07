@@ -66,6 +66,7 @@
 		31821AAC3BB87DE0D8E46697 /* TasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182118FAB48EDF7FE78201B /* TasksView.swift */; };
 		31821AFA9798F3945CA34D09 /* ActivityPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821A15532BF8D598665449 /* ActivityPickerSheet.swift */; };
 		31821BC7F849A5C918F61175 /* ActivityColorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318211488ABF627A2A9935A7 /* ActivityColorSheet.swift */; };
+		31821BCA3B405E8B0F65AB72 /* DividerFg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821CCA60BF87AA05635423 /* DividerFg.swift */; };
 		31821BCAB8BA795D691FADF8 /* MyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821D7654D0C105DFC60DDD /* MyListView.swift */; };
 		31821C0BB92532D84114C15C /* TriggersListIconsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182157C5CB954867515B4BA /* TriggersListIconsView.swift */; };
 		31821C4D6DA83EF42B805658 /* MySpacerSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318212FFE80A0856A0A88DCF /* MySpacerSize.swift */; };
@@ -160,6 +161,7 @@
 		31821C625A8A199EAEF17182 /* MailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
 		31821CC7588164B713321141 /* TextField__VMState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField__VMState.swift; sourceTree = "<group>"; };
 		31821CC8696F1EF2463FFE14 /* TextFeaturesTriggersFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFeaturesTriggersFormView.swift; sourceTree = "<group>"; };
+		31821CCA60BF87AA05635423 /* DividerFg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DividerFg.swift; sourceTree = "<group>"; };
 		31821CEEF63544D48A45B8F4 /* W_TabTimerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W_TabTimerView.swift; sourceTree = "<group>"; };
 		31821CF31C64B32D614C6A9D /* EditActivitiesSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditActivitiesSheet.swift; sourceTree = "<group>"; };
 		31821D2439CE2014EF5FF473 /* ChecklistsPickerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChecklistsPickerSheet.swift; sourceTree = "<group>"; };
@@ -331,6 +333,7 @@
 				31821110E735778C88CDF821 /* Sheet.swift */,
 				2C5BD61A2A6076F000AD4042 /* ReadmeSheet.swift */,
 				3182157C5CB954867515B4BA /* TriggersListIconsView.swift */,
+				31821CCA60BF87AA05635423 /* DividerFg.swift */,
 			);
 			path = iphone;
 			sourceTree = "<group>";
@@ -549,6 +552,7 @@
 				3182115F28EDF1E93DC73694 /* DividerBg.swift in Sources */,
 				3182199F1FA4EF9D78D19E95 /* Sheet.swift in Sources */,
 				31821C0BB92532D84114C15C /* TriggersListIconsView.swift in Sources */,
+				31821BCA3B405E8B0F65AB72 /* DividerFg.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
