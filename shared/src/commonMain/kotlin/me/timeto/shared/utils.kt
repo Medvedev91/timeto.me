@@ -281,8 +281,8 @@ object AppleColors {
     class Palette(
         val name: String,
         val default: ColorRgba,
-        val light: ColorRgba,
-        val dark: ColorRgba,
+        val aLight: ColorRgba,
+        val aDark: ColorRgba,
     )
 }
 
