@@ -30,7 +30,7 @@ extension TimetoSheet {
     }
 }
 
-private let bgColor = c.fg
+private let bgColor = c.sheetBg
 private let itemHeight = 46.0
 private let topPadding = 2.0
 private let bottomPadding = 30.0
@@ -147,8 +147,11 @@ private struct ActivitiesTimerSheet: View {
                                                         .padding(.trailing, 14)
                                                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
 
-                                                DividerFg()
-                                                        .padding(.leading, activityItemPaddingStart)
+                                                if state.allActivities.last != activityUI {
+                                                    c.dividerSheetBg
+                                                            .frame(height: onePx)
+                                                            .padding(.leading, activityItemPaddingStart)
+                                                }
                                             }
                                                     .frame(alignment: .bottom)
                                                     .padding(.leading, 2)
