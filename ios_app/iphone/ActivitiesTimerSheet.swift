@@ -30,7 +30,7 @@ extension TimetoSheet {
     }
 }
 
-private let bgColor = Color(.bgSheet)
+private let bgColor = c.fg
 private let itemHeight = 46.0
 private let topPadding = 2.0
 private let bottomPadding = 30.0
