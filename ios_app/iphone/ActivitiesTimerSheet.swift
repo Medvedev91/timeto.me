@@ -179,7 +179,7 @@ private struct MyButtonStyle: ButtonStyle {
         configuration
                 .label
                 .frame(height: itemHeight)
-                .background(configuration.isPressed ? Color(.systemGray5) : bgColor)
+                .background(configuration.isPressed ? c.dividerFg : bgColor)
     }
 }
 
