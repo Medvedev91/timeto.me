@@ -96,13 +96,60 @@ private struct ActivitiesTimerSheet: View {
 
                             ForEach(state.allActivities, id: \.activity.id) { activityUI in
 
-                                ActivityItemView(
-                                        activityUI: activityUI,
-                                        onClickOnTimer: {
+                                Button(
+                                        action: {
                                             sheetActivity = activityUI.activity
                                         },
-                                        onStarted: {
-                                            onStart()
+                                        label: {
+
+                                            ZStack(alignment: .bottom) { // .bottom for divider
+
+                                                HStack {
+
+                                                    Text(activityUI.activity.emoji)
+                                                            .frame(width: activityItemEmojiWidth)
+                                                            .padding(.horizontal, activityItemEmojiHPadding)
+                                                            .font(.system(size: 22))
+
+                                                    Text(activityUI.listText)
+                                                            .foregroundColor(.primary)
+                                                            .truncationMode(.tail)
+                                                            .lineLimit(1)
+
+                                                    Spacer()
+
+                                                    ForEach(activityUI.timerHints, id: \.seconds) { hintUI in
+                                                        let isPrimary = hintUI.isPrimary
+                                                        Button(
+                                                                action: {
+                                                                    hintUI.startInterval {
+                                                                        onStart()
+                                                                    }
+                                                                },
+                                                                label: {
+                                                                    Text(hintUI.text)
+                                                                            .font(.system(size: isPrimary ? 13 : 14, weight: isPrimary ? .medium : .light))
+                                                                            .foregroundColor(isPrimary ? .white : .blue)
+                                                                            .padding(.leading, 6)
+                                                                            .padding(.trailing, isPrimary ? 6 : 2)
+                                                                            .padding(.top, 3)
+                                                                            .padding(.bottom, 3.5)
+                                                                            .background(isPrimary ? .blue : .clear)
+                                                                            .cornerRadius(99)
+                                                                            .padding(.leading, isPrimary ? 4 : 0)
+                                                                }
+                                                        )
+                                                                .buttonStyle(.borderless)
+                                                    }
+                                                }
+                                                        .padding(.trailing, 14)
+                                                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+
+                                                DividerFg()
+                                                        .padding(.leading, activityItemPaddingStart)
+                                            }
+                                                    .frame(alignment: .bottom)
+                                                    .padding(.leading, 2)
                                         }
                                 )
                             }
@@ -131,73 +178,6 @@ private struct MyButtonStyle: ButtonStyle {
                 .label
                 .frame(height: itemHeight)
                 .background(configuration.isPressed ? Color(.systemGray5) : bgColor)
-    }
-}
-
-private struct ActivityItemView: View {
-
-    var activityUI: ActivitiesTimerSheetVM.ActivityUI
-    let onClickOnTimer: () -> Void
-    let onStarted: () -> Void
-
-    var body: some View {
-
-        Button(
-                action: {
-                    onClickOnTimer()
-                },
-                label: {
-
-                    ZStack(alignment: .bottom) { // .bottom for divider
-
-                        HStack {
-
-                            Text(activityUI.activity.emoji)
-                                    .frame(width: activityItemEmojiWidth)
-                                    .padding(.horizontal, activityItemEmojiHPadding)
-                                    .font(.system(size: 22))
-
-                            Text(activityUI.listText)
-                                    .foregroundColor(.primary)
-                                    .truncationMode(.tail)
-                                    .lineLimit(1)
-
-                            Spacer()
-
-                            ForEach(activityUI.timerHints, id: \.seconds) { hintUI in
-                                let isPrimary = hintUI.isPrimary
-                                Button(
-                                        action: {
-                                            hintUI.startInterval {
-                                                onStarted()
-                                            }
-                                        },
-                                        label: {
-                                            Text(hintUI.text)
-                                                    .font(.system(size: isPrimary ? 13 : 14, weight: isPrimary ? .medium : .light))
-                                                    .foregroundColor(isPrimary ? .white : .blue)
-                                                    .padding(.leading, 6)
-                                                    .padding(.trailing, isPrimary ? 6 : 2)
-                                                    .padding(.top, 3)
-                                                    .padding(.bottom, 3.5)
-                                                    .background(isPrimary ? .blue : .clear)
-                                                    .cornerRadius(99)
-                                                    .padding(.leading, isPrimary ? 4 : 0)
-                                        }
-                                )
-                                        .buttonStyle(.borderless)
-                            }
-                        }
-                                .padding(.trailing, 14)
-                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-
-                        DividerFg()
-                                .padding(.leading, activityItemPaddingStart)
-                    }
-                            .frame(alignment: .bottom)
-                            .padding(.leading, 2)
-                }
-        )
     }
 }
 
