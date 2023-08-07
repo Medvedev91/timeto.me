@@ -33,7 +33,7 @@ extension TimetoSheet {
 private let bgColor = c.sheetBg
 private let itemHeight = 46.0
 private let topPadding = 2.0
-private let bottomPadding = 30.0
+private let bottomPadding = 32.0
 
 private let activityItemEmojiWidth = 30.0
 private let activityItemEmojiHPadding = 8.0
@@ -154,7 +154,6 @@ private struct ActivitiesTimerSheet: View {
                                                 }
                                             }
                                                     .frame(alignment: .bottom)
-                                                    .padding(.leading, 2)
                                         }
                                 )
                             }
