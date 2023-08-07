@@ -248,9 +248,13 @@ object c {
 
     val bg = ColorRgba.bg.toColor()
     val fg = ColorRgba.fg.toColor()
+    val sheetBg = ColorRgba.sheetBg.toColor()
+    val sheetFg = ColorRgba.sheetFg.toColor()
 
     val dividerBg = ColorRgba.dividerBg.toColor()
     val dividerFg = ColorRgba.dividerFg.toColor()
+    val dividerSheetBg = ColorRgba.dividerSheetBg.toColor()
+    val dividerSheetFg = ColorRgba.dividerSheetFg.toColor()
 
     val gray1 = AppleColors.gray1Dark.toColor()
     val gray2 = AppleColors.gray2Dark.toColor()
