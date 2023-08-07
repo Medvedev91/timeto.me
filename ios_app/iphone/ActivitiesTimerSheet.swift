@@ -154,7 +154,7 @@ private struct ActivityTimerSheet: View {
 
     var body: some View {
 
-        VMView(vm: vm, stack: .VStack(spacing: 0)) { state in
+        VMView(vm: vm, stack: .VStack()) { state in
 
             HStack(spacing: 4) {
 
