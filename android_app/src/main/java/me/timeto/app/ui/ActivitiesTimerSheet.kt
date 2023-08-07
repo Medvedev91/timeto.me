@@ -47,7 +47,7 @@ private fun ActivitiesTimerSheet(
 
     LazyColumn(
         modifier = Modifier
-            .background(c.fg)
+            .background(c.sheetBg)
             .navigationBarsPadding()
             .height((activityItemHeight * state.allActivities.size + topContentPadding + bottomContentPadding).limitMax(screenHeight - 60.dp))
             .fillMaxWidth(),
@@ -125,9 +125,10 @@ private fun ActivitiesTimerSheet(
                     }
                 }
 
-                DividerFg(
+                DividerSheetBg(
                     modifier = Modifier
                         .padding(start = startPadding),
+                    isVisible = state.allActivities.lastOrNull() != activityUI,
                 )
             }
         }
