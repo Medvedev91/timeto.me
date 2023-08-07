@@ -143,7 +143,7 @@ fun MyListView__ItemView(
         }
 
         if (withTopDivider)
-            DividerBg2(Modifier.padding(dividerPadding))
+            DividerSheetFg(Modifier.padding(dividerPadding))
     }
 }
 
