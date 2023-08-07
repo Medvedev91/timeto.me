@@ -31,7 +31,7 @@ struct TasksListView: View {
 
                     ScrollView(.vertical, showsIndicators: false) {
 
-                        VStack(spacing: 0) {
+                        VStack {
 
                             Spacer()
 
@@ -56,7 +56,7 @@ struct TasksListView: View {
                             }
 
                             let tasksUIReversed = state.tasksUI.reversed()
-                            VStack(spacing: 0) {
+                            VStack {
                                 ForEach(tasksUIReversed, id: \.task.id) { taskUI in
                                     TasksView__TaskRowView(
                                             taskUI: taskUI,
@@ -341,15 +341,15 @@ struct TasksView__TaskRowView: View {
                             )
                         },
                         label: {
-                            VStack(spacing: 0) {
+                            VStack {
 
                                 let vPadding = 8.0
 
                                 if let timeUI = taskUI.timeUI as? TasksListVM.TaskUITimeUIImportantUI {
 
-                                    HStack(spacing: 0) {
+                                    HStack {
 
-                                        HStack(spacing: 0) {
+                                        HStack {
 
                                             Image(systemName: "calendar")
                                                     .foregroundColor(.white)
@@ -490,7 +490,7 @@ private struct TasksListView__TmrwTaskView: View {
 
     var body: some View {
 
-        VStack(spacing: 0) {
+        VStack {
 
             let vPadding = 8.0
 
