@@ -207,17 +207,10 @@ fun ZStack(
     )
 }
 
-/**
- * https://developer.apple.com/design/human-interface-guidelines/color
- */
 object c {
 
     private val bgFormDarkMode = Color(0xFF121214) // todo remove?
 
-    val blue = Color(0xFF0A84FF)
-    val orange = Color(0xFFFF9D0A) // AG Orange iOS Dark
-    val text = Color(0xEEFFFFFF)
-    val textSecondary = Color(0xAAFFFFFF)
     val bg = Color(0xFF000000)
     val bgSheet = bgFormDarkMode
     val fg = Color(0xFF242426)
@@ -241,18 +234,30 @@ object c {
     // todo rename to bgForm?
     val bgFormSheet = bgFormDarkMode
     val formButtonRightNoteText = Color(0x88FFFFFF)
+
+    ///
+
+    val white = ColorRgba.white.toColor()
+    val black = ColorRgba.black.toColor()
+    val transparent = ColorRgba.transparent.toColor()
+
+    val red = ColorRgba.red.toColor()
+    val green = ColorRgba.green.toColor()
+    val blue = ColorRgba.blue.toColor()
+    val orange = ColorRgba.orange.toColor()
+    val purple = ColorRgba.purple.toColor()
+
+    val text = ColorRgba.text.toColor()
+    val textSecondary = ColorRgba.textSecondary.toColor()
+
     val gray1 = AppleColors.gray1Dark.toColor()
     val gray2 = AppleColors.gray2Dark.toColor()
     val gray3 = AppleColors.gray3Dark.toColor()
     val gray4 = AppleColors.gray4Dark.toColor()
     val gray5 = AppleColors.gray5Dark.toColor()
 
-    val red = Color(0xFFFF453A)
-    val green = colorFromRgbaString("52,199,89") // AG Green Light
-    val purple = colorFromRgbaString("175,82,222") // AG Purple Light
-    val white = Color.White
-    val black = Color.Black
-    val transparent = Color.Transparent
+    // todo
+
     val tasksDropFocused = green
     val formHeaderDivider = gray4
 }
