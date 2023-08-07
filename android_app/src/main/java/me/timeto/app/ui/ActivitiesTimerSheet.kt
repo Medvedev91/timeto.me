@@ -32,6 +32,10 @@ fun ActivitiesTimerSheet__show(
     }
 }
 
+private val activityItemEmojiHPadding = 8.dp
+private val activityItemEmojiWidth = 32.dp
+private val activityItemPaddingStart = activityItemEmojiWidth + (activityItemEmojiHPadding * 2)
+
 @Composable
 private fun ActivitiesTimerSheet(
     layerActivitiesSheet: WrapperView.Layer,
@@ -58,10 +62,6 @@ private fun ActivitiesTimerSheet(
 
             val activity = activityUI.activity
 
-            val emojiHPadding = 8.dp
-            val emojiWidth = 30.dp
-            val startPadding = emojiWidth + (emojiHPadding * 2)
-
             Box(
                 contentAlignment = Alignment.BottomCenter, // for divider
             ) {
@@ -80,15 +80,15 @@ private fun ActivitiesTimerSheet(
                                 }
                             }
                         }
-                        .padding(start = 2.dp, end = 8.dp),
+                        .padding(end = 8.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
 
                     Text(
                         text = activity.emoji,
                         modifier = Modifier
-                            .padding(horizontal = emojiHPadding)
-                            .width(emojiWidth),
+                            .padding(horizontal = activityItemEmojiHPadding)
+                            .width(activityItemEmojiWidth),
                         textAlign = TextAlign.Center,
                         fontSize = 20.sp,
                     )
@@ -127,7 +127,7 @@ private fun ActivitiesTimerSheet(
 
                 DividerSheetBg(
                     modifier = Modifier
-                        .padding(start = startPadding),
+                        .padding(start = activityItemPaddingStart),
                     isVisible = state.allActivities.lastOrNull() != activityUI,
                 )
             }
