@@ -53,8 +53,7 @@ struct TasksView: View {
 
         VMView(vm: vm, stack: .ZStack()) { state in
 
-            Color(.bg)
-                    .ignoresSafeArea()
+            c.bg.ignoresSafeArea()
 
             HStack {
 
@@ -150,10 +149,10 @@ struct TasksView: View {
                                     ZStack {
 
                                         RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                .fill(isActiveRepeating ? .blue : Color(.bg))
+                                                .fill(isActiveRepeating ? .blue : c.bg)
 
                                         RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                .stroke(isActiveRepeating ? .blue : Color(.dividerBg), lineWidth: onePx)
+                                                .stroke(isActiveRepeating ? .blue : c.dividerBg, lineWidth: onePx)
                                     }
                                             .frame(width: tabWidth)
                             )
@@ -250,7 +249,7 @@ private struct TabTasksView__FolderView: View {
                         if isAllowedForDrop {
                             return .purple
                         }
-                        return isActive ? .blue : Color(.bg)
+                        return isActive ? .blue : c.bg
                     }()
 
                     VStack {
@@ -271,7 +270,7 @@ private struct TabTasksView__FolderView: View {
                                                 .fill(bgColor)
 
                                         RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                .stroke(isActive ? .blue : Color(.dividerBg), lineWidth: onePx)
+                                                .stroke(isActive ? .blue : c.dividerBg, lineWidth: onePx)
                                     }
                             )
                             .background(GeometryReader { geometry -> Color in

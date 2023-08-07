@@ -167,7 +167,7 @@ struct ActivityColorSheet: View {
                                         ColorSliderView(value: Double(state.b), color: .blue) { vm.upB(b: Float($0)) }
                                                 .padding(.bottom, 8)
                                     }
-                                            .background(Color(.bg))
+                                            .background(c.bg)
                                             .transition(.move(edge: .bottom))
                                 } else {
                                     // Otherwise vertical scale animation

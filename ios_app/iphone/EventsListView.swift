@@ -91,7 +91,7 @@ struct EventsListView: View {
                             }
                                     .padding(.top, 5)
                                     .padding(.bottom, 5)
-                                    .overlay(squircleShape.stroke(Color(.dividerBg), lineWidth: onePx))
+                                    .overlay(squircleShape.stroke(c.dividerBg, lineWidth: onePx))
                                     .padding(.top, 19)
                                     .padding(.bottom, 20)
                                     .padding(.leading, TAB_TASKS_H_PADDING)
@@ -194,7 +194,7 @@ private struct EventItemView: View {
             AnyView(safeView)
                     .padding(.leading, TAB_TASKS_H_PADDING)
                     // todo remove after removing MyListSwipeToActionItem()
-                    .background(Color(.bg))
+                    .background(c.bg)
         }
     }
 

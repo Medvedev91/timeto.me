@@ -13,7 +13,7 @@ struct ReadmeSheet: View {
             Sheet__HeaderView(
                     title: "How to Use",
                     scrollToHeader: scroll,
-                    bgColor: Color(.bg)
+                    bgColor: c.bg
             )
 
             ScrollViewWithVListener(showsIndicators: false, vScroll: $scroll) {

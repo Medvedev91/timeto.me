@@ -69,11 +69,7 @@ extension UIColor {
 
     //////
 
-    static var bg: UIColor = myDayNight(.white, .black)
-
     static var bgSheet = myDayNightArgb(0xFFFFFFFF, bgFormDarkMode)
-
-    static var dividerBg = myDayNightArgb(0xFFD1D1D6, 0xFF3A3A3C)
 
     // todo remove
     static var myBackground: UIColor = myDayNight(UIColor(argb: tgLikeLightBg), .black)

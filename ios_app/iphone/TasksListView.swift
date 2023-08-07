@@ -121,7 +121,7 @@ struct TasksListView: View {
                                         .padding(.trailing, 5)
                                         .buttonStyle(PlainButtonStyle())
                             }
-                                    .overlay(squircleShape.stroke(Color(.dividerBg), lineWidth: onePx))
+                                    .overlay(squircleShape.stroke(c.dividerBg, lineWidth: onePx))
                                     .padding(.leading, TAB_TASKS_H_PADDING - 2)
                                     .padding(.top, 20)
                                     .padding(.bottom, 20)
@@ -231,7 +231,7 @@ struct TasksView__TaskRowView: View {
         func makeBody(configuration: Self.Configuration) -> some View {
             configuration
                     .label
-                    .background(configuration.isPressed ? Color(.systemGray5) : Color(.bg))
+                    .background(configuration.isPressed ? Color(.systemGray5) : c.bg)
         }
     }
 

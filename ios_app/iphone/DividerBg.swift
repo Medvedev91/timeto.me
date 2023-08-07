@@ -3,7 +3,7 @@ import SwiftUI
 struct DividerBg: View {
 
     var body: some View {
-        Color(.dividerBg)
+        c.dividerBg
                 .frame(height: onePx)
     }
 }

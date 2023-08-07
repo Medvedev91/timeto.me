@@ -130,7 +130,7 @@ struct RepeatingsView__ItemView: View {
             AnyView(safeView)
                     .padding(.leading, TAB_TASKS_H_PADDING)
                     // todo remove after removing MyListSwipeToActionItem()
-                    .background(Color(.bg))
+                    .background(c.bg)
         }
     }
 

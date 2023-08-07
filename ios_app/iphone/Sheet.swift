@@ -20,7 +20,7 @@ struct Sheet__HeaderView: View {
                     .padding(.top, 18)
                     .padding(.bottom, 18)
 
-            Color(.dividerBg)
+            c.dividerBg
                     .opacity(bgAlpha)
                     .frame(height: onePx)
         }
@@ -41,7 +41,7 @@ struct Sheet__BottomView<Content: View>: View {
             DividerBg()
             content()
         }
-                .background(Color(.bg))
+                .background(c.bg)
     }
 }
 
