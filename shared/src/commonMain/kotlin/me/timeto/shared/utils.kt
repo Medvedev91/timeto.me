@@ -237,7 +237,7 @@ data class ColorRgba(
         val sheetFg = ColorRgba(44, 44, 46)
 
         val dividerBg = ColorRgba(50, 50, 53)
-        val dividerFg = AppleColors.gray4Dark
+        val dividerFg = ColorRgba(61, 61, 65)
 
         fun fromRgbaString(rgbaString: String): ColorRgba =
             rgbaString.split(',').map { it.toInt() }.let {
