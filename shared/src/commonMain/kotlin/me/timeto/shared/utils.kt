@@ -233,6 +233,8 @@ data class ColorRgba(
 
         val bg = black
         val fg = ColorRgba(28, 28, 30)
+        val sheetBg = fg
+        val sheetFg = ColorRgba(44, 44, 46)
 
         val dividerBg = AppleColors.gray5Dark
         val dividerFg = AppleColors.gray4Dark
