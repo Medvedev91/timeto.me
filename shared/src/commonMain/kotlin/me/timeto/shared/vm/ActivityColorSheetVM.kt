@@ -48,7 +48,7 @@ class ActivityColorSheetVM(
                       "#${r.toHex()}${g.toHex()}${b.toHex()}".uppercase()
 
         val colorGroups: List<List<ColorItem>> = AppleColors.Palettes.all
-            .map { listOf(it.aLight, it.default, it.aDark) }
+            .map { listOf(it.aLight, it.light, it.aDark) }
             .flatten()
             .map {
                 ColorItem(

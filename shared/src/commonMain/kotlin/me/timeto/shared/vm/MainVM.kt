@@ -200,8 +200,8 @@ class MainVM : __VM<MainVM.State>() {
             text = "$dateText ${textFeatures.textNoFeatures} - ${timeData.timeLeftText()}"
             backgroundColor = when (timeData.status) {
                 TextFeatures.TimeData.STATUS.IN -> ColorRgba.black
-                TextFeatures.TimeData.STATUS.NEAR -> AppleColors.Palettes.blue.default
-                TextFeatures.TimeData.STATUS.OVERDUE -> AppleColors.Palettes.red.default
+                TextFeatures.TimeData.STATUS.NEAR -> AppleColors.Palettes.blue.dark
+                TextFeatures.TimeData.STATUS.OVERDUE -> AppleColors.Palettes.red.dark
             }
             borderColor = when (timeData.status) {
                 TextFeatures.TimeData.STATUS.IN -> ColorRgba.white
