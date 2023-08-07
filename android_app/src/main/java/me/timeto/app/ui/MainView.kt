@@ -192,7 +192,7 @@ fun MainView() {
                         )
                     }
 
-                    FocusDivider(
+                    MainDivider(
                         animateFloatAsState(
                             remember {
                                 derivedStateOf {
@@ -253,7 +253,7 @@ fun MainView() {
                                     )
                                 }
 
-                                FocusDivider(remember { mutableStateOf(1f) }, PaddingValues())
+                                MainDivider(remember { mutableStateOf(1f) }, PaddingValues())
 
                                 BackHandler {
                                     vm.toggleIsTasksVisible()
@@ -427,7 +427,7 @@ private fun ChecklistView(
 
         val checklistVContentPadding = 8.dp
 
-        FocusDivider(
+        MainDivider(
             animateFloatAsState(
                 remember {
                     derivedStateOf { if (scrollState.canScrollBackward) 1f else 0f }
@@ -618,7 +618,7 @@ private fun ImportantTasksView(
 }
 
 @Composable
-private fun FocusDivider(
+private fun MainDivider(
     alphaAnimate: State<Float>,
     padding: PaddingValues = PaddingValues(horizontal = 8.dp),
 ) {
