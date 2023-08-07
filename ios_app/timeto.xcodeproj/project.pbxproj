@@ -74,7 +74,6 @@
 		31821C4D6DA83EF42B805658 /* MySpacerSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318212FFE80A0856A0A88DCF /* MySpacerSize.swift */; };
 		31821CF86EDC2A5C5CB362E0 /* DividerSheetFg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182143FB317BCD82F61C777 /* DividerSheetFg.swift */; };
 		31821D021B3DC7EACD7E4EAA /* ShortcutsPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821F858C3344296F2CB750 /* ShortcutsPickerSheet.swift */; };
-		31821D2F481BE7580FE4DCC2 /* MyDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821155EAD516A3967CFF52 /* MyDivider.swift */; };
 		31821D960D04B6FF21EA9918 /* ActivityFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821794CA93E29D6889286D /* ActivityFormSheet.swift */; };
 		31821DF8D1DFB408872C85BD /* FolderFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821514C5F55F9A34FBC8AD /* FolderFormSheet.swift */; };
 		31821DF974247D110D01C3A2 /* ActivitiesTimerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318213DE3B58FA098A8DBAE7 /* ActivitiesTimerSheet.swift */; };
@@ -132,7 +131,6 @@
 		318210AB991EB1C25EA1B565 /* TimetoSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetoSheet.swift; sourceTree = "<group>"; };
 		31821110E735778C88CDF821 /* Sheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
 		318211488ABF627A2A9935A7 /* ActivityColorSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityColorSheet.swift; sourceTree = "<group>"; };
-		31821155EAD516A3967CFF52 /* MyDivider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDivider.swift; sourceTree = "<group>"; };
 		3182118D8EA3E0D889D4FDC3 /* utils_ios.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = utils_ios.swift; sourceTree = "<group>"; };
 		3182118DB415E858D0B449DB /* ChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		3182118FAB48EDF7FE78201B /* TasksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksView.swift; sourceTree = "<group>"; };
@@ -304,7 +302,6 @@
 				31821ACA6C9306A2CD2016A0 /* HistoryView.swift */,
 				3182189A26C9B48C0D2E8A4A /* KeyboardManager.swift */,
 				31821C625A8A199EAEF17182 /* MailView.swift */,
-				31821155EAD516A3967CFF52 /* MyDivider.swift */,
 				31821DC6AEBDF478C34116FE /* MyListSwipeToActionItem.swift */,
 				318212FFE80A0856A0A88DCF /* MySpacerSize.swift */,
 				2C0BE02E295751B70099AD7C /* PickerStateView.swift */,
@@ -516,7 +513,6 @@
 				2CB73DE3292FACE00053B2D6 /* SearchEmojiSheet.swift in Sources */,
 				31821286152F9C43BA2C4B7B /* TimetoSheet.swift in Sources */,
 				318212C07B5351BA8C7C9671 /* PieView.swift in Sources */,
-				31821D2F481BE7580FE4DCC2 /* MyDivider.swift in Sources */,
 				318214BD0E34368A953B17CD /* MyListSwipeToActionItem.swift in Sources */,
 				2C0BE02F295751B70099AD7C /* PickerStateView.swift in Sources */,
 				318216F271691CC07FC67AFC /* ChecklistFormSheet.swift in Sources */,

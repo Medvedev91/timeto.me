@@ -86,7 +86,8 @@ struct MyListView__ItemView<Content: View>: View {
                     .frame(maxWidth: .infinity)
 
             if withTopDivider {
-                MyDivider(xOffset: dividerPaddingStart)
+                DividerSheetFg()
+                        .padding(.leading, dividerPaddingStart)
             }
         }
                 .background(Color(.mySecondaryBackground))

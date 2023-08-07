@@ -49,7 +49,7 @@ struct TasksListView: View {
                                     }
                                 }
 
-                                MyDivider()
+                                DividerBg()
                                         .padding(.horizontal, 80)
                                         .padding(.top, 20)
                                         .padding(.bottom, state.tasksUI.isEmpty ? 0 : 20)

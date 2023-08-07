@@ -153,6 +153,7 @@ struct MainView: View {
 
                         VStack {
                             if let checklistUI = checklistUI {
+
                                 Button(
                                         action: {
                                             vm.toggleIsTasksVisible()
@@ -166,7 +167,8 @@ struct MainView: View {
                                         }
                                 )
                                         .background(.black)
-                                MyDivider()
+
+                                DividerBg()
                             }
 
                             TasksView()
