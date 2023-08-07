@@ -39,6 +39,8 @@ private let activityItemEmojiWidth = 30.0
 private let activityItemEmojiHPadding = 8.0
 private let activityItemPaddingStart = activityItemEmojiWidth + (activityItemEmojiHPadding * 2)
 
+private let myButtonStyle = MyButtonStyle()
+
 private struct ActivitiesTimerSheet: View {
 
     @State private var vm: ActivitiesTimerSheetVM
@@ -153,7 +155,7 @@ private struct ActivitiesTimerSheet: View {
                                         }
                                 )
                             }
-                                    .buttonStyle(MyButtonStyle())
+                                    .buttonStyle(myButtonStyle)
 
                             Padding(vertical: bottomPadding)
                         }
