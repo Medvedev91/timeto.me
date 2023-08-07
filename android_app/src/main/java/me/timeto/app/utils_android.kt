@@ -211,9 +211,7 @@ object c {
 
     private val bgFormDarkMode = Color(0xFF121214) // todo remove?
 
-    val bg = Color(0xFF000000)
     val bgSheet = bgFormDarkMode
-    val fg = Color(0xFF242426)
 
     // todo remove
     val background = Color(0xFF000000)
@@ -249,6 +247,9 @@ object c {
 
     val text = ColorRgba.text.toColor()
     val textSecondary = ColorRgba.textSecondary.toColor()
+
+    val bg = ColorRgba.bg.toColor()
+    val fg = ColorRgba.fg.toColor()
 
     val gray1 = AppleColors.gray1Dark.toColor()
     val gray2 = AppleColors.gray2Dark.toColor()

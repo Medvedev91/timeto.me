@@ -231,6 +231,9 @@ data class ColorRgba(
         val text = ColorRgba(255, 255, 255, 238)
         val textSecondary = ColorRgba(255, 255, 255, 170)
 
+        val bg = black
+        val fg = ColorRgba(36, 36, 38)
+
         fun fromRgbaString(rgbaString: String): ColorRgba =
             rgbaString.split(',').map { it.toInt() }.let {
                 when (it.size) {
