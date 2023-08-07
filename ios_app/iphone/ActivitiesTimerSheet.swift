@@ -35,6 +35,10 @@ private let itemHeight = 46.0
 private let topPadding = 2.0
 private let bottomPadding = 30.0
 
+private let activityItemEmojiWidth = 30.0
+private let activityItemEmojiHPadding = 8.0
+private let activityItemPaddingStart = activityItemEmojiWidth + (activityItemEmojiHPadding * 2)
+
 private struct ActivitiesTimerSheet: View {
 
     @State private var vm: ActivitiesTimerSheetVM
@@ -146,15 +150,11 @@ private struct ActivityItemView: View {
 
                     ZStack(alignment: .bottom) { // .bottom for divider
 
-                        let emojiHPadding = 8.0
-                        let emojiWidth = 30.0
-                        let startPadding = emojiWidth + (emojiHPadding * 2)
-
-                        HStack(spacing: 0) {
+                        HStack {
 
                             Text(activityUI.activity.emoji)
-                                    .frame(width: emojiWidth)
-                                    .padding(.horizontal, emojiHPadding)
+                                    .frame(width: activityItemEmojiWidth)
+                                    .padding(.horizontal, activityItemEmojiHPadding)
                                     .font(.system(size: 22))
 
                             Text(activityUI.listText)
@@ -191,7 +191,8 @@ private struct ActivityItemView: View {
                                 .padding(.trailing, 14)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
 
-                        MyDivider(xOffset: startPadding)
+                        DividerFg()
+                                .padding(.leading, activityItemPaddingStart)
                     }
                             .frame(alignment: .bottom)
                             .padding(.leading, 2)
