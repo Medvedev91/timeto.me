@@ -98,6 +98,34 @@ extension UIColor {
     static var formHeaderBackground = myDayNightArgb(0xFFF9F9F9, 0xFF191919)
 }
 
+struct c {
+
+    static let white = ColorRgba.companion.white.toColor()
+    static let black = ColorRgba.companion.black.toColor()
+    static let transparent = ColorRgba.companion.transparent.toColor()
+
+    static let red = ColorRgba.companion.red.toColor()
+    static let green = ColorRgba.companion.green.toColor()
+    static let blue = ColorRgba.companion.blue.toColor()
+    static let orange = ColorRgba.companion.orange.toColor()
+    static let purple = ColorRgba.companion.purple.toColor()
+
+    static let text = ColorRgba.companion.text.toColor()
+    static let textSecondary = ColorRgba.companion.textSecondary.toColor()
+
+    static let bg = ColorRgba.companion.bg.toColor()
+    static let fg = ColorRgba.companion.fg.toColor()
+
+    static let dividerBg = ColorRgba.companion.dividerBg.toColor()
+    static let dividerFg = ColorRgba.companion.dividerFg.toColor()
+
+    static let gray1 = AppleColors.shared.gray1Dark.toColor()
+    static let gray2 = AppleColors.shared.gray2Dark.toColor()
+    static let gray3 = AppleColors.shared.gray3Dark.toColor()
+    static let gray4 = AppleColors.shared.gray4Dark.toColor()
+    static let gray5 = AppleColors.shared.gray5Dark.toColor()
+}
+
 extension View {
 
     //
