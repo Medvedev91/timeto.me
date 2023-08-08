@@ -220,7 +220,6 @@ fun Sheet__HeaderView(
         }
     }
     val alphaAnimate = animateFloatAsState(alphaValue.value)
-    val dividerBgColor = c.dividerBg
 
     ZStack(
         modifier = Modifier
@@ -249,7 +248,7 @@ fun Sheet__HeaderView(
                 .height(onePx)
                 .fillMaxWidth()
                 .drawBehind {
-                    drawRect(color = dividerBgColor.copy(alpha = alphaAnimate.value))
+                    drawRect(color = c.dividerSheetBg.copy(alpha = alphaAnimate.value))
                 },
         )
     }
