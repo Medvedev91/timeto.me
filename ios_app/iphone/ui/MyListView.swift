@@ -45,7 +45,7 @@ struct MyListView__HeaderView: View {
 
     var body: some View {
 
-        HStack(spacing: 0) {
+        HStack {
 
             Text(title)
                     .foregroundColor(.primary.opacity(0.55))
@@ -218,7 +218,7 @@ struct MyListView__ItemView__ButtonView: View {
                 },
                 label: {
 
-                    HStack(spacing: 0) {
+                    HStack {
 
                         Text(text)
                                 .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL)
@@ -258,7 +258,7 @@ struct MyListView__ItemView__ActionView: View {
                 },
                 label: {
 
-                    HStack(spacing: 0) {
+                    HStack {
 
                         Spacer()
 
