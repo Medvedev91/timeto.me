@@ -234,6 +234,7 @@ object c {
     val sheetDividerFg = ColorRgba.sheetDividerFg.toColor()
 
     val tasksDropFocused = ColorRgba.tasksDropFocused.toColor()
+    val formButtonRightNoteText = ColorRgba.formButtonRightNoteText.toColor()
 
     val gray1 = AppleColors.gray1Dark.toColor()
     val gray2 = AppleColors.gray2Dark.toColor()
@@ -242,9 +243,5 @@ object c {
     val gray5 = AppleColors.gray5Dark.toColor()
 
     // todo
-
-    // todo remove
     val background2 = Color(0xFF202022) // 0xFF1C1C1E
-
-    val formButtonRightNoteText = Color(0x88FFFFFF)
 }
