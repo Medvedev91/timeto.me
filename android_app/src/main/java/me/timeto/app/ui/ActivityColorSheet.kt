@@ -33,6 +33,8 @@ private val circlePadding = 4.dp
 private val sheetHPadding = MyListView.PADDING_OUTER_HORIZONTAL
 private val dividerPadding = sheetHPadding.goldenRatioDown()
 
+private val bgColor = c.sheetBg
+
 @Composable
 fun ActivityColorSheet(
     layer: WrapperView.Layer,
@@ -41,7 +43,6 @@ fun ActivityColorSheet(
 ) {
 
     val (vm, state) = rememberVM { ActivityColorSheetVM(initData) }
-    val bgColor = c.bgSheet
 
     Column(
         modifier = Modifier
