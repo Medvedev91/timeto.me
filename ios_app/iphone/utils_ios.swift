@@ -115,11 +115,8 @@ struct c {
     static let sheetDividerBg = ColorRgba.companion.sheetDividerBg.toColor()
     static let sheetDividerFg = ColorRgba.companion.sheetDividerFg.toColor()
 
-    static let gray1 = AppleColors.shared.gray1Dark.toColor()
-    static let gray2 = AppleColors.shared.gray2Dark.toColor()
-    static let gray3 = AppleColors.shared.gray3Dark.toColor()
-    static let gray4 = AppleColors.shared.gray4Dark.toColor()
-    static let gray5 = AppleColors.shared.gray5Dark.toColor()
+    static let tasksDropFocused = ColorRgba.companion.tasksDropFocused.toColor()
+    static let formButtonRightNoteText = ColorRgba.companion.formButtonRightNoteText.toColor()
 }
 
 extension View {
