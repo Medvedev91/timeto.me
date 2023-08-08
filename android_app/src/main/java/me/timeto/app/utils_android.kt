@@ -76,13 +76,6 @@ fun ColorNative.toColor() = when (this) {
     ColorNative.transparent -> c.transparent
 }
 
-fun colorFromRgbaString(colorRgba: String) = colorRgba
-    .split(",")
-    .map { it.toInt() }
-    .let {
-        Color(it[0], it[1], it[2], it.getOrNull(3) ?: 255)
-    }
-
 //////
 
 fun scheduleNotification(data: ScheduledNotificationData) {
