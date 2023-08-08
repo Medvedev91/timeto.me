@@ -106,13 +106,14 @@ struct c {
 
     static let bg = ColorRgba.companion.bg.toColor()
     static let fg = ColorRgba.companion.fg.toColor()
-    static let sheetBg = ColorRgba.companion.sheetBg.toColor()
-    static let sheetFg = ColorRgba.companion.sheetFg.toColor()
 
     static let dividerBg = ColorRgba.companion.dividerBg.toColor()
     static let dividerFg = ColorRgba.companion.dividerFg.toColor()
-    static let dividerSheetBg = ColorRgba.companion.dividerSheetBg.toColor()
-    static let dividerSheetFg = ColorRgba.companion.dividerSheetFg.toColor()
+
+    static let sheetBg = ColorRgba.companion.sheetBg.toColor()
+    static let sheetFg = ColorRgba.companion.sheetFg.toColor()
+    static let sheetDividerBg = ColorRgba.companion.sheetDividerBg.toColor()
+    static let sheetDividerFg = ColorRgba.companion.sheetDividerFg.toColor()
 
     static let gray1 = AppleColors.shared.gray1Dark.toColor()
     static let gray2 = AppleColors.shared.gray2Dark.toColor()
