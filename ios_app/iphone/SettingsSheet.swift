@@ -112,7 +112,7 @@ struct SettingsSheet: View {
                             }
                                     .sheetEnv(isPresented: $isHistoryPresented) {
                                         ZStack {
-                                            Color(.myBackground).edgesIgnoringSafeArea(.all)
+                                            c.bg.edgesIgnoringSafeArea(.all)
                                             HistoryView(isHistoryPresented: $isHistoryPresented)
                                         }
                                                 // todo
@@ -370,7 +370,7 @@ struct SettingsSheet: View {
                         .padding(.bottom, 34)
             }
         }
-                .background(Color(.myBackground))
+                .background(c.bg)
                 .sheetEnv(isPresented: $isAddChecklistPresented) {
                     ChecklistFormSheet(isPresented: $isAddChecklistPresented, checklist: nil)
                 }

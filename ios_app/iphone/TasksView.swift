@@ -121,7 +121,7 @@ struct TasksView: View {
                             .background(
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 4, style: .continuous)
-                                                .fill(Color(.myDayNight(.mySecondaryBackground, .myBackground)))
+                                                .fill(c.bg)
                                     }
                             )
 

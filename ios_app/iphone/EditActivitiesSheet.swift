@@ -47,7 +47,7 @@ struct EditActivitiesSheet: View {
 
                 Spacer()
 
-                DialogCloseButton(isPresented: $isPresented, bgColor: Color(.myBackground))
+                DialogCloseButton(isPresented: $isPresented, bgColor: c.bg)
             }
         }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)

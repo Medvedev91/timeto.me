@@ -45,7 +45,7 @@ struct HistoryView: View {
                                                         .padding(.vertical, 5)
                                                         .background(
                                                                 ZStack {
-                                                                    Capsule().fill(Color(.myBackground).opacity(0.5))
+                                                                    Capsule().fill(c.bg.opacity(0.5))
                                                                     Capsule()
                                                                             .fill(.blue)
                                                                             .padding(1 / UIScreen.main.scale)
