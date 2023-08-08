@@ -6,6 +6,8 @@ let TAB_TASKS_H_PADDING = 16.0
 private let tabWidth: CGFloat = 34
 private let SECTION_BUTTONS_END_PADDING = TAB_TASKS_H_PADDING.goldenRatioDown()
 
+private let calendarIconColor = Color(UIColor(argb: 0xFF5F5F5F))
+
 struct TasksView: View {
 
     //////
@@ -90,7 +92,7 @@ struct TasksView: View {
                         if isActiveCalendar {
                             return .blue
                         }
-                        return Color(UIColor(argb: 0xFF5F5F5F))
+                        return calendarIconColor
                     }()
 
                     Button(
