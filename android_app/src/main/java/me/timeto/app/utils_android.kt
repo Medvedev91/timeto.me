@@ -233,6 +233,8 @@ object c {
     val sheetDividerBg = ColorRgba.sheetDividerBg.toColor()
     val sheetDividerFg = ColorRgba.sheetDividerFg.toColor()
 
+    val tasksDropFocused = ColorRgba.tasksDropFocused.toColor()
+
     val gray1 = AppleColors.gray1Dark.toColor()
     val gray2 = AppleColors.gray2Dark.toColor()
     val gray3 = AppleColors.gray3Dark.toColor()
@@ -245,6 +247,4 @@ object c {
     val background2 = Color(0xFF202022) // 0xFF1C1C1E
 
     val formButtonRightNoteText = Color(0x88FFFFFF)
-
-    val tasksDropFocused = green
 }

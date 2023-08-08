@@ -242,6 +242,8 @@ data class ColorRgba(
         val sheetDividerBg = dividerFg
         val sheetDividerFg = ColorRgba(68, 68, 71)
 
+        val tasksDropFocused = green
+
         fun fromRgbaString(rgbaString: String): ColorRgba =
             rgbaString.split(',').map { it.toInt() }.let {
                 when (it.size) {
