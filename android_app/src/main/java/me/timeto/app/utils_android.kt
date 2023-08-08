@@ -209,26 +209,6 @@ fun ZStack(
 
 object c {
 
-    private val bgFormDarkMode = Color(0xFF121214) // todo remove?
-
-    val bgSheet = bgFormDarkMode
-
-    // todo remove
-    val background = Color(0xFF000000)
-
-    // todo remove
-    val background2 = Color(0xFF202022) // 0xFF1C1C1E
-
-    // todo remove?
-    val formHeaderBackground = Color(0xFF191919)
-    val calendarIconColor = Color(0xFF777777)
-
-    // todo rename to bgForm?
-    val bgFormSheet = bgFormDarkMode
-    val formButtonRightNoteText = Color(0x88FFFFFF)
-
-    ///
-
     val white = ColorRgba.white.toColor()
     val black = ColorRgba.black.toColor()
     val transparent = ColorRgba.transparent.toColor()
@@ -259,6 +239,24 @@ object c {
     val gray5 = AppleColors.gray5Dark.toColor()
 
     // todo
+
+    private val bgFormDarkMode = Color(0xFF121214) // todo remove?
+
+    val bgSheet = bgFormDarkMode
+
+    // todo remove
+    val background = Color(0xFF000000)
+
+    // todo remove
+    val background2 = Color(0xFF202022) // 0xFF1C1C1E
+
+    // todo remove?
+    val formHeaderBackground = Color(0xFF191919)
+    val calendarIconColor = Color(0xFF777777)
+
+    // todo rename to bgForm?
+    val bgFormSheet = bgFormDarkMode
+    val formButtonRightNoteText = Color(0x88FFFFFF)
 
     val tasksDropFocused = green
     val formHeaderDivider = gray4
