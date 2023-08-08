@@ -246,8 +246,6 @@ object c {
     // todo remove
     val background2 = Color(0xFF202022) // 0xFF1C1C1E
 
-    // todo remove?
-    val formHeaderBackground = Color(0xFF191919)
     val calendarIconColor = Color(0xFF777777)
 
     val formButtonRightNoteText = Color(0x88FFFFFF)
