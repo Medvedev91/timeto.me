@@ -248,7 +248,7 @@ fun Sheet__HeaderView(
                 .height(onePx)
                 .fillMaxWidth()
                 .drawBehind {
-                    drawRect(color = c.dividerSheetBg.copy(alpha = alphaAnimate.value))
+                    drawRect(color = c.sheetDividerBg.copy(alpha = alphaAnimate.value))
                 },
         )
     }
