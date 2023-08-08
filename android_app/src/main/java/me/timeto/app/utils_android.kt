@@ -234,7 +234,4 @@ object c {
     val gray3 = AppleColors.gray3Dark.toColor()
     val gray4 = AppleColors.gray4Dark.toColor()
     val gray5 = AppleColors.gray5Dark.toColor()
-
-    // todo
-    val background2 = Color(0xFF202022) // 0xFF1C1C1E
 }

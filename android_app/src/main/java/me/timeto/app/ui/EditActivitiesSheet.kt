@@ -60,7 +60,7 @@ fun EditActivitiesSheet(
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(c.background2),
+                            .background(c.sheetBg),
                         contentAlignment = Alignment.TopCenter
                     ) {
 

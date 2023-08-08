@@ -17,7 +17,7 @@ fun AlertDialogView(
 ) {
     Column(
         modifier = Modifier
-            .background(c.background2)
+            .background(c.sheetBg)
             .padding(20.dp)
     ) {
 

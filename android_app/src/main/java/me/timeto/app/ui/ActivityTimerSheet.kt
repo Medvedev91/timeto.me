@@ -36,7 +36,7 @@ fun ActivityTimerSheet(
 
     Column(
         Modifier
-            .background(c.background2)
+            .background(c.sheetBg)
             .padding(top = 5.dp)
     ) {
 

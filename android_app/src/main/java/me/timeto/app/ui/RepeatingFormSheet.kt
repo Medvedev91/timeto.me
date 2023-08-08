@@ -201,7 +201,7 @@ fun RepeatingFormSheet(
                                         RepeatingModel.dayShortNames1.forEachIndexed { index, dayName ->
                                             val isSelected = state.selectedWeekDays[index]
                                             val bgColor =
-                                                animateColorAsState(if (isSelected) c.blue else c.background2)
+                                                animateColorAsState(if (isSelected) c.blue else c.sheetBg)
                                             Text(
                                                 dayName,
                                                 modifier = Modifier
@@ -421,7 +421,7 @@ private fun DaysOfMonthItemView(
     paddingValues: PaddingValues = PaddingValues(),
     onClick: () -> Unit,
 ) {
-    val bgColor = animateColorAsState(if (isSelected) c.blue else c.background2)
+    val bgColor = animateColorAsState(if (isSelected) c.blue else c.sheetBg)
     Text(
         dayName,
         modifier = Modifier

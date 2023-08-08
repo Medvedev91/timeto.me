@@ -39,7 +39,7 @@ fun ChartDialogView(
     val (vm, state) = rememberVM { ChartVM() }
 
     Box(
-        modifier = Modifier.background(c.background2)
+        modifier = Modifier.background(c.sheetBg)
     ) {
 
         Column {
@@ -158,7 +158,7 @@ fun ChartDialogView(
                             .clickable {
                                 vm.upPeriod(period.dayStart, period.dayFinish)
                             }
-                            .background(c.background2.copy(alpha = 0.8f))
+                            .background(c.sheetBg.copy(alpha = 0.8f))
                             .padding(start = 8.dp, end = 8.dp, top = 6.dp, bottom = 7.dp),
                         textAlign = TextAlign.Center,
                         fontSize = 11.5.sp,
@@ -210,7 +210,7 @@ fun ChartDialogView(
                             .padding(end = 4.dp)
                             .size(30.dp)
                             .clip(RoundedCornerShape(99.dp))
-                            .background(c.background2)
+                            .background(c.sheetBg)
                             .clickable {
                                 onClose()
                             }

@@ -29,7 +29,7 @@ fun DaytimePickerSheet(
     val selectedMinute = remember { mutableStateOf(defMinute) }
 
     Column(
-        Modifier.background(c.background2)
+        Modifier.background(c.sheetBg)
     ) {
 
         Sheet.HeaderViewOld(

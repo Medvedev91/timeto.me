@@ -41,7 +41,7 @@ fun HistoryDialogView(
 
     Box(
         contentAlignment = Alignment.BottomCenter,
-        modifier = Modifier.background(c.background2),
+        modifier = Modifier.background(c.sheetBg),
     ) {
 
         val scrollState = rememberLazyListState()
@@ -285,7 +285,7 @@ fun HistoryDialogView(
             modifier = Modifier.padding(bottom = 22.dp)
         ) {
 
-            val bgColorIsEditModeButton = animateColorAsState(if (isEditMode) c.blue else c.background2)
+            val bgColorIsEditModeButton = animateColorAsState(if (isEditMode) c.blue else c.sheetBg)
             val fgColorIsEditModeButton = animateColorAsState(if (isEditMode) c.white else c.textSecondary.copy(alpha = 0.7f))
 
             Icon(
@@ -313,7 +313,7 @@ fun HistoryDialogView(
                     .padding(end = 28.dp)
                     .size(30.dp)
                     .clip(RoundedCornerShape(99.dp))
-                    .background(c.background2)
+                    .background(c.sheetBg)
                     .clickable {
                         onClose()
                     }
