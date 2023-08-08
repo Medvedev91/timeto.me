@@ -34,6 +34,7 @@ private val sheetHPadding = MyListView.PADDING_OUTER_HORIZONTAL
 private val dividerPadding = sheetHPadding.goldenRatioDown()
 
 private val bgColor = c.sheetBg
+private val dividerColor = c.dividerSheetBg
 
 @Composable
 fun ActivityColorSheet(
@@ -67,13 +68,12 @@ fun ActivityColorSheet(
             }
         }.value)
 
-        val dividerBg = c.dividerBg
         ZStack(
             modifier = Modifier
                 .height(onePx)
                 .fillMaxWidth()
                 .drawBehind {
-                    drawRect(color = dividerBg.copy(alpha = alphaAnimate.value))
+                    drawRect(color = dividerColor.copy(alpha = alphaAnimate.value))
                 },
         )
 
@@ -148,7 +148,7 @@ fun ActivityColorSheet(
                         .width(onePx)
                         .padding(top = circlePadding, bottom = activitiesBottomPadding)
                         .fillMaxHeight()
-                        .background(c.dividerBg)
+                        .background(dividerColor)
                 )
             }
 
