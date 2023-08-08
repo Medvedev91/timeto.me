@@ -362,7 +362,7 @@ fun MyListView__ItemView__ButtonView(
 @Composable
 fun MyListView__ItemView__ActionView(
     text: String,
-    textColor: ColorNative = ColorNative.red,
+    textColor: Color = c.red,
     onClick: () -> Unit,
 ) {
 
@@ -386,7 +386,7 @@ fun MyListView__ItemView__ActionView(
                 text,
                 modifier = Modifier
                     .padding(horizontal = MyListView.PADDING_INNER_HORIZONTAL),
-                color = textColor.toColor(),
+                color = textColor,
                 fontWeight = FontWeight.W600,
             )
 
