@@ -88,7 +88,7 @@ object Dialog {
             }
             Column(
                 modifier = Modifier
-                    .background(c.background2)
+                    .background(c.sheetBg)
             ) {
 
                 AndroidView(
