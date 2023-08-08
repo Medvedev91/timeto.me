@@ -39,7 +39,7 @@ fun ChecklistDialogView(
 
     val checklistItems = state.items
 
-    Box(Modifier.background(c.background)) {
+    Box(Modifier.background(c.bg)) {
 
         LazyColumn(
             modifier = Modifier
@@ -154,7 +154,7 @@ fun ChecklistDialogView(
                     modifier = Modifier
                         .padding(start = 29.dp)
                         .clip(MySquircleShape())
-                        .background(c.background)
+                        .background(c.bg)
                         .clickable {
                             vm.uncheck()
                         }

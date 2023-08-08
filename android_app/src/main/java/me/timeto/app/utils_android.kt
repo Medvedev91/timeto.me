@@ -242,9 +242,6 @@ object c {
     // todo
 
     // todo remove
-    val background = Color(0xFF000000)
-
-    // todo remove
     val background2 = Color(0xFF202022) // 0xFF1C1C1E
 
     val formButtonRightNoteText = Color(0x88FFFFFF)

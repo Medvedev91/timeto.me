@@ -331,7 +331,7 @@ private fun AddIntervalDialogView(
 ) {
     val scope = rememberCoroutineScope()
 
-    Box(Modifier.background(c.background)) {
+    Box(Modifier.background(c.bg)) {
 
         LazyColumn(
             modifier = Modifier

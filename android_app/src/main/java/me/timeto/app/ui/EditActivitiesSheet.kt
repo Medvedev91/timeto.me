@@ -33,7 +33,7 @@ fun EditActivitiesSheet(
 
     Box(
         modifier = Modifier
-            .background(c.background)
+            .background(c.bg)
             .navigationBarsPadding()
     ) {
 
