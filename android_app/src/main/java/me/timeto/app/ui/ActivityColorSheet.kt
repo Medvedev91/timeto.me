@@ -260,7 +260,7 @@ fun ActivityColorSheet(
                 Icon(
                     if (state.isRgbSlidersShowed) Icons.Rounded.ExpandMore else Icons.Rounded.Tune,
                     "RGB Picker",
-                    tint = if (state.isRgbSlidersShowed) c.white else c.gray2,
+                    tint = state.rgbSlidersBtnColor.toColor(),
                     modifier = Modifier
                         .padding(start = sheetHPadding - 2.dp)
                         .size(33.dp)

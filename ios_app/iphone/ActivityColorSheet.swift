@@ -188,7 +188,7 @@ struct ActivityColorSheet: View {
                                             ZStack {
                                                 Image(systemName: isRgbSlidersShowedAnim ? "chevron.down" : "slider.horizontal.3")
                                                         .font(.system(size: isRgbSlidersShowedAnim ? 16 : 22, weight: .medium))
-                                                        .foregroundColor(Color(isRgbSlidersShowedAnim ? .white : .systemGray2))
+                                                        .foregroundColor(state.rgbSlidersBtnColor.toColor())
                                                         .offset(y: isRgbSlidersShowedAnim ? 1 : 0)
                                             }
                                                     .frame(width: 34, height: 34)

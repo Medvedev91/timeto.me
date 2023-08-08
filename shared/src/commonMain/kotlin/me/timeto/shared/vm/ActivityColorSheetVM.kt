@@ -43,6 +43,8 @@ class ActivityColorSheetVM(
         val otherActivitiesTitle = "OTHER ACTIVITIES"
         val otherActivitiesTitleColor = AppleColors.gray1Dark
 
+        val rgbSlidersBtnColor = if (isRgbSlidersShowed) ColorRgba.white else AppleColors.gray2Dark
+
         val selectedColor = ColorRgba(r.toInt(), g.toInt(), b.toInt())
 
         val rgbText = "RGB: ${r.toInt()},${g.toInt()},${b.toInt()}" + " / " +
