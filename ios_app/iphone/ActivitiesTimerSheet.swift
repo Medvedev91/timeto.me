@@ -130,12 +130,12 @@ private struct ActivitiesTimerSheet: View {
                                                                 },
                                                                 label: {
                                                                     Text(hintUI.text)
-                                                                            .font(.system(size: isPrimary ? 13 : 14, weight: isPrimary ? .medium : .light))
+                                                                            .font(.system(size: isPrimary ? 14 : 15, weight: isPrimary ? .medium : .light))
                                                                             .foregroundColor(isPrimary ? .white : .blue)
                                                                             .padding(.leading, 6)
                                                                             .padding(.trailing, isPrimary ? 6 : 2)
                                                                             .padding(.top, 3)
-                                                                            .padding(.bottom, 3.5)
+                                                                            .padding(.bottom, 3)
                                                                             .background(isPrimary ? .blue : .clear)
                                                                             .cornerRadius(99)
                                                                             .padding(.leading, isPrimary ? 4 : 0)
