@@ -34,7 +34,7 @@ private val sheetHPadding = MyListView.PADDING_OUTER_HORIZONTAL
 private val dividerPadding = sheetHPadding.goldenRatioDown()
 
 private val bgColor = c.sheetBg
-private val dividerColor = c.dividerSheetBg
+private val dividerColor = c.sheetDividerBg
 
 @Composable
 fun ActivityColorSheet(

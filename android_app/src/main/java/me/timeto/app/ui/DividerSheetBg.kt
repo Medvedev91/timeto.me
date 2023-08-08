@@ -9,5 +9,5 @@ fun DividerSheetBg(
     modifier: Modifier = Modifier,
     isVisible: Boolean = true,
 ) {
-    Divider(c.dividerSheetBg, modifier, isVisible)
+    Divider(c.sheetDividerBg, modifier, isVisible)
 }

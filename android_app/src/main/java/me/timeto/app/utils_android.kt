@@ -252,5 +252,4 @@ object c {
     val formButtonRightNoteText = Color(0x88FFFFFF)
 
     val tasksDropFocused = green
-    val formHeaderDivider = gray4
 }

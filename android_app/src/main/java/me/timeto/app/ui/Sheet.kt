@@ -85,7 +85,7 @@ object Sheet {
         scrollState: ScrollableState?,
         cancelText: String = "Cancel",
         bgColor: Color = c.sheetBg,
-        dividerColor: Color = c.formHeaderDivider,
+        dividerColor: Color = c.sheetDividerBg,
         maxLines: Int = Int.MAX_VALUE,
         onDone: () -> Unit,
     ) {
