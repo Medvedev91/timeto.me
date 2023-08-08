@@ -17,6 +17,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.*
 import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -45,6 +46,7 @@ val TAB_TASKS_PADDING_END = SECTION_BUTTONS_END_PADDING + SECTION_BUTTON_WIDTH +
 val taskListSectionPadding = 20.dp
 
 private val tabShape = MySquircleShape(50f)
+private val calendarIconColor = Color(0xFF777777)
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -251,7 +253,7 @@ fun TasksView(
                             isFocusedToDrop -> c.tasksDropFocused
                             isAllowedToDrop -> c.purple
                             isActive -> c.blue
-                            else -> c.calendarIconColor
+                            else -> calendarIconColor
                         },
                         spring(stiffness = Spring.StiffnessMedium)
                     )
