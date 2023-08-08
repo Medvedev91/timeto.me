@@ -66,7 +66,6 @@ object Dialog {
         minPickableDay: Int, // Available to pick
         minSavableDay: Int, // Active add button
         maxDay: Int = UnixTime.MAX_DAY,
-        title: String? = null,
         withTimeBtnText: String? = null,
         onSelect: (UnixTime) -> Unit,
     ) {
@@ -91,33 +90,6 @@ object Dialog {
                 modifier = Modifier
                     .background(c.background2)
             ) {
-
-                if (title != null) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(c.datePickerTitleBg)
-                    ) {
-                        Text(
-                            title,
-                            modifier = Modifier
-                                .padding(top = 19.dp, bottom = 19.dp, start = 20.dp, end = 20.dp)
-                                .align(Alignment.Center),
-                            fontSize = 19.sp,
-                            fontWeight = FontWeight.Medium,
-                            textAlign = TextAlign.Center,
-                            color = c.text,
-                        )
-
-                        Divider(
-                            Modifier
-                                .align(Alignment.BottomCenter)
-                                .fillMaxWidth()
-                                .height(0.8.dp),
-                            color = c.dividerBg2,
-                        )
-                    }
-                }
 
                 AndroidView(
                     { CalendarView(it) },

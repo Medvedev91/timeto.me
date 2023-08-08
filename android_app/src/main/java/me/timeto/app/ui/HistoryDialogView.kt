@@ -114,7 +114,6 @@ fun HistoryDialogView(
                                                         minPickableDay = state.minPickerDay,
                                                         minSavableDay = state.minPickerDay,
                                                         maxDay = UnixTime().localDay,
-                                                        title = null,
                                                         withTimeBtnText = "Save",
                                                         onSelect = { selectedTime ->
                                                             intervalUI.upTime(selectedTime)
@@ -356,7 +355,6 @@ private fun AddIntervalDialogView(
                             minPickableDay = 0,
                             minSavableDay = 0,
                             maxDay = UnixTime().localDay,
-                            title = null,
                             withTimeBtnText = "Save",
                             onSelect = { selectedTime ->
                                 activityUI.addInterval(selectedTime) {
