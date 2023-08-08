@@ -60,7 +60,7 @@ struct ActivityColorSheet: View {
                                         .padding(.top, 1)
 
                                 Text(state.otherActivitiesTitle)
-                                        .foregroundColor(.secondary)
+                                        .foregroundColor(state.otherActivitiesTitleColor.toColor())
                                         .fontWeight(.medium)
                                         .font(.system(size: 13))
                                         .padding(.leading, 4)

@@ -41,6 +41,7 @@ class ActivityColorSheetVM(
 
         val title = initData.title
         val otherActivitiesTitle = "OTHER ACTIVITIES"
+        val otherActivitiesTitleColor = AppleColors.gray1Dark
 
         val selectedColor = ColorRgba(r.toInt(), g.toInt(), b.toInt())
 

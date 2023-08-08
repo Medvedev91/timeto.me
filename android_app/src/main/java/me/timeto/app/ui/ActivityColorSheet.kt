@@ -120,7 +120,7 @@ fun ActivityColorSheet(
                             .padding(start = 4.dp, top = 24.dp),
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Medium,
-                        color = c.gray1,
+                        color = state.otherActivitiesTitleColor.toColor(),
                     )
 
                     state.allActivities.forEach { activityUI ->
