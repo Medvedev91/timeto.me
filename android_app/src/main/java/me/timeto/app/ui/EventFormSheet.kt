@@ -87,7 +87,7 @@ fun EventFormSheet(
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .background(c.bgFormSheet)
+            .background(c.sheetBg)
     ) {
 
         Column(

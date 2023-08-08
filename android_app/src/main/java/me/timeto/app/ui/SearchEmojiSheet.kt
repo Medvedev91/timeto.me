@@ -44,7 +44,7 @@ fun SearchEmojiSheet(
         modifier = Modifier
             .fillMaxSize()
             .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
-            .background(c.bgFormSheet)
+            .background(c.sheetBg)
     ) {
 
         Row(

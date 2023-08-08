@@ -27,7 +27,7 @@ fun FoldersSettingsSheet(
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .background(c.bgFormSheet)
+            .background(c.sheetBg)
     ) {
 
         val scrollState = rememberLazyListState()

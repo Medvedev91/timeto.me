@@ -43,7 +43,7 @@ fun RepeatingFormSheet(
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .background(c.bgFormSheet)
+            .background(c.sheetBg)
     ) {
 
         val scrollState = rememberScrollState()

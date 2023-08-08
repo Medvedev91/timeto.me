@@ -28,7 +28,7 @@ fun TaskFormSheet(
 
     Column(
         modifier = Modifier
-            .background(c.bgFormSheet)
+            .background(c.sheetBg)
             .navigationBarsPadding()
             .imePadding(),
     ) {

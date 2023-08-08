@@ -29,7 +29,7 @@ fun ChecklistItemEditDialog(
 
     Column(
         modifier = Modifier
-            .background(c.bgFormSheet)
+            .background(c.sheetBg)
             .padding(20.dp)
     ) {
 
