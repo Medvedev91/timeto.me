@@ -339,7 +339,7 @@ fun MainView() {
                     )
                 }
 
-                val menuTasksBg = animateColorAsState(if (state.isTasksVisible) c.gray5 else c.black)
+                val menuTasksBg = animateColorAsState(if (state.isTasksVisible) c.sheetFg else c.black)
 
                 VStack(
                     modifier = Modifier
