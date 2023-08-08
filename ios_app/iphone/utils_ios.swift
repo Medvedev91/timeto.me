@@ -69,8 +69,6 @@ extension UIColor {
 
     //////
 
-    static var bgSheet = myDayNightArgb(0xFFFFFFFF, bgFormDarkMode)
-
     // todo remove
     static var mySecondaryBackground = myDayNightArgb(0xFFFFFFFF, 0xFF1C1C1E)
 

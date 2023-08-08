@@ -6,7 +6,7 @@ private let circlePadding = 4.0
 private let circleCellSize = circleSize + (circlePadding * 2.0)
 private let sheetHPadding = MyListView.PADDING_OUTER_HORIZONTAL
 private let dividerPadding = sheetHPadding.goldenRatioDown()
-private let bgColor = Color(.bgSheet)
+private let bgColor = c.sheetBg
 
 struct ActivityColorSheet: View {
 
