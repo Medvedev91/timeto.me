@@ -219,9 +219,6 @@ object c {
     // todo remove
     val background2 = Color(0xFF202022) // 0xFF1C1C1E
 
-    // todo remove
-    val dividerBg2 = AppleColors.gray4Dark.toColor()
-
     // todo remove?
     val formHeaderBackground = Color(0xFF191919)
     val calendarIconColor = Color(0xFF777777)
