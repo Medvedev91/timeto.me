@@ -7,13 +7,13 @@ import kotlin.math.absoluteValue
 class TimerDataUI(
     interval: IntervalModel,
     isPurple: Boolean,
-    defColor: ColorNative,
+    defColor: ColorRgba,
 ) {
 
     val status: STATUS
     val title: String // 12:34
     val subtitle: String? // NULL / BREAK / OVERDUE
-    val color: ColorNative
+    val color: ColorRgba
 
     private val restartTimer = interval.note?.textFeatures()?.paused?.timer ?: interval.timer
     val restartText = restartTimer.toTimerHintNote(isShort = true)
@@ -22,11 +22,11 @@ class TimerDataUI(
         val now = time()
         val timeLeft = interval.id + interval.timer - now
 
-        class TmpDTO(val subtitle: String?, val color: ColorNative, val timeLeft: Int, val status: STATUS)
+        class TmpDTO(val subtitle: String?, val color: ColorRgba, val timeLeft: Int, val status: STATUS)
 
         val tmpData: TmpDTO = when {
-            timeLeft < -BREAK_SECONDS -> TmpDTO("OVERDUE", ColorNative.red, -timeLeft - BREAK_SECONDS, STATUS.OVERDUE)
-            timeLeft <= 0 -> TmpDTO("BREAK", ColorNative.green, timeLeft + BREAK_SECONDS, STATUS.BREAK)
+            timeLeft < -BREAK_SECONDS -> TmpDTO("OVERDUE", ColorRgba.red, -timeLeft - BREAK_SECONDS, STATUS.OVERDUE)
+            timeLeft <= 0 -> TmpDTO("BREAK", ColorRgba.green, timeLeft + BREAK_SECONDS, STATUS.BREAK)
             else -> TmpDTO(null, defColor, timeLeft, STATUS.WORK)
         }
 
@@ -35,7 +35,7 @@ class TimerDataUI(
         status = tmpData.status
         title = secondsToString(timeForTitle)
         subtitle = tmpData.subtitle
-        color = if (isPurple) ColorNative.purple else tmpData.color
+        color = if (isPurple) ColorRgba.purple else tmpData.color
     }
 
     fun restart() {

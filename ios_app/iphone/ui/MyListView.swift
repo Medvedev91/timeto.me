@@ -247,7 +247,7 @@ struct MyListView__ItemView__ButtonView: View {
 struct MyListView__ItemView__ActionView: View {
 
     let text: String
-    var textColor: ColorNative = .red
+    var textColor: ColorRgba = .companion.red
     let onClick: () -> Void
 
     var body: some View {

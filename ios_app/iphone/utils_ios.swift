@@ -168,13 +168,6 @@ private struct SafeAreaInsetsKey: EnvironmentKey {
     }
 }
 
-extension ColorRgba {
-    func toColor() -> Color {
-        Color(rgba: [r.toInt(), g.toInt(), b.toInt(), a.toInt()])
-    }
-}
-
-
 extension EnvironmentValues {
     var safeAreaInsets: EdgeInsets {
         self[SafeAreaInsetsKey.self]

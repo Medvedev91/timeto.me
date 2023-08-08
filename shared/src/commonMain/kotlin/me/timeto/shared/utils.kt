@@ -264,12 +264,6 @@ data class ColorRgba(
         r == r_ && g == g_ && b == b_ && a == a_
 }
 
-enum class ColorNative {
-    red, green, blue, orange, purple,
-    white, black, transparent,
-    text, textSecondary,
-}
-
 /**
  * https://developer.apple.com/design/human-interface-guidelines/color
  */

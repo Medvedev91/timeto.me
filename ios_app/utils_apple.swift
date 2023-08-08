@@ -320,33 +320,9 @@ extension Color {
     }
 }
 
-extension ColorNative {
-
+extension ColorRgba {
     func toColor() -> Color {
-        switch self {
-        case .red:
-            return .red
-        case .green:
-            return .green
-        case .blue:
-            return .blue
-        case .orange:
-            return .orange
-        case .purple:
-            return .purple
-        case .white:
-            return .white
-        case .black:
-            return .black
-        case .text:
-            return .primary
-        case .textsecondary:
-            return .secondary
-        case .transparent:
-            return .clear
-        default:
-            fatalError("ColorNative.toColor()")
-        }
+        Color(rgba: [r.toInt(), g.toInt(), b.toInt(), a.toInt()])
     }
 }
 

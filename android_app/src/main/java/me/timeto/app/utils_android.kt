@@ -57,23 +57,6 @@ fun Modifier.conditional(
 
 val timerFont = FontFamily(Font(R.font.timer_font))
 
-///
-/// Color
-
-@Composable
-fun ColorNative.toColor() = when (this) {
-    ColorNative.red -> c.red
-    ColorNative.green -> c.green
-    ColorNative.blue -> c.blue
-    ColorNative.orange -> c.orange
-    ColorNative.purple -> c.purple
-    ColorNative.white -> c.white
-    ColorNative.black -> c.black
-    ColorNative.text -> c.text
-    ColorNative.textSecondary -> c.textSecondary
-    ColorNative.transparent -> c.transparent
-}
-
 //////
 
 fun scheduleNotification(data: ScheduledNotificationData) {

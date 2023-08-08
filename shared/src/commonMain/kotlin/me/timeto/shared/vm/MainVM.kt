@@ -26,7 +26,7 @@ class MainVM : __VM<MainVM.State>() {
         val idToUpdate: Long,
     ) {
 
-        val timerData = TimerDataUI(interval, isPurple, ColorNative.white)
+        val timerData = TimerDataUI(interval, isPurple, ColorRgba.white)
         val isTimerButtonsVisible = isPurple || !timerData.status.isWork()
 
         val activity = interval.getActivityDI()
@@ -69,21 +69,21 @@ class MainVM : __VM<MainVM.State>() {
 
         val batteryText = "${batteryLevelOrNull ?: "--"}"
         val batteryTextColor: ColorRgba
-        val batteryBackground: ColorNative
+        val batteryBackground: ColorRgba
 
         init {
             when {
                 isBatteryChargingOrNull == true -> {
                     batteryTextColor = ColorRgba.white
-                    batteryBackground = if (batteryLevelOrNull == 100) ColorNative.green else ColorNative.blue
+                    batteryBackground = if (batteryLevelOrNull == 100) ColorRgba.green else ColorRgba.blue
                 }
                 batteryLevelOrNull in 0..20 -> {
                     batteryTextColor = ColorRgba.white
-                    batteryBackground = ColorNative.red
+                    batteryBackground = ColorRgba.red
                 }
                 else -> {
                     batteryTextColor = menuColor
-                    batteryBackground = ColorNative.transparent
+                    batteryBackground = ColorRgba.transparent
                 }
             }
         }

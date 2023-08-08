@@ -1,11 +1,8 @@
 package me.timeto.shared.data
 
-import me.timeto.shared.ColorNative
-import me.timeto.shared.TextFeatures
-import me.timeto.shared.UnixTime
+import me.timeto.shared.*
 import me.timeto.shared.db.ActivityModel
 import me.timeto.shared.db.IntervalModel
-import me.timeto.shared.textFeatures
 import me.timeto.shared.vm.ui.TimerDataUI
 
 class TimerTabActivityData(
@@ -20,7 +17,7 @@ class TimerTabActivityData(
         TimerDataUI(
             interval = lastInterval,
             isPurple = isPurple,
-            defColor = ColorNative.blue,
+            defColor = ColorRgba.blue,
         )
     }
 

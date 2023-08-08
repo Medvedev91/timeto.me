@@ -96,7 +96,7 @@ class TasksListVM(
                 UnixTime.StringComponent.hhmm24,
             )
             val textColor = if (it.isImportant)
-                ColorNative.blue else ColorNative.textSecondary
+                ColorRgba.blue else ColorRgba.textSecondary
             TimeUI(
                 text = text,
                 textColor = textColor
@@ -105,7 +105,7 @@ class TasksListVM(
 
         class TimeUI(
             val text: String,
-            val textColor: ColorNative,
+            val textColor: ColorRgba,
         )
     }
 
@@ -143,9 +143,9 @@ class TasksListVM(
                     val timeLeftText = timeData.timeLeftText()
                     val unixTime = timeData.unixTime
                     val textColor = when (timeData.status) {
-                        TimeData.STATUS.IN -> ColorNative.textSecondary
-                        TimeData.STATUS.NEAR -> ColorNative.blue
-                        TimeData.STATUS.OVERDUE -> ColorNative.red
+                        TimeData.STATUS.IN -> ColorRgba.textSecondary
+                        TimeData.STATUS.NEAR -> ColorRgba.blue
+                        TimeData.STATUS.OVERDUE -> ColorRgba.red
                     }
 
                     if (timeData.isImportant) {
@@ -158,7 +158,7 @@ class TasksListVM(
                             UnixTime.StringComponent.hhmm24,
                         )
                         val backgroundColor = if (timeData.status == TimeData.STATUS.OVERDUE)
-                            ColorNative.red else ColorNative.blue // todo for .NEAR?
+                            ColorRgba.red else ColorRgba.blue // todo for .NEAR?
                         return ImportantUI(
                             title = title,
                             backgroundColor = backgroundColor,
@@ -177,14 +177,14 @@ class TasksListVM(
 
             class ImportantUI(
                 val title: String,
-                val backgroundColor: ColorNative,
+                val backgroundColor: ColorRgba,
                 val timeLeftText: String,
-                val timeLeftColor: ColorNative,
+                val timeLeftColor: ColorRgba,
             ) : TimeUI()
 
             class RegularUI(
                 val text: String,
-                val textColor: ColorNative,
+                val textColor: ColorRgba,
             ) : TimeUI()
         }
     }

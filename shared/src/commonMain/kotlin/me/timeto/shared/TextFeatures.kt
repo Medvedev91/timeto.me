@@ -74,7 +74,7 @@ data class TextFeatures(
         val id: String,
         val title: String,
         val emoji: String,
-        val color: ColorNative,
+        val color: ColorRgba,
     ) {
 
         fun performUI() {
@@ -86,11 +86,11 @@ data class TextFeatures(
 
         class Checklist(
             val checklist: ChecklistModel
-        ) : Trigger("#c${checklist.id}", checklist.name, "✅", ColorNative.green)
+        ) : Trigger("#c${checklist.id}", checklist.name, "✅", ColorRgba.green)
 
         class Shortcut(
             val shortcut: ShortcutModel
-        ) : Trigger("#s${shortcut.id}", shortcut.name, "↗️", ColorNative.red)
+        ) : Trigger("#s${shortcut.id}", shortcut.name, "↗️", ColorRgba.red)
     }
 
     class TimeData(
