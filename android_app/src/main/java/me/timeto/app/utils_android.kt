@@ -228,10 +228,4 @@ object c {
 
     val tasksDropFocused = ColorRgba.tasksDropFocused.toColor()
     val formButtonRightNoteText = ColorRgba.formButtonRightNoteText.toColor()
-
-    val gray1 = AppleColors.gray1Dark.toColor()
-    val gray2 = AppleColors.gray2Dark.toColor()
-    val gray3 = AppleColors.gray3Dark.toColor()
-    val gray4 = AppleColors.gray4Dark.toColor()
-    val gray5 = AppleColors.gray5Dark.toColor()
 }
