@@ -79,14 +79,6 @@ extension UIColor {
 
     // todo rename like android
     static var mySheetFormBg = myDayNightArgb(tgLikeLightBg, bgFormDarkMode)
-
-    static var myFormButtonRightNoteText = myDayNightArgb(0x88000000, 0x88FFFFFF)
-
-    // todo remove?
-    static var formHeaderDivider = UIColor.systemGray3
-
-    // todo remove?
-    static var formHeaderBackground = myDayNightArgb(0xFFF9F9F9, 0xFF191919)
 }
 
 struct c {

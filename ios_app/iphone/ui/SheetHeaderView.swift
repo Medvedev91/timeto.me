@@ -8,8 +8,8 @@ struct SheetHeaderView: View {
     let isDoneEnabled: Bool
     let scrollToHeader: Int
     var cancelText: String = "Cancel"
-    var bgColor = UIColor.formHeaderBackground
-    var dividerColor = UIColor.formHeaderDivider
+    var bgColor = c.sheetBg
+    var dividerColor = c.sheetDividerBg
     let onDone: () -> Void
 
     private var bgAlpha: Double {
@@ -64,10 +64,10 @@ struct SheetHeaderView: View {
                     .padding(.top, 18)
                     .padding(.bottom, 18)
 
-            Color(dividerColor)
+            dividerColor
                     .opacity(bgAlpha)
                     .frame(height: onePx)
         }
-                .background(Color(bgColor).opacity(bgAlpha))
+                .background(bgColor.opacity(bgAlpha))
     }
 }
