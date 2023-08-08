@@ -60,8 +60,6 @@ val timerFont = FontFamily(Font(R.font.timer_font))
 ///
 /// Color
 
-fun ColorRgba.toColor() = Color(r, g, b, a)
-
 @Composable
 fun ColorNative.toColor() = when (this) {
     ColorNative.red -> c.red
@@ -199,6 +197,11 @@ fun ZStack(
         content = content,
     )
 }
+
+///
+/// Color
+
+fun ColorRgba.toColor() = Color(r, g, b, a)
 
 object c {
 
