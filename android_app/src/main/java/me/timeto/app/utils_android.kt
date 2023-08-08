@@ -222,7 +222,6 @@ object c {
     // todo remove?
     val formHeaderBackground = Color(0xFF191919)
     val calendarIconColor = Color(0xFF777777)
-    val datePickerTitleBg = Color(0xFF2A2A2B)
 
     // todo rename to bgForm?
     val bgFormSheet = bgFormDarkMode
