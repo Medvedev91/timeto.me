@@ -136,7 +136,7 @@ fun MyListView__ItemView(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(c.background2),
+                .background(c.sheetFg),
             contentAlignment = Alignment.CenterStart,
         ) {
             content()
@@ -318,7 +318,7 @@ fun MyListView__ItemView__ButtonView(
 
     Column(
         modifier = modifier
-            .background(c.background2) // Fix swipe to action bg on swipe
+            .background(c.sheetFg) // Fix swipe to action bg on swipe
             .clickable {
                 onClick()
             },
@@ -368,7 +368,7 @@ fun MyListView__ItemView__ActionView(
 
     Column(
         modifier = Modifier
-            .background(c.background2) // Fix swipe to action bg on swipe
+            .background(c.sheetFg) // Fix swipe to action bg on swipe
             .clickable {
                 onClick()
             },
