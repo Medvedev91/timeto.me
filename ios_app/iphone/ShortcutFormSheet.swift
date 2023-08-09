@@ -121,7 +121,7 @@ struct ShortcutFormSheet: View {
                 }
             }
         }
-                .background(Color(.mySheetFormBg))
+                .background(c.sheetBg)
     }
 }
 

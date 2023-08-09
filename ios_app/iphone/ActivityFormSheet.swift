@@ -247,7 +247,7 @@ struct ActivityFormSheet: View {
                 }
             }
         }
-                .background(Color(.mySheetFormBg))
+                .background(c.sheetBg)
                 .sheetEnv(isPresented: $isColorPickerSheetPresented) {
                     ActivityColorSheet(
                             isPresented: $isColorPickerSheetPresented,

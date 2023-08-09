@@ -81,7 +81,7 @@ struct FoldersSettingsSheet: View {
                 }
             }
         }
-                .background(Color(.mySheetFormBg))
+                .background(c.sheetBg)
     }
 }
 

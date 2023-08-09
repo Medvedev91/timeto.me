@@ -85,7 +85,7 @@ struct ChecklistDialog: View {
             }
                     .padding(.top, 20)
         }
-                .background(Color(.mySheetFormBg))
+                .background(c.sheetBg)
                 .sheetEnv(isPresented: $isAddItemPresented) {
                     ChecklistItemFormSheet(isPresented: $isAddItemPresented, checklist: checklist, checklistItem: nil)
                 }

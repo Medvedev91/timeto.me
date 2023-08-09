@@ -293,7 +293,7 @@ struct RepeatingsFormSheet: View {
                         hideKeyboard()
                     }
         }
-                .background(Color(.mySheetFormBg))
+                .background(c.sheetBg)
     }
 }
 
@@ -409,7 +409,7 @@ private struct AddDayOfYearSheet: View {
 
             Spacer()
         }
-                .background(Color(.mySheetFormBg))
+                .background(c.sheetBg)
                 .onAppear {
                     upPickerDays()
                 }

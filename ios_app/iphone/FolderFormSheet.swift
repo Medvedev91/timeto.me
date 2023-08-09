@@ -79,6 +79,6 @@ struct FolderFormSheet: View {
                 }
             }
         }
-                .background(Color(.mySheetFormBg))
+                .background(c.sheetBg)
     }
 }

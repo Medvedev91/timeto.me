@@ -49,6 +49,6 @@ struct ActivityPickerSheet: View {
                         .padding(.top, 20)
             }
         }
-                .background(Color(.mySheetFormBg))
+                .background(c.sheetBg)
     }
 }

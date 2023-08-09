@@ -65,6 +65,6 @@ struct TaskFormSheet: View {
 
             Spacer()
         }
-                .background(Color(.mySheetFormBg))
+                .background(c.sheetBg)
     }
 }
