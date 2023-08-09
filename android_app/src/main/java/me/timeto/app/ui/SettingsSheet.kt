@@ -91,7 +91,7 @@ fun SettingsSheet(
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .background(c.bg),
+            .background(c.sheetBg),
     ) {
 
         val scrollState = rememberLazyListState()
