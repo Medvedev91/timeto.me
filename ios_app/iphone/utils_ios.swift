@@ -67,11 +67,6 @@ extension UIColor {
         myDayNight(UIColor(argb: light), UIColor(argb: dark))
     }
 
-    //////
-
-    // todo remove
-    static var mySecondaryBackground = myDayNightArgb(0xFFFFFFFF, 0xFF1C1C1E)
-
     // todo rename like android
     static var mySheetFormBg = myDayNightArgb(tgLikeLightBg, bgFormDarkMode)
 }
