@@ -59,7 +59,6 @@ struct IOSApp: App {
                             }
                 }
             }
-                    .colorScheme(.dark)
         }
                 .onChange(of: scenePhase) { phase in
                     // Remove notifications and badges
