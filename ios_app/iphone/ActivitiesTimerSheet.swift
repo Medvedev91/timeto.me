@@ -33,7 +33,7 @@ extension TimetoSheet {
 private let bgColor = c.sheetBg
 private let listItemHeight = 46.0
 private let topContentPadding = 2.0
-private let bottomContentPadding = 20.0
+private let bottomContentPadding = 28.0
 
 private let activityItemEmojiWidth = 30.0
 private let activityItemEmojiHPadding = 8.0
