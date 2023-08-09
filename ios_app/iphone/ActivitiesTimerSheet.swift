@@ -31,9 +31,9 @@ extension TimetoSheet {
 }
 
 private let bgColor = c.sheetBg
-private let itemHeight = 46.0
-private let topPadding = 2.0
-private let bottomPadding = 32.0
+private let listItemHeight = 46.0
+private let topContentPadding = 2.0
+private let bottomContentPadding = 20.0
 
 private let activityItemEmojiWidth = 30.0
 private let activityItemEmojiHPadding = 8.0
@@ -72,10 +72,9 @@ private struct ActivitiesTimerSheet: View {
 
         // todo If inside VMView twitch on open sheet
         let sheetHeight = max(
-            /// If height too small - invalid UI
-                ActivityTimerSheet.RECOMMENDED_HEIGHT,
+                ActivityTimerSheet.RECOMMENDED_HEIGHT, // Invalid UI if height too small
             /// Do not be afraid of too much height because the native sheet will cut
-                bottomPadding * topPadding + (DI.activitiesSorted.count.toDouble() * itemHeight)
+                bottomContentPadding * topContentPadding + (DI.activitiesSorted.count.toDouble() * listItemHeight)
         )
 
         VMView(vm: vm) { state in
@@ -97,7 +96,7 @@ private struct ActivitiesTimerSheet: View {
 
                         VStack {
 
-                            Padding(vertical: topPadding)
+                            Padding(vertical: topContentPadding)
 
                             ForEach(state.allActivities, id: \.activity.id) { activityUI in
 
@@ -161,7 +160,7 @@ private struct ActivitiesTimerSheet: View {
                             }
                                     .buttonStyle(myButtonStyle)
 
-                            Padding(vertical: bottomPadding)
+                            Padding(vertical: bottomContentPadding)
                         }
                     }
                 }
@@ -182,7 +181,7 @@ private struct MyButtonStyle: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration
                 .label
-                .frame(height: itemHeight)
+                .frame(height: listItemHeight)
                 .background(configuration.isPressed ? c.dividerFg : bgColor)
     }
 }
