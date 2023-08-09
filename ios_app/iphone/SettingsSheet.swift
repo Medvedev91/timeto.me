@@ -370,7 +370,7 @@ struct SettingsSheet: View {
                         .padding(.bottom, 34)
             }
         }
-                .background(c.bg)
+                .background(c.sheetBg)
                 .sheetEnv(isPresented: $isAddChecklistPresented) {
                     ChecklistFormSheet(isPresented: $isAddChecklistPresented, checklist: nil)
                 }

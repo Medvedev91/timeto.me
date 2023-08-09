@@ -103,13 +103,13 @@ struct MyListSwipeToActionItem<Content: View>: View {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                             itemHeight = geometry.size.height
                         }
-                        return Color(.mySecondaryBackground)
+                        return c.sheetFg
                     })
                     .highPriorityGesture(gesture)
                     .offset(x: xSwipeOffset)
         }
                 .frame(maxWidth: .infinity)
-                .background(Color(.mySecondaryBackground))
+                .background(c.sheetFg)
                 .animation(Animation.easeOut(duration: 0.25), value: xSwipeOffset)
     }
 

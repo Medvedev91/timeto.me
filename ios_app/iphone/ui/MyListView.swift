@@ -90,7 +90,7 @@ struct MyListView__ItemView<Content: View>: View {
                         .padding(.leading, dividerPaddingStart)
             }
         }
-                .background(Color(.mySecondaryBackground))
+                .background(c.sheetFg)
                 .cornerRadius(10, onTop: isFirst, onBottom: isLast)
                 .padding(.leading, outerPaddingStart)
                 .padding(.trailing, outerPaddingEnd)
