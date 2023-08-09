@@ -42,6 +42,8 @@ private val activityItemPaddingStart = activityItemEmojiWidth + (activityItemEmo
 
 private val secondaryFontSize = 14.sp
 private val secondaryFontWeight = FontWeight.Light
+private val timerHintHPadding = 5.dp
+private val listEngPadding = 8.dp
 
 @Composable
 private fun ActivitiesTimerSheet(
@@ -87,7 +89,7 @@ private fun ActivitiesTimerSheet(
                                 }
                             }
                         }
-                        .padding(end = 8.dp),
+                        .padding(end = listEngPadding),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
 
@@ -112,7 +114,7 @@ private fun ActivitiesTimerSheet(
 
                     activityUI.timerHints.forEach { hintUI ->
                         val isPrimary = hintUI.isPrimary
-                        val hPadding = if (isPrimary) 6.dp else 5.dp
+                        val hPadding = if (isPrimary) 6.dp else timerHintHPadding
                         Text(
                             text = hintUI.text,
                             modifier = Modifier
