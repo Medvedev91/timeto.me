@@ -39,6 +39,9 @@ private let activityItemEmojiWidth = 30.0
 private let activityItemEmojiHPadding = 8.0
 private let activityItemPaddingStart = activityItemEmojiWidth + (activityItemEmojiHPadding * 2)
 
+private let secondaryFontSize = 15.0
+private let secondaryFontWeight: Font.Weight = .light
+
 private let myButtonStyle = MyButtonStyle()
 
 private struct ActivitiesTimerSheet: View {
@@ -130,7 +133,7 @@ private struct ActivitiesTimerSheet: View {
                                                                 },
                                                                 label: {
                                                                     Text(hintUI.text)
-                                                                            .font(.system(size: isPrimary ? 14 : 15, weight: isPrimary ? .medium : .light))
+                                                                            .font(.system(size: isPrimary ? 14 : secondaryFontSize, weight: isPrimary ? .medium : secondaryFontWeight))
                                                                             .foregroundColor(isPrimary ? .white : .blue)
                                                                             .padding(.leading, 6)
                                                                             .padding(.trailing, isPrimary ? 6 : 2)
