@@ -1,23 +1,28 @@
 package me.timeto.app.ui
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
+import me.timeto.app.R
 import me.timeto.shared.vm.ActivityTimerSheetVM
 import me.timeto.shared.vm.ActivitiesTimerSheetVM
 
@@ -135,5 +140,75 @@ private fun ActivitiesTimerSheet(
                 )
             }
         }
+
+        item {
+
+            HStack(
+                modifier = Modifier
+                    .padding(top = 8.dp, start = 8.dp),
+            ) {
+
+                ChartHistoryButton(
+                    text = "Chart",
+                    iconResId = R.drawable.sf_chart_pie_small_thin,
+                    iconSize = 17.dp,
+                ) {
+                    Dialog.show(
+                        modifier = Modifier.fillMaxHeight(0.95f),
+                    ) { layer ->
+                        ChartDialogView(layer::close)
+                    }
+                }
+
+                ChartHistoryButton(
+                    "History",
+                    iconResId = R.drawable.sf_list_bullet_rectangle_small_thin,
+                    iconSize = 19.dp,
+                    extraIconPadding = onePx,
+                ) {
+                    Dialog.show(
+                        modifier = Modifier.fillMaxHeight(0.95f),
+                    ) { layer ->
+                        HistoryDialogView(layer::close)
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ChartHistoryButton(
+    text: String,
+    @DrawableRes iconResId: Int,
+    iconSize: Dp,
+    extraIconPadding: Dp = 0.dp,
+    onClick: () -> Unit,
+) {
+    HStack(
+        modifier = Modifier
+            .clip(squircleShape)
+            .clickable {
+                onClick()
+            }
+            .padding(horizontal = 8.dp, vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+
+        Icon(
+            painterResource(iconResId),
+            contentDescription = text,
+            tint = c.blue,
+            modifier = Modifier
+                .padding(end = 5.dp + extraIconPadding)
+                .size(iconSize)
+        )
+
+        Text(
+            text = text,
+            color = c.blue,
+            fontSize = secondaryFontSize,
+            fontWeight = secondaryFontWeight,
+        )
     }
 }
