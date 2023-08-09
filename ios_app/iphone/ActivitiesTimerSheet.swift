@@ -51,6 +51,9 @@ private struct ActivitiesTimerSheet: View {
     @State private var sheetActivity: ActivityModel?
     @Binding private var isPresented: Bool
 
+    @State private var isChartPresented = false
+    @State private var isHistoryPresented = false
+
     private let timerContext: ActivityTimerSheetVM.TimerContext?
     private let onStart: () -> Void
 
@@ -71,10 +74,14 @@ private struct ActivitiesTimerSheet: View {
     var body: some View {
 
         // todo If inside VMView twitch on open sheet
+        let contentHeight = (listItemHeight * DI.activitiesSorted.count.toDouble()) +
+                            listItemHeight + // Buttons
+                            topContentPadding +
+                            bottomContentPadding
+
         let sheetHeight = max(
                 ActivityTimerSheet.RECOMMENDED_HEIGHT, // Invalid UI if height too small
-            /// Do not be afraid of too much height because the native sheet will cut
-                bottomContentPadding * topContentPadding + (DI.activitiesSorted.count.toDouble() * listItemHeight)
+                contentHeight // Do not be afraid of too much height because the native sheet will cut
         )
 
         VMView(vm: vm) { state in
@@ -159,6 +166,43 @@ private struct ActivitiesTimerSheet: View {
                                 )
                             }
                                     .buttonStyle(myButtonStyle)
+
+                            HStack {
+
+                                ChartHistoryButton(text: "Chart", iconName: "chart.pie", iconSize: 17) {
+                                    isChartPresented = true
+                                }
+                                        .padding(.leading, 16)
+                                        .padding(.trailing, 10)
+                                        .sheetEnv(isPresented: $isChartPresented) {
+                                            VStack {
+
+                                                ChartView()
+                                                        .padding(.top, 15)
+
+                                                Button(
+                                                        action: { isChartPresented.toggle() },
+                                                        label: { Text("close").fontWeight(.light) }
+                                                )
+                                                        .padding(.bottom, 4)
+                                            }
+                                        }
+
+                                ChartHistoryButton(text: "History", iconName: "list.bullet.rectangle", iconSize: 17) {
+                                    isHistoryPresented = true
+                                }
+                                        .sheetEnv(isPresented: $isHistoryPresented) {
+                                            ZStack {
+                                                c.bg.edgesIgnoringSafeArea(.all)
+                                                HistoryView(isHistoryPresented: $isHistoryPresented)
+                                            }
+                                                    // todo
+                                                    .interactiveDismissDisabled()
+                                        }
+
+                                Spacer()
+                            }
+                                    .frame(height: listItemHeight)
 
                             Padding(vertical: bottomContentPadding)
                         }
@@ -275,5 +319,28 @@ private struct ActivityTimerSheet: View {
 
             Spacer()
         }
+    }
+}
+
+private struct ChartHistoryButton: View {
+
+    let text: String
+    let iconName: String
+    let iconSize: CGFloat
+    let onClick: () -> Void
+
+    var body: some View {
+        Button(
+                action: { onClick() },
+                label: {
+                    HStack {
+                        Image(systemName: iconName)
+                                .font(.system(size: iconSize, weight: .thin))
+                                .padding(.trailing, 3 + onePx)
+                        Text(text)
+                                .font(.system(size: secondaryFontSize, weight: secondaryFontWeight))
+                    }
+                }
+        )
     }
 }
