@@ -6,7 +6,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -117,7 +116,7 @@ private fun ActivitiesTimerSheet(
                         Text(
                             text = hintUI.text,
                             modifier = Modifier
-                                .clip(RoundedCornerShape(99.dp))
+                                .clip(roundedShape)
                                 .align(Alignment.CenterVertically)
                                 .background(if (isPrimary) c.blue else c.transparent)
                                 .clickable {
