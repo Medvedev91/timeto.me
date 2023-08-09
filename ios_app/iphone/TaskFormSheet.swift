@@ -6,8 +6,6 @@ struct TaskFormSheet: View {
     @State private var vm: TaskFormSheetVM
     @Binding private var isPresented: Bool
 
-    @State private var triggersBg = UIColor.myDayNight(.white, .mySheetFormBg)
-
     init(
             task: TaskModel?,
             isPresented: Binding<Bool>

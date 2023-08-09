@@ -44,33 +44,6 @@ func cosDegrees(_ degrees: Double) -> Double {
     cos(degrees * Double.pi / 180.0)
 }
 
-/// Sheet uses default colors. Set by hardcode.
-extension UIColor {
-
-    // todo remove
-    private static let tgLikeLightBg: UInt = 0xFFEFEFF3
-    private static let bgFormDarkMode: UInt = 0xFF121214
-
-    //////
-
-    static func myDayNight(
-            _ light: UIColor,
-            _ dark: UIColor
-    ) -> UIColor {
-        UIColor { $0.userInterfaceStyle == .light ? light : dark }
-    }
-
-    static func myDayNightArgb(
-            _ light: UInt,
-            _ dark: UInt
-    ) -> UIColor {
-        myDayNight(UIColor(argb: light), UIColor(argb: dark))
-    }
-
-    // todo rename like android
-    static var mySheetFormBg = myDayNightArgb(tgLikeLightBg, bgFormDarkMode)
-}
-
 struct c {
 
     static let white = ColorRgba.companion.white.toColor()

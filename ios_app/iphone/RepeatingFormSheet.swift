@@ -7,8 +7,6 @@ struct RepeatingsFormSheet: View {
     @Binding private var isPresented: Bool
     private let onSave: () -> ()
 
-    @State private var triggersBg = UIColor.myDayNight(.white, .mySheetFormBg)
-
     // Needed for SwiftUI picker, up via onChange(). Set in onAppear().
     @State private var pickerNDaysTemp = 2
 
