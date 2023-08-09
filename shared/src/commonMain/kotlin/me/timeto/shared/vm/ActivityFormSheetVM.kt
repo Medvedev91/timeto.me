@@ -46,7 +46,7 @@ class ActivityFormSheetVM(
             emoji = activity?.emoji,
             activityData = activity?.getData() ?: ActivityModel__Data.buildDefault(),
             textFeatures = (activity?.name ?: "").textFeatures(),
-            keepScreenOn = activity?.keepScreenOn ?: false,
+            keepScreenOn = activity?.keepScreenOn ?: true,
             colorRgba = activity?.getColorRgba() ?: ActivityModel.nextColorDI(),
         )
     )
