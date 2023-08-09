@@ -42,7 +42,6 @@ private val activityItemPaddingStart = activityItemEmojiWidth + (activityItemEmo
 
 private val listItemHeight = 42.dp
 private val topContentPadding = 2.dp
-private val bottomContentPadding = 20.dp
 
 private val secondaryFontSize = 14.sp
 private val secondaryFontWeight = FontWeight.Light
@@ -58,13 +57,17 @@ private fun ActivitiesTimerSheet(
 
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
 
+    val contentHeight = (listItemHeight * state.allActivities.size) +
+                        listItemHeight + // Buttons
+                        topContentPadding
+
     LazyColumn(
         modifier = Modifier
             .background(c.sheetBg)
             .navigationBarsPadding()
-            .height((listItemHeight * state.allActivities.size + topContentPadding + bottomContentPadding).limitMax(screenHeight - 60.dp))
+            .height(contentHeight.limitMax(screenHeight - 60.dp))
             .fillMaxWidth(),
-        contentPadding = PaddingValues(top = topContentPadding, bottom = bottomContentPadding)
+        contentPadding = PaddingValues(top = topContentPadding)
     ) {
 
         items(state.allActivities) { activityUI ->
@@ -146,7 +149,9 @@ private fun ActivitiesTimerSheet(
 
             HStack(
                 modifier = Modifier
-                    .padding(top = 8.dp, start = 8.dp),
+                    .height(listItemHeight)
+                    .padding(start = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
 
                 ChartHistoryButton(
