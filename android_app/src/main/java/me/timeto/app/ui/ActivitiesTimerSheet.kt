@@ -36,6 +36,9 @@ private val activityItemEmojiHPadding = 8.dp
 private val activityItemEmojiWidth = 32.dp
 private val activityItemPaddingStart = activityItemEmojiWidth + (activityItemEmojiHPadding * 2)
 
+private val secondaryFontSize = 14.sp
+private val secondaryFontWeight = FontWeight.Light
+
 @Composable
 private fun ActivitiesTimerSheet(
     layerActivitiesSheet: WrapperView.Layer,
@@ -119,8 +122,8 @@ private fun ActivitiesTimerSheet(
                                 }
                                 .padding(start = hPadding, end = hPadding, top = 3.dp, bottom = 4.dp),
                             color = if (isPrimary) c.white else c.blue,
-                            fontSize = if (isPrimary) 13.sp else 14.sp,
-                            fontWeight = if (isPrimary) FontWeight.W500 else FontWeight.W300,
+                            fontSize = if (isPrimary) 13.sp else secondaryFontSize,
+                            fontWeight = if (isPrimary) FontWeight.W500 else secondaryFontWeight,
                         )
                     }
                 }
