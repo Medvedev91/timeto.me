@@ -41,6 +41,8 @@ private let activityItemPaddingStart = activityItemEmojiWidth + (activityItemEmo
 
 private let secondaryFontSize = 15.0
 private let secondaryFontWeight: Font.Weight = .light
+private let timerHintHPadding = 5.0
+private let listEngPadding = 8.0
 
 private let myButtonStyle = MyButtonStyle()
 
@@ -53,6 +55,7 @@ private struct ActivitiesTimerSheet: View {
 
     @State private var isChartPresented = false
     @State private var isHistoryPresented = false
+    @State private var isEditActivitiesPresented = false
 
     private let timerContext: ActivityTimerSheetVM.TimerContext?
     private let onStart: () -> Void
@@ -141,19 +144,16 @@ private struct ActivitiesTimerSheet: View {
                                                                     Text(hintUI.text)
                                                                             .font(.system(size: isPrimary ? 14 : secondaryFontSize, weight: isPrimary ? .medium : secondaryFontWeight))
                                                                             .foregroundColor(isPrimary ? .white : .blue)
-                                                                            .padding(.leading, 6)
-                                                                            .padding(.trailing, isPrimary ? 6 : 2)
-                                                                            .padding(.top, 3)
-                                                                            .padding(.bottom, 3)
+                                                                            .padding(.horizontal, isPrimary ? 6 : timerHintHPadding)
+                                                                            .padding(.vertical, 4)
                                                                             .background(isPrimary ? .blue : .clear)
                                                                             .cornerRadius(99)
-                                                                            .padding(.leading, isPrimary ? 4 : 0)
                                                                 }
                                                         )
                                                                 .buttonStyle(.borderless)
                                                     }
                                                 }
-                                                        .padding(.trailing, 14)
+                                                        .padding(.trailing, listEngPadding)
                                                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
 
                                                 if state.allActivities.last != activityUI {
@@ -201,6 +201,23 @@ private struct ActivitiesTimerSheet: View {
                                         }
 
                                 Spacer()
+
+                                Button(
+                                        action: { isEditActivitiesPresented = true },
+                                        label: {
+                                            Text("Edit")
+                                                    .font(.system(size: secondaryFontSize, weight: secondaryFontWeight))
+                                                    .padding(.trailing, timerHintHPadding)
+                                        }
+                                )
+                                        .padding(.trailing, listEngPadding)
+                                        .sheetEnv(
+                                                isPresented: $isEditActivitiesPresented
+                                        ) {
+                                            EditActivitiesSheet(
+                                                    isPresented: $isEditActivitiesPresented
+                                            )
+                                        }
                             }
                                     .frame(height: listItemHeight)
 
