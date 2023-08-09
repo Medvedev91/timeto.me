@@ -44,7 +44,7 @@ struct SearchEmojiSheet: View {
                                 .padding(.leading, 12)
                                 .padding(.vertical, 8)
                                 .frame(maxWidth: .infinity)
-                                .background(Color(.mySecondaryBackground))
+                                .background(c.sheetFg)
                                 .onTapGesture {
                                     isFocused = true
                                 }
@@ -120,12 +120,12 @@ struct SearchEmojiSheet: View {
 
                     MySpacerSize(height: 0)
                 }
-                        .background(Color(.mySecondaryBackground))
+                        .background(c.sheetFg)
             }
                     .padding(.top, 10)
                     .padding(.bottom, 8)
         }
-                .background(Color(.mySheetFormBg))
+                .background(c.sheetBg)
                 .onAppear {
                     for i in 0...5 {
                         myAsyncAfter(0.2 * i.toDouble()) {
