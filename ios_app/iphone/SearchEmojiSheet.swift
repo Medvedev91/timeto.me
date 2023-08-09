@@ -12,9 +12,9 @@ struct SearchEmojiSheet: View {
 
     var body: some View {
 
-        VMView(vm: vm, stack: .VStack(spacing: 0)) { state in
+        VMView(vm: vm, stack: .VStack()) { state in
 
-            HStack(alignment: .center, spacing: 0) {
+            HStack(alignment: .center) {
 
                 ZStack(alignment: .trailing) {
 
@@ -23,7 +23,7 @@ struct SearchEmojiSheet: View {
                             isLast: true
                     ) {
 
-                        HStack(spacing: 0) {
+                        HStack {
 
                             Image(systemName: "magnifyingglass")
                                     .foregroundColor(.secondary)
@@ -51,7 +51,7 @@ struct SearchEmojiSheet: View {
                     }
                             .padding(.top, 5)
 
-                    HStack(spacing: 0) {
+                    HStack {
 
                         if isFocused {
 
