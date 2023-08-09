@@ -114,65 +114,6 @@ fun SettingsSheet(
 
             item {
 
-                Box(Modifier.height(16.dp))
-
-                MyListView__ItemView(
-                    isFirst = true,
-                    isLast = true,
-                    withTopDivider = false,
-                ) {
-
-                    MyListView__ItemView__ButtonView(
-                        text = "Activities",
-                    ) {
-                        Sheet.show { layer ->
-                            EditActivitiesSheet(layer = layer)
-                        }
-                    }
-                }
-            }
-
-            item {
-
-                MyListView__Padding__SectionSection()
-
-                MyListView__ItemView(
-                    isFirst = true,
-                    isLast = false,
-                    withTopDivider = false,
-                ) {
-
-                    MyListView__ItemView__ButtonView(
-                        text = "Chart",
-                    ) {
-                        Dialog.show(
-                            modifier = Modifier.fillMaxHeight(0.95f),
-                        ) { layer ->
-                            ChartDialogView(layer::close)
-                        }
-                    }
-                }
-
-                MyListView__ItemView(
-                    isFirst = false,
-                    isLast = true,
-                    withTopDivider = true,
-                ) {
-
-                    MyListView__ItemView__ButtonView(
-                        text = "History",
-                    ) {
-                        Dialog.show(
-                            modifier = Modifier.fillMaxHeight(0.95f),
-                        ) { layer ->
-                            HistoryDialogView(layer::close)
-                        }
-                    }
-                }
-            }
-
-            item {
-
                 MyListView__Padding__SectionHeader()
 
                 MyListView__HeaderView(
