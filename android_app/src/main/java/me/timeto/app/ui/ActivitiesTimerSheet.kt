@@ -173,6 +173,24 @@ private fun ActivitiesTimerSheet(
                         HistoryDialogView(layer::close)
                     }
                 }
+
+                SpacerW1()
+
+                Text(
+                    text = "Edit",
+                    modifier = Modifier
+                        .padding(end = listEngPadding)
+                        .clip(squircleShape)
+                        .clickable {
+                            Sheet.show { layer ->
+                                EditActivitiesSheet(layer = layer)
+                            }
+                        }
+                        .padding(horizontal = timerHintHPadding, vertical = 4.dp),
+                    color = c.blue,
+                    fontSize = secondaryFontSize,
+                    fontWeight = secondaryFontWeight,
+                )
             }
         }
     }
