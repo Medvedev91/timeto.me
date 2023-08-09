@@ -40,6 +40,10 @@ private val activityItemEmojiHPadding = 8.dp
 private val activityItemEmojiWidth = 32.dp
 private val activityItemPaddingStart = activityItemEmojiWidth + (activityItemEmojiHPadding * 2)
 
+private val listItemHeight = 42.dp
+private val topContentPadding = 2.dp
+private val bottomContentPadding = 20.dp
+
 private val secondaryFontSize = 14.sp
 private val secondaryFontWeight = FontWeight.Light
 private val timerHintHPadding = 5.dp
@@ -50,10 +54,6 @@ private fun ActivitiesTimerSheet(
     layerActivitiesSheet: WrapperView.Layer,
     timerContext: ActivityTimerSheetVM.TimerContext?,
 ) {
-    val activityItemHeight = 42.dp
-    val topContentPadding = 2.dp
-    val bottomContentPadding = 20.dp
-
     val (_, state) = rememberVM(timerContext) { ActivitiesTimerSheetVM(timerContext) }
 
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
@@ -62,7 +62,7 @@ private fun ActivitiesTimerSheet(
         modifier = Modifier
             .background(c.sheetBg)
             .navigationBarsPadding()
-            .height((activityItemHeight * state.allActivities.size + topContentPadding + bottomContentPadding).limitMax(screenHeight - 60.dp))
+            .height((listItemHeight * state.allActivities.size + topContentPadding + bottomContentPadding).limitMax(screenHeight - 60.dp))
             .fillMaxWidth(),
         contentPadding = PaddingValues(top = topContentPadding, bottom = bottomContentPadding)
     ) {
@@ -77,7 +77,7 @@ private fun ActivitiesTimerSheet(
 
                 Row(
                     modifier = Modifier
-                        .height(activityItemHeight)
+                        .height(listItemHeight)
                         .clickable {
                             Sheet.show { layerTimer ->
                                 ActivityTimerSheet(
