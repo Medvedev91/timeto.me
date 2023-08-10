@@ -189,6 +189,7 @@ struct MainView: View {
                             timetoSheet.showActivitiesTimerSheet(
                                     isPresented: $isTimerActivitiesPresented,
                                     timerContext: nil,
+                                    withMenu: true,
                                     selectedActivity: nil,
                                     onStart: {
                                         isTimerActivitiesPresented = false
@@ -460,6 +461,7 @@ private struct ImportantTaskItem: View {
                                 timetoSheet.showActivitiesTimerSheet(
                                         isPresented: $isSheetPresented,
                                         timerContext: importantTask.timerContext,
+                                        withMenu: false,
                                         selectedActivity: nil,
                                         onStart: {
                                             isSheetPresented = false
@@ -470,6 +472,7 @@ private struct ImportantTaskItem: View {
                                 timetoSheet.showActivitiesTimerSheet(
                                         isPresented: $isSheetPresented,
                                         timerContext: importantTask.timerContext,
+                                        withMenu: false,
                                         selectedActivity: activity,
                                         onStart: {
                                             isSheetPresented = false

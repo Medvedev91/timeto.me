@@ -322,6 +322,7 @@ struct TasksView__TaskRowView: View {
                                         timetoSheet.showActivitiesTimerSheet(
                                                 isPresented: $isSheetPresented,
                                                 timerContext: taskUI.timerContext,
+                                                withMenu: false,
                                                 selectedActivity: nil,
                                                 onStart: {
                                                     isSheetPresented = false
@@ -332,6 +333,7 @@ struct TasksView__TaskRowView: View {
                                         timetoSheet.showActivitiesTimerSheet(
                                                 isPresented: $isSheetPresented,
                                                 timerContext: taskUI.timerContext,
+                                                withMenu: false,
                                                 selectedActivity: activity,
                                                 onStart: {
                                                     isSheetPresented = false

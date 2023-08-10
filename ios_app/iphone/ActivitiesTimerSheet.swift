@@ -6,6 +6,7 @@ extension TimetoSheet {
     func showActivitiesTimerSheet(
             isPresented: Binding<Bool>,
             timerContext: ActivityTimerSheetVM.TimerContext?,
+            withMenu: Bool,
             selectedActivity: ActivityModel?,
             onStart: @escaping () -> Void
     ) {
@@ -17,6 +18,7 @@ extension TimetoSheet {
                                     ActivitiesTimerSheet(
                                             isPresented: isPresented,
                                             timerContext: timerContext,
+                                            withMenu: withMenu,
                                             selectedActivity: selectedActivity
                                     ) {
                                         isPresented.wrappedValue = false
@@ -58,16 +60,19 @@ private struct ActivitiesTimerSheet: View {
     @State private var isEditActivitiesPresented = false
 
     private let timerContext: ActivityTimerSheetVM.TimerContext?
+    private let withMenu: Bool
     private let onStart: () -> Void
 
     init(
             isPresented: Binding<Bool>,
             timerContext: ActivityTimerSheetVM.TimerContext?,
+            withMenu: Bool,
             selectedActivity: ActivityModel?,
             onStart: @escaping () -> Void
     ) {
         _isPresented = isPresented
         self.timerContext = timerContext
+        self.withMenu = withMenu
         self.onStart = onStart
 
         _vm = State(initialValue: ActivitiesTimerSheetVM(timerContext: timerContext))
@@ -78,7 +83,7 @@ private struct ActivitiesTimerSheet: View {
 
         // todo If inside VMView twitch on open sheet
         let contentHeight = (listItemHeight * DI.activitiesSorted.count.toDouble()) +
-                            listItemHeight + // Buttons
+                            (withMenu ? listItemHeight : 0.0) + // Buttons
                             topContentPadding +
                             bottomContentPadding
 
@@ -167,59 +172,62 @@ private struct ActivitiesTimerSheet: View {
                             }
                                     .buttonStyle(myButtonStyle)
 
-                            HStack {
+                            if withMenu {
 
-                                ChartHistoryButton(text: "Chart", iconName: "chart.pie", iconSize: 18) {
-                                    isChartPresented = true
-                                }
-                                        .padding(.leading, 13)
-                                        .padding(.trailing, 12)
-                                        .sheetEnv(isPresented: $isChartPresented) {
-                                            VStack {
+                                HStack {
 
-                                                ChartView()
-                                                        .padding(.top, 15)
+                                    ChartHistoryButton(text: "Chart", iconName: "chart.pie", iconSize: 18) {
+                                        isChartPresented = true
+                                    }
+                                            .padding(.leading, 13)
+                                            .padding(.trailing, 12)
+                                            .sheetEnv(isPresented: $isChartPresented) {
+                                                VStack {
 
-                                                Button(
-                                                        action: { isChartPresented.toggle() },
-                                                        label: { Text("close").fontWeight(.light) }
-                                                )
-                                                        .padding(.bottom, 4)
+                                                    ChartView()
+                                                            .padding(.top, 15)
+
+                                                    Button(
+                                                            action: { isChartPresented.toggle() },
+                                                            label: { Text("close").fontWeight(.light) }
+                                                    )
+                                                            .padding(.bottom, 4)
+                                                }
                                             }
-                                        }
 
-                                ChartHistoryButton(text: "History", iconName: "list.bullet.rectangle", iconSize: 18) {
-                                    isHistoryPresented = true
-                                }
-                                        .sheetEnv(isPresented: $isHistoryPresented) {
-                                            ZStack {
-                                                c.bg.edgesIgnoringSafeArea(.all)
-                                                HistoryView(isHistoryPresented: $isHistoryPresented)
+                                    ChartHistoryButton(text: "History", iconName: "list.bullet.rectangle", iconSize: 18) {
+                                        isHistoryPresented = true
+                                    }
+                                            .sheetEnv(isPresented: $isHistoryPresented) {
+                                                ZStack {
+                                                    c.bg.edgesIgnoringSafeArea(.all)
+                                                    HistoryView(isHistoryPresented: $isHistoryPresented)
+                                                }
+                                                        // todo
+                                                        .interactiveDismissDisabled()
                                             }
-                                                    // todo
-                                                    .interactiveDismissDisabled()
-                                        }
 
-                                Spacer()
+                                    Spacer()
 
-                                Button(
-                                        action: { isEditActivitiesPresented = true },
-                                        label: {
-                                            Text("Edit")
-                                                    .font(.system(size: secondaryFontSize, weight: secondaryFontWeight))
-                                                    .padding(.trailing, timerHintHPadding)
-                                        }
-                                )
-                                        .padding(.trailing, listEngPadding)
-                                        .sheetEnv(
-                                                isPresented: $isEditActivitiesPresented
-                                        ) {
-                                            EditActivitiesSheet(
+                                    Button(
+                                            action: { isEditActivitiesPresented = true },
+                                            label: {
+                                                Text("Edit")
+                                                        .font(.system(size: secondaryFontSize, weight: secondaryFontWeight))
+                                                        .padding(.trailing, timerHintHPadding)
+                                            }
+                                    )
+                                            .padding(.trailing, listEngPadding)
+                                            .sheetEnv(
                                                     isPresented: $isEditActivitiesPresented
-                                            )
-                                        }
+                                            ) {
+                                                EditActivitiesSheet(
+                                                        isPresented: $isEditActivitiesPresented
+                                                )
+                                            }
+                                }
+                                        .frame(height: listItemHeight)
                             }
-                                    .frame(height: listItemHeight)
 
                             Padding(vertical: bottomContentPadding)
                         }
