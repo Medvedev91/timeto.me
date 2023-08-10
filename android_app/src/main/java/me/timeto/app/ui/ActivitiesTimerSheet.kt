@@ -44,6 +44,7 @@ private val activityItemPaddingStart = activityItemEmojiWidth + (activityItemEmo
 
 private val listItemHeight = 42.dp
 private val topContentPadding = 2.dp
+private val bottomContentPadding = 4.dp
 
 private val secondaryFontSize = 14.sp
 private val secondaryFontWeight = FontWeight.Light
@@ -62,7 +63,8 @@ private fun ActivitiesTimerSheet(
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
     val contentHeight = (listItemHeight * state.allActivities.size) +
                         (if (withMenu) listItemHeight else 0.dp) + // Buttons
-                        topContentPadding
+                        topContentPadding +
+                        bottomContentPadding
 
     LazyColumn(
         modifier = Modifier
@@ -70,7 +72,7 @@ private fun ActivitiesTimerSheet(
             .navigationBarsPadding()
             .height(contentHeight.limitMax(screenHeight - 60.dp))
             .fillMaxWidth(),
-        contentPadding = PaddingValues(top = topContentPadding)
+        contentPadding = PaddingValues(top = topContentPadding, bottom = bottomContentPadding)
     ) {
 
         items(state.allActivities) { activityUI ->
