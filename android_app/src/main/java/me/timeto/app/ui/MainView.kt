@@ -300,7 +300,7 @@ fun MainView() {
                     .clip(squircleShape)
                     .motionEventSpy { event ->
                         if (event.action == MotionEvent.ACTION_DOWN)
-                            ActivitiesTimerSheet__show(timerContext = null)
+                            ActivitiesTimerSheet__show(timerContext = null, withMenu = true)
                     },
                 contentAlignment = Alignment.BottomCenter,
             ) {
@@ -569,7 +569,7 @@ private fun ImportantTasksView(
                         taskItem.task.startIntervalForUI(
                             onStarted = {},
                             activitiesSheet = {
-                                ActivitiesTimerSheet__show(taskItem.timerContext)
+                                ActivitiesTimerSheet__show(taskItem.timerContext, withMenu = false)
                             },
                             timerSheet = { activity ->
                                 Sheet.show { layerTimer ->

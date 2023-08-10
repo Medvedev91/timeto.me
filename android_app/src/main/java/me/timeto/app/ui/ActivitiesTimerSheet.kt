@@ -27,11 +27,13 @@ import me.timeto.shared.vm.ActivitiesTimerSheetVM
 
 fun ActivitiesTimerSheet__show(
     timerContext: ActivityTimerSheetVM.TimerContext?,
+    withMenu: Boolean,
 ) {
     Sheet.show { layer ->
         ActivitiesTimerSheet(
             layerActivitiesSheet = layer,
             timerContext = timerContext,
+            withMenu = withMenu,
         )
     }
 }
@@ -52,13 +54,14 @@ private val listEngPadding = 8.dp
 private fun ActivitiesTimerSheet(
     layerActivitiesSheet: WrapperView.Layer,
     timerContext: ActivityTimerSheetVM.TimerContext?,
+    withMenu: Boolean,
 ) {
+
     val (_, state) = rememberVM(timerContext) { ActivitiesTimerSheetVM(timerContext) }
 
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
-
     val contentHeight = (listItemHeight * state.allActivities.size) +
-                        listItemHeight + // Buttons
+                        (if (withMenu) listItemHeight else 0.dp) + // Buttons
                         topContentPadding
 
     LazyColumn(
@@ -145,57 +148,60 @@ private fun ActivitiesTimerSheet(
             }
         }
 
-        item {
+        if (withMenu) {
 
-            HStack(
-                modifier = Modifier
-                    .height(listItemHeight)
-                    .padding(start = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
+            item {
 
-                ChartHistoryButton(
-                    text = "Chart",
-                    iconResId = R.drawable.sf_chart_pie_small_thin,
-                    iconSize = 17.dp,
-                ) {
-                    Dialog.show(
-                        modifier = Modifier.fillMaxHeight(0.95f),
-                    ) { layer ->
-                        ChartDialogView(layer::close)
-                    }
-                }
-
-                ChartHistoryButton(
-                    "History",
-                    iconResId = R.drawable.sf_list_bullet_rectangle_small_thin,
-                    iconSize = 19.dp,
-                    extraIconPadding = onePx,
-                ) {
-                    Dialog.show(
-                        modifier = Modifier.fillMaxHeight(0.95f),
-                    ) { layer ->
-                        HistoryDialogView(layer::close)
-                    }
-                }
-
-                SpacerW1()
-
-                Text(
-                    text = "Edit",
+                HStack(
                     modifier = Modifier
-                        .padding(end = listEngPadding)
-                        .clip(squircleShape)
-                        .clickable {
-                            Sheet.show { layer ->
-                                EditActivitiesSheet(layer = layer)
-                            }
+                        .height(listItemHeight)
+                        .padding(start = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+
+                    ChartHistoryButton(
+                        text = "Chart",
+                        iconResId = R.drawable.sf_chart_pie_small_thin,
+                        iconSize = 17.dp,
+                    ) {
+                        Dialog.show(
+                            modifier = Modifier.fillMaxHeight(0.95f),
+                        ) { layer ->
+                            ChartDialogView(layer::close)
                         }
-                        .padding(horizontal = timerHintHPadding, vertical = 4.dp),
-                    color = c.blue,
-                    fontSize = secondaryFontSize,
-                    fontWeight = secondaryFontWeight,
-                )
+                    }
+
+                    ChartHistoryButton(
+                        "History",
+                        iconResId = R.drawable.sf_list_bullet_rectangle_small_thin,
+                        iconSize = 19.dp,
+                        extraIconPadding = onePx,
+                    ) {
+                        Dialog.show(
+                            modifier = Modifier.fillMaxHeight(0.95f),
+                        ) { layer ->
+                            HistoryDialogView(layer::close)
+                        }
+                    }
+
+                    SpacerW1()
+
+                    Text(
+                        text = "Edit",
+                        modifier = Modifier
+                            .padding(end = listEngPadding)
+                            .clip(squircleShape)
+                            .clickable {
+                                Sheet.show { layer ->
+                                    EditActivitiesSheet(layer = layer)
+                                }
+                            }
+                            .padding(horizontal = timerHintHPadding, vertical = 4.dp),
+                        color = c.blue,
+                        fontSize = secondaryFontSize,
+                        fontWeight = secondaryFontWeight,
+                    )
+                }
             }
         }
     }

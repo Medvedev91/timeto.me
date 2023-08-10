@@ -274,7 +274,7 @@ fun TasksListView(
                                 taskUI.task.startIntervalForUI(
                                     onStarted = {},
                                     activitiesSheet = {
-                                        ActivitiesTimerSheet__show(taskUI.timerContext)
+                                        ActivitiesTimerSheet__show(taskUI.timerContext, withMenu = false)
                                     },
                                     timerSheet = { activity ->
                                         Sheet.show { layerTimer ->
