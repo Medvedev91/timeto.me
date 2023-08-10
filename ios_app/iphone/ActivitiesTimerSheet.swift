@@ -39,7 +39,7 @@ private let activityItemEmojiWidth = 30.0
 private let activityItemEmojiHPadding = 8.0
 private let activityItemPaddingStart = activityItemEmojiWidth + (activityItemEmojiHPadding * 2)
 
-private let secondaryFontSize = 15.0
+private let secondaryFontSize = 16.0
 private let secondaryFontWeight: Font.Weight = .light
 private let timerHintHPadding = 5.0
 private let listEngPadding = 8.0
@@ -142,7 +142,7 @@ private struct ActivitiesTimerSheet: View {
                                                                 },
                                                                 label: {
                                                                     Text(hintUI.text)
-                                                                            .font(.system(size: isPrimary ? 14 : secondaryFontSize, weight: isPrimary ? .medium : secondaryFontWeight))
+                                                                            .font(.system(size: isPrimary ? 15 : secondaryFontSize, weight: isPrimary ? .medium : secondaryFontWeight))
                                                                             .foregroundColor(isPrimary ? .white : .blue)
                                                                             .padding(.horizontal, isPrimary ? 6 : timerHintHPadding)
                                                                             .padding(.vertical, 4)
@@ -169,11 +169,11 @@ private struct ActivitiesTimerSheet: View {
 
                             HStack {
 
-                                ChartHistoryButton(text: "Chart", iconName: "chart.pie", iconSize: 17) {
+                                ChartHistoryButton(text: "Chart", iconName: "chart.pie", iconSize: 18) {
                                     isChartPresented = true
                                 }
-                                        .padding(.leading, 16)
-                                        .padding(.trailing, 10)
+                                        .padding(.leading, 13)
+                                        .padding(.trailing, 12)
                                         .sheetEnv(isPresented: $isChartPresented) {
                                             VStack {
 
@@ -188,7 +188,7 @@ private struct ActivitiesTimerSheet: View {
                                             }
                                         }
 
-                                ChartHistoryButton(text: "History", iconName: "list.bullet.rectangle", iconSize: 17) {
+                                ChartHistoryButton(text: "History", iconName: "list.bullet.rectangle", iconSize: 18) {
                                     isHistoryPresented = true
                                 }
                                         .sheetEnv(isPresented: $isHistoryPresented) {
