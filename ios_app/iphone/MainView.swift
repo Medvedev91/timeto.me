@@ -126,7 +126,7 @@ struct MainView: View {
                         let isImportantTasksExists = !state.importantTasks.isEmpty
 
                         if let checklistUI = checklistUI {
-                            VStack(spacing: 0) {
+                            VStack {
                                 ChecklistView(checklistUI: checklistUI)
                                 FSDivider()
                             }
@@ -197,7 +197,7 @@ struct MainView: View {
                             )
                         },
                         label: {
-                            VStack(spacing: 0) {
+                            VStack {
                                 Spacer()
                                 Image(systemName: "timer")
                                         .frame(height: menuIconSize)
@@ -233,7 +233,7 @@ struct MainView: View {
                                             .foregroundColor(menuColor)
                                             .font(.system(size: 17, weight: .bold))
 
-                                    HStack(spacing: 0) {
+                                    HStack {
 
                                         let batteryTextColor = state.batteryTextColor.toColor()
 
@@ -269,7 +269,7 @@ struct MainView: View {
                             isSettingsSheetPresented = true
                         },
                         label: {
-                            VStack(spacing: 0) {
+                            VStack {
                                 Spacer()
                                 Image(systemName: "ellipsis.circle")
                                         .frame(height: menuIconSize)
@@ -319,7 +319,7 @@ private struct ChecklistView: View {
 
     var body: some View {
 
-        VStack(spacing: 0) {
+        VStack {
 
             FSDivider(isVisible: vScroll > 0)
 
@@ -335,7 +335,7 @@ private struct ChecklistView: View {
 
                         ScrollViewWithVListener(showsIndicators: false, vScroll: $vScroll) {
 
-                            VStack(spacing: 0) {
+                            VStack {
 
                                 ForEach(checklistUI.itemsUI, id: \.item.id) { itemUI in
 
@@ -344,7 +344,7 @@ private struct ChecklistView: View {
                                                 itemUI.toggle()
                                             },
                                             label: {
-                                                HStack(spacing: 0) {
+                                                HStack {
 
                                                     Image(systemName: itemUI.item.isChecked ? "checkmark.square.fill" : "square")
                                                             .foregroundColor(Color.white)
@@ -417,7 +417,7 @@ private struct ImportantTasksView: View {
 
                 ScrollView(showsIndicators: false) {
 
-                    VStack(spacing: 0) {
+                    VStack {
 
                         Spacer()
 
@@ -482,9 +482,9 @@ private struct ImportantTaskItem: View {
                     )
                 },
                 label: {
-                    HStack(spacing: 0) {
+                    HStack {
 
-                        HStack(spacing: 0) {
+                        HStack {
 
                             Image(systemName: "calendar")
                                     .foregroundColor(Color.white)
