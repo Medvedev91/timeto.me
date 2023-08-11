@@ -1,8 +1,10 @@
 package me.timeto.app.ui
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -51,6 +53,7 @@ private val secondaryFontWeight = FontWeight.Light
 private val timerHintHPadding = 5.dp
 private val listEngPadding = 8.dp
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ActivitiesTimerSheet(
     layerActivitiesSheet: WrapperView.Layer,
@@ -86,17 +89,27 @@ private fun ActivitiesTimerSheet(
                 Row(
                     modifier = Modifier
                         .height(listItemHeight)
-                        .clickable {
-                            Sheet.show { layerTimer ->
-                                ActivityTimerSheet(
-                                    layer = layerTimer,
-                                    activity = activity,
-                                    timerContext = timerContext,
-                                ) {
-                                    layerActivitiesSheet.close()
+                        .combinedClickable(
+                            onClick = {
+                                Sheet.show { layerTimer ->
+                                    ActivityTimerSheet(
+                                        layer = layerTimer,
+                                        activity = activity,
+                                        timerContext = timerContext,
+                                    ) {
+                                        layerActivitiesSheet.close()
+                                    }
                                 }
-                            }
-                        }
+                            },
+                            onLongClick = {
+                                Sheet.show { layer ->
+                                    ActivityFormSheet(
+                                        layer = layer,
+                                        activity = activityUI.activity,
+                                    )
+                                }
+                            },
+                        )
                         .padding(end = listEngPadding),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
