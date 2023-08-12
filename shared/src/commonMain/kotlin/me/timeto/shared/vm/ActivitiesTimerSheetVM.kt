@@ -3,11 +3,12 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.DI
 import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.onEachExIn
 import me.timeto.shared.textFeatures
 import me.timeto.shared.ui.TimerHintUI
 
 class ActivitiesTimerSheetVM(
-    timerContext: ActivityTimerSheetVM.TimerContext?,
+    private val timerContext: ActivityTimerSheetVM.TimerContext?,
 ) : __VM<ActivitiesTimerSheetVM.State>() {
 
     companion object {
@@ -23,6 +24,38 @@ class ActivitiesTimerSheetVM(
                 }
                 .toMap()
         }
+
+        private fun prepActivitiesUI(
+            timerContext: ActivityTimerSheetVM.TimerContext?,
+            sortedActivities: List<ActivityModel>,
+        ): List<ActivityUI> {
+            val primarySecondsMap: Map<Int, List<Int>> /* `activity id` -> `seconds list` */ =
+                when (timerContext) {
+                    is ActivityTimerSheetVM.TimerContext.Task ->
+                        prepHistorySecondsMap(timerContext.task.text)
+                    null -> mapOf()
+                }
+
+            return sortedActivities.map { activity ->
+                val primarySeconds = primarySecondsMap[activity.id] ?: listOf()
+                ActivityUI(
+                    activity = activity,
+                    timerHints = TimerHintUI.buildList(
+                        activity,
+                        isShort = true,
+                        historyLimit = 3,
+                        customLimit = 6,
+                        primaryHints = primarySeconds,
+                    ) { seconds ->
+                        when (timerContext) {
+                            is ActivityTimerSheetVM.TimerContext.Task ->
+                                timerContext.task.startInterval(seconds, activity)
+                            null -> activity.startInterval(seconds)
+                        }
+                    }
+                )
+            }
+        }
     }
 
     class ActivityUI(
@@ -36,38 +69,18 @@ class ActivitiesTimerSheetVM(
         val allActivities: List<ActivityUI>,
     )
 
-    override val state: MutableStateFlow<State>
-
-    init {
-        val primarySecondsMap: Map<Int, List<Int>> /* `activity id` -> `seconds list` */ =
-            when (timerContext) {
-                is ActivityTimerSheetVM.TimerContext.Task ->
-                    prepHistorySecondsMap(timerContext.task.text)
-                null -> mapOf()
-            }
-
-        state = MutableStateFlow(
-            State(
-                allActivities = DI.activitiesSorted.map { activity ->
-                    val primarySeconds = primarySecondsMap[activity.id] ?: listOf()
-                    ActivityUI(
-                        activity = activity,
-                        timerHints = TimerHintUI.buildList(
-                            activity,
-                            isShort = true,
-                            historyLimit = 3,
-                            customLimit = 6,
-                            primaryHints = primarySeconds,
-                        ) { seconds ->
-                            when (timerContext) {
-                                is ActivityTimerSheetVM.TimerContext.Task ->
-                                    timerContext.task.startInterval(seconds, activity)
-                                null -> activity.startInterval(seconds)
-                            }
-                        }
-                    )
-                },
-            )
+    override val state = MutableStateFlow(
+        State(
+            allActivities = prepActivitiesUI(timerContext, DI.activitiesSorted),
         )
+    )
+
+    override fun onAppear() {
+        val scope = scopeVM()
+        ActivityModel.getAscSortedFlow().onEachExIn(scope) { activities ->
+            state.update {
+                it.copy(allActivities = prepActivitiesUI(timerContext, activities))
+            }
+        }
     }
 }
