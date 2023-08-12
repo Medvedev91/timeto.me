@@ -121,6 +121,7 @@ extension View {
                     content()
                             .attachTimetoAlert()
                             .attachTimetoSheet()
+                            .attachNativeSheet()
                 }
         )
     }
