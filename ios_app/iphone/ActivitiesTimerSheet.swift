@@ -50,6 +50,8 @@ private let myButtonStyle = MyButtonStyle()
 
 private struct ActivitiesTimerSheet: View {
 
+    @EnvironmentObject private var nativeSheet: NativeSheet
+
     @State private var vm: ActivitiesTimerSheetVM
 
     @State private var sheetActivity: ActivityModel?
@@ -117,7 +119,7 @@ private struct ActivitiesTimerSheet: View {
 
                                 Button(
                                         action: {
-                                            sheetActivity = activityUI.activity
+                                            // onTapGesture() / onLongPressGesture()
                                         },
                                         label: {
 
@@ -166,6 +168,20 @@ private struct ActivitiesTimerSheet: View {
                                                             .padding(.leading, activityItemPaddingStart)
                                                 }
                                             }
+                                                    /// Ordering is important
+                                                    .contentShape(Rectangle()) // TRICK for tap gesture
+                                                    .onTapGesture {
+                                                        sheetActivity = activityUI.activity
+                                                    }
+                                                    .onLongPressGesture(minimumDuration: 0.1) {
+                                                        nativeSheet.show { isActivityFormPresented in
+                                                            ActivityFormSheet(
+                                                                    isPresented: isActivityFormPresented,
+                                                                    activity: activityUI.activity
+                                                            ) {}
+                                                        }
+                                                    }
+                                                    //////
                                                     .frame(alignment: .bottom)
                                         }
                                 )
