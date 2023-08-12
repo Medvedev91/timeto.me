@@ -5,9 +5,9 @@ struct EditActivitiesSheet: View {
 
     @Binding var isPresented: Bool
 
-    @State private var vm = EditActivitiesVM()
+    @EnvironmentObject private var nativeSheet: NativeSheet
 
-    @State private var isAddActivityPresented = false
+    @State private var vm = EditActivitiesVM()
 
     var body: some View {
 
@@ -23,7 +23,12 @@ struct EditActivitiesSheet: View {
 
                 Button(
                         action: {
-                            isAddActivityPresented = true
+                            nativeSheet.show { isAddActivityPresented in
+                                ActivityFormSheet(
+                                        isPresented: isAddActivityPresented,
+                                        activity: nil
+                                ) {}
+                            }
                         },
                         label: {
                             Text("New Activity")
@@ -36,14 +41,6 @@ struct EditActivitiesSheet: View {
                         .padding(.leading, 24)
                         .padding(.bottom, 8)
                         .safeAreaPadding(.bottom)
-                        .sheetEnv(
-                                isPresented: $isAddActivityPresented
-                        ) {
-                            ActivityFormSheet(
-                                    isPresented: $isAddActivityPresented,
-                                    activity: nil
-                            ) {}
-                        }
 
                 Spacer()
 
