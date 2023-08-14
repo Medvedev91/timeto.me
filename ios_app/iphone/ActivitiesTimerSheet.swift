@@ -123,7 +123,7 @@ private struct ActivitiesTimerSheet: View {
                                         },
                                         label: {
 
-                                            ZStack(alignment: .bottom) { // .bottom for divider
+                                            ZStack(alignment: .bottomLeading) { // divider + isActive
 
                                                 HStack {
 
@@ -166,6 +166,13 @@ private struct ActivitiesTimerSheet: View {
                                                 if state.allActivities.last != activityUI {
                                                     DividerSheetBg()
                                                             .padding(.leading, activityItemPaddingStart)
+                                                }
+
+                                                if activityUI.isActive {
+                                                    ZStack {}
+                                                            .frame(width: 8, height: listItemHeight - 2)
+                                                            .background(roundedShape.fill(c.blue))
+                                                            .offset(x: -4, y: -1)
                                                 }
                                             }
                                                     /// Ordering is important
