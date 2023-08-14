@@ -36,10 +36,13 @@ class ActivitiesTimerSheetVM(
                     null -> mapOf()
                 }
 
+            val lastInterval = DI.lastInterval
+
             return sortedActivities.map { activity ->
                 val primarySeconds = primarySecondsMap[activity.id] ?: listOf()
                 ActivityUI(
                     activity = activity,
+                    isActive = lastInterval.activity_id == activity.id,
                     timerHints = TimerHintUI.buildList(
                         activity,
                         isShort = true,
@@ -60,6 +63,7 @@ class ActivitiesTimerSheetVM(
 
     class ActivityUI(
         val activity: ActivityModel,
+        val isActive: Boolean,
         val timerHints: List<TimerHintUI>,
     ) {
         val listText = activity.name.textFeatures().textUi()
