@@ -160,6 +160,17 @@ private fun ActivitiesTimerSheet(
                         .padding(start = activityItemPaddingStart),
                     isVisible = state.allActivities.lastOrNull() != activityUI,
                 )
+
+                if (activityUI.isActive)
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.CenterStart)
+                            .offset(x = (-4).dp)
+                            .height(listItemHeight - 2.dp)
+                            .clip(roundedShape)
+                            .background(c.blue)
+                            .width(8.dp)
+                    ) {}
             }
         }
 
