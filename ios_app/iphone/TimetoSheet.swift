@@ -54,12 +54,12 @@ struct TimetoSheet__Item<Content: View>: View, Identifiable {
                 .ignoresSafeArea()
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
                 .onAppear {
-                    withAnimation(.spring(response: 0.150)) {
+                    withAnimation(.easeOut(duration: 0.200)) {
                         isPresented = true
                     }
                 }
                 .onChange(of: isPresented) { newValue in
-                    withAnimation(.spring(response: 0.150)) {
+                    withAnimation(.easeOut(duration: 0.200)) {
                         isShown = newValue
                     }
                 }
