@@ -164,7 +164,7 @@ private struct ActivitiesTimerSheet: View {
                                                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
 
                                                 if state.allActivities.last != activityUI {
-                                                    DividerSheetBg()
+                                                    SheetDividerBg()
                                                             .padding(.leading, activityItemPaddingStart)
                                                 }
 

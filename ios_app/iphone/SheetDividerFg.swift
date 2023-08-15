@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct DividerSheetFg: View {
+struct SheetDividerFg: View {
 
     var body: some View {
         Divider(color: c.sheetDividerFg)
