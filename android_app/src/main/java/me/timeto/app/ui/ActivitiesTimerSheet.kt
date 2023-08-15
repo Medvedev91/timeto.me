@@ -155,7 +155,7 @@ private fun ActivitiesTimerSheet(
                     }
                 }
 
-                DividerSheetBg(
+                SheetDividerBg(
                     modifier = Modifier
                         .padding(start = activityItemPaddingStart),
                     isVisible = state.allActivities.lastOrNull() != activityUI,

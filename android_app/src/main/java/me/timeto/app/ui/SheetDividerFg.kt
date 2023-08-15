@@ -5,7 +5,7 @@ import androidx.compose.ui.Modifier
 import me.timeto.app.c
 
 @Composable
-fun DividerSheetFg(
+fun SheetDividerFg(
     modifier: Modifier = Modifier,
     isVisible: Boolean = true,
 ) {
