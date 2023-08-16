@@ -8,7 +8,6 @@ class TimerHintUI(
     val seconds: Int,
     val activity: ActivityModel,
     val isPrimary: Boolean,
-    isShort: Boolean,
     private val onStart: suspend (Int) -> Unit,
 ) {
 
@@ -16,7 +15,6 @@ class TimerHintUI(
 
         fun buildList(
             activity: ActivityModel,
-            isShort: Boolean,
             historyLimit: Int,
             customLimit: Int,
             primaryHints: List<Int> = listOf(),
@@ -34,14 +32,13 @@ class TimerHintUI(
                         seconds = seconds,
                         activity = activity,
                         isPrimary = seconds in primaryHints,
-                        isShort = isShort,
                         onStart = onStart,
                     )
                 }
         }
     }
 
-    val text = seconds.toTimerHintNote(isShort = isShort)
+    val text = seconds.toTimerHintNote(isShort = true)
 
     fun startInterval(
         onSuccess: (() -> Unit) = {},

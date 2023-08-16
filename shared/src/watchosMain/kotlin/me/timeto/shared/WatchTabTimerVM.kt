@@ -19,7 +19,6 @@ class WatchTabTimerVM : __VM<WatchTabTimerVM.State>() {
 
         val timerHints = TimerHintUI.buildList(
             activity,
-            isShort = true,
             historyLimit = 4,
             customLimit = 4,
         ) { seconds ->

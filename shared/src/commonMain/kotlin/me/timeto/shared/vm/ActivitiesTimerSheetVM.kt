@@ -42,7 +42,6 @@ class ActivitiesTimerSheetVM(
                     activity = activity,
                     timerHints = TimerHintUI.buildList(
                         activity,
-                        isShort = true,
                         historyLimit = 3,
                         customLimit = 6,
                         primaryHints = primarySeconds,

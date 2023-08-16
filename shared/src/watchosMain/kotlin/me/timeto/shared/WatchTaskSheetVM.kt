@@ -20,7 +20,6 @@ class WatchTaskSheetVM(
 
         val timerHints = TimerHintUI.buildList(
             activity,
-            isShort = true,
             historyLimit = 4,
             customLimit = 4,
             primaryHints = historySeconds,
