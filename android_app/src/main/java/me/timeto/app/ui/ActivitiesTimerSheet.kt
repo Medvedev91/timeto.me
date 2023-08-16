@@ -133,26 +133,17 @@ private fun ActivitiesTimerSheet(
                         maxLines = 1,
                     )
 
-                    activityUI.timerHints.forEach { hintUI ->
-                        val isPrimary = hintUI.isPrimary
-                        val hPadding = if (isPrimary) 6.dp else timerHintHPadding
-                        Text(
-                            text = hintUI.text,
-                            modifier = Modifier
-                                .clip(roundedShape)
-                                .align(Alignment.CenterVertically)
-                                .background(if (isPrimary) c.blue else c.transparent)
-                                .clickable {
-                                    hintUI.startInterval {
-                                        layerActivitiesSheet.close()
-                                    }
-                                }
-                                .padding(start = hPadding, end = hPadding, top = 3.dp, bottom = 4.dp),
-                            color = if (isPrimary) c.white else c.blue,
-                            fontSize = if (isPrimary) 13.sp else secondaryFontSize,
-                            fontWeight = if (isPrimary) FontWeight.W500 else secondaryFontWeight,
-                        )
-                    }
+                    TimerHintsView(
+                        activityUI.timerHints,
+                        hintHPadding = timerHintHPadding,
+                        fontSize = secondaryFontSize,
+                        fontWeight = secondaryFontWeight,
+                        onStart = { hintUI ->
+                            hintUI.startInterval {
+                                layerActivitiesSheet.close()
+                            }
+                        }
+                    )
                 }
 
                 SheetDividerBg(
