@@ -68,7 +68,7 @@ fun ActivityTimerSheet(
                 color = c.text,
                 textAlign = TextAlign.Center,
                 fontSize = 22.sp,
-                fontWeight = FontWeight.W500,
+                fontWeight = FontWeight.Medium,
                 modifier = Modifier
                     .weight(1f)
             )
@@ -76,7 +76,7 @@ fun ActivityTimerSheet(
             Text(
                 text = "Start",
                 color = c.blue,
-                fontWeight = FontWeight.W700,
+                fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,
                 modifier = Modifier
                     .padding(end = 18.dp)
