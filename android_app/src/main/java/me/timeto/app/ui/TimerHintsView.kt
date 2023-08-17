@@ -24,7 +24,7 @@ fun TimerHintsView(
     hintHPadding: Dp,
     fontSize: TextUnit,
     fontWeight: FontWeight,
-    onStart: (hintUI: TimerHintUI) -> Unit,
+    onStart: () -> Unit,
 ) {
     HStack {
         timerHintsUI.forEach { hintUI ->
@@ -37,7 +37,9 @@ fun TimerHintsView(
                     .align(Alignment.CenterVertically)
                     .background(if (isPrimary) c.blue else c.transparent)
                     .clickable {
-                        onStart(hintUI)
+                        hintUI.startInterval {
+                            onStart()
+                        }
                     }
                     .padding(start = hPadding, end = hPadding, top = 3.dp, bottom = 4.dp),
                 color = if (isPrimary) c.white else c.blue,

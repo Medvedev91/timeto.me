@@ -138,10 +138,8 @@ private fun ActivitiesTimerSheet(
                         hintHPadding = timerHintHPadding,
                         fontSize = secondaryFontSize,
                         fontWeight = secondaryFontWeight,
-                        onStart = { hintUI ->
-                            hintUI.startInterval {
-                                layerActivitiesSheet.close()
-                            }
+                        onStart = {
+                            layerActivitiesSheet.close()
                         }
                     )
                 }
