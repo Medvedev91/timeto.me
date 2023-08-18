@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.*
 import me.timeto.shared.db.ActivityModel
-import me.timeto.shared.launchEx
 import me.timeto.shared.vm.ActivityTimerSheetVM
 
 @Composable
@@ -27,7 +26,6 @@ fun ActivityTimerSheet(
     timerContext: ActivityTimerSheetVM.TimerContext?,
     onStarted: (() -> Unit)? = null,
 ) {
-    val scope = rememberCoroutineScope()
 
     val (vm, state) = rememberVM(activity, timerContext) {
         ActivityTimerSheetVM(activity, timerContext)
@@ -57,9 +55,7 @@ fun ActivityTimerSheet(
                     .clip(roundedShape)
                     .padding(horizontal = 10.dp, vertical = 8.dp)
                     .clickable {
-                        scope.launchEx {
-                            layer.close()
-                        }
+                        layer.close()
                     }
             )
 
