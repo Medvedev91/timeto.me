@@ -134,6 +134,7 @@ private fun ActivitiesTimerSheet(
                     )
 
                     TimerHintsView(
+                        modifier = Modifier,
                         timerHintsUI = activityUI.timerHints,
                         hintHPadding = timerHintHPadding,
                         fontSize = secondaryFontSize,

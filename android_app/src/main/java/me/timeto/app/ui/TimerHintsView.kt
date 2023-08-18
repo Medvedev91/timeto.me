@@ -20,13 +20,14 @@ import me.timeto.shared.db.ActivityModel__Data.TimerHints.TimerHintUI
 
 @Composable
 fun TimerHintsView(
+    modifier: Modifier,
     timerHintsUI: List<TimerHintUI>,
     hintHPadding: Dp,
     fontSize: TextUnit,
     fontWeight: FontWeight,
     onStart: () -> Unit,
 ) {
-    HStack {
+    HStack(modifier = modifier) {
         timerHintsUI.forEach { hintUI ->
             val isPrimary = hintUI.isPrimary
             val hPadding = if (isPrimary) 6.dp else hintHPadding
