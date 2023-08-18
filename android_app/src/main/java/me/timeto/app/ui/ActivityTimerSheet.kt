@@ -87,38 +87,46 @@ fun ActivityTimerSheet(
             )
         }
 
-        Row(
+        Box(
             modifier = Modifier
-                .padding(top = 20.dp, bottom = 60.dp)
-                .height(220.dp)
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
+                .padding(top = 30.dp)
+                .navigationBarsPadding()
+                .fillMaxWidth(),
         ) {
 
-            Box(
-                modifier = Modifier.width(200.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                AndroidView(
-                    modifier = Modifier.fillMaxWidth(),
-                    factory = { context ->
-                        NumberPicker(context).apply {
-                            setOnValueChangedListener { _, _, new ->
-                                vm.setFormTimeItemIdx(new)
-                            }
-                            displayedValues = state.timeItems.map { it.title }.toTypedArray()
-                            if (isSDKQPlus())
-                                textSize = dpToPx(18f).toFloat()
-                            wrapSelectorWheel = false
-                            minValue = 0
-                            maxValue = state.timeItems.size - 1
-                            value = state.formTimeItemIdx // Задавать в конце
+            AndroidView(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 68.dp)
+                    .width(200.dp),
+                factory = { context ->
+                    NumberPicker(context).apply {
+                        setOnValueChangedListener { _, _, new ->
+                            vm.setFormTimeItemIdx(new)
                         }
+                        displayedValues = state.timeItems.map { it.title }.toTypedArray()
+                        if (isSDKQPlus())
+                            textSize = dpToPx(18f).toFloat()
+                        wrapSelectorWheel = false
+                        minValue = 0
+                        maxValue = state.timeItems.size - 1
+                        value = state.formTimeItemIdx // Задавать в конце
                     }
-                )
-            }
+                }
+            )
+
+            TimerHintsView(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 8.dp),
+                timerHintsUI = state.timerHints,
+                hintHPadding = 8.dp,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Light,
+                onStart = {
+                    layer.close()
+                }
+            )
         }
     }
 }
