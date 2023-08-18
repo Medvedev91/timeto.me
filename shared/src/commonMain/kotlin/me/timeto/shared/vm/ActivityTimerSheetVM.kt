@@ -17,7 +17,26 @@ class ActivityTimerSheetVM(
         val timeItems: List<TimerPickerItem>,
         // Like inner data class
         private val activity: ActivityModel,
-    )
+        private val timerContext: TimerContext?,
+    ) {
+
+        val timerHints = activity.getData().timer_hints.getTimerHintsUI(
+            activity = activity,
+            historyLimit = 6,
+            customLimit = 6,
+            noteForPrimary = when (timerContext) {
+                is TimerContext.Task -> timerContext.task.text
+                null -> null
+            },
+            onSelect = { hintUI ->
+                when (timerContext) {
+                    is TimerContext.Task ->
+                        timerContext.task.startInterval(hintUI.seconds, activity)
+                    null -> activity.startInterval(hintUI.seconds)
+                }
+            }
+        )
+    }
 
     override val state: MutableStateFlow<State>
 
@@ -37,6 +56,7 @@ class ActivityTimerSheetVM(
                 formTimeItemIdx = timeItems.indexOfFirst { it.seconds == defSeconds },
                 timeItems = timeItems,
                 activity = activity,
+                timerContext = timerContext,
             )
         )
     }
