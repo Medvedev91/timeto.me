@@ -33,6 +33,7 @@ fun TimerHintsView(
             Text(
                 text = hintUI.text,
                 modifier = Modifier
+                    .padding(start = if (isPrimary) 2.dp else 0.dp)
                     .clip(roundedShape)
                     .align(Alignment.CenterVertically)
                     .background(if (isPrimary) c.blue else c.transparent)
