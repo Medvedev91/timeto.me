@@ -15,7 +15,7 @@ class ActivityTimerSheetVM(
         val note: String?,
         val formTimeItemIdx: Int,
         val timeItems: List<TimerPickerItem>,
-        /// Like inner data class
+        // Like inner data class
         private val activity: ActivityModel,
     )
 
