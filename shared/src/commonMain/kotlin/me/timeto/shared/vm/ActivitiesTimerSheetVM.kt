@@ -5,7 +5,7 @@ import me.timeto.shared.DI
 import me.timeto.shared.db.ActivityModel
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.textFeatures
-import me.timeto.shared.ui.TimerHintUI
+import me.timeto.shared.db.ActivityModel__Data.TimerHints.TimerHintUI
 
 class ActivitiesTimerSheetVM(
     private val timerContext: ActivityTimerSheetVM.TimerContext?,
@@ -29,29 +29,31 @@ class ActivitiesTimerSheetVM(
             timerContext: ActivityTimerSheetVM.TimerContext?,
             sortedActivities: List<ActivityModel>,
         ): List<ActivityUI> {
-            val primarySecondsMap: Map<Int, List<Int>> /* `activity id` -> `seconds list` */ =
-                when (timerContext) {
-                    is ActivityTimerSheetVM.TimerContext.Task ->
-                        prepHistorySecondsMap(timerContext.task.text)
-                    null -> mapOf()
-                }
+
+            val noteForPrimaryHints: String? = when (timerContext) {
+                is ActivityTimerSheetVM.TimerContext.Task -> timerContext.task.text
+                null -> null
+            }
 
             return sortedActivities.map { activity ->
-                val primarySeconds = primarySecondsMap[activity.id] ?: listOf()
-                ActivityUI(
+
+                val timerHints = activity.getData().timer_hints.getTimerHintsUI(
                     activity = activity,
-                    timerHints = TimerHintUI.buildList(
-                        activity,
-                        historyLimit = 3,
-                        customLimit = 6,
-                        primaryHints = primarySeconds,
-                    ) { seconds ->
+                    historyLimit = 3,
+                    customLimit = 6,
+                    noteForPrimary = noteForPrimaryHints,
+                    onSelect = { hintUI ->
                         when (timerContext) {
                             is ActivityTimerSheetVM.TimerContext.Task ->
-                                timerContext.task.startInterval(seconds, activity)
-                            null -> activity.startInterval(seconds)
+                                timerContext.task.startInterval(hintUI.seconds, activity)
+                            null -> activity.startInterval(hintUI.seconds)
                         }
                     }
+                )
+
+                ActivityUI(
+                    activity = activity,
+                    timerHints = timerHints
                 )
             }
         }
