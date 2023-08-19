@@ -389,26 +389,6 @@ data class ActivityModel__Data(
             )
         )
 
-        fun get(
-            historyLimit: Int, // For valid UI
-            customLimit: Int, // Max for valid UI
-            primaryHints: List<Int> = listOf(), // To show in maximum priority
-        ): List<Int> = when (type) {
-            // Sorting for hints from history only after getting the last ones - take()
-            HINT_TYPE.history -> {
-                // We must take the most recent from the history, and sort them, so the logic is below.
-                // We can only sort at the end, otherwise the old ones from the story may be at the beginning.
-                val unique = (primaryHints + history_list).distinct()
-                val (uPrimaryAll, uHistoryAll) = unique.partition { it in primaryHints }
-                //
-                if (uPrimaryAll.size >= historyLimit)
-                    uPrimaryAll.sorted().take(historyLimit)
-                else
-                    uPrimaryAll.sorted() + uHistoryAll.take(historyLimit - uPrimaryAll.size).sorted()
-            }
-            HINT_TYPE.custom -> (primaryHints.sorted() + custom_list.sorted()).distinct().take(customLimit)
-        }
-
         fun getTimerHintsUI(
             historyLimit: Int,
             customLimit: Int,
