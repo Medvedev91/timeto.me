@@ -119,7 +119,6 @@ struct W_TabTasksView: View {
                                         if !activityUI.timerHints.isEmpty {
                                             HStack(spacing: 6) {
                                                 ForEach(activityUI.timerHints, id: \.seconds) { hintUI in
-                                                    let isHistory = activityUI.historySeconds.contains(hintUI.seconds.toInt().toKotlinInt())
                                                     Button(
                                                             action: {
                                                                 hintUI.startInterval {}
@@ -130,10 +129,8 @@ struct W_TabTasksView: View {
                                                             },
                                                             label: {
                                                                 Text(hintUI.text)
-                                                                        .padding(.horizontal, isHistory ? 3 : 0)
-                                                                        .font(.system(size: isHistory ? 12 : 13, weight: .medium))
+                                                                        .font(.system(size: 13, weight: .medium))
                                                                         .foregroundColor(.white)
-                                                                        .background(isHistory ? .blue : .clear)
                                                                         .cornerRadius(99)
                                                                         .lineLimit(1)
                                                             }

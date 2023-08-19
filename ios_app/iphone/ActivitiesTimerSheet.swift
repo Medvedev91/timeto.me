@@ -140,7 +140,6 @@ private struct ActivitiesTimerSheet: View {
                                                     Spacer()
 
                                                     ForEach(activityUI.timerHints, id: \.seconds) { hintUI in
-                                                        let isPrimary = hintUI.isPrimary
                                                         Button(
                                                                 action: {
                                                                     hintUI.startInterval {
@@ -149,11 +148,10 @@ private struct ActivitiesTimerSheet: View {
                                                                 },
                                                                 label: {
                                                                     Text(hintUI.text)
-                                                                            .font(.system(size: isPrimary ? 15 : secondaryFontSize, weight: isPrimary ? .medium : secondaryFontWeight))
-                                                                            .foregroundColor(isPrimary ? .white : .blue)
-                                                                            .padding(.horizontal, isPrimary ? 6 : timerHintHPadding)
+                                                                            .font(.system(size: secondaryFontSize, weight: secondaryFontWeight))
+                                                                            .foregroundColor(.blue)
+                                                                            .padding(.horizontal, timerHintHPadding)
                                                                             .padding(.vertical, 4)
-                                                                            .background(isPrimary ? .blue : .clear)
                                                                             .cornerRadius(99)
                                                                 }
                                                         )
