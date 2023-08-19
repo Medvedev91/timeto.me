@@ -71,51 +71,45 @@ struct MainView: View {
                 )
                         .padding(.top, 13)
 
-                if state.isTimerButtonsVisible {
+                HStack {
 
-                    let timerButtonsHeight = 32.0
+                    Button(
+                            action: {
+                                vm.pauseTask()
+                            },
+                            label: {
+                                Image(systemName: "pause.fill")
+                                        .foregroundColor(timerColor)
+                                        .font(.system(size: 21, weight: .ultraLight))
+                            }
+                    )
 
-                    HStack {
+                    Button(
+                            action: {
+                                state.timerData.restart()
+                            },
+                            label: {
+                                Text(state.timerData.restartText)
+                                        .font(.system(size: 21, weight: .medium))
+                                        .foregroundColor(timerColor)
+                                        .padding(.leading, 3)
+                            }
+                    )
+                            .padding(.horizontal, 20)
 
-                        Button(
-                                action: {
-                                    vm.pauseTask()
-                                },
-                                label: {
-                                    Image(systemName: "pause.fill")
-                                            .foregroundColor(.black)
-                                            .font(.system(size: 16))
-                                }
-                        )
-                                .frame(width: timerButtonsHeight, height: timerButtonsHeight)
-                                .background(roundedShape.fill(.white))
-
-                        Button(
-                                action: {
-                                    state.timerData.restart()
-                                },
-                                label: {
-                                    HStack {
-
-                                        Image(systemName: "clock.arrow.circlepath")
-                                                .foregroundColor(.black)
-                                                .font(.system(size: 16, weight: .heavy))
-
-                                        Text(state.timerData.restartText)
-                                                .padding(.leading, 2)
-                                                .padding(.trailing, 2)
-                                                .font(.system(size: 19, weight: .bold))
-                                                .foregroundColor(.black)
-                                    }
-                                }
-                        )
-                                .padding(.horizontal, 8)
-                                .frame(height: timerButtonsHeight)
-                                .background(roundedShape.fill(.white))
-                                .padding(.leading, 10)
-                    }
-                            .padding(.top, 16)
+                    Button(
+                            action: {
+                                // todo
+                            },
+                            label: {
+                                Image(systemName: "chevron.down.circle.fill")
+                                        .foregroundColor(timerColor)
+                                        .font(.system(size: 19, weight: .black))
+                            }
+                    )
                 }
+                        .padding(.top, 14)
+                        .padding(.bottom, 16)
 
                 ZStack {
 
