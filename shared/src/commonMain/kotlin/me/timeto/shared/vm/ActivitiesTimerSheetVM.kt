@@ -28,27 +28,24 @@ class ActivitiesTimerSheetVM(
         private fun prepActivitiesUI(
             timerContext: ActivityTimerSheetVM.TimerContext?,
             sortedActivities: List<ActivityModel>,
-        ): List<ActivityUI> {
+        ): List<ActivityUI> = sortedActivities.map { activity ->
 
-            return sortedActivities.map { activity ->
-
-                val timerHints = activity.getData().timer_hints.getTimerHintsUI(
-                    historyLimit = 3,
-                    customLimit = 6,
-                    onSelect = { hintUI ->
-                        when (timerContext) {
-                            is ActivityTimerSheetVM.TimerContext.Task ->
-                                timerContext.task.startInterval(hintUI.seconds, activity)
-                            null -> activity.startInterval(hintUI.seconds)
-                        }
+            val timerHints = activity.getData().timer_hints.getTimerHintsUI(
+                historyLimit = 3,
+                customLimit = 6,
+                onSelect = { hintUI ->
+                    when (timerContext) {
+                        is ActivityTimerSheetVM.TimerContext.Task ->
+                            timerContext.task.startInterval(hintUI.seconds, activity)
+                        null -> activity.startInterval(hintUI.seconds)
                     }
-                )
+                }
+            )
 
-                ActivityUI(
-                    activity = activity,
-                    timerHints = timerHints
-                )
-            }
+            ActivityUI(
+                activity = activity,
+                timerHints = timerHints
+            )
         }
     }
 
