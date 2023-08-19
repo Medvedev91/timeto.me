@@ -536,13 +536,6 @@ class TimerPickerItem(
             if (textFeatures.timer != null)
                 return textFeatures.timer
 
-            // If the history contains the task
-            val lastHotInterval = DI.hotIntervalsDesc.firstOrNull {
-                it.activity_id == activity.id && note.lowercase() == it.note?.lowercase()
-            }
-            if (lastHotInterval != null)
-                return lastHotInterval.timer
-
             return activity.timer
         }
     }
