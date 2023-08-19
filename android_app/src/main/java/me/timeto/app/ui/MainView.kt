@@ -49,9 +49,6 @@ private val menuColor = MainVM.menuColor.toColor()
 
 private val menuButtonModifier = Modifier.size(menuIconSize).padding(menuIconPadding)
 
-private val timerButtonsAnimEnter = fadeIn(spring(stiffness = Spring.StiffnessMediumLow)) + expandVertically(spring(stiffness = Spring.StiffnessMedium))
-private val timerButtonsAnimExit = fadeOut(spring(stiffness = Spring.StiffnessHigh)) + shrinkVertically(spring(stiffness = Spring.StiffnessMedium))
-
 private val tasksTextAnimEnter = fadeIn() + expandVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
 private val tasksTextAnimExit = fadeOut() + shrinkVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
 
@@ -110,62 +107,55 @@ fun MainView() {
                 color = timerColor,
             )
 
-            AnimatedVisibility(
-                state.isTimerButtonsVisible,
-                enter = timerButtonsAnimEnter,
-                exit = timerButtonsAnimExit,
+            HStack(
+                modifier = Modifier
+                    .padding(top = 2.dp)
             ) {
 
-                HStack(
+                Icon(
+                    painterResource(R.drawable.sf_pause_fill_medium_regular),
+                    contentDescription = "Pause",
+                    tint = c.black,
                     modifier = Modifier
-                        .padding(top = 2.dp)
+                        .size(timerButtonsHeight)
+                        .clip(roundedShape)
+                        .clickable {
+                            vm.pauseTask()
+                        }
+                        .background(c.white)
+                        .padding(10.dp),
+                )
+
+                HStack(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .padding(start = 10.dp)
+                        .height(timerButtonsHeight)
+                        .clip(roundedShape)
+                        .background(c.white)
+                        .clickable {
+                            state.timerData.restart()
+                        }
+                        .padding(horizontal = 10.dp),
                 ) {
 
                     Icon(
-                        painterResource(R.drawable.sf_pause_fill_medium_regular),
-                        contentDescription = "Pause",
+                        painterResource(id = R.drawable.sf_clock_arrow_circlepath_small_heavy),
+                        contentDescription = "Restart",
                         tint = c.black,
                         modifier = Modifier
-                            .size(timerButtonsHeight)
-                            .clip(roundedShape)
-                            .clickable {
-                                vm.pauseTask()
-                            }
-                            .background(c.white)
-                            .padding(10.dp),
+                            .padding(bottom = 1.dp)
+                            .size(18.dp),
                     )
 
-                    HStack(
-                        verticalAlignment = Alignment.CenterVertically,
+                    Text(
+                        text = state.timerData.restartText,
                         modifier = Modifier
-                            .padding(start = 10.dp)
-                            .height(timerButtonsHeight)
-                            .clip(roundedShape)
-                            .background(c.white)
-                            .clickable {
-                                state.timerData.restart()
-                            }
-                            .padding(horizontal = 10.dp),
-                    ) {
-
-                        Icon(
-                            painterResource(id = R.drawable.sf_clock_arrow_circlepath_small_heavy),
-                            contentDescription = "Restart",
-                            tint = c.black,
-                            modifier = Modifier
-                                .padding(bottom = 1.dp)
-                                .size(18.dp),
-                        )
-
-                        Text(
-                            text = state.timerData.restartText,
-                            modifier = Modifier
-                                .padding(start = 4.dp, bottom = 2.dp),
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = c.black,
-                        )
-                    }
+                            .padding(start = 4.dp, bottom = 2.dp),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = c.black,
+                    )
                 }
             }
 
