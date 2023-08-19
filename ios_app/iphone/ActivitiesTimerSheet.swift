@@ -367,7 +367,7 @@ private struct ActivityTimerSheet: View {
                     HStack {
                         TimerHintsView(
                                 timerHintsUI: state.timerHints,
-                                hintHPadding: timerHintHPadding,
+                                hintHPadding: 8.0,
                                 fontSize: secondaryFontSize,
                                 fontWeight: secondaryFontWeight,
                                 onStart: {
