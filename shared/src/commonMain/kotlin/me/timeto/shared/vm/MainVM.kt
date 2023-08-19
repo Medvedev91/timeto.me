@@ -27,7 +27,6 @@ class MainVM : __VM<MainVM.State>() {
     ) {
 
         val timerData = TimerDataUI(interval, isPurple, ColorRgba.white)
-        val isTimerButtonsVisible = isPurple || !timerData.status.isWork()
 
         val activity = interval.getActivityDI()
 
