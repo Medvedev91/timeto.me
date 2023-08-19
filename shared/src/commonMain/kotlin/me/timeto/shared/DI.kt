@@ -14,7 +14,6 @@ object DI {
     var activitiesSorted = listOf<ActivityModel>()
     var events = listOf<EventModel>()
     var repeatings = listOf<RepeatingModel>()
-    var hotIntervalsDesc = listOf<IntervalModel>()
 
     lateinit var firstInterval: IntervalModel
     lateinit var lastInterval: IntervalModel
@@ -81,10 +80,6 @@ object DI {
 
         repeatings = RepeatingModel.getAsc()
         RepeatingModel.getAscFlow().onEachExIn(scope) { repeatings = it }
-
-        hotIntervalsDesc = IntervalModel.getDesc(IntervalModel.HOT_INTERVALS_LIMIT)
-        IntervalModel.getDescFlow(limit = IntervalModel.HOT_INTERVALS_LIMIT)
-            .onEachExIn(scope) { hotIntervalsDesc = it }
 
         ///
         /// Late Init
