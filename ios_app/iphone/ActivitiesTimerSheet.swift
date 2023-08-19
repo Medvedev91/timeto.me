@@ -333,28 +333,52 @@ private struct ActivityTimerSheet: View {
                         .padding(.top, 6)
             }
 
-            Spacer()
+            ZStack {
 
+                VStack {
 
-            Picker(
-                    "Time",
-                    selection: $formTimeItemsIdx
-            ) {
-                ForEach(state.timeItems, id: \.idx) { item in
-                    Text(item.title)
+                    Spacer()
+
+                    Picker(
+                            "Time",
+                            selection: $formTimeItemsIdx
+                    ) {
+                        ForEach(state.timeItems, id: \.idx) { item in
+                            Text(item.title)
+                        }
+                    }
+                            .onChange(of: formTimeItemsIdx) { newValue in
+                                vm.setFormTimeItemIdx(newIdx: newValue)
+                            }
+                            .onAppear {
+                                formTimeItemsIdx = state.formTimeItemIdx
+                            }
+                            .pickerStyle(.wheel)
+                            .foregroundColor(.primary)
+                            .padding(.bottom, state.note != nil ? 30 : 5)
+
+                    Spacer()
                 }
-            }
-                    .onChange(of: formTimeItemsIdx) { newValue in
-                        vm.setFormTimeItemIdx(newIdx: newValue)
-                    }
-                    .onAppear {
-                        formTimeItemsIdx = state.formTimeItemIdx
-                    }
-                    .pickerStyle(.wheel)
-                    .foregroundColor(.primary)
-                    .padding(.bottom, state.note != nil ? 30 : 5)
 
-            Spacer()
+                VStack {
+
+                    Spacer()
+
+                    HStack {
+                        TimerHintsView(
+                                timerHintsUI: state.timerHints,
+                                hintHPadding: timerHintHPadding,
+                                fontSize: secondaryFontSize,
+                                fontWeight: secondaryFontWeight,
+                                onStart: {
+                                    onStart()
+                                }
+                        )
+                    }
+                            .padding(.bottom, 8)
+                }
+                        .safeAreaPadding(.bottom)
+            }
         }
     }
 }
