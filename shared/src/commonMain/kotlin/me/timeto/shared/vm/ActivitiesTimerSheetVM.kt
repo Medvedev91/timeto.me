@@ -13,18 +13,6 @@ class ActivitiesTimerSheetVM(
 
     companion object {
 
-        fun prepHistorySecondsMap(
-            taskText: String,
-        ): Map<Int, List<Int>> /* activity id => seconds list */ {
-            return DI.hotIntervalsDesc
-                .filter { taskText.lowercase() == it.note?.lowercase() }
-                .groupBy { it.activity_id }
-                .map {
-                    it.key to it.value.map { it.timer }.distinct()
-                }
-                .toMap()
-        }
-
         private fun prepActivitiesUI(
             timerContext: ActivityTimerSheetVM.TimerContext?,
             sortedActivities: List<ActivityModel>,
