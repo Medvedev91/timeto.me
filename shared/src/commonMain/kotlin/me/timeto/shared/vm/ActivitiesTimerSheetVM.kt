@@ -30,18 +30,11 @@ class ActivitiesTimerSheetVM(
             sortedActivities: List<ActivityModel>,
         ): List<ActivityUI> {
 
-            val noteForPrimaryHints: String? = when (timerContext) {
-                is ActivityTimerSheetVM.TimerContext.Task -> timerContext.task.text
-                null -> null
-            }
-
             return sortedActivities.map { activity ->
 
                 val timerHints = activity.getData().timer_hints.getTimerHintsUI(
-                    activity = activity,
                     historyLimit = 3,
                     customLimit = 6,
-                    noteForPrimary = noteForPrimaryHints,
                     onSelect = { hintUI ->
                         when (timerContext) {
                             is ActivityTimerSheetVM.TimerContext.Task ->

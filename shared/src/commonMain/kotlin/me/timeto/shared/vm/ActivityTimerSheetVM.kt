@@ -21,13 +21,8 @@ class ActivityTimerSheetVM(
     ) {
 
         val timerHints = activity.getData().timer_hints.getTimerHintsUI(
-            activity = activity,
             historyLimit = 6,
             customLimit = 6,
-            noteForPrimary = when (timerContext) {
-                is TimerContext.Task -> timerContext.task.text
-                null -> null
-            },
             onSelect = { hintUI ->
                 when (timerContext) {
                     is TimerContext.Task ->

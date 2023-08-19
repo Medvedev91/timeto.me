@@ -410,42 +410,19 @@ data class ActivityModel__Data(
         }
 
         fun getTimerHintsUI(
-            activity: ActivityModel,
             historyLimit: Int,
             customLimit: Int,
-            noteForPrimary: String?,
             onSelect: suspend (TimerHintUI) -> Unit,
         ): List<TimerHintUI> {
 
-            val primarySecondsList: List<Int> =
-                if (noteForPrimary == null) listOf()
-                // Saving desc sorting from DI.hotIntervalsDesc
-                else DI.hotIntervalsDesc
-                    .filter { it.activity_id == activity.id }
-                    .filter { noteForPrimary.lowercase() == it.note?.lowercase() }
-                    .map { it.timer }
-                    .distinct()
-
-            val secondsList: List<Int> = when (type) {
-                // Sorting for hints from history only after getting the last ones - take()
-                HINT_TYPE.history -> {
-                    // We must take the most recent from the history, and sort them, so the logic is below.
-                    // We can only sort at the end, otherwise the old ones from the story may be at the beginning.
-                    val unique = (primarySecondsList + history_list).distinct()
-                    val (uPrimaryAll, uHistoryAll) = unique.partition { it in primarySecondsList }
-                    //
-                    if (uPrimaryAll.size >= historyLimit)
-                        uPrimaryAll.sorted().take(historyLimit)
-                    else
-                        uPrimaryAll.sorted() + uHistoryAll.take(historyLimit - uPrimaryAll.size).sorted()
-                }
-                HINT_TYPE.custom -> (primarySecondsList.sorted() + custom_list.sorted()).distinct().take(customLimit)
+            val secondsList = when (type) {
+                HINT_TYPE.history -> history_list.sorted().distinct().take(historyLimit)
+                HINT_TYPE.custom -> custom_list.sorted().distinct().take(customLimit)
             }
 
             return secondsList.map { seconds ->
                 TimerHintUI(
                     seconds = seconds,
-                    isPrimary = seconds in primarySecondsList,
                     onSelect = onSelect,
                 )
             }
@@ -453,7 +430,6 @@ data class ActivityModel__Data(
 
         class TimerHintUI(
             val seconds: Int,
-            val isPrimary: Boolean,
             val onSelect: suspend (TimerHintUI) -> Unit,
         ) {
 
