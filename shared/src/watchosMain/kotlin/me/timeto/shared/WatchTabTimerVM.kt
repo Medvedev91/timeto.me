@@ -5,7 +5,6 @@ import me.timeto.shared.data.TimerTabActivityData
 import me.timeto.shared.db.ActivityModel
 import me.timeto.shared.db.IntervalModel
 import me.timeto.shared.vm.__VM
-import me.timeto.shared.ui.TimerHintUI
 
 class WatchTabTimerVM : __VM<WatchTabTimerVM.State>() {
 
@@ -17,14 +16,13 @@ class WatchTabTimerVM : __VM<WatchTabTimerVM.State>() {
 
         val data = TimerTabActivityData(activity, lastInterval, isPurple)
 
-        val timerHints = TimerHintUI.buildList(
-            activity,
+        val timerHints = activity.getData().timer_hints.getTimerHintsUI(
             historyLimit = 4,
             customLimit = 4,
-        ) { seconds ->
+        ) { hintUI ->
             WatchToIosSync.startIntervalWithLocal(
                 activity = activity,
-                timer = seconds,
+                timer = hintUI.seconds,
             )
         }
     }
