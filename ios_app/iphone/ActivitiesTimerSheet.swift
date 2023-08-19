@@ -139,24 +139,15 @@ private struct ActivitiesTimerSheet: View {
 
                                                     Spacer()
 
-                                                    ForEach(activityUI.timerHints, id: \.seconds) { hintUI in
-                                                        Button(
-                                                                action: {
-                                                                    hintUI.startInterval {
-                                                                        onStart()
-                                                                    }
-                                                                },
-                                                                label: {
-                                                                    Text(hintUI.text)
-                                                                            .font(.system(size: secondaryFontSize, weight: secondaryFontWeight))
-                                                                            .foregroundColor(.blue)
-                                                                            .padding(.horizontal, timerHintHPadding)
-                                                                            .padding(.vertical, 4)
-                                                                            .cornerRadius(99)
-                                                                }
-                                                        )
-                                                                .buttonStyle(.borderless)
-                                                    }
+                                                    TimerHintsView(
+                                                            timerHintsUI: activityUI.timerHints,
+                                                            hintHPadding: timerHintHPadding,
+                                                            fontSize: secondaryFontSize,
+                                                            fontWeight: secondaryFontWeight,
+                                                            onStart: {
+                                                                onStart()
+                                                            }
+                                                    )
                                                 }
                                                         .padding(.trailing, listEngPadding)
                                                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
