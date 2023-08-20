@@ -102,9 +102,9 @@ struct MainView: View {
                                 // todo
                             },
                             label: {
-                                Image(systemName: "chevron.down.circle.fill")
+                                Image(systemName: "chevron.down")
                                         .foregroundColor(timerColor)
-                                        .font(.system(size: 19, weight: .black))
+                                        .font(.system(size: 19, weight: .heavy))
                             }
                     )
                 }
