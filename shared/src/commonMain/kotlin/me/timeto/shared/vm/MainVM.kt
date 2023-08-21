@@ -27,7 +27,7 @@ class MainVM : __VM<MainVM.State>() {
     ) {
 
         val timerData = TimerDataUI(interval, isPurple, ColorRgba.white)
-        val timerButtonSheetContext = ActivityTimerSheetVM.TimerContext.Interval(interval)
+        val timerButtonExpandSheetContext = ActivityTimerSheetVM.TimerContext.Interval(interval)
 
         val activity = interval.getActivityDI()
 

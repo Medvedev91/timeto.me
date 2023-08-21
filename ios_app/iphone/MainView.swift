@@ -21,7 +21,7 @@ private let navAndTasksTextHeight = bottomNavigationHeight + taskCountsHeight
 struct MainView: View {
 
     @State private var vm = MainVM()
-    @State private var isTimerButtonPresented = false
+    @State private var isTimerButtonExpandPresented = false
     @State private var isTimerActivitiesPresented = false
 
     @State private var isSettingsSheetPresented = false
@@ -101,12 +101,12 @@ struct MainView: View {
                     Button(
                             action: {
                                 timetoSheet.showActivitiesTimerSheet(
-                                        isPresented: $isTimerButtonPresented,
-                                        timerContext: state.timerButtonSheetContext,
+                                        isPresented: $isTimerButtonExpandPresented,
+                                        timerContext: state.timerButtonExpandSheetContext,
                                         withMenu: false,
                                         selectedActivity: state.activity,
                                         onStart: {
-                                            isTimerButtonPresented = false
+                                            isTimerButtonExpandPresented = false
                                         }
                                 )
                             },
