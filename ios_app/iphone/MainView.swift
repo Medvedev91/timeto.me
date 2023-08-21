@@ -96,7 +96,7 @@ struct MainView: View {
                                         .padding(.leading, 3)
                             }
                     )
-                            .padding(.horizontal, 20)
+                            .padding(.horizontal, 24)
 
                     Button(
                             action: {
@@ -113,7 +113,7 @@ struct MainView: View {
                             label: {
                                 Image(systemName: "chevron.down")
                                         .foregroundColor(timerColor)
-                                        .font(.system(size: 19, weight: .heavy))
+                                        .font(.system(size: 20, weight: .bold))
                             }
                     )
                 }
