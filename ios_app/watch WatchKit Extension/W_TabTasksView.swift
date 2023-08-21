@@ -49,7 +49,7 @@ struct W_TabTasksView: View {
                             )
                         },
                         label: {
-                            VStack(alignment: .leading, spacing: 0) {
+                            VStack(alignment: .leading) {
 
                                 if let timeUI = taskUI.timeUI {
                                     Text(timeUI.text)
@@ -109,7 +109,7 @@ struct W_TabTasksView: View {
                                     isTickerPresented = true
                                 },
                                 label: {
-                                    VStack(spacing: 0) {
+                                    VStack {
 
                                         Text(activityUI.listTitle)
                                                 .frame(maxWidth: .infinity, alignment: .leading)
