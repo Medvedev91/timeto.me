@@ -12,6 +12,9 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ExpandMore
+import androidx.compose.material.icons.rounded.Pause
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -52,7 +55,7 @@ private val menuButtonModifier = Modifier.size(menuIconSize).padding(menuIconPad
 private val tasksTextAnimEnter = fadeIn() + expandVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
 private val tasksTextAnimExit = fadeOut() + shrinkVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
 
-private val timerButtonsHeight = 32.dp
+private val timerButtonsHeight = 34.dp
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -109,54 +112,53 @@ fun MainView() {
 
             HStack(
                 modifier = Modifier
-                    .padding(top = 2.dp)
+                    .offset(y = (-4).dp)
             ) {
 
                 Icon(
-                    painterResource(R.drawable.sf_pause_fill_medium_regular),
+                    Icons.Rounded.Pause,
                     contentDescription = "Pause",
-                    tint = c.black,
+                    tint = timerColor,
                     modifier = Modifier
                         .size(timerButtonsHeight)
                         .clip(roundedShape)
                         .clickable {
                             vm.pauseTask()
                         }
-                        .background(c.white)
-                        .padding(10.dp),
+                        .padding(5.dp),
                 )
 
-                HStack(
-                    verticalAlignment = Alignment.CenterVertically,
+                Box(
                     modifier = Modifier
-                        .padding(start = 10.dp)
                         .height(timerButtonsHeight)
                         .clip(roundedShape)
-                        .background(c.white)
                         .clickable {
                             state.timerData.restart()
                         }
-                        .padding(horizontal = 10.dp),
+                        .padding(horizontal = 16.dp),
+                    contentAlignment = Alignment.Center,
                 ) {
-
-                    Icon(
-                        painterResource(id = R.drawable.sf_clock_arrow_circlepath_small_heavy),
-                        contentDescription = "Restart",
-                        tint = c.black,
-                        modifier = Modifier
-                            .padding(bottom = 1.dp)
-                            .size(18.dp),
-                    )
-
                     Text(
                         text = state.timerData.restartText,
                         modifier = Modifier
-                            .padding(start = 4.dp, bottom = 2.dp),
+                            .padding(bottom = 2.dp),
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = c.black,
+                        fontWeight = FontWeight.Medium,
+                        color = timerColor,
                     )
                 }
+
+                Icon(
+                    Icons.Rounded.ExpandMore,
+                    contentDescription = "More",
+                    tint = timerColor,
+                    modifier = Modifier
+                        .size(timerButtonsHeight)
+                        .clip(roundedShape)
+                        .clickable {
+                            // todo
+                        },
+                )
             }
 
             ZStack(
