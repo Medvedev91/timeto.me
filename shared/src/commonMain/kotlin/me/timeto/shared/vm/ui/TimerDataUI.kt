@@ -41,7 +41,7 @@ class TimerDataUI(
     fun restart() {
         launchExDefault {
             val lastInterval = IntervalModel.getLastOneOrNull()!!
-            lastInterval.getActivityDI().startInterval(restartTimer)
+            IntervalModel.addWithValidation(restartTimer, lastInterval.getActivityDI(), lastInterval.note)
         }
     }
 
