@@ -21,6 +21,7 @@ private let navAndTasksTextHeight = bottomNavigationHeight + taskCountsHeight
 struct MainView: View {
 
     @State private var vm = MainVM()
+    @State private var isTimerButtonPresented = false
     @State private var isTimerActivitiesPresented = false
 
     @State private var isSettingsSheetPresented = false
@@ -99,7 +100,15 @@ struct MainView: View {
 
                     Button(
                             action: {
-                                // todo
+                                timetoSheet.showActivitiesTimerSheet(
+                                        isPresented: $isTimerButtonPresented,
+                                        timerContext: state.timerButtonSheetContext,
+                                        withMenu: false,
+                                        selectedActivity: state.activity,
+                                        onStart: {
+                                            isTimerButtonPresented = false
+                                        }
+                                )
                             },
                             label: {
                                 Image(systemName: "chevron.down")
