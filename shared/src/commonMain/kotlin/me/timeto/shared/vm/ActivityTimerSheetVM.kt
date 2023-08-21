@@ -3,6 +3,7 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.db.IntervalModel
 import me.timeto.shared.db.TaskModel
 
 class ActivityTimerSheetVM(
@@ -34,6 +35,7 @@ class ActivityTimerSheetVM(
     init {
         val note = when (timerContext) {
             is TimerContext.Task -> timerContext.task.text
+            is TimerContext.Interval -> timerContext.interval.note
             null -> null
         }
 
@@ -72,6 +74,7 @@ class ActivityTimerSheetVM(
 
     sealed class TimerContext {
         class Task(val task: TaskModel) : TimerContext()
+        class Interval(val interval: IntervalModel) : TimerContext()
     }
 
     companion object {
@@ -84,6 +87,9 @@ class ActivityTimerSheetVM(
             val when_: Any = when (timerContext) {
                 is TimerContext.Task -> {
                     timerContext.task.startInterval(timer, activity)
+                }
+                is TimerContext.Interval -> {
+                    IntervalModel.addWithValidation(timer, activity, timerContext.interval.note)
                 }
                 null -> {
                     activity.startInterval(timer)
