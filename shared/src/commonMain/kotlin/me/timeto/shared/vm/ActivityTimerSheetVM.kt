@@ -24,11 +24,7 @@ class ActivityTimerSheetVM(
             historyLimit = 6,
             customLimit = 6,
             onSelect = { hintUI ->
-                when (timerContext) {
-                    is TimerContext.Task ->
-                        timerContext.task.startInterval(hintUI.seconds, activity)
-                    null -> activity.startInterval(hintUI.seconds)
-                }
+                startIntervalByContext(timerContext, activity, hintUI.seconds)
             }
         )
     }
@@ -61,16 +57,7 @@ class ActivityTimerSheetVM(
     ) = scopeVM().launchEx {
         try {
             val timer = state.value.timeItems[state.value.formTimeItemIdx].seconds
-
-            val when_: Any = when (timerContext) {
-                is TimerContext.Task -> {
-                    timerContext.task.startInterval(timer, activity)
-                }
-                null -> {
-                    activity.startInterval(timer)
-                }
-            }
-
+            startIntervalByContext(timerContext, activity, timer)
             onSuccess()
         } catch (e: UIException) {
             showUiAlert(e.uiMessage)
@@ -85,5 +72,23 @@ class ActivityTimerSheetVM(
 
     sealed class TimerContext {
         class Task(val task: TaskModel) : TimerContext()
+    }
+
+    companion object {
+
+        suspend fun startIntervalByContext(
+            timerContext: TimerContext?,
+            activity: ActivityModel,
+            timer: Int,
+        ) {
+            val when_: Any = when (timerContext) {
+                is TimerContext.Task -> {
+                    timerContext.task.startInterval(timer, activity)
+                }
+                null -> {
+                    activity.startInterval(timer)
+                }
+            }
+        }
     }
 }

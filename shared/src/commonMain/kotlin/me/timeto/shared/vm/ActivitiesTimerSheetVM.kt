@@ -22,11 +22,7 @@ class ActivitiesTimerSheetVM(
                 historyLimit = 3,
                 customLimit = 6,
                 onSelect = { hintUI ->
-                    when (timerContext) {
-                        is ActivityTimerSheetVM.TimerContext.Task ->
-                            timerContext.task.startInterval(hintUI.seconds, activity)
-                        null -> activity.startInterval(hintUI.seconds)
-                    }
+                    ActivityTimerSheetVM.startIntervalByContext(timerContext, activity, hintUI.seconds)
                 }
             )
 
