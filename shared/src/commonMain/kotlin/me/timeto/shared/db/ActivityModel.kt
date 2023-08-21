@@ -223,13 +223,11 @@ data class ActivityModel(
 
     suspend fun startInterval(
         timer: Int,
-    ): IntervalModel {
-        val lastInterval = IntervalModel.getLastOneOrNull()!!
-        val note = if (lastInterval.activity_id == this.id)
-            lastInterval.note?.textFeatures()?.copy(paused = null)?.textWithFeatures()
-        else null
-        return IntervalModel.addWithValidation(timer, this, note)
-    }
+    ): IntervalModel = IntervalModel.addWithValidation(
+        timer = timer,
+        activity = this,
+        note = null,
+    )
 
     suspend fun upByIdWithValidation(
         name: String,
