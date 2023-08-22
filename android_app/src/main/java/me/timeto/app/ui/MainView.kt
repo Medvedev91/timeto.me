@@ -156,7 +156,10 @@ fun MainView() {
                         .size(timerButtonsHeight)
                         .clip(roundedShape)
                         .clickable {
-                            // todo
+                            ActivityTimerSheet__show(
+                                activity = state.activity,
+                                timerContext = state.timerButtonExpandSheetContext,
+                            ) {}
                         },
                 )
             }
