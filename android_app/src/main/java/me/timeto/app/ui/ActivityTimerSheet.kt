@@ -24,7 +24,7 @@ fun ActivityTimerSheet(
     layer: WrapperView.Layer,
     activity: ActivityModel,
     timerContext: ActivityTimerSheetVM.TimerContext?,
-    onStarted: (() -> Unit)? = null,
+    onStarted: () -> Unit,
 ) {
 
     val (vm, state) = rememberVM(activity, timerContext) {
@@ -79,7 +79,7 @@ fun ActivityTimerSheet(
                     .clip(roundedShape)
                     .clickable {
                         vm.start {
-                            onStarted?.invoke()
+                            onStarted()
                             layer.close()
                         }
                     }
