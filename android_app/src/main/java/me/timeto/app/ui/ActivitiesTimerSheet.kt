@@ -91,14 +91,11 @@ private fun ActivitiesTimerSheet(
                         .height(listItemHeight)
                         .combinedClickable(
                             onClick = {
-                                Sheet.show { layerTimer ->
-                                    ActivityTimerSheet(
-                                        layer = layerTimer,
-                                        activity = activity,
-                                        timerContext = timerContext,
-                                    ) {
-                                        layerActivitiesSheet.close()
-                                    }
+                                ActivityTimerSheet__show(
+                                    activity = activity,
+                                    timerContext = timerContext,
+                                ) {
+                                    layerActivitiesSheet.close()
                                 }
                             },
                             onLongClick = {

@@ -277,13 +277,10 @@ fun TasksListView(
                                         ActivitiesTimerSheet__show(taskUI.timerContext, withMenu = false)
                                     },
                                     timerSheet = { activity ->
-                                        Sheet.show { layerTimer ->
-                                            ActivityTimerSheet(
-                                                layer = layerTimer,
-                                                activity = activity,
-                                                timerContext = taskUI.timerContext,
-                                            ) {}
-                                        }
+                                        ActivityTimerSheet__show(
+                                            activity = activity,
+                                            timerContext = taskUI.timerContext,
+                                        ) {}
                                     },
                                 )
                             }

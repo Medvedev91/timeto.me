@@ -564,13 +564,10 @@ private fun ImportantTasksView(
                                 ActivitiesTimerSheet__show(taskItem.timerContext, withMenu = false)
                             },
                             timerSheet = { activity ->
-                                Sheet.show { layerTimer ->
-                                    ActivityTimerSheet(
-                                        layer = layerTimer,
-                                        activity = activity,
-                                        timerContext = taskItem.timerContext,
-                                    ) {}
-                                }
+                                ActivityTimerSheet__show(
+                                    activity = activity,
+                                    timerContext = taskItem.timerContext,
+                                ) {}
                             },
                         )
                     }

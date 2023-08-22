@@ -19,8 +19,23 @@ import me.timeto.app.*
 import me.timeto.shared.db.ActivityModel
 import me.timeto.shared.vm.ActivityTimerSheetVM
 
+fun ActivityTimerSheet__show(
+    activity: ActivityModel,
+    timerContext: ActivityTimerSheetVM.TimerContext?,
+    onStarted: () -> Unit,
+) {
+    Sheet.show { layerTimer ->
+        ActivityTimerSheet(
+            layer = layerTimer,
+            activity = activity,
+            timerContext = timerContext,
+            onStarted = onStarted,
+        )
+    }
+}
+
 @Composable
-fun ActivityTimerSheet(
+private fun ActivityTimerSheet(
     layer: WrapperView.Layer,
     activity: ActivityModel,
     timerContext: ActivityTimerSheetVM.TimerContext?,
