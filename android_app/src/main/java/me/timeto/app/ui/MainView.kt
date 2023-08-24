@@ -595,6 +595,7 @@ private fun ImportantTasksView(
                         .padding(end = 5.dp)
                         .size(14.dp),
                 )
+
                 Text(
                     text = taskItem.text,
                     modifier = Modifier.padding(bottom = 1.dp),
