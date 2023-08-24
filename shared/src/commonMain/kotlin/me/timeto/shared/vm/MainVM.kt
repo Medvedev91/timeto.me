@@ -55,10 +55,14 @@ class MainVM : __VM<MainVM.State>() {
         val importantTasks: List<ImportantTask> = tasksToday
             .mapNotNull { task ->
                 val taskTextFeatures = task.text.textFeatures()
-                val timeData = taskTextFeatures.timeData ?: return@mapNotNull null
-                if (!timeData.isImportant)
-                    return@mapNotNull null
-                ImportantTask(task, taskTextFeatures)
+
+                if (taskTextFeatures.paused != null)
+                    return@mapNotNull ImportantTask(task, taskTextFeatures)
+
+                if (taskTextFeatures.timeData?.isImportant == true)
+                    return@mapNotNull ImportantTask(task, taskTextFeatures)
+
+                null
             }
             .sortedBy {
                 val timeData = it.textFeatures.timeData
