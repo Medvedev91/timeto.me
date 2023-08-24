@@ -58,9 +58,15 @@ class MainVM : __VM<MainVM.State>() {
                 val timeData = taskTextFeatures.timeData ?: return@mapNotNull null
                 if (!timeData.isImportant)
                     return@mapNotNull null
-                ImportantTask(task, timeData, taskTextFeatures)
+                ImportantTask(task, taskTextFeatures)
             }
-            .sortedBy { it.timeData.unixTime.time }
+            .sortedBy {
+                val timeData = it.textFeatures.timeData
+                if (timeData != null)
+                    timeData.unixTime.time
+                else
+                    Int.MAX_VALUE
+            }
 
         val tasksText = when (val size = tasksToday.size) {
             0 -> "No Tasks"
@@ -179,36 +185,48 @@ class MainVM : __VM<MainVM.State>() {
 
     class ImportantTask(
         val task: TaskModel,
-        val timeData: TextFeatures.TimeData,
-        textFeatures: TextFeatures,
+        val textFeatures: TextFeatures,
     ) {
 
-        val type = timeData.type
         val text: String
         val borderColor: ColorRgba
         val backgroundColor: ColorRgba
         val timerContext = ActivityTimerSheetVM.TimerContext.Task(task)
 
         init {
-            val dateText = timeData.unixTime.getStringByComponents(
-                UnixTime.StringComponent.dayOfMonth,
-                UnixTime.StringComponent.space,
-                UnixTime.StringComponent.month3,
-                UnixTime.StringComponent.comma,
-                UnixTime.StringComponent.space,
-                UnixTime.StringComponent.hhmm24,
-            )
-            text = "$dateText ${textFeatures.textNoFeatures} - ${timeData.timeLeftText()}"
-            backgroundColor = when (timeData.status) {
-                TextFeatures.TimeData.STATUS.IN -> ColorRgba.black
-                TextFeatures.TimeData.STATUS.NEAR -> AppleColors.Palettes.blue.dark
-                TextFeatures.TimeData.STATUS.OVERDUE -> AppleColors.Palettes.red.dark
-            }
-            borderColor = when (timeData.status) {
-                TextFeatures.TimeData.STATUS.IN -> ColorRgba.white
-                TextFeatures.TimeData.STATUS.NEAR,
-                TextFeatures.TimeData.STATUS.OVERDUE -> backgroundColor
-            }
+
+            val timeData = textFeatures.timeData
+
+            text = if (timeData != null) {
+                val dateText = timeData.unixTime.getStringByComponents(
+                    UnixTime.StringComponent.dayOfMonth,
+                    UnixTime.StringComponent.space,
+                    UnixTime.StringComponent.month3,
+                    UnixTime.StringComponent.comma,
+                    UnixTime.StringComponent.space,
+                    UnixTime.StringComponent.hhmm24,
+                )
+                "$dateText ${textFeatures.textNoFeatures} - ${timeData.timeLeftText()}"
+            } else
+                textFeatures.textNoFeatures
+
+            backgroundColor = if (timeData != null)
+                when (timeData.status) {
+                    TextFeatures.TimeData.STATUS.IN -> ColorRgba.black
+                    TextFeatures.TimeData.STATUS.NEAR -> AppleColors.Palettes.blue.dark
+                    TextFeatures.TimeData.STATUS.OVERDUE -> AppleColors.Palettes.red.dark
+                }
+            else
+                ColorRgba.black
+
+            borderColor = if (timeData != null)
+                when (timeData.status) {
+                    TextFeatures.TimeData.STATUS.IN -> ColorRgba.white
+                    TextFeatures.TimeData.STATUS.NEAR,
+                    TextFeatures.TimeData.STATUS.OVERDUE -> backgroundColor
+                }
+            else
+                ColorRgba.white
         }
     }
 }
