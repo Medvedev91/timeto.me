@@ -182,6 +182,7 @@ class MainVM : __VM<MainVM.State>() {
         val timeData: TextFeatures.TimeData,
         textFeatures: TextFeatures,
     ) {
+
         val type = timeData.type
         val text: String
         val borderColor: ColorRgba
