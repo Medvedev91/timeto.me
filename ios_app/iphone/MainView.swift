@@ -485,20 +485,35 @@ private struct ImportantTaskItem: View {
                     )
                 },
                 label: {
+
+                    let type = importantTask.type
+
                     HStack {
 
                         HStack {
 
-                            Image(systemName: "calendar")
-                                    .foregroundColor(Color.white)
-                                    .font(.system(size: 15, weight: .light))
-                                    .padding(.trailing, 3)
+                            if (type != nil) {
+                                var (iconRes, iconSize): (String, CGFloat) = {
+                                    if (importantTask.type == .event) {
+                                        return ("calendar", 14)
+                                    } else if (importantTask.type == .repeating) {
+                                        return ("repeat", 14)
+                                    } else if (importantTask.type == .paused) {
+                                        return ("pause.fill", 13)
+                                    }
+                                    return ("", 14)
+                                }()
+                                Image(systemName: iconRes)
+                                        .foregroundColor(Color.white)
+                                        .font(.system(size: iconSize, weight: .light))
+                                        .padding(.trailing, 3)
+                            }
 
                             Text(importantTask.text)
                                     .font(.system(size: 15))
                                     .foregroundColor(Color.white)
                         }
-                                .padding(.horizontal, 6)
+                                .padding(.horizontal, 8)
                                 .frame(maxHeight: .infinity)
                                 .background(
                                         RoundedRectangle(cornerRadius: 99, style: .circular)
