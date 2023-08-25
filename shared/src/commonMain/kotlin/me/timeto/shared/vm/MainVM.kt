@@ -225,7 +225,11 @@ class MainVM : __VM<MainVM.State>() {
                 )
                 "$dateText ${textFeatures.textNoFeatures} - ${timeData.timeLeftText()}"
             } else
-                textFeatures.textNoFeatures
+                textFeatures.textUi(
+                    withActivityEmoji = false,
+                    withPausedEmoji = false,
+                    withTimer = true,
+                )
 
             backgroundColor = if (timeData != null)
                 when (timeData.status) {
