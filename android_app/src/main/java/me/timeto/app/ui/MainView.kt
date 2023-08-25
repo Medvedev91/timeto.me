@@ -49,6 +49,7 @@ private val taskItemHeight = 36.dp
 private val taskListContentPadding = 4.dp
 
 private val menuColor = MainVM.menuColor.toColor()
+private val menuTimeColor = MainVM.menuTimeColor.toColor()
 
 private val menuButtonModifier = Modifier.size(menuIconSize).padding(menuIconPadding)
 
@@ -348,9 +349,12 @@ fun MainView() {
 
                     Text(
                         text = state.timeOfTheDay,
-                        color = menuColor,
-                        fontSize = 16.sp,
+                        color = menuTimeColor,
+                        fontSize = 9.sp,
                         fontWeight = FontWeight.Bold,
+                        fontFamily = timerFont,
+                        modifier = Modifier
+                            .padding(top = 4.dp, bottom = 4.dp)
                     )
 
                     Row(
