@@ -14,7 +14,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ExpandMore
-import androidx.compose.material.icons.rounded.Pause
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -116,7 +115,7 @@ fun MainView() {
             ) {
 
                 Icon(
-                    Icons.Rounded.Pause,
+                    painterResource(id = R.drawable.ic_round_pause_24),
                     contentDescription = "Pause",
                     tint = timerColor,
                     modifier = Modifier
