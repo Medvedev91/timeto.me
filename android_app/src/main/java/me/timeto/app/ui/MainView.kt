@@ -27,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
@@ -586,14 +587,22 @@ private fun ImportantTasksView(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
 
-                Icon(
-                    painterResource(id = R.drawable.sf_calendar_medium_light),
-                    contentDescription = "Event",
-                    tint = c.white,
-                    modifier = Modifier
-                        .padding(end = 5.dp)
-                        .size(14.dp),
-                )
+                val type = taskItem.type
+                if (type != null) {
+                    val (iconRes: Int, iconSize: Dp) = when (type) {
+                        MainVM.ImportantTask.Type.event -> R.drawable.sf_calendar_medium_light to 14.dp
+                        MainVM.ImportantTask.Type.repeating -> R.drawable.sf_repeat_medium_semibold to 14.dp
+                        MainVM.ImportantTask.Type.paused -> R.drawable.ic_round_pause_24 to 15.dp
+                    }
+                    Icon(
+                        painterResource(id = iconRes),
+                        contentDescription = taskItem.text,
+                        tint = c.white,
+                        modifier = Modifier
+                            .padding(end = 5.dp)
+                            .size(iconSize),
+                    )
+                }
 
                 Text(
                     text = taskItem.text,
