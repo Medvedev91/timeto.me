@@ -192,6 +192,7 @@ class MainVM : __VM<MainVM.State>() {
         val textFeatures: TextFeatures,
     ) {
 
+        val type: Type?
         val text: String
         val borderColor: ColorRgba
         val backgroundColor: ColorRgba
@@ -200,6 +201,18 @@ class MainVM : __VM<MainVM.State>() {
         init {
 
             val timeData = textFeatures.timeData
+
+            type = if (timeData != null)
+                when (timeData.type) {
+                    TextFeatures.TimeData.TYPE.EVENT -> Type.event
+                    TextFeatures.TimeData.TYPE.REPEATING -> Type.repeating
+                }
+            else if (textFeatures.paused != null)
+                Type.paused
+            else {
+                reportApi("ImportantTask invalid type")
+                null
+            }
 
             text = if (timeData != null) {
                 val dateText = timeData.unixTime.getStringByComponents(
@@ -231,6 +244,10 @@ class MainVM : __VM<MainVM.State>() {
                 }
             else
                 ColorRgba.white
+        }
+
+        enum class Type {
+            event, repeating, paused
         }
     }
 }
