@@ -418,24 +418,19 @@ private fun ChecklistView(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
-        val checklistVContentPadding = 8.dp
-
-        MainDivider(
-            animateFloatAsState(
-                remember {
-                    derivedStateOf { if (scrollState.canScrollBackward) 1f else 0f }
-                }.value
-            )
-        )
-
         val itemStartPadding = 8.dp
         val checkboxSize = 18.dp
         val checklistItemMinHeight = 44.dp
-        val checklistDividerPadding = 14.dp
 
         val completionState = checklistUI.stateUI
         val checklistMenuInnerIconPadding = (checklistItemMinHeight - checkboxSize) / 2
-        val checklistMenuStartIconPadding = 4.dp
+
+        MainDivider(
+            calcAlpha = {
+                if (scrollState.firstVisibleItemIndex > 0) 1f
+                else (scrollState.firstVisibleItemScrollOffset.toFloat() * 0.05f).limitMax(1f)
+            }
+        )
 
         Row(
             modifier = Modifier
@@ -449,7 +444,6 @@ private fun ChecklistView(
             LazyColumn(
                 modifier = Modifier.weight(1f),
                 state = scrollState,
-                contentPadding = PaddingValues(vertical = checklistVContentPadding),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
@@ -488,7 +482,7 @@ private fun ChecklistView(
                                 color = c.white,
                                 modifier = Modifier
                                     .padding(vertical = 4.dp)
-                                    .padding(start = checklistDividerPadding),
+                                    .padding(start = 14.dp),
                                 textAlign = TextAlign.Start,
                             )
                         }
@@ -498,18 +492,8 @@ private fun ChecklistView(
 
             Row(
                 modifier = Modifier
-                    .padding(top = checklistVContentPadding)
                     .height(IntrinsicSize.Max)
             ) {
-
-                Box(
-                    modifier = Modifier
-                        .padding(vertical = 6.dp)
-                        .alpha(.5f)
-                        .background(c.white)
-                        .width(1.dp)
-                        .fillMaxHeight(),
-                )
 
                 Column {
 
@@ -524,7 +508,7 @@ private fun ChecklistView(
                         contentDescription = completionState.actionDesc,
                         tint = c.white,
                         modifier = Modifier
-                            .padding(start = checklistMenuStartIconPadding)
+                            .padding(start = 4.dp)
                             .size(checklistItemMinHeight)
                             .clip(roundedShape)
                             .clickable {
