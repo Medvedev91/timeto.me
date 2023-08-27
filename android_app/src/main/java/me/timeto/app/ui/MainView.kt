@@ -36,8 +36,6 @@ import me.timeto.shared.*
 import me.timeto.shared.vm.MainVM
 import me.timeto.shared.vm.ui.ChecklistStateUI
 
-private val dividerColor = AppleColors.gray4Dark.toColor()
-
 val bottomNavigationHeight = 56.dp
 
 private val menuIconSize = bottomNavigationHeight
@@ -638,7 +636,7 @@ private fun MainDivider(
             .height(onePx)
             .fillMaxWidth()
             .drawBehind {
-                drawRect(color = dividerColor.copy(alpha = alphaAnimate.value))
+                drawRect(color = c.dividerBg.copy(alpha = alphaAnimate.value))
             },
     )
 }
