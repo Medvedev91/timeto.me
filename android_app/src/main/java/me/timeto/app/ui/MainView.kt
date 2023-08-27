@@ -187,16 +187,12 @@ fun MainView() {
                     }
 
                     MainDivider(
-                        animateFloatAsState(
-                            remember {
-                                derivedStateOf {
-                                    val isMiddleDividerVisible =
-                                        (checklistUI != null && (checklistScrollState.canScrollBackward || checklistScrollState.canScrollForward)) ||
-                                        (isImportantTasksExists && (importantTasksScrollState.canScrollBackward || importantTasksScrollState.canScrollForward))
-                                    if (isMiddleDividerVisible) 1f else 0f
-                                }
-                            }.value
-                        )
+                        calcAlpha = {
+                            val isMiddleDividerVisible =
+                                (checklistUI != null && (checklistScrollState.canScrollBackward || checklistScrollState.canScrollForward)) ||
+                                (isImportantTasksExists && (importantTasksScrollState.canScrollBackward || importantTasksScrollState.canScrollForward))
+                            if (isMiddleDividerVisible) 1f else 0f
+                        }
                     )
 
                     if (isImportantTasksExists) {
@@ -247,7 +243,7 @@ fun MainView() {
                                     )
                                 }
 
-                                MainDivider(remember { mutableStateOf(1f) })
+                                MainDivider(calcAlpha = { 1f })
 
                                 BackHandler {
                                     vm.toggleIsTasksVisible()
@@ -627,8 +623,9 @@ private fun ImportantTasksView(
 
 @Composable
 private fun MainDivider(
-    alphaAnimate: State<Float>,
+    calcAlpha: () -> Float,
 ) {
+    val alphaAnimate = animateFloatAsState(remember { derivedStateOf(calcAlpha) }.value)
     ZStack(
         modifier = Modifier
             .padding(horizontal = TAB_TASKS_H_PADDING)
