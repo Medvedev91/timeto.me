@@ -434,15 +434,23 @@ private fun ChecklistView(
             )
         )
 
+        val itemStartPadding = 8.dp
+        val checkboxSize = 18.dp
+        val checklistItemMinHeight = 44.dp
+        val checklistDividerPadding = 14.dp
+
+        val completionState = checklistUI.stateUI
+        val checklistMenuInnerIconPadding = (checklistItemMinHeight - checkboxSize) / 2
+        val checklistMenuStartIconPadding = 4.dp
+
         Row(
             modifier = Modifier
-                .fillMaxWidth(0.80f)
+                .padding(
+                    start = TAB_TASKS_H_PADDING - itemStartPadding,
+                    end = TAB_TASKS_H_PADDING - checklistMenuInnerIconPadding,
+                )
                 .weight(1f),
         ) {
-
-            val checkboxSize = 18.dp
-            val checklistItemMinHeight = 44.dp
-            val checklistDividerPadding = 14.dp
 
             LazyColumn(
                 modifier = Modifier.weight(1f),
@@ -463,7 +471,7 @@ private fun ChecklistView(
                                 .clickable {
                                     itemUI.toggle()
                                 }
-                                .padding(start = 8.dp),
+                                .padding(start = itemStartPadding),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Start,
                         ) {
@@ -511,9 +519,6 @@ private fun ChecklistView(
 
                 Column {
 
-                    val completionState = checklistUI.stateUI
-                    val checklistMenuInnerIconPadding = (checklistItemMinHeight - checkboxSize) / 2
-                    val checklistMenuStartIconPadding = 4.dp
                     Icon(
                         painterResource(
                             id = when (completionState) {
