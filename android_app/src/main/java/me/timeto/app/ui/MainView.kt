@@ -247,7 +247,7 @@ fun MainView() {
                                     )
                                 }
 
-                                MainDivider(remember { mutableStateOf(1f) }, PaddingValues())
+                                MainDivider(remember { mutableStateOf(1f) })
 
                                 BackHandler {
                                     vm.toggleIsTasksVisible()
@@ -628,11 +628,10 @@ private fun ImportantTasksView(
 @Composable
 private fun MainDivider(
     alphaAnimate: State<Float>,
-    padding: PaddingValues = PaddingValues(horizontal = 8.dp),
 ) {
     ZStack(
         modifier = Modifier
-            .padding(padding)
+            .padding(horizontal = TAB_TASKS_H_PADDING)
             .height(onePx)
             .fillMaxWidth()
             .drawBehind {
