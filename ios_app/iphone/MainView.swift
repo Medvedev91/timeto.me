@@ -5,7 +5,6 @@ import shared
 let bottomNavigationHeight = 56.0 // todo
 
 private let dividerPadding = 8.0
-private let dividerColor: UIColor = .systemGray4
 
 private let menuIconSize = bottomNavigationHeight
 
@@ -536,8 +535,7 @@ private struct FSDivider: View {
     var isVisible = true
 
     var body: some View {
-        Color(isVisible ? dividerColor : .clear)
-                .frame(height: onePx)
+        DividerBg(isVisible: isVisible)
                 .padding(.horizontal, dividerPadding)
     }
 }
