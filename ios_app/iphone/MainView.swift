@@ -130,7 +130,7 @@ struct MainView: View {
                         if let checklistUI = checklistUI {
                             VStack {
                                 ChecklistView(checklistUI: checklistUI)
-                                FSDivider()
+                                MainDivider()
                             }
                         }
 
@@ -528,7 +528,7 @@ private struct ImportantTaskItem: View {
     }
 }
 
-private struct FSDivider: View {
+private struct MainDivider: View {
 
     var isVisible = true
 
