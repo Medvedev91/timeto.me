@@ -154,6 +154,7 @@ struct MainView: View {
                     if (state.isTasksVisible) {
 
                         VStack {
+
                             if let checklistUI = checklistUI {
 
                                 Button(
@@ -170,7 +171,7 @@ struct MainView: View {
                                 )
                                         .background(.black)
 
-                                DividerBg()
+                                MainDivider()
                             }
 
                             TasksView()
@@ -331,8 +332,7 @@ private struct ChecklistView: View {
 
         VStack {
 
-            DividerBg(isVisible: vScroll > 0)
-                    .padding(.trailing, (checklistDividerPadding * 2) + checkboxSize + dividerGap + dividerWidth)
+            MainDivider(isVisible: vScroll > 0)
 
             HStack(alignment: .top) {
 
@@ -396,8 +396,8 @@ private struct ChecklistView: View {
                 )
                         .frame(height: checklistItemMinHeight)
             }
+                    .padding(.horizontal, TAB_TASKS_H_PADDING)
         }
-                .padding(.horizontal, TAB_TASKS_H_PADDING)
     }
 }
 
