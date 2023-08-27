@@ -4,8 +4,6 @@ import shared
 
 let bottomNavigationHeight = 56.0 // todo
 
-private let dividerPadding = 8.0
-
 private let menuIconSize = bottomNavigationHeight
 
 private let taskCountsHeight = 36.0
@@ -522,7 +520,7 @@ private struct ImportantTaskItem: View {
                                                 .fill(importantTask.borderColor.toColor())
                                 )
                                 .padding(.vertical, 4)
-                                .padding(.horizontal, dividerPadding)
+                                .padding(.horizontal, TAB_TASKS_H_PADDING)
                     }
                             .frame(height: taskItemHeight)
                 }
@@ -536,6 +534,6 @@ private struct FSDivider: View {
 
     var body: some View {
         DividerBg(isVisible: isVisible)
-                .padding(.horizontal, dividerPadding)
+                .padding(.horizontal, TAB_TASKS_H_PADDING)
     }
 }
