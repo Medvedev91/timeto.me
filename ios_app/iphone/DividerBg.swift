@@ -2,7 +2,9 @@ import SwiftUI
 
 struct DividerBg: View {
 
+    var isVisible = true
+
     var body: some View {
-        Divider(color: c.dividerBg)
+        Divider(color: isVisible ? c.dividerBg : .clear)
     }
 }
