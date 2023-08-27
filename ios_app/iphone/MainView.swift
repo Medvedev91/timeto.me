@@ -326,87 +326,81 @@ private struct ChecklistView: View {
 
     var body: some View {
 
+        let dividerGap = 8.0
+        let dividerWidth = onePx
+        let checkboxSize = 20.0
+        let checklistItemMinHeight = 46.0
+        let checklistDividerPadding = 12.0
+
         VStack {
 
-            FSDivider(isVisible: vScroll > 0)
+            DividerBg(isVisible: vScroll > 0)
+                    .padding(.trailing, (checklistDividerPadding * 2) + checkboxSize + dividerGap + dividerWidth)
 
-            GeometryReader { proxy in
+            HStack(alignment: .top) {
 
-                ZStack(alignment: .center) {
+                ScrollViewWithVListener(showsIndicators: false, vScroll: $vScroll) {
 
-                    HStack(alignment: .top, spacing: 0) {
+                    VStack {
 
-                        let checkboxSize = 20.0
-                        let checklistItemMinHeight = 46.0
-                        let checklistDividerPadding = 12.0
+                        ForEach(checklistUI.itemsUI, id: \.item.id) { itemUI in
 
-                        ScrollViewWithVListener(showsIndicators: false, vScroll: $vScroll) {
+                            Button(
+                                    action: {
+                                        itemUI.toggle()
+                                    },
+                                    label: {
+                                        HStack {
 
-                            VStack {
+                                            Image(systemName: itemUI.item.isChecked ? "checkmark.square.fill" : "square")
+                                                    .foregroundColor(Color.white)
+                                                    .font(.system(size: checkboxSize, weight: .regular))
+                                                    .padding(.trailing, checklistDividerPadding)
 
-                                ForEach(checklistUI.itemsUI, id: \.item.id) { itemUI in
-
-                                    Button(
-                                            action: {
-                                                itemUI.toggle()
-                                            },
-                                            label: {
-                                                HStack {
-
-                                                    Image(systemName: itemUI.item.isChecked ? "checkmark.square.fill" : "square")
-                                                            .foregroundColor(Color.white)
-                                                            .font(.system(size: checkboxSize, weight: .regular))
-                                                            .padding(.trailing, checklistDividerPadding)
-
-                                                    Text(itemUI.item.text)
-                                                            .padding(.vertical, 4)
-                                                            .foregroundColor(.white)
-                                                            .font(.system(size: 18))
-                                                }
-                                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                                        .frame(minHeight: checklistItemMinHeight)
-                                                //                                                .background(Color.red)
-                                            }
-                                    )
-                                }
-                            }
-
-                            Spacer()
+                                            Text(itemUI.item.text)
+                                                    .padding(.vertical, 4)
+                                                    .foregroundColor(.white)
+                                                    .font(.system(size: 18))
+                                        }
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                                .frame(minHeight: checklistItemMinHeight)
+                                        //                                                .background(Color.red)
+                                    }
+                            )
                         }
-
-                        let dividerGap = 8.0
-                        Color(dividerColor)
-                                .frame(width: onePx)
-                                .frame(height: checklistItemMinHeight - dividerGap)
-                                .padding(.top, dividerGap / 2)
-                                .padding(.trailing, checklistDividerPadding)
-
-                        let stateUI = checklistUI.stateUI
-                        let stateIconResource: String = {
-                            if stateUI is ChecklistStateUI.Completed { return "checkmark.square.fill" }
-                            if stateUI is ChecklistStateUI.Empty { return "square" }
-                            if stateUI is ChecklistStateUI.Partial { return "minus.square.fill" }
-                            fatalError()
-                        }()
-                        Button(
-                                action: {
-                                    stateUI.onClick()
-                                },
-                                label: {
-                                    Image(systemName: stateIconResource)
-                                            .foregroundColor(Color.white)
-                                            .font(.system(size: checkboxSize, weight: .regular))
-                                            .padding(.trailing, checklistDividerPadding)
-                                }
-                        )
-                                .frame(height: checklistItemMinHeight)
                     }
-                            .frame(width: proxy.size.width * 0.80)
+
+                    Spacer()
                 }
-                        .frame(maxWidth: .infinity)
+
+                Color(dividerColor)
+                        .frame(width: dividerWidth)
+                        .frame(height: checklistItemMinHeight - dividerGap)
+                        .padding(.top, dividerGap / 2)
+                        .padding(.trailing, checklistDividerPadding)
+
+                let stateUI = checklistUI.stateUI
+                let stateIconResource: String = {
+                    if stateUI is ChecklistStateUI.Completed { return "checkmark.square.fill" }
+                    if stateUI is ChecklistStateUI.Empty { return "square" }
+                    if stateUI is ChecklistStateUI.Partial { return "minus.square.fill" }
+                    fatalError()
+                }()
+                Button(
+                        action: {
+                            stateUI.onClick()
+                        },
+                        label: {
+                            Image(systemName: stateIconResource)
+                                    .foregroundColor(Color.white)
+                                    .font(.system(size: checkboxSize, weight: .regular))
+                                    .padding(.trailing, checklistDividerPadding)
+                        }
+                )
+                        .frame(height: checklistItemMinHeight)
             }
         }
-                .padding(.top, 20)
+                .padding(.horizontal, TAB_TASKS_H_PADDING)
     }
 }
 
