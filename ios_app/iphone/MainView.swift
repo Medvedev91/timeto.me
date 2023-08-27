@@ -324,11 +324,8 @@ private struct ChecklistView: View {
 
     var body: some View {
 
-        let dividerGap = 8.0
-        let dividerWidth = onePx
         let checkboxSize = 20.0
         let checklistItemMinHeight = 46.0
-        let checklistDividerPadding = 12.0
 
         VStack {
 
@@ -352,7 +349,7 @@ private struct ChecklistView: View {
                                             Image(systemName: itemUI.item.isChecked ? "checkmark.square.fill" : "square")
                                                     .foregroundColor(Color.white)
                                                     .font(.system(size: checkboxSize, weight: .regular))
-                                                    .padding(.trailing, checklistDividerPadding)
+                                                    .padding(.trailing, 12)
 
                                             Text(itemUI.item.text)
                                                     .padding(.vertical, 4)
@@ -370,12 +367,6 @@ private struct ChecklistView: View {
                     Spacer()
                 }
 
-                Color(dividerColor)
-                        .frame(width: dividerWidth)
-                        .frame(height: checklistItemMinHeight - dividerGap)
-                        .padding(.top, dividerGap / 2)
-                        .padding(.trailing, checklistDividerPadding)
-
                 let stateUI = checklistUI.stateUI
                 let stateIconResource: String = {
                     if stateUI is ChecklistStateUI.Completed { return "checkmark.square.fill" }
@@ -391,7 +382,6 @@ private struct ChecklistView: View {
                             Image(systemName: stateIconResource)
                                     .foregroundColor(Color.white)
                                     .font(.system(size: checkboxSize, weight: .regular))
-                                    .padding(.trailing, checklistDividerPadding)
                         }
                 )
                         .frame(height: checklistItemMinHeight)
