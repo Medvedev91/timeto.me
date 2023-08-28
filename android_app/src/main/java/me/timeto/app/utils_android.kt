@@ -30,6 +30,8 @@ fun Date.toUnixTime() = UnixTime((this.time / 1_000L).toInt())
 private val density by lazy { Resources.getSystem().displayMetrics.density }
 fun dpToPx(dp: Float) = (dp * density).toInt()
 fun pxToDp(px: Int) = (px / density)
+
+val H_PADDING = 16.dp
 val onePx = pxToDp(1).dp
 
 fun Dp.limitMin(dp: Dp) = if (this < dp) dp else this

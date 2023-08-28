@@ -67,7 +67,7 @@ fun TasksListView(
 
                 Row(
                     modifier = Modifier
-                        .padding(start = TAB_TASKS_H_PADDING - 2.dp)
+                        .padding(start = H_PADDING - 2.dp)
                         .border(width = onePx, color = c.dividerBg, shape = tabTasksInputShape)
                         .height(IntrinsicSize.Min), // To use fillMaxHeight() inside
                     verticalAlignment = Alignment.CenterVertically
@@ -284,7 +284,7 @@ fun TasksListView(
                                     },
                                 )
                             }
-                            .padding(start = TAB_TASKS_H_PADDING),
+                            .padding(start = H_PADDING),
                         contentAlignment = Alignment.BottomCenter
                     ) {
 
@@ -407,7 +407,7 @@ private fun TasksListView__TmrwTaskView(
 ) {
     Column(
         modifier = Modifier
-            .padding(start = TAB_TASKS_H_PADDING),
+            .padding(start = H_PADDING),
         verticalArrangement = Arrangement.Center,
     ) {
 

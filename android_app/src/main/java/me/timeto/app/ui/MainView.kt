@@ -435,8 +435,8 @@ private fun ChecklistView(
         Row(
             modifier = Modifier
                 .padding(
-                    start = TAB_TASKS_H_PADDING - itemStartPadding,
-                    end = TAB_TASKS_H_PADDING - checklistMenuInnerIconPadding,
+                    start = H_PADDING - itemStartPadding,
+                    end = H_PADDING - checklistMenuInnerIconPadding,
                 )
                 .weight(1f),
         ) {
@@ -612,7 +612,7 @@ private fun MainDivider(
     val alphaAnimate = animateFloatAsState(remember { derivedStateOf(calcAlpha) }.value)
     ZStack(
         modifier = Modifier
-            .padding(horizontal = TAB_TASKS_H_PADDING)
+            .padding(horizontal = H_PADDING)
             .height(onePx)
             .fillMaxWidth()
             .drawBehind {
