@@ -102,7 +102,35 @@ struct MainView: View {
                                 return Color.clear
                             })
 
-                    if state.isPurple {
+                    Button(
+                            action: {
+                                state.timerData.restart()
+                            },
+                            label: {
+                                Text(state.timerData.restartText)
+                                        .font(.system(size: 22, weight: .thin))
+                                        .foregroundColor(timerColor)
+                                        .frame(maxWidth: .infinity)
+                                        .frame(height: timerHeight)
+                            }
+                    )
+                            .offset(x: 2)
+                }
+                        .padding(.top, 13)
+
+                if state.isPurple {
+
+                    HStack {
+
+                        TimerHintsView(
+                                timerHintsUI: state.timerHints,
+                                hintHPadding: 10.0,
+                                fontSize: 20.0,
+                                fontWeight: .regular,
+                                fontColor: timerColor,
+                                onStart: {}
+                        )
+
                         Button(
                                 action: {
                                     timetoSheet.showActivitiesTimerSheet(
@@ -116,30 +144,15 @@ struct MainView: View {
                                     )
                                 },
                                 label: {
-                                    Image(systemName: "chevron.down")
+                                    Image(systemName: "chevron.down.circle.fill")
                                             .foregroundColor(timerColor)
-                                            .font(.system(size: 22, weight: .thin))
-                                            .frame(maxWidth: .infinity)
-                                            .frame(height: timerHeight)
+                                            .font(.system(size: 20, weight: .regular))
                                 }
                         )
-                    } else {
-                        Button(
-                                action: {
-                                    state.timerData.restart()
-                                },
-                                label: {
-                                    Text(state.timerData.restartText)
-                                            .font(.system(size: 22, weight: .thin))
-                                            .foregroundColor(timerColor)
-                                            .frame(maxWidth: .infinity)
-                                            .frame(height: timerHeight)
-                                }
-                        )
-                                .offset(x: 2)
+                                .padding(.leading, 8)
                     }
+                            .padding(.top, 11)
                 }
-                        .padding(.top, 13)
 
                 ZStack {
 
