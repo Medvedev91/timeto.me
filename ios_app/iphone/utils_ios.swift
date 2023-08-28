@@ -3,8 +3,6 @@ import Combine
 import WatchConnectivity
 import shared
 
-let DEF_LIST_V_PADDING = 12.0 // todo remove
-
 let onePx = 1 / UIScreen.main.scale
 
 func hideKeyboard() {
