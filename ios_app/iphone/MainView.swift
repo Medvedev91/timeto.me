@@ -15,7 +15,9 @@ private let menuColor = MainVM.companion.menuColor.toColor()
 private let menuTimeColor = MainVM.companion.menuTimeColor.toColor()
 private let menuTimeFont = buildTimerFont(size: 10)
 
-private let timerFont = buildTimerFont(size: 44)
+private let timerFont1 = buildTimerFont(size: 44)
+private let timerFont2 = buildTimerFont(size: 38)
+private let timerFont3 = buildTimerFont(size: 30)
 
 private let navAndTasksTextHeight = bottomNavigationHeight + taskCountsHeight
 
@@ -82,6 +84,12 @@ struct MainView: View {
                                 vm.toggleIsPurple()
                             },
                             label: {
+                                let timerFont: Font = {
+                                    let len = timerData.title.count
+                                    if len <= 5 { return timerFont1 }
+                                    if len <= 7 { return timerFont2 }
+                                    return timerFont3
+                                }()
                                 Text(timerData.title)
                                         .font(timerFont)
                                         .foregroundColor(timerColor)
@@ -90,7 +98,7 @@ struct MainView: View {
                             }
                     )
                             .background(GeometryReader { geometry -> Color in
-                                myAsyncAfter(0.1) { timerHeight = geometry.size.height }
+                                myAsyncAfter(0.01) { timerHeight = geometry.size.height }
                                 return Color.clear
                             })
 
