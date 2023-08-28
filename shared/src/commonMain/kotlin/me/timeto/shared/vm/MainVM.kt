@@ -32,6 +32,15 @@ class MainVM : __VM<MainVM.State>() {
 
         val activity = interval.getActivityDI()
 
+        val timerHints = activity.getData().timer_hints.getTimerHintsUI(
+            historyLimit = 6,
+            customLimit = 6,
+            onSelect = { hintUI ->
+                val context = ActivityTimerSheetVM.TimerContext.Interval(interval)
+                ActivityTimerSheetVM.startIntervalByContext(context, activity, hintUI.seconds)
+            }
+        )
+
         // todo or use interval.getTriggers()
         val textFeatures = (interval.note ?: activity.name).textFeatures()
         val title = textFeatures.textUi(
