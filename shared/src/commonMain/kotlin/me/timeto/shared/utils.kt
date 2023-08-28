@@ -197,13 +197,12 @@ fun Int.toHms(
 fun Int.toTimerHintNote(
     isShort: Boolean,
 ): String {
-    val hms = this.toHms()
-    if (hms[0] > 0) {
-        if (hms[1] == 0)
-            return "${hms[0]}h"
-        return "${hms[0]}:${hms[1].toString().padStart(2, '0')}"
+    val (h, m) = this.toHms()
+    return when {
+        h == 0 -> "${m}${if (isShort) "" else " min"}"
+        m == 0 -> "${h}h"
+        else -> "${h}:${m.toString().padStart(2, '0')}"
     }
-    return "${hms[1]}${if (isShort) "m" else " min"}"
 }
 
 fun Int.toStringEnding(withNum: Boolean, one: String, many: String): String {
