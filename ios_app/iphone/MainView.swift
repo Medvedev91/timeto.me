@@ -30,6 +30,7 @@ struct MainView: View {
     @EnvironmentObject private var timetoSheet: TimetoSheet
 
     @State private var isPurpleAnim = true
+    @State private var timerHeight = 30.0
 
     static var lastInstance: MainView? = nil
 
@@ -61,18 +62,6 @@ struct MainView: View {
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 20)
 
-                Button(
-                        action: {
-                            vm.toggleIsPurple()
-                        },
-                        label: {
-                            Text(timerData.title)
-                                    .font(timerFont)
-                                    .foregroundColor(timerColor)
-                        }
-                )
-                        .padding(.top, 13)
-
                 HStack {
 
                     Button(
@@ -80,46 +69,68 @@ struct MainView: View {
                                 vm.pauseTask()
                             },
                             label: {
-                                Image(systemName: "pause.fill")
+                                Image(systemName: "pause")
                                         .foregroundColor(timerColor)
-                                        .font(.system(size: 21, weight: .ultraLight))
+                                        .font(.system(size: 22, weight: .thin))
+                                        .frame(maxWidth: .infinity)
+                                        .frame(height: timerHeight)
                             }
                     )
 
                     Button(
                             action: {
-                                state.timerData.restart()
+                                vm.toggleIsPurple()
                             },
                             label: {
-                                Text(state.timerData.restartText)
-                                        .font(.system(size: 21, weight: .medium))
+                                Text(timerData.title)
+                                        .font(timerFont)
                                         .foregroundColor(timerColor)
-                                        .padding(.leading, 3)
+                                        .lineLimit(1)
+                                        .fixedSize()
                             }
                     )
-                            .padding(.horizontal, 24)
+                            .background(GeometryReader { geometry -> Color in
+                                myAsyncAfter(0.1) { timerHeight = geometry.size.height }
+                                return Color.clear
+                            })
 
-                    Button(
-                            action: {
-                                timetoSheet.showActivitiesTimerSheet(
-                                        isPresented: $isTimerButtonExpandPresented,
-                                        timerContext: state.timerButtonExpandSheetContext,
-                                        withMenu: false,
-                                        selectedActivity: state.activity,
-                                        onStart: {
-                                            isTimerButtonExpandPresented = false
-                                        }
-                                )
-                            },
-                            label: {
-                                Image(systemName: "chevron.down")
-                                        .foregroundColor(timerColor)
-                                        .font(.system(size: 20, weight: .bold))
-                            }
-                    )
+                    if state.isPurple {
+                        Button(
+                                action: {
+                                    timetoSheet.showActivitiesTimerSheet(
+                                            isPresented: $isTimerButtonExpandPresented,
+                                            timerContext: state.timerButtonExpandSheetContext,
+                                            withMenu: false,
+                                            selectedActivity: state.activity,
+                                            onStart: {
+                                                isTimerButtonExpandPresented = false
+                                            }
+                                    )
+                                },
+                                label: {
+                                    Image(systemName: "chevron.down")
+                                            .foregroundColor(timerColor)
+                                            .font(.system(size: 22, weight: .thin))
+                                            .frame(maxWidth: .infinity)
+                                            .frame(height: timerHeight)
+                                }
+                        )
+                    } else {
+                        Button(
+                                action: {
+                                    state.timerData.restart()
+                                },
+                                label: {
+                                    Text(state.timerData.restartText)
+                                            .font(.system(size: 22, weight: .thin))
+                                            .foregroundColor(timerColor)
+                                            .frame(maxWidth: .infinity)
+                                            .frame(height: timerHeight)
+                                }
+                        )
+                    }
                 }
-                        .padding(.top, 14)
-                        .padding(.bottom, 16)
+                        .padding(.top, 13)
 
                 ZStack {
 
