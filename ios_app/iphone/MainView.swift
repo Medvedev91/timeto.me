@@ -13,7 +13,7 @@ private let taskListContentPadding = 4.0
 
 private let menuColor = MainVM.companion.menuColor.toColor()
 private let menuTimeColor = MainVM.companion.menuTimeColor.toColor()
-private let menuTimeFont = getTimerFont(size: 10)
+private let menuTimeFont = buildTimerFont(size: 10)
 
 private let navAndTasksTextHeight = bottomNavigationHeight + taskCountsHeight
 
@@ -65,7 +65,7 @@ struct MainView: View {
                         },
                         label: {
                             Text(timerData.title)
-                                    .font(getTimerFont(size: 44))
+                                    .font(buildTimerFont(size: 44))
                                     .foregroundColor(timerColor)
                         }
                 )
