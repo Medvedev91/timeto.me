@@ -27,7 +27,7 @@ class TimerDataUI(
         val tmpData: TmpDTO = when {
             timeLeft < -BREAK_SECONDS -> TmpDTO("OVERDUE", ColorRgba.red, -timeLeft - BREAK_SECONDS, STATUS.OVERDUE)
             timeLeft <= 0 -> TmpDTO("BREAK", ColorRgba.green, timeLeft + BREAK_SECONDS, STATUS.BREAK)
-            else -> TmpDTO(null, defColor, timeLeft, STATUS.WORK)
+            else -> TmpDTO(null, defColor, timeLeft, STATUS.PROCESS)
         }
 
         val timeForTitle = if (isPurple) (now - interval.id) else tmpData.timeLeft
@@ -47,9 +47,9 @@ class TimerDataUI(
 
     enum class STATUS {
 
-        WORK, BREAK, OVERDUE;
+        PROCESS, BREAK, OVERDUE;
 
-        fun isWork() = this == WORK
+        fun isProcess() = this == PROCESS
         fun isBreak() = this == BREAK
         fun isOverdue() = this == OVERDUE
     }
