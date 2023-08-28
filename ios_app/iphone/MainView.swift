@@ -57,6 +57,7 @@ struct MainView: View {
 
                 let timerData = state.timerData
                 let timerColor = timerData.color.toColor()
+                let timerButtonsColor = state.timerButtonsColor.toColor()
 
                 Text(state.title)
                         .font(.system(size: 21, weight: .semibold))
@@ -72,7 +73,7 @@ struct MainView: View {
                             },
                             label: {
                                 Image(systemName: "pause")
-                                        .foregroundColor(timerColor)
+                                        .foregroundColor(timerButtonsColor)
                                         .font(.system(size: 22, weight: .thin))
                                         .frame(maxWidth: .infinity)
                                         .frame(height: timerHeight)
@@ -109,7 +110,7 @@ struct MainView: View {
                             label: {
                                 Text(state.timerData.restartText)
                                         .font(.system(size: 22, weight: .thin))
-                                        .foregroundColor(timerColor)
+                                        .foregroundColor(timerButtonsColor)
                                         .frame(maxWidth: .infinity)
                                         .frame(height: timerHeight)
                             }
