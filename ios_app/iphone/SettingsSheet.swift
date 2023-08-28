@@ -447,6 +447,7 @@ struct SettingsSheet: View {
     }
 }
 
+// todo rename
 struct ToolsView_ChecklistView: View {
 
     let checklist: ChecklistModel
@@ -467,30 +468,15 @@ struct ToolsView_ChecklistView: View {
                     }
                 }
         ) {
-            AnyView(safeView)
-                    .padding(.horizontal, MyListView.PADDING_INNER_HORIZONTAL)
-                    .padding(.vertical, DEF_LIST_V_PADDING)
+            MyListView__ItemView__ButtonView(text: checklist.name) {
+                isItemsPresented = true
+            }
         }
-                .sheetEnv(isPresented: $isEditPresented) {
-                    ChecklistFormSheet(isPresented: $isEditPresented, checklist: checklist)
-                }
-    }
-
-    private var safeView: some View {
-        Button(
-                action: {
-                    isItemsPresented = true
-                },
-                label: {
-                    HStack {
-                        Text(checklist.name)
-                        Spacer()
-                    }
-                }
-        )
-                .foregroundColor(.primary)
                 .sheetEnv(isPresented: $isItemsPresented) {
                     ChecklistDialog(isPresented: $isItemsPresented, checklist: checklist)
+                }
+                .sheetEnv(isPresented: $isEditPresented) {
+                    ChecklistFormSheet(isPresented: $isEditPresented, checklist: checklist)
                 }
     }
 }
