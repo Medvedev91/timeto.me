@@ -7,6 +7,7 @@ struct TimerHintsView: View {
     let hintHPadding: CGFloat
     let fontSize: CGFloat
     let fontWeight: Font.Weight
+    var fontColor: Color = .blue
     let onStart: () -> Void
 
     var body: some View {
@@ -21,7 +22,7 @@ struct TimerHintsView: View {
                     label: {
                         Text(hintUI.text)
                                 .font(.system(size: fontSize, weight: fontWeight))
-                                .foregroundColor(.blue)
+                                .foregroundColor(fontColor)
                                 .padding(.horizontal, hintHPadding)
                                 .padding(.vertical, 4)
                                 .cornerRadius(99)
