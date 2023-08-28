@@ -15,6 +15,8 @@ private let menuColor = MainVM.companion.menuColor.toColor()
 private let menuTimeColor = MainVM.companion.menuTimeColor.toColor()
 private let menuTimeFont = buildTimerFont(size: 10)
 
+private let timerFont = buildTimerFont(size: 44)
+
 private let navAndTasksTextHeight = bottomNavigationHeight + taskCountsHeight
 
 struct MainView: View {
@@ -65,7 +67,7 @@ struct MainView: View {
                         },
                         label: {
                             Text(timerData.title)
-                                    .font(buildTimerFont(size: 44))
+                                    .font(timerFont)
                                     .foregroundColor(timerColor)
                         }
                 )
