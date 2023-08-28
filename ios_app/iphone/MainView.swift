@@ -136,6 +136,7 @@ struct MainView: View {
                                             .frame(height: timerHeight)
                                 }
                         )
+                                .offset(x: 2)
                     }
                 }
                         .padding(.top, 13)
