@@ -133,7 +133,7 @@ struct ChecklistView__ItemView: View {
                     }
             )
                     .foregroundColor(.primary)
-                    .padding(.horizontal, TAB_TASKS_H_PADDING)
+                    .padding(.horizontal, H_PADDING)
         }
                 .sheetEnv(isPresented: $isEditPresented) {
                     ChecklistItemFormSheet(

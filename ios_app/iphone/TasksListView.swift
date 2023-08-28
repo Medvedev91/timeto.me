@@ -44,7 +44,7 @@ struct TasksListView: View {
                                                 .id("tmrw \(taskUI.task.id)")
                                         if !isFirst {
                                             DividerBg()
-                                                    .padding(.leading, TAB_TASKS_H_PADDING)
+                                                    .padding(.leading, H_PADDING)
                                         }
                                     }
                                 }
@@ -122,7 +122,7 @@ struct TasksListView: View {
                                         .buttonStyle(PlainButtonStyle())
                             }
                                     .overlay(squircleShape.stroke(c.dividerBg, lineWidth: onePx))
-                                    .padding(.leading, TAB_TASKS_H_PADDING - 2)
+                                    .padding(.leading, H_PADDING - 2)
                                     .padding(.top, 20)
                                     .padding(.bottom, 20)
 
@@ -143,7 +143,7 @@ struct TasksListView: View {
                             }
                 }
             }
-                    .padding(.trailing, TAB_TASKS_H_PADDING)
+                    .padding(.trailing, H_PADDING)
         }
     }
 
@@ -382,12 +382,12 @@ struct TasksView__TaskRowView: View {
                                     }
                                             .padding(.top, 2)
                                             .padding(.bottom, vPadding - 2)
-                                            .padding(.leading, TAB_TASKS_H_PADDING - 1)
+                                            .padding(.leading, H_PADDING - 1)
 
                                 } else if let timeUI = taskUI.timeUI as? TasksListVM.TaskUITimeUIRegularUI {
                                     HStack {
                                         Text(timeUI.text)
-                                                .padding(.leading, TAB_TASKS_H_PADDING)
+                                                .padding(.leading, H_PADDING)
                                                 .padding(.top, 1)
                                                 .padding(.bottom, vPadding)
                                                 .font(.system(size: 14, weight: .light))
@@ -408,7 +408,7 @@ struct TasksView__TaskRowView: View {
 
                                     TriggersListIconsView(triggers: taskUI.textFeatures.triggers, fontSize: 15)
                                 }
-                                        .padding(.leading, TAB_TASKS_H_PADDING)
+                                        .padding(.leading, H_PADDING)
                             }
                                     .padding(.vertical, 10)
                         }
@@ -429,7 +429,7 @@ struct TasksView__TaskRowView: View {
 
             if (withDivider) {
                 DividerBg()
-                        .padding(.leading, TAB_TASKS_H_PADDING)
+                        .padding(.leading, H_PADDING)
             }
         }
                 .id("\(taskUI.task.id) \(taskUI.task.text)") /// #TruncationDynamic
@@ -520,7 +520,7 @@ private struct TasksListView__TmrwTaskView: View {
                 TriggersListIconsView(triggers: taskUI.textFeatures.triggers, fontSize: 15)
             }
         }
-                .padding(.leading, TAB_TASKS_H_PADDING)
+                .padding(.leading, H_PADDING)
                 .padding(.vertical, 10)
     }
 }

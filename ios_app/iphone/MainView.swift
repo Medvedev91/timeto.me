@@ -421,7 +421,7 @@ private struct ChecklistView: View {
                 )
                         .frame(height: checklistItemMinHeight)
             }
-                    .padding(.horizontal, TAB_TASKS_H_PADDING)
+                    .padding(.horizontal, H_PADDING)
         }
     }
 }
@@ -545,7 +545,7 @@ private struct ImportantTaskItem: View {
                                                 .fill(importantTask.borderColor.toColor())
                                 )
                                 .padding(.vertical, 4)
-                                .padding(.horizontal, TAB_TASKS_H_PADDING)
+                                .padding(.horizontal, H_PADDING)
                     }
                             .frame(height: taskItemHeight)
                 }
@@ -559,6 +559,6 @@ private struct MainDivider: View {
 
     var body: some View {
         DividerBg(isVisible: isVisible)
-                .padding(.horizontal, TAB_TASKS_H_PADDING)
+                .padding(.horizontal, H_PADDING)
     }
 }
