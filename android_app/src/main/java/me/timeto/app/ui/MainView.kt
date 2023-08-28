@@ -342,7 +342,7 @@ fun MainView() {
                 ) {
 
                     Text(
-                        text = state.timeOfTheDay,
+                        text = state.menuTime,
                         color = menuTimeColor,
                         fontSize = 9.sp,
                         fontWeight = FontWeight.Bold,

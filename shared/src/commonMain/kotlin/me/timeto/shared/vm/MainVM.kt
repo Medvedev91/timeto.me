@@ -59,8 +59,7 @@ class MainVM : __VM<MainVM.State>() {
             return@filter clt.checklist.id != clUI.checklist.id
         }
 
-        val timeOfTheDay: String =
-            UnixTime().getStringByComponents(UnixTime.StringComponent.hhmm24)
+        val menuTime: String = UnixTime().getStringByComponents(UnixTime.StringComponent.hhmm24)
 
         val importantTasks: List<ImportantTask> = tasksToday
             .mapNotNull { task ->

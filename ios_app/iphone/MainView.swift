@@ -267,7 +267,7 @@ struct MainView: View {
 
                                 VStack(alignment: .center) {
 
-                                    Text(state.timeOfTheDay)
+                                    Text(state.menuTime)
                                             .foregroundColor(menuTimeColor)
                                             .font(menuTimeFont)
                                             .padding(.top, 4)
