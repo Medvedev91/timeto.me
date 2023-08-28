@@ -31,7 +31,7 @@ class MainVM : __VM<MainVM.State>() {
         val timerButtonExpandSheetContext = ActivityTimerSheetVM.TimerContext.Interval(interval)
 
         val timerButtonsColor = if (timerData.status.isProcess() && !isPurple)
-            ColorRgba(255, 255, 255, 160) else timerData.color
+            ColorRgba(255, 255, 255, 180) else timerData.color
 
         val activity = interval.getActivityDI()
 
