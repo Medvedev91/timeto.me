@@ -481,6 +481,7 @@ struct ToolsView_ChecklistView: View {
     }
 }
 
+// todo rename
 struct ToolsView_ShortcutView: View {
 
     let shortcut: ShortcutModel
@@ -500,27 +501,12 @@ struct ToolsView_ShortcutView: View {
                     }
                 }
         ) {
-            AnyView(itemView)
-                    .padding(.horizontal, MyListView.PADDING_INNER_HORIZONTAL)
-                    .padding(.vertical, DEF_LIST_V_PADDING)
+            MyListView__ItemView__ButtonView(text: shortcut.name) {
+                shortcut.performUI()
+            }
         }
                 .sheetEnv(isPresented: $isEditPresented) {
                     ShortcutFormSheet(isPresented: $isEditPresented, editedShortcut: shortcut)
                 }
-    }
-
-    private var itemView: some View {
-        Button(
-                action: {
-                    shortcut.performUI()
-                },
-                label: {
-                    HStack {
-                        Text(shortcut.name)
-                        Spacer()
-                    }
-                }
-        )
-                .foregroundColor(.primary)
     }
 }
