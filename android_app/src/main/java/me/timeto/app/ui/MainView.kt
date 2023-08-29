@@ -78,6 +78,7 @@ fun MainView() {
         ) {
 
             val timerColor = animateColorAsState(state.timerData.color.toColor()).value
+            val timerButtonsColor = state.timerButtonsColor.toColor()
 
             Text(
                 text = state.title,
@@ -96,56 +97,72 @@ fun MainView() {
                 contentPadding = PaddingValues(horizontal = 50.dp)
             )
 
-            Text(
-                text = state.timerData.title,
-                modifier = Modifier
-                    .clip(squircleShape)
-                    .clickable {
-                        vm.toggleIsPurple()
-                    }
-                    .padding(horizontal = 8.dp, vertical = 12.dp),
-                fontSize = 40.sp, // todo compact if long
-                fontFamily = timerFont,
-                color = timerColor,
-            )
-
             HStack(
                 modifier = Modifier
-                    .offset(y = (-4).dp)
+                    .height(IntrinsicSize.Min),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
 
-                Icon(
-                    painterResource(id = R.drawable.ic_round_pause_24),
-                    contentDescription = "Pause",
-                    tint = timerColor,
+                Box(
                     modifier = Modifier
-                        .size(timerButtonsHeight)
-                        .clip(roundedShape)
+                        .weight(1f)
+                        .fillMaxHeight()
+                        .offset(x = 2.dp)
+                        .clip(squircleShape)
                         .clickable {
                             vm.pauseTask()
+                        },
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Icon(
+                        painterResource(id = R.drawable.ic_round_pause_24),
+                        contentDescription = "Pause",
+                        tint = timerButtonsColor,
+                        modifier = Modifier
+                            .size(34.dp)
+                            .padding(5.dp),
+                    )
+                }
+
+                Text(
+                    text = state.timerData.title,
+                    modifier = Modifier
+                        .clip(squircleShape)
+                        .clickable {
+                            vm.toggleIsPurple()
                         }
-                        .padding(5.dp),
+                        .padding(horizontal = 8.dp, vertical = 12.dp),
+                    fontSize = 40.sp, // todo compact if long
+                    fontFamily = timerFont,
+                    color = timerColor,
                 )
 
                 Box(
                     modifier = Modifier
-                        .height(timerButtonsHeight)
-                        .clip(roundedShape)
+                        .weight(1f)
+                        .fillMaxHeight()
+                        .offset(x = (-2).dp)
+                        .clip(squircleShape)
                         .clickable {
                             state.timerData.restart()
-                        }
-                        .padding(horizontal = 16.dp),
+                        },
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
                         text = state.timerData.restartText,
                         modifier = Modifier
                             .padding(bottom = 2.dp),
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = timerColor,
+                        fontSize = 19.sp,
+                        fontWeight = FontWeight.Thin,
+                        color = timerButtonsColor,
                     )
                 }
+            }
+
+            HStack(
+                modifier = Modifier
+                    .offset(y = (-4).dp)
+            ) {
 
                 Icon(
                     Icons.Rounded.ExpandMore,
