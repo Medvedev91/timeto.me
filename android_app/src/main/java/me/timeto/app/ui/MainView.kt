@@ -107,7 +107,7 @@ fun MainView() {
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxHeight()
-                        .offset(x = 2.dp)
+                        .offset(x = 4.dp)
                         .clip(squircleShape)
                         .clickable {
                             vm.pauseTask()
@@ -115,12 +115,11 @@ fun MainView() {
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
-                        painterResource(id = R.drawable.ic_round_pause_24),
+                        painterResource(id = R.drawable.sf_pause_medium_thin),
                         contentDescription = "Pause",
                         tint = timerButtonsColor,
                         modifier = Modifier
-                            .size(34.dp)
-                            .padding(5.dp),
+                            .size(16.dp),
                     )
                 }
 
