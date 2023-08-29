@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
@@ -23,6 +24,7 @@ fun TimerHintsView(
     hintHPadding: Dp,
     fontSize: TextUnit,
     fontWeight: FontWeight,
+    fontColor: Color = c.blue,
     onStart: () -> Unit,
 ) {
     HStack(modifier = modifier) {
@@ -38,7 +40,7 @@ fun TimerHintsView(
                         }
                     }
                     .padding(start = hintHPadding, end = hintHPadding, top = 3.dp, bottom = 4.dp),
-                color = c.blue,
+                color = fontColor,
                 fontSize = fontSize,
                 fontWeight = fontWeight,
             )
