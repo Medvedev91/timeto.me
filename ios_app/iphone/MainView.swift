@@ -126,8 +126,8 @@ struct MainView: View {
                         TimerHintsView(
                                 timerHintsUI: state.timerHints,
                                 hintHPadding: 10.0,
-                                fontSize: 20.0,
-                                fontWeight: .regular,
+                                fontSize: 22.0,
+                                fontWeight: .thin,
                                 fontColor: timerColor,
                                 onStart: {}
                         )
@@ -147,12 +147,13 @@ struct MainView: View {
                                 label: {
                                     Image(systemName: "chevron.down.circle.fill")
                                             .foregroundColor(timerColor)
-                                            .font(.system(size: 20, weight: .regular))
+                                            .font(.system(size: 22, weight: .regular))
                                 }
                         )
-                                .padding(.leading, 8)
+                                .padding(.leading, 9)
+                                .offset(y: -onePx)
                     }
-                            .padding(.top, 11)
+                            .padding(.top, 9)
                 }
 
                 ZStack {
