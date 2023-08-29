@@ -177,7 +177,7 @@ fun MainView() {
                     contentDescription = "More",
                     tint = timerColor,
                     modifier = Modifier
-                        .padding(start = 6.dp)
+                        .padding(start = 8.dp)
                         .size(28.dp)
                         .clip(roundedShape)
                         .clickable {
