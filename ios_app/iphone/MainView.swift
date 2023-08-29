@@ -153,7 +153,7 @@ struct MainView: View {
                                 .padding(.leading, 9)
                                 .offset(y: -onePx)
                     }
-                            .padding(.top, 9)
+                            .padding(.top, 10)
                 }
 
                 ZStack {
