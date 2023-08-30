@@ -246,7 +246,7 @@ class MainVM : __VM<MainVM.State>() {
             backgroundColor = if (timeData != null)
                 when (timeData.status) {
                     TextFeatures.TimeData.STATUS.IN -> ColorRgba.black
-                    TextFeatures.TimeData.STATUS.NEAR -> AppleColors.Palettes.blue.dark
+                    TextFeatures.TimeData.STATUS.SOON -> AppleColors.Palettes.blue.dark
                     TextFeatures.TimeData.STATUS.OVERDUE -> AppleColors.Palettes.red.dark
                 }
             else
@@ -255,7 +255,7 @@ class MainVM : __VM<MainVM.State>() {
             borderColor = if (timeData != null)
                 when (timeData.status) {
                     TextFeatures.TimeData.STATUS.IN -> ColorRgba.white
-                    TextFeatures.TimeData.STATUS.NEAR,
+                    TextFeatures.TimeData.STATUS.SOON,
                     TextFeatures.TimeData.STATUS.OVERDUE -> backgroundColor
                 }
             else

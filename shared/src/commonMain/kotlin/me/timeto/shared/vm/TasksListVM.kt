@@ -144,7 +144,7 @@ class TasksListVM(
                     val unixTime = timeData.unixTime
                     val textColor = when (timeData.status) {
                         TimeData.STATUS.IN -> ColorRgba.textSecondary
-                        TimeData.STATUS.NEAR -> ColorRgba.blue
+                        TimeData.STATUS.SOON -> ColorRgba.blue
                         TimeData.STATUS.OVERDUE -> ColorRgba.red
                     }
 

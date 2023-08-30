@@ -103,19 +103,19 @@ data class TextFeatures(
 
         val status: STATUS = when {
             secondsLeft > 3_600 -> STATUS.IN
-            secondsLeft > 0 -> STATUS.NEAR
+            secondsLeft > 0 -> STATUS.SOON
             else -> STATUS.OVERDUE
         }
 
         fun timeLeftText(): String = when (status) {
             STATUS.IN,
-            STATUS.NEAR -> secondsInToString(secondsLeft)
+            STATUS.SOON -> secondsInToString(secondsLeft)
             STATUS.OVERDUE -> secondsOverdueToString(secondsLeft)
         }
 
         enum class TYPE { EVENT, REPEATING }
 
-        enum class STATUS { IN, NEAR, OVERDUE }
+        enum class STATUS { IN, SOON, OVERDUE }
     }
 }
 
