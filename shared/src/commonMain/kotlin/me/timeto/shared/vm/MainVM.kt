@@ -64,7 +64,7 @@ class MainVM : __VM<MainVM.State>() {
 
         val menuTime: String = UnixTime().getStringByComponents(UnixTime.StringComponent.hhmm24)
 
-        val importantTasks: List<MainTask> = tasksToday
+        val mainTasks: List<MainTask> = tasksToday
             .mapNotNull { task ->
                 val taskTextFeatures = task.text.textFeatures()
 
@@ -222,7 +222,7 @@ class MainVM : __VM<MainVM.State>() {
                     TextFeatures.TimeData.TYPE.REPEATING -> Type.repeating
                 }
             else {
-                reportApi("ImportantTask invalid type")
+                reportApi("MainTask invalid type")
                 null
             }
 

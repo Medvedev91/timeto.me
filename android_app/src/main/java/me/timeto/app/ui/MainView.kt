@@ -216,7 +216,7 @@ fun MainView() {
                     val checklistScrollState = rememberLazyListState()
                     val mainTasksScrollState = rememberLazyListState()
 
-                    val isMainTasksExists = state.importantTasks.isNotEmpty()
+                    val isMainTasksExists = state.mainTasks.isNotEmpty()
 
                     if (checklistUI != null) {
                         ChecklistView(
@@ -242,10 +242,10 @@ fun MainView() {
                             Modifier.height(
                                 (taskListContentPadding * 2) +
                                 // 4.1f for the smallest emulator
-                                (taskItemHeight * state.importantTasks.size.toFloat().limitMax(4.1f))
+                                (taskItemHeight * state.mainTasks.size.toFloat().limitMax(4.1f))
                             )
                         MainTasksView(
-                            tasks = state.importantTasks,
+                            tasks = state.mainTasks,
                             modifier = mainTasksModifier,
                             scrollState = mainTasksScrollState,
                         )
