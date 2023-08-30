@@ -162,7 +162,7 @@ struct MainView: View {
 
                     VStack {
 
-                        let isImportantTasksExists = !state.importantTasks.isEmpty
+                        let isImportantTasksExists = !state.mainTasks.isEmpty
 
                         if let checklistUI = checklistUI {
                             VStack {
@@ -175,9 +175,9 @@ struct MainView: View {
                             let listHeight: CGFloat =
                                     checklistUI == nil ? .infinity :
                                     (taskListContentPadding * 2.0) +
-                                    (taskItemHeight * state.importantTasks.count.toDouble().limitMax(5.1))
+                                    (taskItemHeight * state.mainTasks.count.toDouble().limitMax(5.1))
                             ImportantTasksView(
-                                    tasks: state.importantTasks
+                                    tasks: state.mainTasks
                             )
                                     .frame(height: listHeight)
                         }
@@ -430,7 +430,7 @@ private struct ChecklistView: View {
 
 private struct ImportantTasksView: View {
 
-    let tasks: [MainVM.ImportantTask]
+    let tasks: [MainVM.MainTask]
 
     private let LIST_BOTTOM_ITEM_ID = "bottom_id"
 
@@ -470,7 +470,7 @@ private struct ImportantTasksView: View {
 
 private struct ImportantTaskItem: View {
 
-    let importantTask: MainVM.ImportantTask
+    let importantTask: MainVM.MainTask
 
     @State private var isSheetPresented = false
 
