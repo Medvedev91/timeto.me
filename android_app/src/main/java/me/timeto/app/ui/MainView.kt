@@ -564,7 +564,7 @@ private fun ChecklistView(
 
 @Composable
 private fun MainTasksView(
-    tasks: List<MainVM.ImportantTask>,
+    tasks: List<MainVM.MainTask>,
     modifier: Modifier,
     scrollState: LazyListState,
 ) {
@@ -617,9 +617,9 @@ private fun MainTasksView(
                 val type = taskItem.type
                 if (type != null) {
                     val (iconRes: Int, iconSize: Dp) = when (type) {
-                        MainVM.ImportantTask.Type.event -> R.drawable.sf_calendar_medium_light to 14.dp
-                        MainVM.ImportantTask.Type.repeating -> R.drawable.sf_repeat_medium_semibold to 14.dp
-                        MainVM.ImportantTask.Type.paused -> R.drawable.ic_round_pause_24 to 15.dp
+                        MainVM.MainTask.Type.event -> R.drawable.sf_calendar_medium_light to 14.dp
+                        MainVM.MainTask.Type.repeating -> R.drawable.sf_repeat_medium_semibold to 14.dp
+                        MainVM.MainTask.Type.paused -> R.drawable.ic_round_pause_24 to 15.dp
                     }
                     Icon(
                         painterResource(id = iconRes),
