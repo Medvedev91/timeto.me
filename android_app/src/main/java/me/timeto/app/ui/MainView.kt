@@ -244,7 +244,7 @@ fun MainView() {
                                 // 4.1f for the smallest emulator
                                 (taskItemHeight * state.importantTasks.size.toFloat().limitMax(4.1f))
                             )
-                        ImportantTasksView(
+                        MainTasksView(
                             tasks = state.importantTasks,
                             modifier = mainTasksModifier,
                             scrollState = mainTasksScrollState,
@@ -563,7 +563,7 @@ private fun ChecklistView(
 }
 
 @Composable
-private fun ImportantTasksView(
+private fun MainTasksView(
     tasks: List<MainVM.ImportantTask>,
     modifier: Modifier,
     scrollState: LazyListState,
