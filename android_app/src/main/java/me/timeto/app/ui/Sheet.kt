@@ -61,7 +61,7 @@ object Sheet {
             content = { layer ->
                 Box(
                     /**
-                     * Ordering is important. Otherwise, podding
+                     * Ordering is important. Otherwise, padding
                      * by height wouldn't work on close click.
                      */
                     modifier = Modifier
