@@ -71,7 +71,7 @@ class MainVM : __VM<MainVM.State>() {
                 if (taskTextFeatures.paused != null)
                     return@mapNotNull MainTask(task, taskTextFeatures)
 
-                if (taskTextFeatures.timeData?.isImportant == true)
+                if (taskTextFeatures.timeData?.type?.isEvent() == true)
                     return@mapNotNull MainTask(task, taskTextFeatures)
 
                 null
