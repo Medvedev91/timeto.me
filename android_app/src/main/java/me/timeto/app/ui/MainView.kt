@@ -214,9 +214,9 @@ fun MainView() {
                 ) {
 
                     val checklistScrollState = rememberLazyListState()
-                    val importantTasksScrollState = rememberLazyListState()
+                    val mainTasksScrollState = rememberLazyListState()
 
-                    val isImportantTasksExists = state.importantTasks.isNotEmpty()
+                    val isMainTasksExists = state.importantTasks.isNotEmpty()
 
                     if (checklistUI != null) {
                         ChecklistView(
@@ -230,13 +230,13 @@ fun MainView() {
                         calcAlpha = {
                             val isMiddleDividerVisible =
                                 (checklistUI != null && (checklistScrollState.canScrollBackward || checklistScrollState.canScrollForward)) ||
-                                (isImportantTasksExists && (importantTasksScrollState.canScrollBackward || importantTasksScrollState.canScrollForward))
+                                (isMainTasksExists && (mainTasksScrollState.canScrollBackward || mainTasksScrollState.canScrollForward))
                             if (isMiddleDividerVisible) 1f else 0f
                         }
                     )
 
-                    if (isImportantTasksExists) {
-                        val importantTasksModifier = if (checklistUI == null)
+                    if (isMainTasksExists) {
+                        val mainTasksModifier = if (checklistUI == null)
                             Modifier.weight(1f)
                         else
                             Modifier.height(
@@ -246,12 +246,12 @@ fun MainView() {
                             )
                         ImportantTasksView(
                             tasks = state.importantTasks,
-                            modifier = importantTasksModifier,
-                            scrollState = importantTasksScrollState,
+                            modifier = mainTasksModifier,
+                            scrollState = mainTasksScrollState,
                         )
                     }
 
-                    if (!isImportantTasksExists && checklistUI == null)
+                    if (!isMainTasksExists && checklistUI == null)
                         SpacerW1()
                 }
 
