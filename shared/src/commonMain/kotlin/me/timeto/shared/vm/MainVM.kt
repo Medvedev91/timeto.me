@@ -64,15 +64,15 @@ class MainVM : __VM<MainVM.State>() {
 
         val menuTime: String = UnixTime().getStringByComponents(UnixTime.StringComponent.hhmm24)
 
-        val importantTasks: List<ImportantTask> = tasksToday
+        val importantTasks: List<MainTask> = tasksToday
             .mapNotNull { task ->
                 val taskTextFeatures = task.text.textFeatures()
 
                 if (taskTextFeatures.paused != null)
-                    return@mapNotNull ImportantTask(task, taskTextFeatures)
+                    return@mapNotNull MainTask(task, taskTextFeatures)
 
                 if (taskTextFeatures.timeData?.isImportant == true)
-                    return@mapNotNull ImportantTask(task, taskTextFeatures)
+                    return@mapNotNull MainTask(task, taskTextFeatures)
 
                 null
             }
@@ -199,7 +199,7 @@ class MainVM : __VM<MainVM.State>() {
         }
     }
 
-    class ImportantTask(
+    class MainTask(
         val task: TaskModel,
         val textFeatures: TextFeatures,
     ) {
