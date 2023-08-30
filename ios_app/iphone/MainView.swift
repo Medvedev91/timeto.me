@@ -162,7 +162,7 @@ struct MainView: View {
 
                     VStack {
 
-                        let isImportantTasksExists = !state.mainTasks.isEmpty
+                        let isMainTasksExists = !state.mainTasks.isEmpty
 
                         if let checklistUI = checklistUI {
                             VStack {
@@ -171,18 +171,18 @@ struct MainView: View {
                             }
                         }
 
-                        if isImportantTasksExists {
+                        if isMainTasksExists {
                             let listHeight: CGFloat =
                                     checklistUI == nil ? .infinity :
                                     (taskListContentPadding * 2.0) +
                                     (taskItemHeight * state.mainTasks.count.toDouble().limitMax(5.1))
-                            ImportantTasksView(
+                            MainTasksView(
                                     tasks: state.mainTasks
                             )
                                     .frame(height: listHeight)
                         }
 
-                        if !isImportantTasksExists && checklistUI == nil {
+                        if !isMainTasksExists && checklistUI == nil {
                             Spacer()
                         }
                     }
@@ -428,7 +428,7 @@ private struct ChecklistView: View {
     }
 }
 
-private struct ImportantTasksView: View {
+private struct MainTasksView: View {
 
     let tasks: [MainVM.MainTask]
 
@@ -449,8 +449,8 @@ private struct ImportantTasksView: View {
                         ZStack {}
                                 .frame(height: taskListContentPadding)
 
-                        ForEach(tasks.reversed(), id: \.self.task.id) { importantTask in
-                            ImportantTaskItem(importantTask: importantTask)
+                        ForEach(tasks.reversed(), id: \.self.task.id) { mainTask in
+                            MainTaskItem(mainTask: mainTask)
                         }
 
                         ZStack {}
@@ -468,9 +468,9 @@ private struct ImportantTasksView: View {
     }
 }
 
-private struct ImportantTaskItem: View {
+private struct MainTaskItem: View {
 
-    let importantTask: MainVM.MainTask
+    let mainTask: MainVM.MainTask
 
     @State private var isSheetPresented = false
 
@@ -480,12 +480,12 @@ private struct ImportantTaskItem: View {
 
         Button(
                 action: {
-                    importantTask.task.startIntervalForUI(
+                    mainTask.task.startIntervalForUI(
                             onStarted: {},
                             activitiesSheet: {
                                 timetoSheet.showActivitiesTimerSheet(
                                         isPresented: $isSheetPresented,
-                                        timerContext: importantTask.timerContext,
+                                        timerContext: mainTask.timerContext,
                                         withMenu: false,
                                         selectedActivity: nil,
                                         onStart: {
@@ -496,7 +496,7 @@ private struct ImportantTaskItem: View {
                             timerSheet: { activity in
                                 timetoSheet.showActivitiesTimerSheet(
                                         isPresented: $isSheetPresented,
-                                        timerContext: importantTask.timerContext,
+                                        timerContext: mainTask.timerContext,
                                         withMenu: false,
                                         selectedActivity: activity,
                                         onStart: {
@@ -508,7 +508,7 @@ private struct ImportantTaskItem: View {
                 },
                 label: {
 
-                    let type = importantTask.type
+                    let type = mainTask.type
 
                     HStack {
 
@@ -516,11 +516,11 @@ private struct ImportantTaskItem: View {
 
                             if (type != nil) {
                                 var (iconRes, iconSize): (String, CGFloat) = {
-                                    if (importantTask.type == .event) {
+                                    if (mainTask.type == .event) {
                                         return ("calendar", 14)
-                                    } else if (importantTask.type == .repeating) {
+                                    } else if (mainTask.type == .repeating) {
                                         return ("repeat", 14)
-                                    } else if (importantTask.type == .paused) {
+                                    } else if (mainTask.type == .paused) {
                                         return ("pause.fill", 13)
                                     }
                                     return ("", 14)
@@ -531,7 +531,7 @@ private struct ImportantTaskItem: View {
                                         .padding(.trailing, 3)
                             }
 
-                            Text(importantTask.text)
+                            Text(mainTask.text)
                                     .font(.system(size: 15))
                                     .foregroundColor(Color.white)
                         }
@@ -539,12 +539,12 @@ private struct ImportantTaskItem: View {
                                 .frame(maxHeight: .infinity)
                                 .background(
                                         RoundedRectangle(cornerRadius: 99, style: .circular)
-                                                .fill(importantTask.backgroundColor.toColor())
+                                                .fill(mainTask.backgroundColor.toColor())
                                 )
                                 .padding(.all, 1)
                                 .background(
                                         RoundedRectangle(cornerRadius: 99, style: .circular)
-                                                .fill(importantTask.borderColor.toColor())
+                                                .fill(mainTask.borderColor.toColor())
                                 )
                                 .padding(.vertical, 4)
                                 .padding(.horizontal, H_PADDING)
