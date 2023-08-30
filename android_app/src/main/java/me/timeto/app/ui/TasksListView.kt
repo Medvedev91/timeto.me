@@ -29,6 +29,8 @@ import me.timeto.shared.db.TaskFolderModel
 import me.timeto.shared.launchEx
 import me.timeto.shared.vm.TasksListVM
 
+private val highlightTimeShape = MySquircleShape(len = 30f)
+
 @OptIn(ExperimentalMaterialApi::class, ExperimentalLayoutApi::class)
 @Composable
 fun TasksListView(
@@ -310,7 +312,7 @@ fun TasksListView(
                                             Row(
                                                 modifier = Modifier
                                                     .offset(x = (-1).dp)
-                                                    .clip(MySquircleShape(len = 30f))
+                                                    .clip(highlightTimeShape)
                                                     .background(timeUI.backgroundColor.toColor())
                                                     .padding(start = 5.dp, end = 4.dp, top = 3.dp, bottom = 3.dp),
                                                 verticalAlignment = Alignment.CenterVertically,
