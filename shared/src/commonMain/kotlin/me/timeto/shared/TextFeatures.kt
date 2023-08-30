@@ -113,7 +113,13 @@ data class TextFeatures(
             STATUS.OVERDUE -> secondsOverdueToString(secondsLeft)
         }
 
-        enum class TYPE { EVENT, REPEATING }
+        enum class TYPE {
+
+            EVENT, REPEATING;
+
+            fun isEvent() = this == EVENT
+            fun isRepeating() = this == REPEATING
+        }
 
         enum class STATUS { IN, SOON, OVERDUE }
     }
