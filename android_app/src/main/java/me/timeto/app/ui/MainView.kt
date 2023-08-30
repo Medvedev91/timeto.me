@@ -129,7 +129,14 @@ fun MainView() {
                             vm.toggleIsPurple()
                         }
                         .padding(horizontal = 8.dp, vertical = 12.dp),
-                    fontSize = 40.sp, // todo compact if long
+                    fontSize = run {
+                        val len = state.timerData.title.count()
+                        when {
+                            len <= 5 -> 40.sp
+                            len <= 7 -> 35.sp
+                            else -> 28.sp
+                        }
+                    },
                     fontFamily = timerFont,
                     color = timerColor,
                 )
