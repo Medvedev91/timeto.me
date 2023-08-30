@@ -159,7 +159,7 @@ class TasksListVM(
                         )
                         val backgroundColor = if (timeData.status == TimeData.STATUS.OVERDUE)
                             ColorRgba.red else ColorRgba.blue // todo for .NEAR?
-                        return ImportantUI(
+                        return HighlightUI(
                             title = title,
                             backgroundColor = backgroundColor,
                             timeLeftText = timeLeftText,
@@ -175,7 +175,7 @@ class TasksListVM(
                 }
             }
 
-            class ImportantUI(
+            class HighlightUI(
                 val title: String,
                 val backgroundColor: ColorRgba,
                 val timeLeftText: String,

@@ -347,7 +347,7 @@ struct TasksView__TaskRowView: View {
 
                                 let vPadding = 8.0
 
-                                if let timeUI = taskUI.timeUI as? TasksListVM.TaskUITimeUIImportantUI {
+                                if let timeUI = taskUI.timeUI as? TasksListVM.TaskUITimeUIHighlightUI {
 
                                     HStack {
 

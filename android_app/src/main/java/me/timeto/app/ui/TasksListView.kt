@@ -308,7 +308,7 @@ fun TasksListView(
 
                                     when (timeUI) {
 
-                                        is TasksListVM.TaskUI.TimeUI.ImportantUI -> {
+                                        is TasksListVM.TaskUI.TimeUI.HighlightUI -> {
                                             Row(
                                                 modifier = Modifier
                                                     .offset(x = (-1).dp)
