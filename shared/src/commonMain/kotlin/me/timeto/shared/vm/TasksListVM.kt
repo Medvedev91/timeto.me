@@ -86,8 +86,8 @@ class TasksListVM(
         val textFeatures = task.text.textFeatures()
         val text = textFeatures.textUi()
 
-        val timeUI = textFeatures.timeData?.let {
-            val text = it.unixTime.getStringByComponents(
+        val timeUI = textFeatures.timeData?.let { timeData ->
+            val text = timeData.unixTime.getStringByComponents(
                 UnixTime.StringComponent.dayOfMonth,
                 UnixTime.StringComponent.space,
                 UnixTime.StringComponent.month3,
@@ -95,8 +95,7 @@ class TasksListVM(
                 UnixTime.StringComponent.space,
                 UnixTime.StringComponent.hhmm24,
             )
-            // todo + if important
-            val textColor = if (it.type.isEvent())
+            val textColor = if (timeData.isHighlight)
                 ColorRgba.blue else ColorRgba.textSecondary
             TmrwTimeUI(
                 text = text,
@@ -150,7 +149,7 @@ class TasksListVM(
                         TimeData.STATUS.OVERDUE -> ColorRgba.red
                     }
 
-                    if (timeData.isImportant) {
+                    if (timeData.isHighlight) {
 
                         val title = timeData.unixTime.getStringByComponents(
                             UnixTime.StringComponent.dayOfMonth,

@@ -17,8 +17,8 @@ data class TextFeatures(
 ) {
 
     val timeData: TimeData? = when {
-        fromRepeating?.time != null -> TimeData(UnixTime(fromRepeating.time), false, TimeData.TYPE.REPEATING)
-        fromEvent != null -> TimeData(fromEvent.unixTime, true, TimeData.TYPE.EVENT)
+        fromRepeating?.time != null -> TimeData(UnixTime(fromRepeating.time), TimeData.TYPE.REPEATING)
+        fromEvent != null -> TimeData(fromEvent.unixTime, TimeData.TYPE.EVENT)
         else -> null
     }
 
@@ -95,9 +95,10 @@ data class TextFeatures(
 
     class TimeData(
         val unixTime: UnixTime,
-        val isImportant: Boolean,
         val type: TYPE,
     ) {
+
+        val isHighlight = type.isEvent()
 
         val secondsLeft: Int = unixTime.time - time()
 
