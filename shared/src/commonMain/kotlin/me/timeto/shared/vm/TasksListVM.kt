@@ -140,6 +140,7 @@ class TasksListVM(
             companion object {
 
                 fun prepItem(timeData: TimeData): TimeUI {
+
                     val timeLeftText = timeData.timeLeftText()
                     val unixTime = timeData.unixTime
                     val textColor = when (timeData.status) {
@@ -149,6 +150,7 @@ class TasksListVM(
                     }
 
                     if (timeData.isImportant) {
+
                         val title = timeData.unixTime.getStringByComponents(
                             UnixTime.StringComponent.dayOfMonth,
                             UnixTime.StringComponent.space,
@@ -157,8 +159,10 @@ class TasksListVM(
                             UnixTime.StringComponent.space,
                             UnixTime.StringComponent.hhmm24,
                         )
+
                         val backgroundColor = if (timeData.status == TimeData.STATUS.OVERDUE)
                             ColorRgba.red else ColorRgba.blue // todo for .NEAR?
+
                         return HighlightUI(
                             title = title,
                             backgroundColor = backgroundColor,
