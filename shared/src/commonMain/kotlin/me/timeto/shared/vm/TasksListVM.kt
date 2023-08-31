@@ -95,7 +95,8 @@ class TasksListVM(
                 UnixTime.StringComponent.space,
                 UnixTime.StringComponent.hhmm24,
             )
-            val textColor = if (it.isImportant)
+            // todo + if important
+            val textColor = if (it.type.isEvent())
                 ColorRgba.blue else ColorRgba.textSecondary
             TimeUI(
                 text = text,
