@@ -24,7 +24,7 @@ class WatchTabTasksVM : __VM<WatchTabTasksVM.State>() {
             val daytimeText = daytimeToString(unixTime.time - unixTime.localDayStartTime())
             val textColor = when (timeData.status) {
                 TimeData.STATUS.IN -> ColorRgba.textSecondary
-                TimeData.STATUS.NEAR -> ColorRgba.blue
+                TimeData.STATUS.SOON -> ColorRgba.blue
                 TimeData.STATUS.OVERDUE -> ColorRgba.red
             }
             TimeUI(
