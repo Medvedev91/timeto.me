@@ -98,13 +98,13 @@ class TasksListVM(
             // todo + if important
             val textColor = if (it.type.isEvent())
                 ColorRgba.blue else ColorRgba.textSecondary
-            TimeUI(
+            TmrwTimeUI(
                 text = text,
-                textColor = textColor
+                textColor = textColor,
             )
         }
 
-        class TimeUI(
+        class TmrwTimeUI(
             val text: String,
             val textColor: ColorRgba,
         )
