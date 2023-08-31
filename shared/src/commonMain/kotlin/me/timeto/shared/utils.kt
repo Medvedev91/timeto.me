@@ -1,6 +1,8 @@
 package me.timeto.shared
 
-import com.squareup.sqldelight.db.SqlDriver
+import app.cash.sqldelight.adapter.primitive.IntColumnAdapter
+import app.cash.sqldelight.db.SqlDriver
+import dbsq.*
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
@@ -407,7 +409,18 @@ internal fun initKmm(
     sqlDriver: SqlDriver,
     deviceData_: DeviceData,
 ) {
-    db = TimetomeDB(sqlDriver)
+    db = TimetomeDB(
+        sqlDriver,
+        ActivitySQAdapter = ActivitySQ.Adapter(IntColumnAdapter, IntColumnAdapter, IntColumnAdapter, IntColumnAdapter, IntColumnAdapter),
+        ChecklistItemSQAdapter = ChecklistItemSQ.Adapter(IntColumnAdapter, IntColumnAdapter, IntColumnAdapter),
+        ChecklistSQAdapter = ChecklistSQ.Adapter(IntColumnAdapter),
+        EventSQAdapter = EventSQ.Adapter(IntColumnAdapter, IntColumnAdapter),
+        IntervalSQAdapter = IntervalSQ.Adapter(IntColumnAdapter, IntColumnAdapter, IntColumnAdapter),
+        RepeatingSQAdapter = RepeatingSQ.Adapter(IntColumnAdapter, IntColumnAdapter, IntColumnAdapter, IntColumnAdapter),
+        ShortcutSQAdapter = ShortcutSQ.Adapter(IntColumnAdapter),
+        TaskFolderSQAdapter = TaskFolderSQ.Adapter(IntColumnAdapter, IntColumnAdapter),
+        TaskSQAdapter = TaskSQ.Adapter(IntColumnAdapter, IntColumnAdapter),
+    )
     deviceData = deviceData_
     initKmmDeferred = defaultScope().async { DI.init() }
 }

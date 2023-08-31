@@ -1,7 +1,7 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    id("com.squareup.sqldelight")
+    id("app.cash.sqldelight") version "2.0.0"
 }
 
 kotlin {
@@ -26,22 +26,22 @@ kotlin {
     sourceSets {
 
         val ktor_version = "2.1.3"
-        val sqldelight_version = "1.5.5" // TRICK Sync with /build.gradle.kts
+        val sqldelight_version = "2.0.0"
 
         val commonMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-core:$ktor_version")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
-                implementation("com.squareup.sqldelight:runtime:$sqldelight_version")
-                implementation("com.squareup.sqldelight:coroutines-extensions:$sqldelight_version")
+                implementation("app.cash.sqldelight:primitive-adapters:$sqldelight_version")
+                implementation("app.cash.sqldelight:coroutines-extensions:$sqldelight_version")
             }
         }
 
         val androidMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-okhttp:$ktor_version")
-                implementation("com.squareup.sqldelight:android-driver:$sqldelight_version")
+                implementation("app.cash.sqldelight:android-driver:$sqldelight_version")
                 implementation("androidx.security:security-crypto:1.0.0")
             }
         }
@@ -54,7 +54,7 @@ kotlin {
             iosSimulatorArm64Main.dependsOn(this)
             dependencies {
                 implementation("io.ktor:ktor-client-darwin:$ktor_version")
-                implementation("com.squareup.sqldelight:native-driver:$sqldelight_version")
+                implementation("app.cash.sqldelight:native-driver:$sqldelight_version")
             }
         }
 
@@ -70,7 +70,7 @@ kotlin {
             watchosSimulatorArm64Main.dependsOn(this)
             dependencies {
                 implementation("io.ktor:ktor-client-darwin:$ktor_version")
-                implementation("com.squareup.sqldelight:native-driver:$sqldelight_version")
+                implementation("app.cash.sqldelight:native-driver:$sqldelight_version")
             }
         }
     }
@@ -86,7 +86,9 @@ android {
 }
 
 sqldelight {
-    database("TimetomeDB") {
-        packageName = "me.timeto.appdbsq"
+    databases {
+        create("TimetomeDB") {
+            packageName.set("me.timeto.appdbsq")
+        }
     }
 }

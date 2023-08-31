@@ -1,10 +1,11 @@
 package me.timeto.shared
 
+import app.cash.sqldelight.db.QueryResult
+import app.cash.sqldelight.db.SqlSchema
+import app.cash.sqldelight.driver.native.NativeSqliteDriver
+import app.cash.sqldelight.driver.native.wrapConnection
 import co.touchlab.sqliter.DatabaseConfiguration
 import co.touchlab.sqliter.JournalMode
-import com.squareup.sqldelight.db.SqlDriver
-import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
-import com.squareup.sqldelight.drivers.native.wrapConnection
 import kotlinx.cinterop.*
 import kotlinx.coroutines.flow.Flow
 import platform.CoreFoundation.*
@@ -141,16 +142,16 @@ fun String.toSwiftData(): NSData = (this as NSString).dataUsingEncoding(NSUTF8St
  * - When the database is changed, the irrelevant UI will be displayed.
  */
 private fun createNativeDriver(
-    schema: SqlDriver.Schema = TimetomeDB.Schema,
+    schema: SqlSchema<QueryResult.Value<Unit>> = TimetomeDB.Schema,
 ) = NativeSqliteDriver(
     configuration = DatabaseConfiguration(
         name = DB_NAME,
-        version = schema.version,
+        version = schema.version.toInt(),
         create = { connection ->
             wrapConnection(connection) { schema.create(it) }
         },
         upgrade = { connection, oldVersion, newVersion ->
-            wrapConnection(connection) { schema.migrate(it, oldVersion, newVersion) }
+            wrapConnection(connection) { schema.migrate(it, oldVersion.toLong(), newVersion.toLong()) }
         },
         journalMode = JournalMode.DELETE, // Changed from JournalMode.WAL
     )

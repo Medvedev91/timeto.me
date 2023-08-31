@@ -1,3 +1,4 @@
+import kotlin.Int;
 
 --
 -- Drop RepeatingSQ.auto_focus column

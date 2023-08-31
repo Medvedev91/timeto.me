@@ -4,7 +4,7 @@ import android.app.Application
 import android.os.Build
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
-import com.squareup.sqldelight.android.AndroidSqliteDriver
+import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import me.timeto.appdbsq.TimetomeDB
 import me.timeto.shared.db.DB_NAME
 import java.io.InputStreamReader

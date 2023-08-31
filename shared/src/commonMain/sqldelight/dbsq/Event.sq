@@ -1,3 +1,5 @@
+import kotlin.Int;
+
 CREATE TABLE EventSQ (
     id INTEGER AS Int NOT NULL PRIMARY KEY,
     text TEXT NOT NULL,

@@ -1,3 +1,5 @@
+import kotlin.Int;
+
 CREATE TABLE TaskFolderSQ (
     id INTEGER AS Int NOT NULL PRIMARY KEY,
     name TEXT NOT NULL,

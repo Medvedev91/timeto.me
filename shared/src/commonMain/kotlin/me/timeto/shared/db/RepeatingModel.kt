@@ -1,8 +1,10 @@
 package me.timeto.shared.db
 
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
 import dbsq.RepeatingSQ
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.*
 import kotlinx.serialization.json.JsonElement
@@ -33,7 +35,7 @@ data class RepeatingModel(
         }
 
         fun getAscFlow() = db.repeatingQueries.getAsc().asFlow()
-            .mapToList().map { list -> list.map { it.toModel() } }
+            .mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
 
         suspend fun getByIdOrNull(id: Int) = dbIO {
             db.repeatingQueries.getById(id).executeAsOneOrNull()?.toModel()

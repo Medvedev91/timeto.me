@@ -1,8 +1,10 @@
 package me.timeto.shared.db
 
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
 import dbsq.ChecklistSQ
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
@@ -22,7 +24,7 @@ data class ChecklistModel(
         }
 
         fun getAscFlow() = db.checklistQueries.getAsc().asFlow()
-            .mapToList().map { list -> list.map { it.toModel() } }
+            .mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
 
         suspend fun addWithValidation(
             name: String,
