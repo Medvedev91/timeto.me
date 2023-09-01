@@ -74,6 +74,9 @@ class MainVM : __VM<MainVM.State>() {
                 if (taskTextFeatures.timeData?.type?.isEvent() == true)
                     return@mapNotNull MainTask(task, taskTextFeatures)
 
+                if (taskTextFeatures.isImportant)
+                    return@mapNotNull MainTask(task, taskTextFeatures)
+
                 null
             }
             .sortedBy {
