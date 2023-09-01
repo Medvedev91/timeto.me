@@ -1,0 +1,3 @@
+import kotlin.Int;
+
+ALTER TABLE RepeatingSQ ADD is_important INTEGER AS Int NOT NULL DEFAULT 0;

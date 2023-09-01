@@ -416,7 +416,7 @@ internal fun initKmm(
         ChecklistSQAdapter = ChecklistSQ.Adapter(IntColumnAdapter),
         EventSQAdapter = EventSQ.Adapter(IntColumnAdapter, IntColumnAdapter),
         IntervalSQAdapter = IntervalSQ.Adapter(IntColumnAdapter, IntColumnAdapter, IntColumnAdapter),
-        RepeatingSQAdapter = RepeatingSQ.Adapter(IntColumnAdapter, IntColumnAdapter, IntColumnAdapter, IntColumnAdapter),
+        RepeatingSQAdapter = RepeatingSQ.Adapter(IntColumnAdapter, IntColumnAdapter, IntColumnAdapter, IntColumnAdapter, IntColumnAdapter),
         ShortcutSQAdapter = ShortcutSQ.Adapter(IntColumnAdapter),
         TaskFolderSQAdapter = TaskFolderSQ.Adapter(IntColumnAdapter, IntColumnAdapter),
         TaskSQAdapter = TaskSQ.Adapter(IntColumnAdapter, IntColumnAdapter),
