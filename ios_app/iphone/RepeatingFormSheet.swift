@@ -83,7 +83,7 @@ struct RepeatingsFormSheet: View {
 
                         MyListView__ItemView(
                                 isFirst: true,
-                                isLast: true
+                                isLast: false
                         ) {
 
                             MyListView__ItemView__ButtonView(
@@ -111,6 +111,19 @@ struct RepeatingsFormSheet: View {
                                         }
                                                 .presentationDetentsMediumIf16()
                                     }
+                        }
+
+                        MyListView__ItemView(
+                                isFirst: false,
+                                isLast: true,
+                                withTopDivider: true
+                        ) {
+                            MyListView__ItemView__SwitchView(
+                                    text: state.isImportantHeader,
+                                    isActive: state.isImportant
+                            ) {
+                                vm.toggleIsImportant()
+                            }
                         }
                     }
 
