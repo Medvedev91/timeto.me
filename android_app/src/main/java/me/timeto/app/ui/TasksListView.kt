@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Flag
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -358,13 +360,26 @@ fun TasksListView(
                             HStack(
                                 verticalAlignment = Alignment.CenterVertically,
                             ) {
+
                                 Text(
                                     taskUI.text,
                                     color = c.text,
                                     modifier = Modifier
                                         .weight(1f),
                                 )
+
                                 TriggersListIconsView(taskUI.textFeatures.triggers, 14.sp)
+
+                                if (taskUI.textFeatures.isImportant) {
+                                    Icon(
+                                        Icons.Rounded.Flag,
+                                        contentDescription = "Important",
+                                        tint = c.red,
+                                        modifier = Modifier
+                                            .padding(start = 8.dp)
+                                            .size(20.dp)
+                                    )
+                                }
                             }
                         }
 
