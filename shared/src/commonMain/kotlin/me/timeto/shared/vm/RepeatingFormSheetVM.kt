@@ -182,6 +182,7 @@ class RepeatingFormSheetVM(
         try {
             // todo check if a text without features
             val nameWithFeatures = state.value.textFeatures.textWithFeatures()
+            val isImportant = state.value.isImportant
 
             // !! Because "enabled" contains the checking
             val period = when (state.value.activePeriodIndex!!) {
@@ -200,7 +201,7 @@ class RepeatingFormSheetVM(
                     text = nameWithFeatures,
                     period = period,
                     daytime = state.value.daytime,
-                    isImportant = state.value.isImportant,
+                    isImportant = isImportant,
                 )
             } else
                 RepeatingModel.addWithValidation(
@@ -208,7 +209,7 @@ class RepeatingFormSheetVM(
                     period = period,
                     lastDay = UnixTime().localDay,
                     daytime = state.value.daytime,
-                    isImportant = state.value.isImportant,
+                    isImportant = isImportant,
                 )
             onSuccess()
         } catch (e: UIException) {
