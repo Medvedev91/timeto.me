@@ -144,7 +144,7 @@ private fun parseLocal(initText: String): TextFeatures {
 
     var textNoFeatures = initText
     fun MatchResult.clean() {
-        textNoFeatures = textNoFeatures.replace(this.value, "").trim()
+        textNoFeatures = textNoFeatures.replace(this.value, "")
     }
 
     val checklists: List<ChecklistModel> = checklistRegex
