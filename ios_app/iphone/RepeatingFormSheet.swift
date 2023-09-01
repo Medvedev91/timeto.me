@@ -46,69 +46,72 @@ struct RepeatingsFormSheet: View {
 
                 VStack {
 
-                    MyListView__ItemView(
-                            isFirst: true,
-                            isLast: true
-                    ) {
+                    VStack {
 
-                        MyListView__ItemView__TextInputView(
-                                text: state.inputTextValue,
-                                placeholder: "Task",
-                                isAutofocus: false
-                        ) { newValue in
-                            vm.setTextValue(text: newValue)
-                        }
-                    }
-                            .padding(.top, 10)
-
-                    MyListView__Padding__SectionSection()
-
-                    TextFeaturesTriggersFormView(
-                            textFeatures: state.textFeatures
-                    ) { textFeatures in
-                        vm.upTextFeatures(textFeatures: textFeatures)
-                    }
-
-                    MyListView__Padding__SectionSection()
-
-                    TextFeaturesTimerFormView(
-                            textFeatures: state.textFeatures
-                    ) { textFeatures in
-                        vm.upTextFeatures(textFeatures: textFeatures)
-                    }
-
-                    MyListView__Padding__SectionSection()
-
-                    MyListView__ItemView(
-                            isFirst: true,
-                            isLast: true
-                    ) {
-
-                        MyListView__ItemView__ButtonView(
-                                text: state.daytimeHeader,
-                                withArrow: true,
-                                rightView: AnyView(
-                                        MyListView__ItemView__ButtonView__RightText(
-                                                text: state.daytimeNote,
-                                                paddingEnd: 2
-                                        )
-                                )
+                        MyListView__ItemView(
+                                isFirst: true,
+                                isLast: true
                         ) {
-                            hideKeyboard()
-                            isDaytimeSheetPresented = true
+
+                            MyListView__ItemView__TextInputView(
+                                    text: state.inputTextValue,
+                                    placeholder: "Task",
+                                    isAutofocus: false
+                            ) { newValue in
+                                vm.setTextValue(text: newValue)
+                            }
                         }
-                                .sheetEnv(isPresented: $isDaytimeSheetPresented) {
-                                    DaytimePickerSheet(
-                                            isPresented: $isDaytimeSheetPresented,
-                                            title: state.daytimeHeader,
-                                            doneText: "Done",
-                                            defMinute: state.daytimePickerDefMinute,
-                                            defHour: state.daytimePickerDefHour
-                                    ) { seconds in
-                                        vm.upDaytime(newDaytimeOrNull: seconds?.toKotlinInt())
+                                .padding(.top, 10)
+
+                        MyListView__Padding__SectionSection()
+
+                        TextFeaturesTriggersFormView(
+                                textFeatures: state.textFeatures
+                        ) { textFeatures in
+                            vm.upTextFeatures(textFeatures: textFeatures)
+                        }
+
+                        MyListView__Padding__SectionSection()
+
+                        TextFeaturesTimerFormView(
+                                textFeatures: state.textFeatures
+                        ) { textFeatures in
+                            vm.upTextFeatures(textFeatures: textFeatures)
+                        }
+
+                        MyListView__Padding__SectionSection()
+
+                        MyListView__ItemView(
+                                isFirst: true,
+                                isLast: true
+                        ) {
+
+                            MyListView__ItemView__ButtonView(
+                                    text: state.daytimeHeader,
+                                    withArrow: true,
+                                    rightView: AnyView(
+                                            MyListView__ItemView__ButtonView__RightText(
+                                                    text: state.daytimeNote,
+                                                    paddingEnd: 2
+                                            )
+                                    )
+                            ) {
+                                hideKeyboard()
+                                isDaytimeSheetPresented = true
+                            }
+                                    .sheetEnv(isPresented: $isDaytimeSheetPresented) {
+                                        DaytimePickerSheet(
+                                                isPresented: $isDaytimeSheetPresented,
+                                                title: state.daytimeHeader,
+                                                doneText: "Done",
+                                                defMinute: state.daytimePickerDefMinute,
+                                                defHour: state.daytimePickerDefHour
+                                        ) { seconds in
+                                            vm.upDaytime(newDaytimeOrNull: seconds?.toKotlinInt())
+                                        }
+                                                .presentationDetentsMediumIf16()
                                     }
-                                            .presentationDetentsMediumIf16()
-                                }
+                        }
                     }
 
                     VStack {
