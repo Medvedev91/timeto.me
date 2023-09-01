@@ -14,6 +14,7 @@ data class TextFeatures(
     val activity: ActivityModel?,
     val timer: Int?,
     val paused: Paused?,
+    val isImportant: Boolean,
 ) {
 
     val timeData: TimeData? = when {
@@ -59,6 +60,8 @@ data class TextFeatures(
             strings.add("#t$timer")
         if (paused != null)
             strings.add("#paused${paused.intervalId}_${paused.timer}")
+        if (isImportant)
+            strings.add(isImportantSubstring)
         return strings.joinToString(" ")
     }
 
@@ -139,6 +142,7 @@ private val fromEventRegex = "#e(\\d{10})".toRegex()
 private val activityRegex = "#a(\\d{10})".toRegex()
 private val timerRegex = "#t(\\d+)".toRegex()
 private val pausedRegex = "#paused(\\d{10})_(\\d+)".toRegex()
+private const val isImportantSubstring = "#important"
 
 private fun parseLocal(initText: String): TextFeatures {
 
@@ -208,6 +212,10 @@ private fun parseLocal(initText: String): TextFeatures {
             return@let TextFeatures.Paused(intervalId, intervalTimer)
         }
 
+    val isImportant = isImportantSubstring in textNoFeatures
+    if (isImportant)
+        textNoFeatures = textNoFeatures.replace(isImportantSubstring, "")
+
     return TextFeatures(
         textNoFeatures = textNoFeatures.removeDuplicateSpaces().trim(),
         checklists = checklists,
@@ -217,6 +225,7 @@ private fun parseLocal(initText: String): TextFeatures {
         activity = activity,
         timer = timer,
         paused = paused,
+        isImportant = isImportant,
     )
 }
 
