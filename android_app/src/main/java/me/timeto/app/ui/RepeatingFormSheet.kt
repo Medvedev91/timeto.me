@@ -96,7 +96,7 @@ fun RepeatingFormSheet(
 
             MyListView__ItemView(
                 isFirst = true,
-                isLast = true,
+                isLast = false,
             ) {
                 MyListView__ItemView__ButtonView(
                     text = state.daytimeHeader,
@@ -121,6 +121,19 @@ fun RepeatingFormSheet(
                             }
                         )
                     }
+                }
+            }
+
+            MyListView__ItemView(
+                isFirst = false,
+                isLast = true,
+                withTopDivider = true,
+            ) {
+                MyListView__ItemView__SwitchView(
+                    text = state.isImportantHeader,
+                    isActive = state.isImportant,
+                ) {
+                    vm.toggleIsImportant()
                 }
             }
 
