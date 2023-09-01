@@ -13,6 +13,7 @@ class RepeatingFormSheetVM(
         val headerDoneText: String,
         val textFeatures: TextFeatures,
         val daytime: Int?,
+        val isImportant: Boolean,
         val activePeriodIndex: Int?,
         val selectedNDays: Int,
         val selectedWeekDays: List<Boolean>,
@@ -24,6 +25,8 @@ class RepeatingFormSheetVM(
         val daytimeNote = daytime?.let { daytimeToString(it) } ?: "None"
         val daytimePickerDefHour: Int
         val daytimePickerDefMinute: Int
+
+        val isImportantHeader = "Is Important"
 
         val inputTextValue = textFeatures.textNoFeatures
         val isHeaderDoneEnabled = inputTextValue.isNotBlank() &&
@@ -92,6 +95,7 @@ class RepeatingFormSheetVM(
                 headerDoneText = if (repeating != null) "Done" else "Create",
                 textFeatures = (repeating?.text ?: "").textFeatures(),
                 daytime = repeating?.daytime,
+                isImportant = repeating?.is_important?.toBoolean10() ?: false,
                 activePeriodIndex = activePeriodIndex,
                 selectedNDays = selectedNDays,
                 selectedWeekDays = selectedWeekDays,
@@ -111,6 +115,10 @@ class RepeatingFormSheetVM(
 
     fun upDaytime(newDaytimeOrNull: Int?) {
         state.update { it.copy(daytime = newDaytimeOrNull) }
+    }
+
+    fun toggleIsImportant() {
+        state.update { it.copy(isImportant = !it.isImportant) }
     }
 
     fun setActivePeriodIndex(index: Int?) {
@@ -192,6 +200,7 @@ class RepeatingFormSheetVM(
                     text = nameWithFeatures,
                     period = period,
                     daytime = state.value.daytime,
+                    isImportant = state.value.isImportant,
                 )
             } else
                 RepeatingModel.addWithValidation(
@@ -199,6 +208,7 @@ class RepeatingFormSheetVM(
                     period = period,
                     lastDay = UnixTime().localDay,
                     daytime = state.value.daytime,
+                    isImportant = state.value.isImportant,
                 )
             onSuccess()
         } catch (e: UIException) {
