@@ -627,7 +627,7 @@ private fun MainTasksView(
                             modifier = Modifier.padding(end = 5.dp).size(14.dp)
                         )
                         MainVM.MainTask.Type.paused -> MainTaskIconUI(
-                            iconRes = R.drawable.sf_pause_medium_thin,
+                            iconRes = R.drawable.sf_pause_small_medium,
                             modifier = Modifier.padding(end = 5.dp).size(10.dp)
                         )
                         MainVM.MainTask.Type.important -> MainTaskIconUI(
