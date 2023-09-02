@@ -219,13 +219,13 @@ class MainVM : __VM<MainVM.State>() {
 
             type = if (textFeatures.paused != null)
                 Type.paused
+            else if (textFeatures.isImportant)
+                Type.important
             else if (timeData != null)
                 when (timeData.type) {
                     TextFeatures.TimeData.TYPE.EVENT -> Type.event
                     TextFeatures.TimeData.TYPE.REPEATING -> Type.repeating
                 }
-            else if (textFeatures.isImportant)
-                Type.important
             else {
                 reportApi("MainTask invalid type")
                 null
