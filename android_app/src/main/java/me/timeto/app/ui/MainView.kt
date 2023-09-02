@@ -631,7 +631,7 @@ private fun MainTasksView(
                         )
                         MainVM.MainTask.Type.important -> MainTaskIconUI(
                             iconRes = R.drawable.sf_flag_fill_medium_regular,
-                            modifier = Modifier.padding(start = 3.dp, end = 7.dp).size(10.dp)
+                            modifier = Modifier.padding(start = 2.dp, end = 7.dp).size(10.dp)
                         )
                     }
                     Icon(
