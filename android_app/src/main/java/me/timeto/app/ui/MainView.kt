@@ -602,7 +602,7 @@ private fun MainTasksView(
                         )
                     }
                     .background(
-                        color = taskItem.backgroundColor.toColor(),
+                        color = taskItem.backgroundColor?.toColor() ?: c.transparent,
                         shape = roundedShape
                     )
                     .padding(start = 8.dp, end = 8.dp),

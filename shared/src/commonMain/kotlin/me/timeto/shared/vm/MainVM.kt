@@ -209,7 +209,7 @@ class MainVM : __VM<MainVM.State>() {
 
         val type: Type?
         val text: String
-        val backgroundColor: ColorRgba
+        val backgroundColor: ColorRgba?
         val timerContext = ActivityTimerSheetVM.TimerContext.Task(task)
 
         init {
@@ -249,12 +249,12 @@ class MainVM : __VM<MainVM.State>() {
 
             backgroundColor = if (timeData != null)
                 when (timeData.status) {
-                    TextFeatures.TimeData.STATUS.IN -> ColorRgba.black
+                    TextFeatures.TimeData.STATUS.IN -> null
                     TextFeatures.TimeData.STATUS.SOON -> AppleColors.Palettes.blue.dark
                     TextFeatures.TimeData.STATUS.OVERDUE -> AppleColors.Palettes.red.dark
                 }
             else
-                ColorRgba.black
+                null
         }
 
         enum class Type {
