@@ -43,7 +43,7 @@ private val menuIconPadding = 14.dp
 
 private val taskCountsHeight = 36.dp
 
-private val mainTaskItemHeight = 36.dp
+private val mainTaskItemHeight = 32.dp
 private val taskListContentPadding = 4.dp
 
 private val menuColor = MainVM.menuColor.toColor()
@@ -585,7 +585,7 @@ private fun MainTasksView(
             Row(
                 modifier = Modifier
                     .height(mainTaskItemHeight)
-                    .padding(vertical = 4.dp, horizontal = 8.dp)
+                    .padding(vertical = 3.dp, horizontal = 8.dp)
                     .clip(roundedShape)
                     .clickable {
                         taskItem.task.startIntervalForUI(
