@@ -224,6 +224,8 @@ class MainVM : __VM<MainVM.State>() {
                     TextFeatures.TimeData.TYPE.EVENT -> Type.event
                     TextFeatures.TimeData.TYPE.REPEATING -> Type.repeating
                 }
+            else if (textFeatures.isImportant)
+                Type.important
             else {
                 reportApi("MainTask invalid type")
                 null
@@ -266,7 +268,7 @@ class MainVM : __VM<MainVM.State>() {
         }
 
         enum class Type {
-            event, repeating, paused
+            event, repeating, paused, important
         }
     }
 }
