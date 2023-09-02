@@ -28,7 +28,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
@@ -44,7 +43,7 @@ private val menuIconPadding = 14.dp
 
 private val taskCountsHeight = 36.dp
 
-private val taskItemHeight = 36.dp
+private val mainTaskItemHeight = 36.dp
 private val taskListContentPadding = 4.dp
 
 private val menuColor = MainVM.menuColor.toColor()
@@ -243,7 +242,7 @@ fun MainView() {
                             Modifier.height(
                                 (taskListContentPadding * 2) +
                                 // 4.1f for the smallest emulator
-                                (taskItemHeight * state.mainTasks.size.toFloat().limitMax(4.1f))
+                                (mainTaskItemHeight * state.mainTasks.size.toFloat().limitMax(4.1f))
                             )
                         MainTasksView(
                             tasks = state.mainTasks,
@@ -585,7 +584,7 @@ private fun MainTasksView(
 
             Row(
                 modifier = Modifier
-                    .height(taskItemHeight)
+                    .height(mainTaskItemHeight)
                     .padding(vertical = 4.dp, horizontal = 8.dp)
                     .clip(roundedShape)
                     .clickable {
