@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Flag
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -372,12 +370,13 @@ fun TasksListView(
 
                                 if (taskUI.textFeatures.isImportant) {
                                     Icon(
-                                        Icons.Rounded.Flag,
+                                        painterResource(R.drawable.sf_flag_fill_medium_regular),
                                         contentDescription = "Important",
                                         tint = c.red,
                                         modifier = Modifier
                                             .padding(start = 8.dp)
-                                            .size(20.dp)
+                                            .offset(y = 1.dp)
+                                            .size(16.dp),
                                     )
                                 }
                             }
