@@ -93,7 +93,7 @@ data class RepeatingModel(
                 type_id = j.getInt(3),
                 value_ = j.getString(4),
                 daytime = j.getIntOrNull(5),
-                is_important = j.getInt(6),
+                is_important = if (j.size < 7) 0 else j.getInt(6),
             )
         }
 
