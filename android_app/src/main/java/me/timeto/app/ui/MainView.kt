@@ -362,7 +362,7 @@ fun MainView() {
                         text = state.tasksText,
                         modifier = Modifier
                             .height(taskCountsHeight)
-                            .padding(top = 2.dp),
+                            .padding(top = 3.dp),
                         color = menuColor,
                         fontSize = 13.sp,
                         fontWeight = FontWeight.Light,
