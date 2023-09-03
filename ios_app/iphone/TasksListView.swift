@@ -357,15 +357,14 @@ struct TasksView__TaskRowView: View {
 
                                             Image(systemName: "calendar")
                                                     .foregroundColor(.white)
-                                                    .frame(width: 12, height: 12)
-                                                    .padding(.leading, 2)
-                                                    .padding(.trailing, 7)
+                                                    .font(.system(size: 16))
+                                                    .padding(.trailing, 3)
 
                                             Text(timeUI.title)
                                                     .foregroundColor(.white)
                                                     .font(.system(size: 13))
                                         }
-                                                .padding(.leading, 6)
+                                                .padding(.leading, 4)
                                                 .padding(.trailing, 5)
                                                 .padding(.top, 4)
                                                 .padding(.bottom, 4)
