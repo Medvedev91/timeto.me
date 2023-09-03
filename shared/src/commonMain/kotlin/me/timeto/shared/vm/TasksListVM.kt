@@ -161,6 +161,7 @@ class TasksListVM(
 
                         val type: HighlightUI.TYPE = when {
                             isEvent -> HighlightUI.TYPE.event
+                            textFeatures.fromRepeating != null -> HighlightUI.TYPE.repeating
                             isImportant -> HighlightUI.TYPE.important
                             else -> throw Exception("TasksListVM invalid type")
                         }
@@ -176,6 +177,7 @@ class TasksListVM(
 
                         val timeComponents = when (type) {
                             HighlightUI.TYPE.event -> fullDateComponents
+                            HighlightUI.TYPE.repeating,
                             HighlightUI.TYPE.important ->
                                 if (timeData.unixTime.isToday())
                                     listOf(UnixTime.StringComponent.hhmm24)
@@ -210,7 +212,7 @@ class TasksListVM(
                 val type: TYPE,
             ) : TimeUI() {
 
-                enum class TYPE { event, important }
+                enum class TYPE { event, repeating, important }
             }
 
             class RegularUI(
