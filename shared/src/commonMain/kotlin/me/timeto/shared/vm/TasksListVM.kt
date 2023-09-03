@@ -164,28 +164,28 @@ class TasksListVM(
                             else -> throw Exception("TasksListVM invalid type")
                         }
 
-                        val title = if (isEvent || !timeData.unixTime.isToday())
-                            timeData.unixTime.getStringByComponents(
-                                UnixTime.StringComponent.dayOfMonth,
-                                UnixTime.StringComponent.space,
-                                UnixTime.StringComponent.month3,
-                                UnixTime.StringComponent.comma,
-                                UnixTime.StringComponent.space,
-                                UnixTime.StringComponent.hhmm24,
-                            )
-                        else {
-                            if (!isImportant)
-                                reportApi("TasksListVM invalid title")
-                            timeData.unixTime.getStringByComponents(
-                                UnixTime.StringComponent.hhmm24,
-                            )
+                        val fullDateComponents = listOf(
+                            UnixTime.StringComponent.dayOfMonth,
+                            UnixTime.StringComponent.space,
+                            UnixTime.StringComponent.month3,
+                            UnixTime.StringComponent.comma,
+                            UnixTime.StringComponent.space,
+                            UnixTime.StringComponent.hhmm24,
+                        )
+
+                        val timeComponents = when (type) {
+                            HighlightUI.TYPE.event -> fullDateComponents
+                            HighlightUI.TYPE.important ->
+                                if (timeData.unixTime.isToday())
+                                    listOf(UnixTime.StringComponent.hhmm24)
+                                else fullDateComponents
                         }
 
                         val backgroundColor = if (timeData.status == TimeData.STATUS.OVERDUE)
                             ColorRgba.red else ColorRgba.blue // todo for .NEAR?
 
                         return HighlightUI(
-                            title = title,
+                            title = timeData.unixTime.getStringByComponents(timeComponents),
                             backgroundColor = backgroundColor,
                             timeLeftText = timeLeftText,
                             timeLeftColor = textColor,
