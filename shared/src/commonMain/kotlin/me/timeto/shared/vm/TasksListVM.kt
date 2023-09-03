@@ -95,7 +95,7 @@ class TasksListVM(
                 UnixTime.StringComponent.space,
                 UnixTime.StringComponent.hhmm24,
             )
-            val textColor = if (timeData.isHighlight)
+            val textColor = if (timeData.type.isEvent())
                 ColorRgba.blue else ColorRgba.textSecondary
             TmrwTimeUI(
                 text = text,
@@ -149,7 +149,7 @@ class TasksListVM(
                         TimeData.STATUS.OVERDUE -> ColorRgba.red
                     }
 
-                    if (timeData.isHighlight) {
+                    if (timeData.type.isEvent()) {
 
                         val title = timeData.unixTime.getStringByComponents(
                             UnixTime.StringComponent.dayOfMonth,

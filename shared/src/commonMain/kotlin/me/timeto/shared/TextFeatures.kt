@@ -101,8 +101,6 @@ data class TextFeatures(
         val type: TYPE,
     ) {
 
-        val isHighlight = type.isEvent()
-
         val secondsLeft: Int = unixTime.time - time()
 
         val status: STATUS = when {
