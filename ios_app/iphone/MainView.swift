@@ -175,7 +175,7 @@ struct MainView: View {
                             let listHeight: CGFloat =
                                     checklistUI == nil ? .infinity :
                                     (taskListContentPadding * 2.0) +
-                                    (taskItemHeight * state.mainTasks.count.toDouble().limitMax(5.1))
+                                    (taskItemHeight * state.mainTasks.count.toDouble().limitMax(5.5))
                             MainTasksView(
                                     tasks: state.mainTasks
                             )
