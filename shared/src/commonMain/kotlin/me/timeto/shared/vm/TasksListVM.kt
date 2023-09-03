@@ -182,7 +182,7 @@ class TasksListVM(
                         }
 
                         val backgroundColor = if (timeData.status == TimeData.STATUS.OVERDUE)
-                            ColorRgba.red else ColorRgba.blue // todo for .NEAR?
+                            ColorRgba.red else ColorRgba.blue
 
                         return HighlightUI(
                             title = timeData.unixTime.getStringByComponents(timeComponents),
