@@ -409,6 +409,13 @@ struct TasksView__TaskRowView: View {
                                     Spacer()
 
                                     TriggersListIconsView(triggers: taskUI.textFeatures.triggers, fontSize: 15)
+
+                                    if (taskUI.textFeatures.isImportant) {
+                                        Image(systemName: "flag.fill")
+                                                .font(.system(size: 18))
+                                                .foregroundColor(c.red)
+                                                .padding(.leading, 8)
+                                    }
                                 }
                                         .padding(.leading, H_PADDING)
                             }
