@@ -51,7 +51,7 @@ class TimerTabActivityData(
                     )
                 }
                 timeComponents.add(UnixTime.StringComponent.hhmm24)
-                notePrefix = unixTime.getStringByComponents(*timeComponents.toTypedArray()) + " "
+                notePrefix = unixTime.getStringByComponents(timeComponents) + " "
             }
             note = notePrefix + noteTf.textUi(withActivityEmoji = false, withTimer = false)
             noteTriggers = noteTf.triggers
