@@ -28,6 +28,8 @@ data class UnixTime(
 
     fun localDayStartTime() = (localDay * 86_400) - utcOffset
 
+    fun isToday() = localDay == UnixTime().localDay
+
     fun utcTime() = time + utcOffset
 
     // 0 - Mon. 1 Jan 1970 - Thu.
