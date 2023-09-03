@@ -167,10 +167,13 @@ class TasksListVM(
                                 UnixTime.StringComponent.space,
                                 UnixTime.StringComponent.hhmm24,
                             )
-                        else
+                        else {
+                            if (!isImportant)
+                                reportApi("TasksListVM invalid title")
                             timeData.unixTime.getStringByComponents(
                                 UnixTime.StringComponent.hhmm24,
                             )
+                        }
 
                         val backgroundColor = if (timeData.status == TimeData.STATUS.OVERDUE)
                             ColorRgba.red else ColorRgba.blue // todo for .NEAR?
