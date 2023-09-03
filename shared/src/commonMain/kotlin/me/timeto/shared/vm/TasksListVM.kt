@@ -158,14 +158,19 @@ class TasksListVM(
 
                     if (isEvent || isImportant) {
 
-                        val title = timeData.unixTime.getStringByComponents(
-                            UnixTime.StringComponent.dayOfMonth,
-                            UnixTime.StringComponent.space,
-                            UnixTime.StringComponent.month3,
-                            UnixTime.StringComponent.comma,
-                            UnixTime.StringComponent.space,
-                            UnixTime.StringComponent.hhmm24,
-                        )
+                        val title = if (isEvent || !timeData.unixTime.isToday())
+                            timeData.unixTime.getStringByComponents(
+                                UnixTime.StringComponent.dayOfMonth,
+                                UnixTime.StringComponent.space,
+                                UnixTime.StringComponent.month3,
+                                UnixTime.StringComponent.comma,
+                                UnixTime.StringComponent.space,
+                                UnixTime.StringComponent.hhmm24,
+                            )
+                        else
+                            timeData.unixTime.getStringByComponents(
+                                UnixTime.StringComponent.hhmm24,
+                            )
 
                         val backgroundColor = if (timeData.status == TimeData.STATUS.OVERDUE)
                             ColorRgba.red else ColorRgba.blue // todo for .NEAR?
