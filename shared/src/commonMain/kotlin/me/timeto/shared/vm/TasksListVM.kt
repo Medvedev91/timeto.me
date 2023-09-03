@@ -118,7 +118,7 @@ class TasksListVM(
         val textFeatures = task.text.textFeatures()
         val text = textFeatures.textUi(withPausedEmoji = true)
         val timeUI: TimeUI? = textFeatures.timeData?.let {
-            TimeUI.prepItem(timeData = it, isImportant = textFeatures.isImportant)
+            TimeUI.prepItem(timeData = it, textFeatures = textFeatures)
         }
         val timerContext = ActivityTimerSheetVM.TimerContext.Task(task)
 
@@ -143,7 +143,7 @@ class TasksListVM(
 
                 fun prepItem(
                     timeData: TimeData,
-                    isImportant: Boolean,
+                    textFeatures: TextFeatures,
                 ): TimeUI {
 
                     val timeLeftText = timeData.timeLeftText()
@@ -155,6 +155,7 @@ class TasksListVM(
                     }
 
                     val isEvent = timeData.type.isEvent()
+                    val isImportant = textFeatures.isImportant
 
                     if (isEvent || isImportant) {
 
