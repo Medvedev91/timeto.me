@@ -158,6 +158,12 @@ class TasksListVM(
 
                     if (isEvent || isImportant) {
 
+                        val type: HighlightUI.TYPE = when {
+                            isEvent -> HighlightUI.TYPE.event
+                            isImportant -> HighlightUI.TYPE.important
+                            else -> throw Exception("TasksListVM invalid type")
+                        }
+
                         val title = if (isEvent || !timeData.unixTime.isToday())
                             timeData.unixTime.getStringByComponents(
                                 UnixTime.StringComponent.dayOfMonth,
@@ -183,6 +189,7 @@ class TasksListVM(
                             backgroundColor = backgroundColor,
                             timeLeftText = timeLeftText,
                             timeLeftColor = textColor,
+                            type = type
                         )
                     }
 
@@ -199,7 +206,17 @@ class TasksListVM(
                 val backgroundColor: ColorRgba,
                 val timeLeftText: String,
                 val timeLeftColor: ColorRgba,
-            ) : TimeUI()
+                val type: TYPE,
+            ) : TimeUI() {
+
+                enum class TYPE {
+
+                    event, important;
+
+                    fun isEvent() = this == event
+                    fun isImportant() = this == important
+                }
+            }
 
             class RegularUI(
                 val text: String,
