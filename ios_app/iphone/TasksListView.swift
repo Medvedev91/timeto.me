@@ -355,10 +355,25 @@ struct TasksView__TaskRowView: View {
 
                                         HStack {
 
-                                            Image(systemName: "calendar")
-                                                    .foregroundColor(.white)
-                                                    .font(.system(size: 16))
-                                                    .padding(.trailing, 3)
+                                            switch timeUI.type {
+                                            case .event:
+                                                Image(systemName: "calendar")
+                                                        .foregroundColor(.white)
+                                                        .font(.system(size: 16))
+                                                        .padding(.trailing, 3)
+                                            case .repeating:
+                                                Image(systemName: "repeat")
+                                                        .foregroundColor(.white)
+                                                        .font(.system(size: 13, weight: .medium))
+                                                        .padding(.trailing, 3)
+                                            case .important:
+                                                Image(systemName: "flag.fill")
+                                                        .foregroundColor(.white)
+                                                        .font(.system(size: 12))
+                                                        .padding(.trailing, 3)
+                                            default:
+                                                fatalError()
+                                            }
 
                                             Text(timeUI.title)
                                                     .foregroundColor(.white)
