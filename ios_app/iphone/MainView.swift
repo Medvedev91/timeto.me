@@ -8,7 +8,7 @@ private let menuIconSize = bottomNavigationHeight
 
 private let taskCountsHeight = 36.0
 
-private let taskItemHeight = 36.0
+private let taskItemHeight = 32.0
 private let taskListContentPadding = 4.0
 
 private let menuColor = MainVM.companion.menuColor.toColor()
@@ -536,7 +536,7 @@ private struct MainTaskItem: View {
                             .padding(.horizontal, 8)
                             .frame(maxHeight: .infinity)
                             .background(roundedShape.fill(mainTask.backgroundColor?.toColor() ?? c.transparent))
-                            .padding(.vertical, 4)
+                            .padding(.vertical, 2)
                             .padding(.horizontal, H_PADDING)
                             .frame(height: taskItemHeight)
                 }
