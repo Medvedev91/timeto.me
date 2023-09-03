@@ -241,8 +241,8 @@ fun MainView() {
                         else
                             Modifier.height(
                                 (taskListContentPadding * 2) +
-                                // 4.1f for the smallest emulator
-                                (mainTaskItemHeight * state.mainTasks.size.toFloat().limitMax(4.1f))
+                                // 4.5f for the smallest emulator
+                                (mainTaskItemHeight * state.mainTasks.size.toFloat().limitMax(4.5f))
                             )
                         MainTasksView(
                             tasks = state.mainTasks,
