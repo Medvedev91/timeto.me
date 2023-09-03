@@ -512,22 +512,22 @@ private struct MainTaskItem: View {
 
                     HStack {
 
-                        if (type != nil) {
-                            var (iconRes, iconSize): (String, CGFloat) = {
-                                if (mainTask.type == .event) {
-                                    return ("calendar", 14)
-                                } else if (mainTask.type == .repeating) {
-                                    return ("repeat", 14)
-                                } else if (mainTask.type == .paused) {
-                                    return ("pause.fill", 13)
-                                }
-                                return ("", 14)
-                            }()
-                            Image(systemName: iconRes)
-                                    .foregroundColor(Color.white)
-                                    .font(.system(size: iconSize, weight: .light))
-                                    .padding(.trailing, 3)
-                        }
+                        var (iconRes, iconSize): (String, CGFloat) = {
+                            if (mainTask.type == .event) {
+                                return ("calendar", 14)
+                            } else if (mainTask.type == .repeating) {
+                                return ("repeat", 14)
+                            } else if (mainTask.type == .important) {
+                                return ("flag.fill", 13)
+                            } else if (mainTask.type == .paused) {
+                                return ("pause.fill", 13)
+                            }
+                            return ("", 14)
+                        }()
+                        Image(systemName: iconRes)
+                                .foregroundColor(Color.white)
+                                .font(.system(size: iconSize, weight: .light))
+                                .padding(.trailing, 3)
 
                         Text(mainTask.text)
                                 .font(.system(size: 15))
