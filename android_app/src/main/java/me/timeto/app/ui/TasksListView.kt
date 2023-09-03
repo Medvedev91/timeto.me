@@ -317,14 +317,43 @@ fun TasksListView(
                                                     .padding(start = 5.dp, end = 4.dp, top = 3.dp, bottom = 3.dp),
                                                 verticalAlignment = Alignment.CenterVertically,
                                             ) {
-                                                Icon(
-                                                    painterResource(id = R.drawable.sf_calendar_medium_light),
-                                                    contentDescription = "Event",
-                                                    tint = c.white,
-                                                    modifier = Modifier
-                                                        .padding(end = 5.dp)
-                                                        .size(14.dp),
-                                                )
+
+                                                when (timeUI.type) {
+
+                                                    TasksListVM.TaskUI.TimeUI.HighlightUI.TYPE.event -> {
+                                                        Icon(
+                                                            painterResource(id = R.drawable.sf_calendar_medium_light),
+                                                            contentDescription = "Event",
+                                                            tint = c.white,
+                                                            modifier = Modifier
+                                                                .padding(end = 5.dp)
+                                                                .size(14.dp),
+                                                        )
+                                                    }
+
+                                                    TasksListVM.TaskUI.TimeUI.HighlightUI.TYPE.repeating -> {
+                                                        Icon(
+                                                            painterResource(id = R.drawable.sf_repeat_medium_semibold),
+                                                            contentDescription = "Repeating",
+                                                            tint = c.white,
+                                                            modifier = Modifier
+                                                                .padding(end = 5.dp)
+                                                                .size(12.dp),
+                                                        )
+                                                    }
+
+                                                    TasksListVM.TaskUI.TimeUI.HighlightUI.TYPE.important -> {
+                                                        Icon(
+                                                            painterResource(id = R.drawable.sf_flag_fill_medium_regular),
+                                                            contentDescription = "Important",
+                                                            tint = c.white,
+                                                            modifier = Modifier
+                                                                .padding(end = 5.dp)
+                                                                .size(10.dp),
+                                                        )
+                                                    }
+                                                }
+
                                                 Text(
                                                     timeUI.title,
                                                     fontSize = 12.sp,
