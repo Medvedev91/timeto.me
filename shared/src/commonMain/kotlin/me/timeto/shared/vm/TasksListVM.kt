@@ -209,13 +209,7 @@ class TasksListVM(
                 val type: TYPE,
             ) : TimeUI() {
 
-                enum class TYPE {
-
-                    event, important;
-
-                    fun isEvent() = this == event
-                    fun isImportant() = this == important
-                }
+                enum class TYPE { event, important }
             }
 
             class RegularUI(
