@@ -96,6 +96,9 @@ data class UnixTime(
         }
     }
 
+    fun getStringByComponents(components: List<StringComponent>): String =
+        getStringByComponents(*components.toTypedArray())
+
     enum class StringComponent {
         month, month3, dayOfMonth, dayOfWeek, dayOfWeek3, hhmm24, space, comma
     }
