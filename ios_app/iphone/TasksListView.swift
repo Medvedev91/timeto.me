@@ -188,6 +188,8 @@ struct TasksListView: View {
     }
 }
 
+private let taskRowButtonStyle = TasksView__TaskRowView.MyButtonStyle()
+
 struct TasksView__TaskRowView: View {
 
     @EnvironmentObject private var timetoSheet: TimetoSheet
@@ -416,7 +418,7 @@ struct TasksView__TaskRowView: View {
                         .offset(x: xSwipeOffset)
                         // .background(Color.white.opacity(0.001)) // Without background DnD does not work. WTF?! Work after highPriorityGesture
                         .highPriorityGesture(gesture)
-                        .buttonStyle(MyButtonStyle())
+                        .buttonStyle(taskRowButtonStyle)
                         .foregroundColor(.primary)
                         .background(GeometryReader { geometry -> Color in
                             /// Or "Modifying state during view update, this will cause undefined behavior."
