@@ -117,7 +117,9 @@ class TasksListVM(
 
         val textFeatures = task.text.textFeatures()
         val text = textFeatures.textUi(withPausedEmoji = true)
-        val timeUI: TimeUI? = textFeatures.timeData?.let { TimeUI.prepItem(it) }
+        val timeUI: TimeUI? = textFeatures.timeData?.let {
+            TimeUI.prepItem(timeData = it, isImportant = textFeatures.isImportant)
+        }
         val timerContext = ActivityTimerSheetVM.TimerContext.Task(task)
 
         fun upFolder(newFolder: TaskFolderModel) {
@@ -139,7 +141,10 @@ class TasksListVM(
 
             companion object {
 
-                fun prepItem(timeData: TimeData): TimeUI {
+                fun prepItem(
+                    timeData: TimeData,
+                    isImportant: Boolean,
+                ): TimeUI {
 
                     val timeLeftText = timeData.timeLeftText()
                     val unixTime = timeData.unixTime
@@ -149,7 +154,9 @@ class TasksListVM(
                         TimeData.STATUS.OVERDUE -> ColorRgba.red
                     }
 
-                    if (timeData.type.isEvent()) {
+                    val isEvent = timeData.type.isEvent()
+
+                    if (isEvent || isImportant) {
 
                         val title = timeData.unixTime.getStringByComponents(
                             UnixTime.StringComponent.dayOfMonth,
