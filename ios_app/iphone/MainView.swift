@@ -539,12 +539,7 @@ private struct MainTaskItem: View {
                                 .frame(maxHeight: .infinity)
                                 .background(
                                         RoundedRectangle(cornerRadius: 99, style: .circular)
-                                                .fill(mainTask.backgroundColor.toColor())
-                                )
-                                .padding(.all, 1)
-                                .background(
-                                        RoundedRectangle(cornerRadius: 99, style: .circular)
-                                                .fill(mainTask.borderColor.toColor())
+                                                .fill(mainTask.backgroundColor?.toColor() ?? c.transparent)
                                 )
                                 .padding(.vertical, 4)
                                 .padding(.horizontal, H_PADDING)
