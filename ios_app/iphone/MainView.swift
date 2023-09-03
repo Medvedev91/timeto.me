@@ -512,38 +512,32 @@ private struct MainTaskItem: View {
 
                     HStack {
 
-                        HStack {
-
-                            if (type != nil) {
-                                var (iconRes, iconSize): (String, CGFloat) = {
-                                    if (mainTask.type == .event) {
-                                        return ("calendar", 14)
-                                    } else if (mainTask.type == .repeating) {
-                                        return ("repeat", 14)
-                                    } else if (mainTask.type == .paused) {
-                                        return ("pause.fill", 13)
-                                    }
-                                    return ("", 14)
-                                }()
-                                Image(systemName: iconRes)
-                                        .foregroundColor(Color.white)
-                                        .font(.system(size: iconSize, weight: .light))
-                                        .padding(.trailing, 3)
-                            }
-
-                            Text(mainTask.text)
-                                    .font(.system(size: 15))
+                        if (type != nil) {
+                            var (iconRes, iconSize): (String, CGFloat) = {
+                                if (mainTask.type == .event) {
+                                    return ("calendar", 14)
+                                } else if (mainTask.type == .repeating) {
+                                    return ("repeat", 14)
+                                } else if (mainTask.type == .paused) {
+                                    return ("pause.fill", 13)
+                                }
+                                return ("", 14)
+                            }()
+                            Image(systemName: iconRes)
                                     .foregroundColor(Color.white)
+                                    .font(.system(size: iconSize, weight: .light))
+                                    .padding(.trailing, 3)
                         }
-                                .padding(.horizontal, 8)
-                                .frame(maxHeight: .infinity)
-                                .background(
-                                        RoundedRectangle(cornerRadius: 99, style: .circular)
-                                                .fill(mainTask.backgroundColor?.toColor() ?? c.transparent)
-                                )
-                                .padding(.vertical, 4)
-                                .padding(.horizontal, H_PADDING)
+
+                        Text(mainTask.text)
+                                .font(.system(size: 15))
+                                .foregroundColor(Color.white)
                     }
+                            .padding(.horizontal, 8)
+                            .frame(maxHeight: .infinity)
+                            .background(roundedShape.fill(mainTask.backgroundColor?.toColor() ?? c.transparent))
+                            .padding(.vertical, 4)
+                            .padding(.horizontal, H_PADDING)
                             .frame(height: taskItemHeight)
                 }
         )
