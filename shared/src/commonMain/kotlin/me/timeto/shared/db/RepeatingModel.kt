@@ -204,7 +204,8 @@ data class RepeatingModel(
         .copy(
             fromRepeating = TextFeatures.FromRepeating(
                 id = id, day = day, time = daytimeToTimeWithDayStart(day)
-            )
+            ),
+            isImportant = is_important.toBoolean10(),
         )
         .textWithFeatures()
 
