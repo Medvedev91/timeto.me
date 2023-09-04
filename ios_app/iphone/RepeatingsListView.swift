@@ -160,6 +160,13 @@ struct RepeatingsView__ItemView: View {
                 Spacer()
 
                 TriggersListIconsView(triggers: repeatingUI.textFeatures.triggers, fontSize: 15)
+
+                if (repeatingUI.isImportant) {
+                    Image(systemName: "flag.fill")
+                            .font(.system(size: 18))
+                            .foregroundColor(c.red)
+                            .padding(.leading, 8)
+                }
             }
                     .padding(.top, 4)
         }
