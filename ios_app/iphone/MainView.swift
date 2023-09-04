@@ -515,28 +515,28 @@ private struct MainTaskItem: View {
                             Image(systemName: "calendar")
                                     .foregroundColor(Color.white)
                                     .font(.system(size: 14, weight: .light))
-                                    .padding(.trailing, 4)
+                                    .padding(.trailing, 5)
                         case .repeating:
                             Image(systemName: "repeat")
                                     .foregroundColor(Color.white)
                                     .font(.system(size: 14, weight: .light))
-                                    .padding(.trailing, 4)
+                                    .padding(.trailing, 5)
                         case .important:
                             Image(systemName: "flag.fill")
                                     .foregroundColor(Color.white)
                                     .font(.system(size: 12, weight: .light))
-                                    .padding(.trailing, 4)
+                                    .padding(.trailing, 5)
                         case .paused:
                             Image(systemName: "pause")
                                     .foregroundColor(Color.white)
                                     .font(.system(size: 14, weight: .medium))
-                                    .padding(.trailing, 4)
+                                    .padding(.trailing, 5)
                         default:
                             fatalError()
                         }
 
                         Text(mainTask.text)
-                                .font(.system(size: 15))
+                                .font(.system(size: mainTask.backgroundColor == nil ? 15 : 14))
                                 .foregroundColor(Color.white)
                     }
                             .padding(.horizontal, 8)
