@@ -262,7 +262,7 @@ struct MainView: View {
                                     Text(state.tasksText)
                                             .foregroundColor(menuColor)
                                             .font(.system(size: 15, weight: .regular))
-                                            .padding(.top, 10)
+                                            .padding(.top, 3)
 
                                     Spacer()
                                 }
