@@ -207,7 +207,7 @@ class MainVM : __VM<MainVM.State>() {
         val textFeatures: TextFeatures,
     ) {
 
-        val type: Type
+        val icon: ICON?
         val text: String
         val backgroundColor: ColorRgba?
         val timerContext = ActivityTimerSheetVM.TimerContext.Task(task)
@@ -216,17 +216,11 @@ class MainVM : __VM<MainVM.State>() {
 
             val timeData = textFeatures.timeData
 
-            type = if (textFeatures.paused != null)
-                Type.paused
-            else if (textFeatures.isImportant)
-                Type.important
-            else if (timeData != null)
-                when (timeData.type) {
-                    TextFeatures.TimeData.TYPE.EVENT -> Type.event
-                    TextFeatures.TimeData.TYPE.REPEATING -> Type.repeating
-                }
-            else
-                throw Exception("MainTask invalid type")
+            icon = when {
+                textFeatures.paused != null -> ICON.paused
+                timeData?.type?.isEvent() == true -> ICON.event
+                else -> null
+            }
 
             text = if (timeData != null) {
                 val dateText = timeData.unixTime.getStringByComponents(
@@ -255,8 +249,8 @@ class MainVM : __VM<MainVM.State>() {
                 null
         }
 
-        enum class Type {
-            event, repeating, paused, important
+        enum class ICON {
+            event, paused
         }
     }
 }
