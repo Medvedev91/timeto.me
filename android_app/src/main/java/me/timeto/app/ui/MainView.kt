@@ -2,7 +2,6 @@ package me.timeto.app.ui
 
 import android.view.MotionEvent
 import androidx.activity.compose.BackHandler
-import androidx.annotation.DrawableRes
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
@@ -609,31 +608,29 @@ private fun MainTasksView(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
 
-                val type = taskItem.type
-                val iconUI: MainTaskIconUI = when (type) {
-                    MainVM.MainTask.Type.event -> MainTaskIconUI(
-                        iconRes = R.drawable.sf_calendar_medium_light,
-                        modifier = Modifier.padding(start = 1.dp, end = 6.dp).size(15.dp),
-                    )
-                    MainVM.MainTask.Type.repeating -> MainTaskIconUI(
-                        iconRes = R.drawable.sf_repeat_medium_semibold,
-                        modifier = Modifier.padding(end = 5.dp).size(15.dp),
-                    )
-                    MainVM.MainTask.Type.paused -> MainTaskIconUI(
-                        iconRes = R.drawable.sf_pause_small_medium,
-                        modifier = Modifier.padding(end = 5.dp).size(11.dp),
-                    )
-                    MainVM.MainTask.Type.important -> MainTaskIconUI(
-                        iconRes = R.drawable.sf_flag_fill_medium_regular,
-                        modifier = Modifier.padding(start = 2.dp, end = 7.dp).size(11.dp),
-                    )
+                when (taskItem.icon) {
+                    MainVM.MainTask.ICON.event -> {
+                        Icon(
+                            painterResource(id = R.drawable.sf_calendar_medium_light),
+                            contentDescription = taskItem.text,
+                            tint = c.white,
+                            modifier = Modifier
+                                .padding(start = 1.dp, end = 6.dp)
+                                .size(15.dp),
+                        )
+                    }
+                    MainVM.MainTask.ICON.paused -> {
+                        Icon(
+                            painterResource(id = R.drawable.sf_pause_small_medium),
+                            contentDescription = taskItem.text,
+                            tint = c.white,
+                            modifier = Modifier
+                                .padding(end = 5.dp)
+                                .size(11.dp),
+                        )
+                    }
+                    null -> {}
                 }
-                Icon(
-                    painterResource(id = iconUI.iconRes),
-                    contentDescription = taskItem.text,
-                    tint = c.white,
-                    modifier = iconUI.modifier,
-                )
 
                 Text(
                     text = taskItem.text,
@@ -648,11 +645,6 @@ private fun MainTasksView(
         }
     }
 }
-
-private class MainTaskIconUI(
-    @DrawableRes val iconRes: Int,
-    val modifier: Modifier,
-)
 
 @Composable
 private fun MainDivider(
