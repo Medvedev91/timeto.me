@@ -118,6 +118,7 @@ struct MainView: View {
                             .offset(x: 2)
                 }
                         .padding(.top, 13)
+                        .padding(.bottom, 14)
 
                 if state.isPurple {
 
@@ -153,7 +154,7 @@ struct MainView: View {
                                 .padding(.leading, 9)
                                 .offset(y: -onePx)
                     }
-                            .padding(.top, 10)
+                            .offset(y: -4)
                 }
 
                 ZStack {
