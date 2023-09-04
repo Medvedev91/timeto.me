@@ -6,17 +6,20 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
+import me.timeto.app.R
 import me.timeto.shared.vm.RepeatingsListVM
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -146,6 +149,18 @@ fun RepeatingsListView() {
                                 color = c.text,
                             )
                             TriggersListIconsView(repeatingUI.textFeatures.triggers, 14.sp)
+
+                            if (repeatingUI.isImportant) {
+                                Icon(
+                                    painterResource(R.drawable.sf_flag_fill_medium_regular),
+                                    contentDescription = "Important",
+                                    tint = c.red,
+                                    modifier = Modifier
+                                        .padding(start = 8.dp)
+                                        .offset(y = 1.dp)
+                                        .size(16.dp),
+                                )
+                            }
                         }
                     }
 
