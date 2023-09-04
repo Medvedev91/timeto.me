@@ -508,26 +508,32 @@ private struct MainTaskItem: View {
                 },
                 label: {
 
-                    let type = mainTask.type
-
                     HStack {
 
-                        var (iconRes, iconSize): (String, CGFloat) = {
-                            if (mainTask.type == .event) {
-                                return ("calendar", 14)
-                            } else if (mainTask.type == .repeating) {
-                                return ("repeat", 14)
-                            } else if (mainTask.type == .important) {
-                                return ("flag.fill", 13)
-                            } else if (mainTask.type == .paused) {
-                                return ("pause.fill", 13)
-                            }
-                            return ("", 14)
-                        }()
-                        Image(systemName: iconRes)
-                                .foregroundColor(Color.white)
-                                .font(.system(size: iconSize, weight: .light))
-                                .padding(.trailing, 3)
+                        switch mainTask.type {
+                        case .event:
+                            Image(systemName: "calendar")
+                                    .foregroundColor(Color.white)
+                                    .font(.system(size: 14, weight: .light))
+                                    .padding(.trailing, 4)
+                        case .repeating:
+                            Image(systemName: "repeat")
+                                    .foregroundColor(Color.white)
+                                    .font(.system(size: 14, weight: .light))
+                                    .padding(.trailing, 4)
+                        case .important:
+                            Image(systemName: "flag.fill")
+                                    .foregroundColor(Color.white)
+                                    .font(.system(size: 12, weight: .light))
+                                    .padding(.trailing, 4)
+                        case .paused:
+                            Image(systemName: "pause")
+                                    .foregroundColor(Color.white)
+                                    .font(.system(size: 14, weight: .medium))
+                                    .padding(.trailing, 4)
+                        default:
+                            fatalError()
+                        }
 
                         Text(mainTask.text)
                                 .font(.system(size: 15))
