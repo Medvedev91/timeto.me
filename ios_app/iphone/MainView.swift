@@ -510,29 +510,21 @@ private struct MainTaskItem: View {
 
                     HStack {
 
-                        switch mainTask.type {
-                        case .event:
-                            Image(systemName: "calendar")
-                                    .foregroundColor(Color.white)
-                                    .font(.system(size: 14, weight: .light))
-                                    .padding(.trailing, 5)
-                        case .repeating:
-                            Image(systemName: "repeat")
-                                    .foregroundColor(Color.white)
-                                    .font(.system(size: 14, weight: .light))
-                                    .padding(.trailing, 5)
-                        case .important:
-                            Image(systemName: "flag.fill")
-                                    .foregroundColor(Color.white)
-                                    .font(.system(size: 12, weight: .light))
-                                    .padding(.trailing, 5)
-                        case .paused:
-                            Image(systemName: "pause")
-                                    .foregroundColor(Color.white)
-                                    .font(.system(size: 14, weight: .medium))
-                                    .padding(.trailing, 5)
-                        default:
-                            fatalError()
+                        if let icon = mainTask.icon {
+                            switch icon {
+                            case .event:
+                                Image(systemName: "calendar")
+                                        .foregroundColor(Color.white)
+                                        .font(.system(size: 14, weight: .light))
+                                        .padding(.trailing, 5)
+                            case .paused:
+                                Image(systemName: "pause")
+                                        .foregroundColor(Color.white)
+                                        .font(.system(size: 14, weight: .medium))
+                                        .padding(.trailing, 5)
+                            default:
+                                fatalError()
+                            }
                         }
 
                         Text(mainTask.text)
