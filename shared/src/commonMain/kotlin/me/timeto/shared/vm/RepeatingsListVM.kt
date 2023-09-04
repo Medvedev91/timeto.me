@@ -10,6 +10,8 @@ class RepeatingsListVM : __VM<RepeatingsListVM.State>() {
         val repeating: RepeatingModel,
     ) {
 
+        val isImportant = repeating.is_important.toBoolean10()
+
         val deletionNote = "Are you sure you want to delete \"${repeating.text}\"?"
         val dayLeftString: String
         val dayRightString = repeating.getNextDayString() + ", " + "${repeating.getNextDay() - UnixTime().localDay}d"
