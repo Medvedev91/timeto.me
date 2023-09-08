@@ -1,6 +1,34 @@
 import SwiftUI
 import shared
 
+extension NativeSheet {
+
+    func showActivitiesTimerSheet(
+            timerContext: ActivityTimerSheetVM.TimerContext?,
+            withMenu: Bool,
+            selectedActivity: ActivityModel?,
+            onStart: @escaping (_ isPresented: Binding<Bool>) -> Void
+    ) {
+        items.append(
+                NativeSheet__Item(
+                        content: { isPresented in
+                            AnyView(
+                                    ActivitiesTimerSheet(
+                                            isPresented: isPresented,
+                                            timerContext: timerContext,
+                                            withMenu: withMenu,
+                                            selectedActivity: selectedActivity
+                                    ) {
+                                        isPresented.wrappedValue = false
+                                        onStart(isPresented)
+                                    }
+                            )
+                        }
+                )
+        )
+    }
+}
+
 extension TimetoSheet {
 
     func showActivitiesTimerSheet(
