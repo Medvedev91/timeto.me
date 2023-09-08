@@ -30,6 +30,7 @@ struct MainView: View {
     @State private var isSettingsSheetPresented = false
 
     @EnvironmentObject private var timetoSheet: TimetoSheet
+    @EnvironmentObject private var nativeSheet: NativeSheet
 
     @State private var isPurpleAnim = true
     @State private var timerHeight = 30.0
@@ -135,13 +136,12 @@ struct MainView: View {
 
                         Button(
                                 action: {
-                                    timetoSheet.showActivitiesTimerSheet(
-                                            isPresented: $isTimerButtonExpandPresented,
+                                    nativeSheet.showActivitiesTimerSheet(
                                             timerContext: state.timerButtonExpandSheetContext,
                                             withMenu: false,
                                             selectedActivity: state.activity,
-                                            onStart: {
-                                                isTimerButtonExpandPresented = false
+                                            onStart: { isPresented in
+                                                isPresented.wrappedValue = false
                                             }
                                     )
                                 },
@@ -227,13 +227,12 @@ struct MainView: View {
 
                 Button(
                         action: {
-                            timetoSheet.showActivitiesTimerSheet(
-                                    isPresented: $isTimerActivitiesPresented,
+                            nativeSheet.showActivitiesTimerSheet(
                                     timerContext: nil,
                                     withMenu: true,
                                     selectedActivity: nil,
-                                    onStart: {
-                                        isTimerActivitiesPresented = false
+                                    onStart: { isPresented in
+                                        isPresented.wrappedValue = false
                                     }
                             )
                         },
