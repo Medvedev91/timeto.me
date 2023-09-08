@@ -7,7 +7,7 @@ extension NativeSheet {
             timerContext: ActivityTimerSheetVM.TimerContext?,
             withMenu: Bool,
             selectedActivity: ActivityModel?,
-            onStart: @escaping (_ isPresented: Binding<Bool>) -> Void
+            onStart: @escaping () -> Void
     ) {
         self.show { isPresented in
             ActivitiesTimerSheet(
@@ -17,7 +17,7 @@ extension NativeSheet {
                     selectedActivity: selectedActivity
             ) {
                 isPresented.wrappedValue = false
-                onStart(isPresented)
+                onStart()
             }
         }
     }

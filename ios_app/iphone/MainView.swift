@@ -137,9 +137,7 @@ struct MainView: View {
                                             timerContext: state.timerButtonExpandSheetContext,
                                             withMenu: false,
                                             selectedActivity: state.activity,
-                                            onStart: { isPresented in
-                                                isPresented.wrappedValue = false
-                                            }
+                                            onStart: {}
                                     )
                                 },
                                 label: {
@@ -228,9 +226,7 @@ struct MainView: View {
                                     timerContext: nil,
                                     withMenu: true,
                                     selectedActivity: nil,
-                                    onStart: { isPresented in
-                                        isPresented.wrappedValue = false
-                                    }
+                                    onStart: {}
                             )
                         },
                         label: {
@@ -482,9 +478,7 @@ private struct MainTaskItem: View {
                                         timerContext: mainTask.timerContext,
                                         withMenu: false,
                                         selectedActivity: nil,
-                                        onStart: { isPresented in
-                                            isPresented.wrappedValue = false
-                                        }
+                                        onStart: {}
                                 )
                             },
                             timerSheet: { activity in
@@ -492,9 +486,7 @@ private struct MainTaskItem: View {
                                         timerContext: mainTask.timerContext,
                                         withMenu: false,
                                         selectedActivity: activity,
-                                        onStart: { isPresented in
-                                            isPresented.wrappedValue = false
-                                        }
+                                        onStart: {}
                                 )
                             }
                     )

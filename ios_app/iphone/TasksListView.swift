@@ -323,9 +323,7 @@ struct TasksView__TaskRowView: View {
                                                 timerContext: taskUI.timerContext,
                                                 withMenu: false,
                                                 selectedActivity: nil,
-                                                onStart: { isPresented in
-                                                    isPresented.wrappedValue = false
-                                                }
+                                                onStart: {}
                                         )
                                     },
                                     timerSheet: { activity in
@@ -333,9 +331,7 @@ struct TasksView__TaskRowView: View {
                                                 timerContext: taskUI.timerContext,
                                                 withMenu: false,
                                                 selectedActivity: activity,
-                                                onStart: { isPresented in
-                                                    isPresented.wrappedValue = false
-                                                }
+                                                onStart: {}
                                         )
                                     }
                             )
