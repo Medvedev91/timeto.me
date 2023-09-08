@@ -6,6 +6,8 @@ extension NativeSheet {
     func showActivityTimerSheet(
             activity: ActivityModel,
             timerContext: ActivityTimerSheetVM.TimerContext?,
+            // Set false for nested sheet to speed up closing
+            hideOnStart: Bool,
             onStart: @escaping () -> Void
     ) {
         self.show { isPresented in
@@ -14,7 +16,9 @@ extension NativeSheet {
                     isPresented: isPresented,
                     timerContext: timerContext
             ) {
-                isPresented.wrappedValue = false
+                if hideOnStart {
+                    isPresented.wrappedValue = false
+                }
                 onStart()
             }
         }
