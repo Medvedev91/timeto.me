@@ -158,7 +158,14 @@ private struct ActivitiesTimerSheet: View {
                                                     /// Ordering is important
                                                     .contentShape(Rectangle()) // TRICK for tap gesture
                                                     .onTapGesture {
-                                                        sheetActivity = activityUI.activity
+                                                        nativeSheet.showActivityTimerSheet(
+                                                                activity: activityUI.activity,
+                                                                timerContext: timerContext,
+                                                                hideOnStart: false,
+                                                                onStart: {
+                                                                    isPresented = false
+                                                                }
+                                                        )
                                                     }
                                                     .onLongPressGesture(minimumDuration: 0.1) {
                                                         nativeSheet.show { isActivityFormPresented in
