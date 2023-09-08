@@ -80,7 +80,7 @@ struct ChartView: View {
                         let columns: [GridItem] = Array(repeating: .init(.fixed(cellHeight)), count: columnsCount)
                         LazyHGrid(rows: columns, spacing: 0) {
                             ForEach(state.pieItems, id: \.id) { pie in
-                                SummaryView_ItemCellView(
+                                ChartView_ItemCellView(
                                         itemData: pie,
                                         selectedId: state.selectedId,
                                         onIdSelected: { vm.selectId(id: $0) },
@@ -100,7 +100,7 @@ struct ChartView: View {
     }
 }
 
-struct SummaryView_ItemCellView: View {
+private struct ChartView_ItemCellView: View {
 
     let itemData: PieChart.ItemData
 
