@@ -9,23 +9,17 @@ extension NativeSheet {
             selectedActivity: ActivityModel?,
             onStart: @escaping (_ isPresented: Binding<Bool>) -> Void
     ) {
-        items.append(
-                NativeSheet__Item(
-                        content: { isPresented in
-                            AnyView(
-                                    ActivitiesTimerSheet(
-                                            isPresented: isPresented,
-                                            timerContext: timerContext,
-                                            withMenu: withMenu,
-                                            selectedActivity: selectedActivity
-                                    ) {
-                                        isPresented.wrappedValue = false
-                                        onStart(isPresented)
-                                    }
-                            )
-                        }
-                )
-        )
+        self.show { isPresented in
+            ActivitiesTimerSheet(
+                    isPresented: isPresented,
+                    timerContext: timerContext,
+                    withMenu: withMenu,
+                    selectedActivity: selectedActivity
+            ) {
+                isPresented.wrappedValue = false
+                onStart(isPresented)
+            }
+        }
     }
 }
 
