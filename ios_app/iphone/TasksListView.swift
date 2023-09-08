@@ -327,10 +327,10 @@ struct TasksView__TaskRowView: View {
                                         )
                                     },
                                     timerSheet: { activity in
-                                        nativeSheet.showActivitiesTimerSheet(
+                                        nativeSheet.showActivityTimerSheet(
+                                                activity: activity,
                                                 timerContext: taskUI.timerContext,
-                                                withMenu: false,
-                                                selectedActivity: activity,
+                                                hideOnStart: true,
                                                 onStart: {}
                                         )
                                     }
