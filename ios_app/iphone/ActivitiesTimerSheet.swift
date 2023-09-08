@@ -6,15 +6,13 @@ extension NativeSheet {
     func showActivitiesTimerSheet(
             timerContext: ActivityTimerSheetVM.TimerContext?,
             withMenu: Bool,
-            selectedActivity: ActivityModel?,
             onStart: @escaping () -> Void
     ) {
         self.show { isPresented in
             ActivitiesTimerSheet(
                     isPresented: isPresented,
                     timerContext: timerContext,
-                    withMenu: withMenu,
-                    selectedActivity: selectedActivity
+                    withMenu: withMenu
             ) {
                 isPresented.wrappedValue = false
                 onStart()
@@ -64,7 +62,6 @@ private struct ActivitiesTimerSheet: View {
             isPresented: Binding<Bool>,
             timerContext: ActivityTimerSheetVM.TimerContext?,
             withMenu: Bool,
-            selectedActivity: ActivityModel?,
             onStart: @escaping () -> Void
     ) {
         _isPresented = isPresented
@@ -74,7 +71,6 @@ private struct ActivitiesTimerSheet: View {
 
         let vm = ActivitiesTimerSheetVM(timerContext: timerContext)
         _vm = State(initialValue: vm)
-        _sheetActivity = State(initialValue: selectedActivity)
 
         let vmState = vm.state.value as! ActivitiesTimerSheetVM.State
         _sheetHeight = State(initialValue: calcSheetHeight(
@@ -89,158 +85,146 @@ private struct ActivitiesTimerSheet: View {
 
             ZStack {
 
-                if let sheetActivity = sheetActivity {
-                    ActivityTimerSheet(
-                            activity: sheetActivity,
-                            isPresented: $isPresented,
-                            timerContext: timerContext,
-                            onStart: {
-                                onStart()
-                            }
-                    )
-                } else {
+                ScrollView {
 
-                    ScrollView {
+                    VStack {
 
-                        VStack {
+                        Padding(vertical: topContentPadding)
 
-                            Padding(vertical: topContentPadding)
+                        ForEach(state.allActivities, id: \.activity.id) { activityUI in
 
-                            ForEach(state.allActivities, id: \.activity.id) { activityUI in
+                            Button(
+                                    action: {
+                                        // onTapGesture() / onLongPressGesture()
+                                    },
+                                    label: {
 
-                                Button(
-                                        action: {
-                                            // onTapGesture() / onLongPressGesture()
-                                        },
-                                        label: {
+                                        ZStack(alignment: .bottomLeading) { // divider + isActive
 
-                                            ZStack(alignment: .bottomLeading) { // divider + isActive
+                                            HStack {
 
-                                                HStack {
+                                                Text(activityUI.activity.emoji)
+                                                        .frame(width: activityItemEmojiWidth)
+                                                        .padding(.horizontal, activityItemEmojiHPadding)
+                                                        .font(.system(size: 22))
 
-                                                    Text(activityUI.activity.emoji)
-                                                            .frame(width: activityItemEmojiWidth)
-                                                            .padding(.horizontal, activityItemEmojiHPadding)
-                                                            .font(.system(size: 22))
+                                                Text(activityUI.listText)
+                                                        .foregroundColor(.primary)
+                                                        .truncationMode(.tail)
+                                                        .lineLimit(1)
 
-                                                    Text(activityUI.listText)
-                                                            .foregroundColor(.primary)
-                                                            .truncationMode(.tail)
-                                                            .lineLimit(1)
+                                                Spacer()
 
-                                                    Spacer()
+                                                TimerHintsView(
+                                                        timerHintsUI: activityUI.timerHints,
+                                                        hintHPadding: timerHintHPadding,
+                                                        fontSize: secondaryFontSize,
+                                                        fontWeight: secondaryFontWeight,
+                                                        onStart: {
+                                                            onStart()
+                                                        }
+                                                )
+                                            }
+                                                    .padding(.trailing, listEngPadding)
+                                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
 
-                                                    TimerHintsView(
-                                                            timerHintsUI: activityUI.timerHints,
-                                                            hintHPadding: timerHintHPadding,
-                                                            fontSize: secondaryFontSize,
-                                                            fontWeight: secondaryFontWeight,
+                                            if state.allActivities.last != activityUI {
+                                                SheetDividerBg()
+                                                        .padding(.leading, activityItemPaddingStart)
+                                            }
+
+                                            if activityUI.isActive {
+                                                ZStack {}
+                                                        .frame(width: 8, height: listItemHeight - 2)
+                                                        .background(roundedShape.fill(c.blue))
+                                                        .offset(x: -4, y: -1)
+                                            }
+                                        }
+                                                /// Ordering is important
+                                                .contentShape(Rectangle()) // TRICK for tap gesture
+                                                .onTapGesture {
+                                                    nativeSheet.showActivityTimerSheet(
+                                                            activity: activityUI.activity,
+                                                            timerContext: timerContext,
+                                                            hideOnStart: false,
                                                             onStart: {
-                                                                onStart()
+                                                                isPresented = false
                                                             }
                                                     )
                                                 }
-                                                        .padding(.trailing, listEngPadding)
-                                                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-
-                                                if state.allActivities.last != activityUI {
-                                                    SheetDividerBg()
-                                                            .padding(.leading, activityItemPaddingStart)
+                                                .onLongPressGesture(minimumDuration: 0.1) {
+                                                    nativeSheet.show { isActivityFormPresented in
+                                                        ActivityFormSheet(
+                                                                isPresented: isActivityFormPresented,
+                                                                activity: activityUI.activity
+                                                        ) {}
+                                                    }
                                                 }
+                                                //////
+                                                .frame(alignment: .bottom)
+                                    }
+                            )
+                        }
+                                .buttonStyle(myButtonStyle)
 
-                                                if activityUI.isActive {
-                                                    ZStack {}
-                                                            .frame(width: 8, height: listItemHeight - 2)
-                                                            .background(roundedShape.fill(c.blue))
-                                                            .offset(x: -4, y: -1)
-                                                }
+                        if withMenu {
+
+                            HStack {
+
+                                ChartHistoryButton(text: "Chart", iconName: "chart.pie", iconSize: 18) {
+                                    isChartPresented = true
+                                }
+                                        .padding(.leading, 13)
+                                        .padding(.trailing, 12)
+                                        .sheetEnv(isPresented: $isChartPresented) {
+                                            VStack {
+
+                                                ChartView()
+                                                        .padding(.top, 15)
+
+                                                Button(
+                                                        action: { isChartPresented.toggle() },
+                                                        label: { Text("close").fontWeight(.light) }
+                                                )
+                                                        .padding(.bottom, 4)
                                             }
-                                                    /// Ordering is important
-                                                    .contentShape(Rectangle()) // TRICK for tap gesture
-                                                    .onTapGesture {
-                                                        nativeSheet.showActivityTimerSheet(
-                                                                activity: activityUI.activity,
-                                                                timerContext: timerContext,
-                                                                hideOnStart: false,
-                                                                onStart: {
-                                                                    isPresented = false
-                                                                }
-                                                        )
-                                                    }
-                                                    .onLongPressGesture(minimumDuration: 0.1) {
-                                                        nativeSheet.show { isActivityFormPresented in
-                                                            ActivityFormSheet(
-                                                                    isPresented: isActivityFormPresented,
-                                                                    activity: activityUI.activity
-                                                            ) {}
-                                                        }
-                                                    }
-                                                    //////
-                                                    .frame(alignment: .bottom)
+                                        }
+
+                                ChartHistoryButton(text: "History", iconName: "list.bullet.rectangle", iconSize: 18) {
+                                    isHistoryPresented = true
+                                }
+                                        .sheetEnv(isPresented: $isHistoryPresented) {
+                                            ZStack {
+                                                c.bg.edgesIgnoringSafeArea(.all)
+                                                HistoryView(isHistoryPresented: $isHistoryPresented)
+                                            }
+                                                    // todo
+                                                    .interactiveDismissDisabled()
+                                        }
+
+                                Spacer()
+
+                                Button(
+                                        action: { isEditActivitiesPresented = true },
+                                        label: {
+                                            Text("Edit")
+                                                    .font(.system(size: secondaryFontSize, weight: secondaryFontWeight))
+                                                    .padding(.trailing, timerHintHPadding)
                                         }
                                 )
-                            }
-                                    .buttonStyle(myButtonStyle)
-
-                            if withMenu {
-
-                                HStack {
-
-                                    ChartHistoryButton(text: "Chart", iconName: "chart.pie", iconSize: 18) {
-                                        isChartPresented = true
-                                    }
-                                            .padding(.leading, 13)
-                                            .padding(.trailing, 12)
-                                            .sheetEnv(isPresented: $isChartPresented) {
-                                                VStack {
-
-                                                    ChartView()
-                                                            .padding(.top, 15)
-
-                                                    Button(
-                                                            action: { isChartPresented.toggle() },
-                                                            label: { Text("close").fontWeight(.light) }
-                                                    )
-                                                            .padding(.bottom, 4)
-                                                }
-                                            }
-
-                                    ChartHistoryButton(text: "History", iconName: "list.bullet.rectangle", iconSize: 18) {
-                                        isHistoryPresented = true
-                                    }
-                                            .sheetEnv(isPresented: $isHistoryPresented) {
-                                                ZStack {
-                                                    c.bg.edgesIgnoringSafeArea(.all)
-                                                    HistoryView(isHistoryPresented: $isHistoryPresented)
-                                                }
-                                                        // todo
-                                                        .interactiveDismissDisabled()
-                                            }
-
-                                    Spacer()
-
-                                    Button(
-                                            action: { isEditActivitiesPresented = true },
-                                            label: {
-                                                Text("Edit")
-                                                        .font(.system(size: secondaryFontSize, weight: secondaryFontWeight))
-                                                        .padding(.trailing, timerHintHPadding)
-                                            }
-                                    )
-                                            .padding(.trailing, listEngPadding)
-                                            .sheetEnv(
+                                        .padding(.trailing, listEngPadding)
+                                        .sheetEnv(
+                                                isPresented: $isEditActivitiesPresented
+                                        ) {
+                                            EditActivitiesSheet(
                                                     isPresented: $isEditActivitiesPresented
-                                            ) {
-                                                EditActivitiesSheet(
-                                                        isPresented: $isEditActivitiesPresented
-                                                )
-                                            }
-                                }
-                                        .frame(height: listItemHeight)
+                                            )
+                                        }
                             }
-
-                            Padding(vertical: bottomContentPadding)
+                                    .frame(height: listItemHeight)
                         }
+
+                        Padding(vertical: bottomContentPadding)
                     }
                 }
             }
@@ -255,9 +239,6 @@ private struct ActivitiesTimerSheet: View {
                 .background(bgColor)
                 .listStyle(.plain)
                 .listSectionSeparatorTint(.clear)
-                .onDisappear {
-                    sheetActivity = nil
-                }
                 .presentationDetentsHeightIf16(sheetHeight, withDragIndicator: true)
                 .ignoresSafeArea()
     }

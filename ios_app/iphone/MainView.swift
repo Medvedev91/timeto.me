@@ -225,7 +225,6 @@ struct MainView: View {
                             nativeSheet.showActivitiesTimerSheet(
                                     timerContext: nil,
                                     withMenu: true,
-                                    selectedActivity: nil,
                                     onStart: {}
                             )
                         },
@@ -477,7 +476,6 @@ private struct MainTaskItem: View {
                                 nativeSheet.showActivitiesTimerSheet(
                                         timerContext: mainTask.timerContext,
                                         withMenu: false,
-                                        selectedActivity: nil,
                                         onStart: {}
                                 )
                             },
