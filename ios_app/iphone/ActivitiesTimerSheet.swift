@@ -24,7 +24,6 @@ extension NativeSheet {
 private let bgColor = c.sheetBg
 private let listItemHeight = 46.0
 private let topContentPadding = 6.0
-private let bottomContentPadding = 36.0
 
 private let activityItemEmojiWidth = 30.0
 private let activityItemEmojiHPadding = 8.0
@@ -220,8 +219,6 @@ private struct ActivitiesTimerSheet: View {
                             }
                                     .frame(height: listItemHeight)
                         }
-
-                        Padding(vertical: bottomContentPadding)
                     }
                 }
             }
@@ -237,7 +234,6 @@ private struct ActivitiesTimerSheet: View {
                 .listStyle(.plain)
                 .listSectionSeparatorTint(.clear)
                 .presentationDetentsHeightIf16(sheetHeight, withDragIndicator: true)
-                .ignoresSafeArea()
     }
 }
 
@@ -248,8 +244,7 @@ private func calcSheetHeight(
     // Do not be afraid of too much height because the native sheet will cut
     (listItemHeight * activitiesCount.toDouble()) +
     (withMenu ? listItemHeight : 0.0) + // Buttons
-    topContentPadding +
-    bottomContentPadding
+    topContentPadding
 }
 
 private struct MyButtonStyle: ButtonStyle {
