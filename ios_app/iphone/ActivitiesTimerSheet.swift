@@ -29,37 +29,6 @@ extension NativeSheet {
     }
 }
 
-extension TimetoSheet {
-
-    func showActivitiesTimerSheet(
-            isPresented: Binding<Bool>,
-            timerContext: ActivityTimerSheetVM.TimerContext?,
-            withMenu: Bool,
-            selectedActivity: ActivityModel?,
-            onStart: @escaping () -> Void
-    ) {
-        items.append(
-                TimetoSheet__Item(
-                        isPresented: isPresented,
-                        content: {
-                            AnyView(
-                                    ActivitiesTimerSheet(
-                                            isPresented: isPresented,
-                                            timerContext: timerContext,
-                                            withMenu: withMenu,
-                                            selectedActivity: selectedActivity
-                                    ) {
-                                        isPresented.wrappedValue = false
-                                        onStart()
-                                    }
-                                            .cornerRadius(10, onTop: true, onBottom: false)
-                            )
-                        }
-                )
-        )
-    }
-}
-
 private let bgColor = c.sheetBg
 private let listItemHeight = 46.0
 private let topContentPadding = 8.0
