@@ -21,8 +21,6 @@ extension NativeSheet {
     }
 }
 
-private let minSheetHeight = 400.0 // For valid timer picker
-
 private let bgColor = c.sheetBg
 private let listItemHeight = 46.0
 private let topContentPadding = 8.0
@@ -45,7 +43,6 @@ private struct ActivitiesTimerSheet: View {
 
     @State private var vm: ActivitiesTimerSheetVM
 
-    @State private var sheetActivity: ActivityModel?
     @Binding private var isPresented: Bool
 
     @State private var sheetHeight: Double
@@ -248,12 +245,11 @@ private func calcSheetHeight(
         activitiesCount: Int,
         withMenu: Bool
 ) -> Double {
-    let contentHeight = (listItemHeight * activitiesCount.toDouble()) +
-                        (withMenu ? listItemHeight : 0.0) + // Buttons
-                        topContentPadding +
-                        bottomContentPadding
     // Do not be afraid of too much height because the native sheet will cut
-    return max(minSheetHeight, contentHeight)
+    (listItemHeight * activitiesCount.toDouble()) +
+    (withMenu ? listItemHeight : 0.0) + // Buttons
+    topContentPadding +
+    bottomContentPadding
 }
 
 private struct MyButtonStyle: ButtonStyle {
