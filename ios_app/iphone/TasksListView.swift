@@ -192,14 +192,12 @@ private let taskRowButtonStyle = TasksView__TaskRowView.MyButtonStyle()
 
 struct TasksView__TaskRowView: View {
 
-    @EnvironmentObject private var timetoSheet: TimetoSheet
+    @EnvironmentObject private var nativeSheet: NativeSheet
 
     private let taskUI: TasksListVM.TaskUI
 
     let tasksListView: TasksListView
     @State private var dragItem: DragItem
-
-    @State private var isSheetPresented = false
 
     @State private var isAddCalendarSheetPresented = false
     @State private var isEditTaskPresented = false
@@ -321,24 +319,22 @@ struct TasksView__TaskRowView: View {
                             taskUI.task.startIntervalForUI(
                                     onStarted: {},
                                     activitiesSheet: {
-                                        timetoSheet.showActivitiesTimerSheet(
-                                                isPresented: $isSheetPresented,
+                                        nativeSheet.showActivitiesTimerSheet(
                                                 timerContext: taskUI.timerContext,
                                                 withMenu: false,
                                                 selectedActivity: nil,
-                                                onStart: {
-                                                    isSheetPresented = false
+                                                onStart: { isPresented in
+                                                    isPresented.wrappedValue = false
                                                 }
                                         )
                                     },
                                     timerSheet: { activity in
-                                        timetoSheet.showActivitiesTimerSheet(
-                                                isPresented: $isSheetPresented,
+                                        nativeSheet.showActivitiesTimerSheet(
                                                 timerContext: taskUI.timerContext,
                                                 withMenu: false,
                                                 selectedActivity: activity,
-                                                onStart: {
-                                                    isSheetPresented = false
+                                                onStart: { isPresented in
+                                                    isPresented.wrappedValue = false
                                                 }
                                         )
                                     }
