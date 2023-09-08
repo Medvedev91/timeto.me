@@ -56,6 +56,7 @@
 		318216CD611B132D9DE288F3 /* EventsHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821B4BCB049B516BF2DF2E /* EventsHistoryView.swift */; };
 		318216E60DD4CA4153065416 /* utils_apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E58DC92CD5673A6B49E /* utils_apple.swift */; };
 		318216F271691CC07FC67AFC /* ChecklistFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318212FEA97CBD2AEC3AA1D6 /* ChecklistFormSheet.swift */; };
+		3182172EBDF607665AA6DBD2 /* ActivityTimerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318211757B7EE8E4805AD047 /* ActivityTimerSheet.swift */; };
 		318217982A5F8106B497432F /* SheetDividerBg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821956E237470E838F18A0 /* SheetDividerBg.swift */; };
 		31821874203EAD4F021DAD0E /* AutoBackupIos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821D5928C18299586075F4 /* AutoBackupIos.swift */; };
 		3182197D9BDC28A7649BA7E1 /* TextFeaturesTimerFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821F29E288957ABB3DF794 /* TextFeaturesTimerFormView.swift */; };
@@ -133,6 +134,7 @@
 		318210AB991EB1C25EA1B565 /* TimetoSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetoSheet.swift; sourceTree = "<group>"; };
 		31821110E735778C88CDF821 /* Sheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
 		318211488ABF627A2A9935A7 /* ActivityColorSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityColorSheet.swift; sourceTree = "<group>"; };
+		318211757B7EE8E4805AD047 /* ActivityTimerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityTimerSheet.swift; sourceTree = "<group>"; };
 		3182118D8EA3E0D889D4FDC3 /* utils_ios.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = utils_ios.swift; sourceTree = "<group>"; };
 		3182118DB415E858D0B449DB /* ChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		3182118FAB48EDF7FE78201B /* TasksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksView.swift; sourceTree = "<group>"; };
@@ -346,6 +348,7 @@
 				3182143FB317BCD82F61C777 /* SheetDividerFg.swift */,
 				318219ADD916F23943506F7F /* NativeSheet.swift */,
 				3182151E7DF53609AA812ED1 /* TimerHintsView.swift */,
+				318211757B7EE8E4805AD047 /* ActivityTimerSheet.swift */,
 			);
 			path = iphone;
 			sourceTree = "<group>";
@@ -569,6 +572,7 @@
 				31821CF86EDC2A5C5CB362E0 /* SheetDividerFg.swift in Sources */,
 				318214AB1E16DF8DC1C357F6 /* NativeSheet.swift in Sources */,
 				318214AF2E65AEC255D6204D /* TimerHintsView.swift in Sources */,
+				3182172EBDF607665AA6DBD2 /* ActivityTimerSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
