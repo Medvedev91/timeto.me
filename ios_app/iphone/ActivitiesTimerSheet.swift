@@ -85,6 +85,8 @@ private struct ActivitiesTimerSheet: View {
     @State private var sheetActivity: ActivityModel?
     @Binding private var isPresented: Bool
 
+    @State private var sheetHeight: Double
+
     @State private var isChartPresented = false
     @State private var isHistoryPresented = false
     @State private var isEditActivitiesPresented = false
@@ -105,22 +107,18 @@ private struct ActivitiesTimerSheet: View {
         self.withMenu = withMenu
         self.onStart = onStart
 
-        _vm = State(initialValue: ActivitiesTimerSheetVM(timerContext: timerContext))
+        let vm = ActivitiesTimerSheetVM(timerContext: timerContext)
+        _vm = State(initialValue: vm)
         _sheetActivity = State(initialValue: selectedActivity)
+
+        let vmState = vm.state.value as! ActivitiesTimerSheetVM.State
+        _sheetHeight = State(initialValue: calcSheetHeight(
+                activitiesCount: vmState.allActivities.count,
+                withMenu: withMenu
+        ))
     }
 
     var body: some View {
-
-        // todo If inside VMView twitch on open sheet
-        let contentHeight = (listItemHeight * DI.activitiesSorted.count.toDouble()) +
-                            (withMenu ? listItemHeight : 0.0) + // Buttons
-                            topContentPadding +
-                            bottomContentPadding
-
-        let sheetHeight = max(
-                ActivityTimerSheet.RECOMMENDED_HEIGHT, // Invalid UI if height too small
-                contentHeight // Do not be afraid of too much height because the native sheet will cut
-        )
 
         VMView(vm: vm) { state in
 
@@ -274,6 +272,12 @@ private struct ActivitiesTimerSheet: View {
                     }
                 }
             }
+                    .onChange(of: state.allActivities.count) { newCount in
+                        sheetHeight = calcSheetHeight(
+                                activitiesCount: newCount,
+                                withMenu: withMenu
+                        )
+                    }
         }
                 .frame(maxHeight: sheetHeight)
                 .background(bgColor)
@@ -282,7 +286,23 @@ private struct ActivitiesTimerSheet: View {
                 .onDisappear {
                     sheetActivity = nil
                 }
+                .presentationDetentsHeightIf16(sheetHeight, withDragIndicator: true)
+                .ignoresSafeArea()
     }
+}
+
+private func calcSheetHeight(
+        activitiesCount: Int,
+        withMenu: Bool
+) -> Double {
+    let contentHeight = (listItemHeight * activitiesCount.toDouble()) +
+                        (withMenu ? listItemHeight : 0.0) + // Buttons
+                        topContentPadding +
+                        bottomContentPadding
+    return max(
+            ActivityTimerSheet.RECOMMENDED_HEIGHT, // Invalid UI if height too small
+            contentHeight // Do not be afraid of too much height because the native sheet will cut
+    )
 }
 
 private struct MyButtonStyle: ButtonStyle {
