@@ -8,22 +8,16 @@ extension NativeSheet {
             timerContext: ActivityTimerSheetVM.TimerContext?,
             onStart: @escaping () -> Void
     ) {
-        items.append(
-                NativeSheet__Item(
-                        content: { isPresented in
-                            AnyView(
-                                    ActivityTimerSheet(
-                                            activity: activity,
-                                            isPresented: isPresented,
-                                            timerContext: timerContext
-                                    ) {
-                                        isPresented.wrappedValue = false
-                                        onStart()
-                                    }
-                            )
-                        }
-                )
-        )
+        self.show { isPresented in
+            ActivityTimerSheet(
+                    activity: activity,
+                    isPresented: isPresented,
+                    timerContext: timerContext
+            ) {
+                isPresented.wrappedValue = false
+                onStart()
+            }
+        }
     }
 }
 
