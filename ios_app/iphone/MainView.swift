@@ -24,12 +24,9 @@ private let navAndTasksTextHeight = bottomNavigationHeight + taskCountsHeight
 struct MainView: View {
 
     @State private var vm = MainVM()
-    @State private var isTimerButtonExpandPresented = false
-    @State private var isTimerActivitiesPresented = false
 
     @State private var isSettingsSheetPresented = false
 
-    @EnvironmentObject private var timetoSheet: TimetoSheet
     @EnvironmentObject private var nativeSheet: NativeSheet
 
     @State private var isPurpleAnim = true
