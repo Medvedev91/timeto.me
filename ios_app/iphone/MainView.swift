@@ -473,9 +473,7 @@ private struct MainTaskItem: View {
 
     let mainTask: MainVM.MainTask
 
-    @State private var isSheetPresented = false
-
-    @EnvironmentObject private var timetoSheet: TimetoSheet
+    @EnvironmentObject private var nativeSheet: NativeSheet
 
     var body: some View {
 
@@ -484,24 +482,22 @@ private struct MainTaskItem: View {
                     mainTask.task.startIntervalForUI(
                             onStarted: {},
                             activitiesSheet: {
-                                timetoSheet.showActivitiesTimerSheet(
-                                        isPresented: $isSheetPresented,
+                                nativeSheet.showActivitiesTimerSheet(
                                         timerContext: mainTask.timerContext,
                                         withMenu: false,
                                         selectedActivity: nil,
-                                        onStart: {
-                                            isSheetPresented = false
+                                        onStart: { isPresented in
+                                            isPresented.wrappedValue = false
                                         }
                                 )
                             },
                             timerSheet: { activity in
-                                timetoSheet.showActivitiesTimerSheet(
-                                        isPresented: $isSheetPresented,
+                                nativeSheet.showActivitiesTimerSheet(
                                         timerContext: mainTask.timerContext,
                                         withMenu: false,
                                         selectedActivity: activity,
-                                        onStart: {
-                                            isSheetPresented = false
+                                        onStart: { isPresented in
+                                            isPresented.wrappedValue = false
                                         }
                                 )
                             }
