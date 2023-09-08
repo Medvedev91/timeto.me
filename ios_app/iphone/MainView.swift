@@ -133,10 +133,10 @@ struct MainView: View {
 
                         Button(
                                 action: {
-                                    nativeSheet.showActivitiesTimerSheet(
+                                    nativeSheet.showActivityTimerSheet(
+                                            activity: state.activity,
                                             timerContext: state.timerButtonExpandSheetContext,
-                                            withMenu: false,
-                                            selectedActivity: state.activity,
+                                            hideOnStart: true,
                                             onStart: {}
                                     )
                                 },
