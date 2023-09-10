@@ -43,7 +43,6 @@ private val menuIconPadding = 14.dp
 private val mainTaskItemHeight = 32.dp
 private val taskListContentPadding = 4.dp
 
-private val menuColor = MainVM.menuColor.toColor()
 private val menuTimeColor = MainVM.menuTimeColor.toColor()
 
 private val menuButtonModifier = Modifier.size(menuIconSize).padding(menuIconPadding)
@@ -334,7 +333,7 @@ fun MainView() {
                 Icon(
                     painterResource(id = R.drawable.sf_timer_medium_thin),
                     contentDescription = "Timer",
-                    tint = menuColor,
+                    tint = c.homeFontSecondary,
                     modifier = menuButtonModifier,
                 )
             }
@@ -419,7 +418,7 @@ fun MainView() {
                 Icon(
                     painterResource(id = R.drawable.sf_ellipsis_circle_medium_thin),
                     contentDescription = "Menu",
-                    tint = menuColor,
+                    tint = c.homeFontSecondary,
                     modifier = menuButtonModifier,
                 )
             }
