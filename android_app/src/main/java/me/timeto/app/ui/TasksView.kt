@@ -46,6 +46,8 @@ private val tabShape = MySquircleShape(50f)
 private val calendarIconColor = Color(0xFF777777)
 
 private val tabVPadding = 8.dp
+private val tabActiveTextColor = c.white
+private val tabInactiveTextColor = c.homeFontSecondary
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -119,9 +121,6 @@ fun TasksView(
             verticalArrangement = Arrangement.Center
         ) {
 
-            val activeTextColor = c.white
-            val inactiveTextColor = c.homeFontSecondary
-
             LazyColumn(
                 reverseLayout = true,
             ) {
@@ -153,8 +152,8 @@ fun TasksView(
                         when {
                             isFocusedToDrop -> c.white
                             isAllowedToDrop -> c.white
-                            isActive -> activeTextColor
-                            else -> inactiveTextColor
+                            isActive -> tabActiveTextColor
+                            else -> tabInactiveTextColor
                         },
                         spring(stiffness = Spring.StiffnessMedium)
                     )
@@ -192,7 +191,7 @@ fun TasksView(
                 item {
                     val isActive = activeSection is Section_Repeating
                     val backgroundColor = animateColorAsState(if (isActive) c.blue else c.bg, spring(stiffness = Spring.StiffnessMedium))
-                    val textColor = animateColorAsState(if (isActive) activeTextColor else inactiveTextColor, spring(stiffness = Spring.StiffnessMedium))
+                    val textColor = animateColorAsState(if (isActive) tabActiveTextColor else tabInactiveTextColor, spring(stiffness = Spring.StiffnessMedium))
 
                     Box(
                         modifier = Modifier
