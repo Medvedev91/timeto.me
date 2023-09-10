@@ -129,56 +129,12 @@ fun TasksView(
                     val dropItem = remember {
                         DropItem.Type__Folder(folderUI.folder, DropItem.Square(0, 0, 0, 0))
                     }
-                    DisposableEffect(Unit) {
-                        dropItems.add(dropItem)
-                        onDispose {
-                            dropItems.remove(dropItem)
-                        }
-                    }
-                    val isAllowedToDrop = dragItem.value?.isDropAllowed?.invoke(dropItem) ?: false
-                    val isFocusedToDrop = dragItem.value?.focusedDrop?.value == dropItem
-
-                    val isActive = (activeSection as? Section_Folder)?.folder?.id == folderUI.folder.id
-                    val bgColor = animateColorAsState(
-                        when {
-                            isFocusedToDrop -> c.tasksDropFocused
-                            isAllowedToDrop -> c.purple
-                            isActive -> c.blue
-                            else -> c.bg
-                        },
-                        spring(stiffness = Spring.StiffnessMedium)
-                    )
-                    val textColor = animateColorAsState(
-                        when {
-                            isFocusedToDrop -> c.white
-                            isAllowedToDrop -> c.white
-                            isActive -> tabActiveTextColor
-                            else -> tabInactiveTextColor
-                        },
-                        spring(stiffness = Spring.StiffnessMedium)
-                    )
-
-                    val rotationMaxAngle = 3f
-                    var rotationAngle by remember { mutableStateOf(0f) }
-                    val rotationAngleAnimate by animateFloatAsState(
-                        targetValue = rotationAngle,
-                        animationSpec = tween(durationMillis = Random.nextInt(80, 130), easing = LinearEasing),
-                        finishedListener = {
-                            if (isAllowedToDrop)
-                                rotationAngle = if (rotationAngle < 0) rotationMaxAngle else -rotationMaxAngle
-                        }
-                    )
-                    LaunchedEffect(isAllowedToDrop) {
-                        if (isAllowedToDrop)
-                            delay(Random.nextInt(0, 50).toLong())
-                        rotationAngle = if (isAllowedToDrop) (if (Random.nextBoolean()) rotationMaxAngle else -rotationMaxAngle) else 0f
-                    }
-
                     TabTextButton(
                         text = folderUI.tabText,
-                        textColor = textColor.value,
-                        bgColor = bgColor.value,
-                        rotationAngleAnimate = rotationAngleAnimate,
+                        isActive = (activeSection as? Section_Folder)?.folder?.id == folderUI.folder.id,
+                        dragItem = dragItem,
+                        dropItem = dropItem,
+                        dropItems = dropItems,
                         onGloballyPositioned = { c ->
                             dropItem.upSquareByCoordinates(c)
                         },
@@ -323,12 +279,59 @@ sealed class DropItem(
 @Composable
 private fun TabTextButton(
     text: String,
-    textColor: Color,
-    bgColor: Color,
-    rotationAngleAnimate: Float,
+    isActive: Boolean,
+    dragItem: State<DragItem?>,
+    dropItem: DropItem,
+    dropItems: MutableList<DropItem>,
     onGloballyPositioned: (LayoutCoordinates) -> Unit,
     onClick: () -> Unit,
 ) {
+    DisposableEffect(Unit) {
+        dropItems.add(dropItem)
+        onDispose {
+            dropItems.remove(dropItem)
+        }
+    }
+
+    val isAllowedToDrop = dragItem.value?.isDropAllowed?.invoke(dropItem) ?: false
+    val isFocusedToDrop = dragItem.value?.focusedDrop?.value == dropItem
+
+    val bgColor = animateColorAsState(
+        when {
+            isFocusedToDrop -> c.tasksDropFocused
+            isAllowedToDrop -> c.purple
+            isActive -> c.blue
+            else -> c.bg
+        },
+        spring(stiffness = Spring.StiffnessMedium)
+    )
+
+    val textColor = animateColorAsState(
+        when {
+            isFocusedToDrop -> c.white
+            isAllowedToDrop -> c.white
+            isActive -> tabActiveTextColor
+            else -> tabInactiveTextColor
+        },
+        spring(stiffness = Spring.StiffnessMedium)
+    )
+
+    val rotationMaxAngle = 3f
+    var rotationAngle by remember { mutableStateOf(0f) }
+    val rotationAngleAnimate by animateFloatAsState(
+        targetValue = rotationAngle,
+        animationSpec = tween(durationMillis = Random.nextInt(80, 130), easing = LinearEasing),
+        finishedListener = {
+            if (isAllowedToDrop)
+                rotationAngle = if (rotationAngle < 0) rotationMaxAngle else -rotationMaxAngle
+        }
+    )
+    LaunchedEffect(isAllowedToDrop) {
+        if (isAllowedToDrop)
+            delay(Random.nextInt(0, 50).toLong())
+        rotationAngle = if (isAllowedToDrop) (if (Random.nextBoolean()) rotationMaxAngle else -rotationMaxAngle) else 0f
+    }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -336,7 +339,7 @@ private fun TabTextButton(
             .rotate(rotationAngleAnimate)
             .onGloballyPositioned(onGloballyPositioned)
             .clip(tabShape)
-            .background(bgColor)
+            .background(bgColor.value)
     ) {
 
         Text(
@@ -346,7 +349,7 @@ private fun TabTextButton(
                 .clickable(onClick = onClick)
                 .padding(vertical = 8.dp),
             textAlign = TextAlign.Center,
-            color = textColor,
+            color = textColor.value,
             fontSize = 12.sp,
             lineHeight = 15.sp,
             fontWeight = FontWeight.SemiBold,
