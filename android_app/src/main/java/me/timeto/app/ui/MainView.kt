@@ -48,8 +48,8 @@ private val menuTimeColor = MainVM.menuTimeColor.toColor()
 
 private val menuButtonModifier = Modifier.size(menuIconSize).padding(menuIconPadding)
 
-private val tasksTextAnimEnter = fadeIn() + expandVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
-private val tasksTextAnimExit = fadeOut() + shrinkVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
+private val purpleAnimEnter = fadeIn() + expandVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
+private val purpleAnimExit = fadeOut() + shrinkVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -162,8 +162,8 @@ fun MainView() {
 
             AnimatedVisibility(
                 state.isPurple,
-                enter = tasksTextAnimEnter,
-                exit = tasksTextAnimExit,
+                enter = purpleAnimEnter,
+                exit = purpleAnimExit,
             ) {
 
                 HStack(
