@@ -11,7 +11,7 @@ class TabTasksVM : __VM<TabTasksVM.State>() {
     data class TaskFolderUI(
         val folder: TaskFolderModel,
     ) {
-        val tabText = folder.name.uppercase().split("").joinToString("\n").trim()
+        val tabText = folder.name.toTabText()
     }
 
     data class State(
@@ -32,3 +32,6 @@ class TabTasksVM : __VM<TabTasksVM.State>() {
         }
     }
 }
+
+private fun String.toTabText(): String =
+    this.uppercase().split("").joinToString("\n").trim()
