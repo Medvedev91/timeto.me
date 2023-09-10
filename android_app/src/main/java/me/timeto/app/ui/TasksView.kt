@@ -16,7 +16,6 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.*
 import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -43,7 +42,6 @@ val TasksView__PADDING_END = SECTION_BUTTON_WIDTH + H_PADDING
 val taskListSectionPadding = 20.dp
 
 private val tabShape = MySquircleShape(50f)
-private val calendarIconColor = Color(0xFF777777)
 
 private val tabVPadding = 8.dp
 private val tabActiveTextColor = c.white
@@ -125,6 +123,25 @@ fun TasksView(
                 reverseLayout = true,
             ) {
 
+                item {
+                    val dropItem = remember {
+                        DropItem.Type__Calendar(DropItem.Square(0, 0, 0, 0))
+                    }
+                    TabTextButton(
+                        text = "3\n8\nS\nA", // todo
+                        isActive = activeSection is Section_Calendar,
+                        dragItem = dragItem,
+                        dropItem = dropItem,
+                        dropItems = dropItems,
+                        onGloballyPositioned = { c ->
+                            dropItem.upSquareByCoordinates(c)
+                        },
+                        onClick = {
+                            activeSection = Section_Calendar()
+                        },
+                    )
+                }
+
                 items(state.taskFoldersUI) { folderUI ->
                     val dropItem = remember {
                         DropItem.Type__Folder(folderUI.folder, DropItem.Square(0, 0, 0, 0))
@@ -165,66 +182,6 @@ fun TasksView(
                             contentDescription = "Repeating",
                             tint = textColor.value,
                             modifier = Modifier.size(12.dp),
-                        )
-                    }
-                }
-
-                item {
-                    val isActive = activeSection is Section_Calendar
-
-                    val dropItem = remember { DropItem.Type__Calendar(DropItem.Square(0, 0, 0, 0)) }
-                    DisposableEffect(Unit) {
-                        dropItems.add(dropItem)
-                        onDispose { dropItems.remove(dropItem) }
-                    }
-                    val isAllowedToDrop = dragItem.value?.isDropAllowed?.invoke(dropItem) ?: false
-                    val isFocusedToDrop = dragItem.value?.focusedDrop?.value == dropItem
-
-                    val textColor = animateColorAsState(
-                        when {
-                            isFocusedToDrop -> c.tasksDropFocused
-                            isAllowedToDrop -> c.purple
-                            isActive -> c.blue
-                            else -> calendarIconColor
-                        },
-                        spring(stiffness = Spring.StiffnessMedium)
-                    )
-
-                    val rotationMaxAngle = 5f
-                    var rotationAngle by remember { mutableStateOf(0f) }
-                    val rotationAngleAnimate by animateFloatAsState(
-                        targetValue = rotationAngle,
-                        animationSpec = tween(durationMillis = Random.nextInt(80, 130), easing = LinearEasing),
-                        finishedListener = {
-                            if (isAllowedToDrop)
-                                rotationAngle = if (rotationAngle < 0) rotationMaxAngle else -rotationMaxAngle
-                        }
-                    )
-                    LaunchedEffect(isAllowedToDrop) {
-                        if (isAllowedToDrop)
-                            delay(Random.nextInt(0, 100).toLong())
-                        rotationAngle = if (isAllowedToDrop) (if (Random.nextBoolean()) rotationMaxAngle else -rotationMaxAngle) else 0f
-                    }
-
-                    Box(
-                        modifier = Modifier
-                            .padding(horizontal = 1.dp)
-                            .fillMaxWidth()
-                            .rotate(rotationAngleAnimate)
-                            .onGloballyPositioned { c ->
-                                dropItem.upSquareByCoordinates(c)
-                            }
-                            .clip(MySquircleShape(40f, -4f))
-                            .clickable {
-                                activeSection = Section_Calendar()
-                            },
-                    ) {
-                        Icon(
-                            painterResource(id = R.drawable.sf_calendar_medium_light),
-                            contentDescription = "Calendar",
-                            tint = textColor.value,
-                            modifier = Modifier
-                                .fillMaxWidth()
                         )
                     }
                 }
