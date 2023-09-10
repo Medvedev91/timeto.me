@@ -1,11 +1,11 @@
 package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
-import me.timeto.shared.DI
-import me.timeto.shared.UnixTime
+import kotlinx.coroutines.launch
+import me.timeto.shared.*
 import me.timeto.shared.db.TaskFolderModel
 import me.timeto.shared.db.TaskFolderModel.Companion.sortedFolders
-import me.timeto.shared.onEachExIn
+import me.timeto.shared.delayToNextMinute
 
 class TabTasksVM : __VM<TabTasksVM.State>() {
 
@@ -32,6 +32,14 @@ class TabTasksVM : __VM<TabTasksVM.State>() {
         TaskFolderModel.getAscBySortFlow().onEachExIn(scope) { folders ->
             val taskFoldersUI = folders.sortedFolders().map { TaskFolderUI(it) }
             state.update { it.copy(taskFoldersUI = taskFoldersUI) }
+        }
+        scope.launch {
+            while (true) {
+                delayToNextMinute()
+                val newTabCalendarText = getTabCalendarText()
+                if (newTabCalendarText != state.value.tabCalendarText)
+                    state.update { it.copy(tabCalendarText = newTabCalendarText) }
+            }
         }
     }
 }
