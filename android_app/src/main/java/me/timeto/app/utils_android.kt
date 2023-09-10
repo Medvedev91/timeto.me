@@ -216,4 +216,6 @@ object c {
 
     val tasksDropFocused = ColorRgba.tasksDropFocused.toColor()
     val formButtonRightNoteText = ColorRgba.formButtonRightNoteText.toColor()
+
+    val homeFontSecondary = ColorRgba.homeFontSecondary.toColor()
 }

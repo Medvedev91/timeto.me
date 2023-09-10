@@ -14,7 +14,6 @@ import me.timeto.shared.vm.ui.TimerDataUI
 class MainVM : __VM<MainVM.State>() {
 
     companion object {
-        val menuColor = ColorRgba(255, 255, 255, 128)
         val menuTimeColor = ColorRgba(255, 255, 255, 200)
     }
 
@@ -102,7 +101,7 @@ class MainVM : __VM<MainVM.State>() {
                     batteryBackground = ColorRgba.red
                 }
                 else -> {
-                    batteryTextColor = menuColor
+                    batteryTextColor = ColorRgba.homeFontSecondary
                     batteryBackground = ColorRgba.transparent
                 }
             }
