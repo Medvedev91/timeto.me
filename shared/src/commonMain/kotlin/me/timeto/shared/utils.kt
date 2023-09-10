@@ -243,6 +243,8 @@ data class ColorRgba(
         val sheetDividerBg = dividerFg
         val sheetDividerFg = ColorRgba(68, 68, 71)
 
+        val homeFontSecondary = ColorRgba(255, 255, 255, 128)
+
         val tasksDropFocused = green
         val formButtonRightNoteText = ColorRgba(255, 255, 255, 136)
 
