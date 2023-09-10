@@ -40,8 +40,6 @@ val bottomNavigationHeight = 56.dp
 private val menuIconSize = bottomNavigationHeight
 private val menuIconPadding = 14.dp
 
-private val taskCountsHeight = 36.dp
-
 private val mainTaskItemHeight = 32.dp
 private val taskListContentPadding = 4.dp
 
@@ -209,7 +207,7 @@ fun MainView() {
 
                 VStack(
                     modifier = Modifier
-                        .padding(bottom = bottomNavigationHeight + taskCountsHeight)
+                        .padding(bottom = bottomNavigationHeight)
                 ) {
 
                     val checklistScrollState = rememberLazyListState()
@@ -351,22 +349,6 @@ fun MainView() {
                     },
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-
-                AnimatedVisibility(
-                    !state.isTasksVisible,
-                    enter = tasksTextAnimEnter,
-                    exit = tasksTextAnimExit,
-                ) {
-                    Text(
-                        text = state.tasksText,
-                        modifier = Modifier
-                            .height(taskCountsHeight)
-                            .padding(top = 3.dp),
-                        color = menuColor,
-                        fontSize = 13.sp,
-                        fontWeight = FontWeight.Light,
-                    )
-                }
 
                 val menuTasksBg = animateColorAsState(if (state.isTasksVisible) c.sheetFg else c.black)
 
