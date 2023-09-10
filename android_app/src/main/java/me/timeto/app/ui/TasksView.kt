@@ -127,9 +127,9 @@ fun TasksView(
                 reverseLayout = true,
             ) {
 
-                items(state.folders) { folder ->
+                items(state.taskFoldersUI) { folderUI ->
                     val dropItem = remember {
-                        DropItem.Type__Folder(folder, DropItem.Square(0, 0, 0, 0))
+                        DropItem.Type__Folder(folderUI.folder, DropItem.Square(0, 0, 0, 0))
                     }
                     DisposableEffect(Unit) {
                         dropItems.add(dropItem)
@@ -140,7 +140,7 @@ fun TasksView(
                     val isAllowedToDrop = dragItem.value?.isDropAllowed?.invoke(dropItem) ?: false
                     val isFocusedToDrop = dragItem.value?.focusedDrop?.value == dropItem
 
-                    val isActive = (activeSection as? Section_Folder)?.folder?.id == folder.id
+                    val isActive = (activeSection as? Section_Folder)?.folder?.id == folderUI.folder.id
                     val backgroundColor = animateColorAsState(
                         when {
                             isFocusedToDrop -> c.tasksDropFocused
@@ -189,11 +189,11 @@ fun TasksView(
                     ) {
 
                         Text(
-                            folder.name.uppercase().split("").joinToString("\n").trim(),
+                            folderUI.tabText,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
-                                    activeSection = Section_Folder(folder)
+                                    activeSection = Section_Folder(folderUI.folder)
                                 }
                                 .padding(vertical = 8.dp),
                             textAlign = TextAlign.Center,
