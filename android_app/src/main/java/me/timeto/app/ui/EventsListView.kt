@@ -26,7 +26,7 @@ fun EventsListView() {
     LazyColumn(
         reverseLayout = true,
         contentPadding = PaddingValues(
-            end = TAB_TASKS_PADDING_END,
+            end = TasksView__PADDING_END,
             top = taskListSectionPadding,
         ),
         modifier = Modifier.fillMaxHeight()

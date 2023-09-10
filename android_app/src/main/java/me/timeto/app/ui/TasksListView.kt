@@ -48,7 +48,7 @@ fun TasksListView(
         modifier = Modifier
             .fillMaxHeight(),
         reverseLayout = true,
-        contentPadding = PaddingValues(top = taskListSectionPadding, end = TAB_TASKS_PADDING_END),
+        contentPadding = PaddingValues(top = taskListSectionPadding, end = TasksView__PADDING_END),
         state = listState,
     ) {
 
