@@ -36,6 +36,9 @@ class TabTasksVM : __VM<TabTasksVM.State>() {
     }
 }
 
+private fun String.toTabText(): String =
+    this.uppercase().split("").joinToString("\n").trim()
+
 private fun getTabCalendarText(): String =
     UnixTime()
         .getStringByComponents(
@@ -43,6 +46,3 @@ private fun getTabCalendarText(): String =
             UnixTime.StringComponent.dayOfWeek2,
         )
         .toTabText()
-
-private fun String.toTabText(): String =
-    this.uppercase().split("").joinToString("\n").trim()
