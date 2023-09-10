@@ -46,6 +46,8 @@ val taskListSectionPadding = 20.dp
 private val tabShape = MySquircleShape(50f)
 private val calendarIconColor = Color(0xFF777777)
 
+private val tabVPadding = 8.dp
+
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TasksView(
@@ -110,8 +112,6 @@ fun TasksView(
             is Section_Calendar -> EventsListView()
             is Section_Repeating -> RepeatingsListView()
         }
-
-        val tabSpace = 11.dp
 
         Column(
             modifier = Modifier
@@ -179,7 +179,7 @@ fun TasksView(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = tabSpace)
+                            .padding(top = tabVPadding)
                             .rotate(rotationAngleAnimate)
                             .onGloballyPositioned { c ->
                                 dropItem.upSquareByCoordinates(c)
