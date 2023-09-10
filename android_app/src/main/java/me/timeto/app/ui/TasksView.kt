@@ -39,8 +39,7 @@ import kotlin.random.Random
 val tabTasksInputShape = MySquircleShape(len = 70f)
 
 private val SECTION_BUTTON_WIDTH = 35.dp
-private val SECTION_BUTTONS_END_PADDING = H_PADDING.goldenRatioDown()
-val TasksView__PADDING_END = SECTION_BUTTONS_END_PADDING + SECTION_BUTTON_WIDTH + H_PADDING
+val TasksView__PADDING_END = SECTION_BUTTON_WIDTH + H_PADDING
 
 val taskListSectionPadding = 20.dp
 
@@ -116,7 +115,6 @@ fun TasksView(
 
         Column(
             modifier = Modifier
-                .padding(end = SECTION_BUTTONS_END_PADDING)
                 .width(SECTION_BUTTON_WIDTH)
                 .fillMaxHeight(),
             verticalArrangement = Arrangement.Center
