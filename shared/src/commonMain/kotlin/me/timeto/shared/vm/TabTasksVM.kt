@@ -23,7 +23,7 @@ class TabTasksVM : __VM<TabTasksVM.State>() {
     override val state = MutableStateFlow(
         State(
             taskFoldersUI = DI.taskFolders.sortedFolders().map { TaskFolderUI(it) },
-            tabCalendarText = getCalendarText().toTabText(),
+            tabCalendarText = getTabCalendarText(),
         )
     )
 
@@ -36,11 +36,13 @@ class TabTasksVM : __VM<TabTasksVM.State>() {
     }
 }
 
-private fun getCalendarText(): String =
-    UnixTime().getStringByComponents(
-        UnixTime.StringComponent.dayOfMonth,
-        UnixTime.StringComponent.dayOfWeek2,
-    )
+private fun getTabCalendarText(): String =
+    UnixTime()
+        .getStringByComponents(
+            UnixTime.StringComponent.dayOfMonth,
+            UnixTime.StringComponent.dayOfWeek2,
+        )
+        .toTabText()
 
 private fun String.toTabText(): String =
     this.uppercase().split("").joinToString("\n").trim()
