@@ -86,6 +86,7 @@ data class UnixTime(
                 StringComponent.month3 -> monthNames3[dayTime.monthNumber - 1]
                 StringComponent.dayOfMonth -> dayTime.dayOfMonth.toString()
                 StringComponent.dayOfWeek -> dayOfWeekNames[dayOfWeek()]
+                StringComponent.dayOfWeek2 -> dayOfWeekNames2[dayOfWeek()]
                 StringComponent.dayOfWeek3 -> dayOfWeekNames3[dayOfWeek()]
                 StringComponent.hhmm24 -> {
                     val (h, m) = (utcTime() % 86_400).toHms()
@@ -101,6 +102,6 @@ data class UnixTime(
         getStringByComponents(*components.toTypedArray())
 
     enum class StringComponent {
-        month, month3, dayOfMonth, dayOfWeek, dayOfWeek3, hhmm24, space, comma,
+        month, month3, dayOfMonth, dayOfWeek, dayOfWeek2, dayOfWeek3, hhmm24, space, comma,
     }
 }
