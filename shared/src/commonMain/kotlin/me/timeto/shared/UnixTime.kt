@@ -101,6 +101,6 @@ data class UnixTime(
         getStringByComponents(*components.toTypedArray())
 
     enum class StringComponent {
-        month, month3, dayOfMonth, dayOfWeek, dayOfWeek3, hhmm24, space, comma
+        month, month3, dayOfMonth, dayOfWeek, dayOfWeek3, hhmm24, space, comma,
     }
 }
