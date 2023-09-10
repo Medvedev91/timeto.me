@@ -176,34 +176,18 @@ fun TasksView(
                         rotationAngle = if (isAllowedToDrop) (if (Random.nextBoolean()) rotationMaxAngle else -rotationMaxAngle) else 0f
                     }
 
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = tabVPadding)
-                            .rotate(rotationAngleAnimate)
-                            .onGloballyPositioned { c ->
-                                dropItem.upSquareByCoordinates(c)
-                            }
-                            .clip(tabShape)
-                            .background(bgColor.value)
-                    ) {
-
-                        Text(
-                            folderUI.tabText,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable {
-                                    activeSection = Section_Folder(folderUI.folder)
-                                }
-                                .padding(vertical = 8.dp),
-                            textAlign = TextAlign.Center,
-                            color = textColor.value,
-                            fontSize = 12.sp,
-                            lineHeight = 15.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            fontFamily = FontFamily.Monospace,
-                        )
-                    }
+                    TabTextButton(
+                        text = folderUI.tabText,
+                        textColor = textColor.value,
+                        bgColor = bgColor.value,
+                        rotationAngleAnimate = rotationAngleAnimate,
+                        onGloballyPositioned = { c ->
+                            dropItem.upSquareByCoordinates(c)
+                        },
+                        onClick = {
+                            activeSection = Section_Folder(folderUI.folder)
+                        },
+                    )
                 }
 
                 item {
@@ -338,4 +322,39 @@ sealed class DropItem(
     class Type__Calendar(
         square: Square,
     ) : DropItem("Calendar", square)
+}
+
+@Composable
+private fun TabTextButton(
+    text: String,
+    textColor: Color,
+    bgColor: Color,
+    rotationAngleAnimate: Float,
+    onGloballyPositioned: (LayoutCoordinates) -> Unit,
+    onClick: () -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = tabVPadding)
+            .rotate(rotationAngleAnimate)
+            .onGloballyPositioned(onGloballyPositioned)
+            .clip(tabShape)
+            .background(bgColor)
+    ) {
+
+        Text(
+            text,
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onClick)
+                .padding(vertical = 8.dp),
+            textAlign = TextAlign.Center,
+            color = textColor,
+            fontSize = 12.sp,
+            lineHeight = 15.sp,
+            fontWeight = FontWeight.SemiBold,
+            fontFamily = FontFamily.Monospace,
+        )
+    }
 }
