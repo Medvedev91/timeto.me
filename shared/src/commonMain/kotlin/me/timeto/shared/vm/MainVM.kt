@@ -87,11 +87,6 @@ class MainVM : __VM<MainVM.State>() {
                     Int.MAX_VALUE
             }
 
-        val tasksText = when (val size = tasksToday.size) {
-            0 -> "No Tasks"
-            else -> size.toStringEnding(true, "task", "tasks")
-        }
-
         val batteryText = "${batteryLevelOrNull ?: "--"}"
         val batteryTextColor: ColorRgba
         val batteryBackground: ColorRgba
