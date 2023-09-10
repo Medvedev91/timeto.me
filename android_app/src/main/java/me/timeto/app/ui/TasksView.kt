@@ -184,7 +184,6 @@ fun TasksView(
                             .onGloballyPositioned { c ->
                                 dropItem.upSquareByCoordinates(c)
                             }
-                            .border(onePx, c.dividerBg, tabShape)
                             .clip(tabShape)
                             .background(backgroundColor.value)
                     ) {
@@ -199,10 +198,10 @@ fun TasksView(
                                 .padding(vertical = 8.dp),
                             textAlign = TextAlign.Center,
                             color = textColor.value,
-                            fontSize = 15.sp,
-                            lineHeight = 16.5.sp,
-                            fontWeight = FontWeight.W600,
-                            fontFamily = FontFamily.Monospace
+                            fontSize = 12.sp,
+                            lineHeight = 15.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            fontFamily = FontFamily.Monospace,
                         )
                     }
                 }
