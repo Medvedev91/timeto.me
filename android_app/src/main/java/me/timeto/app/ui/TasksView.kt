@@ -128,7 +128,7 @@ fun TasksView(
                         DropItem.Type__Calendar(DropItem.Square(0, 0, 0, 0))
                     }
                     TabTextButton(
-                        text = "3\n8\nS\nA", // todo
+                        text = state.tabCalendarText,
                         isActive = activeSection is Section_Calendar,
                         dragItem = dragItem,
                         dropItem = dropItem,
