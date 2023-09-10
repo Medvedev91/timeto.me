@@ -5,7 +5,6 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -197,10 +196,8 @@ fun TasksView(
 
                     Box(
                         modifier = Modifier
-                            .padding(top = 10.dp)
                             .width(SECTION_BUTTON_WIDTH)
                             .height(SECTION_BUTTON_WIDTH)
-                            .border(onePx, c.dividerBg, tabShape)
                             .clip(tabShape)
                             .background(backgroundColor.value)
                             .clickable {
@@ -212,7 +209,7 @@ fun TasksView(
                             painterResource(id = R.drawable.sf_repeat_medium_semibold),
                             contentDescription = "Repeating",
                             tint = textColor.value,
-                            modifier = Modifier.size(17.5.dp)
+                            modifier = Modifier.size(12.dp),
                         )
                     }
                 }
