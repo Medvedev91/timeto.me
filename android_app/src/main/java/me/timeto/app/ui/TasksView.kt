@@ -123,7 +123,7 @@ fun TasksView(
         ) {
 
             val activeTextColor = c.white
-            val inactiveTextColor = c.textSecondary
+            val inactiveTextColor = c.homeFontSecondary
 
             LazyColumn(
                 reverseLayout = true,
