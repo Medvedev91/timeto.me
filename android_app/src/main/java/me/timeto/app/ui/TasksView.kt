@@ -141,7 +141,7 @@ fun TasksView(
                     val isFocusedToDrop = dragItem.value?.focusedDrop?.value == dropItem
 
                     val isActive = (activeSection as? Section_Folder)?.folder?.id == folderUI.folder.id
-                    val backgroundColor = animateColorAsState(
+                    val bgColor = animateColorAsState(
                         when {
                             isFocusedToDrop -> c.tasksDropFocused
                             isAllowedToDrop -> c.purple
@@ -185,7 +185,7 @@ fun TasksView(
                                 dropItem.upSquareByCoordinates(c)
                             }
                             .clip(tabShape)
-                            .background(backgroundColor.value)
+                            .background(bgColor.value)
                     ) {
 
                         Text(
