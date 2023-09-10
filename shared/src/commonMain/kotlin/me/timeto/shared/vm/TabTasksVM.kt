@@ -8,20 +8,27 @@ import me.timeto.shared.onEachExIn
 
 class TabTasksVM : __VM<TabTasksVM.State>() {
 
+    data class TaskFolderUI(
+        val folder: TaskFolderModel,
+    ) {
+        val tabText = folder.name.uppercase().split("").joinToString("\n").trim()
+    }
+
     data class State(
-        val folders: List<TaskFolderModel>,
+        val taskFoldersUI: List<TaskFolderUI>,
     )
 
     override val state = MutableStateFlow(
         State(
-            folders = DI.taskFolders.sortedFolders()
+            taskFoldersUI = DI.taskFolders.sortedFolders().map { TaskFolderUI(it) },
         )
     )
 
     override fun onAppear() {
         val scope = scopeVM()
         TaskFolderModel.getAscBySortFlow().onEachExIn(scope) { folders ->
-            state.update { it.copy(folders = folders.sortedFolders()) }
+            val taskFoldersUI = folders.sortedFolders().map { TaskFolderUI(it) }
+            state.update { it.copy(taskFoldersUI = taskFoldersUI) }
         }
     }
 }
