@@ -167,6 +167,10 @@ class MainVM : __VM<MainVM.State>() {
         state.update { it.copy(isTasksVisible = !it.isTasksVisible) }
     }
 
+    fun upIsTasksExpanded(isExpanded: Boolean) {
+        state.update { it.copy(isTasksVisible = isExpanded) }
+    }
+
     fun pauseTask() {
         launchExDefault {
             IntervalModel.pauseLastInterval()
