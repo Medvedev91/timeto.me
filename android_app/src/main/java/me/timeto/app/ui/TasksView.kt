@@ -1,7 +1,6 @@
 package me.timeto.app.ui
 
 import android.view.MotionEvent
-import androidx.activity.compose.BackHandler
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
@@ -29,7 +28,6 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
 import kotlinx.coroutines.delay
-import me.timeto.shared.DI
 import me.timeto.shared.db.TaskFolderModel
 import me.timeto.shared.vm.TabTasksVM
 import kotlin.random.Random
@@ -55,10 +53,6 @@ fun TasksView(
     val (_, state) = rememberVM { TabTasksVM() }
 
     var activeSection by remember { mutableStateOf<Section?>(null) }
-
-    BackHandler((activeSection as? Section_Folder)?.folder?.isToday != true) {
-        activeSection = Section_Folder(DI.getTodayFolder())
-    }
 
     val dragItem = remember { mutableStateOf<DragItem?>(null) }
     val dropItems = remember { mutableListOf<DropItem>() }
