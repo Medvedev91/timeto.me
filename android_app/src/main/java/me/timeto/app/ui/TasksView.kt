@@ -49,10 +49,21 @@ private val tabInactiveTextColor = c.homeFontSecondary
 @Composable
 fun TasksView(
     modifier: Modifier,
+    isExpanded: Boolean,
+    onExpandedChanged: (Boolean) -> Unit,
 ) {
     val (_, state) = rememberVM { TabTasksVM() }
 
     var activeSection by remember { mutableStateOf<Section?>(null) }
+    LaunchedEffect(isExpanded) {
+        if (!isExpanded)
+            activeSection = null
+    }
+
+    val curActiveSection = activeSection
+    LaunchedEffect(curActiveSection) {
+        onExpandedChanged(curActiveSection != null)
+    }
 
     val dragItem = remember { mutableStateOf<DragItem?>(null) }
     val dropItems = remember { mutableListOf<DropItem>() }
@@ -98,10 +109,11 @@ fun TasksView(
         contentAlignment = Alignment.CenterEnd,
     ) {
 
-        when (val curSection = activeSection) {
+        if (isExpanded) when (val curSection = activeSection) {
             is Section_Folder -> TasksListView(curSection.folder, dragItem)
             is Section_Calendar -> EventsListView()
             is Section_Repeating -> RepeatingsListView()
+            null -> {}
         }
 
         Column(
@@ -119,9 +131,10 @@ fun TasksView(
                     val dropItem = remember {
                         DropItem.Type__Calendar(DropItem.Square(0, 0, 0, 0))
                     }
+                    val isActive = activeSection is Section_Calendar
                     TabTextButton(
                         text = state.tabCalendarText,
-                        isActive = activeSection is Section_Calendar,
+                        isActive = isActive,
                         dragItem = dragItem,
                         dropItem = dropItem,
                         dropItems = dropItems,
@@ -129,7 +142,7 @@ fun TasksView(
                             dropItem.upSquareByCoordinates(c)
                         },
                         onClick = {
-                            activeSection = Section_Calendar()
+                            activeSection = if (isActive) null else Section_Calendar()
                         },
                     )
                 }
@@ -138,9 +151,10 @@ fun TasksView(
                     val dropItem = remember {
                         DropItem.Type__Folder(folderUI.folder, DropItem.Square(0, 0, 0, 0))
                     }
+                    val isActive = (activeSection as? Section_Folder)?.folder?.id == folderUI.folder.id
                     TabTextButton(
                         text = folderUI.tabText,
-                        isActive = (activeSection as? Section_Folder)?.folder?.id == folderUI.folder.id,
+                        isActive = isActive,
                         dragItem = dragItem,
                         dropItem = dropItem,
                         dropItems = dropItems,
@@ -148,7 +162,7 @@ fun TasksView(
                             dropItem.upSquareByCoordinates(c)
                         },
                         onClick = {
-                            activeSection = Section_Folder(folderUI.folder)
+                            activeSection = if (isActive) null else Section_Folder(folderUI.folder)
                         },
                     )
                 }
@@ -165,7 +179,7 @@ fun TasksView(
                             .clip(tabShape)
                             .background(backgroundColor.value)
                             .clickable {
-                                activeSection = Section_Repeating()
+                                activeSection = if (isActive) null else Section_Repeating()
                             },
                         contentAlignment = Alignment.Center
                     ) {
@@ -182,10 +196,10 @@ fun TasksView(
     }
 }
 
-private interface Section
-private class Section_Folder(val folder: TaskFolderModel) : Section
-private class Section_Calendar : Section
-private class Section_Repeating : Section
+private sealed class Section
+private class Section_Folder(val folder: TaskFolderModel) : Section()
+private class Section_Calendar : Section()
+private class Section_Repeating : Section()
 
 
 //
