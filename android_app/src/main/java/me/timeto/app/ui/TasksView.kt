@@ -34,7 +34,7 @@ import me.timeto.shared.db.TaskFolderModel
 import me.timeto.shared.vm.TabTasksVM
 import kotlin.random.Random
 
-val tabTasksInputShape = MySquircleShape(len = 70f)
+val TasksView__TAB_TASKS_INPUT_SHAPE = MySquircleShape(len = 70f)
 
 private val SECTION_BUTTON_WIDTH = 35.dp
 val TasksView__PADDING_END = SECTION_BUTTON_WIDTH + H_PADDING

@@ -70,7 +70,7 @@ fun TasksListView(
                 Row(
                     modifier = Modifier
                         .padding(start = H_PADDING - 2.dp)
-                        .border(width = onePx, color = c.dividerBg, shape = tabTasksInputShape)
+                        .border(width = onePx, color = c.dividerBg, shape = TasksView__TAB_TASKS_INPUT_SHAPE)
                         .height(IntrinsicSize.Min), // To use fillMaxHeight() inside
                     verticalAlignment = Alignment.CenterVertically
                 ) {
