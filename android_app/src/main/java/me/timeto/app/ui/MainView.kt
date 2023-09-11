@@ -200,7 +200,7 @@ fun MainView() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
-                        vm.toggleIsTasksVisible()
+                        vm.upIsTasksExpanded(false)
                     }
                     .padding(top = 6.dp, bottom = 12.dp),
                 textAlign = TextAlign.Center,
@@ -331,7 +331,7 @@ fun MainView() {
                     .clip(squircleShape)
                     .motionEventSpy { event ->
                         if (event.action == MotionEvent.ACTION_DOWN)
-                            vm.toggleIsTasksVisible()
+                            vm.upIsTasksExpanded(false)
                     },
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
