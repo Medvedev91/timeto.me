@@ -1,7 +1,6 @@
 package me.timeto.app.ui
 
 import android.view.MotionEvent
-import androidx.activity.compose.BackHandler
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
@@ -259,40 +258,31 @@ fun MainView() {
                     SpacerW1()
             }
 
-            VStack {
+            ZStack {
 
-                if (state.isTasksVisible) {
+                TasksView(
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd),
+                    isExpanded = state.isTasksVisible,
+                    onExpandedChanged = { isExpanded ->
+                        vm.upIsTasksExpanded(isExpanded)
+                    },
+                )
 
-                    ZStack {
-
-                        VStack(
-                            modifier = Modifier
-                                .background(c.black),
-                        ) {
-
-                            BackHandler {
-                                vm.toggleIsTasksVisible()
-                            }
-
-                            TasksView(Modifier.weight(1f))
-                        }
-
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(4.dp)
-                                .align(Alignment.BottomCenter)
-                                .background(
-                                    Brush.verticalGradient(
-                                        colorStops = arrayOf(
-                                            0.0f to Color.Transparent,
-                                            1f to Color.Black,
-                                        )
-                                    )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(4.dp)
+                        .align(Alignment.BottomCenter)
+                        .background(
+                            Brush.verticalGradient(
+                                colorStops = arrayOf(
+                                    0.0f to Color.Transparent,
+                                    1f to Color.Black,
                                 )
+                            )
                         )
-                    }
-                }
+                )
             }
         }
 
