@@ -34,8 +34,8 @@ import me.timeto.shared.db.TaskFolderModel
 import me.timeto.shared.vm.TabTasksVM
 import kotlin.random.Random
 
-private val SECTION_BUTTON_WIDTH = 35.dp
-val TasksView__PADDING_END = SECTION_BUTTON_WIDTH + H_PADDING
+private val TAB_BUTTON_WIDTH = 35.dp
+val TasksView__PADDING_END = TAB_BUTTON_WIDTH + H_PADDING
 
 val TasksView__TAB_TASKS_INPUT_SHAPE = MySquircleShape(len = 70f)
 val TasksView__LIST_SECTION_PADDING = 20.dp
@@ -114,7 +114,7 @@ fun TasksView(
 
         Column(
             modifier = Modifier
-                .width(SECTION_BUTTON_WIDTH)
+                .width(TAB_BUTTON_WIDTH)
                 .fillMaxHeight(),
             verticalArrangement = Arrangement.Center
         ) {
@@ -168,8 +168,8 @@ fun TasksView(
 
                     Box(
                         modifier = Modifier
-                            .width(SECTION_BUTTON_WIDTH)
-                            .height(SECTION_BUTTON_WIDTH)
+                            .width(TAB_BUTTON_WIDTH)
+                            .height(TAB_BUTTON_WIDTH)
                             .clip(tabShape)
                             .background(backgroundColor.value)
                             .clickable {
