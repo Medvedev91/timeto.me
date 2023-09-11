@@ -32,8 +32,8 @@ fun RepeatingsListView() {
         reverseLayout = true,
         contentPadding = PaddingValues(
             end = TasksView__PADDING_END,
-            bottom = taskListSectionPadding,
-            top = taskListSectionPadding
+            bottom = TasksView__LIST_SECTION_PADDING,
+            top = TasksView__LIST_SECTION_PADDING
         ),
         modifier = Modifier.fillMaxHeight()
     ) {
@@ -45,7 +45,7 @@ fun RepeatingsListView() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = H_PADDING - 2.dp)
-                    .padding(top = taskListSectionPadding)
+                    .padding(top = TasksView__LIST_SECTION_PADDING)
                     .clip(squircleShape)
                     .background(c.blue)
                     .clickable {

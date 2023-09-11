@@ -27,7 +27,7 @@ fun EventsListView() {
         reverseLayout = true,
         contentPadding = PaddingValues(
             end = TasksView__PADDING_END,
-            top = taskListSectionPadding,
+            top = TasksView__LIST_SECTION_PADDING,
         ),
         modifier = Modifier.fillMaxHeight()
     ) {
@@ -42,7 +42,7 @@ fun EventsListView() {
 
                 EventsHistoryView(
                     spaceAround = H_PADDING - 2.dp,
-                    paddingTop = taskListSectionPadding,
+                    paddingTop = TasksView__LIST_SECTION_PADDING,
                 )
 
                 Box(
@@ -50,7 +50,7 @@ fun EventsListView() {
                         .padding(
                             start = H_PADDING - 2.dp,
                             top = 16.dp,
-                            bottom = taskListSectionPadding,
+                            bottom = TasksView__LIST_SECTION_PADDING,
                         )
                         .height(minHeight)
                         .border(onePx, c.dividerBg, TasksView__TAB_TASKS_INPUT_SHAPE)
@@ -94,7 +94,7 @@ fun EventsListView() {
                 modifier = Modifier
                     .padding(start = H_PADDING)
                     .fillMaxWidth()
-                    .padding(top = taskListSectionPadding),
+                    .padding(top = TasksView__LIST_SECTION_PADDING),
                 contentAlignment = Alignment.Center
             ) {
                 Text(

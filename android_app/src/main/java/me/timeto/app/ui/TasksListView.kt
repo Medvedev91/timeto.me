@@ -48,7 +48,7 @@ fun TasksListView(
         modifier = Modifier
             .fillMaxHeight(),
         reverseLayout = true,
-        contentPadding = PaddingValues(top = taskListSectionPadding, end = TasksView__PADDING_END),
+        contentPadding = PaddingValues(top = TasksView__LIST_SECTION_PADDING, end = TasksView__PADDING_END),
         state = listState,
     ) {
 
@@ -62,8 +62,8 @@ fun TasksListView(
                 modifier = Modifier
                     .pointerInput(Unit) { } // Ignore clicks through
                     .padding(
-                        top = taskListSectionPadding,
-                        bottom = taskListSectionPadding,
+                        top = TasksView__LIST_SECTION_PADDING,
+                        bottom = TasksView__LIST_SECTION_PADDING,
                     )
             ) {
 
@@ -163,7 +163,7 @@ fun TasksListView(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = taskListSectionPadding),
+                        .padding(top = TasksView__LIST_SECTION_PADDING),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
