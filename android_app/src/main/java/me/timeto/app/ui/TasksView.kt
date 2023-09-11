@@ -42,7 +42,6 @@ val TasksView__PADDING_END = SECTION_BUTTON_WIDTH + H_PADDING
 val taskListSectionPadding = 20.dp
 
 private val tabShape = MySquircleShape(50f)
-
 private val tabVPadding = 8.dp
 private val tabActiveTextColor = c.white
 private val tabInactiveTextColor = c.homeFontSecondary
