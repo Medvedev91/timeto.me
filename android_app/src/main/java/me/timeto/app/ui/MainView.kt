@@ -22,7 +22,6 @@ import androidx.compose.ui.draw.*
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.motionEventSpy
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -57,253 +56,241 @@ fun MainView() {
 
     val checklistUI = state.checklistUI
 
-    Box(
+    VStack(
         modifier = Modifier
+            .fillMaxSize()
             .background(c.black)
-            .navigationBarsPadding()
+            .padding(top = statusBarHeight)
+            .navigationBarsPadding(),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
-        Column(
+        val timerColor = animateColorAsState(state.timerData.color.toColor()).value
+        val timerButtonsColor = state.timerButtonsColor.toColor()
+
+        Text(
+            text = state.title,
             modifier = Modifier
-                .pointerInput(Unit) { }
-                .fillMaxSize()
-                .padding(top = statusBarHeight),
-            horizontalAlignment = Alignment.CenterHorizontally,
+                .padding(horizontal = 24.dp)
+                .offset(y = 1.dp),
+            fontSize = 19.sp,
+            fontWeight = FontWeight.Medium,
+            color = timerColor,
+            textAlign = TextAlign.Center,
+        )
+
+        TextFeaturesTriggersView(
+            triggers = state.triggers,
+            modifier = Modifier.padding(top = 10.dp),
+            contentPadding = PaddingValues(horizontal = 50.dp)
+        )
+
+        HStack(
+            modifier = Modifier
+                .height(IntrinsicSize.Min),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
 
-            val timerColor = animateColorAsState(state.timerData.color.toColor()).value
-            val timerButtonsColor = state.timerButtonsColor.toColor()
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight()
+                    .offset(x = 4.dp)
+                    .clip(squircleShape)
+                    .clickable {
+                        vm.pauseTask()
+                    },
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    painterResource(id = R.drawable.sf_pause_medium_thin),
+                    contentDescription = "Pause",
+                    tint = timerButtonsColor,
+                    modifier = Modifier
+                        .size(16.dp),
+                )
+            }
 
             Text(
-                text = state.title,
+                text = state.timerData.title,
                 modifier = Modifier
-                    .padding(horizontal = 24.dp)
-                    .offset(y = 1.dp),
-                fontSize = 19.sp,
-                fontWeight = FontWeight.Medium,
+                    .clip(squircleShape)
+                    .clickable {
+                        vm.toggleIsPurple()
+                    }
+                    .padding(horizontal = 8.dp, vertical = 12.dp),
+                fontSize = run {
+                    val len = state.timerData.title.count()
+                    when {
+                        len <= 5 -> 40.sp
+                        len <= 7 -> 35.sp
+                        else -> 28.sp
+                    }
+                },
+                fontFamily = timerFont,
                 color = timerColor,
-                textAlign = TextAlign.Center,
             )
 
-            TextFeaturesTriggersView(
-                triggers = state.triggers,
-                modifier = Modifier.padding(top = 10.dp),
-                contentPadding = PaddingValues(horizontal = 50.dp)
-            )
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight()
+                    .offset(x = (-2).dp)
+                    .clip(squircleShape)
+                    .clickable {
+                        state.timerData.restart()
+                    },
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    text = state.timerData.restartText,
+                    modifier = Modifier
+                        .padding(bottom = 2.dp),
+                    fontSize = 19.sp,
+                    fontWeight = FontWeight.Thin,
+                    color = timerButtonsColor,
+                )
+            }
+        }
+
+        AnimatedVisibility(
+            state.isPurple,
+            enter = purpleAnimEnter,
+            exit = purpleAnimExit,
+        ) {
 
             HStack(
                 modifier = Modifier
-                    .height(IntrinsicSize.Min),
+                    .offset(y = (-4).dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
 
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight()
-                        .offset(x = 4.dp)
-                        .clip(squircleShape)
-                        .clickable {
-                            vm.pauseTask()
-                        },
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Icon(
-                        painterResource(id = R.drawable.sf_pause_medium_thin),
-                        contentDescription = "Pause",
-                        tint = timerButtonsColor,
-                        modifier = Modifier
-                            .size(16.dp),
-                    )
-                }
-
-                Text(
-                    text = state.timerData.title,
-                    modifier = Modifier
-                        .clip(squircleShape)
-                        .clickable {
-                            vm.toggleIsPurple()
-                        }
-                        .padding(horizontal = 8.dp, vertical = 12.dp),
-                    fontSize = run {
-                        val len = state.timerData.title.count()
-                        when {
-                            len <= 5 -> 40.sp
-                            len <= 7 -> 35.sp
-                            else -> 28.sp
-                        }
-                    },
-                    fontFamily = timerFont,
-                    color = timerColor,
+                TimerHintsView(
+                    modifier = Modifier,
+                    timerHintsUI = state.timerHints,
+                    hintHPadding = 10.dp,
+                    fontSize = 19.sp,
+                    fontWeight = FontWeight.Thin,
+                    fontColor = timerColor,
+                    onStart = {},
                 )
 
-                Box(
+                Icon(
+                    Icons.Rounded.ExpandCircleDown,
+                    contentDescription = "More",
+                    tint = timerColor,
                     modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight()
-                        .offset(x = (-2).dp)
-                        .clip(squircleShape)
+                        .padding(start = 8.dp)
+                        .size(28.dp)
+                        .clip(roundedShape)
                         .clickable {
-                            state.timerData.restart()
+                            ActivityTimerSheet__show(
+                                activity = state.activity,
+                                timerContext = state.timerButtonExpandSheetContext,
+                            ) {}
                         },
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Text(
-                        text = state.timerData.restartText,
-                        modifier = Modifier
-                            .padding(bottom = 2.dp),
-                        fontSize = 19.sp,
-                        fontWeight = FontWeight.Thin,
-                        color = timerButtonsColor,
-                    )
-                }
-            }
-
-            AnimatedVisibility(
-                state.isPurple,
-                enter = purpleAnimEnter,
-                exit = purpleAnimExit,
-            ) {
-
-                HStack(
-                    modifier = Modifier
-                        .offset(y = (-4).dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-
-                    TimerHintsView(
-                        modifier = Modifier,
-                        timerHintsUI = state.timerHints,
-                        hintHPadding = 10.dp,
-                        fontSize = 19.sp,
-                        fontWeight = FontWeight.Thin,
-                        fontColor = timerColor,
-                        onStart = {},
-                    )
-
-                    Icon(
-                        Icons.Rounded.ExpandCircleDown,
-                        contentDescription = "More",
-                        tint = timerColor,
-                        modifier = Modifier
-                            .padding(start = 8.dp)
-                            .size(28.dp)
-                            .clip(roundedShape)
-                            .clickable {
-                                ActivityTimerSheet__show(
-                                    activity = state.activity,
-                                    timerContext = state.timerButtonExpandSheetContext,
-                                ) {}
-                            },
-                    )
-                }
-            }
-
-            if (checklistUI != null && state.isTasksVisible) {
-
-                Text(
-                    text = checklistUI.titleToExpand,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            vm.toggleIsTasksVisible()
-                        }
-                        .padding(top = 6.dp, bottom = 12.dp),
-                    textAlign = TextAlign.Center,
-                    color = c.white,
                 )
-
-                MainDivider(calcAlpha = { 1f })
             }
+        }
 
-            ZStack(
+        if (checklistUI != null && state.isTasksVisible) {
+
+            Text(
+                text = checklistUI.titleToExpand,
                 modifier = Modifier
-                    .weight(1f),
-            ) {
-
-                VStack(
-                    modifier = Modifier
-                        .padding(bottom = bottomNavigationHeight)
-                ) {
-
-                    val checklistScrollState = rememberLazyListState()
-                    val mainTasksScrollState = rememberLazyListState()
-
-                    val isMainTasksExists = state.mainTasks.isNotEmpty()
-
-                    if (checklistUI != null) {
-                        ChecklistView(
-                            checklistUI = checklistUI,
-                            modifier = Modifier.weight(1f),
-                            scrollState = checklistScrollState,
-                        )
+                    .fillMaxWidth()
+                    .clickable {
+                        vm.toggleIsTasksVisible()
                     }
+                    .padding(top = 6.dp, bottom = 12.dp),
+                textAlign = TextAlign.Center,
+                color = c.white,
+            )
 
-                    MainDivider(
-                        calcAlpha = {
-                            val isMiddleDividerVisible =
-                                (checklistUI != null && (checklistScrollState.canScrollBackward || checklistScrollState.canScrollForward)) ||
-                                (isMainTasksExists && (mainTasksScrollState.canScrollBackward || mainTasksScrollState.canScrollForward))
-                            if (isMiddleDividerVisible) 1f else 0f
-                        }
+            MainDivider(calcAlpha = { 1f })
+        }
+
+        ZStack(
+            modifier = Modifier
+                .weight(1f),
+        ) {
+
+            VStack {
+
+                val checklistScrollState = rememberLazyListState()
+                val mainTasksScrollState = rememberLazyListState()
+
+                val isMainTasksExists = state.mainTasks.isNotEmpty()
+
+                if (checklistUI != null) {
+                    ChecklistView(
+                        checklistUI = checklistUI,
+                        modifier = Modifier.weight(1f),
+                        scrollState = checklistScrollState,
                     )
-
-                    if (isMainTasksExists) {
-                        val mainTasksModifier = if (checklistUI == null)
-                            Modifier.weight(1f)
-                        else
-                            Modifier.height(
-                                (taskListContentPadding * 2) +
-                                // 4.5f for the smallest emulator
-                                (mainTaskItemHeight * state.mainTasks.size.toFloat().limitMax(4.5f))
-                            )
-                        MainTasksView(
-                            tasks = state.mainTasks,
-                            modifier = mainTasksModifier,
-                            scrollState = mainTasksScrollState,
-                        )
-                    }
-
-                    if (!isMainTasksExists && checklistUI == null)
-                        SpacerW1()
                 }
 
-                VStack(
-                    modifier = Modifier
-                        .padding(bottom = bottomNavigationHeight)
-                ) {
+                MainDivider(
+                    calcAlpha = {
+                        val isMiddleDividerVisible =
+                            (checklistUI != null && (checklistScrollState.canScrollBackward || checklistScrollState.canScrollForward)) ||
+                            (isMainTasksExists && (mainTasksScrollState.canScrollBackward || mainTasksScrollState.canScrollForward))
+                        if (isMiddleDividerVisible) 1f else 0f
+                    }
+                )
 
-                    if (state.isTasksVisible) {
+                if (isMainTasksExists) {
+                    val mainTasksModifier = if (checklistUI == null)
+                        Modifier.weight(1f)
+                    else
+                        Modifier.height(
+                            (taskListContentPadding * 2) +
+                            // 4.5f for the smallest emulator
+                            (mainTaskItemHeight * state.mainTasks.size.toFloat().limitMax(4.5f))
+                        )
+                    MainTasksView(
+                        tasks = state.mainTasks,
+                        modifier = mainTasksModifier,
+                        scrollState = mainTasksScrollState,
+                    )
+                }
 
-                        ZStack {
+                if (!isMainTasksExists && checklistUI == null)
+                    SpacerW1()
+            }
 
-                            VStack(
-                                modifier = Modifier
-                                    .background(c.black),
-                            ) {
+            VStack {
 
-                                BackHandler {
-                                    vm.toggleIsTasksVisible()
-                                }
+                if (state.isTasksVisible) {
 
-                                TasksView(Modifier.weight(1f))
+                    ZStack {
+
+                        VStack(
+                            modifier = Modifier
+                                .background(c.black),
+                        ) {
+
+                            BackHandler {
+                                vm.toggleIsTasksVisible()
                             }
 
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(4.dp)
-                                    .align(Alignment.BottomCenter)
-                                    .background(
-                                        Brush.verticalGradient(
-                                            colorStops = arrayOf(
-                                                0.0f to Color.Transparent,
-                                                1f to Color.Black,
-                                            )
+                            TasksView(Modifier.weight(1f))
+                        }
+
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(4.dp)
+                                .align(Alignment.BottomCenter)
+                                .background(
+                                    Brush.verticalGradient(
+                                        colorStops = arrayOf(
+                                            0.0f to Color.Transparent,
+                                            1f to Color.Black,
                                         )
                                     )
-                            )
-                        }
+                                )
+                        )
                     }
                 }
             }
@@ -314,7 +301,6 @@ fun MainView() {
 
         Row(
             modifier = Modifier
-                .align(Alignment.BottomCenter)
                 .fillMaxWidth()
                 .height(IntrinsicSize.Max),
             verticalAlignment = Alignment.Bottom,
