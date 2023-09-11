@@ -199,6 +199,23 @@ fun MainView() {
                 }
             }
 
+            if (checklistUI != null && state.isTasksVisible) {
+
+                Text(
+                    text = checklistUI.titleToExpand,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            vm.toggleIsTasksVisible()
+                        }
+                        .padding(top = 6.dp, bottom = 12.dp),
+                    textAlign = TextAlign.Center,
+                    color = c.white,
+                )
+
+                MainDivider(calcAlpha = { 1f })
+            }
+
             ZStack(
                 modifier = Modifier
                     .weight(1f),
@@ -264,22 +281,6 @@ fun MainView() {
                                 modifier = Modifier
                                     .background(c.black),
                             ) {
-
-                                if (checklistUI != null) {
-                                    Text(
-                                        text = checklistUI.titleToExpand,
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .clickable {
-                                                vm.toggleIsTasksVisible()
-                                            }
-                                            .padding(top = 6.dp, bottom = 12.dp),
-                                        textAlign = TextAlign.Center,
-                                        color = c.white,
-                                    )
-                                }
-
-                                MainDivider(calcAlpha = { 1f })
 
                                 BackHandler {
                                     vm.toggleIsTasksVisible()
