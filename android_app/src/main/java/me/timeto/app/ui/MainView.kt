@@ -192,7 +192,7 @@ fun MainView() {
             }
         }
 
-        if (checklistUI != null && state.isTasksVisible) {
+        if (checklistUI != null && state.isTasksExpanded) {
 
             Text(
                 text = checklistUI.titleToExpand,
@@ -263,7 +263,7 @@ fun MainView() {
                 TasksView(
                     modifier = Modifier
                         .align(Alignment.CenterEnd),
-                    isExpanded = state.isTasksVisible,
+                    isExpanded = state.isTasksExpanded,
                     onExpandedChanged = { isExpanded ->
                         vm.upIsTasksExpanded(isExpanded)
                     },
@@ -326,7 +326,7 @@ fun MainView() {
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
-                val menuTasksBg = animateColorAsState(if (state.isTasksVisible) c.sheetFg else c.black)
+                val menuTasksBg = animateColorAsState(if (state.isTasksExpanded) c.sheetFg else c.black)
 
                 VStack(
                     modifier = Modifier

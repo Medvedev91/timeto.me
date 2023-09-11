@@ -22,7 +22,7 @@ class MainVM : __VM<MainVM.State>() {
         val allChecklistItems: List<ChecklistItemModel>,
         val isPurple: Boolean,
         val tasksToday: List<TaskModel>,
-        val isTasksVisible: Boolean,
+        val isTasksExpanded: Boolean,
         val idToUpdate: Long,
     ) {
 
@@ -114,7 +114,7 @@ class MainVM : __VM<MainVM.State>() {
             allChecklistItems = DI.checklistItems,
             isPurple = false,
             tasksToday = DI.tasks.filter { it.isToday },
-            isTasksVisible = false,
+            isTasksExpanded = false,
             idToUpdate = 0,
         )
     )
@@ -129,7 +129,7 @@ class MainVM : __VM<MainVM.State>() {
                     it.copy(
                         interval = interval,
                         isPurple = if (isNewInterval) false else it.isPurple,
-                        isTasksVisible = if (isNewInterval) false else it.isTasksVisible,
+                        isTasksExpanded = if (isNewInterval) false else it.isTasksExpanded,
                     )
                 }
             }
@@ -164,7 +164,7 @@ class MainVM : __VM<MainVM.State>() {
     }
 
     fun upIsTasksExpanded(isExpanded: Boolean) {
-        state.update { it.copy(isTasksVisible = isExpanded) }
+        state.update { it.copy(isTasksExpanded = isExpanded) }
     }
 
     fun pauseTask() {
