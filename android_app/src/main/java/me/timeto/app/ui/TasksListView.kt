@@ -152,7 +152,7 @@ fun TasksListView(
                 if (isFocused && WindowInsets.isImeVisible)
                     Box(
                         modifier = Modifier
-                            .consumeWindowInsets(PaddingValues(bottom = bottomNavigationHeight))
+                            .consumeWindowInsets(PaddingValues(bottom = HomeView__BOTTOM_NAVIGATION_HEIGHT))
                             .imePadding()
                     )
             }

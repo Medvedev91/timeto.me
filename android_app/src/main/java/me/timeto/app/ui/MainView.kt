@@ -34,9 +34,9 @@ import me.timeto.shared.*
 import me.timeto.shared.vm.MainVM
 import me.timeto.shared.vm.ui.ChecklistStateUI
 
-val bottomNavigationHeight = 56.dp
+val HomeView__BOTTOM_NAVIGATION_HEIGHT = 56.dp
 
-private val menuIconSize = bottomNavigationHeight
+private val menuIconSize = HomeView__BOTTOM_NAVIGATION_HEIGHT
 private val menuIconPadding = 14.dp
 
 private val mainTaskItemHeight = 32.dp
@@ -340,7 +340,7 @@ fun MainView() {
 
                 VStack(
                     modifier = Modifier
-                        .height(bottomNavigationHeight)
+                        .height(HomeView__BOTTOM_NAVIGATION_HEIGHT)
                         .fillMaxWidth()
                         .clip(squircleShape)
                         .background(menuTasksBg.value),
