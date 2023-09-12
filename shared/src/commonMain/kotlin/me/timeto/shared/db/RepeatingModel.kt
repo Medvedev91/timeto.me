@@ -29,7 +29,6 @@ data class RepeatingModel(
         const val MAX_DAY_OF_MONTH = 27
 
         val dayShortNames1 = listOf("M", "T", "W", "T", "F", "S", "S")
-        val dayShortNames3 = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
 
         suspend fun getAsc() = dbIO {
             db.repeatingQueries.getAsc().executeAsList().map { it.toModel() }
@@ -342,7 +341,7 @@ data class RepeatingModel(
                 title = if (weekDays.size == 7)
                     "Every day"
                 else
-                    weekDays.sorted().joinToString(" ") { dayShortNames3[it] }
+                    weekDays.sorted().joinToString(" ") { UnixTime.dayOfWeekNames3[it] }
             }
         }
 
