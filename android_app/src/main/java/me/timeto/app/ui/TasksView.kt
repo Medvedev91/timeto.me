@@ -54,15 +54,15 @@ fun TasksView(
 ) {
     val (_, state) = rememberVM { TabTasksVM() }
 
-    var activeSection by remember { mutableStateOf<Tab?>(null) }
+    var activeTab by remember { mutableStateOf<Tab?>(null) }
     LaunchedEffect(isExpanded) {
         if (!isExpanded)
-            activeSection = null
+            activeTab = null
     }
 
-    val curActiveSection = activeSection
-    LaunchedEffect(curActiveSection) {
-        onExpandedChanged(curActiveSection != null)
+    val curActiveTab = activeTab
+    LaunchedEffect(curActiveTab) {
+        onExpandedChanged(curActiveTab != null)
     }
 
     val dragItem = remember { mutableStateOf<DragItem?>(null) }
@@ -109,8 +109,8 @@ fun TasksView(
         contentAlignment = Alignment.CenterEnd,
     ) {
 
-        if (isExpanded) when (val curSection = activeSection) {
-            is Tab.Folder -> TasksListView(curSection.folder, dragItem)
+        if (isExpanded) when (val curTab = activeTab) {
+            is Tab.Folder -> TasksListView(curTab.folder, dragItem)
             is Tab.Calendar -> EventsListView()
             is Tab.Repeating -> RepeatingsListView()
             null -> {}
@@ -131,7 +131,7 @@ fun TasksView(
                     val dropItem = remember {
                         DropItem.Type__Calendar(DropItem.Square(0, 0, 0, 0))
                     }
-                    val isActive = activeSection is Tab.Calendar
+                    val isActive = activeTab is Tab.Calendar
                     TabTextButton(
                         text = state.tabCalendarText,
                         isActive = isActive,
@@ -142,7 +142,7 @@ fun TasksView(
                             dropItem.upSquareByCoordinates(c)
                         },
                         onClick = {
-                            activeSection = if (isActive) null else Tab.Calendar()
+                            activeTab = if (isActive) null else Tab.Calendar()
                         },
                     )
                 }
@@ -151,7 +151,7 @@ fun TasksView(
                     val dropItem = remember {
                         DropItem.Type__Folder(folderUI.folder, DropItem.Square(0, 0, 0, 0))
                     }
-                    val isActive = (activeSection as? Tab.Folder)?.folder?.id == folderUI.folder.id
+                    val isActive = (activeTab as? Tab.Folder)?.folder?.id == folderUI.folder.id
                     TabTextButton(
                         text = folderUI.tabText,
                         isActive = isActive,
@@ -162,13 +162,13 @@ fun TasksView(
                             dropItem.upSquareByCoordinates(c)
                         },
                         onClick = {
-                            activeSection = if (isActive) null else Tab.Folder(folderUI.folder)
+                            activeTab = if (isActive) null else Tab.Folder(folderUI.folder)
                         },
                     )
                 }
 
                 item {
-                    val isActive = activeSection is Tab.Repeating
+                    val isActive = activeTab is Tab.Repeating
                     val backgroundColor = animateColorAsState(if (isActive) c.blue else c.bg, spring(stiffness = Spring.StiffnessMedium))
                     val textColor = animateColorAsState(if (isActive) tabActiveTextColor else tabInactiveTextColor, spring(stiffness = Spring.StiffnessMedium))
 
@@ -179,7 +179,7 @@ fun TasksView(
                             .clip(tabShape)
                             .background(backgroundColor.value)
                             .clickable {
-                                activeSection = if (isActive) null else Tab.Repeating()
+                                activeTab = if (isActive) null else Tab.Repeating()
                             },
                         contentAlignment = Alignment.Center
                     ) {
