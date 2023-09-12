@@ -518,7 +518,6 @@ private fun MainTasksView(
             bottom = mainTasksContentBottomPadding,
         ),
         reverseLayout = true,
-        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
         items(
