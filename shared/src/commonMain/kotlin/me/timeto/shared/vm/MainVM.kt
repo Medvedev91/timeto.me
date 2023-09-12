@@ -201,7 +201,6 @@ class MainVM : __VM<MainVM.State>() {
         val textFeatures: TextFeatures,
     ) {
 
-        val icon: ICON?
         val text: String
         val backgroundColor: ColorRgba?
         val timerContext = ActivityTimerSheetVM.TimerContext.Task(task)
@@ -209,12 +208,6 @@ class MainVM : __VM<MainVM.State>() {
         init {
 
             val timeData = textFeatures.timeData
-
-            icon = when {
-                textFeatures.paused != null -> ICON.paused
-                timeData?.type?.isEvent() == true -> ICON.event
-                else -> null
-            }
 
             text = if (timeData != null) {
                 val dateText = timeData.unixTime.getStringByComponents(
@@ -241,10 +234,6 @@ class MainVM : __VM<MainVM.State>() {
                 }
             else
                 null
-        }
-
-        enum class ICON {
-            event, paused
         }
     }
 }
