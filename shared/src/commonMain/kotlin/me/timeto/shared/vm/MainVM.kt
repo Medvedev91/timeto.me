@@ -183,8 +183,6 @@ class MainVM : __VM<MainVM.State>() {
         val stateUI = ChecklistStateUI.build(checklist, items)
         val itemsUI = items.map { ItemUI(it) }
 
-        val titleToExpand = "${checklist.name} ${items.count { it.isChecked }}/${items.size}"
-
         class ItemUI(
             val item: ChecklistItemModel,
         ) {
