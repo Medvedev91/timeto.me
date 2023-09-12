@@ -41,6 +41,7 @@ private val menuIconPadding = 14.dp
 private val mainTaskItemHeight = 32.dp
 private val mainTasksContentTopPadding = 4.dp
 private val mainTasksContentBottomPadding = 8.dp
+private val mainTaskHalfHPadding = H_PADDING / 2
 
 private val menuTimeColor = MainVM.menuTimeColor.toColor()
 
@@ -528,7 +529,7 @@ private fun MainTasksView(
             Row(
                 modifier = Modifier
                     .height(mainTaskItemHeight)
-                    .padding(vertical = 3.dp, horizontal = 8.dp)
+                    .padding(vertical = 3.dp, horizontal = mainTaskHalfHPadding)
                     .clip(squircleShape)
                     .clickable {
                         taskItem.task.startIntervalForUI(
@@ -545,7 +546,7 @@ private fun MainTasksView(
                         )
                     }
                     .background(taskItem.backgroundColor?.toColor() ?: c.transparent)
-                    .padding(start = 8.dp, end = 8.dp),
+                    .padding(horizontal = mainTaskHalfHPadding),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
 
