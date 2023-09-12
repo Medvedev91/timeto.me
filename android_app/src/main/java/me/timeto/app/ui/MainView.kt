@@ -529,7 +529,7 @@ private fun MainTasksView(
                 modifier = Modifier
                     .height(mainTaskItemHeight)
                     .padding(vertical = 3.dp, horizontal = 8.dp)
-                    .clip(roundedShape)
+                    .clip(squircleShape)
                     .clickable {
                         taskItem.task.startIntervalForUI(
                             onStarted = {},
@@ -544,10 +544,7 @@ private fun MainTasksView(
                             },
                         )
                     }
-                    .background(
-                        color = taskItem.backgroundColor?.toColor() ?: c.transparent,
-                        shape = roundedShape
-                    )
+                    .background(taskItem.backgroundColor?.toColor() ?: c.transparent)
                     .padding(start = 8.dp, end = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
