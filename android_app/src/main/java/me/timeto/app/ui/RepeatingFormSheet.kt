@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
 import kotlinx.coroutines.delay
+import me.timeto.shared.UnixTime
 import me.timeto.shared.db.RepeatingModel
 import me.timeto.shared.launchEx
 import me.timeto.shared.vm.RepeatingFormSheetVM
@@ -211,7 +212,7 @@ fun RepeatingFormSheet(
                                                 bottom = 12.dp,
                                             )
                                     ) {
-                                        RepeatingModel.dayShortNames1.forEachIndexed { index, dayName ->
+                                        UnixTime.dayOfWeekNames1.forEachIndexed { index, dayName ->
                                             val isSelected = state.selectedWeekDays[index]
                                             val bgColor =
                                                 animateColorAsState(if (isSelected) c.blue else c.sheetBg)

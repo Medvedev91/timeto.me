@@ -28,8 +28,6 @@ data class RepeatingModel(
         const val LAST_DAY_OF_MONTH = 0
         const val MAX_DAY_OF_MONTH = 27
 
-        val dayShortNames1 = listOf("M", "T", "W", "T", "F", "S", "S")
-
         suspend fun getAsc() = dbIO {
             db.repeatingQueries.getAsc().executeAsList().map { it.toModel() }
         }
