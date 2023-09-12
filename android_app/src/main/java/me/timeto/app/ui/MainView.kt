@@ -566,30 +566,6 @@ private fun MainTasksView(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
 
-                when (taskItem.icon) {
-                    MainVM.MainTask.ICON.event -> {
-                        Icon(
-                            painterResource(id = R.drawable.sf_calendar_medium_light),
-                            contentDescription = taskItem.text,
-                            tint = c.white,
-                            modifier = Modifier
-                                .padding(start = 1.dp, end = 6.dp)
-                                .size(15.dp),
-                        )
-                    }
-                    MainVM.MainTask.ICON.paused -> {
-                        Icon(
-                            painterResource(id = R.drawable.sf_pause_small_medium),
-                            contentDescription = taskItem.text,
-                            tint = c.white,
-                            modifier = Modifier
-                                .padding(end = 5.dp)
-                                .size(11.dp),
-                        )
-                    }
-                    null -> {}
-                }
-
                 Text(
                     text = taskItem.text,
                     modifier = Modifier.padding(bottom = 1.dp),
