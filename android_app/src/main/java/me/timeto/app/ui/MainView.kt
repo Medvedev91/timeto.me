@@ -553,7 +553,7 @@ private fun MainTasksView(
                     text = taskItem.text,
                     modifier = Modifier.padding(bottom = 1.dp),
                     fontWeight = FontWeight.Normal,
-                    fontSize = if (taskItem.backgroundColor == null) 14.sp else 13.sp,
+                    fontSize = if (taskItem.backgroundColor == null) 13.sp else 12.sp,
                     color = c.white,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
