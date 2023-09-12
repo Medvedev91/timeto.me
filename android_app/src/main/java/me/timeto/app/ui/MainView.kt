@@ -39,7 +39,8 @@ private val menuIconSize = HomeView__BOTTOM_NAVIGATION_HEIGHT
 private val menuIconPadding = 14.dp
 
 private val mainTaskItemHeight = 32.dp
-private val mainTasksContentVPadding = 4.dp
+private val mainTasksContentTopPadding = 4.dp
+private val mainTasksContentBottomPadding = 8.dp
 
 private val menuTimeColor = MainVM.menuTimeColor.toColor()
 
@@ -226,7 +227,7 @@ fun MainView() {
                         Modifier.weight(1f)
                     else
                         Modifier.height(
-                            (mainTasksContentVPadding * 2) +
+                            (mainTasksContentTopPadding + mainTasksContentBottomPadding) +
                             // 4.5f for the smallest emulator
                             (mainTaskItemHeight * state.mainTasks.size.toFloat().limitMax(4.5f))
                         )
@@ -512,7 +513,10 @@ private fun MainTasksView(
         modifier = modifier
             .fillMaxWidth(),
         state = scrollState,
-        contentPadding = PaddingValues(vertical = mainTasksContentVPadding),
+        contentPadding = PaddingValues(
+            top = mainTasksContentTopPadding,
+            bottom = mainTasksContentBottomPadding,
+        ),
         reverseLayout = true,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
