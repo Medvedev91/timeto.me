@@ -234,7 +234,7 @@ private fun secondsInToString(seconds: Int): String {
     val d = h / 24
     return when {
         d >= 1 -> "In ${d.toStringEndingDays()}"
-        h >= 5 -> "In ${h.toStringEndingHours()}"
+        h >= 10 -> "In ${h.toStringEndingHours()}"
         h > 0 -> "In ${h.toStringEndingHours()}${if (m == 0) "" else " $m min"}"
         else -> "In ${m.toStringEnding(true, "minute", "min")}"
     }
