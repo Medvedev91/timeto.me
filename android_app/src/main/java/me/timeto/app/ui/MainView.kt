@@ -209,7 +209,7 @@ fun MainView() {
                 if (checklistUI != null) {
                     ChecklistView(
                         checklistUI = checklistUI,
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier.weight(1f).padding(end = TasksView__TAB_BUTTON_WIDTH),
                         scrollState = checklistScrollState,
                     )
                 }
@@ -234,7 +234,7 @@ fun MainView() {
                         )
                     MainTasksView(
                         tasks = state.mainTasks,
-                        modifier = mainTasksModifier,
+                        modifier = mainTasksModifier.padding(end = TasksView__TAB_BUTTON_WIDTH),
                         scrollState = mainTasksScrollState,
                     )
                 }
