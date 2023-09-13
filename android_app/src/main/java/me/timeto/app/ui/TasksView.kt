@@ -127,26 +127,6 @@ fun TasksView(
                 reverseLayout = true,
             ) {
 
-                item {
-                    val dropItem = remember {
-                        DropItem.Type__Calendar(DropItem.Square(0, 0, 0, 0))
-                    }
-                    val isActive = activeTab is Tab.Calendar
-                    TabTextButton(
-                        text = state.tabCalendarText,
-                        isActive = isActive,
-                        dragItem = dragItem,
-                        dropItem = dropItem,
-                        dropItems = dropItems,
-                        onGloballyPositioned = { c ->
-                            dropItem.upSquareByCoordinates(c)
-                        },
-                        onClick = {
-                            activeTab = if (isActive) null else Tab.Calendar()
-                        },
-                    )
-                }
-
                 items(state.taskFoldersUI) { folderUI ->
                     val dropItem = remember {
                         DropItem.Type__Folder(folderUI.folder, DropItem.Square(0, 0, 0, 0))
@@ -163,6 +143,26 @@ fun TasksView(
                         },
                         onClick = {
                             activeTab = if (isActive) null else Tab.Folder(folderUI.folder)
+                        },
+                    )
+                }
+
+                item {
+                    val dropItem = remember {
+                        DropItem.Type__Calendar(DropItem.Square(0, 0, 0, 0))
+                    }
+                    val isActive = activeTab is Tab.Calendar
+                    TabTextButton(
+                        text = state.tabCalendarText,
+                        isActive = isActive,
+                        dragItem = dragItem,
+                        dropItem = dropItem,
+                        dropItems = dropItems,
+                        onGloballyPositioned = { c ->
+                            dropItem.upSquareByCoordinates(c)
+                        },
+                        onClick = {
+                            activeTab = if (isActive) null else Tab.Calendar()
                         },
                     )
                 }
