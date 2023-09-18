@@ -43,8 +43,6 @@ private val mainTasksContentTopPadding = 4.dp
 private val mainTasksContentBottomPadding = 8.dp
 private val mainTaskHalfHPadding = H_PADDING / 2
 
-private val menuTimeColor = MainVM.menuTimeColor.toColor()
-
 private val menuButtonModifier = Modifier.size(menuIconSize).padding(menuIconPadding)
 
 private val purpleAnimEnter = fadeIn() + expandVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
@@ -325,7 +323,7 @@ fun MainView() {
 
                     Text(
                         text = state.menuTime,
-                        color = menuTimeColor,
+                        color = c.homeMenuTime,
                         fontSize = 9.sp,
                         fontWeight = FontWeight.Bold,
                         fontFamily = timerFont,

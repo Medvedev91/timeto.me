@@ -13,10 +13,6 @@ import me.timeto.shared.vm.ui.TimerDataUI
 
 class MainVM : __VM<MainVM.State>() {
 
-    companion object {
-        val menuTimeColor = ColorRgba(255, 255, 255, 200)
-    }
-
     data class State(
         val interval: IntervalModel,
         val allChecklistItems: List<ChecklistItemModel>,

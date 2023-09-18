@@ -218,4 +218,5 @@ object c {
     val formButtonRightNoteText = ColorRgba.formButtonRightNoteText.toColor()
 
     val homeFontSecondary = ColorRgba.homeFontSecondary.toColor()
+    val homeMenuTime = ColorRgba.homeMenuTime.toColor()
 }
