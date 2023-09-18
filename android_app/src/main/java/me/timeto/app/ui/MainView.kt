@@ -43,6 +43,8 @@ private val mainTasksContentTopPadding = 4.dp
 private val mainTasksContentBottomPadding = 8.dp
 private val mainTaskHalfHPadding = H_PADDING / 2
 
+private val homePrimaryFontSize = 16.sp
+
 private val menuButtonModifier = Modifier.size(menuIconSize).padding(menuIconPadding)
 
 private val purpleAnimEnter = fadeIn() + expandVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
@@ -463,6 +465,7 @@ private fun ChecklistView(
                                 modifier = Modifier
                                     .padding(vertical = 4.dp)
                                     .padding(start = 14.dp),
+                                fontSize = homePrimaryFontSize,
                                 textAlign = TextAlign.Start,
                             )
                         }
