@@ -23,8 +23,8 @@ class EventFormSheetVM(
     ) {
         val inputTextValue = textFeatures.textNoFeatures
         val minTime = UnixTime().localDayStartTime()
-        val isHeaderDoneEnabled =
-            inputTextValue.isNotBlank() && (UnixTime(selectedTime).localDay > UnixTime().localDay)
+        val isHeaderDoneEnabled = inputTextValue.isNotBlank() &&
+                                  (UnixTime(selectedTime).localDay >= UnixTime().localDay)
 
         // Only for Android
         val dayStartTime: Int = UnixTime(selectedTime).localDayStartTime()
@@ -89,6 +89,7 @@ class EventFormSheetVM(
                 )
             }
             onSuccess()
+            EventModel.syncTodaySafe(UnixTime().localDay)
         } catch (e: UIException) {
             showUiAlert(e.uiMessage)
         }
