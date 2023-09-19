@@ -147,8 +147,7 @@ data class TextFeatures(
                         else fullDateComponents
                 }
 
-                val backgroundColor = if (status == STATUS.OVERDUE)
-                    ColorRgba.red else ColorRgba.blue
+                val backgroundColor = if (status.isOverdue()) ColorRgba.red else ColorRgba.blue
 
                 return TimeDataUI.HighlightUI(
                     timeData = this,
