@@ -3,7 +3,6 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import me.timeto.shared.*
-import me.timeto.shared.TextFeatures.TimeData
 import me.timeto.shared.db.EventModel
 import me.timeto.shared.db.RepeatingModel
 import me.timeto.shared.db.TaskFolderModel
@@ -117,8 +116,9 @@ class TasksListVM(
 
         val textFeatures = task.text.textFeatures()
         val text = textFeatures.textUi(withPausedEmoji = true)
-        val timeUI: TimeUI? = textFeatures.timeData?.let {
-            TimeUI.prepItem(timeData = it, textFeatures = textFeatures)
+        val timeDataUI: TextFeatures.TimeData.TimeDataUI? = textFeatures.timeData?.let { timeData ->
+            val isHighlight = timeData.type.isEvent() || timeData._textFeatures.isImportant
+            timeData.buildTimeDataUI(isHighlight = isHighlight)
         }
         val timerContext = ActivityTimerSheetVM.TimerContext.Task(task)
 
@@ -135,90 +135,6 @@ class TasksListVM(
             launchExDefault {
                 task.delete()
             }
-        }
-
-        sealed class TimeUI {
-
-            companion object {
-
-                fun prepItem(
-                    timeData: TimeData,
-                    textFeatures: TextFeatures,
-                ): TimeUI {
-
-                    val timeLeftText = timeData.timeLeftText()
-                    val unixTime = timeData.unixTime
-                    val textColor = when (timeData.status) {
-                        TimeData.STATUS.IN -> ColorRgba.textSecondary
-                        TimeData.STATUS.SOON -> ColorRgba.blue
-                        TimeData.STATUS.OVERDUE -> ColorRgba.red
-                    }
-
-                    val isEvent = timeData.type.isEvent()
-                    val isImportant = textFeatures.isImportant
-
-                    if (isEvent || isImportant) {
-
-                        val type: HighlightUI.TYPE = when {
-                            isEvent -> HighlightUI.TYPE.event
-                            textFeatures.fromRepeating != null -> HighlightUI.TYPE.repeating
-                            isImportant -> HighlightUI.TYPE.important
-                            else -> throw Exception("TasksListVM invalid type")
-                        }
-
-                        val fullDateComponents = listOf(
-                            UnixTime.StringComponent.dayOfMonth,
-                            UnixTime.StringComponent.space,
-                            UnixTime.StringComponent.month3,
-                            UnixTime.StringComponent.comma,
-                            UnixTime.StringComponent.space,
-                            UnixTime.StringComponent.hhmm24,
-                        )
-
-                        val timeComponents = when (type) {
-                            HighlightUI.TYPE.event -> fullDateComponents
-                            HighlightUI.TYPE.repeating,
-                            HighlightUI.TYPE.important ->
-                                if (timeData.unixTime.isToday())
-                                    listOf(UnixTime.StringComponent.hhmm24)
-                                else fullDateComponents
-                        }
-
-                        val backgroundColor = if (timeData.status == TimeData.STATUS.OVERDUE)
-                            ColorRgba.red else ColorRgba.blue
-
-                        return HighlightUI(
-                            title = timeData.unixTime.getStringByComponents(timeComponents),
-                            backgroundColor = backgroundColor,
-                            timeLeftText = timeLeftText,
-                            timeLeftColor = textColor,
-                            type = type
-                        )
-                    }
-
-                    val daytimeText = daytimeToString(unixTime.time - unixTime.localDayStartTime())
-                    return RegularUI(
-                        text = "$daytimeText  $timeLeftText",
-                        textColor = textColor,
-                    )
-                }
-            }
-
-            class HighlightUI(
-                val title: String,
-                val backgroundColor: ColorRgba,
-                val timeLeftText: String,
-                val timeLeftColor: ColorRgba,
-                val type: TYPE,
-            ) : TimeUI() {
-
-                enum class TYPE { event, repeating, important }
-            }
-
-            class RegularUI(
-                val text: String,
-                val textColor: ColorRgba,
-            ) : TimeUI()
         }
     }
 }
