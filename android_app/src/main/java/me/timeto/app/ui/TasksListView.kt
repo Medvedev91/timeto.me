@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.*
 import me.timeto.app.*
 import me.timeto.app.R
 import kotlinx.coroutines.delay
+import me.timeto.shared.TextFeatures
 import me.timeto.shared.db.TaskFolderModel
 import me.timeto.shared.launchEx
 import me.timeto.shared.vm.TasksListVM
@@ -298,29 +299,29 @@ fun TasksListView(
 
                             val vPadding = 3.dp
 
-                            val timeUI = taskUI.timeUI
-                            if (timeUI != null) {
+                            val timeDataUI = taskUI.timeDataUI
+                            if (timeDataUI != null) {
                                 Row(
                                     modifier = Modifier
                                         .padding(bottom = vPadding),
                                     verticalAlignment = Alignment.CenterVertically,
                                 ) {
 
-                                    when (timeUI) {
+                                    when (timeDataUI) {
 
-                                        is TasksListVM.TaskUI.TimeUI.HighlightUI -> {
+                                        is TextFeatures.TimeData.TimeDataUI.HighlightUI -> {
                                             Row(
                                                 modifier = Modifier
                                                     .offset(x = (-1).dp)
                                                     .clip(highlightTimeShape)
-                                                    .background(timeUI.backgroundColor.toColor())
+                                                    .background(timeDataUI.backgroundColor.toColor())
                                                     .padding(start = 5.dp, end = 4.dp, top = 3.dp, bottom = 3.dp),
                                                 verticalAlignment = Alignment.CenterVertically,
                                             ) {
 
-                                                when (timeUI.type) {
+                                                when (timeDataUI._timeData.type) {
 
-                                                    TasksListVM.TaskUI.TimeUI.HighlightUI.TYPE.event -> {
+                                                    TextFeatures.TimeData.TYPE.EVENT -> {
                                                         Icon(
                                                             painterResource(id = R.drawable.sf_calendar_medium_light),
                                                             contentDescription = "Event",
@@ -331,7 +332,7 @@ fun TasksListView(
                                                         )
                                                     }
 
-                                                    TasksListVM.TaskUI.TimeUI.HighlightUI.TYPE.repeating -> {
+                                                    TextFeatures.TimeData.TYPE.REPEATING -> {
                                                         Icon(
                                                             painterResource(id = R.drawable.sf_repeat_medium_semibold),
                                                             contentDescription = "Repeating",
@@ -341,43 +342,32 @@ fun TasksListView(
                                                                 .size(12.dp),
                                                         )
                                                     }
-
-                                                    TasksListVM.TaskUI.TimeUI.HighlightUI.TYPE.important -> {
-                                                        Icon(
-                                                            painterResource(id = R.drawable.sf_flag_fill_medium_regular),
-                                                            contentDescription = "Important",
-                                                            tint = c.white,
-                                                            modifier = Modifier
-                                                                .padding(end = 5.dp)
-                                                                .size(10.dp),
-                                                        )
-                                                    }
                                                 }
 
                                                 Text(
-                                                    timeUI.title,
+                                                    timeDataUI.title,
                                                     fontSize = 12.sp,
                                                     color = c.white,
                                                 )
                                             }
                                             Text(
-                                                timeUI.timeLeftText,
+                                                timeDataUI.timeLeftText,
                                                 modifier = Modifier
                                                     .padding(start = 6.dp),
                                                 fontSize = 13.sp,
                                                 fontWeight = FontWeight.W300,
-                                                color = timeUI.timeLeftColor.toColor(),
+                                                color = timeDataUI.timeLeftColor.toColor(),
                                                 maxLines = 1,
                                                 overflow = TextOverflow.Ellipsis,
                                             )
                                         }
 
-                                        is TasksListVM.TaskUI.TimeUI.RegularUI -> {
+                                        is TextFeatures.TimeData.TimeDataUI.RegularUI -> {
                                             Text(
-                                                timeUI.text,
+                                                timeDataUI.text,
                                                 fontSize = 13.sp,
                                                 fontWeight = FontWeight.W300,
-                                                color = timeUI.textColor.toColor(),
+                                                color = timeDataUI.textColor.toColor(),
                                             )
                                         }
                                     }
