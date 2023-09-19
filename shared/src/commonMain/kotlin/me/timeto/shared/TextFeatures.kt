@@ -175,7 +175,14 @@ data class TextFeatures(
             fun isRepeating() = this == REPEATING
         }
 
-        enum class STATUS { IN, SOON, OVERDUE }
+        enum class STATUS {
+
+            IN, SOON, OVERDUE;
+
+            fun isIn() = this == IN
+            fun isSoon() = this == SOON
+            fun isOverdue() = this == OVERDUE
+        }
 
         sealed class TimeDataUI(
             val _timeData: TimeData,
