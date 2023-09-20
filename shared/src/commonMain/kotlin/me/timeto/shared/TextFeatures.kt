@@ -130,22 +130,18 @@ data class TextFeatures(
 
             if (isHighlight) {
 
-                val fullDateComponents = listOf(
-                    UnixTime.StringComponent.dayOfMonth,
-                    UnixTime.StringComponent.space,
-                    UnixTime.StringComponent.month3,
-                    UnixTime.StringComponent.comma,
-                    UnixTime.StringComponent.space,
-                    UnixTime.StringComponent.hhmm24,
-                )
-
-                val timeComponents = when (type) {
-                    TYPE.EVENT -> fullDateComponents
-                    TYPE.REPEATING ->
-                        if (unixTime.isToday())
-                            listOf(UnixTime.StringComponent.hhmm24)
-                        else fullDateComponents
-                }
+                val timeComponents =
+                    if (unixTime.isToday())
+                        listOf(UnixTime.StringComponent.hhmm24)
+                    else
+                        listOf(
+                            UnixTime.StringComponent.dayOfMonth,
+                            UnixTime.StringComponent.space,
+                            UnixTime.StringComponent.month3,
+                            UnixTime.StringComponent.comma,
+                            UnixTime.StringComponent.space,
+                            UnixTime.StringComponent.hhmm24,
+                        )
 
                 val backgroundColor = if (status.isOverdue()) ColorRgba.red else ColorRgba.blue
 
