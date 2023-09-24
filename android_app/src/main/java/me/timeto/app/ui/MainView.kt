@@ -50,6 +50,8 @@ private val menuButtonModifier = Modifier.size(menuIconSize).padding(menuIconPad
 private val purpleAnimEnter = fadeIn() + expandVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
 private val purpleAnimExit = fadeOut() + shrinkVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
 
+private val mainTaskTimeShape = MySquircleShape(len = 40f)
+
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun MainView() {
@@ -527,10 +529,11 @@ private fun MainTasksView(
             key = { it.task.id }
         ) { taskItem ->
 
-            Row(
+            HStack(
                 modifier = Modifier
                     .height(mainTaskItemHeight)
-                    .padding(vertical = 3.dp, horizontal = mainTaskHalfHPadding)
+                    .fillMaxWidth()
+                    .padding(horizontal = mainTaskHalfHPadding)
                     .clip(squircleShape)
                     .clickable {
                         taskItem.task.startIntervalForUI(
@@ -546,20 +549,47 @@ private fun MainTasksView(
                             },
                         )
                     }
-                    .background(taskItem.backgroundColor?.toColor() ?: c.transparent)
                     .padding(horizontal = mainTaskHalfHPadding),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
 
+                val timeUI = taskItem.timeUI
+                if (timeUI != null) {
+                    Text(
+                        timeUI.text,
+                        modifier = Modifier
+                            .padding(end = 6.dp)
+                            .offset(x = (-1).dp)
+                            .clip(mainTaskTimeShape)
+                            .background(timeUI.textBgColor.toColor())
+                            .padding(horizontal = 4.dp, vertical = 1.dp)
+                            .padding(bottom = onePx),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 12.sp,
+                        color = c.white,
+                    )
+                }
+
                 Text(
                     text = taskItem.text,
-                    modifier = Modifier.padding(bottom = 1.dp),
-                    fontWeight = FontWeight.Normal,
-                    fontSize = if (taskItem.backgroundColor == null) 13.sp else 12.sp,
+                    modifier = Modifier
+                        .weight(1f),
+                    fontSize = homePrimaryFontSize,
                     color = c.white,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
+
+                if (timeUI != null) {
+                    Text(
+                        timeUI.note,
+                        modifier = Modifier
+                            .offset(y = 1.dp),
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.Light,
+                        color = timeUI.noteColor.toColor(),
+                    )
+                }
             }
         }
     }
