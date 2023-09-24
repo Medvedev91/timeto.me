@@ -195,39 +195,34 @@ class MainVM : __VM<MainVM.State>() {
         val textFeatures: TextFeatures,
     ) {
 
-        val text: String
-        val backgroundColor: ColorRgba?
+        val text = textFeatures.textUi()
         val timerContext = ActivityTimerSheetVM.TimerContext.Task(task)
+        val timeUI: TimeUI? = textFeatures.timeData?.let { timeData ->
+            val bgColor = when (timeData.status) {
+                TextFeatures.TimeData.STATUS.IN -> AppleColors.gray4Dark
+                TextFeatures.TimeData.STATUS.SOON -> ColorRgba.blue
+                TextFeatures.TimeData.STATUS.OVERDUE -> ColorRgba.red
+            }
 
-        init {
+            val noteColor = when (timeData.status) {
+                TextFeatures.TimeData.STATUS.IN -> ColorRgba.textSecondary
+                TextFeatures.TimeData.STATUS.SOON -> ColorRgba.blue
+                TextFeatures.TimeData.STATUS.OVERDUE -> ColorRgba.red
+            }
 
-            val timeData = textFeatures.timeData
-
-            text = if (timeData != null) {
-                val dateText = timeData.unixTime.getStringByComponents(
-                    UnixTime.StringComponent.dayOfMonth,
-                    UnixTime.StringComponent.space,
-                    UnixTime.StringComponent.month3,
-                    UnixTime.StringComponent.comma,
-                    UnixTime.StringComponent.space,
-                    UnixTime.StringComponent.hhmm24,
-                )
-                "$dateText ${textFeatures.textNoFeatures} - ${timeData.timeLeftText()}"
-            } else
-                textFeatures.textUi(
-                    withActivityEmoji = false,
-                    withPausedEmoji = false,
-                    withTimer = true,
-                )
-
-            backgroundColor = if (timeData != null)
-                when (timeData.status) {
-                    TextFeatures.TimeData.STATUS.IN -> null
-                    TextFeatures.TimeData.STATUS.SOON -> AppleColors.Palettes.blue.dark
-                    TextFeatures.TimeData.STATUS.OVERDUE -> AppleColors.Palettes.red.dark
-                }
-            else
-                null
+            TimeUI(
+                text = timeData.timeText(),
+                textBgColor = bgColor,
+                note = timeData.timeLeftText(),
+                noteColor = noteColor,
+            )
         }
+
+        class TimeUI(
+            val text: String,
+            val textBgColor: ColorRgba,
+            val note: String,
+            val noteColor: ColorRgba,
+        )
     }
 }
