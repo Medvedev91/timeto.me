@@ -112,6 +112,22 @@ data class TextFeatures(
 
         //////
 
+        fun timeText(): String {
+            val components =
+                if (unixTime.isToday())
+                    listOf(UnixTime.StringComponent.hhmm24)
+                else
+                    listOf(
+                        UnixTime.StringComponent.dayOfMonth,
+                        UnixTime.StringComponent.space,
+                        UnixTime.StringComponent.month3,
+                        UnixTime.StringComponent.comma,
+                        UnixTime.StringComponent.space,
+                        UnixTime.StringComponent.hhmm24,
+                    )
+            return unixTime.getStringByComponents(components)
+        }
+
         fun timeLeftText(): String {
             val isOverdue = status.isOverdue()
             val (h, m) = secondsLeft.absoluteValue.toHms(roundToNextMinute = !isOverdue)
@@ -137,25 +153,10 @@ data class TextFeatures(
             }
 
             if (isHighlight) {
-
-                val timeComponents =
-                    if (unixTime.isToday())
-                        listOf(UnixTime.StringComponent.hhmm24)
-                    else
-                        listOf(
-                            UnixTime.StringComponent.dayOfMonth,
-                            UnixTime.StringComponent.space,
-                            UnixTime.StringComponent.month3,
-                            UnixTime.StringComponent.comma,
-                            UnixTime.StringComponent.space,
-                            UnixTime.StringComponent.hhmm24,
-                        )
-
                 val backgroundColor = if (status.isOverdue()) ColorRgba.red else ColorRgba.blue
-
                 return TimeDataUI.HighlightUI(
                     timeData = this,
-                    title = unixTime.getStringByComponents(timeComponents),
+                    title = timeText(),
                     backgroundColor = backgroundColor,
                     timeLeftText = timeLeftText,
                     timeLeftColor = textColor,
