@@ -112,10 +112,18 @@ data class TextFeatures(
 
         //////
 
-        fun timeLeftText(): String = when (status) {
-            STATUS.IN,
-            STATUS.SOON -> secondsInToString(secondsLeft)
-            STATUS.OVERDUE -> secondsOverdueToString(secondsLeft)
+        fun timeLeftText(): String {
+            val isOverdue = status.isOverdue()
+            val (h, m) = secondsLeft.absoluteValue.toHms(roundToNextMinute = !isOverdue)
+            val d = h / 24
+            val timeText = when {
+                d >= 1 -> "${d}d"
+                h >= 10 -> "${h}h"
+                h > 0 -> "${h}h${if (m == 0) "" else " ${m}m"}"
+                m == 0 -> "Now! 🙀"
+                else -> "${m}m"
+            }
+            return if (isOverdue) timeText else "In $timeText"
         }
 
         fun buildTimeDataUI(
@@ -297,30 +305,3 @@ private fun parseLocal(initText: String): TextFeatures {
         isImportant = isImportant,
     )
 }
-
-//////
-
-private fun secondsInToString(seconds: Int): String {
-    val (h, m) = seconds.toHms(roundToNextMinute = true)
-    val d = h / 24
-    return when {
-        d >= 1 -> "In ${d.toStringEndingDays()}"
-        h >= 10 -> "In ${h.toStringEndingHours()}"
-        h > 0 -> "In ${h.toStringEndingHours()}${if (m == 0) "" else " $m min"}"
-        else -> "In ${m.toStringEnding(true, "minute", "min")}"
-    }
-}
-
-private fun secondsOverdueToString(seconds: Int): String {
-    val (h, m) = seconds.absoluteValue.toHms()
-    val d = h / 24
-    return when {
-        d >= 1 -> d.toStringEndingDays() + " overdue"
-        h > 0 -> h.toStringEndingHours() + " overdue"
-        m == 0 -> "Now! 🙀"
-        else -> "$m min overdue"
-    }
-}
-
-private fun Int.toStringEndingHours() = toStringEnding(true, "hour", "hours")
-private fun Int.toStringEndingDays() = toStringEnding(true, "day", "days")
