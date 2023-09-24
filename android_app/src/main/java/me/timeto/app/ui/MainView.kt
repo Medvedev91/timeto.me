@@ -570,6 +570,17 @@ private fun MainTasksView(
                     )
                 }
 
+                if (taskItem.textFeatures.paused != null) {
+                    Icon(
+                        painterResource(id = R.drawable.sf_pause_medium_black),
+                        contentDescription = "Paused Task",
+                        tint = c.homeFontSecondary,
+                        modifier = Modifier
+                            .padding(end = 5.dp, top = 1.dp + onePx)
+                            .size(10.dp),
+                    )
+                }
+
                 Text(
                     text = taskItem.text,
                     modifier = Modifier
