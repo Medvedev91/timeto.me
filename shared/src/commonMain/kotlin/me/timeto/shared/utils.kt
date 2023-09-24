@@ -207,11 +207,6 @@ fun Int.toTimerHintNote(
     }
 }
 
-fun Int.toStringEnding(withNum: Boolean, one: String, many: String): String {
-    val strNum = if (this == 1) one else many
-    return if (withNum) "$this $strNum" else strNum
-}
-
 data class ColorRgba(
     val r: Int, val g: Int,
     val b: Int, val a: Int = 255,
