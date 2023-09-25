@@ -309,7 +309,7 @@ fun TasksListView(
 
                                     when (timeDataUI) {
 
-                                        is TextFeatures.TimeData.TimeDataUI.HighlightUI -> {
+                                        is TasksListVM.TaskUI.TimeUI.HighlightUI -> {
                                             Row(
                                                 modifier = Modifier
                                                     .offset(x = (-1).dp)
@@ -362,7 +362,7 @@ fun TasksListView(
                                             )
                                         }
 
-                                        is TextFeatures.TimeData.TimeDataUI.RegularUI -> {
+                                        is TasksListVM.TaskUI.TimeUI.RegularUI -> {
                                             Text(
                                                 timeDataUI.text,
                                                 fontSize = 13.sp,

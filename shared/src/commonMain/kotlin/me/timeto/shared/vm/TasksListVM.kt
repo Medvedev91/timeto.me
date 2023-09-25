@@ -116,9 +116,35 @@ class TasksListVM(
 
         val textFeatures = task.text.textFeatures()
         val text = textFeatures.textUi(withPausedEmoji = true)
-        val timeDataUI: TextFeatures.TimeData.TimeDataUI? = textFeatures.timeData?.let { timeData ->
+        val timeDataUI: TimeUI? = textFeatures.timeData?.let { timeData ->
+            val unixTime = timeData.unixTime
             val isHighlight = timeData.type.isEvent() || timeData._textFeatures.isImportant
-            timeData.buildTimeDataUI(isHighlight = isHighlight)
+
+            val timeLeftText = timeData.timeLeftText()
+            val textColor = when (timeData.status) {
+                TextFeatures.TimeData.STATUS.IN -> ColorRgba.textSecondary
+                TextFeatures.TimeData.STATUS.SOON -> ColorRgba.blue
+                TextFeatures.TimeData.STATUS.OVERDUE -> ColorRgba.red
+            }
+
+            if (isHighlight) {
+                val backgroundColor = if (timeData.status.isOverdue())
+                    ColorRgba.red else ColorRgba.blue
+                return@let TimeUI.HighlightUI(
+                    timeData = timeData,
+                    title = timeData.timeText(),
+                    backgroundColor = backgroundColor,
+                    timeLeftText = timeLeftText,
+                    timeLeftColor = textColor,
+                )
+            }
+
+            val daytimeText = daytimeToString(unixTime.time - unixTime.localDayStartTime())
+            TimeUI.RegularUI(
+                timeData = timeData,
+                text = "$daytimeText  $timeLeftText",
+                textColor = textColor,
+            )
         }
         val timerContext = ActivityTimerSheetVM.TimerContext.Task(task)
 
@@ -136,6 +162,26 @@ class TasksListVM(
                 task.delete()
             }
         }
+
+        sealed class TimeUI(
+            val _timeData: TextFeatures.TimeData,
+        ) {
+
+            class HighlightUI(
+                timeData: TextFeatures.TimeData,
+                val title: String,
+                val backgroundColor: ColorRgba,
+                val timeLeftText: String,
+                val timeLeftColor: ColorRgba,
+            ) : TimeUI(timeData)
+
+            class RegularUI(
+                timeData: TextFeatures.TimeData,
+                val text: String,
+                val textColor: ColorRgba,
+            ) : TimeUI(timeData)
+        }
+
     }
 }
 

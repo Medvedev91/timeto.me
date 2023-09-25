@@ -142,35 +142,6 @@ data class TextFeatures(
             return if (isOverdue) timeText else "In $timeText"
         }
 
-        fun buildTimeDataUI(
-            isHighlight: Boolean,
-        ): TimeDataUI {
-            val timeLeftText = timeLeftText()
-            val textColor = when (status) {
-                STATUS.IN -> ColorRgba.textSecondary
-                STATUS.SOON -> ColorRgba.blue
-                STATUS.OVERDUE -> ColorRgba.red
-            }
-
-            if (isHighlight) {
-                val backgroundColor = if (status.isOverdue()) ColorRgba.red else ColorRgba.blue
-                return TimeDataUI.HighlightUI(
-                    timeData = this,
-                    title = timeText(),
-                    backgroundColor = backgroundColor,
-                    timeLeftText = timeLeftText,
-                    timeLeftColor = textColor,
-                )
-            }
-
-            val daytimeText = daytimeToString(unixTime.time - unixTime.localDayStartTime())
-            return TimeDataUI.RegularUI(
-                timeData = this,
-                text = "$daytimeText  $timeLeftText",
-                textColor = textColor,
-            )
-        }
-
         enum class TYPE {
 
             EVENT, REPEATING;
@@ -186,25 +157,6 @@ data class TextFeatures(
             fun isIn() = this == IN
             fun isSoon() = this == SOON
             fun isOverdue() = this == OVERDUE
-        }
-
-        sealed class TimeDataUI(
-            val _timeData: TimeData,
-        ) {
-
-            class HighlightUI(
-                timeData: TimeData,
-                val title: String,
-                val backgroundColor: ColorRgba,
-                val timeLeftText: String,
-                val timeLeftColor: ColorRgba,
-            ) : TimeDataUI(timeData)
-
-            class RegularUI(
-                timeData: TimeData,
-                val text: String,
-                val textColor: ColorRgba,
-            ) : TimeDataUI(timeData)
         }
     }
 }
