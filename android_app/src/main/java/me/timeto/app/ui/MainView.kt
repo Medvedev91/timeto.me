@@ -211,7 +211,7 @@ fun MainView() {
                 if (checklistUI != null) {
                     ChecklistView(
                         checklistUI = checklistUI,
-                        modifier = Modifier.weight(1f).padding(end = TasksView__TAB_BUTTON_WIDTH),
+                        modifier = Modifier.weight(1f),
                         scrollState = checklistScrollState,
                     )
                 }
@@ -236,7 +236,7 @@ fun MainView() {
                         )
                     MainTasksView(
                         tasks = state.mainTasks,
-                        modifier = mainTasksModifier.padding(end = TasksView__TAB_BUTTON_WIDTH),
+                        modifier = mainTasksModifier,
                         scrollState = mainTasksScrollState,
                     )
                 }
@@ -247,14 +247,14 @@ fun MainView() {
 
             ZStack {
 
-                TasksView(
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd),
-                    isExpanded = state.isTasksExpanded,
-                    onExpandedChanged = { isExpanded ->
-                        vm.upIsTasksExpanded(isExpanded)
-                    },
-                )
+                if (state.isTasksExpanded)
+                    TasksView(
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd),
+                        onClose = {
+                            vm.toggleIsTasksExpanded()
+                        },
+                    )
 
                 Box(
                     modifier = Modifier
@@ -308,7 +308,7 @@ fun MainView() {
                     .clip(squircleShape)
                     .motionEventSpy { event ->
                         if (event.action == MotionEvent.ACTION_DOWN)
-                            vm.upIsTasksExpanded(false)
+                            vm.toggleIsTasksExpanded()
                     },
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {

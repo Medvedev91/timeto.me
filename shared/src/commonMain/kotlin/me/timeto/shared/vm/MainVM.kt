@@ -159,8 +159,8 @@ class MainVM : __VM<MainVM.State>() {
         state.update { it.copy(isPurple = !it.isPurple) }
     }
 
-    fun upIsTasksExpanded(isExpanded: Boolean) {
-        state.update { it.copy(isTasksExpanded = isExpanded) }
+    fun toggleIsTasksExpanded() {
+        state.update { it.copy(isTasksExpanded = !it.isTasksExpanded) }
     }
 
     fun pauseTask() {
