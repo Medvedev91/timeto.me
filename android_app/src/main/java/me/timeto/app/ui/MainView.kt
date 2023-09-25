@@ -584,6 +584,7 @@ private fun MainTasksView(
                 Text(
                     text = taskItem.text,
                     modifier = Modifier
+                        .padding(end = 4.dp)
                         .weight(1f),
                     fontSize = homePrimaryFontSize,
                     color = c.white,
