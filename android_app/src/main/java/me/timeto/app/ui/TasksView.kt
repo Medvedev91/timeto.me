@@ -49,21 +49,11 @@ private val tabInactiveTextColor = c.homeFontSecondary
 @Composable
 fun TasksView(
     modifier: Modifier,
-    isExpanded: Boolean,
-    onExpandedChanged: (Boolean) -> Unit,
+    onClose: () -> Unit,
 ) {
     val (_, state) = rememberVM { TabTasksVM() }
 
-    var activeTab by remember { mutableStateOf<Tab?>(null) }
-    LaunchedEffect(isExpanded) {
-        if (!isExpanded)
-            activeTab = null
-    }
-
-    val curActiveTab = activeTab
-    LaunchedEffect(curActiveTab) {
-        onExpandedChanged(curActiveTab != null)
-    }
+    var activeTab by remember { mutableStateOf<Tab>(Tab.Folder(state.initFolder)) }
 
     val dragItem = remember { mutableStateOf<DragItem?>(null) }
     val dropItems = remember { mutableListOf<DropItem>() }
@@ -109,11 +99,10 @@ fun TasksView(
         contentAlignment = Alignment.CenterEnd,
     ) {
 
-        if (isExpanded) when (val curTab = activeTab) {
+        when (val curTab = activeTab) {
             is Tab.Folder -> TasksListView(curTab.folder, dragItem)
             is Tab.Calendar -> EventsListView()
             is Tab.Repeating -> RepeatingsListView()
-            null -> {}
         }
 
         Column(
@@ -142,7 +131,8 @@ fun TasksView(
                             dropItem.upSquareByCoordinates(c)
                         },
                         onClick = {
-                            activeTab = if (isActive) null else Tab.Folder(folderUI.folder)
+                            if (isActive) onClose()
+                            else activeTab = Tab.Folder(folderUI.folder)
                         },
                     )
                 }
@@ -162,7 +152,8 @@ fun TasksView(
                             dropItem.upSquareByCoordinates(c)
                         },
                         onClick = {
-                            activeTab = if (isActive) null else Tab.Calendar()
+                            if (isActive) onClose()
+                            else activeTab = Tab.Calendar()
                         },
                     )
                 }
@@ -179,7 +170,8 @@ fun TasksView(
                             .clip(tabShape)
                             .background(backgroundColor.value)
                             .clickable {
-                                activeTab = if (isActive) null else Tab.Repeating()
+                                if (isActive) onClose()
+                                else activeTab = Tab.Repeating()
                             },
                         contentAlignment = Alignment.Center
                     ) {
