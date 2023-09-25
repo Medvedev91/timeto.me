@@ -1,6 +1,7 @@
 package me.timeto.app.ui
 
 import android.view.MotionEvent
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
@@ -54,6 +55,13 @@ fun TasksView(
     val (_, state) = rememberVM { TabTasksVM() }
 
     var activeTab by remember { mutableStateOf<Tab>(Tab.Folder(state.initFolder)) }
+
+    BackHandler {
+        if ((activeTab as? Tab.Folder)?.folder?.isToday != true)
+            activeTab = Tab.Folder(state.initFolder)
+        else
+            onClose()
+    }
 
     val dragItem = remember { mutableStateOf<DragItem?>(null) }
     val dropItems = remember { mutableListOf<DropItem>() }
