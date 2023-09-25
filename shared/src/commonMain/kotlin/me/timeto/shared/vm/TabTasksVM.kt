@@ -18,6 +18,7 @@ class TabTasksVM : __VM<TabTasksVM.State>() {
     data class State(
         val taskFoldersUI: List<TaskFolderUI>,
         val tabCalendarText: String,
+        val initFolder: TaskFolderModel = DI.getTodayFolder(),
     )
 
     override val state = MutableStateFlow(
