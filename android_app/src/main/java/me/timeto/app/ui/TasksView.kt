@@ -135,9 +135,6 @@ fun TasksView(
                         dragItem = dragItem,
                         dropItem = dropItem,
                         dropItems = dropItems,
-                        onGloballyPositioned = { c ->
-                            dropItem.upSquareByCoordinates(c)
-                        },
                         onClick = {
                             if (isActive) onClose()
                             else activeTab = Tab.Folder(folderUI.folder)
@@ -156,9 +153,6 @@ fun TasksView(
                         dragItem = dragItem,
                         dropItem = dropItem,
                         dropItems = dropItems,
-                        onGloballyPositioned = { c ->
-                            dropItem.upSquareByCoordinates(c)
-                        },
                         onClick = {
                             if (isActive) onClose()
                             else activeTab = Tab.Calendar()
@@ -247,7 +241,6 @@ private fun TabTextButton(
     dragItem: State<DragItem?>,
     dropItem: DropItem,
     dropItems: MutableList<DropItem>,
-    onGloballyPositioned: (LayoutCoordinates) -> Unit,
     onClick: () -> Unit,
 ) {
     DisposableEffect(Unit) {
@@ -301,7 +294,9 @@ private fun TabTextButton(
             .fillMaxWidth()
             .padding(top = tabVPadding)
             .rotate(rotationAngleAnimate)
-            .onGloballyPositioned(onGloballyPositioned)
+            .onGloballyPositioned { c ->
+                dropItem.upSquareByCoordinates(c)
+            }
             .clip(tabShape)
             .background(bgColor.value)
     ) {
