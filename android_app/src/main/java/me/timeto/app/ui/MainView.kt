@@ -200,7 +200,10 @@ fun MainView() {
                 .weight(1f),
         ) {
 
-            VStack {
+            VStack(
+                modifier = Modifier
+                    .padding(bottom = HomeView__BOTTOM_NAVIGATION_HEIGHT),
+            ) {
 
                 val checklistScrollState = rememberLazyListState()
                 val mainTasksScrollState = rememberLazyListState()
@@ -244,7 +247,10 @@ fun MainView() {
                     SpacerW1()
             }
 
-            ZStack {
+            ZStack(
+                modifier = Modifier
+                    .padding(bottom = HomeView__BOTTOM_NAVIGATION_HEIGHT),
+            ) {
 
                 if (state.isTasksExpanded)
                     TasksView(
@@ -270,9 +276,9 @@ fun MainView() {
                         )
                 )
             }
-        }
 
-        NavigationView(vm, state)
+            NavigationView(vm, state, Modifier.align(Alignment.BottomCenter))
+        }
     }
 }
 
@@ -498,9 +504,10 @@ private fun MainTasksView(
 private fun NavigationView(
     vm: MainVM,
     state: MainVM.State,
+    modifier: Modifier,
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(IntrinsicSize.Max),
         verticalAlignment = Alignment.Bottom,
