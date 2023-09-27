@@ -48,10 +48,14 @@ class TabTasksVM : __VM<TabTasksVM.State>() {
 private fun String.toTabText(): String =
     this.uppercase().split("").joinToString("\n").trim()
 
-private fun getTabCalendarText(): String =
-    UnixTime()
-        .getStringByComponents(
-            UnixTime.StringComponent.dayOfMonth,
-            UnixTime.StringComponent.dayOfWeek2,
-        )
-        .toTabText()
+private fun getTabCalendarText(): String {
+    val unixTime = UnixTime()
+    val dayStr = unixTime
+        .getStringByComponents(UnixTime.StringComponent.dayOfMonth)
+        .padStart(2, '0')
+    val monthStr = unixTime
+        .month()
+        .toString()
+        .padStart(2, '0')
+    return "$dayStr\n$monthStr"
+}

@@ -124,24 +124,6 @@ fun TasksView(
                 reverseLayout = true,
             ) {
 
-                items(state.taskFoldersUI) { folderUI ->
-                    val dropItem = remember {
-                        DropItem.Type__Folder(folderUI.folder, DropItem.Square(0, 0, 0, 0))
-                    }
-                    val isActive = (activeTab as? Tab.Folder)?.folder?.id == folderUI.folder.id
-                    TabTextButton(
-                        text = folderUI.tabText,
-                        isActive = isActive,
-                        dragItem = dragItem,
-                        dropItem = dropItem,
-                        dropItems = dropItems,
-                        onClick = {
-                            if (isActive) onClose()
-                            else activeTab = Tab.Folder(folderUI.folder)
-                        },
-                    )
-                }
-
                 item {
                     val dropItem = remember {
                         DropItem.Type__Calendar(DropItem.Square(0, 0, 0, 0))
@@ -156,6 +138,24 @@ fun TasksView(
                         onClick = {
                             if (isActive) onClose()
                             else activeTab = Tab.Calendar()
+                        },
+                    )
+                }
+
+                items(state.taskFoldersUI) { folderUI ->
+                    val dropItem = remember {
+                        DropItem.Type__Folder(folderUI.folder, DropItem.Square(0, 0, 0, 0))
+                    }
+                    val isActive = (activeTab as? Tab.Folder)?.folder?.id == folderUI.folder.id
+                    TabTextButton(
+                        text = folderUI.tabText,
+                        isActive = isActive,
+                        dragItem = dragItem,
+                        dropItem = dropItem,
+                        dropItems = dropItems,
+                        onClick = {
+                            if (isActive) onClose()
+                            else activeTab = Tab.Folder(folderUI.folder)
                         },
                     )
                 }
