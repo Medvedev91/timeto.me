@@ -57,6 +57,12 @@ class MainVM : __VM<MainVM.State>() {
             return@filter clt.checklist.id != clUI.checklist.id
         }
 
+        val menuNote: String = when (val count = DI.tasks.count { it.isToday }) {
+            0 -> "No Tasks"
+            1 -> "1 task"
+            else -> "$count tasks"
+        }
+
         val menuTime: String = UnixTime().getStringByComponents(UnixTime.StringComponent.hhmm24)
 
         val mainTasks: List<MainTask> = tasksToday
