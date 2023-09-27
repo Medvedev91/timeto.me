@@ -247,13 +247,14 @@ fun MainView() {
                     SpacerW1()
             }
 
-            ZStack(
-                modifier = Modifier
-                    .zIndex(2f)
-                    .padding(bottom = HomeView__BOTTOM_NAVIGATION_HEIGHT),
-            ) {
+            if (state.isTasksExpanded) {
 
-                if (state.isTasksExpanded)
+                ZStack(
+                    modifier = Modifier
+                        .zIndex(2f)
+                        .padding(bottom = HomeView__BOTTOM_NAVIGATION_HEIGHT),
+                ) {
+
                     TasksView(
                         modifier = Modifier
                             .align(Alignment.CenterEnd),
@@ -262,20 +263,21 @@ fun MainView() {
                         },
                     )
 
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(4.dp)
-                        .align(Alignment.BottomCenter)
-                        .background(
-                            Brush.verticalGradient(
-                                colorStops = arrayOf(
-                                    0.0f to Color.Transparent,
-                                    1f to Color.Black,
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(4.dp)
+                            .align(Alignment.BottomCenter)
+                            .background(
+                                Brush.verticalGradient(
+                                    colorStops = arrayOf(
+                                        0.0f to Color.Transparent,
+                                        1f to Color.Black,
+                                    )
                                 )
                             )
-                        )
-                )
+                    )
+                }
             }
 
             NavigationView(
