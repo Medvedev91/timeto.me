@@ -52,7 +52,6 @@ private val purpleAnimExit = fadeOut() + shrinkVertically(animationSpec = spring
 
 private val mainTaskTimeShape = MySquircleShape(len = 40f)
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun MainView() {
     val (vm, state) = rememberVM { MainVM() }
@@ -273,119 +272,125 @@ fun MainView() {
             }
         }
 
-        //
-        // Navigation
+        NavigationView(vm, state)
+    }
+}
 
-        Row(
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+private fun NavigationView(
+    vm: MainVM,
+    state: MainVM.State,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(IntrinsicSize.Max),
+        verticalAlignment = Alignment.Bottom,
+    ) {
+
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(IntrinsicSize.Max),
-            verticalAlignment = Alignment.Bottom,
+                .weight(1f)
+                .fillMaxHeight()
+                .clip(squircleShape)
+                .motionEventSpy { event ->
+                    if (event.action == MotionEvent.ACTION_DOWN)
+                        ActivitiesTimerSheet__show(timerContext = null, withMenu = true)
+                },
+            contentAlignment = Alignment.BottomCenter,
+        ) {
+            Icon(
+                painterResource(id = R.drawable.sf_timer_medium_thin),
+                contentDescription = "Timer",
+                tint = c.homeFontSecondary,
+                modifier = menuButtonModifier,
+            )
+        }
+
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .clip(squircleShape)
+                .motionEventSpy { event ->
+                    if (event.action == MotionEvent.ACTION_DOWN)
+                        vm.toggleIsTasksExpanded()
+                },
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-                    .clip(squircleShape)
-                    .motionEventSpy { event ->
-                        if (event.action == MotionEvent.ACTION_DOWN)
-                            ActivitiesTimerSheet__show(timerContext = null, withMenu = true)
-                    },
-                contentAlignment = Alignment.BottomCenter,
-            ) {
-                Icon(
-                    painterResource(id = R.drawable.sf_timer_medium_thin),
-                    contentDescription = "Timer",
-                    tint = c.homeFontSecondary,
-                    modifier = menuButtonModifier,
-                )
-            }
+            val menuTasksBg = animateColorAsState(if (state.isTasksExpanded) c.sheetFg else c.black)
 
-            Column(
+            VStack(
                 modifier = Modifier
-                    .weight(1f)
+                    .height(HomeView__BOTTOM_NAVIGATION_HEIGHT)
+                    .fillMaxWidth()
                     .clip(squircleShape)
-                    .motionEventSpy { event ->
-                        if (event.action == MotionEvent.ACTION_DOWN)
-                            vm.toggleIsTasksExpanded()
-                    },
+                    .background(menuTasksBg.value),
+                verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
-                val menuTasksBg = animateColorAsState(if (state.isTasksExpanded) c.sheetFg else c.black)
-
-                VStack(
+                Text(
+                    text = state.menuTime,
+                    color = c.homeMenuTime,
+                    fontSize = 9.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = timerFont,
                     modifier = Modifier
-                        .height(HomeView__BOTTOM_NAVIGATION_HEIGHT)
-                        .fillMaxWidth()
-                        .clip(squircleShape)
-                        .background(menuTasksBg.value),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                        .padding(top = 4.dp, bottom = 4.dp)
+                )
+
+                Row(
+                    modifier = Modifier
+                        .padding(end = 2.dp, bottom = 1.dp)
+                        .clip(roundedShape)
+                        .background(animateColorAsState(state.batteryBackground.toColor()).value)
+                        .padding(start = 4.dp, end = 5.dp),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
 
-                    Text(
-                        text = state.menuTime,
-                        color = c.homeMenuTime,
-                        fontSize = 9.sp,
-                        fontWeight = FontWeight.Bold,
-                        fontFamily = timerFont,
+                    val batteryTextColor = state.batteryTextColor.toColor()
+
+                    Icon(
+                        painterResource(id = R.drawable.sf_bolt_fill_medium_light),
+                        contentDescription = "Battery",
+                        tint = batteryTextColor,
                         modifier = Modifier
-                            .padding(top = 4.dp, bottom = 4.dp)
+                            .offset(y = onePx)
+                            .size(10.dp)
                     )
 
-                    Row(
-                        modifier = Modifier
-                            .padding(end = 2.dp, bottom = 1.dp)
-                            .clip(roundedShape)
-                            .background(animateColorAsState(state.batteryBackground.toColor()).value)
-                            .padding(start = 4.dp, end = 5.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-
-                        val batteryTextColor = state.batteryTextColor.toColor()
-
-                        Icon(
-                            painterResource(id = R.drawable.sf_bolt_fill_medium_light),
-                            contentDescription = "Battery",
-                            tint = batteryTextColor,
-                            modifier = Modifier
-                                .offset(y = onePx)
-                                .size(10.dp)
-                        )
-
-                        Text(
-                            text = state.batteryText,
-                            modifier = Modifier,
-                            color = batteryTextColor,
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Light,
-                        )
-                    }
+                    Text(
+                        text = state.batteryText,
+                        modifier = Modifier,
+                        color = batteryTextColor,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Light,
+                    )
                 }
             }
+        }
 
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-                    .clip(squircleShape)
-                    .motionEventSpy { event ->
-                        if (event.action == MotionEvent.ACTION_DOWN)
-                            Sheet.show { layer ->
-                                SettingsSheet(layer = layer)
-                            }
-                    },
-                contentAlignment = Alignment.BottomCenter,
-            ) {
-                Icon(
-                    painterResource(id = R.drawable.sf_ellipsis_circle_medium_thin),
-                    contentDescription = "Menu",
-                    tint = c.homeFontSecondary,
-                    modifier = menuButtonModifier,
-                )
-            }
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight()
+                .clip(squircleShape)
+                .motionEventSpy { event ->
+                    if (event.action == MotionEvent.ACTION_DOWN)
+                        Sheet.show { layer ->
+                            SettingsSheet(layer = layer)
+                        }
+                },
+            contentAlignment = Alignment.BottomCenter,
+        ) {
+            Icon(
+                painterResource(id = R.drawable.sf_ellipsis_circle_medium_thin),
+                contentDescription = "Menu",
+                tint = c.homeFontSecondary,
+                modifier = menuButtonModifier,
+            )
         }
     }
 }
