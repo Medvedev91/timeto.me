@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.shared.*
@@ -34,6 +35,7 @@ import me.timeto.shared.vm.MainVM
 import me.timeto.shared.vm.ui.ChecklistStateUI
 
 val HomeView__BOTTOM_NAVIGATION_HEIGHT = 56.dp
+private val HomeView__BOTTOM_NAVIGATION_NOTE_HEIGHT = 32.dp
 
 private val mainTaskItemHeight = 32.dp
 private val mainTasksContentTopPadding = 4.dp
@@ -199,7 +201,8 @@ fun MainView() {
 
             VStack(
                 modifier = Modifier
-                    .padding(bottom = HomeView__BOTTOM_NAVIGATION_HEIGHT),
+                    .zIndex(1f)
+                    .padding(bottom = HomeView__BOTTOM_NAVIGATION_HEIGHT + HomeView__BOTTOM_NAVIGATION_NOTE_HEIGHT),
             ) {
 
                 val checklistScrollState = rememberLazyListState()
@@ -246,6 +249,7 @@ fun MainView() {
 
             ZStack(
                 modifier = Modifier
+                    .zIndex(2f)
                     .padding(bottom = HomeView__BOTTOM_NAVIGATION_HEIGHT),
             ) {
 
@@ -274,7 +278,13 @@ fun MainView() {
                 )
             }
 
-            NavigationView(vm, state, Modifier.align(Alignment.BottomCenter))
+            NavigationView(
+                vm = vm,
+                state = state,
+                modifier = Modifier
+                    .zIndex(0f)
+                    .align(Alignment.BottomCenter),
+            )
         }
     }
 }
@@ -529,7 +539,7 @@ private fun NavigationView(
             )
         }
 
-        Column(
+        VStack(
             modifier = Modifier
                 .weight(1f)
                 .clip(squircleShape)
@@ -539,6 +549,16 @@ private fun NavigationView(
                 },
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+
+            Text(
+                text = state.menuNote,
+                modifier = Modifier
+                    .height(HomeView__BOTTOM_NAVIGATION_NOTE_HEIGHT)
+                    .padding(top = 2.dp),
+                color = c.homeFontSecondary,
+                fontSize = 13.sp,
+                fontWeight = FontWeight.Light,
+            )
 
             val menuTasksBg = animateColorAsState(if (state.isTasksExpanded) c.sheetFg else c.black)
 
