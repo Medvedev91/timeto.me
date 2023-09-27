@@ -35,7 +35,7 @@ import me.timeto.shared.vm.MainVM
 import me.timeto.shared.vm.ui.ChecklistStateUI
 
 val HomeView__BOTTOM_NAVIGATION_HEIGHT = 56.dp
-private val HomeView__BOTTOM_NAVIGATION_NOTE_HEIGHT = 32.dp
+private val HomeView__BOTTOM_NAVIGATION_NOTE_HEIGHT = 38.dp
 
 private val mainTaskItemHeight = 32.dp
 private val mainTasksContentTopPadding = 4.dp
@@ -556,7 +556,7 @@ private fun NavigationView(
                 text = state.menuNote,
                 modifier = Modifier
                     .height(HomeView__BOTTOM_NAVIGATION_NOTE_HEIGHT)
-                    .padding(top = 2.dp),
+                    .padding(top = 8.dp),
                 color = c.homeFontSecondary,
                 fontSize = 13.sp,
                 fontWeight = FontWeight.Light,
