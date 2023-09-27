@@ -35,9 +35,6 @@ import me.timeto.shared.vm.ui.ChecklistStateUI
 
 val HomeView__BOTTOM_NAVIGATION_HEIGHT = 56.dp
 
-private val menuIconSize = HomeView__BOTTOM_NAVIGATION_HEIGHT
-private val menuIconPadding = 14.dp
-
 private val mainTaskItemHeight = 32.dp
 private val mainTasksContentTopPadding = 4.dp
 private val mainTasksContentBottomPadding = 8.dp
@@ -45,7 +42,7 @@ private val mainTaskHalfHPadding = H_PADDING / 2
 
 private val homePrimaryFontSize = 16.sp
 
-private val menuButtonModifier = Modifier.size(menuIconSize).padding(menuIconPadding)
+private val menuButtonModifier = Modifier.size(HomeView__BOTTOM_NAVIGATION_HEIGHT).padding(14.dp)
 
 private val purpleAnimEnter = fadeIn() + expandVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
 private val purpleAnimExit = fadeOut() + shrinkVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
