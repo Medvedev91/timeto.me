@@ -21,6 +21,8 @@ private let homePrimaryFontSize = 18.0
 
 private let navAndTasksTextHeight = bottomNavigationHeight + taskCountsHeight
 
+private let mainTaskTimeShape = RoundedRectangle(cornerRadius: 8, style: .continuous)
+
 struct MainView: View {
 
     @State private var vm = MainVM()
@@ -470,33 +472,41 @@ private struct MainTaskItemView: View {
 
                     HStack {
 
-                        if let icon = mainTask.icon {
-                            switch icon {
-                            case .event:
-                                Image(systemName: "calendar")
-                                        .foregroundColor(Color.white)
-                                        .font(.system(size: 14, weight: .light))
-                                        .padding(.trailing, 5)
-                            case .paused:
-                                Image(systemName: "pause")
-                                        .foregroundColor(Color.white)
-                                        .font(.system(size: 14, weight: .medium))
-                                        .padding(.trailing, 5)
-                            default:
-                                fatalError()
-                            }
+                        if let timeUI = mainTask.timeUI {
+                            Text(timeUI.text)
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 13, weight: .bold))
+                                    .padding(.leading, 4)
+                                    .padding(.trailing, 4)
+                                    .padding(.top, 3)
+                                    .padding(.bottom, 2)
+                                    .background(mainTaskTimeShape.fill(timeUI.textBgColor.toColor()))
+                                    .padding(.trailing, 6)
+                        }
+
+                        if mainTask.textFeatures.paused != nil {
+                            Image(systemName: "pause")
+                                    .foregroundColor(c.homeFontSecondary)
+                                    .font(.system(size: 12, weight: .black))
+                                    .padding(.trailing, 5)
                         }
 
                         Text(mainTask.text)
-                                .font(.system(size: mainTask.backgroundColor == nil ? 15 : 14))
+                                .font(.system(size: homePrimaryFontSize))
                                 .foregroundColor(Color.white)
+                                .padding(.trailing, 4)
+
+                        Spacer()
+
+                        if let timeUI = mainTask.timeUI {
+                            Text(timeUI.note)
+                                    .offset(y: 1)
+                                    .foregroundColor(timeUI.noteColor.toColor())
+                                    .font(.system(size: 14, weight: .light))
+                        }
                     }
-                            .padding(.horizontal, 8)
-                            .frame(maxHeight: .infinity)
-                            .background(roundedShape.fill(mainTask.backgroundColor?.toColor() ?? c.transparent))
-                            .padding(.vertical, 2)
-                            .padding(.horizontal, H_PADDING)
                             .frame(height: mainTaskItemHeight)
+                            .padding(.horizontal, H_PADDING)
                 }
         )
     }
