@@ -9,7 +9,8 @@ private let menuIconSize = HomeView__BOTTOM_NAVIGATION_HEIGHT
 private let taskCountsHeight = 36.0
 
 private let mainTaskItemHeight = 32.0
-private let taskListContentPadding = 4.0
+private let mainTasksContentTopPadding = 4.0
+private let mainTasksContentBottomPadding = 4.0
 
 private let menuTimeFont = buildTimerFont(size: 10)
 
@@ -172,7 +173,7 @@ struct MainView: View {
                         if isMainTasksExists {
                             let listHeight: CGFloat =
                                     checklistUI == nil ? .infinity :
-                                    (taskListContentPadding * 2.0) +
+                                    (mainTasksContentTopPadding + mainTasksContentBottomPadding) +
                                     (mainTaskItemHeight * state.mainTasks.count.toDouble().limitMax(5.45))
                             MainTasksView(
                                     tasks: state.mainTasks
@@ -418,14 +419,14 @@ private struct MainTasksView: View {
                         Spacer()
 
                         ZStack {}
-                                .frame(height: taskListContentPadding)
+                                .frame(height: mainTasksContentTopPadding)
 
                         ForEach(tasks.reversed(), id: \.self.task.id) { mainTask in
                             MainTaskItemView(mainTask: mainTask)
                         }
 
                         ZStack {}
-                                .frame(height: taskListContentPadding)
+                                .frame(height: mainTasksContentBottomPadding)
                                 .id(LIST_BOTTOM_ITEM_ID)
                     }
                             .frame(minHeight: geometry.size.height)
