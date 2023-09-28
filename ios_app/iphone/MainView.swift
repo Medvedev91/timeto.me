@@ -185,31 +185,8 @@ struct MainView: View {
                             .padding(.bottom, navAndTasksTextHeight)
 
                     if (state.isTasksVisible) {
-
-                        VStack {
-
-                            if let checklistUI = checklistUI {
-
-                                Button(
-                                        action: {
-                                            vm.toggleIsTasksVisible()
-                                        },
-                                        label: {
-                                            Text(checklistUI.titleToExpand)
-                                                    .foregroundColor(.white)
-                                                    .frame(maxWidth: .infinity)
-                                                    .padding(.top, 6)
-                                                    .padding(.bottom, 12)
-                                        }
-                                )
-                                        .background(.black)
-
-                                MainDivider()
-                            }
-
-                            TasksView()
-                                    .clipped() // Fix list offset on IME open
-                        }
+                        TasksView()
+                                .clipped() // Fix list offset on IME open
                                 .padding(.bottom, bottomNavigationHeight)
                     }
                 }
