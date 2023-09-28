@@ -417,7 +417,7 @@ private struct MainTasksView: View {
                                 .frame(height: taskListContentPadding)
 
                         ForEach(tasks.reversed(), id: \.self.task.id) { mainTask in
-                            MainTaskItem(mainTask: mainTask)
+                            MainTaskItemView(mainTask: mainTask)
                         }
 
                         ZStack {}
@@ -435,7 +435,7 @@ private struct MainTasksView: View {
     }
 }
 
-private struct MainTaskItem: View {
+private struct MainTaskItemView: View {
 
     let mainTask: MainVM.MainTask
 
