@@ -247,7 +247,7 @@ fun MainView() {
                     SpacerW1()
             }
 
-            if (state.isTasksExpanded) {
+            if (state.isTasksVisible) {
 
                 ZStack(
                     modifier = Modifier
@@ -259,7 +259,7 @@ fun MainView() {
                         modifier = Modifier
                             .align(Alignment.CenterEnd),
                         onClose = {
-                            vm.toggleIsTasksExpanded()
+                            vm.toggleIsTasksVisible()
                         },
                     )
 
@@ -547,7 +547,7 @@ private fun NavigationView(
                 .clip(squircleShape)
                 .motionEventSpy { event ->
                     if (event.action == MotionEvent.ACTION_DOWN)
-                        vm.toggleIsTasksExpanded()
+                        vm.toggleIsTasksVisible()
                 },
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -562,7 +562,7 @@ private fun NavigationView(
                 fontWeight = FontWeight.Light,
             )
 
-            val menuTasksBg = animateColorAsState(if (state.isTasksExpanded) c.sheetFg else c.black)
+            val menuTasksBg = animateColorAsState(if (state.isTasksVisible) c.sheetFg else c.black)
 
             VStack(
                 modifier = Modifier
