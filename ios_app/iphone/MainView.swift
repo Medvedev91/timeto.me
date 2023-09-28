@@ -10,7 +10,7 @@ private let taskCountsHeight = 36.0
 
 private let mainTaskItemHeight = 32.0
 private let mainTasksContentTopPadding = 4.0
-private let mainTasksContentBottomPadding = 4.0
+private let mainTasksContentBottomPadding = 14.0
 
 private let menuTimeFont = buildTimerFont(size: 10)
 
@@ -234,7 +234,7 @@ struct MainView: View {
                                     Text(state.menuNote)
                                             .foregroundColor(c.homeFontSecondary)
                                             .font(.system(size: 15, weight: .regular))
-                                            .padding(.top, 3)
+                                            .padding(.top, 4)
 
                                     Spacer()
                                 }
