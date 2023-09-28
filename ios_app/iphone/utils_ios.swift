@@ -6,6 +6,7 @@ import shared
 let H_PADDING = 16.0
 
 let onePx = 1 / UIScreen.main.scale
+let halfDp = CGFloat(Int(UIScreen.main.scale / 2)) / UIScreen.main.scale
 
 func hideKeyboard() {
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
