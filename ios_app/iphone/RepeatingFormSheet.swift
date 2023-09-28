@@ -185,7 +185,7 @@ struct RepeatingsFormSheet: View {
                                         // Can't decrease the height, the pressing area remains outside the limits
                                         // "Add .compositingGroup() after .clipped()" "No longer works on iOS 15.1"
                                     } else if periodIndex == 2 {
-                                        let dayNames = RepeatingModel.companion.dayShortNames1
+                                        let dayNames = UnixTime.companion.dayOfWeekNames1
                                         HStack(spacing: 10) {
                                             ForEach(0..<dayNames.count, id: \.self) { index in
                                                 let isDaySelected = state.selectedWeekDays[index.toInt()] == 1.toKotlinInt()
