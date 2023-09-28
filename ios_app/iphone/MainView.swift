@@ -11,8 +11,6 @@ private let taskCountsHeight = 36.0
 private let taskItemHeight = 32.0
 private let taskListContentPadding = 4.0
 
-private let menuColor = MainVM.companion.menuColor.toColor()
-private let menuTimeColor = MainVM.companion.menuTimeColor.toColor()
 private let menuTimeFont = buildTimerFont(size: 10)
 
 private let timerFont1 = buildTimerFont(size: 44)
@@ -210,7 +208,7 @@ struct MainView: View {
                                 Spacer()
                                 Image(systemName: "timer")
                                         .frame(height: menuIconSize)
-                                        .foregroundColor(menuColor)
+                                        .foregroundColor(c.homeFontSecondary)
                                         .font(.system(size: 30, weight: .thin))
                                         .frame(maxWidth: .infinity)
                                         .frame(alignment: .bottom)
@@ -228,8 +226,8 @@ struct MainView: View {
 
                                 if (!state.isTasksVisible) {
 
-                                    Text(state.tasksText)
-                                            .foregroundColor(menuColor)
+                                    Text(state.menuNote)
+                                            .foregroundColor(c.homeFontSecondary)
                                             .font(.system(size: 15, weight: .regular))
                                             .padding(.top, 3)
 
@@ -239,7 +237,7 @@ struct MainView: View {
                                 VStack(alignment: .center) {
 
                                     Text(state.menuTime)
-                                            .foregroundColor(menuTimeColor)
+                                            .foregroundColor(c.homeMenuTime)
                                             .font(menuTimeFont)
                                             .padding(.top, 4)
                                             .padding(.bottom, 4)
@@ -284,7 +282,7 @@ struct MainView: View {
                                 Spacer()
                                 Image(systemName: "ellipsis.circle")
                                         .frame(height: menuIconSize)
-                                        .foregroundColor(menuColor)
+                                        .foregroundColor(c.homeFontSecondary)
                                         .font(.system(size: 30, weight: .thin))
                                         .frame(maxWidth: .infinity)
                             }
