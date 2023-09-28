@@ -428,7 +428,7 @@ private fun MainTasksView(
         items(
             items = tasks,
             key = { it.task.id }
-        ) { taskItem ->
+        ) { mainTask ->
 
             HStack(
                 modifier = Modifier
@@ -437,15 +437,15 @@ private fun MainTasksView(
                     .padding(horizontal = mainTaskHalfHPadding)
                     .clip(squircleShape)
                     .clickable {
-                        taskItem.task.startIntervalForUI(
+                        mainTask.task.startIntervalForUI(
                             onStarted = {},
                             activitiesSheet = {
-                                ActivitiesTimerSheet__show(taskItem.timerContext, withMenu = false)
+                                ActivitiesTimerSheet__show(mainTask.timerContext, withMenu = false)
                             },
                             timerSheet = { activity ->
                                 ActivityTimerSheet__show(
                                     activity = activity,
-                                    timerContext = taskItem.timerContext,
+                                    timerContext = mainTask.timerContext,
                                 ) {}
                             },
                         )
@@ -454,7 +454,7 @@ private fun MainTasksView(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
 
-                val timeUI = taskItem.timeUI
+                val timeUI = mainTask.timeUI
                 if (timeUI != null) {
                     Text(
                         timeUI.text,
@@ -471,7 +471,7 @@ private fun MainTasksView(
                     )
                 }
 
-                if (taskItem.textFeatures.paused != null) {
+                if (mainTask.textFeatures.paused != null) {
                     Icon(
                         painterResource(id = R.drawable.sf_pause_medium_black),
                         contentDescription = "Paused Task",
@@ -483,7 +483,7 @@ private fun MainTasksView(
                 }
 
                 Text(
-                    text = taskItem.text,
+                    text = mainTask.text,
                     modifier = Modifier
                         .padding(end = 4.dp)
                         .weight(1f),
