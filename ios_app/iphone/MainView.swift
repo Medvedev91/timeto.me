@@ -2,9 +2,9 @@ import SwiftUI
 import Combine
 import shared
 
-let bottomNavigationHeight = 56.0 // todo
+let HomeView__BOTTOM_NAVIGATION_HEIGHT = 56.0
 
-private let menuIconSize = bottomNavigationHeight
+private let menuIconSize = HomeView__BOTTOM_NAVIGATION_HEIGHT
 
 private let taskCountsHeight = 36.0
 
@@ -19,7 +19,7 @@ private let timerFont3 = buildTimerFont(size: 30)
 
 private let homePrimaryFontSize = 18.0
 
-private let navAndTasksTextHeight = bottomNavigationHeight + taskCountsHeight
+private let navAndTasksTextHeight = HomeView__BOTTOM_NAVIGATION_HEIGHT + taskCountsHeight
 
 private let mainTaskTimeShape = RoundedRectangle(cornerRadius: 8, style: .continuous)
 
@@ -189,7 +189,7 @@ struct MainView: View {
                     if (state.isTasksVisible) {
                         TasksView()
                                 .clipped() // Fix list offset on IME open
-                                .padding(.bottom, bottomNavigationHeight)
+                                .padding(.bottom, HomeView__BOTTOM_NAVIGATION_HEIGHT)
                     }
                 }
             }
@@ -269,7 +269,7 @@ struct MainView: View {
                                             )
                                 }
                                         .padding(.top, 2)
-                                        .frame(height: bottomNavigationHeight)
+                                        .frame(height: HomeView__BOTTOM_NAVIGATION_HEIGHT)
                             }
                                     .frame(maxWidth: .infinity)
                                     .background(state.isTasksVisible ? Color(.systemGray5) : .black)
@@ -293,7 +293,7 @@ struct MainView: View {
                         }
                 )
             }
-                    .frame(width: .infinity, height: state.isTasksVisible ? bottomNavigationHeight : navAndTasksTextHeight)
+                    .frame(width: .infinity, height: state.isTasksVisible ? HomeView__BOTTOM_NAVIGATION_HEIGHT : navAndTasksTextHeight)
         }
                 .ignoresSafeArea(.keyboard, edges: .bottom)
                 .onReceive(shortcutPublisher) { shortcut in
