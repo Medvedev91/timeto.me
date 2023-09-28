@@ -63,8 +63,8 @@ struct TasksView: View {
                 if let section = activeSection as? TabTasksView_Section_Folder {
                     /// OMG! Dirty trick!
                     /// Just TabTaskView_TasksListView(...) doesn't call onAppear() to scroll to the bottom.
-                    ForEach(state.folders, id: \.id) { folder in
-                        if section.folder.id == folder.id {
+                    ForEach(state.taskFoldersUI, id: \.folder.id) { folderUI in
+                        if section.folder.id == folderUI.folder.id {
                             TasksListView(activeFolder: section.folder, tabTasksView: self)
                         }
                     }
@@ -160,16 +160,16 @@ struct TasksView: View {
                     //
                     // Folders
 
-                    ForEach(state.folders.reversed(), id: \.id) { folder in
+                    ForEach(state.taskFoldersUI.reversed(), id: \.folder.id) { folderUI in
 
-                        let isActive = folder.id == (activeSection as? TabTasksView_Section_Folder)?.folder.id
+                        let isActive = folderUI.folder.id == (activeSection as? TabTasksView_Section_Folder)?.folder.id
 
                         Spacer()
                                 .frame(height: tabPadding)
 
                         TabTasksView__FolderView(
                                 isActive: isActive,
-                                folder: folder,
+                                folderUI: folderUI,
                                 tabTasksView: self
                         )
                     }
@@ -215,35 +215,31 @@ struct TasksView: View {
 private struct TabTasksView__FolderView: View {
 
     private let isActive: Bool
-    private let folder: TaskFolderModel
+    private let folderUI: TabTasksVM.TaskFolderUI
     private let tabTasksView: TasksView
 
     @State private var drop: DropItem__Folder
 
     init(
             isActive: Bool,
-            folder: TaskFolderModel,
+            folderUI: TabTasksVM.TaskFolderUI,
             tabTasksView: TasksView
     ) {
         self.isActive = isActive
-        self.folder = folder
+        self.folderUI = folderUI
         self.tabTasksView = tabTasksView
-        _drop = State(initialValue: DropItem__Folder(folder))
+        _drop = State(initialValue: DropItem__Folder(folderUI.folder))
     }
 
     var body: some View {
         Button(
                 action: {
-                    tabTasksView.upActiveSectionWithAnimation(TabTasksView_Section_Folder(folder: folder))
+                    tabTasksView.upActiveSectionWithAnimation(TabTasksView_Section_Folder(folder: folderUI.folder))
                 },
                 label: {
-                    let nameN = Array(folder.name)
-                            .map { String($0) }
-                            .joined(separator: "\n")
-
                     let isAllowedForDrop = tabTasksView.activeDrag?.isDropAllowed(drop) == true
                     let bgColor: Color = {
-                        if (tabTasksView.focusedDrop as? DropItem__Folder)?.folder.id == folder.id {
+                        if (tabTasksView.focusedDrop as? DropItem__Folder)?.folder.id == folderUI.folder.id {
                             return .green
                         }
                         if isAllowedForDrop {
@@ -254,7 +250,7 @@ private struct TabTasksView__FolderView: View {
 
                     VStack {
 
-                        Text(nameN)
+                        Text(folderUI.tabText)
                                 .textCase(.uppercase)
                                 .lineSpacing(0)
                                 .font(.system(size: 14, weight: isActive ? .semibold : .regular, design: .monospaced))
