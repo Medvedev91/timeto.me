@@ -299,27 +299,27 @@ fun TasksListView(
 
                             val vPadding = 3.dp
 
-                            val timeDataUI = taskUI.timeUI
-                            if (timeDataUI != null) {
+                            val timeUI = taskUI.timeUI
+                            if (timeUI != null) {
                                 Row(
                                     modifier = Modifier
                                         .padding(bottom = vPadding),
                                     verticalAlignment = Alignment.CenterVertically,
                                 ) {
 
-                                    when (timeDataUI) {
+                                    when (timeUI) {
 
                                         is TasksListVM.TaskUI.TimeUI.HighlightUI -> {
                                             Row(
                                                 modifier = Modifier
                                                     .offset(x = (-1).dp)
                                                     .clip(highlightTimeShape)
-                                                    .background(timeDataUI.backgroundColor.toColor())
+                                                    .background(timeUI.backgroundColor.toColor())
                                                     .padding(start = 5.dp, end = 4.dp, top = 3.dp, bottom = 3.dp),
                                                 verticalAlignment = Alignment.CenterVertically,
                                             ) {
 
-                                                when (timeDataUI._timeData.type) {
+                                                when (timeUI._timeData.type) {
 
                                                     TextFeatures.TimeData.TYPE.EVENT -> {
                                                         Icon(
@@ -345,18 +345,18 @@ fun TasksListView(
                                                 }
 
                                                 Text(
-                                                    timeDataUI.title,
+                                                    timeUI.title,
                                                     fontSize = 12.sp,
                                                     color = c.white,
                                                 )
                                             }
                                             Text(
-                                                timeDataUI.timeLeftText,
+                                                timeUI.timeLeftText,
                                                 modifier = Modifier
                                                     .padding(start = 6.dp),
                                                 fontSize = 13.sp,
                                                 fontWeight = FontWeight.W300,
-                                                color = timeDataUI.timeLeftColor.toColor(),
+                                                color = timeUI.timeLeftColor.toColor(),
                                                 maxLines = 1,
                                                 overflow = TextOverflow.Ellipsis,
                                             )
@@ -364,10 +364,10 @@ fun TasksListView(
 
                                         is TasksListVM.TaskUI.TimeUI.RegularUI -> {
                                             Text(
-                                                timeDataUI.text,
+                                                timeUI.text,
                                                 fontSize = 13.sp,
                                                 fontWeight = FontWeight.W300,
-                                                color = timeDataUI.textColor.toColor(),
+                                                color = timeUI.textColor.toColor(),
                                             )
                                         }
                                     }
