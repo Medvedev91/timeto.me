@@ -8,7 +8,7 @@ private let menuIconSize = bottomNavigationHeight
 
 private let taskCountsHeight = 36.0
 
-private let taskItemHeight = 32.0
+private let mainTaskItemHeight = 32.0
 private let taskListContentPadding = 4.0
 
 private let menuTimeFont = buildTimerFont(size: 10)
@@ -169,7 +169,7 @@ struct MainView: View {
                             let listHeight: CGFloat =
                                     checklistUI == nil ? .infinity :
                                     (taskListContentPadding * 2.0) +
-                                    (taskItemHeight * state.mainTasks.count.toDouble().limitMax(5.45))
+                                    (mainTaskItemHeight * state.mainTasks.count.toDouble().limitMax(5.45))
                             MainTasksView(
                                     tasks: state.mainTasks
                             )
@@ -494,7 +494,7 @@ private struct MainTaskItem: View {
                             .background(roundedShape.fill(mainTask.backgroundColor?.toColor() ?? c.transparent))
                             .padding(.vertical, 2)
                             .padding(.horizontal, H_PADDING)
-                            .frame(height: taskItemHeight)
+                            .frame(height: mainTaskItemHeight)
                 }
         )
     }
