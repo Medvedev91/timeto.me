@@ -350,6 +350,7 @@ fun TasksListView(
                                                     color = c.white,
                                                 )
                                             }
+
                                             Text(
                                                 timeUI.timeLeftText,
                                                 modifier = Modifier
