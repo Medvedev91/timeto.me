@@ -346,7 +346,7 @@ struct TasksView__TaskRowView: View {
 
                                         HStack {
 
-                                            switch timeUI.type {
+                                            switch timeUI._timeData.type {
                                             case .event:
                                                 Image(systemName: "calendar")
                                                         .foregroundColor(.white)
@@ -356,11 +356,6 @@ struct TasksView__TaskRowView: View {
                                                 Image(systemName: "repeat")
                                                         .foregroundColor(.white)
                                                         .font(.system(size: 13, weight: .medium))
-                                                        .padding(.trailing, 3)
-                                            case .important:
-                                                Image(systemName: "flag.fill")
-                                                        .foregroundColor(.white)
-                                                        .font(.system(size: 12))
                                                         .padding(.trailing, 3)
                                             default:
                                                 fatalError()
