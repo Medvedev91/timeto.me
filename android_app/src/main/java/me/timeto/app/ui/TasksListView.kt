@@ -299,7 +299,7 @@ fun TasksListView(
 
                             val vPadding = 3.dp
 
-                            val timeDataUI = taskUI.timeDataUI
+                            val timeDataUI = taskUI.timeUI
                             if (timeDataUI != null) {
                                 Row(
                                     modifier = Modifier
