@@ -17,6 +17,8 @@ private let timerFont1 = buildTimerFont(size: 44)
 private let timerFont2 = buildTimerFont(size: 38)
 private let timerFont3 = buildTimerFont(size: 30)
 
+private let homePrimaryFontSize = 18.0
+
 private let navAndTasksTextHeight = bottomNavigationHeight + taskCountsHeight
 
 struct MainView: View {
@@ -358,7 +360,7 @@ private struct ChecklistView: View {
                                             Text(itemUI.item.text)
                                                     .padding(.vertical, 4)
                                                     .foregroundColor(.white)
-                                                    .font(.system(size: 18))
+                                                    .font(.system(size: homePrimaryFontSize))
                                         }
                                                 .frame(maxWidth: .infinity, alignment: .leading)
                                                 .frame(minHeight: checklistItemMinHeight)
