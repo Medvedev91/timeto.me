@@ -50,7 +50,7 @@ object Dialog {
                         .systemBarsPadding()
                         .imePadding()
                         .padding(margin)
-                        .clip(MySquircleShape(80f))
+                        .clip(SquircleShape(80f))
                         .pointerInput(Unit) { }
                 ) {
                     content(layer)

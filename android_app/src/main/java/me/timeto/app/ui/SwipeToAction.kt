@@ -174,7 +174,7 @@ fun SwipeToAction__DeleteView(
             color = c.white,
             modifier = Modifier
                 .padding(end = 8.dp)
-                .clip(MySquircleShape(len = 50f))
+                .clip(SquircleShape(len = 50f))
                 .clickable {
                     // С launchEx can be canceled
                     scope.launch {
@@ -191,7 +191,7 @@ fun SwipeToAction__DeleteView(
             color = c.red,
             modifier = Modifier
                 .padding(end = 10.dp)
-                .clip(MySquircleShape(len = 50f))
+                .clip(SquircleShape(len = 50f))
                 .background(c.white)
                 .clickable {
                     if (deletionConfirmationNote != null) {

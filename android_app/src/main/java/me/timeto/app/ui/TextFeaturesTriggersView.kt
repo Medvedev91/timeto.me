@@ -42,7 +42,7 @@ fun TextFeaturesTriggersView(
                 modifier = Modifier
                     .padding(end = if (isLast) 0.dp else 8.dp)
                     .height(itemHeight)
-                    .clip(MySquircleShape(len = 50f))
+                    .clip(SquircleShape(len = 50f))
                     .background(trigger.color.toColor())
                     .clickable {
                         trigger.performUI()

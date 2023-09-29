@@ -49,7 +49,7 @@ private val menuButtonModifier = Modifier.size(HomeView__BOTTOM_NAVIGATION_HEIGH
 private val purpleAnimEnter = fadeIn() + expandVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
 private val purpleAnimExit = fadeOut() + shrinkVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
 
-private val mainTaskTimeShape = MySquircleShape(len = 40f)
+private val mainTaskTimeShape = SquircleShape(len = 40f)
 
 @Composable
 fun MainView() {

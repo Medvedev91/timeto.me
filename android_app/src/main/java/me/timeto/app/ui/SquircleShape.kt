@@ -8,7 +8,7 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 
 // Based on https://github.com/mizoguche/ui-bezier-curved-image-compose/blob/master/app/src/main/java/dev/mizoguche/beziercurvedimageview/MainActivity.kt
-class MySquircleShape(
+class SquircleShape(
     private val len: Float = 60f, // Длинна закругления
     private val angleParam: Float = -2f, // Острота загругления,
     private val angles: List<Boolean> = listOf(true, true, true, true), // top left, top right, ...

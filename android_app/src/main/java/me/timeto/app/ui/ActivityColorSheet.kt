@@ -104,7 +104,7 @@ fun ActivityColorSheet(
                         modifier = Modifier
                             .padding(top = 1.dp)
                             .height(circleSize - 2.dp)
-                            .clip(MySquircleShape(len = 70f))
+                            .clip(SquircleShape(len = 70f))
                             .background(state.selectedColor.toColor())
                             .wrapContentHeight(Alignment.CenterVertically)
                             .padding(start = 11.dp, end = 13.dp),

@@ -36,12 +36,12 @@ import kotlin.random.Random
 val TasksView__TAB_BUTTON_WIDTH = 35.dp
 val TasksView__PADDING_END = TasksView__TAB_BUTTON_WIDTH + H_PADDING
 
-val TasksView__INPUT_SHAPE = MySquircleShape(len = 70f)
+val TasksView__INPUT_SHAPE = SquircleShape(len = 70f)
 val TasksView__LIST_SECTION_PADDING = 20.dp
 
 ///
 
-private val tabShape = MySquircleShape(50f)
+private val tabShape = SquircleShape(50f)
 private val tabVPadding = 8.dp
 private val tabActiveTextColor = c.white
 private val tabInactiveTextColor = c.homeFontSecondary

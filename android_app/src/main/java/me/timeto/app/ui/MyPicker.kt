@@ -66,7 +66,7 @@ fun <T> MyPicker(
             listState.animateScrollToItem(selectedIndex)
     }
 
-    val clipShape = MySquircleShape(len = 45f, angleParam = -3f)
+    val clipShape = SquircleShape(len = 45f, angleParam = -3f)
     Box(
         modifier = Modifier
             .border(

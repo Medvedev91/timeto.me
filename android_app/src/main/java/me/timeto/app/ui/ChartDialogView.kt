@@ -154,7 +154,7 @@ fun ChartDialogView(
                     Text(
                         period.title,
                         modifier = Modifier
-                            .clip(MySquircleShape(len = 50f))
+                            .clip(SquircleShape(len = 50f))
                             .clickable {
                                 vm.upPeriod(period.dayStart, period.dayFinish)
                             }
