@@ -384,7 +384,7 @@ private fun AddIntervalDialogView(
                 "Cancel",
                 modifier = Modifier
                     .padding(end = 14.dp)
-                    .clip(MySquircleShape())
+                    .clip(squircleShape)
                     .clickable {
                         onClose()
                     }
