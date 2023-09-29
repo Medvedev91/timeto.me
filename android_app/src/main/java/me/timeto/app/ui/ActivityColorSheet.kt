@@ -128,7 +128,7 @@ fun ActivityColorSheet(
                             text = activityUI.text,
                             modifier = Modifier
                                 .padding(top = 8.dp)
-                                .clip(MySquircleShape())
+                                .clip(squircleShape)
                                 .clickable {
                                     vm.upColorRgba(activityUI.colorRgba)
                                 }
@@ -240,7 +240,7 @@ fun ActivityColorSheet(
                                     text = state.rgbText,
                                     modifier = Modifier
                                         .align(Alignment.Center)
-                                        .clip(MySquircleShape())
+                                        .clip(squircleShape)
                                         .background(state.selectedColor.toColor())
                                         .padding(vertical = 4.dp, horizontal = 8.dp),
                                     color = c.white,
