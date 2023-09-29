@@ -264,10 +264,7 @@ struct MainView: View {
                                             .padding(.bottom, 1)
                                             .padding(.leading, 3)
                                             .padding(.trailing, 4)
-                                            .background(
-                                                    RoundedRectangle(cornerRadius: 99, style: .circular)
-                                                            .fill(state.batteryBackground.toColor())
-                                            )
+                                            .background(roundedShape.fill(state.batteryBackground.toColor()))
                                 }
                                         .padding(.top, 2)
                                         .frame(height: HomeView__BOTTOM_NAVIGATION_HEIGHT)
