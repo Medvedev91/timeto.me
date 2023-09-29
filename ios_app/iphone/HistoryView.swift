@@ -194,13 +194,8 @@ struct HistoryView: View {
                                     .scaleEffect(1.1)
                         }
                 )
-                        .background(
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 99, style: .circular)
-                                            .fill(isEditMode ? .blue : Color(.systemBackground))
-                                }
-                                        .frame(width: 35, height: 35)
-                        )
+                        .frame(width: 35, height: 35)
+                        .background(roundedShape.fill(isEditMode ? .blue : Color(.systemBackground)))
 
                 Spacer()
 
