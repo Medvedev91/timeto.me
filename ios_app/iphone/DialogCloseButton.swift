@@ -26,13 +26,7 @@ struct DialogCloseButton: View {
                             .frame(width: size, height: size)
                 }
         )
-                .background(
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 99, style: .circular)
-                                    .fill(bgColor)
-                        }
-                                .frame(width: size, height: size)
-                )
+                .background(roundedShape.fill(bgColor))
                 .padding(.trailing, trailing)
                 .padding(.bottom, bottom)
                 .padding(withSaveArea ? safeAreaInsets : EdgeInsets())
