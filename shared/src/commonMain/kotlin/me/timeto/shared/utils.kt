@@ -132,7 +132,7 @@ fun JsonArray.getIntOrNull(index: Int): Int? = this[index].jsonPrimitive.intOrNu
 fun JsonArray.getString(index: Int): String = this[index].jsonPrimitive.content
 fun JsonArray.getStringOrNull(index: Int): String? = this[index].jsonPrimitive.contentOrNull
 
-fun <T> List<T>.toJsonArray() = JsonArray(
+fun List<*>.toJsonArray() = JsonArray(
     this.map { item ->
         when (item) {
             is String -> JsonPrimitive(item)
