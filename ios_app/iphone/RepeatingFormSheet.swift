@@ -205,11 +205,9 @@ struct RepeatingsFormSheet: View {
                                                         .background(
                                                                 ZStack {
                                                                     if (isDaySelected) {
-                                                                        RoundedRectangle(cornerRadius: 99, style: .continuous)
-                                                                                .fill(.blue)
+                                                                        roundedShape.fill(.blue)
                                                                     } else {
-                                                                        RoundedRectangle(cornerRadius: 99, style: .continuous)
-                                                                                .stroke(.primary, lineWidth: 1)
+                                                                        roundedShape.stroke(.primary, lineWidth: 1)
                                                                     }
                                                                 }
                                                         )
@@ -337,11 +335,9 @@ private struct DayOfMonthItemView: View {
                 .background(
                         ZStack {
                             if (isDaySelected) {
-                                RoundedRectangle(cornerRadius: 99, style: .continuous)
-                                        .fill(.blue)
+                                roundedShape.fill(.blue)
                             } else {
-                                RoundedRectangle(cornerRadius: 99, style: .continuous)
-                                        .stroke(.primary, lineWidth: 1)
+                                roundedShape.stroke(.primary, lineWidth: 1)
                             }
                         }
                 )
