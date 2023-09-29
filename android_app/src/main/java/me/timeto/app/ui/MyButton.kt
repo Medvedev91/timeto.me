@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.c
+import me.timeto.app.squircleShape
 
 @Composable
 fun MyButton(
@@ -26,7 +27,7 @@ fun MyButton(
     modifier: Modifier = Modifier,
     extraPaddings: Pair<Int, Int> = 0 to 0, // horizontal, vertical
     fontSize: TextUnit = 15.sp,
-    clip: Shape = MySquircleShape(),
+    clip: Shape = squircleShape,
     onClick: () -> Unit
 ) {
     val bg = animateColorAsState(if (isEnabled) backgroundColor else Color.LightGray)
