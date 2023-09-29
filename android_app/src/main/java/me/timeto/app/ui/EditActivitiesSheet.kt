@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.c
 import me.timeto.app.rememberVM
 import me.timeto.app.roundedShape
+import me.timeto.app.squircleShape
 import me.timeto.shared.vm.EditActivitiesVM
 
 @Composable
@@ -166,7 +167,7 @@ fun EditActivitiesSheet(
                 "Close",
                 modifier = Modifier
                     .padding(end = 14.dp)
-                    .clip(MySquircleShape())
+                    .clip(squircleShape)
                     .clickable {
                         layer.close()
                     }
