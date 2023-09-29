@@ -74,7 +74,7 @@ fun ChartDialogView(
                         modifier = Modifier
                             .height(IntrinsicSize.Min) // To use fillMaxHeight() inside
                             .padding(start = 2.dp)
-                            .clip(MySquircleShape())
+                            .clip(squircleShape)
                             .clickable {
                                 vm.selectId(if (state.selectedId == curId) null else curId)
                             }
@@ -237,7 +237,7 @@ private fun ChartDatePicker(
 
     Surface(
         elevation = 6.dp,
-        shape = MySquircleShape(),
+        shape = squircleShape,
         color = c.blue,
         modifier = modifier
             .height(30.dp)
