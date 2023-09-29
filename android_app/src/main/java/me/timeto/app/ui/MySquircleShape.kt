@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.LayoutDirection
 class MySquircleShape(
     private val len: Float = 60f, // Длинна закругления
     private val angleParam: Float = -2f, // Острота загругления,
-    private val angles: List<Boolean> = listOf(true, true, true, true) // top left, top right, ...
+    private val angles: List<Boolean> = listOf(true, true, true, true), // top left, top right, ...
 ) : Shape {
 
     override fun createOutline(
