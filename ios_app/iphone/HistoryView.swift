@@ -315,13 +315,7 @@ struct HistoryView: View {
                     }
             )
                     .frame(width: 22, height: 22)
-                    .background(
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 99, style: .circular)
-                                        .fill(.blue)
-                            }
-                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    )
+                    .background(roundedShape.fill(.blue))
                     .sheetEnv(isPresented: $isSheetPresented) {
                         SheetForm(
                                 isPresented: $isSheetPresented,
