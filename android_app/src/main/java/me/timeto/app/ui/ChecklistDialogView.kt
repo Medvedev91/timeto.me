@@ -153,7 +153,7 @@ fun ChecklistDialogView(
                     "Uncheck",
                     modifier = Modifier
                         .padding(start = 29.dp)
-                        .clip(MySquircleShape())
+                        .clip(squircleShape)
                         .background(c.bg)
                         .clickable {
                             vm.uncheck()
@@ -171,7 +171,7 @@ fun ChecklistDialogView(
                 "Close",
                 modifier = Modifier
                     .padding(end = 14.dp)
-                    .clip(MySquircleShape())
+                    .clip(squircleShape)
                     .clickable {
                         onClose()
                     }
