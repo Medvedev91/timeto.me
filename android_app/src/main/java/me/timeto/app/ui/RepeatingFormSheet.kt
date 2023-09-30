@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
 import kotlinx.coroutines.delay
-import me.timeto.shared.UnixTime
 import me.timeto.shared.db.RepeatingModel
 import me.timeto.shared.launchEx
 import me.timeto.shared.vm.RepeatingFormSheetVM
@@ -212,32 +211,12 @@ fun RepeatingFormSheet(
                                                 bottom = 12.dp,
                                             )
                                     ) {
-                                        UnixTime.dayOfWeekNames1.forEachIndexed { index, dayName ->
-                                            val isSelected = state.selectedWeekDays[index]
-                                            val bgColor =
-                                                animateColorAsState(if (isSelected) c.blue else c.sheetBg)
-                                            Text(
-                                                dayName,
-                                                modifier = Modifier
-                                                    .padding(end = 6.dp)
-                                                    .size(30.dp, 30.dp)
-                                                    .border(
-                                                        width = 1.dp,
-                                                        color = if (isSelected) c.blue else c.text,
-                                                        shape = RoundedCornerShape(99.dp)
-                                                    )
-                                                    .clip(RoundedCornerShape(99.dp))
-                                                    .background(bgColor.value)
-                                                    .clickable {
-                                                        vm.toggleWeekDay(index)
-                                                    }
-                                                    .wrapContentHeight(), // To center vertical
-                                                fontWeight = FontWeight.W500,
-                                                fontSize = 14.sp,
-                                                textAlign = TextAlign.Center,
-                                                color = if (isSelected) c.white else c.text,
-                                            )
-                                        }
+                                        WeekDaysFormView(
+                                            weekDays = state.selectedWeekDays,
+                                            onChange = { newWeekDays ->
+                                                vm.upWeekDays(newWeekDays)
+                                            },
+                                        )
                                     }
                                 }
                                 3 -> {

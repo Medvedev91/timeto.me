@@ -17,7 +17,7 @@ class RepeatingFormSheetVM(
         val isImportant: Boolean,
         val activePeriodIndex: Int?,
         val selectedNDays: Int,
-        val selectedWeekDays: List<Boolean>,
+        val selectedWeekDays: List<Int>,
         val selectedDaysOfMonth: Set<Int>,
         val selectedDaysOfYear: List<RepeatingModel.Period.DaysOfYear.MonthDayItem>,
     ) {
@@ -76,10 +76,8 @@ class RepeatingFormSheetVM(
             if (period.nDays == 1) 2 else period.nDays
         }
 
-        val selectedWeekDays: List<Boolean> = run {
-            val period = (repeating?.getPeriod() as? RepeatingModel.Period.DaysOfWeek)
-                         ?: return@run listOf(false, false, false, false, false, false, false)
-            (0..6).map { it in period.weekDays }.toList()
+        val selectedWeekDays: List<Int> = run {
+            (repeating?.getPeriod() as? RepeatingModel.Period.DaysOfWeek)?.weekDays ?: listOf()
         }
 
         val selectedDaysOfMonth: Set<Int> = run {
@@ -130,16 +128,8 @@ class RepeatingFormSheetVM(
         state.update { it.copy(selectedNDays = nDays) }
     }
 
-    fun toggleWeekDay(index: Int) {
-        state.update {
-            it.copy(
-                selectedWeekDays = it.selectedWeekDays
-                    .toMutableList()
-                    .apply {
-                        set(index, !get(index))
-                    }
-            )
-        }
+    fun upWeekDays(newWeekDays: List<Int>) {
+        state.update { it.copy(selectedWeekDays = newWeekDays) }
     }
 
     fun toggleDayOfMonth(day: Int) {
@@ -189,9 +179,7 @@ class RepeatingFormSheetVM(
             val period = when (state.value.activePeriodIndex!!) {
                 0 -> RepeatingModel.Period.EveryNDays(1)
                 1 -> RepeatingModel.Period.EveryNDays(state.value.selectedNDays)
-                2 -> RepeatingModel.Period.DaysOfWeek(
-                    state.value.selectedWeekDays.mapIndexedNotNull { index, b -> if (b) index else null }
-                )
+                2 -> RepeatingModel.Period.DaysOfWeek(state.value.selectedWeekDays)
                 3 -> RepeatingModel.Period.DaysOfMonth(state.value.selectedDaysOfMonth)
                 4 -> RepeatingModel.Period.DaysOfYear(state.value.selectedDaysOfYear)
                 else -> throw Exception()
