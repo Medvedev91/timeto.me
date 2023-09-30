@@ -43,11 +43,11 @@ fun GoalPickerSheet(
                 isLast = true,
             ) {
                 MyListView__ItemView__ButtonView(
-                    text = state.timeTitle,
+                    text = state.durationTitle,
                     withArrow = true,
                     rightView = {
                         MyListView__ItemView__ButtonView__RightText(
-                            text = state.timeNote,
+                            text = state.durationNote,
                             paddingEnd = 2.dp,
                         )
                     },

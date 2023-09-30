@@ -14,10 +14,10 @@ class GoalPickerSheetVM : __VM<GoalPickerSheetVM.State>() {
         val headerTitle = "New Goal"
         val doneTitle = "Add"
 
-        val timeTitle = "Time"
-        val timeNote = seconds.toTimerHintNote(isShort = false)
+        val durationTitle = "Duration"
+        val durationNote = seconds.toTimerHintNote(isShort = false)
 
-        val timerPickerSheetTitle = "Time"
+        val timerPickerSheetTitle = "Duration"
 
         val weekDaysUI: List<WeekDayUI> = UnixTime.dayOfWeekNames1.mapIndexed { idx, title ->
             WeekDayUI(idx = idx, title = title, isSelected = idx in weekDays)
