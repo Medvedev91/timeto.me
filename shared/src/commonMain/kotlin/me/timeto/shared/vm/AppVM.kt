@@ -216,17 +216,18 @@ private suspend fun fillInitData() {
     val cYellow = colorsWheel.next()
     val cPurple = colorsWheel.next()
 
+    val goals = listOf<ActivityModel.Goal>()
     val defData = ActivityModel__Data.buildDefault()
     val aNormal = ActivityModel.TYPE.NORMAL
-    val actMed = ActivityModel.addWithValidation("Meditation", "🧘‍♀️", 20 * 60, 1, aNormal, cYellow, defData, true)
-    val actWork = ActivityModel.addWithValidation("Work", "📁", 40 * 60, 2, aNormal, cBlue, defData, true)
-    ActivityModel.addWithValidation("Hobby", "🎸", 3600, 3, aNormal, cRed, defData, true)
-    val actPd = ActivityModel.addWithValidation("Personal development", "📖", 30 * 60, 4, aNormal, cPurple, defData, true)
-    val actEx = ActivityModel.addWithValidation("Exercises / Health", "💪", 20 * 60, 5, aNormal, colorsWheel.next(), defData, false)
-    ActivityModel.addWithValidation("Walk", "👟", 30 * 60, 6, aNormal, colorsWheel.next(), defData, false)
-    val actGr = ActivityModel.addWithValidation("Getting ready", "🚀", 30 * 60, 7, aNormal, colorsWheel.next(), defData, true)
-    ActivityModel.addWithValidation("Sleep / Rest", "😴", 8 * 3600, 8, aNormal, cGreen, defData, false)
-    val actOther = ActivityModel.addWithValidation("Other", "💡", 3600, 9, ActivityModel.TYPE.OTHER, colorsWheel.next(), defData, true)
+    val actMed = ActivityModel.addWithValidation("Meditation", "🧘‍♀️", 20 * 60, 1, aNormal, cYellow, defData, true, goals)
+    val actWork = ActivityModel.addWithValidation("Work", "📁", 40 * 60, 2, aNormal, cBlue, defData, true, goals)
+    ActivityModel.addWithValidation("Hobby", "🎸", 3600, 3, aNormal, cRed, defData, true, goals)
+    val actPd = ActivityModel.addWithValidation("Personal development", "📖", 30 * 60, 4, aNormal, cPurple, defData, true, goals)
+    val actEx = ActivityModel.addWithValidation("Exercises / Health", "💪", 20 * 60, 5, aNormal, colorsWheel.next(), defData, false, goals)
+    ActivityModel.addWithValidation("Walk", "👟", 30 * 60, 6, aNormal, colorsWheel.next(), defData, false, goals)
+    val actGr = ActivityModel.addWithValidation("Getting ready", "🚀", 30 * 60, 7, aNormal, colorsWheel.next(), defData, true, goals)
+    ActivityModel.addWithValidation("Sleep / Rest", "😴", 8 * 3600, 8, aNormal, cGreen, defData, false, goals)
+    val actOther = ActivityModel.addWithValidation("Other", "💡", 3600, 9, ActivityModel.TYPE.OTHER, colorsWheel.next(), defData, true, goals)
 
     val interval = IntervalModel.addWithValidation(30 * 60, actPd, null)
     DI.fillLateInit(interval, interval) // To 100% ensure

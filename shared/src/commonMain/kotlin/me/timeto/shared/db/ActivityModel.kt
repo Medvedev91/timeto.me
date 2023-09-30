@@ -20,6 +20,7 @@ data class ActivityModel(
     val color_rgba: String,
     val data_json: String,
     val keep_screen_on: Int,
+    val goals_json: String,
 ) : Backupable__Item {
 
     enum class TYPE(val id: Int) {
@@ -69,6 +70,7 @@ data class ActivityModel(
             colorRgba: ColorRgba,
             data: ActivityModel__Data,
             keepScreenOn: Boolean,
+            goals: List<Goal>,
         ): ActivityModel = dbIO {
 
             if (type == TYPE.OTHER && getAscSorted().find { it.getType() == TYPE.OTHER } != null)
@@ -91,6 +93,7 @@ data class ActivityModel(
                     color_rgba = colorRgba.toRgbaString(),
                     data_json = data.toJString(),
                     keep_screen_on = keepScreenOn.toInt10(),
+                    goals_json = goals.map { it.buildJson() }.toJsonArray().toString(),
                 )
                 db.activityQueries.insert(activitySQ)
                 activitySQ.toModel()
@@ -184,7 +187,7 @@ data class ActivityModel(
         private fun ActivitySQ.toModel() = ActivityModel(
             id = id, name = name, emoji = emoji, timer = timer, sort = sort,
             type_id = type_id, color_rgba = color_rgba, data_json = data_json,
-            keep_screen_on = keep_screen_on,
+            keep_screen_on = keep_screen_on, goals_json = goals_json,
         )
 
         ///
@@ -206,6 +209,7 @@ data class ActivityModel(
                     data_json = j.getString(6),
                     emoji = j.getString(7),
                     keep_screen_on = j.getInt(8),
+                    goals_json = j.getString(9),
                 )
             )
         }
@@ -223,6 +227,11 @@ data class ActivityModel(
 
     fun getData() = ActivityModel__Data.jParse(data_json)
 
+    fun parseGoals(): List<Goal> {
+        val jGoals = Json.parseToJsonElement(goals_json).jsonArray
+        return jGoals.map { Goal.parseJson(it) }
+    }
+
     suspend fun startInterval(
         timer: Int,
     ): IntervalModel = IntervalModel.addWithValidation(
@@ -237,6 +246,7 @@ data class ActivityModel(
         data: ActivityModel__Data,
         keepScreenOn: Boolean,
         colorRgba: ColorRgba,
+        goals: List<Goal>,
     ) = dbIO {
         if (isOther())
             throw UIException("It's impossible to change \"Other\" activity")
@@ -251,6 +261,7 @@ data class ActivityModel(
             data_json = data.toJString(),
             emoji = validateEmoji(emoji, exActivity = this@ActivityModel),
             keep_screen_on = keepScreenOn.toInt10(),
+            goals_json = goals.map { it.buildJson() }.toJsonArray().toString(),
         )
     }
 
@@ -289,7 +300,8 @@ data class ActivityModel(
     override fun backupable__getId(): String = id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
-        id, name, timer, sort, type_id, color_rgba, data_json, emoji, keep_screen_on
+        id, name, timer, sort, type_id, color_rgba,
+        data_json, emoji, keep_screen_on, goals_json,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
@@ -304,6 +316,7 @@ data class ActivityModel(
             data_json = j.getString(6),
             emoji = j.getString(7),
             keep_screen_on = j.getInt(8),
+            goals_json = j.getString(9),
         )
     }
 
