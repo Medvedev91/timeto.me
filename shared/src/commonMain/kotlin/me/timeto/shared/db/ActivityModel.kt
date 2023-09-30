@@ -310,6 +310,114 @@ data class ActivityModel(
     override fun backupable__delete() {
         db.activityQueries.deleteById(id)
     }
+
+    ///
+    ///
+
+    class Goal(
+        val seconds: Int,
+        val period: Period,
+    ) {
+
+        companion object {
+
+            private const val J_SECONDS = "seconds"
+            private const val J_PERIOD = "period"
+
+            fun parseJson(j: JsonElement): Goal {
+                val seconds: Int = j.jsonObject[J_SECONDS]!!.jsonPrimitive.int
+                val jPeriod: JsonElement = j.jsonObject[J_PERIOD]!!
+                return Goal(seconds, Period.parseJson(jPeriod))
+            }
+        }
+
+        fun buildJson(): JsonElement {
+            val map: Map<String, JsonElement> = mapOf(
+                J_SECONDS to JsonPrimitive(seconds),
+                J_PERIOD to period.buildJson(),
+            )
+            return JsonObject(map)
+        }
+
+        ///
+
+        sealed interface Period {
+
+            enum class TYPE(val id: Int) {
+                days_of_week(1)
+            }
+
+            companion object {
+
+                private const val J_TYPE = "type"
+                private const val J_DATA = "data"
+
+                fun parseJson(j: JsonElement): Period {
+                    val type: Int = j.jsonObject[J_TYPE]!!.jsonPrimitive.int
+                    val data: String = j.jsonObject[J_DATA]!!.jsonPrimitive.content
+                    return when (type) {
+                        TYPE.days_of_week.id -> DaysOfWeek.parse(data)
+                        else -> throw Exception()
+                    }
+                }
+            }
+
+            //
+            // Override
+
+            fun buildData(): String
+
+            fun assertValidation()
+
+            //
+            // Helpers
+
+            fun buildJson(): JsonObject {
+                val type: Int = when (this) {
+                    is DaysOfWeek -> TYPE.days_of_week.id
+                }
+                val map: Map<String, JsonPrimitive> = mapOf(
+                    J_TYPE to JsonPrimitive(type),
+                    J_DATA to JsonPrimitive(buildData()),
+                )
+                return JsonObject(map)
+            }
+
+            //
+            // Sealed
+
+            class DaysOfWeek(
+                val weekDays: List<Int>,
+            ) : Period {
+
+                companion object {
+
+                    fun parse(data: String) = DaysOfWeek(
+                        weekDays = data.split(",").map { it.toInt() },
+                    )
+                }
+
+                override fun buildData(): String = weekDays.joinToString(",")
+
+                override fun assertValidation() {
+                    val strDays = weekDays.joinToString(",")
+
+                    if (weekDays.isEmpty())
+                        throw UIException("No days selected")
+
+                    if (weekDays.size != weekDays.distinct().size) {
+                        reportApi("ActivityModel.Goal.Period.DaysOfWeek not distinct $strDays")
+                        throw UIException("Error")
+                    }
+
+                    if (weekDays.any { it < 0 || it > 6 }) {
+                        reportApi("ActivityModel.Goal.Period.DaysOfWeek invalid $strDays")
+                        throw UIException("Error")
+                    }
+                }
+            }
+        }
+    }
 }
 
 data class ActivityModel__Data(
