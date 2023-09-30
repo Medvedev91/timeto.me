@@ -203,21 +203,19 @@ fun RepeatingFormSheet(
                                     }
                                 }
                                 2 -> {
-                                    Row(
+                                    WeekDaysFormView(
+                                        weekDays = state.selectedWeekDays,
+                                        size = 30.dp,
                                         modifier = Modifier
                                             .padding(
                                                 start = MyListView.PADDING_INNER_HORIZONTAL - 2.dp,
                                                 top = 4.dp,
                                                 bottom = 12.dp,
-                                            )
-                                    ) {
-                                        WeekDaysFormView(
-                                            weekDays = state.selectedWeekDays,
-                                            onChange = { newWeekDays ->
-                                                vm.upWeekDays(newWeekDays)
-                                            },
-                                        )
-                                    }
+                                            ),
+                                        onChange = { newWeekDays ->
+                                            vm.upWeekDays(newWeekDays)
+                                        },
+                                    )
                                 }
                                 3 -> {
                                     Column(
