@@ -15,6 +15,7 @@ class ActivityFormSheetVM(
         val headerDoneText: String,
         val emoji: String?,
         val activityData: ActivityModel__Data,
+        val goals: List<ActivityModel.Goal>,
         val textFeatures: TextFeatures,
         val keepScreenOn: Boolean,
         val colorRgba: ColorRgba,
@@ -28,9 +29,32 @@ class ActivityFormSheetVM(
         val colorTitle = "Color"
         val timerHintsHeader = "TIMER HINTS"
         val keepScreenOnTitle = "Keep Screen On"
+
+        val goalsTitle = "Goals"
+        val goalsAddNote = "New"
+        val goalsUI: List<GoalUI> = goals.map { GoalUI(it) }
+
         val deleteText = "Delete Activity"
         val timerHintsCustomItems = activityData.timer_hints.custom_list.map { seconds ->
             TimerHintCustomItem(seconds = seconds, text = seconds.toTimerHintNote(isShort = false))
+        }
+    }
+
+    class GoalUI(
+        val goal: ActivityModel.Goal,
+    ) {
+        val text: String = run {
+            val timeString = goal.seconds.toTimerHintNote(isShort = false)
+            val periodString: String = when (goal.period) {
+                is ActivityModel.Goal.Period.DaysOfWeek -> {
+                    val weekDays = goal.period.weekDays
+                    if (weekDays.size == 7)
+                        "Every day"
+                    else
+                        weekDays.joinToString(", ") { UnixTime.dayOfWeekNames3[it] }
+                }
+            }
+            "$timeString. $periodString."
         }
     }
 
@@ -45,6 +69,7 @@ class ActivityFormSheetVM(
             headerDoneText = if (activity != null) "Save" else "Create",
             emoji = activity?.emoji,
             activityData = activity?.getData() ?: ActivityModel__Data.buildDefault(),
+            goals = activity?.parseGoals() ?: listOf(),
             textFeatures = (activity?.name ?: "").textFeatures(),
             keepScreenOn = activity?.keepScreenOn ?: true,
             colorRgba = activity?.getColorRgba() ?: ActivityModel.nextColorDI(),
@@ -67,6 +92,14 @@ class ActivityFormSheetVM(
 
     fun upColorRgba(colorRgba: ColorRgba) = state.update {
         it.copy(colorRgba = colorRgba)
+    }
+
+    fun addGoal(goal: ActivityModel.Goal) = state.update {
+        it.copy(goals = it.goals.toMutableList().apply { add(goal) })
+    }
+
+    fun delGoal(goal: ActivityModel.Goal) = state.update { curState ->
+        curState.copy(goals = curState.goals.toMutableList().apply { remove(goal) })
     }
 
     ///
@@ -128,6 +161,8 @@ class ActivityFormSheetVM(
             val keepScreenOn = state.value.keepScreenOn
             val colorRgba = state.value.colorRgba
 
+            val goals = state.value.goals
+
             if (activity != null) {
                 activity.upByIdWithValidation(
                     name = nameWithFeatures,
@@ -135,6 +170,7 @@ class ActivityFormSheetVM(
                     data = activityData,
                     keepScreenOn = keepScreenOn,
                     colorRgba = colorRgba,
+                    goals = goals,
                 )
             } else {
                 ActivityModel.addWithValidation(
@@ -146,6 +182,7 @@ class ActivityFormSheetVM(
                     colorRgba = colorRgba,
                     data = activityData,
                     keepScreenOn = keepScreenOn,
+                    goals = goals,
                 )
             }
             onSuccess()
