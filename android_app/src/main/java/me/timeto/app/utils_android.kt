@@ -215,9 +215,9 @@ object c {
     val sheetDividerBg = ColorRgba.sheetDividerBg.toColor()
     val sheetDividerFg = ColorRgba.sheetDividerFg.toColor()
 
-    val tasksDropFocused = ColorRgba.tasksDropFocused.toColor()
-    val formButtonRightNoteText = ColorRgba.formButtonRightNoteText.toColor()
-
     val homeFontSecondary = ColorRgba.homeFontSecondary.toColor()
     val homeMenuTime = ColorRgba.homeMenuTime.toColor()
+
+    val tasksDropFocused = ColorRgba.tasksDropFocused.toColor()
+    val formButtonRightNoteText = ColorRgba.formButtonRightNoteText.toColor()
 }
