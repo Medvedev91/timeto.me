@@ -83,6 +83,7 @@
 		31821E89257A3F8032DE116A /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182118DB415E858D0B449DB /* ChartView.swift */; };
 		31821ED40BEA91336DBFE0B4 /* W_TickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821FC26DE90D545D9620B0 /* W_TickerDialog.swift */; };
 		31821F3DCAF6792F0E78CEBD /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821ACA6C9306A2CD2016A0 /* HistoryView.swift */; };
+		31821F9ADE8CC50422F28059 /* WeekDaysFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821F2108CAA3ADBA741879 /* WeekDaysFormView.swift */; };
 		31821F9CB27F8F5BF61E2D37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3182151D618D3ED8AEE1B80A /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -186,6 +187,7 @@
 		31821E53EB27CE7F81AF0F69 /* DialogCloseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogCloseButton.swift; sourceTree = "<group>"; };
 		31821E58DC92CD5673A6B49E /* utils_apple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = utils_apple.swift; sourceTree = "<group>"; };
 		31821ED2142F08DDD1E0CC75 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		31821F2108CAA3ADBA741879 /* WeekDaysFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekDaysFormView.swift; sourceTree = "<group>"; };
 		31821F29E288957ABB3DF794 /* TextFeaturesTimerFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFeaturesTimerFormView.swift; sourceTree = "<group>"; };
 		31821F4527059D286AC0AF41 /* TaskFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskFormSheet.swift; sourceTree = "<group>"; };
 		31821F7CBA1480191F065D5E /* EventsListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsListView.swift; sourceTree = "<group>"; };
@@ -349,6 +351,7 @@
 				318219ADD916F23943506F7F /* NativeSheet.swift */,
 				3182151E7DF53609AA812ED1 /* TimerHintsView.swift */,
 				318211757B7EE8E4805AD047 /* ActivityTimerSheet.swift */,
+				31821F2108CAA3ADBA741879 /* WeekDaysFormView.swift */,
 			);
 			path = iphone;
 			sourceTree = "<group>";
@@ -573,6 +576,7 @@
 				318214AB1E16DF8DC1C357F6 /* NativeSheet.swift in Sources */,
 				318214AF2E65AEC255D6204D /* TimerHintsView.swift in Sources */,
 				3182172EBDF607665AA6DBD2 /* ActivityTimerSheet.swift in Sources */,
+				31821F9ADE8CC50422F28059 /* WeekDaysFormView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
