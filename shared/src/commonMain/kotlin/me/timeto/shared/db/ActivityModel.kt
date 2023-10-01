@@ -377,6 +377,8 @@ data class ActivityModel(
             //
             // Override
 
+            fun isToday(): Boolean
+
             fun buildData(): String
 
             fun assertValidation()
@@ -408,6 +410,8 @@ data class ActivityModel(
                         weekDays = data.split(",").map { it.toInt() },
                     )
                 }
+
+                override fun isToday() = UnixTime().dayOfWeek() in weekDays
 
                 override fun buildData(): String = weekDays.joinToString(",")
 
