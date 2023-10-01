@@ -18,8 +18,8 @@ object DI {
     lateinit var firstInterval: IntervalModel
     lateinit var lastInterval: IntervalModel
 
-    ///
-    /// Late Init
+    //
+    // Late Init
 
     fun isLateInitInitialized() = ::firstInterval.isInitialized && ::lastInterval.isInitialized
 
@@ -28,15 +28,15 @@ object DI {
         this.lastInterval = lastInterval
     }
 
-    ///
-    /// Task Folders
+    //
+    // Task Folders
 
     fun getTodayFolder(): TaskFolderModel = taskFolders.first { it.isToday }
 
     fun getTmrwFolderOrNull(): TaskFolderModel? = taskFolders.firstOrNull { it.isTmrw }
 
-    ///
-    /// Mics
+    //
+    // Mics
 
     fun getActivityByIdOrNull(id: Int) = activitiesSorted.firstOrNull { id == it.id }
 
@@ -44,15 +44,15 @@ object DI {
 
     fun getShortcutByIdOrNull(id: Int) = shortcuts.firstOrNull { id == it.id }
 
-    ///
-    /// Init
+    //
+    // Init
 
     internal suspend fun init() {
 
         val scope = defaultScope()
 
-        ///
-        /// Database Lists
+        //
+        // Database Lists
 
         shortcuts = ShortcutModel.getAsc()
         ShortcutModel.getAscFlow().onEachExIn(scope) { shortcuts = it }
@@ -81,8 +81,8 @@ object DI {
         repeatings = RepeatingModel.getAsc()
         RepeatingModel.getAscFlow().onEachExIn(scope) { repeatings = it }
 
-        ///
-        /// Late Init
+        //
+        // Late Init
 
         IntervalModel.getAsc(limit = 1).firstOrNull()?.let { firstInterval = it }
         IntervalModel.getAscFlow(limit = 1).filter { it.isNotEmpty() }
