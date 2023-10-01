@@ -116,12 +116,12 @@ private suspend fun prepPieItems(
             realTimeFinish - interval.id
         else
             intervalsAsc[index + 1].id - interval.id
-        mapActivityIdSeconds.plusOrSet(interval.activity_id, iSeconds)
+        mapActivityIdSeconds.incOrSet(interval.activity_id, iSeconds)
     }
     val prevInterval = IntervalModel.getBetweenIdDesc(0, realTimeStart - 1, 1).firstOrNull()
     if (prevInterval != null) {
         val iSeconds = intervalsAsc.firstOrNull()?.id ?: realTimeFinish
-        mapActivityIdSeconds.plusOrSet(prevInterval.activity_id, iSeconds - realTimeStart)
+        mapActivityIdSeconds.incOrSet(prevInterval.activity_id, iSeconds - realTimeStart)
     }
 
     ///
