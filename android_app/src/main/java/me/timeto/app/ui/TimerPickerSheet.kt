@@ -4,7 +4,6 @@ import android.widget.NumberPicker
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -60,7 +59,7 @@ fun TimerPickerSheet(
                 modifier = Modifier
                     .alpha(0.7f)
                     .padding(start = 18.dp)
-                    .clip(RoundedCornerShape(99.dp))
+                    .clip(roundedShape)
                     .padding(horizontal = 10.dp, vertical = 8.dp)
                     .clickable {
                         scope.launchEx {
@@ -86,7 +85,7 @@ fun TimerPickerSheet(
                 fontSize = 18.sp,
                 modifier = Modifier
                     .padding(end = 18.dp)
-                    .clip(RoundedCornerShape(99.dp))
+                    .clip(roundedShape)
                     .clickable {
                         scope.launchEx {
                             onPick(timeItems[formTimeItemIdx].seconds)

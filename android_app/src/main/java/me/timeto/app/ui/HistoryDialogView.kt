@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -95,7 +94,7 @@ fun HistoryDialogView(
                                             modifier = Modifier
                                                 .padding(top = 1.dp, start = 8.dp)
                                                 .size(22.dp)
-                                                .clip(RoundedCornerShape(99.dp))
+                                                .clip(roundedShape)
                                                 .clickable {
                                                     intervalUI.delete()
                                                 }
@@ -107,7 +106,7 @@ fun HistoryDialogView(
                                             modifier = Modifier
                                                 .padding(top = 1.dp, start = 5.dp)
                                                 .size(24.dp)
-                                                .clip(RoundedCornerShape(99.dp))
+                                                .clip(roundedShape)
                                                 .clickable {
                                                     Dialog.showDatePicker(
                                                         defaultTime = interval.unixTime(),
@@ -162,7 +161,7 @@ fun HistoryDialogView(
                                     .width(10.dp)
                                     .height(10.dp.limitMin(timeHeight))
                                     .align(Alignment.CenterHorizontally)
-                                    .clip(RoundedCornerShape(99.dp))
+                                    .clip(roundedShape)
                                     .background(intervalUI.color.toColor())
                             )
 
@@ -178,7 +177,7 @@ fun HistoryDialogView(
                                     modifier = Modifier
                                         .padding(vertical = 4.dp)
                                         .size(24.dp)
-                                        .clip(RoundedCornerShape(99.dp))
+                                        .clip(roundedShape)
                                         .background(c.blue)
                                         .clickable {
                                             Dialog.show { layer ->
@@ -245,7 +244,7 @@ fun HistoryDialogView(
                             section.dayText,
                             modifier = Modifier
                                 .fillMaxHeight()
-                                .clip(RoundedCornerShape(99))
+                                .clip(roundedShape)
                                 .background(c.blue)
                                 .clickable {
                                     Dialog.showDatePicker(
@@ -295,7 +294,7 @@ fun HistoryDialogView(
                 modifier = Modifier
                     .padding(start = 28.dp)
                     .size(30.dp)
-                    .clip(RoundedCornerShape(99.dp))
+                    .clip(roundedShape)
                     .background(bgColorIsEditModeButton.value)
                     .clickable {
                         isEditMode = !isEditMode
@@ -312,7 +311,7 @@ fun HistoryDialogView(
                 modifier = Modifier
                     .padding(end = 28.dp)
                     .size(30.dp)
-                    .clip(RoundedCornerShape(99.dp))
+                    .clip(roundedShape)
                     .background(c.sheetBg)
                     .clickable {
                         onClose()

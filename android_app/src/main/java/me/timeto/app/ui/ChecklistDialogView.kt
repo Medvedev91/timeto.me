@@ -8,7 +8,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -113,7 +112,7 @@ fun ChecklistDialogView(
                                             .padding(end = 18.5.dp)
                                             .size(18.dp)
                                             .alpha(0.8f)
-                                            .clip(RoundedCornerShape(99.dp))
+                                            .clip(roundedShape)
                                             .padding(3.dp)
                                     )
                                 }

@@ -209,7 +209,7 @@ fun ChartDialogView(
                             .align(Alignment.Center)
                             .padding(end = 4.dp)
                             .size(30.dp)
-                            .clip(RoundedCornerShape(99.dp))
+                            .clip(roundedShape)
                             .background(c.sheetBg)
                             .clickable {
                                 onClose()

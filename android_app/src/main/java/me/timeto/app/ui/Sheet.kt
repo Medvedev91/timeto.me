@@ -135,7 +135,7 @@ object Sheet {
                     modifier = Modifier
                         .align(Alignment.CenterStart)
                         .padding(start = 16.dp)
-                        .clip(RoundedCornerShape(99.dp))
+                        .clip(roundedShape)
                         .clickable { onCancel() }
                         .padding(horizontal = 8.dp, vertical = 4.dp),
                     color = c.blue,
@@ -161,7 +161,7 @@ object Sheet {
                         modifier = Modifier
                             .align(Alignment.CenterEnd)
                             .padding(end = 18.dp)
-                            .clip(RoundedCornerShape(99.dp))
+                            .clip(roundedShape)
                             .clickable(enabled = isDoneEnabled) {
                                 onDone()
                             }

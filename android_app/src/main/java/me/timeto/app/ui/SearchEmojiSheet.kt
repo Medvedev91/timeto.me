@@ -28,6 +28,7 @@ import me.timeto.app.R
 import me.timeto.app.rememberVM
 import kotlinx.coroutines.delay
 import me.timeto.app.c
+import me.timeto.app.roundedShape
 import me.timeto.shared.vm.SearchEmojiSheetVM
 
 @Composable
@@ -87,7 +88,7 @@ fun SearchEmojiSheet(
                                     modifier = Modifier
                                         .padding(start = 6.dp, end = 3.dp)
                                         .size(32.dp)
-                                        .clip(RoundedCornerShape(99.dp))
+                                        .clip(roundedShape)
                                         .padding(8.dp)
                                         .offset(y = 0.5.dp)
                                 )
@@ -124,7 +125,7 @@ fun SearchEmojiSheet(
                 "Cancel",
                 modifier = Modifier
                     .padding(end = 12.dp)
-                    .clip(RoundedCornerShape(99.dp))
+                    .clip(roundedShape)
                     .clickable { layer.close() }
                     .padding(horizontal = 8.dp, vertical = 4.dp),
                 color = c.blue,

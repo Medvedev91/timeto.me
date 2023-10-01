@@ -3,7 +3,6 @@ package me.timeto.app.ui
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -133,7 +132,7 @@ fun ActivityFormSheet(
                             modifier = Modifier
                                 .padding(end = 12.dp)
                                 .size(30.dp)
-                                .clip(RoundedCornerShape(99.dp))
+                                .clip(roundedShape)
                                 .background(state.colorRgba.toColor())
                         )
                     }
@@ -293,7 +292,7 @@ fun ActivityFormSheet(
                                                         .padding(end = 4.dp)
                                                         .offset(x = (-2).dp)
                                                         .size(19.dp, 19.dp)
-                                                        .clip(RoundedCornerShape(99f))
+                                                        .clip(roundedShape)
                                                         .clickable {
                                                             vm.delCustomTimerHint(customItem.seconds)
                                                         }
@@ -319,7 +318,7 @@ fun ActivityFormSheet(
                                                     start = MyListView.PADDING_INNER_HORIZONTAL - 8.dp,
                                                     bottom = 8.dp,
                                                 )
-                                                .clip(RoundedCornerShape(99f))
+                                                .clip(roundedShape)
                                                 .clickable {
                                                     Sheet.show { layer ->
                                                         TimerPickerSheet(

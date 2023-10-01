@@ -4,7 +4,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -134,7 +133,7 @@ fun ShortcutFormSheet(
                                             .padding(start = 8.dp)
                                             .size(18.dp)
                                             .alpha(0.8f)
-                                            .clip(RoundedCornerShape(99.dp))
+                                            .clip(roundedShape)
                                             .padding(3.dp)
                                     )
                                 }

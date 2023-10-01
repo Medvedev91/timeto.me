@@ -6,7 +6,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -35,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.R
 import kotlinx.coroutines.delay
 import me.timeto.app.c
+import me.timeto.app.roundedShape
 
 object MyListView {
 
@@ -103,7 +103,7 @@ fun MyListView__HeaderView__RightIcon(
             .size(26.dp)
             .offset(y = 4.dp, x = 4.dp)
             .alpha(0.8f)
-            .clip(RoundedCornerShape(99.dp))
+            .clip(roundedShape)
             .clickable {
                 onClick()
             }

@@ -7,7 +7,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,6 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import me.timeto.app.R
 import me.timeto.app.c
+import me.timeto.app.roundedShape
 
 @Composable
 fun TextFieldClearButtonView(
@@ -35,7 +35,7 @@ fun TextFieldClearButtonView(
                 modifier = Modifier
                     .padding(end = 2.dp)
                     .size(32.dp)
-                    .clip(RoundedCornerShape(99.dp))
+                    .clip(roundedShape)
                     .clickable {
                         onClick()
                     }

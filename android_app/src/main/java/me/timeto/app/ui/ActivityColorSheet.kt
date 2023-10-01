@@ -7,7 +7,6 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
@@ -169,7 +168,7 @@ fun ActivityColorSheet(
                                 modifier = Modifier
                                     .size(circleSize + (circlePadding * 2))
                                     .padding(circlePadding)
-                                    .clip(RoundedCornerShape(99.dp))
+                                    .clip(roundedShape)
                                     .background(colorItem.colorRgba.toColor())
                                     .clickable {
                                         vm.upColorRgba(colorItem.colorRgba)
@@ -264,7 +263,7 @@ fun ActivityColorSheet(
                     modifier = Modifier
                         .padding(start = sheetHPadding - 2.dp)
                         .size(33.dp)
-                        .clip(RoundedCornerShape(99.dp))
+                        .clip(roundedShape)
                         .drawBehind {
                             drawCircle(rgbButtonColor.value)
                         }

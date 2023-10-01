@@ -5,7 +5,6 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -290,7 +289,7 @@ fun RepeatingFormSheet(
                                                         .padding(start = 8.dp)
                                                         .offset(y = 1.dp)
                                                         .size(19.dp, 19.dp)
-                                                        .clip(RoundedCornerShape(99f))
+                                                        .clip(roundedShape)
                                                         .clickable {
                                                             vm.delDayOfTheYear(item)
                                                         }
@@ -378,7 +377,7 @@ private fun DaysOfTheYearForm(
             text = "ADD",
             modifier = Modifier
                 .padding(start = 10.dp)
-                .clip(RoundedCornerShape(99f))
+                .clip(roundedShape)
                 .background(bgAddColor)
                 .clickable(
                     enabled = isAddEnabled
@@ -421,9 +420,9 @@ private fun DaysOfMonthItemView(
             .border(
                 width = 1.dp,
                 color = if (isSelected) c.blue else c.text,
-                shape = RoundedCornerShape(99.dp)
+                shape = roundedShape
             )
-            .clip(RoundedCornerShape(99.dp))
+            .clip(roundedShape)
             .background(bgColor.value)
             .clickable {
                 onClick()

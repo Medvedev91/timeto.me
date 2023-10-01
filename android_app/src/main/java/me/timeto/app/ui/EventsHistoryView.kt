@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -53,7 +52,7 @@ fun EventsHistoryView(
                 uiItem.note,
                 modifier = Modifier
                     .padding(end = if (uiItem == uiItems.last()) 0.dp else 8.dp)
-                    .clip(RoundedCornerShape(99.dp))
+                    .clip(roundedShape)
                     .background(c.blue)
                     .padding(1.dp)
                     .animateItemPlacement()

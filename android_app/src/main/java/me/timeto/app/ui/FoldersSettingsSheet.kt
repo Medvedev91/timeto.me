@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowUpward
@@ -15,6 +14,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import me.timeto.app.c
 import me.timeto.app.rememberVM
+import me.timeto.app.roundedShape
 import me.timeto.shared.vm.FoldersSettingsVM
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -74,7 +74,7 @@ fun FoldersSettingsSheet(
                                 modifier = Modifier
                                     .padding(end = 10.dp)
                                     .size(26.dp)
-                                    .clip(RoundedCornerShape(99.dp))
+                                    .clip(roundedShape)
                                     .clickable(!isFirst) {
                                         vm.sortUp(folder)
                                     }

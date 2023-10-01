@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -15,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import me.timeto.app.c
+import me.timeto.app.roundedShape
 
 @Composable
 fun DaytimePickerSheet(
@@ -59,7 +59,7 @@ fun DaytimePickerSheet(
                 text = "Remove",
                 modifier = Modifier
                     .padding(top = 12.dp)
-                    .clip(RoundedCornerShape(99f))
+                    .clip(roundedShape)
                     .clickable {
                         onPick(null)
                         layer.close()

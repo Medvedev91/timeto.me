@@ -6,7 +6,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -112,7 +111,7 @@ fun EventFormSheet(
                     modifier = Modifier
                         .padding(start = 10.dp)
                         .size(36.dp)
-                        .clip(RoundedCornerShape(99.dp))
+                        .clip(roundedShape)
                         .background(c.transparent)
                         .clickable {
                             layer.close()
@@ -140,7 +139,7 @@ fun EventFormSheet(
                     state.headerDoneText,
                     modifier = Modifier
                         .padding(end = 10.dp, bottom = 1.dp)
-                        .clip(RoundedCornerShape(99.dp))
+                        .clip(roundedShape)
                         .clickable(enabled = state.isHeaderDoneEnabled) {
                             vm.save {
                                 layer.close()

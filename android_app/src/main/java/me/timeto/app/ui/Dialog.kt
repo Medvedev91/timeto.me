@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.c
+import me.timeto.app.roundedShape
 import me.timeto.app.toUnixTime
 import me.timeto.shared.UnixTime
 import me.timeto.shared.toHms
@@ -177,7 +178,7 @@ object Dialog {
                                 .align(Alignment.TopEnd)
                                 .padding(end = 4.dp)
                                 .size(30.dp)
-                                .clip(RoundedCornerShape(99.dp))
+                                .clip(roundedShape)
                                 .background(c.transparent)
                                 .clickable {
                                     layer.close()
