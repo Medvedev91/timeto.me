@@ -4,10 +4,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import me.timeto.shared.*
-import me.timeto.shared.db.ChecklistItemModel
-import me.timeto.shared.db.ChecklistModel
-import me.timeto.shared.db.IntervalModel
-import me.timeto.shared.db.TaskModel
+import me.timeto.shared.db.*
 import me.timeto.shared.vm.ui.ChecklistStateUI
 import me.timeto.shared.vm.ui.TimerDataUI
 
@@ -19,6 +16,7 @@ class MainVM : __VM<MainVM.State>() {
         val isPurple: Boolean,
         val tasksToday: List<TaskModel>,
         val isTasksVisible: Boolean,
+        val todayIntervalsData: TodayIntervalsData,
         val idToUpdate: Long,
     ) {
 
@@ -117,6 +115,7 @@ class MainVM : __VM<MainVM.State>() {
             isPurple = false,
             tasksToday = DI.tasks.filter { it.isToday },
             isTasksVisible = false,
+            todayIntervalsData = TodayIntervalsData(DI.lastInterval, mapOf()), // todo init data
             idToUpdate = 0,
         )
     )
@@ -145,6 +144,34 @@ class MainVM : __VM<MainVM.State>() {
             .map { it.filter { task -> task.isToday } }
             .onEachExIn(scope) { tasks ->
                 state.update { it.copy(tasksToday = tasks) }
+            }
+        IntervalModel.anyChangeFlow()
+            .onEachExIn(scope) {
+                val dayStartTime = UnixTime().localDayStartTime()
+                val todayIntervalsAsc = IntervalModel
+                    .getBetweenIdDesc(dayStartTime, Int.MAX_VALUE)
+                    .reversed()
+                    .toMutableList()
+
+                val prevDayInterval = IntervalModel.getBetweenIdDesc(0, dayStartTime - 1, 1).firstOrNull()
+                if (prevDayInterval != null)
+                    todayIntervalsAsc.add(0, prevDayInterval) // 0 - to start
+
+                val mapActivitySeconds = mutableMapOf<Int, Int>()
+                todayIntervalsAsc.forEachIndexed { idx, interval ->
+                    // Last interval
+                    if ((idx + 1) == todayIntervalsAsc.size)
+                        return@forEachIndexed
+                    val nextInterval = todayIntervalsAsc[idx + 1]
+                    val duration = nextInterval.id - interval.id.limitMin(dayStartTime)
+                    mapActivitySeconds.incOrSet(interval.activity_id, duration)
+                }
+
+                val data = TodayIntervalsData(
+                    lastInterval = todayIntervalsAsc.last(),
+                    mapActivitySeconds = mapActivitySeconds,
+                )
+                state.update { it.copy(todayIntervalsData = data) }
             }
         scope.launch {
             while (true) {
