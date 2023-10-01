@@ -185,35 +185,13 @@ struct RepeatingsFormSheet: View {
                                         // Can't decrease the height, the pressing area remains outside the limits
                                         // "Add .compositingGroup() after .clipped()" "No longer works on iOS 15.1"
                                     } else if periodIndex == 2 {
-                                        let dayNames = UnixTime.companion.dayOfWeekNames1
-                                        HStack(spacing: 10) {
-                                            ForEach(0..<dayNames.count, id: \.self) { index in
-                                                let isDaySelected = state.selectedWeekDays[index.toInt()] == 1.toKotlinInt()
-                                                Button(
-                                                        action: {
-                                                            withAnimation {
-                                                                vm.toggleWeekDay(index: index.toInt32())
-                                                            }
-                                                        },
-                                                        label: {
-                                                            Text(dayNames[index])
-                                                                    .font(.system(size: 16))
-                                                        }
-                                                )
-                                                        .foregroundColor(isDaySelected ? .white : .primary)
-                                                        .frame(width: 32, height: 32)
-                                                        .background(
-                                                                ZStack {
-                                                                    if (isDaySelected) {
-                                                                        roundedShape.fill(.blue)
-                                                                    } else {
-                                                                        roundedShape.stroke(.primary, lineWidth: 1)
-                                                                    }
-                                                                }
-                                                        )
-                                            }
-                                            Spacer()
-                                        }
+                                        WeekDaysFormView(
+                                                weekDays: state.selectedWeekDays,
+                                                size: 30,
+                                                onChange: { newWeekDays in
+                                                    vm.upWeekDays(newWeekDays: newWeekDays)
+                                                }
+                                        )
                                                 .padding(.top, 4)
                                                 .padding(.bottom, 16)
                                                 .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL - 1)
