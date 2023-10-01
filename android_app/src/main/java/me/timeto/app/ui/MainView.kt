@@ -49,6 +49,7 @@ private val menuButtonModifier = Modifier.size(HomeView__BOTTOM_NAVIGATION_HEIGH
 private val purpleAnimEnter = fadeIn() + expandVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
 private val purpleAnimExit = fadeOut() + shrinkVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
 
+private val goalFontSize = 13.sp
 private val mainTaskTimeShape = SquircleShape(len = 40f)
 
 @Composable
@@ -276,7 +277,7 @@ fun MainView() {
                                 .padding(start = 6.dp, bottom = onePx)
                                 .align(Alignment.CenterStart),
                             color = c.white,
-                            fontSize = 12.sp,
+                            fontSize = goalFontSize,
                         )
 
                         Text(
@@ -285,7 +286,7 @@ fun MainView() {
                                 .padding(end = 6.dp, bottom = onePx)
                                 .align(Alignment.CenterEnd),
                             color = c.white,
-                            fontSize = 12.sp,
+                            fontSize = goalFontSize,
                         )
                     }
                 }
