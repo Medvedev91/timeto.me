@@ -245,6 +245,50 @@ fun MainView() {
 
                 if (!isMainTasksExists && checklistUI == null)
                     SpacerW1()
+
+                state.goalsUI.forEachIndexed { idx, goalUI ->
+
+                    if (idx == 0)
+                        ZStack(modifier = Modifier.height(8.dp))
+
+                    ZStack(
+                        modifier = Modifier
+                            .padding(horizontal = H_PADDING)
+                            .padding(bottom = 12.dp)
+                            .height(20.dp)
+                            .fillMaxWidth()
+                            .clip(roundedShape)
+                            .background(c.homeGoalBg),
+                    ) {
+
+                        ZStack(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .fillMaxWidth(goalUI.ratio)
+                                .background(goalUI.bgColor.toColor())
+                                .clip(roundedShape)
+                                .align(Alignment.CenterStart),
+                        )
+
+                        Text(
+                            text = goalUI.textLeft,
+                            modifier = Modifier
+                                .padding(start = 6.dp, bottom = onePx)
+                                .align(Alignment.CenterStart),
+                            color = c.white,
+                            fontSize = 12.sp,
+                        )
+
+                        Text(
+                            text = goalUI.textRight,
+                            modifier = Modifier
+                                .padding(end = 6.dp, bottom = onePx)
+                                .align(Alignment.CenterEnd),
+                            color = c.white,
+                            fontSize = 12.sp,
+                        )
+                    }
+                }
             }
 
             if (state.isTasksVisible) {
