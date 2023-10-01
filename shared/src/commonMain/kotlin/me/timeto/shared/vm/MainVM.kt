@@ -177,6 +177,25 @@ class MainVM : __VM<MainVM.State>() {
 
     //////
 
+    class GoalUI(
+        val textLeft: String,
+        val textRight: String,
+        val ratio: Float,
+        val bgColor: ColorRgba,
+    )
+
+    class TodayIntervalsData(
+        val lastInterval: IntervalModel,
+        val mapActivitySeconds: Map<Int, Int>,
+    ) {
+        fun getDuration(activity: ActivityModel): Int {
+            var duration = mapActivitySeconds[activity.id] ?: 0
+            if (activity.id == lastInterval.activity_id)
+                duration += (time() - lastInterval.id)
+            return duration
+        }
+    }
+
     class ChecklistUI(
         val checklist: ChecklistModel,
         val items: List<ChecklistItemModel>,
