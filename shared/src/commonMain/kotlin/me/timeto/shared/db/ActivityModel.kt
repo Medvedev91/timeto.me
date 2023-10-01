@@ -217,6 +217,10 @@ data class ActivityModel(
 
     val keepScreenOn = keep_screen_on.toBoolean10()
 
+    val goals: List<Goal> by lazy {
+        Json.parseToJsonElement(goals_json).jsonArray.map { Goal.parseJson(it) }
+    }
+
     fun nameWithEmoji() = "$name $emoji"
 
     fun getType() = TYPE.values().first { it.id == type_id }
@@ -226,11 +230,6 @@ data class ActivityModel(
     fun getColorRgba() = ColorRgba.fromRgbaString(color_rgba)
 
     fun getData() = ActivityModel__Data.jParse(data_json)
-
-    fun parseGoals(): List<Goal> {
-        val jGoals = Json.parseToJsonElement(goals_json).jsonArray
-        return jGoals.map { Goal.parseJson(it) }
-    }
 
     suspend fun startInterval(
         timer: Int,

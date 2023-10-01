@@ -69,7 +69,7 @@ class ActivityFormSheetVM(
             headerDoneText = if (activity != null) "Save" else "Create",
             emoji = activity?.emoji,
             activityData = activity?.getData() ?: ActivityModel__Data.buildDefault(),
-            goals = activity?.parseGoals() ?: listOf(),
+            goals = activity?.goals ?: listOf(),
             textFeatures = (activity?.name ?: "").textFeatures(),
             keepScreenOn = activity?.keepScreenOn ?: true,
             colorRgba = activity?.getColorRgba() ?: ActivityModel.nextColorDI(),
