@@ -6,7 +6,7 @@ class WeekDaysFormUI(
     weekDays: List<Int>,
 ) {
 
-    val weekDaysUI = UnixTime.dayOfWeekNames1.mapIndexed { idx, title ->
+    val weekDaysUI: List<WeekDayUI> = UnixTime.dayOfWeekNames1.mapIndexed { idx, title ->
         WeekDayUI(idx = idx, title = title, isSelected = idx in weekDays)
     }
 
