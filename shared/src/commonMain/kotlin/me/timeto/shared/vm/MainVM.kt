@@ -55,6 +55,24 @@ class MainVM : __VM<MainVM.State>() {
             return@filter clt.checklist.id != clUI.checklist.id
         }
 
+        val goalsUI: List<GoalUI> = DI.activitiesSorted
+            .map { activity ->
+                activity.goals
+                    .filter { it.period.isToday() }
+                    .map { goal ->
+                        val timeDone = todayIntervalsData.getDuration(activity).limitMax(goal.seconds)
+                        val timeLeft = goal.seconds - timeDone
+                        val textRight = if (timeLeft > 0) timeLeft.toTimerHintNote(isShort = false) else "👍"
+                        GoalUI(
+                            textLeft = activity.name + " " + goal.seconds.toTimerHintNote(isShort = false),
+                            textRight = textRight,
+                            ratio = timeDone.toFloat() / goal.seconds.toFloat(),
+                            bgColor = activity.getColorRgba(),
+                        )
+                    }
+            }
+            .flatten()
+
         val menuNote: String = when (val count = DI.tasks.count { it.isToday }) {
             0 -> "No Tasks"
             1 -> "1 task"
