@@ -51,24 +51,29 @@ struct Sheet__BottomViewDefault<C1, C2>: View where C1: View, C2: View {
     let primaryAction: () -> Void
     let secondaryText: String
     let secondaryAction: () -> Void
-    var topContent: (() -> C1)? = nil
-    var startContent: (() -> C2)? = nil
+    // todo set default { EmptyView() }
+    var topContent: () -> C1
+    var startContent: () -> C2
+    ////
 
     var body: some View {
 
         Sheet__BottomView {
-            if let topContent = topContent {
-                topContent()
-            }
+
+            topContent()
+
             HStack(alignment: .center) {
-                if let startContent = startContent {
-                    startContent()
-                }
+
+                startContent()
+
                 Spacer()
+
                 HStack {
+
                     Sheet__BottomView__SecondaryButton(text: secondaryText) {
                         secondaryAction()
                     }
+
                     Sheet__BottomView__PrimaryButton(text: primaryText) {
                         primaryAction()
                     }
