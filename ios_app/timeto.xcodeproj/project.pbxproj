@@ -57,6 +57,7 @@
 		318216E60DD4CA4153065416 /* utils_apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E58DC92CD5673A6B49E /* utils_apple.swift */; };
 		318216F271691CC07FC67AFC /* ChecklistFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318212FEA97CBD2AEC3AA1D6 /* ChecklistFormSheet.swift */; };
 		3182172EBDF607665AA6DBD2 /* ActivityTimerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318211757B7EE8E4805AD047 /* ActivityTimerSheet.swift */; };
+		3182178E6CDEEFEDCC11F8EA /* GoalPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E790D2C94A9CD07EF8E /* GoalPickerSheet.swift */; };
 		318217982A5F8106B497432F /* SheetDividerBg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821956E237470E838F18A0 /* SheetDividerBg.swift */; };
 		31821874203EAD4F021DAD0E /* AutoBackupIos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821D5928C18299586075F4 /* AutoBackupIos.swift */; };
 		3182197D9BDC28A7649BA7E1 /* TextFeaturesTimerFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821F29E288957ABB3DF794 /* TextFeaturesTimerFormView.swift */; };
@@ -186,6 +187,7 @@
 		31821E3EB266890584C3EF87 /* FoldersSettingsSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoldersSettingsSheet.swift; sourceTree = "<group>"; };
 		31821E53EB27CE7F81AF0F69 /* DialogCloseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogCloseButton.swift; sourceTree = "<group>"; };
 		31821E58DC92CD5673A6B49E /* utils_apple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = utils_apple.swift; sourceTree = "<group>"; };
+		31821E790D2C94A9CD07EF8E /* GoalPickerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalPickerSheet.swift; sourceTree = "<group>"; };
 		31821ED2142F08DDD1E0CC75 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		31821F2108CAA3ADBA741879 /* WeekDaysFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekDaysFormView.swift; sourceTree = "<group>"; };
 		31821F29E288957ABB3DF794 /* TextFeaturesTimerFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFeaturesTimerFormView.swift; sourceTree = "<group>"; };
@@ -352,6 +354,7 @@
 				3182151E7DF53609AA812ED1 /* TimerHintsView.swift */,
 				318211757B7EE8E4805AD047 /* ActivityTimerSheet.swift */,
 				31821F2108CAA3ADBA741879 /* WeekDaysFormView.swift */,
+				31821E790D2C94A9CD07EF8E /* GoalPickerSheet.swift */,
 			);
 			path = iphone;
 			sourceTree = "<group>";
@@ -577,6 +580,7 @@
 				318214AF2E65AEC255D6204D /* TimerHintsView.swift in Sources */,
 				3182172EBDF607665AA6DBD2 /* ActivityTimerSheet.swift in Sources */,
 				31821F9ADE8CC50422F28059 /* WeekDaysFormView.swift in Sources */,
+				3182178E6CDEEFEDCC11F8EA /* GoalPickerSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
