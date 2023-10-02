@@ -167,62 +167,61 @@ fun ActivityFormSheet(
                 isFirst = true,
                 isLast = true,
             ) {
-                MyListView__ItemView__ButtonView(
-                    text = state.goalsTitle,
-                    withArrow = true,
-                    rightView = {
-                        MyListView__ItemView__ButtonView__RightText(
-                            text = state.goalsAddNote,
-                            paddingEnd = 2.dp,
-                        )
-                    },
-                    bottomView = {
 
-                        VStack {
+                VStack {
 
-                            state.goalsUI.forEach { goalUI ->
-
-                                HStack(
-                                    modifier = Modifier
-                                        .padding(start = MyListView.PADDING_INNER_HORIZONTAL, bottom = 8.dp),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                ) {
-
-                                    Icon(
-                                        painterResource(id = R.drawable.sf_xmark_large_light),
-                                        contentDescription = "Close",
-                                        modifier = Modifier
-                                            .padding(end = 4.dp)
-                                            .offset(x = (-2).dp)
-                                            .size(19.dp)
-                                            .clip(roundedShape)
-                                            .clickable {
-                                                vm.delGoal(goalUI.goal)
-                                            }
-                                            .padding(4.dp),
-                                        tint = c.red
-                                    )
-
-                                    Text(
-                                        goalUI.text,
-                                        modifier = Modifier
-                                            .padding(start = 1.dp)
-                                            .offset(y = (-1).dp),
-                                        color = c.text,
-                                        fontSize = 14.sp,
-                                    )
-                                }
-                            }
+                    MyListView__ItemView__ButtonView(
+                        text = state.goalsTitle,
+                        withArrow = true,
+                        rightView = {
+                            MyListView__ItemView__ButtonView__RightText(
+                                text = state.goalsAddNote,
+                                paddingEnd = 2.dp,
+                            )
+                        },
+                    ) {
+                        Sheet.show { layer ->
+                            GoalPickerSheet(
+                                layer = layer,
+                                onPick = { goal ->
+                                    vm.addGoal(goal)
+                                },
+                            )
                         }
-                    },
-                ) {
-                    Sheet.show { layer ->
-                        GoalPickerSheet(
-                            layer = layer,
-                            onPick = { goal ->
-                                vm.addGoal(goal)
-                            },
-                        )
+                    }
+
+                    state.goalsUI.forEach { goalUI ->
+
+                        HStack(
+                            modifier = Modifier
+                                .padding(start = MyListView.PADDING_INNER_HORIZONTAL, bottom = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+
+                            Icon(
+                                painterResource(id = R.drawable.sf_xmark_large_light),
+                                contentDescription = "Close",
+                                modifier = Modifier
+                                    .padding(end = 4.dp)
+                                    .offset(x = (-2).dp)
+                                    .size(19.dp)
+                                    .clip(roundedShape)
+                                    .clickable {
+                                        vm.delGoal(goalUI.goal)
+                                    }
+                                    .padding(4.dp),
+                                tint = c.red
+                            )
+
+                            Text(
+                                goalUI.text,
+                                modifier = Modifier
+                                    .padding(start = 1.dp)
+                                    .offset(y = (-1).dp),
+                                color = c.text,
+                                fontSize = 14.sp,
+                            )
+                        }
                     }
                 }
             }
