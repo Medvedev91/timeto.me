@@ -86,7 +86,7 @@ fun scheduleNotification(data: ScheduledNotificationData) {
      * setExactAndAllowWhileIdle(), can be delayed for 10 minutes.
      *
      * Based on https://medium.com/@igordias/75c409f3bde0 use setAlarmClock().
-     * Works better. I do not know why to use 2 times pIntent, but it's okey.
+     * Works better. I do not know why to use 2 times pIntent, but it's okay.
      */
     val alarm = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     val alarmInfo = AlarmManager.AlarmClockInfo(timeMls() + (data.inSeconds * 1_000L), pIntent)
