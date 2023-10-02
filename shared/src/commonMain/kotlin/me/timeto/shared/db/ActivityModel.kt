@@ -176,7 +176,7 @@ data class ActivityModel(
 
         fun nextColorDI(): ColorRgba {
             val activityColors = DI.activitiesSorted.map { activity ->
-                activity.getColorRgba().toRgbaString()
+                activity.colorRgba.toRgbaString()
             }
             for (color in colors)
                 if (!activityColors.contains(color.toRgbaString()))
