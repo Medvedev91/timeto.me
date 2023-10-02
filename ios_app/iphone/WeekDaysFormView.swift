@@ -29,7 +29,7 @@ struct WeekDaysFormView: View {
                         }
                 )
                         .foregroundColor(isSelected ? .white : .primary)
-                        .frame(width: 32, height: 32)
+                        .frame(width: size, height: size)
                         .background(
                                 ZStack {
                                     if (isSelected) {

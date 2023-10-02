@@ -187,7 +187,7 @@ struct RepeatingsFormSheet: View {
                                     } else if periodIndex == 2 {
                                         WeekDaysFormView(
                                                 weekDays: state.selectedWeekDays,
-                                                size: 30,
+                                                size: 32,
                                                 onChange: { newWeekDays in
                                                     vm.upWeekDays(newWeekDays: newWeekDays)
                                                 }
