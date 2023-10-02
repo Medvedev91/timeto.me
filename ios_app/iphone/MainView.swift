@@ -22,6 +22,7 @@ private let homePrimaryFontSize = 18.0
 
 private let navAndTasksTextHeight = HomeView__BOTTOM_NAVIGATION_HEIGHT + taskCountsHeight
 
+private let goalFontSize = 14.0
 private let mainTaskTimeShape = RoundedRectangle(cornerRadius: 8, style: .continuous)
 
 struct MainView: View {
@@ -184,6 +185,49 @@ struct MainView: View {
                         if !isMainTasksExists && checklistUI == nil {
                             Spacer()
                         }
+
+                        ForEachIndexedId(
+                                state.goalsUI,
+                                content: { idx, goalUI in
+                                    if idx == 0 {
+                                        Padding(vertical: 8)
+                                    }
+
+                                    ZStack {
+
+                                        GeometryReader { geometry in
+                                            VStack {
+                                                ZStack {}
+                                                        .frame(maxHeight: .infinity)
+                                                        .frame(width: geometry.size.width * Double(goalUI.ratio))
+                                                        .background(goalUI.bgColor.toColor())
+                                                Spacer()
+                                            }
+                                        }
+                                                .frame(width: .infinity)
+                                                .clipShape(roundedShape)
+
+                                        HStack {
+
+                                            Text(goalUI.textLeft)
+                                                    .padding(.leading, 6)
+                                                    .foregroundColor(c.white)
+                                                    .font(.system(size: goalFontSize))
+
+                                            Spacer()
+
+                                            Text(goalUI.textRight)
+                                                    .padding(.trailing, 6)
+                                                    .foregroundColor(c.white)
+                                                    .font(.system(size: goalFontSize))
+                                        }
+                                    }
+                                            .frame(height: 22, alignment: .center)
+                                            .background(roundedShape.fill(c.homeGoalBg))
+                                            .padding(.bottom, 12)
+                                            .padding(.horizontal, H_PADDING)
+                                }
+                        )
                     }
                             .padding(.bottom, navAndTasksTextHeight)
 
