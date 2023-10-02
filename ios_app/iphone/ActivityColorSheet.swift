@@ -109,11 +109,11 @@ struct ActivityColorSheet: View {
 
                         VStack(alignment: .leading) {
 
-                            ForEachIndexedId(state.colorGroups) { _, colors in
+                            ForEachIndexed(state.colorGroups) { _, colors in
 
                                 HStack {
 
-                                    ForEachIndexedId(colors) { _, colorItem in
+                                    ForEachIndexed(colors) { _, colorItem in
 
                                         ColorCircleView(colorItem: colorItem) {
                                             vm.upColorRgba(colorRgba: colorItem.colorRgba)

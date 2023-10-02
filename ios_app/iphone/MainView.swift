@@ -186,7 +186,7 @@ struct MainView: View {
                             Spacer()
                         }
 
-                        ForEachIndexedId(
+                        ForEachIndexed(
                                 state.goalsUI,
                                 content: { idx, goalUI in
                                     if idx == 0 {

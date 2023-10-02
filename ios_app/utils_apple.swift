@@ -40,7 +40,7 @@ func machineIdentifier() -> String {
     }
 }
 
-func ForEachIndexedId<T, Content: View>(
+func ForEachIndexed<T, Content: View>(
         _ items: Array<T>,
         @ViewBuilder content: @escaping (Int, T) -> Content
 ) -> some View {
