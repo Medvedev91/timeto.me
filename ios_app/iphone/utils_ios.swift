@@ -69,11 +69,11 @@ struct c {
     static let sheetDividerBg = ColorRgba.companion.sheetDividerBg.toColor()
     static let sheetDividerFg = ColorRgba.companion.sheetDividerFg.toColor()
 
-    static let tasksDropFocused = ColorRgba.companion.tasksDropFocused.toColor()
-    static let formButtonRightNoteText = ColorRgba.companion.formButtonRightNoteText.toColor()
-
     static let homeFontSecondary = ColorRgba.companion.homeFontSecondary.toColor()
     static let homeMenuTime = ColorRgba.companion.homeMenuTime.toColor()
+
+    static let tasksDropFocused = ColorRgba.companion.tasksDropFocused.toColor()
+    static let formButtonRightNoteText = ColorRgba.companion.formButtonRightNoteText.toColor()
 }
 
 extension View {
