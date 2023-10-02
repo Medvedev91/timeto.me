@@ -15,7 +15,7 @@ class WatchTaskSheetVM(
 
         val listTitle = activity.nameWithEmoji().textFeatures().textUi()
 
-        val timerHints = activity.getData().timer_hints.getTimerHintsUI(
+        val timerHints = activity.data.timer_hints.getTimerHintsUI(
             historyLimit = 4,
             customLimit = 4,
         ) { hintUI ->

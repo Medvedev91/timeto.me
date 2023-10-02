@@ -18,7 +18,7 @@ class ActivitiesTimerSheetVM(
             sortedActivities: List<ActivityModel>,
         ): List<ActivityUI> = sortedActivities.map { activity ->
 
-            val timerHints = activity.getData().timer_hints.getTimerHintsUI(
+            val timerHints = activity.data.timer_hints.getTimerHintsUI(
                 historyLimit = 3,
                 customLimit = 6,
                 onSelect = { hintUI ->

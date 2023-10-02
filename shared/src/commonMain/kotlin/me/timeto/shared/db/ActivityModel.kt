@@ -121,7 +121,7 @@ data class ActivityModel(
                     hints.add(interval.timer)
                 }
                 // todo check
-                val oldData = activity.getData()
+                val oldData = activity.data
                 val newData = oldData.copy(
                     timer_hints = oldData.timer_hints.copy(
                         history_list = hints
@@ -225,13 +225,15 @@ data class ActivityModel(
         ColorRgba.fromRgbaString(color_rgba)
     }
 
+    val data: ActivityModel__Data by lazy {
+        ActivityModel__Data.jParse(data_json)
+    }
+
     fun nameWithEmoji() = "$name $emoji"
 
     fun getType() = TYPE.values().first { it.id == type_id }
 
     fun isOther() = getType() == TYPE.OTHER
-
-    fun getData() = ActivityModel__Data.jParse(data_json)
 
     suspend fun startInterval(
         timer: Int,

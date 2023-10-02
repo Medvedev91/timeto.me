@@ -68,7 +68,7 @@ class ActivityFormSheetVM(
             headerTitle = if (activity != null) "Edit Activity" else "New Activity",
             headerDoneText = if (activity != null) "Save" else "Create",
             emoji = activity?.emoji,
-            activityData = activity?.getData() ?: ActivityModel__Data.buildDefault(),
+            activityData = activity?.data ?: ActivityModel__Data.buildDefault(),
             goals = activity?.goals ?: listOf(),
             textFeatures = (activity?.name ?: "").textFeatures(),
             keepScreenOn = activity?.keepScreenOn ?: true,

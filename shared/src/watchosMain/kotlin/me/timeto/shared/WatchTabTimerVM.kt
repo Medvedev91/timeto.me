@@ -16,7 +16,7 @@ class WatchTabTimerVM : __VM<WatchTabTimerVM.State>() {
 
         val data = TimerTabActivityData(activity, lastInterval, isPurple)
 
-        val timerHints = activity.getData().timer_hints.getTimerHintsUI(
+        val timerHints = activity.data.timer_hints.getTimerHintsUI(
             historyLimit = 4,
             customLimit = 4,
         ) { hintUI ->
