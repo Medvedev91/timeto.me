@@ -310,49 +310,41 @@ fun MyListView__ItemView__ButtonView(
     textModifier: Modifier = Modifier,
     withArrow: Boolean = false,
     rightView: @Composable (() -> Unit)? = null,
-    bottomView: @Composable (() -> Unit)? = null,
     onClick: () -> Unit,
 ) {
 
-    Column(
+    Row(
         modifier = modifier
             .background(c.sheetFg) // Fix swipe to action bg on swipe
             .clickable {
                 onClick()
-            },
+            }
+            .sizeIn(minHeight = MyListView.ITEM_MIN_HEIGHT),
+        verticalAlignment = Alignment.CenterVertically
     ) {
 
-        Row(
-            modifier = Modifier
-                .sizeIn(minHeight = MyListView.ITEM_MIN_HEIGHT),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+        Text(
+            text,
+            modifier = textModifier
+                .padding(start = MyListView.PADDING_INNER_HORIZONTAL, end = 10.dp),
+            color = c.text,
+        )
 
-            Text(
-                text,
-                modifier = textModifier
-                    .padding(start = MyListView.PADDING_INNER_HORIZONTAL, end = 10.dp),
-                color = c.text,
-            )
-
-            Row(Modifier.weight(1f)) {
-                SpacerW1()
-                rightView?.invoke()
-            }
-
-            if (withArrow) {
-                Icon(
-                    Icons.Rounded.KeyboardArrowRight,
-                    "Select emoji",
-                    tint = c.textSecondary.copy(alpha = 0.4f),
-                    modifier = Modifier
-                        .padding(end = 4.dp)
-                        .size(28.dp)
-                )
-            }
+        Row(Modifier.weight(1f)) {
+            SpacerW1()
+            rightView?.invoke()
         }
 
-        bottomView?.invoke()
+        if (withArrow) {
+            Icon(
+                Icons.Rounded.KeyboardArrowRight,
+                "Select emoji",
+                tint = c.textSecondary.copy(alpha = 0.4f),
+                modifier = Modifier
+                    .padding(end = 4.dp)
+                    .size(28.dp)
+            )
+        }
     }
 }
 
