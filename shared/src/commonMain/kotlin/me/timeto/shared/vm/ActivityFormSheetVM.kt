@@ -72,7 +72,7 @@ class ActivityFormSheetVM(
             goals = activity?.goals ?: listOf(),
             textFeatures = (activity?.name ?: "").textFeatures(),
             keepScreenOn = activity?.keepScreenOn ?: true,
-            colorRgba = activity?.getColorRgba() ?: ActivityModel.nextColorDI(),
+            colorRgba = activity?.colorRgba ?: ActivityModel.nextColorDI(),
         )
     )
 

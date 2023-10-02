@@ -67,7 +67,7 @@ class MainVM : __VM<MainVM.State>() {
                             textLeft = activity.name + " " + goal.seconds.toTimerHintNote(isShort = false),
                             textRight = textRight,
                             ratio = timeDone.toFloat() / goal.seconds.toFloat(),
-                            bgColor = activity.getColorRgba(),
+                            bgColor = activity.colorRgba,
                         )
                     }
             }

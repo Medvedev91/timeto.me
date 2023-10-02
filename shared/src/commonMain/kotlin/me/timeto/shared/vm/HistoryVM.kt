@@ -188,7 +188,7 @@ class HistoryVM : __VM<HistoryVM.State>() {
                     barTimeFinish = barTimeFinish,
                     timeString = unixTime.getStringByComponents(UnixTime.StringComponent.hhmm24),
                     periodString = prepPeriodString(seconds),
-                    color = activity.getColorRgba(),
+                    color = activity.colorRgba,
                 )
             }
         }

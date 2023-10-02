@@ -221,13 +221,15 @@ data class ActivityModel(
         Json.parseToJsonElement(goals_json).jsonArray.map { Goal.parseJson(it) }
     }
 
+    val colorRgba: ColorRgba by lazy {
+        ColorRgba.fromRgbaString(color_rgba)
+    }
+
     fun nameWithEmoji() = "$name $emoji"
 
     fun getType() = TYPE.values().first { it.id == type_id }
 
     fun isOther() = getType() == TYPE.OTHER
-
-    fun getColorRgba() = ColorRgba.fromRgbaString(color_rgba)
 
     fun getData() = ActivityModel__Data.jParse(data_json)
 

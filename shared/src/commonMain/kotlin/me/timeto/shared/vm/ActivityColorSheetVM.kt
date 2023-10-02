@@ -64,7 +64,7 @@ class ActivityColorSheetVM(
         val allActivities: List<ActivityUI> = DI.activitiesSorted.map {
             ActivityUI(
                 text = "${it.emoji} ${it.name.textFeatures().textNoFeatures}",
-                colorRgba = it.getColorRgba(),
+                colorRgba = it.colorRgba,
             )
         }
 

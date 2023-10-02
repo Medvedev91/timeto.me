@@ -142,7 +142,7 @@ private suspend fun prepPieItems(
             PieChart.ItemData(
                 id = "${activity.id}",
                 value = seconds.toDouble(),
-                color = activity.getColorRgba(),
+                color = activity.colorRgba,
                 title = activity.nameWithEmoji().textFeatures().textUi(),
                 shortTitle = activity.emoji,
                 subtitleTop = "${(ratio * 100).toInt()}%",
