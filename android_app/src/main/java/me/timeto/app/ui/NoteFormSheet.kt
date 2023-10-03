@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import me.timeto.app.H_PADDING
 import me.timeto.app.VStack
 import me.timeto.app.c
 import me.timeto.app.rememberVM
@@ -22,6 +23,7 @@ fun NoteFormSheet(
         modifier = Modifier
             .fillMaxHeight()
             .background(c.sheetBg)
+            .imePadding(),
     ) {
 
         Sheet__HeaderView(
@@ -32,6 +34,7 @@ fun NoteFormSheet(
 
         Column(
             modifier = Modifier
+                .padding(bottom = H_PADDING)
                 .weight(1f)
         ) {
 
