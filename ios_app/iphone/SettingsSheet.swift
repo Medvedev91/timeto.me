@@ -29,6 +29,8 @@ struct SettingsSheet: View {
 
     @State private var sheetHeaderScroll = 0
 
+    @EnvironmentObject private var nativeSheet: NativeSheet
+
     //////
 
     var body: some View {
@@ -118,6 +120,34 @@ struct SettingsSheet: View {
                                 ToolsView_ShortcutView(shortcut: shortcut)
                             }
                         }
+                    }
+
+                    ///
+                    /// Shortcuts
+
+                    VStack {
+
+                        MyListView__Padding__SectionHeader()
+
+                        MyListView__HeaderView(
+                                title: "NOTES",
+                                rightView: AnyView(
+                                        Button(
+                                                action: {
+                                                    nativeSheet.show { isPresented in
+                                                        NoteFormSheet(
+                                                                isPresented: isPresented,
+                                                                note: nil,
+                                                                onDelete: {}
+                                                        )
+                                                    }
+                                                },
+                                                label: {
+                                                    Image(systemName: "plus")
+                                                }
+                                        )
+                                )
+                        )
                     }
 
                     ///
