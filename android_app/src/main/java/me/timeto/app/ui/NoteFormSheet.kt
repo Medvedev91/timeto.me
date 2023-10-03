@@ -1,13 +1,16 @@
 package me.timeto.app.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import me.timeto.app.H_PADDING
-import me.timeto.app.VStack
-import me.timeto.app.c
-import me.timeto.app.rememberVM
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.unit.dp
+import me.timeto.app.*
 import me.timeto.shared.db.NoteModel
 import me.timeto.shared.vm.NoteFormSheetVM
 
@@ -61,6 +64,26 @@ fun NoteFormSheet(
             secondaryAction = {
                 layer.close()
             },
+            startContent = {
+                val deleteFun  = state.deleteFun
+                if (deleteFun != null) {
+                    Icon(
+                        Icons.Rounded.Delete,
+                        "Delete Note",
+                        tint = c.red,
+                        modifier = Modifier
+                            .padding(start = MyListView.PADDING_OUTER_HORIZONTAL - 0.dp)
+                            .size(33.dp)
+                            .clip(roundedShape)
+                            .clickable {
+                                deleteFun {
+                                    layer.close()
+                                }
+                            }
+                            .padding(4.dp)
+                    )
+                }
+            }
         )
     }
 }
