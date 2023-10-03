@@ -278,6 +278,33 @@ fun SettingsSheet(
                 )
             }
 
+            val notes = state.notes
+            if (notes.isNotEmpty())
+                item { MyListView__Padding__HeaderSection() }
+
+            itemsIndexed(
+                items = notes,
+                key = { _, note -> note.id },
+            ) { _, note ->
+
+                val isFirst = notes.first() == note
+
+                MyListView__ItemView(
+                    isFirst = isFirst,
+                    isLast = notes.last() == note,
+                    withTopDivider = !isFirst,
+                ) {
+                    MyListView__ItemView__ButtonView(
+                        text = note.title,
+                        maxLines = 1,
+                    ) {
+                        Sheet.show { layer ->
+                            NoteSheet(layer, initNote = note)
+                        }
+                    }
+                }
+            }
+
             item {
 
                 MyListView__Padding__SectionHeader()
