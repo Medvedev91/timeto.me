@@ -148,6 +148,20 @@ struct SettingsSheet: View {
                                         )
                                 )
                         )
+
+                        MyListView__Padding__HeaderSection()
+
+                        let notes = state.notes
+                        ForEach(notes, id: \.id) { note in
+                            let isFirst = notes.first == note
+                            MyListView__ItemView(
+                                    isFirst: isFirst,
+                                    isLast: notes.last == note,
+                                    withTopDivider: !isFirst
+                            ) {
+                                NoteListItemView(note: note)
+                            }
+                        }
                     }
 
                     ///
@@ -508,6 +522,22 @@ struct ToolsView_ChecklistView: View {
                 .sheetEnv(isPresented: $isEditPresented) {
                     ChecklistFormSheet(isPresented: $isEditPresented, checklist: checklist)
                 }
+    }
+}
+
+private struct NoteListItemView: View {
+
+    let note: NoteModel
+
+    var body: some View {
+
+        MyListView__ItemView__ButtonView(
+                text: note.text,
+                maxLines: 1,
+                rightView: AnyView(Padding(horizontal: MyListView.PADDING_INNER_HORIZONTAL))
+        ) {
+            // todo
+        }
     }
 }
 
