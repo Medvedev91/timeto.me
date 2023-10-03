@@ -64,7 +64,7 @@ data class NoteModel(
     }
 
     val title: String by lazy {
-        "^(.*?)(\n|$)".toRegex().find(text)!!.value
+        "^(.*?)(\n|$)".toRegex().find(text)!!.value.trim()
     }
 
     suspend fun upWithValidation(
