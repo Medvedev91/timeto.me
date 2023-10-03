@@ -57,7 +57,6 @@ struct ShortcutFormSheet: View {
                                     }
                             )
                         }
-
                     }
 
                     MyListView__HeaderView(title: state.inputUriHeader)
