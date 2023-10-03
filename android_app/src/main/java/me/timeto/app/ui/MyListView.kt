@@ -309,6 +309,7 @@ fun MyListView__ItemView__ButtonView(
     modifier: Modifier = Modifier,
     textModifier: Modifier = Modifier,
     withArrow: Boolean = false,
+    maxLines: Int = Int.MAX_VALUE,
     rightView: @Composable (() -> Unit)? = null,
     onClick: () -> Unit,
 ) {
@@ -328,6 +329,8 @@ fun MyListView__ItemView__ButtonView(
             modifier = textModifier
                 .padding(start = MyListView.PADDING_INNER_HORIZONTAL, end = 10.dp),
             color = c.text,
+            maxLines = maxLines,
+            overflow = TextOverflow.Ellipsis,
         )
 
         Row(Modifier.weight(1f)) {
