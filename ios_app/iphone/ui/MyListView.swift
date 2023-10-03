@@ -207,6 +207,7 @@ struct MyListView__ItemView__ButtonView: View {
 
     let text: String
     var withArrow: Bool = false
+    var maxLines: Int = Int.max
     var rightView: AnyView? = nil
     let onClick: () -> Void
 
@@ -222,6 +223,7 @@ struct MyListView__ItemView__ButtonView: View {
 
                         Text(text)
                                 .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL)
+                                .lineLimit(maxLines)
 
                         Spacer()
 
