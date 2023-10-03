@@ -5,6 +5,7 @@ import me.timeto.shared.*
 import me.timeto.shared.db.ChecklistModel
 import me.timeto.shared.db.KVModel
 import me.timeto.shared.db.KVModel.Companion.asDayStartOffsetSeconds
+import me.timeto.shared.db.NoteModel
 import me.timeto.shared.db.ShortcutModel
 
 class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
@@ -17,6 +18,7 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
     data class State(
         val checklists: List<ChecklistModel>,
         val shortcuts: List<ShortcutModel>,
+        val notes: List<NoteModel>,
         val dayStartSeconds: Int,
         val feedbackSubject: String,
         val autoBackupTimeString: String,
@@ -51,6 +53,7 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
         State(
             checklists = DI.checklists,
             shortcuts = DI.shortcuts,
+            notes = DI.notes,
             dayStartSeconds = dayStartOffsetSeconds(),
             feedbackSubject = "Feedback",
             autoBackupTimeString = prepAutoBackupTimeString(AutoBackup.lastTimeCache.value),
@@ -63,6 +66,8 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
             .onEachExIn(scope) { checklists -> state.update { it.copy(checklists = checklists) } }
         ShortcutModel.getAscFlow()
             .onEachExIn(scope) { shortcuts -> state.update { it.copy(shortcuts = shortcuts) } }
+        NoteModel.getAscFlow()
+            .onEachExIn(scope) { notes -> state.update { it.copy(notes = notes) } }
         KVModel.KEY.DAY_START_OFFSET_SECONDS
             .getOrNullFlow()
             .onEachExIn(scope) { kv ->
