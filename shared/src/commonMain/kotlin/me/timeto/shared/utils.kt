@@ -420,6 +420,7 @@ internal fun initKmm(
         ShortcutSQAdapter = ShortcutSQ.Adapter(IntColumnAdapter),
         TaskFolderSQAdapter = TaskFolderSQ.Adapter(IntColumnAdapter, IntColumnAdapter),
         TaskSQAdapter = TaskSQ.Adapter(IntColumnAdapter, IntColumnAdapter),
+        NoteSQAdapter = NoteSQ.Adapter(IntColumnAdapter, IntColumnAdapter),
     )
     deviceData = deviceData_
     initKmmDeferred = defaultScope().async { DI.init() }

@@ -1,0 +1,30 @@
+import kotlin.Int;
+
+CREATE TABLE NoteSQ (
+    id INTEGER AS Int NOT NULL PRIMARY KEY,
+    sort INTEGER AS Int NOT NULL,
+    text TEXT NOT NULL
+);
+
+anyChange: SELECT id FROM NoteSQ LIMIT 1;
+
+getAsc:
+SELECT *
+FROM NoteSQ
+ORDER BY id ASC;
+
+insert:
+INSERT INTO NoteSQ
+VALUES ?;
+
+upById:
+UPDATE NoteSQ
+SET text = ?
+WHERE id = ?;
+
+deleteById:
+DELETE FROM NoteSQ
+WHERE id = ?;
+
+truncate:
+DELETE FROM NoteSQ;
