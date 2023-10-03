@@ -16,7 +16,7 @@ class NoteFormSheetVM(
     ) {
 
         val headerTitle = if (note == null) "New Note" else "Edit Note"
-        val doneTitle = if (note == null) "Save" else "Edit"
+        val doneTitle = "Save"
 
         val inputTextPlaceholder = "Text"
     }
