@@ -270,7 +270,7 @@ fun ActivityColorSheet(
                         .clickable {
                             vm.toggleIsRgbSlidersShowed()
                         }
-                        .padding(if (state.isRgbSlidersShowed) 4.dp else 4.dp)
+                        .padding(4.dp)
                 )
             }
         )
