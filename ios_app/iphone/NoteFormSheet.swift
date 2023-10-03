@@ -63,7 +63,33 @@ struct NoteFormSheet: View {
 
                         ZStack {
 
+                            if let deleteFun = state.deleteFun {
 
+                                ZStack {
+
+                                    Button(
+                                            action: {
+                                                deleteFun {
+                                                    // todo don't use to fast hide parent sheet
+                                                    isPresented = false
+                                                    onDelete()
+                                                    return KotlinUnit() // WTF?
+                                                }
+                                            },
+                                            label: {
+                                                ZStack {
+                                                    Image(systemName: "trash")
+                                                            .font(.system(size: 20, weight: .medium))
+                                                            .foregroundColor(c.red)
+                                                }
+                                                        .frame(width: 34, height: 34)
+                                            }
+                                    )
+                                }
+                                        .padding(.leading, MyListView.PADDING_OUTER_HORIZONTAL)
+                            } else {
+                                EmptyView()
+                            }
                         }
                     }
             )
