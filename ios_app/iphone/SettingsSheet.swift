@@ -529,14 +529,18 @@ private struct NoteListItemView: View {
 
     let note: NoteModel
 
+    @EnvironmentObject private var nativeSheet: NativeSheet
+
     var body: some View {
 
         MyListView__ItemView__ButtonView(
-                text: note.text,
+                text: note.title,
                 maxLines: 1,
                 rightView: AnyView(Padding(horizontal: MyListView.PADDING_INNER_HORIZONTAL))
         ) {
-            // todo
+            nativeSheet.show { isPresented in
+                NoteSheet(isPresented: isPresented, initNote: note)
+            }
         }
     }
 }
