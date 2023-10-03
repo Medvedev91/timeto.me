@@ -17,6 +17,26 @@ class NoteFormSheetVM(
         val doneTitle = "Save"
 
         val inputTextPlaceholder = "Text"
+
+        val deleteFun: ((onSuccess: () -> Unit) -> Unit)? =
+            if (note == null) null else { onSuccess ->
+                showUiConfirmation(
+                    UIConfirmationData(
+                        text = "Are you sure you want to delete \"${note.title}\" note?",
+                        buttonText = "Delete",
+                        isRed = true,
+                    ) {
+                        launchExDefault {
+                            try {
+                                note.delete()
+                                onSuccess()
+                            } catch (e: UIException) {
+                                showUiAlert(e.uiMessage)
+                            }
+                        }
+                    }
+                )
+            }
     }
 
     override val state = MutableStateFlow(
@@ -47,27 +67,5 @@ class NoteFormSheetVM(
         } catch (e: UIException) {
             showUiAlert(e.uiMessage)
         }
-    }
-
-    fun delete(
-        note: NoteModel,
-        onSuccess: () -> Unit
-    ) {
-        showUiConfirmation(
-            UIConfirmationData(
-                text = "Are you sure you want to delete \"${note.title}\" note?",
-                buttonText = "Delete",
-                isRed = true,
-            ) {
-                launchExDefault {
-                    try {
-                        note.delete()
-                        onSuccess()
-                    } catch (e: UIException) {
-                        showUiAlert(e.uiMessage)
-                    }
-                }
-            }
-        )
     }
 }
