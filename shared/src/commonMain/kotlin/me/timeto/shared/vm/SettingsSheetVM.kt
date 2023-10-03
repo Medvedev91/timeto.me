@@ -15,8 +15,8 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
     )
 
     data class State(
-        val shortcuts: List<ShortcutModel>,
         val checklists: List<ChecklistModel>,
+        val shortcuts: List<ShortcutModel>,
         val dayStartSeconds: Int,
         val feedbackSubject: String,
         val autoBackupTimeString: String,
@@ -49,8 +49,8 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
 
     override val state = MutableStateFlow(
         State(
-            shortcuts = DI.shortcuts,
             checklists = DI.checklists,
+            shortcuts = DI.shortcuts,
             dayStartSeconds = dayStartOffsetSeconds(),
             feedbackSubject = "Feedback",
             autoBackupTimeString = prepAutoBackupTimeString(AutoBackup.lastTimeCache.value),
