@@ -8,6 +8,7 @@ object DI {
     var checklists = listOf<ChecklistModel>()
     var checklistItems = listOf<ChecklistItemModel>()
     var shortcuts = listOf<ShortcutModel>()
+    var notes = listOf<NoteModel>()
     var kv = listOf<KVModel>()
     var tasks = listOf<TaskModel>()
     var taskFolders = listOf<TaskFolderModel>()
@@ -62,6 +63,9 @@ object DI {
 
         shortcuts = ShortcutModel.getAsc()
         ShortcutModel.getAscFlow().onEachExIn(scope) { shortcuts = it }
+
+        notes = NoteModel.getAsc()
+        NoteModel.getAscFlow().onEachExIn(scope) { notes = it }
 
         kv = KVModel.getAll()
         KVModel.getAllFlow().onEachExIn(scope) { kv = it }
