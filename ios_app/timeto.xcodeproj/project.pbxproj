@@ -78,6 +78,7 @@
 		31821C4D6DA83EF42B805658 /* MySpacerSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318212FFE80A0856A0A88DCF /* MySpacerSize.swift */; };
 		31821CF86EDC2A5C5CB362E0 /* SheetDividerFg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182143FB317BCD82F61C777 /* SheetDividerFg.swift */; };
 		31821D021B3DC7EACD7E4EAA /* ShortcutsPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821F858C3344296F2CB750 /* ShortcutsPickerSheet.swift */; };
+		31821D1716CFA24F74C1BE6C /* NoteFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318213EABC97ED666E1FBF91 /* NoteFormSheet.swift */; };
 		31821D960D04B6FF21EA9918 /* ActivityFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821794CA93E29D6889286D /* ActivityFormSheet.swift */; };
 		31821DF8D1DFB408872C85BD /* FolderFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821514C5F55F9A34FBC8AD /* FolderFormSheet.swift */; };
 		31821DF974247D110D01C3A2 /* ActivitiesTimerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318213DE3B58FA098A8DBAE7 /* ActivitiesTimerSheet.swift */; };
@@ -146,6 +147,7 @@
 		318212FEA97CBD2AEC3AA1D6 /* ChecklistFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChecklistFormSheet.swift; sourceTree = "<group>"; };
 		318212FFE80A0856A0A88DCF /* MySpacerSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySpacerSize.swift; sourceTree = "<group>"; };
 		318213DE3B58FA098A8DBAE7 /* ActivitiesTimerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesTimerSheet.swift; sourceTree = "<group>"; };
+		318213EABC97ED666E1FBF91 /* NoteFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteFormSheet.swift; sourceTree = "<group>"; };
 		3182143FB317BCD82F61C777 /* SheetDividerFg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SheetDividerFg.swift; sourceTree = "<group>"; };
 		31821514C5F55F9A34FBC8AD /* FolderFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderFormSheet.swift; sourceTree = "<group>"; };
 		3182151D618D3ED8AEE1B80A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -355,6 +357,7 @@
 				318211757B7EE8E4805AD047 /* ActivityTimerSheet.swift */,
 				31821F2108CAA3ADBA741879 /* WeekDaysFormView.swift */,
 				31821E790D2C94A9CD07EF8E /* GoalPickerSheet.swift */,
+				318213EABC97ED666E1FBF91 /* NoteFormSheet.swift */,
 			);
 			path = iphone;
 			sourceTree = "<group>";
@@ -581,6 +584,7 @@
 				3182172EBDF607665AA6DBD2 /* ActivityTimerSheet.swift in Sources */,
 				31821F9ADE8CC50422F28059 /* WeekDaysFormView.swift in Sources */,
 				3182178E6CDEEFEDCC11F8EA /* GoalPickerSheet.swift in Sources */,
+				31821D1716CFA24F74C1BE6C /* NoteFormSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
