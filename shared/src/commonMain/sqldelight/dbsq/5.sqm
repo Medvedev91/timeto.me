@@ -1,0 +1,7 @@
+import kotlin.Int;
+
+CREATE TABLE NoteSQ (
+    id INTEGER AS Int NOT NULL PRIMARY KEY,
+    sort INTEGER AS Int NOT NULL,
+    text TEXT NOT NULL
+);
