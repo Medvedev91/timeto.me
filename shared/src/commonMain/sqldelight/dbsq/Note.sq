@@ -19,7 +19,7 @@ VALUES ?;
 
 upById:
 UPDATE NoteSQ
-SET text = ?
+SET text = ?, sort = ?
 WHERE id = ?;
 
 deleteById:
