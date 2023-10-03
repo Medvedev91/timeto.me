@@ -63,6 +63,10 @@ data class NoteModel(
         }
     }
 
+    val title: String by lazy {
+        "^(.*?)(\n|$)".toRegex().find(text)!!.value
+    }
+
     suspend fun upWithValidation(
         newText: String,
     ): Unit = dbIO {
