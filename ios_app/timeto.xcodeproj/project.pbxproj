@@ -66,6 +66,7 @@
 		318219E30EE52A96A502BF30 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182189A26C9B48C0D2E8A4A /* KeyboardManager.swift */; };
 		318219E4F8AFEB280A077F74 /* utils_apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E58DC92CD5673A6B49E /* utils_apple.swift */; };
 		318219F4F07E446C4B3C607D /* Divider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318216B917315DE1929486AC /* Divider.swift */; };
+		31821A31BFF9D29DD019E05D /* NoteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821B172A150ADBF8ECF529 /* NoteSheet.swift */; };
 		31821A329A5D1AE8F7CB0604 /* EventFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318212B384624F1CF416C576 /* EventFormSheet.swift */; };
 		31821A46712E80148E00481B /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821C625A8A199EAEF17182 /* MailView.swift */; };
 		31821A947CB3AFF5CE923090 /* ShortcutFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182106A0DA4A0D8844CFA11 /* ShortcutFormSheet.swift */; };
@@ -169,6 +170,7 @@
 		31821ACA6C9306A2CD2016A0 /* HistoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		31821AD0C2CE87BF5AE03022 /* TasksListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksListView.swift; sourceTree = "<group>"; };
 		31821AE61EE1FC22CCF8E753 /* TimerPickerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerPickerSheet.swift; sourceTree = "<group>"; };
+		31821B172A150ADBF8ECF529 /* NoteSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteSheet.swift; sourceTree = "<group>"; };
 		31821B4BCB049B516BF2DF2E /* EventsHistoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsHistoryView.swift; sourceTree = "<group>"; };
 		31821B68F7E968EF32723112 /* RepeatingsListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepeatingsListView.swift; sourceTree = "<group>"; };
 		31821BCB57EC030987E8342E /* SheetHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SheetHeaderView.swift; sourceTree = "<group>"; };
@@ -358,6 +360,7 @@
 				31821F2108CAA3ADBA741879 /* WeekDaysFormView.swift */,
 				31821E790D2C94A9CD07EF8E /* GoalPickerSheet.swift */,
 				318213EABC97ED666E1FBF91 /* NoteFormSheet.swift */,
+				31821B172A150ADBF8ECF529 /* NoteSheet.swift */,
 			);
 			path = iphone;
 			sourceTree = "<group>";
@@ -585,6 +588,7 @@
 				31821F9ADE8CC50422F28059 /* WeekDaysFormView.swift in Sources */,
 				3182178E6CDEEFEDCC11F8EA /* GoalPickerSheet.swift in Sources */,
 				31821D1716CFA24F74C1BE6C /* NoteFormSheet.swift in Sources */,
+				31821A31BFF9D29DD019E05D /* NoteSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
