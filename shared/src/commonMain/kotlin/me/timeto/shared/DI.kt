@@ -5,9 +5,9 @@ import me.timeto.shared.db.*
 
 object DI {
 
-    var shortcuts = listOf<ShortcutModel>()
     var checklists = listOf<ChecklistModel>()
     var checklistItems = listOf<ChecklistItemModel>()
+    var shortcuts = listOf<ShortcutModel>()
     var kv = listOf<KVModel>()
     var tasks = listOf<TaskModel>()
     var taskFolders = listOf<TaskFolderModel>()
@@ -54,14 +54,14 @@ object DI {
         //
         // Database Lists
 
-        shortcuts = ShortcutModel.getAsc()
-        ShortcutModel.getAscFlow().onEachExIn(scope) { shortcuts = it }
-
         checklists = ChecklistModel.getAsc()
         ChecklistModel.getAscFlow().onEachExIn(scope) { checklists = it }
 
         checklistItems = ChecklistItemModel.getAsc()
         ChecklistItemModel.getAscFlow().onEachExIn(scope) { checklistItems = it }
+
+        shortcuts = ShortcutModel.getAsc()
+        ShortcutModel.getAscFlow().onEachExIn(scope) { shortcuts = it }
 
         kv = KVModel.getAll()
         KVModel.getAllFlow().onEachExIn(scope) { kv = it }
