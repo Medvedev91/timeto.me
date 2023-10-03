@@ -59,10 +59,10 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
 
     override fun onAppear() {
         val scope = scopeVM()
-        ShortcutModel.getAscFlow()
-            .onEachExIn(scope) { shortcuts -> state.update { it.copy(shortcuts = shortcuts) } }
         ChecklistModel.getAscFlow()
             .onEachExIn(scope) { checklists -> state.update { it.copy(checklists = checklists) } }
+        ShortcutModel.getAscFlow()
+            .onEachExIn(scope) { shortcuts -> state.update { it.copy(shortcuts = shortcuts) } }
         KVModel.KEY.DAY_START_OFFSET_SECONDS
             .getOrNullFlow()
             .onEachExIn(scope) { kv ->
