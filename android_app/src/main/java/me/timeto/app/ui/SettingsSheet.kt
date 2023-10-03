@@ -261,6 +261,25 @@ fun SettingsSheet(
 
             item {
 
+                MyListView__Padding__SectionHeader((-9).dp) // ~9.dp consume icon space
+
+                MyListView__HeaderView(
+                    title = "NOTES",
+                    rightView = {
+                        MyListView__HeaderView__RightIcon(
+                            icon = Icons.Rounded.Add,
+                            contentDescription = "New Note"
+                        ) {
+                            Sheet.show { layer ->
+                                NoteFormSheet(layer, note = null)
+                            }
+                        }
+                    }
+                )
+            }
+
+            item {
+
                 MyListView__Padding__SectionHeader()
 
                 MyListView__HeaderView(
