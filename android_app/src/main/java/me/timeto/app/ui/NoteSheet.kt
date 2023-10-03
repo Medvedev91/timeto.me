@@ -59,8 +59,12 @@ fun NoteSheet(
                 SpacerW1()
 
                 Sheet__BottomView__SecondaryButton("Edit") {
-                    Sheet.show { layer ->
-                        NoteFormSheet(layer, note = state.note)
+                    Sheet.show { layerForm ->
+                        NoteFormSheet(
+                            layer = layerForm,
+                            note = state.note,
+                            onDelete = { layer.close() },
+                        )
                     }
                 }
 

@@ -271,7 +271,7 @@ fun SettingsSheet(
                             contentDescription = "New Note"
                         ) {
                             Sheet.show { layer ->
-                                NoteFormSheet(layer, note = null)
+                                NoteFormSheet(layer, note = null, onDelete = {})
                             }
                         }
                     }

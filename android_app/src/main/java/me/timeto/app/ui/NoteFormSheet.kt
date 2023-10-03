@@ -18,6 +18,7 @@ import me.timeto.shared.vm.NoteFormSheetVM
 fun NoteFormSheet(
     layer: WrapperView.Layer,
     note: NoteModel?,
+    onDelete: () -> Unit,
 ) {
 
     val (vm, state) = rememberVM(note) { NoteFormSheetVM(note) }
@@ -65,7 +66,7 @@ fun NoteFormSheet(
                 layer.close()
             },
             startContent = {
-                val deleteFun  = state.deleteFun
+                val deleteFun = state.deleteFun
                 if (deleteFun != null) {
                     Icon(
                         Icons.Rounded.Delete,
@@ -78,6 +79,7 @@ fun NoteFormSheet(
                             .clickable {
                                 deleteFun {
                                     layer.close()
+                                    onDelete()
                                 }
                             }
                             .padding(4.dp)
