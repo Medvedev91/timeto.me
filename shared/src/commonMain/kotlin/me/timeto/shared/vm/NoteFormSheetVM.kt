@@ -1,10 +1,8 @@
 package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
-import me.timeto.shared.UIException
+import me.timeto.shared.*
 import me.timeto.shared.db.NoteModel
-import me.timeto.shared.launchEx
-import me.timeto.shared.showUiAlert
 
 class NoteFormSheetVM(
     val note: NoteModel?,
@@ -49,5 +47,27 @@ class NoteFormSheetVM(
         } catch (e: UIException) {
             showUiAlert(e.uiMessage)
         }
+    }
+
+    fun delete(
+        note: NoteModel,
+        onSuccess: () -> Unit
+    ) {
+        showUiConfirmation(
+            UIConfirmationData(
+                text = "Are you sure you want to delete \"${note.title}\" note?",
+                buttonText = "Delete",
+                isRed = true,
+            ) {
+                launchExDefault {
+                    try {
+                        note.delete()
+                        onSuccess()
+                    } catch (e: UIException) {
+                        showUiAlert(e.uiMessage)
+                    }
+                }
+            }
+        )
     }
 }
