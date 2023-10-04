@@ -209,7 +209,7 @@ class MainVM : __VM<MainVM.State>() {
     }
 
     private suspend fun upTodayIntervalsData() {
-        val dayStartTime = UnixTime().localDayStartTime()
+        val dayStartTime = UnixTime(utcOffset = localUtcOffsetWithDayStart).localDayStartTime()
         val todayIntervalsAsc = IntervalModel
             .getBetweenIdDesc(dayStartTime, Int.MAX_VALUE)
             .reversed()
