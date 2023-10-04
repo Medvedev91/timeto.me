@@ -165,31 +165,7 @@ class MainVM : __VM<MainVM.State>() {
             }
         IntervalModel.anyChangeFlow()
             .onEachExIn(scope) {
-                val dayStartTime = UnixTime().localDayStartTime()
-                val todayIntervalsAsc = IntervalModel
-                    .getBetweenIdDesc(dayStartTime, Int.MAX_VALUE)
-                    .reversed()
-                    .toMutableList()
-
-                val prevDayInterval = IntervalModel.getBetweenIdDesc(0, dayStartTime - 1, 1).firstOrNull()
-                if (prevDayInterval != null)
-                    todayIntervalsAsc.add(0, prevDayInterval) // 0 - to start
-
-                val mapActivitySeconds = mutableMapOf<Int, Int>()
-                todayIntervalsAsc.forEachIndexed { idx, interval ->
-                    // Last interval
-                    if ((idx + 1) == todayIntervalsAsc.size)
-                        return@forEachIndexed
-                    val nextInterval = todayIntervalsAsc[idx + 1]
-                    val duration = nextInterval.id - interval.id.limitMin(dayStartTime)
-                    mapActivitySeconds.incOrSet(interval.activity_id, duration)
-                }
-
-                val data = TodayIntervalsData(
-                    lastInterval = todayIntervalsAsc.last(),
-                    mapActivitySeconds = mapActivitySeconds,
-                )
-                state.update { it.copy(todayIntervalsData = data) }
+                upTodayIntervalsData()
             }
         scope.launch {
             while (true) {
@@ -218,6 +194,34 @@ class MainVM : __VM<MainVM.State>() {
         launchExDefault {
             IntervalModel.pauseLastInterval()
         }
+    }
+
+    private suspend fun upTodayIntervalsData() {
+        val dayStartTime = UnixTime().localDayStartTime()
+        val todayIntervalsAsc = IntervalModel
+            .getBetweenIdDesc(dayStartTime, Int.MAX_VALUE)
+            .reversed()
+            .toMutableList()
+
+        val prevDayInterval = IntervalModel.getBetweenIdDesc(0, dayStartTime - 1, 1).firstOrNull()
+        if (prevDayInterval != null)
+            todayIntervalsAsc.add(0, prevDayInterval) // 0 - to start
+
+        val mapActivitySeconds = mutableMapOf<Int, Int>()
+        todayIntervalsAsc.forEachIndexed { idx, interval ->
+            // Last interval
+            if ((idx + 1) == todayIntervalsAsc.size)
+                return@forEachIndexed
+            val nextInterval = todayIntervalsAsc[idx + 1]
+            val duration = nextInterval.id - interval.id.limitMin(dayStartTime)
+            mapActivitySeconds.incOrSet(interval.activity_id, duration)
+        }
+
+        val data = TodayIntervalsData(
+            lastInterval = todayIntervalsAsc.last(),
+            mapActivitySeconds = mapActivitySeconds,
+        )
+        state.update { it.copy(todayIntervalsData = data) }
     }
 
     //////
