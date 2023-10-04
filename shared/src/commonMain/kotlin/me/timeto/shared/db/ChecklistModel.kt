@@ -28,7 +28,7 @@ data class ChecklistModel(
 
         suspend fun addWithValidation(
             name: String,
-        ) {
+        ) = dbIO {
             val nextId = time()
             db.checklistQueries.insert(
                 id = nextId,
