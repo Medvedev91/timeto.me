@@ -193,33 +193,29 @@ class ActivityFormSheetVM(
 
     fun delete(
         onSuccess: () -> Unit
-    ) = launchExDefault {
-        try {
-            val activity = activity
-            if (activity == null) {
-                reportApi("ActivityFormSheetVM no activity. WTF??!!")
-                return@launchExDefault
-            }
+    ) {
+        val activity = activity
+        if (activity == null) {
+            reportApi("ActivityFormSheetVM no activity. WTF??!!")
+            return
+        }
 
-            val nameUi = activity.nameWithEmoji().textFeatures().textUi()
-            showUiConfirmation(
-                UIConfirmationData(
-                    text = "Are you sure you want to delete \"$nameUi\" activity?",
-                    buttonText = "Delete",
-                    isRed = true,
-                ) {
-                    launchExDefault {
-                        try {
-                            activity.delete()
-                            onSuccess()
-                        } catch (e: UIException) {
-                            showUiAlert(e.uiMessage)
-                        }
+        val nameUi = activity.nameWithEmoji().textFeatures().textUi()
+        showUiConfirmation(
+            UIConfirmationData(
+                text = "Are you sure you want to delete \"$nameUi\" activity?",
+                buttonText = "Delete",
+                isRed = true,
+            ) {
+                launchExDefault {
+                    try {
+                        activity.delete()
+                        onSuccess()
+                    } catch (e: UIException) {
+                        showUiAlert(e.uiMessage)
                     }
                 }
-            )
-        } catch (e: UIException) {
-            showUiAlert(e.uiMessage)
-        }
+            }
+        )
     }
 }
