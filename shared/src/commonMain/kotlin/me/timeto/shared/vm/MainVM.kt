@@ -163,10 +163,22 @@ class MainVM : __VM<MainVM.State>() {
             .onEachExIn(scope) { tasks ->
                 state.update { it.copy(tasksToday = tasks) }
             }
+
+        ////
+
         IntervalModel.anyChangeFlow()
             .onEachExIn(scope) {
                 upTodayIntervalsData()
             }
+        scope.launch {
+            while (true) {
+                delayToNextMinute()
+                upTodayIntervalsData()
+            }
+        }
+
+        ////
+
         scope.launch {
             while (true) {
                 state.update {
