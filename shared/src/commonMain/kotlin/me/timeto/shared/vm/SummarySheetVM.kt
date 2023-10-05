@@ -17,6 +17,21 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
 
         val timeStartText: String = pickerTimeStart.getStringByComponents(buttonDateStringComponents)
         val timeFinishText: String = pickerTimeFinish.getStringByComponents(buttonDateStringComponents)
+
+        val periodHints: List<PeriodHint>
+
+        init {
+            val now = UnixTime()
+            periodHints = listOfNotNull(
+                PeriodHint(this, "Today", now, now),
+                // Relevant for the first day, otherwise crash on click
+                if (now.localDay > minPickerTime.localDay)
+                    PeriodHint(this, "Yesterday", now.inDays(-1), now.inDays(-1))
+                else null,
+                PeriodHint(this, "7 days", now.inDays(-6), now),
+                PeriodHint(this, "30 days", now.inDays(-29), now),
+            )
+        }
     }
 
     override val state: MutableStateFlow<State>
@@ -54,6 +69,19 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
         pickerTimeStart = state.value.pickerTimeStart,
         pickerTimeFinish = unixTime,
     )
+
+    ///
+
+    class PeriodHint(
+        state: State,
+        val title: String,
+        val pickerTimeStart: UnixTime,
+        val pickerTimeFinish: UnixTime,
+    ) {
+        val isActive: Boolean =
+            state.pickerTimeStart.localDay == pickerTimeStart.localDay &&
+            state.pickerTimeFinish.localDay == pickerTimeFinish.localDay
+    }
 }
 
 private val buttonDateStringComponents = listOf(
