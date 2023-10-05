@@ -67,7 +67,7 @@ fun SummarySheet(
                     minTime = state.minPickerTime,
                     maxTime = state.maxPickerTime,
                 ) {
-                    // todo
+                    vm.setPickerTimeStart(it)
                 }
 
                 Text(
@@ -85,7 +85,7 @@ fun SummarySheet(
                     minTime = state.minPickerTime,
                     maxTime = state.maxPickerTime,
                 ) {
-                    // todo
+                    vm.setPickerTimeFinish(it)
                 }
 
                 SpacerW1()
