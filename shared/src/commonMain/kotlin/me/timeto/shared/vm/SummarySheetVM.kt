@@ -22,14 +22,15 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
 
         init {
             val now = UnixTime()
+            val yesterday = now.inDays(-1)
             periodHints = listOfNotNull(
                 PeriodHint(this, "Today", now, now),
                 // Relevant for the first day, otherwise crash on click
                 if (now.localDay > minPickerTime.localDay)
-                    PeriodHint(this, "Yesterday", now.inDays(-1), now.inDays(-1))
+                    PeriodHint(this, "Yesterday", yesterday, yesterday)
                 else null,
-                PeriodHint(this, "7 days", now.inDays(-6), now),
-                PeriodHint(this, "30 days", now.inDays(-29), now),
+                PeriodHint(this, "7 days", yesterday.inDays(-6), yesterday),
+                PeriodHint(this, "30 days", yesterday.inDays(-29), yesterday),
             )
         }
     }
