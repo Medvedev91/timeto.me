@@ -242,7 +242,7 @@ private fun ChartDatePicker(
         modifier = modifier
             .height(30.dp)
             .clickable {
-                Dialog.showDatePicker(
+                Dialog.showDateTimePicker(
                     defaultTime = defaultTime,
                     minPickableDay = minPickableDay,
                     minSavableDay = minSavableDay,

@@ -108,7 +108,7 @@ fun HistoryDialogView(
                                                 .size(24.dp)
                                                 .clip(roundedShape)
                                                 .clickable {
-                                                    Dialog.showDatePicker(
+                                                    Dialog.showDateTimePicker(
                                                         defaultTime = interval.unixTime(),
                                                         minPickableDay = state.minPickerDay,
                                                         minSavableDay = state.minPickerDay,
@@ -247,7 +247,7 @@ fun HistoryDialogView(
                                 .clip(roundedShape)
                                 .background(c.blue)
                                 .clickable {
-                                    Dialog.showDatePicker(
+                                    Dialog.showDateTimePicker(
                                         defaultTime = UnixTime.byLocalDay(section.day),
                                         minPickableDay = state.minPickerDay,
                                         minSavableDay = state.minPickerDay,
@@ -349,7 +349,7 @@ private fun AddIntervalDialogView(
                     MyListView__ItemView__ButtonView(
                         text = activityUI.activity.nameWithEmoji(),
                     ) {
-                        Dialog.showDatePicker(
+                        Dialog.showDateTimePicker(
                             defaultTime = UnixTime(defaultTime),
                             minPickableDay = 0,
                             minSavableDay = 0,

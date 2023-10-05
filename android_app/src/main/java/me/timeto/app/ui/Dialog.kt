@@ -59,7 +59,7 @@ object Dialog {
         ).show()
     }
 
-    fun showDatePicker(
+    fun showDateTimePicker(
         defaultTime: UnixTime? = null,
         minPickableDay: Int, // Available to pick
         minSavableDay: Int, // Active add button
