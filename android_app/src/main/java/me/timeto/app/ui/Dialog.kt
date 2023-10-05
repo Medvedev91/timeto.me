@@ -188,4 +188,40 @@ object Dialog {
             }
         }
     }
+
+    fun showDatePicker(
+        unixTime: UnixTime,
+        minTime: UnixTime,
+        maxTime: UnixTime,
+        onSelect: (UnixTime) -> Unit,
+    ) {
+        show(
+            margin = PaddingValues(horizontal = 30.dp),
+        ) { layer ->
+
+            Column(
+                modifier = Modifier
+                    .background(c.sheetBg)
+            ) {
+
+                AndroidView(
+                    { CalendarView(it) },
+                    modifier = Modifier.padding(top = 4.dp),
+                    update = { calendarView ->
+                        calendarView.date = unixTime.time * 1000L
+
+                        calendarView.minDate = minTime.time * 1000L
+                        calendarView.maxDate = maxTime.time * 1000L
+
+                        calendarView.setOnDateChangeListener { _, cYear, cMonthIndex, cDay ->
+                            val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+                            val newDate = formatter.parse("$cYear-${cMonthIndex + 1}-${cDay}")!!
+                            onSelect(newDate.toUnixTime())
+                            layer.close()
+                        }
+                    }
+                )
+            }
+        }
+    }
 }
