@@ -17,19 +17,16 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
 
         val timeStartText: String = pickerTimeStart.getStringByComponents(buttonDateStringComponents)
         val timeFinishText: String = pickerTimeFinish.getStringByComponents(buttonDateStringComponents)
-
-        val timeStartText: String = pickerTimeStart.getStringByComponents(buttonDateTextComponents)
-        val timeFinishText: String = pickerTimeFinish.getStringByComponents(buttonDateTextComponents)
     }
 
     override val state: MutableStateFlow<State>
 
     init {
-        val today = UnixTime()
+        val now = UnixTime()
         state = MutableStateFlow(
             State(
-                pickerTimeStart = today,
-                pickerTimeFinish = today,
+                pickerTimeStart = now,
+                pickerTimeFinish = now,
             )
         )
     }
