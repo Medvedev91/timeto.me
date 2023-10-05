@@ -5,15 +5,6 @@ import me.timeto.shared.DI
 import me.timeto.shared.UnixTime
 import me.timeto.shared.launchEx
 
-private val buttonDateTextComponents = listOf(
-    UnixTime.StringComponent.dayOfMonth,
-    UnixTime.StringComponent.space,
-    UnixTime.StringComponent.month3,
-    UnixTime.StringComponent.comma,
-    UnixTime.StringComponent.space,
-    UnixTime.StringComponent.dayOfWeek3,
-)
-
 class SummarySheetVM : __VM<SummarySheetVM.State>() {
 
     data class State(
@@ -40,7 +31,7 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
         )
     }
 
-    private fun setPeriod(
+    fun setPeriod(
         pickerTimeStart: UnixTime,
         pickerTimeFinish: UnixTime,
     ) {
@@ -64,3 +55,12 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
         pickerTimeFinish = unixTime,
     )
 }
+
+private val buttonDateTextComponents = listOf(
+    UnixTime.StringComponent.dayOfMonth,
+    UnixTime.StringComponent.space,
+    UnixTime.StringComponent.month3,
+    UnixTime.StringComponent.comma,
+    UnixTime.StringComponent.space,
+    UnixTime.StringComponent.dayOfWeek3,
+)
