@@ -10,9 +10,11 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
     data class State(
         val pickerTimeStart: UnixTime,
         val pickerTimeFinish: UnixTime,
-        val minPickerTime: UnixTime,
-        val maxPickerTime: UnixTime,
     ) {
+
+        val minPickerTime = DI.firstInterval.unixTime()
+        val maxPickerTime = DI.lastInterval.unixTime()
+
         val timeStartText: String = pickerTimeStart.getStringByComponents(buttonDateTextComponents)
         val timeFinishText: String = pickerTimeFinish.getStringByComponents(buttonDateTextComponents)
     }
@@ -25,8 +27,6 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
             State(
                 pickerTimeStart = today,
                 pickerTimeFinish = today,
-                minPickerTime = DI.firstInterval.unixTime(),
-                maxPickerTime = DI.lastInterval.unixTime(),
             )
         )
     }
