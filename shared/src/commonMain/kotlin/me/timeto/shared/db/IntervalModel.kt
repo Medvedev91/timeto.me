@@ -140,10 +140,6 @@ data class IntervalModel(
             }
         }
 
-        private fun IntervalSQ.toModel() = IntervalModel(
-            id = id, timer = timer, note = note, activity_id = activity_id
-        )
-
         ///
         /// Backupable Holder
 
@@ -206,3 +202,7 @@ data class IntervalModel(
         db.intervalQueries.deleteById(id)
     }
 }
+
+private fun IntervalSQ.toModel() = IntervalModel(
+    id = id, timer = timer, note = note, activity_id = activity_id
+)
