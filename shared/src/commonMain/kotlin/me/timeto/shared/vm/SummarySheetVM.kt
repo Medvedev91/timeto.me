@@ -22,17 +22,12 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
         val timeStartText: String = pickerTimeStart.getStringByComponents(buttonDateStringComponents)
         val timeFinishText: String = pickerTimeFinish.getStringByComponents(buttonDateStringComponents)
 
-        val periodHints: List<PeriodHint>
-
-        init {
+        val periodHints: List<PeriodHint> = run {
             val now = UnixTime()
             val yesterday = now.inDays(-1)
-            periodHints = listOfNotNull(
+            listOf(
                 PeriodHint(this, "Today", now, now),
-                // Relevant for the first day, otherwise crash on click
-                if (now.localDay > minPickerTime.localDay)
-                    PeriodHint(this, "Yesterday", yesterday, yesterday)
-                else null,
+                PeriodHint(this, "Yesterday", yesterday, yesterday),
                 PeriodHint(this, "7 days", yesterday.inDays(-6), yesterday),
                 PeriodHint(this, "30 days", yesterday.inDays(-29), yesterday),
             )
