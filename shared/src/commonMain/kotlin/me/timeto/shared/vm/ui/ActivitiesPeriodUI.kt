@@ -6,15 +6,10 @@ import me.timeto.shared.db.IntervalModel
 
 class ActivitiesPeriodUI(
     val barsUI: List<BarUI>,
-    private val dayStart: Int,
-    private val dayFinish: Int,
-    private val lastInterval: IntervalModel,
-    // TRICK Without the last interval, use calcDuration()
-    private val mapActivitySeconds: Map<Int, Int>,
 ) {
 
     fun getActivitiesUI(): List<ActivityUI> {
-        val daysCount = dayFinish - dayStart + 1
+        val daysCount = barsUI.size
         val totalSeconds = daysCount * 86_400
         val mapActivitySeconds: MutableMap<Int, Int> = mutableMapOf()
         barsUI.forEach { barUI ->
@@ -35,13 +30,6 @@ class ActivitiesPeriodUI(
                 )
             }
             .sortedByDescending { it.seconds }
-    }
-
-    fun calcDuration(activity: ActivityModel): Int {
-        var duration = mapActivitySeconds[activity.id] ?: 0
-        if (activity.id == lastInterval.activity_id)
-            duration += (time() - lastInterval.id)
-        return duration
     }
 
     ///
@@ -142,22 +130,8 @@ class ActivitiesPeriodUI(
                 BarUI(day, daySections)
             }
 
-            val mapActivitySeconds = mutableMapOf<Int, Int>()
-            intervalsAsc.forEachIndexed { idx, interval ->
-                // Last interval
-                if ((idx + 1) == intervalsAsc.size)
-                    return@forEachIndexed
-                val nextInterval = intervalsAsc[idx + 1]
-                val duration = nextInterval.id - interval.id.limitMin(timeStart)
-                mapActivitySeconds.incOrSet(interval.activity_id, duration)
-            }
-
             return ActivitiesPeriodUI(
                 barsUI = barsUI,
-                dayStart = dayStart,
-                dayFinish = dayFinish,
-                lastInterval = intervalsAsc.last(),
-                mapActivitySeconds = mapActivitySeconds,
             )
         }
     }
