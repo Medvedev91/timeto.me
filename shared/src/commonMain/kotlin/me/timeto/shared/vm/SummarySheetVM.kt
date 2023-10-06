@@ -4,12 +4,14 @@ import kotlinx.coroutines.flow.*
 import me.timeto.shared.DI
 import me.timeto.shared.UnixTime
 import me.timeto.shared.launchEx
+import me.timeto.shared.vm.ui.ActivitiesPeriodUI
 
 class SummarySheetVM : __VM<SummarySheetVM.State>() {
 
     data class State(
         val pickerTimeStart: UnixTime,
         val pickerTimeFinish: UnixTime,
+        val activitiesUI: List<ActivitiesPeriodUI.ActivityUI>,
     ) {
 
         val minPickerTime: UnixTime = DI.firstInterval.unixTime()
@@ -43,6 +45,7 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
             State(
                 pickerTimeStart = now,
                 pickerTimeFinish = now,
+                activitiesUI = listOf(), // todo
             )
         )
     }
@@ -52,10 +55,14 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
         pickerTimeFinish: UnixTime,
     ) {
         scopeVM().launchEx {
+            val timeStart = UnixTime(pickerTimeStart.localDayStartTime())
+            val timeFinish = UnixTime(pickerTimeFinish.inDays(1).localDayStartTime() - 1)
+            val activitiesUI = ActivitiesPeriodUI.build(timeStart, timeFinish).getActivitiesUI()
             state.update {
                 it.copy(
                     pickerTimeStart = pickerTimeStart,
                     pickerTimeFinish = pickerTimeFinish,
+                    activitiesUI = activitiesUI,
                 )
             }
         }
