@@ -50,6 +50,10 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
         )
     }
 
+    override fun onAppear() {
+        setPeriod(state.value.pickerTimeStart, state.value.pickerTimeFinish)
+    }
+
     fun setPeriod(
         pickerTimeStart: UnixTime,
         pickerTimeFinish: UnixTime,
