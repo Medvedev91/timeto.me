@@ -16,16 +16,22 @@ class ActivitiesPeriodUI(
     fun getActivitiesUI(): List<ActivityUI> {
         val daysCount = dayFinish - dayStart + 1
         val totalSeconds = daysCount * 86_400
-        val activityIds: Set<Int> = mapActivitySeconds.keys + lastInterval.activity_id
-        return activityIds
-            .map { activityId ->
+        val mapActivitySeconds: MutableMap<Int, Int> = mutableMapOf()
+        barsUI.forEach { barUI ->
+            barUI.sections.forEach { sectionItem ->
+                val activity = sectionItem.activity
+                if (activity != null)
+                    mapActivitySeconds.incOrSet(activity.id, sectionItem.seconds)
+            }
+        }
+        return mapActivitySeconds
+            .map { (activityId, seconds) ->
                 val activity = DI.getActivityByIdOrNull(activityId)!!
-                val duration = calcDuration(activity)
                 ActivityUI(
                     activity = activity,
-                    seconds = duration,
-                    ratio = duration.toFloat() / totalSeconds,
-                    secondsPerDay = duration / daysCount,
+                    seconds = seconds,
+                    ratio = seconds.toFloat() / totalSeconds,
+                    secondsPerDay = seconds / daysCount,
                 )
             }
             .sortedByDescending { it.seconds }
