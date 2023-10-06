@@ -3,6 +3,8 @@ package me.timeto.app.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -15,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
@@ -44,6 +47,98 @@ fun SummarySheet(
                 .fillMaxWidth()
                 .weight(1f),
         ) {
+
+            HStack(
+                modifier = Modifier
+                    .fillMaxSize(),
+            ) {
+
+                ZStack(
+                    modifier = Modifier
+                        .weight(1f),
+                ) {
+                    // todo
+                }
+
+                val activitiesScrollState = rememberScrollState()
+
+                VStack(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 8.dp)
+                        .verticalScroll(state = activitiesScrollState),
+                ) {
+
+                    state.activitiesUI.forEach { activityUI ->
+
+                        val activityColor = activityUI.activity.colorRgba.toColor()
+
+                        VStack(
+                            modifier = Modifier
+                                .padding(top = 12.dp),
+                        ) {
+
+                            HStack {
+
+                                ActivitySecondaryText(activityUI.perDayString, Modifier.weight(1f))
+
+                                ActivitySecondaryText(activityUI.totalTimeString)
+                            }
+
+                            HStack(
+                                verticalAlignment = Alignment.Bottom,
+                            ) {
+
+                                Text(
+                                    text = activityUI.title,
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .padding(end = 4.dp),
+                                    color = c.text,
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.Medium,
+                                    overflow = TextOverflow.Ellipsis,
+                                    maxLines = 1,
+                                )
+
+                                ActivitySecondaryText(activityUI.percentageString)
+                            }
+
+                            HStack(
+                                modifier = Modifier
+                                    .padding(top = 4.dp)
+                            ) {
+
+                                ZStack(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .clip(roundedShape)
+                                        .background(c.sheetFg),
+                                ) {
+
+                                    ZStack(
+                                        modifier = Modifier
+                                            .fillMaxWidth(activityUI.ratio)
+                                            .height(8.dp)
+                                            .background(activityColor)
+                                            .clip(roundedShape),
+                                    )
+                                }
+
+                                ZStack(
+                                    modifier = Modifier
+                                        .padding(start = 4.dp)
+                                        .size(8.dp)
+                                        .clip(roundedShape)
+                                        .background(activityColor)
+                                )
+                            }
+                        }
+                    }
+
+                    Padding(height = periodHintsHeight + 16.dp)
+                }
+            }
 
             HStack(
                 modifier = Modifier
@@ -138,6 +233,21 @@ fun SummarySheet(
             }
         }
     }
+}
+
+@Composable
+private fun ActivitySecondaryText(
+    text: String,
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        text = text,
+        modifier = modifier,
+        color = c.textSecondary,
+        fontSize = 12.sp,
+        fontWeight = FontWeight.Light,
+        maxLines = 1,
+    )
 }
 
 @Composable
