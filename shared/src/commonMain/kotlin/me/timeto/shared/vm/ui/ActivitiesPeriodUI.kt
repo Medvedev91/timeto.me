@@ -10,6 +10,7 @@ class ActivitiesPeriodUI(
     private val lastInterval: IntervalModel,
     // TRICK Without the last interval, use calcDuration()
     private val mapActivitySeconds: Map<Int, Int>,
+    val barsUI: List<BarUI>,
 ) {
 
     fun getActivitiesUI(): List<ActivityUI> {
@@ -51,6 +52,19 @@ class ActivitiesPeriodUI(
         val totalTimeString: String = prepTimeString(seconds)
     }
 
+    class BarUI(
+        val unixDay: Int,
+        val sections: List<SectionItem>,
+    ) {
+
+        class SectionItem(
+            val activity: ActivityModel?,
+            val seconds: Int,
+        ) {
+            val ratio: Float = seconds.toFloat() / 86_400
+        }
+    }
+
     ///
 
     companion object {
@@ -64,19 +78,53 @@ class ActivitiesPeriodUI(
             val timeStart: Int = UnixTime.byLocalDay(dayStart, utcOffset).time
             val timeFinish: Int = UnixTime.byLocalDay(dayFinish + 1, utcOffset).time - 1
 
+            //
+            // Preparing the intervals list
+
             val intervalsAsc: MutableList<IntervalModel> = IntervalModel
                 .getBetweenIdDesc(timeStart, timeFinish)
                 .reversed()
                 .toMutableList()
 
             // Previous interval
-            IntervalModel
-                .getBetweenIdDesc(0, timeStart - 1, 1)
-                .firstOrNull()
-                ?.let { prevInterval ->
-                    // 0 idx - to start
-                    intervalsAsc.add(0, prevInterval)
+            IntervalModel.getBetweenIdDesc(0, timeStart - 1, 1).firstOrNull()?.let { prevInterval ->
+                intervalsAsc.add(0, prevInterval) // 0 idx - to start
+            }
+
+            ////
+
+            val barsUI: List<BarUI> = (dayStart..dayFinish).map { day ->
+                val dayTimeStart: Int = UnixTime.byLocalDay(day, utcOffset).time
+                val dayTimeFinish: Int = dayTimeStart + 86_400
+
+                if (intervalsAsc.isEmpty() || (intervalsAsc.first().id >= dayTimeFinish))
+                    return@map BarUI(day, listOf(BarUI.SectionItem(null, 86_400)))
+
+                val firstInterval: IntervalModel = intervalsAsc.first()
+
+                val daySections = mutableListOf<BarUI.SectionItem>()
+                val dayIntervals = intervalsAsc.filter { it.id >= dayTimeStart && it.id < dayTimeFinish }
+
+                // Adding leading section
+                if (firstInterval.id >= dayTimeStart)
+                    daySections.add(BarUI.SectionItem(null, firstInterval.id - dayTimeStart))
+                else {
+                    val prevInterval = intervalsAsc.last { it.id < dayTimeStart }
+                    val seconds = (dayIntervals.firstOrNull()?.id ?: dayTimeFinish) - dayTimeStart
+                    daySections.add(BarUI.SectionItem(prevInterval.getActivityDI(), seconds))
                 }
+
+                // Adding other sections
+                dayIntervals.forEachIndexed { idx, interval ->
+                    val nextIntervalTime =
+                        if ((idx + 1) == dayIntervals.size) dayTimeFinish
+                        else dayIntervals[idx + 1].id
+                    val seconds = nextIntervalTime - interval.id
+                    daySections.add(BarUI.SectionItem(interval.getActivityDI(), seconds))
+                }
+
+                BarUI(day, daySections)
+            }
 
             val mapActivitySeconds = mutableMapOf<Int, Int>()
             intervalsAsc.forEachIndexed { idx, interval ->
@@ -93,6 +141,7 @@ class ActivitiesPeriodUI(
                 dayFinish = dayFinish,
                 lastInterval = intervalsAsc.last(),
                 mapActivitySeconds = mapActivitySeconds,
+                barsUI = barsUI,
             )
         }
     }
