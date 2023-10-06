@@ -53,6 +53,7 @@ class ActivitiesPeriodUI(
 
         class SectionItem(
             val activity: ActivityModel?,
+            val timeStart: Int,
             val seconds: Int,
         ) {
             val ratio: Float = seconds.toFloat() / 86_400
@@ -97,7 +98,7 @@ class ActivitiesPeriodUI(
                     intervalsAsc.isEmpty() ||
                     (dayTimeFinish <= intervalsAsc.first().id)
                 )
-                    return@map BarUI(day, listOf(BarUI.SectionItem(null, 86_400)))
+                    return@map BarUI(day, listOf(BarUI.SectionItem(null, dayTimeStart, 86_400)))
 
                 val firstInterval: IntervalModel = intervalsAsc.first()
 
@@ -106,11 +107,11 @@ class ActivitiesPeriodUI(
 
                 // Adding leading section
                 if (firstInterval.id >= dayTimeStart)
-                    daySections.add(BarUI.SectionItem(null, firstInterval.id - dayTimeStart))
+                    daySections.add(BarUI.SectionItem(null, dayTimeStart, firstInterval.id - dayTimeStart))
                 else {
                     val prevInterval = intervalsAsc.last { it.id < dayTimeStart }
                     val seconds = (dayIntervals.firstOrNull()?.id ?: dayMaxTimeFinish) - dayTimeStart
-                    daySections.add(BarUI.SectionItem(prevInterval.getActivityDI(), seconds))
+                    daySections.add(BarUI.SectionItem(prevInterval.getActivityDI(), dayTimeStart, seconds))
                 }
 
                 // Adding other sections
@@ -119,13 +120,13 @@ class ActivitiesPeriodUI(
                         if ((idx + 1) == dayIntervals.size) dayMaxTimeFinish
                         else dayIntervals[idx + 1].id
                     val seconds = nextIntervalTime - interval.id
-                    daySections.add(BarUI.SectionItem(interval.getActivityDI(), seconds))
+                    daySections.add(BarUI.SectionItem(interval.getActivityDI(), interval.id, seconds))
                 }
 
                 // For today
                 val trailingPadding = dayTimeFinish - dayMaxTimeFinish
                 if (trailingPadding > 0)
-                    daySections.add(BarUI.SectionItem(null, trailingPadding))
+                    daySections.add(BarUI.SectionItem(null, dayMaxTimeFinish, trailingPadding))
 
                 BarUI(day, daySections)
             }
