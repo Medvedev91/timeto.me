@@ -93,11 +93,15 @@ class ActivitiesPeriodUI(
 
             ////
 
+            val now = time()
             val barsUI: List<BarUI> = (dayStart..dayFinish).map { day ->
                 val dayTimeStart: Int = UnixTime.byLocalDay(day, utcOffset).time
                 val dayTimeFinish: Int = dayTimeStart + 86_400
 
-                if (intervalsAsc.isEmpty() || (intervalsAsc.first().id >= dayTimeFinish))
+                if ((now <= dayTimeStart) ||
+                    intervalsAsc.isEmpty() ||
+                    (intervalsAsc.first().id >= dayTimeFinish)
+                )
                     return@map BarUI(day, listOf(BarUI.SectionItem(null, 86_400)))
 
                 val firstInterval: IntervalModel = intervalsAsc.first()
