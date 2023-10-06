@@ -25,7 +25,7 @@ import me.timeto.app.R
 import me.timeto.shared.UnixTime
 import me.timeto.shared.vm.SummarySheetVM
 
-private val periodHintsHeight = 40.dp
+private val periodHintsHeight = 36.dp
 private val periodHintShape = SquircleShape(len = 50f)
 private val periodHintBg = c.sheetBg.copy(alpha = 0.8f)
 
