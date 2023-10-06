@@ -97,6 +97,7 @@ class ActivitiesPeriodUI(
             val barsUI: List<BarUI> = (dayStart..dayFinish).map { day ->
                 val dayTimeStart: Int = UnixTime.byLocalDay(day, utcOffset).time
                 val dayTimeFinish: Int = dayTimeStart + 86_400
+                val dayMaxTimeFinish: Int = dayTimeFinish.limitMax(now)
 
                 if ((now <= dayTimeStart) ||
                     intervalsAsc.isEmpty() ||
@@ -114,18 +115,23 @@ class ActivitiesPeriodUI(
                     daySections.add(BarUI.SectionItem(null, firstInterval.id - dayTimeStart))
                 else {
                     val prevInterval = intervalsAsc.last { it.id < dayTimeStart }
-                    val seconds = (dayIntervals.firstOrNull()?.id ?: dayTimeFinish) - dayTimeStart
+                    val seconds = (dayIntervals.firstOrNull()?.id ?: dayMaxTimeFinish) - dayTimeStart
                     daySections.add(BarUI.SectionItem(prevInterval.getActivityDI(), seconds))
                 }
 
                 // Adding other sections
                 dayIntervals.forEachIndexed { idx, interval ->
                     val nextIntervalTime =
-                        if ((idx + 1) == dayIntervals.size) dayTimeFinish
+                        if ((idx + 1) == dayIntervals.size) dayMaxTimeFinish
                         else dayIntervals[idx + 1].id
                     val seconds = nextIntervalTime - interval.id
                     daySections.add(BarUI.SectionItem(interval.getActivityDI(), seconds))
                 }
+
+                // For today
+                val trailingPadding = dayTimeFinish - dayMaxTimeFinish
+                if (trailingPadding > 0)
+                    daySections.add(BarUI.SectionItem(null, trailingPadding))
 
                 BarUI(day, daySections)
             }
