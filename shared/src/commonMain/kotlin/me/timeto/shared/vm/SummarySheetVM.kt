@@ -13,6 +13,7 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
         val pickerTimeStart: UnixTime,
         val pickerTimeFinish: UnixTime,
         val activitiesUI: List<ActivitiesPeriodUI.ActivityUI>,
+        val barsUI: List<ActivitiesPeriodUI.BarUI>,
     ) {
 
         val minPickerTime: UnixTime = DI.firstInterval.unixTime()
@@ -47,6 +48,7 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
                 pickerTimeStart = now,
                 pickerTimeFinish = now,
                 activitiesUI = listOf(), // todo
+                barsUI = listOf(), // todo
             )
         )
     }
@@ -70,6 +72,7 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
                     pickerTimeStart = pickerTimeStart,
                     pickerTimeFinish = pickerTimeFinish,
                     activitiesUI = activitiesPeriodUI.getActivitiesUI(),
+                    barsUI = activitiesPeriodUI.barsUI.reversed(),
                 )
             }
         }
