@@ -1,10 +1,9 @@
 package me.timeto.app.ui
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -53,11 +52,42 @@ fun SummarySheet(
                     .fillMaxSize(),
             ) {
 
-                ZStack(
+                HStack(
                     modifier = Modifier
-                        .weight(1f),
+                        .weight(1f)
+                        .padding(end = 16.dp),
                 ) {
-                    // todo
+
+                    val scrollState = rememberLazyListState()
+
+                    LazyRow(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        state = scrollState,
+                        reverseLayout = true,
+                    ) {
+
+                        state.barsUI.forEach { barUI ->
+                            item {
+                                VStack(
+                                    modifier = Modifier
+                                        .padding(top = 20.dp, bottom = periodHintsHeight + 4.dp, start = 8.dp)
+                                        .width(8.dp)
+                                        .fillMaxHeight()
+                                        .clip(roundedShape),
+                                ) {
+                                    barUI.sections.forEach { section ->
+                                        ZStack(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .weight(section.ratio)
+                                                .background(section.activity?.colorRgba?.toColor() ?: c.sheetFg),
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
 
                 val activitiesScrollState = rememberScrollState()
