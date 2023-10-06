@@ -100,7 +100,7 @@ class ActivitiesPeriodUI(
 
                 if ((now <= dayTimeStart) ||
                     intervalsAsc.isEmpty() ||
-                    (intervalsAsc.first().id >= dayTimeFinish)
+                    (dayTimeFinish <= intervalsAsc.first().id)
                 )
                     return@map BarUI(day, listOf(BarUI.SectionItem(null, 86_400)))
 
