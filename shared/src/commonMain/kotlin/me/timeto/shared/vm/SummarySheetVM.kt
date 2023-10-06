@@ -47,8 +47,8 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
             State(
                 pickerTimeStart = now,
                 pickerTimeFinish = now,
-                activitiesUI = listOf(), // todo
-                barsUI = listOf(), // todo
+                activitiesUI = listOf(),
+                barsUI = listOf(),
             )
         )
     }
