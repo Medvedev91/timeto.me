@@ -5,12 +5,12 @@ import me.timeto.shared.db.ActivityModel
 import me.timeto.shared.db.IntervalModel
 
 class ActivitiesPeriodUI(
+    val barsUI: List<BarUI>,
     private val dayStart: Int,
     private val dayFinish: Int,
     private val lastInterval: IntervalModel,
     // TRICK Without the last interval, use calcDuration()
     private val mapActivitySeconds: Map<Int, Int>,
-    val barsUI: List<BarUI>,
 ) {
 
     fun getActivitiesUI(): List<ActivityUI> {
@@ -147,11 +147,11 @@ class ActivitiesPeriodUI(
             }
 
             return ActivitiesPeriodUI(
+                barsUI = barsUI,
                 dayStart = dayStart,
                 dayFinish = dayFinish,
                 lastInterval = intervalsAsc.last(),
                 mapActivitySeconds = mapActivitySeconds,
-                barsUI = barsUI,
             )
         }
     }
