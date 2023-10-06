@@ -5,16 +5,16 @@ import me.timeto.shared.db.ActivityModel
 import me.timeto.shared.db.IntervalModel
 
 class ActivitiesPeriodUI(
-    private val timeStart: UnixTime,
-    private val timeFinish: UnixTime,
+    private val dayStart: Int,
+    private val dayFinish: Int,
     private val lastInterval: IntervalModel,
     // TRICK Without the last interval, use calcDuration()
     private val mapActivitySeconds: Map<Int, Int>,
 ) {
 
     fun getActivitiesUI(): List<ActivityUI> {
-        val daysCount = timeFinish.localDay - timeStart.localDay + 1
-        val totalSeconds = timeFinish.time - timeStart.time
+        val daysCount = dayFinish - dayStart + 1
+        val totalSeconds = daysCount * 86_400
         val activityIds: Set<Int> = mapActivitySeconds.keys + lastInterval.activity_id
         return activityIds
             .map { activityId ->
@@ -56,22 +56,22 @@ class ActivitiesPeriodUI(
     companion object {
 
         suspend fun build(
-            timeStartRaw: UnixTime,
-            timeFinishRaw: UnixTime,
+            dayStart: Int,
+            dayFinish: Int,
+            utcOffset: Int,
         ): ActivitiesPeriodUI {
 
-            // Time normalization TRICK .copy to keep utcOffset
-            val timeStart = timeStartRaw.copy(time = timeStartRaw.time.limitMin(DI.firstInterval.id))
-            val timeFinish = timeFinishRaw.copy(time = timeFinishRaw.time.limitMax(time()))
+            val timeStart: Int = UnixTime.byLocalDay(dayStart, utcOffset).time
+            val timeFinish: Int = UnixTime.byLocalDay(dayFinish + 1, utcOffset).time - 1
 
             val intervalsAsc: MutableList<IntervalModel> = IntervalModel
-                .getBetweenIdDesc(timeStart.time, timeFinish.time)
+                .getBetweenIdDesc(timeStart, timeFinish)
                 .reversed()
                 .toMutableList()
 
             // Previous interval
             IntervalModel
-                .getBetweenIdDesc(0, timeStart.time - 1, 1)
+                .getBetweenIdDesc(0, timeStart - 1, 1)
                 .firstOrNull()
                 ?.let { prevInterval ->
                     // 0 idx - to start
@@ -84,13 +84,13 @@ class ActivitiesPeriodUI(
                 if ((idx + 1) == intervalsAsc.size)
                     return@forEachIndexed
                 val nextInterval = intervalsAsc[idx + 1]
-                val duration = nextInterval.id - interval.id.limitMin(timeStart.time)
+                val duration = nextInterval.id - interval.id.limitMin(timeStart)
                 mapActivitySeconds.incOrSet(interval.activity_id, duration)
             }
 
             return ActivitiesPeriodUI(
-                timeStart = timeStart,
-                timeFinish = timeFinish,
+                dayStart = dayStart,
+                dayFinish = dayFinish,
                 lastInterval = intervalsAsc.last(),
                 mapActivitySeconds = mapActivitySeconds,
             )
