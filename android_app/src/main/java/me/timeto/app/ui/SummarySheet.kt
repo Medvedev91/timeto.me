@@ -274,13 +274,14 @@ fun SummarySheet(
                     Icon(
                         painter = painterResource(R.drawable.sf_chart_pie_small_thin),
                         contentDescription = "Pie Chart",
-                        tint = c.textSecondary,
+                        tint = if (state.isChartVisible) c.white else c.textSecondary,
                         modifier = Modifier
-                            .alpha(0.7f)
                             .size(30.dp)
                             .clip(roundedShape)
+                            .background(if (state.isChartVisible) c.blue else c.transparent)
+                            .alpha(0.7f)
                             .clickable {
-                                layer.close()
+                                vm.toggleIsChartVisible()
                             }
                             .padding(5.dp),
                     )
