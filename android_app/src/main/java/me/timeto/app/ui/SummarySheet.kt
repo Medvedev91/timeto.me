@@ -66,7 +66,29 @@ fun SummarySheet(
                     //
                     // Bars Time Sheet
 
-                    // todo
+                    VStack(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(top = barsHeaderHeight),
+                    ) {
+                        state.barsTimeRows.forEach { barString ->
+                            VStack(
+                                modifier = Modifier
+                                    .padding(start = hPadding, end = 4.dp)
+                                    .weight(1f),
+                                verticalArrangement = Arrangement.Bottom,
+                            ) {
+                                Text(
+                                    text = barString,
+                                    color = c.textSecondary,
+                                    fontSize = 10.sp,
+                                    fontWeight = FontWeight.Light,
+                                )
+                                SheetDividerFg()
+                            }
+                        }
+                        ZStack(Modifier.weight(1f))
+                    }
 
                     //
                     // Bars
@@ -77,7 +99,8 @@ fun SummarySheet(
 
                         LazyRow(
                             modifier = Modifier
-                                .fillMaxSize(),
+                                .fillMaxSize()
+                                .padding(start = 28.dp),
                             state = scrollState,
                             reverseLayout = true,
                         ) {
