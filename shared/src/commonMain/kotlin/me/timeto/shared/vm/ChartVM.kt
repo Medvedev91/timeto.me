@@ -9,38 +9,18 @@ class ChartVM(
 ) : __VM<ChartVM.State>() {
 
     data class State(
-        val dayStart: Int,
-        val dayFinish: Int,
         val selectedId: String?,
         val pieItems: List<PieChart.ItemData>,
     )
 
-    override val state: MutableStateFlow<State>
-
-    init {
-        val today = UnixTime().localDay
-        state = MutableStateFlow(
-            State(
-                dayStart = today - 6,
-                dayFinish = today,
-                selectedId = null,
-                pieItems = listOf(),
-            )
+    override val state = MutableStateFlow(
+        State(
+            selectedId = null,
+            pieItems = listOf(),
         )
-    }
+    )
 
     override fun onAppear() {
-        upPeriod(state.value.dayStart, state.value.dayFinish)
-    }
-
-    fun selectId(id: String?) {
-        state.update { it.copy(selectedId = id) }
-    }
-
-    fun upPeriod(
-        dayStart: Int,
-        dayFinish: Int,
-    ) {
         scopeVM().launchEx {
             val items = activitiesUI.map { activityUI ->
                 val activity = activityUI.activity
@@ -57,12 +37,12 @@ class ChartVM(
                 )
             }
             state.update {
-                it.copy(
-                    dayStart = dayStart,
-                    dayFinish = dayFinish,
-                    pieItems = items,
-                )
+                it.copy(pieItems = items)
             }
         }
+    }
+
+    fun selectId(id: String?) {
+        state.update { it.copy(selectedId = id) }
     }
 }
