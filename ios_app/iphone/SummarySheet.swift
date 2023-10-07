@@ -32,7 +32,7 @@ struct SummarySheet: View {
                                     },
                                     label: {
                                         Text(period.title)
-                                                .font(.system(size: 13, weight: period.isActive ? .bold : .light))
+                                                .font(.system(size: 14, weight: period.isActive ? .bold : .light))
                                                 .foregroundColor(period.isActive ? c.white : c.text)
                                                 .padding(.horizontal, 8)
                                                 .padding(.vertical, 6)
@@ -40,7 +40,31 @@ struct SummarySheet: View {
                             )
                         }
                     }
-                            .padding(.top, 8)
+                            .padding(.top, 12)
+
+                    HStack(spacing: 6) {
+
+                        DatePickerStateView(
+                                unixTime: state.pickerTimeStart,
+                                minTime: state.minPickerTime,
+                                maxTime: state.maxPickerTime
+                        ) { newTime in
+                            vm.setPickerTimeStart(unixTime: newTime)
+                        }
+                                .labelsHidden()
+
+                        Text("-")
+
+                        DatePickerStateView(
+                                unixTime: state.pickerTimeFinish,
+                                minTime: state.minPickerTime,
+                                maxTime: state.maxPickerTime
+                        ) { newTime in
+                            vm.setPickerTimeFinish(unixTime: newTime)
+                        }
+                                .labelsHidden()
+                    }
+                            .padding(.top, 10)
                 }
             }
         }
