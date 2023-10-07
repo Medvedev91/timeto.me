@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2C0BE02B295258E10099AD7C /* sound_time_to_break.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2C0BE02A295258E10099AD7C /* sound_time_to_break.wav */; };
-		2C0BE02D295732110099AD7C /* DayPickerStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0BE02C295732110099AD7C /* DayPickerStateView.swift */; };
+		2C0BE02D295732110099AD7C /* DatePickerStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0BE02C295732110099AD7C /* DatePickerStateView.swift */; };
 		2C0BE02F295751B70099AD7C /* PickerStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0BE02E295751B70099AD7C /* PickerStateView.swift */; };
 		2C2E93F8290117E300EAADBE /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821ED2142F08DDD1E0CC75 /* MainView.swift */; };
 		2C2E93F92905759100EAADBE /* TimerPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821AE61EE1FC22CCF8E753 /* TimerPickerSheet.swift */; };
@@ -117,7 +117,7 @@
 
 /* Begin PBXFileReference section */
 		2C0BE02A295258E10099AD7C /* sound_time_to_break.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = sound_time_to_break.wav; path = ../android_app/src/main/res/raw/sound_time_to_break.wav; sourceTree = "<group>"; };
-		2C0BE02C295732110099AD7C /* DayPickerStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayPickerStateView.swift; sourceTree = "<group>"; };
+		2C0BE02C295732110099AD7C /* DatePickerStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerStateView.swift; sourceTree = "<group>"; };
 		2C0BE02E295751B70099AD7C /* PickerStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerStateView.swift; sourceTree = "<group>"; };
 		2C2C419628C4CF2A00923267 /* timeto (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "timeto (iOS).entitlements"; sourceTree = "<group>"; };
 		2C2C419728C4D83400923267 /* timeto--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "timeto--iOS--Info.plist"; sourceTree = "<group>"; };
@@ -308,7 +308,7 @@
 				31821A7EADEF749C7A5F04DE /* ChecklistDialog.swift */,
 				318212FEA97CBD2AEC3AA1D6 /* ChecklistFormSheet.swift */,
 				31821290CB27918CD444FBB0 /* ChecklistItemFormSheet.swift */,
-				2C0BE02C295732110099AD7C /* DayPickerStateView.swift */,
+				2C0BE02C295732110099AD7C /* DatePickerStateView.swift */,
 				31821D4211F3426B1F444F81 /* DaytimePickerSheet.swift */,
 				31821E53EB27CE7F81AF0F69 /* DialogCloseButton.swift */,
 				31821CF31C64B32D614C6A9D /* EditActivitiesSheet.swift */,
@@ -551,7 +551,7 @@
 				318210F0EEFF944CD87E3A98 /* TabReadmeView.swift in Sources */,
 				318213FBF8D67B0E8E5463AC /* RepeatingsListView.swift in Sources */,
 				3182132BB1D4C32160A2EBCE /* TasksListView.swift in Sources */,
-				2C0BE02D295732110099AD7C /* DayPickerStateView.swift in Sources */,
+				2C0BE02D295732110099AD7C /* DatePickerStateView.swift in Sources */,
 				31821A947CB3AFF5CE923090 /* ShortcutFormSheet.swift in Sources */,
 				318210ECF60308ECF341FEA2 /* utils_ios.swift in Sources */,
 				318219D2BBD9BE5D46C83469 /* EditActivitiesSheet.swift in Sources */,
