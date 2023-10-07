@@ -236,6 +236,9 @@ fun SummarySheet(
                     Padding(height = 12.dp)
                 }
             }
+
+            if (state.isChartVisible)
+                ChartDialogView()
         }
 
         Sheet__BottomView {
