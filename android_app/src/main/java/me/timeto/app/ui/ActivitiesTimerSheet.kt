@@ -173,14 +173,14 @@ private fun ActivitiesTimerSheet(
                 ) {
 
                     ChartHistoryButton(
-                        text = "Chart",
+                        text = "Summary",
                         iconResId = R.drawable.sf_chart_pie_small_thin,
                         iconSize = 17.dp,
                     ) {
-                        Dialog.show(
-                            modifier = Modifier.fillMaxHeight(0.95f),
+                        Sheet.show(
+                            topPadding = 4.dp,
                         ) { layer ->
-                            ChartDialogView(layer::close)
+                            SummarySheet(layer)
                         }
                     }
 
