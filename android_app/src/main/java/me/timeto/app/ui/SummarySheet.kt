@@ -24,7 +24,7 @@ import me.timeto.app.R
 import me.timeto.shared.UnixTime
 import me.timeto.shared.vm.SummarySheetVM
 
-private val periodHintsHeight = 36.dp
+private val periodHintsHeight = 34.dp
 private val periodHintShape = SquircleShape(len = 50f)
 
 @Composable
@@ -67,21 +67,40 @@ fun SummarySheet(
                     ) {
 
                         state.barsUI.forEach { barUI ->
+
                             item {
+
                                 VStack(
                                     modifier = Modifier
-                                        .padding(top = 20.dp, bottom = periodHintsHeight + 4.dp, start = 8.dp)
-                                        .width(8.dp)
                                         .fillMaxHeight()
-                                        .clip(roundedShape),
+                                        .padding(top = 14.dp, bottom = periodHintsHeight + 8.dp)
+                                        .width(16.dp),
                                 ) {
-                                    barUI.sections.forEach { section ->
-                                        ZStack(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .weight(section.ratio)
-                                                .background(section.activity?.colorRgba?.toColor() ?: c.sheetFg),
-                                        )
+
+                                    Text(
+                                        text = barUI.dayString,
+                                        modifier = Modifier
+                                            .align(Alignment.CenterHorizontally),
+                                        color = c.textSecondary,
+                                        fontSize = 10.sp,
+                                        fontWeight = FontWeight.Light,
+                                        overflow = TextOverflow.Clip,
+                                        maxLines = 1,
+                                    )
+
+                                    VStack(
+                                        modifier = Modifier
+                                            .padding(top = 8.dp, start = 4.dp, end = 4.dp)
+                                            .clip(roundedShape),
+                                    ) {
+                                        barUI.sections.forEach { section ->
+                                            ZStack(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .weight(section.ratio)
+                                                    .background(section.activity?.colorRgba?.toColor() ?: c.sheetFg),
+                                            )
+                                        }
                                     }
                                 }
                             }
