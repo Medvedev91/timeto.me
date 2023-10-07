@@ -49,7 +49,13 @@ class ActivitiesPeriodUI(
     class BarUI(
         val unixDay: Int,
         val sections: List<SectionItem>,
+        dayStringFormat: DAY_STRING_FORMAT,
     ) {
+
+        val dayString: String =
+            if ((dayStringFormat == DAY_STRING_FORMAT.ALL) || ((unixDay % 2) == 0))
+                "${UnixTime.byLocalDay(unixDay).dayOfMonth()}"
+            else ""
 
         class SectionItem(
             val activity: ActivityModel?,
@@ -57,6 +63,10 @@ class ActivitiesPeriodUI(
             val seconds: Int,
         ) {
             val ratio: Float = seconds.toFloat() / 86_400
+        }
+
+        enum class DAY_STRING_FORMAT {
+            ALL, EVEN,
         }
     }
 
@@ -89,6 +99,7 @@ class ActivitiesPeriodUI(
             ////
 
             val now = time()
+            val barDayFormat = if (dayStart == dayFinish) BarUI.DAY_STRING_FORMAT.ALL else BarUI.DAY_STRING_FORMAT.EVEN
             val barsUI: List<BarUI> = (dayStart..dayFinish).map { day ->
                 val dayTimeStart: Int = UnixTime.byLocalDay(day, utcOffset).time
                 val dayTimeFinish: Int = dayTimeStart + 86_400
@@ -98,7 +109,7 @@ class ActivitiesPeriodUI(
                     intervalsAsc.isEmpty() ||
                     (dayTimeFinish <= intervalsAsc.first().id)
                 )
-                    return@map BarUI(day, listOf(BarUI.SectionItem(null, dayTimeStart, 86_400)))
+                    return@map BarUI(day, listOf(BarUI.SectionItem(null, dayTimeStart, 86_400)), barDayFormat)
 
                 val firstInterval: IntervalModel = intervalsAsc.first()
 
@@ -128,7 +139,7 @@ class ActivitiesPeriodUI(
                 if (trailingPadding > 0)
                     daySections.add(BarUI.SectionItem(null, dayMaxTimeFinish, trailingPadding))
 
-                BarUI(day, daySections)
+                BarUI(day, daySections, barDayFormat)
             }
 
             return ActivitiesPeriodUI(
