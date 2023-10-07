@@ -3,7 +3,13 @@ import shared
 
 struct ChartView: View {
 
-    @State private var vm = ChartVM()
+    @State private var vm: ChartVM
+
+    init(
+            activitiesUI: [ActivitiesPeriodUI.ActivityUI]
+    ) {
+        _vm = State(initialValue: ChartVM(activitiesUI: activitiesUI))
+    }
 
     var body: some View {
 
