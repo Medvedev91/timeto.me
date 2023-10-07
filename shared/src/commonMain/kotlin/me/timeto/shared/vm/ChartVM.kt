@@ -49,10 +49,10 @@ class ChartVM(
                     id = "${activity.id}",
                     value = seconds.toDouble(),
                     color = activity.colorRgba,
-                    title = activity.nameWithEmoji().textFeatures().textUi(),
+                    title = activityUI.title,
                     shortTitle = activity.emoji,
                     subtitleTop = "${(activityUI.ratio * 100).toInt()}%",
-                    subtitleBottom = secondsToString(seconds),
+                    subtitleBottom = activityUI.totalTimeString,
                     customData = activityUI.perDayString,
                 )
             }
@@ -65,16 +65,4 @@ class ChartVM(
             }
         }
     }
-}
-
-private fun secondsToString(seconds: Int): String {
-    val aTime = mutableListOf<String>()
-    val hms = seconds.toHms()
-    if (hms[0] > 0)
-        aTime.add("${hms[0]}h")
-    if (hms[1] > 0)
-        aTime.add("${hms[1]}m")
-    if (aTime.isEmpty())
-        aTime.add("${hms[2]}s")
-    return aTime.joinToString(" ")
 }
