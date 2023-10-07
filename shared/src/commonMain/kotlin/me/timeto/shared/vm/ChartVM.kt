@@ -2,10 +2,11 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
-import me.timeto.shared.db.IntervalModel
-import kotlin.math.abs
+import me.timeto.shared.vm.ui.ActivitiesPeriodUI
 
-class ChartVM : __VM<ChartVM.State>() {
+class ChartVM(
+    val activitiesUI: List<ActivitiesPeriodUI.ActivityUI>,
+) : __VM<ChartVM.State>() {
 
     data class State(
         val dayStart: Int,
@@ -41,7 +42,20 @@ class ChartVM : __VM<ChartVM.State>() {
         dayFinish: Int,
     ) {
         scopeVM().launchEx {
-            val items = prepPieItems(dayStart, dayFinish)
+            val items = activitiesUI.map { activityUI ->
+                val activity = activityUI.activity
+                val seconds = activityUI.seconds
+                PieChart.ItemData(
+                    id = "${activity.id}",
+                    value = seconds.toDouble(),
+                    color = activity.colorRgba,
+                    title = activity.nameWithEmoji().textFeatures().textUi(),
+                    shortTitle = activity.emoji,
+                    subtitleTop = "${(activityUI.ratio * 100).toInt()}%",
+                    subtitleBottom = secondsToString(seconds),
+                    customData = activityUI.perDayString,
+                )
+            }
             state.update {
                 it.copy(
                     dayStart = dayStart,
@@ -51,64 +65,6 @@ class ChartVM : __VM<ChartVM.State>() {
             }
         }
     }
-}
-
-private suspend fun prepPieItems(
-    formDayStart: Int,
-    formDayFinish: Int,
-): List<PieChart.ItemData> {
-
-    /**
-     * The period that is selected can be wider than the history with
-     * the data, especially relevant on the first day of the launch,
-     * when the data only for the day but the period of 7 days.
-     */
-    val realTimeStart = UnixTime.byLocalDay(formDayStart).time.limitMin(DI.firstInterval.id)
-    val realTimeFinish = (UnixTime.byLocalDay(formDayFinish).inDays(1).time - 1).limitMax(time())
-
-    ///
-
-    val mapActivityIdSeconds = mutableMapOf<Int, Int>()
-    val intervalsAsc = IntervalModel.getBetweenIdDesc(realTimeStart, realTimeFinish).reversed()
-    intervalsAsc.forEachIndexed { index, interval ->
-        val iSeconds = if (intervalsAsc.last() == interval)
-            realTimeFinish - interval.id
-        else
-            intervalsAsc[index + 1].id - interval.id
-        mapActivityIdSeconds.incOrSet(interval.activity_id, iSeconds)
-    }
-    val prevInterval = IntervalModel.getBetweenIdDesc(0, realTimeStart - 1, 1).firstOrNull()
-    if (prevInterval != null) {
-        val iSeconds = intervalsAsc.firstOrNull()?.id ?: realTimeFinish
-        mapActivityIdSeconds.incOrSet(prevInterval.activity_id, iSeconds - realTimeStart)
-    }
-
-    ///
-
-    val realTotalSeconds = abs(realTimeFinish - realTimeStart)
-
-    val realDayStart = UnixTime(realTimeStart).localDay
-    val realDayFinish = UnixTime(realTimeFinish).localDay
-
-    return mapActivityIdSeconds
-        .toList()
-        .sortedByDescending { it.second }
-        .map { (activityId, seconds) ->
-            val activity = DI.activitiesSorted.first { it.id == activityId }
-            val ratio = seconds.toFloat() / realTotalSeconds
-            val tableNote = secondsToString(seconds / (realDayFinish - realDayStart + 1)) + if (realDayStart == realDayFinish) "" else " / day"
-
-            PieChart.ItemData(
-                id = "${activity.id}",
-                value = seconds.toDouble(),
-                color = activity.colorRgba,
-                title = activity.nameWithEmoji().textFeatures().textUi(),
-                shortTitle = activity.emoji,
-                subtitleTop = "${(ratio * 100).toInt()}%",
-                subtitleBottom = secondsToString(seconds),
-                customData = tableNote,
-            )
-        }
 }
 
 private fun secondsToString(seconds: Int): String {

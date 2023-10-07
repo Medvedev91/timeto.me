@@ -22,11 +22,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.shared.vm.ChartVM
+import me.timeto.shared.vm.ui.ActivitiesPeriodUI
 
 @Composable
-fun ChartDialogView() {
+fun ChartDialogView(
+    activitiesUI: List<ActivitiesPeriodUI.ActivityUI>,
+) {
 
-    val (vm, state) = rememberVM { ChartVM() }
+    val (vm, state) = rememberVM(activitiesUI) { ChartVM(activitiesUI) }
 
     VStack(
         modifier = Modifier
