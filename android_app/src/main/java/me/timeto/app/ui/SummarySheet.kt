@@ -26,7 +26,6 @@ import me.timeto.shared.vm.SummarySheetVM
 
 private val periodHintsHeight = 36.dp
 private val periodHintShape = SquircleShape(len = 50f)
-private val periodHintBg = c.sheetBg.copy(alpha = 0.8f)
 
 @Composable
 fun SummarySheet(
@@ -183,7 +182,7 @@ fun SummarySheet(
                             .clickable {
                                 vm.setPeriod(period.pickerTimeStart, period.pickerTimeFinish)
                             }
-                            .background(periodHintBg)
+                            .background(c.sheetBg)
                             .padding(start = 8.dp, end = 8.dp, top = 6.dp, bottom = 7.dp),
                         textAlign = TextAlign.Center,
                         fontSize = 12.sp,
