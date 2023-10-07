@@ -12,23 +12,18 @@ class ChartVM : __VM<ChartVM.State>() {
         val dayFinish: Int,
         val selectedId: String?,
         val pieItems: List<PieChart.ItemData>,
-        val minPickerDay: Int,
-        val maxPickerDay: Int,
     )
 
     override val state: MutableStateFlow<State>
 
     init {
         val today = UnixTime().localDay
-        val initDay = DI.firstInterval.unixTime().localDay
         state = MutableStateFlow(
             State(
                 dayStart = today - 6,
                 dayFinish = today,
                 selectedId = null,
                 pieItems = listOf(),
-                minPickerDay = initDay,
-                maxPickerDay = today,
             )
         )
     }
@@ -56,16 +51,6 @@ class ChartVM : __VM<ChartVM.State>() {
             }
         }
     }
-
-    fun upDayStart(day: Int) = upPeriod(
-        dayStart = day,
-        dayFinish = state.value.dayFinish,
-    )
-
-    fun upDayFinish(day: Int) = upPeriod(
-        dayStart = state.value.dayStart,
-        dayFinish = day,
-    )
 }
 
 private suspend fun prepPieItems(
