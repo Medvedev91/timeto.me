@@ -28,101 +28,99 @@ fun ChartDialogView() {
 
     val (vm, state) = rememberVM { ChartVM() }
 
-    Box(
-        modifier = Modifier.background(c.sheetBg)
+    VStack(
+        modifier = Modifier
+            .background(c.sheetBg),
     ) {
 
-        Column {
+        Box(
+            modifier = Modifier
+                .padding(top = 28.dp, start = 40.dp, end = 40.dp)
+                .align(Alignment.CenterHorizontally)
+                // ChartUI() must be in square
+                .fillMaxWidth()
+                .aspectRatio(1f)
+        ) {
 
-            Box(
-                modifier = Modifier
-                    .padding(top = 28.dp, start = 40.dp, end = 40.dp)
-                    .align(Alignment.CenterHorizontally)
-                    // ChartUI() must be in square
-                    .fillMaxWidth()
-                    .aspectRatio(1f)
-            ) {
-
-                WyouChart.ChartUI(state.pieItems, state.selectedId) {
-                    vm.selectId(it)
-                }
+            WyouChart.ChartUI(state.pieItems, state.selectedId) {
+                vm.selectId(it)
             }
+        }
 
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                modifier = Modifier.weight(1f),
-                contentPadding = PaddingValues(
-                    bottom = 12.dp,
-                    top = 26.dp,
-                    start = 16.dp,
-                    end = 16.dp
-                )
-            ) {
-                itemsIndexed(state.pieItems) { _, pie ->
-                    val curId = pie.id
-                    Row(
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            modifier = Modifier.weight(1f),
+            contentPadding = PaddingValues(
+                bottom = 12.dp,
+                top = 26.dp,
+                start = 16.dp,
+                end = 16.dp
+            )
+        ) {
+            itemsIndexed(state.pieItems) { _, pie ->
+                val curId = pie.id
+                Row(
+                    modifier = Modifier
+                        .height(IntrinsicSize.Min) // To use fillMaxHeight() inside
+                        .padding(start = 2.dp)
+                        .clip(squircleShape)
+                        .clickable {
+                            vm.selectId(if (state.selectedId == curId) null else curId)
+                        }
+                        .padding(start = 6.dp, end = 1.dp, top = 5.dp, bottom = 5.dp)
+                ) {
+                    val width = animateDpAsState(
+                        if (state.selectedId == curId) 23.dp else 10.dp,
+                        spring(stiffness = Spring.StiffnessLow)
+                    )
+                    Box(
                         modifier = Modifier
-                            .height(IntrinsicSize.Min) // To use fillMaxHeight() inside
-                            .padding(start = 2.dp)
-                            .clip(squircleShape)
-                            .clickable {
-                                vm.selectId(if (state.selectedId == curId) null else curId)
-                            }
-                            .padding(start = 6.dp, end = 1.dp, top = 5.dp, bottom = 5.dp)
+                            .fillMaxHeight()
+                            .width(width.value)
+                            .clip(RoundedCornerShape(5.dp))
+                            .background(pie.color.toColor())
+                    )
+
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(start = 8.dp),
                     ) {
-                        val width = animateDpAsState(
-                            if (state.selectedId == curId) 23.dp else 10.dp,
-                            spring(stiffness = Spring.StiffnessLow)
-                        )
-                        Box(
-                            modifier = Modifier
-                                .fillMaxHeight()
-                                .width(width.value)
-                                .clip(RoundedCornerShape(5.dp))
-                                .background(pie.color.toColor())
+
+                        Text(
+                            pie.title,
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Start,
+                            fontWeight = FontWeight.W500,
+                            fontSize = 14.sp,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            color = c.text,
                         )
 
-                        Column(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(start = 8.dp),
-                        ) {
+                        Row {
 
                             Text(
-                                pie.title,
-                                modifier = Modifier.fillMaxWidth(),
+                                pie.customData as String,
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(top = 1.dp, bottom = 2.dp),
                                 textAlign = TextAlign.Start,
-                                fontWeight = FontWeight.W500,
-                                fontSize = 14.sp,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis,
+                                fontWeight = FontWeight.W300,
+                                fontSize = 12.sp,
                                 color = c.text,
                             )
 
-                            Row {
 
-                                Text(
-                                    pie.customData as String,
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .padding(top = 1.dp, bottom = 2.dp),
-                                    textAlign = TextAlign.Start,
-                                    fontWeight = FontWeight.W300,
-                                    fontSize = 12.sp,
-                                    color = c.text,
-                                )
-
-
-                                Text(
-                                    pie.subtitleTop!!,
-                                    modifier = Modifier
-                                        .padding(top = 1.dp, bottom = 2.dp),
-                                    textAlign = TextAlign.Start,
-                                    fontWeight = FontWeight.W300,
-                                    fontSize = 12.sp,
-                                    color = c.text,
-                                )
-                            }
+                            Text(
+                                pie.subtitleTop!!,
+                                modifier = Modifier
+                                    .padding(top = 1.dp, bottom = 2.dp),
+                                textAlign = TextAlign.Start,
+                                fontWeight = FontWeight.W300,
+                                fontSize = 12.sp,
+                                color = c.text,
+                            )
                         }
                     }
                 }
