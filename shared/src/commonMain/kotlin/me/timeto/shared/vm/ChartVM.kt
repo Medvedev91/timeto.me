@@ -5,52 +5,26 @@ import me.timeto.shared.*
 import me.timeto.shared.db.IntervalModel
 import kotlin.math.abs
 
-/**
- * todo
- * If you open on one day and then reopen to another,
- * it will not be possible to select the current day.
- */
 class ChartVM : __VM<ChartVM.State>() {
-
-    class PeriodHint(
-        val title: String,
-        val dayStart: Int,
-        val dayFinish: Int,
-    )
 
     data class State(
         val dayStart: Int,
         val dayFinish: Int,
-        val periodHints: List<PeriodHint>,
         val selectedId: String?,
         val pieItems: List<PieChart.ItemData>,
         val minPickerDay: Int,
         val maxPickerDay: Int,
-    ) {
-        val activePeriodHintTitle: String = periodHints.firstOrNull { period ->
-            period.dayStart == dayStart && period.dayFinish == dayFinish
-        }?.title ?: ""
-    }
+    )
 
     override val state: MutableStateFlow<State>
 
     init {
         val today = UnixTime().localDay
-
         val initDay = DI.firstInterval.unixTime().localDay
-        val periods: List<PeriodHint> = listOfNotNull(
-            PeriodHint("Today", today, today),
-            // Relevant for the first run, otherwise when you click - crash
-            if (today > initDay) PeriodHint("Yesterday", today - 1, today - 1) else null,
-            PeriodHint("7 days", today - 6, today),
-            PeriodHint("30 days", today - 29, today),
-        )
-
         state = MutableStateFlow(
             State(
                 dayStart = today - 6,
                 dayFinish = today,
-                periodHints = periods,
                 selectedId = null,
                 pieItems = listOf(),
                 minPickerDay = initDay,
