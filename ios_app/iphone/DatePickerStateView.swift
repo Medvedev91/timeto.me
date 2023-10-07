@@ -33,6 +33,8 @@ struct DatePickerStateView: View {
                 in: dateRange,
                 displayedComponents: [.date]
         )
+                // Relatively compact
+                .environment(\.locale, Locale(identifier: "us"))
                 //////
                 .onChange(of: formDate) { newDate in
                     let newTime = newDate.toUnixTime()
