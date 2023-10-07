@@ -145,29 +145,6 @@ fun ChartDialogView(
                 .align(Alignment.BottomCenter)
         ) {
 
-            Row(
-                modifier = Modifier
-                    .padding(bottom = 12.dp, end = 2.dp)
-                    .align(Alignment.CenterHorizontally)
-            ) {
-                state.periodHints.forEach { period ->
-                    Text(
-                        period.title,
-                        modifier = Modifier
-                            .clip(SquircleShape(len = 50f))
-                            .clickable {
-                                vm.upPeriod(period.dayStart, period.dayFinish)
-                            }
-                            .background(c.sheetBg.copy(alpha = 0.8f))
-                            .padding(start = 8.dp, end = 8.dp, top = 6.dp, bottom = 7.dp),
-                        textAlign = TextAlign.Center,
-                        fontSize = 11.5.sp,
-                        fontWeight = if (period.title == state.activePeriodHintTitle) FontWeight.W900 else FontWeight.W300,
-                        color = c.text
-                    )
-                }
-            }
-
             Row {
 
                 Box(modifier = Modifier.weight(1f))
