@@ -1,6 +1,5 @@
 package me.timeto.app.ui
 
-import android.text.format.DateFormat
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
@@ -11,7 +10,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -23,9 +21,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
-import me.timeto.shared.UnixTime
 import me.timeto.shared.vm.ChartVM
-import java.util.*
 
 @Composable
 fun ChartDialogView() {
@@ -56,7 +52,7 @@ fun ChartDialogView() {
                 columns = GridCells.Fixed(2),
                 modifier = Modifier.weight(1f),
                 contentPadding = PaddingValues(
-                    bottom = 100.dp,
+                    bottom = 12.dp,
                     top = 26.dp,
                     start = 16.dp,
                     end = 16.dp
@@ -131,87 +127,6 @@ fun ChartDialogView() {
                     }
                 }
             }
-        }
-
-        Column(
-            modifier = Modifier
-                .padding(bottom = 22.dp)
-                .align(Alignment.BottomCenter)
-        ) {
-
-            Row {
-
-                ChartDatePicker(
-                    UnixTime.byLocalDay(state.dayStart),
-                    minPickableDay = state.minPickerDay,
-                    minSavableDay = state.minPickerDay,
-                    maxDay = state.maxPickerDay,
-                ) {
-                    vm.upDayStart(it.localDay)
-                }
-
-                Text(
-                    "to",
-                    modifier = Modifier
-                        .padding(start = 9.dp, end = 8.dp, bottom = 1.dp)
-                        .align(Alignment.CenterVertically),
-                    fontSize = 14.sp,
-                    color = c.text
-                )
-
-                ChartDatePicker(
-                    UnixTime.byLocalDay(state.dayFinish),
-                    minPickableDay = state.minPickerDay,
-                    minSavableDay = state.minPickerDay,
-                    maxDay = state.maxPickerDay,
-                ) {
-                    vm.upDayFinish(it.localDay)
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun ChartDatePicker(
-    defaultTime: UnixTime,
-    modifier: Modifier = Modifier,
-    minPickableDay: Int,
-    minSavableDay: Int,
-    maxDay: Int = UnixTime.MAX_DAY,
-    withTimeBtnText: String? = null,
-    onSelect: (UnixTime) -> Unit,
-) {
-    val calendar = Calendar.getInstance(Locale.ENGLISH)
-    calendar.timeInMillis = defaultTime.time * 1_000L
-
-    Surface(
-        elevation = 6.dp,
-        shape = squircleShape,
-        color = c.blue,
-        modifier = modifier
-            .height(30.dp)
-            .clickable {
-                Dialog.showDateTimePicker(
-                    defaultTime = defaultTime,
-                    minPickableDay = minPickableDay,
-                    minSavableDay = minSavableDay,
-                    maxDay = maxDay,
-                    withTimeBtnText = withTimeBtnText,
-                    onSelect = onSelect
-                )
-            },
-    ) {
-        Box(contentAlignment = Alignment.Center) {
-            val is0000 = defaultTime.localDayStartTime() == defaultTime.time
-            val format = if (is0000) "d MMM, E" else "d MMM, E HH:mm"
-            Text(
-                DateFormat.format(format, calendar).toString(),
-                color = c.white,
-                modifier = Modifier.padding(horizontal = 10.dp),
-                fontSize = 14.sp,
-                fontWeight = FontWeight.W600
-            )
         }
     }
 }
