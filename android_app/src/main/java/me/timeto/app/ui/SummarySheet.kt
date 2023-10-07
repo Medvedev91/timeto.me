@@ -27,6 +27,9 @@ import me.timeto.shared.vm.SummarySheetVM
 private val periodHintsHeight = 34.dp
 private val periodHintShape = SquircleShape(len = 50f)
 
+private val barsHeaderHeight = 35.dp
+private val hPadding = 8.dp
+
 @Composable
 fun SummarySheet(
     layer: WrapperView.Layer,
@@ -86,24 +89,31 @@ fun SummarySheet(
                                     VStack(
                                         modifier = Modifier
                                             .fillMaxHeight()
-                                            .padding(top = 14.dp)
                                             .width(16.dp),
                                     ) {
 
-                                        Text(
-                                            text = barUI.dayString,
+                                        ZStack(
                                             modifier = Modifier
-                                                .align(Alignment.CenterHorizontally),
-                                            color = c.textSecondary,
-                                            fontSize = 10.sp,
-                                            fontWeight = FontWeight.Light,
-                                            overflow = TextOverflow.Clip,
-                                            maxLines = 1,
-                                        )
+                                                .fillMaxWidth()
+                                                .height(barsHeaderHeight)
+                                                .padding(bottom = 8.dp),
+                                        ) {
+
+                                            Text(
+                                                text = barUI.dayString,
+                                                modifier = Modifier
+                                                    .align(Alignment.BottomCenter),
+                                                color = c.textSecondary,
+                                                fontSize = 10.sp,
+                                                fontWeight = FontWeight.Light,
+                                                overflow = TextOverflow.Clip,
+                                                maxLines = 1,
+                                            )
+                                        }
 
                                         VStack(
                                             modifier = Modifier
-                                                .padding(top = 8.dp, start = 4.dp, end = 4.dp)
+                                                .padding(start = 4.dp, end = 4.dp)
                                                 .clip(roundedShape),
                                         ) {
                                             barUI.sections.forEach { section ->
@@ -130,7 +140,7 @@ fun SummarySheet(
                 VStack(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(end = 8.dp)
+                        .padding(end = hPadding)
                         .verticalScroll(state = activitiesScrollState),
                 ) {
 
