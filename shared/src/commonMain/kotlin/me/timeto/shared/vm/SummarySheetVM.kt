@@ -32,6 +32,9 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
                 PeriodHint(this, "30 days", yesterday.inDays(-29), yesterday),
             )
         }
+
+        val barsTimeRows: List<String> =
+            (2..22).filter { (it % 2) == 0 }.map { "$it".padStart(2, '0') }
     }
 
     override val state: MutableStateFlow<State>
