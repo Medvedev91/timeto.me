@@ -42,7 +42,7 @@ struct SummarySheet: View {
                     }
                             .padding(.top, 12)
 
-                    HStack(spacing: 6) {
+                    HStack {
 
                         DatePickerStateView(
                                 unixTime: state.pickerTimeStart,
@@ -54,6 +54,7 @@ struct SummarySheet: View {
                                 .labelsHidden()
 
                         Text("-")
+                                .padding(.horizontal, 6)
 
                         DatePickerStateView(
                                 unixTime: state.pickerTimeFinish,
