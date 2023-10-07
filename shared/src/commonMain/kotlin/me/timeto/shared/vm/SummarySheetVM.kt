@@ -14,6 +14,7 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
         val pickerTimeFinish: UnixTime,
         val activitiesUI: List<ActivitiesPeriodUI.ActivityUI>,
         val barsUI: List<ActivitiesPeriodUI.BarUI>,
+        val isChartVisible: Boolean,
     ) {
 
         val minPickerTime: UnixTime = DI.firstInterval.unixTime()
@@ -47,12 +48,17 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
                 pickerTimeFinish = now,
                 activitiesUI = listOf(),
                 barsUI = listOf(),
+                isChartVisible = false,
             )
         )
     }
 
     override fun onAppear() {
         setPeriod(state.value.pickerTimeStart, state.value.pickerTimeFinish)
+    }
+
+    fun toggleIsChartVisible() = state.update {
+        it.copy(isChartVisible = !it.isChartVisible)
     }
 
     fun setPeriod(
