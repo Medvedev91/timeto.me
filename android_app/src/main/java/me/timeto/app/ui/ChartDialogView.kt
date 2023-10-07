@@ -36,7 +36,7 @@ fun ChartDialogView() {
 
             Box(
                 modifier = Modifier
-                    .padding(top = 30.dp, start = 35.dp, end = 35.dp)
+                    .padding(top = 28.dp, start = 40.dp, end = 40.dp)
                     .align(Alignment.CenterHorizontally)
                     // ChartUI() must be in square
                     .fillMaxWidth()
