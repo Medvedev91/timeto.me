@@ -24,7 +24,6 @@ import me.timeto.app.R
 import me.timeto.shared.UnixTime
 import me.timeto.shared.vm.SummarySheetVM
 
-private val periodHintsHeight = 34.dp
 private val periodHintShape = SquircleShape(len = 50f)
 
 private val barsHeaderHeight = 35.dp
@@ -60,7 +59,7 @@ fun SummarySheet(
                 ZStack(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(end = 16.dp, bottom = periodHintsHeight + 8.dp),
+                        .padding(end = 12.dp, bottom = 12.dp),
                 ) {
 
                     //
@@ -234,100 +233,103 @@ fun SummarySheet(
                         }
                     }
 
-                    Padding(height = periodHintsHeight + 16.dp)
-                }
-            }
-
-            HStack(
-                modifier = Modifier
-                    .height(periodHintsHeight)
-                    .align(Alignment.BottomCenter),
-            ) {
-                state.periodHints.forEach { period ->
-                    Text(
-                        period.title,
-                        modifier = Modifier
-                            .clip(periodHintShape)
-                            .clickable {
-                                vm.setPeriod(period.pickerTimeStart, period.pickerTimeFinish)
-                            }
-                            .background(c.sheetBg)
-                            .padding(start = 8.dp, end = 8.dp, top = 6.dp, bottom = 7.dp),
-                        textAlign = TextAlign.Center,
-                        fontSize = 12.sp,
-                        fontWeight = if (period.isActive) FontWeight.Black else FontWeight.Light,
-                        color = if (period.isActive) c.white else c.text,
-                    )
+                    Padding(height = 12.dp)
                 }
             }
         }
 
         Sheet__BottomView {
 
-            HStack(
-                modifier = Modifier
-                    .padding(vertical = 10.dp, horizontal = 12.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
+            VStack {
 
-                Icon(
-                    painter = painterResource(R.drawable.sf_chart_pie_small_thin),
-                    contentDescription = "Pie Chart",
-                    tint = c.textSecondary,
+                HStack(
                     modifier = Modifier
-                        .alpha(0.7f)
-                        .size(30.dp)
-                        .clip(roundedShape)
-                        .clickable {
-                            layer.close()
-                        }
-                        .padding(5.dp),
-                )
-
-                SpacerW1()
-
-                DateButtonView(
-                    text = state.timeStartText,
-                    unixTime = state.pickerTimeStart,
-                    minTime = state.minPickerTime,
-                    maxTime = state.maxPickerTime,
+                        .padding(top = 4.dp)
+                        .align(Alignment.CenterHorizontally),
                 ) {
-                    vm.setPickerTimeStart(it)
+                    state.periodHints.forEach { period ->
+                        Text(
+                            period.title,
+                            modifier = Modifier
+                                .clip(periodHintShape)
+                                .clickable {
+                                    vm.setPeriod(period.pickerTimeStart, period.pickerTimeFinish)
+                                }
+                                .padding(start = 8.dp, end = 8.dp, top = 6.dp, bottom = 7.dp),
+                            textAlign = TextAlign.Center,
+                            fontSize = 12.sp,
+                            fontWeight = if (period.isActive) FontWeight.Black else FontWeight.Light,
+                            color = if (period.isActive) c.white else c.text,
+                        )
+                    }
                 }
 
-                Text(
-                    "-",
+                HStack(
                     modifier = Modifier
-                        .padding(start = 8.dp, end = 8.dp, bottom = 1.dp)
-                        .align(Alignment.CenterVertically),
-                    fontSize = 14.sp,
-                    color = c.text
-                )
-
-                DateButtonView(
-                    text = state.timeFinishText,
-                    unixTime = state.pickerTimeFinish,
-                    minTime = state.minPickerTime,
-                    maxTime = state.maxPickerTime,
+                        .padding(horizontal = 12.dp)
+                        .padding(top = 4.dp, bottom = 6.dp),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    vm.setPickerTimeFinish(it)
+
+                    Icon(
+                        painter = painterResource(R.drawable.sf_chart_pie_small_thin),
+                        contentDescription = "Pie Chart",
+                        tint = c.textSecondary,
+                        modifier = Modifier
+                            .alpha(0.7f)
+                            .size(30.dp)
+                            .clip(roundedShape)
+                            .clickable {
+                                layer.close()
+                            }
+                            .padding(5.dp),
+                    )
+
+                    SpacerW1()
+
+                    DateButtonView(
+                        text = state.timeStartText,
+                        unixTime = state.pickerTimeStart,
+                        minTime = state.minPickerTime,
+                        maxTime = state.maxPickerTime,
+                    ) {
+                        vm.setPickerTimeStart(it)
+                    }
+
+                    Text(
+                        "-",
+                        modifier = Modifier
+                            .padding(start = 8.dp, end = 8.dp, bottom = 1.dp)
+                            .align(Alignment.CenterVertically),
+                        fontSize = 14.sp,
+                        color = c.text
+                    )
+
+                    DateButtonView(
+                        text = state.timeFinishText,
+                        unixTime = state.pickerTimeFinish,
+                        minTime = state.minPickerTime,
+                        maxTime = state.maxPickerTime,
+                    ) {
+                        vm.setPickerTimeFinish(it)
+                    }
+
+                    SpacerW1()
+
+                    Icon(
+                        imageVector = Icons.Rounded.Close,
+                        contentDescription = "Close",
+                        tint = c.textSecondary,
+                        modifier = Modifier
+                            .alpha(0.7f)
+                            .size(30.dp)
+                            .clip(roundedShape)
+                            .clickable {
+                                layer.close()
+                            }
+                            .padding(4.dp),
+                    )
                 }
-
-                SpacerW1()
-
-                Icon(
-                    imageVector = Icons.Rounded.Close,
-                    contentDescription = "Close",
-                    tint = c.textSecondary,
-                    modifier = Modifier
-                        .alpha(0.7f)
-                        .size(30.dp)
-                        .clip(roundedShape)
-                        .clickable {
-                            layer.close()
-                        }
-                        .padding(4.dp),
-                )
             }
         }
     }
