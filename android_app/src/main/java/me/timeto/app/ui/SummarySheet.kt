@@ -247,7 +247,7 @@ fun SummarySheet(
 
                 HStack(
                     modifier = Modifier
-                        .padding(top = 4.dp)
+                        .padding(top = 8.dp)
                         .align(Alignment.CenterHorizontally),
                 ) {
                     state.periodHints.forEach { period ->
@@ -270,7 +270,7 @@ fun SummarySheet(
                 HStack(
                     modifier = Modifier
                         .padding(horizontal = 12.dp)
-                        .padding(top = 4.dp, bottom = 6.dp),
+                        .padding(top = 6.dp, bottom = 6.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
 
