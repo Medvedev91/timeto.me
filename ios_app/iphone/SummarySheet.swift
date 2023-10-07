@@ -13,6 +13,11 @@ struct SummarySheet: View {
 
         VMView(vm: vm, stack: .VStack()) { state in
 
+            if state.isChartVisible {
+                ChartView(activitiesUI: state.activitiesUI)
+                        .id(state)
+            }
+
             Spacer()
 
             Sheet__BottomView {
@@ -44,6 +49,23 @@ struct SummarySheet: View {
 
                     HStack {
 
+                        Button(
+                                action: {
+                                    vm.toggleIsChartVisible()
+                                },
+                                label: {
+                                    HStack {
+                                        Image(systemName: "chart.pie")
+                                                .font(.system(size: 22, weight: .light))
+                                                .foregroundColor(state.isChartVisible ? c.white : c.textSecondary)
+                                                .padding(2)
+                                    }
+                                }
+                        )
+                                .background(roundedShape.fill(state.isChartVisible ? c.blue : c.transparent ))
+
+                        Spacer()
+
                         DatePickerStateView(
                                 unixTime: state.pickerTimeStart,
                                 minTime: state.minPickerTime,
@@ -64,8 +86,24 @@ struct SummarySheet: View {
                             vm.setPickerTimeFinish(unixTime: newTime)
                         }
                                 .labelsHidden()
+
+                        Spacer()
+
+                        Button(
+                                action: {
+                                    vm.toggleIsChartVisible()
+                                },
+                                label: {
+                                    HStack {
+                                        Image(systemName: "xmark")
+                                                .font(.system(size: 20, weight: .light))
+                                                .foregroundColor(c.textSecondary)
+                                    }
+                                }
+                        )
                     }
                             .padding(.top, 10)
+                            .padding(.horizontal, 16)
                 }
             }
         }
