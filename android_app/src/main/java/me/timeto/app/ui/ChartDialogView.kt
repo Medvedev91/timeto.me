@@ -35,7 +35,7 @@ fun ChartDialogView() {
 
         Box(
             modifier = Modifier
-                .padding(top = 28.dp, start = 40.dp, end = 40.dp)
+                .padding(top = 20.dp, start = 40.dp, end = 40.dp)
                 .align(Alignment.CenterHorizontally)
                 // ChartUI() must be in square
                 .fillMaxWidth()
@@ -51,10 +51,10 @@ fun ChartDialogView() {
             columns = GridCells.Fixed(2),
             modifier = Modifier.weight(1f),
             contentPadding = PaddingValues(
+                top = 20.dp,
                 bottom = 12.dp,
-                top = 26.dp,
-                start = 16.dp,
-                end = 16.dp
+                start = 8.dp,
+                end = 8.dp
             )
         ) {
             itemsIndexed(state.pieItems) { _, pie ->
