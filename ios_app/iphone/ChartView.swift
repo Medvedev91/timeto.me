@@ -9,52 +9,6 @@ struct ChartView: View {
 
         VMView(vm: vm, stack: .VStack(spacing: 0)) { state in
 
-            HStack {
-
-                PickerStateView(
-                        values: state.periodHints.map { $0.title },
-                        value: state.activePeriodHintTitle
-                ) { newValue in
-                    if let hint = state.periodHints.first { newValue == $0.title } {
-                        vm.upPeriod(dayStart: hint.dayStart, dayFinish: hint.dayFinish)
-                    }
-                }
-                        .padding(.leading, 20)
-                        .padding(.trailing, 20)
-                        .padding(.top, 6)
-                        .padding(.bottom, 4)
-                        .pickerStyle(SegmentedPickerStyle())
-            }
-
-            HStack(spacing: 10) {
-
-                Text("From")
-
-                DayPickerStateView(
-                        day: state.dayStart.toInt(),
-                        minDay: state.minPickerDay.toInt(),
-                        maxDay: state.maxPickerDay.toInt()
-                ) { newDay in
-                    vm.upDayStart(day: newDay.toInt32())
-                }
-                        .labelsHidden()
-                        .padding(.leading, 3)
-
-                Text("to")
-                        .padding(.leading, 3)
-
-                DayPickerStateView(
-                        day: state.dayFinish.toInt(),
-                        minDay: state.minPickerDay.toInt(),
-                        maxDay: state.maxPickerDay.toInt()
-                ) { newDay in
-                    vm.upDayFinish(day: newDay.toInt32())
-                }
-                        .labelsHidden()
-                        .padding(.leading, 3)
-            }
-                    .padding(.top, 15)
-
             GeometryReader { geometry in
 
                 VStack {
