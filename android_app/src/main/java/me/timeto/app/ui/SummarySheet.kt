@@ -51,55 +51,69 @@ fun SummarySheet(
                     .fillMaxSize(),
             ) {
 
-                HStack(
+                //
+                // Left Part
+
+                ZStack(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(end = 16.dp),
+                        .padding(end = 16.dp, bottom = periodHintsHeight + 8.dp),
                 ) {
 
-                    val scrollState = rememberLazyListState()
+                    //
+                    // Bars Time Sheet
 
-                    LazyRow(
-                        modifier = Modifier
-                            .fillMaxSize(),
-                        state = scrollState,
-                        reverseLayout = true,
-                    ) {
+                    // todo
 
-                        state.barsUI.forEach { barUI ->
+                    //
+                    // Bars
 
-                            item {
+                    HStack {
 
-                                VStack(
-                                    modifier = Modifier
-                                        .fillMaxHeight()
-                                        .padding(top = 14.dp, bottom = periodHintsHeight + 8.dp)
-                                        .width(16.dp),
-                                ) {
+                        val scrollState = rememberLazyListState()
 
-                                    Text(
-                                        text = barUI.dayString,
-                                        modifier = Modifier
-                                            .align(Alignment.CenterHorizontally),
-                                        color = c.textSecondary,
-                                        fontSize = 10.sp,
-                                        fontWeight = FontWeight.Light,
-                                        overflow = TextOverflow.Clip,
-                                        maxLines = 1,
-                                    )
+                        LazyRow(
+                            modifier = Modifier
+                                .fillMaxSize(),
+                            state = scrollState,
+                            reverseLayout = true,
+                        ) {
+
+                            state.barsUI.forEach { barUI ->
+
+                                item {
 
                                     VStack(
                                         modifier = Modifier
-                                            .padding(top = 8.dp, start = 4.dp, end = 4.dp)
-                                            .clip(roundedShape),
+                                            .fillMaxHeight()
+                                            .padding(top = 14.dp)
+                                            .width(16.dp),
                                     ) {
-                                        barUI.sections.forEach { section ->
-                                            ZStack(
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .weight(section.ratio)
-                                                    .background(section.activity?.colorRgba?.toColor() ?: c.sheetFg),
-                                            )
+
+                                        Text(
+                                            text = barUI.dayString,
+                                            modifier = Modifier
+                                                .align(Alignment.CenterHorizontally),
+                                            color = c.textSecondary,
+                                            fontSize = 10.sp,
+                                            fontWeight = FontWeight.Light,
+                                            overflow = TextOverflow.Clip,
+                                            maxLines = 1,
+                                        )
+
+                                        VStack(
+                                            modifier = Modifier
+                                                .padding(top = 8.dp, start = 4.dp, end = 4.dp)
+                                                .clip(roundedShape),
+                                        ) {
+                                            barUI.sections.forEach { section ->
+                                                ZStack(
+                                                    modifier = Modifier
+                                                        .fillMaxWidth()
+                                                        .weight(section.ratio)
+                                                        .background(section.activity?.colorRgba?.toColor() ?: c.sheetFg),
+                                                )
+                                            }
                                         }
                                     }
                                 }
@@ -107,6 +121,9 @@ fun SummarySheet(
                         }
                     }
                 }
+
+                //
+                // Right Part
 
                 val activitiesScrollState = rememberScrollState()
 
