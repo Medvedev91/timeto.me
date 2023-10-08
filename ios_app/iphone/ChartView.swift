@@ -57,6 +57,7 @@ struct ChartView: View {
                         .padding(.top, 4)
             }
         }
+                .background(c.sheetBg)
     }
 }
 
