@@ -1,6 +1,11 @@
 import SwiftUI
 import shared
 
+private let bottomBarButtonFontSize = 22.0
+private let bottomBarButtonFontWeight = Font.Weight.light
+private let bottomBarButtonFontColor = c.textSecondary
+private let bottomBarButtonFrameSize = 32.0
+
 struct SummarySheet: View {
 
     @Binding var isPresented: Bool
@@ -56,13 +61,16 @@ struct SummarySheet: View {
                                 label: {
                                     HStack {
                                         Image(systemName: "chart.pie")
-                                                .font(.system(size: 22, weight: .light))
-                                                .foregroundColor(state.isChartVisible ? c.white : c.textSecondary)
-                                                .padding(2)
+                                                .font(.system(
+                                                        size: state.isChartVisible ? 20 : bottomBarButtonFontSize,
+                                                        weight: bottomBarButtonFontWeight
+                                                ))
+                                                .foregroundColor(state.isChartVisible ? c.white : bottomBarButtonFontColor)
                                     }
+                                            .frame(width: bottomBarButtonFrameSize, height: bottomBarButtonFrameSize)
+                                            .background(roundedShape.fill(state.isChartVisible ? c.blue : c.transparent))
                                 }
                         )
-                                .background(roundedShape.fill(state.isChartVisible ? c.blue : c.transparent ))
 
                         Spacer()
 
@@ -91,14 +99,18 @@ struct SummarySheet: View {
 
                         Button(
                                 action: {
-                                    vm.toggleIsChartVisible()
+                                    isPresented = false
                                 },
                                 label: {
                                     HStack {
-                                        Image(systemName: "xmark")
-                                                .font(.system(size: 20, weight: .light))
-                                                .foregroundColor(c.textSecondary)
+                                        Image(systemName: "xmark.circle")
+                                                .font(.system(
+                                                        size: bottomBarButtonFontSize,
+                                                        weight: bottomBarButtonFontWeight
+                                                ))
+                                                .foregroundColor(bottomBarButtonFontColor)
                                     }
+                                            .frame(width: bottomBarButtonFrameSize, height: bottomBarButtonFrameSize)
                                 }
                         )
                     }
