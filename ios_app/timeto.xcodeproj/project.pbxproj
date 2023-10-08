@@ -83,7 +83,7 @@
 		31821D960D04B6FF21EA9918 /* ActivityFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821794CA93E29D6889286D /* ActivityFormSheet.swift */; };
 		31821DF8D1DFB408872C85BD /* FolderFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821514C5F55F9A34FBC8AD /* FolderFormSheet.swift */; };
 		31821DF974247D110D01C3A2 /* ActivitiesTimerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318213DE3B58FA098A8DBAE7 /* ActivitiesTimerSheet.swift */; };
-		31821E89257A3F8032DE116A /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182118DB415E858D0B449DB /* ChartView.swift */; };
+		31821E89257A3F8032DE116A /* SummaryChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182118DB415E858D0B449DB /* SummaryChartView.swift */; };
 		31821ED40BEA91336DBFE0B4 /* W_TickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821FC26DE90D545D9620B0 /* W_TickerDialog.swift */; };
 		31821EE26161D262CC020E3D /* SummarySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E54E02F361F1AD21375 /* SummarySheet.swift */; };
 		31821F3DCAF6792F0E78CEBD /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821ACA6C9306A2CD2016A0 /* HistoryView.swift */; };
@@ -141,7 +141,7 @@
 		318211488ABF627A2A9935A7 /* ActivityColorSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityColorSheet.swift; sourceTree = "<group>"; };
 		318211757B7EE8E4805AD047 /* ActivityTimerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityTimerSheet.swift; sourceTree = "<group>"; };
 		3182118D8EA3E0D889D4FDC3 /* utils_ios.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = utils_ios.swift; sourceTree = "<group>"; };
-		3182118DB415E858D0B449DB /* ChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
+		3182118DB415E858D0B449DB /* SummaryChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryChartView.swift; sourceTree = "<group>"; };
 		3182118FAB48EDF7FE78201B /* TasksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksView.swift; sourceTree = "<group>"; };
 		31821287721625075228B91E /* TabReadmeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabReadmeView.swift; sourceTree = "<group>"; };
 		31821290CB27918CD444FBB0 /* ChecklistItemFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChecklistItemFormSheet.swift; sourceTree = "<group>"; };
@@ -304,7 +304,7 @@
 				31821996D20B09EBA4F73C2B /* AppDelegate.swift */,
 				3182151D618D3ED8AEE1B80A /* Assets.xcassets */,
 				31821D5928C18299586075F4 /* AutoBackupIos.swift */,
-				3182118DB415E858D0B449DB /* ChartView.swift */,
+				3182118DB415E858D0B449DB /* SummaryChartView.swift */,
 				31821A7EADEF749C7A5F04DE /* ChecklistDialog.swift */,
 				318212FEA97CBD2AEC3AA1D6 /* ChecklistFormSheet.swift */,
 				31821290CB27918CD444FBB0 /* ChecklistItemFormSheet.swift */,
@@ -533,7 +533,7 @@
 				31821F3DCAF6792F0E78CEBD /* HistoryView.swift in Sources */,
 				31821A46712E80148E00481B /* MailView.swift in Sources */,
 				2C2E93F92905759100EAADBE /* TimerPickerSheet.swift in Sources */,
-				31821E89257A3F8032DE116A /* ChartView.swift in Sources */,
+				31821E89257A3F8032DE116A /* SummaryChartView.swift in Sources */,
 				2CB73DE3292FACE00053B2D6 /* SearchEmojiSheet.swift in Sources */,
 				31821286152F9C43BA2C4B7B /* TimetoSheet.swift in Sources */,
 				318212C07B5351BA8C7C9671 /* PieView.swift in Sources */,

@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-struct ChartView: View {
+struct SummaryChartView: View {
 
     @State private var vm: SummaryChartVM
 

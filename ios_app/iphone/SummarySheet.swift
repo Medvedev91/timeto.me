@@ -176,7 +176,7 @@ struct SummarySheet: View {
                 }
 
                 if state.isChartVisible {
-                    ChartView(activitiesUI: state.activitiesUI)
+                    SummaryChartView(activitiesUI: state.activitiesUI)
                             .id(state)
                 }
             }

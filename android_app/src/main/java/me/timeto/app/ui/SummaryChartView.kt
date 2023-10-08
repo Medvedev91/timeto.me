@@ -25,7 +25,7 @@ import me.timeto.shared.vm.SummaryChartVM
 import me.timeto.shared.vm.ui.ActivitiesPeriodUI
 
 @Composable
-fun ChartDialogView(
+fun SummaryChartView(
     activitiesUI: List<ActivitiesPeriodUI.ActivityUI>,
 ) {
 

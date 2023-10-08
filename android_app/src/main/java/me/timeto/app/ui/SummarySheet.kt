@@ -237,7 +237,7 @@ fun SummarySheet(
             }
 
             if (state.isChartVisible)
-                ChartDialogView(state.activitiesUI)
+                SummaryChartView(state.activitiesUI)
         }
 
         Sheet__BottomView {
