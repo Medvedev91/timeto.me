@@ -61,7 +61,7 @@ struct SummarySheet: View {
 
                                     Spacer()
 
-                                    ForEachIndexed(state.barsUI.reversed()) { _, barUI in
+                                    ForEachIndexed(state.daysIntervalsUI.reversed()) { _, dayIntervalsUI in
 
                                         VStack {
 
@@ -69,7 +69,7 @@ struct SummarySheet: View {
 
                                                 Spacer()
 
-                                                Text(barUI.dayString)
+                                                Text(dayIntervalsUI.dayString)
                                                         .lineLimit(1)
                                                         .foregroundColor(c.textSecondary)
                                                         .font(.system(size: 10, weight: .light))
@@ -79,11 +79,11 @@ struct SummarySheet: View {
 
                                             GeometryReader { geometry in
                                                 VStack {
-                                                    ForEachIndexed(barUI.sections) { _, section in
+                                                    ForEachIndexed(dayIntervalsUI.intervalsUI) { _, intervalUI in
                                                         ZStack {}
                                                                 .frame(minWidth: 0, maxWidth: .infinity)
-                                                                .frame(height: CGFloat(section.ratio) * geometry.size.height)
-                                                                .background(section.activity?.colorRgba.toColor() ?? c.sheetFg)
+                                                                .frame(height: CGFloat(intervalUI.ratio) * geometry.size.height)
+                                                                .background(intervalUI.activity?.colorRgba.toColor() ?? c.sheetFg)
                                                     }
                                                 }
                                                         .clipShape(roundedShape)

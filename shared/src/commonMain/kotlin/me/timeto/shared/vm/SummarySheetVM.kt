@@ -3,7 +3,7 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.ActivityModel
-import me.timeto.shared.vm.ui.ActivitiesPeriodUI
+import me.timeto.shared.vm.ui.DayIntervalsUI
 
 class SummarySheetVM : __VM<SummarySheetVM.State>() {
 
@@ -11,7 +11,7 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
         val pickerTimeStart: UnixTime,
         val pickerTimeFinish: UnixTime,
         val activitiesUI: List<ActivityUI>,
-        val barsUI: List<ActivitiesPeriodUI.BarUI>,
+        val daysIntervalsUI: List<DayIntervalsUI>,
         val isChartVisible: Boolean,
     ) {
 
@@ -45,7 +45,7 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
                 pickerTimeStart = now,
                 pickerTimeFinish = now,
                 activitiesUI = listOf(),
-                barsUI = listOf(),
+                daysIntervalsUI = listOf(),
                 isChartVisible = false,
             )
         )
@@ -64,7 +64,7 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
         pickerTimeFinish: UnixTime,
     ) {
         scopeVM().launchEx {
-            val activitiesPeriodUI = ActivitiesPeriodUI.buildList(
+            val daysIntervalsUI = DayIntervalsUI.buildList(
                 dayStart = pickerTimeStart.localDay,
                 dayFinish = pickerTimeFinish.localDay,
                 utcOffset = localUtcOffset,
@@ -73,8 +73,8 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
                 it.copy(
                     pickerTimeStart = pickerTimeStart,
                     pickerTimeFinish = pickerTimeFinish,
-                    activitiesUI = prepActivitiesUI(activitiesPeriodUI.barsUI),
-                    barsUI = activitiesPeriodUI.barsUI.reversed(),
+                    activitiesUI = prepActivitiesUI(daysIntervalsUI),
+                    daysIntervalsUI = daysIntervalsUI.reversed(),
                 )
             }
         }
@@ -138,13 +138,13 @@ private val buttonDateStringComponents = listOf(
 )
 
 private fun prepActivitiesUI(
-    barsUI: List<ActivitiesPeriodUI.BarUI>
+    daysIntervalsUI: List<DayIntervalsUI>
 ): List<SummarySheetVM.ActivityUI> {
-    val daysCount = barsUI.size
+    val daysCount = daysIntervalsUI.size
     val totalSeconds = daysCount * 86_400
     val mapActivitySeconds: MutableMap<Int, Int> = mutableMapOf()
-    barsUI.forEach { barUI ->
-        barUI.sections.forEach { sectionItem ->
+    daysIntervalsUI.forEach { dayIntervalsUI ->
+        dayIntervalsUI.intervalsUI.forEach { sectionItem ->
             val activity = sectionItem.activity
             if (activity != null)
                 mapActivitySeconds.incOrSet(activity.id, sectionItem.seconds)
