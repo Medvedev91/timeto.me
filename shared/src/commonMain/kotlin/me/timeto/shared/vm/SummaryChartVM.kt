@@ -2,10 +2,9 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
-import me.timeto.shared.vm.ui.ActivitiesPeriodUI
 
 class SummaryChartVM(
-    val activitiesUI: List<ActivitiesPeriodUI.ActivityUI>,
+    val activitiesUI: List<SummarySheetVM.ActivityUI>,
 ) : __VM<SummaryChartVM.State>() {
 
     data class State(

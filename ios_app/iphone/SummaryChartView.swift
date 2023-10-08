@@ -6,7 +6,7 @@ struct SummaryChartView: View {
     @State private var vm: SummaryChartVM
 
     init(
-            activitiesUI: [ActivitiesPeriodUI.ActivityUI]
+            activitiesUI: [SummarySheetVM.ActivityUI]
     ) {
         _vm = State(initialValue: SummaryChartVM(activitiesUI: activitiesUI))
     }

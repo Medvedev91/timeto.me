@@ -22,11 +22,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.shared.vm.SummaryChartVM
-import me.timeto.shared.vm.ui.ActivitiesPeriodUI
+import me.timeto.shared.vm.SummarySheetVM
 
 @Composable
 fun SummaryChartView(
-    activitiesUI: List<ActivitiesPeriodUI.ActivityUI>,
+    activitiesUI: List<SummarySheetVM.ActivityUI>,
 ) {
 
     val (vm, state) = rememberVM(activitiesUI) { SummaryChartVM(activitiesUI) }

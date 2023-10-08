@@ -1,10 +1,8 @@
 package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
-import me.timeto.shared.DI
-import me.timeto.shared.UnixTime
-import me.timeto.shared.launchEx
-import me.timeto.shared.localUtcOffset
+import me.timeto.shared.*
+import me.timeto.shared.db.ActivityModel
 import me.timeto.shared.vm.ui.ActivitiesPeriodUI
 
 class SummarySheetVM : __VM<SummarySheetVM.State>() {
@@ -12,7 +10,7 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
     data class State(
         val pickerTimeStart: UnixTime,
         val pickerTimeFinish: UnixTime,
-        val activitiesUI: List<ActivitiesPeriodUI.ActivityUI>,
+        val activitiesUI: List<ActivityUI>,
         val barsUI: List<ActivitiesPeriodUI.BarUI>,
         val isChartVisible: Boolean,
     ) {
@@ -75,7 +73,7 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
                 it.copy(
                     pickerTimeStart = pickerTimeStart,
                     pickerTimeFinish = pickerTimeFinish,
-                    activitiesUI = activitiesPeriodUI.getActivitiesUI(),
+                    activitiesUI = prepActivitiesUI(activitiesPeriodUI.barsUI),
                     barsUI = activitiesPeriodUI.barsUI.reversed(),
                 )
             }
@@ -93,6 +91,30 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
     )
 
     ///
+
+    class ActivityUI(
+        val activity: ActivityModel,
+        val seconds: Int,
+        val ratio: Float,
+        secondsPerDay: Int,
+    ) {
+
+        val title = activity.name.textFeatures().textUi()
+        val percentageString = "${(ratio * 100).toInt()}%"
+        val perDayString: String = prepTimeString(secondsPerDay) + " / day"
+        val totalTimeString: String = prepTimeString(seconds)
+
+        companion object {
+
+            private fun prepTimeString(seconds: Int): String {
+                val (h, m, _) = seconds.toHms(roundToNextMinute = true)
+                val items = mutableListOf<String>()
+                if (h > 0) items.add("${h}h")
+                if (m > 0) items.add("${m}m")
+                return items.joinToString(" ")
+            }
+        }
+    }
 
     class PeriodHint(
         state: State,
@@ -114,3 +136,29 @@ private val buttonDateStringComponents = listOf(
     UnixTime.StringComponent.space,
     UnixTime.StringComponent.dayOfWeek3,
 )
+
+private fun prepActivitiesUI(
+    barsUI: List<ActivitiesPeriodUI.BarUI>
+): List<SummarySheetVM.ActivityUI> {
+    val daysCount = barsUI.size
+    val totalSeconds = daysCount * 86_400
+    val mapActivitySeconds: MutableMap<Int, Int> = mutableMapOf()
+    barsUI.forEach { barUI ->
+        barUI.sections.forEach { sectionItem ->
+            val activity = sectionItem.activity
+            if (activity != null)
+                mapActivitySeconds.incOrSet(activity.id, sectionItem.seconds)
+        }
+    }
+    return mapActivitySeconds
+        .map { (activityId, seconds) ->
+            val activity = DI.getActivityByIdOrNull(activityId)!!
+            SummarySheetVM.ActivityUI(
+                activity = activity,
+                seconds = seconds,
+                ratio = seconds.toFloat() / totalSeconds,
+                secondsPerDay = seconds / daysCount,
+            )
+        }
+        .sortedByDescending { it.seconds }
+}

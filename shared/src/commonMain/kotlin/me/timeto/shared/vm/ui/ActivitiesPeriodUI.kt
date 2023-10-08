@@ -8,44 +8,6 @@ class ActivitiesPeriodUI(
     val barsUI: List<BarUI>,
 ) {
 
-    fun getActivitiesUI(): List<ActivityUI> {
-        val daysCount = barsUI.size
-        val totalSeconds = daysCount * 86_400
-        val mapActivitySeconds: MutableMap<Int, Int> = mutableMapOf()
-        barsUI.forEach { barUI ->
-            barUI.sections.forEach { sectionItem ->
-                val activity = sectionItem.activity
-                if (activity != null)
-                    mapActivitySeconds.incOrSet(activity.id, sectionItem.seconds)
-            }
-        }
-        return mapActivitySeconds
-            .map { (activityId, seconds) ->
-                val activity = DI.getActivityByIdOrNull(activityId)!!
-                ActivityUI(
-                    activity = activity,
-                    seconds = seconds,
-                    ratio = seconds.toFloat() / totalSeconds,
-                    secondsPerDay = seconds / daysCount,
-                )
-            }
-            .sortedByDescending { it.seconds }
-    }
-
-    ///
-
-    class ActivityUI(
-        val activity: ActivityModel,
-        val seconds: Int,
-        val ratio: Float,
-        secondsPerDay: Int,
-    ) {
-        val title = activity.name.textFeatures().textUi()
-        val percentageString = "${(ratio * 100).toInt()}%"
-        val perDayString: String = prepTimeString(secondsPerDay) + " / day"
-        val totalTimeString: String = prepTimeString(seconds)
-    }
-
     class BarUI(
         val unixDay: Int,
         val sections: List<SectionItem>,
@@ -147,12 +109,4 @@ class ActivitiesPeriodUI(
             )
         }
     }
-}
-
-private fun prepTimeString(seconds: Int): String {
-    val (h, m, _) = seconds.toHms(roundToNextMinute = true)
-    val items = mutableListOf<String>()
-    if (h > 0) items.add("${h}h")
-    if (m > 0) items.add("${m}m")
-    return items.joinToString(" ")
 }
