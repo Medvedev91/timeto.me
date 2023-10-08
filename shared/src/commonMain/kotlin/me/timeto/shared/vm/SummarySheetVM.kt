@@ -35,7 +35,7 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
         }
 
         val barsTimeRows: List<String> =
-            (2..24).filter { (it % 2) == 0 }.map { "$it".padStart(2, '0') }
+            ((2..22) + 0).filter { (it % 2) == 0 }.map { "$it".padStart(2, '0') }
     }
 
     override val state: MutableStateFlow<State>
