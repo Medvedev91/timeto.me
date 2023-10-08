@@ -6,6 +6,7 @@ import kotlinx.coroutines.launch
 import me.timeto.shared.*
 import me.timeto.shared.db.*
 import me.timeto.shared.vm.ui.ChecklistStateUI
+import me.timeto.shared.vm.ui.DayIntervalsUI
 import me.timeto.shared.vm.ui.TimerDataUI
 
 class MainVM : __VM<MainVM.State>() {
@@ -16,7 +17,7 @@ class MainVM : __VM<MainVM.State>() {
         val isPurple: Boolean,
         val tasksToday: List<TaskModel>,
         val isTasksVisible: Boolean,
-        val todayIntervalsData: TodayIntervalsData,
+        val todayIntervalsUI: DayIntervalsUI?,
         val idToUpdate: Long,
     ) {
 
@@ -55,12 +56,26 @@ class MainVM : __VM<MainVM.State>() {
             return@filter clt.checklist.id != clUI.checklist.id
         }
 
-        val goalsUI: List<GoalUI> = DI.activitiesSorted
+        val goalsUI: List<GoalUI> = if (todayIntervalsUI == null)
+            listOf()
+        else DI.activitiesSorted
             .map { activity ->
                 activity.goals
                     .filter { it.period.isToday() }
                     .map { goal ->
-                        val timeDone = todayIntervalsData.getDuration(activity).limitMax(goal.seconds)
+                        var totalSeconds: Int = todayIntervalsUI.intervalsUI
+                            .sumOf { if (it.activity?.id == activity.id) it.seconds else 0 }
+                        val lastWithActivity = todayIntervalsUI.intervalsUI
+                            .lastOrNull { it.activity != null }
+                        if (lastWithActivity?.activity?.id == activity.id) {
+                            val timeFinish = lastWithActivity.timeFinish()
+                            val now = time()
+                            if (now < timeFinish)
+                                reportApi("MainActivity goal bad time $now $timeFinish")
+                            totalSeconds += (now - timeFinish)
+                        }
+
+                        val timeDone = totalSeconds.limitMax(goal.seconds)
                         val timeLeft = goal.seconds - timeDone
                         val textRight = if (timeLeft > 0) timeLeft.toTimerHintNote(isShort = false) else "👍"
                         GoalUI(
@@ -133,7 +148,7 @@ class MainVM : __VM<MainVM.State>() {
             isPurple = false,
             tasksToday = DI.tasks.filter { it.isToday },
             isTasksVisible = false,
-            todayIntervalsData = TodayIntervalsData(DI.lastInterval, mapOf()), // todo init data
+            todayIntervalsUI = null, // todo init data
             idToUpdate = 0,
         )
     )
@@ -209,31 +224,16 @@ class MainVM : __VM<MainVM.State>() {
     }
 
     private suspend fun upTodayIntervalsUI() {
-        val dayStartTime = UnixTime(utcOffset = localUtcOffsetWithDayStart).localDayStartTime()
-        val todayIntervalsAsc = IntervalModel
-            .getBetweenIdDesc(dayStartTime, Int.MAX_VALUE)
-            .reversed()
-            .toMutableList()
-
-        val prevDayInterval = IntervalModel.getBetweenIdDesc(0, dayStartTime - 1, 1).firstOrNull()
-        if (prevDayInterval != null)
-            todayIntervalsAsc.add(0, prevDayInterval) // 0 - to start
-
-        val mapActivitySeconds = mutableMapOf<Int, Int>()
-        todayIntervalsAsc.forEachIndexed { idx, interval ->
-            // Last interval
-            if ((idx + 1) == todayIntervalsAsc.size)
-                return@forEachIndexed
-            val nextInterval = todayIntervalsAsc[idx + 1]
-            val duration = nextInterval.id - interval.id.limitMin(dayStartTime)
-            mapActivitySeconds.incOrSet(interval.activity_id, duration)
-        }
-
-        val data = TodayIntervalsData(
-            lastInterval = todayIntervalsAsc.last(),
-            mapActivitySeconds = mapActivitySeconds,
-        )
-        state.update { it.copy(todayIntervalsData = data) }
+        val utcOffset = localUtcOffsetWithDayStart
+        val todayDS = UnixTime(utcOffset = utcOffset).localDay
+        val todayIntervalsUI = DayIntervalsUI
+            .buildList(
+                dayStart = todayDS,
+                dayFinish = todayDS,
+                utcOffset = utcOffset,
+            )
+            .first()
+        state.update { it.copy(todayIntervalsUI = todayIntervalsUI) }
     }
 
     //////
@@ -244,18 +244,6 @@ class MainVM : __VM<MainVM.State>() {
         val ratio: Float,
         val bgColor: ColorRgba,
     )
-
-    class TodayIntervalsData(
-        val lastInterval: IntervalModel,
-        val mapActivitySeconds: Map<Int, Int>,
-    ) {
-        fun getDuration(activity: ActivityModel): Int {
-            var duration = mapActivitySeconds[activity.id] ?: 0
-            if (activity.id == lastInterval.activity_id)
-                duration += (time() - lastInterval.id)
-            return duration
-        }
-    }
 
     class ChecklistUI(
         val checklist: ChecklistModel,
