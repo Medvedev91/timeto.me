@@ -46,7 +46,6 @@ private struct ActivitiesTimerSheet: View {
 
     @State private var sheetHeight: Double
 
-    @State private var isChartPresented = false
     @State private var isHistoryPresented = false
     @State private var isEditActivitiesPresented = false
 
@@ -167,24 +166,13 @@ private struct ActivitiesTimerSheet: View {
 
                             HStack {
 
-                                ChartHistoryButton(text: "Chart", iconName: "chart.pie", iconSize: 18) {
-                                    isChartPresented = true
+                                ChartHistoryButton(text: "Summary", iconName: "chart.pie", iconSize: 18) {
+                                    nativeSheet.show { isPresented in
+                                        SummarySheet(isPresented: isPresented)
+                                    }
                                 }
                                         .padding(.leading, 13)
                                         .padding(.trailing, 12)
-                                        .sheetEnv(isPresented: $isChartPresented) {
-                                            VStack {
-
-                                                ChartView()
-                                                        .padding(.top, 15)
-
-                                                Button(
-                                                        action: { isChartPresented.toggle() },
-                                                        label: { Text("close").fontWeight(.light) }
-                                                )
-                                                        .padding(.bottom, 4)
-                                            }
-                                        }
 
                                 ChartHistoryButton(text: "History", iconName: "list.bullet.rectangle", iconSize: 18) {
                                     isHistoryPresented = true
