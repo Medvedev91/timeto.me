@@ -36,71 +36,74 @@ struct SummarySheet: View {
                     //
                     // Right Part
 
-                    VStack {
+                    ScrollView {
 
-                        ForEachIndexed(state.activitiesUI) { idx, activityUI in
+                        VStack {
 
-                            let activityColor = activityUI.activity.colorRgba.toColor()
+                            ForEachIndexed(state.activitiesUI) { idx, activityUI in
 
-                            VStack {
+                                let activityColor = activityUI.activity.colorRgba.toColor()
 
-                                HStack {
+                                VStack {
 
-                                    ActivitySecondaryText(text: activityUI.perDayString)
+                                    HStack {
 
-                                    Spacer()
+                                        ActivitySecondaryText(text: activityUI.perDayString)
 
-                                    ActivitySecondaryText(text: activityUI.totalTimeString)
-                                }
+                                        Spacer()
 
-                                HStack {
-
-                                    Text(activityUI.title)
-                                            .padding(.trailing, 4)
-                                            .foregroundColor(c.text)
-                                            .font(.system(size: 14, weight: .medium))
-                                            .lineLimit(1)
-
-                                    Spacer()
-
-                                    ActivitySecondaryText(text: activityUI.percentageString)
-                                }
-                                        .padding(.top, 4)
-
-
-                                HStack {
-
-                                    ZStack {
-
-                                        GeometryReader { geometry in
-
-                                            ZStack {}
-                                                    .frame(maxHeight: .infinity)
-                                                    .frame(width: geometry.size.width * Double(activityUI.ratio))
-                                                    .background(activityColor)
-                                        }
-                                                .frame(width: .infinity)
+                                        ActivitySecondaryText(text: activityUI.totalTimeString)
                                     }
-                                            .frame(height: 8)
-                                            .frame(minWidth: 0, maxWidth: .infinity)
-                                            .background(c.sheetFg)
-                                            .clipShape(roundedShape)
 
-                                    Padding(horizontal: 4)
+                                    HStack {
 
-                                    ZStack {}
-                                            .frame(width: 8, height: 8)
-                                            .background(roundedShape.fill(activityColor))
+                                        Text(activityUI.title)
+                                                .padding(.trailing, 4)
+                                                .foregroundColor(c.text)
+                                                .font(.system(size: 14, weight: .medium))
+                                                .lineLimit(1)
+
+                                        Spacer()
+
+                                        ActivitySecondaryText(text: activityUI.percentageString)
+                                    }
+                                            .padding(.top, 4)
+
+
+                                    HStack {
+
+                                        ZStack {
+
+                                            GeometryReader { geometry in
+
+                                                ZStack {}
+                                                        .frame(maxHeight: .infinity)
+                                                        .frame(width: geometry.size.width * Double(activityUI.ratio))
+                                                        .background(activityColor)
+                                            }
+                                                    .frame(width: .infinity)
+                                        }
+                                                .frame(height: 8)
+                                                .frame(minWidth: 0, maxWidth: .infinity)
+                                                .background(c.sheetFg)
+                                                .clipShape(roundedShape)
+
+                                        Padding(horizontal: 4)
+
+                                        ZStack {}
+                                                .frame(width: 8, height: 8)
+                                                .background(roundedShape.fill(activityColor))
+                                    }
+                                            .padding(.top, 6)
                                 }
-                                        .padding(.top, 6)
+                                        .padding(.top, 16)
+                                        .padding(.trailing, hPadding)
                             }
-                                    .padding(.top, 16)
-                                    .padding(.trailing, hPadding)
-                        }
 
-                        Spacer()
+                            Padding(vertical: 16)
+                        }
+                                .frame(minWidth: 0, maxWidth: .infinity)
                     }
-                            .frame(minWidth: 0, maxWidth: .infinity)
                 }
 
                 if state.isChartVisible {
