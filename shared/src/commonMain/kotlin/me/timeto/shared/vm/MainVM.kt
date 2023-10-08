@@ -168,12 +168,12 @@ class MainVM : __VM<MainVM.State>() {
 
         IntervalModel.anyChangeFlow()
             .onEachExIn(scope) {
-                upTodayIntervalsData()
+                upTodayIntervalsUI()
             }
         scope.launch {
             while (true) {
                 delayToNextMinute()
-                upTodayIntervalsData()
+                upTodayIntervalsUI()
             }
         }
 
@@ -208,7 +208,7 @@ class MainVM : __VM<MainVM.State>() {
         }
     }
 
-    private suspend fun upTodayIntervalsData() {
+    private suspend fun upTodayIntervalsUI() {
         val dayStartTime = UnixTime(utcOffset = localUtcOffsetWithDayStart).localDayStartTime()
         val todayIntervalsAsc = IntervalModel
             .getBetweenIdDesc(dayStartTime, Int.MAX_VALUE)
