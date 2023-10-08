@@ -96,7 +96,7 @@ struct SummarySheet: View {
                                         .frame(minWidth: geometry.size.width)
                             }
                         }
-                                .padding(.leading, 26)
+                                .padding(.leading, 28)
                     }
                             .frame(minWidth: 0, maxWidth: .infinity)
                             .padding(.bottom, 12)
