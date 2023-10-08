@@ -4,9 +4,9 @@ import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.vm.ui.ActivitiesPeriodUI
 
-class ChartVM(
+class SummaryChartVM(
     val activitiesUI: List<ActivitiesPeriodUI.ActivityUI>,
-) : __VM<ChartVM.State>() {
+) : __VM<SummaryChartVM.State>() {
 
     data class State(
         val selectedId: String?,

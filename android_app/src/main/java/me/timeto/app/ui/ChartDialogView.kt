@@ -21,7 +21,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
-import me.timeto.shared.vm.ChartVM
+import me.timeto.shared.vm.SummaryChartVM
 import me.timeto.shared.vm.ui.ActivitiesPeriodUI
 
 @Composable
@@ -29,7 +29,7 @@ fun ChartDialogView(
     activitiesUI: List<ActivitiesPeriodUI.ActivityUI>,
 ) {
 
-    val (vm, state) = rememberVM(activitiesUI) { ChartVM(activitiesUI) }
+    val (vm, state) = rememberVM(activitiesUI) { SummaryChartVM(activitiesUI) }
 
     VStack(
         modifier = Modifier
