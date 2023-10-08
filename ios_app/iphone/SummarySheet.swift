@@ -6,7 +6,7 @@ private let bottomBarButtonFontWeight = Font.Weight.light
 private let bottomBarButtonFontColor = c.textSecondary
 private let bottomBarButtonFrameSize = 32.0
 
-private let barsHeaderHeight = 29.0
+private let barsHeaderHeight = 36.0
 private let hPadding = 8.0
 
 struct SummarySheet: View {
@@ -54,8 +54,8 @@ struct SummarySheet: View {
                                                         .foregroundColor(c.textSecondary)
                                                         .font(.system(size: 10, weight: .light))
                                             }
-                                                    .frame(height: barsHeaderHeight)
                                                     .padding(.bottom, 8)
+                                                    .frame(height: barsHeaderHeight)
 
                                             GeometryReader { geometry in
                                                 VStack {
