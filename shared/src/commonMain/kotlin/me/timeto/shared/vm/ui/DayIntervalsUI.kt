@@ -20,7 +20,10 @@ class DayIntervalsUI(
         val timeStart: Int,
         val seconds: Int,
     ) {
+
         val ratio: Float = seconds.toFloat() / 86_400
+
+        fun timeFinish(): Int = timeStart + seconds
     }
 
     enum class DAY_STRING_FORMAT {
