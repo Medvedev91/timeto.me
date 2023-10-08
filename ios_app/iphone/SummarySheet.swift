@@ -31,6 +31,26 @@ struct SummarySheet: View {
                     ZStack {
 
                         //
+                        // Bars Time Sheet
+
+                        VStack {
+                            ForEachIndexed(state.barsTimeRows) { _, barString in
+                                VStack(alignment: .leading) {
+                                    Spacer()
+                                    Text(barString)
+                                            .foregroundColor(c.textSecondary)
+                                            .font(.system(size: 10, weight: .light))
+                                            .padding(.bottom, 4)
+                                    SheetDividerFg()
+                                }
+                                        .padding(.leading, hPadding)
+                                        .padding(.trailing, 4)
+                                Spacer()
+                            }
+                        }
+                                .padding(.top, barsHeaderHeight)
+
+                        //
                         // Bars
 
                         GeometryReader { geometry in
@@ -76,6 +96,7 @@ struct SummarySheet: View {
                                         .frame(minWidth: geometry.size.width)
                             }
                         }
+                                .padding(.leading, 26)
                     }
                             .frame(minWidth: 0, maxWidth: .infinity)
                             .padding(.bottom, 12)
