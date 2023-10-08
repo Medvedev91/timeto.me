@@ -36,7 +36,7 @@ class ActivitiesPeriodUI(
 
     companion object {
 
-        suspend fun build(
+        suspend fun buildList(
             dayStart: Int,
             dayFinish: Int,
             utcOffset: Int,
