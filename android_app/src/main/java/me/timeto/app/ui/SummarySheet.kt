@@ -86,7 +86,6 @@ fun SummarySheet(
                                 SheetDividerFg()
                             }
                         }
-                        ZStack(Modifier.weight(1f))
                     }
 
                     //
