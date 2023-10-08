@@ -233,7 +233,7 @@ fun SummarySheet(
                         }
                     }
 
-                    Padding(height = 12.dp)
+                    Padding(vertical = 12.dp)
                 }
             }
 

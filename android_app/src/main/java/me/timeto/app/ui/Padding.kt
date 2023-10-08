@@ -9,6 +9,13 @@ import androidx.compose.ui.unit.dp
 import me.timeto.app.ZStack
 
 @Composable
-fun Padding(width: Dp = 0.dp, height: Dp = 0.dp) {
-    ZStack(modifier = Modifier.width(width).height(height))
+fun Padding(
+    horizontal: Dp = 0.dp,
+    vertical: Dp = 0.dp
+) {
+    ZStack(
+        modifier = Modifier
+            .width(horizontal)
+            .height(vertical)
+    )
 }
