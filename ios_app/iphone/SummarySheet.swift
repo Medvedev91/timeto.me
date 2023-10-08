@@ -6,6 +6,8 @@ private let bottomBarButtonFontWeight = Font.Weight.light
 private let bottomBarButtonFontColor = c.textSecondary
 private let bottomBarButtonFrameSize = 32.0
 
+private let hPadding = 8.0
+
 struct SummarySheet: View {
 
     @Binding var isPresented: Bool
@@ -18,9 +20,93 @@ struct SummarySheet: View {
 
         VMView(vm: vm, stack: .VStack()) { state in
 
-            if state.isChartVisible {
-                ChartView(activitiesUI: state.activitiesUI)
-                        .id(state)
+            ZStack {
+
+                HStack {
+
+                    //
+                    // Left Part
+
+                    ZStack {
+                        Text("todo")
+                    }
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .background(c.green)
+
+                    //
+                    // Right Part
+
+                    VStack {
+
+                        ForEachIndexed(state.activitiesUI) { idx, activityUI in
+
+                            let activityColor = activityUI.activity.colorRgba.toColor()
+
+                            VStack {
+
+                                HStack {
+
+                                    ActivitySecondaryText(text: activityUI.perDayString)
+
+                                    Spacer()
+
+                                    ActivitySecondaryText(text: activityUI.totalTimeString)
+                                }
+
+                                HStack {
+
+                                    Text(activityUI.title)
+                                            .padding(.trailing, 4)
+                                            .foregroundColor(c.text)
+                                            .font(.system(size: 14, weight: .medium))
+                                            .lineLimit(1)
+
+                                    Spacer()
+
+                                    ActivitySecondaryText(text: activityUI.percentageString)
+                                }
+                                        .padding(.top, 4)
+
+
+                                HStack {
+
+                                    ZStack {
+
+                                        GeometryReader { geometry in
+
+                                            ZStack {}
+                                                    .frame(maxHeight: .infinity)
+                                                    .frame(width: geometry.size.width * Double(activityUI.ratio))
+                                                    .background(activityColor)
+                                        }
+                                                .frame(width: .infinity)
+                                    }
+                                            .frame(height: 8)
+                                            .frame(minWidth: 0, maxWidth: .infinity)
+                                            .background(c.sheetFg)
+                                            .clipShape(roundedShape)
+
+                                    Padding(horizontal: 4)
+
+                                    ZStack {}
+                                            .frame(width: 8, height: 8)
+                                            .background(roundedShape.fill(activityColor))
+                                }
+                                        .padding(.top, 6)
+                            }
+                                    .padding(.top, 16)
+                                    .padding(.trailing, hPadding)
+                        }
+
+                        Spacer()
+                    }
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                }
+
+                if state.isChartVisible {
+                    ChartView(activitiesUI: state.activitiesUI)
+                            .id(state)
+                }
             }
 
             Spacer()
@@ -119,5 +205,17 @@ struct SummarySheet: View {
                 }
             }
         }
+    }
+}
+
+private struct ActivitySecondaryText: View {
+
+    let text: String
+
+    var body: some View {
+        Text(text)
+                .font(.system(size: 12, weight: .light))
+                .lineLimit(1)
+                .foregroundColor(c.textSecondary)
     }
 }
