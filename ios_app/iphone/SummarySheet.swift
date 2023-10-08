@@ -6,6 +6,7 @@ private let bottomBarButtonFontWeight = Font.Weight.light
 private let bottomBarButtonFontColor = c.textSecondary
 private let bottomBarButtonFrameSize = 32.0
 
+private let barsHeaderHeight = 29.0
 private let hPadding = 8.0
 
 struct SummarySheet: View {
@@ -28,9 +29,57 @@ struct SummarySheet: View {
                     // Left Part
 
                     ZStack {
+
+                        //
+                        // Bars
+
+                        GeometryReader { geometry in
+
+                            ScrollView(.horizontal) {
+
+                                HStack {
+
+                                    Spacer()
+
+                                    ForEachIndexed(state.barsUI.reversed()) { _, barUI in
+
+                                        VStack {
+
+                                            VStack {
+
+                                                Spacer()
+
+                                                Text(barUI.dayString)
+                                                        .lineLimit(1)
+                                                        .foregroundColor(c.textSecondary)
+                                                        .font(.system(size: 10, weight: .light))
+                                            }
+                                                    .frame(height: barsHeaderHeight)
+                                                    .padding(.bottom, 8)
+
+                                            GeometryReader { geometry in
+                                                VStack {
+                                                    ForEachIndexed(barUI.sections) { _, section in
+                                                        ZStack {}
+                                                                .frame(minWidth: 0, maxWidth: .infinity)
+                                                                .frame(height: CGFloat(section.ratio) * geometry.size.height)
+                                                                .background(section.activity?.colorRgba.toColor() ?? c.sheetFg)
+                                                    }
+                                                }
+                                                        .clipShape(roundedShape)
+                                                        .padding(.horizontal, 4)
+                                            }
+                                        }
+                                                .frame(width: 16)
+                                    }
+                                }
+                                        .frame(minWidth: geometry.size.width)
+                            }
+                        }
                     }
                             .frame(minWidth: 0, maxWidth: .infinity)
-                            .background(c.green)
+                            .padding(.bottom, 12)
+                            .padding(.trailing, 12)
 
                     //
                     // Right Part
@@ -99,7 +148,7 @@ struct SummarySheet: View {
                                         .padding(.trailing, hPadding)
                             }
 
-                            Padding(vertical: 16)
+                            Padding(vertical: 12)
                         }
                                 .frame(minWidth: 0, maxWidth: .infinity)
                     }
