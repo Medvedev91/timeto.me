@@ -28,7 +28,6 @@ struct SummarySheet: View {
                     // Left Part
 
                     ZStack {
-                        Text("todo")
                     }
                             .frame(minWidth: 0, maxWidth: .infinity)
                             .background(c.green)
