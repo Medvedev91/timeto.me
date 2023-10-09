@@ -65,8 +65,10 @@ struct GoalPickerSheet: View {
             Sheet__BottomViewDefault(
                     primaryText: state.doneTitle,
                     primaryAction: {
-                        onPick(state.goal)
-                        isPresented = false
+                        state.buildGoal { goal in
+                            onPick(goal)
+                            isPresented = false
+                        }
                     },
                     secondaryText: "Cancel",
                     secondaryAction: {
