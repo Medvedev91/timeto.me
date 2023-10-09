@@ -391,6 +391,7 @@ data class ActivityModel(
             // Helpers
 
             fun buildJson(): JsonObject {
+                assertValidation()
                 val type: Int = when (this) {
                     is DaysOfWeek -> TYPE.days_of_week.id
                 }
