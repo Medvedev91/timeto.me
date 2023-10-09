@@ -76,7 +76,6 @@ object Backup {
 
     @Throws(Exception::class)
     fun fileNameToUnixTime(fileName: String): UnixTime {
-        val fileName = fileName.replace("__", "_") // todo remove 10+ days after v196 release
         val regex = "(\\d{4})_(\\d{2})_(\\d{2})_(\\d{2})_(\\d{2})_(\\d{2})\\.json$".toRegex()
         val match = regex.find(fileName) ?: throw Exception("Backup.fileNameToUnixTime($fileName)")
         val v = match.groupValues.drop(1).map { it.toInt() }
