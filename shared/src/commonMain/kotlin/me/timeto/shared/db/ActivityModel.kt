@@ -424,7 +424,7 @@ data class ActivityModel(
                     val strDays = weekDays.joinToString(",")
 
                     if (weekDays.isEmpty())
-                        throw UIException("No days selected")
+                        throw UIException("No days selected for the goal")
 
                     if (weekDays.size != weekDays.distinct().size) {
                         reportApi("ActivityModel.Goal.Period.DaysOfWeek not distinct $strDays")
