@@ -83,8 +83,10 @@ fun GoalPickerSheet(
         Sheet__BottomViewDefault(
             primaryText = state.doneTitle,
             primaryAction = {
-                onPick(state.goal)
-                layer.close()
+                state.buildGoal { goal ->
+                    onPick(goal)
+                    layer.close()
+                }
             },
             secondaryText = "Cancel",
             secondaryAction = {
