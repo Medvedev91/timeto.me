@@ -115,7 +115,7 @@ fun String.toBoolean10(): Boolean = this != "0"
 private val duplicateSpacesRegex = " +".toRegex()
 fun String.removeDuplicateSpaces() = this.replace(duplicateSpacesRegex, " ")
 
-fun getSoundTimeToBreakFileName(withExtension: Boolean): String =
+fun getSoundTimerExpiredFileName(withExtension: Boolean): String =
     "sound_timer_expired${if (withExtension) ".mp3" else ""}"
 
 ///

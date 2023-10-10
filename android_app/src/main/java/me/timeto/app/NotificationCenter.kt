@@ -6,7 +6,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.media.AudioAttributes
 import android.net.Uri
-import me.timeto.shared.getSoundTimeToBreakFileName
+import me.timeto.shared.getSoundTimerExpiredFileName
 
 /**
  * WARNING
@@ -17,7 +17,7 @@ import me.timeto.shared.getSoundTimeToBreakFileName
  */
 object NotificationCenter {
 
-    fun channelTimerExpired() = upsertChannel("timer_expired", "Timer Expired", getSoundTimeToBreakFileName(false))
+    fun channelTimerExpired() = upsertChannel("timer_expired", "Timer Expired", getSoundTimerExpiredFileName(false))
     fun channelTimerOverdue() = upsertChannel("timer_overdue", "Timer Overdue", null)
 
     fun getManager(): NotificationManager =

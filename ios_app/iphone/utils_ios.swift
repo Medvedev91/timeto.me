@@ -18,7 +18,7 @@ func schedulePush(data: ScheduledNotificationData) {
     content.body = data.text
 
     if data.type == .break_ {
-        let soundFile = UtilsKt.getSoundTimeToBreakFileName(withExtension: true)
+        let soundFile = UtilsKt.getSoundTimerExpiredFileName(withExtension: true)
         content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: soundFile))
     } else {
         content.sound = .default
