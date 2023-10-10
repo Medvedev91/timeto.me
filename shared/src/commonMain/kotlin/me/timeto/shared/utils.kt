@@ -116,7 +116,7 @@ private val duplicateSpacesRegex = " +".toRegex()
 fun String.removeDuplicateSpaces() = this.replace(duplicateSpacesRegex, " ")
 
 fun getSoundTimeToBreakFileName(withExtension: Boolean): String =
-    "sound_time_to_break${if (withExtension) ".wav" else ""}"
+    "sound_timer_expired${if (withExtension) ".mp3" else ""}"
 
 ///
 /// Json

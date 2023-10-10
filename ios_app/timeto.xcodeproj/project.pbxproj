@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2C0BE02B295258E10099AD7C /* sound_time_to_break.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2C0BE02A295258E10099AD7C /* sound_time_to_break.wav */; };
 		2C0BE02D295732110099AD7C /* DatePickerStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0BE02C295732110099AD7C /* DatePickerStateView.swift */; };
 		2C0BE02F295751B70099AD7C /* PickerStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0BE02E295751B70099AD7C /* PickerStateView.swift */; };
+		2C246BCF2AD563AC008780E1 /* sound_timer_expired.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2C246BCE2AD563AC008780E1 /* sound_timer_expired.mp3 */; };
 		2C2E93F8290117E300EAADBE /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821ED2142F08DDD1E0CC75 /* MainView.swift */; };
 		2C2E93F92905759100EAADBE /* TimerPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821AE61EE1FC22CCF8E753 /* TimerPickerSheet.swift */; };
 		2C2E93FA2905B57700EAADBE /* ScrollViewWithVListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318218D93C3456758557A6E0 /* ScrollViewWithVListener.swift */; };
@@ -116,9 +116,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2C0BE02A295258E10099AD7C /* sound_time_to_break.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = sound_time_to_break.wav; path = ../android_app/src/main/res/raw/sound_time_to_break.wav; sourceTree = "<group>"; };
 		2C0BE02C295732110099AD7C /* DatePickerStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerStateView.swift; sourceTree = "<group>"; };
 		2C0BE02E295751B70099AD7C /* PickerStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerStateView.swift; sourceTree = "<group>"; };
+		2C246BCE2AD563AC008780E1 /* sound_timer_expired.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = sound_timer_expired.mp3; path = ../android_app/src/main/res/raw/sound_timer_expired.mp3; sourceTree = "<group>"; };
 		2C2C419628C4CF2A00923267 /* timeto (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "timeto (iOS).entitlements"; sourceTree = "<group>"; };
 		2C2C419728C4D83400923267 /* timeto--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "timeto--iOS--Info.plist"; sourceTree = "<group>"; };
 		2C4044972951FCA800A24521 /* emojis.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = emojis.json; path = ../android_app/src/main/res/raw/emojis.json; sourceTree = "<group>"; };
@@ -224,8 +224,8 @@
 		2C4044962951FC5400A24521 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				2C246BCE2AD563AC008780E1 /* sound_timer_expired.mp3 */,
 				2C4F676E2A5C743D00F6013B /* timer_font.otf */,
-				2C0BE02A295258E10099AD7C /* sound_time_to_break.wav */,
 				2C4044972951FCA800A24521 /* emojis.json */,
 			);
 			name = resources;
@@ -462,9 +462,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C4F676F2A5C743D00F6013B /* timer_font.otf in Resources */,
+				2C246BCF2AD563AC008780E1 /* sound_timer_expired.mp3 in Resources */,
 				2C4044982951FCA800A24521 /* emojis.json in Resources */,
 				31821F9CB27F8F5BF61E2D37 /* Assets.xcassets in Resources */,
-				2C0BE02B295258E10099AD7C /* sound_time_to_break.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
