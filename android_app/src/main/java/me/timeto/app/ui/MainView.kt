@@ -31,7 +31,7 @@ import androidx.compose.ui.zIndex
 import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.shared.*
-import me.timeto.shared.vm.MainVM
+import me.timeto.shared.vm.HomeVM
 import me.timeto.shared.vm.ui.ChecklistStateUI
 
 val HomeView__BOTTOM_NAVIGATION_HEIGHT = 56.dp
@@ -54,7 +54,7 @@ private val mainTaskTimeShape = SquircleShape(len = 40f)
 
 @Composable
 fun MainView() {
-    val (vm, state) = rememberVM { MainVM() }
+    val (vm, state) = rememberVM { HomeVM() }
 
     val checklistUI = state.checklistUI
 
@@ -338,7 +338,7 @@ fun MainView() {
 
 @Composable
 private fun ChecklistView(
-    checklistUI: MainVM.ChecklistUI,
+    checklistUI: HomeVM.ChecklistUI,
     modifier: Modifier,
     scrollState: LazyListState,
 ) {
@@ -455,7 +455,7 @@ private fun ChecklistView(
 
 @Composable
 private fun MainTasksView(
-    tasks: List<MainVM.MainTask>,
+    tasks: List<HomeVM.MainTask>,
     modifier: Modifier,
     scrollState: LazyListState,
 ) {
@@ -556,8 +556,8 @@ private fun MainTasksView(
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun NavigationView(
-    vm: MainVM,
-    state: MainVM.State,
+    vm: HomeVM,
+    state: HomeVM.State,
     modifier: Modifier,
 ) {
     Row(

@@ -27,7 +27,7 @@ private let mainTaskTimeShape = RoundedRectangle(cornerRadius: 8, style: .contin
 
 struct MainView: View {
 
-    @State private var vm = MainVM()
+    @State private var vm = HomeVM()
 
     @State private var isSettingsSheetPresented = false
 
@@ -368,7 +368,7 @@ struct MainView: View {
 
 private struct ChecklistView: View {
 
-    let checklistUI: MainVM.ChecklistUI
+    let checklistUI: HomeVM.ChecklistUI
 
     @State private var vScroll = 0
 
@@ -443,7 +443,7 @@ private struct ChecklistView: View {
 
 private struct MainTasksView: View {
 
-    let tasks: [MainVM.MainTask]
+    let tasks: [HomeVM.MainTask]
 
     private let LIST_BOTTOM_ITEM_ID = "bottom_id"
 
@@ -483,7 +483,7 @@ private struct MainTasksView: View {
 
 private struct MainTaskItemView: View {
 
-    let mainTask: MainVM.MainTask
+    let mainTask: HomeVM.MainTask
 
     @EnvironmentObject private var nativeSheet: NativeSheet
 
