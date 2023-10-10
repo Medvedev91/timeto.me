@@ -273,7 +273,7 @@ class MainVM : __VM<MainVM.State>() {
         val timerContext = ActivityTimerSheetVM.TimerContext.Task(task)
         val timeUI: TimeUI? = textFeatures.timeData?.let { timeData ->
             val bgColor = when (timeData.status) {
-                TextFeatures.TimeData.STATUS.IN -> AppleColors.gray4Dark
+                TextFeatures.TimeData.STATUS.IN -> ColorRgba.homeFg
                 TextFeatures.TimeData.STATUS.SOON -> ColorRgba.blue
                 TextFeatures.TimeData.STATUS.OVERDUE -> ColorRgba.red
             }
