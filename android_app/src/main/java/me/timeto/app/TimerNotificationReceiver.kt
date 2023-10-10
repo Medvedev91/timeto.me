@@ -35,11 +35,11 @@ class TimerNotificationReceiver : BroadcastReceiver() {
 
         /**
          * WARNING
-         * Do not forget about channelTimeToBreak()/channelTimerOverdue()
+         * Do not forget about channelTimerExpired()/channelTimerOverdue()
          */
         val (iconId, color, channel) = when (requestCode) {
             NOTIFICATION_ID_BREAK -> {
-                Triple(R.drawable.readme_notification_timer_checkmark, 0x34C759, NotificationCenter.channelTimeToBreak())
+                Triple(R.drawable.readme_notification_timer_checkmark, 0x34C759, NotificationCenter.channelTimerExpired())
             }
             NOTIFICATION_ID_OVERDUE -> {
                 Triple(R.drawable.readme_notification_alarm, 0x0055FF, NotificationCenter.channelTimerOverdue())

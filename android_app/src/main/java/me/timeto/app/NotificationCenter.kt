@@ -17,7 +17,7 @@ import me.timeto.shared.getSoundTimeToBreakFileName
  */
 object NotificationCenter {
 
-    fun channelTimeToBreak() = upsertChannel("time_to_break", "Time to Break", getSoundTimeToBreakFileName(false))
+    fun channelTimerExpired() = upsertChannel("timer_expired", "Timer Expired", getSoundTimeToBreakFileName(false))
     fun channelTimerOverdue() = upsertChannel("timer_overdue", "Timer Overdue", null)
 
     fun getManager(): NotificationManager =

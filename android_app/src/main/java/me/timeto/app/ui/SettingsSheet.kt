@@ -440,7 +440,7 @@ fun SettingsSheet(
                         context.startActivity(
                             Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).apply {
                                 putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
-                                putExtra(Settings.EXTRA_CHANNEL_ID, NotificationCenter.channelTimeToBreak().id)
+                                putExtra(Settings.EXTRA_CHANNEL_ID, NotificationCenter.channelTimerExpired().id)
                             }
                         )
                     }
