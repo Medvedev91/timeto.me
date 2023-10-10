@@ -217,7 +217,8 @@ object c {
 
     val homeFontSecondary = ColorRgba.homeFontSecondary.toColor()
     val homeMenuTime = ColorRgba.homeMenuTime.toColor()
-    val homeGoalBg = ColorRgba.homeGoalBg.toColor()
+    val homeFg = ColorRgba.homeFg.toColor()
+
     val summaryDatePicker = ColorRgba.summaryDatePicker.toColor()
 
     val tasksDropFocused = ColorRgba.tasksDropFocused.toColor()

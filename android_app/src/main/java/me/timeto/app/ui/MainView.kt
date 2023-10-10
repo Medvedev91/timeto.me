@@ -259,7 +259,7 @@ fun MainView() {
                             .height(20.dp)
                             .fillMaxWidth()
                             .clip(roundedShape)
-                            .background(c.homeGoalBg),
+                            .background(c.homeFg),
                     ) {
 
                         ZStack(

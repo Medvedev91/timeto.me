@@ -241,7 +241,8 @@ data class ColorRgba(
 
         val homeFontSecondary = ColorRgba(255, 255, 255, 128)
         val homeMenuTime = ColorRgba(255, 255, 255, 200)
-        val homeGoalBg = sheetFg
+        val homeFg = sheetFg
+
         val summaryDatePicker = sheetFg
 
         val tasksDropFocused = green

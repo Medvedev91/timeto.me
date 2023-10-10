@@ -223,7 +223,7 @@ struct MainView: View {
                                         }
                                     }
                                             .frame(height: 22, alignment: .center)
-                                            .background(roundedShape.fill(c.homeGoalBg))
+                                            .background(roundedShape.fill(c.homeFg))
                                             .padding(.bottom, 12)
                                             .padding(.horizontal, H_PADDING)
                                 }

@@ -71,7 +71,7 @@ struct c {
 
     static let homeFontSecondary = ColorRgba.companion.homeFontSecondary.toColor()
     static let homeMenuTime = ColorRgba.companion.homeMenuTime.toColor()
-    static let homeGoalBg = ColorRgba.companion.homeGoalBg.toColor()
+    static let homeFg = ColorRgba.companion.homeFg.toColor()
 
     static let tasksDropFocused = ColorRgba.companion.tasksDropFocused.toColor()
     static let formButtonRightNoteText = ColorRgba.companion.formButtonRightNoteText.toColor()
