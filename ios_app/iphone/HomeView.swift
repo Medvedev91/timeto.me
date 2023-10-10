@@ -25,7 +25,7 @@ private let navAndTasksTextHeight = HomeView__BOTTOM_NAVIGATION_HEIGHT + taskCou
 private let goalFontSize = 14.0
 private let mainTaskTimeShape = RoundedRectangle(cornerRadius: 8, style: .continuous)
 
-struct MainView: View {
+struct HomeView: View {
 
     @State private var vm = HomeVM()
 
@@ -36,7 +36,7 @@ struct MainView: View {
     @State private var isPurpleAnim = true
     @State private var timerHeight = 30.0
 
-    static var lastInstance: MainView? = nil
+    static var lastInstance: HomeView? = nil
 
     @State private var triggersChecklist: ChecklistModel?
     @State private var isTriggersChecklistPresented = false
@@ -361,7 +361,7 @@ struct MainView: View {
                     SettingsSheet(isPresented: $isSettingsSheetPresented)
                 }
                 .onAppear {
-                    MainView.lastInstance = self
+                    HomeView.lastInstance = self
                 }
     }
 }

@@ -31,7 +31,7 @@ struct IOSApp: App {
 
                 if state.isAppReady {
 
-                    MainView()
+                    HomeView()
                             .attachTimetoSheet()
                             .attachTimetoAlert()
                             .attachAutoBackupIos()
