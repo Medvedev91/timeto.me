@@ -20,7 +20,7 @@ object NotificationCenter {
     fun channelTimeToBreak() = upsertChannel("time_to_break", "Time to Break", getSoundTimeToBreakFileName(false))
     fun channelTimerOverdue() = upsertChannel("timer_overdue", "Timer Overdue", null)
 
-    fun getManager() =
+    fun getManager(): NotificationManager =
         App.instance.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     /**
