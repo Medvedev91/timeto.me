@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
                 if (state.isAppReady) {
 
                     WrapperView.LayoutView {
-                        MainView()
+                        HomeView()
                         UIListeners()
                     }
 

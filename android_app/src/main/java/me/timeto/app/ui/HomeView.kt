@@ -53,7 +53,7 @@ private val goalFontSize = 13.sp
 private val mainTaskTimeShape = SquircleShape(len = 40f)
 
 @Composable
-fun MainView() {
+fun HomeView() {
     val (vm, state) = rememberVM { HomeVM() }
 
     val checklistUI = state.checklistUI
