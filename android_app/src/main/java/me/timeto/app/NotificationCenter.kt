@@ -54,5 +54,7 @@ object NotificationCenter {
      */
     fun cleanAllPushes() {
         getManager().cancelAll()
+        // todo Remove after v2023.10.10
+        getManager().deleteNotificationChannel("time_to_break")
     }
 }
