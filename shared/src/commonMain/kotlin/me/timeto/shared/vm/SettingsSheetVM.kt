@@ -42,7 +42,7 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
             val index = dayStartListItems.indexOfFirst { it.seconds == dayStartSeconds }
             if (index != -1)
                 return@run index
-            reportApi("TabToolsVM.dayStartSelectedIdx != -1")
+            reportApi("SettingsSheetVM.dayStartSelectedIdx != -1")
             return@run dayStartListItems.indexOfFirst { it.seconds == 0 }
         }
 
