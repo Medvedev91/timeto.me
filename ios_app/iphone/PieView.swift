@@ -181,12 +181,13 @@ struct PieView: View {
                 )
                         .fill(data.itemData.color.toColor())
 
-                let hintRadius = (oRadius + iRadius) / 2 * 1.02
+                let isShortTitle = isa <= 20
+                let hintRadius = (oRadius + iRadius) / 2 * (isShortTitle ? 1.08 : 1.02)
                 let hintWidth = 65.0
                 let hintHeight = 30.0
                 let hintX = sinDegrees(middleDegrees) * hintRadius + center.x - hintWidth / 2
                 let hintY = cosDegrees(middleDegrees) * hintRadius - center.y + hintHeight / 2
-                let title = isa > 20 ? data.itemData.title : data.itemData.shortTitle
+                let title = isShortTitle ? data.itemData.shortTitle : data.itemData.title
                 Text(title)
                         .offset(x: hintX, y: -hintY)
                         .lineSpacing(-6)
