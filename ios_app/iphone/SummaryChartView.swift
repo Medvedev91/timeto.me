@@ -54,7 +54,7 @@ struct SummaryChartView: View {
                     }
                 }
                         .frame(maxWidth: .infinity) // Иначе, если всего один элемент не на всю ширину
-                        .padding(.top, 4)
+                        .padding(.top, 8)
             }
         }
                 .background(c.sheetBg)
