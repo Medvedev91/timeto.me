@@ -77,58 +77,7 @@ struct TasksView: View {
                 VStack {
 
                     //
-                    // Calendar
-
-                    let isActiveCalendar = activeSection is TabTasksView_Section_Calendar
-                    let calendarFgColor: Color = {
-                        if focusedDrop is DropItem__Calendar {
-                            return .green
-                        }
-                        if activeDrag?.isDropAllowed(dropCalendar) == true {
-                            return .purple
-                        }
-                        if isActiveCalendar {
-                            return .blue
-                        }
-                        return calendarIconColor
-                    }()
-
-                    Button(
-                            action: {
-                                upActiveSectionWithAnimation(TabTasksView_Section_Calendar())
-                            },
-                            label: {
-                                GeometryReader { geometry in
-                                    let _ = dropCalendar.square.upByRect(rect: geometry.frame(in: CoordinateSpace.global))
-                                    Image(systemName: "calendar")
-                                            .resizable()
-                                            .animation(.spring())
-                                            .font(.system(size: 18, weight: .thin))
-                                            ///
-                                            .onAppear {
-                                                dropItems.append(dropCalendar)
-                                            }
-                                            .onDisappear {
-                                                dropItems.removeAll { $0 === dropCalendar }
-                                            }
-                                            ///
-                                            .foregroundColor(calendarFgColor)
-                                }
-                                        .frame(width: tabWidth - 2.4, height: tabWidth - 2.4)
-                            }
-                    )
-                            .background(
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 4, style: .continuous)
-                                                .fill(c.bg)
-                                    }
-                            )
-
-                    //
                     // Repeating
-
-                    Spacer()
-                            .frame(height: tabPadding)
 
                     let isActiveRepeating = activeSection is TabTasksView_Section_Repeating
 
@@ -174,6 +123,57 @@ struct TasksView: View {
                                 tabTasksView: self
                         )
                     }
+
+                    //
+                    // Calendar
+
+                    Spacer()
+                            .frame(height: tabPadding)
+
+                    let isActiveCalendar = activeSection is TabTasksView_Section_Calendar
+                    let calendarFgColor: Color = {
+                        if focusedDrop is DropItem__Calendar {
+                            return .green
+                        }
+                        if activeDrag?.isDropAllowed(dropCalendar) == true {
+                            return .purple
+                        }
+                        if isActiveCalendar {
+                            return .blue
+                        }
+                        return c.homeFontSecondary
+                    }()
+
+                    Button(
+                            action: {
+                                upActiveSectionWithAnimation(TabTasksView_Section_Calendar())
+                            },
+                            label: {
+                                GeometryReader { geometry in
+                                    let _ = dropCalendar.square.upByRect(rect: geometry.frame(in: CoordinateSpace.global))
+                                    Image(systemName: "calendar")
+                                            .resizable()
+                                            .animation(.spring())
+                                            .font(.system(size: 18, weight: .thin))
+                                            ///
+                                            .onAppear {
+                                                dropItems.append(dropCalendar)
+                                            }
+                                            .onDisappear {
+                                                dropItems.removeAll { $0 === dropCalendar }
+                                            }
+                                            ///
+                                            .foregroundColor(calendarFgColor)
+                                }
+                                        .frame(width: tabWidth - 2.4, height: tabWidth - 2.4)
+                            }
+                    )
+                            .background(
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 4, style: .continuous)
+                                                .fill(c.bg)
+                                    }
+                            )
                 }
                         .padding(.trailing, SECTION_BUTTONS_END_PADDING)
             }
