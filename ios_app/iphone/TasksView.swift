@@ -2,7 +2,6 @@ import SwiftUI
 import shared
 
 private let tabWidth: CGFloat = 34
-private let SECTION_BUTTONS_END_PADDING = H_PADDING.goldenRatioDown()
 
 struct TasksView: View {
 
