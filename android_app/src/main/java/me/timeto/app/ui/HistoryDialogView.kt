@@ -199,30 +199,15 @@ fun HistoryDialogView(
                         ) {
 
                             if (!intervalUI.isStartsPrevDay) {
-
                                 Text(
-                                    intervalUI.activityText,
+                                    text = intervalUI.text,
                                     modifier = Modifier
                                         .padding(top = 4.dp)
                                         .fillMaxWidth(),
                                     textAlign = TextAlign.Start,
                                     fontSize = 14.sp,
-                                    color = c.textSecondary,
+                                    color = c.text,
                                 )
-
-                                val intervalNote = intervalUI.noteText
-                                if (intervalNote != null) {
-                                    Text(
-                                        intervalNote,
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(bottom = 2.dp),
-                                        textAlign = TextAlign.Start,
-                                        fontWeight = FontWeight.W300,
-                                        fontSize = 13.sp,
-                                        color = c.text
-                                    )
-                                }
                             }
                         }
                     }
