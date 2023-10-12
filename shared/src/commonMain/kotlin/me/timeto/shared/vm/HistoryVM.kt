@@ -113,8 +113,7 @@ class HistoryVM : __VM<HistoryVM.State>() {
     data class IntervalUI(
         val interval: IntervalModel,
         val isStartsPrevDay: Boolean,
-        val activityText: String,
-        val noteText: String?,
+        val text: String,
         val secondsForBar: Int,
         val barTimeFinish: Int,
         val timeString: String,
@@ -145,7 +144,7 @@ class HistoryVM : __VM<HistoryVM.State>() {
         fun delete() {
             showUiConfirmation(
                 UIConfirmationData(
-                    text = "Are you sure you want to delete \"$activityText\"",
+                    text = "Are you sure you want to delete \"$text\"",
                     buttonText = "Delete",
                     isRed = true,
                 ) {
@@ -182,8 +181,7 @@ class HistoryVM : __VM<HistoryVM.State>() {
                 return IntervalUI(
                     interval = interval,
                     isStartsPrevDay = unixTime.localDay < section.day,
-                    activityText = activity.nameWithEmoji().textFeatures().textUi(),
-                    noteText = interval.note?.textFeatures()?.textUi(),
+                    text = (interval.note ?: activity.nameWithEmoji()).textFeatures().textUi(),
                     secondsForBar = barTimeFinish - sectionDayTimeStart.limitMin(interval.id),
                     barTimeFinish = barTimeFinish,
                     timeString = unixTime.getStringByComponents(UnixTime.StringComponent.hhmm24),
