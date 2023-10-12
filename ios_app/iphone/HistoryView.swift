@@ -347,7 +347,7 @@ struct HistoryView: View {
 
                                 Picker("Activity", selection: $selectedActivityId) {
                                     ForEach(state.activitiesFormAddUI, id: \.activity.id) { activityUI in
-                                        Text(activityUI.activity.nameWithEmoji())
+                                        Text(activityUI.activity.nameWithEmoji(isLeading: false))
                                     }
                                 }
                                         .foregroundColor(.primary)

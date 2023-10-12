@@ -229,7 +229,8 @@ data class ActivityModel(
         ActivityModel__Data.jParse(data_json)
     }
 
-    fun nameWithEmoji() = "$name $emoji"
+    fun nameWithEmoji(isLeading: Boolean = false) =
+        if (isLeading) "$emoji $name" else "$name $emoji"
 
     fun getType() = TYPE.values().first { it.id == type_id }
 
