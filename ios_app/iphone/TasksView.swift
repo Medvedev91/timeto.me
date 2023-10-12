@@ -93,15 +93,8 @@ struct TasksView: View {
                             }
                     )
                             .background(
-
-                                    ZStack {
-
-                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                .fill(isActiveRepeating ? .blue : c.bg)
-
-                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                .stroke(isActiveRepeating ? .blue : c.dividerBg, lineWidth: onePx)
-                                    }
+                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                            .fill(isActiveRepeating ? .blue : c.bg)
                                             .frame(width: tabWidth)
                             )
 
@@ -173,7 +166,7 @@ struct TasksView: View {
                                     }
                             )
                 }
-                        .padding(.trailing, SECTION_BUTTONS_END_PADDING)
+                        .padding(.trailing, 4)
             }
                     .onAppear {
                         UITableView.appearance().sectionFooterHeight = 0
@@ -259,15 +252,7 @@ private struct TabTasksView__FolderView: View {
                                 .padding(.top, 8)
                                 .padding(.bottom, 8)
                     }
-                            .background(
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                .fill(bgColor)
-
-                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                .stroke(isActive ? .blue : c.dividerBg, lineWidth: onePx)
-                                    }
-                            )
+                            .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(bgColor))
                             .background(GeometryReader { geometry -> Color in
                                 drop.square.upByRect(rect: geometry.frame(in: CoordinateSpace.global))
                                 return Color.clear
