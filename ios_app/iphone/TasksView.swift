@@ -103,6 +103,7 @@ struct TasksView: View {
                                     Image(systemName: "calendar")
                                             .resizable()
                                             .animation(.spring())
+                                            .font(.system(size: 18, weight: .thin))
                                             ///
                                             .onAppear {
                                                 dropItems.append(dropCalendar)
