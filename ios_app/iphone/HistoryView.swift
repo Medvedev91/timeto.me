@@ -133,19 +133,10 @@ struct HistoryView: View {
 
                                             if !intervalUI.isStartsPrevDay {
 
-                                                Text(intervalUI.activityText)
+                                                Text(intervalUI.text)
                                                         .foregroundColor(.primary)
-                                                        .font(.system(size: 15, weight: .medium))
+                                                        .font(.system(size: 16, weight: .medium))
                                                         .frame(maxWidth: .infinity, alignment: .leading)
-
-                                                if let note = intervalUI.noteText {
-                                                    // todo triggers
-                                                    Text(note)
-                                                            .foregroundColor(.primary)
-                                                            .font(.system(size: 14, weight: .thin))
-                                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                                            .multilineTextAlignment(.leading)
-                                                }
                                             }
                                         }
                                                 .frame(maxWidth: .infinity)
