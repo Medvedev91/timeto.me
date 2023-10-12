@@ -22,7 +22,7 @@ private let homePrimaryFontSize = 18.0
 
 private let navAndTasksTextHeight = HomeView__BOTTOM_NAVIGATION_HEIGHT + taskCountsHeight
 
-private let goalFontSize = 14.0
+private let goalFontSize = 15.0
 private let mainTaskTimeShape = RoundedRectangle(cornerRadius: 8, style: .continuous)
 
 struct HomeView: View {
@@ -210,19 +210,19 @@ struct HomeView: View {
                                         HStack {
 
                                             Text(goalUI.textLeft)
-                                                    .padding(.leading, 6)
+                                                    .padding(.leading, 8)
                                                     .foregroundColor(c.white)
                                                     .font(.system(size: goalFontSize))
 
                                             Spacer()
 
                                             Text(goalUI.textRight)
-                                                    .padding(.trailing, 6)
+                                                    .padding(.trailing, 8)
                                                     .foregroundColor(c.white)
                                                     .font(.system(size: goalFontSize))
                                         }
                                     }
-                                            .frame(height: 22, alignment: .center)
+                                            .frame(height: 24, alignment: .center)
                                             .background(roundedShape.fill(c.homeFg))
                                             .padding(.bottom, 12)
                                             .padding(.horizontal, H_PADDING)
