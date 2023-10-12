@@ -4,8 +4,6 @@ import shared
 private let tabWidth: CGFloat = 34
 private let SECTION_BUTTONS_END_PADDING = H_PADDING.goldenRatioDown()
 
-private let calendarIconColor = Color(UIColor(argb: 0xFF5F5F5F))
-
 struct TasksView: View {
 
     //////
