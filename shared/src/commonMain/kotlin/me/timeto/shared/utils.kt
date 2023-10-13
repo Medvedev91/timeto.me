@@ -16,6 +16,8 @@ import me.timeto.appdbsq.TimetomeDB
 import me.timeto.shared.db.*
 import me.timeto.shared.db.KVModel.Companion.asDayStartOffsetSeconds
 
+const val isFDroid = false
+
 const val BREAK_SECONDS = 5 * 60
 const val GOLDEN_RATIO = 1.618f
 
@@ -27,6 +29,9 @@ fun zlog(message: Any?) = println(";; $message")
 
 internal expect val REPORT_API_TITLE: String
 fun reportApi(message: String) {
+    if (isFDroid)
+        return
+
     // Not launchEx because of recursion
     defaultScope().launch {
         zlog("reportApi $message")
