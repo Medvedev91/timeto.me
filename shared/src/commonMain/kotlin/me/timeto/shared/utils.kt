@@ -16,7 +16,7 @@ import me.timeto.appdbsq.TimetomeDB
 import me.timeto.shared.db.*
 import me.timeto.shared.db.KVModel.Companion.asDayStartOffsetSeconds
 
-const val isFDroid = false
+const val isFDroid = true
 
 const val BREAK_SECONDS = 5 * 60
 const val GOLDEN_RATIO = 1.618f
