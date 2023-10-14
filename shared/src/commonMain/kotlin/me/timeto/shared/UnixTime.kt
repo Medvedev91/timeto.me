@@ -106,3 +106,55 @@ data class UnixTime(
         month, month3, dayOfMonth, dayOfWeek, dayOfWeek2, dayOfWeek3, hhmm24, space, comma,
     }
 }
+
+//
+// TODO
+
+//val time = ymdToTime(2003, 12, 14)
+//zlog(time)
+//zlog(timeToYmd(time))
+
+// todo hms
+// todo time zone
+// todo if year = 1970
+// todo if year < 1970
+// todo if year < 0
+// todo m,d,h,m,s validation
+private fun ymdToTime(y: Int, m: Int, d: Int): Int {
+    val prevY = y - 1
+    val daysJesusUntilYear = (prevY * 365) + (prevY / 400) - (prevY / 100) + (prevY / 4)
+    val prevYearsDays = daysJesusUntilYear - daysJesusUntilUnix
+    val daysInMonthInc = if (isLeapYear(y)) daysInMonthIncLeap else daysInMonthIncCommon
+    val prevMonthsDays = daysInMonthInc[m - 1]
+    return (prevYearsDays + prevMonthsDays + (d - 1)) * 86_400
+}
+
+// todo refactor + clean?
+// todo hms
+// todo time zone
+// todo if time = 0
+// todo if time < 0
+private fun timeToYmd(time: Int): List<Int> {
+    val daysUnixUntilNow = time / 86_400
+    val daysJesusUntilNow = daysUnixUntilNow + daysJesusUntilUnix
+    val prevY = (daysJesusUntilNow * 400) / 146_097 // 146_097 days in 400 years
+    val daysJesusUntilYear = (prevY * 365) + (prevY / 400) - (prevY / 100) + (prevY / 4)
+    val y = prevY + 1
+    val daysInMonthInc = if (isLeapYear(y)) daysInMonthIncLeap else daysInMonthIncCommon
+    val leftSeconds = time - ((daysJesusUntilYear - daysJesusUntilUnix) * 86_400)
+    val leftDays = leftSeconds / 86_400
+    val m = daysInMonthInc.indexOfFirst { it > leftDays }
+    val d = leftDays - daysInMonthInc[m - 1]
+    return listOf(y, m, d + 1)
+}
+
+private fun isLeapYear(y: Int) = when {
+    (y % 400) == 0 -> true
+    (y % 100) == 0 -> false
+    (y % 4) == 0 -> true
+    else -> false
+}
+
+private const val daysJesusUntilUnix = (1969 * 365) + (1969 / 400) - (1969 / 100) + (1969 / 4)
+private val daysInMonthIncLeap = listOf(0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366)
+private val daysInMonthIncCommon = listOf(0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365)
