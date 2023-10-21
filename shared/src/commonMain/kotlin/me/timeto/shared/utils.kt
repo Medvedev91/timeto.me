@@ -417,7 +417,7 @@ internal fun initKmm(
     deviceData_: DeviceData,
 ) {
     db = TimetomeDB(
-        sqlDriver,
+        driver = sqlDriver,
         ActivitySQAdapter = ActivitySQ.Adapter(IntColumnAdapter, IntColumnAdapter, IntColumnAdapter, IntColumnAdapter, IntColumnAdapter),
         ChecklistItemSQAdapter = ChecklistItemSQ.Adapter(IntColumnAdapter, IntColumnAdapter, IntColumnAdapter),
         ChecklistSQAdapter = ChecklistSQ.Adapter(IntColumnAdapter),
