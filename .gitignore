@@ -5,10 +5,10 @@
 /build/
 /local.properties
 
+/shared/build/
+
 /android_app/build/
 /android_app/release/
 
 /ios_app/timeto.xcodeproj/xcuserdata/
 /ios_app/timeto.xcodeproj/project.xcworkspace/xcuserdata/
-
-/shared/build/
