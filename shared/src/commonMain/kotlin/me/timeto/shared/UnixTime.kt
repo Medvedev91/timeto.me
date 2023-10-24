@@ -80,12 +80,12 @@ data class UnixTime(
     fun getStringByComponents(
         vararg components: StringComponent,
     ): String {
-        val dayTime = Instant.fromEpochSeconds(localDay * 86_400L).toLocalDateTime(TimeZone.UTC)
+        val dateTime = Instant.fromEpochSeconds(localDay * 86_400L).toLocalDateTime(TimeZone.UTC)
         return components.joinToString("") { component ->
             when (component) {
-                StringComponent.month -> monthNames[dayTime.monthNumber - 1]
-                StringComponent.month3 -> monthNames3[dayTime.monthNumber - 1]
-                StringComponent.dayOfMonth -> dayTime.dayOfMonth.toString()
+                StringComponent.month -> monthNames[dateTime.monthNumber - 1]
+                StringComponent.month3 -> monthNames3[dateTime.monthNumber - 1]
+                StringComponent.dayOfMonth -> dateTime.dayOfMonth.toString()
                 StringComponent.dayOfWeek -> dayOfWeekNames[dayOfWeek()]
                 StringComponent.dayOfWeek2 -> dayOfWeekNames2[dayOfWeek()]
                 StringComponent.dayOfWeek3 -> dayOfWeekNames3[dayOfWeek()]
