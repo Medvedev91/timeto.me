@@ -90,7 +90,8 @@ data class UnixTime(
                 StringComponent.dayOfWeek2 -> dayOfWeekNames2[dayOfWeek()]
                 StringComponent.dayOfWeek3 -> dayOfWeekNames3[dayOfWeek()]
                 StringComponent.hhmm24 -> {
-                    val (h, m) = (utcTime() % 86_400).toHms()
+                    val dayTime = utcTime() % 86_400
+                    val (h, m) = listOf(dayTime / 3600, (dayTime % 3_600) / 60)
                     "$h".padStart(2, '0') + ":" + "$m".padStart(2, '0')
                 }
                 StringComponent.space -> " "
