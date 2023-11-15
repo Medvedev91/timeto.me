@@ -30,6 +30,8 @@ fun initKmmAndroid(application: Application, build: Int) {
 
 actual fun time(): Int = (System.currentTimeMillis() / 1_000).toInt()
 
+actual fun timeMls(): Long = System.currentTimeMillis()
+
 actual fun getResourceContent(file: String, type: String) = androidApplication
     .resources
     .openRawResource(

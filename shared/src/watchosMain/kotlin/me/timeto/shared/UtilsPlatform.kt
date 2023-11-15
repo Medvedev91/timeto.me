@@ -26,6 +26,8 @@ fun initKmmWatchOS(deviceName: String) {
 
 actual fun time(): Int = NSDate().timeIntervalSince1970.toInt()
 
+actual fun timeMls(): Long = NSDate().timeIntervalSince1970.toLong() * 1_000
+
 actual fun getResourceContent(file: String, type: String): String {
     TODO("WatchOS getResourceContent() not implemented")
 }
