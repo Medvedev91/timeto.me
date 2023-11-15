@@ -36,8 +36,8 @@ android {
 
 dependencies {
     implementation(project(":shared"))
-    implementation("androidx.activity:activity-compose:1.7.2")
-    implementation("androidx.compose.material:material:1.4.3")
-    implementation("androidx.compose.material:material-icons-extended:1.4.3")
-    implementation("com.google.android.material:material:1.9.0")
+    implementation("androidx.activity:activity-compose:1.8.0")
+    implementation("androidx.compose.material:material:1.5.4")
+    implementation("androidx.compose.material:material-icons-extended:1.5.4")
+    implementation("com.google.android.material:material:1.10.0")
 }
