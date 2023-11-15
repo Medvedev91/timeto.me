@@ -9,7 +9,7 @@ import shared
 let DI = shared.DI.shared
 
 func time() -> Int {
-    UtilsKt.time().toInt()
+    UtilsPlatformKt.time().toInt()
 }
 
 func reportApi(_ message: String) {
