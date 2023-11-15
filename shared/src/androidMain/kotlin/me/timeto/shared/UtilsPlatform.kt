@@ -28,6 +28,8 @@ fun initKmmAndroid(application: Application, build: Int) {
     initKmm(AndroidSqliteDriver(TimetomeDB.Schema, application, DB_NAME), deviceData)
 }
 
+actual fun time(): Int = (System.currentTimeMillis() / 1_000).toInt()
+
 actual fun getResourceContent(file: String, type: String) = androidApplication
     .resources
     .openRawResource(

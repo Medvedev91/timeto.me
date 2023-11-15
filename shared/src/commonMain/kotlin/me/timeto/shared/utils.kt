@@ -494,7 +494,7 @@ val localUtcOffset: Int
 val localUtcOffsetWithDayStart: Int
     get() = localUtcOffset - dayStartOffsetSeconds()
 
-fun time(): Int = Clock.System.now().epochSeconds.toInt()
+expect fun time(): Int
 
 fun timeMls(): Long = Clock.System.now().toEpochMilliseconds()
 

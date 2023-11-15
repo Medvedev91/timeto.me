@@ -10,6 +10,8 @@ import platform.Foundation.NSBundle
 import platform.WatchKit.WKInterfaceDevice
 import me.timeto.appdbsq.TimetomeDB
 import me.timeto.shared.db.DB_NAME
+import platform.Foundation.NSDate
+import platform.Foundation.timeIntervalSince1970
 
 internal actual val REPORT_API_TITLE = "⌚ Watch OS"
 
@@ -21,6 +23,8 @@ fun initKmmWatchOS(deviceName: String) {
     )
     initKmm(createNativeDriver(), deviceData)
 }
+
+actual fun time(): Int = NSDate().timeIntervalSince1970.toInt()
 
 actual fun getResourceContent(file: String, type: String): String {
     TODO("WatchOS getResourceContent() not implemented")

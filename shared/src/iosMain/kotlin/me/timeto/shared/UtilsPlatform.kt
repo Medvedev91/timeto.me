@@ -28,6 +28,8 @@ fun initKmmIos(deviceName: String) {
     listenForSyncWatch()
 }
 
+actual fun time(): Int = NSDate().timeIntervalSince1970.toInt()
+
 actual fun getResourceContent(file: String, type: String): String {
     // Based on https://github.dev/touchlab/DroidconKotlin
     val path = NSBundle.mainBundle.pathForResource(name = file, ofType = type)!!
