@@ -1,5 +1,8 @@
+@file:OptIn(ExperimentalForeignApi::class)
+
 package me.timeto.shared
 
+import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.serialization.json.*
 import me.timeto.shared.db.IntervalModel
 import me.timeto.shared.db.TaskModel

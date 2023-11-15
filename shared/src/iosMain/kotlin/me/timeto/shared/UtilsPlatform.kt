@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalForeignApi::class)
+
 package me.timeto.shared
 
 import app.cash.sqldelight.db.QueryResult
