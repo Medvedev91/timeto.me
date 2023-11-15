@@ -6,12 +6,12 @@ plugins {
 android {
 
     namespace = "me.timeto.app"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "me.timeto.app"
         minSdk = 26
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 433
         versionName = "2023.10.13"
     }
