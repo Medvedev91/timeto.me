@@ -14,6 +14,7 @@ object DI {
     var taskFolders = listOf<TaskFolderModel>()
     var activitiesSorted = listOf<ActivityModel>()
     var events = listOf<EventModel>()
+    var eventTemplates = listOf<EventTemplateDB>()
     var repeatings = listOf<RepeatingModel>()
 
     lateinit var firstInterval: IntervalModel
@@ -81,6 +82,9 @@ object DI {
 
         events = EventModel.getAscByTime()
         EventModel.getAscByTimeFlow().onEachExIn(scope) { events = it }
+
+        eventTemplates = EventTemplateDB.selectAscSorted()
+        EventTemplateDB.selectAscSortedFlow().onEachExIn(scope) { eventTemplates = it }
 
         repeatings = RepeatingModel.getAsc()
         RepeatingModel.getAscFlow().onEachExIn(scope) { repeatings = it }
