@@ -2,6 +2,7 @@ package me.timeto.app.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -19,6 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.shared.vm.EventTemplatesVM
+
+private val newTemplateButtonShape = SquircleShape(len = 40f)
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -38,7 +41,7 @@ fun EventTemplatesView(
 
     LazyRow(
         modifier = Modifier
-            .padding(top = if (templatesUI.isEmpty()) 0.dp else paddingTop),
+            .padding(top = paddingTop),
         contentPadding = PaddingValues(horizontal = spaceAround),
         state = scrollState
     ) {
@@ -74,6 +77,21 @@ fun EventTemplatesView(
                 fontSize = 12.sp,
                 fontWeight = FontWeight.W600,
                 color = c.white,
+            )
+        }
+
+        item(key = "add_template") {
+
+            Text(
+                text = "New Template",
+                modifier = Modifier
+                    .clip(newTemplateButtonShape)
+                    .clickable {
+                    }
+                    .padding(horizontal = 2.dp),
+                color = c.blue,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Light,
             )
         }
     }
