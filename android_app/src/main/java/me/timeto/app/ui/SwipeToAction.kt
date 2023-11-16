@@ -92,11 +92,13 @@ fun SwipeToAction(
         }
     }
 
+    val localViewConfiguration = LocalViewConfiguration.current
     CompositionLocalProvider(
-        LocalViewConfiguration provides SwipeToAction__ViewConfiguration(
-            LocalViewConfiguration.current,
-            slopPx.toFloat()
-        )
+        LocalViewConfiguration provides remember {
+            object : ViewConfiguration by localViewConfiguration {
+                override val touchSlop = slopPx.toFloat()
+            }
+        }
     ) {
         SwipeToDismiss(
             state = state,
@@ -213,16 +215,6 @@ fun SwipeToAction__DeleteView(
             fontSize = 15.sp
         )
     }
-}
-
-private class SwipeToAction__ViewConfiguration(
-    curVC: ViewConfiguration,
-    slop: Float
-) : ViewConfiguration {
-    override val doubleTapMinTimeMillis = curVC.doubleTapMinTimeMillis
-    override val doubleTapTimeoutMillis = curVC.doubleTapTimeoutMillis
-    override val longPressTimeoutMillis = curVC.longPressTimeoutMillis
-    override val touchSlop = slop
 }
 
 private class ActionsContainer(
