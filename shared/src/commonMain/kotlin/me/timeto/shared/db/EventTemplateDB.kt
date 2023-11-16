@@ -10,6 +10,10 @@ data class EventTemplateDB(
 ) {
 
     companion object {
+
+        suspend fun selectAscBySort(): List<EventTemplateDB> = dbIO {
+            db.eventTemplateQueries.selectAscBySort().executeAsList().map { it.toDB() }
+        }
     }
 }
 
