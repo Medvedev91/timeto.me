@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
-import me.timeto.shared.vm.EventsHistoryVM
+import me.timeto.shared.vm.EventTemplatesVM
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -27,7 +27,7 @@ fun EventTemplatesView(
     paddingTop: Dp,
 ) {
 
-    val (vm, state) = rememberVM { EventsHistoryVM() }
+    val (vm, state) = rememberVM { EventTemplatesVM() }
     val uiItems = state.uiItems
 
     val scrollState = rememberLazyListState()

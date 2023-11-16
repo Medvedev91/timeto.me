@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.KVModel
 
-class EventsHistoryVM : __VM<EventsHistoryVM.State>() {
+class EventTemplatesVM : __VM<EventTemplatesVM.State>() {
 
     data class UiItem(
         val historyItem: EventsHistory.Item,
