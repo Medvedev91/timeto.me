@@ -9,10 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
-import me.timeto.shared.Backupable__Item
-import me.timeto.shared.getInt
-import me.timeto.shared.getString
-import me.timeto.shared.toJsonArray
+import me.timeto.shared.*
 
 data class EventTemplateDB(
     val id: Int,
@@ -21,7 +18,7 @@ data class EventTemplateDB(
     val text: String,
 ) : Backupable__Item {
 
-    companion object {
+    companion object : Backupable__Holder {
 
         suspend fun selectAscSorted(): List<EventTemplateDB> = dbIO {
             db.eventTemplateQueries.selectAscSorted().executeAsList().map { it.toDB() }
@@ -29,6 +26,24 @@ data class EventTemplateDB(
 
         fun selectAscSortedFlow(): Flow<List<EventTemplateDB>> = db.eventTemplateQueries
             .selectAscSorted().asFlow().mapToList(Dispatchers.IO).map { list -> list.map { it.toDB() } }
+
+        //
+        // Backupable Holder
+
+        override fun backupable__getAll(): List<Backupable__Item> =
+            db.eventTemplateQueries.selectAscSorted().executeAsList().map { it.toDB() }
+
+        override fun backupable__restore(json: JsonElement) {
+            val j = json.jsonArray
+            db.eventTemplateQueries.insertObject(
+                EventTemplateSQ(
+                    id = j.getInt(0),
+                    sort = j.getInt(1),
+                    daytime = j.getInt(2),
+                    text = j.getString(3),
+                )
+            )
+        }
     }
 
     //
