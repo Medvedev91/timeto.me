@@ -6,3 +6,8 @@ CREATE TABLE EventTemplateSQ (
     daytime INTEGER AS Int NOT NULL,
     text TEXT NOT NULL
 );
+
+selectAscBySort:
+SELECT *
+FROM EventTemplateSQ
+ORDER BY sort ASC, id ASC;
