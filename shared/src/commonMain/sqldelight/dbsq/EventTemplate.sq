@@ -16,3 +16,7 @@ updateById:
 UPDATE EventTemplateSQ
 SET sort = ?, daytime = ?, text = ?
 WHERE id = ?;
+
+deleteById:
+DELETE FROM EventTemplateSQ
+WHERE id = ?;
