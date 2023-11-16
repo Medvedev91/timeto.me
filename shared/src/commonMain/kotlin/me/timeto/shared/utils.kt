@@ -422,6 +422,7 @@ internal fun initKmm(
         ChecklistItemSQAdapter = ChecklistItemSQ.Adapter(IntColumnAdapter, IntColumnAdapter, IntColumnAdapter),
         ChecklistSQAdapter = ChecklistSQ.Adapter(IntColumnAdapter),
         EventSQAdapter = EventSQ.Adapter(IntColumnAdapter, IntColumnAdapter),
+        EventTemplateSQAdapter = EventTemplateSQ.Adapter(IntColumnAdapter, IntColumnAdapter, IntColumnAdapter),
         IntervalSQAdapter = IntervalSQ.Adapter(IntColumnAdapter, IntColumnAdapter, IntColumnAdapter),
         RepeatingSQAdapter = RepeatingSQ.Adapter(IntColumnAdapter, IntColumnAdapter, IntColumnAdapter, IntColumnAdapter, IntColumnAdapter),
         ShortcutSQAdapter = ShortcutSQ.Adapter(IntColumnAdapter),
