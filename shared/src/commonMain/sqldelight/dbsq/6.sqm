@@ -1,0 +1,8 @@
+import kotlin.Int;
+
+CREATE TABLE EventTemplateSQ (
+    id INTEGER AS Int NOT NULL PRIMARY KEY,
+    sort INTEGER AS Int NOT NULL,
+    daytime INTEGER AS Int NOT NULL,
+    text TEXT NOT NULL
+);
