@@ -12,6 +12,10 @@ SELECT *
 FROM EventTemplateSQ
 ORDER BY sort ASC, id ASC;
 
+insertObject:
+INSERT INTO EventTemplateSQ
+VALUES ?;
+
 updateById:
 UPDATE EventTemplateSQ
 SET sort = ?, daytime = ?, text = ?
