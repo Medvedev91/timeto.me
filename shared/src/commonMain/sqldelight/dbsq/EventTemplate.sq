@@ -20,3 +20,6 @@ WHERE id = ?;
 deleteById:
 DELETE FROM EventTemplateSQ
 WHERE id = ?;
+
+truncate:
+DELETE FROM EventTemplateSQ;
