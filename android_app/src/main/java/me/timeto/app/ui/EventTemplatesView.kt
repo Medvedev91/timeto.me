@@ -22,7 +22,7 @@ import me.timeto.shared.vm.EventsHistoryVM
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun EventsHistoryView(
+fun EventTemplatesView(
     spaceAround: Dp,
     paddingTop: Dp,
 ) {

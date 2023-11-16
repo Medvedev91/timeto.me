@@ -40,7 +40,7 @@ fun EventsListView() {
 
             Column {
 
-                EventsHistoryView(
+                EventTemplatesView(
                     spaceAround = H_PADDING - 2.dp,
                     paddingTop = TasksView__LIST_SECTION_PADDING,
                 )
