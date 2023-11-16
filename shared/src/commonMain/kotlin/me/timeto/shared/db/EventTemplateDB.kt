@@ -13,6 +13,6 @@ data class EventTemplateDB(
     }
 }
 
-private fun EventTemplateSQ.db() = EventTemplateDB(
+private fun EventTemplateSQ.toDB() = EventTemplateDB(
     id = id, sort = sort, daytime = daytime, text = text,
 )
