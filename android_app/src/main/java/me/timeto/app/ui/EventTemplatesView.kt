@@ -28,30 +28,30 @@ fun EventTemplatesView(
 ) {
 
     val (vm, state) = rememberVM { EventTemplatesVM() }
-    val uiItems = state.uiItems
+    val templatesUI = state.templatesUI
 
     val scrollState = rememberLazyListState()
-    LaunchedEffect(uiItems.firstOrNull()?.historyItem?.normalized_title) {
-        if (uiItems.isNotEmpty())
+    LaunchedEffect(templatesUI.firstOrNull()?.text) {
+        if (templatesUI.isNotEmpty())
             scrollState.animateScrollToItem(0)
     }
 
     LazyRow(
         modifier = Modifier
-            .padding(top = if (state.uiItems.isEmpty()) 0.dp else paddingTop),
+            .padding(top = if (templatesUI.isEmpty()) 0.dp else paddingTop),
         contentPadding = PaddingValues(horizontal = spaceAround),
         state = scrollState
     ) {
 
         itemsIndexed(
-            uiItems,
-            key = { _, item -> item.historyItem.normalized_title }
-        ) { _, uiItem ->
+            templatesUI,
+            key = { _, templateUI -> templateUI.templateDB.id }
+        ) { _, templateUI ->
 
             Text(
-                uiItem.note,
+                templateUI.text,
                 modifier = Modifier
-                    .padding(end = if (uiItem == uiItems.last()) 0.dp else 8.dp)
+                    .padding(end = if (templateUI == templatesUI.last()) 0.dp else 8.dp)
                     .clip(roundedShape)
                     .background(c.blue)
                     .padding(1.dp)
@@ -60,12 +60,12 @@ fun EventTemplatesView(
                         onClick = {
                             EventFormSheet__show(
                                 editedEvent = null,
-                                defText = uiItem.historyItem.raw_title,
-                                defTime = uiItem.defTime,
+                                defText = templateUI.templateDB.text,
+                                defTime = templateUI.templateDB.daytime,
                             ) {}
                         },
                         onLongClick = {
-                            vm.delItem(uiItem.historyItem)
+                            vm.delTemplate(templateUI)
                             vibrateShort()
                         },
                     )

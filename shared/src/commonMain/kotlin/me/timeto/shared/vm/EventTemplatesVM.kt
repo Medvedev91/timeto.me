@@ -2,74 +2,54 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
-import me.timeto.shared.db.KVModel
+import me.timeto.shared.db.EventTemplateDB
 
 class EventTemplatesVM : __VM<EventTemplatesVM.State>() {
 
-    data class UiItem(
-        val historyItem: EventsHistory.Item,
-        val defTime: Int,
-        val note: String,
+    data class TemplateUI(
+        val templateDB: EventTemplateDB,
+        val text: String,
     )
 
     data class State(
-        val uiItems: List<UiItem>
+        val templatesUI: List<TemplateUI>
     )
 
-    override val state: MutableStateFlow<State>
-
-    init {
-        val history = EventsHistory.buildFromDI()
-        state = MutableStateFlow(
-            State(
-                uiItems = history.items.toUiItems()
-            )
+    override val state = MutableStateFlow(
+        State(
+            templatesUI = DI.eventTemplates.toTemplatesUI(),
         )
-    }
+    )
 
     override fun onAppear() {
-        KVModel.KEY.EVENTS_HISTORY
-            .getOrNullFlow()
-            .filterNotNull()
-            .onEachExIn(scopeVM()) { kv ->
-                state.update {
-                    it.copy(uiItems = EventsHistory.buildFromJString(kv.value).items.toUiItems())
-                }
+        val scope = scopeVM()
+        EventTemplateDB.selectAscSortedFlow().onEachExIn(scope) { templatesDB ->
+            state.update {
+                it.copy(templatesUI = templatesDB.toTemplatesUI())
             }
+        }
     }
 
-    fun delItem(item: EventsHistory.Item) {
+    fun delTemplate(templateUI: TemplateUI) {
         showUiConfirmation(
             UIConfirmationData(
-                text = "Remove \"${item.raw_title}\" from Recent?",
+                text = "Remove \"${templateUI.text}\" from templates?",
                 buttonText = "Remove",
                 isRed = true,
             ) {
                 scopeVM().launchEx {
-                    EventsHistory.delete(item)
+                    templateUI.templateDB.backupable__delete()
                 }
             }
         )
     }
+}
 
-    private fun List<EventsHistory.Item>.toUiItems() = this.map { historyItem ->
-        val dayTimeString = run {
-            if (historyItem.daytime == 0)
-                return@run ""
-            val hms = historyItem.daytime.toHms()
-            " " + ("${hms[0]}".padStart(2, '0')) + ":" + ("${hms[1]}".padStart(2, '0'))
-        }
-
-        val rawTitleSized = run {
-            if (historyItem.raw_title.length <= 12)
-                historyItem.raw_title
-            else
-                historyItem.raw_title.substring(0..9) + ".."
-        }
-        UiItem(
-            historyItem = historyItem,
-            defTime = UnixTime().localDayStartTime() + historyItem.daytime,
-            note = rawTitleSized + dayTimeString,
-        )
-    }
+private fun List<EventTemplateDB>.toTemplatesUI() = this.map { templateDB ->
+    EventTemplatesVM.TemplateUI(
+        templateDB = templateDB,
+        text = templateDB.text.textFeatures().textNoFeatures.let {
+            if (it.length <= 12) it else it.substring(0..9) + ".."
+        },
+    )
 }
