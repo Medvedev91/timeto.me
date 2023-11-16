@@ -25,6 +25,7 @@ object Backup {
             "shortcuts" to ShortcutModel.getAsc().modelsToJsonArray(),
             "repeatings" to RepeatingModel.getAsc().modelsToJsonArray(),
             "events" to EventModel.getAscByTime().modelsToJsonArray(),
+            "event_templates" to EventTemplateDB.selectAscSorted().modelsToJsonArray(),
             "notes" to NoteModel.getAsc().modelsToJsonArray(),
             "kv" to KVModel.getAll().modelsToJsonArray(),
         )
@@ -44,6 +45,7 @@ object Backup {
             db.intervalQueries.truncate()
             db.activityQueries.truncate()
             db.eventQueries.truncate()
+            db.eventTemplateQueries.truncate()
             db.repeatingQueries.truncate()
             db.checklistItemQueries.truncate()
             db.checklistQueries.truncate()
@@ -60,6 +62,7 @@ object Backup {
             json.mapJsonArray("shortcuts") { ShortcutModel.backupable__restore(it) }
             json.mapJsonArray("repeatings") { RepeatingModel.backupable__restore(it) }
             json.mapJsonArray("events") { EventModel.backupable__restore(it) }
+            json.mapJsonArray("event_templates") { EventTemplateDB.backupable__restore(it) }
             json.mapJsonArray("notes") { NoteModel.backupable__restore(it) }
             json.mapJsonArray("kv") { KVModel.backupable__restore(it) }
         }
