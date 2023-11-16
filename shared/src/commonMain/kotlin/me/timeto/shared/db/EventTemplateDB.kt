@@ -11,8 +11,8 @@ data class EventTemplateDB(
 
     companion object {
 
-        suspend fun selectAscBySort(): List<EventTemplateDB> = dbIO {
-            db.eventTemplateQueries.selectAscBySort().executeAsList().map { it.toDB() }
+        suspend fun selectAscSorted(): List<EventTemplateDB> = dbIO {
+            db.eventTemplateQueries.selectAscSorted().executeAsList().map { it.toDB() }
         }
     }
 }

@@ -7,7 +7,7 @@ CREATE TABLE EventTemplateSQ (
     text TEXT NOT NULL
 );
 
-selectAscBySort:
+selectAscSorted:
 SELECT *
 FROM EventTemplateSQ
 ORDER BY sort ASC, id ASC;
