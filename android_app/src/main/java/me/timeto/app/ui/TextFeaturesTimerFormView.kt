@@ -18,10 +18,9 @@ fun TextFeaturesTimerFormView(
 ) {
 
     val formUI = remember(textFeatures) { TextFeaturesTimerFormUI(textFeatures) }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Column {
-
-        val keyboardController = LocalSoftwareKeyboardController.current
 
         MyListView__ItemView(
             isFirst = true,
@@ -38,6 +37,7 @@ fun TextFeaturesTimerFormView(
                     )
                 }
             ) {
+                keyboardController?.hide()
                 Sheet.show { layer ->
                     ActivityPickerSheet(
                         layer = layer,
