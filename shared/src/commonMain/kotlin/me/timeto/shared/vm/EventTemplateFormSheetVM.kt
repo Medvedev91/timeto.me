@@ -12,7 +12,7 @@ class EventTemplateFormSheetVM(
         val headerTitle: String,
         val doneText: String,
         val textFeatures: TextFeatures,
-        val dayTime: Int,
+        val dayTime: Int?,
     ) {
         val inputTextValue = textFeatures.textNoFeatures
         val deleteText = "Delete Template"
@@ -23,7 +23,7 @@ class EventTemplateFormSheetVM(
             headerTitle = if (eventTemplateDB != null) "Edit Template" else "New Template",
             doneText = "Save",
             textFeatures = (eventTemplateDB?.text ?: "").textFeatures(),
-            dayTime = eventTemplateDB?.daytime ?: (12 * 3_600),
+            dayTime = eventTemplateDB?.daytime,
         )
     )
 
@@ -40,7 +40,7 @@ class EventTemplateFormSheetVM(
     ) {
         scopeVM().launchEx {
             try {
-                val daytime = state.value.dayTime
+                val daytime = state.value.dayTime ?: throw UIException("The time is not set")
                 val textFeatures = state.value.textFeatures
                 val textWithFeatures = textFeatures.textWithFeatures()
                 if (textFeatures.textNoFeatures.isBlank())
