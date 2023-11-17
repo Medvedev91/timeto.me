@@ -79,7 +79,7 @@ fun EventTemplatesView(
 
         item(key = "add_template") {
             ListButton(
-                text = "New Template",
+                text = state.newTemplateText,
                 modifier = Modifier
                     .clip(listButtonShape)
                     .clickable {
