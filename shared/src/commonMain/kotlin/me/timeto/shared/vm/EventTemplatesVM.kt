@@ -36,10 +36,10 @@ class EventTemplatesVM : __VM<EventTemplatesVM.State>() {
 private fun List<EventTemplateDB>.toTemplatesUI() = this
     .reversed()
     .map { templateDB ->
-    EventTemplatesVM.TemplateUI(
-        templateDB = templateDB,
-        text = templateDB.text.textFeatures().textNoFeatures.let {
-            if (it.length <= 12) it else it.substring(0..9) + ".."
-        },
-    )
-}
+        EventTemplatesVM.TemplateUI(
+            templateDB = templateDB,
+            text = templateDB.text.textFeatures().textNoFeatures.let {
+                if (it.length <= 12) it else it.substring(0..9) + ".."
+            },
+        )
+    }
