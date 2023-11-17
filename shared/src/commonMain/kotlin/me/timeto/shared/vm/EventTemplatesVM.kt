@@ -9,7 +9,9 @@ class EventTemplatesVM : __VM<EventTemplatesVM.State>() {
     data class TemplateUI(
         val templateDB: EventTemplateDB,
         val text: String,
-    )
+    ) {
+        val timeForEventForm: Int = UnixTime().localDayStartTime() + templateDB.daytime
+    }
 
     data class State(
         val templatesUI: List<TemplateUI>
