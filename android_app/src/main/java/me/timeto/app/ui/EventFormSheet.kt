@@ -50,7 +50,7 @@ fun EventFormSheet__show(
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun EventFormSheet(
+private fun EventFormSheet(
     layer: WrapperView.Layer,
     editedEvent: EventModel?,
     defText: String? = null,
