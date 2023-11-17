@@ -15,7 +15,9 @@ class EventTemplatesVM : __VM<EventTemplatesVM.State>() {
 
     data class State(
         val templatesUI: List<TemplateUI>
-    )
+    ) {
+        val newTemplateText = "New Template"
+    }
 
     override val state = MutableStateFlow(
         State(
