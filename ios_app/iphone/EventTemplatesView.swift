@@ -1,6 +1,10 @@
 import SwiftUI
 import shared
 
+private let buttonFont: Font = .system(size: 15, weight: .light)
+private let buttonHPadding = 2.0
+private let buttonVPadding = 4.0
+
 struct EventTemplatesView: View {
 
     let spaceAround: Double
@@ -22,17 +26,14 @@ struct EventTemplatesView: View {
 
                     ForEach(state.templatesUI, id: \.templateDB.id) { templateUI in
 
-                        MySpacerSize(width: 8)
-
                         Button(
                                 action: {
                                     // In onTapGesture()/onLongPressGesture()
                                 },
                                 label: {
                                     Text(templateUI.text)
-                                            .padding(.vertical, 6)
-                                            .padding(.horizontal, 11)
-                                            .background(Capsule(style: .circular).fill(.blue))
+                                            .padding(.vertical, buttonVPadding)
+                                            .padding(.horizontal, buttonHPadding)
                                             /// Ordering is important
                                             .onTapGesture {
                                                 nativeSheet.EventFormSheet__show(
@@ -42,13 +43,39 @@ struct EventTemplatesView: View {
                                                 ) {}
                                             }
                                             .onLongPressGesture(minimumDuration: 0.1) {
+                                                nativeSheet.show { isPresented in
+                                                    EventTemplateFormSheet(
+                                                            isPresented: isPresented,
+                                                            eventTemplateDB: templateUI.templateDB
+                                                    )
+                                                }
                                             }
                                             //////
-                                            .foregroundColor(.white)
-                                            .font(.system(size: 14, weight: .semibold))
+                                            .foregroundColor(.blue)
+                                            .font(buttonFont)
                                 }
                         )
+
+                        MySpacerSize(width: 8)
                     }
+
+                    Button(
+                            action: {
+                                nativeSheet.show { isPresented in
+                                    EventTemplateFormSheet(
+                                            isPresented: isPresented,
+                                            eventTemplateDB: nil
+                                    )
+                                }
+                            },
+                            label: {
+                                Text(state.newTemplateText)
+                                        .padding(.vertical, buttonVPadding)
+                                        .padding(.horizontal, buttonHPadding)
+                                        .foregroundColor(.blue)
+                                        .font(buttonFont)
+                            }
+                    )
 
                     MySpacerSize(width: spaceAround)
                 }
