@@ -64,7 +64,7 @@ fun EventTemplatesView(
                             EventFormSheet__show(
                                 editedEvent = null,
                                 defText = templateUI.templateDB.text,
-                                defTime = templateUI.templateDB.daytime,
+                                defTime = templateUI.timeForEventForm,
                             ) {}
                         },
                         onLongClick = {
