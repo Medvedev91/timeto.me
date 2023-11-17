@@ -8,8 +8,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import me.timeto.app.setFalse
 import me.timeto.app.setTrue
 import kotlinx.coroutines.delay
@@ -45,10 +47,13 @@ object WrapperView {
         }
     }
 
+    @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     fun LayoutView(
         content: @Composable () -> Unit
     ) {
+
+        val keyboardController = LocalSoftwareKeyboardController.current
 
         Box {
 
@@ -89,6 +94,7 @@ object WrapperView {
                     }
 
                     LaunchedEffect(Unit) {
+                        keyboardController?.hide()
                         layer.isPresented.setTrue()
                     }
                 }
