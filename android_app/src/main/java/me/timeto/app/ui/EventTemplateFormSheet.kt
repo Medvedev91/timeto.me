@@ -57,6 +57,38 @@ fun EventTemplateFormSheet(
 
             MyListView__Padding__SectionSection()
 
+            MyListView__ItemView(
+                isFirst = true,
+                isLast = true,
+            ) {
+                MyListView__ItemView__ButtonView(
+                    text = state.daytimeTitle,
+                    withArrow = true,
+                    rightView = {
+                        MyListView__ItemView__ButtonView__RightText(
+                            text = state.daytimeNote,
+                            paddingEnd = 2.dp,
+                            color = state.daytimeNoteColor?.toColor(),
+                        )
+                    }
+                ) {
+                    Sheet.show { layer ->
+                        DaytimePickerSheet(
+                            layer = layer,
+                            title = state.daytimeTitle,
+                            doneText = "Done",
+                            defHour = state.daytimeDefHour,
+                            defMinute = state.daytimeDefMinute,
+                            onPick = { secondsOrNull ->
+                                vm.setDaytime(secondsOrNull)
+                            }
+                        )
+                    }
+                }
+            }
+
+            MyListView__Padding__SectionSection()
+
             TextFeaturesTimerFormView(state.textFeatures) {
                 vm.setTextFeatures(it)
             }
