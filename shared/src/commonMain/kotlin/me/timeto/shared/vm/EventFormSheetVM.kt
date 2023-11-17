@@ -85,7 +85,6 @@ class EventFormSheetVM(
                 EventModel.addWithValidation(
                     text = nameWithFeatures,
                     localTime = state.value.selectedTime,
-                    addToHistory = true,
                 )
             }
             onSuccess()

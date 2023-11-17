@@ -28,7 +28,6 @@ data class EventModel(
         suspend fun addWithValidation(
             text: String,
             localTime: Int,
-            addToHistory: Boolean,
         ): Unit = dbIO {
             val newEventSQ = EventSQ(
                 id = time(), // todo check unique
@@ -36,10 +35,6 @@ data class EventModel(
                 utc_time = localTime + localUtcOffset
             )
             db.eventQueries.insertObject(newEventSQ)
-
-            val newEvent = newEventSQ.toModel()
-            if (addToHistory)
-                EventsHistory.upsert(newEvent)
         }
 
         suspend fun syncTodaySafe(today: Int): Unit = dbIO {
