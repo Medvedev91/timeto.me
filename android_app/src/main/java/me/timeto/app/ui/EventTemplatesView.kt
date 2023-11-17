@@ -1,7 +1,6 @@
 package me.timeto.app.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,7 +13,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,6 +20,7 @@ import me.timeto.app.*
 import me.timeto.shared.vm.EventTemplatesVM
 
 private val listButtonShape = SquircleShape(len = 40f)
+private val listButtonPadding = PaddingValues(horizontal = 2.dp)
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -51,13 +50,11 @@ fun EventTemplatesView(
             key = { _, templateUI -> templateUI.templateDB.id }
         ) { _, templateUI ->
 
-            Text(
-                templateUI.text,
+            ListButton(
+                text = templateUI.text,
                 modifier = Modifier
-                    .padding(end = if (templateUI == templatesUI.last()) 0.dp else 8.dp)
-                    .clip(roundedShape)
-                    .background(c.blue)
-                    .padding(1.dp)
+                    .padding(end = 8.dp)
+                    .clip(listButtonShape)
                     .animateItemPlacement()
                     .combinedClickable(
                         onClick = {
@@ -76,17 +73,12 @@ fun EventTemplatesView(
                             }
                         },
                     )
-                    .padding(start = 8.dp, end = 8.dp, top = 4.dp, bottom = 5.dp),
-                textAlign = TextAlign.Center,
-                fontSize = 12.sp,
-                fontWeight = FontWeight.W600,
-                color = c.white,
+                    .padding(listButtonPadding),
             )
         }
 
         item(key = "add_template") {
-
-            Text(
+            ListButton(
                 text = "New Template",
                 modifier = Modifier
                     .clip(listButtonShape)
@@ -95,11 +87,22 @@ fun EventTemplatesView(
                             EventTemplateFormSheet(layer = layer, eventTemplate = null)
                         }
                     }
-                    .padding(horizontal = 2.dp),
-                color = c.blue,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Light,
+                    .padding(listButtonPadding),
             )
         }
     }
+}
+
+@Composable
+private fun ListButton(
+    text: String,
+    modifier: Modifier,
+) {
+    Text(
+        text = text,
+        modifier = modifier,
+        color = c.blue,
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Light,
+    )
 }
