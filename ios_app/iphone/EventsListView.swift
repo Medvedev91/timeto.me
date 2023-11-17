@@ -55,7 +55,7 @@ struct EventsListView: View {
                             }
                                     .padding(.leading, MyListView.PADDING_OUTER_HORIZONTAL)
 
-                            EventsHistoryView(
+                            EventTemplatesView(
                                     spaceAround: H_PADDING,
                                     paddingTop: 20
                             ) { historyItem in

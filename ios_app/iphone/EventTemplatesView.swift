@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-struct EventsHistoryView: View {
+struct EventTemplatesView: View {
 
     @State private var vm = EventsHistoryVM()
 
