@@ -5,7 +5,7 @@ import me.timeto.shared.*
 import me.timeto.shared.db.EventTemplateDB
 
 class EventTemplateFormSheetVM(
-    private val eventTemplateDB: EventTemplateDB?,
+    val eventTemplateDB: EventTemplateDB?,
 ) : __VM<EventTemplateFormSheetVM.State>() {
 
     data class State(

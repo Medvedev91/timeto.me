@@ -99,7 +99,8 @@ fun EventTemplateFormSheet(
                 vm.setTextFeatures(it)
             }
 
-            if (eventTemplate != null) {
+            val eventTemplateDB = vm.eventTemplateDB
+            if (eventTemplateDB != null) {
 
                 MyListView__Padding__SectionSection()
 
@@ -110,7 +111,7 @@ fun EventTemplateFormSheet(
                     MyListView__ItemView__ActionView(
                         text = state.deleteText,
                     ) {
-                        vm.delete(eventTemplate) {
+                        vm.delete(eventTemplateDB) {
                             layer.close()
                         }
                     }
