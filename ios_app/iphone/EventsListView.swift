@@ -174,16 +174,16 @@ struct EventsListView: View {
 
 private struct EventItemView: View {
 
-    @State private var isEditEventPresented = false
-
     let uiEvent: EventsListVM.UiEvent
+
+    @EnvironmentObject private var nativeSheet: NativeSheet
 
     var body: some View {
         MyListSwipeToActionItem(
                 deletionHint: uiEvent.event.text,
                 deletionConfirmationNote: uiEvent.deletionNote,
                 onEdit: {
-                    isEditEventPresented = true
+                    nativeSheet.EventFormSheet__show(editedEvent: uiEvent.event) {}
                 },
                 onDelete: {
                     withAnimation {
@@ -228,15 +228,6 @@ private struct EventItemView: View {
                 .padding(.top, 10)
                 .padding(.bottom, 10)
                 .foregroundColor(.primary)
-                .sheetEnv(
-                        isPresented: $isEditEventPresented,
-                        content: {
-                            EventFormSheet(
-                                    isPresented: $isEditEventPresented,
-                                    editedEvent: uiEvent.event
-                            )
-                        }
-                )
                 .id("\(uiEvent.event.id) \(uiEvent.event.text)") /// #TruncationDynamic
     }
 }
