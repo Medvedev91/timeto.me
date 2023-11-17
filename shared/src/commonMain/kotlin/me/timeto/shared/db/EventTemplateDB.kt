@@ -46,6 +46,23 @@ data class EventTemplateDB(
         }
     }
 
+    suspend fun updateWithValidation(
+        daytime: Int,
+        text: String,
+    ) {
+        dbIO {
+            db.transaction {
+                val templates = db.eventTemplateQueries.selectAscSorted().executeAsList().toDBList()
+                db.eventTemplateQueries.updateById(
+                    id = id,
+                    sort = sort,
+                    daytime = dayTimeValidation(daytime),
+                    text = textValidation(text, templates),
+                )
+            }
+        }
+    }
+
     //
     // Backupable Item
 
