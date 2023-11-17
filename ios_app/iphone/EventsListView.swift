@@ -5,13 +5,6 @@ struct EventsListView: View {
 
     @State private var vm = EventsListVM()
 
-    ///
-    /// WARNING Do use showAddCalendar()
-    @State private var addCalendarInitHistoryItem: EventsHistory.Item? = nil
-    @State private var isAddCalendarPresented = false
-    @State private var wtfGuys = false
-    //////
-
     /// Avoiding animation on start, but it is needed for editing
     @State private var useAnimation = false
 
@@ -60,11 +53,7 @@ struct EventsListView: View {
                             EventTemplatesView(
                                     spaceAround: H_PADDING,
                                     paddingTop: 20
-                            ) { historyItem in
-                                showAddCalendar(
-                                        initHistoryItem: historyItem
-                                )
-                            }
+                            )
 
                             ZStack(alignment: .trailing) {
 
@@ -104,25 +93,6 @@ struct EventsListView: View {
                             }
                                     .id(LIST_BOTTOM_ITEM_ID)
                         }
-                                .sheetEnv(
-                                        isPresented: $isAddCalendarPresented
-                                ) {
-                                    ZStack {
-                                        if wtfGuys {
-                                            EventFormSheet(
-                                                    isPresented: $isAddCalendarPresented,
-                                                    editedEvent: nil,
-                                                    defText: addCalendarInitHistoryItem?.raw_title ?? "",
-                                                    defDate: Date().startOfDay().inSeconds(addCalendarInitHistoryItem?.daytime.toInt() ?? 0)
-                                            ) {
-                                                scrollDown(scrollProxy: scrollProxy, toAnimate: true)
-                                            }
-                                        }
-                                    }
-                                            .onAppear { wtfGuys = true }
-                                            .onDisappear { wtfGuys = false }
-                                }
-
                                 .frame(minHeight: geometry.size.height)
                     }
                             .animation(useAnimation ? Animation.easeOut(duration: 0.25) : nil)
@@ -143,15 +113,6 @@ struct EventsListView: View {
                 }
                 ///
                 .padding(.trailing, 20)
-    }
-
-    private func showAddCalendar(
-            initHistoryItem: EventsHistory.Item? = nil
-    ) {
-        // Ordering is important
-        addCalendarInitHistoryItem = initHistoryItem
-        isAddCalendarPresented = true
-        hideKeyboard()
     }
 
     private func scrollDown(
