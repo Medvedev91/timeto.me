@@ -33,6 +33,55 @@ struct EventTemplateFormSheet: View {
 
             ScrollViewWithVListener(showsIndicators: false, vScroll: $scroll) {
 
+                VStack {
+
+                    MyListView__ItemView(
+                            isFirst: true,
+                            isLast: true
+                    ) {
+
+                        MyListView__ItemView__TextInputView(
+                                text: state.inputTextValue,
+                                placeholder: "Text",
+                                isAutofocus: false,
+                                onValueChanged: { newText in vm.setInputTextValue(text: newText) }
+                        )
+                    }
+                            .padding(.top, 12)
+
+                    MyListView__Padding__SectionSection()
+
+                    MyListView__ItemView(
+                            isFirst: true,
+                            isLast: true
+                    ) {
+
+                        MyListView__ItemView__ButtonView(
+                                text: state.daytimeTitle,
+                                withArrow: true,
+                                rightView: AnyView(
+                                        MyListView__ItemView__ButtonView__RightText(
+                                                text: state.daytimeNote,
+                                                paddingEnd: 2,
+                                                textColor: state.daytimeNoteColor?.toColor()
+                                        )
+                                )
+                        ) {
+                            nativeSheet.show { isTimerPickerPresented in
+                                DaytimePickerSheet(
+                                        isPresented: isTimerPickerPresented,
+                                        title: state.daytimeTitle,
+                                        doneText: "Done",
+                                        defMinute: state.daytimeDefMinute,
+                                        defHour: state.daytimeDefHour
+                                ) { secondsOrNull in
+                                    vm.setDaytime(newDaytimeOrNull: secondsOrNull?.toKotlinInt())
+                                }
+                                        .presentationDetentsMediumIf16()
+                            }
+                        }
+                    }
+                }
             }
 
             Sheet__BottomViewDefault(
