@@ -199,7 +199,6 @@ struct TasksView__TaskRowView: View {
     let tasksListView: TasksListView
     @State private var dragItem: DragItem
 
-    @State private var isAddCalendarSheetPresented = false
     @State private var isEditTaskPresented = false
 
     @State private var xSwipeOffset: CGFloat = 0
@@ -443,19 +442,6 @@ struct TasksView__TaskRowView: View {
         }
                 .id("\(taskUI.task.id) \(taskUI.task.text)") /// #TruncationDynamic
                 .sheetEnv(
-                        isPresented: $isAddCalendarSheetPresented,
-                        content: {
-                            EventFormSheet(
-                                    isPresented: $isAddCalendarSheetPresented,
-                                    editedEvent: nil,
-                                    defText: taskUI.task.text,
-                                    defDate: Date().startOfDay()
-                            ) {
-                                taskUI.delete()
-                            }
-                        }
-                )
-                .sheetEnv(
                         isPresented: $isEditTaskPresented,
                         content: {
                             TaskFormSheet(
@@ -479,7 +465,13 @@ struct TasksView__TaskRowView: View {
                     if let drop = drop {
                         xSwipeOffset = 0
                         if drop is DropItem__Calendar {
-                            isAddCalendarSheetPresented = true
+                            nativeSheet.EventFormSheet__show(
+                                    editedEvent: nil,
+                                    defText: taskUI.task.text,
+                                    defTime: nil
+                            ) {
+                                taskUI.delete()
+                            }
                         } else if let dropFolder = drop as? DropItem__Folder {
                             taskUI.upFolder(newFolder: dropFolder.folder)
                         }
