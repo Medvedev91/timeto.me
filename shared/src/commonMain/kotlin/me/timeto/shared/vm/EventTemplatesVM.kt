@@ -19,7 +19,7 @@ class EventTemplatesVM : __VM<EventTemplatesVM.State>() {
 
     override val state = MutableStateFlow(
         State(
-            templatesUI = DI.eventTemplates.toTemplatesUI(),
+            templatesUI = DI.eventTemplatesSorted.toTemplatesUI(),
         )
     )
 
