@@ -33,7 +33,9 @@ class EventTemplatesVM : __VM<EventTemplatesVM.State>() {
     }
 }
 
-private fun List<EventTemplateDB>.toTemplatesUI() = this.map { templateDB ->
+private fun List<EventTemplateDB>.toTemplatesUI() = this
+    .reversed()
+    .map { templateDB ->
     EventTemplatesVM.TemplateUI(
         templateDB = templateDB,
         text = templateDB.text.textFeatures().textNoFeatures.let {
