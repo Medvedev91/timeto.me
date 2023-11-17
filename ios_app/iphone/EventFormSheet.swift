@@ -1,6 +1,27 @@
 import SwiftUI
 import shared
 
+extension NativeSheet {
+
+    func EventFormSheet__show(
+            editedEvent: EventModel?,
+            defText: String? = nil,
+            defTime: Int? = nil,
+            onSave: @escaping () -> Void
+    ) {
+        self.show { isPresented in
+            EventFormSheet(
+                    isPresented: isPresented,
+                    editedEvent: editedEvent,
+                    defText: defText ?? "",
+                    defTime: defTime
+            ) {
+                onSave()
+            }
+        }
+    }
+}
+
 struct EventFormSheet: View {
 
     @State private var vm: EventFormSheetVM
