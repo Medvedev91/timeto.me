@@ -81,6 +81,22 @@ struct EventTemplateFormSheet: View {
                             }
                         }
                     }
+
+                    MyListView__Padding__SectionSection()
+
+                    TextFeaturesTimerFormView(
+                            textFeatures: state.textFeatures
+                    ) { textFeatures in
+                        vm.setTextFeatures(newTextFeatures: textFeatures)
+                    }
+
+                    MyListView__Padding__SectionSection()
+
+                    TextFeaturesTriggersFormView(
+                            textFeatures: state.textFeatures
+                    ) { textFeatures in
+                        vm.setTextFeatures(newTextFeatures: textFeatures)
+                    }
                 }
             }
 
