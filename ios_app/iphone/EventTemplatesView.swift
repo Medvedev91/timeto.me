@@ -5,55 +5,55 @@ struct EventTemplatesView: View {
 
     let spaceAround: Double
     let paddingTop: Double
-    let onClick: (EventsHistory.Item) -> Void
 
     @State private var vm = EventTemplatesVM()
+
+    @EnvironmentObject private var nativeSheet: NativeSheet
 
     var body: some View {
 
         VMView(vm: vm, stack: .ZStack()) { state in
 
-            if !state.uiItems.isEmpty {
+            ScrollView(.horizontal, showsIndicators: false) {
 
-                ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 0) {
 
-                    HStack(spacing: 0) {
+                    MySpacerSize(width: spaceAround)
 
-                        MySpacerSize(width: spaceAround)
+                    ForEach(state.templatesUI, id: \.templateDB.id) { templateUI in
 
-                        ForEach(state.uiItems, id: \.historyItem.normalized_title) { uiItem in
+                        MySpacerSize(width: 8)
 
-                            MySpacerSize(width: state.uiItems.first !== uiItem ? 8 : 0)
-
-                            Button(
-                                    action: {
-                                        // In onTapGesture()/onLongPressGesture()
-                                    },
-                                    label: {
-                                        Text(uiItem.note)
-                                                .padding(.vertical, 6)
-                                                .padding(.horizontal, 11)
-                                                .background(Capsule(style: .circular).fill(.blue))
-                                                /// Ordering is important
-                                                .onTapGesture {
-                                                    onClick(uiItem.historyItem)
-                                                }
-                                                .onLongPressGesture(minimumDuration: 0.1) {
-                                                    vibrate(.warning)
-                                                    vm.delItem(item: uiItem.historyItem)
-                                                }
-                                                //////
-                                                .foregroundColor(.white)
-                                                .font(.system(size: 14, weight: .semibold))
-                                    }
-                            )
-                        }
-
-                        MySpacerSize(width: spaceAround)
+                        Button(
+                                action: {
+                                    // In onTapGesture()/onLongPressGesture()
+                                },
+                                label: {
+                                    Text(templateUI.text)
+                                            .padding(.vertical, 6)
+                                            .padding(.horizontal, 11)
+                                            .background(Capsule(style: .circular).fill(.blue))
+                                            /// Ordering is important
+                                            .onTapGesture {
+                                                nativeSheet.EventFormSheet__show(
+                                                        editedEvent: nil,
+                                                        defText: templateUI.templateDB.text,
+                                                        defTime: templateUI.timeForEventForm.toInt()
+                                                ) {}
+                                            }
+                                            .onLongPressGesture(minimumDuration: 0.1) {
+                                            }
+                                            //////
+                                            .foregroundColor(.white)
+                                            .font(.system(size: 14, weight: .semibold))
+                                }
+                        )
                     }
+
+                    MySpacerSize(width: spaceAround)
                 }
-                        .padding(.top, paddingTop)
             }
+                    .padding(.top, paddingTop)
         }
     }
 }
