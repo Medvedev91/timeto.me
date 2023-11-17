@@ -22,7 +22,7 @@ extension NativeSheet {
     }
 }
 
-struct EventFormSheet: View {
+private struct EventFormSheet: View {
 
     @State private var vm: EventFormSheetVM
 
