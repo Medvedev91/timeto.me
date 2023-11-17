@@ -29,12 +29,13 @@ data class EventModel(
             text: String,
             localTime: Int,
         ): Unit = dbIO {
-            val newEventSQ = EventSQ(
-                id = time(), // todo check unique
-                text = validateText(text),
-                utc_time = localTime + localUtcOffset
+            db.eventQueries.insertObject(
+                EventSQ(
+                    id = time(), // todo check unique
+                    text = validateText(text),
+                    utc_time = localTime + localUtcOffset
+                )
             )
-            db.eventQueries.insertObject(newEventSQ)
         }
 
         suspend fun syncTodaySafe(today: Int): Unit = dbIO {
