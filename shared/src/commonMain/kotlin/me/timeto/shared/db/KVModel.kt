@@ -25,12 +25,12 @@ data class KVModel(
         fun getAllFlow() = db.kVQueries.getAll().asFlow()
             .mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
 
-        ///
+        //
 
         fun String?.asDayStartOffsetSeconds(): Int = this?.toInt() ?: 0
 
-        ///
-        /// Backupable Holder
+        //
+        // Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
             db.kVQueries.getAll().executeAsList().map { it.toModel() }
@@ -59,8 +59,8 @@ data class KVModel(
         }
     }
 
-    ///
-    /// Backupable Item
+    //
+    // Backupable Item
 
     override fun backupable__getId(): String = key
 
