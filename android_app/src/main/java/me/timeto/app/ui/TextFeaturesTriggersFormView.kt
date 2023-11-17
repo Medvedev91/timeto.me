@@ -3,10 +3,13 @@ package me.timeto.app.ui
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.vm.ui.TextFeaturesTriggersFormUI
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TextFeaturesTriggersFormView(
     textFeatures: TextFeatures,
@@ -14,6 +17,7 @@ fun TextFeaturesTriggersFormView(
 ) {
 
     val formUI = remember(textFeatures) { TextFeaturesTriggersFormUI(textFeatures) }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Column {
 
@@ -31,6 +35,7 @@ fun TextFeaturesTriggersFormView(
                     )
                 }
             ) {
+                keyboardController?.hide()
                 Sheet.show { layer ->
                     ChecklistsPickerSheet(
                         layer = layer,
@@ -57,6 +62,7 @@ fun TextFeaturesTriggersFormView(
                     )
                 }
             ) {
+                keyboardController?.hide()
                 Sheet.show { layer ->
                     ShortcutsPickerSheet(
                         layer = layer,
