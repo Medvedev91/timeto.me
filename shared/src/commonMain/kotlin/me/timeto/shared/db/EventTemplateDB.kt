@@ -21,17 +21,17 @@ data class EventTemplateDB(
     companion object : Backupable__Holder {
 
         suspend fun selectAscSorted(): List<EventTemplateDB> = dbIO {
-            db.eventTemplateQueries.selectAscSorted().executeAsList().map { it.toDB() }
+            db.eventTemplateQueries.selectAscSorted().executeAsList().toDBList()
         }
 
         fun selectAscSortedFlow(): Flow<List<EventTemplateDB>> = db.eventTemplateQueries
-            .selectAscSorted().asFlow().mapToList(Dispatchers.IO).map { list -> list.map { it.toDB() } }
+            .selectAscSorted().asFlow().mapToList(Dispatchers.IO).map { it.toDBList() }
 
         //
         // Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.eventTemplateQueries.selectAscSorted().executeAsList().map { it.toDB() }
+            db.eventTemplateQueries.selectAscSorted().executeAsList().toDBList()
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
@@ -73,6 +73,8 @@ data class EventTemplateDB(
 private fun EventTemplateSQ.toDB() = EventTemplateDB(
     id = id, sort = sort, daytime = daytime, text = text,
 )
+
+private fun List<EventTemplateSQ>.toDBList() = this.map { it.toDB() }
 
 private fun dayTimeValidation(daytime: Int): Int {
     if (daytime < 0)
