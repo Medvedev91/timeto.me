@@ -3,11 +3,11 @@ import shared
 
 struct EventTemplatesView: View {
 
-    @State private var vm = EventsHistoryVM()
-
     let spaceAround: Double
     let paddingTop: Double
     let onClick: (EventsHistory.Item) -> Void
+
+    @State private var vm = EventTemplatesVM()
 
     var body: some View {
 
