@@ -69,7 +69,11 @@ data class EventTemplateDB(
     ) {
         dbIO {
             db.transaction {
-                val templates = db.eventTemplateQueries.selectAscSorted().executeAsList().toDBList()
+                val templates = db.eventTemplateQueries
+                    .selectAscSorted()
+                    .executeAsList()
+                    .toDBList()
+                    .filter { id != it.id }
                 db.eventTemplateQueries.updateById(
                     id = id,
                     sort = sort,
