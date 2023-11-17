@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.shared.vm.EventTemplatesVM
 
-private val newTemplateButtonShape = SquircleShape(len = 40f)
+private val listButtonShape = SquircleShape(len = 40f)
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -89,7 +89,7 @@ fun EventTemplatesView(
             Text(
                 text = "New Template",
                 modifier = Modifier
-                    .clip(newTemplateButtonShape)
+                    .clip(listButtonShape)
                     .clickable {
                         Sheet.show { layer ->
                             EventTemplateFormSheet(layer = layer, eventTemplate = null)
