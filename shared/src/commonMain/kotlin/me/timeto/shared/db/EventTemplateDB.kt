@@ -81,3 +81,13 @@ private fun dayTimeValidation(daytime: Int): Int {
         throw UIException("Invalid daytime")
     return daytime
 }
+
+private fun textValidation(
+    text: String,
+    otherTemplates: List<EventTemplateDB>,
+): String {
+    val textValidated = text.trim()
+    if (otherTemplates.any { it.text == textValidated })
+        throw UIException("Template \"$textValidated\" already exists")
+    return textValidated
+}
