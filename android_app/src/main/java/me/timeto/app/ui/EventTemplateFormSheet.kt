@@ -41,11 +41,11 @@ fun EventTemplateFormSheet(
                 .weight(1f)
         ) {
 
-            MyListView__Padding__HeaderSection()
-
             MyListView__ItemView(
                 isFirst = true,
                 isLast = true,
+                modifier = Modifier
+                    .padding(top = 12.dp)
             ) {
 
                 MyListView__ItemView__TextInputView(
