@@ -16,7 +16,7 @@ struct EventTemplatesView: View {
 
             ScrollView(.horizontal, showsIndicators: false) {
 
-                HStack(spacing: 0) {
+                HStack {
 
                     MySpacerSize(width: spaceAround)
 
