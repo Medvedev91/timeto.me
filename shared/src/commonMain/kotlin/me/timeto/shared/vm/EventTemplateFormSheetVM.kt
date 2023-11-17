@@ -14,8 +14,26 @@ class EventTemplateFormSheetVM(
         val textFeatures: TextFeatures,
         val daytime: Int?,
     ) {
+
+        val daytimeTitle = "Time"
+        val daytimeDefHour: Int
+        val daytimeDefMinute: Int
+        val daytimeNote = daytime?.let { daytimeToString(it) } ?: "None"
+        val daytimeNoteColor: ColorRgba? = if (daytime != null) null else ColorRgba.red
+
         val inputTextValue = textFeatures.textNoFeatures
         val deleteText = "Delete Template"
+
+        init {
+            if (daytime != null) {
+                val (h, m) = daytime.toHms()
+                daytimeDefHour = h
+                daytimeDefMinute = m
+            } else {
+                daytimeDefHour = 12
+                daytimeDefMinute = 0
+            }
+        }
     }
 
     override val state = MutableStateFlow(
