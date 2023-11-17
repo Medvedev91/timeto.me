@@ -87,6 +87,9 @@ fun EventTemplatesView(
                 modifier = Modifier
                     .clip(newTemplateButtonShape)
                     .clickable {
+                        Sheet.show { layer ->
+                            EventTemplateFormSheet(layer = layer, eventTemplate = null)
+                        }
                     }
                     .padding(horizontal = 2.dp),
                 color = c.blue,
