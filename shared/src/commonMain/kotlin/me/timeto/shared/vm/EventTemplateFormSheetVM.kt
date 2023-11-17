@@ -53,6 +53,10 @@ class EventTemplateFormSheetVM(
         it.copy(textFeatures = newTextFeatures)
     }
 
+    fun setDaytime(newDaytimeOrNull: Int?) {
+        state.update { it.copy(daytime = newDaytimeOrNull) }
+    }
+
     fun save(
         onSuccess: () -> Unit,
     ) {
