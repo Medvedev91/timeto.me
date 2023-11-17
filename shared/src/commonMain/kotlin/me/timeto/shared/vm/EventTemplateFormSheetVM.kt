@@ -37,11 +37,26 @@ class EventTemplateFormSheetVM(
 
     fun save(
         onSuccess: () -> Unit,
-    ) = scopeVM().launchEx {
-        try {
-            onSuccess()
-        } catch (e: UIException) {
-            showUiAlert(e.uiMessage)
+    ) {
+        scopeVM().launchEx {
+            try {
+                val daytime = state.value.dayTime
+                val textFeatures = state.value.textFeatures
+                val textWithFeatures = textFeatures.textWithFeatures()
+                if (textFeatures.textNoFeatures.isBlank())
+                    throw UIException("Text is empty")
+                if (textFeatures.activity == null)
+                    throw UIException("Activity not selected")
+                if (textFeatures.timer == null)
+                    throw UIException("Timer not selected")
+                if (eventTemplateDB != null)
+                    eventTemplateDB.updateWithValidation(daytime, textWithFeatures)
+                else
+                    EventTemplateDB.insertWithValidation(daytime, textWithFeatures)
+                onSuccess()
+            } catch (e: UIException) {
+                showUiAlert(e.uiMessage)
+            }
         }
     }
 
