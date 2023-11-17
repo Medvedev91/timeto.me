@@ -31,20 +31,6 @@ class EventTemplatesVM : __VM<EventTemplatesVM.State>() {
             }
         }
     }
-
-    fun delTemplate(templateUI: TemplateUI) {
-        showUiConfirmation(
-            UIConfirmationData(
-                text = "Remove \"${templateUI.text}\" from templates?",
-                buttonText = "Remove",
-                isRed = true,
-            ) {
-                scopeVM().launchEx {
-                    templateUI.templateDB.backupable__delete()
-                }
-            }
-        )
-    }
 }
 
 private fun List<EventTemplateDB>.toTemplatesUI() = this.map { templateDB ->
