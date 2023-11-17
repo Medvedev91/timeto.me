@@ -61,8 +61,21 @@ class EventTemplateFormSheetVM(
     }
 
     fun delete(
-        eventTemplateDB: EventTemplateDB,
+        templateDB: EventTemplateDB,
         onSuccess: () -> Unit,
     ) {
+        val text = templateDB.text.textFeatures().textNoFeatures
+        showUiConfirmation(
+            UIConfirmationData(
+                text = "Remove \"$text\" from templates?",
+                buttonText = "Remove",
+                isRed = true,
+            ) {
+                scopeVM().launchEx {
+                    templateDB.backupable__delete()
+                    onSuccess()
+                }
+            }
+        )
     }
 }
