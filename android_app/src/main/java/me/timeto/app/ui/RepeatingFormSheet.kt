@@ -107,7 +107,6 @@ fun RepeatingFormSheet(
                         )
                     }
                 ) {
-                    keyboardController?.hide()
                     Sheet.show { layer ->
                         DaytimePickerSheet(
                             layer = layer,

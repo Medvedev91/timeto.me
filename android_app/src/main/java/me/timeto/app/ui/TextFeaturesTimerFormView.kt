@@ -3,14 +3,11 @@ package me.timeto.app.ui
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import me.timeto.app.toColor
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.vm.ui.TextFeaturesTimerFormUI
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TextFeaturesTimerFormView(
     textFeatures: TextFeatures,
@@ -18,7 +15,6 @@ fun TextFeaturesTimerFormView(
 ) {
 
     val formUI = remember(textFeatures) { TextFeaturesTimerFormUI(textFeatures) }
-    val keyboardController = LocalSoftwareKeyboardController.current
 
     Column {
 
@@ -37,7 +33,6 @@ fun TextFeaturesTimerFormView(
                     )
                 }
             ) {
-                keyboardController?.hide()
                 Sheet.show { layer ->
                     ActivityPickerSheet(
                         layer = layer,
@@ -64,7 +59,6 @@ fun TextFeaturesTimerFormView(
                     )
                 }
             ) {
-                keyboardController?.hide()
                 Sheet.show { layer ->
                     TimerPickerSheet(
                         layer = layer,
