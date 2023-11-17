@@ -27,6 +27,23 @@ data class EventTemplateDB(
         fun selectAscSortedFlow(): Flow<List<EventTemplateDB>> = db.eventTemplateQueries
             .selectAscSorted().asFlow().mapToList(Dispatchers.IO).map { it.toDBList() }
 
+        suspend fun insertWithValidation(
+            daytime: Int,
+            text: String,
+        ) {
+            dbIO {
+                val templates = db.eventTemplateQueries.selectAscSorted().executeAsList().toDBList()
+                db.eventTemplateQueries.insertObject(
+                    EventTemplateSQ(
+                        id = time(), // todo validation
+                        sort = 0,
+                        daytime = dayTimeValidation(daytime),
+                        text = textValidation(text, templates),
+                    )
+                )
+            }
+        }
+
         //
         // Backupable Holder
 
