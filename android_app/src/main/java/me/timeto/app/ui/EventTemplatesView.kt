@@ -30,7 +30,7 @@ fun EventTemplatesView(
     paddingTop: Dp,
 ) {
 
-    val (vm, state) = rememberVM { EventTemplatesVM() }
+    val (_, state) = rememberVM { EventTemplatesVM() }
     val templatesUI = state.templatesUI
 
     val scrollState = rememberLazyListState()
@@ -68,8 +68,12 @@ fun EventTemplatesView(
                             ) {}
                         },
                         onLongClick = {
-                            vm.delTemplate(templateUI)
-                            vibrateShort()
+                            Sheet.show { layer ->
+                                EventTemplateFormSheet(
+                                    layer = layer,
+                                    eventTemplate = templateUI.templateDB,
+                                )
+                            }
                         },
                     )
                     .padding(start = 8.dp, end = 8.dp, top = 4.dp, bottom = 5.dp),
