@@ -5,12 +5,15 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import me.timeto.app.*
 import me.timeto.shared.db.EventTemplateDB
 import me.timeto.shared.vm.EventTemplateFormSheetVM
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun EventTemplateFormSheet(
     layer: WrapperView.Layer,
@@ -18,6 +21,7 @@ fun EventTemplateFormSheet(
 ) {
 
     val (vm, state) = rememberVM(eventTemplate) { EventTemplateFormSheetVM(eventTemplate) }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     VStack(
         modifier = Modifier
@@ -72,6 +76,7 @@ fun EventTemplateFormSheet(
                         )
                     }
                 ) {
+                    keyboardController?.hide()
                     Sheet.show { layer ->
                         DaytimePickerSheet(
                             layer = layer,
