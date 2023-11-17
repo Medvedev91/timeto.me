@@ -59,8 +59,8 @@ data class EventModel(
             }
         }
 
-        ///
-        /// Backupable Holder
+        //
+        // Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
             db.eventQueries.getAscByTime().executeAsList().map { it.toModel() }
@@ -96,8 +96,8 @@ data class EventModel(
 
     suspend fun delete() = dbIO { db.eventQueries.deleteById(id) }
 
-    ///
-    /// Backupable Item
+    //
+    // Backupable Item
 
     override fun backupable__getId(): String = id.toString()
 
