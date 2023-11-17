@@ -16,13 +16,13 @@ struct EventFormSheet: View {
             isPresented: Binding<Bool>,
             editedEvent: EventModel?,
             defText: String? = nil,
-            defDate: Date? = nil,
+            defTime: Int? = nil,
             onSave: @escaping () -> Void = {}
     ) {
         _vm = State(initialValue: EventFormSheetVM(
                 event: editedEvent,
                 defText: defText,
-                defTime: defDate?.toUnixTime().time.toKotlinInt()
+                defTime: defTime?.toKotlinInt()
         ))
         self.onSave = onSave
         _isPresented = isPresented
