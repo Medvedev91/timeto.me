@@ -15,6 +15,8 @@ struct EventsListView: View {
     /// Avoiding animation on start, but it is needed for editing
     @State private var useAnimation = false
 
+    @EnvironmentObject private var nativeSheet: NativeSheet
+
     private let LIST_BOTTOM_ITEM_ID = "bottom_id"
 
     var body: some View {
@@ -68,7 +70,9 @@ struct EventsListView: View {
 
                                 Button(
                                         action: {
-                                            showAddCalendar()
+                                            nativeSheet.EventFormSheet__show(editedEvent: nil) {
+                                                scrollDown(scrollProxy: scrollProxy, toAnimate: true)
+                                            }
                                         },
                                         label: {
                                             Text("Event")
