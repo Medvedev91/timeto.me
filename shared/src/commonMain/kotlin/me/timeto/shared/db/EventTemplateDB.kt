@@ -73,3 +73,9 @@ data class EventTemplateDB(
 private fun EventTemplateSQ.toDB() = EventTemplateDB(
     id = id, sort = sort, daytime = daytime, text = text,
 )
+
+private fun dayTimeValidation(daytime: Int): Int {
+    if (daytime < 0)
+        throw UIException("Invalid daytime")
+    return daytime
+}
