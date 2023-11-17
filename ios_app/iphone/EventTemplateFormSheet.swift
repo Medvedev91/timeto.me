@@ -97,6 +97,24 @@ struct EventTemplateFormSheet: View {
                     ) { textFeatures in
                         vm.setTextFeatures(newTextFeatures: textFeatures)
                     }
+
+                    if let eventTemplate = vm.eventTemplateDB {
+
+                        MyListView__Padding__SectionSection()
+
+                        MyListView__ItemView(
+                                isFirst: true,
+                                isLast: true
+                        ) {
+                            MyListView__ItemView__ActionView(
+                                    text: state.deleteText
+                            ) {
+                                vm.delete(templateDB: eventTemplate) {
+                                    isPresented = false
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
