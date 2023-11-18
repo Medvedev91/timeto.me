@@ -112,6 +112,7 @@ extension View {
     func sheetEnv<Content>(
             isPresented: Binding<Bool>,
             onDismiss: (() -> Void)? = nil,
+            hideKeyboardOnPresent: Bool = true,
             @ViewBuilder content: @escaping () -> Content
     ) -> some View where Content: View {
         sheet(
@@ -124,5 +125,10 @@ extension View {
                             .attachNativeSheet()
                 }
         )
+                .onChange(of: isPresented.wrappedValue) { newValue in
+                    if newValue && hideKeyboardOnPresent {
+                        hideKeyboard()
+                    }
+                }
     }
 }
