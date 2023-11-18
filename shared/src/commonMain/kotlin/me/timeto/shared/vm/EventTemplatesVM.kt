@@ -41,7 +41,7 @@ private fun List<EventTemplateDB>.toTemplatesUI() = this
         EventTemplatesVM.TemplateUI(
             templateDB = templateDB,
             text = templateDB.text.textFeatures().textNoFeatures.let {
-                if (it.length <= 12) it else it.substring(0..9) + ".."
+                if (it.length <= 17) it else it.substring(0..14) + ".."
             },
         )
     }
