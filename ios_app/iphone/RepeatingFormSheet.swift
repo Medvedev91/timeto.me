@@ -96,7 +96,6 @@ struct RepeatingsFormSheet: View {
                                             )
                                     )
                             ) {
-                                hideKeyboard()
                                 isDaytimeSheetPresented = true
                             }
                                     .sheetEnv(isPresented: $isDaytimeSheetPresented) {
