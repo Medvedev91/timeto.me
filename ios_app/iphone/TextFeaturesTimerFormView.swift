@@ -37,7 +37,6 @@ struct TextFeaturesTimerFormView: View {
                                 )
                         )
                 ) {
-                    hideKeyboard()
                     isActivitySheetPresented = true
                 }
                         .sheetEnv(isPresented: $isActivitySheetPresented) {
@@ -66,7 +65,6 @@ struct TextFeaturesTimerFormView: View {
                                 )
                         )
                 ) {
-                    hideKeyboard()
                     isTimerSheetPresented = true
                 }
                         .sheetEnv(isPresented: $isTimerSheetPresented) {
