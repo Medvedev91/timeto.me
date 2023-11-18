@@ -19,7 +19,7 @@ struct TextFeaturesTriggersFormView: View {
 
     var body: some View {
 
-        VStack(spacing: 0) {
+        VStack {
 
             MyListView__ItemView(
                     isFirst: true,
