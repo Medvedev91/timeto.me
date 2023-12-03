@@ -25,7 +25,7 @@ internal lateinit var deviceData: DeviceData
 var batteryLevelOrNull: Int? = null
 var isBatteryChargingOrNull: Boolean? = null
 
-fun zlog(message: Any?) = println(";; $message")
+fun zlog(message: Any?) = println(";; ${message.toString().replace("\n", "\n;; ")}")
 
 internal expect val REPORT_API_TITLE: String
 fun reportApi(message: String) {
