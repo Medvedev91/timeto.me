@@ -46,10 +46,15 @@ kotlin {
             }
         }
 
+        val appleMain by creating {
+            dependsOn(commonMain)
+        }
+
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
         val iosMain by creating {
             dependsOn(commonMain)
+            dependsOn(appleMain)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
             dependencies {
@@ -64,6 +69,7 @@ kotlin {
         val watchosSimulatorArm64Main by getting
         val watchosMain by creating {
             dependsOn(commonMain)
+            dependsOn(appleMain)
             watchosX64Main.dependsOn(this)
             watchosArm32Main.dependsOn(this)
             watchosArm64Main.dependsOn(this)
