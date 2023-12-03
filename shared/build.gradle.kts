@@ -6,7 +6,7 @@ plugins {
 
 kotlin {
 
-    android()
+    androidTarget()
 
     listOf(
         // iOS
