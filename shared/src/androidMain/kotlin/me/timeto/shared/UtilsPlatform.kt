@@ -48,6 +48,8 @@ internal actual object SecureLocalStorage {
 
     // ESP - Encrypted Shared Preferences
     // https://developer.android.com/reference/androidx/security/crypto/EncryptedSharedPreferences
+    // todo https://developer.android.com/jetpack/androidx/releases/security
+    // todo https://issuetracker.google.com/issues/164901843
 
     private val espMasterKey by lazy {
         MasterKey.Builder(androidApplication)
