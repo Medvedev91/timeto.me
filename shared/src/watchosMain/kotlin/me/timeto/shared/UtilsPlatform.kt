@@ -1,15 +1,7 @@
 package me.timeto.shared
 
-import app.cash.sqldelight.db.QueryResult
-import app.cash.sqldelight.db.SqlSchema
-import app.cash.sqldelight.driver.native.NativeSqliteDriver
-import app.cash.sqldelight.driver.native.wrapConnection
-import co.touchlab.sqliter.DatabaseConfiguration
-import co.touchlab.sqliter.JournalMode
 import platform.Foundation.NSBundle
 import platform.WatchKit.WKInterfaceDevice
-import me.timeto.appdbsq.TimetomeDB
-import me.timeto.shared.db.DB_NAME
 
 internal actual val REPORT_API_TITLE = "⌚ Watch OS"
 
@@ -36,25 +28,3 @@ internal actual object SecureLocalStorage {
         TODO("WatchOS SecureLocalStorage.upsert() not implemented")
     }
 }
-
-//////
-
-/**
- * WARNING
- * DO NOT CHANGE THE CODE! It is copy from "iosMain".
- */
-private fun createNativeDriver(
-    schema: SqlSchema<QueryResult.Value<Unit>> = TimetomeDB.Schema,
-) = NativeSqliteDriver(
-    configuration = DatabaseConfiguration(
-        name = DB_NAME,
-        version = schema.version.toInt(),
-        create = { connection ->
-            wrapConnection(connection) { schema.create(it) }
-        },
-        upgrade = { connection, oldVersion, newVersion ->
-            wrapConnection(connection) { schema.migrate(it, oldVersion.toLong(), newVersion.toLong()) }
-        },
-        journalMode = JournalMode.DELETE, // Changed from JournalMode.WAL
-    )
-)
