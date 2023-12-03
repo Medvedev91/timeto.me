@@ -4,6 +4,7 @@ import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.utils.io.core.*
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.serialization.json.Json
@@ -58,7 +59,11 @@ class AppVM : __VM<AppVM.State>() {
                      * - No need to wait after daytime changes;
                      * - No need to wait after backup restore.
                      */
-                    delay(1_000L)
+                    try {
+                        delay(1_000L)
+                    } catch (e: CancellationException) {
+                        break // On app closing
+                    }
                     try {
                         syncTmrw()
                         syncTodayEvents()
@@ -76,7 +81,11 @@ class AppVM : __VM<AppVM.State>() {
                 delay(500L)
                 while (true) {
                     ping()
-                    delay(10 * 60 * 1_000L) // 10 min
+                    try {
+                        delay(10 * 60 * 1_000L) // 10 min
+                    } catch (e: CancellationException) {
+                        break // On app closing
+                    }
                 }
             }
         }
