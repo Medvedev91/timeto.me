@@ -9,7 +9,7 @@ import shared
 let DI = shared.DI.shared
 
 func time() -> Int {
-    UtilsPlatformKt.time().toInt()
+    Atm_kmp_appleKt.time().toInt()
 }
 
 func reportApi(_ message: String) {
@@ -17,7 +17,7 @@ func reportApi(_ message: String) {
 }
 
 func zlog(_ message: Any?) {
-    UtilsKt.zlog(message: message)
+    Atm_kmpKt.zlog(message: message)
 }
 
 //////
