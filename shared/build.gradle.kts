@@ -42,7 +42,7 @@ kotlin {
             dependencies {
                 implementation("io.ktor:ktor-client-okhttp:$ktor_version")
                 implementation("app.cash.sqldelight:android-driver:$sqldelight_version")
-                implementation("androidx.security:security-crypto:1.0.0")
+                implementation("androidx.security:security-crypto:1.1.0-alpha06")
             }
         }
 
