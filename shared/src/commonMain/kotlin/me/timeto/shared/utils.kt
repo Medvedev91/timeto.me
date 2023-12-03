@@ -466,10 +466,6 @@ val localUtcOffset: Int
 val localUtcOffsetWithDayStart: Int
     get() = localUtcOffset - dayStartOffsetSeconds()
 
-expect fun time(): Int
-
-expect fun timeMls(): Long
-
 fun dayStartOffsetSeconds(): Int =
     KVModel.KEY.DAY_START_OFFSET_SECONDS.getFromDIOrNull().asDayStartOffsetSeconds()
 

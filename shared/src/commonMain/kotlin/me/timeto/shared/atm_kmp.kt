@@ -5,6 +5,13 @@ import kotlinx.serialization.json.*
 fun zlog(message: Any?) = println(";; ${message.toString().replace("\n", "\n;; ")}")
 
 //
+// Time
+
+expect fun time(): Int
+
+expect fun timeMls(): Long
+
+//
 // Json
 
 fun JsonObject.getInt(key: String): Int = this[key]!!.jsonPrimitive.int
