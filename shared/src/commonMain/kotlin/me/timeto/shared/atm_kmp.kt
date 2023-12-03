@@ -4,8 +4,8 @@ import kotlinx.serialization.json.*
 
 fun zlog(message: Any?) = println(";; ${message.toString().replace("\n", "\n;; ")}")
 
-///
-/// Json
+//
+// Json
 
 fun JsonObject.getInt(key: String): Int = this[key]!!.jsonPrimitive.int
 fun JsonObject.getString(key: String): String = this[key]!!.jsonPrimitive.content
