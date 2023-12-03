@@ -48,6 +48,10 @@ kotlin {
 
         val appleMain by creating {
             dependsOn(commonMain)
+            dependencies {
+                implementation("io.ktor:ktor-client-darwin:$ktor_version")
+                implementation("app.cash.sqldelight:native-driver:$sqldelight_version")
+            }
         }
 
         val iosArm64Main by getting
@@ -57,10 +61,6 @@ kotlin {
             dependsOn(appleMain)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
-            dependencies {
-                implementation("io.ktor:ktor-client-darwin:$ktor_version")
-                implementation("app.cash.sqldelight:native-driver:$sqldelight_version")
-            }
         }
 
         val watchosX64Main by getting
@@ -74,10 +74,6 @@ kotlin {
             watchosArm32Main.dependsOn(this)
             watchosArm64Main.dependsOn(this)
             watchosSimulatorArm64Main.dependsOn(this)
-            dependencies {
-                implementation("io.ktor:ktor-client-darwin:$ktor_version")
-                implementation("app.cash.sqldelight:native-driver:$sqldelight_version")
-            }
         }
     }
 }
