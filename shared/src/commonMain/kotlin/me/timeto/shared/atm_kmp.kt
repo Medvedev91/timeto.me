@@ -15,6 +15,8 @@ expect fun timeMls(): Long
 // Json
 
 fun JsonObject.getInt(key: String): Int = this[key]!!.jsonPrimitive.int
+fun JsonObject.getDouble(key: String): Double = this[key]!!.jsonPrimitive.double
+fun JsonObject.getDoubleOrNull(key: String): Double? = this[key]!!.jsonPrimitive.doubleOrNull
 fun JsonObject.getString(key: String): String = this[key]!!.jsonPrimitive.content
 fun JsonObject.getStringOrNull(key: String): String? = this[key]!!.jsonPrimitive.contentOrNull
 fun JsonObject.getBoolean(key: String): Boolean = this[key]!!.jsonPrimitive.boolean
