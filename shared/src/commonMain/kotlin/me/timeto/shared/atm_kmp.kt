@@ -22,6 +22,7 @@ fun JsonObject.getDoubleOrNull(key: String): Double? = this[key]!!.jsonPrimitive
 fun JsonObject.getString(key: String): String = this[key]!!.jsonPrimitive.content
 fun JsonObject.getStringOrNull(key: String): String? = this[key]!!.jsonPrimitive.contentOrNull
 fun JsonObject.getBoolean(key: String): Boolean = this[key]!!.jsonPrimitive.boolean
+fun JsonObject.getBooleanOrNull(key: String): Boolean? = this[key]!!.jsonPrimitive.booleanOrNull
 fun JsonObject.getIntArray(key: String): List<Int> = this[key]!!.jsonArray.map { it.jsonPrimitive.int }
 
 fun JsonArray.getInt(index: Int): Int = this[index].jsonPrimitive.int
