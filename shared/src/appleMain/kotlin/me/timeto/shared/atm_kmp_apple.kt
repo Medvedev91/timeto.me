@@ -6,8 +6,6 @@ import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import app.cash.sqldelight.driver.native.wrapConnection
 import co.touchlab.sqliter.DatabaseConfiguration
 import co.touchlab.sqliter.JournalMode
-import me.timeto.appdbsq.TimetomeDB
-import me.timeto.shared.db.DB_NAME
 import platform.Foundation.NSDate
 import platform.Foundation.timeIntervalSince1970
 
@@ -23,7 +21,7 @@ actual fun getLocalUtcOffset(): Int = TODO()
 /**
  * SqlDelight
  *
- * Code copied from the constructor of NativeSqliteDriver(TimetoDB.Schema, DB_NAME)
+ * Code copied from the constructor of NativeSqliteDriver(schema, dbName)
  * with adding "journalMode = JournalMode.DELETE". The default was "JournalMode.WAL".
  *
  * Same issue https://github.com/cashapp/sqldelight/issues/2123
@@ -39,10 +37,11 @@ actual fun getLocalUtcOffset(): Int = TODO()
  * - When the database is changed, the irrelevant UI will be displayed.
  */
 internal fun createNativeDriver(
-    schema: SqlSchema<QueryResult.Value<Unit>> = TimetomeDB.Schema,
+    dbName: String,
+    schema: SqlSchema<QueryResult.Value<Unit>>,
 ) = NativeSqliteDriver(
     configuration = DatabaseConfiguration(
-        name = DB_NAME,
+        name = dbName,
         version = schema.version.toInt(),
         create = { connection ->
             wrapConnection(connection) { schema.create(it) }

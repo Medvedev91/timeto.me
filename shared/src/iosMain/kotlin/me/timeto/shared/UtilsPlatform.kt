@@ -4,6 +4,7 @@ package me.timeto.shared
 
 import kotlinx.cinterop.*
 import kotlinx.coroutines.flow.Flow
+import me.timeto.appdbsq.TimetomeDB
 import platform.CoreFoundation.*
 import platform.Foundation.*
 import platform.Security.*
@@ -19,7 +20,7 @@ fun initKmmIos(deviceName: String) {
         os = "ios-${UIDevice.currentDevice.systemVersion}",
         device = deviceName,
     )
-    initKmm(createNativeDriver(), deviceData)
+    initKmm(createNativeDriver(DB_NAME, TimetomeDB.Schema), deviceData)
     listenForSyncWatch()
 }
 

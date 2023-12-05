@@ -1,5 +1,7 @@
 package me.timeto.shared
 
+import me.timeto.appdbsq.TimetomeDB
+import me.timeto.shared.db.DB_NAME
 import platform.Foundation.NSBundle
 import platform.WatchKit.WKInterfaceDevice
 
@@ -11,7 +13,7 @@ fun initKmmWatchOS(deviceName: String) {
         os = "watchos-${WKInterfaceDevice.currentDevice().systemVersion}",
         device = deviceName,
     )
-    initKmm(createNativeDriver(), deviceData)
+    initKmm(createNativeDriver(DB_NAME, TimetomeDB.Schema), deviceData)
 }
 
 actual fun getResourceContent(file: String, type: String): String {
