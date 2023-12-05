@@ -16,21 +16,21 @@ expect fun getLocalUtcOffset(): Int
 //
 // Json
 
-fun JsonObject.getInt(key: String): Int = this[key]!!.jsonPrimitive.int
-fun JsonObject.getDouble(key: String): Double = this[key]!!.jsonPrimitive.double
-fun JsonObject.getDoubleOrNull(key: String): Double? = this[key]!!.jsonPrimitive.doubleOrNull
-fun JsonObject.getString(key: String): String = this[key]!!.jsonPrimitive.content
-fun JsonObject.getStringOrNull(key: String): String? = this[key]!!.jsonPrimitive.contentOrNull
-fun JsonObject.getBoolean(key: String): Boolean = this[key]!!.jsonPrimitive.boolean
-fun JsonObject.getBooleanOrNull(key: String): Boolean? = this[key]!!.jsonPrimitive.booleanOrNull
-fun JsonObject.getIntArray(key: String): List<Int> = this[key]!!.jsonArray.map { it.jsonPrimitive.int }
+internal fun JsonObject.getInt(key: String): Int = this[key]!!.jsonPrimitive.int
+internal fun JsonObject.getDouble(key: String): Double = this[key]!!.jsonPrimitive.double
+internal fun JsonObject.getDoubleOrNull(key: String): Double? = this[key]!!.jsonPrimitive.doubleOrNull
+internal fun JsonObject.getString(key: String): String = this[key]!!.jsonPrimitive.content
+internal fun JsonObject.getStringOrNull(key: String): String? = this[key]!!.jsonPrimitive.contentOrNull
+internal fun JsonObject.getBoolean(key: String): Boolean = this[key]!!.jsonPrimitive.boolean
+internal fun JsonObject.getBooleanOrNull(key: String): Boolean? = this[key]!!.jsonPrimitive.booleanOrNull
+internal fun JsonObject.getIntArray(key: String): List<Int> = this[key]!!.jsonArray.map { it.jsonPrimitive.int }
 
-fun JsonArray.getInt(index: Int): Int = this[index].jsonPrimitive.int
-fun JsonArray.getIntOrNull(index: Int): Int? = this[index].jsonPrimitive.intOrNull
-fun JsonArray.getString(index: Int): String = this[index].jsonPrimitive.content
-fun JsonArray.getStringOrNull(index: Int): String? = this[index].jsonPrimitive.contentOrNull
+internal fun JsonArray.getInt(index: Int): Int = this[index].jsonPrimitive.int
+internal fun JsonArray.getIntOrNull(index: Int): Int? = this[index].jsonPrimitive.intOrNull
+internal fun JsonArray.getString(index: Int): String = this[index].jsonPrimitive.content
+internal fun JsonArray.getStringOrNull(index: Int): String? = this[index].jsonPrimitive.contentOrNull
 
-fun List<*>.toJsonArray() = JsonArray(
+internal fun List<*>.toJsonArray() = JsonArray(
     this.map { item ->
         when (item) {
             is JsonElement -> item
