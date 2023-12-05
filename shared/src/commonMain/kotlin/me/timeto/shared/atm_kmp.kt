@@ -11,6 +11,8 @@ expect fun time(): Int
 
 expect fun timeMls(): Long
 
+expect fun getLocalUtcOffset(): Int
+
 //
 // Json
 
