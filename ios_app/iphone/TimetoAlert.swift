@@ -14,8 +14,8 @@ private struct TimetoAlert__Modifier: ViewModifier {
     @StateObject private var timetoAlert = TimetoAlert()
     @State private var isPresented = false
 
-    private let alertPublisher: AnyPublisher<UIAlertData, Never> = UtilsKt.uiAlertFlow.toPublisher()
-    private let confirmationPublisher: AnyPublisher<UIConfirmationData, Never> = UtilsKt.uiConfirmationFlow.toPublisher()
+    private let alertPublisher: AnyPublisher<UIAlertData, Never> = Utils_kmpKt.uiAlertFlow.toPublisher()
+    private let confirmationPublisher: AnyPublisher<UIConfirmationData, Never> = Utils_kmpKt.uiConfirmationFlow.toPublisher()
 
     func body(content: Content) -> some View {
 

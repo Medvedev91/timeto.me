@@ -13,7 +13,7 @@ func time() -> Int {
 }
 
 func reportApi(_ message: String) {
-    UtilsKt.reportApi(message: message)
+    Utils_kmpKt.reportApi(message: message)
 }
 
 func zlog(_ message: Any?) {
@@ -151,7 +151,7 @@ extension Date {
     }
 
     func toUnixTime() -> UnixTime {
-        UnixTime(time: Int32(timeIntervalSince1970), utcOffset: UtilsKt.localUtcOffset)
+        UnixTime(time: Int32(timeIntervalSince1970), utcOffset: Utils_kmpKt.localUtcOffset)
     }
 }
 
@@ -199,7 +199,7 @@ extension FixedWidthInteger {
     ///
 
     func asUnixDayToDate() -> Date {
-        Date(timeIntervalSince1970: Double(UnixTime.companion.byLocalDay(localDay: Int32(self), utcOffset: UtilsKt.localUtcOffset).time))
+        Date(timeIntervalSince1970: Double(UnixTime.companion.byLocalDay(localDay: Int32(self), utcOffset: Utils_kmpKt.localUtcOffset).time))
     }
 
     func asTimeToDate() -> Date {
@@ -246,11 +246,11 @@ extension Double {
     //////
 
     func goldenRatioUp() -> Double {
-        self * Double(UtilsKt.GOLDEN_RATIO)
+        self * Double(Utils_kmpKt.GOLDEN_RATIO)
     }
 
     func goldenRatioDown() -> Double {
-        self / Double(UtilsKt.GOLDEN_RATIO)
+        self / Double(Utils_kmpKt.GOLDEN_RATIO)
     }
 }
 

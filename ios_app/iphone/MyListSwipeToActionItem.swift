@@ -66,7 +66,7 @@ struct MyListSwipeToActionItem<Content: View>: View {
                     Button(
                             action: {
                                 if let deletionConfirmationNote = deletionConfirmationNote {
-                                    UtilsKt.showUiConfirmation(data: UIConfirmationData(
+                                    Utils_kmpKt.showUiConfirmation(data: UIConfirmationData(
                                             text: deletionConfirmationNote,
                                             buttonText: "Delete",
                                             isRed: true

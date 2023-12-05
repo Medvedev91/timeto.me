@@ -12,15 +12,15 @@ struct IOSApp: App {
     @StateObject private var myInAppNotificationDelegate = MyInAppNotificationDelegate()
 
     private let scheduledNotificationsDataPublisher: AnyPublisher<NSArray, Never> =
-            UtilsKt.scheduledNotificationsDataFlow.toPublisher()
+            Utils_kmpKt.scheduledNotificationsDataFlow.toPublisher()
 
     private let keepScreenOnDataPublisher: AnyPublisher<KotlinBoolean, Never> =
-            UtilsKt.keepScreenOnStateFlow.toPublisher()
+            Utils_kmpKt.keepScreenOnStateFlow.toPublisher()
 
     private let batteryManager = BatteryManager() // Keep the object
 
     init() {
-        UtilsPlatformKt.doInitKmmIos(deviceName: machineIdentifier())
+        Utils_kmp_iosKt.doInitKmmIos(deviceName: machineIdentifier())
     }
 
     var body: some Scene {
@@ -113,17 +113,17 @@ private class BatteryManager {
         let state = UIDevice.current.batteryState
         switch state {
         case .unplugged:
-            UtilsKt.isBatteryChargingOrNull = false
+            Utils_kmpKt.isBatteryChargingOrNull = false
             break
         case .charging,
              .full:
-            UtilsKt.isBatteryChargingOrNull = true
+            Utils_kmpKt.isBatteryChargingOrNull = true
             break
         case .unknown:
-            UtilsKt.isBatteryChargingOrNull = isSimulator() ? false : nil
+            Utils_kmpKt.isBatteryChargingOrNull = isSimulator() ? false : nil
             break
         @unknown default:
-            UtilsKt.isBatteryChargingOrNull = isSimulator() ? false : nil
+            Utils_kmpKt.isBatteryChargingOrNull = isSimulator() ? false : nil
             break
         }
     }
@@ -131,9 +131,9 @@ private class BatteryManager {
     private static func upBatteryLevel() {
         let level = Int(UIDevice.current.batteryLevel * 100)
         if level < 0 {
-            UtilsKt.batteryLevelOrNull = isSimulator() ? 100 : nil
+            Utils_kmpKt.batteryLevelOrNull = isSimulator() ? 100 : nil
             return
         }
-        UtilsKt.batteryLevelOrNull = level.toKotlinInt()
+        Utils_kmpKt.batteryLevelOrNull = level.toKotlinInt()
     }
 }

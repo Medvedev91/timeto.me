@@ -11,7 +11,7 @@ struct W_TabsView: View {
 
     @State var tabSelection = TAB_ID_TIMER
 
-    private let alertPublisher: AnyPublisher<UIAlertData, Never> = UtilsKt.uiAlertFlow.toPublisher()
+    private let alertPublisher: AnyPublisher<UIAlertData, Never> = Utils_kmpKt.uiAlertFlow.toPublisher()
     @State private var dialogErrorText: String?
     @State private var dialogErrorIsPresented = false
 

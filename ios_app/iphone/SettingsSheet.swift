@@ -397,7 +397,7 @@ struct SettingsSheet: View {
 
                         isPresented = false
                     } catch {
-                        UtilsKt.showUiAlert(message: "Error", reportApiText: "iOS restore exception\n" + error.myMessage())
+                        Utils_kmpKt.showUiAlert(message: "Error", reportApiText: "iOS restore exception\n" + error.myMessage())
                     }
                 }
     }

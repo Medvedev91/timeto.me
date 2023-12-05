@@ -41,8 +41,8 @@ struct HomeView: View {
     @State private var triggersChecklist: ChecklistModel?
     @State private var isTriggersChecklistPresented = false
 
-    private let shortcutPublisher: AnyPublisher<ShortcutModel, Never> = UtilsKt.uiShortcutFlow.toPublisher()
-    private let checklistPublisher: AnyPublisher<ChecklistModel, Never> = UtilsKt.uiChecklistFlow.toPublisher()
+    private let shortcutPublisher: AnyPublisher<ShortcutModel, Never> = Utils_kmpKt.uiShortcutFlow.toPublisher()
+    private let checklistPublisher: AnyPublisher<ChecklistModel, Never> = Utils_kmpKt.uiChecklistFlow.toPublisher()
 
     var body: some View {
 
@@ -341,7 +341,7 @@ struct HomeView: View {
                 .onReceive(shortcutPublisher) { shortcut in
                     let swiftURL = URL(string: shortcut.uri)!
                     if !UIApplication.shared.canOpenURL(swiftURL) {
-                        UtilsKt.showUiAlert(message: "Invalid shortcut link", reportApiText: nil)
+                        Utils_kmpKt.showUiAlert(message: "Invalid shortcut link", reportApiText: nil)
                         return
                     }
                     UIApplication.shared.open(swiftURL)
