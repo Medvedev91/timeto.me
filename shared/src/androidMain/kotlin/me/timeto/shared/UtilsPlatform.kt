@@ -8,7 +8,6 @@ import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import me.timeto.appdbsq.TimetomeDB
 import me.timeto.shared.db.DB_NAME
 import java.io.InputStreamReader
-import java.util.*
 
 private lateinit var androidApplication: Application
 
@@ -28,12 +27,6 @@ fun initKmmAndroid(application: Application, build: Int) {
     )
     initKmm(AndroidSqliteDriver(TimetomeDB.Schema, application, DB_NAME), deviceData)
 }
-
-actual fun time(): Int = (System.currentTimeMillis() / 1_000).toInt()
-
-actual fun timeMls(): Long = System.currentTimeMillis()
-
-actual fun getLocalUtcOffset(): Int = TimeZone.getDefault().getOffset(timeMls()) / 1_000
 
 actual fun getResourceContent(file: String, type: String) = androidApplication
     .resources
