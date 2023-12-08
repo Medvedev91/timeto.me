@@ -6,7 +6,10 @@ import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import app.cash.sqldelight.driver.native.wrapConnection
 import co.touchlab.sqliter.DatabaseConfiguration
 import co.touchlab.sqliter.JournalMode
+import kotlinx.cinterop.UnsafeNumber
+import platform.Foundation.NSCalendar
 import platform.Foundation.NSDate
+import platform.Foundation.secondsFromGMT
 import platform.Foundation.timeIntervalSince1970
 
 //
@@ -16,7 +19,8 @@ actual fun time(): Int = NSDate().timeIntervalSince1970.toInt()
 
 actual fun timeMls(): Long = (NSDate().timeIntervalSince1970 * 1_000).toLong()
 
-actual fun getLocalUtcOffset(): Int = TODO()
+@OptIn(UnsafeNumber::class)
+actual fun getLocalUtcOffset(): Int = NSCalendar.currentCalendar.timeZone.secondsFromGMT().toInt()
 
 /**
  * SqlDelight
