@@ -406,25 +406,6 @@ internal fun initKmm(
 }
 
 ///
-/// Swift Flow
-
-class SwiftFlow<T>(kotlinFlow: Flow<T>) : Flow<T> by kotlinFlow {
-    fun watch(block: (T) -> Unit): SwiftFlow__Cancellable {
-        val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
-        onEach(block).launchIn(scope)
-        return object : SwiftFlow__Cancellable {
-            override fun cancel() {
-                scope.cancel()
-            }
-        }
-    }
-}
-
-interface SwiftFlow__Cancellable {
-    fun cancel()
-}
-
-///
 /// Secure Local Storage
 
 internal expect object SecureLocalStorage {

@@ -7,6 +7,13 @@ import app.cash.sqldelight.driver.native.wrapConnection
 import co.touchlab.sqliter.DatabaseConfiguration
 import co.touchlab.sqliter.JournalMode
 import kotlinx.cinterop.UnsafeNumber
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import platform.Foundation.NSCalendar
 import platform.Foundation.NSDate
 import platform.Foundation.secondsFromGMT
@@ -56,3 +63,22 @@ internal fun createNativeDriver(
         journalMode = JournalMode.DELETE, // Changed from JournalMode.WAL
     )
 )
+
+//
+// Swift Flow
+
+class SwiftFlow<T>(kotlinFlow: Flow<T>) : Flow<T> by kotlinFlow {
+    fun watch(block: (T) -> Unit): SwiftFlow__Cancellable {
+        val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+        onEach(block).launchIn(scope)
+        return object : SwiftFlow__Cancellable {
+            override fun cancel() {
+                scope.cancel()
+            }
+        }
+    }
+}
+
+interface SwiftFlow__Cancellable {
+    fun cancel()
+}
