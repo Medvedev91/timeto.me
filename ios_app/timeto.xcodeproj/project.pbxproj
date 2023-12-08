@@ -67,6 +67,7 @@
 		318219E30EE52A96A502BF30 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182189A26C9B48C0D2E8A4A /* KeyboardManager.swift */; };
 		318219E4F8AFEB280A077F74 /* utils_apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E58DC92CD5673A6B49E /* utils_apple.swift */; };
 		318219F4F07E446C4B3C607D /* Divider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318216B917315DE1929486AC /* Divider.swift */; };
+		318219F8C525548F4D40DF35 /* atm_apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821346E2128825E6DBB9F8 /* atm_apple.swift */; };
 		31821A31BFF9D29DD019E05D /* NoteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821B172A150ADBF8ECF529 /* NoteSheet.swift */; };
 		31821A329A5D1AE8F7CB0604 /* EventFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318212B384624F1CF416C576 /* EventFormSheet.swift */; };
 		31821A46712E80148E00481B /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821C625A8A199EAEF17182 /* MailView.swift */; };
@@ -76,6 +77,7 @@
 		31821BC7F849A5C918F61175 /* ActivityColorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318211488ABF627A2A9935A7 /* ActivityColorSheet.swift */; };
 		31821BCA3B405E8B0F65AB72 /* DividerFg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821CCA60BF87AA05635423 /* DividerFg.swift */; };
 		31821BCAB8BA795D691FADF8 /* MyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821D7654D0C105DFC60DDD /* MyListView.swift */; };
+		31821C095E0F97CA52AE37ED /* atm_apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821346E2128825E6DBB9F8 /* atm_apple.swift */; };
 		31821C0BB92532D84114C15C /* TriggersListIconsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182157C5CB954867515B4BA /* TriggersListIconsView.swift */; };
 		31821C4D6DA83EF42B805658 /* MySpacerSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318212FFE80A0856A0A88DCF /* MySpacerSize.swift */; };
 		31821CF86EDC2A5C5CB362E0 /* SheetDividerFg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182143FB317BCD82F61C777 /* SheetDividerFg.swift */; };
@@ -149,6 +151,7 @@
 		318212B384624F1CF416C576 /* EventFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventFormSheet.swift; sourceTree = "<group>"; };
 		318212FEA97CBD2AEC3AA1D6 /* ChecklistFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChecklistFormSheet.swift; sourceTree = "<group>"; };
 		318212FFE80A0856A0A88DCF /* MySpacerSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySpacerSize.swift; sourceTree = "<group>"; };
+		31821346E2128825E6DBB9F8 /* atm_apple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = atm_apple.swift; sourceTree = "<group>"; };
 		318213DE3B58FA098A8DBAE7 /* ActivitiesTimerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesTimerSheet.swift; sourceTree = "<group>"; };
 		318213EABC97ED666E1FBF91 /* NoteFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteFormSheet.swift; sourceTree = "<group>"; };
 		3182143FB317BCD82F61C777 /* SheetDividerFg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SheetDividerFg.swift; sourceTree = "<group>"; };
@@ -276,6 +279,7 @@
 				2C2C419628C4CF2A00923267 /* timeto (iOS).entitlements */,
 				2C2C419728C4D83400923267 /* timeto--iOS--Info.plist */,
 				31821E58DC92CD5673A6B49E /* utils_apple.swift */,
+				31821346E2128825E6DBB9F8 /* atm_apple.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -522,6 +526,7 @@
 				318211D5994178629ED2FA09 /* W_TabTasksView.swift in Sources */,
 				31821ED40BEA91336DBFE0B4 /* W_TickerDialog.swift in Sources */,
 				318216E60DD4CA4153065416 /* utils_apple.swift in Sources */,
+				318219F8C525548F4D40DF35 /* atm_apple.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -597,6 +602,7 @@
 				31821A31BFF9D29DD019E05D /* NoteSheet.swift in Sources */,
 				31821EE26161D262CC020E3D /* SummarySheet.swift in Sources */,
 				31821859FBE8390BA3346A0E /* EventTemplateFormSheet.swift in Sources */,
+				31821C095E0F97CA52AE37ED /* atm_apple.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
