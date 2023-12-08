@@ -55,8 +55,6 @@ fun reportApi(message: String) {
     }
 }
 
-internal fun defaultScope() = CoroutineScope(SupervisorJob() + Dispatchers.Default)
-
 internal suspend fun delayToNextMinute(extraMls: Long = 1_000L) {
     val secondsToNewMinute = 60 - (time() % 60)
     delay((secondsToNewMinute * 1_000L) + extraMls)
