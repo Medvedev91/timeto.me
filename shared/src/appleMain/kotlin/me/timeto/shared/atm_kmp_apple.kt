@@ -6,7 +6,7 @@ import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import app.cash.sqldelight.driver.native.wrapConnection
 import co.touchlab.sqliter.DatabaseConfiguration
 import co.touchlab.sqliter.JournalMode
-import kotlinx.cinterop.UnsafeNumber
+import kotlinx.cinterop.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -14,10 +14,9 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import platform.Foundation.NSCalendar
-import platform.Foundation.NSDate
-import platform.Foundation.secondsFromGMT
-import platform.Foundation.timeIntervalSince1970
+import platform.Foundation.*
+import platform.posix.uname
+import platform.posix.utsname
 
 //
 // Time
@@ -63,6 +62,16 @@ internal fun createNativeDriver(
         journalMode = JournalMode.DELETE, // Changed from JournalMode.WAL
     )
 )
+
+// Based on https://slack-chats.kotlinlang.org/t/527926
+@OptIn(ExperimentalForeignApi::class, UnsafeNumber::class)
+internal fun machineIdentifier(): String {
+    memScoped {
+        val q = alloc<utsname>()
+        uname(q.ptr)
+        return NSString.stringWithCString(q.machine, encoding = NSUTF8StringEncoding) ?: ""
+    }
+}
 
 //
 // Swift Flow
