@@ -20,7 +20,7 @@ struct IOSApp: App {
     private let batteryManager = BatteryManager() // Keep the object
 
     init() {
-        Utils_kmp_iosKt.doInitKmmIos(deviceName: machineIdentifier())
+        Utils_kmp_iosKt.doInitKmmIos()
     }
 
     var body: some Scene {
