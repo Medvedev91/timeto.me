@@ -2,6 +2,10 @@ import SwiftUI
 import Combine
 import shared
 
+func zlog(_ message: Any?) {
+    Atm_kmpKt.zlog(message: message)
+}
+
 extension Kotlinx_coroutines_coreFlow {
 
     func toPublisher<T: AnyObject>() -> AnyPublisher<T, Never> {

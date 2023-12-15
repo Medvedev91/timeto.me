@@ -15,10 +15,6 @@ func reportApi(_ message: String) {
     Utils_kmpKt.reportApi(message: message)
 }
 
-func zlog(_ message: Any?) {
-    Atm_kmpKt.zlog(message: message)
-}
-
 //////
 
 let roundedShape = RoundedRectangle(cornerRadius: 99, style: .circular)
