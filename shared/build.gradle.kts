@@ -25,7 +25,7 @@ kotlin {
 
     sourceSets {
 
-        val ktor_version = "2.3.6"
+        val ktor_version = "2.3.7"
         val sqldelight_version = "2.0.1"
 
         val commonMain by getting {
