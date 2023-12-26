@@ -1,6 +1,6 @@
-Google Play https://play.google.com/store/apps/details?id=me.timeto.app
-
 App Store https://apps.apple.com/us/app/id6448869727
+
+Google Play https://play.google.com/store/apps/details?id=me.timeto.app
 
 Any questions [hi@timeto.me](mailto:hi@timeto.me?subject=[GitHub]%20Feedback)
 
