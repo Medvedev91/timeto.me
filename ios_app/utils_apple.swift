@@ -70,38 +70,6 @@ func is12HoursFormat() -> Bool {
     DateFormatter.dateFormat(fromTemplate: "j", options: 0, locale: Locale.current)?.range(of: "a") != nil
 }
 
-///
-/// Custom HStack/VStack/Spacer for default spacing
-
-struct HStack<Content: View>: View {
-
-    var alignment: VerticalAlignment = .center
-    var spacing: CGFloat? = 0
-    @ViewBuilder let content: () -> Content
-
-    var body: some View {
-        SwiftUI.HStack(alignment: alignment, spacing: spacing, content: content)
-    }
-}
-
-struct VStack<Content: View>: View {
-
-    var alignment: HorizontalAlignment = .center
-    var spacing: CGFloat? = 0
-    @ViewBuilder let content: () -> Content
-
-    var body: some View {
-        SwiftUI.VStack(alignment: alignment, spacing: spacing, content: content)
-    }
-}
-
-struct Spacer: View {
-
-    var body: some View {
-        SwiftUI.Spacer(minLength: 0)
-    }
-}
-
 //////
 
 struct Padding: View {
