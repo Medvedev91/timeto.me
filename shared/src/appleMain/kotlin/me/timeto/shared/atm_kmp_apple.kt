@@ -28,6 +28,8 @@ actual fun timeMls(): Long = (NSDate().timeIntervalSince1970 * 1_000).toLong()
 @OptIn(UnsafeNumber::class)
 actual fun getLocalUtcOffset(): Int = NSCalendar.currentCalendar.timeZone.secondsFromGMT().toInt()
 
+fun appleMainScope() = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+
 /**
  * SqlDelight
  *
