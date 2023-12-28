@@ -6,6 +6,9 @@ func zlog(_ message: Any?) {
     Atm_kmpKt.zlog(message: message)
 }
 
+let roundedShape = RoundedRectangle(cornerRadius: 99, style: .circular)
+let squircleShape = RoundedRectangle(cornerRadius: 12, style: .continuous)
+
 extension Kotlinx_coroutines_coreFlow {
 
     func toPublisher<T: AnyObject>() -> AnyPublisher<T, Never> {
