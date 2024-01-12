@@ -1,3 +1,14 @@
+# timeto.me - Time Tracker 24/7
+
+The main feature of this app is there is no "stop" option. Once you have completed one activity,
+you have to set a timer for the next one, even if it's a "sleeping" activity.
+
+This time-tracking approach provides real 24/7 data on how long everything takes.
+You can see it on the Chart screen.
+
+In addition, there are many features related to the task manager, such as tasks,
+calendar, checklists, shortcuts, notes, repetitive tasks, goals, pomodoro, etc.
+
 App Store https://apps.apple.com/us/app/id6448869727
 
 Google Play https://play.google.com/store/apps/details?id=me.timeto.app
@@ -7,6 +18,8 @@ F-Droid https://f-droid.org/en/packages/me.timeto.app
 Any questions [hi@timeto.me](mailto:hi@timeto.me?subject=[GitHub]%20Feedback)
 
 ---
+
+# Development Documentation
 
 To build, you have to create  **local.properties** file like
 
