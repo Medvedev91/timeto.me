@@ -60,6 +60,7 @@ class HomeVM : __VM<HomeVM.State>() {
             listOf()
         else DI.activitiesSorted
             .map { activity ->
+                val activityName = activity.name.textFeatures().textNoFeatures
                 activity.goals
                     .filter { it.period.isToday() }
                     .map { goal ->
@@ -79,7 +80,7 @@ class HomeVM : __VM<HomeVM.State>() {
                         val timeLeft = goal.seconds - timeDone
                         val textRight = if (timeLeft > 0) timeLeft.toTimerHintNote(isShort = false) else "👍"
                         GoalUI(
-                            textLeft = activity.name + " " + goal.seconds.toTimerHintNote(isShort = false),
+                            textLeft = activityName + " " + goal.seconds.toTimerHintNote(isShort = false),
                             textRight = textRight,
                             ratio = timeDone.toFloat() / goal.seconds.toFloat(),
                             bgColor = activity.colorRgba,
