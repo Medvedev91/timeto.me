@@ -163,7 +163,7 @@ fun ShortcutFormSheet(
                             layer = layer,
                             onAppSelected = { shortcutApp ->
                                 vm.setInputNameValue(shortcutApp.name)
-                                vm.setInputUriValue(shortcutApp.appPackage)
+                                vm.setAndroidPackage(shortcutApp.androidPackage)
                             }
                         )
                     }
@@ -240,7 +240,7 @@ private fun getAllApps(): List<ShortcutApp> {
         .map { packageInfo ->
             ShortcutApp(
                 name = packageInfo.applicationInfo.loadLabel(packageManager).toString(),
-                appPackage = packageInfo.applicationInfo.packageName,
+                androidPackage = packageInfo.applicationInfo.packageName,
                 icon = packageInfo.applicationInfo.loadIcon(packageManager),
             )
         }
@@ -249,7 +249,7 @@ private fun getAllApps(): List<ShortcutApp> {
 
 private class ShortcutApp(
     val name: String,
-    val appPackage: String,
+    val androidPackage: String,
     val icon: Drawable,
 )
 
