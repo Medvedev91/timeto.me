@@ -232,7 +232,6 @@ private fun AppsListSheet(
 
 private fun getAllApps(): List<ShortcutApp> {
     val packageManager = App.instance.packageManager
-    // todo permission
     val packagesInfo = packageManager.getInstalledPackages(0)
     return packagesInfo
         // Ignore system apps
