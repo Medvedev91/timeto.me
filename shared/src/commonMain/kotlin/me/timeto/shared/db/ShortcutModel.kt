@@ -19,6 +19,8 @@ data class ShortcutModel(
 
     companion object : Backupable__Holder {
 
+        const val ANDROID_PACKAGE_PREFIX = "app://"
+
         fun anyChangeFlow() = db.shortcutQueries.anyChange().asFlow()
 
         suspend fun getCount(): Int = dbIO {
