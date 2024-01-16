@@ -1,7 +1,9 @@
 package me.timeto.app.ui
 
+import android.graphics.drawable.Drawable
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -149,6 +151,85 @@ fun ShortcutFormSheet(
         }
     }
 }
+
+@Composable
+private fun AppsListSheet(
+    layer: WrapperView.Layer,
+    onAppSelected: (ShortcutApp) -> Unit,
+) {
+
+    val allApps = remember { mutableStateOf<List<ShortcutApp>>(emptyList()) }
+    LaunchedEffect(Unit) {
+        allApps.value = getAllApps()
+    }
+
+    VStack(
+        modifier = Modifier
+            .fillMaxHeight()
+            .background(c.sheetBg)
+    ) {
+
+        Sheet__HeaderView(
+            title = "Apps",
+            scrollState = null,
+            bgColor = c.sheetBg,
+        )
+
+        val scrollState = rememberScrollState()
+
+        VStack(
+            modifier = Modifier
+                .verticalScroll(state = scrollState)
+        ) {
+
+            allApps.value.forEach { shortcutApp ->
+
+                VStack(
+                    modifier = Modifier
+                        .clickable {
+                            onAppSelected(shortcutApp)
+                            layer.close()
+                        }
+                        .padding(horizontal = MyListView.PADDING_OUTER_HORIZONTAL),
+                ) {
+
+                    Text(
+                        text = shortcutApp.name,
+                        modifier = Modifier
+                            .padding(vertical = 8.dp),
+                        color = c.text,
+                    )
+
+                    DividerFg()
+                }
+            }
+
+            HStack(modifier = Modifier.navigationBarsPadding()) {}
+        }
+    }
+}
+
+private fun getAllApps(): List<ShortcutApp> {
+    val packageManager = App.instance.packageManager
+    val packagesInfo = packageManager.getInstalledPackages(0)
+    return packagesInfo
+        // Ignore system apps
+        // .filter { (it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM) == 0 }
+        .map { packageInfo ->
+            ShortcutApp(
+                name = packageInfo.applicationInfo.loadLabel(packageManager).toString(),
+                appPackage = packageInfo.applicationInfo.packageName,
+                icon = packageInfo.applicationInfo.loadIcon(packageManager),
+            )
+        }
+        .sortedBy { it.name.lowercase() }
+}
+
+private class ShortcutApp(
+    val name: String,
+    val appPackage: String,
+    val icon: Drawable,
+)
 
 private val shortcutExamples = listOf(
     ShortcutExample(name = "10-Minute Meditation", hint = "Youtube", uri = "https://www.youtube.com/watch?v=O-6f5wQXSu8"),
