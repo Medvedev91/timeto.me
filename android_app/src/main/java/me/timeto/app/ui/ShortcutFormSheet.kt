@@ -148,6 +148,27 @@ fun ShortcutFormSheet(
                     }
                 }
             }
+
+            MyListView__Padding__SectionSection()
+
+            MyListView__ItemView(
+                isFirst = true,
+                isLast = true,
+            ) {
+                MyListView__ItemView__ButtonView(
+                    text = "Apps",
+                ) {
+                    Sheet.show { layer ->
+                        AppsListSheet(
+                            layer = layer,
+                            onAppSelected = { shortcutApp ->
+                                vm.setInputNameValue(shortcutApp.name)
+                                vm.setInputUriValue(shortcutApp.appPackage)
+                            }
+                        )
+                    }
+                }
+            }
         }
     }
 }
@@ -211,6 +232,7 @@ private fun AppsListSheet(
 
 private fun getAllApps(): List<ShortcutApp> {
     val packageManager = App.instance.packageManager
+    // todo permission
     val packagesInfo = packageManager.getInstalledPackages(0)
     return packagesInfo
         // Ignore system apps
