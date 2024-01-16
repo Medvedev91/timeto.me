@@ -44,6 +44,10 @@ class ShortcutFormSheetVM(
         it.copy(inputUriValue = text)
     }
 
+    fun setAndroidPackage(androidPackage: String) = state.update {
+        it.copy(inputUriValue = "${ShortcutModel.ANDROID_PACKAGE_PREFIX}$androidPackage")
+    }
+
     fun save(
         onSuccess: () -> Unit
     ): Unit = scopeVM().launchEx {
