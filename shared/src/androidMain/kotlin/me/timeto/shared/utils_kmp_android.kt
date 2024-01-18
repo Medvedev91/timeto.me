@@ -16,7 +16,9 @@ internal actual val REPORT_API_TITLE = "🤖 Android"
 fun initKmmAndroid(
     application: Application,
     build: Int,
+    buildType: String,
 ) {
+    isFDroid = buildType == "fdroid"
     androidApplication = application
 
     val manufacturer = Build.MANUFACTURER
