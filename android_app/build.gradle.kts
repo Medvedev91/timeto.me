@@ -24,6 +24,23 @@ android {
         }
     }
 
+    flavorDimensions += "type"
+    productFlavors {
+        create("common") {
+            dimension = "type"
+        }
+        create("fdroid") {
+            dimension = "type"
+        }
+    }
+
+    applicationVariants.all {
+        outputs.all {
+            this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
+            outputFileName = "$flavorName-release.apk"
+        }
+    }
+
     // https://f-droid.org/en/docs/Reproducible_Builds/#png-crushcrunch
     packaging.resources { aaptOptions.cruncherEnabled = false }
 
