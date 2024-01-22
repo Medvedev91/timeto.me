@@ -30,7 +30,7 @@ data class ChecklistItemDb(
 
         suspend fun addWithValidation(
             text: String,
-            checklist: ChecklistModel,
+            checklist: ChecklistDb,
         ) {
             val timeId = time()
             val nextId = if (getAsc().any { it.id == timeId })
@@ -47,7 +47,7 @@ data class ChecklistItemDb(
         }
 
         suspend fun toggleByList(
-            list: ChecklistModel,
+            list: ChecklistDb,
             checkOrUncheck: Boolean
         ) = dbIO {
             db.checklistItemQueries.upCheckTimeByList(

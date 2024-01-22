@@ -107,7 +107,7 @@ object WatchToIosSync {
             // Ordering is important
             // WARNING The same models must be in listenForSyncWatch()
             val checklistItems = smartRestore__start(ChecklistItemDb, json.jsonObject["checklist_items"]!!.jsonArray)
-            val checklists = smartRestore__start(ChecklistModel, json.jsonObject["checklists"]!!.jsonArray)
+            val checklists = smartRestore__start(ChecklistDb, json.jsonObject["checklists"]!!.jsonArray)
             val shortcuts = smartRestore__start(ShortcutModel, json.jsonObject["shortcuts"]!!.jsonArray)
             val intervals = smartRestore__start(IntervalModel, json.jsonObject["intervals"]!!.jsonArray, doNotUpdate = true)
             val tasks = smartRestore__start(TaskModel, json.jsonObject["tasks"]!!.jsonArray)

@@ -2,10 +2,10 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.DI
-import me.timeto.shared.db.ChecklistModel
+import me.timeto.shared.db.ChecklistDb
 
 class ChecklistsPickerSheetVM(
-    selectedChecklists: List<ChecklistModel>,
+    selectedChecklists: List<ChecklistDb>,
 ) : __VM<ChecklistsPickerSheetVM.State>() {
 
     data class State(
@@ -16,7 +16,7 @@ class ChecklistsPickerSheetVM(
     }
 
     data class ChecklistUI(
-        val checklist: ChecklistModel,
+        val checklist: ChecklistDb,
         val isSelected: Boolean,
     ) {
         val text = checklist.name

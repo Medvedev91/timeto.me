@@ -3,13 +3,13 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.DI
 import me.timeto.shared.db.ChecklistItemDb
-import me.timeto.shared.db.ChecklistModel
+import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.launchExDefault
 import me.timeto.shared.onEachExIn
 
 // todo actions from view to vm
 class ChecklistDialogVM(
-    val checklist: ChecklistModel,
+    val checklist: ChecklistDb,
 ) : __VM<ChecklistDialogVM.State>() {
 
     data class State(
@@ -35,5 +35,5 @@ class ChecklistDialogVM(
 }
 
 private fun List<ChecklistItemDb>.prepChecklistItems(
-    checklist: ChecklistModel
+    checklist: ChecklistDb
 ): List<ChecklistItemDb> = this.filter { it.list_id == checklist.id }

@@ -247,7 +247,7 @@ class HomeVM : __VM<HomeVM.State>() {
     )
 
     class ChecklistUI(
-        val checklist: ChecklistModel,
+        val checklist: ChecklistDb,
         val items: List<ChecklistItemDb>,
     ) {
 

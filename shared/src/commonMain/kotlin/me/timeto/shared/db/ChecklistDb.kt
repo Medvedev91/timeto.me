@@ -10,7 +10,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
 
-data class ChecklistModel(
+data class ChecklistDb(
     val id: Int,
     val name: String,
 ) : Backupable__Item {
@@ -71,7 +71,7 @@ data class ChecklistModel(
     }
 
     fun performUI() {
-        launchExDefault { uiChecklistFlow.emit(this@ChecklistModel) }
+        launchExDefault { uiChecklistFlow.emit(this@ChecklistDb) }
     }
 
     suspend fun upNameWithValidation(newName: String): Unit = dbIO {
@@ -107,6 +107,6 @@ data class ChecklistModel(
     }
 }
 
-private fun ChecklistSQ.toModel() = ChecklistModel(
+private fun ChecklistSQ.toModel() = ChecklistDb(
     id = id, name = name
 )

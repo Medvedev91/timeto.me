@@ -2,12 +2,12 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.UIException
-import me.timeto.shared.db.ChecklistModel
+import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.launchEx
 import me.timeto.shared.showUiAlert
 
 class ChecklistFormVM(
-    val checklist: ChecklistModel?,
+    val checklist: ChecklistDb?,
 ) : __VM<ChecklistFormVM.State>() {
 
     data class State(
@@ -37,7 +37,7 @@ class ChecklistFormVM(
             if (checklist != null)
                 checklist.upNameWithValidation(state.value.inputNameValue)
             else
-                ChecklistModel.addWithValidation(state.value.inputNameValue)
+                ChecklistDb.addWithValidation(state.value.inputNameValue)
             onSuccess()
         } catch (e: UIException) {
             showUiAlert(e.uiMessage)

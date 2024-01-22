@@ -1,7 +1,7 @@
 package me.timeto.shared.vm.ui
 
 import me.timeto.shared.db.ChecklistItemDb
-import me.timeto.shared.db.ChecklistModel
+import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.launchExDefault
 
 sealed class ChecklistStateUI(
@@ -12,7 +12,7 @@ sealed class ChecklistStateUI(
     companion object {
 
         fun build(
-            checklist: ChecklistModel,
+            checklist: ChecklistDb,
             items: List<ChecklistItemDb>,
         ): ChecklistStateUI = when {
             items.all { it.isChecked } -> Completed(checklist)
@@ -23,19 +23,19 @@ sealed class ChecklistStateUI(
 
     //////
 
-    class Completed(checklist: ChecklistModel) : ChecklistStateUI("Uncheck All", {
+    class Completed(checklist: ChecklistDb) : ChecklistStateUI("Uncheck All", {
         launchExDefault {
             ChecklistItemDb.toggleByList(checklist, false)
         }
     })
 
-    class Empty(checklist: ChecklistModel) : ChecklistStateUI("Check All", {
+    class Empty(checklist: ChecklistDb) : ChecklistStateUI("Check All", {
         launchExDefault {
             ChecklistItemDb.toggleByList(checklist, true)
         }
     })
 
-    class Partial(checklist: ChecklistModel) : ChecklistStateUI("Uncheck All", {
+    class Partial(checklist: ChecklistDb) : ChecklistStateUI("Uncheck All", {
         launchExDefault {
             ChecklistItemDb.toggleByList(checklist, false)
         }

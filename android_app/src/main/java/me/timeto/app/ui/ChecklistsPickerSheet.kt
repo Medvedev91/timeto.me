@@ -9,14 +9,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.timeto.app.c
 import me.timeto.app.rememberVM
-import me.timeto.shared.db.ChecklistModel
+import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.vm.ChecklistsPickerSheetVM
 
 @Composable
 fun ChecklistsPickerSheet(
     layer: WrapperView.Layer,
-    selectedChecklists: List<ChecklistModel>,
-    onPick: (List<ChecklistModel>) -> Unit,
+    selectedChecklists: List<ChecklistDb>,
+    onPick: (List<ChecklistDb>) -> Unit,
 ) {
 
     val (vm, state) = rememberVM { ChecklistsPickerSheetVM(selectedChecklists) }

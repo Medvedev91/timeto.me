@@ -372,7 +372,7 @@ fun showUiConfirmation(data: UIConfirmationData) {
 
 val uiShortcutFlow = MutableSharedFlow<ShortcutModel>()
 
-val uiChecklistFlow = MutableSharedFlow<ChecklistModel>()
+val uiChecklistFlow = MutableSharedFlow<ChecklistDb>()
 
 val keepScreenOnStateFlow = MutableStateFlow(false)
 

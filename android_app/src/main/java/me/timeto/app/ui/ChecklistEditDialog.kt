@@ -14,12 +14,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.c
 import me.timeto.app.rememberVM
-import me.timeto.shared.db.ChecklistModel
+import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.vm.ChecklistFormVM
 
 @Composable
 fun ChecklistEditDialog(
-    editedChecklist: ChecklistModel?,
+    editedChecklist: ChecklistDb?,
     onClose: () -> Unit,
 ) {
 

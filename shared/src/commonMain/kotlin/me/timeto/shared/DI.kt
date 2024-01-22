@@ -5,7 +5,7 @@ import me.timeto.shared.db.*
 
 object DI {
 
-    var checklists = listOf<ChecklistModel>()
+    var checklists = listOf<ChecklistDb>()
     var checklistItems = listOf<ChecklistItemDb>()
     var shortcuts = listOf<ShortcutModel>()
     var notes = listOf<NoteModel>()
@@ -56,8 +56,8 @@ object DI {
         //
         // Database Lists
 
-        checklists = ChecklistModel.getAsc()
-        ChecklistModel.getAscFlow().onEachExIn(scope) { checklists = it }
+        checklists = ChecklistDb.getAsc()
+        ChecklistDb.getAscFlow().onEachExIn(scope) { checklists = it }
 
         checklistItems = ChecklistItemDb.getAsc()
         ChecklistItemDb.getAscFlow().onEachExIn(scope) { checklistItems = it }

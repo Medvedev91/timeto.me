@@ -1,13 +1,13 @@
 package me.timeto.shared
 
 import me.timeto.shared.db.ActivityDb
-import me.timeto.shared.db.ChecklistModel
+import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.ShortcutModel
 import kotlin.math.absoluteValue
 
 data class TextFeatures(
     val textNoFeatures: String,
-    val checklists: List<ChecklistModel>,
+    val checklists: List<ChecklistDb>,
     val shortcuts: List<ShortcutModel>,
     val fromRepeating: FromRepeating?,
     val fromEvent: FromEvent?,
@@ -88,7 +88,7 @@ data class TextFeatures(
         }
 
         class Checklist(
-            val checklist: ChecklistModel
+            val checklist: ChecklistDb
         ) : Trigger("#c${checklist.id}", checklist.name, "✅", ColorRgba.green)
 
         class Shortcut(
@@ -181,7 +181,7 @@ private fun parseLocal(initText: String): TextFeatures {
         textNoFeatures = textNoFeatures.replace(this.value, "")
     }
 
-    val checklists: List<ChecklistModel> = checklistRegex
+    val checklists: List<ChecklistDb> = checklistRegex
         .findAll(textNoFeatures)
         .map { match ->
             val id = match.groupValues[1].toInt()

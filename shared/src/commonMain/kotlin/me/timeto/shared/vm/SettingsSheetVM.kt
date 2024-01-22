@@ -2,7 +2,7 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
-import me.timeto.shared.db.ChecklistModel
+import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.KvDb
 import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
 import me.timeto.shared.db.NoteModel
@@ -16,7 +16,7 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
     )
 
     data class State(
-        val checklists: List<ChecklistModel>,
+        val checklists: List<ChecklistDb>,
         val shortcuts: List<ShortcutModel>,
         val notes: List<NoteModel>,
         val dayStartSeconds: Int,
@@ -62,7 +62,7 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
 
     override fun onAppear() {
         val scope = scopeVM()
-        ChecklistModel.getAscFlow()
+        ChecklistDb.getAscFlow()
             .onEachExIn(scope) { checklists -> state.update { it.copy(checklists = checklists) } }
         ShortcutModel.getAscFlow()
             .onEachExIn(scope) { shortcuts -> state.update { it.copy(shortcuts = shortcuts) } }

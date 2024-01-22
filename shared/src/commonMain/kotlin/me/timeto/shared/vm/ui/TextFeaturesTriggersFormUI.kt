@@ -1,7 +1,7 @@
 package me.timeto.shared.vm.ui
 
 import me.timeto.shared.TextFeatures
-import me.timeto.shared.db.ChecklistModel
+import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.ShortcutModel
 
 class TextFeaturesTriggersFormUI(
@@ -14,7 +14,7 @@ class TextFeaturesTriggersFormUI(
     val shortcutsTitle = "Shortcuts"
     val shortcutsNote = textFeatures.shortcuts.takeIf { it.isNotEmpty() }?.joinToString(", ") { it.name } ?: "None"
 
-    fun setChecklists(checklists: List<ChecklistModel>) =
+    fun setChecklists(checklists: List<ChecklistDb>) =
         textFeatures.copy(checklists = checklists)
 
     fun setShortcuts(shortcuts: List<ShortcutModel>) =

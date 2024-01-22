@@ -126,7 +126,7 @@ private fun listenForSyncWatch() = launchExDefault {
         TaskFolderModel.anyChangeFlow(),
         TaskModel.anyChangeFlow(),
         IntervalModel.anyChangeFlow(),
-        ChecklistModel.anyChangeFlow(),
+        ChecklistDb.anyChangeFlow(),
         ChecklistItemDb.anyChangeFlow(),
         ShortcutModel.anyChangeFlow(),
     ).forEach { diFlow ->

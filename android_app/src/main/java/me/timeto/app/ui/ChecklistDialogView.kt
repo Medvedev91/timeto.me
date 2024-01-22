@@ -23,14 +23,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
-import me.timeto.shared.db.ChecklistModel
+import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.launchEx
 import me.timeto.shared.vm.ChecklistDialogVM
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ChecklistDialogView(
-    checklist: ChecklistModel,
+    checklist: ChecklistDb,
     onClose: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()

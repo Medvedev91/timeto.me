@@ -3,12 +3,12 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.UIException
 import me.timeto.shared.db.ChecklistItemDb
-import me.timeto.shared.db.ChecklistModel
+import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.launchEx
 import me.timeto.shared.showUiAlert
 
 class ChecklistItemFormVM(
-    val checklist: ChecklistModel,
+    val checklist: ChecklistDb,
     val checklistItem: ChecklistItemDb?,
 ) : __VM<ChecklistItemFormVM.State>() {
 
