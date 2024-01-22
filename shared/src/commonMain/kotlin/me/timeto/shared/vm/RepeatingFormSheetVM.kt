@@ -3,7 +3,7 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.RepeatingDb
-import me.timeto.shared.db.TaskModel
+import me.timeto.shared.db.TaskDb
 
 class RepeatingFormSheetVM(
     private val repeating: RepeatingDb?
@@ -192,7 +192,7 @@ class RepeatingFormSheetVM(
                     daytime = state.value.daytime,
                     isImportant = isImportant,
                 )
-                TaskModel.getAsc().forEach { task ->
+                TaskDb.getAsc().forEach { task ->
                     val tf = task.text.textFeatures()
                     if (tf.fromRepeating?.id == repeating.id) {
                         val newTf = tf.copy(isImportant = isImportant)

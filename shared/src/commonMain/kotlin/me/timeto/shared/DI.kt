@@ -10,7 +10,7 @@ object DI {
     var shortcuts = listOf<ShortcutDb>()
     var notes = listOf<NoteDb>()
     var kv = listOf<KvDb>()
-    var tasks = listOf<TaskModel>()
+    var tasks = listOf<TaskDb>()
     var taskFolders = listOf<TaskFolderDb>()
     var activitiesSorted = listOf<ActivityDb>()
     var events = listOf<EventDb>()
@@ -71,8 +71,8 @@ object DI {
         kv = KvDb.getAll()
         KvDb.getAllFlow().onEachExIn(scope) { kv = it }
 
-        tasks = TaskModel.getAsc()
-        TaskModel.getAscFlow().onEachExIn(scope) { tasks = it }
+        tasks = TaskDb.getAsc()
+        TaskDb.getAscFlow().onEachExIn(scope) { tasks = it }
 
         taskFolders = TaskFolderDb.getAscBySort()
         TaskFolderDb.getAscBySortFlow().onEachExIn(scope) { taskFolders = it }

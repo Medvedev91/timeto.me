@@ -69,7 +69,7 @@ object WatchToIosSync {
     fun startTaskWithLocal(
         activity: ActivityDb,
         timer: Int,
-        task: TaskModel,
+        task: TaskDb,
     ): Unit = defaultScope().launchEx {
         task.startInterval(timer, activity)
         launchEx {
@@ -110,7 +110,7 @@ object WatchToIosSync {
             val checklists = smartRestore__start(ChecklistDb, json.jsonObject["checklists"]!!.jsonArray)
             val shortcuts = smartRestore__start(ShortcutDb, json.jsonObject["shortcuts"]!!.jsonArray)
             val intervals = smartRestore__start(IntervalDb, json.jsonObject["intervals"]!!.jsonArray, doNotUpdate = true)
-            val tasks = smartRestore__start(TaskModel, json.jsonObject["tasks"]!!.jsonArray)
+            val tasks = smartRestore__start(TaskDb, json.jsonObject["tasks"]!!.jsonArray)
             val taskFolders = smartRestore__start(TaskFolderDb, json.jsonObject["task_folders"]!!.jsonArray)
             val activities = smartRestore__start(ActivityDb, json.jsonObject["activities"]!!.jsonArray)
 

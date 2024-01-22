@@ -88,7 +88,7 @@ fun <T> Flow<T>.onEachExIn(
 }.launchIn(scope)
 
 fun taskAutostartData(
-    task: TaskModel,
+    task: TaskDb,
 ): Pair<ActivityDb, Int>? {
     val textFeatures = task.text.textFeatures()
     val activity = textFeatures.activity ?: return null

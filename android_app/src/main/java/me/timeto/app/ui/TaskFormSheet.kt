@@ -12,13 +12,13 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import me.timeto.app.c
 import me.timeto.app.rememberVM
-import me.timeto.shared.db.TaskModel
+import me.timeto.shared.db.TaskDb
 import me.timeto.shared.vm.TaskFormSheetVM
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TaskFormSheet(
-    task: TaskModel?,
+    task: TaskDb?,
     layer: WrapperView.Layer,
 ) {
 

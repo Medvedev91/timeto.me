@@ -11,7 +11,7 @@ import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
 import kotlin.math.max
 
-data class TaskModel(
+data class TaskDb(
     val id: Int,
     val text: String,
     val folder_id: Int,
@@ -28,7 +28,7 @@ data class TaskModel(
         fun getAscFlow() = db.taskQueries.getAsc().asFlow()
             .mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
 
-        suspend fun getByIdOrNull(id: Int): TaskModel? = dbIO {
+        suspend fun getByIdOrNull(id: Int): TaskDb? = dbIO {
             db.taskQueries.getById(id).executeAsOneOrNull()?.toModel()
         }
 
@@ -87,7 +87,7 @@ data class TaskModel(
             return validatedText
         }
 
-        private fun TaskSQ.toModel() = TaskModel(
+        private fun TaskSQ.toModel() = TaskDb(
             id = id, text = text, folder_id = folder_id
         )
 

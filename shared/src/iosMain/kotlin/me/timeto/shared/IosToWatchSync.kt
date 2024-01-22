@@ -5,7 +5,7 @@ package me.timeto.shared
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.serialization.json.*
 import me.timeto.shared.db.IntervalDb
-import me.timeto.shared.db.TaskModel
+import me.timeto.shared.db.TaskDb
 import platform.WatchConnectivity.WCSession
 import me.timeto.shared.db.ActivityDb
 
@@ -70,7 +70,7 @@ object IosToWatchSync {
         if (command == "start_task") {
             val timer = jData["timer"]!!.jsonPrimitive.int
             val activity = ActivityDb.getByIdOrNull(jData["activity_id"]!!.jsonPrimitive.int)!!
-            val task = TaskModel.getByIdOrNull(jData["task_id"]!!.jsonPrimitive.int)!!
+            val task = TaskDb.getByIdOrNull(jData["task_id"]!!.jsonPrimitive.int)!!
             task.startInterval(
                 timer = timer,
                 activity = activity,

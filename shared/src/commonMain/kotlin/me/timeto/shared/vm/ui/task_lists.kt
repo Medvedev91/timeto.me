@@ -2,12 +2,12 @@ package me.timeto.shared.vm.ui
 
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.db.TaskFolderDb
-import me.timeto.shared.db.TaskModel
+import me.timeto.shared.db.TaskDb
 import me.timeto.shared.textFeatures
 
-fun List<TaskModel>.sortedByFolder(
+fun List<TaskDb>.sortedByFolder(
     folder: TaskFolderDb,
-): List<TaskModel> {
+): List<TaskDb> {
     if (!folder.isToday)
         return this.sortedByDescending { it.id }
 
@@ -23,7 +23,7 @@ fun List<TaskModel>.sortedByFolder(
         .sortedByDescending { it.first }
         .map {
             it.second.sortedWith(
-                compareBy<Pair<TaskModel, TextFeatures>> { (_, features) ->
+                compareBy<Pair<TaskDb, TextFeatures>> { (_, features) ->
                     features.fromEvent?.unixTime?.time
                     ?: features.fromRepeating?.time
                     ?: 0

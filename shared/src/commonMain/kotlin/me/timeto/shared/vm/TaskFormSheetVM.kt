@@ -2,10 +2,10 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
-import me.timeto.shared.db.TaskModel
+import me.timeto.shared.db.TaskDb
 
 class TaskFormSheetVM(
-    val task: TaskModel?,
+    val task: TaskDb?,
 ) : __VM<TaskFormSheetVM.State>() {
 
     data class State(
@@ -42,7 +42,7 @@ class TaskFormSheetVM(
             if (task != null) {
                 task.upTextWithValidation(textWithFeatures)
             } else {
-                TaskModel.addWithValidation(textWithFeatures, DI.getTodayFolder())
+                TaskDb.addWithValidation(textWithFeatures, DI.getTodayFolder())
             }
             onSuccess()
         } catch (e: UIException) {

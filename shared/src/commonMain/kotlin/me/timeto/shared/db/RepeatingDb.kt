@@ -66,7 +66,7 @@ data class RepeatingDb(
                     .map { it.toModel() }
                     .filter { it.getNextDay() <= today }
                     .forEach { repeating ->
-                        TaskModel.addWithValidation_transactionRequired(
+                        TaskDb.addWithValidation_transactionRequired(
                             text = repeating.prepTextForTask(today),
                             folder = DI.getTodayFolder(),
                         )

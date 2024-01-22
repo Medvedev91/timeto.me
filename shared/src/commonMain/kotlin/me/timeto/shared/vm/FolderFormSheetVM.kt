@@ -3,7 +3,7 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.TaskFolderDb
-import me.timeto.shared.db.TaskModel
+import me.timeto.shared.db.TaskDb
 
 class FolderFormSheetVM(
     val folder: TaskFolderDb?
@@ -61,7 +61,7 @@ class FolderFormSheetVM(
             if (folder.isToday)
                 throw UIException("It's impossible to delete \"Today\" folder")
 
-            if (TaskModel.getAsc().any { it.folder_id == folder.id })
+            if (TaskDb.getAsc().any { it.folder_id == folder.id })
                 throw UIException("The folder must be empty before deletion")
 
             showUiConfirmation(

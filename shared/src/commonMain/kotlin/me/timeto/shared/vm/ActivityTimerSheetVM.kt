@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
-import me.timeto.shared.db.TaskModel
+import me.timeto.shared.db.TaskDb
 
 class ActivityTimerSheetVM(
     val activity: ActivityDb,
@@ -73,7 +73,7 @@ class ActivityTimerSheetVM(
     ///
 
     sealed class TimerContext {
-        class Task(val task: TaskModel) : TimerContext()
+        class Task(val task: TaskDb) : TimerContext()
         class Interval(val interval: IntervalDb) : TimerContext()
     }
 

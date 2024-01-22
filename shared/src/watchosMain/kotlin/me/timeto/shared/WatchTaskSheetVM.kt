@@ -2,11 +2,11 @@ package me.timeto.shared
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.db.ActivityDb
-import me.timeto.shared.db.TaskModel
+import me.timeto.shared.db.TaskDb
 import me.timeto.shared.vm.__VM
 
 class WatchTaskSheetVM(
-    val task: TaskModel,
+    val task: TaskDb,
 ) : __VM<WatchTaskSheetVM.State>() {
 
     inner class ActivityUI(

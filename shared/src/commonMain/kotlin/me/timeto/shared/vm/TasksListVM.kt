@@ -6,7 +6,7 @@ import me.timeto.shared.*
 import me.timeto.shared.db.EventDb
 import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.db.TaskFolderDb
-import me.timeto.shared.db.TaskModel
+import me.timeto.shared.db.TaskDb
 import me.timeto.shared.vm.ui.sortedByFolder
 
 // todo live tmrw data?
@@ -34,7 +34,7 @@ class TasksListVM(
 
     override fun onAppear() {
         val scope = scopeVM()
-        TaskModel.getAscFlow()
+        TaskDb.getAscFlow()
             .onEachExIn(scope) { list ->
                 state.update { it.copy(tasksUI = list.toUiList()) }
             }
@@ -42,7 +42,7 @@ class TasksListVM(
         scope.launch {
             while (true) {
                 delayToNextMinute()
-                state.update { it.copy(tasksUI = TaskModel.getAsc().toUiList()) }
+                state.update { it.copy(tasksUI = TaskDb.getAsc().toUiList()) }
             }
         }
     }
@@ -57,7 +57,7 @@ class TasksListVM(
         onSuccess: () -> Unit,
     ) = scopeVM().launchEx {
         try {
-            TaskModel.addWithValidation(state.value.addFormInputTextValue, folder)
+            TaskDb.addWithValidation(state.value.addFormInputTextValue, folder)
             setAddFormInputTextValue("")
             onSuccess()
         } catch (e: UIException) {
@@ -65,7 +65,7 @@ class TasksListVM(
         }
     }
 
-    private fun List<TaskModel>.toUiList() = this
+    private fun List<TaskDb>.toUiList() = this
         .filter { it.folder_id == folder.id }
         .sortedByFolder(folder)
         .map { TaskUI(it) }
@@ -79,7 +79,7 @@ class TasksListVM(
     )
 
     class TmrwTaskUI(
-        val task: TaskModel
+        val task: TaskDb
     ) {
 
         val textFeatures = task.text.textFeatures()
@@ -111,7 +111,7 @@ class TasksListVM(
     ///
 
     class TaskUI(
-        val task: TaskModel,
+        val task: TaskDb,
     ) {
 
         val textFeatures = task.text.textFeatures()
@@ -190,7 +190,7 @@ private fun prepTmrwData(
     allEvents: List<EventDb>,
 ): TasksListVM.TmrwData {
 
-    val rawTasks = mutableListOf<TaskModel>()
+    val rawTasks = mutableListOf<TaskDb>()
     val unixTmrwDS = UnixTime(utcOffset = localUtcOffsetWithDayStart).inDays(1)
     val tmrwDSDay = unixTmrwDS.localDay
     var lastFakeTaskId = unixTmrwDS.localDayStartTime()
@@ -200,7 +200,7 @@ private fun prepTmrwData(
         .filter { it.getNextDay() == tmrwDSDay }
         .forEach { repeating ->
             rawTasks.add(
-                TaskModel(
+                TaskDb(
                     id = ++lastFakeTaskId,
                     text = repeating.prepTextForTask(tmrwDSDay),
                     folder_id = TaskFolderDb.ID_TODAY,
@@ -213,7 +213,7 @@ private fun prepTmrwData(
         .filter { it.getLocalTime().localDay == tmrwDSDay }
         .forEach { event ->
             rawTasks.add(
-                TaskModel(
+                TaskDb(
                     id = ++lastFakeTaskId,
                     text = event.prepTextForTask(),
                     folder_id = TaskFolderDb.ID_TODAY,

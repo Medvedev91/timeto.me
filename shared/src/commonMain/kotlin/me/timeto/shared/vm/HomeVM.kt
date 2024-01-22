@@ -15,7 +15,7 @@ class HomeVM : __VM<HomeVM.State>() {
         val interval: IntervalDb,
         val allChecklistItems: List<ChecklistItemDb>,
         val isPurple: Boolean,
-        val tasksToday: List<TaskModel>,
+        val tasksToday: List<TaskDb>,
         val isTasksVisible: Boolean,
         val todayIntervalsUI: DayIntervalsUI?,
         val idToUpdate: Long,
@@ -173,7 +173,7 @@ class HomeVM : __VM<HomeVM.State>() {
             .onEachExIn(scope) { items ->
                 state.update { it.copy(allChecklistItems = items) }
             }
-        TaskModel
+        TaskDb
             .getAscFlow()
             .map { it.filter { task -> task.isToday } }
             .onEachExIn(scope) { tasks ->
@@ -266,7 +266,7 @@ class HomeVM : __VM<HomeVM.State>() {
     }
 
     class MainTask(
-        val task: TaskModel,
+        val task: TaskDb,
         val textFeatures: TextFeatures,
     ) {
 

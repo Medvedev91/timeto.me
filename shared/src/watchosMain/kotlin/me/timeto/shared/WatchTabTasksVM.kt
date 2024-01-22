@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.db.TaskFolderDb.Companion.sortedFolders
-import me.timeto.shared.db.TaskModel
+import me.timeto.shared.db.TaskDb
 import me.timeto.shared.TextFeatures.TimeData
 import me.timeto.shared.vm.__VM
 import me.timeto.shared.vm.ui.sortedByFolder
@@ -12,7 +12,7 @@ import me.timeto.shared.vm.ui.sortedByFolder
 class WatchTabTasksVM : __VM<WatchTabTasksVM.State>() {
 
     class TaskUI(
-        val task: TaskModel,
+        val task: TaskDb,
     ) {
 
         val textFeatures = task.text.textFeatures()
@@ -71,15 +71,15 @@ class WatchTabTasksVM : __VM<WatchTabTasksVM.State>() {
 
     override fun onAppear() {
         val scope = scopeVM()
-        TaskModel.getAscFlow().onEachExIn(scope) { tasks ->
+        TaskDb.getAscFlow().onEachExIn(scope) { tasks ->
             upFolders(tasks)
         }
         TaskFolderDb.anyChangeFlow().onEachExIn(scope) {
-            upFolders(TaskModel.getAsc())
+            upFolders(TaskDb.getAsc())
         }
     }
 
-    private suspend fun upFolders(allTasks: List<TaskModel>) {
+    private suspend fun upFolders(allTasks: List<TaskDb>) {
         val foldersUI = TaskFolderDb.getAscBySort().sortedFolders().map { folder ->
             FolderUI(
                 title = folder.name,

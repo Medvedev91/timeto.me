@@ -51,7 +51,7 @@ data class EventDb(
                         event.getLocalTime().time
                     }
                     .forEach { event ->
-                        TaskModel.addWithValidation_transactionRequired(
+                        TaskDb.addWithValidation_transactionRequired(
                             event.prepTextForTask(),
                             DI.getTodayFolder()
                         )

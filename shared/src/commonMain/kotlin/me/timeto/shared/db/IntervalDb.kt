@@ -132,7 +132,7 @@ data class IntervalDb(
                     timer = timer,
                     paused = paused,
                 )
-                TaskModel.addWithValidation_transactionRequired(
+                TaskDb.addWithValidation_transactionRequired(
                     text = tf.textWithFeatures(),
                     folder = DI.getTodayFolder(),
                 )
