@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.datetime.*
 import me.timeto.appdbsq.TimetomeDB
 import me.timeto.shared.db.*
-import me.timeto.shared.db.KVModel.Companion.asDayStartOffsetSeconds
+import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
 
 var isFDroid = false
 
@@ -446,7 +446,7 @@ val localUtcOffsetWithDayStart: Int
     get() = localUtcOffset - dayStartOffsetSeconds()
 
 fun dayStartOffsetSeconds(): Int =
-    KVModel.KEY.DAY_START_OFFSET_SECONDS.getFromDIOrNull().asDayStartOffsetSeconds()
+    KvDb.KEY.DAY_START_OFFSET_SECONDS.getFromDIOrNull().asDayStartOffsetSeconds()
 
 fun daytimeToString(daytime: Int): String {
     val (h, m) = daytime.toHms()

@@ -9,7 +9,7 @@ object DI {
     var checklistItems = listOf<ChecklistItemModel>()
     var shortcuts = listOf<ShortcutModel>()
     var notes = listOf<NoteModel>()
-    var kv = listOf<KVModel>()
+    var kv = listOf<KvDb>()
     var tasks = listOf<TaskModel>()
     var taskFolders = listOf<TaskFolderModel>()
     var activitiesSorted = listOf<ActivityModel>()
@@ -68,8 +68,8 @@ object DI {
         notes = NoteModel.getAsc()
         NoteModel.getAscFlow().onEachExIn(scope) { notes = it }
 
-        kv = KVModel.getAll()
-        KVModel.getAllFlow().onEachExIn(scope) { kv = it }
+        kv = KvDb.getAll()
+        KvDb.getAllFlow().onEachExIn(scope) { kv = it }
 
         tasks = TaskModel.getAsc()
         TaskModel.getAscFlow().onEachExIn(scope) { tasks = it }

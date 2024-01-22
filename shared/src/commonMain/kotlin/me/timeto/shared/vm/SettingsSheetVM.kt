@@ -3,8 +3,8 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.ChecklistModel
-import me.timeto.shared.db.KVModel
-import me.timeto.shared.db.KVModel.Companion.asDayStartOffsetSeconds
+import me.timeto.shared.db.KvDb
+import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
 import me.timeto.shared.db.NoteModel
 import me.timeto.shared.db.ShortcutModel
 
@@ -68,7 +68,7 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
             .onEachExIn(scope) { shortcuts -> state.update { it.copy(shortcuts = shortcuts) } }
         NoteModel.getAscFlow()
             .onEachExIn(scope) { notes -> state.update { it.copy(notes = notes) } }
-        KVModel.KEY.DAY_START_OFFSET_SECONDS
+        KvDb.KEY.DAY_START_OFFSET_SECONDS
             .getOrNullFlow()
             .onEachExIn(scope) { kv ->
                 val seconds = kv?.value.asDayStartOffsetSeconds()
@@ -89,7 +89,7 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
         onSuccess: () -> Unit,
     ) {
         scopeVM().launchEx {
-            KVModel.KEY.DAY_START_OFFSET_SECONDS.upsert(seconds.toString())
+            KvDb.KEY.DAY_START_OFFSET_SECONDS.upsert(seconds.toString())
             onSuccess()
         }
     }

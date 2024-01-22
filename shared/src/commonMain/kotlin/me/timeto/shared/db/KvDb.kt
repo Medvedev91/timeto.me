@@ -11,7 +11,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
 
-data class KVModel(
+data class KvDb(
     val key: String,
     val value: String,
 ) : Backupable__Item {
@@ -80,6 +80,6 @@ data class KVModel(
     }
 }
 
-private fun KVSQ.toModel() = KVModel(
+private fun KVSQ.toModel() = KvDb(
     key = key, value = value_
 )

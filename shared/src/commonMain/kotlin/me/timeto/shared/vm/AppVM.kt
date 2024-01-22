@@ -34,7 +34,7 @@ class AppVM : __VM<AppVM.State>() {
 
             // todo remove ofter this triggers once ~2023.11.21
             val kvNamesToDelete = setOf("EVENTS_HISTORY", "CALENDAR_HISTORY", "IS_SHOW_README_ON_MAIN")
-            KVModel.getAll()
+            KvDb.getAll()
                 .filter { it.key in kvNamesToDelete }
                 .map { it.backupable__delete() }
 
