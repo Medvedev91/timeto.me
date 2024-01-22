@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import me.timeto.shared.*
 import me.timeto.shared.db.EventDb
-import me.timeto.shared.db.RepeatingModel
+import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.db.TaskFolderModel
 import me.timeto.shared.db.TaskModel
 import me.timeto.shared.vm.ui.sortedByFolder
@@ -186,7 +186,7 @@ class TasksListVM(
 }
 
 private fun prepTmrwData(
-    allRepeatings: List<RepeatingModel>,
+    allRepeatings: List<RepeatingDb>,
     allEvents: List<EventDb>,
 ): TasksListVM.TmrwData {
 

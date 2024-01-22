@@ -15,7 +15,7 @@ object DI {
     var activitiesSorted = listOf<ActivityDb>()
     var events = listOf<EventDb>()
     var eventTemplatesSorted = listOf<EventTemplateDb>()
-    var repeatings = listOf<RepeatingModel>()
+    var repeatings = listOf<RepeatingDb>()
 
     lateinit var firstInterval: IntervalDb
     lateinit var lastInterval: IntervalDb
@@ -86,8 +86,8 @@ object DI {
         eventTemplatesSorted = EventTemplateDb.selectAscSorted()
         EventTemplateDb.selectAscSortedFlow().onEachExIn(scope) { eventTemplatesSorted = it }
 
-        repeatings = RepeatingModel.getAsc()
-        RepeatingModel.getAscFlow().onEachExIn(scope) { repeatings = it }
+        repeatings = RepeatingDb.getAsc()
+        RepeatingDb.getAscFlow().onEachExIn(scope) { repeatings = it }
 
         //
         // Late Init

@@ -168,7 +168,7 @@ private suspend fun syncTodayRepeating() {
     // To avoid unnecessary checks. It works without that.
     if (syncTodayRepeatingLastDay == todayWithOffset)
         return
-    RepeatingModel.syncTodaySafe(todayWithOffset)
+    RepeatingDb.syncTodaySafe(todayWithOffset)
     // In case on error while syncTodaySafe()
     syncTodayRepeatingLastDay = todayWithOffset
 }
@@ -253,9 +253,9 @@ private suspend fun fillInitData() {
     val todayDay = UnixTime().localDay
     fun prepRep(title: String, activity: ActivityDb, timerMin: Int): String =
         title.textFeatures().copy(activity = activity, timer = timerMin * 60).textWithFeatures()
-    RepeatingModel.addWithValidation(prepRep("Exercises", actEx, 30), RepeatingModel.Period.EveryNDays(1), todayDay, null, false)
-    RepeatingModel.addWithValidation(prepRep("Meditation", actMed, 20), RepeatingModel.Period.EveryNDays(1), todayDay, null, false)
-    RepeatingModel.addWithValidation(prepRep("Small tasks", actOther, 30), RepeatingModel.Period.EveryNDays(1), todayDay, null, false)
-    RepeatingModel.addWithValidation(prepRep("Getting ready", actGr, 20), RepeatingModel.Period.EveryNDays(1), todayDay, null, false)
-    RepeatingModel.addWithValidation(prepRep("Weekly plan", actWork, 20), RepeatingModel.Period.DaysOfWeek(listOf(0)), todayDay, null, false)
+    RepeatingDb.addWithValidation(prepRep("Exercises", actEx, 30), RepeatingDb.Period.EveryNDays(1), todayDay, null, false)
+    RepeatingDb.addWithValidation(prepRep("Meditation", actMed, 20), RepeatingDb.Period.EveryNDays(1), todayDay, null, false)
+    RepeatingDb.addWithValidation(prepRep("Small tasks", actOther, 30), RepeatingDb.Period.EveryNDays(1), todayDay, null, false)
+    RepeatingDb.addWithValidation(prepRep("Getting ready", actGr, 20), RepeatingDb.Period.EveryNDays(1), todayDay, null, false)
+    RepeatingDb.addWithValidation(prepRep("Weekly plan", actWork, 20), RepeatingDb.Period.DaysOfWeek(listOf(0)), todayDay, null, false)
 }

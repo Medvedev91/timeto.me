@@ -2,12 +2,12 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
-import me.timeto.shared.db.RepeatingModel
+import me.timeto.shared.db.RepeatingDb
 
 class RepeatingsListVM : __VM<RepeatingsListVM.State>() {
 
     class RepeatingUI(
-        val repeating: RepeatingModel,
+        val repeating: RepeatingDb,
     ) {
 
         val isImportant = repeating.is_important.toBoolean10()
@@ -42,14 +42,14 @@ class RepeatingsListVM : __VM<RepeatingsListVM.State>() {
     )
 
     override fun onAppear() {
-        RepeatingModel.getAscFlow()
+        RepeatingDb.getAscFlow()
             .onEachExIn(scopeVM()) { list ->
                 state.update { it.copy(repeatingsUI = list.toUiList()) }
             }
     }
 }
 
-private fun List<RepeatingModel>.toUiList() = this
+private fun List<RepeatingDb>.toUiList() = this
     .groupBy { it.getNextDay() }
     .toList()
     .sortedBy { it.first }
@@ -57,10 +57,10 @@ private fun List<RepeatingModel>.toUiList() = this
     .flatten()
     .map { RepeatingsListVM.RepeatingUI(it) }
 
-private fun List<RepeatingModel>.sortedInsideDay(): List<RepeatingModel> {
+private fun List<RepeatingDb>.sortedInsideDay(): List<RepeatingDb> {
     val (withDaytime, noDaytime) = this.partition { it.daytime != null }
 
-    val resList = mutableListOf<RepeatingModel>()
+    val resList = mutableListOf<RepeatingDb>()
     noDaytime
         .sortedByDescending { it.id }
         .forEach { resList.add(it) }

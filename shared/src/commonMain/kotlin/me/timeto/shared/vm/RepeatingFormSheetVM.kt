@@ -2,11 +2,11 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
-import me.timeto.shared.db.RepeatingModel
+import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.db.TaskModel
 
 class RepeatingFormSheetVM(
-    private val repeating: RepeatingModel?
+    private val repeating: RepeatingDb?
 ) : __VM<RepeatingFormSheetVM.State>() {
 
     data class State(
@@ -19,7 +19,7 @@ class RepeatingFormSheetVM(
         val selectedNDays: Int,
         val selectedWeekDays: List<Int>,
         val selectedDaysOfMonth: Set<Int>,
-        val selectedDaysOfYear: List<RepeatingModel.Period.DaysOfYear.MonthDayItem>,
+        val selectedDaysOfYear: List<RepeatingDb.Period.DaysOfYear.MonthDayItem>,
     ) {
 
         val daytimeHeader = "Time of the Day"
@@ -61,10 +61,10 @@ class RepeatingFormSheetVM(
     init {
         val activePeriodIndex = if (repeating == null) null else {
             when (val period = repeating.getPeriod()) {
-                is RepeatingModel.Period.EveryNDays -> if (period.nDays == 1) 0 else 1
-                is RepeatingModel.Period.DaysOfWeek -> 2
-                is RepeatingModel.Period.DaysOfMonth -> 3
-                is RepeatingModel.Period.DaysOfYear -> 4
+                is RepeatingDb.Period.EveryNDays -> if (period.nDays == 1) 0 else 1
+                is RepeatingDb.Period.DaysOfWeek -> 2
+                is RepeatingDb.Period.DaysOfMonth -> 3
+                is RepeatingDb.Period.DaysOfYear -> 4
             }
         }
 
@@ -72,20 +72,20 @@ class RepeatingFormSheetVM(
         // That's by if the EveryNDays == 1, the "Every Day" would be checked, and for
         // Every N Days it's needed to set 2 as a default value instead of 1.
         val selectedNDays: Int = run {
-            val period = (repeating?.getPeriod() as? RepeatingModel.Period.EveryNDays) ?: return@run 2
+            val period = (repeating?.getPeriod() as? RepeatingDb.Period.EveryNDays) ?: return@run 2
             if (period.nDays == 1) 2 else period.nDays
         }
 
         val selectedWeekDays: List<Int> = run {
-            (repeating?.getPeriod() as? RepeatingModel.Period.DaysOfWeek)?.weekDays ?: listOf()
+            (repeating?.getPeriod() as? RepeatingDb.Period.DaysOfWeek)?.weekDays ?: listOf()
         }
 
         val selectedDaysOfMonth: Set<Int> = run {
-            (repeating?.getPeriod() as? RepeatingModel.Period.DaysOfMonth)?.days ?: setOf()
+            (repeating?.getPeriod() as? RepeatingDb.Period.DaysOfMonth)?.days ?: setOf()
         }
 
-        val selectedDaysOfYear: List<RepeatingModel.Period.DaysOfYear.MonthDayItem> = run {
-            (repeating?.getPeriod() as? RepeatingModel.Period.DaysOfYear)?.items ?: listOf()
+        val selectedDaysOfYear: List<RepeatingDb.Period.DaysOfYear.MonthDayItem> = run {
+            (repeating?.getPeriod() as? RepeatingDb.Period.DaysOfYear)?.items ?: listOf()
         }
 
         state = MutableStateFlow(
@@ -146,7 +146,7 @@ class RepeatingFormSheetVM(
         }
     }
 
-    fun addDayOfTheYear(item: RepeatingModel.Period.DaysOfYear.MonthDayItem) {
+    fun addDayOfTheYear(item: RepeatingDb.Period.DaysOfYear.MonthDayItem) {
         state.update {
             it.copy(
                 selectedDaysOfYear = it.selectedDaysOfYear
@@ -157,7 +157,7 @@ class RepeatingFormSheetVM(
         }
     }
 
-    fun delDayOfTheYear(item: RepeatingModel.Period.DaysOfYear.MonthDayItem) {
+    fun delDayOfTheYear(item: RepeatingDb.Period.DaysOfYear.MonthDayItem) {
         state.update {
             it.copy(
                 selectedDaysOfYear = it.selectedDaysOfYear
@@ -177,11 +177,11 @@ class RepeatingFormSheetVM(
 
             // !! Because "enabled" contains the checking
             val period = when (state.value.activePeriodIndex!!) {
-                0 -> RepeatingModel.Period.EveryNDays(1)
-                1 -> RepeatingModel.Period.EveryNDays(state.value.selectedNDays)
-                2 -> RepeatingModel.Period.DaysOfWeek(state.value.selectedWeekDays)
-                3 -> RepeatingModel.Period.DaysOfMonth(state.value.selectedDaysOfMonth)
-                4 -> RepeatingModel.Period.DaysOfYear(state.value.selectedDaysOfYear)
+                0 -> RepeatingDb.Period.EveryNDays(1)
+                1 -> RepeatingDb.Period.EveryNDays(state.value.selectedNDays)
+                2 -> RepeatingDb.Period.DaysOfWeek(state.value.selectedWeekDays)
+                3 -> RepeatingDb.Period.DaysOfMonth(state.value.selectedDaysOfMonth)
+                4 -> RepeatingDb.Period.DaysOfYear(state.value.selectedDaysOfYear)
                 else -> throw Exception()
             }
 
@@ -200,7 +200,7 @@ class RepeatingFormSheetVM(
                     }
                 }
             } else
-                RepeatingModel.addWithValidation(
+                RepeatingDb.addWithValidation(
                     text = nameWithFeatures,
                     period = period,
                     lastDay = UnixTime().localDay,

@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
 import kotlinx.coroutines.delay
-import me.timeto.shared.db.RepeatingModel
+import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.launchEx
 import me.timeto.shared.vm.RepeatingFormSheetVM
 
@@ -30,7 +30,7 @@ import me.timeto.shared.vm.RepeatingFormSheetVM
 @Composable
 fun RepeatingFormSheet(
     layer: WrapperView.Layer,
-    editedRepeating: RepeatingModel?,
+    editedRepeating: RepeatingDb?,
 ) {
 
     val (vm, state) = rememberVM(editedRepeating) { RepeatingFormSheetVM(editedRepeating) }
@@ -225,7 +225,7 @@ fun RepeatingFormSheet(
                                             )
                                     ) {
 
-                                        (1..RepeatingModel.MAX_DAY_OF_MONTH).chunked(7).forEach { days ->
+                                        (1..RepeatingDb.MAX_DAY_OF_MONTH).chunked(7).forEach { days ->
                                             Row {
                                                 days.forEach { day ->
                                                     val isDaySelected = day in state.selectedDaysOfMonth
@@ -240,14 +240,14 @@ fun RepeatingFormSheet(
                                         }
 
                                         val isLastDaySelected =
-                                            RepeatingModel.LAST_DAY_OF_MONTH in state.selectedDaysOfMonth
+                                            RepeatingDb.LAST_DAY_OF_MONTH in state.selectedDaysOfMonth
                                         DaysOfMonthItemView(
                                             dayName = "Last Day of the Month",
                                             isSelected = isLastDaySelected,
                                             width = Dp.Unspecified,
                                             paddingValues = PaddingValues(start = 8.dp, end = 8.dp, bottom = 1.dp)
                                         ) {
-                                            vm.toggleDayOfMonth(RepeatingModel.LAST_DAY_OF_MONTH)
+                                            vm.toggleDayOfMonth(RepeatingDb.LAST_DAY_OF_MONTH)
                                         }
 
                                     }
@@ -319,9 +319,9 @@ fun RepeatingFormSheet(
 
 @Composable
 private fun DaysOfTheYearForm(
-    onAdd: (RepeatingModel.Period.DaysOfYear.MonthDayItem) -> Unit,
+    onAdd: (RepeatingDb.Period.DaysOfYear.MonthDayItem) -> Unit,
 ) {
-    val months = RepeatingModel.Period.DaysOfYear.months
+    val months = RepeatingDb.Period.DaysOfYear.months
 
     val NO_SELECTED_DAY_STRING = "--"
 
@@ -382,7 +382,7 @@ private fun DaysOfTheYearForm(
                     enabled = isAddEnabled
                 ) {
                     onAdd(
-                        RepeatingModel.Period.DaysOfYear.MonthDayItem(
+                        RepeatingDb.Period.DaysOfYear.MonthDayItem(
                             monthId = months[selectedMonthIndex].id,
                             dayId = daysListItems[selectedDayIndex].toInt()
                         )

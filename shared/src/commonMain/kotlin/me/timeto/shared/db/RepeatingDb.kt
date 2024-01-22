@@ -13,7 +13,7 @@ import me.timeto.shared.*
 import kotlin.math.absoluteValue
 import kotlin.math.max
 
-data class RepeatingModel(
+data class RepeatingDb(
     val id: Int,
     val text: String,
     val last_day: Int,
@@ -101,7 +101,7 @@ data class RepeatingModel(
             return validatedText
         }
 
-        private fun RepeatingSQ.toModel() = RepeatingModel(
+        private fun RepeatingSQ.toModel() = RepeatingDb(
             id = id, text = text, last_day = last_day,
             type_id = type_id, value = value_, daytime = daytime,
             is_important = is_important,
