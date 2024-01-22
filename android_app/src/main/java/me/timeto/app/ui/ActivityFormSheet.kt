@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.shared.db.ActivityDb
-import me.timeto.shared.db.ActivityModel__Data.TimerHints.HINT_TYPE
+import me.timeto.shared.db.ActivityDb__Data.TimerHints.HINT_TYPE
 import me.timeto.shared.vm.ActivityFormSheetVM
 
 @Composable

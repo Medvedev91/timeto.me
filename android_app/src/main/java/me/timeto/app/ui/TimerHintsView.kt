@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import me.timeto.app.HStack
 import me.timeto.app.c
 import me.timeto.app.roundedShape
-import me.timeto.shared.db.ActivityModel__Data.TimerHints.TimerHintUI
+import me.timeto.shared.db.ActivityDb__Data.TimerHints.TimerHintUI
 
 @Composable
 fun TimerHintsView(

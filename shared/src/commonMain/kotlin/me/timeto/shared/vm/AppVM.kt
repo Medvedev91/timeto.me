@@ -235,7 +235,7 @@ private suspend fun fillInitData() {
     val cPurple = colorsWheel.next()
 
     val goals = listOf<ActivityDb.Goal>()
-    val defData = ActivityModel__Data.buildDefault()
+    val defData = ActivityDb__Data.buildDefault()
     val aNormal = ActivityDb.TYPE.NORMAL
     val actMed = ActivityDb.addWithValidation("Meditation", "🧘‍♀️", 20 * 60, 1, aNormal, cYellow, defData, true, goals)
     val actWork = ActivityDb.addWithValidation("Work", "📁", 40 * 60, 2, aNormal, cBlue, defData, true, goals)

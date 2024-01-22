@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.*
 import me.timeto.shared.db.ActivityDb
-import me.timeto.shared.db.ActivityModel__Data
+import me.timeto.shared.db.ActivityDb__Data
 
 class ActivityFormSheetVM(
     val activity: ActivityDb?
@@ -14,7 +14,7 @@ class ActivityFormSheetVM(
         val headerTitle: String,
         val headerDoneText: String,
         val emoji: String?,
-        val activityData: ActivityModel__Data,
+        val activityData: ActivityDb__Data,
         val goals: List<ActivityDb.Goal>,
         val textFeatures: TextFeatures,
         val keepScreenOn: Boolean,
@@ -68,7 +68,7 @@ class ActivityFormSheetVM(
             headerTitle = if (activity != null) "Edit Activity" else "New Activity",
             headerDoneText = if (activity != null) "Save" else "Create",
             emoji = activity?.emoji,
-            activityData = activity?.data ?: ActivityModel__Data.buildDefault(),
+            activityData = activity?.data ?: ActivityDb__Data.buildDefault(),
             goals = activity?.goals ?: listOf(),
             textFeatures = (activity?.name ?: "").textFeatures(),
             keepScreenOn = activity?.keepScreenOn ?: true,
@@ -105,7 +105,7 @@ class ActivityFormSheetVM(
     ///
     /// Timer Hints
 
-    fun setTimerHintsType(type: ActivityModel__Data.TimerHints.HINT_TYPE) {
+    fun setTimerHintsType(type: ActivityDb__Data.TimerHints.HINT_TYPE) {
         setTimeHints(state.value.activityData.timer_hints.copy(type = type))
     }
 
@@ -128,7 +128,7 @@ class ActivityFormSheetVM(
         )
     }
 
-    private fun setTimeHints(newTimerHints: ActivityModel__Data.TimerHints) {
+    private fun setTimeHints(newTimerHints: ActivityDb__Data.TimerHints) {
         state.update {
             it.copy(activityData = it.activityData.copy(timer_hints = newTimerHints))
         }

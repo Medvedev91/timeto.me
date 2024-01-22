@@ -5,7 +5,7 @@ import me.timeto.shared.DI
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.textFeatures
-import me.timeto.shared.db.ActivityModel__Data.TimerHints.TimerHintUI
+import me.timeto.shared.db.ActivityDb__Data.TimerHints.TimerHintUI
 
 class ActivitiesTimerSheetVM(
     private val timerContext: ActivityTimerSheetVM.TimerContext?,

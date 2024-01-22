@@ -68,7 +68,7 @@ data class ActivityDb(
             sort: Int,
             type: TYPE,
             colorRgba: ColorRgba,
-            data: ActivityModel__Data,
+            data: ActivityDb__Data,
             keepScreenOn: Boolean,
             goals: List<Goal>,
         ): ActivityDb = dbIO {
@@ -225,8 +225,8 @@ data class ActivityDb(
         ColorRgba.fromRgbaString(color_rgba)
     }
 
-    val data: ActivityModel__Data by lazy {
-        ActivityModel__Data.jParse(data_json)
+    val data: ActivityDb__Data by lazy {
+        ActivityDb__Data.jParse(data_json)
     }
 
     fun nameWithEmoji(isLeading: Boolean = false) =
@@ -247,7 +247,7 @@ data class ActivityDb(
     suspend fun upByIdWithValidation(
         name: String,
         emoji: String,
-        data: ActivityModel__Data,
+        data: ActivityDb__Data,
         keepScreenOn: Boolean,
         colorRgba: ColorRgba,
         goals: List<Goal>,
@@ -269,7 +269,7 @@ data class ActivityDb(
         )
     }
 
-    suspend fun upData(data: ActivityModel__Data) = dbIO {
+    suspend fun upData(data: ActivityDb__Data) = dbIO {
         val newDataString = data.toJString()
         if (data_json != newDataString)
             db.activityQueries.upData(
@@ -442,7 +442,7 @@ data class ActivityDb(
     }
 }
 
-data class ActivityModel__Data(
+data class ActivityDb__Data(
     val timer_hints: TimerHints,
 ) {
 
@@ -471,17 +471,17 @@ data class ActivityModel__Data(
 
     companion object {
 
-        fun jParse(jString: String): ActivityModel__Data = try {
+        fun jParse(jString: String): ActivityDb__Data = try {
             val jData = Json.parseToJsonElement(jString)
             val jTimerHints = jData.jsonObject["timer_hints"]!!.jsonObject
-            ActivityModel__Data(TimerHints.fromJsonObject(jTimerHints))
+            ActivityDb__Data(TimerHints.fromJsonObject(jTimerHints))
         } catch (e: Throwable) {
             // todo migration?
             reportApi("ActivityModel__Data.jParse() exception:\n$jString\n$e")
             buildDefault()
         }
 
-        fun buildDefault() = ActivityModel__Data(
+        fun buildDefault() = ActivityDb__Data(
             timer_hints = TimerHints(
                 type = TimerHints.HINT_TYPE.history,
                 default_list = listOf(),
