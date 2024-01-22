@@ -37,7 +37,7 @@ data class TaskModel(
 
         suspend fun addWithValidation(
             text: String,
-            folder: TaskFolderModel,
+            folder: TaskFolderDb,
         ): Unit = dbIO {
             db.transaction {
                 addWithValidation_transactionRequired(text = text, folder = folder)
@@ -46,7 +46,7 @@ data class TaskModel(
 
         fun addWithValidation_transactionRequired(
             text: String,
-            folder: TaskFolderModel,
+            folder: TaskFolderDb,
         ) {
             db.taskQueries.insert(
                 id = getNextId_ioRequired(),
@@ -107,8 +107,8 @@ data class TaskModel(
         }
     }
 
-    val isToday = folder_id == TaskFolderModel.ID_TODAY
-    val isTmrw = folder_id == TaskFolderModel.ID_TMRW
+    val isToday = folder_id == TaskFolderDb.ID_TODAY
+    val isTmrw = folder_id == TaskFolderDb.ID_TMRW
 
     fun unixTime(utcOffset: Int = localUtcOffset) = UnixTime(id, utcOffset = utcOffset)
 
@@ -162,7 +162,7 @@ data class TaskModel(
     }
 
     suspend fun upFolder(
-        newFolder: TaskFolderModel,
+        newFolder: TaskFolderDb,
         replaceIfTmrw: Boolean,
     ): Unit = dbIO {
         db.taskQueries.upFolderIdById(

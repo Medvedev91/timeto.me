@@ -111,7 +111,7 @@ object WatchToIosSync {
             val shortcuts = smartRestore__start(ShortcutDb, json.jsonObject["shortcuts"]!!.jsonArray)
             val intervals = smartRestore__start(IntervalDb, json.jsonObject["intervals"]!!.jsonArray, doNotUpdate = true)
             val tasks = smartRestore__start(TaskModel, json.jsonObject["tasks"]!!.jsonArray)
-            val taskFolders = smartRestore__start(TaskFolderModel, json.jsonObject["task_folders"]!!.jsonArray)
+            val taskFolders = smartRestore__start(TaskFolderDb, json.jsonObject["task_folders"]!!.jsonArray)
             val activities = smartRestore__start(ActivityDb, json.jsonObject["activities"]!!.jsonArray)
 
             activities()

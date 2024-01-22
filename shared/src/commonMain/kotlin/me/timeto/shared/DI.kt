@@ -11,7 +11,7 @@ object DI {
     var notes = listOf<NoteDb>()
     var kv = listOf<KvDb>()
     var tasks = listOf<TaskModel>()
-    var taskFolders = listOf<TaskFolderModel>()
+    var taskFolders = listOf<TaskFolderDb>()
     var activitiesSorted = listOf<ActivityDb>()
     var events = listOf<EventDb>()
     var eventTemplatesSorted = listOf<EventTemplateDb>()
@@ -33,9 +33,9 @@ object DI {
     //
     // Task Folders
 
-    fun getTodayFolder(): TaskFolderModel = taskFolders.first { it.isToday }
+    fun getTodayFolder(): TaskFolderDb = taskFolders.first { it.isToday }
 
-    fun getTmrwFolderOrNull(): TaskFolderModel? = taskFolders.firstOrNull { it.isTmrw }
+    fun getTmrwFolderOrNull(): TaskFolderDb? = taskFolders.firstOrNull { it.isTmrw }
 
     //
     // Mics
@@ -74,8 +74,8 @@ object DI {
         tasks = TaskModel.getAsc()
         TaskModel.getAscFlow().onEachExIn(scope) { tasks = it }
 
-        taskFolders = TaskFolderModel.getAscBySort()
-        TaskFolderModel.getAscBySortFlow().onEachExIn(scope) { taskFolders = it }
+        taskFolders = TaskFolderDb.getAscBySort()
+        TaskFolderDb.getAscBySortFlow().onEachExIn(scope) { taskFolders = it }
 
         activitiesSorted = ActivityDb.getAscSorted()
         ActivityDb.getAscSortedFlow().onEachExIn(scope) { activitiesSorted = it }

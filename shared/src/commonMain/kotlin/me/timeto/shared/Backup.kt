@@ -18,7 +18,7 @@ object Backup {
 
             "activities" to ActivityDb.getAscSorted().modelsToJsonArray(),
             "intervals" to IntervalDb.getDesc(intervalsLimit).modelsToJsonArray(),
-            "task_folders" to TaskFolderModel.getAscBySort().modelsToJsonArray(),
+            "task_folders" to TaskFolderDb.getAscBySort().modelsToJsonArray(),
             "tasks" to TaskModel.getAsc().modelsToJsonArray(),
             "checklists" to ChecklistDb.getAsc().modelsToJsonArray(),
             "checklist_items" to ChecklistItemDb.getAsc().modelsToJsonArray(),
@@ -55,7 +55,7 @@ object Backup {
 
             json.mapJsonArray("activities") { ActivityDb.backupable__restore(it) }
             json.mapJsonArray("intervals") { IntervalDb.backupable__restore(it) }
-            json.mapJsonArray("task_folders") { TaskFolderModel.backupable__restore(it) }
+            json.mapJsonArray("task_folders") { TaskFolderDb.backupable__restore(it) }
             json.mapJsonArray("tasks") { TaskModel.backupable__restore(it) }
             json.mapJsonArray("checklists") { ChecklistDb.backupable__restore(it) }
             json.mapJsonArray("checklist_items") { ChecklistItemDb.backupable__restore(it) }

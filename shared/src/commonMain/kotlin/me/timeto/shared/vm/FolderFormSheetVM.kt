@@ -2,15 +2,15 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
-import me.timeto.shared.db.TaskFolderModel
+import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.db.TaskModel
 
 class FolderFormSheetVM(
-    val folder: TaskFolderModel?
+    val folder: TaskFolderDb?
 ) : __VM<FolderFormSheetVM.State>() {
 
     data class State(
-        val folder: TaskFolderModel?,
+        val folder: TaskFolderDb?,
         val inputNameValue: String,
     ) {
         val headerTitle = if (folder != null) "Edit Folder" else "New Folder"
@@ -40,7 +40,7 @@ class FolderFormSheetVM(
             if (folder != null) {
                 folder.upNameWithValidation(name)
             } else {
-                TaskFolderModel.addWithValidation(name)
+                TaskFolderDb.addWithValidation(name)
             }
             onSuccess()
         } catch (e: UIException) {

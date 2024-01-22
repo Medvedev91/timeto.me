@@ -2,8 +2,8 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
-import me.timeto.shared.db.TaskFolderModel
-import me.timeto.shared.db.TaskFolderModel.Companion.sortedFolders
+import me.timeto.shared.db.TaskFolderDb
+import me.timeto.shared.db.TaskFolderDb.Companion.sortedFolders
 
 class FoldersSettingsVM : __VM<FoldersSettingsVM.State>() {
 
@@ -16,12 +16,12 @@ class FoldersSettingsVM : __VM<FoldersSettingsVM.State>() {
                 showUiAlert("Tmrw already exists", "Tmrw already exists")
                 return@launchExDefault
             }
-            TaskFolderModel.addTmrw()
+            TaskFolderDb.addTmrw()
         }
     }
 
     data class State(
-        val folders: List<TaskFolderModel>,
+        val folders: List<TaskFolderDb>,
     ) {
         val headerTitle = "Folders"
         val tmrwButtonUI = if (folders.any { it.isTmrw }) null else TmrwButtonUI()
@@ -35,12 +35,12 @@ class FoldersSettingsVM : __VM<FoldersSettingsVM.State>() {
 
     override fun onAppear() {
         val scope = scopeVM()
-        TaskFolderModel.getAscBySortFlow().onEachExIn(scope) { folders ->
+        TaskFolderDb.getAscBySortFlow().onEachExIn(scope) { folders ->
             state.update { it.copy(folders = folders.toUIList()) }
         }
     }
 
-    fun sortUp(folder: TaskFolderModel) {
+    fun sortUp(folder: TaskFolderDb) {
         val tmpFolders = state.value.folders.toMutableList()
         val curIndex = tmpFolders.indexOf(folder)
         if ((curIndex <= 0) || ((curIndex + 1) > tmpFolders.size))
@@ -59,4 +59,4 @@ class FoldersSettingsVM : __VM<FoldersSettingsVM.State>() {
     }
 }
 
-private fun List<TaskFolderModel>.toUIList() = this.sortedFolders().reversed()
+private fun List<TaskFolderDb>.toUIList() = this.sortedFolders().reversed()

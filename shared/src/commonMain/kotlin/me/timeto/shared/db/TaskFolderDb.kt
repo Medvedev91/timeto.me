@@ -10,7 +10,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
 
-data class TaskFolderModel(
+data class TaskFolderDb(
     val id: Int,
     val name: String,
     val sort: Int,
@@ -52,11 +52,11 @@ data class TaskFolderModel(
             )
         }
 
-        fun List<TaskFolderModel>.sortedFolders() = this.sortedWith(
+        fun List<TaskFolderDb>.sortedFolders() = this.sortedWith(
             compareBy({ it.sort }, { it.id })
         )
 
-        private fun TaskFolderSQ.toModel() = TaskFolderModel(
+        private fun TaskFolderSQ.toModel() = TaskFolderDb(
             id = id, name = name, sort = sort
         )
 

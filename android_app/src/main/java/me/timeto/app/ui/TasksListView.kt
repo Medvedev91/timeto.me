@@ -26,7 +26,7 @@ import me.timeto.app.*
 import me.timeto.app.R
 import kotlinx.coroutines.delay
 import me.timeto.shared.TextFeatures
-import me.timeto.shared.db.TaskFolderModel
+import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.launchEx
 import me.timeto.shared.vm.TasksListVM
 
@@ -35,7 +35,7 @@ private val highlightTimeShape = SquircleShape(len = 30f)
 @OptIn(ExperimentalMaterialApi::class, ExperimentalLayoutApi::class)
 @Composable
 fun TasksListView(
-    activeFolder: TaskFolderModel,
+    activeFolder: TaskFolderDb,
     dragItem: MutableState<DragItem?>,
 ) {
     val (vm, state) = rememberVM(activeFolder) { TasksListVM(activeFolder) }

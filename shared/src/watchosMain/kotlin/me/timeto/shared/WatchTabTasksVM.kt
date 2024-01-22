@@ -2,8 +2,8 @@ package me.timeto.shared
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
-import me.timeto.shared.db.TaskFolderModel
-import me.timeto.shared.db.TaskFolderModel.Companion.sortedFolders
+import me.timeto.shared.db.TaskFolderDb
+import me.timeto.shared.db.TaskFolderDb.Companion.sortedFolders
 import me.timeto.shared.db.TaskModel
 import me.timeto.shared.TextFeatures.TimeData
 import me.timeto.shared.vm.__VM
@@ -74,13 +74,13 @@ class WatchTabTasksVM : __VM<WatchTabTasksVM.State>() {
         TaskModel.getAscFlow().onEachExIn(scope) { tasks ->
             upFolders(tasks)
         }
-        TaskFolderModel.anyChangeFlow().onEachExIn(scope) {
+        TaskFolderDb.anyChangeFlow().onEachExIn(scope) {
             upFolders(TaskModel.getAsc())
         }
     }
 
     private suspend fun upFolders(allTasks: List<TaskModel>) {
-        val foldersUI = TaskFolderModel.getAscBySort().sortedFolders().map { folder ->
+        val foldersUI = TaskFolderDb.getAscBySort().sortedFolders().map { folder ->
             FolderUI(
                 title = folder.name,
                 tasks = allTasks

@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
 import kotlinx.coroutines.delay
-import me.timeto.shared.db.TaskFolderModel
+import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.vm.TabTasksVM
 import kotlin.random.Random
 
@@ -191,7 +191,7 @@ fun TasksView(
 }
 
 private sealed class Tab {
-    class Folder(val folder: TaskFolderModel) : Tab()
+    class Folder(val folder: TaskFolderDb) : Tab()
     class Calendar : Tab()
     class Repeating : Tab()
 }
@@ -225,7 +225,7 @@ sealed class DropItem(
     /// Types
 
     class Type__Folder(
-        val folder: TaskFolderModel,
+        val folder: TaskFolderDb,
         square: Square,
     ) : DropItem(folder.name, square)
 

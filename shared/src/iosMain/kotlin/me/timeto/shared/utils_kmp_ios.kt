@@ -123,7 +123,7 @@ private fun listenForSyncWatch() = launchExDefault {
     listOf<Flow<*>>(
         ActivityDb.anyChangeFlow(),
         NoteDb.anyChangeFlow(),
-        TaskFolderModel.anyChangeFlow(),
+        TaskFolderDb.anyChangeFlow(),
         TaskModel.anyChangeFlow(),
         IntervalDb.anyChangeFlow(),
         ChecklistDb.anyChangeFlow(),

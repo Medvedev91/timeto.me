@@ -5,13 +5,13 @@ import kotlinx.coroutines.launch
 import me.timeto.shared.*
 import me.timeto.shared.db.EventDb
 import me.timeto.shared.db.RepeatingDb
-import me.timeto.shared.db.TaskFolderModel
+import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.db.TaskModel
 import me.timeto.shared.vm.ui.sortedByFolder
 
 // todo live tmrw data?
 class TasksListVM(
-    val folder: TaskFolderModel,
+    val folder: TaskFolderDb,
 ) : __VM<TasksListVM.State>() {
 
     data class State(
@@ -148,7 +148,7 @@ class TasksListVM(
         }
         val timerContext = ActivityTimerSheetVM.TimerContext.Task(task)
 
-        fun upFolder(newFolder: TaskFolderModel) {
+        fun upFolder(newFolder: TaskFolderDb) {
             launchExDefault {
                 task.upFolder(newFolder, replaceIfTmrw = true)
             }
@@ -203,7 +203,7 @@ private fun prepTmrwData(
                 TaskModel(
                     id = ++lastFakeTaskId,
                     text = repeating.prepTextForTask(tmrwDSDay),
-                    folder_id = TaskFolderModel.ID_TODAY,
+                    folder_id = TaskFolderDb.ID_TODAY,
                 )
             )
         }
@@ -216,7 +216,7 @@ private fun prepTmrwData(
                 TaskModel(
                     id = ++lastFakeTaskId,
                     text = event.prepTextForTask(),
-                    folder_id = TaskFolderModel.ID_TODAY,
+                    folder_id = TaskFolderDb.ID_TODAY,
                 )
             )
         }

@@ -1,12 +1,12 @@
 package me.timeto.shared.vm.ui
 
 import me.timeto.shared.TextFeatures
-import me.timeto.shared.db.TaskFolderModel
+import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.db.TaskModel
 import me.timeto.shared.textFeatures
 
 fun List<TaskModel>.sortedByFolder(
-    folder: TaskFolderModel,
+    folder: TaskFolderDb,
 ): List<TaskModel> {
     if (!folder.isToday)
         return this.sortedByDescending { it.id }
