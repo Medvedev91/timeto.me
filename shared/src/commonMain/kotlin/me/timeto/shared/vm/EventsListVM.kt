@@ -4,12 +4,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import me.timeto.shared.*
-import me.timeto.shared.db.EventModel
+import me.timeto.shared.db.EventDb
 
 class EventsListVM : __VM<EventsListVM.State>() {
 
     class UiEvent(
-        val event: EventModel,
+        val event: EventDb,
     ) {
         val deletionNote = "Are you sure you want to delete \"${event.text}\" event?"
         val dayLeftString = "${event.getLocalTime().localDay - UnixTime().localDay}d"
@@ -44,7 +44,7 @@ class EventsListVM : __VM<EventsListVM.State>() {
                 state.update { it.copy(curTimeString = getCurTimeString()) }
             }
         }
-        EventModel.getAscByTimeFlow()
+        EventDb.getAscByTimeFlow()
             .onEachExIn(scopeVM()) { list ->
                 state.update { it.copy(uiEvents = list.toUiList()) }
             }
@@ -75,4 +75,4 @@ private fun getCurTimeString() =
         UnixTime.StringComponent.hhmm24
     )
 
-private fun List<EventModel>.toUiList() = map { EventsListVM.UiEvent(it) }
+private fun List<EventDb>.toUiList() = map { EventsListVM.UiEvent(it) }

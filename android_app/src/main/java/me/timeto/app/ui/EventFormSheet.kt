@@ -24,13 +24,13 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.*
 import me.timeto.shared.UnixTime
-import me.timeto.shared.db.EventModel
+import me.timeto.shared.db.EventDb
 import me.timeto.shared.vm.EventFormSheetVM
 import java.text.SimpleDateFormat
 import java.util.*
 
 fun EventFormSheet__show(
-    editedEvent: EventModel?,
+    editedEvent: EventDb?,
     defText: String? = null,
     defTime: Int? = null,
     onSave: () -> Unit,
@@ -52,7 +52,7 @@ fun EventFormSheet__show(
 @Composable
 private fun EventFormSheet(
     layer: WrapperView.Layer,
-    editedEvent: EventModel?,
+    editedEvent: EventDb?,
     defText: String? = null,
     defTime: Int? = null,
     onSave: () -> Unit,

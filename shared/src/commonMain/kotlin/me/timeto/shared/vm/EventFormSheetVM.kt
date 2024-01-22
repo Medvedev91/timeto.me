@@ -2,14 +2,14 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
-import me.timeto.shared.db.EventModel
+import me.timeto.shared.db.EventDb
 
 /**
  * Different logic for platform. For iOS, we use a Date() object
  * for date and time, for Android there are custom pickers.
  */
 class EventFormSheetVM(
-    val event: EventModel?,
+    val event: EventDb?,
     val defText: String?,
     val defTime: Int?,
 ) : __VM<EventFormSheetVM.State>() {
@@ -82,13 +82,13 @@ class EventFormSheetVM(
                     localTime = state.value.selectedTime,
                 )
             } else {
-                EventModel.addWithValidation(
+                EventDb.addWithValidation(
                     text = nameWithFeatures,
                     localTime = state.value.selectedTime,
                 )
             }
             onSuccess()
-            EventModel.syncTodaySafe(UnixTime().localDay)
+            EventDb.syncTodaySafe(UnixTime().localDay)
         } catch (e: UIException) {
             showUiAlert(e.uiMessage)
         }

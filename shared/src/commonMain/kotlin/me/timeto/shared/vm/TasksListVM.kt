@@ -3,7 +3,7 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import me.timeto.shared.*
-import me.timeto.shared.db.EventModel
+import me.timeto.shared.db.EventDb
 import me.timeto.shared.db.RepeatingModel
 import me.timeto.shared.db.TaskFolderModel
 import me.timeto.shared.db.TaskModel
@@ -187,7 +187,7 @@ class TasksListVM(
 
 private fun prepTmrwData(
     allRepeatings: List<RepeatingModel>,
-    allEvents: List<EventModel>,
+    allEvents: List<EventDb>,
 ): TasksListVM.TmrwData {
 
     val rawTasks = mutableListOf<TaskModel>()

@@ -180,7 +180,7 @@ private suspend fun syncTodayEvents() {
     // To avoid unnecessary checks. It works without that.
     if (syncTodayEventsLastDay == todayNoOffset)
         return
-    EventModel.syncTodaySafe(todayNoOffset)
+    EventDb.syncTodaySafe(todayNoOffset)
     // In case on error while syncTodaySafe()
     syncTodayEventsLastDay = todayNoOffset
 }

@@ -10,7 +10,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
 
-data class EventModel(
+data class EventDb(
     val id: Int,
     val text: String,
     val utc_time: Int,
@@ -127,6 +127,6 @@ private fun validateText(text: String): String {
     return validatedText
 }
 
-private fun EventSQ.toModel() = EventModel(
+private fun EventSQ.toModel() = EventDb(
     id = id, text = text, utc_time = utc_time
 )

@@ -13,7 +13,7 @@ object DI {
     var tasks = listOf<TaskModel>()
     var taskFolders = listOf<TaskFolderModel>()
     var activitiesSorted = listOf<ActivityDb>()
-    var events = listOf<EventModel>()
+    var events = listOf<EventDb>()
     var eventTemplatesSorted = listOf<EventTemplateDB>()
     var repeatings = listOf<RepeatingModel>()
 
@@ -80,8 +80,8 @@ object DI {
         activitiesSorted = ActivityDb.getAscSorted()
         ActivityDb.getAscSortedFlow().onEachExIn(scope) { activitiesSorted = it }
 
-        events = EventModel.getAscByTime()
-        EventModel.getAscByTimeFlow().onEachExIn(scope) { events = it }
+        events = EventDb.getAscByTime()
+        EventDb.getAscByTimeFlow().onEachExIn(scope) { events = it }
 
         eventTemplatesSorted = EventTemplateDB.selectAscSorted()
         EventTemplateDB.selectAscSortedFlow().onEachExIn(scope) { eventTemplatesSorted = it }
