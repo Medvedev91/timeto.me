@@ -13,7 +13,7 @@ class HomeVM : __VM<HomeVM.State>() {
 
     data class State(
         val interval: IntervalModel,
-        val allChecklistItems: List<ChecklistItemModel>,
+        val allChecklistItems: List<ChecklistItemDb>,
         val isPurple: Boolean,
         val tasksToday: List<TaskModel>,
         val isTasksVisible: Boolean,
@@ -168,7 +168,7 @@ class HomeVM : __VM<HomeVM.State>() {
                     )
                 }
             }
-        ChecklistItemModel
+        ChecklistItemDb
             .getAscFlow()
             .onEachExIn(scope) { items ->
                 state.update { it.copy(allChecklistItems = items) }
@@ -248,14 +248,14 @@ class HomeVM : __VM<HomeVM.State>() {
 
     class ChecklistUI(
         val checklist: ChecklistModel,
-        val items: List<ChecklistItemModel>,
+        val items: List<ChecklistItemDb>,
     ) {
 
         val stateUI = ChecklistStateUI.build(checklist, items)
         val itemsUI = items.map { ItemUI(it) }
 
         class ItemUI(
-            val item: ChecklistItemModel,
+            val item: ChecklistItemDb,
         ) {
             fun toggle() {
                 defaultScope().launchEx {

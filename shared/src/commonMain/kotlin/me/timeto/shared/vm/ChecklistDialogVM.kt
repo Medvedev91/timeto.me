@@ -2,7 +2,7 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.DI
-import me.timeto.shared.db.ChecklistItemModel
+import me.timeto.shared.db.ChecklistItemDb
 import me.timeto.shared.db.ChecklistModel
 import me.timeto.shared.launchExDefault
 import me.timeto.shared.onEachExIn
@@ -13,7 +13,7 @@ class ChecklistDialogVM(
 ) : __VM<ChecklistDialogVM.State>() {
 
     data class State(
-        val items: List<ChecklistItemModel>,
+        val items: List<ChecklistItemDb>,
     )
 
     override val state = MutableStateFlow(
@@ -22,18 +22,18 @@ class ChecklistDialogVM(
 
     override fun onAppear() {
         val scope = scopeVM()
-        ChecklistItemModel.getAscFlow().onEachExIn(scope) { items ->
+        ChecklistItemDb.getAscFlow().onEachExIn(scope) { items ->
             state.update { it.copy(items = items.prepChecklistItems(checklist)) }
         }
     }
 
     fun uncheck() {
         launchExDefault {
-            ChecklistItemModel.toggleByList(checklist, false)
+            ChecklistItemDb.toggleByList(checklist, false)
         }
     }
 }
 
-private fun List<ChecklistItemModel>.prepChecklistItems(
+private fun List<ChecklistItemDb>.prepChecklistItems(
     checklist: ChecklistModel
-): List<ChecklistItemModel> = this.filter { it.list_id == checklist.id }
+): List<ChecklistItemDb> = this.filter { it.list_id == checklist.id }

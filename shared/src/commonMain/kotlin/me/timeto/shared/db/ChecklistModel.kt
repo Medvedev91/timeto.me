@@ -81,7 +81,7 @@ data class ChecklistModel(
     }
 
     suspend fun deleteWithDependencies(): Unit = dbIO {
-        ChecklistItemModel.getAsc().filter { it.list_id == id }.forEach { it.delete() }
+        ChecklistItemDb.getAsc().filter { it.list_id == id }.forEach { it.delete() }
         db.checklistQueries.deleteById(id)
     }
 

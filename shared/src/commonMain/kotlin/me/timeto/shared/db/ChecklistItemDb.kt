@@ -10,7 +10,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
 
-data class ChecklistItemModel(
+data class ChecklistItemDb(
     val id: Int,
     val text: String,
     val list_id: Int,
@@ -120,6 +120,6 @@ private fun validateText(text: String): String {
     return validatedText
 }
 
-private fun ChecklistItemSQ.toModel() = ChecklistItemModel(
+private fun ChecklistItemSQ.toModel() = ChecklistItemDb(
     id = id, text = text, list_id = list_id, check_time = check_time
 )
