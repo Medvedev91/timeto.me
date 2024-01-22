@@ -2,7 +2,7 @@ package me.timeto.shared.vm.ui
 
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.TextFeatures
-import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toTimerHintNote
 
@@ -21,7 +21,7 @@ class TextFeaturesTimerFormUI(
     val timerNote = textFeatures.timer?.toTimerHintNote(isShort = false) ?: "Not Selected"
     val timerColorOrNull = if (textFeatures.timer == null) ColorRgba.red else null
 
-    fun setActivity(activity: ActivityModel) =
+    fun setActivity(activity: ActivityDb) =
         textFeatures.copy(activity = activity)
 
     fun setTimer(seconds: Int) =

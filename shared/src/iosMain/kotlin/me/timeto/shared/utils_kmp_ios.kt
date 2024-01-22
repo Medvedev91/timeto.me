@@ -121,7 +121,7 @@ fun String.toSwiftData(): NSData = (this as NSString).dataUsingEncoding(NSUTF8St
 private fun listenForSyncWatch() = launchExDefault {
     initKmmDeferred.join()
     listOf<Flow<*>>(
-        ActivityModel.anyChangeFlow(),
+        ActivityDb.anyChangeFlow(),
         NoteModel.anyChangeFlow(),
         TaskFolderModel.anyChangeFlow(),
         TaskModel.anyChangeFlow(),

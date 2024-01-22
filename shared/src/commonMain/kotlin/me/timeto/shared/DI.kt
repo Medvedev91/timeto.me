@@ -12,7 +12,7 @@ object DI {
     var kv = listOf<KvDb>()
     var tasks = listOf<TaskModel>()
     var taskFolders = listOf<TaskFolderModel>()
-    var activitiesSorted = listOf<ActivityModel>()
+    var activitiesSorted = listOf<ActivityDb>()
     var events = listOf<EventModel>()
     var eventTemplatesSorted = listOf<EventTemplateDB>()
     var repeatings = listOf<RepeatingModel>()
@@ -77,8 +77,8 @@ object DI {
         taskFolders = TaskFolderModel.getAscBySort()
         TaskFolderModel.getAscBySortFlow().onEachExIn(scope) { taskFolders = it }
 
-        activitiesSorted = ActivityModel.getAscSorted()
-        ActivityModel.getAscSortedFlow().onEachExIn(scope) { activitiesSorted = it }
+        activitiesSorted = ActivityDb.getAscSorted()
+        ActivityDb.getAscSortedFlow().onEachExIn(scope) { activitiesSorted = it }
 
         events = EventModel.getAscByTime()
         EventModel.getAscByTimeFlow().onEachExIn(scope) { events = it }

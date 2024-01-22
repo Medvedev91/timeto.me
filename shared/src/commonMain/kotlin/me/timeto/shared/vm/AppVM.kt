@@ -46,7 +46,7 @@ class AppVM : __VM<AppVM.State>() {
                 .getLastOneOrNullFlow()
                 .filterNotNull()
                 .onEachExIn(this) { lastInterval ->
-                    ActivityModel.syncTimeHints()
+                    ActivityDb.syncTimeHints()
                     rescheduleNotifications()
                     performShortcut(lastInterval, secondsLimit = 3)
                     keepScreenOnStateFlow.emit(lastInterval.getActivityDI().keepScreenOn)
@@ -227,31 +227,31 @@ private suspend fun fillInitData() {
     TaskFolderModel.addTmrw()
     TaskFolderModel.addRaw(time(), "SMDAY", 3)
 
-    val colorsWheel = Wheel(ActivityModel.colors)
+    val colorsWheel = Wheel(ActivityDb.colors)
     val cGreen = colorsWheel.next()
     val cBlue = colorsWheel.next()
     val cRed = colorsWheel.next()
     val cYellow = colorsWheel.next()
     val cPurple = colorsWheel.next()
 
-    val goals = listOf<ActivityModel.Goal>()
+    val goals = listOf<ActivityDb.Goal>()
     val defData = ActivityModel__Data.buildDefault()
-    val aNormal = ActivityModel.TYPE.NORMAL
-    val actMed = ActivityModel.addWithValidation("Meditation", "🧘‍♀️", 20 * 60, 1, aNormal, cYellow, defData, true, goals)
-    val actWork = ActivityModel.addWithValidation("Work", "📁", 40 * 60, 2, aNormal, cBlue, defData, true, goals)
-    ActivityModel.addWithValidation("Hobby", "🎸", 3600, 3, aNormal, cRed, defData, true, goals)
-    val actPd = ActivityModel.addWithValidation("Personal development", "📖", 30 * 60, 4, aNormal, cPurple, defData, true, goals)
-    val actEx = ActivityModel.addWithValidation("Exercises / Health", "💪", 20 * 60, 5, aNormal, colorsWheel.next(), defData, false, goals)
-    ActivityModel.addWithValidation("Walk", "👟", 30 * 60, 6, aNormal, colorsWheel.next(), defData, false, goals)
-    val actGr = ActivityModel.addWithValidation("Getting ready", "🚀", 30 * 60, 7, aNormal, colorsWheel.next(), defData, true, goals)
-    ActivityModel.addWithValidation("Sleep / Rest", "😴", 8 * 3600, 8, aNormal, cGreen, defData, false, goals)
-    val actOther = ActivityModel.addWithValidation("Other", "💡", 3600, 9, ActivityModel.TYPE.OTHER, colorsWheel.next(), defData, true, goals)
+    val aNormal = ActivityDb.TYPE.NORMAL
+    val actMed = ActivityDb.addWithValidation("Meditation", "🧘‍♀️", 20 * 60, 1, aNormal, cYellow, defData, true, goals)
+    val actWork = ActivityDb.addWithValidation("Work", "📁", 40 * 60, 2, aNormal, cBlue, defData, true, goals)
+    ActivityDb.addWithValidation("Hobby", "🎸", 3600, 3, aNormal, cRed, defData, true, goals)
+    val actPd = ActivityDb.addWithValidation("Personal development", "📖", 30 * 60, 4, aNormal, cPurple, defData, true, goals)
+    val actEx = ActivityDb.addWithValidation("Exercises / Health", "💪", 20 * 60, 5, aNormal, colorsWheel.next(), defData, false, goals)
+    ActivityDb.addWithValidation("Walk", "👟", 30 * 60, 6, aNormal, colorsWheel.next(), defData, false, goals)
+    val actGr = ActivityDb.addWithValidation("Getting ready", "🚀", 30 * 60, 7, aNormal, colorsWheel.next(), defData, true, goals)
+    ActivityDb.addWithValidation("Sleep / Rest", "😴", 8 * 3600, 8, aNormal, cGreen, defData, false, goals)
+    val actOther = ActivityDb.addWithValidation("Other", "💡", 3600, 9, ActivityDb.TYPE.OTHER, colorsWheel.next(), defData, true, goals)
 
     val interval = IntervalModel.addWithValidation(30 * 60, actPd, null)
     DI.fillLateInit(interval, interval) // To 100% ensure
 
     val todayDay = UnixTime().localDay
-    fun prepRep(title: String, activity: ActivityModel, timerMin: Int): String =
+    fun prepRep(title: String, activity: ActivityDb, timerMin: Int): String =
         title.textFeatures().copy(activity = activity, timer = timerMin * 60).textWithFeatures()
     RepeatingModel.addWithValidation(prepRep("Exercises", actEx, 30), RepeatingModel.Period.EveryNDays(1), todayDay, null, false)
     RepeatingModel.addWithValidation(prepRep("Meditation", actMed, 20), RepeatingModel.Period.EveryNDays(1), todayDay, null, false)

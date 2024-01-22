@@ -89,7 +89,7 @@ fun <T> Flow<T>.onEachExIn(
 
 fun taskAutostartData(
     task: TaskModel,
-): Pair<ActivityModel, Int>? {
+): Pair<ActivityDb, Int>? {
     val textFeatures = task.text.textFeatures()
     val activity = textFeatures.activity ?: return null
     val timerTime = textFeatures.timer ?: return null
@@ -492,7 +492,7 @@ class TimerPickerItem(
         }
 
         fun calcDefSeconds(
-            activity: ActivityModel,
+            activity: ActivityDb,
             note: String?,
         ): Int {
             if (note == null)

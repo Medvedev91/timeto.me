@@ -1,7 +1,7 @@
 package me.timeto.shared.vm.ui
 
 import me.timeto.shared.*
-import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalModel
 
 class DayIntervalsUI(
@@ -16,7 +16,7 @@ class DayIntervalsUI(
         else ""
 
     class IntervalUI(
-        val activity: ActivityModel?,
+        val activity: ActivityDb?,
         val timeStart: Int,
         val seconds: Int,
     ) {

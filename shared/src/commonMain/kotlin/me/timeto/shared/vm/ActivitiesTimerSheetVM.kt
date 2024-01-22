@@ -2,7 +2,7 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.DI
-import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.textFeatures
 import me.timeto.shared.db.ActivityModel__Data.TimerHints.TimerHintUI
@@ -15,7 +15,7 @@ class ActivitiesTimerSheetVM(
 
         private fun prepActivitiesUI(
             timerContext: ActivityTimerSheetVM.TimerContext?,
-            sortedActivities: List<ActivityModel>,
+            sortedActivities: List<ActivityDb>,
         ): List<ActivityUI> = sortedActivities.map { activity ->
 
             val timerHints = activity.data.timer_hints.getTimerHintsUI(
@@ -34,7 +34,7 @@ class ActivitiesTimerSheetVM(
     }
 
     class ActivityUI(
-        val activity: ActivityModel,
+        val activity: ActivityDb,
         val timerHints: List<TimerHintUI>,
     ) {
         val listText = activity.name.textFeatures().textUi()
@@ -53,7 +53,7 @@ class ActivitiesTimerSheetVM(
 
     override fun onAppear() {
         val scope = scopeVM()
-        ActivityModel.getAscSortedFlow().onEachExIn(scope) { activities ->
+        ActivityDb.getAscSortedFlow().onEachExIn(scope) { activities ->
             state.update {
                 it.copy(allActivities = prepActivitiesUI(timerContext, activities))
             }

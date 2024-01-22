@@ -2,7 +2,7 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
-import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalModel
 
 class HistoryVM : __VM<HistoryVM.State>() {
@@ -26,7 +26,7 @@ class HistoryVM : __VM<HistoryVM.State>() {
             state.update {
                 it.copy(
                     sections = prepHistorySections(allIntervalsAsc = intervalsAsc),
-                    activitiesFormAddUI = ActivityModel.getAscSorted().map { ActivityFormAddUI(it) },
+                    activitiesFormAddUI = ActivityDb.getAscSorted().map { ActivityFormAddUI(it) },
                 )
             }
         }
@@ -58,7 +58,7 @@ class HistoryVM : __VM<HistoryVM.State>() {
     ///
 
     class ActivityFormAddUI(
-        val activity: ActivityModel,
+        val activity: ActivityDb,
     ) {
 
         fun addInterval(

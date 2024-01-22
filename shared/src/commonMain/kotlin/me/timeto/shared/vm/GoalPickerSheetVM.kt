@@ -2,7 +2,7 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.UIException
-import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.showUiAlert
 import me.timeto.shared.toTimerHintNote
 
@@ -21,12 +21,12 @@ class GoalPickerSheetVM : __VM<GoalPickerSheetVM.State>() {
         val timerPickerSheetTitle = "Duration"
 
         fun buildGoal(
-            onBuild: (goal: ActivityModel.Goal) -> Unit
+            onBuild: (goal: ActivityDb.Goal) -> Unit
         ) {
             try {
-                val goal = ActivityModel.Goal(
+                val goal = ActivityDb.Goal(
                     seconds = seconds,
-                    period = ActivityModel.Goal.Period.DaysOfWeek(weekDays = weekDays),
+                    period = ActivityDb.Goal.Period.DaysOfWeek(weekDays = weekDays),
                 )
                 goal.period.assertValidation()
                 onBuild(goal)

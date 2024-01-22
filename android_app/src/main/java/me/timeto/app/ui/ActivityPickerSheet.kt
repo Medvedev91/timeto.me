@@ -9,13 +9,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.timeto.app.c
 import me.timeto.app.rememberVM
-import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.vm.ActivityPickerSheetVM
 
 @Composable
 fun ActivityPickerSheet(
     layer: WrapperView.Layer,
-    onPick: (ActivityModel) -> Unit,
+    onPick: (ActivityDb) -> Unit,
 ) {
 
     val (_, state) = rememberVM { ActivityPickerSheetVM() }

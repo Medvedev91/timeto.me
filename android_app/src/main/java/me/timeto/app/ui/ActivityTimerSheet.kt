@@ -16,11 +16,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.*
-import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.vm.ActivityTimerSheetVM
 
 fun ActivityTimerSheet__show(
-    activity: ActivityModel,
+    activity: ActivityDb,
     timerContext: ActivityTimerSheetVM.TimerContext?,
     onStarted: () -> Unit,
 ) {
@@ -37,7 +37,7 @@ fun ActivityTimerSheet__show(
 @Composable
 private fun ActivityTimerSheet(
     layer: WrapperView.Layer,
-    activity: ActivityModel,
+    activity: ActivityDb,
     timerContext: ActivityTimerSheetVM.TimerContext?,
     onStarted: () -> Unit,
 ) {

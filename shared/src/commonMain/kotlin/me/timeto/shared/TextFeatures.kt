@@ -1,6 +1,6 @@
 package me.timeto.shared
 
-import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.ChecklistModel
 import me.timeto.shared.db.ShortcutModel
 import kotlin.math.absoluteValue
@@ -11,7 +11,7 @@ data class TextFeatures(
     val shortcuts: List<ShortcutModel>,
     val fromRepeating: FromRepeating?,
     val fromEvent: FromEvent?,
-    val activity: ActivityModel?,
+    val activity: ActivityDb?,
     val timer: Int?,
     val paused: Paused?,
     val isImportant: Boolean,
@@ -219,7 +219,7 @@ private fun parseLocal(initText: String): TextFeatures {
             return@let TextFeatures.FromEvent(UnixTime(time))
         }
 
-    val activity: ActivityModel? = activityRegex
+    val activity: ActivityDb? = activityRegex
         .find(textNoFeatures)?.let { match ->
             val id = match.groupValues[1].toInt()
             val activity = DI.getActivityByIdOrNull(id) ?: return@let null

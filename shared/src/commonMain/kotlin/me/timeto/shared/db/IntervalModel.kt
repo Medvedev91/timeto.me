@@ -83,7 +83,7 @@ data class IntervalModel(
 
         suspend fun addWithValidation(
             timer: Int,
-            activity: ActivityModel,
+            activity: ActivityDb,
             note: String?,
             id: Int = time(),
         ): IntervalModel = dbIO {
@@ -99,7 +99,7 @@ data class IntervalModel(
 
         fun addWithValidationNeedTransaction(
             timer: Int,
-            activity: ActivityModel,
+            activity: ActivityDb,
             note: String?,
             id: Int = time(),
         ): IntervalModel {
@@ -136,7 +136,7 @@ data class IntervalModel(
                     text = tf.textWithFeatures(),
                     folder = DI.getTodayFolder(),
                 )
-                addWithValidationNeedTransaction(TIMER_AFTER_PAUSE, ActivityModel.getOther(), null)
+                addWithValidationNeedTransaction(TIMER_AFTER_PAUSE, ActivityDb.getOther(), null)
             }
         }
 
@@ -163,7 +163,7 @@ data class IntervalModel(
 
     fun getActivityDI() = DI.activitiesSorted.first { it.id == activity_id }
 
-    suspend fun upActivity(newActivity: ActivityModel): Unit = dbIO {
+    suspend fun upActivity(newActivity: ActivityDb): Unit = dbIO {
         db.intervalQueries.upActivityIdById(
             id = id, activity_id = newActivity.id
         )

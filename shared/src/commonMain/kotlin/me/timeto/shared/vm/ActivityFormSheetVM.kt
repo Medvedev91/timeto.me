@@ -3,11 +3,11 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.*
-import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.ActivityModel__Data
 
 class ActivityFormSheetVM(
-    val activity: ActivityModel?
+    val activity: ActivityDb?
 ) : __VM<ActivityFormSheetVM.State>() {
 
     data class State(
@@ -15,7 +15,7 @@ class ActivityFormSheetVM(
         val headerDoneText: String,
         val emoji: String?,
         val activityData: ActivityModel__Data,
-        val goals: List<ActivityModel.Goal>,
+        val goals: List<ActivityDb.Goal>,
         val textFeatures: TextFeatures,
         val keepScreenOn: Boolean,
         val colorRgba: ColorRgba,
@@ -41,12 +41,12 @@ class ActivityFormSheetVM(
     }
 
     class GoalUI(
-        val goal: ActivityModel.Goal,
+        val goal: ActivityDb.Goal,
     ) {
         val text: String = run {
             val timeString = goal.seconds.toTimerHintNote(isShort = false)
             val periodString: String = when (goal.period) {
-                is ActivityModel.Goal.Period.DaysOfWeek -> {
+                is ActivityDb.Goal.Period.DaysOfWeek -> {
                     val weekDays = goal.period.weekDays
                     if (weekDays.size == 7)
                         "Every day"
@@ -72,7 +72,7 @@ class ActivityFormSheetVM(
             goals = activity?.goals ?: listOf(),
             textFeatures = (activity?.name ?: "").textFeatures(),
             keepScreenOn = activity?.keepScreenOn ?: true,
-            colorRgba = activity?.colorRgba ?: ActivityModel.nextColorDI(),
+            colorRgba = activity?.colorRgba ?: ActivityDb.nextColorDI(),
         )
     )
 
@@ -94,11 +94,11 @@ class ActivityFormSheetVM(
         it.copy(colorRgba = colorRgba)
     }
 
-    fun addGoal(goal: ActivityModel.Goal) = state.update {
+    fun addGoal(goal: ActivityDb.Goal) = state.update {
         it.copy(goals = it.goals.toMutableList().apply { add(goal) })
     }
 
-    fun delGoal(goal: ActivityModel.Goal) = state.update { curState ->
+    fun delGoal(goal: ActivityDb.Goal) = state.update { curState ->
         curState.copy(goals = curState.goals.toMutableList().apply { remove(goal) })
     }
 
@@ -173,12 +173,12 @@ class ActivityFormSheetVM(
                     goals = goals,
                 )
             } else {
-                ActivityModel.addWithValidation(
+                ActivityDb.addWithValidation(
                     name = nameWithFeatures,
                     emoji = selectedEmoji,
                     timer = 20 * 60,
                     sort = 0,
-                    type = ActivityModel.TYPE.NORMAL,
+                    type = ActivityDb.TYPE.NORMAL,
                     colorRgba = colorRgba,
                     data = activityData,
                     keepScreenOn = keepScreenOn,

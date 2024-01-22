@@ -2,7 +2,7 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.DI
-import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.db.ActivityDb
 
 class ActivityPickerSheetVM : __VM<ActivityPickerSheetVM.State>() {
 
@@ -21,7 +21,7 @@ class ActivityPickerSheetVM : __VM<ActivityPickerSheetVM.State>() {
     ///
 
     class ActivityUI(
-        val activity: ActivityModel,
+        val activity: ActivityDb,
     ) {
         // todo no triggers
         val text = activity.nameWithEmoji()

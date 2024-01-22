@@ -2,12 +2,12 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
-import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalModel
 import me.timeto.shared.db.TaskModel
 
 class ActivityTimerSheetVM(
-    val activity: ActivityModel,
+    val activity: ActivityDb,
     private val timerContext: TimerContext?,
 ) : __VM<ActivityTimerSheetVM.State>() {
 
@@ -17,7 +17,7 @@ class ActivityTimerSheetVM(
         val formTimeItemIdx: Int,
         val timeItems: List<TimerPickerItem>,
         // Like inner data class
-        private val activity: ActivityModel,
+        private val activity: ActivityDb,
         private val timerContext: TimerContext?,
     ) {
 
@@ -81,7 +81,7 @@ class ActivityTimerSheetVM(
 
         suspend fun startIntervalByContext(
             timerContext: TimerContext?,
-            activity: ActivityModel,
+            activity: ActivityDb,
             timer: Int,
         ) {
             val when_: Any = when (timerContext) {

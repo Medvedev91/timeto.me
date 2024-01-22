@@ -2,12 +2,12 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
-import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.db.ActivityDb
 
 class EditActivitiesVM : __VM<EditActivitiesVM.State>() {
 
     class ActivityUI(
-        val activity: ActivityModel,
+        val activity: ActivityDb,
     ) {
         val listText = activity.nameWithEmoji().textFeatures().textUi()
     }
@@ -22,7 +22,7 @@ class EditActivitiesVM : __VM<EditActivitiesVM.State>() {
 
     override fun onAppear() {
         val scope = scopeVM()
-        ActivityModel.getAscSortedFlow().onEachExIn(scope) { activities ->
+        ActivityDb.getAscSortedFlow().onEachExIn(scope) { activities ->
             state.update { it.copy(activitiesUI = activities.toUiList()) }
         }
     }
@@ -67,5 +67,5 @@ class EditActivitiesVM : __VM<EditActivitiesVM.State>() {
     }
 }
 
-private fun List<ActivityModel>.toUiList() = this
+private fun List<ActivityDb>.toUiList() = this
     .map { EditActivitiesVM.ActivityUI(it) }

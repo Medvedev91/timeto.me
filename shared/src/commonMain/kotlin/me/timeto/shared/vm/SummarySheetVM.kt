@@ -2,7 +2,7 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
-import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.vm.ui.DayIntervalsUI
 
 class SummarySheetVM : __VM<SummarySheetVM.State>() {
@@ -93,7 +93,7 @@ class SummarySheetVM : __VM<SummarySheetVM.State>() {
     ///
 
     class ActivityUI(
-        val activity: ActivityModel,
+        val activity: ActivityDb,
         val seconds: Int,
         val ratio: Float,
         secondsPerDay: Int,

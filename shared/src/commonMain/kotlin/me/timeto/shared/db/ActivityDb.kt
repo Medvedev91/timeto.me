@@ -10,7 +10,7 @@ import kotlinx.serialization.json.*
 import me.timeto.shared.*
 import kotlin.math.max
 
-data class ActivityModel(
+data class ActivityDb(
     val id: Int,
     val name: String,
     val emoji: String,
@@ -49,7 +49,7 @@ data class ActivityModel(
             db.activityQueries.getById(id).executeAsOneOrNull()?.toModel()
         }
 
-        fun getOther(): ActivityModel {
+        fun getOther(): ActivityDb {
             val activities = DI.activitiesSorted.filter { it.type_id == TYPE.OTHER.id }
             if (activities.size != 1)
                 throw UIException("System error") // todo report: "getOther() size ${activities.size}"
@@ -71,7 +71,7 @@ data class ActivityModel(
             data: ActivityModel__Data,
             keepScreenOn: Boolean,
             goals: List<Goal>,
-        ): ActivityModel = dbIO {
+        ): ActivityDb = dbIO {
 
             if (type == TYPE.OTHER && getAscSorted().find { it.getType() == TYPE.OTHER } != null)
                 throw UIException("Other already exists") // todo report
@@ -140,7 +140,7 @@ data class ActivityModel(
 
         suspend fun validateEmoji(
             emoji: String,
-            exActivity: ActivityModel? = null,
+            exActivity: ActivityDb? = null,
         ): String {
             val validatedEmoji = emoji.trim()
             if (validatedEmoji.isEmpty())
@@ -184,7 +184,7 @@ data class ActivityModel(
             return colors.random()
         }
 
-        private fun ActivitySQ.toModel() = ActivityModel(
+        private fun ActivitySQ.toModel() = ActivityDb(
             id = id, name = name, emoji = emoji, timer = timer, sort = sort,
             type_id = type_id, color_rgba = color_rgba, data_json = data_json,
             keep_screen_on = keep_screen_on, goals_json = goals_json,
@@ -263,7 +263,7 @@ data class ActivityModel(
             type_id = type_id,
             color_rgba = colorRgba.toRgbaString(),
             data_json = data.toJString(),
-            emoji = validateEmoji(emoji, exActivity = this@ActivityModel),
+            emoji = validateEmoji(emoji, exActivity = this@ActivityDb),
             keep_screen_on = keepScreenOn.toInt10(),
             goals_json = goals.map { it.buildJson() }.toJsonArray().toString(),
         )
@@ -463,7 +463,7 @@ data class ActivityModel__Data(
         }
     }
 
-    suspend fun saveToActivity(activity: ActivityModel) {
+    suspend fun saveToActivity(activity: ActivityDb) {
         activity.upData(this)
     }
 

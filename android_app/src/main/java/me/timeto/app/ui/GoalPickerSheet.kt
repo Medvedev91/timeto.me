@@ -8,13 +8,13 @@ import androidx.compose.ui.unit.dp
 import me.timeto.app.VStack
 import me.timeto.app.c
 import me.timeto.app.rememberVM
-import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.vm.GoalPickerSheetVM
 
 @Composable
 fun GoalPickerSheet(
     layer: WrapperView.Layer,
-    onPick: (ActivityModel.Goal) -> Unit,
+    onPick: (ActivityDb.Goal) -> Unit,
 ) {
 
     val (vm, state) = rememberVM { GoalPickerSheetVM() }

@@ -2,14 +2,14 @@ package me.timeto.shared
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.data.TimerTabActivityData
-import me.timeto.shared.db.ActivityModel
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalModel
 import me.timeto.shared.vm.__VM
 
 class WatchTabTimerVM : __VM<WatchTabTimerVM.State>() {
 
     class ActivityUI(
-        val activity: ActivityModel,
+        val activity: ActivityDb,
         val lastInterval: IntervalModel,
         val isPurple: Boolean,
     ) {
@@ -28,7 +28,7 @@ class WatchTabTimerVM : __VM<WatchTabTimerVM.State>() {
     }
 
     data class State(
-        val activities: List<ActivityModel>,
+        val activities: List<ActivityDb>,
         val lastInterval: IntervalModel,
         val isPurple: Boolean,
     ) {
@@ -45,7 +45,7 @@ class WatchTabTimerVM : __VM<WatchTabTimerVM.State>() {
 
     override fun onAppear() {
         val scope = scopeVM()
-        ActivityModel.getAscSortedFlow()
+        ActivityDb.getAscSortedFlow()
             .onEachExIn(scope) { activities ->
                 state.update { it.copy(activities = activities) }
             }
@@ -57,7 +57,7 @@ class WatchTabTimerVM : __VM<WatchTabTimerVM.State>() {
     }
 }
 
-private fun List<ActivityModel>.toUiList(
+private fun List<ActivityDb>.toUiList(
     lastInterval: IntervalModel,
     isPurple: Boolean,
 ): List<WatchTabTimerVM.ActivityUI> {

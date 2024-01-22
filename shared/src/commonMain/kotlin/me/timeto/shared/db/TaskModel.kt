@@ -114,7 +114,7 @@ data class TaskModel(
 
     suspend fun startInterval(
         timer: Int,
-        activity: ActivityModel,
+        activity: ActivityDb,
         intervalId: Int = time(),
     ) = dbIO {
         db.transaction {
@@ -131,7 +131,7 @@ data class TaskModel(
     fun startIntervalForUI(
         onStarted: () -> Unit,
         activitiesSheet: () -> Unit, // todo data for sheet
-        timerSheet: (activity: ActivityModel) -> Unit,
+        timerSheet: (activity: ActivityDb) -> Unit,
     ) {
         val tf = this.text.textFeatures()
         val (activity, timer) = tf.activity to tf.timer

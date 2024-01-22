@@ -35,7 +35,7 @@ object WatchToIosSync {
     fun pauseWithLocal(): Unit = defaultScope().launchEx {
         IntervalModel.addWithValidation(
             timer = IntervalModel.TIMER_AFTER_PAUSE,
-            activity = ActivityModel.getOther(),
+            activity = ActivityDb.getOther(),
             note = null,
         )
         launchEx {
@@ -48,7 +48,7 @@ object WatchToIosSync {
     }
 
     fun startIntervalWithLocal(
-        activity: ActivityModel,
+        activity: ActivityDb,
         timer: Int,
     ): Unit = defaultScope().launchEx {
         val interval = activity.startInterval(timer)
@@ -67,7 +67,7 @@ object WatchToIosSync {
     }
 
     fun startTaskWithLocal(
-        activity: ActivityModel,
+        activity: ActivityDb,
         timer: Int,
         task: TaskModel,
     ): Unit = defaultScope().launchEx {
@@ -112,7 +112,7 @@ object WatchToIosSync {
             val intervals = smartRestore__start(IntervalModel, json.jsonObject["intervals"]!!.jsonArray, doNotUpdate = true)
             val tasks = smartRestore__start(TaskModel, json.jsonObject["tasks"]!!.jsonArray)
             val taskFolders = smartRestore__start(TaskFolderModel, json.jsonObject["task_folders"]!!.jsonArray)
-            val activities = smartRestore__start(ActivityModel, json.jsonObject["activities"]!!.jsonArray)
+            val activities = smartRestore__start(ActivityDb, json.jsonObject["activities"]!!.jsonArray)
 
             activities()
             taskFolders()
