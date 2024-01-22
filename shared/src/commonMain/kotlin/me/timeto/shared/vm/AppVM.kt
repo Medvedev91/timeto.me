@@ -42,7 +42,7 @@ class AppVM : __VM<AppVM.State>() {
 
             ///
 
-            IntervalModel
+            IntervalDb
                 .getLastOneOrNullFlow()
                 .filterNotNull()
                 .onEachExIn(this) { lastInterval ->
@@ -100,7 +100,7 @@ class AppVM : __VM<AppVM.State>() {
 }
 
 private fun performShortcut(
-    interval: IntervalModel,
+    interval: IntervalDb,
     secondsLimit: Int,
 ) {
     if ((interval.id + secondsLimit) < time())
@@ -247,7 +247,7 @@ private suspend fun fillInitData() {
     ActivityDb.addWithValidation("Sleep / Rest", "😴", 8 * 3600, 8, aNormal, cGreen, defData, false, goals)
     val actOther = ActivityDb.addWithValidation("Other", "💡", 3600, 9, ActivityDb.TYPE.OTHER, colorsWheel.next(), defData, true, goals)
 
-    val interval = IntervalModel.addWithValidation(30 * 60, actPd, null)
+    val interval = IntervalDb.addWithValidation(30 * 60, actPd, null)
     DI.fillLateInit(interval, interval) // To 100% ensure
 
     val todayDay = UnixTime().localDay

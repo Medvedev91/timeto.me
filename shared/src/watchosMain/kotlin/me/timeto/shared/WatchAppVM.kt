@@ -2,7 +2,7 @@ package me.timeto.shared
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
-import me.timeto.shared.db.IntervalModel
+import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.vm.__VM
 
 class WatchAppVM : __VM<WatchAppVM.State>() {
@@ -39,9 +39,9 @@ class WatchAppVM : __VM<WatchAppVM.State>() {
              */
             sync(doForceOrOnce = false)
 
-            if (IntervalModel.getLastOneOrNull() == null) {
+            if (IntervalDb.getLastOneOrNull() == null) {
 
-                IntervalModel
+                IntervalDb
                     .getLastOneOrNullFlow()
                     .filterNotNull()
                     .onEachExIn(this) {

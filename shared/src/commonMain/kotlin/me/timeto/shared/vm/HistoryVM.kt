@@ -3,7 +3,7 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.ActivityDb
-import me.timeto.shared.db.IntervalModel
+import me.timeto.shared.db.IntervalDb
 
 class HistoryVM : __VM<HistoryVM.State>() {
 
@@ -22,7 +22,7 @@ class HistoryVM : __VM<HistoryVM.State>() {
     )
 
     override fun onAppear() {
-        IntervalModel.getAscFlow().onEachExIn(scopeVM()) { intervalsAsc ->
+        IntervalDb.getAscFlow().onEachExIn(scopeVM()) { intervalsAsc ->
             state.update {
                 it.copy(
                     sections = prepHistorySections(allIntervalsAsc = intervalsAsc),
@@ -74,10 +74,10 @@ class HistoryVM : __VM<HistoryVM.State>() {
                         throw UIException("Invalid time")
 
                     // todo ui limit
-                    if (IntervalModel.getByIdOrNull(timestamp) != null)
+                    if (IntervalDb.getByIdOrNull(timestamp) != null)
                         throw UIException("Time is unavailable")
 
-                    IntervalModel.addWithValidation(
+                    IntervalDb.addWithValidation(
                         timer = activity.timer,
                         note = null,
                         activity = activity,
@@ -93,7 +93,7 @@ class HistoryVM : __VM<HistoryVM.State>() {
 
     class HistorySection(
         val day: Int,
-        val intervals: List<IntervalModel>,
+        val intervals: List<IntervalDb>,
         val nextIntervalStart: Int,
     ) {
 
@@ -111,7 +111,7 @@ class HistoryVM : __VM<HistoryVM.State>() {
      * A separate class with data to not store in memory all intervals.
      */
     data class IntervalUI(
-        val interval: IntervalModel,
+        val interval: IntervalDb,
         val isStartsPrevDay: Boolean,
         val text: String,
         val secondsForBar: Int,
@@ -132,7 +132,7 @@ class HistoryVM : __VM<HistoryVM.State>() {
                     throw UIException("Invalid time")
 
                 // todo ui limit
-                if (IntervalModel.getByIdOrNull(timestamp) != null)
+                if (IntervalDb.getByIdOrNull(timestamp) != null)
                     throw UIException("Time is unavailable")
 
                 interval.upId(timestamp)
@@ -151,7 +151,7 @@ class HistoryVM : __VM<HistoryVM.State>() {
                     try {
                         launchExDefault {
                             // todo UI
-                            if (IntervalModel.getAsc(limit = 2).size < 2)
+                            if (IntervalDb.getAsc(limit = 2).size < 2)
                                 throw UIException("Unable to delete the first item")
                             interval.delete()
                         }
@@ -165,7 +165,7 @@ class HistoryVM : __VM<HistoryVM.State>() {
         companion object {
 
             fun build(
-                interval: IntervalModel,
+                interval: IntervalDb,
                 section: HistorySection,
             ): IntervalUI {
                 val unixTime = interval.unixTime()
@@ -205,13 +205,13 @@ private fun prepPeriodString(
 }
 
 private fun prepHistorySections(
-    allIntervalsAsc: List<IntervalModel>,
+    allIntervalsAsc: List<IntervalDb>,
 ): List<HistoryVM.HistorySection> {
     val sections = mutableListOf<HistoryVM.HistorySection>()
 
     // "last" I mean the last while iteration
     var lastDay = UnixTime(allIntervalsAsc.first().id).localDay
-    var lastList = mutableListOf<IntervalModel>()
+    var lastList = mutableListOf<IntervalDb>()
 
     allIntervalsAsc.forEach { interval ->
         val intervalTime = interval.unixTime()

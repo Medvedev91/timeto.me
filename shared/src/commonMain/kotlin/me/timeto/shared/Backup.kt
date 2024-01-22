@@ -17,7 +17,7 @@ object Backup {
             "type" to JsonPrimitive(type),
 
             "activities" to ActivityDb.getAscSorted().modelsToJsonArray(),
-            "intervals" to IntervalModel.getDesc(intervalsLimit).modelsToJsonArray(),
+            "intervals" to IntervalDb.getDesc(intervalsLimit).modelsToJsonArray(),
             "task_folders" to TaskFolderModel.getAscBySort().modelsToJsonArray(),
             "tasks" to TaskModel.getAsc().modelsToJsonArray(),
             "checklists" to ChecklistDb.getAsc().modelsToJsonArray(),
@@ -54,7 +54,7 @@ object Backup {
             db.kVQueries.truncate()
 
             json.mapJsonArray("activities") { ActivityDb.backupable__restore(it) }
-            json.mapJsonArray("intervals") { IntervalModel.backupable__restore(it) }
+            json.mapJsonArray("intervals") { IntervalDb.backupable__restore(it) }
             json.mapJsonArray("task_folders") { TaskFolderModel.backupable__restore(it) }
             json.mapJsonArray("tasks") { TaskModel.backupable__restore(it) }
             json.mapJsonArray("checklists") { ChecklistDb.backupable__restore(it) }

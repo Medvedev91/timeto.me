@@ -33,8 +33,8 @@ object WatchToIosSync {
     }
 
     fun pauseWithLocal(): Unit = defaultScope().launchEx {
-        IntervalModel.addWithValidation(
-            timer = IntervalModel.TIMER_AFTER_PAUSE,
+        IntervalDb.addWithValidation(
+            timer = IntervalDb.TIMER_AFTER_PAUSE,
             activity = ActivityDb.getOther(),
             note = null,
         )
@@ -109,7 +109,7 @@ object WatchToIosSync {
             val checklistItems = smartRestore__start(ChecklistItemDb, json.jsonObject["checklist_items"]!!.jsonArray)
             val checklists = smartRestore__start(ChecklistDb, json.jsonObject["checklists"]!!.jsonArray)
             val shortcuts = smartRestore__start(ShortcutModel, json.jsonObject["shortcuts"]!!.jsonArray)
-            val intervals = smartRestore__start(IntervalModel, json.jsonObject["intervals"]!!.jsonArray, doNotUpdate = true)
+            val intervals = smartRestore__start(IntervalDb, json.jsonObject["intervals"]!!.jsonArray, doNotUpdate = true)
             val tasks = smartRestore__start(TaskModel, json.jsonObject["tasks"]!!.jsonArray)
             val taskFolders = smartRestore__start(TaskFolderModel, json.jsonObject["task_folders"]!!.jsonArray)
             val activities = smartRestore__start(ActivityDb, json.jsonObject["activities"]!!.jsonArray)
@@ -123,7 +123,7 @@ object WatchToIosSync {
             checklistItems()
 
             // To 100% ensure
-            val ifl = IntervalModel.getFirstAndLastNeedTransaction()
+            val ifl = IntervalDb.getFirstAndLastNeedTransaction()
             DI.fillLateInit(firstInterval = ifl[0], lastInterval = ifl[1])
         }
     }

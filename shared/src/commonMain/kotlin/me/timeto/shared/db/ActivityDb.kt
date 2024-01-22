@@ -107,7 +107,7 @@ data class ActivityDb(
             // Logging for safety. In case of recursive looping, I'll note in the log.
             zlog("ActivityModel__.syncTimeHints()")
 
-            val intervals = IntervalModel.getBetweenIdDesc(time() - 30 * 24 * 3600, time())
+            val intervals = IntervalDb.getBetweenIdDesc(time() - 30 * 24 * 3600, time())
             getAscSorted().forEach { activity ->
                 // Do not use "set" to save sorting by time
                 val hints = mutableListOf<Int>()
@@ -238,7 +238,7 @@ data class ActivityDb(
 
     suspend fun startInterval(
         timer: Int,
-    ): IntervalModel = IntervalModel.addWithValidation(
+    ): IntervalDb = IntervalDb.addWithValidation(
         timer = timer,
         activity = this,
         note = null,
@@ -288,7 +288,7 @@ data class ActivityDb(
             throw UIException("It's impossible to delete \"other\" activity")
 
         val other = getOther()
-        IntervalModel
+        IntervalDb
             .getAsc()
             .filter { id == it.activity_id }
             .forEach {

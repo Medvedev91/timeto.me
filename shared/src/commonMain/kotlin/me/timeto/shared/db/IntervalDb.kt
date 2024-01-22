@@ -11,7 +11,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
 
-data class IntervalModel(
+data class IntervalDb(
     val id: Int,
     val timer: Int,
     val note: String?,
@@ -40,7 +40,7 @@ data class IntervalModel(
         fun getAscFlow(limit: Int = Int.MAX_VALUE) = db.intervalQueries.getAsc(limit = limit.toLong())
             .asFlow().mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
 
-        suspend fun getDesc(limit: Int): List<IntervalModel> = dbIO {
+        suspend fun getDesc(limit: Int): List<IntervalDb> = dbIO {
             db.intervalQueries.getDesc(limit.toLong()).executeAsList().map { it.toModel() }
         }
 
@@ -67,11 +67,11 @@ data class IntervalModel(
         ///
         /// Select One
 
-        suspend fun getByIdOrNull(id: Int): IntervalModel? = dbIO {
+        suspend fun getByIdOrNull(id: Int): IntervalDb? = dbIO {
             db.intervalQueries.getById(id).executeAsOneOrNull()?.toModel()
         }
 
-        suspend fun getLastOneOrNull(): IntervalModel? = dbIO {
+        suspend fun getLastOneOrNull(): IntervalDb? = dbIO {
             db.intervalQueries.getDesc(limit = 1).executeAsOneOrNull()?.toModel()
         }
 
@@ -86,7 +86,7 @@ data class IntervalModel(
             activity: ActivityDb,
             note: String?,
             id: Int = time(),
-        ): IntervalModel = dbIO {
+        ): IntervalDb = dbIO {
             db.transactionWithResult {
                 addWithValidationNeedTransaction(
                     timer = timer,
@@ -102,7 +102,7 @@ data class IntervalModel(
             activity: ActivityDb,
             note: String?,
             id: Int = time(),
-        ): IntervalModel {
+        ): IntervalDb {
             db.intervalQueries.deleteById(id)
             val intervalSQ = IntervalSQ(
                 id = id,
@@ -203,6 +203,6 @@ data class IntervalModel(
     }
 }
 
-private fun IntervalSQ.toModel() = IntervalModel(
+private fun IntervalSQ.toModel() = IntervalDb(
     id = id, timer = timer, note = note, activity_id = activity_id
 )

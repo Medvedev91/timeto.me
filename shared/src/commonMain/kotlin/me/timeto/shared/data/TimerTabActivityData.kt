@@ -2,12 +2,12 @@ package me.timeto.shared.data
 
 import me.timeto.shared.*
 import me.timeto.shared.db.ActivityDb
-import me.timeto.shared.db.IntervalModel
+import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.vm.ui.TimerDataUI
 
 class TimerTabActivityData(
     activity: ActivityDb,
-    lastInterval: IntervalModel,
+    lastInterval: IntervalDb,
     isPurple: Boolean,
 ) {
 

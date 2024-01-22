@@ -1,11 +1,11 @@
 package me.timeto.shared.vm.ui
 
 import me.timeto.shared.*
-import me.timeto.shared.db.IntervalModel
+import me.timeto.shared.db.IntervalDb
 import kotlin.math.absoluteValue
 
 class TimerDataUI(
-    interval: IntervalModel,
+    interval: IntervalDb,
     isPurple: Boolean,
     defColor: ColorRgba,
 ) {
@@ -40,8 +40,8 @@ class TimerDataUI(
 
     fun restart() {
         launchExDefault {
-            val lastInterval = IntervalModel.getLastOneOrNull()!!
-            IntervalModel.addWithValidation(restartTimer, lastInterval.getActivityDI(), lastInterval.note)
+            val lastInterval = IntervalDb.getLastOneOrNull()!!
+            IntervalDb.addWithValidation(restartTimer, lastInterval.getActivityDI(), lastInterval.note)
         }
     }
 

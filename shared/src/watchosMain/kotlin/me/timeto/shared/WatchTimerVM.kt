@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.timeto.shared.db.IntervalModel
+import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.vm.__VM
 import me.timeto.shared.vm.ui.TimerDataUI
 
@@ -13,7 +13,7 @@ class WatchTimerVM : __VM<WatchTimerVM.State>() {
 
     data class State(
         val isPurple: Boolean,
-        val lastInterval: IntervalModel,
+        val lastInterval: IntervalDb,
         val idToUpdate: Int = 0,
     ) {
         val timerData = TimerDataUI(lastInterval, isPurple, ColorRgba.text)
@@ -28,7 +28,7 @@ class WatchTimerVM : __VM<WatchTimerVM.State>() {
 
     override fun onAppear() {
         val scope = scopeVM()
-        IntervalModel.getLastOneOrNullFlow()
+        IntervalDb.getLastOneOrNullFlow()
             .filterNotNull()
             .onEachExIn(scope) { newInterval ->
                 state.update { it.copy(isPurple = false, lastInterval = newInterval) }

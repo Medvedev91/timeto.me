@@ -17,15 +17,15 @@ object DI {
     var eventTemplatesSorted = listOf<EventTemplateDb>()
     var repeatings = listOf<RepeatingModel>()
 
-    lateinit var firstInterval: IntervalModel
-    lateinit var lastInterval: IntervalModel
+    lateinit var firstInterval: IntervalDb
+    lateinit var lastInterval: IntervalDb
 
     //
     // Late Init
 
     fun isLateInitInitialized() = ::firstInterval.isInitialized && ::lastInterval.isInitialized
 
-    fun fillLateInit(firstInterval: IntervalModel, lastInterval: IntervalModel) {
+    fun fillLateInit(firstInterval: IntervalDb, lastInterval: IntervalDb) {
         this.firstInterval = firstInterval
         this.lastInterval = lastInterval
     }
@@ -92,12 +92,12 @@ object DI {
         //
         // Late Init
 
-        IntervalModel.getAsc(limit = 1).firstOrNull()?.let { firstInterval = it }
-        IntervalModel.getAscFlow(limit = 1).filter { it.isNotEmpty() }
+        IntervalDb.getAsc(limit = 1).firstOrNull()?.let { firstInterval = it }
+        IntervalDb.getAscFlow(limit = 1).filter { it.isNotEmpty() }
             .onEachExIn(scope) { firstInterval = it.first() }
 
-        IntervalModel.getDesc(limit = 1).firstOrNull()?.let { lastInterval = it }
-        IntervalModel.getDescFlow(limit = 1).filter { it.isNotEmpty() }
+        IntervalDb.getDesc(limit = 1).firstOrNull()?.let { lastInterval = it }
+        IntervalDb.getDescFlow(limit = 1).filter { it.isNotEmpty() }
             .onEachExIn(scope) { lastInterval = it.first() }
     }
 }

@@ -4,7 +4,7 @@ package me.timeto.shared
 
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.serialization.json.*
-import me.timeto.shared.db.IntervalModel
+import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.TaskModel
 import platform.WatchConnectivity.WCSession
 import me.timeto.shared.db.ActivityDb
@@ -34,7 +34,7 @@ object IosToWatchSync {
          */
         val type = "${timeMls()}"
 
-        val jString = Backup.create(type, intervalsLimit = IntervalModel.HOT_INTERVALS_LIMIT)
+        val jString = Backup.create(type, intervalsLimit = IntervalDb.HOT_INTERVALS_LIMIT)
         // todo error?
         session.updateApplicationContext(mapOf("backup" to jString), error = null)
     }
@@ -58,7 +58,7 @@ object IosToWatchSync {
             val timer = jData["timer"]!!.jsonPrimitive.int
             val activity = ActivityDb.getByIdOrNull(jData["activity_id"]!!.jsonPrimitive.int)!!
             val note = jData["note"]?.jsonPrimitive?.contentOrNull
-            IntervalModel.addWithValidation(
+            IntervalDb.addWithValidation(
                 timer = timer,
                 activity = activity,
                 note = note,
@@ -80,7 +80,7 @@ object IosToWatchSync {
         }
 
         if (command == "pause") {
-            IntervalModel.pauseLastInterval()
+            IntervalDb.pauseLastInterval()
             onFinish("{}")
             return@launchExDefault
         }

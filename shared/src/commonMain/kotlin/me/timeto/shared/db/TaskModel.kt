@@ -118,7 +118,7 @@ data class TaskModel(
         intervalId: Int = time(),
     ) = dbIO {
         db.transaction {
-            IntervalModel.addWithValidationNeedTransaction(
+            IntervalDb.addWithValidationNeedTransaction(
                 timer = timer,
                 activity = activity,
                 note = text,

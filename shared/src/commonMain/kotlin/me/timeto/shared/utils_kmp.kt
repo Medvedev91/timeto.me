@@ -311,7 +311,7 @@ data class ScheduledNotificationData(
 }
 
 suspend fun rescheduleNotifications() {
-    val lastInterval = IntervalModel.getLastOneOrNull()!!
+    val lastInterval = IntervalDb.getLastOneOrNull()!!
     val inSeconds = (lastInterval.id + lastInterval.timer) - time()
     if (inSeconds <= 0)
         return

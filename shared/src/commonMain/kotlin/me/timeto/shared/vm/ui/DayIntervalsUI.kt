@@ -2,7 +2,7 @@ package me.timeto.shared.vm.ui
 
 import me.timeto.shared.*
 import me.timeto.shared.db.ActivityDb
-import me.timeto.shared.db.IntervalModel
+import me.timeto.shared.db.IntervalDb
 
 class DayIntervalsUI(
     val unixDay: Int,
@@ -46,13 +46,13 @@ class DayIntervalsUI(
             //
             // Preparing the intervals list
 
-            val intervalsAsc: MutableList<IntervalModel> = IntervalModel
+            val intervalsAsc: MutableList<IntervalDb> = IntervalDb
                 .getBetweenIdDesc(timeStart, timeFinish)
                 .reversed()
                 .toMutableList()
 
             // Previous interval
-            IntervalModel.getBetweenIdDesc(0, timeStart - 1, 1).firstOrNull()?.let { prevInterval ->
+            IntervalDb.getBetweenIdDesc(0, timeStart - 1, 1).firstOrNull()?.let { prevInterval ->
                 intervalsAsc.add(0, prevInterval) // 0 idx - to start
             }
 
@@ -71,7 +71,7 @@ class DayIntervalsUI(
                 )
                     return@map DayIntervalsUI(day, listOf(IntervalUI(null, dayTimeStart, 86_400)), barDayFormat)
 
-                val firstInterval: IntervalModel = intervalsAsc.first()
+                val firstInterval: IntervalDb = intervalsAsc.first()
 
                 val daySections = mutableListOf<IntervalUI>()
                 val dayIntervals = intervalsAsc.filter { it.id >= dayTimeStart && it.id < dayTimeFinish }

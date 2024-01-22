@@ -3,14 +3,14 @@ package me.timeto.shared
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.data.TimerTabActivityData
 import me.timeto.shared.db.ActivityDb
-import me.timeto.shared.db.IntervalModel
+import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.vm.__VM
 
 class WatchTabTimerVM : __VM<WatchTabTimerVM.State>() {
 
     class ActivityUI(
         val activity: ActivityDb,
-        val lastInterval: IntervalModel,
+        val lastInterval: IntervalDb,
         val isPurple: Boolean,
     ) {
 
@@ -29,7 +29,7 @@ class WatchTabTimerVM : __VM<WatchTabTimerVM.State>() {
 
     data class State(
         val activities: List<ActivityDb>,
-        val lastInterval: IntervalModel,
+        val lastInterval: IntervalDb,
         val isPurple: Boolean,
     ) {
         val activitiesUI = activities.toUiList(lastInterval, isPurple)
@@ -49,7 +49,7 @@ class WatchTabTimerVM : __VM<WatchTabTimerVM.State>() {
             .onEachExIn(scope) { activities ->
                 state.update { it.copy(activities = activities) }
             }
-        IntervalModel.getLastOneOrNullFlow()
+        IntervalDb.getLastOneOrNullFlow()
             .filterNotNull()
             .onEachExIn(scope) { interval ->
                 state.update { it.copy(lastInterval = interval, isPurple = false) }
@@ -58,7 +58,7 @@ class WatchTabTimerVM : __VM<WatchTabTimerVM.State>() {
 }
 
 private fun List<ActivityDb>.toUiList(
-    lastInterval: IntervalModel,
+    lastInterval: IntervalDb,
     isPurple: Boolean,
 ): List<WatchTabTimerVM.ActivityUI> {
     // On top the active activity :)

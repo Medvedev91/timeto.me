@@ -12,7 +12,7 @@ import me.timeto.shared.vm.ui.TimerDataUI
 class HomeVM : __VM<HomeVM.State>() {
 
     data class State(
-        val interval: IntervalModel,
+        val interval: IntervalDb,
         val allChecklistItems: List<ChecklistItemDb>,
         val isPurple: Boolean,
         val tasksToday: List<TaskModel>,
@@ -156,7 +156,7 @@ class HomeVM : __VM<HomeVM.State>() {
 
     override fun onAppear() {
         val scope = scopeVM()
-        IntervalModel.getLastOneOrNullFlow()
+        IntervalDb.getLastOneOrNullFlow()
             .filterNotNull()
             .onEachExIn(scope) { interval ->
                 state.update {
@@ -182,7 +182,7 @@ class HomeVM : __VM<HomeVM.State>() {
 
         ////
 
-        IntervalModel.anyChangeFlow()
+        IntervalDb.anyChangeFlow()
             .onEachExIn(scope) {
                 upTodayIntervalsUI()
             }
@@ -220,7 +220,7 @@ class HomeVM : __VM<HomeVM.State>() {
 
     fun pauseTask() {
         launchExDefault {
-            IntervalModel.pauseLastInterval()
+            IntervalDb.pauseLastInterval()
         }
     }
 

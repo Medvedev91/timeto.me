@@ -125,7 +125,7 @@ private fun listenForSyncWatch() = launchExDefault {
         NoteModel.anyChangeFlow(),
         TaskFolderModel.anyChangeFlow(),
         TaskModel.anyChangeFlow(),
-        IntervalModel.anyChangeFlow(),
+        IntervalDb.anyChangeFlow(),
         ChecklistDb.anyChangeFlow(),
         ChecklistItemDb.anyChangeFlow(),
         ShortcutModel.anyChangeFlow(),
