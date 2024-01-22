@@ -9,13 +9,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.timeto.app.*
-import me.timeto.shared.db.NoteModel
+import me.timeto.shared.db.NoteDb
 import me.timeto.shared.vm.NoteSheetVM
 
 @Composable
 fun NoteSheet(
     layer: WrapperView.Layer,
-    initNote: NoteModel, // TRICK Can change, use VM!
+    initNote: NoteDb, // TRICK Can change, use VM!
 ) {
 
     val (_, state) = rememberVM(initNote) { NoteSheetVM(initNote) }

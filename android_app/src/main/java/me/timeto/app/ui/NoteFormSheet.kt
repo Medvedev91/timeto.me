@@ -11,13 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import me.timeto.app.*
-import me.timeto.shared.db.NoteModel
+import me.timeto.shared.db.NoteDb
 import me.timeto.shared.vm.NoteFormSheetVM
 
 @Composable
 fun NoteFormSheet(
     layer: WrapperView.Layer,
-    note: NoteModel?,
+    note: NoteDb?,
     onDelete: () -> Unit,
 ) {
 

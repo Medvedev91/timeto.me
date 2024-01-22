@@ -26,7 +26,7 @@ object Backup {
             "repeatings" to RepeatingModel.getAsc().modelsToJsonArray(),
             "events" to EventDb.getAscByTime().modelsToJsonArray(),
             "event_templates" to EventTemplateDb.selectAscSorted().modelsToJsonArray(),
-            "notes" to NoteModel.getAsc().modelsToJsonArray(),
+            "notes" to NoteDb.getAsc().modelsToJsonArray(),
             "kv" to KvDb.getAll().modelsToJsonArray(),
         )
         return JsonObject(map).toString()
@@ -63,7 +63,7 @@ object Backup {
             json.mapJsonArray("repeatings") { RepeatingModel.backupable__restore(it) }
             json.mapJsonArray("events") { EventDb.backupable__restore(it) }
             json.mapJsonArray("event_templates") { EventTemplateDb.backupable__restore(it) }
-            json.mapJsonArray("notes") { NoteModel.backupable__restore(it) }
+            json.mapJsonArray("notes") { NoteDb.backupable__restore(it) }
             json.mapJsonArray("kv") { KvDb.backupable__restore(it) }
         }
     }

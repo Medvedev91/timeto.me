@@ -122,7 +122,7 @@ private fun listenForSyncWatch() = launchExDefault {
     initKmmDeferred.join()
     listOf<Flow<*>>(
         ActivityDb.anyChangeFlow(),
-        NoteModel.anyChangeFlow(),
+        NoteDb.anyChangeFlow(),
         TaskFolderModel.anyChangeFlow(),
         TaskModel.anyChangeFlow(),
         IntervalDb.anyChangeFlow(),

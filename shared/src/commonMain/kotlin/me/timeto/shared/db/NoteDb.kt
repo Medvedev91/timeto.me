@@ -12,7 +12,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
 
-data class NoteModel(
+data class NoteDb(
     val id: Int,
     val sort: Int,
     val text: String,
@@ -22,11 +22,11 @@ data class NoteModel(
 
         fun anyChangeFlow() = db.noteQueries.anyChange().asFlow()
 
-        suspend fun getAsc(): List<NoteModel> = dbIO {
+        suspend fun getAsc(): List<NoteDb> = dbIO {
             db.noteQueries.getAsc().toModels()
         }
 
-        fun getAscFlow(): Flow<List<NoteModel>> = db.noteQueries.getAsc().asFlow()
+        fun getAscFlow(): Flow<List<NoteDb>> = db.noteQueries.getAsc().asFlow()
             .mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
 
         suspend fun addWithValidation(
@@ -110,18 +110,18 @@ data class NoteModel(
 
 ///
 
-private fun NoteSQ.toModel() = NoteModel(
+private fun NoteSQ.toModel() = NoteDb(
     id = id, sort = sort, text = text
 )
 
-private fun Query<NoteSQ>.toModels(): List<NoteModel> =
+private fun Query<NoteSQ>.toModels(): List<NoteDb> =
     executeAsList().map { it.toModel() }
 
 ///
 
 private fun textValidation(
     text: String,
-    otherNotes: List<NoteModel>,
+    otherNotes: List<NoteDb>,
 ): String {
 
     val resText = text.trim()

@@ -1,15 +1,15 @@
 package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
-import me.timeto.shared.db.NoteModel
+import me.timeto.shared.db.NoteDb
 import me.timeto.shared.onEachExIn
 
 class NoteSheetVM(
-    val note: NoteModel,
+    val note: NoteDb,
 ) : __VM<NoteSheetVM.State>() {
 
     data class State(
-        val note: NoteModel,
+        val note: NoteDb,
     )
 
     override val state = MutableStateFlow(
@@ -20,7 +20,7 @@ class NoteSheetVM(
 
     override fun onAppear() {
         val scope = scopeVM()
-        NoteModel.getAscFlow().onEachExIn(scope) { notes ->
+        NoteDb.getAscFlow().onEachExIn(scope) { notes ->
             // Null on deletion
             val newNote = notes.firstOrNull { it.id == note.id }
             if (newNote != null)

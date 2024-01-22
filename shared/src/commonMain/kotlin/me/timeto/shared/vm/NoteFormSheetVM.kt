@@ -2,14 +2,14 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
-import me.timeto.shared.db.NoteModel
+import me.timeto.shared.db.NoteDb
 
 class NoteFormSheetVM(
-    val note: NoteModel?,
+    val note: NoteDb?,
 ) : __VM<NoteFormSheetVM.State>() {
 
     data class State(
-        val note: NoteModel?,
+        val note: NoteDb?,
         val inputTextValue: String,
     ) {
 
@@ -60,7 +60,7 @@ class NoteFormSheetVM(
                     newText = text,
                 )
             else
-                NoteModel.addWithValidation(
+                NoteDb.addWithValidation(
                     text = text,
                 )
             onSuccess()
