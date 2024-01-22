@@ -22,7 +22,7 @@ object Backup {
             "tasks" to TaskModel.getAsc().modelsToJsonArray(),
             "checklists" to ChecklistDb.getAsc().modelsToJsonArray(),
             "checklist_items" to ChecklistItemDb.getAsc().modelsToJsonArray(),
-            "shortcuts" to ShortcutModel.getAsc().modelsToJsonArray(),
+            "shortcuts" to ShortcutDb.getAsc().modelsToJsonArray(),
             "repeatings" to RepeatingDb.getAsc().modelsToJsonArray(),
             "events" to EventDb.getAscByTime().modelsToJsonArray(),
             "event_templates" to EventTemplateDb.selectAscSorted().modelsToJsonArray(),
@@ -59,7 +59,7 @@ object Backup {
             json.mapJsonArray("tasks") { TaskModel.backupable__restore(it) }
             json.mapJsonArray("checklists") { ChecklistDb.backupable__restore(it) }
             json.mapJsonArray("checklist_items") { ChecklistItemDb.backupable__restore(it) }
-            json.mapJsonArray("shortcuts") { ShortcutModel.backupable__restore(it) }
+            json.mapJsonArray("shortcuts") { ShortcutDb.backupable__restore(it) }
             json.mapJsonArray("repeatings") { RepeatingDb.backupable__restore(it) }
             json.mapJsonArray("events") { EventDb.backupable__restore(it) }
             json.mapJsonArray("event_templates") { EventTemplateDb.backupable__restore(it) }

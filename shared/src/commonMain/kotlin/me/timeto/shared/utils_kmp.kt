@@ -370,7 +370,7 @@ fun showUiConfirmation(data: UIConfirmationData) {
 
 //
 
-val uiShortcutFlow = MutableSharedFlow<ShortcutModel>()
+val uiShortcutFlow = MutableSharedFlow<ShortcutDb>()
 
 val uiChecklistFlow = MutableSharedFlow<ChecklistDb>()
 

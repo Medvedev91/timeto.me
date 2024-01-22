@@ -9,14 +9,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.timeto.app.c
 import me.timeto.app.rememberVM
-import me.timeto.shared.db.ShortcutModel
+import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.vm.ShortcutsPickerSheetVM
 
 @Composable
 fun ShortcutsPickerSheet(
     layer: WrapperView.Layer,
-    selectedShortcuts: List<ShortcutModel>,
-    onPick: (List<ShortcutModel>) -> Unit,
+    selectedShortcuts: List<ShortcutDb>,
+    onPick: (List<ShortcutDb>) -> Unit,
 ) {
 
     val (vm, state) = rememberVM { ShortcutsPickerSheetVM(selectedShortcuts) }

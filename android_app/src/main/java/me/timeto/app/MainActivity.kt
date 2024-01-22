@@ -25,7 +25,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import me.timeto.app.ui.*
 import kotlinx.coroutines.delay
 import me.timeto.shared.*
-import me.timeto.shared.db.ShortcutModel
+import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.vm.AppVM
 
 var statusBarHeight = 0.dp // todo remove?
@@ -165,8 +165,8 @@ private fun UIListeners() {
         uiShortcutFlow.onEachExIn(this) { shortcut ->
             try {
                 val uri: String = shortcut.uri
-                if (uri.startsWith(ShortcutModel.ANDROID_PACKAGE_PREFIX)) {
-                    val androidPackage = uri.replaceFirst(ShortcutModel.ANDROID_PACKAGE_PREFIX, "")
+                if (uri.startsWith(ShortcutDb.ANDROID_PACKAGE_PREFIX)) {
+                    val androidPackage = uri.replaceFirst(ShortcutDb.ANDROID_PACKAGE_PREFIX, "")
                     val intent: Intent? = context.packageManager.getLaunchIntentForPackage(androidPackage)
                     if (intent == null)
                         showUiAlert("App package not found")

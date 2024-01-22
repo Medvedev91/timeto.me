@@ -2,10 +2,10 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.DI
-import me.timeto.shared.db.ShortcutModel
+import me.timeto.shared.db.ShortcutDb
 
 class ShortcutsPickerSheetVM(
-    selectedShortcuts: List<ShortcutModel>,
+    selectedShortcuts: List<ShortcutDb>,
 ) : __VM<ShortcutsPickerSheetVM.State>() {
 
     data class State(
@@ -16,7 +16,7 @@ class ShortcutsPickerSheetVM(
     }
 
     data class ShortcutUI(
-        val shortcut: ShortcutModel,
+        val shortcut: ShortcutDb,
         val isSelected: Boolean,
     ) {
         val text = shortcut.name

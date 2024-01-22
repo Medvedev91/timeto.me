@@ -20,14 +20,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
-import me.timeto.shared.db.ShortcutModel
+import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.vm.ShortcutFormSheetVM
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ShortcutFormSheet(
     layer: WrapperView.Layer,
-    editedShortcut: ShortcutModel?,
+    editedShortcut: ShortcutDb?,
 ) {
 
     val (vm, state) = rememberVM(editedShortcut) { ShortcutFormSheetVM(editedShortcut) }

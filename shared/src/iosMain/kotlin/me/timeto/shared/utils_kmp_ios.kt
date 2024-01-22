@@ -128,7 +128,7 @@ private fun listenForSyncWatch() = launchExDefault {
         IntervalDb.anyChangeFlow(),
         ChecklistDb.anyChangeFlow(),
         ChecklistItemDb.anyChangeFlow(),
-        ShortcutModel.anyChangeFlow(),
+        ShortcutDb.anyChangeFlow(),
     ).forEach { diFlow ->
         var isFirst = true
         diFlow.onEachExIn(this) {

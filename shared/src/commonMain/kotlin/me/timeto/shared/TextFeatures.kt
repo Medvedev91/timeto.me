@@ -2,13 +2,13 @@ package me.timeto.shared
 
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.ChecklistDb
-import me.timeto.shared.db.ShortcutModel
+import me.timeto.shared.db.ShortcutDb
 import kotlin.math.absoluteValue
 
 data class TextFeatures(
     val textNoFeatures: String,
     val checklists: List<ChecklistDb>,
-    val shortcuts: List<ShortcutModel>,
+    val shortcuts: List<ShortcutDb>,
     val fromRepeating: FromRepeating?,
     val fromEvent: FromEvent?,
     val activity: ActivityDb?,
@@ -92,7 +92,7 @@ data class TextFeatures(
         ) : Trigger("#c${checklist.id}", checklist.name, "✅", ColorRgba.green)
 
         class Shortcut(
-            val shortcut: ShortcutModel
+            val shortcut: ShortcutDb
         ) : Trigger("#s${shortcut.id}", shortcut.name, "↗️", ColorRgba.red)
     }
 
@@ -192,7 +192,7 @@ private fun parseLocal(initText: String): TextFeatures {
         .filterNotNull()
         .toList()
 
-    val shortcuts: List<ShortcutModel> = shortcutRegex
+    val shortcuts: List<ShortcutDb> = shortcutRegex
         .findAll(textNoFeatures)
         .map { match ->
             val id = match.groupValues[1].toInt()

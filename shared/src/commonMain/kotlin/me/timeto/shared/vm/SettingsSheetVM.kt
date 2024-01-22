@@ -6,7 +6,7 @@ import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.KvDb
 import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
 import me.timeto.shared.db.NoteDb
-import me.timeto.shared.db.ShortcutModel
+import me.timeto.shared.db.ShortcutDb
 
 class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
 
@@ -17,7 +17,7 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
 
     data class State(
         val checklists: List<ChecklistDb>,
-        val shortcuts: List<ShortcutModel>,
+        val shortcuts: List<ShortcutDb>,
         val notes: List<NoteDb>,
         val dayStartSeconds: Int,
         val feedbackSubject: String,
@@ -64,7 +64,7 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
         val scope = scopeVM()
         ChecklistDb.getAscFlow()
             .onEachExIn(scope) { checklists -> state.update { it.copy(checklists = checklists) } }
-        ShortcutModel.getAscFlow()
+        ShortcutDb.getAscFlow()
             .onEachExIn(scope) { shortcuts -> state.update { it.copy(shortcuts = shortcuts) } }
         NoteDb.getAscFlow()
             .onEachExIn(scope) { notes -> state.update { it.copy(notes = notes) } }

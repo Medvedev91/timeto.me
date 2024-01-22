@@ -11,7 +11,7 @@ import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
 import kotlin.math.max
 
-data class ShortcutModel(
+data class ShortcutDb(
     val id: Int,
     val name: String,
     val uri: String,
@@ -112,7 +112,7 @@ data class ShortcutModel(
     }
 
     fun performUI() {
-        launchExDefault { uiShortcutFlow.emit(this@ShortcutModel) }
+        launchExDefault { uiShortcutFlow.emit(this@ShortcutDb) }
     }
 
     suspend fun upWithValidation(name: String, uri: String) = dbIO {
@@ -146,6 +146,6 @@ data class ShortcutModel(
     }
 }
 
-private fun ShortcutSQ.toModel() = ShortcutModel(
+private fun ShortcutSQ.toModel() = ShortcutDb(
     id = id, name = name, uri = uri
 )

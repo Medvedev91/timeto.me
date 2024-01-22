@@ -2,12 +2,12 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.UIException
-import me.timeto.shared.db.ShortcutModel
+import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.launchEx
 import me.timeto.shared.showUiAlert
 
 class ShortcutFormSheetVM(
-    val shortcut: ShortcutModel?
+    val shortcut: ShortcutDb?
 ) : __VM<ShortcutFormSheetVM.State>() {
 
     data class State(
@@ -45,7 +45,7 @@ class ShortcutFormSheetVM(
     }
 
     fun setAndroidPackage(androidPackage: String) = state.update {
-        it.copy(inputUriValue = "${ShortcutModel.ANDROID_PACKAGE_PREFIX}$androidPackage")
+        it.copy(inputUriValue = "${ShortcutDb.ANDROID_PACKAGE_PREFIX}$androidPackage")
     }
 
     fun save(
@@ -58,7 +58,7 @@ class ShortcutFormSheetVM(
                     uri = state.value.inputUriValue,
                 )
             else
-                ShortcutModel.addWithValidation(
+                ShortcutDb.addWithValidation(
                     name = state.value.inputNameValue,
                     uri = state.value.inputUriValue,
                 )

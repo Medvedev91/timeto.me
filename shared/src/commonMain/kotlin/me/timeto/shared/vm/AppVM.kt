@@ -106,7 +106,7 @@ private fun performShortcut(
     if ((interval.id + secondsLimit) < time())
         return
 
-    val shortcut: ShortcutModel? =
+    val shortcut: ShortcutDb? =
         interval.note?.textFeatures()?.shortcuts?.firstOrNull()
         ?: interval.getActivityDI().name.textFeatures().shortcuts.firstOrNull()
 
