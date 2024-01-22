@@ -320,9 +320,9 @@ class DropItem__Calendar: DropItem {
 
 class DropItem__Folder: DropItem {
 
-    let folder: TaskFolderModel
+    let folder: TaskFolderDb
 
-    init(_ folder: TaskFolderModel) {
+    init(_ folder: TaskFolderDb) {
         self.folder = folder
         super.init(name: folder.name, square: DropItem.Square())
     }
@@ -338,7 +338,7 @@ protocol TabTasksView_Section {
 }
 
 struct TabTasksView_Section_Folder: TabTasksView_Section {
-    let folder: TaskFolderModel
+    let folder: TaskFolderDb
 }
 
 struct TabTasksView_Section_Repeating: TabTasksView_Section {

@@ -17,7 +17,7 @@ struct RepeatingsFormSheet: View {
 
     init(
             isPresented: Binding<Bool>,
-            editedRepeating: RepeatingModel?,
+            editedRepeating: RepeatingDb?,
             onSave: @escaping () -> ()
     ) {
         _isPresented = isPresented
@@ -195,7 +195,7 @@ struct RepeatingsFormSheet: View {
                                                 .padding(.bottom, 16)
                                                 .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL - 1)
                                     } else if periodIndex == 3 {
-                                        let dayNumbers: [Int] = Array(1..<(RepeatingModel.companion.MAX_DAY_OF_MONTH.toInt() + 1))
+                                        let dayNumbers: [Int] = Array(1..<(RepeatingDb.companion.MAX_DAY_OF_MONTH.toInt() + 1))
                                         VStack(alignment: .leading, spacing: 8) {
                                             ForEach(dayNumbers.chunked(7), id: \.self) { chunk in
                                                 HStack(spacing: 8) {
@@ -210,14 +210,14 @@ struct RepeatingsFormSheet: View {
                                                     }
                                                 }
                                             }
-                                            let isDaySelected = state.selectedDaysOfMonth.contains(RepeatingModel.companion.LAST_DAY_OF_MONTH.toInt().toKotlinInt())
+                                            let isDaySelected = state.selectedDaysOfMonth.contains(RepeatingDb.companion.LAST_DAY_OF_MONTH.toInt().toKotlinInt())
                                             DayOfMonthItemView(
                                                     text: "Last Day of the Month",
                                                     isDaySelected: isDaySelected,
                                                     width: .infinity,
                                                     hPaddings: 10
                                             ) {
-                                                vm.toggleDayOfMonth(day: RepeatingModel.companion.LAST_DAY_OF_MONTH)
+                                                vm.toggleDayOfMonth(day: RepeatingDb.companion.LAST_DAY_OF_MONTH)
                                             }
                                         }
                                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
@@ -324,7 +324,7 @@ private struct DayOfMonthItemView: View {
 private struct AddDayOfYearSheet: View {
 
     @Binding var isPresented: Bool
-    let onSelect: (RepeatingModelPeriodDaysOfYear.MonthDayItem) -> Void
+    let onSelect: (RepeatingDbPeriodDaysOfYear.MonthDayItem) -> Void
 
     @State private var selectedMonthId = 1.toInt32()
     @State private var selectedDayId = 1.toInt32()
@@ -344,7 +344,7 @@ private struct AddDayOfYearSheet: View {
             ) {
                 isPresented = false
                 onSelect(
-                        RepeatingModelPeriodDaysOfYear.MonthDayItem(
+                        RepeatingDbPeriodDaysOfYear.MonthDayItem(
                                 monthId: selectedMonthId,
                                 dayId: selectedDayId
                         )
@@ -363,7 +363,7 @@ private struct AddDayOfYearSheet: View {
                         "",
                         selection: $selectedMonthId
                 ) {
-                    ForEach(RepeatingModelPeriodDaysOfYear.companion.months, id: \.id) { month in
+                    ForEach(RepeatingDbPeriodDaysOfYear.companion.months, id: \.id) { month in
                         Text(month.getName())
                                 .tag(month.id)
                     }
@@ -403,7 +403,7 @@ private struct AddDayOfYearSheet: View {
     }
 
     private func upPickerDays() {
-        let month = RepeatingModelPeriodDaysOfYear.companion.months.first {
+        let month = RepeatingDbPeriodDaysOfYear.companion.months.first {
             $0.id == selectedMonthId
         }!
         pickerDayIds = Array(month.days.first...month.days.last)

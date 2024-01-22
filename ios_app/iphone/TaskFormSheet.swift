@@ -7,7 +7,7 @@ struct TaskFormSheet: View {
     @Binding private var isPresented: Bool
 
     init(
-            task: TaskModel?,
+            task: TaskDb?,
             isPresented: Binding<Bool>
     ) {
         _vm = State(initialValue: TaskFormSheetVM(task: task))

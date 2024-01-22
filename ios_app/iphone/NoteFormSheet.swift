@@ -11,7 +11,7 @@ struct NoteFormSheet: View {
 
     init(
             isPresented: Binding<Bool>,
-            note: NoteModel?,
+            note: NoteDb?,
             onDelete: @escaping () -> Void
     ) {
         _isPresented = isPresented

@@ -6,8 +6,8 @@ import shared
 ///
 struct W_TickerDialog: View {
 
-    var activity: ActivityModel
-    let task: TaskModel?
+    var activity: ActivityDb
+    let task: TaskDb?
     private let preAdd: () -> Void
 
     // Int32 для соответствия типа с TimerPickerItem.seconds
@@ -15,8 +15,8 @@ struct W_TickerDialog: View {
     private let timeItems: [TimerPickerItem]
 
     init(
-            activity: ActivityModel,
-            task: TaskModel?,
+            activity: ActivityDb,
+            task: TaskDb?,
             preAdd: @escaping () -> Void
     ) {
         self.activity = activity

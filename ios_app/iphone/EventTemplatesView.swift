@@ -46,7 +46,7 @@ struct EventTemplatesView: View {
                                                 nativeSheet.show { isPresented in
                                                     EventTemplateFormSheet(
                                                             isPresented: isPresented,
-                                                            eventTemplateDB: templateUI.templateDB
+                                                            eventTemplateDb: templateUI.templateDB
                                                     )
                                                 }
                                             }
@@ -64,7 +64,7 @@ struct EventTemplatesView: View {
                                 nativeSheet.show { isPresented in
                                     EventTemplateFormSheet(
                                             isPresented: isPresented,
-                                            eventTemplateDB: nil
+                                            eventTemplateDb: nil
                                     )
                                 }
                             },

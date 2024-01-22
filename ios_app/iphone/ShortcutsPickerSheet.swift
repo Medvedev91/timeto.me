@@ -4,15 +4,15 @@ import shared
 struct ShortcutsPickerSheet: View {
 
     @Binding private var isPresented: Bool
-    private let onPick: ([ShortcutModel]) -> Void
+    private let onPick: ([ShortcutDb]) -> Void
 
     @State private var vm: ShortcutsPickerSheetVM
     @State private var sheetHeaderScroll = 0
 
     init(
             isPresented: Binding<Bool>,
-            selectedShortcuts: [ShortcutModel],
-            onPick: @escaping ([ShortcutModel]) -> Void
+            selectedShortcuts: [ShortcutDb],
+            onPick: @escaping ([ShortcutDb]) -> Void
     ) {
         self.onPick = onPick
         _isPresented = isPresented

@@ -18,7 +18,7 @@ struct ActivityFormSheet: View {
 
     init(
             isPresented: Binding<Bool>,
-            activity: ActivityModel?,
+            activity: ActivityDb?,
             onSave: @escaping () -> Void
     ) {
         self.onSave = onSave
@@ -213,7 +213,7 @@ struct ActivityFormSheet: View {
 
                     VStack {
 
-                        let hintsTypeName: [(title: String, type: ActivityModel__Data.TimerHintsHINT_TYPE)] = [
+                        let hintsTypeName: [(title: String, type: ActivityDb__Data.TimerHintsHINT_TYPE)] = [
                             ("By History", .history),
                             ("Custom", .custom),
                         ]

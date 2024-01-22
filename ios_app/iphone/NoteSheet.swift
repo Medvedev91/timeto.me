@@ -10,7 +10,7 @@ struct NoteSheet: View {
 
     init(
             isPresented: Binding<Bool>,
-            initNote: NoteModel
+            initNote: NoteDb
     ) {
         _isPresented = isPresented
         _vm = State(initialValue: NoteSheetVM(note: initNote))

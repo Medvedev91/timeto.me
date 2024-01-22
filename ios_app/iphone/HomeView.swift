@@ -38,11 +38,11 @@ struct HomeView: View {
 
     static var lastInstance: HomeView? = nil
 
-    @State private var triggersChecklist: ChecklistModel?
+    @State private var triggersChecklist: ChecklistDb?
     @State private var isTriggersChecklistPresented = false
 
-    private let shortcutPublisher: AnyPublisher<ShortcutModel, Never> = Utils_kmpKt.uiShortcutFlow.toPublisher()
-    private let checklistPublisher: AnyPublisher<ChecklistModel, Never> = Utils_kmpKt.uiChecklistFlow.toPublisher()
+    private let shortcutPublisher: AnyPublisher<ShortcutDb, Never> = Utils_kmpKt.uiShortcutFlow.toPublisher()
+    private let checklistPublisher: AnyPublisher<ChecklistDb, Never> = Utils_kmpKt.uiChecklistFlow.toPublisher()
 
     var body: some View {
 

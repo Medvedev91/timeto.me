@@ -88,7 +88,7 @@ struct FoldersSettingsSheet: View {
 private struct FoldersSettingsSheet__FolderItem: View {
 
     let vm: FoldersSettingsVM
-    let folder: TaskFolderModel
+    let folder: TaskFolderDb
 
     @State private var isEditPresented = false
 

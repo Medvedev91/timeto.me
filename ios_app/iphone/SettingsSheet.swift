@@ -494,7 +494,7 @@ struct SettingsSheet: View {
 // todo rename
 struct ToolsView_ChecklistView: View {
 
-    let checklist: ChecklistModel
+    let checklist: ChecklistDb
 
     @State private var isItemsPresented = false
     @State private var isEditPresented = false
@@ -527,7 +527,7 @@ struct ToolsView_ChecklistView: View {
 
 private struct NoteListItemView: View {
 
-    let note: NoteModel
+    let note: NoteDb
 
     @EnvironmentObject private var nativeSheet: NativeSheet
 
@@ -548,7 +548,7 @@ private struct NoteListItemView: View {
 // todo rename
 struct ToolsView_ShortcutView: View {
 
-    let shortcut: ShortcutModel
+    let shortcut: ShortcutDb
 
     @State private var isEditPresented = false
 

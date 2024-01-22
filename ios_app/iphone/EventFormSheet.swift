@@ -4,7 +4,7 @@ import shared
 extension NativeSheet {
 
     func EventFormSheet__show(
-            editedEvent: EventModel?,
+            editedEvent: EventDb?,
             defText: String? = nil,
             defTime: Int? = nil,
             onSave: @escaping () -> Void
@@ -35,7 +35,7 @@ private struct EventFormSheet: View {
 
     init(
             isPresented: Binding<Bool>,
-            editedEvent: EventModel?,
+            editedEvent: EventDb?,
             defText: String? = nil,
             defTime: Int? = nil,
             onSave: @escaping () -> Void = {}

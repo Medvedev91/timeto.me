@@ -13,11 +13,11 @@ struct EventTemplateFormSheet: View {
 
     init(
             isPresented: Binding<Bool>,
-            eventTemplateDB: EventTemplateDB?
+            eventTemplateDb: EventTemplateDb?
     ) {
         _isPresented = isPresented
         _vm = State(initialValue: EventTemplateFormSheetVM(
-                eventTemplateDB: eventTemplateDB
+                eventTemplateDB: eventTemplateDb
         ))
     }
 

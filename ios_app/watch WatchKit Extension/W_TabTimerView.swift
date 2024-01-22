@@ -57,7 +57,7 @@ struct W_TabTimerView: View {
     struct ActivityView: View {
 
         var activityUI: WatchTabTimerVM.ActivityUI
-        var lastInterval: IntervalModel
+        var lastInterval: IntervalDb
         @State private var isTickerPresented = false
 
         let defBgColor = Color(rgba: [34, 34, 35])

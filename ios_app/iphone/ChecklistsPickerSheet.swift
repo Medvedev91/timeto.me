@@ -4,15 +4,15 @@ import shared
 struct ChecklistsPickerSheet: View {
 
     @Binding private var isPresented: Bool
-    private let onPick: ([ChecklistModel]) -> Void
+    private let onPick: ([ChecklistDb]) -> Void
 
     @State private var vm: ChecklistsPickerSheetVM
     @State private var sheetHeaderScroll = 0
 
     init(
             isPresented: Binding<Bool>,
-            selectedChecklists: [ChecklistModel],
-            onPick: @escaping ([ChecklistModel]) -> Void
+            selectedChecklists: [ChecklistDb],
+            onPick: @escaping ([ChecklistDb]) -> Void
     ) {
         self.onPick = onPick
         _isPresented = isPresented

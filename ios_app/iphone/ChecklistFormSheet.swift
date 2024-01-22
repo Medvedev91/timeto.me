@@ -9,7 +9,7 @@ struct ChecklistFormSheet: View {
 
     init(
             isPresented: Binding<Bool>,
-            checklist: ChecklistModel?
+            checklist: ChecklistDb?
     ) {
         _isPresented = isPresented
         vm = ChecklistFormVM(checklist: checklist)

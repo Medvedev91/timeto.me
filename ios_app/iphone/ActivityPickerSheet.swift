@@ -4,7 +4,7 @@ import shared
 struct ActivityPickerSheet: View {
 
     @Binding var isPresented: Bool
-    let onPick: (ActivityModel) -> Void
+    let onPick: (ActivityDb) -> Void
 
     @State private var vm = ActivityPickerSheetVM()
     @State private var sheetHeaderScroll = 0

@@ -4,7 +4,7 @@ import shared
 struct GoalPickerSheet: View {
 
     @Binding var isPresented: Bool
-    let onPick: (ActivityModel.Goal) -> Void
+    let onPick: (ActivityDb.Goal) -> Void
 
     ///
 

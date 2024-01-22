@@ -3,7 +3,7 @@ import shared
 
 struct TimerHintsView: View {
 
-    let timerHintsUI: [ActivityModel__Data.TimerHintsTimerHintUI]
+    let timerHintsUI: [ActivityDb__Data.TimerHintsTimerHintUI]
     let hintHPadding: CGFloat
     let fontSize: CGFloat
     let fontWeight: Font.Weight

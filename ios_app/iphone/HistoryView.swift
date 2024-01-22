@@ -62,7 +62,7 @@ struct HistoryView: View {
                                             .id("day_" + section.day.toString())
                                             .flippedUpsideDown()
                             ) {
-                                ForEach(section.intervals.reversed(), id: \.id) { (interval: IntervalModel) in
+                                ForEach(section.intervals.reversed(), id: \.id) { (interval: IntervalDb) in
 
                                     let intervalUI = HistoryVM.IntervalUI.companion.build(interval: interval, section: section)
 

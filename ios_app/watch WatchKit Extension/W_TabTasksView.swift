@@ -73,10 +73,10 @@ struct W_TabTasksView: View {
 
                 @State private var vm: WatchTaskSheetVM
 
-                let task: TaskModel
+                let task: TaskDb
                 @Binding var isPresented: Bool
 
-                init(task: TaskModel, isPresented: Binding<Bool>) {
+                init(task: TaskDb, isPresented: Binding<Bool>) {
                     self.task = task
                     _isPresented = isPresented
                     _vm = State(initialValue: WatchTaskSheetVM(task: task))
@@ -100,7 +100,7 @@ struct W_TabTasksView: View {
 
                     let taskSheetDialog: TaskSheetDialog
                     let activityUI: WatchTaskSheetVM.ActivityUI
-                    var task: TaskModel
+                    var task: TaskDb
                     @State private var isTickerPresented = false
 
                     var body: some View {

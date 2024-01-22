@@ -9,7 +9,7 @@ struct ShortcutFormSheet: View {
 
     init(
             isPresented: Binding<Bool>,
-            editedShortcut: ShortcutModel?
+            editedShortcut: ShortcutDb?
     ) {
         _isPresented = isPresented
         vm = ShortcutFormSheetVM(shortcut: editedShortcut)

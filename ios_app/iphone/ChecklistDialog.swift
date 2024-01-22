@@ -6,13 +6,13 @@ struct ChecklistDialog: View {
     @State private var vm: ChecklistDialogVM
 
     @Binding private var isPresented: Bool
-    private var checklist: ChecklistModel
+    private var checklist: ChecklistDb
 
     @State private var isAddItemPresented = false
 
     init(
             isPresented: Binding<Bool>,
-            checklist: ChecklistModel
+            checklist: ChecklistDb
     ) {
         _isPresented = isPresented
         self.checklist = checklist
@@ -94,7 +94,7 @@ struct ChecklistDialog: View {
 
 struct ChecklistView__ItemView: View {
 
-    let item: ChecklistItemModel
+    let item: ChecklistItemDb
 
     @State private var isEditPresented = false
 

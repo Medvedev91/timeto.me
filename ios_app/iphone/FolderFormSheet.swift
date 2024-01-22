@@ -9,7 +9,7 @@ struct FolderFormSheet: View {
 
     init(
             isPresented: Binding<Bool>,
-            folder: TaskFolderModel?
+            folder: TaskFolderDb?
     ) {
         _isPresented = isPresented
         vm = FolderFormSheetVM(folder: folder)
