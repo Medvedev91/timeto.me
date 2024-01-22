@@ -8,13 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.timeto.app.*
-import me.timeto.shared.db.EventTemplateDB
+import me.timeto.shared.db.EventTemplateDb
 import me.timeto.shared.vm.EventTemplateFormSheetVM
 
 @Composable
 fun EventTemplateFormSheet(
     layer: WrapperView.Layer,
-    eventTemplate: EventTemplateDB?,
+    eventTemplate: EventTemplateDb?,
 ) {
 
     val (vm, state) = rememberVM(eventTemplate) { EventTemplateFormSheetVM(eventTemplate) }

@@ -11,7 +11,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
 
-data class EventTemplateDB(
+data class EventTemplateDb(
     val id: Int,
     val sort: Int,
     val daytime: Int,
@@ -20,11 +20,11 @@ data class EventTemplateDB(
 
     companion object : Backupable__Holder {
 
-        suspend fun selectAscSorted(): List<EventTemplateDB> = dbIO {
+        suspend fun selectAscSorted(): List<EventTemplateDb> = dbIO {
             db.eventTemplateQueries.selectAscSorted().executeAsList().toDBList()
         }
 
-        fun selectAscSortedFlow(): Flow<List<EventTemplateDB>> = db.eventTemplateQueries
+        fun selectAscSortedFlow(): Flow<List<EventTemplateDb>> = db.eventTemplateQueries
             .selectAscSorted().asFlow().mapToList(Dispatchers.IO).map { it.toDBList() }
 
         suspend fun insertWithValidation(
@@ -108,7 +108,7 @@ data class EventTemplateDB(
     }
 }
 
-private fun EventTemplateSQ.toDB() = EventTemplateDB(
+private fun EventTemplateSQ.toDB() = EventTemplateDb(
     id = id, sort = sort, daytime = daytime, text = text,
 )
 
@@ -122,7 +122,7 @@ private fun dayTimeValidation(daytime: Int): Int {
 
 private fun textValidation(
     text: String,
-    otherTemplates: List<EventTemplateDB>,
+    otherTemplates: List<EventTemplateDb>,
 ): String {
     val textValidated = text.trim()
     if (otherTemplates.any { it.text == textValidated })

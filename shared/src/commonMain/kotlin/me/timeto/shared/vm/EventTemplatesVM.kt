@@ -2,12 +2,12 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
-import me.timeto.shared.db.EventTemplateDB
+import me.timeto.shared.db.EventTemplateDb
 
 class EventTemplatesVM : __VM<EventTemplatesVM.State>() {
 
     data class TemplateUI(
-        val templateDB: EventTemplateDB,
+        val templateDB: EventTemplateDb,
         val text: String,
     ) {
         val timeForEventForm: Int = UnixTime().localDayStartTime() + templateDB.daytime
@@ -27,7 +27,7 @@ class EventTemplatesVM : __VM<EventTemplatesVM.State>() {
 
     override fun onAppear() {
         val scope = scopeVM()
-        EventTemplateDB.selectAscSortedFlow().onEachExIn(scope) { templatesDB ->
+        EventTemplateDb.selectAscSortedFlow().onEachExIn(scope) { templatesDB ->
             state.update {
                 it.copy(templatesUI = templatesDB.toTemplatesUI())
             }
@@ -35,7 +35,7 @@ class EventTemplatesVM : __VM<EventTemplatesVM.State>() {
     }
 }
 
-private fun List<EventTemplateDB>.toTemplatesUI() = this
+private fun List<EventTemplateDb>.toTemplatesUI() = this
     .reversed()
     .map { templateDB ->
         EventTemplatesVM.TemplateUI(

@@ -2,10 +2,10 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
-import me.timeto.shared.db.EventTemplateDB
+import me.timeto.shared.db.EventTemplateDb
 
 class EventTemplateFormSheetVM(
-    val eventTemplateDB: EventTemplateDB?,
+    val eventTemplateDB: EventTemplateDb?,
 ) : __VM<EventTemplateFormSheetVM.State>() {
 
     data class State(
@@ -74,7 +74,7 @@ class EventTemplateFormSheetVM(
                 if (eventTemplateDB != null)
                     eventTemplateDB.updateWithValidation(daytime, textWithFeatures)
                 else
-                    EventTemplateDB.insertWithValidation(daytime, textWithFeatures)
+                    EventTemplateDb.insertWithValidation(daytime, textWithFeatures)
                 onSuccess()
             } catch (e: UIException) {
                 showUiAlert(e.uiMessage)
@@ -83,7 +83,7 @@ class EventTemplateFormSheetVM(
     }
 
     fun delete(
-        templateDB: EventTemplateDB,
+        templateDB: EventTemplateDb,
         onSuccess: () -> Unit,
     ) {
         val text = templateDB.text.textFeatures().textNoFeatures
