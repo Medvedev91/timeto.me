@@ -134,7 +134,7 @@ private fun ymdToTime(y: Int, m: Int, d: Int): Int {
 
 // todo if time = 0
 // todo if time < 0
-private fun timeToYmdUtc(time: Int): List<Int> {
+private fun timeToYmdUtc(time: Int): UnixTime.Ymd {
     val daysUnixUntilNow = time / 86_400
     val daysJesusUntilNow = daysUnixUntilNow + daysJesusUntilUnix
     val prevY = (daysJesusUntilNow * 400) / 146_097 // 146_097 days in 400 years
@@ -145,7 +145,7 @@ private fun timeToYmdUtc(time: Int): List<Int> {
     val leftDays = leftSeconds / 86_400
     val m = daysInMonthInc.indexOfFirst { it > leftDays }
     val d = leftDays - daysInMonthInc[m - 1]
-    return listOf(y, m, d + 1)
+    return UnixTime.Ymd(y = y, m = m, d = d + 1)
 }
 
 private fun isLeapYear(y: Int) = when {
