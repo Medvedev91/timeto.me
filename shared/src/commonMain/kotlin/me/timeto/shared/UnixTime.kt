@@ -128,10 +128,9 @@ private fun ymdToTime(y: Int, m: Int, d: Int): Int {
 
 // todo refactor + clean?
 // todo hms
-// todo time zone
 // todo if time = 0
 // todo if time < 0
-private fun timeToYmd(time: Int): List<Int> {
+private fun timeToYmdUtc(time: Int): List<Int> {
     val daysUnixUntilNow = time / 86_400
     val daysJesusUntilNow = daysUnixUntilNow + daysJesusUntilUnix
     val prevY = (daysJesusUntilNow * 400) / 146_097 // 146_097 days in 400 years
