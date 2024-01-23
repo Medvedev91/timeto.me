@@ -106,6 +106,12 @@ data class UnixTime(
     enum class StringComponent {
         month, month3, dayOfMonth, dayOfWeek, dayOfWeek2, dayOfWeek3, hhmm24, space, comma,
     }
+
+    data class Ymd(
+        val y: Int,
+        val m: Int, // 1 - Jan
+        val d: Int, // 1..31
+    )
 }
 
 //
