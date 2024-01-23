@@ -132,8 +132,6 @@ private fun ymdToTime(y: Int, m: Int, d: Int): Int {
     return (prevYearsDays + prevMonthsDays + (d - 1)) * 86_400
 }
 
-// todo refactor + clean?
-// todo hms
 // todo if time = 0
 // todo if time < 0
 private fun timeToYmdUtc(time: Int): List<Int> {
