@@ -111,10 +111,6 @@ data class UnixTime(
 //
 // TODO
 
-//val time = ymdToTime(2003, 12, 14)
-//zlog(time)
-//zlog(timeToYmd(time))
-
 // todo hms
 // todo time zone
 // todo if year = 1970
