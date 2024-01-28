@@ -553,7 +553,6 @@ private fun MainTasksView(
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun NavigationView(
     vm: HomeVM,
