@@ -38,7 +38,7 @@ val TasksView__PADDING_END = TasksView__TAB_BUTTON_WIDTH + H_PADDING
 val TasksView__INPUT_SHAPE = SquircleShape(len = 70f)
 val TasksView__LIST_SECTION_PADDING = 20.dp
 
-///
+//
 
 private val tabShape = SquircleShape(50f)
 private val tabVPadding = 8.dp
@@ -50,6 +50,7 @@ fun TasksView(
     modifier: Modifier,
     onClose: () -> Unit,
 ) {
+
     val (_, state) = rememberVM { TabTasksVM() }
 
     var activeTab by remember { mutableStateOf<Tab>(Tab.Folder(state.initFolder)) }
@@ -219,8 +220,8 @@ sealed class DropItem(
 
     class Square(var x1: Int, var y1: Int, var x2: Int, var y2: Int)
 
-    ///
-    /// Types
+    //
+    // Types
 
     class Type__Folder(
         val folder: TaskFolderDb,
