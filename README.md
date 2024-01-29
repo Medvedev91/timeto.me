@@ -1,4 +1,4 @@
-# timeto.me - Time Tracker 24/7
+# timeto.me - Personal Productivity Tools
 
 The main feature of this app is there is no "stop" option. Once you have completed one activity,
 you have to set a timer for the next one, even if it's a "sleeping" activity.
