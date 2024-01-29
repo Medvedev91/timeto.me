@@ -67,7 +67,7 @@ fun TasksView(
         dragItem.value?.focusedDrop?.value = drop
     }
 
-    Box(
+    ZStack(
         modifier = modifier
             .motionEventSpy { event ->
                 val dragItemValue = dragItem.value ?: return@motionEventSpy
@@ -272,7 +272,7 @@ private fun TabTextButton(
     )
 
     val rotationMaxAngle = 3f
-    var rotationAngle by remember { mutableStateOf(0f) }
+    var rotationAngle by remember { mutableFloatStateOf(0f) }
     val rotationAngleAnimate by animateFloatAsState(
         targetValue = rotationAngle,
         animationSpec = tween(durationMillis = Random.nextInt(80, 130), easing = LinearEasing),
