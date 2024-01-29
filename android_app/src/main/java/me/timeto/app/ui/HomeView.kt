@@ -53,6 +53,7 @@ private val mainTaskTimeShape = SquircleShape(len = 40f)
 
 @Composable
 fun HomeView() {
+
     val (vm, state) = rememberVM { HomeVM() }
 
     val checklistUI = state.checklistUI
