@@ -23,7 +23,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
@@ -31,13 +30,11 @@ import me.timeto.app.R
 import kotlinx.coroutines.delay
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.vm.TabTasksVM
-import me.timeto.shared.vm.ui.TimerDataUI
 import kotlin.random.Random
 
 val TasksView__TAB_BUTTON_WIDTH = 35.dp
 val TasksView__PADDING_END = TasksView__TAB_BUTTON_WIDTH + H_PADDING
 
-private val timerShape = SquircleShape(len = 40f)
 val TasksView__INPUT_SHAPE = SquircleShape(len = 70f)
 val TasksView__LIST_SECTION_PADDING = 20.dp
 
@@ -50,8 +47,6 @@ private val tabInactiveTextColor = c.homeFontSecondary
 
 @Composable
 fun TasksView(
-    timerTitle: String,
-    timerData: TimerDataUI,
     modifier: Modifier,
     onClose: () -> Unit,
 ) {
@@ -73,168 +68,127 @@ fun TasksView(
         dragItem.value?.focusedDrop?.value = drop
     }
 
-    VStack {
+    ZStack(
+        modifier = modifier
+            .motionEventSpy { event ->
+                val dragItemValue = dragItem.value ?: return@motionEventSpy
 
-        HStack(
-            modifier = Modifier
-                .height(56.dp)
-                .background(c.black),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-
-            VStack(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-                    .padding(start = 10.dp, end = 8.dp)
-                    .clip(timerShape)
-                    .clickable {
-                        onClose()
+                val x = event.x
+                val y = event.y
+                val focusedDrop = dropItems
+                    .filter { dragItemValue.isDropAllowed(it) }
+                    .firstOrNull { drop ->
+                        val s = drop.square
+                        x > s.x1 && y > s.y1 && x < s.x2 && y < s.y2
                     }
-                    .padding(horizontal = 6.dp),
-            ) {
 
-                val timerColor = animateColorAsState(timerData.color.toColor()).value
+                if (focusedDrop == null) {
+                    setFocusedDrop(null)
+                    return@motionEventSpy
+                }
 
-                Text(
-                    text = timerTitle,
-                    modifier = Modifier
-                        .padding(start = onePx, bottom = 6.dp),
-                    color = timerColor,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Medium,
-                )
-
-                Text(
-                    text = timerData.title,
-                    fontSize = 17.sp,
-                    fontFamily = timerFont,
-                    color = timerColor,
-                )
+                when (event.action) {
+                    MotionEvent.ACTION_UP -> {
+                        dragItemValue.onDrop(focusedDrop)
+                        setFocusedDrop(null)
+                    }
+                    MotionEvent.ACTION_MOVE -> {
+                        if (dragItemValue.focusedDrop.value == null)
+                            vibrateShort()
+                        setFocusedDrop(focusedDrop)
+                    }
+                    else -> {
+                        setFocusedDrop(null)
+                    }
+                }
             }
+            .background(c.bg),
+        contentAlignment = Alignment.CenterEnd,
+    ) {
+
+        when (val curTab = activeTab) {
+            is Tab.Folder -> TasksListView(curTab.folder, dragItem)
+            is Tab.Calendar -> EventsListView()
+            is Tab.Repeating -> RepeatingsListView()
         }
 
-        DividerBg(modifier = Modifier.padding(horizontal = H_PADDING))
-
-        ZStack(
-            modifier = modifier
-                .motionEventSpy { event ->
-                    val dragItemValue = dragItem.value ?: return@motionEventSpy
-
-                    val x = event.x
-                    val y = event.y
-                    val focusedDrop = dropItems
-                        .filter { dragItemValue.isDropAllowed(it) }
-                        .firstOrNull { drop ->
-                            val s = drop.square
-                            x > s.x1 && y > s.y1 && x < s.x2 && y < s.y2
-                        }
-
-                    if (focusedDrop == null) {
-                        setFocusedDrop(null)
-                        return@motionEventSpy
-                    }
-
-                    when (event.action) {
-                        MotionEvent.ACTION_UP -> {
-                            dragItemValue.onDrop(focusedDrop)
-                            setFocusedDrop(null)
-                        }
-                        MotionEvent.ACTION_MOVE -> {
-                            if (dragItemValue.focusedDrop.value == null)
-                                vibrateShort()
-                            setFocusedDrop(focusedDrop)
-                        }
-                        else -> {
-                            setFocusedDrop(null)
-                        }
-                    }
-                }
-                .background(c.bg),
-            contentAlignment = Alignment.CenterEnd,
+        Column(
+            modifier = Modifier
+                .width(TasksView__TAB_BUTTON_WIDTH)
+                .fillMaxHeight(),
+            verticalArrangement = Arrangement.Center
         ) {
 
-            when (val curTab = activeTab) {
-                is Tab.Folder -> TasksListView(curTab.folder, dragItem)
-                is Tab.Calendar -> EventsListView()
-                is Tab.Repeating -> RepeatingsListView()
-            }
-
-            Column(
-                modifier = Modifier
-                    .width(TasksView__TAB_BUTTON_WIDTH)
-                    .fillMaxHeight(),
-                verticalArrangement = Arrangement.Center
+            LazyColumn(
+                reverseLayout = true,
             ) {
 
-                LazyColumn(
-                    reverseLayout = true,
-                ) {
-
-                    item {
-                        val dropItem = remember {
-                            DropItem.Type__Calendar(DropItem.Square(0, 0, 0, 0))
-                        }
-                        val isActive = activeTab is Tab.Calendar
-                        TabTextButton(
-                            text = state.tabCalendarText,
-                            isActive = isActive,
-                            dragItem = dragItem,
-                            dropItem = dropItem,
-                            dropItems = dropItems,
-                            onClick = {
-                                if (isActive) onClose()
-                                else activeTab = Tab.Calendar()
-                            },
-                        )
+                item {
+                    val dropItem = remember {
+                        DropItem.Type__Calendar(DropItem.Square(0, 0, 0, 0))
                     }
+                    val isActive = activeTab is Tab.Calendar
+                    TabTextButton(
+                        text = state.tabCalendarText,
+                        isActive = isActive,
+                        dragItem = dragItem,
+                        dropItem = dropItem,
+                        dropItems = dropItems,
+                        onClick = {
+                            if (isActive) onClose()
+                            else activeTab = Tab.Calendar()
+                        },
+                    )
+                }
 
-                    items(state.taskFoldersUI) { folderUI ->
-                        val dropItem = remember {
-                            DropItem.Type__Folder(folderUI.folder, DropItem.Square(0, 0, 0, 0))
-                        }
-                        val isActive = (activeTab as? Tab.Folder)?.folder?.id == folderUI.folder.id
-                        TabTextButton(
-                            text = folderUI.tabText,
-                            isActive = isActive,
-                            dragItem = dragItem,
-                            dropItem = dropItem,
-                            dropItems = dropItems,
-                            onClick = {
-                                if (isActive) onClose()
-                                else activeTab = Tab.Folder(folderUI.folder)
-                            },
-                        )
+                items(state.taskFoldersUI) { folderUI ->
+                    val dropItem = remember {
+                        DropItem.Type__Folder(folderUI.folder, DropItem.Square(0, 0, 0, 0))
                     }
+                    val isActive = (activeTab as? Tab.Folder)?.folder?.id == folderUI.folder.id
+                    TabTextButton(
+                        text = folderUI.tabText,
+                        isActive = isActive,
+                        dragItem = dragItem,
+                        dropItem = dropItem,
+                        dropItems = dropItems,
+                        onClick = {
+                            if (isActive) onClose()
+                            else activeTab = Tab.Folder(folderUI.folder)
+                        },
+                    )
+                }
 
-                    item {
-                        val isActive = activeTab is Tab.Repeating
-                        val backgroundColor = animateColorAsState(if (isActive) c.blue else c.bg, spring(stiffness = Spring.StiffnessMedium))
-                        val textColor = animateColorAsState(if (isActive) tabActiveTextColor else tabInactiveTextColor, spring(stiffness = Spring.StiffnessMedium))
+                //
+                // Repetitive
 
-                        Box(
-                            modifier = Modifier
-                                .width(TasksView__TAB_BUTTON_WIDTH)
-                                .height(TasksView__TAB_BUTTON_WIDTH)
-                                .clip(tabShape)
-                                .background(backgroundColor.value)
-                                .clickable {
-                                    if (isActive) onClose()
-                                    else activeTab = Tab.Repeating()
-                                },
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                painterResource(id = R.drawable.sf_repeat_medium_semibold),
-                                contentDescription = "Repeating",
-                                tint = textColor.value,
-                                modifier = Modifier.size(12.dp),
-                            )
-                        }
+                item {
+                    val isActive = activeTab is Tab.Repeating
+                    val backgroundColor = animateColorAsState(if (isActive) c.blue else c.bg, spring(stiffness = Spring.StiffnessMedium))
+                    val textColor = animateColorAsState(if (isActive) tabActiveTextColor else tabInactiveTextColor, spring(stiffness = Spring.StiffnessMedium))
+
+                    Box(
+                        modifier = Modifier
+                            .width(TasksView__TAB_BUTTON_WIDTH)
+                            .height(TasksView__TAB_BUTTON_WIDTH)
+                            .clip(tabShape)
+                            .background(backgroundColor.value)
+                            .clickable {
+                                if (isActive) onClose()
+                                else activeTab = Tab.Repeating()
+                            },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            painterResource(id = R.drawable.sf_repeat_medium_semibold),
+                            contentDescription = "Repeating",
+                            tint = textColor.value,
+                            modifier = Modifier.size(12.dp),
+                        )
                     }
                 }
+
+                ////
             }
         }
     }

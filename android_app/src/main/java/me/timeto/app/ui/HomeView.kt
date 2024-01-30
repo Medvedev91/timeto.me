@@ -302,8 +302,6 @@ fun HomeView() {
                 ) {
 
                     TasksView(
-                        timerTitle = state.title,
-                        timerData = state.timerData,
                         modifier = Modifier
                             .align(Alignment.CenterEnd),
                         onClose = {
