@@ -37,6 +37,7 @@ import kotlin.random.Random
 val TasksView__TAB_BUTTON_WIDTH = 35.dp
 val TasksView__PADDING_END = TasksView__TAB_BUTTON_WIDTH + H_PADDING
 
+private val timerShape = SquircleShape(len = 40f)
 val TasksView__INPUT_SHAPE = SquircleShape(len = 70f)
 val TasksView__LIST_SECTION_PADDING = 20.dp
 
@@ -76,41 +77,41 @@ fun TasksView(
 
         HStack(
             modifier = Modifier
-                .height(44.dp)
+                .height(56.dp)
                 .background(c.black),
             verticalAlignment = Alignment.CenterVertically,
         ) {
 
-            HStack(
+            VStack(
                 modifier = Modifier
                     .weight(1f)
+                    .fillMaxHeight()
                     .padding(start = 10.dp, end = 8.dp)
-                    .clip(squircleShape)
+                    .clip(timerShape)
                     .clickable {
                         onClose()
-                    },
-                verticalAlignment = Alignment.CenterVertically,
+                    }
+                    .padding(horizontal = 6.dp),
             ) {
 
                 val timerColor = animateColorAsState(timerData.color.toColor()).value
 
                 Text(
-                    text = timerData.title,
-                    modifier = Modifier
-                        .offset(y = (-1).dp - halfDp)
-                        .padding(horizontal = 6.dp, vertical = 4.dp),
-                    fontSize = 13.sp,
-                    fontFamily = timerFont,
-                    color = timerColor,
-                )
-
-                Text(
                     text = timerTitle,
                     modifier = Modifier
-                        .padding(end = 8.dp),
+                        .padding(start = onePx, bottom = 6.dp),
                     color = timerColor,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Medium,
+                )
+
+                Text(
+                    text = timerData.title,
+                    fontSize = 17.sp,
+                    fontFamily = timerFont,
+                    color = timerColor,
                 )
             }
         }
