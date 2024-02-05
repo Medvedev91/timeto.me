@@ -19,17 +19,19 @@ import me.timeto.shared.vm.EventsListVM
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun EventsListView() {
+fun EventsListView(
+    modifier: Modifier,
+) {
 
     val (_, state) = rememberVM { EventsListVM() }
 
     LazyColumn(
+        modifier = modifier,
         reverseLayout = true,
         contentPadding = PaddingValues(
             end = TasksView__PADDING_END,
             top = TasksView__LIST_SECTION_PADDING,
         ),
-        modifier = Modifier.fillMaxHeight()
     ) {
 
         val minHeight = 42.dp

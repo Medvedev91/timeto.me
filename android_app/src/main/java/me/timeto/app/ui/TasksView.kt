@@ -110,7 +110,7 @@ fun TasksView(
 
         when (val curTab = activeTab) {
             is Tab.Folder -> TasksListView(curTab.folder, dragItem)
-            is Tab.Calendar -> EventsListView()
+            is Tab.Calendar -> EventsView()
             is Tab.Repeating -> RepeatingsListView()
         }
 
