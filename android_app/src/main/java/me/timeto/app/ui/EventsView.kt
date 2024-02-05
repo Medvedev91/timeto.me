@@ -1,5 +1,6 @@
 package me.timeto.app.ui
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
+import me.timeto.shared.vm.EventsVM
 
 private val menuTopPadding = 10.dp
 private val menuBottomPadding = menuTopPadding.goldenRatioUp()
@@ -18,15 +20,24 @@ private val menuBottomPadding = menuTopPadding.goldenRatioUp()
 @Composable
 fun EventsView() {
 
+    val (vm, state) = rememberVM { EventsVM() }
+
     VStack(
         modifier = Modifier
             .fillMaxSize(),
     ) {
 
-        EventsListView(
-            modifier = Modifier
-                .weight(1f),
-        )
+        if (state.isCalendarOrList) {
+            EventsCalendarView(
+                modifier = Modifier
+                    .weight(1f),
+            )
+        } else {
+            EventsListView(
+                modifier = Modifier
+                    .weight(1f),
+            )
+        }
 
         DividerBg(
             modifier = Modifier
@@ -42,9 +53,9 @@ fun EventsView() {
                 text = "Calendar",
                 modifier = Modifier
                     .padding(start = H_PADDING - halfDp),
-                isActive = true,
+                isActive = state.isCalendarOrList,
                 onClick = {
-                    // todo
+                    vm.setIsCalendarOrList(true)
                 },
             )
 
@@ -52,9 +63,9 @@ fun EventsView() {
                 text = "List",
                 modifier = Modifier
                     .padding(start = 8.dp),
-                isActive = false,
+                isActive = !state.isCalendarOrList,
                 onClick = {
-                    // todo
+                    vm.setIsCalendarOrList(false)
                 },
             )
         }
@@ -81,7 +92,7 @@ private fun ModeButton(
             .clickable {
                 onClick()
             }
-            .background(if (isActive) c.blue else c.transparent)
+            .background(animateColorAsState(if (isActive) c.blue else c.transparent).value)
             .padding(horizontal = 6.dp)
             .padding(top = halfDp, bottom = 1.dp),
         color = if (isActive) c.white else c.text,
