@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
@@ -45,6 +46,7 @@ private val tabVPadding = 8.dp
 private val tabActiveTextColor = c.white
 private val tabInactiveTextColor = c.homeFontSecondary
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TasksView(
     modifier: Modifier,
