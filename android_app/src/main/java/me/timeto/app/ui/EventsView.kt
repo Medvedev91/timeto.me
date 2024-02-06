@@ -14,8 +14,8 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.shared.vm.EventsVM
 
-private val menuTopPadding = 10.dp
-private val menuBottomPadding = menuTopPadding.goldenRatioUp()
+private val menuTopPadding = 8.dp
+private val menuBottomPadding = menuTopPadding.goldenRatioUp().goldenRatioUp()
 
 @Composable
 fun EventsView() {
@@ -94,7 +94,7 @@ private fun ModeButton(
             }
             .background(animateColorAsState(if (isActive) c.blue else c.transparent).value)
             .padding(horizontal = 6.dp)
-            .padding(top = halfDp, bottom = 1.dp),
+            .padding(top = 1.dp, bottom = 2.dp),
         color = if (isActive) c.white else c.text,
         fontSize = 14.sp,
     )
