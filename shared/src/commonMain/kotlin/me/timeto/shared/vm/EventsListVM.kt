@@ -8,7 +8,7 @@ import me.timeto.shared.db.EventDb
 
 class EventsListVM : __VM<EventsListVM.State>() {
 
-    class UiEvent(
+    class EventUi(
         val event: EventDb,
     ) {
         val deletionNote = "Are you sure you want to delete \"${event.text}\" event?"
@@ -27,7 +27,7 @@ class EventsListVM : __VM<EventsListVM.State>() {
 
     data class State(
         val curTimeString: String,
-        val uiEvents: List<UiEvent>,
+        val uiEvents: List<EventUi>,
     )
 
     override val state = MutableStateFlow(
@@ -75,4 +75,4 @@ private fun getCurTimeString() =
         UnixTime.StringComponent.hhmm24
     )
 
-private fun List<EventDb>.toUiList() = map { EventsListVM.UiEvent(it) }
+private fun List<EventDb>.toUiList() = map { EventsListVM.EventUi(it) }
