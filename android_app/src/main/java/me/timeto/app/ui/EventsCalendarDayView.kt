@@ -47,6 +47,10 @@ fun EventsCalendarDayView(
                     .clip(roundedShape)
                     .background(c.blue)
                     .clickable {
+                        EventFormSheet__show(
+                            editedEvent = null,
+                            defTime = state.formDefTime,
+                        ) {}
                     }
                     .padding(horizontal = 8.dp)
                     .padding(top = 2.dp, bottom = 2.dp + halfDp),

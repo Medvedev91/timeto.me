@@ -8,11 +8,13 @@ class EventsCalendarDayVM(
 ) : __VM<EventsCalendarDayVM.State>() {
 
     data class State(
+        val formDefTime: Int,
         val inNote: String,
     )
 
     override val state = MutableStateFlow(
         State(
+            formDefTime = UnixTime.byLocalDay(unixDay).time + (12 * 3_600),
             inNote = run {
                 val today = UnixTime().localDay
                 val diff = unixDay - today
