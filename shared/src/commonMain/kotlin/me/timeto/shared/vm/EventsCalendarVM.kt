@@ -64,6 +64,7 @@ class EventsCalendarVM : __VM<EventsCalendarVM.State>() {
                         }
                         val weekRem = unixDay % 7
                         Month.Day(
+                            unixDay = unixDay,
                             title = "$dayOfMonth",
                             previews = previews,
                             isBusiness = !(weekRem == 2 || weekRem == 3),
@@ -107,6 +108,7 @@ class EventsCalendarVM : __VM<EventsCalendarVM.State>() {
         val emptyEndDaysCount: Int,
     ) {
         data class Day(
+            val unixDay: Int,
             val title: String,
             val previews: List<String>,
             val isBusiness: Boolean,
