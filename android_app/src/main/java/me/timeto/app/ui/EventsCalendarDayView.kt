@@ -76,7 +76,7 @@ fun EventsCalendarDayView(
                     bgColor = bgColor,
                     paddingStart = hPadding,
                     paddingEnd = hPadding,
-                    withTopDivider = false,
+                    withTopDivider = (idx > 0),
                 )
             }
         }
