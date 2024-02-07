@@ -19,8 +19,6 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.shared.vm.EventsCalendarVM
 
-private val todayShape = SquircleShape(len = 40f)
-
 @Composable
 fun EventsCalendarView(
     modifier: Modifier,
@@ -91,44 +89,42 @@ fun EventsCalendarView(
                                     SpacerW1()
                                 else {
 
+                                    val bgAnimate = animateColorAsState(
+                                        if (day.unixDay == state.selectedDay) c.blue
+                                        else if (day.isToday) c.purple
+                                        else c.transparent
+                                    )
+
                                     VStack(
                                         modifier = Modifier
                                             .weight(1f)
-                                            .background(if (day.unixDay == state.selectedDay) c.blue else c.transparent)
+                                            .background(bgAnimate.value)
                                             .clickable {
                                                 vm.setSelectedDay(day.unixDay)
-                                            },
+                                            }
+                                            .padding(bottom = 2.dp),
+                                        horizontalAlignment = Alignment.CenterHorizontally,
                                     ) {
 
                                         DividerBg()
 
-                                        VStack(
-                                            modifier = Modifier
-                                                .padding(vertical = 2.dp)
-                                                .fillMaxWidth()
-                                                .clip(todayShape)
-                                                .background(if (day.isToday) c.purple else c.transparent),
-                                            horizontalAlignment = Alignment.CenterHorizontally,
-                                        ) {
+                                        Text(
+                                            text = day.title,
+                                            modifier = Modifier.padding(top = 6.dp),
+                                            color = if (day.isBusiness) c.white else c.textSecondary,
+                                        )
 
+                                        day.previews.forEach { preview ->
                                             Text(
-                                                text = day.title,
-                                                modifier = Modifier.padding(top = 4.dp),
-                                                color = if (day.isBusiness) c.white else c.textSecondary,
+                                                text = preview,
+                                                modifier = Modifier
+                                                    .padding(horizontal = 2.dp),
+                                                color = c.textSecondary,
+                                                fontSize = 11.sp,
+                                                fontWeight = FontWeight.ExtraLight,
+                                                maxLines = 1,
+                                                softWrap = false,
                                             )
-
-                                            day.previews.forEach { preview ->
-                                                Text(
-                                                    text = preview,
-                                                    modifier = Modifier
-                                                        .padding(horizontal = 2.dp),
-                                                    color = c.textSecondary,
-                                                    fontSize = 11.sp,
-                                                    fontWeight = FontWeight.ExtraLight,
-                                                    maxLines = 1,
-                                                    softWrap = false,
-                                                )
-                                            }
                                         }
                                     }
                                 }
