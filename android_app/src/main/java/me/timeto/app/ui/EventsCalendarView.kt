@@ -93,6 +93,7 @@ fun EventsCalendarView(
                                     VStack(
                                         modifier = Modifier
                                             .weight(1f)
+                                            .background(if (day.unixDay == state.selectedDay) c.blue else c.transparent)
                                             .clickable {
                                                 vm.setSelectedDay(day.unixDay)
                                             },
