@@ -85,9 +85,9 @@ fun EventsCalendarView(
 
                             week.forEach { day ->
 
-                                if (day == null) {
+                                if (day == null)
                                     SpacerW1()
-                                } else {
+                                else {
 
                                     VStack(
                                         modifier = Modifier
