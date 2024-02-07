@@ -65,7 +65,7 @@ fun EventsCalendarView(
                                     VStack(
                                         modifier = Modifier
                                             .weight(1f)
-                                            .padding(bottom = 1.dp),
+                                            .padding(bottom = 2.dp),
                                         horizontalAlignment = Alignment.CenterHorizontally,
                                     ) {
 
