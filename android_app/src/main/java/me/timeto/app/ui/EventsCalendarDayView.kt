@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -69,13 +70,15 @@ fun EventsCalendarDayView(
         }
 
         state.eventsUi.forEachIndexed { idx, eventUi ->
-            EventsListEventView(
-                eventUi = eventUi,
-                bgColor = bgColor,
-                paddingStart = hPadding,
-                paddingEnd = hPadding,
-                withTopDivider = false,
-            )
+            key(eventUi.event.id) {
+                EventsListEventView(
+                    eventUi = eventUi,
+                    bgColor = bgColor,
+                    paddingStart = hPadding,
+                    paddingEnd = hPadding,
+                    withTopDivider = false,
+                )
+            }
         }
     }
 }
