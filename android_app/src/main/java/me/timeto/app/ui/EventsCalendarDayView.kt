@@ -62,7 +62,7 @@ fun EventsCalendarDayView(
                         ) {}
                     }
                     .padding(horizontal = 8.dp)
-                    .padding(top = 2.dp, bottom = 2.dp + halfDp),
+                    .padding(top = 4.dp, bottom = 4.dp + halfDp),
                 color = c.white,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Medium,
