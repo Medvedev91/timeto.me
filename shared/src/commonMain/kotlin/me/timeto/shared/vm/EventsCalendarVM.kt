@@ -11,12 +11,14 @@ class EventsCalendarVM : __VM<EventsCalendarVM.State>() {
 
     data class State(
         val months: List<Month>,
+        val selectedDay: Int?,
         val weekTitles: List<WeekTitle>,
     )
 
     override val state = MutableStateFlow(
         State(
             months = listOf(), // todo preload
+            selectedDay = null,
             weekTitles = listOf(
                 WeekTitle("MO", true),
                 WeekTitle("TU", true),
@@ -88,6 +90,12 @@ class EventsCalendarVM : __VM<EventsCalendarVM.State>() {
 
             state.update { it.copy(months = months) }
         }
+    }
+
+    //
+
+    fun setSelectedDay(unixDay: Int) {
+        state.update { it.copy(selectedDay = unixDay) }
     }
 
     //
