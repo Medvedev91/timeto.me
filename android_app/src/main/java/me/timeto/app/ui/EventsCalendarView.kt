@@ -1,6 +1,7 @@
 package me.timeto.app.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -24,7 +25,7 @@ fun EventsCalendarView(
     modifier: Modifier,
 ) {
 
-    val (_, state) = rememberVM { EventsCalendarVM() }
+    val (vm, state) = rememberVM { EventsCalendarVM() }
 
     VStack(
         modifier = modifier
@@ -91,7 +92,10 @@ fun EventsCalendarView(
 
                                     VStack(
                                         modifier = Modifier
-                                            .weight(1f),
+                                            .weight(1f)
+                                            .clickable {
+                                                vm.setSelectedDay(day.unixDay)
+                                            },
                                     ) {
 
                                         DividerBg()
