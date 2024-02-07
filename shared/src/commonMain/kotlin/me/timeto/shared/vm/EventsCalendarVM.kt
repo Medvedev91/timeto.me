@@ -59,9 +59,11 @@ class EventsCalendarVM : __VM<EventsCalendarVM.State>() {
                             dayEvents.map { it.text.textFeatures().textNoFeatures } +
                             (0 until (3 - dayEvents.size)).map { "" }
                         }
+                        val weekRem = unixDay % 7
                         Month.Day(
                             title = "$dayOfMonth",
                             previews = previews,
+                            isPrimary = !(weekRem == 2 || weekRem == 3),
                         )
                     }
 
@@ -97,6 +99,7 @@ class EventsCalendarVM : __VM<EventsCalendarVM.State>() {
         data class Day(
             val title: String,
             val previews: List<String>,
+            val isPrimary: Boolean,
         )
     }
 
