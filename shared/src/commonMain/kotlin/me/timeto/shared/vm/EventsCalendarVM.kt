@@ -96,7 +96,10 @@ class EventsCalendarVM : __VM<EventsCalendarVM.State>() {
     //
 
     fun setSelectedDay(unixDay: Int) {
-        state.update { it.copy(selectedDay = unixDay) }
+        state.update {
+            val newDay = if (unixDay == it.selectedDay) null else unixDay
+            it.copy(selectedDay = newDay)
+        }
     }
 
     //
