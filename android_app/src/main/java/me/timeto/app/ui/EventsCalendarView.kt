@@ -1,5 +1,6 @@
 package me.timeto.app.ui
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
@@ -25,7 +26,28 @@ fun EventsCalendarView(
             .padding(start = H_PADDING, end = TasksView__PADDING_END),
     ) {
 
-        LazyColumn {
+        VStack {
+
+            HStack {
+
+                state.weekTitles.forEach { weekTitle ->
+                    Text(
+                        text = weekTitle.title,
+                        modifier = Modifier
+                            .weight(1f),
+                        color = if (weekTitle.isPrimary) c.text else c.textSecondary,
+                        fontSize = 10.sp,
+                        textAlign = TextAlign.Center,
+                    )
+                }
+            }
+
+            DividerBg(Modifier.padding(top = 2.dp))
+        }
+
+        LazyColumn(
+            contentPadding = PaddingValues(top = 8.dp),
+        ) {
 
             state.months.forEach { month ->
 

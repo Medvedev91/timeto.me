@@ -11,11 +11,21 @@ class EventsCalendarVM : __VM<EventsCalendarVM.State>() {
 
     data class State(
         val months: List<Month>,
+        val weekTitles: List<WeekTitle>,
     )
 
     override val state = MutableStateFlow(
         State(
             months = listOf(), // todo preload
+            weekTitles = listOf(
+                WeekTitle("MO", true),
+                WeekTitle("TU", true),
+                WeekTitle("WE", true),
+                WeekTitle("TH", true),
+                WeekTitle("FR", true),
+                WeekTitle("SA", false),
+                WeekTitle("SU", false),
+            )
         )
     )
 
@@ -89,4 +99,9 @@ class EventsCalendarVM : __VM<EventsCalendarVM.State>() {
             val previews: List<String>,
         )
     }
+
+    data class WeekTitle(
+        val title: String,
+        val isPrimary: Boolean,
+    )
 }
