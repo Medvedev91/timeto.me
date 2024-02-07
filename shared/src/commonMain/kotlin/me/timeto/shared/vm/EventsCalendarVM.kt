@@ -63,7 +63,7 @@ class EventsCalendarVM : __VM<EventsCalendarVM.State>() {
                         Month.Day(
                             title = "$dayOfMonth",
                             previews = previews,
-                            isPrimary = !(weekRem == 2 || weekRem == 3),
+                            isBusiness = !(weekRem == 2 || weekRem == 3),
                         )
                     }
 
@@ -99,7 +99,7 @@ class EventsCalendarVM : __VM<EventsCalendarVM.State>() {
         data class Day(
             val title: String,
             val previews: List<String>,
-            val isPrimary: Boolean,
+            val isBusiness: Boolean,
         )
     }
 

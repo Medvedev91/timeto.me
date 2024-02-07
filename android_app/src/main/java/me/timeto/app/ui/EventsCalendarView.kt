@@ -95,7 +95,7 @@ fun EventsCalendarView(
 
                                         Text(
                                             text = day.title,
-                                            color = if (day.isPrimary) c.white else c.textSecondary,
+                                            color = if (day.isBusiness) c.white else c.textSecondary,
                                         )
 
                                         day.previews.forEach { preview ->
