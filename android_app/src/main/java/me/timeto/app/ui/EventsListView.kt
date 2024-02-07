@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.shared.vm.EventsListVM
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun EventsListView(
     modifier: Modifier,
@@ -110,81 +109,9 @@ fun EventsListView(
 
         itemsIndexed(
             state.uiEvents,
-            key = { _, uiEvent -> uiEvent.event.id }
-        ) { index, uiEvent ->
-
-            SwipeToAction(
-                isStartOrEnd = remember { mutableStateOf(null) },
-                startView = { SwipeToAction__StartView("Edit", c.blue) },
-                endView = { state ->
-                    SwipeToAction__DeleteView(
-                        state = state,
-                        note = uiEvent.event.text,
-                        deletionConfirmationNote = uiEvent.deletionNote,
-                    ) {
-                        vibrateLong()
-                        uiEvent.delete()
-                    }
-                },
-                onStart = {
-                    EventFormSheet__show(editedEvent = uiEvent.event) {}
-                    false
-                },
-                onEnd = {
-                    true
-                },
-                toVibrateStartEnd = listOf(true, false),
-            ) {
-
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(c.bg)
-                        .padding(start = H_PADDING),
-                    contentAlignment = Alignment.BottomCenter
-                ) {
-
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 10.dp)
-                    ) {
-
-                        Row {
-                            Text(
-                                uiEvent.dateString,
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.W300,
-                                color = c.textSecondary,
-                                modifier = Modifier.weight(1f)
-                            )
-                            Text(
-                                uiEvent.dayLeftString,
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.W300,
-                                color = c.textSecondary,
-                                modifier = Modifier
-                            )
-                        }
-
-                        HStack(
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Text(
-                                uiEvent.listText,
-                                modifier = Modifier
-                                    .weight(1f),
-                                color = c.text,
-                            )
-                            TriggersListIconsView(uiEvent.textFeatures.triggers, 14.sp)
-                        }
-                    }
-
-                    // Remember the list is reversed
-                    if (index > 0)
-                        DividerBg()
-                }
-            }
+            key = { _, eventUi -> eventUi.event.id },
+        ) { index, eventUi ->
+            EventsListEventView(eventUi, withTopDivider = (index > 0))
         }
     }
 }
