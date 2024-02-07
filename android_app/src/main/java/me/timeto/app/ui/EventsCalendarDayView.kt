@@ -16,6 +16,7 @@ import me.timeto.app.*
 import me.timeto.shared.vm.EventsCalendarDayVM
 
 private val bgColor = c.fg
+private val paddingStart = 8.dp
 
 @Composable
 fun EventsCalendarDayView(
@@ -35,7 +36,7 @@ fun EventsCalendarDayView(
         HStack(
             modifier = Modifier
                 .background(bgColor)
-                .padding(horizontal = 8.dp)
+                .padding(horizontal = paddingStart)
                 .padding(top = 12.dp, bottom = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -71,6 +72,7 @@ fun EventsCalendarDayView(
             EventsListEventView(
                 eventUi = eventUi,
                 bgColor = bgColor,
+                paddingStart = paddingStart,
                 withTopDivider = false,
             )
         }

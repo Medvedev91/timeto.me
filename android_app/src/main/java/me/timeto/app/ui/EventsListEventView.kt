@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
@@ -22,6 +23,7 @@ import me.timeto.shared.vm.EventsListVM
 fun EventsListEventView(
     eventUi: EventsListVM.EventUi,
     bgColor: Color,
+    paddingStart: Dp,
     withTopDivider: Boolean,
 ) {
 
@@ -52,7 +54,7 @@ fun EventsListEventView(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(bgColor)
-                .padding(start = H_PADDING),
+                .padding(start = paddingStart),
             contentAlignment = Alignment.BottomCenter,
         ) {
 
