@@ -59,5 +59,12 @@ fun EventsCalendarDayView(
                 fontWeight = FontWeight.Medium,
             )
         }
+
+        state.eventsUi.forEachIndexed { idx, eventUi ->
+            EventsListEventView(
+                eventUi = eventUi,
+                withTopDivider = false,
+            )
+        }
     }
 }
