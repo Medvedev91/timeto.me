@@ -33,25 +33,29 @@ class EventsCalendarVM : __VM<EventsCalendarVM.State>() {
                 val firstDay = initDay.plus(DatePeriod(months = inMonths))
                 val lastDay = firstDay.plus(DatePeriod(months = 1, days = -1))
 
-                val dayNumbers: MutableList<Int?> = mutableListOf()
-                val emptyStartDaysCount = firstDay.dayOfWeek.ordinal
-                dayNumbers.addAll(arrayOfNulls<Int>(emptyStartDaysCount))
-                dayNumbers.addAll((firstDay.dayOfMonth..lastDay.dayOfMonth))
-                val emptyEndDaysCount = dayNumbers.size % 7
-                if (emptyEndDaysCount > 0)
-                    dayNumbers.addAll(arrayOfNulls<Int>(7 - emptyEndDaysCount))
+                val firstDayUnixDay = firstDay.toEpochDays()
 
-                val days: List<Month.Day?> = dayNumbers.map { dayNumber ->
-                    if (dayNumber == null) null
-                    else {
+                val days: List<Month.Day> = (firstDay.dayOfMonth..lastDay.dayOfMonth)
+                    .mapIndexed { idx, dayOfMonth ->
+                        val unixDay = firstDayUnixDay + idx
+                        val previews = mutableListOf("ew") // todo
                         Month.Day(
-                            title = "$dayNumber",
+                            title = "$dayOfMonth",
+                            previews = previews,
                         )
                     }
-                }
+
+                val monthDays: MutableList<Month.Day?> = mutableListOf()
+                val emptyStartDaysCount = firstDay.dayOfWeek.ordinal
+                monthDays.addAll(arrayOfNulls<Month.Day>(emptyStartDaysCount))
+                monthDays.addAll(days)
+                val emptyEndDaysCount = monthDays.size % 7
+                if (emptyEndDaysCount > 0)
+                    monthDays.addAll(arrayOfNulls<Month.Day>(7 - emptyEndDaysCount))
+
                 val month = Month(
                     title = UnixTime.monthNames3[firstDay.monthNumber - 1],
-                    weeks = days.chunked(7),
+                    weeks = monthDays.chunked(7),
                     emptyStartDaysCount = emptyStartDaysCount,
                     emptyEndDaysCount = 7 - 1 - emptyStartDaysCount,
                 )
@@ -72,6 +76,7 @@ class EventsCalendarVM : __VM<EventsCalendarVM.State>() {
     ) {
         data class Day(
             val title: String,
+            val previews: List<String>,
         )
     }
 }
