@@ -9,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
@@ -97,5 +98,6 @@ private fun ModeButton(
             .padding(top = 2.dp, bottom = 3.dp),
         color = if (isActive) c.white else c.text,
         fontSize = 14.sp,
+        fontWeight = FontWeight.Medium,
     )
 }
