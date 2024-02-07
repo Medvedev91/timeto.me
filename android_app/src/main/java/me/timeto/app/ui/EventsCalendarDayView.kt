@@ -14,6 +14,8 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.shared.vm.EventsCalendarDayVM
 
+private val bgColor = c.fg
+
 @Composable
 fun EventsCalendarDayView(
     unixDay: Int,
@@ -27,7 +29,7 @@ fun EventsCalendarDayView(
 
         HStack(
             modifier = Modifier
-                .background(c.fg)
+                .background(bgColor)
                 .padding(horizontal = 8.dp)
                 .padding(top = 12.dp, bottom = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -63,6 +65,7 @@ fun EventsCalendarDayView(
         state.eventsUi.forEachIndexed { idx, eventUi ->
             EventsListEventView(
                 eventUi = eventUi,
+                bgColor = bgColor,
                 withTopDivider = false,
             )
         }

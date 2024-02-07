@@ -17,6 +17,8 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.shared.vm.EventsListVM
 
+private val bgColor = c.bg
+
 @Composable
 fun EventsListView(
     modifier: Modifier,
@@ -56,7 +58,7 @@ fun EventsListView(
                         .height(minHeight)
                         .border(onePx, c.dividerBg, TasksView__INPUT_SHAPE)
                         .clip(TasksView__INPUT_SHAPE)
-                        .background(c.bg)
+                        .background(bgColor)
                         .clickable {
                             EventFormSheet__show(editedEvent = null) {}
                         }
@@ -113,6 +115,7 @@ fun EventsListView(
         ) { index, eventUi ->
             EventsListEventView(
                 eventUi = eventUi,
+                bgColor = bgColor,
                 withTopDivider = (index > 0),
             )
         }
