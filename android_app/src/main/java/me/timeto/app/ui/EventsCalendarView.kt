@@ -1,5 +1,6 @@
 package me.timeto.app.ui
 
+import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
@@ -132,6 +133,20 @@ fun EventsCalendarView(
                                     }
                                 }
                             }
+                        }
+
+                        val selectedDay = week
+                            .filterNotNull()
+                            .firstOrNull { it.unixDay == state.selectedDay }
+
+                        val isDaySelected = selectedDay != null
+                        AnimatedVisibility(
+                            visible = isDaySelected,
+                            enter = expandVertically(expandFrom = Alignment.Top),
+                            exit = shrinkVertically(),
+                        ) {
+                            if (isDaySelected)
+                                EventsCalendarDayView(unixDay = selectedDay!!.unixDay)
                         }
                     }
                 }
