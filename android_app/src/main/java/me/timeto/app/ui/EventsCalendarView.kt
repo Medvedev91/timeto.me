@@ -120,8 +120,8 @@ fun EventsCalendarView(
                                                 modifier = Modifier
                                                     .padding(horizontal = 2.dp),
                                                 color = c.textSecondary,
-                                                fontSize = 11.sp,
-                                                fontWeight = FontWeight.ExtraLight,
+                                                fontSize = 10.sp,
+                                                fontWeight = FontWeight.Light,
                                                 maxLines = 1,
                                                 softWrap = false,
                                             )
