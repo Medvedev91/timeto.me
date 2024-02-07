@@ -60,13 +60,12 @@ fun EventsCalendarView(
 
                                 if (day == null) {
                                     SpacerW1()
-                                }
-                                else {
+                                } else {
 
                                     VStack(
                                         modifier = Modifier
                                             .weight(1f)
-                                            .padding(bottom = 2.dp),
+                                            .padding(bottom = 1.dp),
                                         horizontalAlignment = Alignment.CenterHorizontally,
                                     ) {
 
@@ -76,6 +75,19 @@ fun EventsCalendarView(
                                             text = day.title,
                                             color = c.white,
                                         )
+
+                                        day.previews.forEach { preview ->
+                                            Text(
+                                                text = preview,
+                                                modifier = Modifier
+                                                    .padding(horizontal = 2.dp),
+                                                color = c.textSecondary,
+                                                fontSize = 12.sp,
+                                                fontWeight = FontWeight.Light,
+                                                maxLines = 1,
+                                                softWrap = false,
+                                            )
+                                        }
                                     }
                                 }
                             }

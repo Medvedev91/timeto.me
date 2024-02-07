@@ -5,6 +5,7 @@ import kotlinx.datetime.*
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.EventDb
 import me.timeto.shared.onEachExIn
+import me.timeto.shared.textFeatures
 
 class EventsCalendarVM : __VM<EventsCalendarVM.State>() {
 
@@ -24,6 +25,8 @@ class EventsCalendarVM : __VM<EventsCalendarVM.State>() {
 
         EventDb.getAscByTimeFlow().onEachExIn(scope) { newEvents ->
 
+            val newEventsMapByDays = newEvents.groupBy { it.getLocalTime().localDay }
+
             val now = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
             val initDay = LocalDate(now.year, now.monthNumber, 1)
 
@@ -38,7 +41,14 @@ class EventsCalendarVM : __VM<EventsCalendarVM.State>() {
                 val days: List<Month.Day> = (firstDay.dayOfMonth..lastDay.dayOfMonth)
                     .mapIndexed { idx, dayOfMonth ->
                         val unixDay = firstDayUnixDay + idx
-                        val previews = mutableListOf("ew") // todo
+                        val dayEvents: List<EventDb> = newEventsMapByDays[unixDay] ?: listOf()
+                        val previews: List<String> = if (dayEvents.size > 3) {
+                            dayEvents.take(2).map { it.text.textFeatures().textNoFeatures } +
+                            "+${dayEvents.size - 2}"
+                        } else {
+                            dayEvents.map { it.text.textFeatures().textNoFeatures } +
+                            (0 until (3 - dayEvents.size)).map { "" }
+                        }
                         Month.Day(
                             title = "$dayOfMonth",
                             previews = previews,
