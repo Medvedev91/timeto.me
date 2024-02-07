@@ -111,7 +111,10 @@ fun EventsListView(
             state.uiEvents,
             key = { _, eventUi -> eventUi.event.id },
         ) { index, eventUi ->
-            EventsListEventView(eventUi, withTopDivider = (index > 0))
+            EventsListEventView(
+                eventUi = eventUi,
+                withTopDivider = (index > 0),
+            )
         }
     }
 }
