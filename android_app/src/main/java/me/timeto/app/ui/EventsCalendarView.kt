@@ -35,7 +35,7 @@ fun EventsCalendarView(
                         text = weekTitle.title,
                         modifier = Modifier
                             .weight(1f),
-                        color = if (weekTitle.isPrimary) c.text else c.textSecondary,
+                        color = if (weekTitle.isBusiness) c.text else c.textSecondary,
                         fontSize = 10.sp,
                         textAlign = TextAlign.Center,
                     )

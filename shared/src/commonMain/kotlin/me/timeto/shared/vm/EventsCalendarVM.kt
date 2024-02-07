@@ -105,6 +105,6 @@ class EventsCalendarVM : __VM<EventsCalendarVM.State>() {
 
     data class WeekTitle(
         val title: String,
-        val isPrimary: Boolean,
+        val isBusiness: Boolean,
     )
 }
