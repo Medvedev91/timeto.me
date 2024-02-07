@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -23,7 +24,11 @@ fun EventsCalendarDayView(
 
     val (_, state) = rememberVM(unixDay) { EventsCalendarDayVM(unixDay) }
 
-    VStack {
+    VStack(
+        modifier = Modifier
+            // Ignore swipe to action overflow
+            .clipToBounds(),
+    ) {
 
         Divider(c.blue)
 
