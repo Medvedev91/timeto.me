@@ -39,6 +39,7 @@ class EventsCalendarVM : __VM<EventsCalendarVM.State>() {
 
             val now = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
             val initDay = LocalDate(now.year, now.monthNumber, 1)
+            val todayUnixDay = UnixTime().localDay
 
             // todo unlimited years up and down
             val months: List<Month> = (0..(5 * 12)).map { inMonths ->
@@ -64,6 +65,7 @@ class EventsCalendarVM : __VM<EventsCalendarVM.State>() {
                             title = "$dayOfMonth",
                             previews = previews,
                             isBusiness = !(weekRem == 2 || weekRem == 3),
+                            isToday = todayUnixDay == unixDay,
                         )
                     }
 
@@ -100,6 +102,7 @@ class EventsCalendarVM : __VM<EventsCalendarVM.State>() {
             val title: String,
             val previews: List<String>,
             val isBusiness: Boolean,
+            val isToday: Boolean,
         )
     }
 

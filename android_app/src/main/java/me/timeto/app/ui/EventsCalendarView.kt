@@ -1,18 +1,23 @@
 package me.timeto.app.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.shared.vm.EventsCalendarVM
+
+private val todayShape = SquircleShape(len = 40f)
 
 @Composable
 fun EventsCalendarView(
@@ -86,29 +91,38 @@ fun EventsCalendarView(
 
                                     VStack(
                                         modifier = Modifier
-                                            .weight(1f)
-                                            .padding(bottom = 2.dp),
-                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                            .weight(1f),
                                     ) {
 
-                                        DividerBg(Modifier.padding(bottom = 6.dp))
+                                        DividerBg()
 
-                                        Text(
-                                            text = day.title,
-                                            color = if (day.isBusiness) c.white else c.textSecondary,
-                                        )
+                                        VStack(
+                                            modifier = Modifier
+                                                .padding(vertical = 2.dp)
+                                                .fillMaxWidth()
+                                                .clip(todayShape)
+                                                .background(if (day.isToday) c.purple else c.transparent),
+                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                        ) {
 
-                                        day.previews.forEach { preview ->
                                             Text(
-                                                text = preview,
-                                                modifier = Modifier
-                                                    .padding(horizontal = 2.dp),
-                                                color = c.textSecondary,
-                                                fontSize = 11.sp,
-                                                fontWeight = FontWeight.Light,
-                                                maxLines = 1,
-                                                softWrap = false,
+                                                text = day.title,
+                                                modifier = Modifier.padding(top = 4.dp),
+                                                color = if (day.isBusiness) c.white else c.textSecondary,
                                             )
+
+                                            day.previews.forEach { preview ->
+                                                Text(
+                                                    text = preview,
+                                                    modifier = Modifier
+                                                        .padding(horizontal = 2.dp),
+                                                    color = c.textSecondary,
+                                                    fontSize = 11.sp,
+                                                    fontWeight = FontWeight.Light,
+                                                    maxLines = 1,
+                                                    softWrap = false,
+                                                )
+                                            }
                                         }
                                     }
                                 }
