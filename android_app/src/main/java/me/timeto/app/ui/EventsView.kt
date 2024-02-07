@@ -93,8 +93,8 @@ private fun ModeButton(
                 onClick()
             }
             .background(animateColorAsState(if (isActive) c.blue else c.transparent).value)
-            .padding(horizontal = 6.dp)
-            .padding(top = 1.dp, bottom = 2.dp),
+            .padding(horizontal = 7.dp)
+            .padding(top = 2.dp, bottom = 3.dp),
         color = if (isActive) c.white else c.text,
         fontSize = 14.sp,
     )
