@@ -56,7 +56,7 @@ fun EventsListEventView(
                 .fillMaxWidth()
                 .background(bgColor)
                 .padding(start = paddingStart, end = paddingEnd),
-            contentAlignment = Alignment.BottomCenter,
+            contentAlignment = Alignment.TopCenter,
         ) {
 
             VStack(

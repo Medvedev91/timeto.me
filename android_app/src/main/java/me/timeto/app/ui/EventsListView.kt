@@ -112,13 +112,13 @@ fun EventsListView(
         itemsIndexed(
             state.uiEvents,
             key = { _, eventUi -> eventUi.event.id },
-        ) { index, eventUi ->
+        ) { idx, eventUi ->
             EventsListEventView(
                 eventUi = eventUi,
                 bgColor = bgColor,
                 paddingStart = H_PADDING,
                 paddingEnd = 0.dp,
-                withTopDivider = (index > 0),
+                withTopDivider = (state.uiEvents.size - 1) != idx,
             )
         }
     }
