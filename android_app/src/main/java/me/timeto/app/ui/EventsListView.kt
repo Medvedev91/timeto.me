@@ -117,6 +117,7 @@ fun EventsListView(
                 eventUi = eventUi,
                 bgColor = bgColor,
                 paddingStart = H_PADDING,
+                paddingEnd = 0.dp,
                 withTopDivider = (index > 0),
             )
         }

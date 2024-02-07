@@ -24,6 +24,7 @@ fun EventsListEventView(
     eventUi: EventsListVM.EventUi,
     bgColor: Color,
     paddingStart: Dp,
+    paddingEnd: Dp,
     withTopDivider: Boolean,
 ) {
 
@@ -54,7 +55,7 @@ fun EventsListEventView(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(bgColor)
-                .padding(start = paddingStart),
+                .padding(start = paddingStart, end = paddingEnd),
             contentAlignment = Alignment.BottomCenter,
         ) {
 
