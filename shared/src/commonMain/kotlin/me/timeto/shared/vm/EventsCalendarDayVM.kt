@@ -13,7 +13,9 @@ class EventsCalendarDayVM(
         val formDefTime: Int,
         val eventsUi: List<EventsListVM.EventUi>,
         val inNote: String,
-    )
+    ) {
+        val newEventBtnText = "New Event"
+    }
 
     override val state = MutableStateFlow(
         State(

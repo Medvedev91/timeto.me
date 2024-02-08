@@ -51,7 +51,7 @@ fun EventsCalendarDayView(
             SpacerW1()
 
             Text(
-                text = "New Event",
+                text = state.newEventBtnText,
                 modifier = Modifier
                     .clip(roundedShape)
                     .background(c.blue)
