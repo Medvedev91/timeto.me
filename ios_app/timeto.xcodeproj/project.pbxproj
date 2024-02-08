@@ -17,6 +17,7 @@
 		2C4F676F2A5C743D00F6013B /* timer_font.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4F676E2A5C743D00F6013B /* timer_font.otf */; };
 		2C5BD61B2A6076F000AD4042 /* ReadmeSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5BD61A2A6076F000AD4042 /* ReadmeSheet.swift */; };
 		2C672A102B74CC01002BC21C /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C672A0F2B74CC01002BC21C /* EventsView.swift */; };
+		2C672A122B74CF76002BC21C /* EventsCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C672A112B74CF76002BC21C /* EventsCalendarView.swift */; };
 		2C82BF5A28726E400041BCA3 /* WAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C82BF5928726E400041BCA3 /* WAssets.xcassets */; };
 		2C82BF6528726E400041BCA3 /* W_TabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82BF6428726E400041BCA3 /* W_TabsView.swift */; };
 		2C82BF6728726E400041BCA3 /* W_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82BF6628726E400041BCA3 /* W_App.swift */; };
@@ -129,6 +130,7 @@
 		2C4F676E2A5C743D00F6013B /* timer_font.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = timer_font.otf; path = ../android_app/src/main/res/font/timer_font.otf; sourceTree = "<group>"; };
 		2C5BD61A2A6076F000AD4042 /* ReadmeSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadmeSheet.swift; sourceTree = "<group>"; };
 		2C672A0F2B74CC01002BC21C /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsView.swift; sourceTree = "<group>"; };
+		2C672A112B74CF76002BC21C /* EventsCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsCalendarView.swift; sourceTree = "<group>"; };
 		2C82BF5728726E3F0041BCA3 /* timeto.me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = timeto.me.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C82BF5928726E400041BCA3 /* WAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = WAssets.xcassets; sourceTree = "<group>"; };
 		2C82BF6428726E400041BCA3 /* W_TabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = W_TabsView.swift; sourceTree = "<group>"; };
@@ -374,6 +376,7 @@
 				31821F2108CAA3ADBA741879 /* WeekDaysFormView.swift */,
 				3182151D618D3ED8AEE1B80A /* Assets.xcassets */,
 				318218DEA96CCDED8A4C448C /* ui */,
+				2C672A112B74CF76002BC21C /* EventsCalendarView.swift */,
 			);
 			path = iphone;
 			sourceTree = "<group>";
@@ -585,6 +588,7 @@
 				318210C5F98B5CD4E8D8C104 /* FoldersSettingsSheet.swift in Sources */,
 				31821DF8D1DFB408872C85BD /* FolderFormSheet.swift in Sources */,
 				31821AFA9798F3945CA34D09 /* ActivityPickerSheet.swift in Sources */,
+				2C672A122B74CF76002BC21C /* EventsCalendarView.swift in Sources */,
 				3182165F04FA76ED88CD4696 /* TextFeaturesTriggersFormView.swift in Sources */,
 				3182163121ABFB307798FDA9 /* ChecklistsPickerSheet.swift in Sources */,
 				31821D021B3DC7EACD7E4EAA /* ShortcutsPickerSheet.swift in Sources */,
