@@ -31,11 +31,13 @@ struct EventsListView: View {
                                 ForEach(uiEvents, id: \.event.id) { uiEvent in
                                     let isFirst = uiEvents.first == uiEvent
                                     ZStack(alignment: .top) {
-                                        EventItemView(uiEvent: uiEvent)
-                                        if !isFirst {
-                                            DividerBg()
-                                                    .padding(.leading, H_PADDING)
-                                        }
+                                        EventsListEventView(
+                                            eventUi: uiEvent,
+                                            bgColor: c.bg,
+                                            paddingStart: H_PADDING,
+                                            paddingEnd: 0,
+                                            withTopDivider: !isFirst
+                                        )
                                     }
                                 }
                             }
@@ -133,66 +135,5 @@ struct EventsListView: View {
         } else {
             scrollProxy.scrollTo(LIST_BOTTOM_ITEM_ID, anchor: .bottom)
         }
-    }
-}
-
-
-private struct EventItemView: View {
-
-    let uiEvent: EventsListVM.EventUi
-
-    @EnvironmentObject private var nativeSheet: NativeSheet
-
-    var body: some View {
-        MyListSwipeToActionItem(
-                deletionHint: uiEvent.event.text,
-                deletionConfirmationNote: uiEvent.deletionNote,
-                onEdit: {
-                    nativeSheet.EventFormSheet__show(editedEvent: uiEvent.event) {}
-                },
-                onDelete: {
-                    withAnimation {
-                        uiEvent.delete()
-                    }
-                }
-        ) {
-            AnyView(safeView)
-                    .padding(.leading, H_PADDING)
-                    // todo remove after removing MyListSwipeToActionItem()
-                    .background(c.bg)
-        }
-    }
-
-    private var safeView: some View {
-
-        VStack {
-
-            HStack {
-                Text(uiEvent.dateString)
-                        .font(.system(size: 14, weight: .light))
-                        .foregroundColor(.secondary)
-                Spacer()
-                Text(uiEvent.dayLeftString)
-                        .font(.system(size: 14, weight: .light))
-                        .foregroundColor(.secondary)
-            }
-
-            HStack {
-
-                Text(uiEvent.listText)
-                        .lineSpacing(4)
-                        .multilineTextAlignment(.leading)
-                        .myMultilineText()
-
-                Spacer()
-
-                TriggersListIconsView(triggers: uiEvent.textFeatures.triggers, fontSize: 15)
-            }
-                    .padding(.top, 4)
-        }
-                .padding(.top, 10)
-                .padding(.bottom, 10)
-                .foregroundColor(.primary)
-                .id("\(uiEvent.event.id) \(uiEvent.event.text)") /// #TruncationDynamic
     }
 }
