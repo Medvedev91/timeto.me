@@ -95,6 +95,7 @@
 		31821F3DCAF6792F0E78CEBD /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821ACA6C9306A2CD2016A0 /* HistoryView.swift */; };
 		31821F9ADE8CC50422F28059 /* WeekDaysFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821F2108CAA3ADBA741879 /* WeekDaysFormView.swift */; };
 		31821F9CB27F8F5BF61E2D37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3182151D618D3ED8AEE1B80A /* Assets.xcassets */; };
+		31821FB6B5CC8647F2541328 /* EventsListEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821220E2A7C6FBE2EA3D34 /* EventsListEventView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -151,6 +152,7 @@
 		3182118D8EA3E0D889D4FDC3 /* utils_ios.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = utils_ios.swift; sourceTree = "<group>"; };
 		3182118DB415E858D0B449DB /* SummaryChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryChartView.swift; sourceTree = "<group>"; };
 		3182118FAB48EDF7FE78201B /* TasksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksView.swift; sourceTree = "<group>"; };
+		31821220E2A7C6FBE2EA3D34 /* EventsListEventView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsListEventView.swift; sourceTree = "<group>"; };
 		31821287721625075228B91E /* TabReadmeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabReadmeView.swift; sourceTree = "<group>"; };
 		31821290CB27918CD444FBB0 /* ChecklistItemFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChecklistItemFormSheet.swift; sourceTree = "<group>"; };
 		318212B384624F1CF416C576 /* EventFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventFormSheet.swift; sourceTree = "<group>"; };
@@ -380,6 +382,7 @@
 				318218DEA96CCDED8A4C448C /* ui */,
 				2C672A112B74CF76002BC21C /* EventsCalendarView.swift */,
 				3182153700935B575E6144A5 /* EventsCalendarDayView.swift */,
+				31821220E2A7C6FBE2EA3D34 /* EventsListEventView.swift */,
 			);
 			path = iphone;
 			sourceTree = "<group>";
@@ -615,6 +618,7 @@
 				31821859FBE8390BA3346A0E /* EventTemplateFormSheet.swift in Sources */,
 				31821C095E0F97CA52AE37ED /* atm_apple.swift in Sources */,
 				31821B177073394D777AED10 /* EventsCalendarDayView.swift in Sources */,
+				31821FB6B5CC8647F2541328 /* EventsListEventView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
