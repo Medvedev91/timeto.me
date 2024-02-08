@@ -33,7 +33,7 @@ struct EventsCalendarView: View {
 
                 ScrollView(showsIndicators: false) {
 
-                    LazyVStack {
+                    LazyVStack(spacing: 0) {
 
                         ForEachIndexed(state.months) { _, month in
 
@@ -69,10 +69,36 @@ struct EventsCalendarView: View {
                                     ForEachIndexed(week) { _, day in
 
                                         if let day = day {
-                                            VStack {
-                                                Text(day.title)
-                                            }
-                                                    .frame(minWidth: 0, maxWidth: .infinity)
+
+                                            let bgColor: Color = {
+                                                let selectedDay = state.selectedDay?.toInt() ?? -1
+                                                if day.unixDay == selectedDay {
+                                                    return c.blue
+                                                } else if day.isToday {
+                                                    return c.purple
+                                                }
+                                                return c.transparent
+                                            }()
+
+                                            Button(
+                                                action: {
+                                                    vm.setSelectedDay(unixDay: day.unixDay)
+                                                },
+                                                label: {
+
+                                                    VStack {
+
+                                                        DividerBg()
+
+                                                        Text(day.title)
+                                                                .foregroundColor(c.white)
+                                                                .padding(.top, 6)
+                                                    }
+                                                            .padding(.bottom, 2)
+                                                            .frame(minWidth: 0, maxWidth: .infinity)
+                                                }
+                                            )
+                                                    .background(bgColor)
                                         } else {
                                             ZStack {
                                             }
