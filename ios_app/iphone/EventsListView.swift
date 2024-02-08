@@ -139,7 +139,7 @@ struct EventsListView: View {
 
 private struct EventItemView: View {
 
-    let uiEvent: EventsListVM.UiEvent
+    let uiEvent: EventsListVM.EventUi
 
     @EnvironmentObject private var nativeSheet: NativeSheet
 
