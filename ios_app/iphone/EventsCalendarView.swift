@@ -58,6 +58,29 @@ struct EventsCalendarView: View {
                                             .frame(minWidth: 0, maxWidth: .infinity)
                                 }
                             }
+
+                            let weeks = month.weeks as! [[EventsCalendarVM.MonthDay?]]
+
+                            // Fix nested ForEachIndexed()
+                            ForEach(weeks, id: \.self) { week in
+
+                                HStack {
+
+                                    ForEachIndexed(week) { _, day in
+
+                                        if let day = day {
+                                            VStack {
+                                                Text(day.title)
+                                            }
+                                                    .frame(minWidth: 0, maxWidth: .infinity)
+                                        } else {
+                                            ZStack {
+                                            }
+                                                    .frame(minWidth: 0, maxWidth: .infinity)
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
