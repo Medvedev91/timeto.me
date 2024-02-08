@@ -51,6 +51,16 @@ struct EventsCalendarDayView: View {
                     .padding(.horizontal, hPadding)
                     .padding(.vertical, 12)
                     .background(bgColor)
+
+            ForEachIndexed(state.eventsUi) { idx, eventUi in
+                EventsListEventView(
+                    eventUi: eventUi,
+                    bgColor: bgColor,
+                    paddingStart: hPadding,
+                    paddingEnd: hPadding,
+                    withTopDivider: (idx > 0)
+                )
+            }
         }
     }
 }
