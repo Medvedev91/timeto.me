@@ -31,13 +31,15 @@ struct EventsListEventView: View {
 
                 AnyView(safeView)
                         .padding(.leading, paddingStart)
+                        .padding(.trailing, paddingEnd)
                         // todo remove after removing MyListSwipeToActionItem()
-                        .background(c.bg)
+                        .background(bgColor)
             }
 
             if withTopDivider {
                 DividerBg()
-                    .padding(.leading, paddingStart)
+                        .padding(.leading, paddingStart)
+                        .padding(.trailing, paddingEnd)
             }
         }
     }
