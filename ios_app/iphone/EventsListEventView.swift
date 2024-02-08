@@ -35,38 +35,45 @@ struct EventsListEventView: View {
     }
 
     private var safeView: some View {
-
-        VStack {
-
-            HStack {
-
-                Text(eventUi.dateString)
+        
+        ZStack(alignment: .top) {
+            
+            VStack {
+                
+                HStack {
+                    
+                    Text(eventUi.dateString)
                         .font(.system(size: 14, weight: .light))
                         .foregroundColor(.secondary)
-
-                Spacer()
-
-                Text(eventUi.dayLeftString)
+                    
+                    Spacer()
+                    
+                    Text(eventUi.dayLeftString)
                         .font(.system(size: 14, weight: .light))
                         .foregroundColor(.secondary)
-            }
-
-            HStack {
-
-                Text(eventUi.listText)
+                }
+                
+                HStack {
+                    
+                    Text(eventUi.listText)
                         .lineSpacing(4)
                         .multilineTextAlignment(.leading)
                         .myMultilineText()
-
-                Spacer()
-
-                TriggersListIconsView(triggers: eventUi.textFeatures.triggers, fontSize: 15)
+                    
+                    Spacer()
+                    
+                    TriggersListIconsView(triggers: eventUi.textFeatures.triggers, fontSize: 15)
+                }
+                .padding(.top, 4)
             }
-                    .padding(.top, 4)
+            .padding(.top, 10)
+            .padding(.bottom, 10)
+            .foregroundColor(.primary)
+            .id("\(eventUi.event.id) \(eventUi.event.text)") /// #TruncationDynamic
+            
+            if withTopDivider {
+                DividerBg()
+            }
         }
-                .padding(.top, 10)
-                .padding(.bottom, 10)
-                .foregroundColor(.primary)
-                .id("\(eventUi.event.id) \(eventUi.event.text)") /// #TruncationDynamic
     }
 }
