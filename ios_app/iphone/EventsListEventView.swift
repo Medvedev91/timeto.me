@@ -7,6 +7,7 @@ struct EventsListEventView: View {
     let bgColor: Color
     let paddingStart: CGFloat
     let paddingEnd: CGFloat
+    let dividerColor: Color
     let withTopDivider: Bool
 
     @EnvironmentObject private var nativeSheet: NativeSheet
@@ -37,7 +38,7 @@ struct EventsListEventView: View {
             }
 
             if withTopDivider {
-                DividerBg()
+                Divider(color: dividerColor)
                         .padding(.leading, paddingStart)
                         .padding(.trailing, paddingEnd)
             }

@@ -36,6 +36,7 @@ struct EventsListView: View {
                                             bgColor: c.bg,
                                             paddingStart: H_PADDING,
                                             paddingEnd: 0,
+                                            dividerColor: c.dividerBg,
                                             withTopDivider: !isFirst
                                         )
                                     }
