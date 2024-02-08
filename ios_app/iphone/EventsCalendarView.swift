@@ -30,6 +30,37 @@ struct EventsCalendarView: View {
                     DividerBg()
                             .padding(.top, 2.0)
                 }
+
+                ScrollView(showsIndicators: false) {
+
+                    LazyVStack {
+
+                        ForEachIndexed(state.months) { _, month in
+
+                            HStack {
+
+                                ForEach(0..<month.emptyStartDaysCount, id: \.self) { _ in
+                                    ZStack {
+                                    }
+                                            .frame(minWidth: 0, maxWidth: .infinity)
+                                }
+
+                                Text(month.title)
+                                        .frame(minWidth: 0, maxWidth: .infinity)
+                                        .foregroundColor(c.white)
+                                        .padding(.top, 16)
+                                        .padding(.bottom, 8)
+                                        .font(.system(size: 17, weight: .bold))
+
+                                ForEach(0..<month.emptyEndDaysCount, id: \.self) { _ in
+                                    ZStack {
+                                    }
+                                            .frame(minWidth: 0, maxWidth: .infinity)
+                                }
+                            }
+                        }
+                    }
+                }
             }
                     .padding(.horizontal, H_PADDING)
         }
