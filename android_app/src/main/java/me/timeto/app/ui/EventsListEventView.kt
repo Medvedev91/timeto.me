@@ -25,6 +25,7 @@ fun EventsListEventView(
     bgColor: Color,
     paddingStart: Dp,
     paddingEnd: Dp,
+    dividerColor: Color,
     withTopDivider: Boolean,
 ) {
 
@@ -99,7 +100,7 @@ fun EventsListEventView(
             }
 
             if (withTopDivider)
-                DividerBg()
+                Divider(color = dividerColor)
         }
     }
 }

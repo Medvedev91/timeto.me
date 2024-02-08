@@ -118,6 +118,7 @@ fun EventsListView(
                 bgColor = bgColor,
                 paddingStart = H_PADDING,
                 paddingEnd = 0.dp,
+                dividerColor = c.dividerBg,
                 withTopDivider = (state.uiEvents.size - 1) != idx,
             )
         }
