@@ -68,7 +68,7 @@ struct TasksView: View {
                 } else if activeSection is TabTasksView_Section_Repeating {
                     RepeatingsListView()
                 } else if activeSection is TabTasksView_Section_Calendar {
-                    EventsListView()
+                    EventsView()
                 }
 
                 VStack {
