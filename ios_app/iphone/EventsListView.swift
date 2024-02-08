@@ -51,28 +51,28 @@ struct EventsListView: View {
                                     .padding(.leading, MyListView.PADDING_OUTER_HORIZONTAL)
 
                             EventTemplatesView(
-                                    spaceAround: H_PADDING,
-                                    paddingTop: 20
+                                spaceAround: H_PADDING,
+                                paddingTop: 20
                             )
 
                             ZStack(alignment: .trailing) {
 
                                 Button(
-                                        action: {
-                                            nativeSheet.EventFormSheet__show(editedEvent: nil) {
-                                                scrollDown(scrollProxy: scrollProxy, toAnimate: true)
-                                            }
-                                        },
-                                        label: {
-                                            Text("Event")
-                                                    .foregroundColor(.primary)
-                                                    .multilineTextAlignment(.leading)
-                                                    .opacity(0.4)
-                                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                                    .padding(.leading, 18)
-                                                    .padding(.trailing, 6)
-                                                    .padding(.vertical, 8)
+                                    action: {
+                                        nativeSheet.EventFormSheet__show(editedEvent: nil) {
+                                            scrollDown(scrollProxy: scrollProxy, toAnimate: true)
                                         }
+                                    },
+                                    label: {
+                                        Text("Event")
+                                                .foregroundColor(.primary)
+                                                .multilineTextAlignment(.leading)
+                                                .opacity(0.4)
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                                .padding(.leading, 18)
+                                                .padding(.trailing, 6)
+                                                .padding(.vertical, 8)
+                                    }
                                 )
 
                                 Text("DATE")
@@ -102,7 +102,7 @@ struct EventsListView: View {
                 }
             }
         }
-                ///
+            ///
                 .onAppear {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         useAnimation = true
@@ -116,8 +116,8 @@ struct EventsListView: View {
     }
 
     private func scrollDown(
-            scrollProxy: ScrollViewProxy,
-            toAnimate: Bool
+        scrollProxy: ScrollViewProxy,
+        toAnimate: Bool
     ) {
         if (toAnimate) {
             withAnimation {
