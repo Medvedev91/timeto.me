@@ -93,6 +93,15 @@ struct EventsCalendarView: View {
                                                         Text(day.title)
                                                                 .foregroundColor(day.isBusiness ? c.white : c.textSecondary)
                                                                 .padding(.top, 6)
+
+                                                        ForEach(day.previews, id: \.self) { preview in
+
+                                                            Text(preview)
+                                                                    .padding(.horizontal, 1)
+                                                                    .foregroundColor(c.textSecondary)
+                                                                    .font(.system(size: 11, weight: .light))
+                                                                    .lineLimit(1)
+                                                        }
                                                     }
                                                             .padding(.bottom, 2)
                                                             .frame(minWidth: 0, maxWidth: .infinity)
