@@ -48,7 +48,7 @@ struct EventsCalendarView: View {
                                 Text(month.title)
                                         .frame(minWidth: 0, maxWidth: .infinity)
                                         .foregroundColor(c.white)
-                                        .padding(.top, 16)
+                                        .padding(.top, 24)
                                         .padding(.bottom, 8)
                                         .font(.system(size: 17, weight: .bold))
 
