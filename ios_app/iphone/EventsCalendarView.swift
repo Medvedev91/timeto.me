@@ -126,6 +126,8 @@ struct EventsCalendarView: View {
                                 let isDaySelected = selectedDay != nil
                                 if isDaySelected {
                                     EventsCalendarDayView(unixDay: selectedDay!!.unixDay.toInt())
+                                        // Force update on selectedDay changes
+                                            .id("EventsCalendarDayView_\(selectedDay!!.unixDay)")
                                 }
                             }
                         }
