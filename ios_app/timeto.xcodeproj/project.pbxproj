@@ -76,6 +76,7 @@
 		31821A947CB3AFF5CE923090 /* ShortcutFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182106A0DA4A0D8844CFA11 /* ShortcutFormSheet.swift */; };
 		31821AAC3BB87DE0D8E46697 /* TasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182118FAB48EDF7FE78201B /* TasksView.swift */; };
 		31821AFA9798F3945CA34D09 /* ActivityPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821A15532BF8D598665449 /* ActivityPickerSheet.swift */; };
+		31821B177073394D777AED10 /* EventsCalendarDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182153700935B575E6144A5 /* EventsCalendarDayView.swift */; };
 		31821BC7F849A5C918F61175 /* ActivityColorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318211488ABF627A2A9935A7 /* ActivityColorSheet.swift */; };
 		31821BCA3B405E8B0F65AB72 /* DividerFg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821CCA60BF87AA05635423 /* DividerFg.swift */; };
 		31821BCAB8BA795D691FADF8 /* MyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821D7654D0C105DFC60DDD /* MyListView.swift */; };
@@ -163,6 +164,7 @@
 		3182151D618D3ED8AEE1B80A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3182151E7DF53609AA812ED1 /* TimerHintsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerHintsView.swift; sourceTree = "<group>"; };
 		31821527096D1BDB0A35B178 /* TimetoAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetoAlert.swift; sourceTree = "<group>"; };
+		3182153700935B575E6144A5 /* EventsCalendarDayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsCalendarDayView.swift; sourceTree = "<group>"; };
 		3182157C5CB954867515B4BA /* TriggersListIconsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggersListIconsView.swift; sourceTree = "<group>"; };
 		318215C1991B23DE1654074B /* SettingsSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSheet.swift; sourceTree = "<group>"; };
 		3182161C9947F88C6A1D3B80 /* W_TabTasksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W_TabTasksView.swift; sourceTree = "<group>"; };
@@ -377,6 +379,7 @@
 				3182151D618D3ED8AEE1B80A /* Assets.xcassets */,
 				318218DEA96CCDED8A4C448C /* ui */,
 				2C672A112B74CF76002BC21C /* EventsCalendarView.swift */,
+				3182153700935B575E6144A5 /* EventsCalendarDayView.swift */,
 			);
 			path = iphone;
 			sourceTree = "<group>";
@@ -611,6 +614,7 @@
 				31821EE26161D262CC020E3D /* SummarySheet.swift in Sources */,
 				31821859FBE8390BA3346A0E /* EventTemplateFormSheet.swift in Sources */,
 				31821C095E0F97CA52AE37ED /* atm_apple.swift in Sources */,
+				31821B177073394D777AED10 /* EventsCalendarDayView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -115,6 +115,18 @@ struct EventsCalendarView: View {
                                         }
                                     }
                                 }
+
+                                let selectedDay = week.first { item in
+                                    if let item = item, let selectedDay = state.selectedDay {
+                                        return item.unixDay.toInt() == selectedDay.toInt()
+                                    }
+                                    return false
+                                }
+
+                                let isDaySelected = selectedDay != nil
+                                if isDaySelected {
+                                    EventsCalendarDayView(unixDay: selectedDay!!.unixDay.toInt())
+                                }
                             }
                         }
                     }
