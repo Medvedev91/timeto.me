@@ -1,9 +1,13 @@
 import SwiftUI
 import shared
 
+private let bgColor = c.fg
+private let hPadding = 8.0
+
 struct EventsCalendarDayView: View {
 
     @State private var vm: EventsCalendarDayVM
+    @EnvironmentObject private var nativeSheet: NativeSheet
 
     init(
         unixDay: Int
@@ -13,9 +17,40 @@ struct EventsCalendarDayView: View {
 
     var body: some View {
 
-        VMView(vm: vm) { state in
+        VMView(vm: vm, stack: .VStack()) { state in
 
-            Text("eee")
+            Divider(color: c.blue)
+
+            HStack {
+
+                Text(state.inNote)
+                        .font(.system(size: 15))
+                        .foregroundColor(.white)
+
+                Spacer()
+
+                Button(
+                    action: {
+                        nativeSheet.EventFormSheet__show(
+                            editedEvent: nil,
+                            defTime: state.formDefTime.toInt()
+                        ) {
+                        }
+                    },
+                    label: {
+                        Text(state.newEventBtnText)
+                                .font(.system(size: 14, weight: .medium))
+                                .foregroundColor(c.white)
+                                .padding(.horizontal, 9)
+                                .padding(.top, 4)
+                                .padding(.bottom, 4)
+                    }
+                )
+                        .background(roundedShape.fill(c.blue))
+            }
+                    .padding(.horizontal, hPadding)
+                    .padding(.vertical, 12)
+                    .background(bgColor)
         }
     }
 }
