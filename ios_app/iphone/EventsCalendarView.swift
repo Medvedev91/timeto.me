@@ -91,7 +91,7 @@ struct EventsCalendarView: View {
                                                         DividerBg()
 
                                                         Text(day.title)
-                                                                .foregroundColor(c.white)
+                                                                .foregroundColor(day.isBusiness ? c.white : c.textSecondary)
                                                                 .padding(.top, 6)
                                                     }
                                                             .padding(.bottom, 2)
