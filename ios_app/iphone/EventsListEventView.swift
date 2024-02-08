@@ -13,67 +13,69 @@ struct EventsListEventView: View {
 
     var body: some View {
 
-        MyListSwipeToActionItem(
-            deletionHint: eventUi.event.text,
-            deletionConfirmationNote: eventUi.deletionNote,
-            onEdit: {
-                nativeSheet.EventFormSheet__show(editedEvent: eventUi.event) {
-                }
-            },
-            onDelete: {
-                withAnimation {
-                    eventUi.delete()
-                }
-            }
-        ) {
+        ZStack(alignment: .top) {
 
-            AnyView(safeView)
-                    .padding(.leading, H_PADDING)
-                    // todo remove after removing MyListSwipeToActionItem()
-                    .background(c.bg)
+            MyListSwipeToActionItem(
+                deletionHint: eventUi.event.text,
+                deletionConfirmationNote: eventUi.deletionNote,
+                onEdit: {
+                    nativeSheet.EventFormSheet__show(editedEvent: eventUi.event) {
+                    }
+                },
+                onDelete: {
+                    withAnimation {
+                        eventUi.delete()
+                    }
+                }
+            ) {
+
+                AnyView(safeView)
+                        .padding(.leading, paddingStart)
+                        // todo remove after removing MyListSwipeToActionItem()
+                        .background(c.bg)
+            }
+
+            if withTopDivider {
+                DividerBg()
+                    .padding(.leading, paddingStart)
+            }
         }
     }
 
     private var safeView: some View {
-        
-        ZStack(alignment: .top) {
-            
-            VStack {
-                
-                HStack {
-                    
-                    Text(eventUi.dateString)
+
+        VStack {
+
+            HStack {
+
+                Text(eventUi.dateString)
                         .font(.system(size: 14, weight: .light))
                         .foregroundColor(.secondary)
-                    
-                    Spacer()
-                    
-                    Text(eventUi.dayLeftString)
+
+                Spacer()
+
+                Text(eventUi.dayLeftString)
                         .font(.system(size: 14, weight: .light))
                         .foregroundColor(.secondary)
-                }
-                
-                HStack {
-                    
-                    Text(eventUi.listText)
+            }
+
+            HStack {
+
+                Text(eventUi.listText)
                         .lineSpacing(4)
                         .multilineTextAlignment(.leading)
                         .myMultilineText()
-                    
-                    Spacer()
-                    
-                    TriggersListIconsView(triggers: eventUi.textFeatures.triggers, fontSize: 15)
-                }
-                .padding(.top, 4)
+
+                Spacer()
+
+                TriggersListIconsView(triggers: eventUi.textFeatures.triggers, fontSize: 15)
             }
-            .padding(.top, 10)
-            .padding(.bottom, 10)
-            .foregroundColor(.primary)
-            .id("\(eventUi.event.id) \(eventUi.event.text)") /// #TruncationDynamic
-            
-            if withTopDivider {
-                DividerBg()
-            }
+                    .padding(.top, 4)
         }
+                .padding(.top, 10)
+                .padding(.bottom, 10)
+                .foregroundColor(.primary)
+                .id("\(eventUi.event.id) \(eventUi.event.text)") /// #TruncationDynamic
+
     }
 }
