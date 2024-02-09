@@ -334,9 +334,10 @@ struct SettingsSheet: View {
                 }
 
                 HStack {
-                    Text("timeto.me for iOS v" + state.appVersion)
+                    Text("timeto.me for iOS\nv\(Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String).\(state.appVersion)")
                             .foregroundColor(.secondary)
                             .font(.system(size: 16))
+                            .multilineTextAlignment(.center)
                 }
                         .padding(.top, 24)
                         .padding(.bottom, 34)
