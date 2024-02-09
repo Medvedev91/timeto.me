@@ -207,14 +207,6 @@ private fun syncTmrw() {
 
 private suspend fun fillInitData() {
     try {
-        /**
-         * In iOS, the data in the keychain is saved even after uninstalling
-         * the app, when initializing it is better to clean it. Otherwise:
-         * - Reinstalling will not always "save" in any unclear situation;
-         * - If it applies to different devices, there may be more than one
-         *   device for one user.
-         */
-        SecureLocalStorage__Key.values().forEach { it.upsert(null) }
         syncTodayEventsLastDay = null
         syncTodayRepeatingLastDay = null
         pingLastDay = null
