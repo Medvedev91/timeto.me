@@ -140,7 +140,7 @@ private suspend fun ping() {
                 throw Exception("status != success\n$plainJson")
             val jData = j.jsonObject["data"]!!.jsonObject
             KvDb.KEY.TOKEN.upsert(jData.getString("token"))
-            SecureLocalStorage__Key.feedback_subject.upsert(jData.getString("feedback_subject"))
+            KvDb.KEY.FEEDBACK_SUBJECT.upsert(jData.getString("feedback_subject"))
             pingLastDay = today // After success
         }
     } catch (e: Throwable) {

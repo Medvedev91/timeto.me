@@ -78,7 +78,7 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
             state.update { it.copy(autoBackupTimeString = prepAutoBackupTimeString(unixTime)) }
         }
         scope.launchEx {
-            val subject = SecureLocalStorage__Key.feedback_subject.getOrNull()
+            val subject = KvDb.KEY.FEEDBACK_SUBJECT.selectOrNull()
             if (subject != null)
                 state.update { it.copy(feedbackSubject = subject) }
         }
