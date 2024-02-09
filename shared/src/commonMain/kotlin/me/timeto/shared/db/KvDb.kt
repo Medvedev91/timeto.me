@@ -51,6 +51,8 @@ data class KvDb(
         TOKEN_PASSWORD,
         FEEDBACK_SUBJECT;
 
+        suspend fun selectOrNull(): String? = getAll().firstOrNull { it.key == this.name }?.value
+
         fun getFromDIOrNull(): String? = DI.kv.firstOrNull { it.key == this.name }?.value
 
         fun getOrNullFlow() = db.kVQueries.getByKey(this.name).asFlow()
