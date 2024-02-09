@@ -128,8 +128,9 @@ private suspend fun ping() {
     try {
         HttpClient().use { client ->
             val httpResponse = client.get("https://api.timeto.me/ping") {
+                val password = getsertTokenPassword()
                 url {
-                    parameters.append("password", getsertTokenPassword())
+                    parameters.append("password", password)
                     appendDeviceData()
                 }
             }
@@ -147,15 +148,14 @@ private suspend fun ping() {
     }
 }
 
-@Throws(SecureLocalStorage__Exception::class)
-private fun getsertTokenPassword(): String {
-    val oldPassword = SecureLocalStorage__Key.token_password.getOrNull()
+private suspend fun getsertTokenPassword(): String {
+    val oldPassword = KvDb.KEY.TOKEN_PASSWORD.selectOrNull()
     if (oldPassword != null)
         return oldPassword
 
     val chars = ('0'..'9') + ('a'..'z') + ('A'..'Z') + ("!@#%^&*()_+".toList())
     val newPassword = (1..15).map { chars.random() }.joinToString("")
-    SecureLocalStorage__Key.token_password.upsert(newPassword)
+    KvDb.KEY.TOKEN_PASSWORD.upsert(newPassword)
     return newPassword
 }
 
