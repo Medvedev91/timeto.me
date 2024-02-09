@@ -46,7 +46,8 @@ data class KvDb(
 
     enum class KEY {
 
-        DAY_START_OFFSET_SECONDS;
+        DAY_START_OFFSET_SECONDS,
+        TOKEN;
 
         fun getFromDIOrNull(): String? = DI.kv.firstOrNull { it.key == this.name }?.value
 
