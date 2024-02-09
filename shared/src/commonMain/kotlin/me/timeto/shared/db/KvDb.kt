@@ -18,9 +18,10 @@ data class KvDb(
 
     companion object : Backupable__Holder {
 
-        suspend fun getAll() = dbIO {
+        suspend fun getAll(): List<KvDb> = dbIO { selectAllPlain() }
+
+        fun selectAllPlain(): List<KvDb> =
             db.kVQueries.getAll().executeAsList().map { it.toModel() }
-        }
 
         fun getAllFlow() = db.kVQueries.getAll().asFlow()
             .mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
