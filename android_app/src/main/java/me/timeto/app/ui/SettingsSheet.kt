@@ -512,13 +512,14 @@ fun SettingsSheet(
                 Row {
 
                     Text(
-                        text = "timeto.me for Android v${state.appVersion}-${BuildConfig.FLAVOR}",
+                        text = "timeto.me for Android\nv${BuildConfig.VERSION_NAME}.${state.appVersion}-${BuildConfig.FLAVOR}",
                         modifier = Modifier
                             .padding(top = 24.dp)
                             .weight(1f),
                         color = c.textSecondary,
                         fontSize = 15.sp,
                         textAlign = TextAlign.Center,
+                        lineHeight = 20.sp,
                     )
                 }
             }
