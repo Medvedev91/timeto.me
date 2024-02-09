@@ -94,7 +94,6 @@ fun taskAutostartData(
     return activity to timerTime
 }
 
-@Throws(SecureLocalStorage__Exception::class)
 fun HttpRequestBuilder.appendDeviceData() {
 
     val token: String? = try {
@@ -500,34 +499,6 @@ internal fun initKmm(
     deviceData = deviceData_
     initKmmDeferred = defaultScope().async { DI.init() }
 }
-
-///
-/// Secure Local Storage
-
-internal expect object SecureLocalStorage {
-
-    @Throws(SecureLocalStorage__Exception::class)
-    fun getOrNull(key: SecureLocalStorage__Key): String?
-
-    @Throws(SecureLocalStorage__Exception::class)
-    fun upsert(key: SecureLocalStorage__Key, value: String?)
-}
-
-// TRICK Do not change constants, it's used as storage keys
-internal enum class SecureLocalStorage__Key {
-
-    temp, token, token_password, feedback_subject;
-
-    @Throws(SecureLocalStorage__Exception::class)
-    fun getOrNull() = SecureLocalStorage.getOrNull(this)
-
-    @Throws(SecureLocalStorage__Exception::class)
-    fun upsert(value: String?) = SecureLocalStorage.upsert(this, value)
-}
-
-internal class SecureLocalStorage__Exception(
-    override val message: String,
-) : Exception(message)
 
 ///
 /// Time

@@ -20,14 +20,3 @@ fun initKmmWatchOS() {
 actual fun getResourceContent(file: String, type: String): String {
     TODO("WatchOS getResourceContent() not implemented")
 }
-
-internal actual object SecureLocalStorage {
-
-    actual fun getOrNull(key: SecureLocalStorage__Key): String? {
-        TODO("WatchOS SecureLocalStorage.getOrNull() not implemented")
-    }
-
-    actual fun upsert(key: SecureLocalStorage__Key, value: String?) {
-        TODO("WatchOS SecureLocalStorage.upsert() not implemented")
-    }
-}

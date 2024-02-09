@@ -2,8 +2,6 @@ package me.timeto.shared
 
 import android.app.Application
 import android.os.Build
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKey
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import me.timeto.appdbsq.TimetomeDB
 import me.timeto.shared.db.DB_NAME
@@ -44,34 +42,3 @@ actual fun getResourceContent(file: String, type: String) = androidApplication
             reader.readText()
         }
     }
-
-internal actual object SecureLocalStorage {
-
-    // ESP - Encrypted Shared Preferences
-    // https://developer.android.com/reference/androidx/security/crypto/EncryptedSharedPreferences
-    // todo https://developer.android.com/jetpack/androidx/releases/security
-    // todo https://issuetracker.google.com/issues/164901843
-
-    private val espMasterKey by lazy {
-        MasterKey.Builder(androidApplication)
-            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-            .build()
-    }
-
-    private val esp by lazy {
-        EncryptedSharedPreferences.create(
-            androidApplication,
-            "timetome_encrypted_shared_preferences_v2",
-            espMasterKey,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM,
-        )
-    }
-
-    actual fun getOrNull(key: SecureLocalStorage__Key): String? =
-        esp.getString(key.name, null)
-
-    actual fun upsert(key: SecureLocalStorage__Key, value: String?) {
-        esp.edit().putString(key.name, value).apply()
-    }
-}
