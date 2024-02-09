@@ -96,8 +96,17 @@ fun taskAutostartData(
 
 @Throws(SecureLocalStorage__Exception::class)
 fun HttpRequestBuilder.appendDeviceData() {
+
+    val token: String? = try {
+        // todo no plain?
+        KvDb.KEY.TOKEN.selectOrNullPlain()
+    } catch (e: Throwable) {
+        // todo report fallback
+        null
+    }
+
     url {
-        parameters.append("__token", SecureLocalStorage__Key.token.getOrNull() ?: "")
+        parameters.append("__token", token ?: "")
         parameters.append("__build", deviceData.build.toString())
         parameters.append("__os", deviceData.os)
         parameters.append("__device", deviceData.device)
