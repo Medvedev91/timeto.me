@@ -26,7 +26,7 @@ android {
 
     flavorDimensions += "type"
     productFlavors {
-        create("common") {
+        create("base") {
             dimension = "type"
         }
         create("fdroid") {
