@@ -15,8 +15,6 @@ import me.timeto.appdbsq.TimetomeDB
 import me.timeto.shared.db.*
 import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
 
-var isFDroid = false
-
 const val BREAK_SECONDS = 5 * 60
 const val GOLDEN_RATIO = 1.618f
 
@@ -26,7 +24,7 @@ var isBatteryChargingOrNull: Boolean? = null
 
 internal expect val REPORT_API_TITLE: String
 fun reportApi(message: String) {
-    if (isFDroid)
+    if (deviceData.isFdroid)
         return
 
     // Not launchEx because of recursion
@@ -639,4 +637,6 @@ internal data class DeviceData(
     val os: String,
     val device: String,
     val flavor: String?,
-)
+) {
+    val isFdroid = (flavor == "fdroid")
+}

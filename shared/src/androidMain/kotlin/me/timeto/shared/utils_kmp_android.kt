@@ -18,7 +18,6 @@ fun initKmmAndroid(
     build: Int,
     flavor: String,
 ) {
-    isFDroid = flavor == "fdroid"
     androidApplication = application
 
     val manufacturer = Build.MANUFACTURER

@@ -118,7 +118,7 @@ private fun performShortcut(
 
 private var pingLastDay: Int? = null
 private suspend fun ping() {
-    if (isFDroid)
+    if (deviceData.isFdroid)
         return
 
     val today = UnixTime().localDay
