@@ -48,7 +48,8 @@ data class KvDb(
 
         DAY_START_OFFSET_SECONDS,
         TOKEN,
-        TOKEN_PASSWORD;
+        TOKEN_PASSWORD,
+        FEEDBACK_SUBJECT;
 
         fun getFromDIOrNull(): String? = DI.kv.firstOrNull { it.key == this.name }?.value
 
