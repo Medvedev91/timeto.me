@@ -12,6 +12,7 @@ fun initKmmWatchOS() {
         build = (NSBundle.mainBundle.infoDictionary!!["CFBundleVersion"] as String).toInt(),
         os = "watchos-${WKInterfaceDevice.currentDevice().systemVersion}",
         device = machineIdentifier(),
+        flavor = null,
     )
     initKmm(createNativeDriver(DB_NAME, TimetomeDB.Schema), deviceData)
 }

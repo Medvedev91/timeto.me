@@ -19,6 +19,7 @@ fun initKmmIos() {
         build = (NSBundle.mainBundle.infoDictionary!!["CFBundleVersion"] as String).toInt(),
         os = "ios-${UIDevice.currentDevice.systemVersion}",
         device = machineIdentifier(),
+        flavor = null,
     )
     initKmm(createNativeDriver(DB_NAME, TimetomeDB.Schema), deviceData)
     listenForSyncWatch()

@@ -637,4 +637,5 @@ internal data class DeviceData(
     val build: Int,
     val os: String,
     val device: String,
+    val flavor: String?,
 )

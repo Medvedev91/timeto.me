@@ -16,9 +16,9 @@ internal actual val REPORT_API_TITLE = "🤖 Android"
 fun initKmmAndroid(
     application: Application,
     build: Int,
-    isFDroid_: Boolean,
+    flavor: String,
 ) {
-    isFDroid = isFDroid_
+    isFDroid = flavor == "fdroid"
     androidApplication = application
 
     val manufacturer = Build.MANUFACTURER
@@ -29,6 +29,7 @@ fun initKmmAndroid(
         build = build,
         os = "android-${Build.VERSION.RELEASE}",
         device = deviceName,
+        flavor = flavor,
     )
     initKmm(AndroidSqliteDriver(TimetomeDB.Schema, application, DB_NAME), deviceData)
 }
