@@ -103,6 +103,7 @@ fun HttpRequestBuilder.appendDeviceData() {
         parameters.append("__build", deviceData.build.toString())
         parameters.append("__os", deviceData.os)
         parameters.append("__device", deviceData.device)
+        parameters.append("__flavor", deviceData.flavor ?: "")
     }
 }
 
