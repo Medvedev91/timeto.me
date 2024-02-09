@@ -38,13 +38,14 @@ struct SettingsSheet: View {
         VMView(vm: vm, stack: .VStack()) { state in
 
             SheetHeaderView(
-                    onCancel: { isPresented.toggle() },
-                    title: state.headerTitle,
-                    doneText: nil,
-                    isDoneEnabled: false,
-                    scrollToHeader: sheetHeaderScroll,
-                    cancelText: "Back"
-            ) {}
+                onCancel: { isPresented.toggle() },
+                title: state.headerTitle,
+                doneText: nil,
+                isDoneEnabled: false,
+                scrollToHeader: sheetHeaderScroll,
+                cancelText: "Back"
+            ) {
+            }
 
             ScrollViewWithVListener(showsIndicators: false, vScroll: $sheetHeaderScroll) {
 
@@ -58,17 +59,17 @@ struct SettingsSheet: View {
                         MyListView__Padding__SectionHeader()
 
                         MyListView__HeaderView(
-                                title: "CHECKLISTS",
-                                rightView: AnyView(
-                                        Button(
-                                                action: {
-                                                    isAddChecklistPresented.toggle()
-                                                },
-                                                label: {
-                                                    Image(systemName: "plus")
-                                                }
-                                        )
+                            title: "CHECKLISTS",
+                            rightView: AnyView(
+                                Button(
+                                    action: {
+                                        isAddChecklistPresented.toggle()
+                                    },
+                                    label: {
+                                        Image(systemName: "plus")
+                                    }
                                 )
+                            )
                         )
 
                         MyListView__Padding__HeaderSection()
@@ -77,9 +78,9 @@ struct SettingsSheet: View {
                         ForEach(checklists, id: \.id) { checklist in
                             let isFirst = checklists.first == checklist
                             MyListView__ItemView(
-                                    isFirst: isFirst,
-                                    isLast: checklists.last == checklist,
-                                    withTopDivider: !isFirst
+                                isFirst: isFirst,
+                                isLast: checklists.last == checklist,
+                                withTopDivider: !isFirst
                             ) {
                                 ToolsView_ChecklistView(checklist: checklist)
                             }
@@ -94,17 +95,17 @@ struct SettingsSheet: View {
                         MyListView__Padding__SectionHeader()
 
                         MyListView__HeaderView(
-                                title: "SHORTCUTS",
-                                rightView: AnyView(
-                                        Button(
-                                                action: {
-                                                    isAddShortcutPresented.toggle()
-                                                },
-                                                label: {
-                                                    Image(systemName: "plus")
-                                                }
-                                        )
+                            title: "SHORTCUTS",
+                            rightView: AnyView(
+                                Button(
+                                    action: {
+                                        isAddShortcutPresented.toggle()
+                                    },
+                                    label: {
+                                        Image(systemName: "plus")
+                                    }
                                 )
+                            )
                         )
 
                         MyListView__Padding__HeaderSection()
@@ -113,9 +114,9 @@ struct SettingsSheet: View {
                         ForEach(shortcuts, id: \.id) { shortcut in
                             let isFirst = shortcuts.first == shortcut
                             MyListView__ItemView(
-                                    isFirst: isFirst,
-                                    isLast: shortcuts.last == shortcut,
-                                    withTopDivider: !isFirst
+                                isFirst: isFirst,
+                                isLast: shortcuts.last == shortcut,
+                                withTopDivider: !isFirst
                             ) {
                                 ToolsView_ShortcutView(shortcut: shortcut)
                             }
@@ -130,23 +131,23 @@ struct SettingsSheet: View {
                         MyListView__Padding__SectionHeader()
 
                         MyListView__HeaderView(
-                                title: "NOTES",
-                                rightView: AnyView(
-                                        Button(
-                                                action: {
-                                                    nativeSheet.show { isPresented in
-                                                        NoteFormSheet(
-                                                                isPresented: isPresented,
-                                                                note: nil,
-                                                                onDelete: {}
-                                                        )
-                                                    }
-                                                },
-                                                label: {
-                                                    Image(systemName: "plus")
-                                                }
-                                        )
+                            title: "NOTES",
+                            rightView: AnyView(
+                                Button(
+                                    action: {
+                                        nativeSheet.show { isPresented in
+                                            NoteFormSheet(
+                                                isPresented: isPresented,
+                                                note: nil,
+                                                onDelete: {}
+                                            )
+                                        }
+                                    },
+                                    label: {
+                                        Image(systemName: "plus")
+                                    }
                                 )
+                            )
                         )
 
                         MyListView__Padding__HeaderSection()
@@ -155,9 +156,9 @@ struct SettingsSheet: View {
                         ForEach(notes, id: \.id) { note in
                             let isFirst = notes.first == note
                             MyListView__ItemView(
-                                    isFirst: isFirst,
-                                    isLast: notes.last == note,
-                                    withTopDivider: !isFirst
+                                isFirst: isFirst,
+                                isLast: notes.last == note,
+                                withTopDivider: !isFirst
                             ) {
                                 NoteListItemView(note: note)
                             }
@@ -176,12 +177,12 @@ struct SettingsSheet: View {
                         MyListView__Padding__HeaderSection()
 
                         MyListView__ItemView(
-                                isFirst: true,
-                                isLast: false
+                            isFirst: true,
+                            isLast: false
                         ) {
                             MyListView__ItemView__ButtonView(
-                                    text: "Folders",
-                                    withArrow: true
+                                text: "Folders",
+                                withArrow: true
                             ) {
                                 isFoldersSettingsPresented = true
                             }
@@ -191,25 +192,25 @@ struct SettingsSheet: View {
                         }
 
                         MyListView__ItemView(
-                                isFirst: false,
-                                isLast: true,
-                                withTopDivider: true
+                            isFirst: false,
+                            isLast: true,
+                            withTopDivider: true
                         ) {
                             MyListView__ItemView__ButtonView(
-                                    text: "Day Start",
-                                    rightView: AnyView(
-                                            MyListView__ItemView__ButtonView__RightText(
-                                                    text: state.dayStartNote
-                                            )
+                                text: "Day Start",
+                                rightView: AnyView(
+                                    MyListView__ItemView__ButtonView__RightText(
+                                        text: state.dayStartNote
                                     )
+                                )
                             ) {
                                 isDayStartPresented = true
                             }
                                     .sheetEnv(isPresented: $isDayStartPresented) {
                                         DayStartDialog(
-                                                isPresented: $isDayStartPresented,
-                                                settingsSheetVM: vm,
-                                                settingsSheetState: state
+                                            isPresented: $isDayStartPresented,
+                                            settingsSheetVM: vm,
+                                            settingsSheetState: state
                                         )
                                     }
                         }
@@ -227,8 +228,8 @@ struct SettingsSheet: View {
                         MyListView__Padding__HeaderSection()
 
                         MyListView__ItemView(
-                                isFirst: true,
-                                isLast: false
+                            isFirst: true,
+                            isLast: false
                         ) {
 
                             MyListView__ItemView__ButtonView(text: "Create") {
@@ -242,9 +243,9 @@ struct SettingsSheet: View {
                         }
 
                         MyListView__ItemView(
-                                isFirst: false,
-                                isLast: false,
-                                withTopDivider: true
+                            isFirst: false,
+                            isLast: false,
+                            withTopDivider: true
                         ) {
 
                             MyListView__ItemView__ButtonView(text: "Restore") {
@@ -253,18 +254,18 @@ struct SettingsSheet: View {
                         }
 
                         MyListView__ItemView(
-                                isFirst: false,
-                                isLast: true,
-                                withTopDivider: true
+                            isFirst: false,
+                            isLast: true,
+                            withTopDivider: true
                         ) {
 
                             MyListView__ItemView__ButtonView(
-                                    text: "Auto Backup",
-                                    rightView: AnyView(
-                                            MyListView__ItemView__ButtonView__RightText(
-                                                    text: state.autoBackupTimeString
-                                            )
+                                text: "Auto Backup",
+                                rightView: AnyView(
+                                    MyListView__ItemView__ButtonView__RightText(
+                                        text: state.autoBackupTimeString
                                     )
+                                )
                             ) {
                                 // todo do catch
                                 // https://stackoverflow.com/a/64592118/5169420
@@ -283,9 +284,9 @@ struct SettingsSheet: View {
                     MyListView__Padding__SectionHeader()
 
                     MyListView__ItemView(
-                            isFirst: true,
-                            isLast: false,
-                            withTopDivider: false
+                        isFirst: true,
+                        isLast: false,
+                        withTopDivider: false
                     ) {
                         MyListView__ItemView__ButtonView(text: "How to Use") {
                             isReadmePresented.toggle()
@@ -296,9 +297,9 @@ struct SettingsSheet: View {
                             }
 
                     MyListView__ItemView(
-                            isFirst: false,
-                            isLast: false,
-                            withTopDivider: true
+                        isFirst: false,
+                        isLast: false,
+                        withTopDivider: true
                     ) {
                         MyListView__ItemView__ButtonView(text: "Ask a Question") {
                             if (MFMailComposeViewController.canSendMail()) {
@@ -312,18 +313,18 @@ struct SettingsSheet: View {
                         }
                                 .sheetEnv(isPresented: $isMailViewPresented) {
                                     MailView(
-                                            toEmail: state.feedbackEmail,
-                                            subject: state.feedbackSubject,
-                                            body: nil,
-                                            result: $mailViewResult
+                                        toEmail: state.feedbackEmail,
+                                        subject: state.feedbackSubject,
+                                        body: nil,
+                                        result: $mailViewResult
                                     )
                                 }
                     }
 
                     MyListView__ItemView(
-                            isFirst: false,
-                            isLast: true,
-                            withTopDivider: true
+                        isFirst: false,
+                        isLast: true,
+                        withTopDivider: true
                     ) {
 
                         MyListView__ItemView__ButtonView(text: "Open Source") {
@@ -362,12 +363,12 @@ struct SettingsSheet: View {
                     // }
                 }
                 .fileExporter(
-                        isPresented: $isFileExporterPresented,
-                        document: fileForExport,
-                        // I do not know why, but I have to set contentType.
-                        // It also set in MyJsonFileDocument.
-                        contentType: .json,
-                        defaultFilename: fileForExportName
+                    isPresented: $isFileExporterPresented,
+                    document: fileForExport,
+                    // I do not know why, but I have to set contentType.
+                    // It also set in MyJsonFileDocument.
+                    contentType: .json,
+                    defaultFilename: fileForExportName
                 ) { result in
                     switch result {
                     case .success(let url):
@@ -434,9 +435,9 @@ struct SettingsSheet: View {
         private let settingsSheetState: SettingsSheetVM.State
 
         init(
-                isPresented: Binding<Bool>,
-                settingsSheetVM: SettingsSheetVM,
-                settingsSheetState: SettingsSheetVM.State
+            isPresented: Binding<Bool>,
+            settingsSheetVM: SettingsSheetVM,
+            settingsSheetState: SettingsSheetVM.State
         ) {
             _isPresented = isPresented
             self.settingsSheetVM = settingsSheetVM
@@ -451,24 +452,24 @@ struct SettingsSheet: View {
                 HStack {
 
                     Button(
-                            action: { isPresented.toggle() },
-                            label: { Text("Cancel") }
+                        action: { isPresented.toggle() },
+                        label: { Text("Cancel") }
                     )
                             .padding(.leading, 25)
 
                     Spacer()
 
                     Button(
-                            action: {
-                                settingsSheetVM.upDayStartOffsetSeconds(seconds: selectedDayStart) {
-                                    isPresented = false
-                                }
-                            },
-                            label: {
-                                Text("Save")
-                                        .fontWeight(.heavy)
-                                        .padding(.trailing, 25)
+                        action: {
+                            settingsSheetVM.upDayStartOffsetSeconds(seconds: selectedDayStart) {
+                                isPresented = false
                             }
+                        },
+                        label: {
+                            Text("Save")
+                                    .fontWeight(.heavy)
+                                    .padding(.trailing, 25)
+                        }
                     )
                 }
                         .padding(.top, 20)
@@ -476,8 +477,8 @@ struct SettingsSheet: View {
                 Spacer()
 
                 Picker(
-                        "",
-                        selection: $selectedDayStart
+                    "",
+                    selection: $selectedDayStart
                 ) {
                     ForEach(settingsSheetState.dayStartListItems, id: \.seconds) { item in
                         Text(item.note).tag(item.seconds)
@@ -501,16 +502,16 @@ struct ToolsView_ChecklistView: View {
 
     var body: some View {
         MyListSwipeToActionItem(
-                deletionHint: checklist.name,
-                deletionConfirmationNote: "Are you sure you want to delete \"\(checklist.name)\" checklist?",
-                onEdit: {
-                    isEditPresented = true
-                },
-                onDelete: {
-                    checklist.deleteWithDependencies { _ in
-                        // todo
-                    }
+            deletionHint: checklist.name,
+            deletionConfirmationNote: "Are you sure you want to delete \"\(checklist.name)\" checklist?",
+            onEdit: {
+                isEditPresented = true
+            },
+            onDelete: {
+                checklist.deleteWithDependencies { _ in
+                    // todo
                 }
+            }
         ) {
             MyListView__ItemView__ButtonView(text: checklist.name) {
                 isItemsPresented = true
@@ -534,9 +535,9 @@ private struct NoteListItemView: View {
     var body: some View {
 
         MyListView__ItemView__ButtonView(
-                text: note.title,
-                maxLines: 1,
-                rightView: AnyView(Padding(horizontal: MyListView.PADDING_INNER_HORIZONTAL))
+            text: note.title,
+            maxLines: 1,
+            rightView: AnyView(Padding(horizontal: MyListView.PADDING_INNER_HORIZONTAL))
         ) {
             nativeSheet.show { isPresented in
                 NoteSheet(isPresented: isPresented, initNote: note)
@@ -554,16 +555,16 @@ struct ToolsView_ShortcutView: View {
 
     var body: some View {
         MyListSwipeToActionItem(
-                deletionHint: shortcut.name,
-                deletionConfirmationNote: "Are you sure you want to delete \"\(shortcut.name)\" shortcut?",
-                onEdit: {
-                    isEditPresented = true
-                },
-                onDelete: {
-                    shortcut.delete { err in
-                        // todo report
-                    }
+            deletionHint: shortcut.name,
+            deletionConfirmationNote: "Are you sure you want to delete \"\(shortcut.name)\" shortcut?",
+            onEdit: {
+                isEditPresented = true
+            },
+            onDelete: {
+                shortcut.delete { err in
+                    // todo report
                 }
+            }
         ) {
             MyListView__ItemView__ButtonView(text: shortcut.name) {
                 shortcut.performUI()
