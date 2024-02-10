@@ -26,7 +26,6 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
 
         val headerTitle = "Settings"
 
-        val openSourceUrl = "https://github.com/appstome/timetome-app"
         val feedbackEmail = "hi@timeto.me"
 
         val dayStartNote = dayStartSecondsToString(dayStartSeconds)

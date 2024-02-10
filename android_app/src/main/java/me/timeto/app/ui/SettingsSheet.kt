@@ -498,11 +498,7 @@ fun SettingsSheet(
                     withTopDivider = true,
                 ) {
                     MyListView__ItemView__ButtonView(text = "Open Source") {
-                        context.startActivity(
-                            Intent(Intent.ACTION_VIEW).apply {
-                                data = Uri.parse(state.openSourceUrl)
-                            }
-                        )
+                        showOpenSource()
                     }
                 }
 
