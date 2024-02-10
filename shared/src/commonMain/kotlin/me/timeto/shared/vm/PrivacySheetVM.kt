@@ -9,7 +9,7 @@ class PrivacySheetVM : __VM<PrivacySheetVM.State>() {
         var tmp: String,
     ) {
 
-        val headerTitle: String = "Privacy"
+        val headerTitle = "Privacy"
 
         val isSendReportsEnabled = false
         val sendReportsTitle = "Send Reports"
