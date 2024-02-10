@@ -12,11 +12,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import me.timeto.app.H_PADDING
 import me.timeto.app.VStack
 import me.timeto.app.c
 import me.timeto.app.rememberVM
 import me.timeto.shared.vm.PrivacySheetVM
+
+private val hPadding = MyListView.PADDING_OUTER_HORIZONTAL
 
 @Composable
 fun PrivacySheet(
@@ -100,7 +101,7 @@ private fun PView(
     Text(
         text = text,
         modifier = Modifier
-            .padding(horizontal = H_PADDING)
+            .padding(horizontal = hPadding)
             .padding(top = topPadding),
         color = c.white,
         lineHeight = 22.sp,
