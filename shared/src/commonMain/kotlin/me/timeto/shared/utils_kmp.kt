@@ -18,6 +18,8 @@ import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
 const val BREAK_SECONDS = 5 * 60
 const val GOLDEN_RATIO = 1.618f
 
+val OPEN_SOURCE_URL = "https://github.com/appstome/timetome-app"
+
 internal lateinit var deviceData: DeviceData
 var batteryLevelOrNull: Int? = null
 var isBatteryChargingOrNull: Boolean? = null
