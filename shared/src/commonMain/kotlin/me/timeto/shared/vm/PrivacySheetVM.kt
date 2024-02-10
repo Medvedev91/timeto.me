@@ -11,6 +11,9 @@ class PrivacySheetVM : __VM<PrivacySheetVM.State>() {
 
         val headerTitle: String = "Privacy"
 
+        val isSendReportsEnabled = false
+        val sendReportsTitle = "Send Reports"
+
         val text1 = PrivacySheetVM.text1
         val text2 = PrivacySheetVM.text2
         val text3 = PrivacySheetVM.text3
