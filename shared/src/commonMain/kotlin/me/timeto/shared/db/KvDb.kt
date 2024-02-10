@@ -50,7 +50,8 @@ data class KvDb(
         DAY_START_OFFSET_SECONDS,
         TOKEN,
         TOKEN_PASSWORD,
-        FEEDBACK_SUBJECT;
+        FEEDBACK_SUBJECT,
+        IS_SENDING_REPORTS;
 
         suspend fun selectOrNull(): String? = getAll().firstOrNull { it.key == this.name }?.value
 
