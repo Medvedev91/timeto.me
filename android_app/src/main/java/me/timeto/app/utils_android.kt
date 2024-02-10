@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
+import android.net.Uri
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
@@ -59,6 +60,14 @@ fun Modifier.conditional(
 }
 
 val timerFont = FontFamily(Font(R.font.timer_font))
+
+fun showOpenSource() {
+    App.instance.startActivity(
+        Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(OPEN_SOURCE_URL)
+        }
+    )
+}
 
 //////
 
