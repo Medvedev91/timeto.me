@@ -1,6 +1,7 @@
 package me.timeto.app.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -8,13 +9,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import me.timeto.app.VStack
-import me.timeto.app.c
-import me.timeto.app.rememberVM
+import me.timeto.app.*
 import me.timeto.shared.vm.PrivacySheetVM
 
 private val hPadding = MyListView.PADDING_OUTER_HORIZONTAL
@@ -84,6 +84,19 @@ fun PrivacySheet(
                 }
             }
 
+            Text(
+                text = "Open Source",
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .padding(horizontal = MyListView.PADDING_INNER_HORIZONTAL)
+                    .clip(squircleShape)
+                    .clickable {
+                        showOpenSource()
+                    }
+                    .padding(horizontal = 8.dp, vertical = 4.dp),
+                color = c.blue,
+                fontSize = 14.sp,
+            )
         }
 
         Sheet__BottomViewClose {
