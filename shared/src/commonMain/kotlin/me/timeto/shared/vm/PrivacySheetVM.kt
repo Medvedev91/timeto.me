@@ -3,7 +3,7 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.deviceData
 
-class PrivacyVM : __VM<PrivacyVM.State>() {
+class PrivacySheetVM : __VM<PrivacySheetVM.State>() {
 
     data class State(
         var tmp: String,
@@ -11,14 +11,14 @@ class PrivacyVM : __VM<PrivacyVM.State>() {
 
         val headerTitle: String = "Privacy"
 
-        val text1 = PrivacyVM.text1
-        val text2 = PrivacyVM.text2
-        val text3 = PrivacyVM.text3
-        val text4 = PrivacyVM.text4
-        val text5 = PrivacyVM.text5
-        val text6 = PrivacyVM.text6
+        val text1 = PrivacySheetVM.text1
+        val text2 = PrivacySheetVM.text2
+        val text3 = PrivacySheetVM.text3
+        val text4 = PrivacySheetVM.text4
+        val text5 = PrivacySheetVM.text5
+        val text6 = PrivacySheetVM.text6
 
-        val sendItems: List<String> = PrivacyVM.sendItems
+        val sendItems: List<String> = PrivacySheetVM.sendItems
     }
 
     override val state = MutableStateFlow(

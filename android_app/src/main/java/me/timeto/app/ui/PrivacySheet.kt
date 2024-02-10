@@ -16,14 +16,14 @@ import me.timeto.app.H_PADDING
 import me.timeto.app.VStack
 import me.timeto.app.c
 import me.timeto.app.rememberVM
-import me.timeto.shared.vm.PrivacyVM
+import me.timeto.shared.vm.PrivacySheetVM
 
 @Composable
 fun PrivacySheet(
     layer: WrapperView.Layer,
 ) {
 
-    val (_, state) = rememberVM { PrivacyVM() }
+    val (_, state) = rememberVM { PrivacySheetVM() }
 
     VStack(
         modifier = Modifier
