@@ -6,6 +6,7 @@ import app.cash.sqldelight.coroutines.mapToOneOrNull
 import dbsq.KVSQ
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
@@ -59,7 +60,7 @@ data class KvDb(
 
         fun getFromDIOrNull(): String? = DI.kv.firstOrNull { it.key == this.name }?.value
 
-        fun getOrNullFlow() = db.kVQueries.getByKey(this.name).asFlow()
+        fun getOrNullFlow(): Flow<KvDb?> = db.kVQueries.getByKey(this.name).asFlow()
             .mapToOneOrNull(Dispatchers.IO).map { it?.toModel() }
 
         suspend fun upsert(value: String): Unit = dbIO {
