@@ -494,7 +494,7 @@ fun SettingsSheet(
 
                 MyListView__ItemView(
                     isFirst = false,
-                    isLast = true,
+                    isLast = false,
                     withTopDivider = true,
                 ) {
                     MyListView__ItemView__ButtonView(text = "Open Source") {
@@ -503,6 +503,18 @@ fun SettingsSheet(
                                 data = Uri.parse(state.openSourceUrl)
                             }
                         )
+                    }
+                }
+
+                MyListView__ItemView(
+                    isFirst = false,
+                    isLast = true,
+                    withTopDivider = true,
+                ) {
+                    MyListView__ItemView__ButtonView(text = "Privacy") {
+                        Sheet.show { layer ->
+                            PrivacySheet(layer)
+                        }
                     }
                 }
             }
