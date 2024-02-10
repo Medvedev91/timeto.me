@@ -61,7 +61,7 @@ fun PrivacySheet(
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .background(c.sheetFg)
-                    .padding(top = 4.dp, bottom = 12.dp),
+                    .padding(top = 8.dp, bottom = 12.dp),
             ) {
                 state.sendItems.forEach { sendItem ->
                     PView(sendItem, topPadding = 4.dp)
