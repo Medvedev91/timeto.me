@@ -1,17 +1,10 @@
 package me.timeto.shared.vm
 
-import io.ktor.client.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import io.ktor.utils.io.core.*
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.jsonObject
 import me.timeto.shared.*
 import me.timeto.shared.db.*
-import me.timeto.shared.db.KvDb.Companion.isSendingReports
 
 class AppVM : __VM<AppVM.State>() {
 
@@ -112,52 +105,6 @@ private fun performShortcut(
             ?: interval.getActivityDI().name.textFeatures().shortcuts.firstOrNull()
 
     shortcut?.performUI()
-}
-
-//
-// Ping
-
-private var pingLastDay: Int? = null
-private suspend fun ping() {
-    try {
-        if (!KvDb.KEY.IS_SENDING_REPORTS.selectOrNull().isSendingReports())
-            return
-
-        val today = UnixTime().localDay
-        if (pingLastDay == today)
-            return
-
-        HttpClient().use { client ->
-            val httpResponse = client.get("https://api.timeto.me/ping") {
-                val password = getsertTokenPassword()
-                url {
-                    parameters.append("password", password)
-                    appendDeviceData()
-                }
-            }
-            val plainJson = httpResponse.bodyAsText()
-            val j = Json.parseToJsonElement(plainJson).jsonObject
-            if (j.getString("status") != "success")
-                throw Exception("status != success\n$plainJson")
-            val jData = j.jsonObject["data"]!!.jsonObject
-            KvDb.KEY.TOKEN.upsert(jData.getString("token"))
-            KvDb.KEY.FEEDBACK_SUBJECT.upsert(jData.getString("feedback_subject"))
-            pingLastDay = today // After success
-        }
-    } catch (e: Throwable) {
-        reportApi("AppVM ping() exception:\n$e")
-    }
-}
-
-private suspend fun getsertTokenPassword(): String {
-    val oldPassword = KvDb.KEY.TOKEN_PASSWORD.selectOrNull()
-    if (oldPassword != null)
-        return oldPassword
-
-    val chars = ('0'..'9') + ('a'..'z') + ('A'..'Z') + ("!@#%^&*()_+".toList())
-    val newPassword = (1..15).map { chars.random() }.joinToString("")
-    KvDb.KEY.TOKEN_PASSWORD.upsert(newPassword)
-    return newPassword
 }
 
 ///
