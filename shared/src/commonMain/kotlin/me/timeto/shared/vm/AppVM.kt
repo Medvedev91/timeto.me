@@ -108,7 +108,7 @@ private fun performShortcut(
 
     val shortcut: ShortcutDb? =
         interval.note?.textFeatures()?.shortcuts?.firstOrNull()
-        ?: interval.getActivityDI().name.textFeatures().shortcuts.firstOrNull()
+            ?: interval.getActivityDI().name.textFeatures().shortcuts.firstOrNull()
 
     shortcut?.performUI()
 }
@@ -206,13 +206,10 @@ private fun syncTmrw() {
 //////
 
 private suspend fun fillInitData() {
-    try {
-        syncTodayEventsLastDay = null
-        syncTodayRepeatingLastDay = null
-        pingLastDay = null
-    } catch (e: Throwable) {
-        reportApi("fillInitData() exception:\n$e")
-    }
+
+    syncTodayEventsLastDay = null
+    syncTodayRepeatingLastDay = null
+    pingLastDay = null
 
     // TRICK time() only for SMDAY
     TaskFolderDb.addRaw(TaskFolderDb.ID_TODAY, "Today", 1)
@@ -226,6 +223,7 @@ private suspend fun fillInitData() {
     val cYellow = colorsWheel.next()
     val cPurple = colorsWheel.next()
 
+    // @formatter:off
     val goals = listOf<ActivityDb.Goal>()
     val defData = ActivityDb__Data.buildDefault()
     val aNormal = ActivityDb.TYPE.NORMAL
@@ -250,4 +248,5 @@ private suspend fun fillInitData() {
     RepeatingDb.addWithValidation(prepRep("Small tasks", actOther, 30), RepeatingDb.Period.EveryNDays(1), todayDay, null, false)
     RepeatingDb.addWithValidation(prepRep("Getting ready", actGr, 20), RepeatingDb.Period.EveryNDays(1), todayDay, null, false)
     RepeatingDb.addWithValidation(prepRep("Weekly plan", actWork, 20), RepeatingDb.Period.DaysOfWeek(listOf(0)), todayDay, null, false)
+    // @formatter:on
 }
