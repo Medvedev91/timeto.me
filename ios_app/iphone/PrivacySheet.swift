@@ -71,11 +71,11 @@ struct PrivacySheet: View {
                             HStack {
 
                                 Text("Open Source")
-                                    .padding(.top, 16)
-                                    .padding(.horizontal, MyListView.PADDING_OUTER_HORIZONTAL)
-                                    .padding(.top, 8)
-                                    .foregroundColor(c.blue)
-                                    .font(.system(size: 15))
+                                        .padding(.top, 16)
+                                        .padding(.horizontal, MyListView.PADDING_OUTER_HORIZONTAL)
+                                        .padding(.top, 8)
+                                        .foregroundColor(c.blue)
+                                        .font(.system(size: 15))
 
                                 Spacer()
                             }
