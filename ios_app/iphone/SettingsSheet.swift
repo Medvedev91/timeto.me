@@ -352,6 +352,11 @@ struct SettingsSheet: View {
                                 }
                             )
                         ) {
+                            nativeSheet.show { isPresented in
+                                PrivacySheet(
+                                    isPresented: isPresented
+                                )
+                            }
                         }
                     }
                 }
