@@ -11,6 +11,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
 import me.timeto.shared.*
 import me.timeto.shared.db.*
+import me.timeto.shared.db.KvDb.Companion.isSendingReports
 
 class AppVM : __VM<AppVM.State>() {
 
@@ -118,14 +119,14 @@ private fun performShortcut(
 
 private var pingLastDay: Int? = null
 private suspend fun ping() {
-    if (deviceData.isFdroid)
-        return
-
-    val today = UnixTime().localDay
-    if (pingLastDay == today)
-        return
-
     try {
+        if (!KvDb.KEY.IS_SENDING_REPORTS.selectOrNull().isSendingReports())
+            return
+
+        val today = UnixTime().localDay
+        if (pingLastDay == today)
+            return
+
         HttpClient().use { client ->
             val httpResponse = client.get("https://api.timeto.me/ping") {
                 val password = getsertTokenPassword()
