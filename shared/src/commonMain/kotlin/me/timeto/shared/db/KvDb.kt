@@ -29,10 +29,10 @@ data class KvDb(
 
         //
 
-        suspend fun isSendingReportsEnabled(): Boolean =
-            KEY.IS_SENDING_REPORTS.selectBoolOrNull() ?: !deviceData.isFdroid
-
         fun String?.asDayStartOffsetSeconds(): Int = this?.toInt() ?: 0
+
+        fun String?.isSendingReportsEnabled(): Boolean =
+            this?.toBool() ?: !deviceData.isFdroid
 
         //
         // Backupable Holder
@@ -115,3 +115,9 @@ data class KvDb(
 private fun KVSQ.toModel() = KvDb(
     key = key, value = value_
 )
+
+private fun String.toBool(): Boolean = when (this) {
+    "1" -> true
+    "0" -> false
+    else -> throw Exception()
+}

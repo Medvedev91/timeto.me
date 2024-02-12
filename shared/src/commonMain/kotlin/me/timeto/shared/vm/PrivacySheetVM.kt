@@ -34,7 +34,7 @@ class PrivacySheetVM : __VM<PrivacySheetVM.State>() {
     fun toggleIsSendingReports() {
         val scope = scopeVM()
         scope.launchEx {
-            val cur = KvDb.isSendingReportsEnabled()
+            val cur = KvDb.KEY.IS_SENDING_REPORTS.selectOrNull().isSendingReportsEnabled()
             KvDb.KEY.IS_SENDING_REPORTS.upsertBool(!cur)
         }
     }
