@@ -6,12 +6,11 @@ import me.timeto.shared.deviceData
 class PrivacySheetVM : __VM<PrivacySheetVM.State>() {
 
     data class State(
-        var tmp: String,
+        val isSendReportsEnabled: Boolean,
     ) {
 
         val headerTitle = "Privacy"
 
-        val isSendReportsEnabled = false
         val sendReportsTitle = "Send Reports"
 
         val text1 = PrivacySheetVM.text1
@@ -26,7 +25,7 @@ class PrivacySheetVM : __VM<PrivacySheetVM.State>() {
 
     override val state = MutableStateFlow(
         State(
-            tmp = "todo"
+            isSendReportsEnabled = false, // todo init value
         )
     )
 
