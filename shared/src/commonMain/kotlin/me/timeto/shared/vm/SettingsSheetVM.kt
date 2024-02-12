@@ -5,6 +5,7 @@ import me.timeto.shared.*
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.KvDb
 import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
+import me.timeto.shared.db.KvDb.Companion.isSendingReportsEnabled
 import me.timeto.shared.db.NoteDb
 import me.timeto.shared.db.ShortcutDb
 
@@ -22,6 +23,7 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
         val dayStartSeconds: Int,
         val feedbackSubject: String,
         val autoBackupTimeString: String,
+        val privacyNote: String?,
     ) {
 
         val headerTitle = "Settings"
@@ -56,6 +58,7 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
             dayStartSeconds = dayStartOffsetSeconds(),
             feedbackSubject = "Feedback",
             autoBackupTimeString = prepAutoBackupTimeString(AutoBackup.lastTimeCache.value),
+            privacyNote = null, // todo init value
         )
     )
 
@@ -72,6 +75,12 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
             .onEachExIn(scope) { kv ->
                 val seconds = kv?.value.asDayStartOffsetSeconds()
                 state.update { it.copy(dayStartSeconds = seconds) }
+            }
+        KvDb.KEY.IS_SENDING_REPORTS
+            .getOrNullFlow()
+            .onEachExIn(scope) { kv ->
+                val isEnabled = kv?.value.isSendingReportsEnabled()
+                state.update { it.copy(privacyNote = if (isEnabled) null else PrivacySheetVM.prayEmoji) }
             }
         AutoBackup.lastTimeCache.onEachExIn(scope) { unixTime ->
             state.update { it.copy(autoBackupTimeString = prepAutoBackupTimeString(unixTime)) }
