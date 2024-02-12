@@ -31,6 +31,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.*
 import kotlinx.coroutines.launch
 import me.timeto.shared.*
+import me.timeto.shared.vm.PrivacySheetVM
 import me.timeto.shared.vm.SettingsSheetVM
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -507,7 +508,21 @@ fun SettingsSheet(
                     isLast = true,
                     withTopDivider = true,
                 ) {
-                    MyListView__ItemView__ButtonView(text = "Privacy") {
+                    MyListView__ItemView__ButtonView(
+                        text = "Privacy",
+                        rightView = {
+                            val privacyNote = state.privacyNote
+                            if (privacyNote == null)
+                                Text("")
+                            else
+                                Text(
+                                    text = PrivacySheetVM.prayEmoji,
+                                    modifier = Modifier
+                                        .padding(end = MyListView.PADDING_INNER_HORIZONTAL),
+                                    fontSize = 18.sp,
+                                )
+                        },
+                    ) {
                         Sheet.show { layer ->
                             PrivacySheet(layer)
                         }
