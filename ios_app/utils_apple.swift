@@ -2,8 +2,8 @@ import SwiftUI
 import WatchConnectivity
 import shared
 
-///
-/// Kmm
+//
+// KMP
 
 let DI = shared.DI.shared
 
@@ -15,22 +15,22 @@ func reportApi(_ message: String) {
     Utils_kmpKt.reportApi(message: message)
 }
 
-//////
+//
 
 func buildTimerFont(size: CGFloat) -> Font {
     Font.custom("NotoSansMono-ExtraBold", size: size)
 }
 
 func ForEachIndexed<T, Content: View>(
-        _ items: Array<T>,
-        @ViewBuilder content: @escaping (Int, T) -> Content
+    _ items: Array<T>,
+    @ViewBuilder content: @escaping (Int, T) -> Content
 ) -> some View {
     ForEach(Array(items.enumerated()), id: \.offset) { index, item in
         content(index, item)
     }
 }
 
-/// Watch Connectivity
+// Watch Connectivity
 func setupWCSession(_ delegate: WCSessionDelegate) {
     if WCSession.isSupported() {
         let session = WCSession.default
@@ -41,8 +41,7 @@ func setupWCSession(_ delegate: WCSessionDelegate) {
     }
 }
 
-///
-///
+//
 
 func myAsync(_ function: @escaping () -> Void) {
     DispatchQueue.main.async {
@@ -51,15 +50,15 @@ func myAsync(_ function: @escaping () -> Void) {
 }
 
 func myAsyncAfter(
-        _ seconds: CGFloat,
-        work: @escaping () -> Void
+    _ seconds: CGFloat,
+    work: @escaping () -> Void
 ) {
     DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
         work()
     }
 }
 
-//////
+//
 
 // todo move to KMM
 
@@ -67,7 +66,7 @@ func is12HoursFormat() -> Bool {
     DateFormatter.dateFormat(fromTemplate: "j", options: 0, locale: Locale.current)?.range(of: "a") != nil
 }
 
-//////
+//
 
 struct Padding: View {
 
@@ -75,13 +74,14 @@ struct Padding: View {
     var vertical: Double = 0
 
     var body: some View {
-        ZStack {}
+        ZStack {
+        }
                 .frame(width: horizontal)
                 .frame(height: vertical)
     }
 }
 
-//////
+//
 
 extension Date {
 
@@ -94,8 +94,8 @@ extension Date {
         var components = DateComponents()
         components.second = seconds
         return Calendar.current.date(
-                byAdding: components,
-                to: self
+            byAdding: components,
+            to: self
         )!
     }
 
@@ -115,7 +115,7 @@ extension Array {
 
     // todo remove
     func chunked(
-            _ size: Int
+        _ size: Int
     ) -> [[Element]] {
         stride(from: 0, to: count, by: size).map {
             Array(self[$0..<Swift.min($0 + size, count)])
@@ -242,10 +242,10 @@ extension UIColor {
 
     convenience init(argb: UInt) {
         self.init(
-                red: Double((argb >> 16) & 0xff) / 255,
-                green: Double((argb >> 8) & 0xff) / 255,
-                blue: Double((argb >> 0) & 0xff) / 255,
-                alpha: Double((argb >> 24) & 0xff) / 255
+            red: Double((argb >> 16) & 0xff) / 255,
+            green: Double((argb >> 8) & 0xff) / 255,
+            blue: Double((argb >> 0) & 0xff) / 255,
+            alpha: Double((argb >> 24) & 0xff) / 255
         )
     }
 }
@@ -254,11 +254,11 @@ extension Color {
 
     init(rgba: [Int]) {
         self.init(
-                .sRGB,
-                red: Double(rgba[0]) / 255,
-                green: Double(rgba[1]) / 255,
-                blue: Double(rgba[2]) / 255,
-                opacity: Double(rgba.getOrNull(index: 3) ?? 255) / 255
+            .sRGB,
+            red: Double(rgba[0]) / 255,
+            green: Double(rgba[1]) / 255,
+            blue: Double(rgba[2]) / 255,
+            opacity: Double(rgba.getOrNull(index: 3) ?? 255) / 255
         )
     }
 
@@ -281,19 +281,23 @@ extension View {
      * https://www.avanderlee.com/swiftui/conditional-view-modifier/
      */
     @ViewBuilder func conditional<Content: View>(
-            _ condition: Bool,
-            transform: (Self) -> Content
+        _ condition: Bool,
+        transform: (Self) -> Content
     ) -> some View {
-        if condition { transform(self) } else { self }
+        if condition {
+            transform(self)
+        } else {
+            self
+        }
     }
 
     /**
      * https://stackoverflow.com/a/72435691
      */
     @ViewBuilder func cornerRadius(
-            _ radius: CGFloat,
-            onTop: Bool,
-            onBottom: Bool
+        _ radius: CGFloat,
+        onTop: Bool,
+        onBottom: Bool
     ) -> some View {
         self
                 .conditional(onTop) { view in
@@ -336,9 +340,9 @@ private struct AnimateVmValueModifier<T: Equatable>: ViewModifier {
 extension View {
 
     func animateVmValue<T: Equatable>(
-            value: T,
-            state: Binding<T>,
-            animation: Animation = .spring(response: 0.250)
+        value: T,
+        state: Binding<T>,
+        animation: Animation = .spring(response: 0.250)
     ) -> some View {
         modifier(AnimateVmValueModifier(value: value, state: state, animation: animation))
     }
