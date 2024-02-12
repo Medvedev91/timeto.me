@@ -6,6 +6,7 @@ import me.timeto.shared.db.KvDb.Companion.isSendingReports
 import me.timeto.shared.deviceData
 import me.timeto.shared.launchEx
 import me.timeto.shared.onEachExIn
+import me.timeto.shared.reportApi
 
 class PrivacySheetVM : __VM<PrivacySheetVM.State>() {
 
@@ -48,6 +49,7 @@ class PrivacySheetVM : __VM<PrivacySheetVM.State>() {
         scope.launchEx {
             val newValue = !KvDb.KEY.IS_SENDING_REPORTS.selectOrNull().isSendingReports()
             KvDb.KEY.IS_SENDING_REPORTS.upsertBool(newValue)
+            reportApi("Up IS_SENDING_REPORTS: $newValue", force = true)
         }
     }
 
