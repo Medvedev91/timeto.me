@@ -204,6 +204,9 @@ fun HomeView() {
                     .padding(top = 4.dp)
                     .clip(roundedShape)
                     .clickable {
+                        Sheet.show { layer ->
+                            FDroidSheet(layer)
+                        }
                     }
                     .background(c.red)
                     .padding(horizontal = 10.dp)
