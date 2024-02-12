@@ -29,12 +29,15 @@ var batteryLevelOrNull: Int? = null
 var isBatteryChargingOrNull: Boolean? = null
 
 internal expect val REPORT_API_TITLE: String
-fun reportApi(message: String) {
+fun reportApi(
+    message: String,
+    force: Boolean = false,
+) {
 
     // Not launchEx because of recursion
     defaultScope().launch {
 
-        if (!KvDb.KEY.IS_SENDING_REPORTS.selectOrNull().isSendingReports())
+        if (!force && !KvDb.KEY.IS_SENDING_REPORTS.selectOrNull().isSendingReports())
             return@launch
 
         zlog("reportApi $message")
