@@ -74,10 +74,10 @@ data class KvDb(
             .mapToOneOrNull(Dispatchers.IO).map { it?.toModel() }
 
         suspend fun upsert(value: String?): Unit = dbIO {
-            if (value != null)
-                db.kVQueries.upsert(key = name, value_ = value)
-            else
+            if (value == null)
                 db.kVQueries.delByKey(key = name)
+            else
+                db.kVQueries.upsert(key = name, value_ = value)
         }
     }
 
