@@ -10,6 +10,7 @@
 		2C0BE02D295732110099AD7C /* DatePickerStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0BE02C295732110099AD7C /* DatePickerStateView.swift */; };
 		2C0BE02F295751B70099AD7C /* PickerStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0BE02E295751B70099AD7C /* PickerStateView.swift */; };
 		2C246BCF2AD563AC008780E1 /* sound_timer_expired.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2C246BCE2AD563AC008780E1 /* sound_timer_expired.mp3 */; };
+		2C2C205D2B7A824A00D4B325 /* PrivacySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2C205C2B7A824A00D4B325 /* PrivacySheet.swift */; };
 		2C2E93F8290117E300EAADBE /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821ED2142F08DDD1E0CC75 /* HomeView.swift */; };
 		2C2E93F92905759100EAADBE /* TimerPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821AE61EE1FC22CCF8E753 /* TimerPickerSheet.swift */; };
 		2C2E93FA2905B57700EAADBE /* ScrollViewWithVListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318218D93C3456758557A6E0 /* ScrollViewWithVListener.swift */; };
@@ -126,6 +127,7 @@
 		2C0BE02C295732110099AD7C /* DatePickerStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerStateView.swift; sourceTree = "<group>"; };
 		2C0BE02E295751B70099AD7C /* PickerStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerStateView.swift; sourceTree = "<group>"; };
 		2C246BCE2AD563AC008780E1 /* sound_timer_expired.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = sound_timer_expired.mp3; path = ../android_app/src/main/res/raw/sound_timer_expired.mp3; sourceTree = "<group>"; };
+		2C2C205C2B7A824A00D4B325 /* PrivacySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacySheet.swift; sourceTree = "<group>"; };
 		2C2C419628C4CF2A00923267 /* timeto (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "timeto (iOS).entitlements"; sourceTree = "<group>"; };
 		2C2C419728C4D83400923267 /* timeto--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "timeto--iOS--Info.plist"; sourceTree = "<group>"; };
 		2C4044972951FCA800A24521 /* emojis.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = emojis.json; path = ../android_app/src/main/res/raw/emojis.json; sourceTree = "<group>"; };
@@ -383,6 +385,7 @@
 				2C672A112B74CF76002BC21C /* EventsCalendarView.swift */,
 				3182153700935B575E6144A5 /* EventsCalendarDayView.swift */,
 				31821220E2A7C6FBE2EA3D34 /* EventsListEventView.swift */,
+				2C2C205C2B7A824A00D4B325 /* PrivacySheet.swift */,
 			);
 			path = iphone;
 			sourceTree = "<group>";
@@ -616,6 +619,7 @@
 				31821A31BFF9D29DD019E05D /* NoteSheet.swift in Sources */,
 				31821EE26161D262CC020E3D /* SummarySheet.swift in Sources */,
 				31821859FBE8390BA3346A0E /* EventTemplateFormSheet.swift in Sources */,
+				2C2C205D2B7A824A00D4B325 /* PrivacySheet.swift in Sources */,
 				31821C095E0F97CA52AE37ED /* atm_apple.swift in Sources */,
 				31821B177073394D777AED10 /* EventsCalendarDayView.swift in Sources */,
 				31821FB6B5CC8647F2541328 /* EventsListEventView.swift in Sources */,
