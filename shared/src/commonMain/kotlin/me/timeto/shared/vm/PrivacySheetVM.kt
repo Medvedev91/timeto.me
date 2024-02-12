@@ -1,12 +1,10 @@
 package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
+import me.timeto.shared.*
 import me.timeto.shared.db.KvDb
 import me.timeto.shared.db.KvDb.Companion.isSendingReports
 import me.timeto.shared.deviceData
-import me.timeto.shared.launchEx
-import me.timeto.shared.onEachExIn
-import me.timeto.shared.reportApi
 
 class PrivacySheetVM : __VM<PrivacySheetVM.State>() {
 
@@ -50,6 +48,8 @@ class PrivacySheetVM : __VM<PrivacySheetVM.State>() {
             val newValue = !KvDb.KEY.IS_SENDING_REPORTS.selectOrNull().isSendingReports()
             KvDb.KEY.IS_SENDING_REPORTS.upsertBool(newValue)
             reportApi("Up IS_SENDING_REPORTS: $newValue", force = true)
+            if (newValue)
+                ping(force = true)
         }
     }
 
