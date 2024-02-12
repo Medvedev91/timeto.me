@@ -56,6 +56,13 @@ data class KvDb(
 
         suspend fun selectOrNull(): String? = getAll().firstOrNull { it.key == this.name }?.value
 
+        suspend fun selectBoolOrNull(): Boolean? = when (selectOrNull()) {
+            "1" -> true
+            "0" -> false
+            null -> null
+            else -> throw Exception()
+        }
+
         fun selectOrNullPlain(): String? = selectAllPlain().firstOrNull { it.key == this.name }?.value
 
         fun getFromDIOrNull(): String? = DI.kv.firstOrNull { it.key == this.name }?.value
