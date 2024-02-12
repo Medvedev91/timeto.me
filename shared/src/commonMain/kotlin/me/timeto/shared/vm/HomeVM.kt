@@ -187,7 +187,7 @@ class HomeVM : __VM<HomeVM.State>() {
                 .onEachExIn(scope) { kvDb ->
                     if (kvDb == null) {
                         state.update {
-                            it.copy(fdroidMessage = "Message for F-Droid users")
+                            it.copy(fdroidMessage = "Message to F-Droid users")
                         }
                     }
                 }
