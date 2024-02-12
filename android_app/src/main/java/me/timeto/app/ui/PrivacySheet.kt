@@ -24,7 +24,7 @@ fun PrivacySheet(
     layer: WrapperView.Layer,
 ) {
 
-    val (_, state) = rememberVM { PrivacySheetVM() }
+    val (vm, state) = rememberVM { PrivacySheetVM() }
 
     VStack(
         modifier = Modifier
@@ -81,6 +81,7 @@ fun PrivacySheet(
                     text = state.sendReportsTitle,
                     isActive = state.isSendReportsEnabled,
                 ) {
+                    vm.toggleIsSendingReports()
                 }
             }
 
