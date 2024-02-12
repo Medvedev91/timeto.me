@@ -68,14 +68,19 @@ fun reportApi(
 // Ping
 
 var pingLastDay: Int? = null
-suspend fun ping() {
+suspend fun ping(
+    force: Boolean = false,
+) {
     try {
-        if (!KvDb.KEY.IS_SENDING_REPORTS.selectOrNull().isSendingReports())
-            return
 
         val today = UnixTime().localDay
-        if (pingLastDay == today)
-            return
+
+        if (!force) {
+            if (!KvDb.KEY.IS_SENDING_REPORTS.selectOrNull().isSendingReports())
+                return
+            if (pingLastDay == today)
+                return
+        }
 
         HttpClient().use { client ->
             val httpResponse = client.get("https://api.timeto.me/ping") {
