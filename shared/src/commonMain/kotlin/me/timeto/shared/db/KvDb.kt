@@ -79,6 +79,15 @@ data class KvDb(
             else
                 db.kVQueries.upsert(key = name, value_ = value)
         }
+
+        suspend fun upsertBool(value: Boolean?): Unit = dbIO {
+            val newVal: String? = when (value) {
+                true -> "1"
+                false -> "0"
+                null -> null
+            }
+            upsert(newVal)
+        }
     }
 
     //
