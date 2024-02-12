@@ -323,12 +323,35 @@ struct SettingsSheet: View {
 
                     MyListView__ItemView(
                         isFirst: false,
-                        isLast: true,
+                        isLast: false,
                         withTopDivider: true
                     ) {
 
                         MyListView__ItemView__ButtonView(text: "Open Source") {
                             showOpenSource()
+                        }
+                    }
+
+                    MyListView__ItemView(
+                        isFirst: false,
+                        isLast: true,
+                        withTopDivider: true
+                    ) {
+
+                        MyListView__ItemView__ButtonView(
+                            text: "Privacy",
+                            rightView: AnyView(
+                                HStack {
+                                    if let privacyNote = state.privacyNote {
+                                        Text(privacyNote)
+                                                .font(.system(size: 25))
+                                                .padding(.trailing, MyListView.PADDING_INNER_HORIZONTAL)
+                                    } else {
+                                        Text("")
+                                    }
+                                }
+                            )
+                        ) {
                         }
                     }
                 }
