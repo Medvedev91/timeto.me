@@ -12,7 +12,7 @@ func time() -> Int {
 }
 
 func reportApi(_ message: String) {
-    Utils_kmpKt.reportApi(message: message)
+    Utils_kmpKt.reportApi(message: message, force: false)
 }
 
 //
