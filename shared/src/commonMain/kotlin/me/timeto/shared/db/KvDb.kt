@@ -70,8 +70,11 @@ data class KvDb(
         fun getOrNullFlow(): Flow<KvDb?> = db.kVQueries.getByKey(this.name).asFlow()
             .mapToOneOrNull(Dispatchers.IO).map { it?.toModel() }
 
-        suspend fun upsert(value: String): Unit = dbIO {
-            db.kVQueries.upsert(key = name, value_ = value)
+        suspend fun upsert(value: String?): Unit = dbIO {
+            if (value != null)
+                db.kVQueries.upsert(key = name, value_ = value)
+            else
+                db.kVQueries.delByKey(key = name)
         }
     }
 
