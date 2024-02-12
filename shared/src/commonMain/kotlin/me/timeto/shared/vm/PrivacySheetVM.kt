@@ -15,7 +15,7 @@ class PrivacySheetVM : __VM<PrivacySheetVM.State>() {
 
         val headerTitle = "Privacy"
 
-        val sendReportsTitle = "Send Reports"
+        val sendReportsTitle = "Send Reports  ${if (isSendReportsEnabled) "" else prayEmoji}"
 
         val text1 = PrivacySheetVM.text1
         val text2 = PrivacySheetVM.text2
