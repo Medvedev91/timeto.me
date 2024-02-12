@@ -12,6 +12,10 @@ func hideKeyboard() {
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
 }
 
+func showOpenSource() {
+    UIApplication.shared.open(URL(string: Utils_kmpKt.OPEN_SOURCE_URL)!)
+}
+
 func schedulePush(data: ScheduledNotificationData) {
     let content = UNMutableNotificationContent()
     content.title = data.title

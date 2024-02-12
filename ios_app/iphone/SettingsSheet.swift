@@ -328,7 +328,7 @@ struct SettingsSheet: View {
                     ) {
 
                         MyListView__ItemView__ButtonView(text: "Open Source") {
-                            UIApplication.shared.open(URL(string: state.openSourceUrl)!)
+                            showOpenSource()
                         }
                     }
                 }
