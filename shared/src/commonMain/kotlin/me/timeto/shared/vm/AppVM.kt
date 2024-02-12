@@ -114,8 +114,8 @@ private fun performShortcut(
     shortcut?.performUI()
 }
 
-///
-/// Ping
+//
+// Ping
 
 private var pingLastDay: Int? = null
 private suspend fun ping() {
