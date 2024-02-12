@@ -14,6 +14,7 @@ import kotlinx.datetime.*
 import me.timeto.appdbsq.TimetomeDB
 import me.timeto.shared.db.*
 import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
+import me.timeto.shared.db.KvDb.Companion.isSendingReports
 
 const val BREAK_SECONDS = 5 * 60
 const val GOLDEN_RATIO = 1.618f
@@ -26,11 +27,13 @@ var isBatteryChargingOrNull: Boolean? = null
 
 internal expect val REPORT_API_TITLE: String
 fun reportApi(message: String) {
-    if (deviceData.isFdroid)
-        return
 
     // Not launchEx because of recursion
     defaultScope().launch {
+
+        if (!KvDb.KEY.IS_SENDING_REPORTS.selectOrNull().isSendingReports())
+            return@launch
+
         zlog("reportApi $message")
         try {
             HttpClient().use {
