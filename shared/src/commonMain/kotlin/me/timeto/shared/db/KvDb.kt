@@ -31,7 +31,7 @@ data class KvDb(
 
         fun String?.asDayStartOffsetSeconds(): Int = this?.toInt() ?: 0
 
-        fun String?.isSendingReportsEnabled(): Boolean =
+        fun String?.isSendingReports(): Boolean =
             this?.toBool() ?: !deviceData.isFdroid
 
         //

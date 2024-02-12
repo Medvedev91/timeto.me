@@ -2,7 +2,7 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.db.KvDb
-import me.timeto.shared.db.KvDb.Companion.isSendingReportsEnabled
+import me.timeto.shared.db.KvDb.Companion.isSendingReports
 import me.timeto.shared.deviceData
 import me.timeto.shared.launchEx
 import me.timeto.shared.onEachExIn
@@ -37,7 +37,7 @@ class PrivacySheetVM : __VM<PrivacySheetVM.State>() {
         val scope = scopeVM()
         KvDb.KEY.IS_SENDING_REPORTS.getOrNullFlow().onEachExIn(scope) { kvDb ->
             state.update {
-                val newVal = kvDb?.value.isSendingReportsEnabled()
+                val newVal = kvDb?.value.isSendingReports()
                 it.copy(isSendReportsEnabled = newVal)
             }
         }
@@ -46,7 +46,7 @@ class PrivacySheetVM : __VM<PrivacySheetVM.State>() {
     fun toggleIsSendingReports() {
         val scope = scopeVM()
         scope.launchEx {
-            val cur = KvDb.KEY.IS_SENDING_REPORTS.selectOrNull().isSendingReportsEnabled()
+            val cur = KvDb.KEY.IS_SENDING_REPORTS.selectOrNull().isSendingReports()
             KvDb.KEY.IS_SENDING_REPORTS.upsertBool(!cur)
         }
     }

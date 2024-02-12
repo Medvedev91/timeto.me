@@ -5,7 +5,7 @@ import me.timeto.shared.*
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.KvDb
 import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
-import me.timeto.shared.db.KvDb.Companion.isSendingReportsEnabled
+import me.timeto.shared.db.KvDb.Companion.isSendingReports
 import me.timeto.shared.db.NoteDb
 import me.timeto.shared.db.ShortcutDb
 
@@ -79,7 +79,7 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
         KvDb.KEY.IS_SENDING_REPORTS
             .getOrNullFlow()
             .onEachExIn(scope) { kv ->
-                val isEnabled = kv?.value.isSendingReportsEnabled()
+                val isEnabled = kv?.value.isSendingReports()
                 state.update { it.copy(privacyNote = if (isEnabled) null else PrivacySheetVM.prayEmoji) }
             }
         AutoBackup.lastTimeCache.onEachExIn(scope) { unixTime ->
