@@ -101,9 +101,9 @@ class MyInAppNotificationDelegate: NSObject, ObservableObject, UNUserNotificatio
     /// Called if the notification comes at a time when the app is open - in app.
     ///
     func userNotificationCenter(
-            _ center: UNUserNotificationCenter,
-            willPresent notification: UNNotification,
-            withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
         // Haptic vibration
         UINotificationFeedbackGenerator().notificationOccurred(.success)
@@ -147,8 +147,8 @@ func vibrate(_ type: UINotificationFeedbackGenerator.FeedbackType) {
 extension View {
 
     func presentationDetentsHeightIf16(
-            _ height: CGFloat,
-            withDragIndicator: Bool = true
+        _ height: CGFloat,
+        withDragIndicator: Bool = true
     ) -> some View {
         if #available(iOS 16.0, *) {
             return self
@@ -159,7 +159,7 @@ extension View {
     }
 
     func presentationDetentsMediumIf16(
-            withDragIndicator: Bool = true
+        withDragIndicator: Bool = true
     ) -> some View {
         if #available(iOS 16.0, *) {
             return self
