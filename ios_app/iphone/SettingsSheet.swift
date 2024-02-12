@@ -344,7 +344,7 @@ struct SettingsSheet: View {
                                 HStack {
                                     if let privacyNote = state.privacyNote {
                                         Text(privacyNote)
-                                                .font(.system(size: 25))
+                                                .font(.system(size: 21))
                                                 .padding(.trailing, MyListView.PADDING_INNER_HORIZONTAL)
                                     } else {
                                         Text("")
