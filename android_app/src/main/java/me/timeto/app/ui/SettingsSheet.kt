@@ -563,7 +563,7 @@ private fun DayStartDialogView(
         )
 
         val items = settingsSheetState.dayStartListItems
-        var selectedItem by remember { mutableStateOf(settingsSheetState.dayStartSelectedIdx) }
+        var selectedItem by remember { mutableIntStateOf(settingsSheetState.dayStartSelectedIdx) }
 
         AndroidView(
             modifier = Modifier
