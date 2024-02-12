@@ -18,6 +18,7 @@ class HomeVM : __VM<HomeVM.State>() {
         val tasksToday: List<TaskDb>,
         val isTasksVisible: Boolean,
         val todayIntervalsUI: DayIntervalsUI?,
+        val fdroidMessage: String?,
         val idToUpdate: Long,
     ) {
 
@@ -150,6 +151,7 @@ class HomeVM : __VM<HomeVM.State>() {
             tasksToday = DI.tasks.filter { it.isToday },
             isTasksVisible = false,
             todayIntervalsUI = null, // todo init data
+            fdroidMessage = null, // todo init data
             idToUpdate = 0,
         )
     )
@@ -179,6 +181,16 @@ class HomeVM : __VM<HomeVM.State>() {
             .onEachExIn(scope) { tasks ->
                 state.update { it.copy(tasksToday = tasks) }
             }
+        if (deviceData.isFdroid)
+            KvDb.KEY.IS_SENDING_REPORTS
+                .getOrNullFlow()
+                .onEachExIn(scope) { kvDb ->
+                    if (kvDb == null) {
+                        state.update {
+                            it.copy(fdroidMessage = "Message for F-Droid users")
+                        }
+                    }
+                }
 
         ////
 
