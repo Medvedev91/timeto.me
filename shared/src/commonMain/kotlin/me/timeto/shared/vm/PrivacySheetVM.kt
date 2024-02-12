@@ -17,12 +17,12 @@ class PrivacySheetVM : __VM<PrivacySheetVM.State>() {
 
         val sendReportsTitle = "Send Reports${if (isSendReportsEnabled) "" else "  $prayEmoji"}"
 
-        val text1 = PrivacySheetVM.textHi
-        val text2 = PrivacySheetVM.textHere
-        val text3 = PrivacySheetVM.textRule
-        val text4 = PrivacySheetVM.textNever
-        val text5 = PrivacySheetVM.textOnly
-        val text6 = PrivacySheetVM.textKindly
+        val text1 = textHi
+        val text2 = textHere
+        val text3 = textRule
+        val text4 = textNever
+        val text5 = textOnly
+        val text6 = textKindly
 
         val sendItems: List<String> = PrivacySheetVM.sendItems
     }
