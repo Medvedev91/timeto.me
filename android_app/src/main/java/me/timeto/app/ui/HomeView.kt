@@ -196,6 +196,23 @@ fun HomeView() {
             }
         }
 
+        val fdroidMessage = state.fdroidMessage
+        if (fdroidMessage != null) {
+            Text(
+                text = fdroidMessage,
+                modifier = Modifier
+                    .padding(top = 4.dp)
+                    .clip(roundedShape)
+                    .clickable {
+                    }
+                    .background(c.red)
+                    .padding(horizontal = 10.dp)
+                    .padding(top = 4.dp, bottom = 5.dp),
+                color = c.white,
+                fontSize = 14.sp,
+            )
+        }
+
         ZStack(
             modifier = Modifier
                 .weight(1f),
