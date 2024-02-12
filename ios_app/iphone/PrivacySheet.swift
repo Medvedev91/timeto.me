@@ -46,22 +46,19 @@ struct PrivacySheet: View {
 
                     PView(text: state.text6)
 
-                    /*
-                MyListView__ItemView(
-                    isFirst = true,
-                    isLast = true,
-                    modifier = Modifier
-                            .padding(top = 24.dp),
-                    withTopDivider = false,
+                    MyListView__ItemView(
+                        isFirst: true,
+                        isLast: true,
+                        withTopDivider: false
                     ) {
-                    MyListView__ItemView__SwitchView(
-                        text = state.sendReportsTitle,
-                        isActive = state.isSendReportsEnabled,
+                        MyListView__ItemView__SwitchView(
+                            text: state.sendReportsTitle,
+                            isActive: state.isSendReportsEnabled
                         ) {
-                        vm.toggleIsSendingReports()
+                            vm.toggleIsSendingReports()
+                        }
                     }
-                }
-            */
+                            .padding(.top, 24)
 
                     Button(
                         action: {
