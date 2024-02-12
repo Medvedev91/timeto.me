@@ -3,6 +3,7 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.db.KvDb
 import me.timeto.shared.launchEx
+import me.timeto.shared.ping
 import me.timeto.shared.reportApi
 
 class FDroidSheetVM : __VM<FDroidSheetVM.State>() {
@@ -36,8 +37,10 @@ class FDroidSheetVM : __VM<FDroidSheetVM.State>() {
         val scope = scopeVM()
         scope.launchEx {
             KvDb.KEY.IS_SENDING_REPORTS.upsertBool(isSendReports)
-            if (isSendReports)
-                reportApi("F-Droid enable reports")
+            if (isSendReports) {
+                ping(force = true)
+                reportApi("F-Droid enable reports", force = true)
+            }
             onSuccess()
         }
     }
