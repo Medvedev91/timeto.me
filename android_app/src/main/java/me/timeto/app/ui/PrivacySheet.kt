@@ -3,6 +3,7 @@ package me.timeto.app.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -59,6 +60,7 @@ fun PrivacySheet(
 
             VStack(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .padding(top = 16.dp)
                     .background(c.sheetFg)
                     .padding(top = 8.dp, bottom = 12.dp),
