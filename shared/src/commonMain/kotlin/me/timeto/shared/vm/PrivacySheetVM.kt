@@ -49,7 +49,9 @@ class PrivacySheetVM : __VM<PrivacySheetVM.State>() {
             KvDb.KEY.IS_SENDING_REPORTS.upsertBool(newValue)
             reportApi("Up IS_SENDING_REPORTS: $newValue", force = true)
             if (newValue)
-                ping(force = true)
+                defaultScope().launchEx {
+                    ping(force = true)
+                }
         }
     }
 
