@@ -83,6 +83,10 @@ data class KvDb(
             }
             upsert(newVal)
         }
+
+        suspend fun upsertInt(value: Int?): Unit = dbIO {
+            upsert(value?.toString())
+        }
     }
 
     //
