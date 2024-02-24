@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.res.Resources
 import android.net.Uri
 import android.os.Build
@@ -64,6 +65,7 @@ val timerFont = FontFamily(Font(R.font.timer_font))
 fun showOpenSource() {
     App.instance.startActivity(
         Intent(Intent.ACTION_VIEW).apply {
+            flags = FLAG_ACTIVITY_NEW_TASK
             data = Uri.parse(OPEN_SOURCE_URL)
         }
     )
