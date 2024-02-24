@@ -87,6 +87,12 @@ data class KvDb(
         suspend fun upsertInt(value: Int?): Unit = dbIO {
             upsert(value?.toString())
         }
+
+        //
+
+        suspend fun upsertIsSendingReports(isSendingReports: Boolean) {
+            upsertInt(if (isSendingReports) time() else (-time()))
+        }
     }
 
     //
