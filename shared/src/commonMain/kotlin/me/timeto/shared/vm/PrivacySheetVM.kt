@@ -46,7 +46,7 @@ class PrivacySheetVM : __VM<PrivacySheetVM.State>() {
         val scope = scopeVM()
         scope.launchEx {
             val newValue = !KvDb.KEY.IS_SENDING_REPORTS.selectOrNull().isSendingReports()
-            KvDb.KEY.IS_SENDING_REPORTS.upsertBool(newValue)
+            KvDb.KEY.IS_SENDING_REPORTS.upsertIsSendingReports(newValue)
             reportApi("Up IS_SENDING_REPORTS: $newValue", force = true)
             if (newValue)
                 defaultScope().launchEx {

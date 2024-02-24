@@ -37,7 +37,7 @@ class FDroidSheetVM : __VM<FDroidSheetVM.State>() {
     ) {
         val scope = scopeVM()
         scope.launchEx {
-            KvDb.KEY.IS_SENDING_REPORTS.upsertBool(isSendReports)
+            KvDb.KEY.IS_SENDING_REPORTS.upsertIsSendingReports(isSendReports)
             if (isSendReports) {
                 defaultScope().launchEx {
                     ping(force = true)
