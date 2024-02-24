@@ -31,8 +31,10 @@ data class KvDb(
 
         fun String?.asDayStartOffsetSeconds(): Int = this?.toInt() ?: 0
 
-        fun String?.isSendingReports(): Boolean =
-            this?.toBool() ?: !deviceData.isFdroid
+        fun String?.isSendingReports(): Boolean {
+            val time: Int = this?.toInt() ?: return !deviceData.isFdroid
+            return time > 0
+        }
 
         //
         // Backupable Holder
