@@ -119,6 +119,7 @@ fun EventsCalendarView(
                                                     .padding(horizontal = 2.dp),
                                                 color = c.textSecondary,
                                                 fontSize = 10.sp,
+                                                lineHeight = 12.sp,
                                                 fontWeight = FontWeight.Light,
                                                 maxLines = 1,
                                                 softWrap = false,
