@@ -296,19 +296,21 @@ fun HomeView() {
                         Text(
                             text = goalUI.textLeft,
                             modifier = Modifier
-                                .padding(start = 6.dp, bottom = onePx)
+                                .padding(start = 6.dp)
                                 .align(Alignment.CenterStart),
                             color = c.white,
                             fontSize = goalFontSize,
+                            lineHeight = 18.sp,
                         )
 
                         Text(
                             text = goalUI.textRight,
                             modifier = Modifier
-                                .padding(end = 6.dp, bottom = onePx)
+                                .padding(end = 6.dp)
                                 .align(Alignment.CenterEnd),
                             color = c.white,
                             fontSize = goalFontSize,
+                            lineHeight = 18.sp,
                         )
                     }
                 }
@@ -645,6 +647,7 @@ private fun NavigationView(
                     text = state.menuTime,
                     color = c.homeMenuTime,
                     fontSize = 9.sp,
+                    lineHeight = 14.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = timerFont,
                     modifier = Modifier
@@ -676,6 +679,7 @@ private fun NavigationView(
                         modifier = Modifier,
                         color = batteryTextColor,
                         fontSize = 12.sp,
+                        lineHeight = 14.sp,
                         fontWeight = FontWeight.Light,
                     )
                 }
