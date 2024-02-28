@@ -379,9 +379,11 @@ private fun DateButtonView(
                     onSelect = onSelect,
                 )
             }
-            .padding(horizontal = 8.dp, vertical = 4.dp),
+            .padding(horizontal = 8.dp, vertical = 4.dp)
+            .padding(top = 1.dp),
         color = c.white,
         fontSize = 14.sp,
+        lineHeight = 18.sp,
         fontWeight = FontWeight.Medium,
     )
 }
