@@ -111,6 +111,7 @@ fun SummaryChartView(
                                 textAlign = TextAlign.Start,
                                 fontWeight = FontWeight.W300,
                                 fontSize = 12.sp,
+                                lineHeight = 14.sp,
                                 color = c.text,
                             )
 
@@ -122,6 +123,7 @@ fun SummaryChartView(
                                 textAlign = TextAlign.Start,
                                 fontWeight = FontWeight.W300,
                                 fontSize = 12.sp,
+                                lineHeight = 14.sp,
                                 color = c.text,
                             )
                         }
