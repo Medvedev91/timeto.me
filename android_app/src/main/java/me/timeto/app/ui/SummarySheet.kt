@@ -171,7 +171,7 @@ fun SummarySheet(
 
                         VStack(
                             modifier = Modifier
-                                .padding(top = 12.dp),
+                                .padding(top = 16.dp),
                         ) {
 
                             HStack {
@@ -182,6 +182,8 @@ fun SummarySheet(
                             }
 
                             HStack(
+                                modifier = Modifier
+                                    .padding(top = 4.dp),
                                 verticalAlignment = Alignment.Bottom,
                             ) {
 
@@ -192,6 +194,7 @@ fun SummarySheet(
                                         .padding(end = 4.dp),
                                     color = c.text,
                                     fontSize = 14.sp,
+                                    lineHeight = 14.sp,
                                     fontWeight = FontWeight.Medium,
                                     overflow = TextOverflow.Ellipsis,
                                     maxLines = 1,
@@ -202,7 +205,7 @@ fun SummarySheet(
 
                             HStack(
                                 modifier = Modifier
-                                    .padding(top = 4.dp)
+                                    .padding(top = 6.dp)
                             ) {
 
                                 ZStack(
@@ -348,6 +351,7 @@ private fun ActivitySecondaryText(
         modifier = modifier,
         color = c.textSecondary,
         fontSize = 12.sp,
+        lineHeight = 14.sp,
         fontWeight = FontWeight.Light,
         maxLines = 1,
     )
