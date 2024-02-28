@@ -263,6 +263,7 @@ fun SummarySheet(
                                 .padding(start = 8.dp, end = 8.dp, top = 6.dp, bottom = 7.dp),
                             textAlign = TextAlign.Center,
                             fontSize = 12.sp,
+                            lineHeight = 14.sp,
                             fontWeight = if (period.isActive) FontWeight.Black else FontWeight.Light,
                             color = if (period.isActive) c.white else c.text,
                         )
