@@ -293,7 +293,7 @@ fun TasksListView(
 
                         Column(
                             modifier = Modifier
-                                .padding(top = 11.dp, bottom = 11.dp),
+                                .padding(top = 10.dp, bottom = 10.dp),
                             verticalArrangement = Arrangement.Center
                         ) {
 
@@ -346,7 +346,10 @@ fun TasksListView(
 
                                                 Text(
                                                     timeUI.title,
+                                                    modifier = Modifier
+                                                        .padding(top = 1.dp),
                                                     fontSize = 12.sp,
+                                                    lineHeight = 14.sp,
                                                     color = c.white,
                                                 )
                                             }
@@ -367,6 +370,7 @@ fun TasksListView(
                                             Text(
                                                 timeUI.text,
                                                 fontSize = 13.sp,
+                                                lineHeight = 18.sp,
                                                 fontWeight = FontWeight.W300,
                                                 color = timeUI.textColor.toColor(),
                                             )
