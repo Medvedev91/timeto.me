@@ -532,10 +532,11 @@ private fun MainTasksView(
                             .offset(x = (-1).dp)
                             .clip(mainTaskTimeShape)
                             .background(timeUI.textBgColor.toColor())
-                            .padding(horizontal = 4.dp, vertical = 1.dp)
-                            .padding(bottom = onePx),
+                            .padding(horizontal = 4.dp)
+                            .padding(top = 1.dp),
                         fontWeight = FontWeight.Bold,
                         fontSize = 12.sp,
+                        lineHeight = 18.sp,
                         color = c.white,
                     )
                 }
