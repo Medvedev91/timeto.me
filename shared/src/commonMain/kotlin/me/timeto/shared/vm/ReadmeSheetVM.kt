@@ -1,6 +1,7 @@
 package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
+import me.timeto.shared.developerEmoji
 
 class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
 
@@ -29,7 +30,6 @@ private typealias PText = ReadmeSheetVM.Paragraph.Text
 private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     val paragraphs = mutableListOf<ReadmeSheetVM.Paragraph>()
     paragraphs.add(PText("Hi!"))
-    paragraphs.add(PText("Developer is here."))
-
+    paragraphs.add(PText("Developer is here  $developerEmoji"))
     return paragraphs
 }
