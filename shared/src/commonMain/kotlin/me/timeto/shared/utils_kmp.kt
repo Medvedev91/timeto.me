@@ -24,6 +24,8 @@ const val GOLDEN_RATIO = 1.618f
 
 const val OPEN_SOURCE_URL = "https://github.com/appstome/timetome-app"
 
+const val developerEmoji = "👨‍💻"
+
 internal lateinit var deviceData: DeviceData
 var batteryLevelOrNull: Int? = null
 var isBatteryChargingOrNull: Boolean? = null
