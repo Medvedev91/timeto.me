@@ -2,60 +2,55 @@ package me.timeto.app.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.LocalTextStyle
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.VStack
 import me.timeto.app.c
+import me.timeto.app.rememberVM
+import me.timeto.shared.vm.ReadmeSheetVM
+
+private val hPadding = MyListView.PADDING_OUTER_HORIZONTAL
 
 @Composable
 fun ReadmeSheet(
     layer: WrapperView.Layer,
 ) {
 
+    val (_, state) = rememberVM { ReadmeSheetVM() }
+
     VStack(
         modifier = Modifier
-            .background(c.bg)
+            .background(c.sheetBg)
     ) {
+
+        val scrollState = rememberScrollState()
+
+        Sheet__HeaderView(
+            title = state.title,
+            scrollState = scrollState,
+            bgColor = c.sheetBg,
+        )
 
         VStack(
             modifier = Modifier
-                .padding(horizontal = 24.dp)
-                .padding(vertical = 24.dp),
+                .verticalScroll(state = scrollState)
+                .padding(bottom = 20.dp)
+                .weight(1f),
         ) {
 
-            Text(
-                "Set a timer for each task to stay focused.",
-                style = prepTextStyle(fontWeight = FontWeight.Bold)
-            )
+            state.paragraphs.forEach { paragraph ->
 
-            Text(
-                "No \"stop\" option is the main feature of this app. Once you have completed one activity, you have to set a timer for the next one, even if it's a \"sleeping\" activity.",
-                modifier = Modifier.padding(top = 8.dp),
-                style = prepTextStyle()
-            )
-
-            val s8 = buildAnnotatedString {
-                append("This time-tracking approach provides real 24/7 data on how long everything takes. You can see it on the ")
-                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                    append("Chart")
+                when (paragraph) {
+                    is ReadmeSheetVM.Paragraph.Text -> PTextView(paragraph.text)
                 }
-                append(". ")
             }
-
-            Text(
-                text = s8,
-                modifier = Modifier.padding(top = 8.dp),
-                style = prepTextStyle(),
-            )
         }
 
         Sheet__BottomViewClose {
@@ -65,13 +60,18 @@ fun ReadmeSheet(
 }
 
 @Composable
-private fun prepTextStyle(
-    fontWeight: FontWeight = FontWeight.Normal
-) = LocalTextStyle.current.merge(
-    TextStyle(
-        color = c.textSecondary.copy(alpha = 0.6f),
-        fontSize = 14.sp,
+private fun PTextView(
+    text: String,
+    topPadding: Dp = 16.dp,
+    fontWeight: FontWeight = FontWeight.Normal,
+) {
+    Text(
+        text = text,
+        modifier = Modifier
+            .padding(horizontal = hPadding)
+            .padding(top = topPadding),
+        color = c.white,
+        lineHeight = 22.sp,
         fontWeight = fontWeight,
-        lineHeight = 18.sp,
     )
-)
+}
