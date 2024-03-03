@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
@@ -15,7 +14,6 @@ import me.timeto.app.rememberVM
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.vm.TaskFormSheetVM
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TaskFormSheet(
     task: TaskDb?,
