@@ -1,22 +1,28 @@
 package me.timeto.app.ui
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import me.timeto.app.VStack
-import me.timeto.app.c
-import me.timeto.app.rememberVM
+import me.timeto.app.*
+import me.timeto.app.R
+import me.timeto.shared.ColorRgba
 import me.timeto.shared.vm.ReadmeSheetVM
 
 private val hPadding = MyListView.PADDING_OUTER_HORIZONTAL
+
+private val imagesHBetween = 4.dp
+private val imagesHBlock = 10.dp
+private val imagesShape = SquircleShape(len = 50f)
 
 @Composable
 fun ReadmeSheet(
@@ -48,7 +54,21 @@ fun ReadmeSheet(
             state.paragraphs.forEach { paragraph ->
 
                 when (paragraph) {
+
                     is ReadmeSheetVM.Paragraph.Text -> PTextView(paragraph.text)
+
+                    is ReadmeSheetVM.Paragraph.ChartImages -> {
+
+                        HStack(
+                            modifier = Modifier
+                                .padding(top = 20.dp)
+                                .padding(horizontal = imagesHBlock),
+                        ) {
+                            ChartImageView()
+                            ChartImageView()
+                            ChartImageView()
+                        }
+                    }
                 }
             }
         }
@@ -73,5 +93,21 @@ private fun PTextView(
         color = c.white,
         lineHeight = 22.sp,
         fontWeight = fontWeight,
+    )
+}
+
+private val imageBorderColor = ColorRgba(96, 96, 96).toColor()
+
+@Composable
+private fun RowScope.ChartImageView() {
+    Image(
+        painter = painterResource(R.drawable.readme_chart_1),
+        modifier = Modifier
+            .padding(horizontal = imagesHBetween)
+            .clip(imagesShape)
+            .border(1.dp, imageBorderColor, shape = imagesShape)
+            .weight(1f),
+        contentDescription = "todo image",
+        contentScale = ContentScale.Fit,
     )
 }
