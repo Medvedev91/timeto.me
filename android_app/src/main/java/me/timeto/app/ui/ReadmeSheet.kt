@@ -1,5 +1,6 @@
 package me.timeto.app.ui
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
@@ -64,9 +65,9 @@ fun ReadmeSheet(
                                 .padding(top = 20.dp)
                                 .padding(horizontal = imagesHBlock),
                         ) {
-                            ChartImageView()
-                            ChartImageView()
-                            ChartImageView()
+                            ChartImageView(R.drawable.readme_chart_1)
+                            ChartImageView(R.drawable.readme_chart_2)
+                            ChartImageView(R.drawable.readme_chart_3)
                         }
                     }
                 }
@@ -99,15 +100,17 @@ private fun PTextView(
 private val imageBorderColor = ColorRgba(96, 96, 96).toColor()
 
 @Composable
-private fun RowScope.ChartImageView() {
+private fun RowScope.ChartImageView(
+    @DrawableRes resId: Int,
+) {
     Image(
-        painter = painterResource(R.drawable.readme_chart_1),
+        painter = painterResource(resId),
         modifier = Modifier
             .padding(horizontal = imagesHBetween)
             .clip(imagesShape)
             .border(1.dp, imageBorderColor, shape = imagesShape)
             .weight(1f),
-        contentDescription = "todo image",
+        contentDescription = "Chart Screenshot",
         contentScale = ContentScale.Fit,
     )
 }
