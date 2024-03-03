@@ -19,7 +19,9 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
 
     sealed class Paragraph {
 
-        data class Text(val text: String) : Paragraph()
+        class Text(val text: String) : Paragraph()
+
+        class ChartImages() : Paragraph()
     }
 }
 
@@ -35,5 +37,6 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     paragraphs.add(PText("First of all, it is a pragmatic guide. I mean, it is NOT just a list of features, but my real day-to-day experience."))
     paragraphs.add(PText("I will start with the most important things: timer, repeating tasks and checklists. That is 90% I use."))
     paragraphs.add(PText("Enjoy!"))
+    paragraphs.add(ReadmeSheetVM.Paragraph.ChartImages())
     return paragraphs
 }
