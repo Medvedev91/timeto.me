@@ -3,6 +3,8 @@ package me.timeto.app.ui
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -109,7 +111,31 @@ private fun RowScope.ChartImageView(
             .padding(horizontal = imagesHBetween)
             .clip(imagesShape)
             .border(1.dp, imageBorderColor, shape = imagesShape)
-            .weight(1f),
+            .weight(1f)
+            .clickable {
+                Sheet.show { layer ->
+
+                    VStack(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .background(c.sheetBg),
+                    ) {
+
+                        Image(
+                            painter = painterResource(resId),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f),
+                            contentDescription = "Chart Screenshot",
+                            contentScale = ContentScale.Fit,
+                        )
+
+                        Sheet__BottomViewClose {
+                            layer.close()
+                        }
+                    }
+                }
+            },
         contentDescription = "Chart Screenshot",
         contentScale = ContentScale.Fit,
     )
