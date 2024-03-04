@@ -148,10 +148,10 @@ private fun RowScope.ChartImageView(
     Image(
         painter = painterResource(resId),
         modifier = Modifier
+            .weight(1f)
             .padding(horizontal = imagesHBetween)
             .clip(imagesShape)
             .border(1.dp, imageBorderColor, shape = imagesShape)
-            .weight(1f)
             .clickable {
                 Sheet.show { layer ->
 
