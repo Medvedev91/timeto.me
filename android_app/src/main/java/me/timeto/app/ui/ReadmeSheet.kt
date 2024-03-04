@@ -86,7 +86,6 @@ fun ReadmeSheet(
 private fun PTextView(
     text: String,
     topPadding: Dp = 16.dp,
-    fontWeight: FontWeight = FontWeight.Normal,
 ) {
     Text(
         text = text,
@@ -95,7 +94,7 @@ private fun PTextView(
             .padding(top = topPadding),
         color = c.white,
         lineHeight = 22.sp,
-        fontWeight = fontWeight,
+        fontWeight = FontWeight.Normal,
     )
 }
 
