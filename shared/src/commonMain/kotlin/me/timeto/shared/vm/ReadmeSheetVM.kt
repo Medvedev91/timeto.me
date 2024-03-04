@@ -21,6 +21,8 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
 
         class Text(val text: String) : Paragraph()
 
+        class RedText(val text: String) : Paragraph()
+
         class ChartImages() : Paragraph()
     }
 }
@@ -28,6 +30,7 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
 //
 
 private typealias PText = ReadmeSheetVM.Paragraph.Text
+private typealias PRedText = ReadmeSheetVM.Paragraph.RedText
 
 private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     val paragraphs = mutableListOf<ReadmeSheetVM.Paragraph>()
@@ -37,6 +40,7 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     paragraphs.add(PText("First of all, it is a pragmatic guide. I mean, it is NOT just a list of features, but my real day-to-day experience."))
     paragraphs.add(PText("I will start with the most important things: timer, repeating tasks and checklists. That is 90% I use."))
     paragraphs.add(PText("Enjoy!"))
+    paragraphs.add(PRedText("There is no \"stop\" option! Timer is running all the time."))
     paragraphs.add(ReadmeSheetVM.Paragraph.ChartImages())
     return paragraphs
 }
