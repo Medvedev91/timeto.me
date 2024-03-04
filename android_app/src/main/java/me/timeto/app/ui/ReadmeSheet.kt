@@ -27,6 +27,8 @@ private val imagesHBetween = 4.dp
 private val imagesHBlock = 10.dp
 private val imagesShape = SquircleShape(len = 50f)
 
+private val pTextLineHeight = 22.sp
+
 @Composable
 fun ReadmeSheet(
     layer: WrapperView.Layer,
@@ -94,7 +96,7 @@ private fun PTextView(
             .padding(horizontal = hPadding)
             .padding(top = topPadding),
         color = c.white,
-        lineHeight = 22.sp,
+        lineHeight = pTextLineHeight,
         fontWeight = FontWeight.Normal,
     )
 }
