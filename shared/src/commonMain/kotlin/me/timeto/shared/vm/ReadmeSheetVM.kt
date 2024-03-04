@@ -26,6 +26,8 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
         class RedText(val text: String) : Paragraph()
 
         class ChartImages() : Paragraph()
+
+        class ActivitiesImage() : Paragraph()
     }
 }
 
@@ -48,6 +50,8 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     paragraphs.add(PText("Once you complete one activity, you must immediately set the timer for the next one, even if it is a \"sleeping\" activity."))
     paragraphs.add(PRedText("There is no \"stop\" option! Timer is running all the time."))
     paragraphs.add(ReadmeSheetVM.Paragraph.ChartImages())
+    paragraphs.add(PRedText("There is no \"stop\" option! Timer is running all the time."))
+    paragraphs.add(ReadmeSheetVM.Paragraph.ActivitiesImage())
     paragraphs.add(PTitle("Repeating Tasks"))
     return paragraphs
 }
