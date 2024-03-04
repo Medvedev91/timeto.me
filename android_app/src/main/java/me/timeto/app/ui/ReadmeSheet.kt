@@ -78,6 +78,19 @@ fun ReadmeSheet(
                             ChartImageView(R.drawable.readme_chart_3)
                         }
                     }
+
+                    is ReadmeSheetVM.Paragraph.ActivitiesImage -> {
+
+                        HStack(
+                            modifier = Modifier
+                                .padding(top = 20.dp)
+                                .padding(horizontal = imagesHBlock),
+                        ) {
+                            ChartImageView(R.drawable.readme_activities_1)
+                            ChartImageView(null)
+                            ChartImageView(null)
+                        }
+                    }
                 }
             }
         }
