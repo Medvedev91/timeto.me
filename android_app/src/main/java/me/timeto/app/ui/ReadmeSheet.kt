@@ -62,6 +62,8 @@ fun ReadmeSheet(
 
                     is ReadmeSheetVM.Paragraph.Text -> PTextView(paragraph.text)
 
+                    is ReadmeSheetVM.Paragraph.RedText -> PRedTextView(paragraph.text)
+
                     is ReadmeSheetVM.Paragraph.ChartImages -> {
 
                         HStack(
@@ -95,6 +97,24 @@ private fun PTextView(
             .fillMaxWidth()
             .padding(horizontal = hPadding)
             .padding(top = topPadding),
+        color = c.white,
+        lineHeight = pTextLineHeight,
+        fontWeight = FontWeight.Normal,
+    )
+}
+
+@Composable
+private fun PRedTextView(
+    text: String,
+) {
+    Text(
+        text = text,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 12.dp)
+            .background(c.red)
+            .padding(horizontal = hPadding)
+            .padding(top = 12.dp, bottom = 10.dp),
         color = c.white,
         lineHeight = pTextLineHeight,
         fontWeight = FontWeight.Normal,
