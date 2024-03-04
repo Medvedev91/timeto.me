@@ -60,6 +60,8 @@ fun ReadmeSheet(
 
                 when (paragraph) {
 
+                    is ReadmeSheetVM.Paragraph.Title -> PTitleView(paragraph.text)
+
                     is ReadmeSheetVM.Paragraph.Text -> PTextView(paragraph.text)
 
                     is ReadmeSheetVM.Paragraph.RedText -> PRedTextView(paragraph.text)
@@ -84,6 +86,22 @@ fun ReadmeSheet(
             layer.close()
         }
     }
+}
+
+@Composable
+private fun PTitleView(
+    text: String,
+) {
+    Text(
+        text = text,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = hPadding)
+            .padding(top = 48.dp),
+        color = c.white,
+        fontWeight = FontWeight.Bold,
+        fontSize = 28.sp,
+    )
 }
 
 @Composable
