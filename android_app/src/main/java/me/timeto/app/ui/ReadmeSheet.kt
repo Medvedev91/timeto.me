@@ -90,6 +90,7 @@ private fun PTextView(
     Text(
         text = text,
         modifier = Modifier
+            .fillMaxWidth()
             .padding(horizontal = hPadding)
             .padding(top = topPadding),
         color = c.white,
