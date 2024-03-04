@@ -143,8 +143,14 @@ private val imageBorderColor = ColorRgba(96, 96, 96).toColor()
 
 @Composable
 private fun RowScope.ChartImageView(
-    @DrawableRes resId: Int,
+    @DrawableRes resId: Int?,
 ) {
+
+    if (resId == null) {
+        SpacerW1()
+        return
+    }
+
     Image(
         painter = painterResource(resId),
         modifier = Modifier
