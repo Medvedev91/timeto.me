@@ -19,6 +19,8 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
 
     sealed class Paragraph {
 
+        class Title(val text: String) : Paragraph()
+
         class Text(val text: String) : Paragraph()
 
         class RedText(val text: String) : Paragraph()
@@ -29,6 +31,7 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
 
 //
 
+private typealias PTitle = ReadmeSheetVM.Paragraph.Title
 private typealias PText = ReadmeSheetVM.Paragraph.Text
 private typealias PRedText = ReadmeSheetVM.Paragraph.RedText
 
@@ -40,6 +43,9 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     paragraphs.add(PText("First of all, it is a pragmatic guide. I mean, it is NOT just a list of features, but my real day-to-day experience."))
     paragraphs.add(PText("I will start with the most important things: timer, repeating tasks and checklists. That is 90% I use."))
     paragraphs.add(PText("Enjoy!"))
+    paragraphs.add(PTitle("Timer"))
+    paragraphs.add(PText("You must set a timer for each activity, like eating, working, reading, etc."))
+    paragraphs.add(PText("Once you complete one activity, you must immediately set the timer for the next one, even if it is a \"sleeping\" activity."))
     paragraphs.add(PRedText("There is no \"stop\" option! Timer is running all the time."))
     paragraphs.add(ReadmeSheetVM.Paragraph.ChartImages())
     return paragraphs
