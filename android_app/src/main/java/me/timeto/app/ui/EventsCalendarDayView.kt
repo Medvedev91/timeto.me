@@ -61,8 +61,8 @@ fun EventsCalendarDayView(
                             defTime = state.formDefTime,
                         ) {}
                     }
-                    .padding(horizontal = 8.dp)
-                    .padding(top = 4.dp, bottom = 4.dp + halfDp),
+                    .padding(horizontal = 10.dp)
+                    .padding(top = 2.dp + onePx, bottom = 2.dp),
                 color = c.white,
                 fontSize = 13.sp,
                 fontWeight = FontWeight.Medium,
