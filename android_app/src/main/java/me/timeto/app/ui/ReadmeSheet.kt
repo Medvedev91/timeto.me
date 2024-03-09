@@ -162,7 +162,7 @@ private fun PListDashedView(
 
             HStack(
                 modifier = Modifier
-                    .padding(top = 6.dp),
+                    .padding(top = 8.dp),
             ) {
 
                 Icon(

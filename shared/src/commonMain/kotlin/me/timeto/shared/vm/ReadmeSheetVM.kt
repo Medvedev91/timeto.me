@@ -55,14 +55,13 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     paragraphs.add(PRedText("There is no \"stop\" option! Timer is running all the time."))
     paragraphs.add(ReadmeSheetVM.Paragraph.ActivitiesImage())
     paragraphs.add(PTitle("Repeating Tasks"))
-    paragraphs.add(PText("You must set a timer for each activity, like eating, working, reading, etc."))
+    paragraphs.add(PText("We learned the timer, repeating tasks, and checklists. Here are the most important points:"))
     paragraphs.add(
         ReadmeSheetVM.Paragraph.ListDash(
             items = listOf(
-                "First of all, it is a pragmatic guide. I mean, it is NOT just a list of features, but my real day-to-day experience.",
-                "There is no \"stop\" option! Timer is running all the time.",
-                "You must set a timer for each activity, like eating, working, reading, etc.",
-                "Nobody.one",
+                "Timer is running all the time;",
+                "Using repeating tasks to the max;",
+                "Timer, activity and checklist will be set automatically.",
             ),
         )
     )
