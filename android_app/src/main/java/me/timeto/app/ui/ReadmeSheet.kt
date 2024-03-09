@@ -2,10 +2,8 @@ package me.timeto.app.ui
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -65,6 +63,8 @@ fun ReadmeSheet(
                     is ReadmeSheetVM.Paragraph.Text -> PTextView(paragraph.text)
 
                     is ReadmeSheetVM.Paragraph.RedText -> PRedTextView(paragraph.text)
+
+                    is ReadmeSheetVM.Paragraph.ListDash -> PListDashedView(paragraph.items)
 
                     is ReadmeSheetVM.Paragraph.ChartImages -> {
 
@@ -150,6 +150,42 @@ private fun PRedTextView(
         lineHeight = pTextLineHeight,
         fontWeight = FontWeight.Normal,
     )
+}
+
+@Composable
+private fun PListDashedView(
+    items: List<String>,
+) {
+    VStack {
+
+        items.forEach { item ->
+
+            HStack(
+                modifier = Modifier
+                    .padding(top = 6.dp),
+            ) {
+
+                Icon(
+                    painter = painterResource(R.drawable.sf_minus_medium_regular),
+                    contentDescription = item,
+                    modifier = Modifier
+                        .padding(start = hPadding, top = 5.dp)
+                        .size(12.dp),
+                    tint = c.white,
+                )
+
+                Text(
+                    text = item,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 12.dp, end = hPadding),
+                    color = c.white,
+                    lineHeight = pTextLineHeight,
+                    fontWeight = FontWeight.Normal,
+                )
+            }
+        }
+    }
 }
 
 private val imageBorderColor = ColorRgba(96, 96, 96).toColor()
