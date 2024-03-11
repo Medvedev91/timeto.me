@@ -154,3 +154,11 @@ A typical calendar. Tasks from the calendar will be displayed not only in "Today
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_calendar_1.jpg" width="200" />
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_calendar_2.jpg" width="200" />
 </p>
+
+# Shortcuts
+
+Real life example: I meditate every day, to start I open a special video on YouTube.
+
+Shortcuts automate this. When I start the "Meditation" activity, the video will start automatically.
+
+This works especially well with repeating tasks. "Meditation" is automatically created every day, I just tap on it, the timer and video starts.
