@@ -125,3 +125,13 @@ After that, create repeating tasks. You can rely on my examples. They will appea
 Then move on to advanced features.
 
 Good luck! 🍀
+
+# Goals
+
+Look at the bottom of the screenshot. For me, I set a goal to work 8 hours a day and read for 30 minutes.
+
+<p float="left">
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_goals_1.jpg" width="200" />
+</p>
+
+To create goals, go to the activity edit form.
