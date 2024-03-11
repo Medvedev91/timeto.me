@@ -170,3 +170,5 @@ Especially for owls. You can set the time when repeating tasks will be added for
 # Conclusion
 
 I hope the app will improve your life like it improved mine. I would be very happy to get feedback and answer questions.
+
+Any questions [hi@timeto.me](mailto:hi@timeto.me?subject=[GitHubReadme]%20Feedback)
