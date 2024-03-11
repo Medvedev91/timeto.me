@@ -145,3 +145,12 @@ Today - tasks from repeating tasks and calendar go here on a set day, you can ad
 Tmrw (tomorrow) - tasks that will be tomorrow including repeating tasks and calendar. In other words, the tasks that will be moved to "Today" tomorrow.
 
 Swipe left to delete and right to edit.
+
+# Calendar
+
+A typical calendar. Tasks from the calendar will be displayed not only in "Today" but also on the Home Screen. "Call Ann" example:
+
+<p float="left">
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_calendar_1.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_calendar_1.jpg" width="200" />
+</p>
