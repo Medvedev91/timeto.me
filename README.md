@@ -89,3 +89,19 @@ Note, the tasks are sorted by time of day and indicate how much time is left. It
 Of course, you can create not only everyday tasks. For example, watering a cactus once a week or paying for internet once a month, etc.
 
 I believe this is the main feature of the app. I recommend using it to the max.
+
+# Checklists
+
+**The most important is how checklists work with repeating tasks.**
+
+In fact, checklists are an addition to repeating tasks.
+
+You can add a checklist for any repeating task and it will always appear below the timer.
+
+Here are examples for morning routine, work and evening:
+
+<p float="left">
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_checklists_1.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_checklists_2.jpg" width="200" /> 
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_checklists_3.jpg" width="200" />
+</p>
