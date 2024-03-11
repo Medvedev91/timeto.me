@@ -92,7 +92,7 @@ I believe this is the main feature of the app. I recommend using it to the max.
 
 # Checklists
 
-**The most important is how checklists work with repeating tasks.**
+**The most important is HOW checklists work WITH repeating tasks.**
 
 In fact, checklists are an addition to repeating tasks.
 
@@ -105,3 +105,11 @@ Here are examples for morning routine, work and evening:
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_checklists_2.jpg" width="200" /> 
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_checklists_3.jpg" width="200" />
 </p>
+
+# Conclusion
+
+We learned the timer, repeating tasks, and checklists. Here are the most important points:
+
+- Timer is running all the time;
+- Using repeating tasks to the max;
+- Timer, activity and checklist will be set automatically.
