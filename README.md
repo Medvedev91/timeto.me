@@ -162,3 +162,7 @@ Real life example: I meditate every day, to start I open a special video on YouT
 Shortcuts automate this. When I start the "Meditation" activity, the video will start automatically.
 
 This works especially well with repeating tasks. "Meditation" is automatically created every day, I just tap on it, the timer and video starts.
+
+# Day Start Time
+
+Especially for owls. You can set the time when repeating tasks will be added for the next day. Default 00:00.
