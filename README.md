@@ -38,3 +38,23 @@ Enjoy!
 # Timer
 
 You must set a timer for each activity, like eating, working, reading, etc.
+
+**There is NO “stop” option! Once you complete one activity, you must set the timer for the next one, even if it is a "sleeping" activity.**
+
+In other words, to finish the current activity, you have to start the timer for the next one.
+
+This way provides real 24/7 data on how long everything takes. It will look like this:
+
+<p float="left">
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_chart_1.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_chart_2.jpg" width="200" /> 
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_chart_3.jpg" width="200" />
+</p>
+
+By default, the app has some activities, but you can add your own. Here are mine:
+
+<p float="left">
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_activities_1.jpg" width="200" />
+</p>
+
+You may think choosing activity and timer for each task is overwhelming. This is where “Repeating Tasks” come into play.
