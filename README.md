@@ -152,5 +152,5 @@ A typical calendar. Tasks from the calendar will be displayed not only in "Today
 
 <p float="left">
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_calendar_1.jpg" width="200" />
-  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_calendar_1.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_calendar_2.jpg" width="200" />
 </p>
