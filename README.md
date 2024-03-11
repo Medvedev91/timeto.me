@@ -57,4 +57,35 @@ By default, the app has some activities, but you can add your own. Here are mine
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_activities_1.jpg" width="200" />
 </p>
 
-You may think choosing activity and timer for each task is overwhelming. This is where “Repeating Tasks” come into play.
+You may think choosing activity and timer for each task is overwhelming. This is where "Repeating Tasks" come into play.
+
+# Repeating Tasks
+
+I will show how it works for me.
+
+Almost all of my activities are actually repeated. I wake up at the same time, then I spend 1 hour getting ready, 2 hours working, 1 hour eating, and so on.
+
+In the app, I created a repeating task for each activity with a time of day. It looks like this:
+
+<p float="left">
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_repeatings_1.jpg" width="200" />
+</p>
+
+Pay attention to 3 things:
+- Time of day, like "Every day at 9:00";
+- Emoji, like "🥗", which means the "Eating" activity;
+- Timer, like "1h".
+
+These repeating tasks are added to my task list every day. It looks like this:
+
+<p float="left">
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_repeatings_2.jpg" width="200" />
+</p>
+
+Note, the tasks are sorted by time of day and indicate how much time is left. It's like a schedule.
+
+**But most importantly, when I press it, it automatically starts a timer with the right activity.**
+
+Of course, you can create not only everyday tasks. For example, watering a cactus once a week or paying for internet once a month, etc.
+
+I believe this is the main feature of the app. I recommend using it to the max.
