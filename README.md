@@ -39,9 +39,9 @@ Enjoy!
 
 You must set a timer for each activity, like eating, working, reading, etc.
 
-**There is NO “stop” option! Once you complete one activity, you must set the timer for the next one, even if it is a "sleeping" activity.**
+**There is NO "stop" option! Once you complete one activity, you must set the timer for the next one, even if it is a "sleeping" activity.**
 
-In other words, to finish the current activity, you have to start the timer for the next one.
+In other words, to finish the current activity, you have to start the next one.
 
 This way provides real 24/7 data on how long everything takes. It will look like this:
 
