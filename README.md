@@ -1,14 +1,5 @@
 # timeto.me - Personal Productivity Tools
 
-The main feature of this app is there is no "stop" option. Once you have completed one activity,
-you have to set a timer for the next one, even if it's a "sleeping" activity.
-
-This time-tracking approach provides real 24/7 data on how long everything takes.
-You can see it on the Chart screen.
-
-In addition, there are many features related to the task manager, such as tasks,
-calendar, checklists, shortcuts, notes, repetitive tasks, goals, pomodoro, etc.
-
 App Store https://apps.apple.com/us/app/id6448869727
 
 Google Play https://play.google.com/store/apps/details?id=me.timeto.app
@@ -18,14 +9,14 @@ F-Droid https://f-droid.org/en/packages/me.timeto.app
 Any questions [hi@timeto.me](mailto:hi@timeto.me?subject=[GitHub]%20Feedback)
 
 <p float="left">
-  <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/1.jpg" width="200" />
-  <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/2.jpg" width="200" /> 
-  <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/3.jpg" width="200" />
-  <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/4.jpg" width="200" />
-  <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/5.jpg" width="200" />
-  <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/6.jpg" width="200" />
-  <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/7.jpg" width="200" />
-  <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/8.jpg" width="200" />
+  <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/1.jpg" width="180" />
+  <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/2.jpg" width="180" /> 
+  <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/3.jpg" width="180" />
+  <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/4.jpg" width="180" />
+  <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/5.jpg" width="180" />
+  <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/6.jpg" width="180" />
+  <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/7.jpg" width="180" />
+  <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/8.jpg" width="180" />
 </p>
 
 ---
@@ -49,10 +40,6 @@ sdk.dir=/Users/__USER__/Library/Android/sdk
 `Settings -> Editor -> Code Style -> Kotlin -> Wrapping and Braces -> Binary expressions -> check 'Align when multiline'`
 
 `Settings -> Editor -> TODO -> + -> Pattern: \btrick\b.*   Foreground: F22613`
-
-# AppCode
-
-`Settings -> Editor -> Code Style -> Swift -> Wrapping and Braces -> Binary expressions -> check 'Align when multiline'`
 
 # Android Specific
 
