@@ -135,3 +135,13 @@ Look at the bottom of the screenshot. For me, I set a goal to work 8 hours a day
 </p>
 
 To create goals, go to the activity edit form.
+
+# Tasks List
+
+A typical task list with folders. But there are 2 special folders: today and tmrw (tomorrow).
+
+Today - tasks from repeating tasks and calendar go here on a set day, you can add your own.
+
+Tmrw (tomorrow) - tasks that will be tomorrow including repeating tasks and calendar. In other words, the tasks that will be moved to "Today" tomorrow.
+
+Swipe left to delete and right to edit.
