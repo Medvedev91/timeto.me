@@ -91,6 +91,20 @@ fun ReadmeSheet(
                             ChartImageView(null)
                         }
                     }
+
+                    is ReadmeSheetVM.Paragraph.AskAQuestion -> {
+
+                        MyListView__ItemView(
+                            isFirst = true,
+                            isLast = true,
+                            modifier = Modifier
+                                .padding(top = 24.dp),
+                        ) {
+                            MyListView__ItemView__ButtonView(text = paragraph.title) {
+                                askAQuestion(subject = paragraph.subject)
+                            }
+                        }
+                    }
                 }
             }
         }
