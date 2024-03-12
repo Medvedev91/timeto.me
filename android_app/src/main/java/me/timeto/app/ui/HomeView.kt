@@ -201,6 +201,7 @@ fun HomeView() {
             MessageButton(
                 title = readmeMessage,
                 onClick = {
+                    vm.onReadmeOpen()
                     Sheet.show { layer ->
                         ReadmeSheet(layer)
                     }
