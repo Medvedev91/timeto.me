@@ -490,11 +490,7 @@ fun SettingsSheet(
                     withTopDivider = false,
                 ) {
                     MyListView__ItemView__ButtonView(text = "Ask a Question") {
-                        context.startActivity(
-                            Intent(Intent.ACTION_VIEW).apply {
-                                data = Uri.parse("mailto:${state.feedbackEmail}?subject=${state.feedbackSubject}")
-                            }
-                        )
+                        askAQuestion(subject = state.feedbackSubject)
                     }
                 }
 
