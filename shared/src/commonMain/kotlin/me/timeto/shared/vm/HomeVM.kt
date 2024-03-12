@@ -229,6 +229,12 @@ class HomeVM : __VM<HomeVM.State>() {
             reportApi("batteryLevelOrNull null")
     }
 
+    fun onReadmeOpen() {
+        launchExDefault {
+            KvDb.KEY.HOME_README_OPEN_TIME.upsertInt(time())
+        }
+    }
+
     fun toggleIsPurple() {
         state.update { it.copy(isPurple = !it.isPurple) }
     }
