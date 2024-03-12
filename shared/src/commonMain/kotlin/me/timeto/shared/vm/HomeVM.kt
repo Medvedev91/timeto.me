@@ -19,6 +19,7 @@ class HomeVM : __VM<HomeVM.State>() {
         val isTasksVisible: Boolean,
         val todayIntervalsUI: DayIntervalsUI?,
         val fdroidMessage: String?,
+        val readmeMessage: String?,
         val idToUpdate: Long,
     ) {
 
@@ -152,6 +153,7 @@ class HomeVM : __VM<HomeVM.State>() {
             isTasksVisible = false,
             todayIntervalsUI = null, // todo init data
             fdroidMessage = null, // todo init data
+            readmeMessage = null, // todo init data
             idToUpdate = 0,
         )
     )
@@ -189,6 +191,13 @@ class HomeVM : __VM<HomeVM.State>() {
                         it.copy(fdroidMessage = if (kvDb == null) "Message for F-Droid users" else null)
                     }
                 }
+        KvDb.KEY.HOME_README_OPEN_TIME
+            .getOrNullFlow()
+            .onEachExIn(scope) { kvDb ->
+                state.update {
+                    it.copy(readmeMessage = if (kvDb == null) "How to use the app" else null)
+                }
+            }
 
         ////
 
