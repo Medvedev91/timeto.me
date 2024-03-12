@@ -198,21 +198,13 @@ fun HomeView() {
 
         val fdroidMessage = state.fdroidMessage
         if (fdroidMessage != null) {
-            Text(
-                text = fdroidMessage,
-                modifier = Modifier
-                    .padding(top = 4.dp)
-                    .clip(roundedShape)
-                    .clickable {
-                        Sheet.show { layer ->
-                            FDroidSheet(layer)
-                        }
+            MessageButton(
+                title = fdroidMessage,
+                onClick = {
+                    Sheet.show { layer ->
+                        FDroidSheet(layer)
                     }
-                    .background(c.red)
-                    .padding(horizontal = 10.dp)
-                    .padding(vertical = 4.dp),
-                color = c.white,
-                fontSize = 14.sp,
+                }
             )
         }
 
@@ -358,6 +350,27 @@ fun HomeView() {
             )
         }
     }
+}
+
+@Composable
+private fun MessageButton(
+    title: String,
+    onClick: () -> Unit,
+) {
+    Text(
+        text = title,
+        modifier = Modifier
+            .padding(top = 4.dp)
+            .clip(roundedShape)
+            .clickable {
+                onClick()
+            }
+            .background(c.red)
+            .padding(horizontal = 10.dp)
+            .padding(vertical = 4.dp),
+        color = c.white,
+        fontSize = 14.sp,
+    )
 }
 
 @Composable
