@@ -196,6 +196,18 @@ fun HomeView() {
             }
         }
 
+        val readmeMessage = state.readmeMessage
+        if (readmeMessage != null) {
+            MessageButton(
+                title = readmeMessage,
+                onClick = {
+                    Sheet.show { layer ->
+                        ReadmeSheet(layer)
+                    }
+                }
+            )
+        }
+
         val fdroidMessage = state.fdroidMessage
         if (fdroidMessage != null) {
             MessageButton(
