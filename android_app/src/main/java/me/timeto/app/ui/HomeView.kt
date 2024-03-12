@@ -210,7 +210,7 @@ fun HomeView() {
                     }
                     .background(c.red)
                     .padding(horizontal = 10.dp)
-                    .padding(top = 4.dp, bottom = 5.dp),
+                    .padding(vertical = 4.dp),
                 color = c.white,
                 fontSize = 14.sp,
             )
