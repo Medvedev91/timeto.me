@@ -1,6 +1,7 @@
 package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
+import me.timeto.shared.db.KvDb
 import me.timeto.shared.developerEmoji
 
 class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
@@ -30,6 +31,15 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
         class ChartImages() : Paragraph()
 
         class ActivitiesImage() : Paragraph()
+
+        class AskAQuestion() : Paragraph() {
+            val title = "Ask a Question"
+            val subject: String =
+                when (val fs = KvDb.KEY.FEEDBACK_SUBJECT.getFromDIOrNull()) {
+                    null -> "Feedback Readme"
+                    else -> "$fs Readme"
+                }
+        }
     }
 }
 
@@ -65,5 +75,6 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
             ),
         )
     )
+    paragraphs.add(ReadmeSheetVM.Paragraph.AskAQuestion())
     return paragraphs
 }
