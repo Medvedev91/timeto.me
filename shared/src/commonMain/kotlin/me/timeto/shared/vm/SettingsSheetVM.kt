@@ -28,8 +28,6 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
 
         val headerTitle = "Settings"
 
-        val feedbackEmail = "hi@timeto.me"
-
         val dayStartNote = dayStartSecondsToString(dayStartSeconds)
         val dayStartListItems = (-6..6).map { hour ->
             DayStartOffsetListItem(
