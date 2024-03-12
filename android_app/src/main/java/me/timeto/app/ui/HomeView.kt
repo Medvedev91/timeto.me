@@ -360,7 +360,7 @@ private fun MessageButton(
     Text(
         text = title,
         modifier = Modifier
-            .padding(top = 4.dp)
+            .padding(top = 12.dp)
             .clip(roundedShape)
             .clickable {
                 onClick()
