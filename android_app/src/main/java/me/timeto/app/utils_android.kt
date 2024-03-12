@@ -71,6 +71,17 @@ fun showOpenSource() {
     )
 }
 
+fun askAQuestion(
+    subject: String,
+) {
+    App.instance.startActivity(
+        Intent(Intent.ACTION_VIEW).apply {
+            flags = FLAG_ACTIVITY_NEW_TASK
+            data = Uri.parse("mailto:hi@timeto.me?subject=$subject")
+        }
+    )
+}
+
 //////
 
 fun scheduleNotification(data: ScheduledNotificationData) {
