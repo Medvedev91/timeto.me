@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
@@ -22,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -29,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.*
 import kotlinx.coroutines.launch
+import me.timeto.app.R
 import me.timeto.shared.*
 import me.timeto.shared.vm.PrivacySheetVM
 import me.timeto.shared.vm.SettingsSheetVM
@@ -121,7 +124,19 @@ fun SettingsSheet(
                     isLast = true,
                     withTopDivider = false,
                 ) {
-                    MyListView__ItemView__ButtonView(text = state.readmeTitle) {
+                    MyListView__ItemView__ButtonView(
+                        text = state.readmeTitle,
+                        rightView = {
+                            Icon(
+                                painterResource(id = R.drawable.sf_info_circle_medium_regular),
+                                "Info",
+                                tint = c.textSecondary.copy(alpha = 0.47f),
+                                modifier = Modifier
+                                    .padding(end = 14.dp)
+                                    .size(22.dp),
+                            )
+                        }
+                    ) {
                         Sheet.show { layer ->
                             ReadmeSheet(layer)
                         }
