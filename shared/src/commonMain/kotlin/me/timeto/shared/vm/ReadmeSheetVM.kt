@@ -13,7 +13,7 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
 
     override val state = MutableStateFlow(
         State(
-            title = "How to Use",
+            title = "How to Use the App",
             paragraphs = prepParagraphs(),
         )
     )
