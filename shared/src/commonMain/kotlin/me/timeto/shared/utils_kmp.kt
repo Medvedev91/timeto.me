@@ -23,6 +23,7 @@ const val BREAK_SECONDS = 5 * 60
 const val GOLDEN_RATIO = 1.618f
 
 const val OPEN_SOURCE_URL = "https://github.com/appstome/timetome-app"
+const val HI_EMAIL = "hi@timeto.me"
 
 const val developerEmoji = "👨‍💻"
 
