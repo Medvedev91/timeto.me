@@ -27,6 +27,7 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
     ) {
 
         val headerTitle = "Settings"
+        val readmeTitle = "How to Use the App"
 
         val dayStartNote = dayStartSecondsToString(dayStartSeconds)
         val dayStartListItems = (-6..6).map { hour ->
