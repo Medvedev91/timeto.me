@@ -121,7 +121,7 @@ fun SettingsSheet(
                     isLast = true,
                     withTopDivider = false,
                 ) {
-                    MyListView__ItemView__ButtonView(text = "How to Use") {
+                    MyListView__ItemView__ButtonView(text = state.readmeTitle) {
                         Sheet.show { layer ->
                             ReadmeSheet(layer)
                         }
