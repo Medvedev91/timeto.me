@@ -77,7 +77,7 @@ fun askAQuestion(
     App.instance.startActivity(
         Intent(Intent.ACTION_VIEW).apply {
             flags = FLAG_ACTIVITY_NEW_TASK
-            data = Uri.parse("mailto:hi@timeto.me?subject=$subject")
+            data = Uri.parse("mailto:${HI_EMAIL}?subject=$subject")
         }
     )
 }
