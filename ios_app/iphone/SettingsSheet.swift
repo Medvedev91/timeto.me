@@ -1,6 +1,6 @@
 import SwiftUI
 import UniformTypeIdentifiers
-import MessageUI
+
 import shared
 
 struct SettingsSheet: View {
@@ -10,9 +10,6 @@ struct SettingsSheet: View {
     @State private var vm = SettingsSheetVM()
 
     @State private var isReadmePresented = false
-
-    @State private var mailViewResult: Result<MFMailComposeResult, Error>? = nil
-    @State private var isMailViewPresented = false
 
     @State private var isFileImporterPresented = false
 
@@ -296,30 +293,9 @@ struct SettingsSheet: View {
                                 ReadmeSheet(isPresented: $isReadmePresented)
                             }
 
-                    MyListView__ItemView(
-                        isFirst: false,
-                        isLast: false,
-                        withTopDivider: true
-                    ) {
-                        MyListView__ItemView__ButtonView(text: "Ask a Question") {
-                            if (MFMailComposeViewController.canSendMail()) {
-                                isMailViewPresented.toggle()
-                            } else {
-                                // Взято из skorolek
-                                let subjectEncoded = state.feedbackSubject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-                                let url = URL(string: "mailto:\(state.feedbackEmail)?subject=\(subjectEncoded)")!
-                                UIApplication.shared.open(url)
-                            }
-                        }
-                                .sheetEnv(isPresented: $isMailViewPresented) {
-                                    MailView(
-                                        toEmail: state.feedbackEmail,
-                                        subject: state.feedbackSubject,
-                                        body: nil,
-                                        result: $mailViewResult
-                                    )
-                                }
-                    }
+                    AskAQuestionButtonView(
+                        subject: state.feedbackSubject
+                    )
 
                     MyListView__ItemView(
                         isFirst: false,
