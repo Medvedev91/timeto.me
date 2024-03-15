@@ -1,6 +1,5 @@
 import SwiftUI
 import UniformTypeIdentifiers
-
 import shared
 
 struct SettingsSheet: View {
