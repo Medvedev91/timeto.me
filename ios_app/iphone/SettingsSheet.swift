@@ -284,7 +284,7 @@ struct SettingsSheet: View {
                         isLast: false,
                         withTopDivider: false
                     ) {
-                        MyListView__ItemView__ButtonView(text: "How to Use") {
+                        MyListView__ItemView__ButtonView(text: state.readmeTitle) {
                             isReadmePresented.toggle()
                         }
                     }
