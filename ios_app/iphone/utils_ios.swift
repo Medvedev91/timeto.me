@@ -156,8 +156,8 @@ extension View {
     ) -> some View {
         if #available(iOS 16.0, *) {
             return self
-                    .presentationDetents([.height(height)])
-                    .presentationDragIndicator(withDragIndicator ? .visible : .hidden)
+                .presentationDetents([.height(height)])
+                .presentationDragIndicator(withDragIndicator ? .visible : .hidden)
         }
         return self
     }
@@ -167,8 +167,8 @@ extension View {
     ) -> some View {
         if #available(iOS 16.0, *) {
             return self
-                    .presentationDetents([.medium])
-                    .presentationDragIndicator(withDragIndicator ? .visible : .hidden)
+                .presentationDetents([.medium])
+                .presentationDragIndicator(withDragIndicator ? .visible : .hidden)
         }
         return self
     }
@@ -199,8 +199,8 @@ private struct SafeAreaPaddingsModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-                .padding(.top, edges.contains(.top) ? safeAreaInsets.top : 0)
-                .padding(.bottom, edges.contains(.bottom) ? safeAreaInsets.bottom : 0)
+            .padding(.top, edges.contains(.top) ? safeAreaInsets.top : 0)
+            .padding(.bottom, edges.contains(.bottom) ? safeAreaInsets.bottom : 0)
     }
 }
 
