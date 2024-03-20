@@ -60,9 +60,9 @@ fun ChecklistsPickerSheet(
                     isLast = state.checklistsUI.last() == checklistUI,
                     withTopDivider = !isFirst,
                 ) {
-                    MyListView__ItemView__CheckboxView(
+                    MyListView__ItemView__RadioView(
                         text = checklistUI.text,
-                        isChecked = checklistUI.isSelected,
+                        isActive = checklistUI.isSelected,
                     ) {
                         vm.toggleChecklist(checklistUI)
                     }
