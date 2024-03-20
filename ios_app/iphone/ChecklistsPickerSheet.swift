@@ -49,9 +49,9 @@ struct ChecklistsPickerSheet: View {
                                 withTopDivider: !isFirst
                         ) {
 
-                            MyListView__ItemView__CheckboxView(
+                            MyListView__ItemView__RadioView(
                                     text: checklistUI.text,
-                                    isChecked: checklistUI.isSelected
+                                    isActive: checklistUI.isSelected
                             ) {
                                 vm.toggleChecklist(checklistUI: checklistUI)
                             }
