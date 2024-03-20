@@ -7,6 +7,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import me.timeto.app.VStack
+import me.timeto.app.ZStack
 import me.timeto.app.c
 import me.timeto.app.rememberVM
 import me.timeto.shared.db.ChecklistDb
@@ -21,7 +23,7 @@ fun ChecklistsPickerSheet(
 
     val (vm, state) = rememberVM { ChecklistsPickerSheetVM(selectedChecklists) }
 
-    Column(
+    VStack(
         modifier = Modifier
             .fillMaxHeight()
             .background(c.sheetBg)
@@ -40,7 +42,7 @@ fun ChecklistsPickerSheet(
             layer.close()
         }
 
-        Column(
+        VStack(
             modifier = Modifier
                 .verticalScroll(state = scrollState)
                 .padding(bottom = 20.dp)
@@ -48,7 +50,7 @@ fun ChecklistsPickerSheet(
                 .imePadding()
         ) {
 
-            Row(Modifier.height(20.dp)) { }
+            ZStack(Modifier.height(20.dp)) { }
 
             val checklistsUI = state.checklistsUI
             checklistsUI.forEach { checklistUI ->
