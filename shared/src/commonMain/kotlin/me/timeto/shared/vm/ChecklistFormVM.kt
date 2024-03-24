@@ -7,10 +7,11 @@ import me.timeto.shared.launchEx
 import me.timeto.shared.showUiAlert
 
 class ChecklistFormVM(
-    val checklist: ChecklistDb?,
+    private val checklist: ChecklistDb?,
 ) : __VM<ChecklistFormVM.State>() {
 
     data class State(
+        val checklist: ChecklistDb?,
         val inputNameValue: String,
     ) {
         val isSaveEnabled = inputNameValue.isNotBlank()
@@ -21,6 +22,7 @@ class ChecklistFormVM(
     init {
         state = MutableStateFlow(
             State(
+                checklist = checklist,
                 inputNameValue = checklist?.name ?: ""
             )
         )
