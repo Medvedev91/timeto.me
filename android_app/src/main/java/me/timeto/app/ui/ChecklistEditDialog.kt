@@ -21,7 +21,8 @@ import me.timeto.shared.vm.ChecklistFormVM
 @Composable
 fun ChecklistEditDialog(
     editedChecklist: ChecklistDb?,
-    onClose: () -> Unit,
+    onCancel: () -> Unit,
+    onSave: () -> Unit,
 ) {
 
     val (vm, state) = rememberVM(editedChecklist) {
@@ -75,13 +76,15 @@ fun ChecklistEditDialog(
                 modifier = Modifier
                     .padding(end = 11.dp)
                     .clip(RoundedCornerShape(8.dp))
-                    .clickable { onClose() }
+                    .clickable {
+                        onCancel()
+                    }
                     .padding(horizontal = 8.dp, vertical = 4.dp)
             )
 
             MyButton("Save", state.isSaveEnabled, c.blue) {
                 vm.save {
-                    onClose()
+                    onSave()
                 }
             }
         }

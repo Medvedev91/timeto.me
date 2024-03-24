@@ -156,7 +156,15 @@ fun SettingsSheet(
                             contentDescription = "New Checklist"
                         ) {
                             Dialog.show { layer ->
-                                ChecklistEditDialog(editedChecklist = null, onClose = layer::close)
+                                ChecklistEditDialog(
+                                    editedChecklist = null,
+                                    onCancel = {
+                                        layer.close()
+                                    },
+                                    onSave = {
+                                        layer.close()
+                                    },
+                                )
                             }
                         }
                     }
@@ -199,7 +207,15 @@ fun SettingsSheet(
                         },
                         onStart = {
                             Dialog.show { layer ->
-                                ChecklistEditDialog(editedChecklist = checklist, onClose = layer::close)
+                                ChecklistEditDialog(
+                                    editedChecklist = checklist,
+                                    onCancel = {
+                                        layer.close()
+                                    },
+                                    onSave = {
+                                        layer.close()
+                                    },
+                                )
                             }
                             false
                         },
