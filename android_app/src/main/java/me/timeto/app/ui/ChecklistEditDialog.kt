@@ -12,6 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import me.timeto.app.HStack
 import me.timeto.app.c
 import me.timeto.app.rememberVM
 import me.timeto.shared.db.ChecklistDb
@@ -59,7 +60,7 @@ fun ChecklistEditDialog(
 
         ////
 
-        Row(
+        HStack(
             Modifier
                 .fillMaxWidth()
                 .padding(top = 24.dp),
