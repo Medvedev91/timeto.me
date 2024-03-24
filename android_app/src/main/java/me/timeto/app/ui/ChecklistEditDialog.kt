@@ -32,7 +32,7 @@ fun ChecklistEditDialog(
     ) {
 
         Text(
-            editedChecklist?.name ?: "New Checklist",
+            text = state.header,
             modifier = Modifier
                 .padding(start = 10.dp, bottom = 15.dp),
             fontSize = 24.sp,
