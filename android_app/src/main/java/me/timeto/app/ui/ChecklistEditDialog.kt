@@ -23,7 +23,9 @@ fun ChecklistEditDialog(
     onClose: () -> Unit,
 ) {
 
-    val (vm, state) = rememberVM(editedChecklist) { ChecklistFormVM(editedChecklist) }
+    val (vm, state) = rememberVM(editedChecklist) {
+        ChecklistFormVM(editedChecklist)
+    }
 
     Column(
         modifier = Modifier
