@@ -16,6 +16,7 @@ class ChecklistFormVM(
     ) {
         val isSaveEnabled = inputNameValue.isNotBlank()
         val header = checklist?.name ?: "New Checklist"
+        val inputNamePlaceholder = "Name"
     }
 
     override val state: MutableStateFlow<State>
