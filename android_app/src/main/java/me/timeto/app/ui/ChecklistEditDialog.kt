@@ -50,7 +50,7 @@ fun ChecklistEditDialog(
             outerPadding = PaddingValues(horizontal = 8.dp)
         ) {
             MyListView__ItemView__TextInputView(
-                placeholder = "Name",
+                placeholder = state.inputNamePlaceholder,
                 text = state.inputNameValue,
                 onTextChanged = { vm.setInputName(it) },
                 isAutofocus = true,
