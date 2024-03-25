@@ -35,14 +35,13 @@ import me.timeto.shared.vm.HomeVM
 import me.timeto.shared.vm.ui.ChecklistStateUI
 
 val HomeView__BOTTOM_NAVIGATION_HEIGHT = 56.dp
+val HomeView__PRIMARY_FONT_SIZE = 16.sp
 private val HomeView__BOTTOM_NAVIGATION_NOTE_HEIGHT = 38.dp
 
 private val mainTaskItemHeight = 32.dp
 private val mainTasksContentTopPadding = 4.dp
 private val mainTasksContentBottomPadding = 8.dp
 private val mainTaskHalfHPadding = H_PADDING / 2
-
-private val homePrimaryFontSize = 16.sp
 
 private val menuButtonModifier = Modifier.size(HomeView__BOTTOM_NAVIGATION_HEIGHT).padding(14.dp)
 
@@ -583,7 +582,7 @@ private fun MainTasksView(
                     modifier = Modifier
                         .padding(end = 4.dp)
                         .weight(1f),
-                    fontSize = homePrimaryFontSize,
+                    fontSize = HomeView__PRIMARY_FONT_SIZE,
                     color = c.white,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
