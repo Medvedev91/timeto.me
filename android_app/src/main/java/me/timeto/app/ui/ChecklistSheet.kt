@@ -52,8 +52,15 @@ fun ChecklistSheet(
             modifier = Modifier
                 .weight(1f),
             scrollState = scrollState,
-            withNavigationPadding = true,
-            bottomPadding = 16.dp,
+        )
+
+        DividerBg(
+            modifier = Modifier
+                .padding(horizontal = H_PADDING)
+                .navigationBarsPadding(),
+            isVisible = remember {
+                derivedStateOf { scrollState.canScrollForward }
+            }.value,
         )
     }
 }
