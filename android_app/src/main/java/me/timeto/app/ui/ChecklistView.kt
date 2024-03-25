@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import me.timeto.app.*
 import me.timeto.app.R
@@ -25,6 +26,7 @@ fun ChecklistView(
     modifier: Modifier,
     scrollState: LazyListState,
     withNavigationPadding: Boolean = false,
+    bottomPadding: Dp = 0.dp,
 ) {
 
     val (_, state) = rememberVM { ChecklistVM(checklistDb) }
@@ -54,6 +56,7 @@ fun ChecklistView(
                 modifier = Modifier.weight(1f),
                 state = scrollState,
                 horizontalAlignment = Alignment.CenterHorizontally,
+                contentPadding = PaddingValues(bottom = bottomPadding),
             ) {
 
                 state.checklistUI.itemsUI.forEach { itemUI ->
