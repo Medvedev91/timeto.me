@@ -24,6 +24,7 @@ fun ChecklistView(
     checklistDb: ChecklistDb,
     modifier: Modifier,
     scrollState: LazyListState,
+    withNavigationPadding: Boolean = false,
 ) {
 
     val (_, state) = rememberVM { ChecklistVM(checklistDb) }
@@ -95,6 +96,12 @@ fun ChecklistView(
                                 textAlign = TextAlign.Start,
                             )
                         }
+                    }
+                }
+
+                if (withNavigationPadding) {
+                    item {
+                        ZStack(Modifier.navigationBarsPadding())
                     }
                 }
             }
