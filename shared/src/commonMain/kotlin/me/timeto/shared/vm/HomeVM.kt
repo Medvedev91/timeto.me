@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import me.timeto.shared.*
 import me.timeto.shared.db.*
-import me.timeto.shared.vm.ui.ChecklistStateUI
 import me.timeto.shared.vm.ui.DayIntervalsUI
 import me.timeto.shared.vm.ui.TimerDataUI
 
@@ -13,7 +12,6 @@ class HomeVM : __VM<HomeVM.State>() {
 
     data class State(
         val interval: IntervalDb,
-        val allChecklistItems: List<ChecklistItemDb>,
         val isPurple: Boolean,
         val tasksToday: List<TaskDb>,
         val isTasksVisible: Boolean,
@@ -47,15 +45,12 @@ class HomeVM : __VM<HomeVM.State>() {
             withTimer = false,
         )
 
-        val checklistUI: ChecklistUI? = textFeatures.checklists.firstOrNull()?.let { checklist ->
-            val items = allChecklistItems.filter { it.list_id == checklist.id }
-            ChecklistUI(checklist, items)
-        }
+        val checklistDb: ChecklistDb? = textFeatures.checklists.firstOrNull()
 
         val triggers = textFeatures.triggers.filter {
             val clt = (it as? TextFeatures.Trigger.Checklist) ?: return@filter true
-            val clUI = checklistUI ?: return@filter true
-            return@filter clt.checklist.id != clUI.checklist.id
+            val clDb = checklistDb ?: return@filter true
+            return@filter clt.checklist.id != clDb.id
         }
 
         val goalsUI: List<GoalUI> = if (todayIntervalsUI == null)
@@ -147,7 +142,6 @@ class HomeVM : __VM<HomeVM.State>() {
     override val state = MutableStateFlow(
         State(
             interval = DI.lastInterval,
-            allChecklistItems = DI.checklistItems,
             isPurple = false,
             tasksToday = DI.tasks.filter { it.isToday },
             isTasksVisible = false,
@@ -171,11 +165,6 @@ class HomeVM : __VM<HomeVM.State>() {
                         isTasksVisible = if (isNewInterval) false else it.isTasksVisible,
                     )
                 }
-            }
-        ChecklistItemDb
-            .getAscFlow()
-            .onEachExIn(scope) { items ->
-                state.update { it.copy(allChecklistItems = items) }
             }
         TaskDb
             .getAscFlow()
@@ -270,25 +259,6 @@ class HomeVM : __VM<HomeVM.State>() {
         val ratio: Float,
         val bgColor: ColorRgba,
     )
-
-    class ChecklistUI(
-        val checklist: ChecklistDb,
-        val items: List<ChecklistItemDb>,
-    ) {
-
-        val stateUI = ChecklistStateUI.build(checklist, items)
-        val itemsUI = items.map { ItemUI(it) }
-
-        class ItemUI(
-            val item: ChecklistItemDb,
-        ) {
-            fun toggle() {
-                defaultScope().launchEx {
-                    item.toggle()
-                }
-            }
-        }
-    }
 
     class MainTask(
         val task: TaskDb,
