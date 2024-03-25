@@ -53,6 +53,7 @@ fun ChecklistSheet(
                 .weight(1f),
             scrollState = scrollState,
             withNavigationPadding = true,
+            bottomPadding = 16.dp,
         )
     }
 }
