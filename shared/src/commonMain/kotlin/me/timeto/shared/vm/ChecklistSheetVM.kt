@@ -8,9 +8,9 @@ import me.timeto.shared.launchExDefault
 import me.timeto.shared.onEachExIn
 
 // todo actions from view to vm
-class ChecklistDialogVM(
+class ChecklistSheetVM(
     val checklist: ChecklistDb,
-) : __VM<ChecklistDialogVM.State>() {
+) : __VM<ChecklistSheetVM.State>() {
 
     data class State(
         val items: List<ChecklistItemDb>,

@@ -25,7 +25,7 @@ import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.launchEx
-import me.timeto.shared.vm.ChecklistDialogVM
+import me.timeto.shared.vm.ChecklistSheetVM
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -34,7 +34,7 @@ fun ChecklistSheet(
     onClose: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
-    val (vm, state) = rememberVM { ChecklistDialogVM(checklist = checklist) }
+    val (vm, state) = rememberVM { ChecklistSheetVM(checklist = checklist) }
 
     val checklistItems = state.items
 
