@@ -32,7 +32,6 @@ import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.shared.*
 import me.timeto.shared.vm.HomeVM
-import me.timeto.shared.vm.ui.ChecklistStateUI
 
 val HomeView__BOTTOM_NAVIGATION_HEIGHT = 56.dp
 val HomeView__PRIMARY_FONT_SIZE = 16.sp
@@ -56,7 +55,7 @@ fun HomeView() {
 
     val (vm, state) = rememberVM { HomeVM() }
 
-    val checklistUI = state.checklistUI
+    val checklistDb = state.checklistDb
 
     val timerColor = animateColorAsState(state.timerData.color.toColor()).value
     val timerButtonsColor = state.timerButtonsColor.toColor()
@@ -237,9 +236,17 @@ fun HomeView() {
 
                 val isMainTasksExists = state.mainTasks.isNotEmpty()
 
-                if (checklistUI != null) {
+                if (checklistDb != null) {
+
+                    MainDivider(
+                        calcAlpha = {
+                            if (checklistScrollState.firstVisibleItemIndex > 0) 1f
+                            else (checklistScrollState.firstVisibleItemScrollOffset.toFloat() * 0.05f).limitMax(1f)
+                        }
+                    )
+
                     ChecklistView(
-                        checklistUI = checklistUI,
+                        checklistDb = checklistDb,
                         modifier = Modifier.weight(1f),
                         scrollState = checklistScrollState,
                     )
@@ -248,14 +255,14 @@ fun HomeView() {
                 MainDivider(
                     calcAlpha = {
                         val isMiddleDividerVisible =
-                            (checklistUI != null && (checklistScrollState.canScrollBackward || checklistScrollState.canScrollForward)) ||
+                            (checklistDb != null && (checklistScrollState.canScrollBackward || checklistScrollState.canScrollForward)) ||
                             (isMainTasksExists && (mainTasksScrollState.canScrollBackward || mainTasksScrollState.canScrollForward))
                         if (isMiddleDividerVisible) 1f else 0f
                     }
                 )
 
                 if (isMainTasksExists) {
-                    val mainTasksModifier = if (checklistUI == null)
+                    val mainTasksModifier = if (checklistDb == null)
                         Modifier.weight(1f)
                     else
                         Modifier.height(
@@ -270,7 +277,7 @@ fun HomeView() {
                     )
                 }
 
-                if (!isMainTasksExists && checklistUI == null)
+                if (!isMainTasksExists && checklistDb == null)
                     SpacerW1()
 
                 state.goalsUI.forEachIndexed { idx, goalUI ->
@@ -383,123 +390,6 @@ private fun MessageButton(
         color = c.white,
         fontSize = 14.sp,
     )
-}
-
-@Composable
-private fun ChecklistView(
-    checklistUI: HomeVM.ChecklistUI,
-    modifier: Modifier,
-    scrollState: LazyListState,
-) {
-
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-
-        val itemStartPadding = 8.dp
-        val checkboxSize = 18.dp
-        val checklistItemMinHeight = 44.dp
-
-        val completionState = checklistUI.stateUI
-        val checklistMenuInnerIconPadding = (checklistItemMinHeight - checkboxSize) / 2
-
-        MainDivider(
-            calcAlpha = {
-                if (scrollState.firstVisibleItemIndex > 0) 1f
-                else (scrollState.firstVisibleItemScrollOffset.toFloat() * 0.05f).limitMax(1f)
-            }
-        )
-
-        Row(
-            modifier = Modifier
-                .padding(
-                    start = H_PADDING - itemStartPadding,
-                    end = H_PADDING - checklistMenuInnerIconPadding,
-                )
-                .weight(1f),
-        ) {
-
-            LazyColumn(
-                modifier = Modifier.weight(1f),
-                state = scrollState,
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-
-                checklistUI.itemsUI.forEach { itemUI ->
-
-                    item {
-
-                        Row(
-                            modifier = Modifier
-                                .defaultMinSize(minHeight = checklistItemMinHeight)
-                                .fillMaxWidth()
-                                .clip(squircleShape)
-                                .clickable {
-                                    itemUI.toggle()
-                                }
-                                .padding(start = itemStartPadding),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Start,
-                        ) {
-
-                            Icon(
-                                painterResource(
-                                    id = if (itemUI.item.isChecked)
-                                        R.drawable.sf_checkmark_square_fill_medium_regular
-                                    else
-                                        R.drawable.sf_square_medium_regular
-                                ),
-                                contentDescription = "Checkbox",
-                                tint = c.white,
-                                modifier = Modifier
-                                    .size(checkboxSize),
-                            )
-
-                            Text(
-                                text = itemUI.item.text,
-                                color = c.white,
-                                modifier = Modifier
-                                    .padding(vertical = 4.dp)
-                                    .padding(start = 14.dp),
-                                fontSize = homePrimaryFontSize,
-                                textAlign = TextAlign.Start,
-                            )
-                        }
-                    }
-                }
-            }
-
-            Row(
-                modifier = Modifier
-                    .height(IntrinsicSize.Max)
-            ) {
-
-                Column {
-
-                    Icon(
-                        painterResource(
-                            id = when (completionState) {
-                                is ChecklistStateUI.Completed -> R.drawable.sf_checkmark_square_fill_medium_regular
-                                is ChecklistStateUI.Empty -> R.drawable.sf_square_medium_regular
-                                is ChecklistStateUI.Partial -> R.drawable.sf_minus_square_fill_medium_medium
-                            }
-                        ),
-                        contentDescription = completionState.actionDesc,
-                        tint = c.white,
-                        modifier = Modifier
-                            .padding(start = 4.dp)
-                            .size(checklistItemMinHeight)
-                            .clip(roundedShape)
-                            .clickable {
-                                completionState.onClick()
-                            }
-                            .padding(checklistMenuInnerIconPadding),
-                    )
-                }
-            }
-        }
-    }
 }
 
 @Composable
