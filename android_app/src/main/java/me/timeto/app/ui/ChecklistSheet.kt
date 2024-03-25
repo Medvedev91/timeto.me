@@ -29,7 +29,7 @@ import me.timeto.shared.vm.ChecklistDialogVM
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ChecklistDialogView(
+fun ChecklistSheet(
     checklist: ChecklistDb,
     onClose: () -> Unit,
 ) {

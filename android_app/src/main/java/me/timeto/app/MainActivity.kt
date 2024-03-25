@@ -181,7 +181,7 @@ private fun UIListeners() {
         }
         uiChecklistFlow.onEachExIn(this) { checklist ->
             Dialog.show { layer ->
-                ChecklistDialogView(checklist) { layer.close() }
+                ChecklistSheet(checklist) { layer.close() }
             }
         }
     }
