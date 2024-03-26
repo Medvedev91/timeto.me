@@ -34,6 +34,7 @@ fun dpToPx(dp: Float) = (dp * density).toInt()
 fun pxToDp(px: Int) = (px / density)
 
 val H_PADDING = 16.dp
+val H_PADDING_HALF = H_PADDING / 2
 val onePx = pxToDp(1).dp
 val halfDp = (dpToPx(1f) / 2).dp
 
