@@ -1,8 +1,11 @@
 package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
+import me.timeto.shared.UIConfirmationData
 import me.timeto.shared.db.ChecklistDb
+import me.timeto.shared.launchExDefault
 import me.timeto.shared.onEachExIn
+import me.timeto.shared.showUiConfirmation
 
 class ChecklistFormSheetVM(
     checklistDb: ChecklistDb,
@@ -29,5 +32,26 @@ class ChecklistFormSheetVM(
                     state.update { it.copy(checklistDb = newChecklistDb) }
                 }
         }
+    }
+
+    ///
+
+    fun deleteChecklist(
+        onDelete: () -> Unit,
+    ) {
+        val checklistDb = state.value.checklistDb
+        showUiConfirmation(
+            UIConfirmationData(
+                text = "Are you sure you want to delete \"${checklistDb.name}\" checklist?",
+                buttonText = "Delete",
+                isRed = true,
+                onConfirm = {
+                    launchExDefault {
+                        checklistDb.deleteWithDependencies()
+                    }
+                    onDelete()
+                }
+            )
+        )
     }
 }
