@@ -99,7 +99,15 @@ fun ChecklistView(
                 }
             }
 
-            VStack {
+            VStack(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .padding(start = 4.dp)
+                    .clip(squircleShape)
+                    .clickable {
+                        completionState.onClick()
+                    },
+            ) {
 
                 Icon(
                     painterResource(
@@ -112,12 +120,7 @@ fun ChecklistView(
                     contentDescription = completionState.actionDesc,
                     tint = c.white,
                     modifier = Modifier
-                        .padding(start = 4.dp)
                         .size(checklistItemMinHeight)
-                        .clip(roundedShape)
-                        .clickable {
-                            completionState.onClick()
-                        }
                         .padding(checklistMenuInnerIconPadding),
                 )
 
@@ -126,7 +129,6 @@ fun ChecklistView(
                     contentDescription = "Edit Checklist",
                     tint = c.white,
                     modifier = Modifier
-                        .padding(start = 4.dp)
                         .size(checklistItemMinHeight)
                         .clip(roundedShape)
                         .clickable {
