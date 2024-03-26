@@ -120,6 +120,19 @@ fun ChecklistView(
                         }
                         .padding(checklistMenuInnerIconPadding),
                 )
+
+                Icon(
+                    painterResource(R.drawable.sf_pencil_medium_medium),
+                    contentDescription = "Edit Checklist",
+                    tint = c.white,
+                    modifier = Modifier
+                        .padding(start = 4.dp)
+                        .size(checklistItemMinHeight)
+                        .clip(roundedShape)
+                        .clickable {
+                        }
+                        .padding(checklistMenuInnerIconPadding + 1.dp),
+                )
             }
         }
     }
