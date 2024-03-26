@@ -2,6 +2,7 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.db.ChecklistDb
+import me.timeto.shared.onEachExIn
 
 class ChecklistFormSheetVM(
     checklistDb: ChecklistDb,
@@ -20,5 +21,13 @@ class ChecklistFormSheetVM(
     )
 
     override fun onAppear() {
+        val scope = scopeVM()
+        ChecklistDb.getAscFlow().onEachExIn(scope) { allChecklists ->
+            allChecklists
+                .firstOrNull { it.id == state.value.checklistDb.id }
+                ?.let { newChecklistDb ->
+                    state.update { it.copy(checklistDb = newChecklistDb) }
+                }
+        }
     }
 }
