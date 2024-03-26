@@ -42,6 +42,13 @@ fun ChecklistFormSheet(
                 .padding(horizontal = H_PADDING_HALF)
                 .clip(squircleShape)
                 .clickable {
+                    Dialog.show { editNameLayer ->
+                        ChecklistEditDialog(
+                            layer = editNameLayer,
+                            editedChecklist = state.checklistDb,
+                            onSave = {},
+                        )
+                    }
                 }
                 .padding(horizontal = H_PADDING_HALF, vertical = 4.dp),
             verticalAlignment = Alignment.CenterVertically,
