@@ -28,7 +28,9 @@ fun ChecklistView(
     bottomPadding: Dp = 0.dp,
 ) {
 
-    val (_, state) = rememberVM { ChecklistVM(checklistDb) }
+    val (_, state) = rememberVM(checklistDb) {
+        ChecklistVM(checklistDb)
+    }
 
     VStack(
         modifier = modifier,
