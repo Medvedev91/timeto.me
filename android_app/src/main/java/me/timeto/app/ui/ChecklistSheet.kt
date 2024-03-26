@@ -52,6 +52,7 @@ fun ChecklistSheet(
             modifier = Modifier
                 .weight(1f),
             scrollState = scrollState,
+            bottomPadding = 20.dp,
         )
 
         DividerBg(
