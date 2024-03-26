@@ -75,5 +75,11 @@ fun ChecklistFormSheet(
         }
 
         DividerFg(Modifier.padding(horizontal = H_PADDING))
+
+        SpacerW1()
+
+        Sheet__BottomViewDone("Done") {
+            layer.close()
+        }
     }
 }
