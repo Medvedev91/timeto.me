@@ -26,7 +26,7 @@ fun ChecklistFormSheet(
     checklistDb: ChecklistDb,
 ) {
 
-    val (_, state) = rememberVM(checklistDb) {
+    val (vm, state) = rememberVM(checklistDb) {
         ChecklistFormSheetVM(checklistDb)
     }
 
@@ -90,6 +90,7 @@ fun ChecklistFormSheet(
                     .clip(roundedShape)
                     .size(36.dp)
                     .clickable {
+                        vm.deleteChecklist(onDelete = { layer.close() })
                     }
                     .padding(8.dp),
             )
