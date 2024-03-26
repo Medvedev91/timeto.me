@@ -63,10 +63,10 @@ By default, the app has some activities, but you can add your own. Here are mine
 
 ### Practice
 
-Right now, try to start a new activity. To do so, close this window, tap the timer icon at the bottom left, tap "Work",
-set the timer and tap "Start".
+Right now, try to start a new activity. To do so, back to home screen, tap the timer icon at the bottom left, tap "Work"
+and start the timer.
 
-The timer starts. Then tap the timer icon again and check the "Summary" and "History" (2 buttons at the bottom).
+The timer starts. Then tap the timer icon again to check the "Summary" and "History".
 
 Then come back and move on to the next topic.
 
