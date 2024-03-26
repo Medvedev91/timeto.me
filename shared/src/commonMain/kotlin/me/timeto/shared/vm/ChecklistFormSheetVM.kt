@@ -8,12 +8,14 @@ class ChecklistFormSheetVM(
 ) : __VM<ChecklistFormSheetVM.State>() {
 
     data class State(
-        val checklistName: String,
-    )
+        val checklistDb: ChecklistDb,
+    ) {
+        val checklistName: String = checklistDb.name
+    }
 
     override val state = MutableStateFlow(
         State(
-            checklistName = checklistDb.name,
+            checklistDb = checklistDb,
         )
     )
 
