@@ -99,33 +99,27 @@ fun ChecklistView(
                 }
             }
 
-            HStack(
-                modifier = Modifier
-                    .height(IntrinsicSize.Max)
-            ) {
+            VStack {
 
-                Column {
-
-                    Icon(
-                        painterResource(
-                            id = when (completionState) {
-                                is ChecklistStateUI.Completed -> R.drawable.sf_checkmark_square_fill_medium_regular
-                                is ChecklistStateUI.Empty -> R.drawable.sf_square_medium_regular
-                                is ChecklistStateUI.Partial -> R.drawable.sf_minus_square_fill_medium_medium
-                            }
-                        ),
-                        contentDescription = completionState.actionDesc,
-                        tint = c.white,
-                        modifier = Modifier
-                            .padding(start = 4.dp)
-                            .size(checklistItemMinHeight)
-                            .clip(roundedShape)
-                            .clickable {
-                                completionState.onClick()
-                            }
-                            .padding(checklistMenuInnerIconPadding),
-                    )
-                }
+                Icon(
+                    painterResource(
+                        id = when (completionState) {
+                            is ChecklistStateUI.Completed -> R.drawable.sf_checkmark_square_fill_medium_regular
+                            is ChecklistStateUI.Empty -> R.drawable.sf_square_medium_regular
+                            is ChecklistStateUI.Partial -> R.drawable.sf_minus_square_fill_medium_medium
+                        }
+                    ),
+                    contentDescription = completionState.actionDesc,
+                    tint = c.white,
+                    modifier = Modifier
+                        .padding(start = 4.dp)
+                        .size(checklistItemMinHeight)
+                        .clip(roundedShape)
+                        .clickable {
+                            completionState.onClick()
+                        }
+                        .padding(checklistMenuInnerIconPadding),
+                )
             }
         }
     }
