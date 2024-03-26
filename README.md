@@ -59,9 +59,9 @@ By default, the app has some activities, but you can add your own. Here are mine
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_activities_1.jpg" width="200" />
 </p>
 
-You may think choosing activity and timer for each task is overwhelming. This is where "Repeating Tasks" come into play.
-
 # Repeating Tasks
+
+You may think choosing activity and timer for each task is overwhelming. This is where "Repeating Tasks" come into play.
 
 I will show how it works for me.
 
