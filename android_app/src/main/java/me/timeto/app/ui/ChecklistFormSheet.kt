@@ -38,7 +38,8 @@ fun ChecklistFormSheet(
 
         HStack(
             modifier = Modifier
-                .padding(top = 16.dp, start = H_PADDING_HALF)
+                .padding(top = 16.dp, bottom = 4.dp)
+                .padding(horizontal = H_PADDING_HALF)
                 .clip(squircleShape)
                 .clickable {
                 }
@@ -53,15 +54,19 @@ fun ChecklistFormSheet(
                 color = c.white,
             )
 
+            SpacerW1()
+
             Icon(
                 painterResource(R.drawable.sf_pencil_medium_medium),
                 contentDescription = "Edit Name",
                 tint = c.white,
                 modifier = Modifier
                     .offset(y = 1.dp)
-                    .padding(start = 16.dp)
+                    .padding(start = 16.dp, end = 2.dp)
                     .size(20.dp),
             )
         }
+
+        DividerFg(Modifier.padding(horizontal = H_PADDING))
     }
 }
