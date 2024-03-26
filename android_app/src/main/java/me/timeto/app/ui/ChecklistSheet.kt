@@ -16,6 +16,7 @@ import me.timeto.shared.vm.ChecklistSheetVM
 
 @Composable
 fun ChecklistSheet(
+    layer: WrapperView.Layer,
     checklist: ChecklistDb,
 ) {
     val (_, state) = rememberVM { ChecklistSheetVM(checklist) }
@@ -52,6 +53,7 @@ fun ChecklistSheet(
             modifier = Modifier
                 .weight(1f),
             scrollState = scrollState,
+            onDelete = { layer.close() },
             bottomPadding = 32.dp,
         )
 

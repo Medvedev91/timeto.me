@@ -180,8 +180,11 @@ private fun UIListeners() {
             }
         }
         uiChecklistFlow.onEachExIn(this) { checklist ->
-            Sheet.show {
-                ChecklistSheet(checklist)
+            Sheet.show { layer ->
+                ChecklistSheet(
+                    layer = layer,
+                    checklist = checklist,
+                )
             }
         }
     }
