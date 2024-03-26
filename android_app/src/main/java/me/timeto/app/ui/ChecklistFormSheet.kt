@@ -63,12 +63,12 @@ fun ChecklistFormSheet(
 
                 Text(
                     text = state.checklistName,
+                    modifier = Modifier
+                        .weight(1f),
                     fontSize = 26.sp,
                     fontWeight = FontWeight.Bold,
                     color = c.white,
                 )
-
-                SpacerW1()
 
                 Icon(
                     painterResource(R.drawable.sf_pencil_medium_medium),
