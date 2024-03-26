@@ -28,7 +28,8 @@ fun ConfirmationDialogView(
             text = data.text,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(all = 5.dp)
+                .padding(all = 5.dp),
+            color = c.text,
         )
 
         Row(
