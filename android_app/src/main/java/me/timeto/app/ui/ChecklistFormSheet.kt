@@ -39,38 +39,59 @@ fun ChecklistFormSheet(
         HStack(
             modifier = Modifier
                 .padding(top = 16.dp, bottom = 4.dp)
-                .padding(horizontal = H_PADDING_HALF)
-                .clip(squircleShape)
-                .clickable {
-                    Dialog.show { editNameLayer ->
-                        ChecklistEditDialog(
-                            layer = editNameLayer,
-                            editedChecklist = state.checklistDb,
-                            onSave = {},
-                        )
-                    }
-                }
-                .padding(horizontal = H_PADDING_HALF, vertical = 4.dp),
+                .padding(horizontal = H_PADDING_HALF),
             verticalAlignment = Alignment.CenterVertically,
         ) {
 
-            Text(
-                text = state.checklistName,
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-                color = c.white,
-            )
+            HStack(
+                modifier = Modifier
+                    .weight(1f)
+                    .clip(squircleShape)
+                    .clickable {
+                        Dialog.show { editNameLayer ->
+                            ChecklistEditDialog(
+                                layer = editNameLayer,
+                                editedChecklist = state.checklistDb,
+                                onSave = {},
+                            )
+                        }
+                    }
+                    .padding(horizontal = H_PADDING_HALF, vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
 
-            SpacerW1()
+                Text(
+                    text = state.checklistName,
+                    fontSize = 26.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = c.white,
+                )
+
+                SpacerW1()
+
+                Icon(
+                    painterResource(R.drawable.sf_pencil_medium_medium),
+                    contentDescription = "Edit Name",
+                    tint = c.white,
+                    modifier = Modifier
+                        .offset(y = 1.dp)
+                        .padding(start = 16.dp)
+                        .size(18.dp),
+                )
+            }
 
             Icon(
-                painterResource(R.drawable.sf_pencil_medium_medium),
-                contentDescription = "Edit Name",
-                tint = c.white,
+                painterResource(R.drawable.sf_trash_medium_regular),
+                contentDescription = "Delete Checklist",
+                tint = c.red,
                 modifier = Modifier
                     .offset(y = 1.dp)
-                    .padding(start = 16.dp, end = 2.dp)
-                    .size(20.dp),
+                    .padding(start = 12.dp, end = H_PADDING_HALF)
+                    .clip(roundedShape)
+                    .size(36.dp)
+                    .clickable {
+                    }
+                    .padding(8.dp),
             )
         }
 
