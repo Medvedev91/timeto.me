@@ -61,6 +61,13 @@ By default, the app has some activities, but you can add your own. Here are mine
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_activities_1.jpg" width="200" />
 </p>
 
+Right now, try to start a new activity. To do so, close this window, tap the timer icon at the bottom left, tap "Work",
+set the timer and tap "Start".
+
+The timer starts. Then tap the timer icon again and check the "Summary" and "History" (2 buttons at the bottom).
+
+Then come back and move on to the next topic.
+
 # Repeating Tasks
 
 You may think choosing activity and timer for each task is overwhelming. This is where "Repeating Tasks" come into play.
