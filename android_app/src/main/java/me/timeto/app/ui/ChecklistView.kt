@@ -135,6 +135,12 @@ fun ChecklistView(
                         .size(checklistItemMinHeight)
                         .clip(roundedShape)
                         .clickable {
+                            Sheet.show { layer ->
+                                ChecklistFormSheet(
+                                    layer = layer,
+                                    checklistDb = state.checklistUI.checklistDb,
+                                )
+                            }
                         }
                         .padding(checklistMenuInnerIconPadding + 1.dp),
                 )
