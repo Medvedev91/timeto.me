@@ -43,7 +43,9 @@ You must set a timer for each activity, like eating, working, reading, etc.
 
 In other words, to finish the current activity, you have to start the next one.
 
-This way provides real 24/7 data on how long everything takes. It will look like this:
+It helps to always be focused on what you have to do and do only one task.
+
+Also, this way provides real 24/7 data on how long everything takes. It will look like this:
 
 <p float="left">
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_chart_1.jpg" width="200" />
