@@ -307,6 +307,28 @@ fun Sheet__BottomViewDefault(
 }
 
 @Composable
+fun Sheet__BottomViewDone(
+    text: String,
+    action: () -> Unit,
+) {
+    Sheet__BottomView {
+        HStack(
+            modifier = Modifier
+                .padding(
+                    top = 10.dp,
+                    end = MyListView.PADDING_OUTER_HORIZONTAL,
+                    bottom = 10.dp,
+                )
+        ) {
+            SpacerW1()
+            Sheet__BottomView__PrimaryButton(text) {
+                action()
+            }
+        }
+    }
+}
+
+@Composable
 fun Sheet__BottomViewClose(
     closeText: String = "Close",
     onClick: () -> Unit,
