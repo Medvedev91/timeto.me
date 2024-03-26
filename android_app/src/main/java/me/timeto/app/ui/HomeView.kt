@@ -249,6 +249,7 @@ fun HomeView() {
                         checklistDb = checklistDb,
                         modifier = Modifier.weight(1f),
                         scrollState = checklistScrollState,
+                        onDelete = {},
                     )
                 }
 

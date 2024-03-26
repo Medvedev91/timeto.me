@@ -25,6 +25,7 @@ fun ChecklistView(
     checklistDb: ChecklistDb,
     modifier: Modifier,
     scrollState: LazyListState,
+    onDelete: () -> Unit,
     bottomPadding: Dp = 0.dp,
 ) {
 
@@ -141,6 +142,7 @@ fun ChecklistView(
                                 ChecklistFormSheet(
                                     layer = layer,
                                     checklistDb = state.checklistUI.checklistDb,
+                                    onDelete = { onDelete() },
                                 )
                             }
                         }

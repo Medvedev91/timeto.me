@@ -24,6 +24,7 @@ import me.timeto.shared.vm.ChecklistFormSheetVM
 fun ChecklistFormSheet(
     layer: WrapperView.Layer,
     checklistDb: ChecklistDb,
+    onDelete: () -> Unit,
 ) {
 
     val (vm, state) = rememberVM(checklistDb) {
@@ -90,7 +91,12 @@ fun ChecklistFormSheet(
                     .clip(roundedShape)
                     .size(36.dp)
                     .clickable {
-                        vm.deleteChecklist(onDelete = { layer.close() })
+                        vm.deleteChecklist(
+                            onDelete = {
+                                onDelete()
+                                layer.close()
+                            }
+                        )
                     }
                     .padding(8.dp),
             )
