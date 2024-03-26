@@ -31,7 +31,8 @@ I built this app to manage my productivity. Here I will show how I use it.
 
 It is a pragmatic guide. I mean, it is NOT just a list of features, but my real day-to-day experience.
 
-I will start with the most important things: timer, repeating tasks and checklists. That is 90% I use. Then others like tasks, calendar, goals, shortcuts, etc.
+I will start with the most important things: timer, repeating tasks and checklists. That is 90% I use. Then others like
+tasks, calendar, goals, shortcuts, etc.
 
 Enjoy!
 
@@ -39,7 +40,8 @@ Enjoy!
 
 You must set a timer for each activity, like eating, working, reading, etc.
 
-**There is NO "stop" option! Once you complete one activity, you must set the timer for the next one, even if it is a "sleeping" activity.**
+**There is NO "stop" option! Once you complete one activity, you must set the timer for the next one, even if it is a "
+sleeping" activity.**
 
 In other words, to finish the current activity, you have to start the next one.
 
@@ -65,7 +67,8 @@ You may think choosing activity and timer for each task is overwhelming. This is
 
 I will show how it works for me.
 
-Almost all of my activities are actually repeated. I wake up at the same time, then I spend 1 hour getting ready, 2 hours working, 1 hour eating, and so on.
+Almost all of my activities are actually repeated. I wake up at the same time, then I spend 1 hour getting ready, 2
+hours working, 1 hour eating, and so on.
 
 In the app, I created a repeating task for each activity with a time of day. It looks like this:
 
@@ -74,6 +77,7 @@ In the app, I created a repeating task for each activity with a time of day. It 
 </p>
 
 Pay attention to 3 things:
+
 - Time of day, like "Every day at 9:00";
 - Emoji, like "🥗", which means the "Eating" activity;
 - Timer, like "1h".
@@ -88,7 +92,8 @@ Note, the tasks are sorted by time of day and indicate how much time is left. It
 
 **But most importantly, when I press it, it automatically starts a timer with the right activity.**
 
-Of course, you can create not only everyday tasks. For example, watering a cactus once a week or paying for internet once a month, etc.
+Of course, you can create not only everyday tasks. For example, watering a cactus once a week or paying for internet
+once a month, etc.
 
 I believe this is the main feature of the app. I recommend using it to the max.
 
@@ -144,13 +149,15 @@ A typical task list with folders. But there are 2 special folders: today and tmr
 
 Today - tasks from repeating tasks and calendar go here on a set day, you can add your own.
 
-Tmrw (tomorrow) - tasks that will be tomorrow including repeating tasks and calendar. In other words, the tasks that will be moved to "Today" tomorrow.
+Tmrw (tomorrow) - tasks that will be tomorrow including repeating tasks and calendar. In other words, the tasks that
+will be moved to "Today" tomorrow.
 
 Swipe left to delete and right to edit.
 
 # Calendar
 
-A typical calendar. Tasks from the calendar will be displayed not only in "Today" but also on the Home Screen. "Call Ann" example:
+A typical calendar. Tasks from the calendar will be displayed not only in "Today" but also on the Home Screen. "Call
+Ann" example:
 
 <p float="left">
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_calendar_1.jpg" width="200" />
@@ -163,7 +170,8 @@ Real life example: I meditate every day, to start I open a special video on YouT
 
 Shortcuts automate this. When I start the "Meditation" activity, the video will start automatically.
 
-This works especially well with repeating tasks. "Meditation" is automatically created every day, I just tap on it, the timer and video starts.
+This works especially well with repeating tasks. "Meditation" is automatically created every day, I just tap on it, the
+timer and video starts.
 
 # Day Start Time
 
