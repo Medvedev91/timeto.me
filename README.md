@@ -68,7 +68,7 @@ and start the timer.
 
 The timer starts. Then tap the timer icon again to check the "Summary" and "History".
 
-Then come back and move on to the next topic.
+Then come back here and move on to the next topic.
 
 # Repeating Tasks
 
