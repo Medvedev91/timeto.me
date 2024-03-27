@@ -1,16 +1,16 @@
 package me.timeto.app.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import me.timeto.app.VStack
-import me.timeto.app.ZStack
-import me.timeto.app.c
-import me.timeto.app.rememberVM
+import me.timeto.app.*
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.vm.ChecklistsPickerSheetVM
 
@@ -68,6 +68,19 @@ fun ChecklistsPickerSheet(
                     }
                 }
             }
+
+            Text(
+                text = state.newChecklistButton,
+                modifier = Modifier
+                    .padding(top = 12.dp, start = 14.dp)
+                    .clip(squircleShape)
+                    .clickable {
+                    }
+                    .padding(horizontal = 8.dp, vertical = 4.dp),
+                color = c.blue,
+            )
+
+            ZStack(Modifier.height(20.dp)) { }
         }
     }
 }
