@@ -75,6 +75,21 @@ fun ChecklistsPickerSheet(
                     .padding(top = 12.dp, start = 14.dp)
                     .clip(squircleShape)
                     .clickable {
+                        Dialog.show { layer ->
+                            ChecklistEditDialog(
+                                layer = layer,
+                                editedChecklist = null,
+                                onSave = { newChecklistDb ->
+                                    Sheet.show { layer ->
+                                        ChecklistFormSheet(
+                                            layer = layer,
+                                            checklistDb = newChecklistDb,
+                                            onDelete = {},
+                                        )
+                                    }
+                                },
+                            )
+                        }
                     }
                     .padding(horizontal = 8.dp, vertical = 4.dp),
                 color = c.blue,
