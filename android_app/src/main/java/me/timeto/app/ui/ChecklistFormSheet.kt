@@ -21,6 +21,7 @@ import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.vm.ChecklistFormSheetVM
 
 private val deleteButtonSize = 28.dp
+private val deleteButtonInnerPadding = 5.dp
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -134,13 +135,13 @@ fun ChecklistFormSheet(
                                 painterResource(id = R.drawable.sf_minus_circle_fill_medium_regular),
                                 contentDescription = "Delete",
                                 modifier = Modifier
-                                    .padding(start = H_PADDING - 6.dp)
+                                    .padding(start = H_PADDING - deleteButtonInnerPadding)
                                     .size(deleteButtonSize)
                                     .clip(roundedShape)
                                     .clickable {
                                         vm.deleteItem(checklistItemUi.checklistItemDb)
                                     }
-                                    .padding(5.dp),
+                                    .padding(deleteButtonInnerPadding),
                                 tint = c.red,
                             )
 
