@@ -78,10 +78,15 @@ data class ChecklistDb(
         launchExDefault { uiChecklistFlow.emit(this@ChecklistDb) }
     }
 
-    suspend fun upNameWithValidation(newName: String): Unit = dbIO {
+    suspend fun upNameWithValidation(
+        newName: String,
+    ): ChecklistDb = dbIO {
+        val newName = validateName(newName, setOf(id))
         db.checklistQueries.upNameById(
-            id = id, name = validateName(newName, setOf(id))
+            id = id,
+            name = newName,
         )
+        this@ChecklistDb.copy(name = newName)
     }
 
     suspend fun deleteWithDependencies(): Unit = dbIO {
