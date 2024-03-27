@@ -13,6 +13,7 @@ class ChecklistsPickerSheetVM(
     ) {
         val headerTitle = "Checklists"
         val doneTitle = "Done"
+        val newChecklistButton = "+ new checklist"
     }
 
     data class ChecklistUI(
