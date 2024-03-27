@@ -124,6 +124,15 @@ fun ChecklistFormSheet(
                         modifier = Modifier
                             .animateItemPlacement()
                             .clickable {
+                                Dialog.show { editItemLayer ->
+                                    ChecklistItemEditDialog(
+                                        checklist = state.checklistDb,
+                                        editedChecklistItem = checklistItemUi.checklistItemDb,
+                                        onClose = {
+                                            editItemLayer.close()
+                                        },
+                                    )
+                                }
                             },
                     ) {
 
