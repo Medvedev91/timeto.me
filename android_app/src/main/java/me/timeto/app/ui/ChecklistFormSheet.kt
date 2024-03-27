@@ -94,7 +94,7 @@ fun ChecklistFormSheet(
                 tint = c.red,
                 modifier = Modifier
                     .offset(y = 1.dp)
-                    .padding(start = 12.dp, end = H_PADDING_HALF)
+                    .padding(start = 12.dp)
                     .clip(roundedShape)
                     .size(36.dp)
                     .clickable {
