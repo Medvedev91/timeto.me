@@ -14,8 +14,7 @@ ORDER BY id ASC;
 
 insert:
 INSERT INTO ChecklistSQ
-( id,  name) VALUES
-(:id, :name);
+VALUES ?;
 
 upNameById:
 UPDATE ChecklistSQ

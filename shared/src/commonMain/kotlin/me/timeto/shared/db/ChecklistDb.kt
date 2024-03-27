@@ -28,12 +28,14 @@ data class ChecklistDb(
 
         suspend fun addWithValidation(
             name: String,
-        ) = dbIO {
+        ): ChecklistDb = dbIO {
             val nextId = time()
-            db.checklistQueries.insert(
+            val sqModel = ChecklistSQ(
                 id = nextId,
                 name = validateName(name),
             )
+            db.checklistQueries.insert(sqModel)
+            sqModel.toModel()
         }
 
         private suspend fun validateName(
@@ -64,8 +66,10 @@ data class ChecklistDb(
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
             db.checklistQueries.insert(
-                id = j.getInt(0),
-                name = j.getString(1),
+                ChecklistSQ(
+                    id = j.getInt(0),
+                    name = j.getString(1),
+                )
             )
         }
     }
