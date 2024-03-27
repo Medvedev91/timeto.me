@@ -2,10 +2,8 @@ package me.timeto.app.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
+import me.timeto.app.R
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.vm.ChecklistFormSheetVM
 
@@ -104,7 +103,44 @@ fun ChecklistFormSheet(
 
         DividerFg(Modifier.padding(horizontal = H_PADDING))
 
-        SpacerW1()
+        LazyColumn(
+            modifier = Modifier
+                .weight(1f),
+            contentPadding = PaddingValues(top = 16.dp),
+        ) {
+
+            state.checklistItemsUi.forEach { checklistItemUi ->
+
+                item(
+                    key = checklistItemUi.checklistItemDb.id,
+                ) {
+
+                    ZStack(
+                        modifier = Modifier
+                            .clickable {
+                            },
+                    ) {
+
+                        HStack {
+
+                            Text(
+                                text = checklistItemUi.checklistItemDb.text,
+                                modifier = Modifier
+                                    .padding(vertical = 8.dp),
+                                color = c.text,
+                            )
+                        }
+
+                        if (!checklistItemUi.isFirst)
+                            DividerFg(
+                                modifier = Modifier
+                                    .padding(start = H_PADDING)
+                                    .align(Alignment.TopCenter),
+                            )
+                    }
+                }
+            }
+        }
 
         Sheet__BottomViewDone("Done") {
             layer.close()
