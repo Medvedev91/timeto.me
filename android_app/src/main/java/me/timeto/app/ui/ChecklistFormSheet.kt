@@ -157,9 +157,18 @@ fun ChecklistFormSheet(
                             Text(
                                 text = checklistItemUi.checklistItemDb.text,
                                 modifier = Modifier
+                                    .weight(1f)
                                     .padding(vertical = 8.dp)
                                     .padding(start = 8.dp),
                                 color = c.text,
+                            )
+
+                            Icon(
+                                painterResource(id = R.drawable.sf_pencil_medium_medium),
+                                contentDescription = "Edit",
+                                modifier = Modifier
+                                    .size(16.dp),
+                                tint = c.blue,
                             )
                         }
 
