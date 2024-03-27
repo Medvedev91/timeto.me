@@ -39,6 +39,11 @@ UPDATE ChecklistItemSQ
 SET check_time = ?
 WHERE id = ?;
 
+upSortById:
+UPDATE ChecklistItemSQ
+SET sort=?
+WHERE id=?;
+
 upCheckTimeByList:
 UPDATE ChecklistItemSQ
 SET check_time=?
