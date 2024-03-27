@@ -39,6 +39,7 @@ fun ChecklistItemEditDialog(
                 .padding(start = 10.dp, bottom = 15.dp),
             fontSize = 24.sp,
             fontWeight = FontWeight.W500,
+            color = c.text,
         )
 
         //
