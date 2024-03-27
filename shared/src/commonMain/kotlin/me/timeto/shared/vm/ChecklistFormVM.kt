@@ -35,15 +35,15 @@ class ChecklistFormVM(
     }
 
     fun save(
-        onSuccess: () -> Unit,
+        onSuccess: (ChecklistDb) -> Unit,
     ) = scopeVM().launchEx {
         try {
             val checklist = state.value.checklist
-            if (checklist != null)
+            val newChecklist: ChecklistDb = if (checklist != null)
                 checklist.upNameWithValidation(state.value.inputNameValue)
             else
                 ChecklistDb.addWithValidation(state.value.inputNameValue)
-            onSuccess()
+            onSuccess(newChecklist)
         } catch (e: UIException) {
             showUiAlert(e.uiMessage)
         }
