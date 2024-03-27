@@ -19,6 +19,8 @@ import me.timeto.app.R
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.vm.ChecklistFormSheetVM
 
+private val deleteButtonSize = 28.dp
+
 @Composable
 fun ChecklistFormSheet(
     layer: WrapperView.Layer,
@@ -106,7 +108,7 @@ fun ChecklistFormSheet(
         LazyColumn(
             modifier = Modifier
                 .weight(1f),
-            contentPadding = PaddingValues(top = 16.dp),
+            contentPadding = PaddingValues(vertical = 8.dp),
         ) {
 
             state.checklistItemsUi.forEach { checklistItemUi ->
@@ -121,12 +123,28 @@ fun ChecklistFormSheet(
                             },
                     ) {
 
-                        HStack {
+                        HStack(
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+
+                            Icon(
+                                painterResource(id = R.drawable.sf_minus_circle_fill_medium_regular),
+                                contentDescription = "Delete",
+                                modifier = Modifier
+                                    .padding(start = H_PADDING - 6.dp)
+                                    .size(deleteButtonSize)
+                                    .clip(roundedShape)
+                                    .clickable {
+                                    }
+                                    .padding(5.dp),
+                                tint = c.red,
+                            )
 
                             Text(
                                 text = checklistItemUi.checklistItemDb.text,
                                 modifier = Modifier
-                                    .padding(vertical = 8.dp),
+                                    .padding(vertical = 8.dp)
+                                    .padding(start = 8.dp),
                                 color = c.text,
                             )
                         }
@@ -134,7 +152,7 @@ fun ChecklistFormSheet(
                         if (!checklistItemUi.isFirst)
                             DividerFg(
                                 modifier = Modifier
-                                    .padding(start = H_PADDING)
+                                    .padding(start = H_PADDING + deleteButtonSize)
                                     .align(Alignment.TopCenter),
                             )
                     }
