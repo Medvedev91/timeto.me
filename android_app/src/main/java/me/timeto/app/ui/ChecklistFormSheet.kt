@@ -196,6 +196,7 @@ fun ChecklistFormSheet(
                                     .size(24.dp)
                                     .clip(roundedShape)
                                     .clickable {
+                                        vm.up(checklistItemUi)
                                     }
                                     .padding(1.dp)
                             )

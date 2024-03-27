@@ -82,6 +82,23 @@ class ChecklistFormSheetVM(
         )
     }
 
+    fun up(itemUi: ChecklistItemUi) {
+        val itemsUi = state.value.checklistItemsUi
+        if (itemsUi.first() == itemUi)
+            return
+        val idx = itemsUi.indexOf(itemUi)
+        val prevIdx = idx - 1
+        val prevItemUi = itemsUi[prevIdx]
+        val newItemsUi = itemsUi.toMutableList()
+        newItemsUi[idx] = prevItemUi
+        newItemsUi[prevIdx] = itemUi
+        launchExDefault {
+            newItemsUi.forEachIndexed { idx, itemUi ->
+                itemUi.checklistItemDb.upSort(idx)
+            }
+        }
+    }
+
     ///
 
     data class ChecklistItemUi(
