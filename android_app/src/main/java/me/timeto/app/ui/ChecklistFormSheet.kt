@@ -1,5 +1,6 @@
 package me.timeto.app.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -21,6 +22,7 @@ import me.timeto.shared.vm.ChecklistFormSheetVM
 
 private val deleteButtonSize = 28.dp
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ChecklistFormSheet(
     layer: WrapperView.Layer,
@@ -119,6 +121,7 @@ fun ChecklistFormSheet(
 
                     ZStack(
                         modifier = Modifier
+                            .animateItemPlacement()
                             .clickable {
                             },
                     ) {
@@ -135,6 +138,7 @@ fun ChecklistFormSheet(
                                     .size(deleteButtonSize)
                                     .clip(roundedShape)
                                     .clickable {
+                                        vm.deleteItem(checklistItemUi.checklistItemDb)
                                     }
                                     .padding(5.dp),
                                 tint = c.red,
