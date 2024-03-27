@@ -1,0 +1,3 @@
+import kotlin.Int;
+
+ALTER TABLE ChecklistItemSQ ADD sort INTEGER AS Int NOT NULL DEFAULT 0;
