@@ -43,6 +43,7 @@ data class ChecklistItemDb(
                 text = validateText(text),
                 list_id = checklist.id,
                 check_time = 0,
+                sort = 0,
             )
         }
 
@@ -69,6 +70,7 @@ data class ChecklistItemDb(
                 text = j.getString(1),
                 list_id = j.getInt(2),
                 check_time = j.getInt(3),
+                sort = j.getInt(4),
             )
         }
     }
@@ -105,6 +107,7 @@ data class ChecklistItemDb(
             text = j.getString(1),
             list_id = j.getInt(2),
             check_time = j.getInt(3),
+            sort = j.getInt(4),
         )
     }
 
