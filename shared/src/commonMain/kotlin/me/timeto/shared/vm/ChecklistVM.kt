@@ -25,7 +25,7 @@ class ChecklistVM(
     override fun onAppear() {
         val scopeVm = scopeVM()
         ChecklistItemDb
-            .getAscFlow()
+            .getSortedFlow()
             .onEachExIn(scopeVm) { items ->
                 state.update {
                     it.copy(checklistUI = ChecklistUI.build(checklistDb, items))

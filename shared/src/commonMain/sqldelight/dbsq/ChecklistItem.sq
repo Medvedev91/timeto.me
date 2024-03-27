@@ -10,10 +10,10 @@ CREATE TABLE ChecklistItemSQ (
 
 anyChange: SELECT id FROM ChecklistItemSQ LIMIT 1;
 
-getAsc:
+getSorted:
 SELECT *
 FROM ChecklistItemSQ
-ORDER BY id ASC;
+ORDER BY sort ASC, id ASC;
 
 insert:
 INSERT INTO ChecklistItemSQ

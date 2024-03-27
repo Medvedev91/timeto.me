@@ -59,8 +59,8 @@ object DI {
         checklists = ChecklistDb.getAsc()
         ChecklistDb.getAscFlow().onEachExIn(scope) { checklists = it }
 
-        checklistItems = ChecklistItemDb.getAsc()
-        ChecklistItemDb.getAscFlow().onEachExIn(scope) { checklistItems = it }
+        checklistItems = ChecklistItemDb.getSorted()
+        ChecklistItemDb.getSortedFlow().onEachExIn(scope) { checklistItems = it }
 
         shortcuts = ShortcutDb.getAsc()
         ShortcutDb.getAscFlow().onEachExIn(scope) { shortcuts = it }

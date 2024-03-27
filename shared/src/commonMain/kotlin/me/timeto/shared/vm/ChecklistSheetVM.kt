@@ -24,7 +24,7 @@ class ChecklistSheetVM(
 
     override fun onAppear() {
         val scope = scopeVM()
-        ChecklistItemDb.getAscFlow().onEachExIn(scope) { items ->
+        ChecklistItemDb.getSortedFlow().onEachExIn(scope) { items ->
             state.update { it.copy(items = items.prepChecklistItems(checklistDb)) }
         }
     }

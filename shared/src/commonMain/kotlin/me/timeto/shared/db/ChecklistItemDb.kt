@@ -21,11 +21,11 @@ data class ChecklistItemDb(
 
         fun anyChangeFlow() = db.checklistItemQueries.anyChange().asFlow()
 
-        suspend fun getAsc() = dbIO {
-            db.checklistItemQueries.getAsc().executeAsList().map { it.toModel() }
+        suspend fun getSorted() = dbIO {
+            db.checklistItemQueries.getSorted().executeAsList().map { it.toModel() }
         }
 
-        fun getAscFlow() = db.checklistItemQueries.getAsc().asFlow()
+        fun getSortedFlow() = db.checklistItemQueries.getSorted().asFlow()
             .mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
 
         suspend fun addWithValidation(
@@ -33,7 +33,7 @@ data class ChecklistItemDb(
             checklist: ChecklistDb,
         ) {
             val timeId = time()
-            val nextId = if (getAsc().any { it.id == timeId })
+            val nextId = if (getSorted().any { it.id == timeId })
                 timeId + 1 // todo test
             else
                 timeId
@@ -61,7 +61,7 @@ data class ChecklistItemDb(
         /// Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.checklistItemQueries.getAsc().executeAsList().map { it.toModel() }
+            db.checklistItemQueries.getSorted().executeAsList().map { it.toModel() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray

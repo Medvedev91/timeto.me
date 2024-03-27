@@ -39,7 +39,7 @@ class ChecklistFormSheetVM(
                     state.update { it.copy(checklistDb = newChecklistDb) }
                 }
         }
-        ChecklistItemDb.getAscFlow().onEachExIn(scope) { allChecklistItems ->
+        ChecklistItemDb.getSortedFlow().onEachExIn(scope) { allChecklistItems ->
             val newChecklistItemsDb = allChecklistItems
                 .filter { it.list_id == state.value.checklistDb.id }
             state.update { it.copy(checklistItemsDb = newChecklistItemsDb) }
