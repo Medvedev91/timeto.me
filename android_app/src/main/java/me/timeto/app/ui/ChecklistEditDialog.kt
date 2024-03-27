@@ -22,7 +22,7 @@ import me.timeto.shared.vm.ChecklistFormVM
 fun ChecklistEditDialog(
     layer: WrapperView.Layer,
     editedChecklist: ChecklistDb?,
-    onSave: () -> Unit,
+    onSave: (ChecklistDb) -> Unit,
 ) {
 
     val (vm, state) = rememberVM(editedChecklist) {
@@ -83,9 +83,9 @@ fun ChecklistEditDialog(
             )
 
             MyButton("Save", state.isSaveEnabled, c.blue) {
-                vm.save {
+                vm.save { checklist ->
                     layer.close()
-                    onSave()
+                    onSave(checklist)
                 }
             }
         }
