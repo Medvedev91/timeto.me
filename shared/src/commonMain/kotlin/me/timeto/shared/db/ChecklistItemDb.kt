@@ -89,6 +89,13 @@ data class ChecklistItemDb(
         )
     }
 
+    suspend fun upSort(newSort: Int): Unit = dbIO {
+        db.checklistItemQueries.upSortById(
+            id = id,
+            sort = newSort,
+        )
+    }
+
     suspend fun delete() = dbIO { db.checklistItemQueries.deleteById(id) }
 
     ///
