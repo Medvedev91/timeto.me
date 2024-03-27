@@ -7,6 +7,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowDownward
+import androidx.compose.material.icons.rounded.ArrowUpward
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -167,8 +170,34 @@ fun ChecklistFormSheet(
                                 painterResource(id = R.drawable.sf_pencil_medium_medium),
                                 contentDescription = "Edit",
                                 modifier = Modifier
-                                    .size(16.dp),
+                                    .size(15.dp),
                                 tint = c.blue,
+                            )
+
+                            Icon(
+                                Icons.Rounded.ArrowDownward,
+                                "Down",
+                                tint = c.blue,
+                                modifier = Modifier
+                                    .padding(start = 12.dp)
+                                    .size(24.dp)
+                                    .clip(roundedShape)
+                                    .clickable {
+                                    }
+                                    .padding(1.dp)
+                            )
+
+                            Icon(
+                                Icons.Rounded.ArrowUpward,
+                                "Up",
+                                tint = c.blue,
+                                modifier = Modifier
+                                    .padding(start = 4.dp, end = 8.dp)
+                                    .size(24.dp)
+                                    .clip(roundedShape)
+                                    .clickable {
+                                    }
+                                    .padding(1.dp)
                             )
                         }
 
