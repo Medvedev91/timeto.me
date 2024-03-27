@@ -1,11 +1,9 @@
 package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
-import me.timeto.shared.UIConfirmationData
+import me.timeto.shared.*
 import me.timeto.shared.db.ChecklistDb
-import me.timeto.shared.launchExDefault
-import me.timeto.shared.onEachExIn
-import me.timeto.shared.showUiConfirmation
+import me.timeto.shared.db.ChecklistItemDb
 
 class ChecklistFormSheetVM(
     checklistDb: ChecklistDb,
@@ -13,13 +11,22 @@ class ChecklistFormSheetVM(
 
     data class State(
         val checklistDb: ChecklistDb,
+        val checklistItemsDb: List<ChecklistItemDb>,
     ) {
         val checklistName: String = checklistDb.name
+        val checklistItemsUi: List<ChecklistItemUi> = checklistItemsDb
+            .mapIndexed { idx, checklistItemDb ->
+                ChecklistItemUi(
+                    checklistItemDb = checklistItemDb,
+                    isFirst = (idx == 0),
+                )
+            }
     }
 
     override val state = MutableStateFlow(
         State(
             checklistDb = checklistDb,
+            checklistItemsDb = DI.checklistItems.filter { it.list_id == checklistDb.id },
         )
     )
 
@@ -31,6 +38,11 @@ class ChecklistFormSheetVM(
                 ?.let { newChecklistDb ->
                     state.update { it.copy(checklistDb = newChecklistDb) }
                 }
+        }
+        ChecklistItemDb.getAscFlow().onEachExIn(scope) { allChecklistItems ->
+            val newChecklistItemsDb = allChecklistItems
+                .filter { it.list_id == state.value.checklistDb.id }
+            state.update { it.copy(checklistItemsDb = newChecklistItemsDb) }
         }
     }
 
@@ -54,4 +66,11 @@ class ChecklistFormSheetVM(
             )
         )
     }
+
+    ///
+
+    data class ChecklistItemUi(
+        val checklistItemDb: ChecklistItemDb,
+        val isFirst: Boolean,
+    )
 }
