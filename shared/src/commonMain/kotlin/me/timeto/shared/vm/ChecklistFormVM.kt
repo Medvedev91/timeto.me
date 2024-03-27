@@ -7,7 +7,7 @@ import me.timeto.shared.launchEx
 import me.timeto.shared.showUiAlert
 
 class ChecklistFormVM(
-    private val checklist: ChecklistDb?,
+    checklist: ChecklistDb?,
 ) : __VM<ChecklistFormVM.State>() {
 
     data class State(
@@ -38,6 +38,7 @@ class ChecklistFormVM(
         onSuccess: () -> Unit,
     ) = scopeVM().launchEx {
         try {
+            val checklist = state.value.checklist
             if (checklist != null)
                 checklist.upNameWithValidation(state.value.inputNameValue)
             else
