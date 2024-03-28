@@ -36,16 +36,18 @@ class ChecklistFormVM(
 
     fun save(
         onSuccess: (ChecklistDb) -> Unit,
-    ) = scopeVM().launchEx {
-        try {
-            val checklist = state.value.checklist
-            val newChecklist: ChecklistDb = if (checklist != null)
-                checklist.upNameWithValidation(state.value.inputNameValue)
-            else
-                ChecklistDb.addWithValidation(state.value.inputNameValue)
-            onSuccess(newChecklist)
-        } catch (e: UIException) {
-            showUiAlert(e.uiMessage)
+    ) {
+        scopeVM().launchEx {
+            try {
+                val checklist = state.value.checklist
+                val newChecklist: ChecklistDb = if (checklist != null)
+                    checklist.upNameWithValidation(state.value.inputNameValue)
+                else
+                    ChecklistDb.addWithValidation(state.value.inputNameValue)
+                onSuccess(newChecklist)
+            } catch (e: UIException) {
+                showUiAlert(e.uiMessage)
+            }
         }
     }
 }
