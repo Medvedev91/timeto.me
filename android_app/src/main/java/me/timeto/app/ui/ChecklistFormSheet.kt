@@ -212,6 +212,32 @@ fun ChecklistFormSheet(
                     }
                 }
             }
+
+            item(
+                key = "new_item"
+            ) {
+                Text(
+                    text = state.newItemButton,
+                    modifier = Modifier
+                        .padding(top = 4.dp, start = 8.dp)
+                        .clip(squircleShape)
+                        .clickable {
+                            Dialog.show { layer ->
+                                ChecklistItemEditDialog(
+                                    checklist = state.checklistDb,
+                                    editedChecklistItem = null,
+                                    onClose = {
+                                        layer.close()
+                                    },
+                                )
+                            }
+                        }
+                        .padding(horizontal = 8.dp, vertical = 4.dp),
+                    color = c.blue,
+                )
+
+                ZStack(Modifier.height(20.dp)) {}
+            }
         }
 
         Sheet__BottomViewDone("Done") {
