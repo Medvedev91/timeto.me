@@ -129,11 +129,9 @@ fun ChecklistFormSheet(
                             .clickable {
                                 Dialog.show { editItemLayer ->
                                     ChecklistItemEditDialog(
+                                        layer = editItemLayer,
                                         checklist = state.checklistDb,
                                         editedChecklistItem = checklistItemUi.checklistItemDb,
-                                        onClose = {
-                                            editItemLayer.close()
-                                        },
                                     )
                                 }
                             },
@@ -222,13 +220,11 @@ fun ChecklistFormSheet(
                         .padding(top = 4.dp, start = 8.dp)
                         .clip(squircleShape)
                         .clickable {
-                            Dialog.show { layer ->
+                            Dialog.show { newItemLayer ->
                                 ChecklistItemEditDialog(
+                                    layer = newItemLayer,
                                     checklist = state.checklistDb,
                                     editedChecklistItem = null,
-                                    onClose = {
-                                        layer.close()
-                                    },
                                 )
                             }
                         }

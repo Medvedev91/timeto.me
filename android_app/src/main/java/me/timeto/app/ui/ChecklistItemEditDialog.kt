@@ -20,9 +20,9 @@ import me.timeto.shared.vm.ChecklistItemFormVM
 
 @Composable
 fun ChecklistItemEditDialog(
+    layer: WrapperView.Layer,
     checklist: ChecklistDb,
     editedChecklistItem: ChecklistItemDb?,
-    onClose: () -> Unit,
 ) {
 
     val (vm, state) = rememberVM(checklist, editedChecklistItem) {
@@ -76,13 +76,15 @@ fun ChecklistItemEditDialog(
                 modifier = Modifier
                     .padding(end = 11.dp)
                     .clip(RoundedCornerShape(8.dp))
-                    .clickable { onClose() }
+                    .clickable {
+                        layer.close()
+                    }
                     .padding(horizontal = 8.dp, vertical = 4.dp)
             )
 
             MyButton("Save", state.isSaveEnabled, c.blue) {
                 vm.save {
-                    onClose()
+                    layer.close()
                 }
             }
         }
