@@ -15,6 +15,7 @@ data class ChecklistItemDb(
     val text: String,
     val list_id: Int,
     val check_time: Int,
+    val sort: Int,
 ) : Backupable__Item {
 
     companion object : Backupable__Holder {
@@ -132,5 +133,6 @@ private fun validateText(text: String): String {
 }
 
 private fun ChecklistItemSQ.toModel() = ChecklistItemDb(
-    id = id, text = text, list_id = list_id, check_time = check_time
+    id = id, text = text, list_id = list_id,
+    check_time = check_time, sort = sort,
 )
