@@ -32,8 +32,9 @@ data class ChecklistItemDb(
             text: String,
             checklist: ChecklistDb,
         ) {
+            val allSorted = getSorted()
             val timeId = time()
-            val nextId = if (getSorted().any { it.id == timeId })
+            val nextId = if (allSorted.any { it.id == timeId })
                 timeId + 1 // todo test
             else
                 timeId
