@@ -80,6 +80,7 @@ fun ChecklistsPickerSheet(
                                 layer = layer,
                                 editedChecklist = null,
                                 onSave = { newChecklistDb ->
+                                    vm.selectById(newChecklistDb.id)
                                     Sheet.show { layer ->
                                         ChecklistFormSheet(
                                             layer = layer,
