@@ -25,7 +25,8 @@ fun AlertDialogView(
             text = data.message,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(all = 5.dp)
+                .padding(all = 5.dp),
+            color = c.white,
         )
 
         Row(
