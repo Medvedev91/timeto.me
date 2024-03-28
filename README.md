@@ -45,10 +45,8 @@ sleeping" activity.**
 
 In other words, to finish the current activity, you have to start the next one.
 
-It helps to always be focused on what you have to do and do only one task. In most times your screen will look like
+It helps to always be focused on what you have to do and do only one task. Most of the time your screen will look like a
 typical "pomodoro" timer:
-
-todo
 
 Also, this way provides real 24/7 data on how long everything takes. It will look like this:
 
