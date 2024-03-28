@@ -13,6 +13,9 @@ class ChecklistFormSheetVM(
         val checklistDb: ChecklistDb,
         val checklistItemsDb: List<ChecklistItemDb>,
     ) {
+
+        val newItemButton = "+ new item"
+
         val checklistName: String = checklistDb.name
         val checklistItemsUi: List<ChecklistItemUi> = checklistItemsDb
             .mapIndexed { idx, checklistItemDb ->
