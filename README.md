@@ -40,11 +40,9 @@ Enjoy!
 
 You must set a timer for each activity, like eating, working, reading, etc.
 
-**There is no stop option!**
+**There is NO stop option! To finish the current activity, you have to start the next one.**
 
-**Once you complete one activity, you must start the timer for the next one, even sleep.**
-
-In other words, to finish the current activity, you have to start the next one.
+In other words, once you complete one activity, you must start the timer for the next one, even sleep.
 
 It helps to always be focused on what you have to do and do only one task. Most of the time your screen will look like a
 typical "pomodoro" timer:
