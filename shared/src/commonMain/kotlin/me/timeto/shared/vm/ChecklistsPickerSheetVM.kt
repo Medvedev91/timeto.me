@@ -50,6 +50,14 @@ class ChecklistsPickerSheetVM(
 
     ///
 
+    fun selectById(id: Int) {
+        val newSelectedIds = state.value.selectedIds.toMutableSet()
+        newSelectedIds.add(id)
+        state.update {
+            it.copy(selectedIds = newSelectedIds)
+        }
+    }
+
     fun toggleChecklist(checklistUI: ChecklistUI) {
         val newSelectedIds = state.value.selectedIds.toMutableSet()
         val checklistId = checklistUI.checklist.id
