@@ -34,18 +34,21 @@ data class ChecklistItemDb(
             checklist: ChecklistDb,
         ) {
             val allSorted = getSorted()
+
             val timeId = time()
             val nextId = if (allSorted.any { it.id == timeId })
                 timeId + 1 // todo test
             else
                 timeId
 
+            val sort = allSorted.maxOfOrNull { it.sort }?.plus(1) ?: 0
+
             db.checklistItemQueries.insert(
                 id = nextId,
                 text = validateText(text),
                 list_id = checklist.id,
                 check_time = 0,
-                sort = 0,
+                sort = sort,
             )
         }
 
