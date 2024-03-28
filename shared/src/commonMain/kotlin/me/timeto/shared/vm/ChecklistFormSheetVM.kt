@@ -51,6 +51,14 @@ class ChecklistFormSheetVM(
 
     ///
 
+    fun isDoneAllowed(): Boolean {
+        if (state.value.checklistItemsUi.isEmpty()) {
+            showUiAlert(message = "Please add at least one item.")
+            return false
+        }
+        return true
+    }
+
     fun deleteChecklist(
         onDelete: () -> Unit,
     ) {
