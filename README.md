@@ -40,7 +40,9 @@ Enjoy!
 
 You must set a timer for each activity, like eating, working, reading, etc.
 
-**There is NO stop option! Once you complete one activity, you must start the timer for the next one, even sleep.**
+**There is no stop option!**
+
+**Once you complete one activity, you must start the timer for the next one, even sleep.**
 
 In other words, to finish the current activity, you have to start the next one.
 
