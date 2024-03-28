@@ -105,7 +105,7 @@ data class ChecklistItemDb(
     override fun backupable__getId(): String = id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
-        id, text, list_id, check_time
+        id, text, list_id, check_time, sort,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
