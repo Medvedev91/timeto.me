@@ -237,7 +237,8 @@ fun ChecklistFormSheet(
         }
 
         Sheet__BottomViewDone("Done") {
-            layer.close()
+            if (vm.isDoneAllowed())
+                layer.close()
         }
     }
 }
