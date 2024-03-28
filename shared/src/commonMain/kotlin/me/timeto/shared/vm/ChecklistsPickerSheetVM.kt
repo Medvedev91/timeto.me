@@ -6,15 +6,23 @@ import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.onEachExIn
 
 class ChecklistsPickerSheetVM(
-    private val selectedChecklists: List<ChecklistDb>,
+    selectedChecklists: List<ChecklistDb>,
 ) : __VM<ChecklistsPickerSheetVM.State>() {
 
     data class State(
-        val checklistsUI: List<ChecklistUI>,
+        val checklistsDb: List<ChecklistDb>,
+        val selectedIds: Set<Int>,
     ) {
         val headerTitle = "Checklists"
         val doneTitle = "Done"
         val newChecklistButton = "+ new checklist"
+
+        val checklistsUI: List<ChecklistUI> = checklistsDb.map { checklistDb ->
+            ChecklistUI(
+                checklist = checklistDb,
+                isSelected = checklistDb.id in selectedIds,
+            )
+        }
     }
 
     data class ChecklistUI(
@@ -26,7 +34,8 @@ class ChecklistsPickerSheetVM(
 
     override val state = MutableStateFlow(
         State(
-            checklistsUI = prepChecklistsUi(DI.checklists, selectedChecklists),
+            checklistsDb = DI.checklists,
+            selectedIds = selectedChecklists.map { it.id }.toSet(),
         )
     )
 
@@ -34,7 +43,7 @@ class ChecklistsPickerSheetVM(
         val scope = scopeVM()
         ChecklistDb.getAscFlow().onEachExIn(scope) { newChecklistsDb ->
             state.update {
-                it.copy(checklistsUI = prepChecklistsUi(newChecklistsDb, selectedChecklists))
+                it.copy(checklistsDb = newChecklistsDb)
             }
         }
     }
@@ -42,23 +51,18 @@ class ChecklistsPickerSheetVM(
     ///
 
     fun toggleChecklist(checklistUI: ChecklistUI) {
-        val checklistsUI = state.value.checklistsUI.toMutableList()
-        val idx = checklistsUI.indexOf(checklistUI) // todo report if -1
-        checklistsUI[idx] = checklistUI.copy(isSelected = !checklistUI.isSelected)
-        state.update { it.copy(checklistsUI = checklistsUI) }
+        val newSelectedIds = state.value.selectedIds.toMutableSet()
+        val checklistId = checklistUI.checklist.id
+        if (checklistUI.isSelected)
+            newSelectedIds.remove(checklistId)
+        else
+            newSelectedIds.add(checklistId)
+        state.update {
+            it.copy(selectedIds = newSelectedIds)
+        }
     }
 
     fun getSelectedChecklists() = state.value.checklistsUI
         .filter { it.isSelected }
         .map { it.checklist }
-}
-
-private fun prepChecklistsUi(
-    allChecklistsDb: List<ChecklistDb>,
-    selectedChecklists: List<ChecklistDb>,
-): List<ChecklistsPickerSheetVM.ChecklistUI> {
-    val selectedChecklistIds = selectedChecklists.map { it.id }
-    return allChecklistsDb.map {
-        ChecklistsPickerSheetVM.ChecklistUI(it, it.id in selectedChecklistIds)
-    }
 }
