@@ -6,9 +6,9 @@ import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.launchEx
 import me.timeto.shared.showUiAlert
 
-class ChecklistFormVM(
+class ChecklistNameDialogVM(
     checklist: ChecklistDb?,
-) : __VM<ChecklistFormVM.State>() {
+) : __VM<ChecklistNameDialogVM.State>() {
 
     data class State(
         val checklist: ChecklistDb?,

@@ -76,7 +76,7 @@ fun ChecklistsPickerSheet(
                     .clip(squircleShape)
                     .clickable {
                         Dialog.show { layer ->
-                            ChecklistEditDialog(
+                            ChecklistNameDialog(
                                 layer = layer,
                                 editedChecklist = null,
                                 onSave = { newChecklistDb ->

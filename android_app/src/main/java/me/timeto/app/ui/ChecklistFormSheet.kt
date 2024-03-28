@@ -57,7 +57,7 @@ fun ChecklistFormSheet(
                     .clip(squircleShape)
                     .clickable {
                         Dialog.show { editNameLayer ->
-                            ChecklistEditDialog(
+                            ChecklistNameDialog(
                                 layer = editNameLayer,
                                 editedChecklist = state.checklistDb,
                                 onSave = {},

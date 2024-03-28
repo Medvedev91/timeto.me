@@ -16,17 +16,17 @@ import me.timeto.app.HStack
 import me.timeto.app.c
 import me.timeto.app.rememberVM
 import me.timeto.shared.db.ChecklistDb
-import me.timeto.shared.vm.ChecklistFormVM
+import me.timeto.shared.vm.ChecklistNameDialogVM
 
 @Composable
-fun ChecklistEditDialog(
+fun ChecklistNameDialog(
     layer: WrapperView.Layer,
     editedChecklist: ChecklistDb?,
     onSave: (ChecklistDb) -> Unit,
 ) {
 
     val (vm, state) = rememberVM(editedChecklist) {
-        ChecklistFormVM(editedChecklist)
+        ChecklistNameDialogVM(editedChecklist)
     }
 
     Column(

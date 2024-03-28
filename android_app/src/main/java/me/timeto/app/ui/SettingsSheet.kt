@@ -156,7 +156,7 @@ fun SettingsSheet(
                             contentDescription = "New Checklist"
                         ) {
                             Dialog.show { layer ->
-                                ChecklistEditDialog(
+                                ChecklistNameDialog(
                                     layer = layer,
                                     editedChecklist = null,
                                     onSave = {},
@@ -203,7 +203,7 @@ fun SettingsSheet(
                         },
                         onStart = {
                             Dialog.show { layer ->
-                                ChecklistEditDialog(
+                                ChecklistNameDialog(
                                     layer = layer,
                                     editedChecklist = checklist,
                                     onSave = {},
