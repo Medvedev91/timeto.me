@@ -129,8 +129,8 @@ fun SettingsSheet(
                         rightView = {
                             Icon(
                                 painterResource(id = R.drawable.sf_info_circle_medium_regular),
-                                "Info",
-                                tint = c.textSecondary.copy(alpha = 0.47f),
+                                "How to Use the App",
+                                tint = c.blue,
                                 modifier = Modifier
                                     .padding(end = 14.dp)
                                     .size(22.dp),
