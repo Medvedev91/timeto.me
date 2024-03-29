@@ -23,7 +23,7 @@ Any questions [hi@timeto.me](mailto:hi@timeto.me?subject=[GitHub]%20Feedback)
 
 # How to Use the App
 
-Hi!
+Hi,
 
 Developer is here 👨‍💻
 

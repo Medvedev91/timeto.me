@@ -51,7 +51,7 @@ private typealias PRedText = ReadmeSheetVM.Paragraph.RedText
 
 private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     val paragraphs = mutableListOf<ReadmeSheetVM.Paragraph>()
-    paragraphs.add(PText("Hi!"))
+    paragraphs.add(PText("Hi,"))
     paragraphs.add(PText("Developer is here  $developerEmoji"))
     paragraphs.add(PText("I built this app to manage my productivity. Here I will show how I use it."))
     paragraphs.add(PText("First of all, it is a pragmatic guide. I mean, it is NOT just a list of features, but my real day-to-day experience."))

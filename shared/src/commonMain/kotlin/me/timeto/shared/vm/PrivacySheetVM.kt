@@ -61,7 +61,7 @@ class PrivacySheetVM : __VM<PrivacySheetVM.State>() {
 
         const val prayEmoji = "🙏"
 
-        const val textHi = "Hi!"
+        const val textHi = "Hi,"
         const val textHere = "Developer is here  $developerEmoji"
         const val textRule = "The strongest rule I follow is \"Privacy with no compromise\". I believe that task management is extremely sensitive information. No one should have access to it."
         const val textNever = "The app never sends any personal information!"
