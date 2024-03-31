@@ -355,7 +355,7 @@ struct HomeView: View {
                 }
                 .sheetEnv(isPresented: $isTriggersChecklistPresented) {
                     if let checklist = triggersChecklist {
-                        ChecklistDialog(isPresented: $isTriggersChecklistPresented, checklist: checklist)
+                        ChecklistSheet(isPresented: $isTriggersChecklistPresented, checklist: checklist)
                     }
                 }
                 .sheetEnv(

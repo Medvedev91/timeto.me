@@ -522,7 +522,7 @@ struct ToolsView_ChecklistView: View {
             }
         }
                 .sheetEnv(isPresented: $isItemsPresented) {
-                    ChecklistDialog(isPresented: $isItemsPresented, checklist: checklist)
+                    ChecklistSheet(isPresented: $isItemsPresented, checklist: checklist)
                 }
                 .sheetEnv(isPresented: $isEditPresented) {
                     ChecklistNameDialog(isPresented: $isEditPresented, checklist: checklist)
