@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-struct ChecklistFormSheet: View {
+struct ChecklistNameDialog: View {
 
     @State private var vm: ChecklistNameDialogVM
 
