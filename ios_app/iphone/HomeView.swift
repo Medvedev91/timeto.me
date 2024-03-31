@@ -3,6 +3,7 @@ import Combine
 import shared
 
 let HomeView__BOTTOM_NAVIGATION_HEIGHT = 56.0
+let HomeView__PRIMARY_FONT_SIZE = 18.0
 
 private let menuIconSize = HomeView__BOTTOM_NAVIGATION_HEIGHT
 
@@ -17,8 +18,6 @@ private let menuTimeFont = buildTimerFont(size: 10)
 private let timerFont1 = buildTimerFont(size: 44)
 private let timerFont2 = buildTimerFont(size: 38)
 private let timerFont3 = buildTimerFont(size: 30)
-
-private let homePrimaryFontSize = 18.0
 
 private let navAndTasksTextHeight = HomeView__BOTTOM_NAVIGATION_HEIGHT + taskCountsHeight
 
@@ -158,22 +157,26 @@ struct HomeView: View {
 
                 ZStack {
 
-                    let checklistUI = state.checklistUI
+                    let checklistDb = state.checklistDb
 
                     VStack {
 
                         let isMainTasksExists = !state.mainTasks.isEmpty
 
-                        if let checklistUI = checklistUI {
+                        if let checklistDb = checklistDb {
                             VStack {
-                                ChecklistView(checklistUI: checklistUI)
+                                ChecklistView(
+                                    checklistDb: checklistDb,
+                                    onDelete: {},
+                                    bottomPadding: 0
+                                )
                                 MainDivider()
                             }
                         }
 
                         if isMainTasksExists {
                             let listHeight: CGFloat =
-                                    checklistUI == nil ? .infinity :
+                                    checklistDb == nil ? .infinity :
                                     (mainTasksContentTopPadding + mainTasksContentBottomPadding) +
                                     (mainTaskItemHeight * state.mainTasks.count.toDouble().limitMax(5.45))
                             MainTasksView(
@@ -182,7 +185,7 @@ struct HomeView: View {
                                     .frame(height: listHeight)
                         }
 
-                        if !isMainTasksExists && checklistUI == nil {
+                        if !isMainTasksExists && checklistDb == nil {
                             Spacer()
                         }
 
@@ -366,81 +369,6 @@ struct HomeView: View {
     }
 }
 
-private struct ChecklistView: View {
-
-    let checklistUI: HomeVM.ChecklistUI
-
-    @State private var vScroll = 0
-
-    var body: some View {
-
-        let checkboxSize = 20.0
-        let checklistItemMinHeight = 46.0
-
-        VStack {
-
-            MainDivider(isVisible: vScroll > 0)
-
-            HStack(alignment: .top) {
-
-                ScrollViewWithVListener(showsIndicators: false, vScroll: $vScroll) {
-
-                    VStack {
-
-                        ForEach(checklistUI.itemsUI, id: \.item.id) { itemUI in
-
-                            Button(
-                                    action: {
-                                        itemUI.toggle()
-                                    },
-                                    label: {
-                                        HStack {
-
-                                            Image(systemName: itemUI.item.isChecked ? "checkmark.square.fill" : "square")
-                                                    .foregroundColor(Color.white)
-                                                    .font(.system(size: checkboxSize, weight: .regular))
-                                                    .padding(.trailing, 12)
-
-                                            Text(itemUI.item.text)
-                                                    .padding(.vertical, 4)
-                                                    .foregroundColor(.white)
-                                                    .font(.system(size: homePrimaryFontSize))
-                                        }
-                                                .frame(maxWidth: .infinity, alignment: .leading)
-                                                .frame(minHeight: checklistItemMinHeight)
-                                        //                                                .background(Color.red)
-                                    }
-                            )
-                        }
-                    }
-
-                    Spacer()
-                }
-
-                let stateUI = checklistUI.stateUI
-                let stateIconResource: String = {
-                    if stateUI is ChecklistStateUI.Completed { return "checkmark.square.fill" }
-                    if stateUI is ChecklistStateUI.Empty { return "square" }
-                    if stateUI is ChecklistStateUI.Partial { return "minus.square.fill" }
-                    fatalError()
-                }()
-                Button(
-                        action: {
-                            stateUI.onClick()
-                        },
-                        label: {
-                            Image(systemName: stateIconResource)
-                                    .foregroundColor(Color.white)
-                                    .font(.system(size: checkboxSize, weight: .regular))
-                        }
-                )
-                        .frame(height: checklistItemMinHeight)
-            }
-                    .padding(.horizontal, H_PADDING)
-        }
-    }
-}
-
 private struct MainTasksView: View {
 
     let tasks: [HomeVM.MainTask]
@@ -534,7 +462,7 @@ private struct MainTaskItemView: View {
                         }
 
                         Text(mainTask.text)
-                                .font(.system(size: homePrimaryFontSize))
+                                .font(.system(size: HomeView__PRIMARY_FONT_SIZE))
                                 .foregroundColor(Color.white)
                                 .padding(.trailing, 4)
 
