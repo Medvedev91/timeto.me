@@ -33,7 +33,7 @@ struct ChecklistFormSheet: View {
 
                 Button(
                         action: {
-                            vm.save {
+                            vm.save { checklist in
                                 isPresented = false
                             }
                         },
