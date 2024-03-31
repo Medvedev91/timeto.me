@@ -11,6 +11,7 @@
 		2C0BE02F295751B70099AD7C /* PickerStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0BE02E295751B70099AD7C /* PickerStateView.swift */; };
 		2C246BCF2AD563AC008780E1 /* sound_timer_expired.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2C246BCE2AD563AC008780E1 /* sound_timer_expired.mp3 */; };
 		2C273F2B2BA4ACEB0016F11D /* AskAQuestionListButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C273F2A2BA4ACEB0016F11D /* AskAQuestionListButtonView.swift */; };
+		2C273F2D2BB99A200016F11D /* ChecklistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C273F2C2BB99A200016F11D /* ChecklistView.swift */; };
 		2C2C205D2B7A824A00D4B325 /* PrivacySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2C205C2B7A824A00D4B325 /* PrivacySheet.swift */; };
 		2C2E93F8290117E300EAADBE /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821ED2142F08DDD1E0CC75 /* HomeView.swift */; };
 		2C2E93F92905759100EAADBE /* TimerPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821AE61EE1FC22CCF8E753 /* TimerPickerSheet.swift */; };
@@ -129,6 +130,7 @@
 		2C0BE02E295751B70099AD7C /* PickerStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerStateView.swift; sourceTree = "<group>"; };
 		2C246BCE2AD563AC008780E1 /* sound_timer_expired.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = sound_timer_expired.mp3; path = ../android_app/src/main/res/raw/sound_timer_expired.mp3; sourceTree = "<group>"; };
 		2C273F2A2BA4ACEB0016F11D /* AskAQuestionListButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskAQuestionListButtonView.swift; sourceTree = "<group>"; };
+		2C273F2C2BB99A200016F11D /* ChecklistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChecklistView.swift; sourceTree = "<group>"; };
 		2C2C205C2B7A824A00D4B325 /* PrivacySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacySheet.swift; sourceTree = "<group>"; };
 		2C2C419628C4CF2A00923267 /* timeto (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "timeto (iOS).entitlements"; sourceTree = "<group>"; };
 		2C2C419728C4D83400923267 /* timeto--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "timeto--iOS--Info.plist"; sourceTree = "<group>"; };
@@ -389,6 +391,7 @@
 				31821220E2A7C6FBE2EA3D34 /* EventsListEventView.swift */,
 				2C2C205C2B7A824A00D4B325 /* PrivacySheet.swift */,
 				2C273F2A2BA4ACEB0016F11D /* AskAQuestionListButtonView.swift */,
+				2C273F2C2BB99A200016F11D /* ChecklistView.swift */,
 			);
 			path = iphone;
 			sourceTree = "<group>";
@@ -599,6 +602,7 @@
 				318212D55BBA074155F95EB0 /* TextField__VMState.swift in Sources */,
 				318215958A7A06F6610DF5AF /* TimetoAlert.swift in Sources */,
 				318210C5F98B5CD4E8D8C104 /* FoldersSettingsSheet.swift in Sources */,
+				2C273F2D2BB99A200016F11D /* ChecklistView.swift in Sources */,
 				31821DF8D1DFB408872C85BD /* FolderFormSheet.swift in Sources */,
 				31821AFA9798F3945CA34D09 /* ActivityPickerSheet.swift in Sources */,
 				2C672A122B74CF76002BC21C /* EventsCalendarView.swift in Sources */,
