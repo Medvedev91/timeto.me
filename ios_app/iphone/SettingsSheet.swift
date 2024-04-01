@@ -294,7 +294,10 @@ struct SettingsSheet: View {
                     MyListView__Padding__SectionHeader()
 
                     AskAQuestionButtonView(
-                        subject: state.feedbackSubject
+                        subject: state.feedbackSubject,
+                        isFirst: true,
+                        isLast: false,
+                        withTopDivider: false
                     )
 
                     MyListView__ItemView(

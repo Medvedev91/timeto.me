@@ -5,6 +5,9 @@ import shared
 struct AskAQuestionButtonView: View {
 
     let subject: String
+    let isFirst: Bool
+    let isLast: Bool
+    let withTopDivider: Bool
 
     @State private var isMailViewPresented = false
     @State private var mailViewResult: Result<MFMailComposeResult, Error>? = nil
@@ -12,9 +15,9 @@ struct AskAQuestionButtonView: View {
     var body: some View {
 
         MyListView__ItemView(
-            isFirst: false,
-            isLast: false,
-            withTopDivider: true
+            isFirst: isFirst,
+            isLast: isLast,
+            withTopDivider: withTopDivider
         ) {
 
             MyListView__ItemView__ButtonView(text: "Ask a Question") {
