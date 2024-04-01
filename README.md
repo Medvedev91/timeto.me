@@ -82,7 +82,7 @@ How it works for me:
 Almost all of my activities are actually repeated. I wake up at the same time, then I spend 1 hour getting ready, 2
 hours working, 1 hour eating, and so on.
 
-In the app, I created a repeating task for each activity with a time of day. It looks like this:
+In the app, I created a repeating task for each activity with a time of day:
 
 <p float="left">
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_repeatings_1.jpg" width="200" />
@@ -94,7 +94,7 @@ Pay attention to 3 things:
 - Emoji, like "🥗", which means the "Eating" activity;
 - Timer, like "1h".
 
-These repeating tasks are added to my task list every day. It looks like this:
+These repeating tasks are added to my task list every day. Like this:
 
 <p float="left">
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_repeatings_2.jpg" width="200" />
