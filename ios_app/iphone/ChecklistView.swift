@@ -85,12 +85,28 @@ struct ChecklistView: View {
                             stateUI.onClick()
                         },
                         label: {
-                            Image(systemName: stateIconResource)
-                                .foregroundColor(Color.white)
-                                .font(.system(size: checkboxSize, weight: .regular))
+                            VStack {
+
+                                Image(systemName: stateIconResource)
+                                    .foregroundColor(Color.white)
+                                    .font(.system(size: checkboxSize, weight: .regular))
+                                    .frame(height: checklistItemMinHeight)
+
+                                Button(
+                                    action: {
+                                    },
+                                    label: {
+                                        Image(systemName: "pencil")
+                                            .foregroundColor(Color.white)
+                                            .font(.system(size: checkboxSize, weight: .regular))
+                                            .frame(height: checklistItemMinHeight)
+                                    }
+                                )
+
+                                Spacer()
+                            }
                         }
                     )
-                    .frame(height: checklistItemMinHeight)
                 }
                 .padding(.horizontal, H_PADDING)
             }
