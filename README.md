@@ -77,7 +77,7 @@ Then come back here and move on to the next topic.
 
 You may think choosing activity and timer for each task is overwhelming. This is where "Repeating Tasks" come into play.
 
-I will show how it works for me.
+How it works for me:
 
 Almost all of my activities are actually repeated. I wake up at the same time, then I spend 1 hour getting ready, 2
 hours working, 1 hour eating, and so on.
