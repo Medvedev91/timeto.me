@@ -6,6 +6,8 @@ private let checklistItemMinHeight = 46.0
 
 struct ChecklistView: View {
 
+    @EnvironmentObject private var nativeSheet: NativeSheet
+
     @State private var vm: ChecklistVM
 
     private let onDelete: () -> Void
@@ -94,6 +96,14 @@ struct ChecklistView: View {
 
                                 Button(
                                     action: {
+                                        nativeSheet.show { isEditPresented in
+                                            ChecklistFormSheet(
+                                                checklistDb: state.checklistUI.checklistDb,
+                                                onDelete: {
+                                                    onDelete()
+                                                }
+                                            )
+                                        }
                                     },
                                     label: {
                                         Image(systemName: "pencil")
