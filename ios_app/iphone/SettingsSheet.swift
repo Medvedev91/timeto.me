@@ -47,6 +47,20 @@ struct SettingsSheet: View {
 
                 VStack {
 
+                    MyListView__ItemView(
+                        isFirst: true,
+                        isLast: true,
+                        withTopDivider: false
+                    ) {
+                        MyListView__ItemView__ButtonView(text: state.readmeTitle) {
+                            isReadmePresented.toggle()
+                        }
+                    }
+                            .padding(.top, 16)
+                            .sheetEnv(isPresented: $isReadmePresented) {
+                                ReadmeSheet(isPresented: $isReadmePresented)
+                            }
+
                     ///
                     /// Checklists
 
@@ -278,19 +292,6 @@ struct SettingsSheet: View {
                     /// Mics
 
                     MyListView__Padding__SectionHeader()
-
-                    MyListView__ItemView(
-                        isFirst: true,
-                        isLast: false,
-                        withTopDivider: false
-                    ) {
-                        MyListView__ItemView__ButtonView(text: state.readmeTitle) {
-                            isReadmePresented.toggle()
-                        }
-                    }
-                            .sheetEnv(isPresented: $isReadmePresented) {
-                                ReadmeSheet(isPresented: $isReadmePresented)
-                            }
 
                     AskAQuestionButtonView(
                         subject: state.feedbackSubject
