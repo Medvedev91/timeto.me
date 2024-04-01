@@ -52,11 +52,20 @@ struct SettingsSheet: View {
                         isLast: true,
                         withTopDivider: false
                     ) {
-                        MyListView__ItemView__ButtonView(text: state.readmeTitle) {
+                        MyListView__ItemView__ButtonView(
+                            text: state.readmeTitle,
+                            rightView: AnyView(
+                                Image(systemName: "info.circle")
+                                    .font(.system(size: 20))
+                                    .padding(.trailing, 13)
+                                    .foregroundColor(.blue)
+                            )
+                        ) {
                             isReadmePresented.toggle()
                         }
                     }
                             .padding(.top, 16)
+                            .padding(.bottom, 8)
                             .sheetEnv(isPresented: $isReadmePresented) {
                                 ReadmeSheet(isPresented: $isReadmePresented)
                             }
