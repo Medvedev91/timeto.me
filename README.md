@@ -44,7 +44,7 @@ You must set a timer for each activity, like eating, working, reading, etc.
 
 In other words, once you complete one activity, you must start the timer for the next activity, even sleep or breakfast.
 
-It helps me to always stay focused on what I have to do. Most of the time my screen looks like a pomodoro timer:
+It helps me to always stay focused on what I have to do. Most of the time my screen looks like a typical pomodoro timer:
 
 <p float="left">
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_timer_1.jpg" width="200" />
