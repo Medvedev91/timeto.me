@@ -79,8 +79,8 @@ You may think choosing activity and timer for each task is overwhelming. This is
 
 How it works for me:
 
-Almost all of my activities are repeated. I wake up at the same time, then I spend 1 hour getting ready, 2
-hours working, 1 hour eating, and so on.
+Almost all of my activities are repeated. I wake up at the same time, then 1 hour to get ready, 2 hours working, 1 hour
+eating, and so on.
 
 I created a repeating task for each activity with a time of day:
 
