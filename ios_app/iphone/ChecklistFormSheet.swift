@@ -72,6 +72,18 @@ struct ChecklistFormSheet: View {
 
                         HStack(spacing: 8) {
 
+                            Button(
+                                action: {
+                                    vm.deleteItem(itemDb: checklistItemUi.checklistItemDb)
+                                },
+                                label: {
+                                    Image(systemName: "minus.circle.fill")
+                                        .font(.system(size: 16))
+                                        .foregroundColor(.red)
+                                }
+                            )
+                            .buttonStyle(.plain)
+
                             Text(checklistItemUi.checklistItemDb.text)
                                 .lineLimit(1)
 
@@ -102,7 +114,7 @@ struct ChecklistFormSheet: View {
                                 },
                                 label: {
                                     Image(systemName: "arrow.down")
-                                        .font(.system(size: 14))
+                                        .font(.system(size: 15))
                                         .foregroundColor(.blue)
                                 }
                             )
@@ -115,7 +127,7 @@ struct ChecklistFormSheet: View {
                                 },
                                 label: {
                                     Image(systemName: "arrow.up")
-                                        .font(.system(size: 14))
+                                        .font(.system(size: 15))
                                         .foregroundColor(.blue)
                                 }
                             )
