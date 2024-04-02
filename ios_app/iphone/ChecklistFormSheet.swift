@@ -41,7 +41,7 @@ struct ChecklistFormSheet: View {
                             .foregroundColor(c.white)
                     }
                 )
-                .offset(y: 2)
+                .offset(y: 1)
 
                 Spacer()
 
