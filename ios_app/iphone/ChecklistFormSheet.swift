@@ -4,15 +4,18 @@ import shared
 struct ChecklistFormSheet: View {
 
     @State private var vm: ChecklistFormSheetVM
+    @Binding private var isPresented: Bool
     private let onDelete: () -> Void
 
     @EnvironmentObject private var nativeSheet: NativeSheet
 
     init(
         checklistDb: ChecklistDb,
+        isPresented: Binding<Bool>,
         onDelete: @escaping () -> Void
     ) {
-        self._vm = State(initialValue: ChecklistFormSheetVM(checklistDb: checklistDb))
+        _vm = State(initialValue: ChecklistFormSheetVM(checklistDb: checklistDb))
+        _isPresented = isPresented
         self.onDelete = onDelete
     }
 
