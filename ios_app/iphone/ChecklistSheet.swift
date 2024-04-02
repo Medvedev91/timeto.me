@@ -29,7 +29,7 @@ struct ChecklistSheet: View {
                 ChecklistView(
                     checklistDb: state.checklistDb,
                     onDelete: {
-                        // todo
+                        isPresented = false
                     },
                     bottomPadding: 0
                 )
