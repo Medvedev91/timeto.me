@@ -66,6 +66,7 @@ struct ChecklistFormSheet: View {
 
                         if !checklistItemUi.isFirst {
                             DividerFg()
+                                .padding(.leading, 27)
                         }
 
                         Spacer()
