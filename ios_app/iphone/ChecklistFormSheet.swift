@@ -6,6 +6,8 @@ struct ChecklistFormSheet: View {
     @State private var vm: ChecklistFormSheetVM
     private let onDelete: () -> Void
 
+    @EnvironmentObject private var nativeSheet: NativeSheet
+
     init(
         checklistDb: ChecklistDb,
         onDelete: @escaping () -> Void
@@ -26,6 +28,12 @@ struct ChecklistFormSheet: View {
 
                 Button(
                     action: {
+                        nativeSheet.show { isPresented in
+                            ChecklistNameDialog(
+                                isPresented: isPresented,
+                                checklist: state.checklistDb
+                            )
+                        }
                     },
                     label: {
                         Image(systemName: "pencil")
