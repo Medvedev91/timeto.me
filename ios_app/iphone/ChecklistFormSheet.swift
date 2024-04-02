@@ -16,8 +16,40 @@ struct ChecklistFormSheet: View {
 
     var body: some View {
 
-        VMView(vm: vm) { state in
-            Text("ttdd")
+        VMView(vm: vm, stack: .VStack()) { state in
+
+            HStack {
+
+                Text(state.checklistName)
+                    .padding(.trailing, 8)
+                    .font(.system(size: 24, weight: .bold))
+
+                Button(
+                    action: {
+                    },
+                    label: {
+                        Image(systemName: "pencil")
+                            .font(.system(size: 20, weight: .regular))
+                            .foregroundColor(c.white)
+                    }
+                )
+                .offset(y: 2)
+
+                Spacer()
+
+                Image(systemName: "trash")
+                    .foregroundColor(c.red)
+                    .font(.system(size: 19, weight: .regular))
+            }
+            .padding(.top, 24)
+            .padding(.horizontal, H_PADDING)
+
+            DividerBg()
+                .padding(.horizontal, H_PADDING)
+                .padding(.top, 16)
+
+            Spacer()
         }
+        .background(c.sheetBg)
     }
 }
