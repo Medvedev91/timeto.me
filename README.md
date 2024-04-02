@@ -104,7 +104,7 @@ Note, the tasks are sorted by time of day and indicate how much time is left. It
 
 **But most importantly, when I press it, it automatically starts a timer with the right activity.**
 
-Of course, you can create not only everyday tasks. For example, watering a cactus once a week or paying for internet
+You can create not only everyday tasks. For example, watering a cactus once a week or paying for internet
 once a month, etc.
 
 I believe this is the main feature of the app. I recommend using it to the max.
