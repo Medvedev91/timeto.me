@@ -140,6 +140,29 @@ struct ChecklistFormSheet: View {
                     }
                     .padding(.horizontal, H_PADDING)
                 }
+
+                HStack {
+
+                    Button(
+                        action: {
+                            nativeSheet.show { isPresented in
+                                ChecklistItemFormSheet(
+                                    isPresented: isPresented,
+                                    checklist: state.checklistDb,
+                                    checklistItem: nil
+                                )
+                            }
+                        },
+                        label: {
+                            Text(state.newItemButton)
+                                .foregroundColor(c.blue)
+                                .padding(.leading, H_PADDING)
+                        }
+                    )
+
+                    Spacer()
+                }
+                .padding(.top, 12)
             }
         }
         .background(c.sheetBg)
