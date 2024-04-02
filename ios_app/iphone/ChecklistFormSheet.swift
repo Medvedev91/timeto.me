@@ -48,9 +48,21 @@ struct ChecklistFormSheet: View {
 
                 Spacer()
 
-                Image(systemName: "trash")
-                    .foregroundColor(c.red)
-                    .font(.system(size: 19, weight: .regular))
+                Button(
+                    action: {
+                        vm.deleteChecklist(
+                            onDelete: {
+                                onDelete()
+                                isPresented = false
+                            }
+                        )
+                    },
+                    label: {
+                        Image(systemName: "trash")
+                            .foregroundColor(c.red)
+                            .font(.system(size: 19, weight: .regular))
+                    }
+                )
             }
             .padding(.top, 24)
             .padding(.horizontal, H_PADDING)
