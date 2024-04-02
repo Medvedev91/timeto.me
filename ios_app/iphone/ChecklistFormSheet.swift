@@ -79,6 +79,13 @@ struct ChecklistFormSheet: View {
 
                             Button(
                                 action: {
+                                    nativeSheet.show { isPresented in
+                                        ChecklistItemFormSheet(
+                                            isPresented: isPresented,
+                                            checklist: state.checklistDb,
+                                            checklistItem: checklistItemUi.checklistItemDb
+                                        )
+                                    }
                                 },
                                 label: {
                                     Image(systemName: "pencil")
