@@ -56,7 +56,72 @@ struct ChecklistFormSheet: View {
                 .padding(.horizontal, H_PADDING)
                 .padding(.top, 16)
 
-            Spacer()
+            ScrollView {
+
+                Padding(vertical: 8)
+
+                ForEach(state.checklistItemsUi, id: \.checklistItemDb.id) { checklistItemUi in
+
+                    VStack {
+
+                        if !checklistItemUi.isFirst {
+                            DividerFg()
+                        }
+
+                        Spacer()
+
+                        HStack(spacing: 8) {
+
+                            Text(checklistItemUi.checklistItemDb.text)
+                                .lineLimit(1)
+
+                            Spacer()
+
+                            Button(
+                                action: {
+                                },
+                                label: {
+                                    Image(systemName: "pencil")
+                                        .font(.system(size: 16))
+                                        .foregroundColor(.blue)
+                                }
+                            )
+                            .buttonStyle(.plain)
+                            .padding(.leading, 8)
+
+                            Button(
+                                action: {
+                                    vm.down(itemUi: checklistItemUi)
+                                },
+                                label: {
+                                    Image(systemName: "arrow.down")
+                                        .font(.system(size: 14))
+                                        .foregroundColor(.blue)
+                                }
+                            )
+                            .buttonStyle(.plain)
+                            .padding(.leading, 8)
+
+                            Button(
+                                action: {
+                                    vm.up(itemUi: checklistItemUi)
+                                },
+                                label: {
+                                    Image(systemName: "arrow.up")
+                                        .font(.system(size: 14))
+                                        .foregroundColor(.blue)
+                                }
+                            )
+                            .buttonStyle(.plain)
+                            .padding(.leading, 6)
+                        }
+                        .padding(.vertical, 12)
+
+                        Spacer()
+                    }
+                    .padding(.horizontal, H_PADDING)
+                }
+            }
         }
         .background(c.sheetBg)
     }
