@@ -73,7 +73,7 @@ The timer starts. Then tap the timer again to see the "Summary" and "History".
 
 # Repeating Tasks
 
-You may think choosing activity and timer for each task is overwhelming. This is where "Repeating Tasks" come into play.
+You may think choosing activity and timer for each task is overwhelming. This is where repeating tasks come into play.
 
 How it works for me:
 
