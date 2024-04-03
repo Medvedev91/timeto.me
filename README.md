@@ -71,8 +71,6 @@ Try to start a new activity. To do so, back to the home screen, tap the timer at
 
 The timer starts. Then tap the timer again to see the "Summary" and "History".
 
-Then come back here and move on to the next topic.
-
 # Repeating Tasks
 
 You may think choosing activity and timer for each task is overwhelming. This is where "Repeating Tasks" come into play.
