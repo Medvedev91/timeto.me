@@ -111,7 +111,7 @@ These repeating tasks are added to my task list every day. Like this:
 
 Note, the tasks are sorted by time of day and indicate how much time is left. It's like a schedule.
 
-**But most importantly, when I press it, it automatically starts a timer with the right activity.**
+**The most important, when I press it, it automatically starts a timer with the right activity.**
 
 You can create not only everyday tasks. For example, watering a cactus once a week or paying for internet
 once a month, etc.
