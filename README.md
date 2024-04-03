@@ -71,6 +71,14 @@ Try to start a new activity. To do so, back to the home screen, tap the timer at
 
 The timer starts. Then tap the timer again to see the "Summary" and "History".
 
+<p float="left">
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_timer_practice_1.jpg" width="150" />
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_timer_practice_2.jpg" width="150" /> 
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_timer_practice_3.jpg" width="150" />
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_timer_practice_4.jpg" width="150" />
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_timer_practice_5.jpg" width="150" />
+</p>
+
 # Repeating Tasks
 
 You may think choosing activity and timer for each task is overwhelming. This is where repeating tasks come into play.
