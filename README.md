@@ -77,7 +77,6 @@ The timer starts. Then tap the timer again to see the "Summary" and "History".
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_timer_practice_3.jpg" width="150" />
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_timer_practice_4.jpg" width="150" />
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_timer_practice_5.jpg" width="150" />
-  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_chart_1.jpg" width="150" />
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_chart_2.jpg" width="150" /> 
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_chart_3.jpg" width="150" />
 </p>
