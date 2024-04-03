@@ -58,7 +58,7 @@ This way also provides real 24/7 data on how long everything takes:
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_chart_3.jpg" width="200" />
 </p>
 
-By default, the app has some activities, but you can add your own. Here are mine:
+The app has some activities by default, but you can add your own. Here are mine:
 
 <p float="left">
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_activities_1.jpg" width="200" />
