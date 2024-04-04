@@ -110,6 +110,10 @@ once a month, etc.
 
 I believe this is the main feature of the app. I recommend using it to the max.
 
+### Practice
+
+Let's create a repeating task for a daily workout at 18:00.
+
 # Checklists
 
 **The most important is HOW checklists work WITH repeating tasks.**
