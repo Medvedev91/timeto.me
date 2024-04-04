@@ -96,7 +96,7 @@ eating, etc. So I created a repeating task for each of these.
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_repeatings_1.jpg" width="200" />
 </p>
 
-These repeating tasks are added to my task list every day. Like this:
+Each day, these tasks move to the "Today" folder:
 
 <p float="left">
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_repeatings_2.jpg" width="200" />
