@@ -96,13 +96,12 @@ eating, etc. So I created a repeating task for each of these.
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_repeatings_1.jpg" width="200" />
 </p>
 
-Each day, these tasks move to the "Today" folder:
+Each day, these tasks move to the "Today" folder. Note, the tasks are sorted by time of day and indicate how much time
+is left. It's like a schedule.
 
 <p float="left">
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_repeatings_2.jpg" width="200" />
 </p>
-
-Note, the tasks are sorted by time of day and indicate how much time is left. It's like a schedule.
 
 **The most important, when I press it, it automatically starts a timer with the right activity.**
 
