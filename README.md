@@ -88,9 +88,9 @@ You may think choosing activity and timer for each task is overwhelming. This is
 How it works for me:
 
 Most of my activities are repeated. I wake up at the same time, then 1 hour to get ready, 2 hours working, 1 hour
-eating, etc.
+eating, etc. So I created a repeating task for each of these.
 
-I created a repeating task for each of these activities with timer and time of day.
+**Note I set the timer and time of day.**
 
 <p float="left">
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_repeatings_1.jpg" width="200" />
