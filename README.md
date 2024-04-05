@@ -126,8 +126,8 @@ fill the form:
 
 Every day, a "Workout" task will be added to the "Today" folder.
 
-This task is already created for today. Open "Today" and tap the "Workout" task. The timer will automatically start with the right
-activity, you don't have to set the timer and activity.
+This task is already created for today. Open "Today" and tap the "Workout" task. The timer will automatically start with
+the right activity.
 
 <p float="left">
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_repeating_practice_1.jpg" width="180" />
