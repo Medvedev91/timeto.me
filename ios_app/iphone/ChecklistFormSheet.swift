@@ -35,7 +35,7 @@ struct ChecklistFormSheet: View {
                             ChecklistNameDialog(
                                 isPresented: isPresented,
                                 checklist: state.checklistDb,
-                                onSave: {_ in}
+                                onSave: { _ in }
                             )
                         }
                     },
