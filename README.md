@@ -141,8 +141,6 @@ the right activity.
 
 Checklists are an addition to repeating tasks that are placed under the timer.
 
-Here are examples for morning routine, work and evening:
-
 <p float="left">
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_checklists_1.jpg" width="200" />
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_checklists_2.jpg" width="200" /> 
