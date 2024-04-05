@@ -165,6 +165,18 @@ fill the form:
 
 Test it! Open "Today" and tap the "Morning Routine" task. You will see the checklist.
 
+<p float="left">
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_checklists_practice_1.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_checklists_practice_2.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_checklists_practice_3.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_checklists_practice_4.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_checklists_practice_5.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_checklists_practice_6.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_checklists_practice_7.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_checklists_practice_8.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_checklists_practice_9.jpg" width="200" />
+</p>
+
 # Conclusion
 
 We learned the timer, repeating tasks, and checklists. Here are the most important points:
