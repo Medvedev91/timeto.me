@@ -114,7 +114,7 @@ I believe this is the main feature of the app. I recommend using it to the max.
 
 Let's create a repeating task for a daily workout at 18:00.
 
-On the home screen, tap at the bottom center to open tasks. Then tap the repeating icon, tap "New Repeating Task" and
+On the home screen, tap at the bottom center to open tasks, tap the repeating icon, tap "New Repeating Task" and
 fill the form:
 
 - Task: Workout;
