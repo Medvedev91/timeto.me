@@ -6,13 +6,16 @@ struct ChecklistNameDialog: View {
     @State private var vm: ChecklistNameDialogVM
 
     @Binding private var isPresented: Bool
+    private let onSave: (ChecklistDb) -> Void
 
     init(
         isPresented: Binding<Bool>,
-        checklist: ChecklistDb?
+        checklist: ChecklistDb?,
+        onSave: @escaping (ChecklistDb) -> Void
     ) {
         _isPresented = isPresented
         vm = ChecklistNameDialogVM(checklist: checklist)
+        self.onSave = onSave
     }
 
     var body: some View {
@@ -34,6 +37,7 @@ struct ChecklistNameDialog: View {
                 Button(
                     action: {
                         vm.save { checklist in
+                            onSave(checklist)
                             isPresented = false
                         }
                     },

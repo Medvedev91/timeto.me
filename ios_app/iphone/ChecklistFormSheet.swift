@@ -34,7 +34,8 @@ struct ChecklistFormSheet: View {
                         nativeSheet.show { isPresented in
                             ChecklistNameDialog(
                                 isPresented: isPresented,
-                                checklist: state.checklistDb
+                                checklist: state.checklistDb,
+                                onSave: {_ in}
                             )
                         }
                     },

@@ -361,7 +361,7 @@ struct SettingsSheet: View {
         }
                 .background(c.sheetBg)
                 .sheetEnv(isPresented: $isAddChecklistPresented) {
-                    ChecklistNameDialog(isPresented: $isAddChecklistPresented, checklist: nil)
+                    ChecklistNameDialog(isPresented: $isAddChecklistPresented, checklist: nil, onSave: {_ in})
                 }
                 .sheetEnv(isPresented: $isAddShortcutPresented) {
                     ShortcutFormSheet(isPresented: $isAddShortcutPresented, editedShortcut: nil)
@@ -538,7 +538,7 @@ struct ToolsView_ChecklistView: View {
                     ChecklistSheet(isPresented: $isItemsPresented, checklist: checklist)
                 }
                 .sheetEnv(isPresented: $isEditPresented) {
-                    ChecklistNameDialog(isPresented: $isEditPresented, checklist: checklist)
+                    ChecklistNameDialog(isPresented: $isEditPresented, checklist: checklist, onSave: {_ in})
                 }
     }
 }
