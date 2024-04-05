@@ -139,8 +139,6 @@ the right activity.
 
 # Checklists
 
-**The most important is HOW checklists work WITH repeating tasks.**
-
 Checklists are an addition to repeating tasks that are placed under the timer.
 
 Here are examples for morning routine, work and evening:
