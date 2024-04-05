@@ -9,6 +9,8 @@ struct ChecklistsPickerSheet: View {
     @State private var vm: ChecklistsPickerSheetVM
     @State private var sheetHeaderScroll = 0
 
+    @EnvironmentObject private var nativeSheet: NativeSheet
+
     init(
         isPresented: Binding<Bool>,
         selectedChecklists: [ChecklistDb],
@@ -62,6 +64,22 @@ struct ChecklistsPickerSheet: View {
 
                         Button(
                             action: {
+                                nativeSheet.show { isPresentedNameDialog in
+                                    ChecklistNameDialog(
+                                        isPresented: isPresentedNameDialog,
+                                        checklist: nil,
+                                        onSave: { newChecklistDb in
+                                            vm.selectById(id: newChecklistDb.id)
+                                            nativeSheet.show { isPresentedForm in
+                                                ChecklistFormSheet(
+                                                    checklistDb: newChecklistDb,
+                                                    isPresented: isPresentedForm,
+                                                    onDelete: {}
+                                                )
+                                            }
+                                        }
+                                    )
+                                }
                             },
                             label: {
                                 Text(state.newChecklistButton)
