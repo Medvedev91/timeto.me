@@ -57,6 +57,22 @@ struct ChecklistsPickerSheet: View {
                             }
                         }
                     }
+
+                    HStack {
+
+                        Button(
+                            action: {
+                            },
+                            label: {
+                                Text(state.newChecklistButton)
+                                    .foregroundColor(c.blue)
+                                    .padding(.leading, H_PADDING + 6)
+                                    .padding(.top, 16)
+                            }
+                        )
+
+                        Spacer()
+                    }
                 }
                 .padding(.top, 20)
             }
