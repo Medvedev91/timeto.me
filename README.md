@@ -124,6 +124,11 @@ fill the form:
 - Repetition Period: Every Day;
 - Tap "Create".
 
+Every day, a "Workout" task will be added to the "Today" folder.
+
+This task is already added for today. Try it. Tap "Today" and you will see a new task. Tap it, and the timer will
+automatically start with the right activity.
+
 <p float="left">
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_repeating_practice_1.jpg" width="180" />
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_repeating_practice_2.jpg" width="180" />
