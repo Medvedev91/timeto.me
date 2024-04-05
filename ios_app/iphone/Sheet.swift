@@ -86,6 +86,30 @@ struct Sheet__BottomViewDefault<C1, C2>: View where C1: View, C2: View {
     }
 }
 
+struct Sheet__BottomViewDone: View {
+
+    let text: String
+    let action: () -> Void
+
+    var body: some View {
+
+        Sheet__BottomView {
+
+            HStack {
+
+                Spacer()
+
+                Sheet__BottomView__PrimaryButton(text: text) {
+                    action()
+                }
+            }
+                    .padding(.top, 10)
+                    .padding(.trailing, MyListView.PADDING_OUTER_HORIZONTAL)
+                    .padding(.bottom, 10)
+        }
+    }
+}
+
 struct Sheet__BottomViewClose: View {
 
     let closeText = "Close"
