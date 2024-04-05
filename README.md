@@ -114,6 +114,14 @@ I believe this is the main feature of the app. I recommend using it to the max.
 
 Let's create a repeating task for a daily workout at 18:00.
 
+<p float="left">
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_repeating_practice_1.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_repeating_practice_2.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_repeating_practice_3.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_repeating_practice_4.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_repeating_practice_5.jpg" width="200" />
+</p>
+
 # Checklists
 
 **The most important is HOW checklists work WITH repeating tasks.**
