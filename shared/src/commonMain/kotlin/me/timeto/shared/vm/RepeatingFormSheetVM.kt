@@ -199,11 +199,16 @@ class RepeatingFormSheetVM(
                         task.upTextWithValidation(newTf.textWithFeatures())
                     }
                 }
-            } else
+            } else {
+                val lastDay: Int = if (period is RepeatingDb.Period.EveryNDays && period.nDays == 1)
+                    UnixTime().localDay - 1
+                else
+                    UnixTime().localDay
+
                 RepeatingDb.addWithValidation(
                     text = nameWithFeatures,
                     period = period,
-                    lastDay = UnixTime().localDay,
+                    lastDay = lastDay,
                     daytime = state.value.daytime,
                     isImportant = isImportant,
                 )
