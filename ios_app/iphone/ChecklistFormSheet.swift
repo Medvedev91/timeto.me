@@ -181,6 +181,13 @@ struct ChecklistFormSheet: View {
                 }
                 .padding(.top, 12)
             }
+
+
+            Sheet__BottomViewDone(text: "Done") {
+                if vm.isDoneAllowed() {
+                    isPresented = false
+                }
+            }
         }
         .background(c.sheetBg)
     }
