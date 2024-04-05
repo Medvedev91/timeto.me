@@ -35,6 +35,8 @@ data class RepeatingDb(
         fun getAscFlow() = db.repeatingQueries.getAsc().asFlow()
             .mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
 
+        fun todayWithOffset(): Int = UnixTime(time() - dayStartOffsetSeconds()).localDay
+
         suspend fun getByIdOrNull(id: Int) = dbIO {
             db.repeatingQueries.getById(id).executeAsOneOrNull()?.toModel()
         }
