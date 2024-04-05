@@ -147,6 +147,10 @@ Checklists are an addition to repeating tasks that are placed under the timer.
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_checklists_3.jpg" width="200" />
 </p>
 
+### Practice
+
+Let's create a repeating task for a daily morning routine at 7:00 with a checklist.
+
 # Conclusion
 
 We learned the timer, repeating tasks, and checklists. Here are the most important points:
