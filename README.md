@@ -151,6 +151,20 @@ Checklists are an addition to repeating tasks that are placed under the timer.
 
 Let's create a repeating task for a daily morning routine at 7:00 with a checklist.
 
+On the home screen, tap at the bottom center to open tasks, tap the repeating icon, tap "New Repeating Task" and
+fill the form:
+
+- Task: Morning Routine;
+- Activity: Getting Ready;
+- Timer: 1h;
+- Time of the Day: 7:00;
+- Repetition Period: Every Day;
+- Checklists: Tap "+ new checklist", type "Morning Routine", "Save", "+ new item". Create few items like Drink a glass
+  of water, Warm up, Shower, Light breakfast, Medication, Yesterday's reflection, Day plan. Tap "Done", again "Done";
+- Tap "Create".
+
+Test it! Open "Today" and tap the "Morning Routine" task. You will see the checklist.
+
 # Conclusion
 
 We learned the timer, repeating tasks, and checklists. Here are the most important points:
