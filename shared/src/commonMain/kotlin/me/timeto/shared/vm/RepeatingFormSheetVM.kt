@@ -212,6 +212,9 @@ class RepeatingFormSheetVM(
                     daytime = state.value.daytime,
                     isImportant = isImportant,
                 )
+
+                RepeatingDb.syncTodaySafe(RepeatingDb.todayWithOffset())
+            }
             onSuccess()
         } catch (e: UIException) {
             showUiAlert(e.uiMessage)
