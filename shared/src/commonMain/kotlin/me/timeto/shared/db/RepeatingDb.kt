@@ -136,7 +136,9 @@ data class RepeatingDb(
      */
     fun getNextDay(): Int {
         return when (val period = getPeriod()) {
+
             is Period.EveryNDays -> last_day + period.nDays
+
             is Period.DaysOfWeek -> {
                 val weekDays = period.weekDays
                 if (weekDays.isEmpty())
@@ -148,6 +150,7 @@ data class RepeatingDb(
                 }
                 throw UIException("getNextDay() DaysOfWeek wtf?")
             }
+
             is Period.DaysOfMonth -> {
                 // todo catch
                 if (period.days.isEmpty())
@@ -174,6 +177,7 @@ data class RepeatingDb(
                 }
                 period.days.map { getNextMonthDay(it) }.minBy { it.localDay }.localDay
             }
+
             is Period.DaysOfYear -> {
                 if (period.items.isEmpty())
                     throw UIException("Period.DaysOfYear items.isEmpty()")
