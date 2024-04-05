@@ -8,8 +8,8 @@ struct ChecklistNameDialog: View {
     @Binding private var isPresented: Bool
 
     init(
-            isPresented: Binding<Bool>,
-            checklist: ChecklistDb?
+        isPresented: Binding<Bool>,
+        checklist: ChecklistDb?
     ) {
         _isPresented = isPresented
         vm = ChecklistNameDialogVM(checklist: checklist)
@@ -22,50 +22,50 @@ struct ChecklistNameDialog: View {
             HStack {
 
                 Button(
-                        action: {
-                            isPresented = false
-                        },
-                        label: { Text("Cancel") }
+                    action: {
+                        isPresented = false
+                    },
+                    label: { Text("Cancel") }
                 )
-                        .padding(.leading, 25)
+                .padding(.leading, 25)
 
                 Spacer()
 
                 Button(
-                        action: {
-                            vm.save { checklist in
-                                isPresented = false
-                            }
-                        },
-                        label: {
-                            Text("Save")
-                                    .fontWeight(.heavy)
-                                    .padding(.trailing, 25)
+                    action: {
+                        vm.save { checklist in
+                            isPresented = false
                         }
+                    },
+                    label: {
+                        Text("Save")
+                            .fontWeight(.heavy)
+                            .padding(.trailing, 25)
+                    }
                 )
-                        .disabled(!state.isSaveEnabled)
+                .disabled(!state.isSaveEnabled)
             }
-                    .padding(.top, 20)
+            .padding(.top, 20)
 
             MyListView__Padding__HeaderSection()
 
             MyListView__ItemView(
-                    isFirst: true,
-                    isLast: true
+                isFirst: true,
+                isLast: true
             ) {
 
                 MyListView__ItemView__TextInputView(
-                        text: state.inputNameValue,
-                        placeholder: "Name",
-                        isAutofocus: true,
-                        onValueChanged: { newValue in
-                            vm.setInputName(name: newValue)
-                        }
+                    text: state.inputNameValue,
+                    placeholder: "Name",
+                    isAutofocus: true,
+                    onValueChanged: { newValue in
+                        vm.setInputName(name: newValue)
+                    }
                 )
             }
 
             Spacer()
         }
-                .background(c.sheetBg)
+        .background(c.sheetBg)
     }
 }
