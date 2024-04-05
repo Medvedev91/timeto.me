@@ -112,8 +112,7 @@ private fun performShortcut(
 
 private var syncTodayRepeatingLastDay: Int? = null
 private suspend fun syncTodayRepeating() {
-    val todayWithOffset = UnixTime(time() - dayStartOffsetSeconds()).localDay
-    // To avoid unnecessary checks. It works without that.
+    val todayWithOffset = RepeatingDb.todayWithOffset()
     if (syncTodayRepeatingLastDay == todayWithOffset)
         return
     RepeatingDb.syncTodaySafe(todayWithOffset)
