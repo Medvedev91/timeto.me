@@ -113,7 +113,14 @@ I believe this is the main feature of the app. I recommend using it to the max.
 ### Practice
 
 Let's create a repeating task for a daily workout at 18:00. On the home screen, tap at the bottom center to open tasks.
-Then tap the repeating icon and tap "New Repeating Task".
+Then tap the repeating icon, tap "New Repeating Task", and fill the form:
+
+- Task: Workout;
+- Activity: Exercises / Health;
+- Timer: 1h;
+- Time of the Day: 18:00;
+- Repetition Period: Every Day;
+- Tap "Create".
 
 <p float="left">
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_repeating_practice_1.jpg" width="180" />
