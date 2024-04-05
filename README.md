@@ -141,9 +141,7 @@ the right activity.
 
 **The most important is HOW checklists work WITH repeating tasks.**
 
-In fact, checklists are an addition to repeating tasks.
-
-You can add a checklist for any repeating task and it will always appear below the timer.
+Checklists are an addition to repeating tasks that are placed under the timer.
 
 Here are examples for morning routine, work and evening:
 
