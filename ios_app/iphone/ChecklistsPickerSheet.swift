@@ -10,9 +10,9 @@ struct ChecklistsPickerSheet: View {
     @State private var sheetHeaderScroll = 0
 
     init(
-            isPresented: Binding<Bool>,
-            selectedChecklists: [ChecklistDb],
-            onPick: @escaping ([ChecklistDb]) -> Void
+        isPresented: Binding<Bool>,
+        selectedChecklists: [ChecklistDb],
+        onPick: @escaping ([ChecklistDb]) -> Void
     ) {
         self.onPick = onPick
         _isPresented = isPresented
@@ -21,14 +21,14 @@ struct ChecklistsPickerSheet: View {
 
     var body: some View {
 
-        VMView(vm: vm, stack: .VStack(spacing: 0)) { state in
+        VMView(vm: vm, stack: .VStack()) { state in
 
             SheetHeaderView(
-                    onCancel: { isPresented = false },
-                    title: state.headerTitle,
-                    doneText: state.doneTitle,
-                    isDoneEnabled: true,
-                    scrollToHeader: sheetHeaderScroll
+                onCancel: { isPresented = false },
+                title: state.headerTitle,
+                doneText: state.doneTitle,
+                isDoneEnabled: true,
+                scrollToHeader: sheetHeaderScroll
             ) {
                 onPick(vm.getSelectedChecklists())
                 isPresented = false
@@ -36,7 +36,7 @@ struct ChecklistsPickerSheet: View {
 
             ScrollViewWithVListener(showsIndicators: false, vScroll: $sheetHeaderScroll) {
 
-                VStack(spacing: 0) {
+                VStack {
 
                     let checklistsUI = state.checklistsUI
                     ForEach(checklistsUI, id: \.checklist.id) { checklistUI in
@@ -44,23 +44,23 @@ struct ChecklistsPickerSheet: View {
                         let isFirst = checklistsUI.first == checklistUI
 
                         MyListView__ItemView(
-                                isFirst: isFirst,
-                                isLast: checklistsUI.last == checklistUI,
-                                withTopDivider: !isFirst
+                            isFirst: isFirst,
+                            isLast: checklistsUI.last == checklistUI,
+                            withTopDivider: !isFirst
                         ) {
 
                             MyListView__ItemView__RadioView(
-                                    text: checklistUI.text,
-                                    isActive: checklistUI.isSelected
+                                text: checklistUI.text,
+                                isActive: checklistUI.isSelected
                             ) {
                                 vm.toggleChecklist(checklistUI: checklistUI)
                             }
                         }
                     }
                 }
-                        .padding(.top, 20)
+                .padding(.top, 20)
             }
         }
-                .background(c.sheetBg)
+        .background(c.sheetBg)
     }
 }
