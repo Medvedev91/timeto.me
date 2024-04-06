@@ -167,8 +167,6 @@ fill the form:
   of water, Warm up, Shower, Light breakfast, Medication, Yesterday's reflection, Day plan. Tap "Done", again "Done";
 - Tap "Create".
 
-Test it! Open "Today" and tap the "Morning Routine" task. You will see the checklist.
-
 <p float="left">
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_checklists_practice_1.jpg" width="200" />
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_checklists_practice_2.jpg" width="200" />
@@ -177,6 +175,11 @@ Test it! Open "Today" and tap the "Morning Routine" task. You will see the check
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_checklists_practice_5.jpg" width="200" />
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_checklists_practice_6.jpg" width="200" />
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_checklists_practice_7.jpg" width="200" />
+</p>
+
+Test it! Open "Today" and tap the "Morning Routine" task. You will see the checklist.
+
+<p float="left">
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_checklists_practice_8.jpg" width="200" />
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_checklists_practice_9.jpg" width="200" />
 </p>
