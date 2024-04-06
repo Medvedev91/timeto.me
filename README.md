@@ -243,7 +243,7 @@ timer and video starts.
 
 # Day Start Time
 
-Especially for owls. You can set the time when repeating tasks will be added for the next day. Default 00:00.
+Especially for night owls. You can set the time when repeating tasks will be added for the next day. Default 00:00.
 
 # Conclusion
 
