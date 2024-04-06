@@ -69,13 +69,16 @@ The app has some activities by default, but you can add your own. Here are mine:
 Try to start a new activity. To do so, back to the home screen, tap the timer at the bottom left, tap
 "Work" and start the timer.
 
-The timer starts. Then tap the timer again to see the "Summary" and "History".
-
 <p float="left">
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_timer_practice_1.jpg" width="150" />
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_timer_practice_2.jpg" width="150" /> 
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_timer_practice_3.jpg" width="150" />
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_timer_practice_4.jpg" width="150" />
+</p>
+
+The timer starts. Then tap the timer again to see the "Summary" and "History".
+
+<p float="left">
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_timer_practice_5.jpg" width="150" />
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_chart_2.jpg" width="150" /> 
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_chart_3.jpg" width="150" />
