@@ -184,21 +184,18 @@ Test it! Open "Today" and tap the "Morning Routine" task. You will see the check
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_checklists_practice_9.jpg" width="200" />
 </p>
 
-# Conclusion
+# First Steps
 
-We learned the timer, repeating tasks, and checklists. Here are the most important points:
+We learned the timer, repeating tasks, and checklists. The most important points:
 
 - Timer is running all the time;
 - Using repeating tasks to the max;
 - Timer, activity and checklist will be set automatically.
 
-# First Steps
-
 **You can already use the app!**
 
-Right now, try playing with the app: tap the timer icon and start a new activity, then check the history and summary.
-
-After that, create repeating tasks. You can rely on my examples. They will appear in the "Today" folder tomorrow.
+Right now, try playing with the app: start a new activity, create repeating tasks, checklists. You can rely on my
+examples. 
 
 Then move on to advanced features.
 
