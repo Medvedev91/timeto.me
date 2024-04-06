@@ -126,14 +126,17 @@ fill the form:
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_repeating_practice_1.jpg" width="200" />
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_repeating_practice_2.jpg" width="200" />
   <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_repeating_practice_3.jpg" width="200" />
-  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_repeating_practice_4.jpg" width="200" />
-  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_repeating_practice_5.jpg" width="200" />
 </p>
 
 Every day, a "Workout" task will be added to the "Today" folder.
 
 This task is already created for today. Open "Today" and tap the "Workout" task. The timer will automatically start with
 the right activity.
+
+<p float="left">
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_repeating_practice_4.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/appstome/timetome-app/main/android_app/src/main/res/drawable/readme_repeating_practice_5.jpg" width="200" />
+</p>
 
 # Checklists
 
