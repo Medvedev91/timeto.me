@@ -1,16 +1,26 @@
 package me.timeto.app.ui
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.VisibilityThreshold
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
@@ -205,6 +215,22 @@ private fun PListDashedView(
 
 private val imageBorderColor = ColorRgba(96, 96, 96).toColor()
 
+private val imageSliderEnterAnimation: EnterTransition = slideInVertically(
+    animationSpec = spring(
+        stiffness = Spring.StiffnessMedium,
+        visibilityThreshold = IntOffset.VisibilityThreshold,
+    ),
+    initialOffsetY = { it },
+)
+
+private val imageSliderExitAnimation: ExitTransition = slideOutVertically(
+    animationSpec = spring(
+        stiffness = Spring.StiffnessMedium,
+        visibilityThreshold = IntOffset.VisibilityThreshold,
+    ),
+    targetOffsetY = { it },
+)
+
 @Composable
 private fun ImagesView(
     vararg resIds: Int,
@@ -225,30 +251,38 @@ private fun ImagesView(
                     .clip(imagesShape)
                     .border(1.dp, imageBorderColor, shape = imagesShape)
                     .clickable {
-                        Sheet.show { layer ->
 
-                            VStack(
-                                modifier = Modifier
-                                    .fillMaxHeight()
-                                    .background(c.sheetBg),
-                            ) {
-
-                                Image(
-                                    painter = painterResource(resId),
+                        WrapperView.Layer(
+                            enterAnimation = imageSliderEnterAnimation,
+                            exitAnimation = imageSliderExitAnimation,
+                            alignment = Alignment.BottomCenter,
+                            onClose = {},
+                            content = { layer ->
+                                VStack(
                                     modifier = Modifier
-                                        .fillMaxWidth()
-                                        .weight(1f),
-                                    contentDescription = "Chart Screenshot",
-                                    contentScale = ContentScale.Fit,
-                                )
+                                        .background(c.black)
+                                        .fillMaxHeight()
+                                        .padding(top = statusBarHeight)
+                                        .pointerInput(Unit) { },
+                                ) {
 
-                                Sheet__BottomViewClose {
-                                    layer.close()
+                                    Image(
+                                        painter = painterResource(resId),
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .weight(1f),
+                                        contentDescription = "Screenshot",
+                                        contentScale = ContentScale.Fit,
+                                    )
+
+                                    Sheet__BottomViewClose {
+                                        layer.close()
+                                    }
                                 }
                             }
-                        }
+                        ).show()
                     },
-                contentDescription = "Chart Screenshot",
+                contentDescription = "Screenshot",
                 contentScale = ContentScale.Fit,
             )
         }
