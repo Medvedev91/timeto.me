@@ -1,6 +1,5 @@
 package me.timeto.app.ui
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -73,9 +72,11 @@ fun ReadmeSheet(
                                 .padding(top = 20.dp)
                                 .padding(horizontal = imagesHBlock),
                         ) {
-                            ChartImageView(R.drawable.readme_chart_1)
-                            ChartImageView(R.drawable.readme_chart_2)
-                            ChartImageView(R.drawable.readme_chart_3)
+                            ImagesView(
+                                R.drawable.readme_chart_1,
+                                R.drawable.readme_chart_2,
+                                R.drawable.readme_chart_3,
+                            )
                         }
                     }
 
@@ -86,9 +87,9 @@ fun ReadmeSheet(
                                 .padding(top = 20.dp)
                                 .padding(horizontal = imagesHBlock),
                         ) {
-                            ChartImageView(R.drawable.readme_activities_1)
-                            ChartImageView(null)
-                            ChartImageView(null)
+                            ImagesView(
+                                R.drawable.readme_activities_1,
+                            )
                         }
                     }
 
@@ -205,47 +206,51 @@ private fun PListDashedView(
 private val imageBorderColor = ColorRgba(96, 96, 96).toColor()
 
 @Composable
-private fun RowScope.ChartImageView(
-    @DrawableRes resId: Int?,
+private fun ImagesView(
+    vararg resIds: Int,
 ) {
-
-    if (resId == null) {
-        SpacerW1()
-        return
-    }
-
-    Image(
-        painter = painterResource(resId),
+    val scrollState = rememberScrollState()
+    HStack(
         modifier = Modifier
-            .weight(1f)
-            .padding(horizontal = imagesHBetween)
-            .clip(imagesShape)
-            .border(1.dp, imageBorderColor, shape = imagesShape)
-            .clickable {
-                Sheet.show { layer ->
+            .horizontalScroll(scrollState),
+    ) {
 
-                    VStack(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .background(c.sheetBg),
-                    ) {
+        resIds.forEach { resId ->
 
-                        Image(
-                            painter = painterResource(resId),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(1f),
-                            contentDescription = "Chart Screenshot",
-                            contentScale = ContentScale.Fit,
-                        )
+            Image(
+                painter = painterResource(resId),
+                modifier = Modifier
+                    .height(250.dp)
+                    .padding(horizontal = imagesHBetween)
+                    .clip(imagesShape)
+                    .border(1.dp, imageBorderColor, shape = imagesShape)
+                    .clickable {
+                        Sheet.show { layer ->
 
-                        Sheet__BottomViewClose {
-                            layer.close()
+                            VStack(
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                                    .background(c.sheetBg),
+                            ) {
+
+                                Image(
+                                    painter = painterResource(resId),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .weight(1f),
+                                    contentDescription = "Chart Screenshot",
+                                    contentScale = ContentScale.Fit,
+                                )
+
+                                Sheet__BottomViewClose {
+                                    layer.close()
+                                }
+                            }
                         }
-                    }
-                }
-            },
-        contentDescription = "Chart Screenshot",
-        contentScale = ContentScale.Fit,
-    )
+                    },
+                contentDescription = "Chart Screenshot",
+                contentScale = ContentScale.Fit,
+            )
+        }
+    }
 }
