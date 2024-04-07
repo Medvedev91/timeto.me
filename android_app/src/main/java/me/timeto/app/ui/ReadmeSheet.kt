@@ -274,9 +274,10 @@ private fun showImagesSlider(
             VStack(
                 modifier = Modifier
                     .background(c.black)
-                    .fillMaxHeight()
+                    .fillMaxSize()
                     .padding(top = statusBarHeight)
                     .pointerInput(Unit) { },
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
                 val scrollState = rememberScrollState()
