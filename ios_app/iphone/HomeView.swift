@@ -51,8 +51,8 @@ struct HomeView: View {
             EmptyView().id("MainView checklist \(triggersChecklist?.id ?? 0)")
 
             Color.black.edgesIgnoringSafeArea(.all)
-                    .statusBar(hidden: true)
-                    .animateVmValue(value: state.isPurple, state: $isPurpleAnim)
+                .statusBar(hidden: true)
+                .animateVmValue(value: state.isPurple, state: $isPurpleAnim)
 
             VStack {
 
@@ -61,98 +61,104 @@ struct HomeView: View {
                 let timerButtonsColor = state.timerButtonsColor.toColor()
 
                 Text(state.title)
-                        .font(.system(size: 21, weight: .semibold))
-                        .foregroundColor(timerColor)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 20)
+                    .font(.system(size: 21, weight: .semibold))
+                    .foregroundColor(timerColor)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 20)
 
                 HStack {
 
                     Button(
-                            action: {
-                                vm.pauseTask()
-                            },
-                            label: {
-                                Image(systemName: "pause")
-                                        .foregroundColor(timerButtonsColor)
-                                        .font(.system(size: 22, weight: .thin))
-                                        .frame(maxWidth: .infinity)
-                                        .frame(height: timerHeight)
-                            }
+                        action: {
+                            vm.pauseTask()
+                        },
+                        label: {
+                            Image(systemName: "pause")
+                                .foregroundColor(timerButtonsColor)
+                                .font(.system(size: 22, weight: .thin))
+                                .frame(maxWidth: .infinity)
+                                .frame(height: timerHeight)
+                        }
                     )
 
                     Button(
-                            action: {
-                                vm.toggleIsPurple()
-                            },
-                            label: {
-                                let timerFont: Font = {
-                                    let len = timerData.title.count
-                                    if len <= 5 { return timerFont1 }
-                                    if len <= 7 { return timerFont2 }
-                                    return timerFont3
-                                }()
-                                Text(timerData.title)
-                                        .font(timerFont)
-                                        .foregroundColor(timerColor)
-                                        .lineLimit(1)
-                                        .fixedSize()
-                            }
+                        action: {
+                            vm.toggleIsPurple()
+                        },
+                        label: {
+                            let timerFont: Font = {
+                                let len = timerData.title.count
+                                if len <= 5 {
+                                    return timerFont1
+                                }
+                                if len <= 7 {
+                                    return timerFont2
+                                }
+                                return timerFont3
+                            }()
+                            Text(timerData.title)
+                                .font(timerFont)
+                                .foregroundColor(timerColor)
+                                .lineLimit(1)
+                                .fixedSize()
+                        }
                     )
-                            .background(GeometryReader { geometry -> Color in
-                                myAsyncAfter(0.01) { timerHeight = geometry.size.height }
-                                return Color.clear
-                            })
+                    .background(GeometryReader { geometry -> Color in
+                        myAsyncAfter(0.01) {
+                            timerHeight = geometry.size.height
+                        }
+                        return Color.clear
+                    })
 
                     Button(
-                            action: {
-                                state.timerData.restart()
-                            },
-                            label: {
-                                Text(state.timerData.restartText)
-                                        .font(.system(size: 22, weight: .thin))
-                                        .foregroundColor(timerButtonsColor)
-                                        .frame(maxWidth: .infinity)
-                                        .frame(height: timerHeight)
-                            }
+                        action: {
+                            state.timerData.restart()
+                        },
+                        label: {
+                            Text(state.timerData.restartText)
+                                .font(.system(size: 22, weight: .thin))
+                                .foregroundColor(timerButtonsColor)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: timerHeight)
+                        }
                     )
-                            .offset(x: 2)
+                    .offset(x: 2)
                 }
-                        .padding(.top, 13)
-                        .padding(.bottom, 14)
+                .padding(.top, 13)
+                .padding(.bottom, 14)
 
                 if state.isPurple {
 
                     HStack {
 
                         TimerHintsView(
-                                timerHintsUI: state.timerHints,
-                                hintHPadding: 10.0,
-                                fontSize: 22.0,
-                                fontWeight: .thin,
-                                fontColor: timerColor,
-                                onStart: {}
+                            timerHintsUI: state.timerHints,
+                            hintHPadding: 10.0,
+                            fontSize: 22.0,
+                            fontWeight: .thin,
+                            fontColor: timerColor,
+                            onStart: {}
                         )
 
                         Button(
-                                action: {
-                                    nativeSheet.showActivityTimerSheet(
-                                            activity: state.activity,
-                                            timerContext: state.timerButtonExpandSheetContext,
-                                            hideOnStart: true,
-                                            onStart: {}
-                                    )
-                                },
-                                label: {
-                                    Image(systemName: "chevron.down.circle.fill")
-                                            .foregroundColor(timerColor)
-                                            .font(.system(size: 22, weight: .regular))
-                                }
+                            action: {
+                                nativeSheet.showActivityTimerSheet(
+                                    activity: state.activity,
+                                    timerContext: state.timerButtonExpandSheetContext,
+                                    hideOnStart: true,
+                                    onStart: {}
+                                )
+                            },
+                            label: {
+                                Image(systemName: "chevron.down.circle.fill")
+                                    .foregroundColor(timerColor)
+                                    .font(.system(size: 22, weight: .regular))
+                            }
                         )
-                                .padding(.leading, 9)
-                                .offset(y: -onePx)
+                        .padding(.leading, 9)
+                        .offset(y: -onePx)
                     }
-                            .offset(y: -4)
+                    .offset(y: -4)
                 }
 
                 ZStack {
@@ -176,13 +182,13 @@ struct HomeView: View {
 
                         if isMainTasksExists {
                             let listHeight: CGFloat =
-                                    checklistDb == nil ? .infinity :
+                                checklistDb == nil ? .infinity :
                                     (mainTasksContentTopPadding + mainTasksContentBottomPadding) +
                                     (mainTaskItemHeight * state.mainTasks.count.toDouble().limitMax(5.45))
                             MainTasksView(
-                                    tasks: state.mainTasks
+                                tasks: state.mainTasks
                             )
-                                    .frame(height: listHeight)
+                                .frame(height: listHeight)
                         }
 
                         if !isMainTasksExists && checklistDb == nil {
@@ -190,54 +196,55 @@ struct HomeView: View {
                         }
 
                         ForEachIndexed(
-                                state.goalsUI,
-                                content: { idx, goalUI in
-                                    if idx == 0 {
-                                        Padding(vertical: 8)
-                                    }
-
-                                    ZStack {
-
-                                        GeometryReader { geometry in
-                                            VStack {
-                                                ZStack {}
-                                                        .frame(maxHeight: .infinity)
-                                                        .frame(width: geometry.size.width * Double(goalUI.ratio))
-                                                        .background(goalUI.bgColor.toColor())
-                                                Spacer()
-                                            }
-                                        }
-                                                .frame(width: .infinity)
-                                                .clipShape(roundedShape)
-
-                                        HStack {
-
-                                            Text(goalUI.textLeft)
-                                                    .padding(.leading, 8)
-                                                    .foregroundColor(c.white)
-                                                    .font(.system(size: goalFontSize))
-
-                                            Spacer()
-
-                                            Text(goalUI.textRight)
-                                                    .padding(.trailing, 8)
-                                                    .foregroundColor(c.white)
-                                                    .font(.system(size: goalFontSize))
-                                        }
-                                    }
-                                            .frame(height: 24, alignment: .center)
-                                            .background(roundedShape.fill(c.homeFg))
-                                            .padding(.bottom, 12)
-                                            .padding(.horizontal, H_PADDING)
+                            state.goalsUI,
+                            content: { idx, goalUI in
+                                if idx == 0 {
+                                    Padding(vertical: 8)
                                 }
+
+                                ZStack {
+
+                                    GeometryReader { geometry in
+                                        VStack {
+                                            ZStack {
+                                            }
+                                            .frame(maxHeight: .infinity)
+                                            .frame(width: geometry.size.width * Double(goalUI.ratio))
+                                            .background(goalUI.bgColor.toColor())
+                                            Spacer()
+                                        }
+                                    }
+                                    .frame(width: .infinity)
+                                    .clipShape(roundedShape)
+
+                                    HStack {
+
+                                        Text(goalUI.textLeft)
+                                            .padding(.leading, 8)
+                                            .foregroundColor(c.white)
+                                            .font(.system(size: goalFontSize))
+
+                                        Spacer()
+
+                                        Text(goalUI.textRight)
+                                            .padding(.trailing, 8)
+                                            .foregroundColor(c.white)
+                                            .font(.system(size: goalFontSize))
+                                    }
+                                }
+                                .frame(height: 24, alignment: .center)
+                                .background(roundedShape.fill(c.homeFg))
+                                .padding(.bottom, 12)
+                                .padding(.horizontal, H_PADDING)
+                            }
                         )
                     }
-                            .padding(.bottom, navAndTasksTextHeight)
+                    .padding(.bottom, navAndTasksTextHeight)
 
                     if (state.isTasksVisible) {
                         TasksView()
-                                .clipped() // Fix list offset on IME open
-                                .padding(.bottom, HomeView__BOTTOM_NAVIGATION_HEIGHT)
+                            .clipped() // Fix list offset on IME open
+                            .padding(.bottom, HomeView__BOTTOM_NAVIGATION_HEIGHT)
                     }
                 }
             }
@@ -248,124 +255,124 @@ struct HomeView: View {
             HStack(alignment: .bottom) {
 
                 Button(
-                        action: {
-                            nativeSheet.showActivitiesTimerSheet(
-                                    timerContext: nil,
-                                    withMenu: true,
-                                    onStart: {}
-                            )
-                        },
-                        label: {
-                            VStack {
-                                Spacer()
-                                Image(systemName: "timer")
-                                        .frame(height: menuIconSize)
-                                        .foregroundColor(c.homeFontSecondary)
-                                        .font(.system(size: 30, weight: .thin))
-                                        .frame(maxWidth: .infinity)
-                                        .frame(alignment: .bottom)
-                            }
+                    action: {
+                        nativeSheet.showActivitiesTimerSheet(
+                            timerContext: nil,
+                            withMenu: true,
+                            onStart: {}
+                        )
+                    },
+                    label: {
+                        VStack {
+                            Spacer()
+                            Image(systemName: "timer")
+                                .frame(height: menuIconSize)
+                                .foregroundColor(c.homeFontSecondary)
+                                .font(.system(size: 30, weight: .thin))
+                                .frame(maxWidth: .infinity)
+                                .frame(alignment: .bottom)
                         }
+                    }
                 )
 
                 Button(
-                        action: {
-                            vm.toggleIsTasksVisible()
-                        },
-                        label: {
+                    action: {
+                        vm.toggleIsTasksVisible()
+                    },
+                    label: {
 
-                            VStack {
+                        VStack {
 
-                                if (!state.isTasksVisible) {
+                            if (!state.isTasksVisible) {
 
-                                    Text(state.menuNote)
-                                            .foregroundColor(c.homeFontSecondary)
-                                            .font(.system(size: 15, weight: .regular))
-                                            .padding(.top, 4)
+                                Text(state.menuNote)
+                                    .foregroundColor(c.homeFontSecondary)
+                                    .font(.system(size: 15, weight: .regular))
+                                    .padding(.top, 4)
 
-                                    Spacer()
-                                }
-
-                                VStack(alignment: .center) {
-
-                                    Text(state.menuTime)
-                                            .foregroundColor(c.homeMenuTime)
-                                            .font(menuTimeFont)
-                                            .padding(.top, 4)
-                                            .padding(.bottom, 4)
-
-                                    HStack {
-
-                                        let batteryTextColor = state.batteryTextColor.toColor()
-
-                                        Image(systemName: "bolt.fill")
-                                                .foregroundColor(batteryTextColor)
-                                                .font(.system(size: 12, weight: .ultraLight))
-
-                                        Text(state.batteryText)
-                                                .foregroundColor(batteryTextColor)
-                                                .font(.system(size: 13, weight: .regular))
-                                                .padding(.trailing, 1)
-                                    }
-                                            .padding(.top, 2)
-                                            .padding(.bottom, 1)
-                                            .padding(.leading, 3)
-                                            .padding(.trailing, 4)
-                                            .background(roundedShape.fill(state.batteryBackground.toColor()))
-                                }
-                                        .padding(.top, 2)
-                                        .frame(height: HomeView__BOTTOM_NAVIGATION_HEIGHT)
+                                Spacer()
                             }
-                                    .frame(maxWidth: .infinity)
-                                    .background(state.isTasksVisible ? Color(.systemGray5) : .black)
-                                    .cornerRadius(10, onTop: true, onBottom: true)
+
+                            VStack(alignment: .center) {
+
+                                Text(state.menuTime)
+                                    .foregroundColor(c.homeMenuTime)
+                                    .font(menuTimeFont)
+                                    .padding(.top, 4)
+                                    .padding(.bottom, 4)
+
+                                HStack {
+
+                                    let batteryTextColor = state.batteryTextColor.toColor()
+
+                                    Image(systemName: "bolt.fill")
+                                        .foregroundColor(batteryTextColor)
+                                        .font(.system(size: 12, weight: .ultraLight))
+
+                                    Text(state.batteryText)
+                                        .foregroundColor(batteryTextColor)
+                                        .font(.system(size: 13, weight: .regular))
+                                        .padding(.trailing, 1)
+                                }
+                                .padding(.top, 2)
+                                .padding(.bottom, 1)
+                                .padding(.leading, 3)
+                                .padding(.trailing, 4)
+                                .background(roundedShape.fill(state.batteryBackground.toColor()))
+                            }
+                            .padding(.top, 2)
+                            .frame(height: HomeView__BOTTOM_NAVIGATION_HEIGHT)
                         }
+                        .frame(maxWidth: .infinity)
+                        .background(state.isTasksVisible ? Color(.systemGray5) : .black)
+                        .cornerRadius(10, onTop: true, onBottom: true)
+                    }
                 )
 
                 Button(
-                        action: {
-                            isSettingsSheetPresented = true
-                        },
-                        label: {
-                            VStack {
-                                Spacer()
-                                Image(systemName: "ellipsis.circle")
-                                        .frame(height: menuIconSize)
-                                        .foregroundColor(c.homeFontSecondary)
-                                        .font(.system(size: 30, weight: .thin))
-                                        .frame(maxWidth: .infinity)
-                            }
+                    action: {
+                        isSettingsSheetPresented = true
+                    },
+                    label: {
+                        VStack {
+                            Spacer()
+                            Image(systemName: "ellipsis.circle")
+                                .frame(height: menuIconSize)
+                                .foregroundColor(c.homeFontSecondary)
+                                .font(.system(size: 30, weight: .thin))
+                                .frame(maxWidth: .infinity)
                         }
+                    }
                 )
             }
-                    .frame(width: .infinity, height: state.isTasksVisible ? HomeView__BOTTOM_NAVIGATION_HEIGHT : navAndTasksTextHeight)
+            .frame(width: .infinity, height: state.isTasksVisible ? HomeView__BOTTOM_NAVIGATION_HEIGHT : navAndTasksTextHeight)
         }
-                .ignoresSafeArea(.keyboard, edges: .bottom)
-                .onReceive(shortcutPublisher) { shortcut in
-                    let swiftURL = URL(string: shortcut.uri)!
-                    if !UIApplication.shared.canOpenURL(swiftURL) {
-                        Utils_kmpKt.showUiAlert(message: "Invalid shortcut link", reportApiText: nil)
-                        return
-                    }
-                    UIApplication.shared.open(swiftURL)
-                }
-                .onReceive(checklistPublisher) { checklist in
-                    triggersChecklist = checklist
-                    isTriggersChecklistPresented = true
-                }
-                .sheetEnv(isPresented: $isTriggersChecklistPresented) {
-                    if let checklist = triggersChecklist {
-                        ChecklistSheet(isPresented: $isTriggersChecklistPresented, checklist: checklist)
-                    }
-                }
-                .sheetEnv(
-                        isPresented: $isSettingsSheetPresented
-                ) {
-                    SettingsSheet(isPresented: $isSettingsSheetPresented)
-                }
-                .onAppear {
-                    HomeView.lastInstance = self
-                }
+        .ignoresSafeArea(.keyboard, edges: .bottom)
+        .onReceive(shortcutPublisher) { shortcut in
+            let swiftURL = URL(string: shortcut.uri)!
+            if !UIApplication.shared.canOpenURL(swiftURL) {
+                Utils_kmpKt.showUiAlert(message: "Invalid shortcut link", reportApiText: nil)
+                return
+            }
+            UIApplication.shared.open(swiftURL)
+        }
+        .onReceive(checklistPublisher) { checklist in
+            triggersChecklist = checklist
+            isTriggersChecklistPresented = true
+        }
+        .sheetEnv(isPresented: $isTriggersChecklistPresented) {
+            if let checklist = triggersChecklist {
+                ChecklistSheet(isPresented: $isTriggersChecklistPresented, checklist: checklist)
+            }
+        }
+        .sheetEnv(
+            isPresented: $isSettingsSheetPresented
+        ) {
+            SettingsSheet(isPresented: $isSettingsSheetPresented)
+        }
+        .onAppear {
+            HomeView.lastInstance = self
+        }
     }
 }
 
@@ -387,23 +394,25 @@ private struct MainTasksView: View {
 
                         Spacer()
 
-                        ZStack {}
-                                .frame(height: mainTasksContentTopPadding)
+                        ZStack {
+                        }
+                        .frame(height: mainTasksContentTopPadding)
 
                         ForEach(tasks.reversed(), id: \.self.task.id) { mainTask in
                             MainTaskItemView(mainTask: mainTask)
                         }
 
-                        ZStack {}
-                                .frame(height: mainTasksContentBottomPadding)
-                                .id(LIST_BOTTOM_ITEM_ID)
-                    }
-                            .frame(minHeight: geometry.size.height)
-                }
-                        .frame(maxWidth: .infinity)
-                        .onAppear {
-                            scrollProxy.scrollTo(LIST_BOTTOM_ITEM_ID)
+                        ZStack {
                         }
+                        .frame(height: mainTasksContentBottomPadding)
+                        .id(LIST_BOTTOM_ITEM_ID)
+                    }
+                    .frame(minHeight: geometry.size.height)
+                }
+                .frame(maxWidth: .infinity)
+                .onAppear {
+                    scrollProxy.scrollTo(LIST_BOTTOM_ITEM_ID)
+                }
             }
         }
     }
@@ -418,66 +427,66 @@ private struct MainTaskItemView: View {
     var body: some View {
 
         Button(
-                action: {
-                    mainTask.task.startIntervalForUI(
-                            onStarted: {},
-                            activitiesSheet: {
-                                nativeSheet.showActivitiesTimerSheet(
-                                        timerContext: mainTask.timerContext,
-                                        withMenu: false,
-                                        onStart: {}
-                                )
-                            },
-                            timerSheet: { activity in
-                                nativeSheet.showActivityTimerSheet(
-                                        activity: activity,
-                                        timerContext: mainTask.timerContext,
-                                        hideOnStart: true,
-                                        onStart: {}
-                                )
-                            }
-                    )
-                },
-                label: {
-
-                    HStack {
-
-                        if let timeUI = mainTask.timeUI {
-                            Text(timeUI.text)
-                                    .foregroundColor(.white)
-                                    .font(.system(size: 13, weight: .bold))
-                                    .padding(.leading, 4)
-                                    .padding(.trailing, 4)
-                                    .padding(.top, 3)
-                                    .padding(.bottom, 2)
-                                    .background(mainTaskTimeShape.fill(timeUI.textBgColor.toColor()))
-                                    .padding(.trailing, 6)
-                        }
-
-                        if mainTask.textFeatures.paused != nil {
-                            Image(systemName: "pause")
-                                    .foregroundColor(c.homeFontSecondary)
-                                    .font(.system(size: 12, weight: .black))
-                                    .padding(.trailing, 5)
-                        }
-
-                        Text(mainTask.text)
-                                .font(.system(size: HomeView__PRIMARY_FONT_SIZE))
-                                .foregroundColor(Color.white)
-                                .padding(.trailing, 4)
-
-                        Spacer()
-
-                        if let timeUI = mainTask.timeUI {
-                            Text(timeUI.note)
-                                    .offset(y: 1)
-                                    .foregroundColor(timeUI.noteColor.toColor())
-                                    .font(.system(size: 14, weight: .light))
-                        }
+            action: {
+                mainTask.task.startIntervalForUI(
+                    onStarted: {},
+                    activitiesSheet: {
+                        nativeSheet.showActivitiesTimerSheet(
+                            timerContext: mainTask.timerContext,
+                            withMenu: false,
+                            onStart: {}
+                        )
+                    },
+                    timerSheet: { activity in
+                        nativeSheet.showActivityTimerSheet(
+                            activity: activity,
+                            timerContext: mainTask.timerContext,
+                            hideOnStart: true,
+                            onStart: {}
+                        )
                     }
-                            .frame(height: mainTaskItemHeight)
-                            .padding(.horizontal, H_PADDING)
+                )
+            },
+            label: {
+
+                HStack {
+
+                    if let timeUI = mainTask.timeUI {
+                        Text(timeUI.text)
+                            .foregroundColor(.white)
+                            .font(.system(size: 13, weight: .bold))
+                            .padding(.leading, 4)
+                            .padding(.trailing, 4)
+                            .padding(.top, 3)
+                            .padding(.bottom, 2)
+                            .background(mainTaskTimeShape.fill(timeUI.textBgColor.toColor()))
+                            .padding(.trailing, 6)
+                    }
+
+                    if mainTask.textFeatures.paused != nil {
+                        Image(systemName: "pause")
+                            .foregroundColor(c.homeFontSecondary)
+                            .font(.system(size: 12, weight: .black))
+                            .padding(.trailing, 5)
+                    }
+
+                    Text(mainTask.text)
+                        .font(.system(size: HomeView__PRIMARY_FONT_SIZE))
+                        .foregroundColor(Color.white)
+                        .padding(.trailing, 4)
+
+                    Spacer()
+
+                    if let timeUI = mainTask.timeUI {
+                        Text(timeUI.note)
+                            .offset(y: 1)
+                            .foregroundColor(timeUI.noteColor.toColor())
+                            .font(.system(size: 14, weight: .light))
+                    }
                 }
+                .frame(height: mainTaskItemHeight)
+                .padding(.horizontal, H_PADDING)
+            }
         )
     }
 }
@@ -488,6 +497,6 @@ private struct MainDivider: View {
 
     var body: some View {
         DividerBg(isVisible: isVisible)
-                .padding(.horizontal, H_PADDING)
+            .padding(.horizontal, H_PADDING)
     }
 }
