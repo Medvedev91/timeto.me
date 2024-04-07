@@ -214,6 +214,7 @@ private fun PListDashedView(
 }
 
 private val imageBorderColor = ColorRgba(96, 96, 96).toColor()
+private val imageSliderShape = SquircleShape(len = 90f, angleParam = 10f)
 
 private val imageSliderEnterAnimation: EnterTransition = slideInVertically(
     animationSpec = spring(
@@ -235,10 +236,10 @@ private val imageSliderExitAnimation: ExitTransition = slideOutVertically(
 private fun ImagePreviewsView(
     vararg resIds: Int,
 ) {
-    val scrollStatePreviews = rememberScrollState()
+    val scrollState = rememberScrollState()
     HStack(
         modifier = Modifier
-            .horizontalScroll(scrollStatePreviews),
+            .horizontalScroll(scrollState),
     ) {
 
         resIds.forEach { resId ->
@@ -251,40 +252,76 @@ private fun ImagePreviewsView(
                     .clip(imagesShape)
                     .border(1.dp, imageBorderColor, shape = imagesShape)
                     .clickable {
-
-                        WrapperView.Layer(
-                            enterAnimation = imageSliderEnterAnimation,
-                            exitAnimation = imageSliderExitAnimation,
-                            alignment = Alignment.BottomCenter,
-                            onClose = {},
-                            content = { layer ->
-                                VStack(
-                                    modifier = Modifier
-                                        .background(c.black)
-                                        .fillMaxHeight()
-                                        .padding(top = statusBarHeight)
-                                        .pointerInput(Unit) { },
-                                ) {
-
-                                    Image(
-                                        painter = painterResource(resId),
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .weight(1f),
-                                        contentDescription = "Screenshot",
-                                        contentScale = ContentScale.Fit,
-                                    )
-
-                                    Sheet__BottomViewClose {
-                                        layer.close()
-                                    }
-                                }
-                            }
-                        ).show()
+                        showImagesSlider(*resIds)
                     },
                 contentDescription = "Screenshot",
                 contentScale = ContentScale.Fit,
             )
         }
     }
+}
+
+private fun showImagesSlider(
+    vararg resIds: Int,
+) {
+
+    WrapperView.Layer(
+        enterAnimation = imageSliderEnterAnimation,
+        exitAnimation = imageSliderExitAnimation,
+        alignment = Alignment.BottomCenter,
+        onClose = {},
+        content = { layer ->
+            VStack(
+                modifier = Modifier
+                    .background(c.black)
+                    .fillMaxHeight()
+                    .padding(top = statusBarHeight)
+                    .pointerInput(Unit) { },
+            ) {
+
+                val scrollState = rememberScrollState()
+                HStack(
+                    modifier = Modifier
+                        .weight(1f)
+                        .horizontalScroll(scrollState),
+                ) {
+
+                    Padding(horizontal = 8.dp)
+
+                    resIds.forEach { resId ->
+                        Image(
+                            painter = painterResource(resId),
+                            modifier = Modifier
+                                .padding(horizontal = 8.dp)
+                                .fillMaxHeight()
+                                .clip(imageSliderShape)
+                                .border(1.dp, imageBorderColor, shape = imageSliderShape),
+                            contentDescription = "Screenshot",
+                            contentScale = ContentScale.FillHeight,
+                        )
+                    }
+
+                    Padding(horizontal = 8.dp)
+                }
+
+                Text(
+                    text = "Close",
+                    modifier = Modifier
+                        .padding(end = 16.dp)
+                        .padding(vertical = 8.dp)
+                        .align(Alignment.End)
+                        .navigationBarsPadding()
+                        .clip(roundedShape)
+                        .clickable {
+                            layer.close()
+                        }
+                        .padding(horizontal = 14.dp)
+                        .padding(top = 6.dp, bottom = 7.dp),
+                    color = c.textSecondary,
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Light,
+                )
+            }
+        }
+    ).show()
 }
