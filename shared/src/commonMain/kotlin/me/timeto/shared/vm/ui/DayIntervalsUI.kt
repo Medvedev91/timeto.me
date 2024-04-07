@@ -82,7 +82,9 @@ class DayIntervalsUI(
                 else {
                     val prevInterval = intervalsAsc.last { it.id < dayTimeStart }
                     val seconds = (dayIntervals.firstOrNull()?.id ?: dayMaxTimeFinish) - dayTimeStart
-                    daySections.add(IntervalUI(prevInterval.getActivityDI(), dayTimeStart, seconds))
+                    // 0 when the interval starts at 00:00
+                    if (seconds > 0)
+                        daySections.add(IntervalUI(prevInterval.getActivityDI(), dayTimeStart, seconds))
                 }
 
                 // Adding other sections
