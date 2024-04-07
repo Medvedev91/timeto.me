@@ -235,10 +235,10 @@ private val imageSliderExitAnimation: ExitTransition = slideOutVertically(
 private fun ImagesView(
     vararg resIds: Int,
 ) {
-    val scrollState = rememberScrollState()
+    val scrollStatePreviews = rememberScrollState()
     HStack(
         modifier = Modifier
-            .horizontalScroll(scrollState),
+            .horizontalScroll(scrollStatePreviews),
     ) {
 
         resIds.forEach { resId ->
