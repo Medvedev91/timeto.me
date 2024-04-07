@@ -172,6 +172,9 @@ struct HomeView: View {
                             Button(
                                 action: {
                                     vm.onReadmeOpen()
+                                    nativeSheet.show { isReadmePresented in
+                                        ReadmeSheet(isPresented: isReadmePresented)
+                                    }
                                 },
                                 label: {
                                     Text(readmeMessage)
