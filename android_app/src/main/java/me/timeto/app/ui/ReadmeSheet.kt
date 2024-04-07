@@ -82,7 +82,7 @@ fun ReadmeSheet(
                                 .padding(top = 20.dp)
                                 .padding(horizontal = imagesHBlock),
                         ) {
-                            ImagesView(
+                            ImagePreviewsView(
                                 R.drawable.readme_chart_1,
                                 R.drawable.readme_chart_2,
                                 R.drawable.readme_chart_3,
@@ -97,7 +97,7 @@ fun ReadmeSheet(
                                 .padding(top = 20.dp)
                                 .padding(horizontal = imagesHBlock),
                         ) {
-                            ImagesView(
+                            ImagePreviewsView(
                                 R.drawable.readme_activities_1,
                             )
                         }
@@ -232,7 +232,7 @@ private val imageSliderExitAnimation: ExitTransition = slideOutVertically(
 )
 
 @Composable
-private fun ImagesView(
+private fun ImagePreviewsView(
     vararg resIds: Int,
 ) {
     val scrollStatePreviews = rememberScrollState()
