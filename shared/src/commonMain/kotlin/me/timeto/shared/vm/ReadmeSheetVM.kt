@@ -179,6 +179,9 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     paragraphs.add(PText("Shortcuts automate this. When I start the \"Meditation\" activity, the video will start automatically."))
     paragraphs.add(PText("This works especially well with repeating tasks. \"Meditation\" is automatically created every day, I just tap on it, the timer and video starts."))
 
+    paragraphs.add(PTitle("Day Start Time"))
+    paragraphs.add(PText("Especially for night owls. You can set the time when repeating tasks will be added for the next day. Default 00:00."))
+
     paragraphs.add(ReadmeSheetVM.Paragraph.AskAQuestion())
 
     return paragraphs
