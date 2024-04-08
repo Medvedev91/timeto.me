@@ -125,6 +125,36 @@ fun ReadmeSheet(
                         )
                     }
 
+                    is ReadmeSheetVM.Paragraph.RepeatingsMy -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_repeatings_1,
+                        )
+                    }
+
+
+                    is ReadmeSheetVM.Paragraph.RepeatingsToday -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_repeatings_2,
+                        )
+                    }
+
+
+                    is ReadmeSheetVM.Paragraph.RepeatingsPractice1 -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_repeating_practice_1,
+                            R.drawable.readme_repeating_practice_2,
+                            R.drawable.readme_repeating_practice_3,
+                        )
+                    }
+
+
+                    is ReadmeSheetVM.Paragraph.RepeatingsPractice2 -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_repeating_practice_4,
+                            R.drawable.readme_repeating_practice_5,
+                        )
+                    }
+
                     is ReadmeSheetVM.Paragraph.AskAQuestion -> {
 
                         MyListView__ItemView(
