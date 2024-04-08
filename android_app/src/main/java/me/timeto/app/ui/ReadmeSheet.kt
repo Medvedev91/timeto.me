@@ -76,31 +76,17 @@ fun ReadmeSheet(
                     is ReadmeSheetVM.Paragraph.ListDash -> PListDashedView(paragraph.items)
 
                     is ReadmeSheetVM.Paragraph.ChartImages -> {
-
-                        HStack(
-                            modifier = Modifier
-                                .padding(top = 20.dp)
-                                .padding(horizontal = imagesHBlock),
-                        ) {
-                            ImagePreviewsView(
-                                R.drawable.readme_chart_1,
-                                R.drawable.readme_chart_2,
-                                R.drawable.readme_chart_3,
-                            )
-                        }
+                        ImagePreviewsView(
+                            R.drawable.readme_chart_1,
+                            R.drawable.readme_chart_2,
+                            R.drawable.readme_chart_3,
+                        )
                     }
 
                     is ReadmeSheetVM.Paragraph.ActivitiesImage -> {
-
-                        HStack(
-                            modifier = Modifier
-                                .padding(top = 20.dp)
-                                .padding(horizontal = imagesHBlock),
-                        ) {
-                            ImagePreviewsView(
-                                R.drawable.readme_activities_1,
-                            )
-                        }
+                        ImagePreviewsView(
+                            R.drawable.readme_activities_1,
+                        )
                     }
 
                     is ReadmeSheetVM.Paragraph.AskAQuestion -> {
@@ -235,10 +221,13 @@ private val imageSliderExitAnimation: ExitTransition = slideOutVertically(
 @Composable
 private fun ImagePreviewsView(
     vararg resIds: Int,
+    paddingTop: Dp = 20.dp,
 ) {
     val scrollState = rememberScrollState()
     HStack(
         modifier = Modifier
+            .padding(top = paddingTop)
+            .padding(horizontal = imagesHBlock)
             .horizontalScroll(scrollState),
     ) {
 
