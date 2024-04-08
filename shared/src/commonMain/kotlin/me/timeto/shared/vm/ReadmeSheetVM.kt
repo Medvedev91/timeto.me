@@ -32,6 +32,11 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
         class TimerPractice1() : Paragraph()
         class TimerPractice2() : Paragraph()
 
+        class RepeatingsMy() : Paragraph()
+        class RepeatingsToday() : Paragraph()
+        class RepeatingsPractice1() : Paragraph()
+        class RepeatingsPractice2() : Paragraph()
+
         class AskAQuestion() : Paragraph() {
             val title = "Ask a Question"
             val subject: String =
