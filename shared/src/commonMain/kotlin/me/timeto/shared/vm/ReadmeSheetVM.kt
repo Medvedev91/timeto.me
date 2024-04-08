@@ -135,7 +135,9 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
             ),
         )
     )
+    paragraphs.add(ReadmeSheetVM.Paragraph.ChecklistsPractice1())
     paragraphs.add(PText("Test it! Open \"Today\" and tap the \"Morning Routine\" task. You will see the checklist."))
+    paragraphs.add(ReadmeSheetVM.Paragraph.ChecklistsPractice2())
 
     paragraphs.add(ReadmeSheetVM.Paragraph.AskAQuestion())
 
