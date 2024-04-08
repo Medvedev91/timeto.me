@@ -117,6 +117,14 @@ fun ReadmeSheet(
                         )
                     }
 
+                    is ReadmeSheetVM.Paragraph.TimerPractice2 -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_timer_practice_5,
+                            R.drawable.readme_chart_2,
+                            R.drawable.readme_chart_3,
+                        )
+                    }
+
                     is ReadmeSheetVM.Paragraph.AskAQuestion -> {
 
                         MyListView__ItemView(
