@@ -75,6 +75,11 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     paragraphs.add(ReadmeSheetVM.Paragraph.TimerCharts())
     paragraphs.add(PText("The app has some activities by default, but you can add your own. Here are mine:"))
     paragraphs.add(ReadmeSheetVM.Paragraph.TimerMyActivities())
+    paragraphs.add(PSubtitle("Practice"))
+    paragraphs.add(PText("Try to start a new activity. To do so, back to the home screen, tap the timer at the bottom left, tap \"Work\" and start the timer."))
+    paragraphs.add(ReadmeSheetVM.Paragraph.TimerPractice1())
+    paragraphs.add(PText("The timer starts. Then tap the timer again to see the \"Summary\" and \"History\"."))
+    paragraphs.add(ReadmeSheetVM.Paragraph.TimerPractice2())
 
     paragraphs.add(
         ReadmeSheetVM.Paragraph.ListDash(
