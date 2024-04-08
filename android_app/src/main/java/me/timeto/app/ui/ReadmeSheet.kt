@@ -108,12 +108,6 @@ fun ReadmeSheet(
                         )
                     }
 
-                    is ReadmeSheetVM.Paragraph.ActivitiesImage -> {
-                        ImagePreviewsView(
-                            R.drawable.readme_activities_1,
-                        )
-                    }
-
                     is ReadmeSheetVM.Paragraph.AskAQuestion -> {
 
                         MyListView__ItemView(
