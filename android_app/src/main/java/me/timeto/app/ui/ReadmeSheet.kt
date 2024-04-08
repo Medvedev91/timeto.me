@@ -188,6 +188,13 @@ fun ReadmeSheet(
                         )
                     }
 
+                    is ReadmeSheetVM.Paragraph.CalendarExamples -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_calendar_1,
+                            R.drawable.readme_calendar_2,
+                        )
+                    }
+
                     is ReadmeSheetVM.Paragraph.AskAQuestion -> {
 
                         MyListView__ItemView(
