@@ -69,6 +69,19 @@ fun ReadmeSheet(
 
                     is ReadmeSheetVM.Paragraph.Title -> PTitleView(paragraph.text)
 
+                    is ReadmeSheetVM.Paragraph.Subtitle -> {
+                        Text(
+                            text = paragraph.text,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = hPadding)
+                                .padding(top = 36.dp),
+                            color = c.white,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 20.sp,
+                        )
+                    }
+
                     is ReadmeSheetVM.Paragraph.Text -> PTextView(paragraph.text)
 
                     is ReadmeSheetVM.Paragraph.RedText -> PRedTextView(paragraph.text)
