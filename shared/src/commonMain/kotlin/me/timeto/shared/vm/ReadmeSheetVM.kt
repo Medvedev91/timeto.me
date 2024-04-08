@@ -30,12 +30,9 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
 
         class ListDash(val items: List<String>) : Paragraph()
 
-        class ChartImages() : Paragraph()
-
         class TimerTypical() : Paragraph()
-
+        class ChartImages() : Paragraph()
         class TimerMyActivities() : Paragraph()
-
         class ActivitiesImage() : Paragraph()
 
         class AskAQuestion() : Paragraph() {
