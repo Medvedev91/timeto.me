@@ -100,7 +100,7 @@ fun ReadmeSheet(
                         )
                     }
 
-                    is ReadmeSheetVM.Paragraph.ChartImages -> {
+                    is ReadmeSheetVM.Paragraph.TimerCharts -> {
                         ImagePreviewsView(
                             R.drawable.readme_chart_1,
                             R.drawable.readme_chart_2,

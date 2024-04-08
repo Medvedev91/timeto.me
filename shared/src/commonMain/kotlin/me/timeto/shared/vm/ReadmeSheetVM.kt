@@ -31,7 +31,7 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
         class ListDash(val items: List<String>) : Paragraph()
 
         class TimerTypical() : Paragraph()
-        class ChartImages() : Paragraph()
+        class TimerCharts() : Paragraph()
         class TimerMyActivities() : Paragraph()
 
         class AskAQuestion() : Paragraph() {
@@ -70,7 +70,7 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     paragraphs.add(PText("It helps me to always stay focused on what I have to do. Most of the time my screen looks like a typical pomodoro timer:"))
     paragraphs.add(ReadmeSheetVM.Paragraph.TimerTypical())
     paragraphs.add(PText("This way also provides real 24/7 data on how long everything takes:"))
-    paragraphs.add(ReadmeSheetVM.Paragraph.ChartImages())
+    paragraphs.add(ReadmeSheetVM.Paragraph.TimerCharts())
     paragraphs.add(PText("The app has some activities by default, but you can add your own. Here are mine:"))
     paragraphs.add(ReadmeSheetVM.Paragraph.TimerMyActivities())
 
