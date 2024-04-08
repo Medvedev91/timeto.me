@@ -82,15 +82,35 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     paragraphs.add(PText("The timer starts. Then tap the timer again to see the \"Summary\" and \"History\"."))
     paragraphs.add(ReadmeSheetVM.Paragraph.TimerPractice2())
 
+    paragraphs.add(PTitle("Repeating Tasks"))
+    paragraphs.add(PText("You may think choosing activity and timer for each task is overwhelming. This is where repeating tasks come into play."))
+    paragraphs.add(PText("How it works for me:"))
+    paragraphs.add(PText("Most of my activities are repeated. I wake up at the same time, then 1 hour to get ready, 2 hours working, 1 hour eating, etc. So I created a repeating task for each of these."))
+    paragraphs.add(ReadmeSheetVM.Paragraph.RepeatingsMy())
+    paragraphs.add(PText("Each day, these tasks move to the \"Today\" folder. Tasks are sorted by time of day and show how much time is left. It's like a schedule:"))
+    paragraphs.add(ReadmeSheetVM.Paragraph.RepeatingsToday())
+    paragraphs.add(PRedText("The most important, when I press it, it automatically starts a timer with the right activity."))
+    paragraphs.add(PText("You can create not only everyday tasks. For example, watering a cactus once a week or paying for internet once a month, etc."))
+    paragraphs.add(PText("I believe this is the main feature of the app. I recommend using it to the max."))
+    paragraphs.add(PSubtitle("Practice"))
+    paragraphs.add(PText("Let's create a repeating task for a daily workout at 18:00."))
+    paragraphs.add(PText("On the home screen, tap at the bottom center to open tasks, tap the repeating icon, tap \"New Repeating Task\" and fill the form:"))
     paragraphs.add(
         ReadmeSheetVM.Paragraph.ListDash(
             items = listOf(
-                "Timer is running all the time;",
-                "Using repeating tasks to the max;",
-                "Timer, activity and checklist will be set automatically.",
+                "Task: Workout;",
+                "Activity: Exercises / Health;",
+                "Timer: 1h;",
+                "Time of the Day: 18:00;",
+                "Repetition Period: Every Day;",
+                "Tap \"Create\".",
             ),
         )
     )
+    paragraphs.add(ReadmeSheetVM.Paragraph.RepeatingsPractice1())
+    paragraphs.add(PText("Every day, a \"Workout\" task will be added to the \"Today\" folder."))
+    paragraphs.add(PText("This task is already created for today. Open \"Today\" and tap the \"Workout\" task. The timer will automatically start with the right activity."))
+    paragraphs.add(ReadmeSheetVM.Paragraph.RepeatingsPractice2())
 
     paragraphs.add(ReadmeSheetVM.Paragraph.AskAQuestion())
 
