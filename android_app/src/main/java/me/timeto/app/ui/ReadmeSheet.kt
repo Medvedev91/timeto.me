@@ -182,6 +182,12 @@ fun ReadmeSheet(
                         )
                     }
 
+                    is ReadmeSheetVM.Paragraph.GoalsExamples -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_goals_1,
+                        )
+                    }
+
                     is ReadmeSheetVM.Paragraph.AskAQuestion -> {
 
                         MyListView__ItemView(
