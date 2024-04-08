@@ -21,13 +21,9 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
     sealed class Paragraph {
 
         class Title(val text: String) : Paragraph()
-
         class Subtitle(val text: String) : Paragraph()
-
         class Text(val text: String) : Paragraph()
-
         class RedText(val text: String) : Paragraph()
-
         class ListDash(val items: List<String>) : Paragraph()
 
         class TimerTypical() : Paragraph()
