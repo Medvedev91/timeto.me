@@ -259,7 +259,7 @@ private fun PRedTextView(
         text = text,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 12.dp)
+            .padding(top = 16.dp)
             .background(c.red)
             .padding(horizontal = hPadding)
             .padding(top = 12.dp, bottom = 10.dp),
