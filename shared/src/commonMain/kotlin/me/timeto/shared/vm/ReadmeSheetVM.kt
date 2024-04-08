@@ -182,6 +182,9 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     paragraphs.add(PTitle("Day Start Time"))
     paragraphs.add(PText("Especially for night owls. You can set the time when repeating tasks will be added for the next day. Default 00:00."))
 
+    paragraphs.add(PTitle("Conclusion"))
+    paragraphs.add(PText("I hope the app will improve your life like it improved mine. I would be very happy to get feedback and answer questions."))
+
     paragraphs.add(ReadmeSheetVM.Paragraph.AskAQuestion())
 
     return paragraphs
