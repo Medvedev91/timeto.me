@@ -34,6 +34,7 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
         class TimerCharts() : Paragraph()
         class TimerMyActivities() : Paragraph()
         class TimerPractice1() : Paragraph()
+        class TimerPractice2() : Paragraph()
 
         class AskAQuestion() : Paragraph() {
             val title = "Ask a Question"
