@@ -30,6 +30,8 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
 
         class ChartImages() : Paragraph()
 
+        class TimerTypical() : Paragraph()
+
         class ActivitiesImage() : Paragraph()
 
         class AskAQuestion() : Paragraph() {
