@@ -139,6 +139,22 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     paragraphs.add(PText("Test it! Open \"Today\" and tap the \"Morning Routine\" task. You will see the checklist."))
     paragraphs.add(ReadmeSheetVM.Paragraph.ChecklistsPractice2())
 
+    paragraphs.add(PTitle("First Steps"))
+    paragraphs.add(PText("We learned the timer, repeating tasks, and checklists. The most important points:"))
+    paragraphs.add(
+        ReadmeSheetVM.Paragraph.ListDash(
+            items = listOf(
+                "Timer is running all the time;",
+                "Using repeating tasks to the max;",
+                "Timer, activity and checklist will be set automatically.",
+            ),
+        )
+    )
+    paragraphs.add(PRedText("You can already use the app!"))
+    paragraphs.add(PText("Right now, try playing with the app: start a new activity, create repeating tasks, checklists. You can rely on my examples."))
+    paragraphs.add(PText("Then move on to advanced features."))
+    paragraphs.add(PText("Good luck!  🍀"))
+
     paragraphs.add(ReadmeSheetVM.Paragraph.AskAQuestion())
 
     return paragraphs
