@@ -31,7 +31,7 @@ import me.timeto.shared.vm.ReadmeSheetVM
 private val hPadding = MyListView.PADDING_OUTER_HORIZONTAL
 
 private val imagesHBetween = 4.dp
-private val imagesHBlock = 10.dp
+private val imagesHBlock = 14.dp
 private val imagesShape = SquircleShape(len = 50f)
 
 private val pTextLineHeight = 22.sp
