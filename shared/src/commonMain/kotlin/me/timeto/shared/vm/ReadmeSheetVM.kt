@@ -174,6 +174,11 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     paragraphs.add(PText("A typical calendar. Tasks from the calendar will be displayed not only in \"Today\" but also on the Home Screen. \"Call Ann\" example:"))
     paragraphs.add(ReadmeSheetVM.Paragraph.CalendarExamples())
 
+    paragraphs.add(PTitle("Shortcuts"))
+    paragraphs.add(PText("Real life example: I meditate every day, to start I open a special video on YouTube."))
+    paragraphs.add(PText("Shortcuts automate this. When I start the \"Meditation\" activity, the video will start automatically."))
+    paragraphs.add(PText("This works especially well with repeating tasks. \"Meditation\" is automatically created every day, I just tap on it, the timer and video starts."))
+
     paragraphs.add(ReadmeSheetVM.Paragraph.AskAQuestion())
 
     return paragraphs
