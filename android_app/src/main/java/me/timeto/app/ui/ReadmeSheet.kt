@@ -245,7 +245,7 @@ private fun ImagePreviewsView(
     val scrollState = rememberScrollState()
     HStack(
         modifier = Modifier
-            .padding(top = paddingTop)
+            .padding(top = paddingTop, bottom = 8.dp)
             .padding(horizontal = imagesHBlock)
             .horizontalScroll(scrollState),
     ) {
