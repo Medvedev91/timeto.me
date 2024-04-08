@@ -43,6 +43,8 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
 
         class GoalsExamples() : Paragraph()
 
+        class CalendarExamples() : Paragraph()
+
         class AskAQuestion() : Paragraph() {
             val title = "Ask a Question"
             val subject: String =
