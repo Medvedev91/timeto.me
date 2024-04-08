@@ -22,6 +22,8 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
 
         class Title(val text: String) : Paragraph()
 
+        class Subtitle(val text: String) : Paragraph()
+
         class Text(val text: String) : Paragraph()
 
         class RedText(val text: String) : Paragraph()
@@ -50,6 +52,7 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
 //
 
 private typealias PTitle = ReadmeSheetVM.Paragraph.Title
+private typealias PSubtitle = ReadmeSheetVM.Paragraph.Subtitle
 private typealias PText = ReadmeSheetVM.Paragraph.Text
 private typealias PRedText = ReadmeSheetVM.Paragraph.RedText
 
