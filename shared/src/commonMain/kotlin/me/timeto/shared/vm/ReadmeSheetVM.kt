@@ -164,6 +164,12 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     paragraphs.add(ReadmeSheetVM.Paragraph.GoalsExamples())
     paragraphs.add(PText("To create goals, go to the activity edit form."))
 
+    paragraphs.add(PTitle("Tasks List"))
+    paragraphs.add(PText("A typical task list with folders. But there are 2 special folders: today and tmrw (tomorrow)."))
+    paragraphs.add(PText("Today - tasks from repeating tasks and calendar go here on a set day, you can add your own."))
+    paragraphs.add(PText("Tmrw (tomorrow) - tasks that will be tomorrow including repeating tasks and calendar. In other words, the tasks that will be moved to \"Today\" tomorrow."))
+    paragraphs.add(PText("Swipe left to delete and right to edit."))
+
     paragraphs.add(ReadmeSheetVM.Paragraph.AskAQuestion())
 
     return paragraphs
