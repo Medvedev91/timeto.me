@@ -159,6 +159,11 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     paragraphs.add(PText("Then move on to advanced features."))
     paragraphs.add(PText("Good luck!  🍀"))
 
+    paragraphs.add(PTitle("Goals"))
+    paragraphs.add(PText("Look at the bottom of the screenshot. For me, I set a goal to work 8 hours a day and read for 30 minutes."))
+    paragraphs.add(ReadmeSheetVM.Paragraph.GoalsExamples())
+    paragraphs.add(PText("To create goals, go to the activity edit form."))
+
     paragraphs.add(ReadmeSheetVM.Paragraph.AskAQuestion())
 
     return paragraphs
