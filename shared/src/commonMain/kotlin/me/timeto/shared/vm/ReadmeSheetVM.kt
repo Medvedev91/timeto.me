@@ -170,6 +170,10 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     paragraphs.add(PText("Tmrw (tomorrow) - tasks that will be tomorrow including repeating tasks and calendar. In other words, the tasks that will be moved to \"Today\" tomorrow."))
     paragraphs.add(PText("Swipe left to delete and right to edit."))
 
+    paragraphs.add(PTitle("Calendar"))
+    paragraphs.add(PText("A typical calendar. Tasks from the calendar will be displayed not only in \"Today\" but also on the Home Screen. \"Call Ann\" example:"))
+    paragraphs.add(ReadmeSheetVM.Paragraph.CalendarExamples())
+
     paragraphs.add(ReadmeSheetVM.Paragraph.AskAQuestion())
 
     return paragraphs
