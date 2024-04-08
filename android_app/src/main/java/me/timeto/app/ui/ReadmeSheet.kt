@@ -155,6 +155,33 @@ fun ReadmeSheet(
                         )
                     }
 
+                    is ReadmeSheetVM.Paragraph.ChecklistsExamples -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_checklists_1,
+                            R.drawable.readme_checklists_2,
+                            R.drawable.readme_checklists_3,
+                        )
+                    }
+
+                    is ReadmeSheetVM.Paragraph.ChecklistsPractice1 -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_checklists_practice_1,
+                            R.drawable.readme_checklists_practice_2,
+                            R.drawable.readme_checklists_practice_3,
+                            R.drawable.readme_checklists_practice_4,
+                            R.drawable.readme_checklists_practice_5,
+                            R.drawable.readme_checklists_practice_6,
+                            R.drawable.readme_checklists_practice_7,
+                        )
+                    }
+
+                    is ReadmeSheetVM.Paragraph.ChecklistsPractice2 -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_checklists_practice_8,
+                            R.drawable.readme_checklists_practice_9,
+                        )
+                    }
+
                     is ReadmeSheetVM.Paragraph.AskAQuestion -> {
 
                         MyListView__ItemView(
