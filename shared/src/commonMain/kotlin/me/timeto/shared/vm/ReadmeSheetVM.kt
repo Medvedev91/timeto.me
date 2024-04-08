@@ -54,22 +54,27 @@ private typealias PText = ReadmeSheetVM.Paragraph.Text
 private typealias PRedText = ReadmeSheetVM.Paragraph.RedText
 
 private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
+
     val paragraphs = mutableListOf<ReadmeSheetVM.Paragraph>()
+
     paragraphs.add(PText("Hi,"))
     paragraphs.add(PText("Developer is here  $developerEmoji"))
     paragraphs.add(PText("I built this app to manage my productivity. Here I will show how I use it."))
-    paragraphs.add(PText("First of all, it is a pragmatic guide. I mean, it is NOT just a list of features, but my real day-to-day experience."))
-    paragraphs.add(PText("I will start with the most important things: timer, repeating tasks and checklists. That is 90% I use."))
+    paragraphs.add(PRedText("This guide is not just a list of features, but my real day-to-day experience."))
+    paragraphs.add(PText("I will start with the most important things: timer, repeating tasks and checklists, that is 90% I use. Then tasks, calendar, goals, shortcuts, etc."))
     paragraphs.add(PText("Enjoy!"))
+
     paragraphs.add(PTitle("Timer"))
     paragraphs.add(PText("You must set a timer for each activity, like eating, working, reading, etc."))
-    paragraphs.add(PText("Once you complete one activity, you must immediately set the timer for the next one, even if it is a \"sleeping\" activity."))
-    paragraphs.add(PRedText("There is no \"stop\" option! Timer is running all the time."))
+    paragraphs.add(PRedText("There is NO stop option! To finish the current activity, you have to start the next one."))
+    paragraphs.add(PText("In other words, once you complete one activity, you must start the timer for the next activity, even sleep or breakfast."))
+    paragraphs.add(PText("It helps me to always stay focused on what I have to do. Most of the time my screen looks like a typical pomodoro timer:"))
+    paragraphs.add(ReadmeSheetVM.Paragraph.TimerTypical())
+    paragraphs.add(PText("This way also provides real 24/7 data on how long everything takes:"))
     paragraphs.add(ReadmeSheetVM.Paragraph.ChartImages())
-    paragraphs.add(PRedText("There is no \"stop\" option! Timer is running all the time."))
-    paragraphs.add(ReadmeSheetVM.Paragraph.ActivitiesImage())
-    paragraphs.add(PTitle("Repeating Tasks"))
-    paragraphs.add(PText("We learned the timer, repeating tasks, and checklists. Here are the most important points:"))
+    paragraphs.add(PText("The app has some activities by default, but you can add your own. Here are mine:"))
+    paragraphs.add(ReadmeSheetVM.Paragraph.TimerMyActivities())
+
     paragraphs.add(
         ReadmeSheetVM.Paragraph.ListDash(
             items = listOf(
@@ -79,6 +84,8 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
             ),
         )
     )
+
     paragraphs.add(ReadmeSheetVM.Paragraph.AskAQuestion())
+
     return paragraphs
 }
