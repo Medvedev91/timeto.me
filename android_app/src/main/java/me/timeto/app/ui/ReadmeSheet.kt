@@ -75,6 +75,12 @@ fun ReadmeSheet(
 
                     is ReadmeSheetVM.Paragraph.ListDash -> PListDashedView(paragraph.items)
 
+                    is ReadmeSheetVM.Paragraph.TimerTypical -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_timer_1,
+                        )
+                    }
+
                     is ReadmeSheetVM.Paragraph.ChartImages -> {
                         ImagePreviewsView(
                             R.drawable.readme_chart_1,
