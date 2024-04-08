@@ -37,6 +37,10 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
         class RepeatingsPractice1() : Paragraph()
         class RepeatingsPractice2() : Paragraph()
 
+        class ChecklistsExamples() : Paragraph()
+        class ChecklistsPractice1() : Paragraph()
+        class ChecklistsPractice2() : Paragraph()
+
         class AskAQuestion() : Paragraph() {
             val title = "Ask a Question"
             val subject: String =
