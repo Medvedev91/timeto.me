@@ -81,6 +81,12 @@ fun ReadmeSheet(
                         )
                     }
 
+                    is ReadmeSheetVM.Paragraph.TimerMyActivities -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_activities_1,
+                        )
+                    }
+
                     is ReadmeSheetVM.Paragraph.ChartImages -> {
                         ImagePreviewsView(
                             R.drawable.readme_chart_1,
