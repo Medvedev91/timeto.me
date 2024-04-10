@@ -2,6 +2,7 @@ import SwiftUI
 import shared
 
 private let hPadding = MyListView.PADDING_OUTER_HORIZONTAL
+private let pTextLineHeight = 4.0
 
 struct ReadmeSheet: View {
 
@@ -48,7 +49,7 @@ struct ReadmeSheet: View {
                                     .font(.system(size: 18))
                                     .padding(.top, 24)
                                     .padding(.horizontal, hPadding)
-                                    .lineSpacing(4)
+                                    .lineSpacing(pTextLineHeight)
                                 Spacer()
                             }
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphRedText {
