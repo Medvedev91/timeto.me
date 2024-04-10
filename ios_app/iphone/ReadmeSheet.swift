@@ -1,6 +1,8 @@
 import SwiftUI
 import shared
 
+private let hPadding = MyListView.PADDING_OUTER_HORIZONTAL
+
 struct ReadmeSheet: View {
 
     @Binding var isPresented: Bool
@@ -22,26 +24,42 @@ struct ReadmeSheet: View {
 
                 VStack {
 
-                    Text("Set a timer for each task to stay focused.")
-                        .fontWeight(.bold)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.bottom, 8)
+                    ForEachIndexed(state.paragraphs) { _, paragraph in
 
-                    Text("No \"stop\" option is the main feature of this app. Once you have completed one activity, you have to set a timer for the next one, even if it's a \"sleeping\" activity.")
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.bottom, 8)
-
-                    // todo
-                    //                                Text("This time-tracking approach provides real 24/7 data on how long everything takes. You can see it on the ")
-                    //                                        + Text("Chart").fontWeight(.bold)
-                    //                                        + Text(".")
-                    Text("This time-tracking approach provides real 24/7 data on how long everything takes. You can see it on the Chart.")
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTitle {
+                            HStack {
+                                Text(paragraph.text)
+                                    .font(.system(size: 25, weight: .bold))
+                                    .padding(.top, 44)
+                                    .padding(.horizontal, hPadding)
+                                Spacer()
+                            }
+                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphSubtitle {
+                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphText {
+                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphRedText {
+                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphListDash {
+                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTimerTypical {
+                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTimerCharts {
+                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTimerMyActivities {
+                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTimerPractice1 {
+                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTimerPractice2 {
+                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphRepeatingsMy {
+                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphRepeatingsToday {
+                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphRepeatingsPractice1 {
+                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphRepeatingsPractice2 {
+                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphChecklistsExamples {
+                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphChecklistsPractice1 {
+                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphChecklistsPractice2 {
+                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphGoalsExamples {
+                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphCalendarExamples {
+                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphAskAQuestion {
+                        } else {
+                            fatalError()
+                        }
+                    }
 
                     Spacer()
                 }
-                .padding(.horizontal, 20)
-                .padding(.vertical, 16)
             }
 
             Sheet__BottomViewClose {
