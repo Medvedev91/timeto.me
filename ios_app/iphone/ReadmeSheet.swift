@@ -87,19 +87,109 @@ struct ReadmeSheet: View {
                             .padding(.horizontal, hPadding)
                             .padding(.top, 12)
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTimerTypical {
-                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTimerCharts {
+                            ImagePreviewsView(
+                                images: [
+                                    "readme_timer_1"
+                                ]
+                            )
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTimerMyActivities {
+                            ImagePreviewsView(
+                                images: [
+                                    "readme_activities_1"
+                                ]
+                            )
+                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTimerCharts {
+                            ImagePreviewsView(
+                                images: [
+                                    "readme_chart_1",
+                                    "readme_chart_2",
+                                    "readme_chart_3"
+                                ]
+                            )
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTimerPractice1 {
+                            ImagePreviewsView(
+                                images: [
+                                    "readme_timer_practice_1",
+                                    "readme_timer_practice_2",
+                                    "readme_timer_practice_3",
+                                    "readme_timer_practice_4"
+                                ]
+                            )
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTimerPractice2 {
+                            ImagePreviewsView(
+                                images: [
+                                    "readme_timer_practice_5",
+                                    "readme_chart_2",
+                                    "readme_chart_3"
+                                ]
+                            )
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphRepeatingsMy {
+                            ImagePreviewsView(
+                                images: [
+                                    "readme_repeatings_1"
+                                ]
+                            )
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphRepeatingsToday {
+                            ImagePreviewsView(
+                                images: [
+                                    "readme_repeatings_2"
+                                ]
+                            )
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphRepeatingsPractice1 {
+                            ImagePreviewsView(
+                                images: [
+                                    "readme_repeating_practice_1",
+                                    "readme_repeating_practice_2",
+                                    "readme_repeating_practice_3"
+                                ]
+                            )
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphRepeatingsPractice2 {
+                            ImagePreviewsView(
+                                images: [
+                                    "readme_repeating_practice_4",
+                                    "readme_repeating_practice_5"
+                                ]
+                            )
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphChecklistsExamples {
+                            ImagePreviewsView(
+                                images: [
+                                    "readme_checklists_1",
+                                    "readme_checklists_2",
+                                    "readme_checklists_3"
+                                ]
+                            )
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphChecklistsPractice1 {
+                            ImagePreviewsView(
+                                images: [
+                                    "readme_checklists_practice_1",
+                                    "readme_checklists_practice_2",
+                                    "readme_checklists_practice_3",
+                                    "readme_checklists_practice_4",
+                                    "readme_checklists_practice_5",
+                                    "readme_checklists_practice_6",
+                                    "readme_checklists_practice_7"
+                                ]
+                            )
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphChecklistsPractice2 {
+                            ImagePreviewsView(
+                                images: [
+                                    "readme_checklists_practice_8",
+                                    "readme_checklists_practice_9"
+                                ]
+                            )
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphGoalsExamples {
+                            ImagePreviewsView(
+                                images: [
+                                    "readme_goals_1"
+                                ]
+                            )
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphCalendarExamples {
+                            ImagePreviewsView(
+                                images: [
+                                    "readme_calendar_1",
+                                    "readme_calendar_2"
+                                ]
+                            )
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphAskAQuestion {
                             AskAQuestionButtonView(
                                 subject: paragraph.subject,
@@ -154,6 +244,5 @@ private struct ImagePreviewsView: View {
                 Padding(horizontal: 10)
             }
         }
-        .padding(.top, 28)
     }
 }
