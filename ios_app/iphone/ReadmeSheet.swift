@@ -17,7 +17,7 @@ struct ReadmeSheet: View {
             Sheet__HeaderView(
                 title: state.title,
                 scrollToHeader: scroll,
-                bgColor: c.bg
+                bgColor: c.sheetBg
             )
 
             ScrollViewWithVListener(showsIndicators: false, vScroll: $scroll) {
