@@ -80,6 +80,13 @@ struct ReadmeSheet: View {
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphGoalsExamples {
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphCalendarExamples {
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphAskAQuestion {
+                            AskAQuestionButtonView(
+                                subject: paragraph.subject,
+                                isFirst: true,
+                                isLast: true,
+                                withTopDivider: false
+                            )
+                                .padding(.top, 36)
                         } else {
                             fatalError()
                         }
