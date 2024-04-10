@@ -142,13 +142,13 @@ private struct ImagePreviewsView: View {
                     Image(item)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .clipShape(.rect(cornerRadius: 16))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 16)
-                                .stroke(c.text, lineWidth: onePx)
-                        )
+                        .cornerRadius(16)
+                        .shadow(radius: 4)
                         .frame(height: 350)
                         .padding(.horizontal, 6)
+                        // Paddings for shadow radius
+                        .padding(.top, 28)
+                        .padding(.bottom, 4)
                 }
 
                 Padding(horizontal: 10)
