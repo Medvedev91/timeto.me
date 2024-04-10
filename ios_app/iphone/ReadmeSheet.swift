@@ -81,7 +81,7 @@ struct ReadmeSheet: View {
 
                                         Spacer()
                                     }
-                                            .padding(.top, 12)
+                                    .padding(.top, 12)
                                 }
                             }
                             .padding(.horizontal, hPadding)
