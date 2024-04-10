@@ -43,6 +43,14 @@ struct ReadmeSheet: View {
                                 Spacer()
                             }
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphText {
+                            HStack {
+                                Text(paragraph.text)
+                                    .font(.system(size: 18))
+                                    .padding(.top, 24)
+                                    .padding(.horizontal, hPadding)
+                                    .lineSpacing(4)
+                                Spacer()
+                            }
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphRedText {
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphListDash {
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTimerTypical {
