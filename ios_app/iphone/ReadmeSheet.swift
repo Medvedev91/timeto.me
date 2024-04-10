@@ -219,6 +219,8 @@ private struct ImagePreviewsView: View {
 
     let images: [String]
 
+    @EnvironmentObject private var nativeSheet: NativeSheet
+
     var body: some View {
 
         ScrollView(.horizontal, showsIndicators: false) {
@@ -229,19 +231,83 @@ private struct ImagePreviewsView: View {
 
                 ForEachIndexed(images) { _, item in
 
-                    Image(item)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .cornerRadius(16)
-                        .shadow(radius: 4)
-                        .frame(height: 350)
-                        .padding(.horizontal, 6)
-                        // Paddings for shadow radius
-                        .padding(.top, 28)
-                        .padding(.bottom, 4)
+                    Button(
+                        action: {
+                            nativeSheet.show { isSliderPresented in
+                                ImagesSlider(
+                                    isPresented: isSliderPresented,
+                                    images: images
+                                )
+                            }
+                        },
+                        label: {
+                            Image(item)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .cornerRadius(16)
+                                .shadow(radius: 4)
+                                .frame(height: 350)
+                                .padding(.horizontal, 6)
+                                // Paddings for shadow radius
+                                .padding(.top, 28)
+                                .padding(.bottom, 4)
+                        }
+                    )
                 }
 
                 Padding(horizontal: 10)
+            }
+        }
+    }
+}
+
+private struct ImagesSlider: View {
+
+    @Binding var isPresented: Bool
+    let images: [String]
+
+    var body: some View {
+
+        VStack {
+
+            ScrollView(.horizontal, showsIndicators: false) {
+
+                HStack {
+
+                    Padding(horizontal: 10)
+
+                    ForEachIndexed(images) { _, item in
+
+                        Image(item)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .cornerRadius(16)
+                            .shadow(radius: 8)
+                            .frame(height: .infinity)
+                            .padding(.horizontal, 12)
+                            // Paddings for shadow radius
+                            .padding(.top, 16)
+                            .padding(.bottom, 12)
+                    }
+
+                    Padding(horizontal: 10)
+                }
+            }
+
+            HStack {
+                Spacer()
+                Button(
+                    action: {
+                        isPresented = false
+                    },
+                    label: {
+                        Text("close")
+                            .foregroundColor(c.text)
+                    }
+                )
+                .padding(.top, 12)
+                .padding(.bottom, 12)
+                .padding(.trailing, 36)
             }
         }
     }
