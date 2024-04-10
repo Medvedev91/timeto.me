@@ -74,6 +74,7 @@ struct ReadmeSheet: View {
                     }
 
                     Spacer()
+                        .padding(.top, 36)
                 }
             }
 
