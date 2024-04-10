@@ -124,3 +124,36 @@ struct ReadmeSheet: View {
         }
     }
 }
+
+private struct ImagePreviewsView: View {
+
+    let images: [String]
+
+    var body: some View {
+
+        ScrollView(.horizontal, showsIndicators: false) {
+
+            HStack {
+
+                Padding(horizontal: 10)
+
+                ForEachIndexed(images) { _, item in
+
+                    Image(item)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .clipShape(.rect(cornerRadius: 16))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(c.text, lineWidth: onePx)
+                        )
+                        .frame(height: 350)
+                        .padding(.horizontal, 6)
+                }
+
+                Padding(horizontal: 10)
+            }
+        }
+        .padding(.top, 28)
+    }
+}
