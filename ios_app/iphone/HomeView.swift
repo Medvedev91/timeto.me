@@ -199,6 +199,7 @@ struct HomeView: View {
                                 )
                                 MainDivider()
                             }
+                            .id("home_checklist_id_\(checklistDb.id)") // Force update on change
                         }
 
                         if isMainTasksExists {
