@@ -214,8 +214,14 @@ class HomeVM : __VM<HomeVM.State>() {
                 delay(1_000L)
             }
         }
-        if (batteryLevelOrNull == null)
-            reportApi("batteryLevelOrNull null")
+
+        if (batteryLevelOrNull == null) {
+            scope.launch {
+                delay(2_000)
+                if (batteryLevelOrNull == null)
+                    reportApi("batteryLevelOrNull null")
+            }
+        }
     }
 
     fun onReadmeOpen() {
