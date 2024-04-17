@@ -5,20 +5,20 @@ import kotlinx.coroutines.flow.*
 class WhatsNewVm : __VM<WhatsNewVm.State>() {
 
     data class State(
-        val historyItems: List<HistoryItem>,
+        val historyItemsUi: List<HistoryItemUi>,
     ) {
         val headerTitle = "What's New"
     }
 
     override val state = MutableStateFlow(
         State(
-            historyItems = prepHistoryItems(),
+            historyItemsUi = prepHistoryItems(),
         )
     )
 
     ///
 
-    data class HistoryItem(
+    data class HistoryItemUi(
         val build: Int,
         val unixDay: Int,
         val title: String,
@@ -26,5 +26,5 @@ class WhatsNewVm : __VM<WhatsNewVm.State>() {
     )
 }
 
-private fun prepHistoryItems(): List<WhatsNewVm.HistoryItem> = listOf(
+private fun prepHistoryItems(): List<WhatsNewVm.HistoryItemUi> = listOf(
 )
