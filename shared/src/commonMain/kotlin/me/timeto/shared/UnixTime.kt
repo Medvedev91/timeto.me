@@ -83,19 +83,19 @@ data class UnixTime(
         val dateTime = Instant.fromEpochSeconds(localDay * 86_400L).toLocalDateTime(TimeZone.UTC)
         return components.joinToString("") { component ->
             when (component) {
-                StringComponent.month -> monthNames[dateTime.monthNumber - 1]
-                StringComponent.month3 -> monthNames3[dateTime.monthNumber - 1]
-                StringComponent.dayOfMonth -> dateTime.dayOfMonth.toString()
-                StringComponent.dayOfWeek -> dayOfWeekNames[dayOfWeek()]
-                StringComponent.dayOfWeek2 -> dayOfWeekNames2[dayOfWeek()]
-                StringComponent.dayOfWeek3 -> dayOfWeekNames3[dayOfWeek()]
+                StringComponent.space -> " "
+                StringComponent.comma -> ","
                 StringComponent.hhmm24 -> {
                     val dayTime = utcTime() % 86_400
                     val (h, m) = listOf(dayTime / 3600, (dayTime % 3_600) / 60)
                     "$h".padStart(2, '0') + ":" + "$m".padStart(2, '0')
                 }
-                StringComponent.space -> " "
-                StringComponent.comma -> ","
+                StringComponent.dayOfWeek -> dayOfWeekNames[dayOfWeek()]
+                StringComponent.dayOfWeek2 -> dayOfWeekNames2[dayOfWeek()]
+                StringComponent.dayOfWeek3 -> dayOfWeekNames3[dayOfWeek()]
+                StringComponent.dayOfMonth -> dateTime.dayOfMonth.toString()
+                StringComponent.month -> monthNames[dateTime.monthNumber - 1]
+                StringComponent.month3 -> monthNames3[dateTime.monthNumber - 1]
             }
         }
     }
@@ -104,6 +104,10 @@ data class UnixTime(
         getStringByComponents(*components.toTypedArray())
 
     enum class StringComponent {
-        month, month3, dayOfMonth, dayOfWeek, dayOfWeek2, dayOfWeek3, hhmm24, space, comma,
+        space, comma,
+        hhmm24,
+        dayOfWeek, dayOfWeek2, dayOfWeek3,
+        dayOfMonth,
+        month, month3,
     }
 }
