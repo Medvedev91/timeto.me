@@ -66,7 +66,7 @@ class PrivacySheetVM : __VM<PrivacySheetVM.State>() {
         const val textRule = "The strongest rule I follow is \"Privacy with no compromise\". I believe that task management is extremely sensitive information. No one should have access to it."
         const val textNever = "The app never sends any personal information!"
         const val textOnly = "The only thing the app sends is technical reports. That's all the data the app sends:"
-        const val textKindly = "I kindly ask you 🙏 not to turn off sending reports. It is the only way I can know I have such great users like you, nothing else motivates me to keep going."
+        const val textKindly = "I kindly ask you 🙏 to turn on sending reports. It is the only way I can know I have such great users like you, nothing else motivates me to keep going."
 
         val sendItems: List<String> = listOf(
             "OS: ${deviceData.os}",
