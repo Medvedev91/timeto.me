@@ -10,10 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import me.timeto.app.H_PADDING
-import me.timeto.app.VStack
-import me.timeto.app.c
-import me.timeto.app.rememberVM
+import me.timeto.app.*
 import me.timeto.shared.vm.WhatsNewVm
 
 @Composable
@@ -54,11 +51,23 @@ fun WhatsNewSheet(
                         .padding(horizontal = H_PADDING),
                 ) {
 
-                    Text(
-                        text = historyItem.title,
-                        color = c.text,
-                        fontWeight = FontWeight.Bold,
-                    )
+                    HStack {
+
+                        Text(
+                            text = historyItem.title,
+                            modifier = Modifier
+                                .weight(1f),
+                            color = c.text,
+                            fontWeight = FontWeight.Bold,
+                        )
+
+                        Text(
+                            text = historyItem.timeAgoText,
+                            modifier = Modifier
+                                .padding(top = 2.dp),
+                            color = c.text,
+                        )
+                    }
 
                     Text(
                         text = historyItem.text,
