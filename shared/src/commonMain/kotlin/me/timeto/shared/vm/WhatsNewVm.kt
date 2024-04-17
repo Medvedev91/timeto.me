@@ -22,7 +22,7 @@ class WhatsNewVm : __VM<WhatsNewVm.State>() {
     override fun onAppear() {
         val lastUnixDay: Int = state.value.historyItemsUi.first().unixDay
         launchExDefault {
-            KvDb.KEY.WHATS_NEW_CHECK_ID.upsertInt(lastUnixDay)
+            KvDb.KEY.WHATS_NEW_CHECK_UNIX_DAY.upsertInt(lastUnixDay)
         }
     }
 
