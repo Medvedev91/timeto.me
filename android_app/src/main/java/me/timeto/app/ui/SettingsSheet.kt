@@ -125,7 +125,7 @@ fun SettingsSheet(
 
                 MyListView__ItemView(
                     isFirst = true,
-                    isLast = true,
+                    isLast = false,
                     withTopDivider = false,
                 ) {
                     MyListView__ItemView__ButtonView(
@@ -143,6 +143,20 @@ fun SettingsSheet(
                     ) {
                         Sheet.show { layer ->
                             ReadmeSheet(layer)
+                        }
+                    }
+                }
+
+                MyListView__ItemView(
+                    isFirst = false,
+                    isLast = true,
+                    withTopDivider = true,
+                ) {
+                    MyListView__ItemView__ButtonView(
+                        text = state.whatsNewTitle,
+                    ) {
+                        Sheet.show { layer ->
+                            WhatsNewSheet(layer)
                         }
                     }
                 }
