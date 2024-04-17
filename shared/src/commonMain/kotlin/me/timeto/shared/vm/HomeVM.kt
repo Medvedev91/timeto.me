@@ -189,6 +189,18 @@ class HomeVM : __VM<HomeVM.State>() {
                     it.copy(readmeMessage = if (kvDb == null) "How to use the app" else null)
                 }
             }
+        KvDb.KEY.WHATS_NEW_CHECK_BUILD
+            .getOrNullFlow()
+            .onEachExIn(scope) { kvDb ->
+                val lastHistoryBuild = WhatsNewVm.prepHistoryItemsUi().first().build
+                val message: String? =
+                    if ((kvDb == null) || (lastHistoryBuild > kvDb.value.toInt()))
+                        "What's New"
+                    else null
+                state.update {
+                    it.copy(whatsNewMessage = message)
+                }
+            }
 
         ////
 
