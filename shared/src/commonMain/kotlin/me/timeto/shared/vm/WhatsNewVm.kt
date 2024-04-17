@@ -20,9 +20,9 @@ class WhatsNewVm : __VM<WhatsNewVm.State>() {
     )
 
     override fun onAppear() {
-        val lastId: Int = state.value.historyItemsUi.first().id
+        val lastUnixDay: Int = state.value.historyItemsUi.first().unixDay
         launchExDefault {
-            KvDb.KEY.WHATS_NEW_CHECK_ID.upsertInt(lastId)
+            KvDb.KEY.WHATS_NEW_CHECK_ID.upsertInt(lastUnixDay)
         }
     }
 
@@ -31,15 +31,14 @@ class WhatsNewVm : __VM<WhatsNewVm.State>() {
     companion object {
 
         fun prepHistoryItemsUi(): List<HistoryItemUi> = listOf(
-            HistoryItemUi(2, 19823, "Checklist Sorting"),
-            HistoryItemUi(1, 19766, "New Calendar"),
+            HistoryItemUi(19823, "Checklist Sorting"),
+            HistoryItemUi(19766, "New Calendar"),
         )
     }
 
     ///
 
     data class HistoryItemUi(
-        val id: Int,
         val unixDay: Int,
         val text: String,
     ) {
