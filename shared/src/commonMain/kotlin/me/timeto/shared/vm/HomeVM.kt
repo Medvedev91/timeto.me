@@ -192,9 +192,9 @@ class HomeVM : __VM<HomeVM.State>() {
         KvDb.KEY.WHATS_NEW_CHECK_BUILD
             .getOrNullFlow()
             .onEachExIn(scope) { kvDb ->
-                val lastHistoryBuild = WhatsNewVm.prepHistoryItemsUi().first().build
+                val lastHistoryId = WhatsNewVm.prepHistoryItemsUi().first().id
                 val message: String? =
-                    if ((kvDb == null) || (lastHistoryBuild > kvDb.value.toInt()))
+                    if ((kvDb == null) || (lastHistoryId > kvDb.value.toInt()))
                         "What's New"
                     else null
                 state.update {
