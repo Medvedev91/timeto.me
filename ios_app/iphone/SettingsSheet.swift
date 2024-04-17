@@ -57,7 +57,7 @@ struct SettingsSheet: View {
                             rightView: AnyView(
                                 Image(systemName: "info.circle")
                                     .font(.system(size: 20))
-                                    .padding(.trailing, 13)
+                                    .padding(.trailing, 8)
                                     .foregroundColor(.blue)
                             )
                         ) {
