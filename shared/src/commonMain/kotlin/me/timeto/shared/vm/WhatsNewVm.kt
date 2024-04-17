@@ -26,9 +26,11 @@ class WhatsNewVm : __VM<WhatsNewVm.State>() {
     ) {
 
         val title: String
+        val timeAgoText: String
 
         init {
             val unixTime = UnixTime.byLocalDay(unixDay)
+            val today = UnixTime().localDay
             title = unixTime.getStringByComponents(
                 UnixTime.StringComponent.dayOfMonth,
                 UnixTime.StringComponent.space,
@@ -36,6 +38,13 @@ class WhatsNewVm : __VM<WhatsNewVm.State>() {
                 UnixTime.StringComponent.space,
                 UnixTime.StringComponent.year,
             )
+            val daysAgo = today - unixDay
+            timeAgoText = when {
+                daysAgo == 0 -> "Today"
+                daysAgo > 365 -> "${daysAgo / 365}y"
+                daysAgo > 30 -> "${daysAgo / 30}mo"
+                else -> "${daysAgo}d"
+            }
         }
     }
 }
