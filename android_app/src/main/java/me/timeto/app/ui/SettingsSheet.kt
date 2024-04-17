@@ -136,7 +136,7 @@ fun SettingsSheet(
                                 "How to Use the App",
                                 tint = c.blue,
                                 modifier = Modifier
-                                    .padding(end = 14.dp)
+                                    .padding(end = 12.dp)
                                     .size(22.dp),
                             )
                         }
@@ -154,6 +154,11 @@ fun SettingsSheet(
                 ) {
                     MyListView__ItemView__ButtonView(
                         text = state.whatsNewTitle,
+                        rightView = {
+                            MyListView__ItemView__ButtonView__RightText(
+                                text = state.whatsNewNote,
+                            )
+                        },
                     ) {
                         Sheet.show { layer ->
                             WhatsNewSheet(layer)
