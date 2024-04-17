@@ -2,6 +2,8 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.UnixTime
+import me.timeto.shared.db.KvDb
+import me.timeto.shared.launchExDefault
 
 class WhatsNewVm : __VM<WhatsNewVm.State>() {
 
@@ -16,6 +18,13 @@ class WhatsNewVm : __VM<WhatsNewVm.State>() {
             historyItemsUi = prepHistoryItemsUi(),
         )
     )
+
+    override fun onAppear() {
+        val lastBuild: Int = state.value.historyItemsUi.first().build
+        launchExDefault {
+            KvDb.KEY.WHATS_NEW_CHECK_BUILD.upsertInt(lastBuild)
+        }
+    }
 
     ///
 
