@@ -18,6 +18,7 @@ class HomeVM : __VM<HomeVM.State>() {
         val todayIntervalsUI: DayIntervalsUI?,
         val fdroidMessage: String?,
         val readmeMessage: String?,
+        val whatsNewMessage: String?,
         val idToUpdate: Long,
     ) {
 
@@ -148,6 +149,7 @@ class HomeVM : __VM<HomeVM.State>() {
             todayIntervalsUI = null, // todo init data
             fdroidMessage = null, // todo init data
             readmeMessage = null, // todo init data
+            whatsNewMessage = null, // todo init data
             idToUpdate = 0,
         )
     )
