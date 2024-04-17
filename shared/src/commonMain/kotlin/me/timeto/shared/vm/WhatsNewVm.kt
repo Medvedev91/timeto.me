@@ -22,7 +22,7 @@ class WhatsNewVm : __VM<WhatsNewVm.State>() {
     override fun onAppear() {
         val lastId: Int = state.value.historyItemsUi.first().id
         launchExDefault {
-            KvDb.KEY.WHATS_NEW_CHECK_BUILD.upsertInt(lastId)
+            KvDb.KEY.WHATS_NEW_CHECK_ID.upsertInt(lastId)
         }
     }
 
