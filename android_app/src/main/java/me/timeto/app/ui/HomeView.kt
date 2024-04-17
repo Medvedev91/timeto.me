@@ -219,6 +219,18 @@ fun HomeView() {
             )
         }
 
+        val whatsNewMessage = state.whatsNewMessage
+        if (whatsNewMessage != null) {
+            MessageButton(
+                title = whatsNewMessage,
+                onClick = {
+                    Sheet.show { layer ->
+                        WhatsNewSheet(layer)
+                    }
+                }
+            )
+        }
+
         ZStack(
             modifier = Modifier
                 .weight(1f),
