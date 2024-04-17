@@ -163,6 +163,8 @@ private suspend fun fillInitData() {
     TaskFolderDb.addTmrw()
     TaskFolderDb.addRaw(time(), "SMDAY", 3)
 
+    KvDb.KEY.WHATS_NEW_CHECK_BUILD.upsertInt(WhatsNewVm.prepHistoryItemsUi().first().build)
+
     val colorsWheel = Wheel(ActivityDb.colors)
     val cGreen = colorsWheel.next()
     val cBlue = colorsWheel.next()
