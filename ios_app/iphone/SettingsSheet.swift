@@ -64,11 +64,11 @@ struct SettingsSheet: View {
                             isReadmePresented.toggle()
                         }
                     }
-                            .padding(.top, 16)
-                            .padding(.bottom, 8)
-                            .sheetEnv(isPresented: $isReadmePresented) {
-                                ReadmeSheet(isPresented: $isReadmePresented)
-                            }
+                    .padding(.top, 16)
+                    .padding(.bottom, 8)
+                    .sheetEnv(isPresented: $isReadmePresented) {
+                        ReadmeSheet(isPresented: $isReadmePresented)
+                    }
 
                     ///
                     /// Checklists
@@ -205,9 +205,9 @@ struct SettingsSheet: View {
                             ) {
                                 isFoldersSettingsPresented = true
                             }
-                                    .sheetEnv(isPresented: $isFoldersSettingsPresented) {
-                                        FoldersSettingsSheet(isPresented: $isFoldersSettingsPresented)
-                                    }
+                            .sheetEnv(isPresented: $isFoldersSettingsPresented) {
+                                FoldersSettingsSheet(isPresented: $isFoldersSettingsPresented)
+                            }
                         }
 
                         MyListView__ItemView(
@@ -225,13 +225,13 @@ struct SettingsSheet: View {
                             ) {
                                 isDayStartPresented = true
                             }
-                                    .sheetEnv(isPresented: $isDayStartPresented) {
-                                        DayStartDialog(
-                                            isPresented: $isDayStartPresented,
-                                            settingsSheetVM: vm,
-                                            settingsSheetState: state
-                                        )
-                                    }
+                            .sheetEnv(isPresented: $isDayStartPresented) {
+                                DayStartDialog(
+                                    isPresented: $isDayStartPresented,
+                                    settingsSheetVM: vm,
+                                    settingsSheetState: state
+                                )
+                            }
                         }
                     }
 
@@ -289,8 +289,8 @@ struct SettingsSheet: View {
                                 // todo do catch
                                 // https://stackoverflow.com/a/64592118/5169420
                                 let path = try! AutoBackupIos.autoBackupsFolder()
-                                        .absoluteString
-                                        .replacingOccurrences(of: "file://", with: "shareddocuments://")
+                                    .absoluteString
+                                    .replacingOccurrences(of: "file://", with: "shareddocuments://")
                                 UIApplication.shared.open(URL(string: path)!)
                             }
                         }
@@ -332,8 +332,8 @@ struct SettingsSheet: View {
                                 HStack {
                                     if let privacyNote = state.privacyNote {
                                         Text(privacyNote)
-                                                .font(.system(size: 21))
-                                                .padding(.trailing, MyListView.PADDING_INNER_HORIZONTAL)
+                                            .font(.system(size: 21))
+                                            .padding(.trailing, MyListView.PADDING_INNER_HORIZONTAL)
                                     } else {
                                         Text("")
                                     }
@@ -351,73 +351,73 @@ struct SettingsSheet: View {
 
                 HStack {
                     Text("timeto.me for iOS\nv\(Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String).\(state.appVersion)")
-                            .foregroundColor(.secondary)
-                            .font(.system(size: 16))
-                            .multilineTextAlignment(.center)
+                        .foregroundColor(.secondary)
+                        .font(.system(size: 16))
+                        .multilineTextAlignment(.center)
                 }
-                        .padding(.top, 24)
-                        .padding(.bottom, 34)
+                .padding(.top, 24)
+                .padding(.bottom, 34)
             }
         }
-                .background(c.sheetBg)
-                .sheetEnv(isPresented: $isAddChecklistPresented) {
-                    ChecklistNameDialog(isPresented: $isAddChecklistPresented, checklist: nil, onSave: {_ in})
-                }
-                .sheetEnv(isPresented: $isAddShortcutPresented) {
-                    ShortcutFormSheet(isPresented: $isAddShortcutPresented, editedShortcut: nil)
-                }
-                .onAppear {
-                    // todo auto backups https://www.hackingwithswift.com/books/ios-swiftui/writing-data-to-the-documents-directory
-                    // let str = "Test Message"
-                    // let dd = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-                    // let url = dd.appendingPathComponent("message.txt")
-                    // do {
-                    // try str.write(to: url, atomically: true, encoding: .utf8)
-                    // let input = try String(contentsOf: url)
-                    // print(url)
-                    // } catch {
-                    // print(error.localizedDescription)
-                    // }
-                }
-                .fileExporter(
-                    isPresented: $isFileExporterPresented,
-                    document: fileForExport,
-                    // I do not know why, but I have to set contentType.
-                    // It also set in MyJsonFileDocument.
-                    contentType: .json,
-                    defaultFilename: fileForExportName
-                ) { result in
-                    switch result {
-                    case .success(let url):
-                        // todo
-                        print("Saved to \(url.absoluteString.removingPercentEncoding!)")
-                    case .failure(let error):
-                        // todo
-                        print(error.myMessage())
-                    }
-                }
-                .fileImporter(isPresented: $isFileImporterPresented, allowedContentTypes: [.json]) { res in
-                    do {
-                        let fileUrl = try res.get()
+        .background(c.sheetBg)
+        .sheetEnv(isPresented: $isAddChecklistPresented) {
+            ChecklistNameDialog(isPresented: $isAddChecklistPresented, checklist: nil, onSave: { _ in })
+        }
+        .sheetEnv(isPresented: $isAddShortcutPresented) {
+            ShortcutFormSheet(isPresented: $isAddShortcutPresented, editedShortcut: nil)
+        }
+        .onAppear {
+            // todo auto backups https://www.hackingwithswift.com/books/ios-swiftui/writing-data-to-the-documents-directory
+            // let str = "Test Message"
+            // let dd = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            // let url = dd.appendingPathComponent("message.txt")
+            // do {
+            // try str.write(to: url, atomically: true, encoding: .utf8)
+            // let input = try String(contentsOf: url)
+            // print(url)
+            // } catch {
+            // print(error.localizedDescription)
+            // }
+        }
+        .fileExporter(
+            isPresented: $isFileExporterPresented,
+            document: fileForExport,
+            // I do not know why, but I have to set contentType.
+            // It also set in MyJsonFileDocument.
+            contentType: .json,
+            defaultFilename: fileForExportName
+        ) { result in
+            switch result {
+            case .success(let url):
+                // todo
+                print("Saved to \(url.absoluteString.removingPercentEncoding!)")
+            case .failure(let error):
+                // todo
+                print(error.myMessage())
+            }
+        }
+        .fileImporter(isPresented: $isFileImporterPresented, allowedContentTypes: [.json]) { res in
+            do {
+                let fileUrl = try res.get()
 
-                        ///
-                        /// https://stackoverflow.com/a/64351217
-                        if !fileUrl.startAccessingSecurityScopedResource() {
-                            throw MyError("iOS restore !fileUrl.startAccessingSecurityScopedResource()")
-                        }
-                        guard let jString = String(data: try Data(contentsOf: fileUrl), encoding: .utf8) else {
-                            throw MyError("iOS restore jString null")
-                        }
-                        fileUrl.stopAccessingSecurityScopedResource()
-                        //////
-
-                        try Backup.shared.restore(jString: jString)
-
-                        isPresented = false
-                    } catch {
-                        Utils_kmpKt.showUiAlert(message: "Error", reportApiText: "iOS restore exception\n" + error.myMessage())
-                    }
+                ///
+                /// https://stackoverflow.com/a/64351217
+                if !fileUrl.startAccessingSecurityScopedResource() {
+                    throw MyError("iOS restore !fileUrl.startAccessingSecurityScopedResource()")
                 }
+                guard let jString = String(data: try Data(contentsOf: fileUrl), encoding: .utf8) else {
+                    throw MyError("iOS restore jString null")
+                }
+                fileUrl.stopAccessingSecurityScopedResource()
+                //////
+
+                try Backup.shared.restore(jString: jString)
+
+                isPresented = false
+            } catch {
+                Utils_kmpKt.showUiAlert(message: "Error", reportApiText: "iOS restore exception\n" + error.myMessage())
+            }
+        }
     }
 
     /// https://www.hackingwithswift.com/quick-start/swiftui/how-to-export-files-using-fileexporter
@@ -472,7 +472,7 @@ struct SettingsSheet: View {
                         action: { isPresented.toggle() },
                         label: { Text("Cancel") }
                     )
-                            .padding(.leading, 25)
+                        .padding(.leading, 25)
 
                     Spacer()
 
@@ -484,12 +484,12 @@ struct SettingsSheet: View {
                         },
                         label: {
                             Text("Save")
-                                    .fontWeight(.heavy)
-                                    .padding(.trailing, 25)
+                                .fontWeight(.heavy)
+                                .padding(.trailing, 25)
                         }
                     )
                 }
-                        .padding(.top, 20)
+                .padding(.top, 20)
 
                 Spacer()
 
@@ -501,7 +501,7 @@ struct SettingsSheet: View {
                         Text(item.note).tag(item.seconds)
                     }
                 }
-                        .pickerStyle(WheelPickerStyle())
+                .pickerStyle(WheelPickerStyle())
 
                 Spacer()
             }
@@ -534,12 +534,12 @@ struct ToolsView_ChecklistView: View {
                 isItemsPresented = true
             }
         }
-                .sheetEnv(isPresented: $isItemsPresented) {
-                    ChecklistSheet(isPresented: $isItemsPresented, checklist: checklist)
-                }
-                .sheetEnv(isPresented: $isEditPresented) {
-                    ChecklistNameDialog(isPresented: $isEditPresented, checklist: checklist, onSave: {_ in})
-                }
+        .sheetEnv(isPresented: $isItemsPresented) {
+            ChecklistSheet(isPresented: $isItemsPresented, checklist: checklist)
+        }
+        .sheetEnv(isPresented: $isEditPresented) {
+            ChecklistNameDialog(isPresented: $isEditPresented, checklist: checklist, onSave: { _ in })
+        }
     }
 }
 
@@ -587,8 +587,8 @@ struct ToolsView_ShortcutView: View {
                 shortcut.performUI()
             }
         }
-                .sheetEnv(isPresented: $isEditPresented) {
-                    ShortcutFormSheet(isPresented: $isEditPresented, editedShortcut: shortcut)
-                }
+        .sheetEnv(isPresented: $isEditPresented) {
+            ShortcutFormSheet(isPresented: $isEditPresented, editedShortcut: shortcut)
+        }
     }
 }
