@@ -49,7 +49,7 @@ struct SettingsSheet: View {
 
                     MyListView__ItemView(
                         isFirst: true,
-                        isLast: true,
+                        isLast: false,
                         withTopDivider: false
                     ) {
                         MyListView__ItemView__ButtonView(
@@ -65,10 +65,29 @@ struct SettingsSheet: View {
                         }
                     }
                     .padding(.top, 16)
-                    .padding(.bottom, 8)
                     .sheetEnv(isPresented: $isReadmePresented) {
                         ReadmeSheet(isPresented: $isReadmePresented)
                     }
+
+                    MyListView__ItemView(
+                        isFirst: false,
+                        isLast: true,
+                        withTopDivider: true
+                    ) {
+                        MyListView__ItemView__ButtonView(
+                            text: state.whatsNewTitle,
+                            rightView: AnyView(
+                                MyListView__ItemView__ButtonView__RightText(
+                                    text: state.whatsNewNote
+                                )
+                            )
+                        ) {
+                            nativeSheet.show { isWhatsNewPresented in
+                                WhatsNewSheet(isPresented: isWhatsNewPresented)
+                            }
+                        }
+                    }
+                    .padding(.bottom, 8)
 
                     ///
                     /// Checklists
