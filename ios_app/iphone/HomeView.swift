@@ -167,7 +167,6 @@ struct HomeView: View {
 
                     VStack {
 
-
                         if let readmeMessage = state.readmeMessage {
                             Button(
                                 action: {
