@@ -60,6 +60,7 @@ struct WhatsNewSheet: View {
                         .padding(.horizontal, H_PADDING)
                     }
                 }
+                .padding(.bottom, 16)
             }
 
             Sheet__BottomViewClose {
