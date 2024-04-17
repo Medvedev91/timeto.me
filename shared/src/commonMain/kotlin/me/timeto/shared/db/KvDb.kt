@@ -56,6 +56,7 @@ data class KvDb(
         DAY_START_OFFSET_SECONDS,
         TOKEN,
         TOKEN_PASSWORD,
+        WHATS_NEW_CHECK_BUILD,
         FEEDBACK_SUBJECT,
         IS_SENDING_REPORTS,
         HOME_README_OPEN_TIME;
