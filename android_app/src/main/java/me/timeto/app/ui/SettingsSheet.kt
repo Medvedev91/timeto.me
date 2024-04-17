@@ -69,11 +69,16 @@ fun SettingsSheet(
     val launcherRestore = rememberLauncherForActivityResult(
         ActivityResultContracts.GetContent()
     ) { destinationUri ->
-        // todo check if null destinationUri. On cancel.
+
+        if (destinationUri == null) {
+            showUiAlert("File not selected")
+            return@rememberLauncherForActivityResult
+        }
+
         // todo handle errors
         scope.launch {
             try {
-                val inputStream = context.contentResolver.openInputStream(destinationUri!!)
+                val inputStream = context.contentResolver.openInputStream(destinationUri)
                 val inputStreamReader = InputStreamReader(inputStream)
                 val bufferedReader = BufferedReader(inputStreamReader)
                 var receiveString: String? = ""
