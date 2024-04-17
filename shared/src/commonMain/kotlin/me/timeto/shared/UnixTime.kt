@@ -96,6 +96,7 @@ data class UnixTime(
                 StringComponent.dayOfMonth -> dateTime.dayOfMonth.toString()
                 StringComponent.month -> monthNames[dateTime.monthNumber - 1]
                 StringComponent.month3 -> monthNames3[dateTime.monthNumber - 1]
+                StringComponent.year -> dateTime.year.toString()
             }
         }
     }
@@ -109,5 +110,6 @@ data class UnixTime(
         dayOfWeek, dayOfWeek2, dayOfWeek3,
         dayOfMonth,
         month, month3,
+        year,
     }
 }
