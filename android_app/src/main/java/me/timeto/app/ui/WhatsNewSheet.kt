@@ -43,7 +43,7 @@ fun WhatsNewSheet(
                 .weight(1f),
         ) {
 
-            state.historyItemsUi.forEach { historyItem ->
+            state.historyItemsUi.forEach { historyItemUi ->
 
                 VStack(
                     modifier = Modifier
@@ -54,7 +54,7 @@ fun WhatsNewSheet(
                     HStack {
 
                         Text(
-                            text = historyItem.title,
+                            text = historyItemUi.title,
                             modifier = Modifier
                                 .weight(1f),
                             color = c.text,
@@ -62,7 +62,7 @@ fun WhatsNewSheet(
                         )
 
                         Text(
-                            text = historyItem.timeAgoText,
+                            text = historyItemUi.timeAgoText,
                             modifier = Modifier
                                 .padding(top = 2.dp),
                             color = c.text,
@@ -70,13 +70,13 @@ fun WhatsNewSheet(
                     }
 
                     Text(
-                        text = historyItem.text,
+                        text = historyItemUi.text,
                         modifier = Modifier
                             .padding(top = 2.dp),
                         color = c.text,
                     )
 
-                    if (state.historyItemsUi.last() != historyItem)
+                    if (state.historyItemsUi.last() != historyItemUi)
                         SheetDividerBg(Modifier.padding(top = 12.dp))
                 }
             }
