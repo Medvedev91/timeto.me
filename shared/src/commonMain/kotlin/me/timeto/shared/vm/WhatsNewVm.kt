@@ -13,9 +13,19 @@ class WhatsNewVm : __VM<WhatsNewVm.State>() {
 
     override val state = MutableStateFlow(
         State(
-            historyItemsUi = prepHistoryItems(),
+            historyItemsUi = prepHistoryItemsUi(),
         )
     )
+
+    ///
+
+    companion object {
+
+        fun prepHistoryItemsUi(): List<HistoryItemUi> = listOf(
+            HistoryItemUi(488, 19823, "Checklist Sorting"),
+            HistoryItemUi(480, 19766, "New Calendar"),
+        )
+    }
 
     ///
 
@@ -48,8 +58,3 @@ class WhatsNewVm : __VM<WhatsNewVm.State>() {
         }
     }
 }
-
-private fun prepHistoryItems(): List<WhatsNewVm.HistoryItemUi> = listOf(
-    WhatsNewVm.HistoryItemUi(488, 19823, "Checklist Sorting"),
-    WhatsNewVm.HistoryItemUi(480, 19766, "New Calendar"),
-)
