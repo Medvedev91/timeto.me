@@ -1,6 +1,7 @@
 package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
+import me.timeto.shared.UnixTime
 
 class WhatsNewVm : __VM<WhatsNewVm.State>() {
 
@@ -21,9 +22,22 @@ class WhatsNewVm : __VM<WhatsNewVm.State>() {
     data class HistoryItemUi(
         val build: Int,
         val unixDay: Int,
-        val title: String,
         val text: String,
-    )
+    ) {
+
+        val title: String
+
+        init {
+            val unixTime = UnixTime.byLocalDay(unixDay)
+            title = unixTime.getStringByComponents(
+                UnixTime.StringComponent.dayOfMonth,
+                UnixTime.StringComponent.space,
+                UnixTime.StringComponent.month3,
+                UnixTime.StringComponent.space,
+                UnixTime.StringComponent.year,
+            )
+        }
+    }
 }
 
 private fun prepHistoryItems(): List<WhatsNewVm.HistoryItemUi> = listOf(
