@@ -75,7 +75,6 @@ fun SettingsSheet(
             return@rememberLauncherForActivityResult
         }
 
-        // todo handle errors
         scope.launch {
             try {
                 val inputStream = context.contentResolver.openInputStream(destinationUri)
