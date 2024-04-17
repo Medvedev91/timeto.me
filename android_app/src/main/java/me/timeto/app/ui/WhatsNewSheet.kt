@@ -63,8 +63,6 @@ fun WhatsNewSheet(
 
                         Text(
                             text = historyItemUi.timeAgoText,
-                            modifier = Modifier
-                                .padding(top = 2.dp),
                             color = c.text,
                         )
                     }
