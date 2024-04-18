@@ -62,7 +62,7 @@ struct ReadmeSheet: View {
                                     .lineSpacing(pTextLineHeight)
                                 Spacer()
                             }
-                            .background(c.red)
+                            .background(c.blue)
                             .padding(.top, 24)
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphListDash {
                             VStack {
