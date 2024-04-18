@@ -23,7 +23,7 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
         class Title(val text: String) : Paragraph()
         class Subtitle(val text: String) : Paragraph()
         class Text(val text: String) : Paragraph()
-        class TextHighLight(val text: String) : Paragraph()
+        class TextHighlight(val text: String) : Paragraph()
         class ListDash(val items: List<String>) : Paragraph()
 
         class TimerTypical() : Paragraph()
@@ -61,7 +61,7 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
 private typealias PTitle = ReadmeSheetVM.Paragraph.Title
 private typealias PSubtitle = ReadmeSheetVM.Paragraph.Subtitle
 private typealias PText = ReadmeSheetVM.Paragraph.Text
-private typealias PTextHighLight = ReadmeSheetVM.Paragraph.TextHighLight
+private typealias PTextHighlight = ReadmeSheetVM.Paragraph.TextHighlight
 
 private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
 
@@ -70,13 +70,13 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     paragraphs.add(PText("Hi,"))
     paragraphs.add(PText("Developer is here  $developerEmoji"))
     paragraphs.add(PText("I built this app to manage my productivity. Here I will show how I use it."))
-    paragraphs.add(PTextHighLight("This guide is not just a list of features, but my real day-to-day experience."))
+    paragraphs.add(PTextHighlight("This guide is not just a list of features, but my real day-to-day experience."))
     paragraphs.add(PText("I will start with the most important things: timer, repeating tasks and checklists, that is 90% I use. Then tasks, calendar, goals, shortcuts, etc."))
     paragraphs.add(PText("Enjoy!"))
 
     paragraphs.add(PTitle("Timer"))
     paragraphs.add(PText("You must set a timer for each activity, like eating, working, reading, etc."))
-    paragraphs.add(PTextHighLight("There is NO stop option! To finish the current activity, you have to start the next one."))
+    paragraphs.add(PTextHighlight("There is NO stop option! To finish the current activity, you have to start the next one."))
     paragraphs.add(PText("In other words, once you complete one activity, you must start the timer for the next activity, even sleep or breakfast."))
     paragraphs.add(PText("It helps me to always stay focused on what I have to do. Most of the time my screen looks like a typical pomodoro timer:"))
     paragraphs.add(ReadmeSheetVM.Paragraph.TimerTypical())
@@ -97,7 +97,7 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     paragraphs.add(ReadmeSheetVM.Paragraph.RepeatingsMy())
     paragraphs.add(PText("Each day, these tasks move to the \"Today\" folder. Tasks are sorted by time of day and show how much time is left. It's like a schedule:"))
     paragraphs.add(ReadmeSheetVM.Paragraph.RepeatingsToday())
-    paragraphs.add(PTextHighLight("The most important, when I press it, it automatically starts a timer with the right activity."))
+    paragraphs.add(PTextHighlight("The most important, when I press it, it automatically starts a timer with the right activity."))
     paragraphs.add(PText("You can create not only everyday tasks. For example, watering a cactus once a week or paying for internet once a month, etc."))
     paragraphs.add(PText("I believe this is the main feature of the app. I recommend using it to the max."))
     paragraphs.add(PSubtitle("Practice"))
@@ -154,7 +154,7 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
             ),
         )
     )
-    paragraphs.add(PTextHighLight("You can already use the app!"))
+    paragraphs.add(PTextHighlight("You can already use the app!"))
     paragraphs.add(PText("Right now, try playing with the app: start a new activity, create repeating tasks, checklists. You can rely on my examples."))
     paragraphs.add(PText("Then move on to advanced features."))
     paragraphs.add(PText("Good luck!  🍀"))

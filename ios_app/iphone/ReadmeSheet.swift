@@ -52,7 +52,7 @@ struct ReadmeSheet: View {
                                     .lineSpacing(pTextLineHeight)
                                 Spacer()
                             }
-                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTextHighLight {
+                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTextHighlight {
                             HStack {
                                 Text(paragraph.text)
                                     .font(.system(size: 18))

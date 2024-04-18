@@ -84,7 +84,7 @@ fun ReadmeSheet(
 
                     is ReadmeSheetVM.Paragraph.Text -> PTextView(paragraph.text)
 
-                    is ReadmeSheetVM.Paragraph.TextHighLight -> PTextHighLightView(paragraph.text)
+                    is ReadmeSheetVM.Paragraph.TextHighlight -> PTextHighLightView(paragraph.text)
 
                     is ReadmeSheetVM.Paragraph.ListDash -> PListDashedView(paragraph.items)
 
