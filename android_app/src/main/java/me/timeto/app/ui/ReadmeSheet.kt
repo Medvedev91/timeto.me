@@ -84,7 +84,7 @@ fun ReadmeSheet(
 
                     is ReadmeSheetVM.Paragraph.Text -> PTextView(paragraph.text)
 
-                    is ReadmeSheetVM.Paragraph.TextHighlight -> PTextHighLightView(paragraph.text)
+                    is ReadmeSheetVM.Paragraph.TextHighlight -> PTextHighlightView(paragraph.text)
 
                     is ReadmeSheetVM.Paragraph.ListDash -> PListDashedView(paragraph.items)
 
@@ -252,7 +252,7 @@ private fun PTextView(
 }
 
 @Composable
-private fun PTextHighLightView(
+private fun PTextHighlightView(
     text: String,
 ) {
     Text(
