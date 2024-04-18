@@ -260,7 +260,7 @@ private fun PTextHighLightView(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 16.dp)
-            .background(c.red)
+            .background(c.blue)
             .padding(horizontal = hPadding)
             .padding(top = 12.dp, bottom = 10.dp),
         color = c.white,
