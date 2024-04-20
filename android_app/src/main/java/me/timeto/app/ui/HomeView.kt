@@ -296,7 +296,7 @@ fun HomeView() {
                 state.goalsUI.forEachIndexed { idx, goalUI ->
 
                     if (idx == 0)
-                        ZStack(modifier = Modifier.height(8.dp))
+                        ZStack(modifier = Modifier.height(6.dp))
 
                     ZStack(
                         modifier = Modifier
