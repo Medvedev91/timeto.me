@@ -37,18 +37,20 @@ val HomeView__BOTTOM_NAVIGATION_HEIGHT = 56.dp
 val HomeView__PRIMARY_FONT_SIZE = 16.sp
 private val HomeView__BOTTOM_NAVIGATION_NOTE_HEIGHT = 38.dp
 
-private val mainTaskItemHeight = 36.dp
+// MTG - Main Tasks & Goals
+private val mtgItemHeight = 36.dp
+private val mtgCircleHPadding = 6.dp
+private val mtgCircleHeight = 22.dp
+private val mtgCircleFontSize = 13.sp
+private val mtgCircleFontWeight = FontWeight.SemiBold
+
 private val mainTasksContentTopPadding = 4.dp
-private val mainTasksContentBottomPadding = 8.dp
 private val mainTaskHalfHPadding = H_PADDING / 2
 
 private val menuButtonModifier = Modifier.size(HomeView__BOTTOM_NAVIGATION_HEIGHT).padding(14.dp)
 
 private val purpleAnimEnter = fadeIn() + expandVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
 private val purpleAnimExit = fadeOut() + shrinkVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
-
-private val goalFontSize = 13.sp
-private val mainTaskTimeShape = SquircleShape(len = 40f)
 
 @Composable
 fun HomeView() {
@@ -281,9 +283,9 @@ fun HomeView() {
                         Modifier.weight(1f)
                     else
                         Modifier.height(
-                            (mainTasksContentTopPadding + mainTasksContentBottomPadding) +
+                            mainTasksContentTopPadding +
                             // 4.5f for the smallest emulator
-                            (mainTaskItemHeight * state.mainTasks.size.toFloat().limitMax(4.5f))
+                            (mtgItemHeight * state.mainTasks.size.toFloat().limitMax(4.5f))
                         )
                     MainTasksView(
                         tasks = state.mainTasks,
@@ -295,51 +297,59 @@ fun HomeView() {
                 if (!isMainTasksExists && checklistDb == null)
                     SpacerW1()
 
-                state.goalsUI.forEachIndexed { idx, goalUI ->
+                state.goalsUI.forEach { goalUi ->
 
-                    if (idx == 0)
-                        ZStack(modifier = Modifier.height(6.dp))
-
-                    ZStack(
+                    HStack(
                         modifier = Modifier
-                            .padding(horizontal = H_PADDING)
-                            .padding(bottom = 12.dp)
-                            .height(20.dp)
-                            .fillMaxWidth()
-                            .clip(roundedShape)
-                            .background(c.homeFg),
+                            .height(mtgItemHeight),
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
 
                         ZStack(
                             modifier = Modifier
-                                .fillMaxHeight()
-                                .fillMaxWidth(goalUI.ratio)
-                                .background(goalUI.bgColor.toColor())
+                                .padding(top = 1.dp)
+                                .padding(horizontal = H_PADDING)
+                                .height(mtgCircleHeight)
+                                .fillMaxWidth()
                                 .clip(roundedShape)
-                                .align(Alignment.CenterStart),
-                        )
+                                .background(c.homeFg),
+                        ) {
 
-                        Text(
-                            text = goalUI.textLeft,
-                            modifier = Modifier
-                                .padding(start = 6.dp)
-                                .align(Alignment.CenterStart),
-                            color = c.white,
-                            fontSize = goalFontSize,
-                            lineHeight = 18.sp,
-                        )
+                            ZStack(
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                                    .fillMaxWidth(goalUi.ratio)
+                                    .background(goalUi.bgColor.toColor())
+                                    .clip(roundedShape)
+                                    .align(Alignment.CenterStart),
+                            )
 
-                        Text(
-                            text = goalUI.textRight,
-                            modifier = Modifier
-                                .padding(end = 6.dp)
-                                .align(Alignment.CenterEnd),
-                            color = c.white,
-                            fontSize = goalFontSize,
-                            lineHeight = 18.sp,
-                        )
+                            Text(
+                                text = goalUi.textLeft,
+                                modifier = Modifier
+                                    .padding(start = mtgCircleHPadding, top = onePx)
+                                    .align(Alignment.CenterStart),
+                                color = c.white,
+                                fontSize = mtgCircleFontSize,
+                                fontWeight = mtgCircleFontWeight,
+                                lineHeight = 18.sp,
+                            )
+
+                            Text(
+                                text = goalUi.textRight,
+                                modifier = Modifier
+                                    .padding(end = mtgCircleHPadding, top = onePx)
+                                    .align(Alignment.CenterEnd),
+                                color = c.white,
+                                fontSize = mtgCircleFontSize,
+                                fontWeight = mtgCircleFontWeight,
+                                lineHeight = 18.sp,
+                            )
+                        }
                     }
                 }
+
+                Padding(vertical = 8.dp)
             }
 
             if (state.isTasksVisible) {
@@ -419,7 +429,6 @@ private fun MainTasksView(
         state = scrollState,
         contentPadding = PaddingValues(
             top = mainTasksContentTopPadding,
-            bottom = mainTasksContentBottomPadding,
         ),
         reverseLayout = true,
     ) {
@@ -431,9 +440,9 @@ private fun MainTasksView(
 
             HStack(
                 modifier = Modifier
-                    .height(mainTaskItemHeight)
+                    .height(mtgItemHeight)
                     .fillMaxWidth()
-                    .padding(horizontal = mainTaskHalfHPadding + 1.dp)
+                    .padding(horizontal = mainTaskHalfHPadding)
                     .clip(squircleShape)
                     .clickable {
                         mainTask.task.startIntervalForUI(
@@ -455,20 +464,25 @@ private fun MainTasksView(
 
                 val timeUI = mainTask.timeUI
                 if (timeUI != null) {
-                    Text(
-                        timeUI.text,
+                    HStack(
                         modifier = Modifier
-                            .padding(end = 6.dp)
-                            .offset(x = (-1).dp)
-                            .clip(mainTaskTimeShape)
+                            .padding(end = 8.dp)
+                            .height(mtgCircleHeight)
+                            .clip(roundedShape)
                             .background(timeUI.textBgColor.toColor())
-                            .padding(horizontal = 4.dp)
-                            .padding(top = 1.dp),
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 12.sp,
-                        lineHeight = 18.sp,
-                        color = c.white,
-                    )
+                            .padding(horizontal = mtgCircleHPadding),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(
+                            timeUI.text,
+                            modifier = Modifier
+                                .padding(top = onePx),
+                            fontWeight = mtgCircleFontWeight,
+                            fontSize = mtgCircleFontSize,
+                            lineHeight = 18.sp,
+                            color = c.white,
+                        )
+                    }
                 }
 
                 if (mainTask.textFeatures.paused != null) {
