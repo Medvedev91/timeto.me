@@ -37,7 +37,7 @@ val HomeView__BOTTOM_NAVIGATION_HEIGHT = 56.dp
 val HomeView__PRIMARY_FONT_SIZE = 16.sp
 private val HomeView__BOTTOM_NAVIGATION_NOTE_HEIGHT = 38.dp
 
-private val mainTaskItemHeight = 34.dp
+private val mainTaskItemHeight = 36.dp
 private val mainTasksContentTopPadding = 4.dp
 private val mainTasksContentBottomPadding = 8.dp
 private val mainTaskHalfHPadding = H_PADDING / 2
@@ -433,7 +433,7 @@ private fun MainTasksView(
                 modifier = Modifier
                     .height(mainTaskItemHeight)
                     .fillMaxWidth()
-                    .padding(horizontal = mainTaskHalfHPadding)
+                    .padding(horizontal = mainTaskHalfHPadding + 1.dp)
                     .clip(squircleShape)
                     .clickable {
                         mainTask.task.startIntervalForUI(
