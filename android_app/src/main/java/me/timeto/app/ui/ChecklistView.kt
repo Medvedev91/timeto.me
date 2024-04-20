@@ -20,7 +20,7 @@ import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.vm.ChecklistVM
 import me.timeto.shared.vm.ui.ChecklistStateUI
 
-private val checklistItemMinHeight = 36.dp
+private val checklistItemMinHeight = 40.dp
 
 @Composable
 fun ChecklistView(
