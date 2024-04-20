@@ -78,7 +78,11 @@ class HomeVM : __VM<HomeVM.State>() {
                         val timeLeft = goal.seconds - timeDone
                         val textRight = if (timeLeft > 0) timeLeft.toTimerHintNote(isShort = false) else "👍"
                         GoalUI(
-                            textLeft = activityName + " " + goal.seconds.toTimerHintNote(isShort = false),
+                            textLeft = prepGoalTextLeft(
+                                activityName = activityName,
+                                totalSeconds = totalSeconds,
+                                goalSeconds = goal.seconds,
+                            ),
                             textRight = textRight,
                             ratio = timeDone.toFloat() / goal.seconds.toFloat(),
                             bgColor = activity.colorRgba,
@@ -315,4 +319,17 @@ class HomeVM : __VM<HomeVM.State>() {
             val noteColor: ColorRgba,
         )
     }
+}
+
+private fun prepGoalTextLeft(
+    activityName: String,
+    totalSeconds: Int,
+    goalSeconds: Int,
+): String {
+    val goalTimeText = goalSeconds.toTimerHintNote(isShort = false)
+    if (totalSeconds < 60)
+        return "$activityName $goalTimeText"
+
+    val done = totalSeconds.toTimerHintNote(isShort = false)
+    return "$activityName  $done / $goalTimeText"
 }
