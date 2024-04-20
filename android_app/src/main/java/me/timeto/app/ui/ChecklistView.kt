@@ -20,6 +20,8 @@ import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.vm.ChecklistVM
 import me.timeto.shared.vm.ui.ChecklistStateUI
 
+private val checklistItemMinHeight = 40.dp
+
 @Composable
 fun ChecklistView(
     checklistDb: ChecklistDb,
@@ -40,7 +42,6 @@ fun ChecklistView(
 
         val itemStartPadding = 8.dp
         val checkboxSize = 18.dp
-        val checklistItemMinHeight = 44.dp
 
         val completionState = state.checklistUI.stateUI
         val checklistMenuInnerIconPadding = (checklistItemMinHeight - checkboxSize) / 2
