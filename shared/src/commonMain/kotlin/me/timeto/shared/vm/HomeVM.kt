@@ -331,5 +331,5 @@ private fun prepGoalTextLeft(
         return "$activityName $goalTimeText"
 
     val done = totalSeconds.toTimerHintNote(isShort = false)
-    return "$activityName  $done / $goalTimeText"
+    return "$activityName $done / $goalTimeText"
 }
