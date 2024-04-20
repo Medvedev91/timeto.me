@@ -80,8 +80,7 @@ class HomeVM : __VM<HomeVM.State>() {
                         GoalUI(
                             textLeft = prepGoalTextLeft(
                                 activityName = activityName,
-                                totalSeconds = totalSeconds,
-                                goalSeconds = goal.seconds,
+                                secondsLeft = totalSeconds,
                             ),
                             textRight = textRight,
                             ratio = timeDone.toFloat() / goal.seconds.toFloat(),
@@ -323,13 +322,11 @@ class HomeVM : __VM<HomeVM.State>() {
 
 private fun prepGoalTextLeft(
     activityName: String,
-    totalSeconds: Int,
-    goalSeconds: Int,
+    secondsLeft: Int,
 ): String {
-    val goalTimeText = goalSeconds.toTimerHintNote(isShort = false)
-    if (totalSeconds < 60)
-        return "$activityName $goalTimeText"
-
-    val done = totalSeconds.toTimerHintNote(isShort = false)
-    return "$activityName $done / $goalTimeText"
+    if (secondsLeft == 0)
+        return activityName
+    val rem = secondsLeft % 60
+    val secondsToUi = if (rem == 0) secondsLeft else (secondsLeft + (60 - rem))
+    return "$activityName ${secondsToUi.toTimerHintNote(isShort = false)}"
 }
