@@ -38,7 +38,7 @@ val HomeView__PRIMARY_FONT_SIZE = 16.sp
 private val HomeView__BOTTOM_NAVIGATION_NOTE_HEIGHT = 38.dp
 
 // MTG - Main Tasks & Goals
-private val mtgItemHeight = 36.dp
+private val mtgItemHeight = 40.dp
 private val mtgCircleHPadding = 6.dp
 private val mtgCircleHeight = 22.dp
 private val mtgCircleFontSize = 13.sp
