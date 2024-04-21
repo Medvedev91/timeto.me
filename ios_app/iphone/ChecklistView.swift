@@ -2,7 +2,7 @@ import SwiftUI
 import shared
 
 private let checkboxSize = 20.0
-private let checklistItemMinHeight = 46.0
+private let checklistItemMinHeight = 42.0
 
 struct ChecklistView: View {
 
