@@ -14,17 +14,16 @@ private let mtgCircleHeight = 24.0
 private let mtgCircleFontSize = 15.0
 private let mtgCircleFontWeight: Font.Weight = .semibold
 
-private let taskCountsHeight = 36.0
-
 private let mainTasksContentTopPadding = 4.0
+
+private let navigationNoteHeight = 36.0
+private let navigationButtonHeight = HomeView__BOTTOM_NAVIGATION_HEIGHT + navigationNoteHeight
 
 private let menuTimeFont = buildTimerFont(size: 10)
 
 private let timerFont1 = buildTimerFont(size: 44)
 private let timerFont2 = buildTimerFont(size: 38)
 private let timerFont3 = buildTimerFont(size: 30)
-
-private let navAndTasksTextHeight = HomeView__BOTTOM_NAVIGATION_HEIGHT + taskCountsHeight
 
 struct HomeView: View {
 
@@ -283,7 +282,7 @@ struct HomeView: View {
 
                         Padding(vertical: 16.0)
                     }
-                    .padding(.bottom, navAndTasksTextHeight)
+                    .padding(.bottom, navigationButtonHeight)
 
                     if (state.isTasksVisible) {
                         TasksView()
@@ -389,7 +388,7 @@ struct HomeView: View {
                     }
                 )
             }
-            .frame(width: .infinity, height: state.isTasksVisible ? HomeView__BOTTOM_NAVIGATION_HEIGHT : navAndTasksTextHeight)
+            .frame(width: .infinity, height: state.isTasksVisible ? HomeView__BOTTOM_NAVIGATION_HEIGHT : navigationButtonHeight)
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
         .onReceive(shortcutPublisher) { shortcut in
