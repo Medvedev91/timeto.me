@@ -7,11 +7,16 @@ let HomeView__PRIMARY_FONT_SIZE = 18.0
 
 private let menuIconSize = HomeView__BOTTOM_NAVIGATION_HEIGHT
 
+// MTG - Main Tasks & Goals
+private let mtgItemHeight = 38.0
+private let mtgCircleHPadding = 7.0
+private let mtgCircleHeight = 24.0
+private let mtgCircleFontSize = 15.0
+private let mtgCircleFontWeight: Font.Weight = .semibold
+
 private let taskCountsHeight = 36.0
 
-private let mainTaskItemHeight = 32.0
 private let mainTasksContentTopPadding = 4.0
-private let mainTasksContentBottomPadding = 14.0
 
 private let menuTimeFont = buildTimerFont(size: 10)
 
@@ -20,9 +25,6 @@ private let timerFont2 = buildTimerFont(size: 38)
 private let timerFont3 = buildTimerFont(size: 30)
 
 private let navAndTasksTextHeight = HomeView__BOTTOM_NAVIGATION_HEIGHT + taskCountsHeight
-
-private let goalFontSize = 15.0
-private let mainTaskTimeShape = RoundedRectangle(cornerRadius: 8, style: .continuous)
 
 struct HomeView: View {
 
@@ -223,8 +225,8 @@ struct HomeView: View {
                         if isMainTasksExists {
                             let listHeight: CGFloat =
                                 checklistDb == nil ? .infinity :
-                                    (mainTasksContentTopPadding + mainTasksContentBottomPadding) +
-                                    (mainTaskItemHeight * state.mainTasks.count.toDouble().limitMax(5.45))
+                                    mainTasksContentTopPadding +
+                                    (mtgItemHeight * state.mainTasks.count.toDouble().limitMax(5.45))
                             MainTasksView(
                                 tasks: state.mainTasks
                             )
@@ -238,46 +240,48 @@ struct HomeView: View {
                         ForEachIndexed(
                             state.goalsUI,
                             content: { idx, goalUI in
-                                if idx == 0 {
-                                    Padding(vertical: 8)
-                                }
 
                                 ZStack {
 
-                                    GeometryReader { geometry in
-                                        VStack {
-                                            ZStack {
+                                    ZStack {
+
+                                        GeometryReader { geometry in
+                                            VStack {
+                                                ZStack {
+                                                }
+                                                .frame(maxHeight: .infinity)
+                                                .frame(width: geometry.size.width * Double(goalUI.ratio))
+                                                .background(goalUI.bgColor.toColor())
+                                                Spacer()
                                             }
-                                            .frame(maxHeight: .infinity)
-                                            .frame(width: geometry.size.width * Double(goalUI.ratio))
-                                            .background(goalUI.bgColor.toColor())
+                                        }
+                                        .frame(width: .infinity)
+                                        .clipShape(roundedShape)
+
+                                        HStack {
+
+                                            Text(goalUI.textLeft)
+                                                .padding(.leading, mtgCircleHPadding)
+                                                .foregroundColor(c.white)
+                                                .font(.system(size: mtgCircleFontSize, weight: mtgCircleFontWeight))
+
                                             Spacer()
+
+                                            Text(goalUI.textRight)
+                                                .padding(.trailing, mtgCircleHPadding)
+                                                .foregroundColor(c.white)
+                                                .font(.system(size: mtgCircleFontSize, weight: mtgCircleFontWeight))
                                         }
                                     }
-                                    .frame(width: .infinity)
-                                    .clipShape(roundedShape)
-
-                                    HStack {
-
-                                        Text(goalUI.textLeft)
-                                            .padding(.leading, 8)
-                                            .foregroundColor(c.white)
-                                            .font(.system(size: goalFontSize))
-
-                                        Spacer()
-
-                                        Text(goalUI.textRight)
-                                            .padding(.trailing, 8)
-                                            .foregroundColor(c.white)
-                                            .font(.system(size: goalFontSize))
-                                    }
+                                    .frame(height: mtgCircleHeight, alignment: .center)
+                                    .background(roundedShape.fill(c.homeFg))
+                                    .padding(.horizontal, H_PADDING)
                                 }
-                                .frame(height: 24, alignment: .center)
-                                .background(roundedShape.fill(c.homeFg))
-                                .padding(.bottom, 12)
-                                .padding(.horizontal, H_PADDING)
+                                .frame(height: mtgItemHeight, alignment: .center)
                             }
                         )
+
+                        Padding(vertical: 16.0)
                     }
                     .padding(.bottom, navAndTasksTextHeight)
 
@@ -444,7 +448,6 @@ private struct MainTasksView: View {
 
                         ZStack {
                         }
-                        .frame(height: mainTasksContentBottomPadding)
                         .id(LIST_BOTTOM_ITEM_ID)
                     }
                     .frame(minHeight: geometry.size.height)
@@ -494,13 +497,11 @@ private struct MainTaskItemView: View {
                     if let timeUI = mainTask.timeUI {
                         Text(timeUI.text)
                             .foregroundColor(.white)
-                            .font(.system(size: 13, weight: .bold))
-                            .padding(.leading, 4)
-                            .padding(.trailing, 4)
-                            .padding(.top, 3)
-                            .padding(.bottom, 2)
-                            .background(mainTaskTimeShape.fill(timeUI.textBgColor.toColor()))
-                            .padding(.trailing, 6)
+                            .font(.system(size: mtgCircleFontSize, weight: mtgCircleFontWeight))
+                            .padding(.horizontal, mtgCircleHPadding)
+                            .frame(height: mtgCircleHeight)
+                            .background(roundedShape.fill(timeUI.textBgColor.toColor()))
+                            .padding(.trailing, 8)
                     }
 
                     if mainTask.textFeatures.paused != nil {
@@ -524,7 +525,7 @@ private struct MainTaskItemView: View {
                             .font(.system(size: 14, weight: .light))
                     }
                 }
-                .frame(height: mainTaskItemHeight)
+                .frame(height: mtgItemHeight)
                 .padding(.horizontal, H_PADDING)
             }
         )
