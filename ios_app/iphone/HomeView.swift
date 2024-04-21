@@ -8,7 +8,7 @@ let HomeView__PRIMARY_FONT_SIZE = 18.0
 private let menuIconSize = HomeView__BOTTOM_NAVIGATION_HEIGHT
 
 // MTG - Main Tasks & Goals
-private let mtgItemHeight = 42.0
+let HomeView__MTG_ITEM_HEIGHT = 42.0
 private let mtgCircleHPadding = 7.0
 private let mtgCircleHeight = 24.0
 private let mtgCircleFontSize = 15.0
@@ -225,7 +225,7 @@ struct HomeView: View {
                             let listHeight: CGFloat =
                                 checklistDb == nil ? .infinity :
                                     mainTasksContentTopPadding +
-                                    (mtgItemHeight * state.mainTasks.count.toDouble().limitMax(5.45))
+                                    (HomeView__MTG_ITEM_HEIGHT * state.mainTasks.count.toDouble().limitMax(5.45))
                             MainTasksView(
                                 tasks: state.mainTasks
                             )
@@ -276,7 +276,7 @@ struct HomeView: View {
                                     .background(roundedShape.fill(c.homeFg))
                                     .padding(.horizontal, H_PADDING)
                                 }
-                                .frame(height: mtgItemHeight, alignment: .center)
+                                .frame(height: HomeView__MTG_ITEM_HEIGHT, alignment: .center)
                             }
                         )
 
@@ -524,7 +524,7 @@ private struct MainTaskItemView: View {
                             .font(.system(size: 14, weight: .light))
                     }
                 }
-                .frame(height: mtgItemHeight)
+                .frame(height: HomeView__MTG_ITEM_HEIGHT)
                 .padding(.horizontal, H_PADDING)
             }
         )
