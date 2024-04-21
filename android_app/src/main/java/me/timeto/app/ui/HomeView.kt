@@ -35,7 +35,6 @@ import me.timeto.shared.vm.HomeVM
 
 val HomeView__BOTTOM_NAVIGATION_HEIGHT = 56.dp
 val HomeView__PRIMARY_FONT_SIZE = 16.sp
-private val HomeView__BOTTOM_NAVIGATION_NOTE_HEIGHT = 38.dp
 
 // MTG - Main Tasks & Goals
 private val mtgItemHeight = 40.dp
@@ -47,7 +46,8 @@ private val mtgCircleFontWeight = FontWeight.SemiBold
 private val mainTasksContentTopPadding = 4.dp
 private val mainTaskHalfHPadding = H_PADDING / 2
 
-private val menuButtonModifier = Modifier.size(HomeView__BOTTOM_NAVIGATION_HEIGHT).padding(14.dp)
+private val navigationNoteHeight = 38.dp
+private val navigationButtonModifier = Modifier.size(HomeView__BOTTOM_NAVIGATION_HEIGHT).padding(14.dp)
 
 private val purpleAnimEnter = fadeIn() + expandVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
 private val purpleAnimExit = fadeOut() + shrinkVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
@@ -241,7 +241,7 @@ fun HomeView() {
             VStack(
                 modifier = Modifier
                     .zIndex(1f)
-                    .padding(bottom = HomeView__BOTTOM_NAVIGATION_HEIGHT + HomeView__BOTTOM_NAVIGATION_NOTE_HEIGHT),
+                    .padding(bottom = HomeView__BOTTOM_NAVIGATION_HEIGHT + navigationNoteHeight),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
@@ -551,7 +551,7 @@ private fun NavigationView(
                 painterResource(id = R.drawable.sf_timer_medium_thin),
                 contentDescription = "Timer",
                 tint = c.homeFontSecondary,
-                modifier = menuButtonModifier,
+                modifier = navigationButtonModifier,
             )
         }
 
@@ -569,7 +569,7 @@ private fun NavigationView(
             Text(
                 text = state.menuNote,
                 modifier = Modifier
-                    .height(HomeView__BOTTOM_NAVIGATION_NOTE_HEIGHT)
+                    .height(navigationNoteHeight)
                     .padding(top = 8.dp),
                 color = c.homeFontSecondary,
                 fontSize = 13.sp,
@@ -648,7 +648,7 @@ private fun NavigationView(
                 painterResource(id = R.drawable.sf_ellipsis_circle_medium_thin),
                 contentDescription = "Menu",
                 tint = c.homeFontSecondary,
-                modifier = menuButtonModifier,
+                modifier = navigationButtonModifier,
             )
         }
     }
