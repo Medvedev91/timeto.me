@@ -443,7 +443,7 @@ private fun MainTasksView(
                     .height(mtgItemHeight)
                     .fillMaxWidth()
                     .padding(horizontal = mainTaskHalfHPadding)
-                    .clip(squircleShape)
+                    .clip(roundedShape)
                     .clickable {
                         mainTask.task.startIntervalForUI(
                             onStarted = {},
