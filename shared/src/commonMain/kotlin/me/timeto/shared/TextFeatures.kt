@@ -132,10 +132,10 @@ data class TextFeatures(
             val isOverdue = status.isOverdue()
             val (h, m) = secondsLeft.absoluteValue.toHms(roundToNextMinute = !isOverdue)
             val d = h / 24
-            val timeText = when {
+            val timeText: String = when {
                 d >= 1 -> "${d}d"
                 h >= 10 -> "${h}h"
-                h > 0 -> "${h}h${if (m == 0) "" else " ${m}m"}"
+                h > 0 -> if (m == 0) "${h}h" else "$h:${m.toString().padStart(2, '0')}"
                 m == 0 -> "Now! 🙀"
                 else -> "${m}m"
             }
