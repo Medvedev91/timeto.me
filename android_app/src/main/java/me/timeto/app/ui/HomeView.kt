@@ -510,8 +510,10 @@ private fun MainTasksView(
                 if (timeUI != null) {
                     Text(
                         timeUI.note,
-                        fontSize = HomeView__PRIMARY_FONT_SIZE,
-                        fontWeight = FontWeight.Thin,
+                        modifier = Modifier
+                            .padding(top = onePx),
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.ExtraLight,
                         color = timeUI.noteColor.toColor(),
                     )
                 }
