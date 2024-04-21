@@ -118,7 +118,7 @@ struct ChecklistView: View {
                         }
                     )
                 }
-                .padding(.horizontal, H_PADDING)
+                .padding(.horizontal, H_PADDING - 2)
             }
         }
     }
