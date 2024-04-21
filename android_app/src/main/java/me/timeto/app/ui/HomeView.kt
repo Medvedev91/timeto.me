@@ -37,7 +37,7 @@ val HomeView__BOTTOM_NAVIGATION_HEIGHT = 56.dp
 val HomeView__PRIMARY_FONT_SIZE = 16.sp
 
 // MTG - Main Tasks & Goals
-private val mtgItemHeight = 40.dp
+val HomeView__MTG_ITEM_HEIGHT = 40.dp
 private val mtgCircleHPadding = 6.dp
 private val mtgCircleHeight = 22.dp
 private val mtgCircleFontSize = 13.sp
@@ -285,7 +285,7 @@ fun HomeView() {
                         Modifier.height(
                             mainTasksContentTopPadding +
                             // 4.5f for the smallest emulator
-                            (mtgItemHeight * state.mainTasks.size.toFloat().limitMax(4.5f))
+                            (HomeView__MTG_ITEM_HEIGHT * state.mainTasks.size.toFloat().limitMax(4.5f))
                         )
                     MainTasksView(
                         tasks = state.mainTasks,
@@ -301,7 +301,7 @@ fun HomeView() {
 
                     HStack(
                         modifier = Modifier
-                            .height(mtgItemHeight),
+                            .height(HomeView__MTG_ITEM_HEIGHT),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
 
@@ -440,7 +440,7 @@ private fun MainTasksView(
 
             HStack(
                 modifier = Modifier
-                    .height(mtgItemHeight)
+                    .height(HomeView__MTG_ITEM_HEIGHT)
                     .fillMaxWidth()
                     .padding(horizontal = mainTaskHalfHPadding)
                     .clip(roundedShape)
