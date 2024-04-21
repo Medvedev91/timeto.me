@@ -49,7 +49,7 @@ struct ChecklistView: View {
                                         HStack {
 
                                             Image(systemName: itemUI.item.isChecked ? "checkmark.square.fill" : "square")
-                                                .foregroundColor(Color.white)
+                                                .foregroundColor(c.white)
                                                 .font(.system(size: checkboxSize, weight: .regular))
                                                 .padding(.trailing, 12)
 
@@ -60,7 +60,6 @@ struct ChecklistView: View {
                                         }
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .frame(minHeight: checklistItemMinHeight)
-                                        //                                                .background(Color.red)
                                     }
                                 )
                             }
@@ -121,7 +120,6 @@ struct ChecklistView: View {
                 }
                 .padding(.horizontal, H_PADDING)
             }
-
         }
     }
 }
