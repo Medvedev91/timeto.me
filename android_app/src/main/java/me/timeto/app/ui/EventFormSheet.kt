@@ -34,9 +34,7 @@ fun EventFormSheet__show(
     defTime: Int? = null,
     onSave: () -> Unit,
 ) {
-    Sheet.show(
-        topPadding = 2.dp
-    ) { layer ->
+    FullScreen.show { layer ->
         EventFormSheet(
             layer = layer,
             editedEvent = editedEvent,
