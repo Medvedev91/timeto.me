@@ -1,6 +1,5 @@
 package me.timeto.app.ui
 
-import android.widget.CalendarView
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,18 +14,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.*
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.EventDb
 import me.timeto.shared.vm.EventFormSheetVM
-import java.text.SimpleDateFormat
-import java.util.*
 
 fun EventFormSheet__show(
     editedEvent: EventDb?,
@@ -64,14 +59,6 @@ private fun EventFormSheet(
 
     val scrollState = rememberScrollState()
 
-    var isFirstImeHideSkipped by remember { mutableStateOf(false) }
-    LaunchedEffect(state.selectedTime) {
-        if (!isFirstImeHideSkipped) {
-            isFirstImeHideSkipped = true
-            return@LaunchedEffect
-        }
-    }
-
     VStack(
         modifier = Modifier
             .fillMaxHeight()
@@ -89,21 +76,27 @@ private fun EventFormSheet(
 
             SpacerW1()
 
-            AndroidView(
-                { CalendarView(it) },
+            Text(
+                text = state.selectedTimeText,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .offset(y = (-2).dp),
-                update = { calendarView ->
-                    calendarView.date = state.selectedTime * 1000L
-                    calendarView.minDate = state.minTime * 1000L
-                    calendarView.setOnDateChangeListener { _, cYear, cMonthIndex, cDay ->
-                        val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-                        val newDate = formatter.parse("$cYear-${cMonthIndex + 1}-${cDay}")!!
-                        val newDayStartTime = UnixTime((newDate.time / 1000L).toInt()).localDayStartTime()
-                        vm.setTimeByComponents(dayStartTime = newDayStartTime)
+                    .padding(start = H_PADDING)
+                    .clip(squircleShape)
+                    .background(c.sheetFg)
+                    .clickable {
+                        Dialog.showDatePicker(
+                            unixTime = state.selectedUnixTime,
+                            minTime = UnixTime(state.minTime),
+                            maxTime = UnixTime(UnixTime.MAX_TIME),
+                            onSelect = {
+                                vm.setTimeByComponents(dayStartTime = it.time)
+                            },
+                        )
                     }
-                }
+                    .padding(horizontal = 10.dp, vertical = 4.dp)
+                    .padding(top = onePx),
+                color = c.text,
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Medium,
             )
 
             DayTimePickerView(
@@ -147,7 +140,7 @@ private fun EventFormSheet(
                     placeholder = "Event",
                     text = state.inputTextValue,
                     onTextChanged = { vm.setInputTextValue(it) },
-                    isAutofocus = state.isAutoFocus,
+                    isAutofocus = true,
                     keyboardButton = ImeAction.Done,
                     keyboardEvent = {},
                 )
