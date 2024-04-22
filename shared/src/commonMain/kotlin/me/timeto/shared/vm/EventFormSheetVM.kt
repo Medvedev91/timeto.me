@@ -21,13 +21,16 @@ class EventFormSheetVM(
         val isAutoFocus: Boolean,
         val textFeatures: TextFeatures,
     ) {
+
+        val selectedUnixTime = UnixTime(selectedTime)
+
         val inputTextValue = textFeatures.textNoFeatures
         val minTime = UnixTime().localDayStartTime()
         val isHeaderDoneEnabled = inputTextValue.isNotBlank() &&
-                                  (UnixTime(selectedTime).localDay >= UnixTime().localDay)
+                                  (selectedUnixTime.localDay >= UnixTime().localDay)
 
         // Only for Android
-        val dayStartTime: Int = UnixTime(selectedTime).localDayStartTime()
+        val dayStartTime: Int = selectedUnixTime.localDayStartTime()
         val hour: Int
         val minute: Int
 
