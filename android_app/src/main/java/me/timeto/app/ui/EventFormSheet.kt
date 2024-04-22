@@ -62,7 +62,6 @@ private fun EventFormSheet(
         )
     }
 
-    val keyboardController = LocalSoftwareKeyboardController.current
     val scrollState = rememberScrollState()
 
     var isFirstImeHideSkipped by remember { mutableStateOf(false) }
@@ -71,87 +70,24 @@ private fun EventFormSheet(
             isFirstImeHideSkipped = true
             return@LaunchedEffect
         }
-        keyboardController?.hide()
     }
 
-    LaunchedEffect(scrollState.isScrollInProgress) {
-        if (scrollState.isScrollInProgress)
-            keyboardController?.hide()
-    }
-
-    Column(
+    VStack(
         modifier = Modifier
             .fillMaxHeight()
             .background(c.sheetBg)
     ) {
 
-        Column(
+        VStack(
             modifier = Modifier
+                .weight(1f)
                 .verticalScroll(
-                    state = scrollState
+                    state = scrollState,
+                    reverseScrolling = true,
                 )
-                .padding(bottom = 20.dp)
-                .navigationBarsPadding()
-                .imePadding()
         ) {
 
-            Row(
-                modifier = Modifier.padding(top = 16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-
-                Icon(
-                    Icons.Rounded.Close,
-                    "Close",
-                    tint = c.text.copy(alpha = 0.4f),
-                    modifier = Modifier
-                        .padding(start = 10.dp)
-                        .size(36.dp)
-                        .clip(roundedShape)
-                        .background(c.transparent)
-                        .clickable {
-                            layer.close()
-                        }
-                        .padding(6.dp)
-                )
-
-                MyListView__ItemView(
-                    modifier = Modifier.weight(1f),
-                    isFirst = true,
-                    isLast = true,
-                    outerPadding = PaddingValues(horizontal = 8.dp)
-                ) {
-                    MyListView__ItemView__TextInputView(
-                        placeholder = "Event Title",
-                        text = state.inputTextValue,
-                        onTextChanged = { vm.setInputTextValue(it) },
-                        isAutofocus = state.isAutoFocus,
-                        keyboardButton = ImeAction.Done,
-                        keyboardEvent = { keyboardController?.hide() },
-                    )
-                }
-
-                Text(
-                    state.headerDoneText,
-                    modifier = Modifier
-                        .padding(end = 10.dp, bottom = 1.dp)
-                        .clip(roundedShape)
-                        .clickable(enabled = state.isHeaderDoneEnabled) {
-                            vm.save {
-                                layer.close()
-                                onSave()
-                            }
-                        }
-                        .padding(horizontal = 8.dp, vertical = 4.dp),
-                    color = animateColorAsState(
-                        targetValue =
-                        if (state.isHeaderDoneEnabled) c.blue
-                        else c.textSecondary.copy(alpha = 0.4f)
-                    ).value,
-                    fontSize = 17.sp,
-                    fontWeight = FontWeight.W600
-                )
-            }
+            SpacerW1()
 
             AndroidView(
                 { CalendarView(it) },
@@ -175,6 +111,67 @@ private fun EventFormSheet(
                 minute = state.minute,
                 onHourChanged = { hour -> vm.setTimeByComponents(hour = hour) },
                 onMinuteChanged = { minute -> vm.setTimeByComponents(minute = minute) },
+            )
+        }
+
+        HStack(
+            modifier = Modifier
+                .padding(vertical = 8.dp)
+                .navigationBarsPadding()
+                .imePadding(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+
+            Icon(
+                Icons.Rounded.Close,
+                "Close",
+                tint = c.text.copy(alpha = 0.4f),
+                modifier = Modifier
+                    .padding(start = 10.dp)
+                    .size(36.dp)
+                    .clip(roundedShape)
+                    .background(c.transparent)
+                    .clickable {
+                        layer.close()
+                    }
+                    .padding(6.dp)
+            )
+
+            MyListView__ItemView(
+                modifier = Modifier.weight(1f),
+                isFirst = true,
+                isLast = true,
+                outerPadding = PaddingValues(horizontal = 8.dp)
+            ) {
+                MyListView__ItemView__TextInputView(
+                    placeholder = "Event",
+                    text = state.inputTextValue,
+                    onTextChanged = { vm.setInputTextValue(it) },
+                    isAutofocus = state.isAutoFocus,
+                    keyboardButton = ImeAction.Done,
+                    keyboardEvent = {},
+                )
+            }
+
+            Text(
+                state.headerDoneText,
+                modifier = Modifier
+                    .padding(end = 10.dp, bottom = 1.dp)
+                    .clip(roundedShape)
+                    .clickable(enabled = state.isHeaderDoneEnabled) {
+                        vm.save {
+                            layer.close()
+                            onSave()
+                        }
+                    }
+                    .padding(horizontal = 8.dp, vertical = 4.dp),
+                color = animateColorAsState(
+                    targetValue =
+                    if (state.isHeaderDoneEnabled) c.blue
+                    else c.textSecondary.copy(alpha = 0.4f)
+                ).value,
+                fontSize = 17.sp,
+                fontWeight = FontWeight.W600
             )
         }
     }
