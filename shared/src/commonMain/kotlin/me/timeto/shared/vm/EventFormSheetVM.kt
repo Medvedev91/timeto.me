@@ -30,6 +30,14 @@ class EventFormSheetVM(
                                   (selectedUnixTime.localDay >= UnixTime().localDay)
 
         // Only for Android
+        val selectedTimeText: String = selectedUnixTime.getStringByComponents(
+           UnixTime.StringComponent.dayOfMonth,
+           UnixTime.StringComponent.space,
+           UnixTime.StringComponent.month3,
+           UnixTime.StringComponent.comma,
+           UnixTime.StringComponent.space,
+           UnixTime.StringComponent.dayOfWeek3,
+        )
         val dayStartTime: Int = selectedUnixTime.localDayStartTime()
         val hour: Int
         val minute: Int
