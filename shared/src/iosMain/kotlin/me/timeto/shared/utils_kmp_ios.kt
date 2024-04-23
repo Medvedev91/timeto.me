@@ -34,7 +34,7 @@ actual fun getResourceContent(file: String, type: String): String {
 //////
 
 private fun listenForSyncWatch() = launchExDefault {
-    initKmmDeferred.join()
+    initKmpDeferred.join()
     listOf<Flow<*>>(
         ActivityDb.anyChangeFlow(),
         NoteDb.anyChangeFlow(),

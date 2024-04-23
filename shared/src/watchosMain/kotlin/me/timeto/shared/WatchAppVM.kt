@@ -24,7 +24,7 @@ class WatchAppVM : __VM<WatchAppVM.State>() {
     override fun onAppear() {
         scopeVM().launchEx {
 
-            initKmmDeferred.join()
+            initKmpDeferred.join()
 
             /**
              * DO NOT sync data on each onAppear(). Example:

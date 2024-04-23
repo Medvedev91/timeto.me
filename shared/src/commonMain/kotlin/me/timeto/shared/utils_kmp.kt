@@ -453,9 +453,9 @@ val uiChecklistFlow = MutableSharedFlow<ChecklistDb>()
 val keepScreenOnStateFlow = MutableStateFlow(false)
 
 ///
-/// KMM init/await
+/// KMP init/await
 
-lateinit var initKmmDeferred: Deferred<Unit>
+lateinit var initKmpDeferred: Deferred<Unit>
 
 internal fun initKmp(
     sqlDriver: SqlDriver,
@@ -488,7 +488,7 @@ internal fun initKmp(
         NoteSQAdapter = NoteSQ.Adapter(IntColumnAdapter, IntColumnAdapter),
     )
     deviceData = deviceData_
-    initKmmDeferred = defaultScope().async { DI.init() }
+    initKmpDeferred = defaultScope().async { DI.init() }
 }
 
 ///

@@ -21,7 +21,7 @@ class AppVM : __VM<AppVM.State>() {
     override fun onAppear() {
         scopeVM().launchEx {
 
-            initKmmDeferred.await()
+            initKmpDeferred.await()
 
             if (!DI.isLateInitInitialized())
                 fillInitData()
