@@ -14,7 +14,7 @@ fun initKmmWatchOS() {
         device = machineIdentifier(),
         flavor = null,
     )
-    initKmm(createNativeDriver(DB_NAME, TimetomeDB.Schema), deviceData)
+    initKmp(createNativeDriver(DB_NAME, TimetomeDB.Schema), deviceData)
 }
 
 actual fun getResourceContent(file: String, type: String): String {

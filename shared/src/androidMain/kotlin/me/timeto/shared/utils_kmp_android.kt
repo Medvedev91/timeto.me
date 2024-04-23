@@ -28,7 +28,7 @@ fun initKmmAndroid(
         device = deviceName,
         flavor = flavor,
     )
-    initKmm(AndroidSqliteDriver(TimetomeDB.Schema, application, DB_NAME), deviceData)
+    initKmp(AndroidSqliteDriver(TimetomeDB.Schema, application, DB_NAME), deviceData)
 }
 
 actual fun getResourceContent(file: String, type: String) = androidApplication

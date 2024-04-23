@@ -18,7 +18,7 @@ fun initKmmIos() {
         device = machineIdentifier(),
         flavor = null,
     )
-    initKmm(createNativeDriver(DB_NAME, TimetomeDB.Schema), deviceData)
+    initKmp(createNativeDriver(DB_NAME, TimetomeDB.Schema), deviceData)
     listenForSyncWatch()
 }
 

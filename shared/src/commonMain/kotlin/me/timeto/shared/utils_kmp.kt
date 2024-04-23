@@ -457,7 +457,7 @@ val keepScreenOnStateFlow = MutableStateFlow(false)
 
 lateinit var initKmmDeferred: Deferred<Unit>
 
-internal fun initKmm(
+internal fun initKmp(
     sqlDriver: SqlDriver,
     deviceData_: DeviceData,
 ) {
