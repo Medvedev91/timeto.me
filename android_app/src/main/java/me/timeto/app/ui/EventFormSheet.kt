@@ -104,7 +104,7 @@ private fun EventFormSheet(
                     fontWeight = FontWeight.Medium,
                 )
 
-                DayTimePickerView(
+                DayTimePickerViewOld(
                     hour = state.hour,
                     minute = state.minute,
                     onHourChanged = { hour -> vm.setTimeByComponents(hour = hour) },

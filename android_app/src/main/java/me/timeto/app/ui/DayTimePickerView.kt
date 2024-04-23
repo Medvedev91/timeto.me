@@ -11,7 +11,7 @@ import me.timeto.app.dpToPx
 import me.timeto.app.isSDKQPlus
 
 @Composable
-fun DayTimePickerView(
+fun DayTimePickerViewOld(
     hour: Int,
     minute: Int,
     onHourChanged: (Int) -> Unit,
