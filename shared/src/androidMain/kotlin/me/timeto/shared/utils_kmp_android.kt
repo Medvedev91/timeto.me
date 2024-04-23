@@ -11,7 +11,7 @@ private lateinit var androidApplication: Application
 
 internal actual val REPORT_API_TITLE = "🤖 Android"
 
-fun initKmmAndroid(
+fun initKmpAndroid(
     application: Application,
     build: Int,
     flavor: String,

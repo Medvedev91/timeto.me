@@ -1,7 +1,7 @@
 package me.timeto.app
 
 import android.app.Application
-import me.timeto.shared.initKmmAndroid
+import me.timeto.shared.initKmpAndroid
 
 class App : Application() {
 
@@ -14,6 +14,6 @@ class App : Application() {
     override fun onCreate() {
         instance = this
         super.onCreate()
-        initKmmAndroid(this, BuildConfig.VERSION_CODE, BuildConfig.FLAVOR)
+        initKmpAndroid(this, BuildConfig.VERSION_CODE, BuildConfig.FLAVOR)
     }
 }
