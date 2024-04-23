@@ -7,7 +7,7 @@ import platform.WatchKit.WKInterfaceDevice
 
 internal actual val REPORT_API_TITLE = "⌚ Watch OS"
 
-fun initKmmWatchOS() {
+fun initKmpWatchOS() {
     val deviceData = DeviceData(
         build = (NSBundle.mainBundle.infoDictionary!!["CFBundleVersion"] as String).toInt(),
         os = "watchos-${WKInterfaceDevice.currentDevice().systemVersion}",

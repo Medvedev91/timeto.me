@@ -10,7 +10,7 @@ struct W_App: App {
     @WKApplicationDelegateAdaptor(W_Delegate.self) var delegate
 
     init() {
-        Utils_kmp_watchosKt.doInitKmmWatchOS()
+        Utils_kmp_watchosKt.doInitKmpWatchOS()
     }
 
     var body: some Scene {
