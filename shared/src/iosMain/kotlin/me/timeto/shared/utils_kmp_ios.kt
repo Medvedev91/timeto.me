@@ -11,7 +11,7 @@ import me.timeto.shared.db.*
 
 internal actual val REPORT_API_TITLE = " iOS"
 
-fun initKmmIos() {
+fun initKmpIos() {
     val deviceData = DeviceData(
         build = (NSBundle.mainBundle.infoDictionary!!["CFBundleVersion"] as String).toInt(),
         os = "ios-${UIDevice.currentDevice.systemVersion}",
