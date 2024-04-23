@@ -120,26 +120,11 @@ private fun EventFormSheet(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
 
-                Icon(
-                    Icons.Rounded.Close,
-                    "Close",
-                    tint = c.text.copy(alpha = 0.4f),
-                    modifier = Modifier
-                        .padding(start = 10.dp)
-                        .size(36.dp)
-                        .clip(roundedShape)
-                        .background(c.transparent)
-                        .clickable {
-                            layer.close()
-                        }
-                        .padding(6.dp)
-                )
-
                 MyListView__ItemView(
                     modifier = Modifier.weight(1f),
                     isFirst = true,
                     isLast = true,
-                    outerPadding = PaddingValues(horizontal = 8.dp)
+                    outerPadding = PaddingValues(start = H_PADDING, end = 8.dp)
                 ) {
                     MyListView__ItemView__TextInputView(
                         placeholder = "Event",
@@ -173,5 +158,21 @@ private fun EventFormSheet(
                 )
             }
         }
+
+        Icon(
+            Icons.Rounded.Close,
+            "Close",
+            tint = c.textSecondary.copy(alpha = 0.4f),
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(top = statusBarHeight + 2.dp, end = H_PADDING)
+                .size(36.dp)
+                .clip(roundedShape)
+                .background(c.sheetFg)
+                .clickable {
+                    layer.close()
+                }
+                .padding(6.dp),
+        )
     }
 }
