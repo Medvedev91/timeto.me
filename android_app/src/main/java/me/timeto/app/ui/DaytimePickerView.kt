@@ -1,14 +1,73 @@
 package me.timeto.app.ui
 
 import android.widget.NumberPicker
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import me.timeto.app.dpToPx
-import me.timeto.app.isSDKQPlus
+import me.timeto.app.*
+import me.timeto.shared.vm.ui.DaytimePickerUi
+
+private val circleSize = 20.dp
+
+@Composable
+fun DayTimePickerView(
+    data: DaytimePickerUi,
+    modifier: Modifier,
+    onChange: (DaytimePickerUi) -> Unit,
+) {
+
+    VStack(
+        modifier = modifier,
+    ) {
+
+        SliderView(
+            value = data.minute,
+            ticks = data.minuteTicks,
+            stepSlide = data.minuteStepSlide,
+            onChange = { newMinute ->
+                onChange(data.copy(minute = newMinute))
+            },
+        )
+    }
+}
+
+@Composable
+private fun SliderView(
+    value: Int,
+    ticks: List<DaytimePickerUi.Tick>,
+    stepSlide: Int,
+    onChange: (Int) -> Unit,
+) {
+
+    ZStack(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(circleSize),
+    ) {
+
+        ZStack(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .padding(horizontal = H_PADDING)
+                .fillMaxWidth()
+                .height(4.dp)
+                .clip(roundedShape)
+                .background(c.sheetFg),
+        )
+
+        ZStack(
+            modifier = Modifier
+                .size(circleSize)
+                .clip(roundedShape)
+                .background(c.blue),
+        )
+    }
+}
 
 @Composable
 fun DayTimePickerViewOld(
