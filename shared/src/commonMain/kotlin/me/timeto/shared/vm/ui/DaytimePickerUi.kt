@@ -10,6 +10,6 @@ data class DaytimePickerUi(
 
     data class Tick(
         val value: Int,
-        val hint: String?,
+        val text: String?,
     )
 }
