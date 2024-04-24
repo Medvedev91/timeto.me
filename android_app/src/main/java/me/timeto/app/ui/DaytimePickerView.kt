@@ -167,7 +167,7 @@ private fun SliderView(
 
                         ZStack(
                             modifier = Modifier
-                                .offset(x = if (isFirst) 2.dp else 0.dp, y = 1.dp)
+                                .offset(x = if (isFirst) onePx else 0.dp, y = 1.dp)
                                 .width(1.dp)
                                 .height(5.dp)
                                 .background(c.sheetFg),
@@ -176,7 +176,7 @@ private fun SliderView(
                         Text(
                             text = tickText,
                             modifier = Modifier
-                                .offset(x = if (isFirst) (-1).dp else 0.dp),
+                                .offset(x = if (isFirst) ((-2).dp - halfDp) else 0.dp),
                             color = c.textSecondary,
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Light,
