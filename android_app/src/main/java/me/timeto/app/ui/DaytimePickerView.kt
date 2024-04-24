@@ -1,5 +1,6 @@
 package me.timeto.app.ui
 
+import android.view.MotionEvent
 import android.widget.NumberPicker
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -17,7 +18,12 @@ import me.timeto.app.*
 import me.timeto.shared.vm.ui.DaytimePickerUi
 
 private val circleSize = 20.dp
-private val circleDefaultOffset = H_PADDING - (circleSize / 2) + 2.dp
+private val circleDefaultOffset = H_PADDING - (circleSize / 2)
+private val allowedMotionEventActions = setOf(
+    MotionEvent.ACTION_DOWN,
+    MotionEvent.ACTION_MOVE,
+    MotionEvent.ACTION_UP,
+)
 
 @Composable
 fun DayTimePickerView(
@@ -115,7 +121,7 @@ private fun SliderView(
                 }
             }
 
-            ZStack(Modifier.weight(0.4f))
+            ZStack(Modifier.weight(0.5f))
         }
     }
 }
