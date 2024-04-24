@@ -78,11 +78,23 @@ private fun SliderView(
             .motionEventSpy { event ->
                 if (event.action !in allowedMotionEventActions)
                     return@motionEventSpy
+
                 val slideLength = event.x - sliderXPx.intValue
-                val newValue = (slideLength / tickPx.floatValue)
+                val preciseValue = (slideLength / tickPx.floatValue)
                     .toInt()
-                    .limitMinMax(min = 0, max = ticks.size)
-                onChange(newValue)
+                    .limitMinMax(min = 0, max = ticks.size - 1)
+
+                val remStep = preciseValue % stepSlide
+                val newValue: Int = if (
+                    ((preciseValue + stepSlide) > ticks.size) ||
+                    ((remStep.toFloat() / stepSlide) < 0.5)
+                )
+                    preciseValue - remStep
+                else
+                    preciseValue + (stepSlide - remStep)
+
+                if (value != newValue)
+                    onChange(newValue)
             }
     ) {
 
