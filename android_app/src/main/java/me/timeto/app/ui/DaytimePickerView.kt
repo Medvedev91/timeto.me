@@ -70,6 +70,7 @@ private fun SliderView(
     onChange: (Int) -> Unit,
 ) {
 
+    // 0 also used as "no value"
     val sliderXPx = remember { mutableIntStateOf(0) }
     val tickPx = remember { mutableFloatStateOf(0f) }
 
@@ -122,23 +123,27 @@ private fun SliderView(
                     .background(c.sheetFg),
             )
 
-            val circleOffset = remember(value) {
-                derivedStateOf {
-                    circleDefaultOffset + pxToDp((tickPx.floatValue * value).toInt()).dp
-                }
-            }
-            val circleOffsetAnimation = animateDpAsState(
-                targetValue = circleOffset.value,
-                animationSpec = circleAnimation,
-            )
+            // To ignore init animation
+            if (sliderXPx.intValue > 0) {
 
-            ZStack(
-                modifier = Modifier
-                    .offset(x = circleOffsetAnimation.value)
-                    .size(circleSize)
-                    .clip(roundedShape)
-                    .background(c.blue),
-            )
+                val circleOffset = remember(value) {
+                    derivedStateOf {
+                        circleDefaultOffset + pxToDp((tickPx.floatValue * value).toInt()).dp
+                    }
+                }
+                val circleOffsetAnimation = animateDpAsState(
+                    targetValue = circleOffset.value,
+                    animationSpec = circleAnimation,
+                )
+
+                ZStack(
+                    modifier = Modifier
+                        .offset(x = circleOffsetAnimation.value)
+                        .size(circleSize)
+                        .clip(roundedShape)
+                        .background(c.blue),
+                )
+            }
         }
 
         HStack(
