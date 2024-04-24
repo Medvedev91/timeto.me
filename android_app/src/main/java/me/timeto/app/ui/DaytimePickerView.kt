@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.zIndex
 import me.timeto.app.*
+import me.timeto.shared.limitMinMax
 import me.timeto.shared.vm.ui.DaytimePickerUi
 
 private val circleSize = 20.dp
@@ -78,7 +79,10 @@ private fun SliderView(
                 if (event.action !in allowedMotionEventActions)
                     return@motionEventSpy
                 val slideLength = event.x - sliderXPx.intValue
-                onChange((slideLength / tickPx.floatValue).toInt())
+                val newValue = (slideLength / tickPx.floatValue)
+                    .toInt()
+                    .limitMinMax(min = 0, max = ticks.size)
+                onChange(newValue)
             }
     ) {
 
