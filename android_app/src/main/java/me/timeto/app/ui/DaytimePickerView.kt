@@ -29,14 +29,15 @@ import me.timeto.shared.vm.ui.DaytimePickerUi
 
 private val circleSize = 20.dp
 private val circleDefaultOffset = H_PADDING - (circleSize / 2)
+private val circleAnimation = spring(
+    visibilityThreshold = Dp.VisibilityThreshold,
+    stiffness = Spring.StiffnessHigh,
+)
+
 private val allowedMotionEventActions = setOf(
     MotionEvent.ACTION_DOWN,
     MotionEvent.ACTION_MOVE,
     MotionEvent.ACTION_UP,
-)
-private val circleAnimation = spring(
-    visibilityThreshold = Dp.VisibilityThreshold,
-    stiffness = Spring.StiffnessHigh,
 )
 
 @Composable
