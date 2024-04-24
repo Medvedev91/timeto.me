@@ -2,14 +2,23 @@ package me.timeto.app.ui
 
 import android.view.MotionEvent
 import android.widget.NumberPicker
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.VisibilityThreshold
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.pointer.motionEventSpy
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -23,6 +32,10 @@ private val allowedMotionEventActions = setOf(
     MotionEvent.ACTION_DOWN,
     MotionEvent.ACTION_MOVE,
     MotionEvent.ACTION_UP,
+)
+private val circleAnimation = spring(
+    visibilityThreshold = Dp.VisibilityThreshold,
+    stiffness = Spring.StiffnessHigh,
 )
 
 @Composable
@@ -47,6 +60,7 @@ fun DayTimePickerView(
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun SliderView(
     value: Int,
@@ -55,7 +69,18 @@ private fun SliderView(
     onChange: (Int) -> Unit,
 ) {
 
-    ZStack {
+    val sliderXPx = remember { mutableIntStateOf(0) }
+    val tickPx = remember { mutableFloatStateOf(0f) }
+
+    ZStack(
+        modifier = Modifier
+            .motionEventSpy { event ->
+                if (event.action !in allowedMotionEventActions)
+                    return@motionEventSpy
+                val slideLength = event.x - sliderXPx.intValue
+                onChange((slideLength / tickPx.floatValue).toInt())
+            }
+    ) {
 
         ZStack(
             modifier = Modifier
@@ -68,14 +93,32 @@ private fun SliderView(
                     .align(Alignment.Center)
                     .padding(horizontal = H_PADDING)
                     .fillMaxWidth()
+                    .onGloballyPositioned { coords ->
+                        val newSliderXPx = coords.positionInWindow().x.toInt()
+                        val newTickPx = coords.size.width.toFloat() / ticks.size
+                        if (sliderXPx.intValue == newSliderXPx && tickPx.floatValue == newTickPx)
+                            return@onGloballyPositioned
+                        sliderXPx.intValue = newSliderXPx
+                        tickPx.floatValue = newTickPx
+                    }
                     .height(4.dp)
                     .clip(roundedShape)
                     .background(c.sheetFg),
             )
 
+            val circleOffset = remember(value) {
+                derivedStateOf {
+                    circleDefaultOffset + pxToDp((tickPx.floatValue * value).toInt()).dp
+                }
+            }
+            val circleOffsetAnimation = animateDpAsState(
+                targetValue = circleOffset.value,
+                animationSpec = circleAnimation,
+            )
+
             ZStack(
                 modifier = Modifier
-                    .offset(x = circleDefaultOffset)
+                    .offset(x = circleOffsetAnimation.value)
                     .size(circleSize)
                     .clip(roundedShape)
                     .background(c.blue),
