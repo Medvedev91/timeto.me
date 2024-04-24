@@ -5,8 +5,13 @@ data class DaytimePickerUi(
     val minute: Int,
 ) {
 
-    val minuteTicks: List<Tick> = listOf()
     val minuteStepSlide = 5
+    val minuteTicks: List<Tick> = (0..59).map {
+        Tick(
+            value = it,
+            text = if ((it % minuteStepSlide) == 0) "$it" else null,
+        )
+    }
 
     data class Tick(
         val value: Int,
