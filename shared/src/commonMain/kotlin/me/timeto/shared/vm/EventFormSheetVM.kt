@@ -18,7 +18,6 @@ class EventFormSheetVM(
         val headerTitle: String,
         val headerDoneText: String,
         val selectedTime: Int,
-        val isAutoFocus: Boolean,
         val textFeatures: TextFeatures,
     ) {
 
@@ -58,7 +57,6 @@ class EventFormSheetVM(
                 headerTitle = if (event != null) "Edit Event" else "New Event",
                 headerDoneText = if (event != null) "Done" else "Create",
                 selectedTime = event?.getLocalTime()?.time ?: defTime ?: UnixTime().localDayStartTime(),
-                isAutoFocus = (event == null && textFeatures.textNoFeatures.isBlank()),
                 textFeatures = textFeatures,
             )
         )
