@@ -19,6 +19,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -33,6 +34,9 @@ private val circleAnimation = spring(
     visibilityThreshold = Dp.VisibilityThreshold,
     stiffness = Spring.StiffnessHigh,
 )
+
+// No size of tick, but for absolute positioned view
+private val tickNoteWidthDp: Dp = 16.dp
 
 private val allowedMotionEventActions = setOf(
     MotionEvent.ACTION_DOWN,
@@ -52,9 +56,20 @@ fun DayTimePickerView(
     ) {
 
         SliderView(
-            value = data.minute,
+            tickIdx = data.hour,
+            ticks = data.hourTicks,
+            stepTicks = data.hourStepSlide,
+            onChange = { newHour ->
+                onChange(data.copy(hour = newHour))
+            },
+        )
+
+        Padding(vertical = 8.dp)
+
+        SliderView(
+            tickIdx = data.minute,
             ticks = data.minuteTicks,
-            stepSlide = data.minuteStepSlide,
+            stepTicks = data.minuteStepSlide,
             onChange = { newMinute ->
                 onChange(data.copy(minute = newMinute))
             },
@@ -65,15 +80,16 @@ fun DayTimePickerView(
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun SliderView(
-    value: Int,
+    tickIdx: Int,
     ticks: List<DaytimePickerUi.Tick>,
-    stepSlide: Int,
+    stepTicks: Int,
     onChange: (Int) -> Unit,
 ) {
 
     // 0 also used as "no value"
     val sliderXPx = remember { mutableIntStateOf(0) }
-    val tickPx = remember { mutableFloatStateOf(0f) }
+    // Not exact but approximate `slide width` / `ticks size`
+    val tickAxmPx = remember { mutableFloatStateOf(0f) }
 
     ZStack(
         modifier = Modifier
@@ -81,21 +97,15 @@ private fun SliderView(
                 if (event.action !in allowedMotionEventActions)
                     return@motionEventSpy
 
-                val slideLength = event.x - sliderXPx.intValue
-                val preciseValue = (slideLength / tickPx.floatValue)
-                    .toInt()
-                    .limitMinMax(min = 0, max = ticks.size - 1)
+                val slideXPosition = event.x - sliderXPx.intValue
+                val stepPx = tickAxmPx.floatValue * stepTicks
 
-                val remStep = preciseValue % stepSlide
-                val newValue: Int = if (
-                    ((preciseValue + stepSlide) > ticks.size) ||
-                    ((remStep.toFloat() / stepSlide) < 0.5)
-                )
-                    preciseValue - remStep
-                else
-                    preciseValue + (stepSlide - remStep)
+                val prevStep = slideXPosition / stepPx
+                val prevStepExtra = prevStep - prevStep.toInt()
+                val newStep = (if (prevStepExtra < 0.5) prevStep else prevStep + 1).toInt()
+                val newValue = (newStep * stepTicks).limitMinMax(min = 0, max = ticks.size - 1)
 
-                if (value != newValue)
+                if (tickIdx != newValue)
                     onChange(newValue)
             }
     ) {
@@ -113,11 +123,12 @@ private fun SliderView(
                     .fillMaxWidth()
                     .onGloballyPositioned { coords ->
                         val newSliderXPx = coords.positionInWindow().x.toInt()
-                        val newTickPx = coords.size.width.toFloat() / ticks.size
-                        if (sliderXPx.intValue == newSliderXPx && tickPx.floatValue == newTickPx)
+                        // "ticks.size - 1" to make first and last sticks on edges
+                        val newTickPx = coords.size.width.toFloat() / (ticks.size - 1)
+                        if (sliderXPx.intValue == newSliderXPx && tickAxmPx.floatValue == newTickPx)
                             return@onGloballyPositioned
                         sliderXPx.intValue = newSliderXPx
-                        tickPx.floatValue = newTickPx
+                        tickAxmPx.floatValue = newTickPx
                     }
                     .height(4.dp)
                     .clip(roundedShape)
@@ -127,9 +138,9 @@ private fun SliderView(
             // To ignore init animation
             if (sliderXPx.intValue > 0) {
 
-                val circleOffset = remember(value) {
+                val circleOffset = remember(tickIdx) {
                     derivedStateOf {
-                        circleDefaultOffset + pxToDp((tickPx.floatValue * value).toInt()).dp
+                        circleDefaultOffset + pxToDp((tickAxmPx.floatValue * tickIdx).toInt()).dp
                     }
                 }
                 val circleOffsetAnimation = animateDpAsState(
@@ -147,7 +158,7 @@ private fun SliderView(
             }
         }
 
-        HStack(
+        ZStack(
             modifier = Modifier
                 .zIndex(0f)
                 .padding(top = 16.dp)
@@ -155,29 +166,33 @@ private fun SliderView(
                 .fillMaxWidth(),
         ) {
 
-            ticks.forEach { tick ->
+            ticks.forEachIndexed { tickIdx, tick ->
 
-                val tickText = tick.text
-                if (tickText != null) {
-                    val isFirst = (tick.value == 0)
-                    VStack(
-                        modifier = Modifier
-                            .weight(if (isFirst) 0.5f else 1f),
-                        horizontalAlignment = if (isFirst) Alignment.Start else Alignment.CenterHorizontally,
-                    ) {
+                ZStack(
+                    modifier = Modifier
+                        .offset {
+                            val tickNoteHalfPx = (tickNoteWidthDp.value * this.density) / 2
+                            IntOffset(((tickAxmPx.floatValue * tickIdx) - tickNoteHalfPx).toInt(), 0)
+                        }
+                        .width(tickNoteWidthDp),
+                    contentAlignment = Alignment.TopCenter,
+                ) {
 
+                    if (tick.withStick) {
                         ZStack(
                             modifier = Modifier
-                                .offset(x = if (isFirst) onePx else 0.dp, y = 1.dp)
                                 .width(1.dp)
                                 .height(5.dp)
                                 .background(c.sheetFg),
                         )
+                    }
 
+                    val tickText = tick.text
+                    if (tickText != null) {
                         Text(
                             text = tickText,
                             modifier = Modifier
-                                .offset(x = if (isFirst) ((-2).dp - halfDp) else 0.dp),
+                                .padding(top = 4.dp),
                             color = c.textSecondary,
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Light,
@@ -185,8 +200,6 @@ private fun SliderView(
                     }
                 }
             }
-
-            ZStack(Modifier.weight(0.5f))
         }
     }
 }
