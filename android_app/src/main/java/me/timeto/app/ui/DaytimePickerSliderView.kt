@@ -47,7 +47,7 @@ private val allowedMotionEventActions = setOf(
 )
 
 @Composable
-fun DayTimePickerView(
+fun DayTimePickerSliderView(
     data: DaytimePickerUi,
     modifier: Modifier,
     onChange: (DaytimePickerUi) -> Unit,
