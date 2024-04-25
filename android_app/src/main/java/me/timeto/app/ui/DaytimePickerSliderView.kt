@@ -47,8 +47,8 @@ private val allowedMotionEventActions = setOf(
 )
 
 @Composable
-fun DayTimePickerSliderView(
-    data: DaytimePickerUi,
+fun DaytimePickerSliderView(
+    daytimePickerUi: DaytimePickerUi,
     modifier: Modifier,
     onChange: (DaytimePickerUi) -> Unit,
 ) {
@@ -58,22 +58,22 @@ fun DayTimePickerSliderView(
     ) {
 
         SliderView(
-            tickIdx = data.hour,
-            ticks = data.hourTicks,
-            stepTicks = data.hourStepSlide,
+            tickIdx = daytimePickerUi.hour,
+            ticks = daytimePickerUi.hourTicks,
+            stepTicks = daytimePickerUi.hourStepSlide,
             onChange = { newHour ->
-                onChange(data.copy(hour = newHour))
+                onChange(daytimePickerUi.copy(hour = newHour))
             },
         )
 
         Padding(vertical = 8.dp)
 
         SliderView(
-            tickIdx = data.minute,
-            ticks = data.minuteTicks,
-            stepTicks = data.minuteStepSlide,
+            tickIdx = daytimePickerUi.minute,
+            ticks = daytimePickerUi.minuteTicks,
+            stepTicks = daytimePickerUi.minuteStepSlide,
             onChange = { newMinute ->
-                onChange(data.copy(minute = newMinute))
+                onChange(daytimePickerUi.copy(minute = newMinute))
             },
         )
     }
