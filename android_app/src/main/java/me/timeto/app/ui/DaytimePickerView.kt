@@ -28,8 +28,10 @@ import me.timeto.app.*
 import me.timeto.shared.limitMinMax
 import me.timeto.shared.vm.ui.DaytimePickerUi
 
+// Slider line a little wider to nice ui
+private val sliderInternalPadding = 2.dp
 private val circleSize = 20.dp
-private val circleDefaultOffset = H_PADDING - (circleSize / 2)
+private val circleDefaultOffset = H_PADDING - (circleSize / 2) + sliderInternalPadding
 private val circleAnimation = spring(
     visibilityThreshold = Dp.VisibilityThreshold,
     stiffness = Spring.StiffnessHigh,
@@ -103,10 +105,10 @@ private fun SliderView(
                 val prevStep = slideXPosition / stepPx
                 val prevStepExtra = prevStep - prevStep.toInt()
                 val newStep = (if (prevStepExtra < 0.5) prevStep else prevStep + 1).toInt()
-                val newValue = (newStep * stepTicks).limitMinMax(min = 0, max = ticks.size - 1)
+                val newIdx = (newStep * stepTicks).limitMinMax(min = 0, max = ticks.size - 1)
 
-                if (tickIdx != newValue)
-                    onChange(newValue)
+                if (tickIdx != newIdx)
+                    onChange(newIdx)
             }
     ) {
 
@@ -121,6 +123,10 @@ private fun SliderView(
                     .align(Alignment.Center)
                     .padding(horizontal = H_PADDING)
                     .fillMaxWidth()
+                    .height(4.dp)
+                    .clip(roundedShape)
+                    .background(c.sheetFg)
+                    .padding(horizontal = sliderInternalPadding)
                     .onGloballyPositioned { coords ->
                         val newSliderXPx = coords.positionInWindow().x.toInt()
                         // "ticks.size - 1" to make first and last sticks on edges
@@ -129,10 +135,7 @@ private fun SliderView(
                             return@onGloballyPositioned
                         sliderXPx.intValue = newSliderXPx
                         tickAxmPx.floatValue = newTickPx
-                    }
-                    .height(4.dp)
-                    .clip(roundedShape)
-                    .background(c.sheetFg),
+                    },
             )
 
             // To ignore init animation
@@ -162,7 +165,7 @@ private fun SliderView(
             modifier = Modifier
                 .zIndex(0f)
                 .padding(top = 16.dp)
-                .padding(horizontal = H_PADDING)
+                .padding(horizontal = H_PADDING + sliderInternalPadding)
                 .fillMaxWidth(),
         ) {
 
