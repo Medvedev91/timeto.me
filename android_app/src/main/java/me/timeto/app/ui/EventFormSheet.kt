@@ -93,7 +93,7 @@ private fun EventFormSheet(
                                 minTime = UnixTime(state.minTime),
                                 maxTime = UnixTime(UnixTime.MAX_TIME),
                                 onSelect = {
-                                    vm.setTimeByComponents(dayStartTime = it.time)
+                                    vm.setUnixDay(it.localDay)
                                 },
                             )
                         }
@@ -104,11 +104,13 @@ private fun EventFormSheet(
                     fontWeight = FontWeight.Medium,
                 )
 
-                DayTimePickerViewOld(
-                    hour = state.hour,
-                    minute = state.minute,
-                    onHourChanged = { hour -> vm.setTimeByComponents(hour = hour) },
-                    onMinuteChanged = { minute -> vm.setTimeByComponents(minute = minute) },
+                DaytimePickerSliderView(
+                    daytimePickerUi = state.daytimePickerUi,
+                    modifier = Modifier
+                        .padding(top = 16.dp, bottom = 8.dp),
+                    onChange = { newDaytimeUi ->
+                        vm.setDaytimePickerUi(newDaytimeUi)
+                    },
                 )
             }
 

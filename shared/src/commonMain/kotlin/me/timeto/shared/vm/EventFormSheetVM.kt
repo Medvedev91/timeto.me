@@ -3,6 +3,7 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.EventDb
+import me.timeto.shared.vm.ui.DaytimePickerUi
 
 /**
  * Different logic for platform. For iOS, we use a Date() object
@@ -17,11 +18,14 @@ class EventFormSheetVM(
     data class State(
         val headerTitle: String,
         val headerDoneText: String,
-        val selectedTime: Int,
         val textFeatures: TextFeatures,
+        val unixDay: Int,
+        val daytimePickerUi: DaytimePickerUi,
     ) {
 
-        val selectedUnixTime = UnixTime(selectedTime)
+        val selectedUnixTime = UnixTime.byLocalDay(unixDay).inSeconds(
+            daytimePickerUi.hour * 3_600 + daytimePickerUi.minute * 60
+        )
 
         val inputTextValue = textFeatures.textNoFeatures
         val minTime = UnixTime().localDayStartTime()
@@ -37,41 +41,32 @@ class EventFormSheetVM(
             UnixTime.StringComponent.space,
             UnixTime.StringComponent.dayOfWeek3,
         )
-        val dayStartTime: Int = selectedUnixTime.localDayStartTime()
-        val hour: Int
-        val minute: Int
-
-        init {
-            val hms = (selectedTime - dayStartTime).toHms()
-            hour = hms[0]
-            minute = hms[1]
-        }
     }
 
     override val state: MutableStateFlow<State>
 
     init {
         val textFeatures = (event?.text ?: defText ?: "").textFeatures()
+        val initTime: Int = event?.getLocalTime()?.time ?: defTime ?: UnixTime().localDayStartTime()
+        val initUnixTime = UnixTime(initTime)
+        val hms = (initUnixTime.time - initUnixTime.localDayStartTime()).toHms()
         state = MutableStateFlow(
             State(
                 headerTitle = if (event != null) "Edit Event" else "New Event",
                 headerDoneText = if (event != null) "Done" else "Create",
-                selectedTime = event?.getLocalTime()?.time ?: defTime ?: UnixTime().localDayStartTime(),
                 textFeatures = textFeatures,
+                unixDay = initUnixTime.localDay,
+                daytimePickerUi = DaytimePickerUi(hour = hms[0], minute = hms[1]),
             )
         )
     }
 
-    fun setTime(time: Int) {
-        state.update { it.copy(selectedTime = time) }
+    fun setDaytimePickerUi(newDaytimePickerUi: DaytimePickerUi) {
+        state.update { it.copy(daytimePickerUi = newDaytimePickerUi) }
     }
 
-    fun setTimeByComponents(
-        dayStartTime: Int = state.value.dayStartTime,
-        hour: Int = state.value.hour,
-        minute: Int = state.value.minute,
-    ) {
-        setTime(dayStartTime + (hour * 3600) + (minute * 60))
+    fun setUnixDay(newUnixDay: Int) {
+        state.update { it.copy(unixDay = newUnixDay) }
     }
 
     fun setInputTextValue(text: String) = state.update {
@@ -84,16 +79,17 @@ class EventFormSheetVM(
         try {
             // todo check if a text without features
             val nameWithFeatures = state.value.textFeatures.textWithFeatures()
+            val time = state.value.selectedUnixTime.time
 
             if (event != null) {
                 event.upWithValidation(
                     text = nameWithFeatures,
-                    localTime = state.value.selectedTime,
+                    localTime = time,
                 )
             } else {
                 EventDb.addWithValidation(
                     text = nameWithFeatures,
-                    localTime = state.value.selectedTime,
+                    localTime = time,
                 )
             }
             onSuccess()
