@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,8 +25,8 @@ fun DaytimePickerSheet(
     defHour: Int,
     onPick: (/* seconds or remove */ Int?) -> Unit,
 ) {
-    val selectedHour = remember { mutableStateOf(defHour) }
-    val selectedMinute = remember { mutableStateOf(defMinute) }
+    val selectedHour = remember { mutableIntStateOf(defHour) }
+    val selectedMinute = remember { mutableIntStateOf(defMinute) }
 
     Column(
         Modifier.background(c.sheetBg)
@@ -39,7 +39,7 @@ fun DaytimePickerSheet(
             isDoneEnabled = true,
             scrollState = null,
         ) {
-            onPick((selectedHour.value * 3_600) + (selectedMinute.value * 60))
+            onPick((selectedHour.intValue * 3_600) + (selectedMinute.intValue * 60))
             layer.close()
         }
 
@@ -51,10 +51,10 @@ fun DaytimePickerSheet(
         ) {
 
             DaytimePickerView(
-                hour = selectedHour.value,
-                minute = selectedMinute.value,
-                onHourChanged = { hour -> selectedHour.value = hour },
-                onMinuteChanged = { minute -> selectedMinute.value = minute },
+                hour = selectedHour.intValue,
+                minute = selectedMinute.intValue,
+                onHourChanged = { hour -> selectedHour.intValue = hour },
+                onMinuteChanged = { minute -> selectedMinute.intValue = minute },
             )
 
             Text(
