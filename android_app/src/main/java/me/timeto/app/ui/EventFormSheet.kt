@@ -103,14 +103,19 @@ private fun EventFormSheet(
                         text = state.selectedTimeText,
                         paddingStart = H_PADDING_HALF,
                         onClick = {
-                            Dialog.showDatePicker(
-                                unixTime = state.selectedUnixTime,
-                                minTime = UnixTime(state.minTime),
-                                maxTime = UnixTime(UnixTime.MAX_TIME),
-                                onSelect = {
-                                    vm.setUnixDay(it.localDay)
-                                },
-                            )
+                            Sheet.show { layer ->
+                                DaytimePickerSheet(
+                                    layer = layer,
+                                    title = state.daytimeSheetTitle,
+                                    doneText = state.daytimeSheetDone,
+                                    daytimePickerUi = state.daytimePickerUi,
+                                    withRemove = false,
+                                    onPick = { daytimePickerUi ->
+                                        vm.setDaytime(daytimePickerUi)
+                                    },
+                                    onRemove = {},
+                                )
+                            }
                         },
                     )
                 }
