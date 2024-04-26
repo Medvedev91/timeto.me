@@ -81,27 +81,18 @@ private fun EventFormSheet(
 
                 SpacerW1()
 
-                Text(
+                DateTimeButton(
                     text = state.selectedTimeText,
-                    modifier = Modifier
-                        .padding(start = H_PADDING)
-                        .clip(squircleShape)
-                        .background(c.sheetFg)
-                        .clickable {
-                            Dialog.showDatePicker(
-                                unixTime = state.selectedUnixTime,
-                                minTime = UnixTime(state.minTime),
-                                maxTime = UnixTime(UnixTime.MAX_TIME),
-                                onSelect = {
-                                    vm.setUnixDay(it.localDay)
-                                },
-                            )
-                        }
-                        .padding(horizontal = 10.dp, vertical = 4.dp)
-                        .padding(top = onePx),
-                    color = c.text,
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Medium,
+                    onClick = {
+                        Dialog.showDatePicker(
+                            unixTime = state.selectedUnixTime,
+                            minTime = UnixTime(state.minTime),
+                            maxTime = UnixTime(UnixTime.MAX_TIME),
+                            onSelect = {
+                                vm.setUnixDay(it.localDay)
+                            },
+                        )
+                    },
                 )
 
                 DaytimePickerSliderView(
@@ -177,4 +168,26 @@ private fun EventFormSheet(
                 .padding(6.dp),
         )
     }
+}
+
+@Composable
+private fun DateTimeButton(
+    text: String,
+    onClick: () -> Unit,
+) {
+    Text(
+        text = text,
+        modifier = Modifier
+            .padding(start = H_PADDING)
+            .clip(squircleShape)
+            .background(c.sheetFg)
+            .clickable {
+                onClick()
+            }
+            .padding(horizontal = 10.dp, vertical = 4.dp)
+            .padding(top = onePx),
+        color = c.text,
+        fontSize = 15.sp,
+        fontWeight = FontWeight.Medium,
+    )
 }
