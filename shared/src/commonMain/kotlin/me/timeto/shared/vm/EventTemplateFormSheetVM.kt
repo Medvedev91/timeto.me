@@ -3,6 +3,7 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.EventTemplateDb
+import me.timeto.shared.vm.ui.DaytimePickerUi
 
 class EventTemplateFormSheetVM(
     val eventTemplateDB: EventTemplateDb?,
@@ -12,28 +13,18 @@ class EventTemplateFormSheetVM(
         val headerTitle: String,
         val doneText: String,
         val textFeatures: TextFeatures,
-        val daytime: Int?,
+        val daytimePickerUi: DaytimePickerUi?,
     ) {
 
         val daytimeTitle = "Time"
-        val daytimeDefHour: Int
-        val daytimeDefMinute: Int
-        val daytimeNote = daytime?.let { daytimeToString(it) } ?: "None"
-        val daytimeNoteColor: ColorRgba? = if (daytime != null) null else ColorRgba.red
+
+        val daytimeNote: String = daytimePickerUi?.text ?: "None"
+        val daytimeNoteColor: ColorRgba? = if (daytimePickerUi != null) null else ColorRgba.red
+
+        val defDaytimePickerUi = daytimePickerUi ?: DaytimePickerUi(hour = 12, minute = 0)
 
         val inputTextValue = textFeatures.textNoFeatures
         val deleteText = "Delete Template"
-
-        init {
-            if (daytime != null) {
-                val (h, m) = daytime.toHms()
-                daytimeDefHour = h
-                daytimeDefMinute = m
-            } else {
-                daytimeDefHour = 12
-                daytimeDefMinute = 0
-            }
-        }
     }
 
     override val state = MutableStateFlow(
@@ -41,7 +32,7 @@ class EventTemplateFormSheetVM(
             headerTitle = if (eventTemplateDB != null) "Edit Template" else "New Template",
             doneText = "Save",
             textFeatures = (eventTemplateDB?.text ?: "").textFeatures(),
-            daytime = eventTemplateDB?.daytime,
+            daytimePickerUi = eventTemplateDB?.daytime?.let { DaytimePickerUi.byHms(it) },
         )
     )
 
@@ -53,8 +44,8 @@ class EventTemplateFormSheetVM(
         it.copy(textFeatures = newTextFeatures)
     }
 
-    fun setDaytime(newDaytimeOrNull: Int?) {
-        state.update { it.copy(daytime = newDaytimeOrNull) }
+    fun setDaytime(daytimePickerUi: DaytimePickerUi?) {
+        state.update { it.copy(daytimePickerUi = daytimePickerUi) }
     }
 
     fun save(
@@ -62,7 +53,7 @@ class EventTemplateFormSheetVM(
     ) {
         scopeVM().launchEx {
             try {
-                val daytime = state.value.daytime ?: throw UIException("The time is not set")
+                val daytime = state.value.daytimePickerUi?.seconds ?: throw UIException("The time is not set")
                 val textFeatures = state.value.textFeatures
                 val textWithFeatures = textFeatures.textWithFeatures()
                 if (textFeatures.textNoFeatures.isBlank())

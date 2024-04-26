@@ -17,7 +17,9 @@ fun EventTemplateFormSheet(
     eventTemplate: EventTemplateDb?,
 ) {
 
-    val (vm, state) = rememberVM(eventTemplate) { EventTemplateFormSheetVM(eventTemplate) }
+    val (vm, state) = rememberVM(eventTemplate) {
+        EventTemplateFormSheetVM(eventTemplate)
+    }
 
     VStack(
         modifier = Modifier
@@ -77,11 +79,10 @@ fun EventTemplateFormSheet(
                             layer = layer,
                             title = state.daytimeTitle,
                             doneText = "Done",
-                            defHour = state.daytimeDefHour,
-                            defMinute = state.daytimeDefMinute,
+                            daytimePickerUi = state.defDaytimePickerUi,
                             withRemove = true,
-                            onPick = { seconds ->
-                                vm.setDaytime(seconds)
+                            onPick = { daytimePickerUi ->
+                                vm.setDaytime(daytimePickerUi)
                             },
                             onRemove = {
                                 vm.setDaytime(null)
