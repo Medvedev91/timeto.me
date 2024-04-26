@@ -9,7 +9,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -26,7 +25,6 @@ import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.launchEx
 import me.timeto.shared.vm.RepeatingFormSheetVM
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun RepeatingFormSheet(
     layer: WrapperView.Layer,
