@@ -45,6 +45,9 @@ class EventFormSheetVM(
         val selectedTimeText: String =
             daytimePickerUi.hour.toString().padStart(2, '0') + ":" +
             daytimePickerUi.minute.toString().padStart(2, '0')
+
+        val daytimeSheetTitle = "Time"
+        val daytimeSheetDone = "Done"
     }
 
     override val state: MutableStateFlow<State>
