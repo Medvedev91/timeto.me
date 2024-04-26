@@ -33,7 +33,7 @@ class EventFormSheetVM(
                                   (selectedUnixTime.localDay >= UnixTime().localDay)
 
         // Only for Android
-        val selectedTimeText: String = selectedUnixTime.getStringByComponents(
+        val selectedDateText: String = selectedUnixTime.getStringByComponents(
             UnixTime.StringComponent.dayOfMonth,
             UnixTime.StringComponent.space,
             UnixTime.StringComponent.month3,
@@ -41,6 +41,10 @@ class EventFormSheetVM(
             UnixTime.StringComponent.space,
             UnixTime.StringComponent.dayOfWeek3,
         )
+
+        val selectedTimeText: String =
+            daytimePickerUi.hour.toString().padStart(2, '0') + ":" +
+            daytimePickerUi.minute.toString().padStart(2, '0')
     }
 
     override val state: MutableStateFlow<State>
