@@ -26,6 +26,9 @@ data class DaytimePickerUi(
         )
     }
 
+    fun toText(): String =
+        "$hour".padStart(2, '0') + ":" + "$minute".padStart(2, '0')
+
     ///
 
     companion object {
