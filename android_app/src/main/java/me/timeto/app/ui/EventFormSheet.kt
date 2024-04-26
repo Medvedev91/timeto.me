@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
@@ -81,19 +82,38 @@ private fun EventFormSheet(
 
                 SpacerW1()
 
-                DateTimeButton(
-                    text = state.selectedTimeText,
-                    onClick = {
-                        Dialog.showDatePicker(
-                            unixTime = state.selectedUnixTime,
-                            minTime = UnixTime(state.minTime),
-                            maxTime = UnixTime(UnixTime.MAX_TIME),
-                            onSelect = {
-                                vm.setUnixDay(it.localDay)
-                            },
-                        )
-                    },
-                )
+                HStack {
+
+                    DateTimeButton(
+                        text = state.selectedDateText,
+                        paddingStart = H_PADDING,
+                        onClick = {
+                            Dialog.showDatePicker(
+                                unixTime = state.selectedUnixTime,
+                                minTime = UnixTime(state.minTime),
+                                maxTime = UnixTime(UnixTime.MAX_TIME),
+                                onSelect = {
+                                    vm.setUnixDay(it.localDay)
+                                },
+                            )
+                        },
+                    )
+
+                    DateTimeButton(
+                        text = state.selectedTimeText,
+                        paddingStart = H_PADDING_HALF,
+                        onClick = {
+                            Dialog.showDatePicker(
+                                unixTime = state.selectedUnixTime,
+                                minTime = UnixTime(state.minTime),
+                                maxTime = UnixTime(UnixTime.MAX_TIME),
+                                onSelect = {
+                                    vm.setUnixDay(it.localDay)
+                                },
+                            )
+                        },
+                    )
+                }
 
                 DaytimePickerSliderView(
                     daytimePickerUi = state.daytimePickerUi,
@@ -173,12 +193,13 @@ private fun EventFormSheet(
 @Composable
 private fun DateTimeButton(
     text: String,
+    paddingStart: Dp,
     onClick: () -> Unit,
 ) {
     Text(
         text = text,
         modifier = Modifier
-            .padding(start = H_PADDING)
+            .padding(start = paddingStart)
             .clip(squircleShape)
             .background(c.sheetFg)
             .clickable {
