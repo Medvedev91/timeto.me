@@ -23,7 +23,9 @@ fun DaytimePickerSheet(
     doneText: String,
     defMinute: Int,
     defHour: Int,
-    onPick: (/* seconds or remove */ Int?) -> Unit,
+    withRemove: Boolean,
+    onPick: (Int) -> Unit,
+    onRemove: () -> Unit,
 ) {
     val selectedHour = remember { mutableIntStateOf(defHour) }
     val selectedMinute = remember { mutableIntStateOf(defMinute) }
@@ -57,18 +59,19 @@ fun DaytimePickerSheet(
                 onMinuteChanged = { minute -> selectedMinute.intValue = minute },
             )
 
-            Text(
-                text = "Remove",
-                modifier = Modifier
-                    .padding(top = 12.dp)
-                    .clip(roundedShape)
-                    .clickable {
-                        onPick(null)
-                        layer.close()
-                    }
-                    .padding(horizontal = 12.dp, vertical = 4.dp),
-                color = c.red,
-            )
+            if (withRemove)
+                Text(
+                    text = "Remove",
+                    modifier = Modifier
+                        .padding(top = 12.dp)
+                        .clip(roundedShape)
+                        .clickable {
+                            onRemove()
+                            layer.close()
+                        }
+                        .padding(horizontal = 12.dp, vertical = 4.dp),
+                    color = c.red,
+                )
         }
     }
 }

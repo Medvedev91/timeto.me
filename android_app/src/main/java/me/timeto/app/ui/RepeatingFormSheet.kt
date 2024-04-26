@@ -112,9 +112,13 @@ fun RepeatingFormSheet(
                             doneText = "Done",
                             defHour = state.daytimePickerDefHour,
                             defMinute = state.daytimePickerDefMinute,
-                            onPick = { secondsOrNull ->
-                                vm.upDaytime(secondsOrNull)
-                            }
+                            withRemove = true,
+                            onPick = { seconds ->
+                                vm.upDaytime(seconds)
+                            },
+                            onRemove = {
+                                vm.upDaytime(null)
+                            },
                         )
                     }
                 }

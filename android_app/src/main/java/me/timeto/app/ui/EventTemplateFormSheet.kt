@@ -79,9 +79,13 @@ fun EventTemplateFormSheet(
                             doneText = "Done",
                             defHour = state.daytimeDefHour,
                             defMinute = state.daytimeDefMinute,
-                            onPick = { secondsOrNull ->
-                                vm.setDaytime(secondsOrNull)
-                            }
+                            withRemove = true,
+                            onPick = { seconds ->
+                                vm.setDaytime(seconds)
+                            },
+                            onRemove = {
+                                vm.setDaytime(null)
+                            },
                         )
                     }
                 }
