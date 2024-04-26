@@ -7,6 +7,8 @@ data class DaytimePickerUi(
     val minute: Int,
 ) {
 
+    val text: String = "$hour".padStart(2, '0') + ":$minute".padStart(2, '0')
+
     val hourStepSlide = 1
     val hourTicks: List<Tick> = (0..23).map {
         Tick(
@@ -25,9 +27,6 @@ data class DaytimePickerUi(
             withStick = withText,
         )
     }
-
-    fun toText(): String =
-        "$hour".padStart(2, '0') + ":" + "$minute".padStart(2, '0')
 
     ///
 
