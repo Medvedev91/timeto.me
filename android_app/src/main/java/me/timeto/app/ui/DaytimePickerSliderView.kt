@@ -1,7 +1,6 @@
 package me.timeto.app.ui
 
 import android.view.MotionEvent
-import android.widget.NumberPicker
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.VisibilityThreshold
 import androidx.compose.animation.core.animateDpAsState
@@ -22,7 +21,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.zIndex
 import me.timeto.app.*
 import me.timeto.shared.limitMinMax
@@ -203,71 +201,6 @@ private fun SliderView(
                     }
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun DayTimePickerViewOld(
-    hour: Int,
-    minute: Int,
-    onHourChanged: (Int) -> Unit,
-    onMinuteChanged: (Int) -> Unit,
-) {
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
-    ) {
-
-        Box(
-            modifier = Modifier.width(100.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            AndroidView(
-                modifier = Modifier.fillMaxWidth(),
-                factory = { context ->
-                    val hourIndexes = 0..23
-                    NumberPicker(context).apply {
-                        setOnValueChangedListener { _, _, new ->
-                            onHourChanged(new)
-                        }
-                        displayedValues = hourIndexes.map { "$it".padStart(2, '0') }.toTypedArray()
-                        if (isSDKQPlus())
-                            textSize = dpToPx(18f).toFloat()
-                        wrapSelectorWheel = false
-                        minValue = 0
-                        maxValue = hourIndexes.last
-                        value = hour // Set last
-                    }
-                }
-            )
-        }
-
-        Box(
-            modifier = Modifier.width(100.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            AndroidView(
-                modifier = Modifier.fillMaxWidth(),
-                factory = { context ->
-                    val minuteIndexes = 0..59
-                    NumberPicker(context).apply {
-                        setOnValueChangedListener { _, _, new ->
-                            onMinuteChanged(new)
-                        }
-                        displayedValues = minuteIndexes.map { "$it".padStart(2, '0') }.toTypedArray()
-                        if (isSDKQPlus())
-                            textSize = dpToPx(18f).toFloat()
-                        wrapSelectorWheel = false
-                        minValue = 0
-                        maxValue = minuteIndexes.last
-                        value = minute // Set last
-                    }
-                }
-            )
         }
     }
 }

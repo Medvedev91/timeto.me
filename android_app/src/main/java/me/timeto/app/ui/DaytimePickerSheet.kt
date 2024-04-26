@@ -50,7 +50,7 @@ fun DaytimePickerSheet(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
-            DayTimePickerViewOld(
+            DaytimePickerView(
                 hour = selectedHour.value,
                 minute = selectedMinute.value,
                 onHourChanged = { hour -> selectedHour.value = hour },
