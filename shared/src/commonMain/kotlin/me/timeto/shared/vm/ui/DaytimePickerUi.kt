@@ -8,6 +8,7 @@ data class DaytimePickerUi(
 ) {
 
     val text: String = "$hour".padStart(2, '0') + ":$minute".padStart(2, '0')
+    val seconds: Int = (hour * 3_600) + (minute * 60)
 
     val hourStepSlide = 1
     val hourTicks: List<Tick> = (0..23).map {
