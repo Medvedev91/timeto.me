@@ -68,7 +68,7 @@ class EventFormSheetVM(
         )
     }
 
-    fun setDaytimePickerUi(newDaytimePickerUi: DaytimePickerUi) {
+    fun setDaytime(newDaytimePickerUi: DaytimePickerUi) {
         state.update { it.copy(daytimePickerUi = newDaytimePickerUi) }
     }
 

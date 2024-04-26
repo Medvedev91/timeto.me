@@ -120,7 +120,7 @@ private fun EventFormSheet(
                     modifier = Modifier
                         .padding(top = 16.dp, bottom = 8.dp),
                     onChange = { newDaytimePickerUi ->
-                        vm.setDaytimePickerUi(newDaytimePickerUi)
+                        vm.setDaytime(newDaytimePickerUi)
                     },
                 )
             }
