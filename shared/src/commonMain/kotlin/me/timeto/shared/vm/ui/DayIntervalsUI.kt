@@ -68,8 +68,13 @@ class DayIntervalsUI(
                 if ((now <= dayTimeStart) ||
                     intervalsAsc.isEmpty() ||
                     (dayTimeFinish <= intervalsAsc.first().id)
-                )
-                    return@map DayIntervalsUI(day, listOf(IntervalUI(null, dayTimeStart, 86_400)), barDayFormat)
+                ) {
+                    return@map DayIntervalsUI(
+                        unixDay = day,
+                        intervalsUI = listOf(IntervalUI(null, dayTimeStart, 86_400)),
+                        dayStringFormat = barDayFormat,
+                    )
+                }
 
                 val firstInterval: IntervalDb = intervalsAsc.first()
 
