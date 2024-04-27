@@ -51,12 +51,14 @@ object Sheet {
             ),
             targetOffsetY = { it }
         ),
+        closeIme: Boolean = true,
         content: @Composable (WrapperView.Layer) -> Unit,
     ) {
         WrapperView.Layer(
             enterAnimation = enterAnimation,
             exitAnimation = exitAnimation,
             alignment = Alignment.BottomCenter,
+            closeIme = closeIme,
             onClose = {},
             content = { layer ->
                 Box(
