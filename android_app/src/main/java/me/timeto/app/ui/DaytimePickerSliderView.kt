@@ -136,7 +136,10 @@ private fun SliderView(
                     },
             )
 
-            // To ignore init animation
+            //
+            // Circle
+            // Ignore init animation
+
             if (sliderXPx.intValue > 0) {
 
                 val circleOffset = remember(tickIdx) {
@@ -157,6 +160,8 @@ private fun SliderView(
                         .background(c.blue),
                 )
             }
+
+            ////
         }
 
         ZStack(
