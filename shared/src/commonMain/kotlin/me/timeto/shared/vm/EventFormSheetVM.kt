@@ -29,8 +29,6 @@ class EventFormSheetVM(
 
         val inputTextValue = textFeatures.textNoFeatures
         val minTime = UnixTime().localDayStartTime()
-        val isHeaderDoneEnabled = inputTextValue.isNotBlank() &&
-                                  (selectedUnixTime.localDay >= UnixTime().localDay)
 
         // Only for Android
         val selectedDateText: String = selectedUnixTime.getStringByComponents(
