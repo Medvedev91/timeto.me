@@ -162,7 +162,7 @@ private fun SliderView(
                 ) {
 
                     Text(
-                        text = "$tickIdx",
+                        text = ticks[tickIdx].text,
                         modifier = Modifier
                             .offset(y = -onePx),
                         color = c.white,
