@@ -20,6 +20,7 @@ import me.timeto.shared.vm.ui.DaytimePickerUi
 @Composable
 fun DaytimePickerSheet(
     layer: WrapperView.Layer,
+    modifier: Modifier = Modifier,
     title: String,
     doneText: String,
     daytimePickerUi: DaytimePickerUi,
@@ -32,7 +33,8 @@ fun DaytimePickerSheet(
     val selectedMinute = remember { mutableIntStateOf(daytimePickerUi.minute) }
 
     VStack(
-        Modifier.background(c.sheetBg)
+        modifier = modifier
+            .background(c.sheetBg),
     ) {
 
         Sheet.HeaderViewOld(
