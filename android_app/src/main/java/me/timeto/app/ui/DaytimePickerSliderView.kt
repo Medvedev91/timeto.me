@@ -195,7 +195,7 @@ private fun SliderView(
                     contentAlignment = Alignment.TopCenter,
                 ) {
 
-                    if (tick.withStick) {
+                    if (tick.withSliderStick) {
                         ZStack(
                             modifier = Modifier
                                 .width(1.dp)

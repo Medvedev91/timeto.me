@@ -15,7 +15,7 @@ data class DaytimePickerUi(
         Tick(
             value = it,
             text = if ((it % 2) == 0) "$it" else null,
-            withStick = true,
+            withSliderStick = true,
         )
     }
 
@@ -25,7 +25,7 @@ data class DaytimePickerUi(
         Tick(
             value = it,
             text = if (withText) "$it" else null,
-            withStick = withText,
+            withSliderStick = withText,
         )
     }
 
@@ -45,6 +45,6 @@ data class DaytimePickerUi(
     data class Tick(
         val value: Int,
         val text: String?,
-        val withStick: Boolean,
+        val withSliderStick: Boolean,
     )
 }
