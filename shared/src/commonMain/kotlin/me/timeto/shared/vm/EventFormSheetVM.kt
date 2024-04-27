@@ -60,7 +60,7 @@ class EventFormSheetVM(
         state = MutableStateFlow(
             State(
                 headerTitle = if (event != null) "Edit Event" else "New Event",
-                headerDoneText = if (event != null) "Done" else "Create",
+                headerDoneText = if (event != null) "Save" else "Create",
                 textFeatures = textFeatures,
                 unixDay = initUnixTime.localDay,
                 daytimePickerUi = DaytimePickerUi(hour = hms[0], minute = hms[1]),
