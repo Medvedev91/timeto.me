@@ -26,7 +26,6 @@ object WrapperView {
         val enterAnimation: EnterTransition,
         val exitAnimation: ExitTransition,
         val alignment: Alignment,
-        val closeIme: Boolean = true,
         val onClose: () -> Unit,
         val content: @Composable (Layer) -> Unit,
     ) {
@@ -93,8 +92,7 @@ object WrapperView {
                     }
 
                     LaunchedEffect(Unit) {
-                        if (layer.closeIme)
-                            keyboardController?.hide()
+                        keyboardController?.hide()
                         layer.isPresented.setTrue()
                     }
                 }
