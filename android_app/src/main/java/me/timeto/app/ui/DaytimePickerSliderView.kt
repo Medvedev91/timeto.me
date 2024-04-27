@@ -158,7 +158,18 @@ private fun SliderView(
                         .size(circleSize)
                         .clip(roundedShape)
                         .background(c.blue),
-                )
+                    contentAlignment = Alignment.Center,
+                ) {
+
+                    Text(
+                        text = "$tickIdx",
+                        modifier = Modifier
+                            .offset(y = (-1).dp),
+                        color = c.white,
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight.Medium,
+                    )
+                }
             }
 
             ////
