@@ -27,7 +27,7 @@ import me.timeto.shared.limitMinMax
 import me.timeto.shared.vm.ui.DaytimePickerUi
 
 // Slider line a little wider to nice ui
-private val sliderInternalPadding = 2.dp
+private val sliderInternalPadding = 3.dp
 private val circleSize = 20.dp
 private val circleDefaultOffset = H_PADDING - (circleSize / 2) + sliderInternalPadding
 private val circleAnimation = spring(
