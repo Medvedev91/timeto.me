@@ -1,6 +1,6 @@
 package me.timeto.shared.vm.ui
 
-data class DaytimePickerUi(
+data class DaytimePickerSliderUi(
     val hour: Int,
     val minute: Int,
 ) {
