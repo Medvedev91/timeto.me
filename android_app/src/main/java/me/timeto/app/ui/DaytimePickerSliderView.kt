@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import me.timeto.app.*
 import me.timeto.shared.libs.DaytimeModel
+import me.timeto.shared.limitMax
 import me.timeto.shared.limitMinMax
 import me.timeto.shared.vm.ui.DaytimePickerSliderUi
 
@@ -105,7 +106,9 @@ private fun SliderView(
 
                 val prevStep = slideXPosition / stepPx
                 val prevStepExtra = prevStep - prevStep.toInt()
-                val newStep = (if (prevStepExtra < 0.5) prevStep else prevStep + 1).toInt()
+                val newStep = (if (prevStepExtra < 0.5) prevStep else prevStep + 1)
+                    .toInt()
+                    .limitMax((ticks.size - 1) / stepTicks)
                 val newIdx = (newStep * stepTicks).limitMinMax(min = 0, max = ticks.size - 1)
 
                 if (tickIdx != newIdx)
