@@ -97,28 +97,6 @@ private fun EventFormSheet(
                             )
                         },
                     )
-
-                    DateTimeButton(
-                        text = state.selectedTimeText,
-                        paddingStart = H_PADDING_HALF,
-                        onClick = {
-                            Sheet.show(closeIme = false) { layer ->
-                                DaytimePickerSheet(
-                                    layer = layer,
-                                    modifier = Modifier
-                                        .imePadding(),
-                                    title = state.daytimeSheetTitle,
-                                    doneText = state.daytimeSheetDone,
-                                    daytimePickerUi = state.daytimePickerUi,
-                                    withRemove = false,
-                                    onPick = { daytimePickerUi ->
-                                        vm.setDaytime(daytimePickerUi)
-                                    },
-                                    onRemove = {},
-                                )
-                            }
-                        },
-                    )
                 }
 
                 DaytimePickerSliderView(
