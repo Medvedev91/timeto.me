@@ -123,7 +123,7 @@ private fun EventFormSheet(
                 DaytimePickerSliderView(
                     daytimePickerUi = state.daytimePickerUi,
                     modifier = Modifier
-                        .padding(top = 16.dp, bottom = 8.dp),
+                        .padding(top = 16.dp, bottom = 12.dp),
                     onChange = { newDaytimePickerUi ->
                         vm.setDaytime(newDaytimePickerUi)
                     },
@@ -132,18 +132,18 @@ private fun EventFormSheet(
 
             HStack(
                 modifier = Modifier
-                    .padding(vertical = 8.dp)
+                    .background(c.sheetFg)
+                    .padding(vertical = 4.dp)
                     .navigationBarsPadding()
                     .imePadding(),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
 
-                MyListView__ItemView(
-                    modifier = Modifier.weight(1f),
-                    isFirst = true,
-                    isLast = true,
-                    outerPadding = PaddingValues(start = H_PADDING, end = 8.dp)
+                ZStack(
+                    modifier = Modifier
+                        .weight(1f),
                 ) {
+
                     MyListView__ItemView__TextInputView(
                         placeholder = "Event",
                         text = state.inputTextValue,
@@ -155,24 +155,21 @@ private fun EventFormSheet(
                 }
 
                 Text(
-                    state.headerDoneText,
+                    text = state.headerDoneText,
                     modifier = Modifier
-                        .padding(end = 10.dp, bottom = 1.dp)
+                        .padding(start = 10.dp, end = H_PADDING)
                         .clip(roundedShape)
-                        .clickable(enabled = state.isHeaderDoneEnabled) {
+                        .background(c.blue)
+                        .clickable {
                             vm.save {
                                 layer.close()
                                 onSave()
                             }
                         }
-                        .padding(horizontal = 8.dp, vertical = 4.dp),
-                    color = animateColorAsState(
-                        targetValue =
-                        if (state.isHeaderDoneEnabled) c.blue
-                        else c.textSecondary.copy(alpha = 0.4f)
-                    ).value,
-                    fontSize = 17.sp,
-                    fontWeight = FontWeight.W600
+                        .padding(horizontal = 12.dp, vertical = 4.dp),
+                    color = c.white,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Medium,
                 )
             }
         }
