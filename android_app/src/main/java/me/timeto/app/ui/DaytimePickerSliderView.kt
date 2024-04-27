@@ -204,10 +204,10 @@ private fun SliderView(
                         )
                     }
 
-                    val tickText = tick.text
-                    if (tickText != null) {
+                    val sliderStickText = tick.sliderStickText
+                    if (sliderStickText != null) {
                         Text(
-                            text = tickText,
+                            text = sliderStickText,
                             modifier = Modifier
                                 .padding(top = 4.dp),
                             color = c.textSecondary,

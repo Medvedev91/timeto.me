@@ -14,18 +14,18 @@ data class DaytimePickerUi(
     val hourTicks: List<Tick> = (0..23).map {
         Tick(
             value = it,
-            text = if ((it % 2) == 0) "$it" else null,
+            sliderStickText = if ((it % 2) == 0) "$it" else null,
             withSliderStick = true,
         )
     }
 
     val minuteStepSlide = 5
     val minuteTicks: List<Tick> = (0..59).map {
-        val withText = (it % minuteStepSlide) == 0
+        val withSliderStickText = (it % minuteStepSlide) == 0
         Tick(
             value = it,
-            text = if (withText) "$it" else null,
-            withSliderStick = withText,
+            sliderStickText = if (withSliderStickText) "$it" else null,
+            withSliderStick = withSliderStickText,
         )
     }
 
@@ -44,7 +44,7 @@ data class DaytimePickerUi(
 
     data class Tick(
         val value: Int,
-        val text: String?,
+        val sliderStickText: String?,
         val withSliderStick: Boolean,
     )
 }
