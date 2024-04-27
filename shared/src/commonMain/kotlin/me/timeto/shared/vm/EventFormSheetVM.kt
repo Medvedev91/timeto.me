@@ -3,7 +3,7 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.EventDb
-import me.timeto.shared.vm.ui.DaytimePickerUi
+import me.timeto.shared.libs.DaytimeModel
 
 /**
  * Different logic for platform. For iOS, we use a Date() object
@@ -20,11 +20,11 @@ class EventFormSheetVM(
         val headerDoneText: String,
         val textFeatures: TextFeatures,
         val unixDay: Int,
-        val daytimePickerUi: DaytimePickerUi,
+        val daytimeModel: DaytimeModel,
     ) {
 
         val selectedUnixTime = UnixTime.byLocalDay(unixDay).inSeconds(
-            daytimePickerUi.hour * 3_600 + daytimePickerUi.minute * 60
+            daytimeModel.hour * 3_600 + daytimeModel.minute * 60
         )
 
         val inputTextValue = textFeatures.textNoFeatures
@@ -54,13 +54,13 @@ class EventFormSheetVM(
                 headerDoneText = if (event != null) "Save" else "Create",
                 textFeatures = textFeatures,
                 unixDay = initUnixTime.localDay,
-                daytimePickerUi = DaytimePickerUi(hour = hms[0], minute = hms[1]),
+                daytimeModel = DaytimeModel(hour = hms[0], minute = hms[1]),
             )
         )
     }
 
-    fun setDaytime(newDaytimePickerUi: DaytimePickerUi) {
-        state.update { it.copy(daytimePickerUi = newDaytimePickerUi) }
+    fun setDaytime(daytimeModel: DaytimeModel) {
+        state.update { it.copy(daytimeModel = daytimeModel) }
     }
 
     fun setUnixDay(newUnixDay: Int) {
