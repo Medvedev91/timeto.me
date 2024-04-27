@@ -102,9 +102,11 @@ private fun EventFormSheet(
                         text = state.selectedTimeText,
                         paddingStart = H_PADDING_HALF,
                         onClick = {
-                            Sheet.show { layer ->
+                            Sheet.show(closeIme = false) { layer ->
                                 DaytimePickerSheet(
                                     layer = layer,
+                                    modifier = Modifier
+                                        .imePadding(),
                                     title = state.daytimeSheetTitle,
                                     doneText = state.daytimeSheetDone,
                                     daytimePickerUi = state.daytimePickerUi,
