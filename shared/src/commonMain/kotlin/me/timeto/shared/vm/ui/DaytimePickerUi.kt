@@ -46,5 +46,7 @@ data class DaytimePickerUi(
         val value: Int,
         val sliderStickText: String?,
         val withSliderStick: Boolean,
-    )
+    ) {
+        val text = value.toString().padStart(2, '0')
+    }
 }
