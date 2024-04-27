@@ -1,7 +1,5 @@
 package me.timeto.shared.vm.ui
 
-import me.timeto.shared.toHms
-
 data class DaytimePickerUi(
     val hour: Int,
     val minute: Int,
@@ -30,17 +28,6 @@ data class DaytimePickerUi(
     }
 
     ///
-
-    companion object {
-
-        fun byHms(daytime: Int): DaytimePickerUi {
-            val (h, m) = daytime.toHms()
-            return DaytimePickerUi(
-                hour = h,
-                minute = m,
-            )
-        }
-    }
 
     data class Tick(
         val value: Int,
