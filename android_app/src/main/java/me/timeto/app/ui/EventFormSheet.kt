@@ -5,10 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Close
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -59,115 +56,93 @@ private fun EventFormSheet(
 
     val scrollState = rememberScrollState()
 
-    ZStack(
+    VStack(
         modifier = Modifier
             .fillMaxSize()
-            .background(c.sheetBg)
+            .background(c.sheetBg),
     ) {
 
         VStack(
             modifier = Modifier
-                .fillMaxSize()
+                .weight(1f)
+                .verticalScroll(
+                    state = scrollState,
+                    reverseScrolling = true,
+                )
         ) {
 
-            VStack(
-                modifier = Modifier
-                    .weight(1f)
-                    .verticalScroll(
-                        state = scrollState,
-                        reverseScrolling = true,
-                    )
-            ) {
+            SpacerW1()
 
-                SpacerW1()
+            HStack {
 
-                HStack {
-
-                    DateTimeButton(
-                        text = state.selectedDateText,
-                        paddingStart = H_PADDING,
-                        onClick = {
-                            Dialog.showDatePicker(
-                                unixTime = state.selectedUnixTime,
-                                minTime = UnixTime(state.minTime),
-                                maxTime = UnixTime(UnixTime.MAX_TIME),
-                                onSelect = {
-                                    vm.setUnixDay(it.localDay)
-                                },
-                            )
-                        },
-                    )
-                }
-
-                DaytimePickerSliderView(
-                    daytimeModel = state.daytimeModel,
-                    modifier = Modifier
-                        .padding(top = 16.dp, bottom = 12.dp),
-                    onChange = { daytimeModel ->
-                        vm.setDaytime(daytimeModel)
+                DateTimeButton(
+                    text = state.selectedDateText,
+                    paddingStart = H_PADDING,
+                    onClick = {
+                        Dialog.showDatePicker(
+                            unixTime = state.selectedUnixTime,
+                            minTime = UnixTime(state.minTime),
+                            maxTime = UnixTime(UnixTime.MAX_TIME),
+                            onSelect = {
+                                vm.setUnixDay(it.localDay)
+                            },
+                        )
                     },
                 )
             }
 
-            HStack(
+            DaytimePickerSliderView(
+                daytimeModel = state.daytimeModel,
                 modifier = Modifier
-                    .background(c.sheetFg)
-                    .padding(vertical = 4.dp)
-                    .navigationBarsPadding()
-                    .imePadding(),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-
-                ZStack(
-                    modifier = Modifier
-                        .weight(1f),
-                ) {
-
-                    MyListView__ItemView__TextInputView(
-                        placeholder = "Event",
-                        text = state.inputTextValue,
-                        onTextChanged = { vm.setInputTextValue(it) },
-                        isAutofocus = true,
-                        keyboardButton = ImeAction.Done,
-                        keyboardEvent = {},
-                    )
-                }
-
-                Text(
-                    text = state.headerDoneText,
-                    modifier = Modifier
-                        .padding(start = 10.dp, end = H_PADDING)
-                        .clip(roundedShape)
-                        .background(c.blue)
-                        .clickable {
-                            vm.save {
-                                layer.close()
-                                onSave()
-                            }
-                        }
-                        .padding(horizontal = 12.dp, vertical = 4.dp),
-                    color = c.white,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Medium,
-                )
-            }
+                    .padding(top = 16.dp, bottom = 12.dp),
+                onChange = { daytimeModel ->
+                    vm.setDaytime(daytimeModel)
+                },
+            )
         }
 
-        Icon(
-            Icons.Rounded.Close,
-            "Close",
-            tint = c.textSecondary.copy(alpha = 0.4f),
+        HStack(
             modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(top = statusBarHeight + 2.dp, end = H_PADDING)
-                .size(36.dp)
-                .clip(roundedShape)
                 .background(c.sheetFg)
-                .clickable {
-                    layer.close()
-                }
-                .padding(6.dp),
-        )
+                .padding(vertical = 4.dp)
+                .navigationBarsPadding()
+                .imePadding(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+
+            ZStack(
+                modifier = Modifier
+                    .weight(1f),
+            ) {
+
+                MyListView__ItemView__TextInputView(
+                    placeholder = "Event",
+                    text = state.inputTextValue,
+                    onTextChanged = { vm.setInputTextValue(it) },
+                    isAutofocus = true,
+                    keyboardButton = ImeAction.Done,
+                    keyboardEvent = {},
+                )
+            }
+
+            Text(
+                text = state.headerDoneText,
+                modifier = Modifier
+                    .padding(start = 10.dp, end = H_PADDING)
+                    .clip(roundedShape)
+                    .background(c.blue)
+                    .clickable {
+                        vm.save {
+                            layer.close()
+                            onSave()
+                        }
+                    }
+                    .padding(horizontal = 12.dp, vertical = 4.dp),
+                color = c.white,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Medium,
+            )
+        }
     }
 }
 
