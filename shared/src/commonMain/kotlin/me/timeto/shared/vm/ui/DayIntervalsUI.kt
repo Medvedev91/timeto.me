@@ -82,14 +82,15 @@ class DayIntervalsUI(
                 val dayIntervals = intervalsAsc.filter { it.id >= dayTimeStart && it.id < dayTimeFinish }
 
                 // Adding leading section
-                if (firstInterval.id >= dayTimeStart)
+                if (firstInterval.id > dayTimeStart)
                     daySections.add(IntervalUI(null, dayTimeStart, firstInterval.id - dayTimeStart))
                 else {
-                    val prevInterval = intervalsAsc.last { it.id < dayTimeStart }
-                    val seconds = (dayIntervals.firstOrNull()?.id ?: dayMaxTimeFinish) - dayTimeStart
-                    // 0 when the interval starts at 00:00
-                    if (seconds > 0)
+                    val todayFirstIntervalOrNull: IntervalDb? = dayIntervals.firstOrNull()
+                    if ((todayFirstIntervalOrNull == null) || (todayFirstIntervalOrNull.id > dayTimeStart)) {
+                        val prevInterval = intervalsAsc.last { it.id < dayTimeStart }
+                        val seconds = (todayFirstIntervalOrNull?.id ?: dayMaxTimeFinish) - dayTimeStart
                         daySections.add(IntervalUI(prevInterval.getActivityDI(), dayTimeStart, seconds))
+                    }
                 }
 
                 // Adding other sections
