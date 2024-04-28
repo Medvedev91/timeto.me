@@ -51,7 +51,12 @@ fun SettingsSheet(
     val launcherBackup = rememberLauncherForActivityResult(
         ActivityResultContracts.CreateDocument()
     ) { destinationUri ->
-        // todo check if null destinationUri. On cancel.
+
+        if (destinationUri == null) {
+            showUiAlert("File not selected")
+            return@rememberLauncherForActivityResult
+        }
+
         scope.launch {
             try {
                 val jsonBytes = Backup.create("manual").toByteArray()
