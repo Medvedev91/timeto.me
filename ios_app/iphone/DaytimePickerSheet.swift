@@ -6,7 +6,8 @@ struct DaytimePickerSheet: View {
     @Binding private var isPresented: Bool
     private let title: String
     private let doneText: String
-    private let onPick: (_ seconds: Int32?) -> Void
+    private let onPick: (_ daytimeModel: DaytimeModel) -> Void
+    private let onRemove: () -> Void
 
     ///
 
@@ -15,19 +16,20 @@ struct DaytimePickerSheet: View {
     ///
 
     init(
-            isPresented: Binding<Bool>,
-            title: String,
-            doneText: String,
-            defMinute: Int32,
-            defHour: Int32,
-            onPick: @escaping (_ seconds: Int32?) -> Void
+        isPresented: Binding<Bool>,
+        title: String,
+        doneText: String,
+        daytimeModel: DaytimeModel,
+        onPick: @escaping (_ daytimeModel: DaytimeModel) -> Void,
+        onRemove: @escaping () -> Void
     ) {
         _isPresented = isPresented
         self.title = title
         self.doneText = doneText
         self.onPick = onPick
+        self.onRemove = onRemove
         ///
-        _dateTrick = State(initialValue: Date().startOfDay().inSeconds((defHour * 3600 + defMinute * 60).toInt()))
+        _dateTrick = State(initialValue: Date().startOfDay().inSeconds((daytimeModel.seconds).toInt()))
     }
 
     var body: some View {
@@ -37,51 +39,53 @@ struct DaytimePickerSheet: View {
             HStack(spacing: 4) {
 
                 Button(
-                        action: { isPresented.toggle() },
-                        label: { Text("Cancel") }
+                    action: { isPresented.toggle() },
+                    label: { Text("Cancel") }
                 )
 
                 Spacer()
 
                 Text(title)
-                        .font(.title2)
-                        .fontWeight(.semibold)
-                        .multilineTextAlignment(.center)
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                    .multilineTextAlignment(.center)
 
                 Spacer()
 
                 Button(
-                        action: {
-                            let calendar = Calendar.current
-                            let hour = calendar.component(.hour, from: dateTrick)
-                            let minutes = calendar.component(.minute, from: dateTrick)
-                            onPick(Int32((hour * 3_600) + (minutes * 60)))
-                            isPresented = false
-                        },
-                        label: {
-                            Text(doneText)
-                                    .fontWeight(.bold)
-                        }
+                    action: {
+                        let calendar = Calendar.current
+                        let newDaytimeModel = DaytimeModel(
+                            hour: calendar.component(.hour, from: dateTrick).toInt32(),
+                            minute: calendar.component(.minute, from: dateTrick).toInt32()
+                        )
+                        onPick(newDaytimeModel)
+                        isPresented = false
+                    },
+                    label: {
+                        Text(doneText)
+                            .fontWeight(.bold)
+                    }
                 )
             }
-                    .padding(.horizontal, 25)
-                    .padding(.top, 24)
+            .padding(.horizontal, 25)
+            .padding(.top, 24)
 
             Spacer()
 
             DatePicker(
-                    "Start Date",
-                    selection: $dateTrick,
-                    displayedComponents: [.hourAndMinute]
+                "Start Date",
+                selection: $dateTrick,
+                displayedComponents: [.hourAndMinute]
             )
-                    .labelsHidden()
-                    .datePickerStyle(.wheel)
+                .labelsHidden()
+                .datePickerStyle(.wheel)
 
             Button("Remove") {
-                onPick(nil)
+                onRemove()
                 isPresented = false
             }
-                    .foregroundColor(.red)
+            .foregroundColor(.red)
 
             Spacer()
         }
