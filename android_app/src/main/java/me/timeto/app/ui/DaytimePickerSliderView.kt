@@ -170,7 +170,7 @@ private fun SliderView(
                     Text(
                         text = ticks[tickIdx].text,
                         modifier = Modifier
-                            .offset(y = -onePx),
+                            .offset(y = -onePx * 2),
                         color = c.white,
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Medium,
