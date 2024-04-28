@@ -12,12 +12,12 @@ struct EventTemplateFormSheet: View {
     @State private var scroll = 0
 
     init(
-            isPresented: Binding<Bool>,
-            eventTemplateDb: EventTemplateDb?
+        isPresented: Binding<Bool>,
+        eventTemplateDb: EventTemplateDb?
     ) {
         _isPresented = isPresented
         _vm = State(initialValue: EventTemplateFormSheetVM(
-                eventTemplateDB: eventTemplateDb
+            eventTemplateDB: eventTemplateDb
         ))
     }
 
@@ -26,9 +26,9 @@ struct EventTemplateFormSheet: View {
         VMView(vm: vm, stack: .VStack()) { state in
 
             Sheet__HeaderView(
-                    title: state.headerTitle,
-                    scrollToHeader: scroll,
-                    bgColor: c.sheetBg
+                title: state.headerTitle,
+                scrollToHeader: scroll,
+                bgColor: c.sheetBg
             )
 
             ScrollViewWithVListener(showsIndicators: false, vScroll: $scroll) {
@@ -36,48 +36,51 @@ struct EventTemplateFormSheet: View {
                 VStack {
 
                     MyListView__ItemView(
-                            isFirst: true,
-                            isLast: true
+                        isFirst: true,
+                        isLast: true
                     ) {
 
                         MyListView__ItemView__TextInputView(
-                                text: state.inputTextValue,
-                                placeholder: "Text",
-                                isAutofocus: false,
-                                onValueChanged: { newText in vm.setInputTextValue(text: newText) }
+                            text: state.inputTextValue,
+                            placeholder: "Text",
+                            isAutofocus: false,
+                            onValueChanged: { newText in vm.setInputTextValue(text: newText) }
                         )
                     }
-                            .padding(.top, 12)
+                    .padding(.top, 12)
 
                     MyListView__Padding__SectionSection()
 
                     MyListView__ItemView(
-                            isFirst: true,
-                            isLast: true
+                        isFirst: true,
+                        isLast: true
                     ) {
 
                         MyListView__ItemView__ButtonView(
-                                text: state.daytimeTitle,
-                                withArrow: true,
-                                rightView: AnyView(
-                                        MyListView__ItemView__ButtonView__RightText(
-                                                text: state.daytimeNote,
-                                                paddingEnd: 2,
-                                                textColor: state.daytimeNoteColor?.toColor()
-                                        )
+                            text: state.daytimeTitle,
+                            withArrow: true,
+                            rightView: AnyView(
+                                MyListView__ItemView__ButtonView__RightText(
+                                    text: state.daytimeNote,
+                                    paddingEnd: 2,
+                                    textColor: state.daytimeNoteColor?.toColor()
                                 )
+                            )
                         ) {
                             nativeSheet.show { isTimerPickerPresented in
                                 DaytimePickerSheet(
-                                        isPresented: isTimerPickerPresented,
-                                        title: state.daytimeTitle,
-                                        doneText: "Done",
-                                        defMinute: state.daytimeDefMinute,
-                                        defHour: state.daytimeDefHour
-                                ) { secondsOrNull in
-                                    vm.setDaytime(newDaytimeOrNull: secondsOrNull?.toKotlinInt())
-                                }
-                                        .presentationDetentsMediumIf16()
+                                    isPresented: isTimerPickerPresented,
+                                    title: state.daytimeTitle,
+                                    doneText: "Done",
+                                    daytimeModel: state.defDaytimeModel,
+                                    onPick: { daytimeModel in
+                                        vm.setDaytime(daytimeModel: daytimeModel)
+                                    },
+                                    onRemove: {
+                                        vm.setDaytime(daytimeModel: nil)
+                                    }
+                                )
+                                .presentationDetentsMediumIf16()
                             }
                         }
                     }
@@ -85,7 +88,7 @@ struct EventTemplateFormSheet: View {
                     MyListView__Padding__SectionSection()
 
                     TextFeaturesTimerFormView(
-                            textFeatures: state.textFeatures
+                        textFeatures: state.textFeatures
                     ) { textFeatures in
                         vm.setTextFeatures(newTextFeatures: textFeatures)
                     }
@@ -93,7 +96,7 @@ struct EventTemplateFormSheet: View {
                     MyListView__Padding__SectionSection()
 
                     TextFeaturesTriggersFormView(
-                            textFeatures: state.textFeatures
+                        textFeatures: state.textFeatures
                     ) { textFeatures in
                         vm.setTextFeatures(newTextFeatures: textFeatures)
                     }
@@ -103,11 +106,11 @@ struct EventTemplateFormSheet: View {
                         MyListView__Padding__SectionSection()
 
                         MyListView__ItemView(
-                                isFirst: true,
-                                isLast: true
+                            isFirst: true,
+                            isLast: true
                         ) {
                             MyListView__ItemView__ActionView(
-                                    text: state.deleteText
+                                text: state.deleteText
                             ) {
                                 vm.delete(templateDB: eventTemplate) {
                                     isPresented = false
@@ -119,18 +122,18 @@ struct EventTemplateFormSheet: View {
             }
 
             Sheet__BottomViewDefault(
-                    primaryText: state.doneText,
-                    primaryAction: {
-                        vm.save {
-                            isPresented = false
-                        }
-                    },
-                    secondaryText: "Cancel",
-                    secondaryAction: {
+                primaryText: state.doneText,
+                primaryAction: {
+                    vm.save {
                         isPresented = false
-                    },
-                    topContent: { EmptyView() },
-                    startContent: { EmptyView() }
+                    }
+                },
+                secondaryText: "Cancel",
+                secondaryAction: {
+                    isPresented = false
+                },
+                topContent: { EmptyView() },
+                startContent: { EmptyView() }
             )
         }
     }
