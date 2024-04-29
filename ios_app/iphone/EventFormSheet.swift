@@ -67,10 +67,10 @@ private struct EventFormSheet: View {
                 }
             }
             .onAppear {
-                date = Date(timeIntervalSince1970: Double(state.selectedTime))
+                date = Date(timeIntervalSince1970: Double(state.selectedUnixTime.time))
             }
             .onChange(of: date) { _ in
-                vm.setTime(time: date.toUnixTime().time)
+                vm.setUnixDay(unixDay: date.toUnixTime().localDay)
                 hideKeyboard()
             }
 
@@ -94,24 +94,21 @@ private struct EventFormSheet: View {
                     }
                     .padding(.top, 1)
 
-                    DatePicker(
-                        "Start Date",
-                        selection: $date,
-                        in: Date().startOfDay()...,
-                        displayedComponents: [.date]
-                    )
-                        .labelsHidden()
-                        .padding(.horizontal, 28)
-                        .padding(.top, 8)
-                        .datePickerStyle(.graphical)
+                    HStack {
 
-                    DatePicker(
-                        "Start Date",
-                        selection: $date,
-                        displayedComponents: [.hourAndMinute]
-                    )
-                        .labelsHidden()
-                        .datePickerStyle(.wheel)
+                        DatePicker(
+                            "Start Date",
+                            selection: $date,
+                            in: Date().startOfDay()...,
+                            displayedComponents: [.date]
+                        )
+                            .labelsHidden()
+                            .padding(.top, 8)
+                            .datePickerStyle(.compact)
+
+                        Spacer()
+                    }
+                    .padding(.leading, H_PADDING + 4)
 
                     Spacer()
                         .frame(minHeight: 20)
