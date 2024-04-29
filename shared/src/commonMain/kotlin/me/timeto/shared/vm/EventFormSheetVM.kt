@@ -23,7 +23,7 @@ class EventFormSheetVM(
         val daytimeModel: DaytimeModel,
     ) {
 
-        val selectedUnixTime = UnixTime.byLocalDay(unixDay).inSeconds(
+        val selectedUnixTime: UnixTime = UnixTime.byLocalDay(unixDay).inSeconds(
             daytimeModel.hour * 3_600 + daytimeModel.minute * 60
         )
 
