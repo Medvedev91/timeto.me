@@ -87,7 +87,14 @@ private struct EventFormSheet: View {
                             Spacer()
                         }
 
-                        Padding(vertical: 16)
+                        DaytimePickerSliderView(
+                            daytimeModel: state.daytimeModel,
+                            onChange: { daytimeModel in
+                                vm.setDaytime(daytimeModel: daytimeModel)
+                            }
+                        )
+                        .padding(.top, 16)
+                        .padding(.bottom, 16)
                     }
                     .frame(minHeight: geometry.size.height)
                 }
