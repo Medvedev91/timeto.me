@@ -63,8 +63,8 @@ class EventFormSheetVM(
         state.update { it.copy(daytimeModel = daytimeModel) }
     }
 
-    fun setUnixDay(newUnixDay: Int) {
-        state.update { it.copy(unixDay = newUnixDay) }
+    fun setUnixDay(unixDay: Int) {
+        state.update { it.copy(unixDay = unixDay) }
     }
 
     fun setInputTextValue(text: String) = state.update {
