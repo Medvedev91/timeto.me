@@ -54,17 +54,7 @@ private struct EventFormSheet: View {
 
         VMView(vm: vm, stack: .VStack()) { state in
 
-            SheetHeaderView(
-                onCancel: { isPresented.toggle() },
-                title: state.headerTitle,
-                doneText: state.saveText,
-                isDoneEnabled: true,
-                scrollToHeader: sheetHeaderScroll
-            ) {
-                vm.save {
-                    onSave()
-                    isPresented = false
-                }
+            ZStack {
             }
             .onAppear {
                 date = Date(timeIntervalSince1970: Double(state.selectedUnixTime.time))
