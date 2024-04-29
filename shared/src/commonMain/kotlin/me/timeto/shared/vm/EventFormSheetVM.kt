@@ -28,6 +28,7 @@ class EventFormSheetVM(
         )
 
         val inputTextValue = textFeatures.textNoFeatures
+        val inputPlaceholder = "Event"
         val minTime = UnixTime().localDayStartTime()
 
         // Only for Android

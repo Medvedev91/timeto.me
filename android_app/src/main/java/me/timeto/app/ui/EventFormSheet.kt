@@ -116,7 +116,7 @@ private fun EventFormSheet(
             ) {
 
                 MyListView__ItemView__TextInputView(
-                    placeholder = "Event",
+                    placeholder = state.inputPlaceholder,
                     text = state.inputTextValue,
                     onTextChanged = { vm.setInputTextValue(it) },
                     isAutofocus = true,
