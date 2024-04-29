@@ -78,21 +78,7 @@ private struct EventFormSheet: View {
 
                 VStack {
 
-                    MyListView__ItemView(
-                        isFirst: true,
-                        isLast: true
-                    ) {
-
-                        MyListView__ItemView__TextInputView(
-                            text: state.inputTextValue,
-                            placeholder: "Title",
-                            // Autofocus only for new events
-                            isAutofocus: true
-                        ) { newValue in
-                            vm.setInputTextValue(text: newValue)
-                        }
-                    }
-                    .padding(.top, 1)
+                    Spacer()
 
                     HStack {
 
@@ -114,6 +100,38 @@ private struct EventFormSheet: View {
                         .frame(minHeight: 20)
                 }
             }
+
+            HStack {
+
+                MyListView__ItemView__TextInputView(
+                    text: state.inputTextValue,
+                    placeholder: state.inputPlaceholder,
+                    isAutofocus: true
+                ) { newValue in
+                    vm.setInputTextValue(text: newValue)
+                }
+
+                Button(
+                    action: {
+                        vm.save {
+                            onSave()
+                            isPresented = false
+                        }
+                    },
+                    label: {
+                        Text(state.saveText)
+                            .font(.system(size: 16, weight: .medium))
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 6)
+                            .foregroundColor(c.white)
+                            .background(roundedShape.fill(c.blue))
+                    }
+                )
+                .padding(.leading, 8)
+                .padding(.trailing, H_PADDING)
+            }
+            .padding(.vertical, 4)
+            .background(c.sheetFg)
         }
         .background(c.sheetBg)
     }
