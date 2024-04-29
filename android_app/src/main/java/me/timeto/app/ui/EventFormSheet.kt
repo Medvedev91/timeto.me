@@ -126,7 +126,7 @@ private fun EventFormSheet(
             }
 
             Text(
-                text = state.headerDoneText,
+                text = state.saveText,
                 modifier = Modifier
                     .padding(start = 10.dp, end = H_PADDING)
                     .clip(roundedShape)

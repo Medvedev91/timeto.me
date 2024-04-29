@@ -17,7 +17,7 @@ class EventFormSheetVM(
 
     data class State(
         val headerTitle: String,
-        val headerDoneText: String,
+        val saveText: String,
         val textFeatures: TextFeatures,
         val unixDay: Int,
         val daytimeModel: DaytimeModel,
@@ -51,7 +51,7 @@ class EventFormSheetVM(
         state = MutableStateFlow(
             State(
                 headerTitle = if (event != null) "Edit Event" else "New Event",
-                headerDoneText = if (event != null) "Save" else "Create",
+                saveText = if (event != null) "Save" else "Create",
                 textFeatures = textFeatures,
                 unixDay = initUnixTime.localDay,
                 daytimeModel = DaytimeModel(hour = hms[0], minute = hms[1]),

@@ -57,7 +57,7 @@ private struct EventFormSheet: View {
             SheetHeaderView(
                 onCancel: { isPresented.toggle() },
                 title: state.headerTitle,
-                doneText: state.headerDoneText,
+                doneText: state.saveText,
                 isDoneEnabled: true,
                 scrollToHeader: sheetHeaderScroll
             ) {
