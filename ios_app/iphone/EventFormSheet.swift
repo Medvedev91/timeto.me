@@ -52,7 +52,7 @@ private struct EventFormSheet: View {
 
     var body: some View {
 
-        VMView(vm: vm, stack: .VStack(spacing: 0)) { state in
+        VMView(vm: vm, stack: .VStack()) { state in
 
             SheetHeaderView(
                 onCancel: { isPresented.toggle() },
@@ -76,7 +76,7 @@ private struct EventFormSheet: View {
 
             ScrollViewWithVListener(showsIndicators: false, vScroll: $sheetHeaderScroll) {
 
-                VStack(spacing: 0) {
+                VStack {
 
                     MyListView__ItemView(
                         isFirst: true,
