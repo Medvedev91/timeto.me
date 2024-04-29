@@ -58,7 +58,7 @@ private struct EventFormSheet: View {
                 onCancel: { isPresented.toggle() },
                 title: state.headerTitle,
                 doneText: state.headerDoneText,
-                isDoneEnabled: state.isHeaderDoneEnabled,
+                isDoneEnabled: true,
                 scrollToHeader: sheetHeaderScroll
             ) {
                 vm.save {
@@ -87,7 +87,7 @@ private struct EventFormSheet: View {
                             text: state.inputTextValue,
                             placeholder: "Title",
                             // Autofocus only for new events
-                            isAutofocus: state.isAutoFocus
+                            isAutofocus: true
                         ) { newValue in
                             vm.setInputTextValue(text: newValue)
                         }
