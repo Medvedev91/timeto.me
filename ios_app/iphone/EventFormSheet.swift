@@ -64,30 +64,32 @@ private struct EventFormSheet: View {
                 hideKeyboard()
             }
 
-            ScrollViewWithVListener(showsIndicators: false, vScroll: $sheetHeaderScroll) {
+            GeometryReader { geometry in
 
-                VStack {
+                ScrollViewWithVListener(showsIndicators: false, vScroll: $sheetHeaderScroll) {
 
-                    Spacer()
-
-                    HStack {
-
-                        DatePicker(
-                            "Start Date",
-                            selection: $date,
-                            in: Date().startOfDay()...,
-                            displayedComponents: [.date]
-                        )
-                            .labelsHidden()
-                            .padding(.top, 8)
-                            .datePickerStyle(.compact)
+                    VStack {
 
                         Spacer()
-                    }
-                    .padding(.leading, H_PADDING + 4)
 
-                    Spacer()
-                        .frame(minHeight: 20)
+                        HStack {
+
+                            DatePicker(
+                                "Start Date",
+                                selection: $date,
+                                in: Date().startOfDay()...,
+                                displayedComponents: [.date]
+                            )
+                                .labelsHidden()
+                                .datePickerStyle(.compact)
+                                .padding(.leading, H_PADDING)
+
+                            Spacer()
+                        }
+
+                        Padding(vertical: 16)
+                    }
+                    .frame(minHeight: geometry.size.height)
                 }
             }
 
