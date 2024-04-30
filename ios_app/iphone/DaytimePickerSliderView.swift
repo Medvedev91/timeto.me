@@ -47,6 +47,8 @@ private struct SliderView: View {
     @State private var sliderXPx = 0.0
     // Not exact but approximate `slide width` / `ticks size`
     @State private var tickAxmPx = 0.0
+    
+    @State private var circleOffsetAnimation = 0.0
 
     var body: some View {
 
@@ -93,10 +95,15 @@ private struct SliderView: View {
                         }
                         .frame(width: circleSize, height: circleSize, alignment: .center)
                         .background(roundedShape.fill(c.blue))
-                        .offset(x: circleOffset)
+                        .offset(x: circleOffsetAnimation)
 
                         Spacer()
                     }
+                    .animateVmValue(
+                        value: circleOffset,
+                        state: $circleOffsetAnimation,
+                        animation: .spring(response: 0.15)
+                    )
                 }
 
                 ////
