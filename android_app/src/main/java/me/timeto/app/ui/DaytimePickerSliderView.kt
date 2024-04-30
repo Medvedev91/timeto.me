@@ -107,12 +107,12 @@ private fun SliderView(
                 val slideXPosition = event.x - sliderXPx.intValue
                 val stepPx = tickAxmPx.floatValue * stepTicks
 
-                val prevStep = slideXPosition / stepPx
-                val prevStepExtra = prevStep - prevStep.toInt()
-                val newStep = (if (prevStepExtra < 0.5) prevStep else prevStep + 1)
-                    .toInt()
-                    .limitMax((ticks.size - 1) / stepTicks)
-                val newIdx = (newStep * stepTicks).limitMinMax(min = 0, max = ticks.size - 1)
+                val newIdx = DaytimePickerSliderUi.calcSliderTickIdx(
+                    ticksSize = ticks.size,
+                    stepTicks = stepTicks,
+                    slideXPosition = slideXPosition,
+                    stepPx = stepPx,
+                )
 
                 if (tickIdx != newIdx)
                     onChange(newIdx)
