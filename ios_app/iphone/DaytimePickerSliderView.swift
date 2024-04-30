@@ -109,6 +109,45 @@ private struct SliderView: View {
                 ////
             }
             .frame(height: circleSize)
+            .zIndex(1.0)
+
+            ZStack {
+
+                ForEachIndexed(ticks) { tickIdx, tick in
+
+                    HStack {
+
+                        let tickNoteHalfPx = tickNoteWidthDp / 2
+                        let offsetX = (tickAxmPx * tickIdx.toDouble()) - tickNoteHalfPx
+
+                        ZStack {
+
+                            if tick.withSliderStick {
+                                ZStack {
+                                }
+                                .frame(width: 1, height: 5)
+                                .background(c.sheetFg)
+                            }
+
+                            if let sliderStickText = tick.sliderStickText {
+//                                Text(sliderStickText)
+                                //                                modifier = Modifier
+                                //                                    .padding(top = 4.dp),
+                                //                                color = c.textSecondary,
+                                //                                fontSize = 12.sp,
+                                //                                fontWeight = FontWeight.Light,
+                            }
+                        }
+                        .offset(x: offsetX)
+                        .frame(width: tickNoteWidthDp)
+
+                        Spacer()
+                    }
+                }
+            }
+            .zIndex(0.0)
+            .padding(.top, 16)
+            .padding(.horizontal, H_PADDING + sliderInternalPadding)
         }
         .highPriorityGesture(gesture)
     }
