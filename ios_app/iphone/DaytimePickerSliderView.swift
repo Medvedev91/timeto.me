@@ -3,7 +3,7 @@ import shared
 
 // Slider line a little wider to nice ui
 private let sliderInternalPadding = 3.0
-private let circleSize = 22.0
+private let circleSize = 24.0
 private let circleDefaultOffset = H_PADDING - (circleSize / 2) + sliderInternalPadding
 
 // No size of tick, but for absolute positioned view
