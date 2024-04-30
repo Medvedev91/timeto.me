@@ -52,7 +52,7 @@ private struct SliderView: View {
 
     var body: some View {
 
-        ZStack {
+        ZStack(alignment: .topLeading) {
 
             ZStack {
 
@@ -115,31 +115,27 @@ private struct SliderView: View {
 
                 ForEachIndexed(ticks) { tickIdx, tick in
 
-                    HStack {
+                    let tickNoteHalfPx = tickNoteWidthDp / 2
+                    let offsetX = (tickAxmPx * tickIdx.toDouble()) - tickNoteHalfPx
 
-                        let tickNoteHalfPx = tickNoteWidthDp / 2
-                        let offsetX = (tickAxmPx * tickIdx.toDouble()) - tickNoteHalfPx
+                    ZStack {
 
-                        ZStack {
-
-                            if tick.withSliderStick {
-                                ZStack {
-                                }
-                                .frame(width: 1, height: 5)
-                                .background(c.sheetFg)
+                        if tick.withSliderStick {
+                            ZStack {
                             }
-
-                            if let sliderStickText = tick.sliderStickText {
-                                Text(sliderStickText)
-                                    .foregroundColor(c.textSecondary)
-                                    .font(.system(size: 13, weight: .light))
-                            }
+                            .frame(width: 1, height: 5)
+                            .background(c.sheetFg)
                         }
-                        .offset(x: offsetX)
-                        .frame(width: tickNoteWidthDp)
 
-                        Spacer()
+                        if let sliderStickText = tick.sliderStickText {
+                            Text(sliderStickText)
+                                .padding(.top, 8)
+                                .foregroundColor(c.textSecondary)
+                                .font(.system(size: 13, weight: .light))
+                        }
                     }
+                    .offset(x: offsetX)
+                    .frame(width: tickNoteWidthDp)
                 }
             }
             .zIndex(0.0)
