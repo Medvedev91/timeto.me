@@ -21,18 +21,37 @@ struct DaytimePickerSliderView: View {
             minute: daytimeModel.minute
         )
 
-        SliderView(
-            tickIdx: sliderUi.hour.toInt(),
-            ticks: sliderUi.hourTicks,
-            stepTicks: sliderUi.hourStepSlide.toInt(),
-            onChange: { hour in
-                let newDaytimeModel = DaytimeModel(
-                    hour: hour.toInt32(),
-                    minute: daytimeModel.minute
-                )
-                onChange(newDaytimeModel)
-            }
-        )
+        VStack {
+
+            SliderView(
+                tickIdx: sliderUi.hour.toInt(),
+                ticks: sliderUi.hourTicks,
+                stepTicks: sliderUi.hourStepSlide.toInt(),
+                onChange: { hour in
+                    let newDaytimeModel = DaytimeModel(
+                        hour: hour.toInt32(),
+                        minute: daytimeModel.minute
+                    )
+                    onChange(newDaytimeModel)
+                }
+            )
+            .padding(.top, 4)
+
+            SliderView(
+                tickIdx: sliderUi.minute.toInt(),
+                ticks: sliderUi.minuteTicks,
+                stepTicks: sliderUi.minuteStepSlide.toInt(),
+                onChange: { minute in
+                    let newDaytimeModel = DaytimeModel(
+                        hour: daytimeModel.hour,
+                        minute: minute.toInt32()
+                    )
+                    onChange(newDaytimeModel)
+                }
+            )
+            .padding(.top, 14)
+            .padding(.bottom, 8)
+        }
     }
 }
 
