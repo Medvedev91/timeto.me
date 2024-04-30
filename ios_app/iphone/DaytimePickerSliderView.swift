@@ -110,5 +110,26 @@ private struct SliderView: View {
             }
             .frame(height: circleSize)
         }
+        .highPriorityGesture(gesture)
+    }
+
+    var gesture: some Gesture {
+
+        DragGesture(minimumDistance: 0, coordinateSpace: .global)
+            .onChanged { value in
+                let slideXPosition = value.location.x - sliderXPx
+                let stepPx = tickAxmPx * stepTicks.toDouble()
+
+                let newIdx = DaytimePickerSliderUi.companion.calcSliderTickIdx(
+                    ticksSize: ticks.count.toInt32(),
+                    stepTicks: stepTicks.toInt32(),
+                    slideXPosition: Float(slideXPosition),
+                    stepPx: Float(stepPx)
+                )
+
+                if tickIdx != newIdx {
+                    onChange(newIdx.toInt())
+                }
+            }
     }
 }
