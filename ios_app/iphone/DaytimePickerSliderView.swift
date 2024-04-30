@@ -7,7 +7,7 @@ private let circleSize = 24.0
 private let circleDefaultOffset = H_PADDING - (circleSize / 2) + sliderInternalPadding
 
 // No size of tick, but for absolute positioned view
-private let tickNoteWidthDp = 16.0
+private let tickNoteWidthDp = 20.0
 
 struct DaytimePickerSliderView: View {
 
@@ -130,12 +130,9 @@ private struct SliderView: View {
                             }
 
                             if let sliderStickText = tick.sliderStickText {
-//                                Text(sliderStickText)
-                                //                                modifier = Modifier
-                                //                                    .padding(top = 4.dp),
-                                //                                color = c.textSecondary,
-                                //                                fontSize = 12.sp,
-                                //                                fontWeight = FontWeight.Light,
+                                Text(sliderStickText)
+                                    .foregroundColor(c.textSecondary)
+                                    .font(.system(size: 13, weight: .light))
                             }
                         }
                         .offset(x: offsetX)
