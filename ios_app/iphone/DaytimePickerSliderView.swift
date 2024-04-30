@@ -47,7 +47,7 @@ private struct SliderView: View {
     @State private var sliderXPx = 0.0
     // Not exact but approximate `slide width` / `ticks size`
     @State private var tickAxmPx = 0.0
-    
+
     @State private var circleOffsetAnimation = 0.0
 
     var body: some View {
