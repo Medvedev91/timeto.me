@@ -1,5 +1,8 @@
 package me.timeto.shared.vm.ui
 
+import me.timeto.shared.limitMax
+import me.timeto.shared.limitMinMax
+
 data class DaytimePickerSliderUi(
     val hour: Int,
     val minute: Int,
@@ -25,6 +28,26 @@ data class DaytimePickerSliderUi(
             sliderStickText = if (withSliderStickText) "$it" else null,
             withSliderStick = withSliderStickText,
         )
+    }
+
+    ///
+
+    companion object {
+
+        fun calcSliderTickIdx(
+            ticksSize: Int,
+            stepTicks: Int,
+            slideXPosition: Float,
+            stepPx: Float,
+        ): Int {
+            val prevStep = slideXPosition / stepPx
+            val prevStepExtra = prevStep - prevStep.toInt()
+            val newStep = (if (prevStepExtra < 0.5) prevStep else prevStep + 1)
+                .toInt()
+                .limitMax((ticksSize - 1) / stepTicks)
+            val newIdx = (newStep * stepTicks).limitMinMax(min = 0, max = ticksSize - 1)
+            return newIdx
+        }
     }
 
     ///
