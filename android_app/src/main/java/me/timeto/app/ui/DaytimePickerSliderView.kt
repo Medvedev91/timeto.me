@@ -53,7 +53,10 @@ fun DaytimePickerSliderView(
     onChange: (DaytimeModel) -> Unit,
 ) {
 
-    val sliderUi = DaytimePickerSliderUi(daytimeModel.hour, daytimeModel.minute)
+    val sliderUi = DaytimePickerSliderUi(
+        hour = daytimeModel.hour,
+        minute = daytimeModel.minute,
+    )
 
     VStack(
         modifier = modifier,
