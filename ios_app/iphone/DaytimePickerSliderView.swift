@@ -83,11 +83,20 @@ private struct SliderView: View {
 
                     let circleOffset = circleDefaultOffset + (tickAxmPx * tickIdx.toDouble())
 
-                    ZStack {
+                    HStack {
+
+                        HStack {
+
+                            Text(ticks[tickIdx].text)
+                                .foregroundColor(c.white)
+                                .font(.system(size: 12, weight: .medium))
+                        }
+                        .frame(width: circleSize, height: circleSize, alignment: .center)
+                        .background(roundedShape.fill(c.blue))
+                        .offset(x: circleOffset)
+
+                        Spacer()
                     }
-                    .offset(x: circleOffset)
-                    .frame(width: circleSize, height: circleSize)
-                    .background(roundedShape.fill(c.blue))
                 }
 
                 ////
