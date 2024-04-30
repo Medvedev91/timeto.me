@@ -111,14 +111,14 @@ private struct SliderView: View {
             .frame(height: circleSize)
             .zIndex(1.0)
 
-            ZStack {
+            ZStack(alignment: .top) {
 
                 ForEachIndexed(ticks) { tickIdx, tick in
 
                     let tickNoteHalfPx = tickNoteWidthDp / 2
                     let offsetX = (tickAxmPx * tickIdx.toDouble()) - tickNoteHalfPx
 
-                    ZStack {
+                    ZStack(alignment: .top) {
 
                         if tick.withSliderStick {
                             ZStack {
@@ -139,7 +139,7 @@ private struct SliderView: View {
                 }
             }
             .zIndex(0.0)
-            .padding(.top, 16)
+            .padding(.top, 18)
             .padding(.horizontal, H_PADDING + sliderInternalPadding)
         }
         .highPriorityGesture(gesture)
