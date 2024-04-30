@@ -74,6 +74,23 @@ private struct SliderView: View {
                 .padding(.horizontal, sliderInternalPadding)
                 .background(roundedShape.fill(c.sheetFg))
                 .padding(.horizontal, H_PADDING)
+
+                //
+                // Circle
+                // Ignore init animation
+
+                if sliderXPx > 0 {
+
+                    let circleOffset = circleDefaultOffset + (tickAxmPx * tickIdx.toDouble())
+
+                    ZStack {
+                    }
+                    .offset(x: circleOffset)
+                    .frame(width: circleSize, height: circleSize)
+                    .background(roundedShape.fill(c.blue))
+                }
+
+                ////
             }
             .frame(height: circleSize)
         }
