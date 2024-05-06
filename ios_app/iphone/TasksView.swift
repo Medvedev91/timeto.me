@@ -2,6 +2,7 @@ import SwiftUI
 import shared
 
 private let tabWidth: CGFloat = 34
+private let tabShape = RoundedRectangle(cornerRadius: 8, style: .continuous)
 
 struct TasksView: View {
 
@@ -253,7 +254,7 @@ private struct TabTasksView__FolderView: View {
                         .padding(.top, 8)
                         .padding(.bottom, 8)
                 }
-                .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(bgColor))
+                .background(tabShape.fill(bgColor))
                 .background(GeometryReader { geometry -> Color in
                     drop.square.upByRect(rect: geometry.frame(in: CoordinateSpace.global))
                     return Color.clear
