@@ -79,23 +79,23 @@ struct TasksView: View {
                     let isActiveRepeating = activeSection is TabTasksView_Section_Repeating
 
                     Button(
-                            action: {
-                                upActiveSectionWithAnimation(TabTasksView_Section_Repeating())
-                            },
-                            label: {
-                                Image(systemName: "repeat")
-                                        .padding(.top, 9)
-                                        .padding(.bottom, 9)
-                                        .foregroundColor(isActiveRepeating ? .white : .primary)
-                                        .opacity(isActiveRepeating ? 1 : 0.7)
+                        action: {
+                            upActiveSectionWithAnimation(TabTasksView_Section_Repeating())
+                        },
+                        label: {
+                            Image(systemName: "repeat")
+                                .padding(.top, 9)
+                                .padding(.bottom, 9)
+                                .foregroundColor(isActiveRepeating ? .white : .primary)
+                                .opacity(isActiveRepeating ? 1 : 0.7)
 
-                            }
+                        }
                     )
-                            .background(
-                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                            .fill(isActiveRepeating ? .blue : c.bg)
-                                            .frame(width: tabWidth)
-                            )
+                    .background(
+                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                            .fill(isActiveRepeating ? .blue : c.bg)
+                            .frame(width: tabWidth)
+                    )
 
                     //
                     // Folders
@@ -105,12 +105,12 @@ struct TasksView: View {
                         let isActive = folderUI.folder.id == (activeSection as? TabTasksView_Section_Folder)?.folder.id
 
                         Spacer()
-                                .frame(height: tabPadding)
+                            .frame(height: tabPadding)
 
                         TabTasksView__FolderView(
-                                isActive: isActive,
-                                folderUI: folderUI,
-                                tabTasksView: self
+                            isActive: isActive,
+                            folderUI: folderUI,
+                            tabTasksView: self
                         )
                     }
 
@@ -118,7 +118,7 @@ struct TasksView: View {
                     // Calendar
 
                     Spacer()
-                            .frame(height: tabPadding)
+                        .frame(height: tabPadding)
 
                     let isActiveCalendar = activeSection is TabTasksView_Section_Calendar
                     let calendarFgColor: Color = {
@@ -135,54 +135,56 @@ struct TasksView: View {
                     }()
 
                     Button(
-                            action: {
-                                upActiveSectionWithAnimation(TabTasksView_Section_Calendar())
-                            },
-                            label: {
-                                GeometryReader { geometry in
-                                    let _ = dropCalendar.square.upByRect(rect: geometry.frame(in: CoordinateSpace.global))
-                                    Image(systemName: "calendar")
-                                            .resizable()
-                                            .animation(.spring())
-                                            .font(.system(size: 18, weight: .thin))
-                                            ///
-                                            .onAppear {
-                                                dropItems.append(dropCalendar)
-                                            }
-                                            .onDisappear {
-                                                dropItems.removeAll { $0 === dropCalendar }
-                                            }
-                                            ///
-                                            .foregroundColor(calendarFgColor)
+                        action: {
+                            upActiveSectionWithAnimation(TabTasksView_Section_Calendar())
+                        },
+                        label: {
+                            GeometryReader { geometry in
+                                let _ = dropCalendar.square.upByRect(rect: geometry.frame(in: CoordinateSpace.global))
+                                Image(systemName: "calendar")
+                                .resizable()
+                                .animation(.spring())
+                                .font(.system(size: 18, weight: .thin))
+                                ///
+                                .onAppear {
+                                    dropItems.append(dropCalendar)
                                 }
-                                        .frame(width: tabWidth - 2.4, height: tabWidth - 2.4)
-                            }
-                    )
-                            .background(
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 4, style: .continuous)
-                                                .fill(c.bg)
+                                .onDisappear {
+                                    dropItems.removeAll {
+                                        $0 === dropCalendar
                                     }
-                            )
+                                }
+                                ///
+                                .foregroundColor(calendarFgColor)
+                            }
+                            .frame(width: tabWidth - 2.4, height: tabWidth - 2.4)
+                        }
+                    )
+                    .background(
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 4, style: .continuous)
+                                .fill(c.bg)
+                        }
+                    )
                 }
-                        .padding(.trailing, 4)
+                .padding(.trailing, 4)
             }
-                    .onAppear {
-                        UITableView.appearance().sectionFooterHeight = 0
-                        UIScrollView.appearance().keyboardDismissMode = .interactive
-                    }
-                    .onDisappear {
-                        /// On onDisappear(), otherwise on onAppear() twitching (hide old and open new).
-                        activeSection = TabTasksView_Section_Folder(folder: DI.getTodayFolder())
-                    }
+            .onAppear {
+                UITableView.appearance().sectionFooterHeight = 0
+                UIScrollView.appearance().keyboardDismissMode = .interactive
+            }
+            .onDisappear {
+                /// On onDisappear(), otherwise on onAppear() twitching (hide old and open new).
+                activeSection = TabTasksView_Section_Folder(folder: DI.getTodayFolder())
+            }
         }
-                .onAppear {
-                    TasksView.lastInstance = self
-                }
+        .onAppear {
+            TasksView.lastInstance = self
+        }
     }
 
     func upActiveSectionWithAnimation(
-            _ newSection: TabTasksView_Section
+        _ newSection: TabTasksView_Section
     ) {
         /// Fix issue: on tab changes scroll animation.
         withListAnimation = false
@@ -212,9 +214,9 @@ private struct TabTasksView__FolderView: View {
     @State private var drop: DropItem__Folder
 
     init(
-            isActive: Bool,
-            folderUI: TabTasksVM.TaskFolderUI,
-            tabTasksView: TasksView
+        isActive: Bool,
+        folderUI: TabTasksVM.TaskFolderUI,
+        tabTasksView: TasksView
     ) {
         self.isActive = isActive
         self.folderUI = folderUI
@@ -224,48 +226,50 @@ private struct TabTasksView__FolderView: View {
 
     var body: some View {
         Button(
-                action: {
-                    tabTasksView.upActiveSectionWithAnimation(TabTasksView_Section_Folder(folder: folderUI.folder))
-                },
-                label: {
-                    let isAllowedForDrop = tabTasksView.activeDrag?.isDropAllowed(drop) == true
-                    let bgColor: Color = {
-                        if (tabTasksView.focusedDrop as? DropItem__Folder)?.folder.id == folderUI.folder.id {
-                            return .green
-                        }
-                        if isAllowedForDrop {
-                            return .purple
-                        }
-                        return isActive ? .blue : c.bg
-                    }()
-
-                    VStack {
-
-                        Text(folderUI.tabText)
-                                .textCase(.uppercase)
-                                .lineSpacing(0)
-                                .font(.system(size: 14, weight: isActive ? .semibold : .regular, design: .monospaced))
-                                .frame(width: tabWidth)
-                                .foregroundColor(isActive || isAllowedForDrop ? .white : .primary)
-                                ///
-                                .padding(.top, 8)
-                                .padding(.bottom, 8)
+            action: {
+                tabTasksView.upActiveSectionWithAnimation(TabTasksView_Section_Folder(folder: folderUI.folder))
+            },
+            label: {
+                let isAllowedForDrop = tabTasksView.activeDrag?.isDropAllowed(drop) == true
+                let bgColor: Color = {
+                    if (tabTasksView.focusedDrop as? DropItem__Folder)?.folder.id == folderUI.folder.id {
+                        return .green
                     }
-                            .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(bgColor))
-                            .background(GeometryReader { geometry -> Color in
-                                drop.square.upByRect(rect: geometry.frame(in: CoordinateSpace.global))
-                                return Color.clear
-                            })
-                            ///
-                            .onAppear {
-                                tabTasksView.dropItems.append(drop)
-                            }
-                            .onDisappear {
-                                tabTasksView.dropItems.removeAll { $0 === drop }
-                            }
-                            ///
-                            .animation(.spring())
+                    if isAllowedForDrop {
+                        return .purple
+                    }
+                    return isActive ? .blue : c.bg
+                }()
+
+                VStack {
+
+                    Text(folderUI.tabText)
+                        .textCase(.uppercase)
+                        .lineSpacing(0)
+                        .font(.system(size: 14, weight: isActive ? .semibold : .regular, design: .monospaced))
+                        .frame(width: tabWidth)
+                        .foregroundColor(isActive || isAllowedForDrop ? .white : .primary)
+                        ///
+                        .padding(.top, 8)
+                        .padding(.bottom, 8)
                 }
+                .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(bgColor))
+                .background(GeometryReader { geometry -> Color in
+                    drop.square.upByRect(rect: geometry.frame(in: CoordinateSpace.global))
+                    return Color.clear
+                })
+                ///
+                .onAppear {
+                    tabTasksView.dropItems.append(drop)
+                }
+                .onDisappear {
+                    tabTasksView.dropItems.removeAll {
+                        $0 === drop
+                    }
+                }
+                ///
+                .animation(.spring())
+            }
         )
     }
 }
