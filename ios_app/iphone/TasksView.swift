@@ -88,7 +88,7 @@ struct TasksView: View {
                                 .padding(.bottom, 9)
                                 .foregroundColor(isActiveRepeating ? .white : .primary)
                                 .opacity(isActiveRepeating ? 1 : 0.7)
-
+                                .font(.system(size: 15))
                         }
                     )
                     .background(
