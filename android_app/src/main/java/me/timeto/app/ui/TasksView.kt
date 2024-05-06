@@ -130,8 +130,8 @@ fun TasksView(
                         DropItem.Type__Calendar(DropItem.Square(0, 0, 0, 0))
                     }
                     val isActive = activeTab is Tab.Calendar
-                    TabTextButton(
-                        text = state.tabCalendarText,
+
+                    TasksCalendarButtonView(
                         isActive = isActive,
                         dragItem = dragItem,
                         dropItem = dropItem,
@@ -333,14 +333,73 @@ private val calendarDots: List<List<Boolean>> = listOf(
 )
 
 @Composable
-private fun TasksCalendarButtonView() {
+private fun TasksCalendarButtonView(
+    isActive: Boolean,
+    dragItem: State<DragItem?>,
+    dropItem: DropItem,
+    dropItems: MutableList<DropItem>,
+    onClick: () -> Unit,
+) {
+
+    DisposableEffect(Unit) {
+        dropItems.add(dropItem)
+        onDispose {
+            dropItems.remove(dropItem)
+        }
+    }
+
+    val isAllowedToDrop = dragItem.value?.isDropAllowed?.invoke(dropItem) ?: false
+    val isFocusedToDrop = dragItem.value?.focusedDrop?.value == dropItem
+
+    val bgColor = animateColorAsState(
+        when {
+            isFocusedToDrop -> c.tasksDropFocused
+            isAllowedToDrop -> c.purple
+            isActive -> c.blue
+            else -> c.bg
+        },
+        spring(stiffness = Spring.StiffnessMedium)
+    )
+
+    val textColor = animateColorAsState(
+        when {
+            isFocusedToDrop -> c.white
+            isAllowedToDrop -> c.white
+            isActive -> tabActiveTextColor
+            else -> tabInactiveTextColor
+        },
+        spring(stiffness = Spring.StiffnessMedium)
+    )
+
+    val rotationMaxAngle = 3f
+    var rotationAngle by remember { mutableFloatStateOf(0f) }
+    val rotationAngleAnimate by animateFloatAsState(
+        targetValue = rotationAngle,
+        animationSpec = tween(durationMillis = Random.nextInt(80, 130), easing = LinearEasing),
+        finishedListener = {
+            if (isAllowedToDrop)
+                rotationAngle = if (rotationAngle < 0) rotationMaxAngle else -rotationMaxAngle
+        }
+    )
+    LaunchedEffect(isAllowedToDrop) {
+        if (isAllowedToDrop)
+            delay(Random.nextInt(0, 50).toLong())
+        rotationAngle = if (isAllowedToDrop) (if (Random.nextBoolean()) rotationMaxAngle else -rotationMaxAngle) else 0f
+    }
 
     VStack(
         modifier = Modifier
             .padding(top = 11.dp)
+            .rotate(rotationAngleAnimate)
+            .onGloballyPositioned { c ->
+                dropItem.upSquareByCoordinates(c)
+            }
             .size(TasksView__TAB_BUTTON_WIDTH)
             .clip(tabShape)
-//            .background(c.blue)
+            .clickable {
+                onClick()
+            }
+            .background(bgColor.value)
             .padding(horizontal = 5.dp),
         verticalArrangement = Arrangement.Center,
     ) {
@@ -360,7 +419,7 @@ private fun TasksCalendarButtonView() {
                         modifier = Modifier
                             .size(2.dp + onePx)
                             .clip(roundedShape)
-                            .background(if (dot) tabInactiveTextColor else c.transparent),
+                            .background(if (dot) textColor.value else c.transparent),
                     )
                 }
 
