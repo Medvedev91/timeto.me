@@ -322,3 +322,50 @@ private fun TabTextButton(
         )
     }
 }
+
+//
+// Calendar Button
+
+private val calendarDots: List<List<Boolean>> = listOf(
+    listOf(false, true, true, true),
+    listOf(true, true, true, true),
+    listOf(true, true, true, false),
+)
+
+@Composable
+private fun TasksCalendarButtonView() {
+
+    VStack(
+        modifier = Modifier
+            .padding(top = 11.dp)
+            .size(TasksView__TAB_BUTTON_WIDTH)
+            .clip(tabShape)
+//            .background(c.blue)
+            .padding(horizontal = 5.dp),
+        verticalArrangement = Arrangement.Center,
+    ) {
+
+        calendarDots.forEachIndexed { idx, dots ->
+
+            HStack(
+                modifier = Modifier
+                    .padding(top = if (idx == 0) 0.dp else 5.dp),
+            ) {
+
+                dots.forEach { dot ->
+
+                    SpacerW1()
+
+                    ZStack(
+                        modifier = Modifier
+                            .size(2.dp + onePx)
+                            .clip(roundedShape)
+                            .background(if (dot) tabInactiveTextColor else c.transparent),
+                    )
+                }
+
+                SpacerW1()
+            }
+        }
+    }
+}
