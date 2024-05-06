@@ -122,49 +122,15 @@ struct TasksView: View {
                         .frame(height: tabPadding)
 
                     let isActiveCalendar = activeSection is TabTasksView_Section_Calendar
-                    let calendarFgColor: Color = {
-                        if focusedDrop is DropItem__Calendar {
-                            return .green
-                        }
-                        if activeDrag?.isDropAllowed(dropCalendar) == true {
-                            return .purple
-                        }
-                        if isActiveCalendar {
-                            return .blue
-                        }
-                        return c.homeFontSecondary
-                    }()
 
-                    Button(
-                        action: {
+                    TasksCalendarButtonView(
+                        isActive: isActiveCalendar,
+                        focusedDrop: $focusedDrop,
+                        dragItem: $activeDrag,
+                        dropItem: dropCalendar,
+                        dropItems: $dropItems,
+                        onClick: {
                             upActiveSectionWithAnimation(TabTasksView_Section_Calendar())
-                        },
-                        label: {
-                            GeometryReader { geometry in
-                                let _ = dropCalendar.square.upByRect(rect: geometry.frame(in: CoordinateSpace.global))
-                                Image(systemName: "calendar")
-                                .resizable()
-                                .animation(.spring())
-                                .font(.system(size: 18, weight: .thin))
-                                ///
-                                .onAppear {
-                                    dropItems.append(dropCalendar)
-                                }
-                                .onDisappear {
-                                    dropItems.removeAll {
-                                        $0 === dropCalendar
-                                    }
-                                }
-                                ///
-                                .foregroundColor(calendarFgColor)
-                            }
-                            .frame(width: tabWidth - 2.4, height: tabWidth - 2.4)
-                        }
-                    )
-                    .background(
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 4, style: .continuous)
-                                .fill(c.bg)
                         }
                     )
                 }
@@ -350,4 +316,106 @@ struct TabTasksView_Section_Repeating: TabTasksView_Section {
 }
 
 struct TabTasksView_Section_Calendar: TabTasksView_Section {
+}
+
+//
+// Calendar Button
+
+private let calendarDots: [[Bool]] = [
+    [false, true, true, true],
+    [true, true, true, true],
+    [true, true, true, false],
+]
+
+private struct TasksCalendarButtonView: View {
+
+    let isActive: Bool
+    @Binding var focusedDrop: DropItem?
+    @Binding var dragItem: DragItem?
+    let dropItem: DropItem
+    @Binding var dropItems: [DropItem]
+    let onClick: () -> Void
+
+    var body: some View {
+
+        let isAllowedToDrop = dragItem?.isDropAllowed(dropItem) == true
+        let isFocusedToDrop = focusedDrop is DropItem__Calendar
+
+        let bgColor: Color = {
+            if isFocusedToDrop {
+                return .green
+            }
+            if isAllowedToDrop {
+                return .purple
+            }
+            if isActive {
+                return .blue
+            }
+            return c.transparent
+        }()
+
+        let fgColor: Color = {
+            if isFocusedToDrop {
+                return c.white
+            }
+            if isAllowedToDrop {
+                return c.white
+            }
+            if isActive {
+                return c.white
+            }
+            return .secondary
+        }()
+
+        Button(
+            action: {
+                onClick()
+            },
+            label: {
+
+                GeometryReader { geometry in
+
+                    let _ = dropItem.square.upByRect(rect: geometry.frame(in: CoordinateSpace.global))
+
+                    VStack {
+
+                        ForEachIndexed(calendarDots) { dotsIdx, dots in
+
+                            HStack {
+
+                                ForEachIndexed(dots) { dotIdx, dot in
+
+                                    Spacer()
+
+                                    ZStack {
+                                    }
+                                    .frame(width: 3, height: 3)
+                                    .background(roundedShape.fill(dot ? fgColor : c.transparent))
+                                }
+
+                                Spacer()
+                            }
+                            .id("TasksCalendarButtonView dots \(dotsIdx)")
+                            .padding(.top, (dotsIdx == 0 ? 1 : 5))
+                            .padding(.horizontal, 5)
+                        }
+                    }
+                    .frame(width: tabWidth, height: tabWidth)
+                    .background(tabShape.fill(bgColor))
+                    ///
+                    .onAppear {
+                        dropItems.append(dropItem)
+                    }
+                    .onDisappear {
+                        dropItems.removeAll {
+                            $0 === dropItem
+                        }
+                    }
+                    ///
+                }
+                .frame(width: tabWidth, height: tabWidth)
+                .padding(.top, 3)
+            }
+        )
+    }
 }
