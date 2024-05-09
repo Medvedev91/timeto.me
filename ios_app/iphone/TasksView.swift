@@ -363,7 +363,7 @@ private struct TasksCalendarButtonView: View {
             if isActive {
                 return c.white
             }
-            return .secondary
+            return .primary
         }()
 
         Button(
@@ -388,7 +388,7 @@ private struct TasksCalendarButtonView: View {
 
                                     ZStack {
                                     }
-                                    .frame(width: 3, height: 3)
+                                    .frame(width: 2 + onePx, height: 2 + onePx)
                                     .background(roundedShape.fill(dot ? fgColor : c.transparent))
                                 }
 
@@ -413,7 +413,7 @@ private struct TasksCalendarButtonView: View {
                     ///
                 }
                 .frame(width: tabWidth, height: tabWidth)
-                .padding(.top, 3)
+                .padding(.top, 2)
             }
         )
     }
