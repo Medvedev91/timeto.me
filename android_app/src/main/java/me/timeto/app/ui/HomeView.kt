@@ -511,7 +511,6 @@ private fun MainTasksView(
                     Text(
                         timeUI.note,
                         fontSize = HomeView__PRIMARY_FONT_SIZE,
-                        fontWeight = FontWeight.Thin,
                         color = timeUI.noteColor.toColor(),
                     )
                 }
