@@ -520,7 +520,7 @@ private struct MainTaskItemView: View {
                     if let timeUI = mainTask.timeUI {
                         Text(timeUI.note)
                             .foregroundColor(timeUI.noteColor.toColor())
-                            .font(.system(size: HomeView__PRIMARY_FONT_SIZE, weight: .ultraLight))
+                            .font(.system(size: HomeView__PRIMARY_FONT_SIZE))
                     }
                 }
                 .frame(height: HomeView__MTG_ITEM_HEIGHT)
