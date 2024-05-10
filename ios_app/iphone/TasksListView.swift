@@ -338,9 +338,8 @@ struct TasksView__TaskRowView: View {
                         )
                     },
                     label: {
-                        VStack {
 
-                            let vPadding = 8.0
+                        VStack {
 
                             if let timeUI = taskUI.timeUI as? TasksListVM.TaskUITimeUIHighlightUI {
 
@@ -385,7 +384,7 @@ struct TasksView__TaskRowView: View {
                                     Spacer()
                                 }
                                 .padding(.top, 2)
-                                .padding(.bottom, vPadding - 2)
+                                .padding(.bottom, 6)
                                 .padding(.leading, H_PADDING - 1)
 
                             } else if let timeUI = taskUI.timeUI as? TasksListVM.TaskUITimeUIRegularUI {
@@ -393,7 +392,7 @@ struct TasksView__TaskRowView: View {
                                     Text(timeUI.text)
                                         .padding(.leading, H_PADDING)
                                         .padding(.top, 1)
-                                        .padding(.bottom, vPadding)
+                                        .padding(.bottom, 6)
                                         .font(.system(size: 14, weight: .light))
                                         .foregroundColor(timeUI.textColor.toColor())
                                         .lineLimit(1)
@@ -421,7 +420,8 @@ struct TasksView__TaskRowView: View {
                             }
                             .padding(.leading, H_PADDING)
                         }
-                        .padding(.vertical, 10)
+                        .padding(.top, 10)
+                        .padding(.bottom, 11)
                     }
                 )
                 .offset(x: xSwipeOffset)
