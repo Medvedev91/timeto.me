@@ -90,6 +90,7 @@ struct TasksListView: View {
                                             vm.setAddFormInputTextValue(text: newText)
                                         }
                                     )
+                                    .offset(y: onePx)
                                 }
                                 .onTapGesture {
                                     isAddFormFocused = true
@@ -121,6 +122,8 @@ struct TasksListView: View {
                                 .padding(.trailing, 5)
                                 .buttonStyle(PlainButtonStyle())
                             }
+                                // trick x2 overlay looks better
+                            .overlay(squircleShape.stroke(c.dividerBg, lineWidth: onePx))
                             .overlay(squircleShape.stroke(c.dividerBg, lineWidth: onePx))
                             .padding(.leading, H_PADDING - 2)
                             .padding(.top, 20)
