@@ -135,6 +135,7 @@ struct EventsCalendarView: View {
                 }
             }
                     .padding(.horizontal, H_PADDING)
+                    .padding(.top, 6)
         }
     }
 }

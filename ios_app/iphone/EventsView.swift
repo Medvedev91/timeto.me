@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-private let menuTopPadding = 8.0
+private let menuTopPadding = 6.0
 private let menuBottomPadding = menuTopPadding.goldenRatioUp().goldenRatioUp()
 
 struct EventsView: View {
