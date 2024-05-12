@@ -30,13 +30,7 @@ class ActivityPomodoroSheetVm(
         val headerTitle = "Pomodoro"
         val doneTitle = "Done"
 
-        val listItemsUi: List<ListItemUi> = pomodoroTimes.map { time ->
-            val timeStr: String = when {
-                time == 0 -> "None"
-                time < 3_600 -> "${time / 60} min"
-                time == 3600 -> "1 hour"
-                else -> throw Exception("Invalid time")
-            }
+        val listItemsUi: List<ListItemUi> = pomodoroTimers.map { timer ->
             ListItemUi(
                 time = timer,
                 text = prepPomodoroTimeString(timer),
@@ -66,4 +60,4 @@ class ActivityPomodoroSheetVm(
     )
 }
 
-private val pomodoroTimes = listOf(0, 5, 10, 15, 30, 60).map { it * 60 }
+private val pomodoroTimers = listOf(0, 5, 10, 15, 30, 60).map { it * 60 }
