@@ -19,6 +19,7 @@ class ActivityFormSheetVM(
         val textFeatures: TextFeatures,
         val keepScreenOn: Boolean,
         val colorRgba: ColorRgba,
+        val pomodoroTimer: Int,
     ) {
         val inputNameValue = textFeatures.textNoFeatures
         val isHeaderDoneEnabled = (inputNameValue.isNotBlank() && emoji != null)
@@ -29,6 +30,9 @@ class ActivityFormSheetVM(
         val colorTitle = "Color"
         val timerHintsHeader = "TIMER HINTS"
         val keepScreenOnTitle = "Keep Screen On"
+
+        val pomodoroTitle = "Pomodoro"
+        val pomodoroNote: String = ActivityPomodoroSheetVm.prepPomodoroTimeString(pomodoroTimer)
 
         val goalsTitle = "Goals"
         val goalsAddNote = "New"
@@ -73,6 +77,7 @@ class ActivityFormSheetVM(
             textFeatures = (activity?.name ?: "").textFeatures(),
             keepScreenOn = activity?.keepScreenOn ?: true,
             colorRgba = activity?.colorRgba ?: ActivityDb.nextColorDI(),
+            pomodoroTimer = activity?.pomodoro_timer ?: 0,
         )
     )
 
@@ -92,6 +97,10 @@ class ActivityFormSheetVM(
 
     fun upColorRgba(colorRgba: ColorRgba) = state.update {
         it.copy(colorRgba = colorRgba)
+    }
+
+    fun setPomodoroTimer(pomodoroTimer: Int) = state.update {
+        it.copy(pomodoroTimer = pomodoroTimer)
     }
 
     fun addGoal(goal: ActivityDb.Goal) = state.update {
@@ -163,6 +172,8 @@ class ActivityFormSheetVM(
 
             val goals = state.value.goals
 
+            val pomodoroTimer = state.value.pomodoroTimer
+
             if (activity != null) {
                 activity.upByIdWithValidation(
                     name = nameWithFeatures,
@@ -171,6 +182,7 @@ class ActivityFormSheetVM(
                     keepScreenOn = keepScreenOn,
                     colorRgba = colorRgba,
                     goals = goals,
+                    pomodoroTimer = pomodoroTimer,
                 )
             } else {
                 ActivityDb.addWithValidation(
@@ -183,6 +195,7 @@ class ActivityFormSheetVM(
                     data = activityData,
                     keepScreenOn = keepScreenOn,
                     goals = goals,
+                    pomodoroTimer = pomodoroTimer,
                 )
             }
             onSuccess()
