@@ -13,12 +13,12 @@ import me.timeto.shared.vm.ActivityPomodoroSheetVm
 @Composable
 fun ActivityPomodoroSheet(
     layer: WrapperView.Layer,
-    selectedTime: Int,
+    selectedTimer: Int,
     onPick: (Int) -> Unit,
 ) {
 
-    val (vm, state) = rememberVM(selectedTime) {
-        ActivityPomodoroSheetVm(selectedTime = selectedTime)
+    val (vm, state) = rememberVM(selectedTimer) {
+        ActivityPomodoroSheetVm(selectedTimer = selectedTimer)
     }
 
     VStack(
@@ -62,7 +62,7 @@ fun ActivityPomodoroSheet(
                         text = listItemUi.text,
                         isActive = listItemUi.isSelected,
                     ) {
-                        vm.setTime(listItemUi.time)
+                        vm.setTimer(listItemUi.time)
                     }
                 }
             }

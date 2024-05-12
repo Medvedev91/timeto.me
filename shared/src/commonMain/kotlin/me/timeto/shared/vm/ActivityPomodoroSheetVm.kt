@@ -3,11 +3,11 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 
 class ActivityPomodoroSheetVm(
-    selectedTime: Int,
+    selectedTimer: Int,
 ) : __VM<ActivityPomodoroSheetVm.State>() {
 
     data class State(
-        val selectedTime: Int,
+        val selectedTimer: Int,
     ) {
 
         val headerTitle = "Pomodoro"
@@ -23,7 +23,7 @@ class ActivityPomodoroSheetVm(
             ListItemUi(
                 time = time,
                 text = timeStr,
-                isSelected = selectedTime == time,
+                isSelected = selectedTimer == time,
             )
         }
 
@@ -32,12 +32,12 @@ class ActivityPomodoroSheetVm(
 
     override val state = MutableStateFlow(
         State(
-            selectedTime = selectedTime,
+            selectedTimer = selectedTimer,
         )
     )
 
-    fun setTime(time: Int) {
-        state.update { it.copy(selectedTime = time) }
+    fun setTimer(time: Int) {
+        state.update { it.copy(selectedTimer = time) }
     }
 
     ///
