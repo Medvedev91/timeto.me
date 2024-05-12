@@ -11,7 +11,7 @@ CREATE TABLE ActivitySQ (
     data_json TEXT NOT NULL,
     keep_screen_on INTEGER AS Int NOT NULL,
     goals_json TEXT NOT NULL,
-    pomodoro_time INTEGER AS Int NOT NULL
+    pomodoro_timer INTEGER AS Int NOT NULL
 );
 
 anyChange: SELECT id FROM ActivitySQ LIMIT 1;
@@ -41,7 +41,7 @@ upById:
 UPDATE ActivitySQ
 SET name=?, emoji=?, timer=?, sort=?, type_id=?,
     color_rgba=?, data_json=?, keep_screen_on=?,
-    goals_json=?, pomodoro_time=?
+    goals_json=?, pomodoro_timer=?
 WHERE id=?;
 
 upData:
