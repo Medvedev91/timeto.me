@@ -1,10 +1,27 @@
 package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
+import me.timeto.shared.toHms
 
 class ActivityPomodoroSheetVm(
     selectedTimer: Int,
 ) : __VM<ActivityPomodoroSheetVm.State>() {
+
+    companion object {
+
+        fun prepPomodoroTimeString(timer: Int): String = when {
+            timer < 0 -> throw Exception("prepPomodoroTimeString(0)")
+            timer == 0 -> "None"
+            timer < 3_600 -> "${timer / 60} min"
+            else -> {
+                val (h, m, _) = timer.toHms()
+                if (m == 0)
+                    "$h ${if (h == 1) "hour" else "hours"}"
+                else
+                    "${h}h ${m}m"
+            }
+        }
+    }
 
     data class State(
         val selectedTimer: Int,
@@ -21,9 +38,9 @@ class ActivityPomodoroSheetVm(
                 else -> throw Exception("Invalid time")
             }
             ListItemUi(
-                time = time,
-                text = timeStr,
-                isSelected = selectedTimer == time,
+                time = timer,
+                text = prepPomodoroTimeString(timer),
+                isSelected = selectedTimer == timer,
             )
         }
 
