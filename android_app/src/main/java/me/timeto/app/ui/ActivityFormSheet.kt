@@ -150,7 +150,7 @@ fun ActivityFormSheet(
 
             MyListView__ItemView(
                 isFirst = false,
-                isLast = true,
+                isLast = false,
                 withTopDivider = true,
             ) {
                 MyListView__ItemView__SwitchView(
@@ -158,6 +158,32 @@ fun ActivityFormSheet(
                     isActive = state.keepScreenOn,
                 ) {
                     vm.toggleKeepScreenOn()
+                }
+            }
+
+            MyListView__ItemView(
+                isFirst = false,
+                isLast = true,
+                withTopDivider = true,
+            ) {
+
+                MyListView__ItemView__ButtonView(
+                    text = state.pomodoroTitle,
+                    rightView = {
+                        MyListView__ItemView__ButtonView__RightText(
+                            text = state.pomodoroNote,
+                        )
+                    }
+                ) {
+                    Sheet.show { layer ->
+                        ActivityPomodoroSheet(
+                            layer = layer,
+                            selectedTimer = state.pomodoroTimer,
+                            onPick = {
+                                vm.setPomodoroTimer(it)
+                            }
+                        )
+                    }
                 }
             }
 
