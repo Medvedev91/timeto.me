@@ -24,9 +24,10 @@ class TimerDataUI(
 
         class TmpDTO(val subtitle: String?, val color: ColorRgba, val timeLeft: Int, val status: STATUS)
 
+        val pomodoro: Int = interval.getActivityDI().pomodoro_timer
         val tmpData: TmpDTO = when {
-            timeLeft < -BREAK_SECONDS -> TmpDTO("OVERDUE", ColorRgba.red, -timeLeft - BREAK_SECONDS, STATUS.OVERDUE)
-            timeLeft <= 0 -> TmpDTO("BREAK", ColorRgba.green, timeLeft + BREAK_SECONDS, STATUS.BREAK)
+            timeLeft < -pomodoro -> TmpDTO("OVERDUE", ColorRgba.red, -timeLeft - pomodoro, STATUS.OVERDUE)
+            timeLeft <= 0 -> TmpDTO("BREAK", ColorRgba.green, timeLeft + pomodoro, STATUS.BREAK)
             else -> TmpDTO(null, defColor, timeLeft, STATUS.PROCESS)
         }
 
