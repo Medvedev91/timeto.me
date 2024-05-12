@@ -393,22 +393,30 @@ suspend fun rescheduleNotifications() {
         return
 
     val totalMinutes = lastInterval.timer / 60
-    scheduledNotificationsDataFlow.emit(
-        listOf(
-            ScheduledNotificationData(
-                title = "Time to Break  ✅",
-                text = if (totalMinutes == 1) "1 minute has expired" else "$totalMinutes minutes have expired",
-                inSeconds = inSeconds,
-                type = ScheduledNotificationData.TYPE.BREAK,
-            ),
+
+    val notifications = mutableListOf(
+        ScheduledNotificationData(
+            title = "Time to Break  ✅",
+            text = if (totalMinutes == 1) "1 minute has expired" else "$totalMinutes minutes have expired",
+            inSeconds = inSeconds,
+            type = ScheduledNotificationData.TYPE.BREAK,
+        ),
+    )
+
+    val activityDb = lastInterval.getActivityDI()
+    val pomodoroTimer = activityDb.pomodoro_timer
+    if (pomodoroTimer > 0) {
+        notifications.add(
             ScheduledNotificationData(
                 title = "Break Is Over ⏰",
                 text = "Restart or set the timer",
-                inSeconds = inSeconds + BREAK_SECONDS,
+                inSeconds = inSeconds + pomodoroTimer,
                 type = ScheduledNotificationData.TYPE.OVERDUE,
             ),
         )
-    )
+    }
+
+    scheduledNotificationsDataFlow.emit(notifications)
 }
 
 ///
