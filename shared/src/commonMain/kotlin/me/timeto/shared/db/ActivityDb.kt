@@ -21,6 +21,7 @@ data class ActivityDb(
     val data_json: String,
     val keep_screen_on: Int,
     val goals_json: String,
+    val pomodoro_time: Int,
 ) : Backupable__Item {
 
     enum class TYPE(val id: Int) {
@@ -71,6 +72,7 @@ data class ActivityDb(
             data: ActivityDb__Data,
             keepScreenOn: Boolean,
             goals: List<Goal>,
+            pomodoroTime: Int,
         ): ActivityDb = dbIO {
 
             if (type == TYPE.OTHER && getAscSorted().find { it.getType() == TYPE.OTHER } != null)
@@ -94,6 +96,7 @@ data class ActivityDb(
                     data_json = data.toJString(),
                     keep_screen_on = keepScreenOn.toInt10(),
                     goals_json = goals.map { it.buildJson() }.toJsonArray().toString(),
+                    pomodoro_time = pomodoroTime,
                 )
                 db.activityQueries.insert(activitySQ)
                 activitySQ.toModel()
@@ -188,6 +191,7 @@ data class ActivityDb(
             id = id, name = name, emoji = emoji, timer = timer, sort = sort,
             type_id = type_id, color_rgba = color_rgba, data_json = data_json,
             keep_screen_on = keep_screen_on, goals_json = goals_json,
+            pomodoro_time = pomodoro_time,
         )
 
         ///
@@ -210,6 +214,7 @@ data class ActivityDb(
                     emoji = j.getString(7),
                     keep_screen_on = j.getInt(8),
                     goals_json = j.getString(9),
+                    pomodoro_time = j.getInt(10),
                 )
             )
         }
@@ -251,6 +256,7 @@ data class ActivityDb(
         keepScreenOn: Boolean,
         colorRgba: ColorRgba,
         goals: List<Goal>,
+        pomodoroTime: Int,
     ) = dbIO {
         if (isOther())
             throw UIException("It's impossible to change \"Other\" activity")
@@ -266,6 +272,7 @@ data class ActivityDb(
             emoji = validateEmoji(emoji, exActivity = this@ActivityDb),
             keep_screen_on = keepScreenOn.toInt10(),
             goals_json = goals.map { it.buildJson() }.toJsonArray().toString(),
+            pomodoro_time = pomodoroTime,
         )
     }
 
@@ -306,6 +313,7 @@ data class ActivityDb(
     override fun backupable__backup(): JsonElement = listOf(
         id, name, timer, sort, type_id, color_rgba,
         data_json, emoji, keep_screen_on, goals_json,
+        pomodoro_time,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
@@ -321,6 +329,7 @@ data class ActivityDb(
             emoji = j.getString(7),
             keep_screen_on = j.getInt(8),
             goals_json = j.getString(9),
+            pomodoro_time = j.getInt(10),
         )
     }
 
