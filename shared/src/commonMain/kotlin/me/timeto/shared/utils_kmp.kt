@@ -19,7 +19,6 @@ import me.timeto.shared.db.*
 import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
 import me.timeto.shared.db.KvDb.Companion.isSendingReports
 
-const val BREAK_SECONDS = 5 * 60
 const val GOLDEN_RATIO = 1.618f
 
 const val OPEN_SOURCE_URL = "https://github.com/medvedev91/timetome"
