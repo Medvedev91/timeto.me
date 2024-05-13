@@ -132,7 +132,7 @@ struct ActivityFormSheet: View {
 
                     MyListView__ItemView(
                         isFirst: false,
-                        isLast: true,
+                        isLast: false,
                         withTopDivider: true
                     ) {
                         MyListView__ItemView__SwitchView(
@@ -140,6 +140,31 @@ struct ActivityFormSheet: View {
                             isActive: state.keepScreenOn
                         ) {
                             vm.toggleKeepScreenOn()
+                        }
+                    }
+
+                    MyListView__ItemView(
+                        isFirst: false,
+                        isLast: true,
+                        withTopDivider: true
+                    ) {
+                        MyListView__ItemView__ButtonView(
+                            text: state.pomodoroTitle,
+                            rightView: AnyView(
+                                MyListView__ItemView__ButtonView__RightText(
+                                    text: state.pomodoroNote
+                                )
+                            )
+                        ) {
+                            nativeSheet.show { isPomodoroPresented in
+                                ActivityPomodoroSheet(
+                                    isPresented: isPomodoroPresented,
+                                    selectedTimer: state.pomodoroTimer.toInt(),
+                                    onPick: { it in
+                                        vm.setPomodoroTimer(pomodoroTimer: it.toInt32())
+                                    }
+                                )
+                            }
                         }
                     }
 
