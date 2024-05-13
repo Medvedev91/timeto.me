@@ -120,6 +120,27 @@ fun scheduleNotification(data: ScheduledNotificationData) {
     alarm.setAlarmClock(alarmInfo, pIntent)
 }
 
+fun cancelAllAlarms() {
+
+    val context = App.instance
+    val intent = Intent(context, TimerNotificationReceiver::class.java)
+    val alarm = getAlarmManager()
+
+    val requestCodes: List<Int> = TimerNotificationReceiver.NOTIFICATION_ID.entries.map { it.id }
+    requestCodes.forEach { requestCode ->
+        val pIntent = PendingIntent.getBroadcast(
+            context,
+            requestCode,
+            intent,
+            PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        alarm.cancel(pIntent)
+    }
+}
+
+////
+
+
 @Composable
 fun <State, VM : __VM<State>> rememberVM(
     key1: Any? = null,
