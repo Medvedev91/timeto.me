@@ -84,6 +84,7 @@ class MainActivity : ComponentActivity() {
                     LaunchedEffect(Unit) {
                         scheduledNotificationsDataFlow
                             .onEachExIn(this) { notificationsData ->
+                                cancelAllAlarms()
                                 NotificationCenter.cleanAllPushes()
                                 notificationsData.forEach { scheduleNotification(it) }
                             }
