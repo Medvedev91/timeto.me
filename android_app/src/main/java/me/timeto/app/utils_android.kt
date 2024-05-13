@@ -83,7 +83,11 @@ fun askAQuestion(
     )
 }
 
-//////
+//
+// Notification / Alarms
+
+private fun getAlarmManager(): AlarmManager =
+    App.instance.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
 fun scheduleNotification(data: ScheduledNotificationData) {
     val requestCode = when (data.type) {
@@ -111,7 +115,7 @@ fun scheduleNotification(data: ScheduledNotificationData) {
      * Based on https://medium.com/@igordias/75c409f3bde0 use setAlarmClock().
      * Works better. I do not know why to use 2 times pIntent, but it's okay.
      */
-    val alarm = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+    val alarm = getAlarmManager()
     val alarmInfo = AlarmManager.AlarmClockInfo(timeMls() + (data.inSeconds * 1_000L), pIntent)
     alarm.setAlarmClock(alarmInfo, pIntent)
 }
