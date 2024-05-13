@@ -17,9 +17,9 @@ struct ActivityFormSheet: View {
     @State private var sheetHeaderScroll = 0
 
     init(
-            isPresented: Binding<Bool>,
-            activity: ActivityDb?,
-            onSave: @escaping () -> Void
+        isPresented: Binding<Bool>,
+        activity: ActivityDb?,
+        onSave: @escaping () -> Void
     ) {
         self.onSave = onSave
         _isPresented = isPresented
@@ -31,11 +31,11 @@ struct ActivityFormSheet: View {
         VMView(vm: vm, stack: .VStack()) { state in
 
             SheetHeaderView(
-                    onCancel: { isPresented.toggle() },
-                    title: state.headerTitle,
-                    doneText: state.headerDoneText,
-                    isDoneEnabled: state.isHeaderDoneEnabled,
-                    scrollToHeader: sheetHeaderScroll
+                onCancel: { isPresented.toggle() },
+                title: state.headerTitle,
+                doneText: state.headerDoneText,
+                isDoneEnabled: state.isHeaderDoneEnabled,
+                scrollToHeader: sheetHeaderScroll
             ) {
                 vm.save {
                     isPresented = false
@@ -56,24 +56,24 @@ struct ActivityFormSheet: View {
                         MyListView__Padding__HeaderSection()
 
                         MyListView__ItemView(
-                                isFirst: true,
-                                isLast: true
+                            isFirst: true,
+                            isLast: true
                         ) {
 
                             MyListView__ItemView__TextInputView(
-                                    text: state.inputNameValue,
-                                    placeholder: state.inputNamePlaceholder,
-                                    isAutofocus: false,
-                                    onValueChanged: { newValue in
-                                        vm.setInputNameValue(text: newValue)
-                                    }
+                                text: state.inputNameValue,
+                                placeholder: state.inputNamePlaceholder,
+                                isAutofocus: false,
+                                onValueChanged: { newValue in
+                                    vm.setInputNameValue(text: newValue)
+                                }
                             )
                         }
 
                         MyListView__Padding__SectionSection()
 
                         TextFeaturesTriggersFormView(
-                                textFeatures: state.textFeatures
+                            textFeatures: state.textFeatures
                         ) { textFeatures in
                             vm.setTextFeatures(newTextFeatures: textFeatures)
                         }
@@ -82,62 +82,62 @@ struct ActivityFormSheet: View {
                     }
 
                     MyListView__ItemView(
-                            isFirst: true,
-                            isLast: false
+                        isFirst: true,
+                        isLast: false
                     ) {
 
                         MyListView__ItemView__ButtonView(
-                                text: state.emojiTitle,
-                                withArrow: true,
-                                rightView: AnyView(
+                            text: state.emojiTitle,
+                            withArrow: true,
+                            rightView: AnyView(
 
-                                        HStack {
+                                HStack {
 
-                                            if let selectedEmoji = state.emoji {
-                                                Text(selectedEmoji)
-                                                        .font(.system(size: 30))
-                                                        .padding(.trailing, 8)
-                                            } else {
-                                                Text(state.emojiNotSelected)
-                                                        .foregroundColor(.red)
-                                                        .font(.system(size: 15))
-                                                        .padding(.trailing, 8)
-                                            }
-                                        }
-                                )
+                                    if let selectedEmoji = state.emoji {
+                                        Text(selectedEmoji)
+                                            .font(.system(size: 30))
+                                            .padding(.trailing, 8)
+                                    } else {
+                                        Text(state.emojiNotSelected)
+                                            .foregroundColor(.red)
+                                            .font(.system(size: 15))
+                                            .padding(.trailing, 8)
+                                    }
+                                }
+                            )
                         ) {
                             isEmojiSheetPresented = true
                         }
                     }
 
                     MyListView__ItemView(
-                            isFirst: false,
-                            isLast: false,
-                            withTopDivider: true
+                        isFirst: false,
+                        isLast: false,
+                        withTopDivider: true
                     ) {
 
                         MyListView__ItemView__ButtonView(
-                                text: state.colorTitle,
-                                withArrow: false,
-                                rightView: AnyView(
-                                        Circle()
-                                                .foregroundColor(state.colorRgba.toColor())
-                                                .frame(width: 32, height: 32)
-                                                .padding(.trailing, 8)
-                                )
+                            text: state.colorTitle,
+                            withArrow: false,
+                            rightView: AnyView(
+                                Circle()
+                                    .foregroundColor(state.colorRgba.toColor())
+                                    .frame(width: 32, height: 32)
+                                    .padding(.trailing, 8)
+                            )
                         ) {
                             isColorPickerSheetPresented = true
                         }
                     }
 
                     MyListView__ItemView(
-                            isFirst: false,
-                            isLast: true,
-                            withTopDivider: true
+                        isFirst: false,
+                        isLast: true,
+                        withTopDivider: true
                     ) {
                         MyListView__ItemView__SwitchView(
-                                text: state.keepScreenOnTitle,
-                                isActive: state.keepScreenOn
+                            text: state.keepScreenOnTitle,
+                            isActive: state.keepScreenOn
                         ) {
                             vm.toggleKeepScreenOn()
                         }
@@ -148,28 +148,28 @@ struct ActivityFormSheet: View {
                         MyListView__Padding__SectionSection()
 
                         MyListView__ItemView(
-                                isFirst: true,
-                                isLast: true
+                            isFirst: true,
+                            isLast: true
                         ) {
 
                             VStack {
 
                                 MyListView__ItemView__ButtonView(
-                                        text: state.goalsTitle,
-                                        withArrow: true,
-                                        rightView: AnyView(
-                                                MyListView__ItemView__ButtonView__RightText(
-                                                        text: state.goalsAddNote,
-                                                        paddingEnd: 2
-                                                )
+                                    text: state.goalsTitle,
+                                    withArrow: true,
+                                    rightView: AnyView(
+                                        MyListView__ItemView__ButtonView__RightText(
+                                            text: state.goalsAddNote,
+                                            paddingEnd: 2
                                         )
+                                    )
                                 ) {
                                     nativeSheet.show { isGoalsSheetPresented in
                                         GoalPickerSheet(
-                                                isPresented: isGoalsSheetPresented,
-                                                onPick: { goal in
-                                                    vm.addGoal(goal: goal)
-                                                }
+                                            isPresented: isGoalsSheetPresented,
+                                            onPick: { goal in
+                                                vm.addGoal(goal: goal)
+                                            }
                                         )
                                     }
                                 }
@@ -183,22 +183,22 @@ struct ActivityFormSheet: View {
                                         HStack(spacing: 10) {
 
                                             Button(
-                                                    action: {
-                                                        vm.delGoal(goal: goalUI.goal)
-                                                    },
-                                                    label: {
-                                                        Image(systemName: "minus.circle.fill")
-                                                                .foregroundColor(.red)
-                                                    }
+                                                action: {
+                                                    vm.delGoal(goal: goalUI.goal)
+                                                },
+                                                label: {
+                                                    Image(systemName: "minus.circle.fill")
+                                                        .foregroundColor(.red)
+                                                }
                                             )
 
                                             Text(goalUI.text)
                                         }
-                                                .padding(.bottom, 10)
+                                        .padding(.bottom, 10)
                                     }
                                 }
-                                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                        .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL)
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL)
                             }
                         }
                     }
@@ -225,16 +225,16 @@ struct ActivityFormSheet: View {
                             let isFirst = hintsTypeName.first! == pair
 
                             MyListView__ItemView(
-                                    isFirst: isFirst,
-                                    isLast: hintsTypeName.last! == pair,
-                                    withTopDivider: !isFirst
+                                isFirst: isFirst,
+                                isLast: hintsTypeName.last! == pair,
+                                withTopDivider: !isFirst
                             ) {
 
                                 VStack {
 
                                     MyListView__ItemView__RadioView(
-                                            text: pair.title,
-                                            isActive: isActive
+                                        text: pair.title,
+                                        isActive: isActive
                                     ) {
                                         withAnimation {
                                             vm.setTimerHintsType(type: pair.type)
@@ -255,32 +255,32 @@ struct ActivityFormSheet: View {
                                                     HStack(spacing: 10) {
 
                                                         Button(
-                                                                action: {
-                                                                    vm.delCustomTimerHint(seconds: customItem.seconds)
-                                                                },
-                                                                label: {
-                                                                    Image(systemName: "minus.circle.fill")
-                                                                            .foregroundColor(.red)
-                                                                }
+                                                            action: {
+                                                                vm.delCustomTimerHint(seconds: customItem.seconds)
+                                                            },
+                                                            label: {
+                                                                Image(systemName: "minus.circle.fill")
+                                                                    .foregroundColor(.red)
+                                                            }
                                                         )
 
                                                         Text(customItem.text)
                                                     }
-                                                            .padding(.bottom, 10)
+                                                    .padding(.bottom, 10)
                                                 }
 
                                                 Button(
-                                                        action: {
-                                                            isAddCustomHintPresented = true
-                                                        },
-                                                        label: {
-                                                            Text("Add")
-                                                        }
+                                                    action: {
+                                                        isAddCustomHintPresented = true
+                                                    },
+                                                    label: {
+                                                        Text("Add")
+                                                    }
                                                 )
                                             }
-                                                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                                    .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL)
-                                                    .padding(.bottom, 14)
+                                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                            .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL)
+                                            .padding(.bottom, 14)
                                         }
                                     }
                                 }
@@ -294,12 +294,12 @@ struct ActivityFormSheet: View {
                     MyListView__Padding__SectionSection()
 
                     MyListView__ItemView(
-                            isFirst: true,
-                            isLast: true
+                        isFirst: true,
+                        isLast: true
                     ) {
 
                         MyListView__ItemView__ActionView(
-                                text: state.deleteText
+                            text: state.deleteText
                         ) {
                             vm.delete {
                                 isPresented = false
@@ -309,30 +309,30 @@ struct ActivityFormSheet: View {
                 }
             }
         }
-                .background(c.sheetBg)
-                .sheetEnv(isPresented: $isColorPickerSheetPresented) {
-                    ActivityColorSheet(
-                            isPresented: $isColorPickerSheetPresented,
-                            initData: vm.buildColorPickerInitData()
-                    ) { colorRgba in
-                        vm.upColorRgba(colorRgba: colorRgba)
-                    }
-                }
-                .sheetEnv(isPresented: $isAddCustomHintPresented) {
-                    TimerPickerSheet(
-                            isPresented: $isAddCustomHintPresented,
-                            title: "Timer Hint",
-                            doneText: "Add",
-                            defMinutes: 30
-                    ) { seconds in
-                        vm.addCustomTimerHint(seconds: seconds.toInt32())
-                    }
-                            .presentationDetentsMediumIf16()
-                }
-                .sheetEnv(isPresented: $isEmojiSheetPresented) {
-                    SearchEmojiSheet(isPresented: $isEmojiSheetPresented) { emoji in
-                        vm.setEmoji(newEmoji: emoji)
-                    }
-                }
+        .background(c.sheetBg)
+        .sheetEnv(isPresented: $isColorPickerSheetPresented) {
+            ActivityColorSheet(
+                isPresented: $isColorPickerSheetPresented,
+                initData: vm.buildColorPickerInitData()
+            ) { colorRgba in
+                vm.upColorRgba(colorRgba: colorRgba)
+            }
+        }
+        .sheetEnv(isPresented: $isAddCustomHintPresented) {
+            TimerPickerSheet(
+                isPresented: $isAddCustomHintPresented,
+                title: "Timer Hint",
+                doneText: "Add",
+                defMinutes: 30
+            ) { seconds in
+                vm.addCustomTimerHint(seconds: seconds.toInt32())
+            }
+            .presentationDetentsMediumIf16()
+        }
+        .sheetEnv(isPresented: $isEmojiSheetPresented) {
+            SearchEmojiSheet(isPresented: $isEmojiSheetPresented) { emoji in
+                vm.setEmoji(newEmoji: emoji)
+            }
+        }
     }
 }
