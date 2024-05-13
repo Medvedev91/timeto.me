@@ -85,6 +85,7 @@
 		31821BC7F849A5C918F61175 /* ActivityColorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318211488ABF627A2A9935A7 /* ActivityColorSheet.swift */; };
 		31821BCA3B405E8B0F65AB72 /* DividerFg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821CCA60BF87AA05635423 /* DividerFg.swift */; };
 		31821BCAB8BA795D691FADF8 /* MyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821D7654D0C105DFC60DDD /* MyListView.swift */; };
+		31821BD87B0E4B9CC03CD31D /* ActivityPomodoroSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182197746881B28790F44E1 /* ActivityPomodoroSheet.swift */; };
 		31821C095E0F97CA52AE37ED /* atm_apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821346E2128825E6DBB9F8 /* atm_apple.swift */; };
 		31821C0BB92532D84114C15C /* TriggersListIconsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182157C5CB954867515B4BA /* TriggersListIconsView.swift */; };
 		31821C4D6DA83EF42B805658 /* MySpacerSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318212FFE80A0856A0A88DCF /* MySpacerSize.swift */; };
@@ -187,6 +188,7 @@
 		3182189A26C9B48C0D2E8A4A /* KeyboardManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		318218D93C3456758557A6E0 /* ScrollViewWithVListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollViewWithVListener.swift; sourceTree = "<group>"; };
 		31821956E237470E838F18A0 /* SheetDividerBg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SheetDividerBg.swift; sourceTree = "<group>"; };
+		3182197746881B28790F44E1 /* ActivityPomodoroSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityPomodoroSheet.swift; sourceTree = "<group>"; };
 		31821996D20B09EBA4F73C2B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		318219ADD916F23943506F7F /* NativeSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeSheet.swift; sourceTree = "<group>"; };
 		31821A15532BF8D598665449 /* ActivityPickerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityPickerSheet.swift; sourceTree = "<group>"; };
@@ -401,6 +403,7 @@
 				2C273F2E2BBAE3090016F11D /* ChecklistFormSheet.swift */,
 				31821DED445F739FAF7C55D0 /* WhatsNewSheet.swift */,
 				31821629888DF1D9B797A39A /* DaytimePickerSliderView.swift */,
+				3182197746881B28790F44E1 /* ActivityPomodoroSheet.swift */,
 			);
 			path = iphone;
 			sourceTree = "<group>";
@@ -643,6 +646,7 @@
 				31821FB6B5CC8647F2541328 /* EventsListEventView.swift in Sources */,
 				31821D335AF5DBA16579CA61 /* WhatsNewSheet.swift in Sources */,
 				31821A76C3FAC481BE5C7C66 /* DaytimePickerSliderView.swift in Sources */,
+				31821BD87B0E4B9CC03CD31D /* ActivityPomodoroSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
