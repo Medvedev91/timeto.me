@@ -9,10 +9,11 @@ import me.timeto.shared.reportApi
 
 class TimerNotificationReceiver : BroadcastReceiver() {
 
-    companion object {
+    enum class NOTIFICATION_ID(val id: Int) {
+        BREAK(1), OVERDUE(2)
+    }
 
-        const val NOTIFICATION_ID_BREAK = 1
-        const val NOTIFICATION_ID_OVERDUE = 2
+    companion object {
 
         const val EXTRA_TITLE = "title"
         const val EXTRA_TEXT = "text"
@@ -38,10 +39,10 @@ class TimerNotificationReceiver : BroadcastReceiver() {
          * Do not forget about channelTimerExpired()/channelTimerOverdue()
          */
         val (iconId, color, channel) = when (requestCode) {
-            NOTIFICATION_ID_BREAK -> {
+            NOTIFICATION_ID.BREAK.id -> {
                 Triple(R.drawable.readme_notification_timer_checkmark, 0x34C759, NotificationCenter.channelTimerExpired())
             }
-            NOTIFICATION_ID_OVERDUE -> {
+            NOTIFICATION_ID.OVERDUE.id -> {
                 Triple(R.drawable.readme_notification_alarm, 0x0055FF, NotificationCenter.channelTimerOverdue())
             }
             else -> {

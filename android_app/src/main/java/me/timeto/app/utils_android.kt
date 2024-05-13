@@ -91,8 +91,8 @@ private fun getAlarmManager(): AlarmManager =
 
 fun scheduleNotification(data: ScheduledNotificationData) {
     val requestCode = when (data.type) {
-        ScheduledNotificationData.TYPE.BREAK -> TimerNotificationReceiver.NOTIFICATION_ID_BREAK
-        ScheduledNotificationData.TYPE.OVERDUE -> TimerNotificationReceiver.NOTIFICATION_ID_OVERDUE
+        ScheduledNotificationData.TYPE.BREAK -> TimerNotificationReceiver.NOTIFICATION_ID.BREAK.id
+        ScheduledNotificationData.TYPE.OVERDUE -> TimerNotificationReceiver.NOTIFICATION_ID.OVERDUE.id
     }
 
     val context = App.instance
