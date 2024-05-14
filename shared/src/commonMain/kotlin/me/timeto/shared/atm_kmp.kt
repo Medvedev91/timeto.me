@@ -3,11 +3,24 @@ package me.timeto.shared
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.json.*
 
 fun zlog(message: Any?) = println(";; ${message.toString().replace("\n", "\n;; ")}")
 
 fun defaultScope() = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+
+fun <T> Flow<T>.ignoreFirst(): Flow<T> = flow {
+    var isFirst = true
+    collect { value ->
+        if (isFirst) {
+            isFirst = false
+            return@collect
+        }
+        emit(value)
+    }
+}
 
 //
 // Time
