@@ -392,7 +392,7 @@ suspend fun rescheduleNotifications() {
         return
 
     val totalMinutes = lastInterval.timer / 60
-    val activityDb = lastInterval.getActivityDI()
+    val activityDb = lastInterval.getActivity()
     val pomodoroTimer = activityDb.pomodoro_timer
     if (pomodoroTimer > 0) {
         scheduledNotificationsDataFlow.emit(
