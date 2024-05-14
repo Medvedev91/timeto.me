@@ -46,6 +46,14 @@ class AppVM : __VM<AppVM.State>() {
                     keepScreenOnStateFlow.emit(lastInterval.getActivityDI().keepScreenOn)
                 }
 
+            ActivityDb
+                .anyChangeFlow()
+                .ignoreFirst()
+                .onEachExIn(this) {
+                    // In case the pomodoro changed
+                    rescheduleNotifications()
+                }
+
             launchEx {
                 while (true) {
                     /**
