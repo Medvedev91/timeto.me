@@ -163,7 +163,7 @@ data class IntervalDb(
 
     suspend fun getActivity(): ActivityDb = ActivityDb.getByIdOrNull(activity_id)!!
 
-    fun getActivityDI() = DI.activitiesSorted.first { it.id == activity_id }
+    fun getActivityDI(): ActivityDb = DI.activitiesSorted.first { it.id == activity_id }
 
     suspend fun upActivity(newActivity: ActivityDb): Unit = dbIO {
         db.intervalQueries.upActivityIdById(
