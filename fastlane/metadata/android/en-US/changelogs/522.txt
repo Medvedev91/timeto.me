@@ -1,5 +1,5 @@
 1 May 2024:
-New Calendar Event Creation Form;
+New Calendar Event Creation Form
 
 18 Apr 2024:
 What's New Changelog
