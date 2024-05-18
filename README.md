@@ -47,7 +47,7 @@ In other words, once you complete one activity, you must start the timer for the
 It helps me to always stay focused on what I have to do. Most of the time my screen looks like a typical pomodoro timer:
 
 <p float="left">
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_timer_1.jpg" width="200" style="border-radius: 15px;" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_timer_1.jpg" width="200" />
 </p>
 
 This way also provides real 24/7 data on how long everything takes:
