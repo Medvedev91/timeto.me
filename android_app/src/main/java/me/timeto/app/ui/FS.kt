@@ -13,7 +13,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 private val enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessMedium))
 private val exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessMedium))
 
-object FullScreen {
+object FS {
 
     fun show(
         content: @Composable (WrapperView.Layer) -> Unit,

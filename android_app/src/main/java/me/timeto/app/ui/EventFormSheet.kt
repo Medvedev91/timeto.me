@@ -26,7 +26,7 @@ fun EventFormSheet__show(
     defTime: Int? = null,
     onSave: () -> Unit,
 ) {
-    FullScreen.show { layer ->
+    FS.show { layer ->
         EventFormSheet(
             layer = layer,
             editedEvent = editedEvent,
