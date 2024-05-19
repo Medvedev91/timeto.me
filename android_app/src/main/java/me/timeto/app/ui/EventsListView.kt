@@ -30,22 +30,11 @@ fun EventsListView(
     ) {
 
         item {
-
-            Column {
-
-                EventTemplatesView(
-                    spaceAround = H_PADDING - 2.dp,
-                    paddingTop = TasksView__LIST_SECTION_PADDING,
-                )
-            }
-        }
-
-        item {
             Box(
                 modifier = Modifier
                     .padding(start = H_PADDING)
                     .fillMaxWidth()
-                    .padding(top = TasksView__LIST_SECTION_PADDING),
+                    .padding(vertical = TasksView__LIST_SECTION_PADDING),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
