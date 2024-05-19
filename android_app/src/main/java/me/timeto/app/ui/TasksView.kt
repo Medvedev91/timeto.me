@@ -36,7 +36,6 @@ import kotlin.random.Random
 val TasksView__TAB_BUTTON_WIDTH = 32.dp
 val TasksView__PADDING_END = TasksView__TAB_BUTTON_WIDTH + H_PADDING
 
-val TasksView__INPUT_SHAPE = SquircleShape(len = 70f)
 val TasksView__LIST_SECTION_PADDING = 20.dp
 
 //

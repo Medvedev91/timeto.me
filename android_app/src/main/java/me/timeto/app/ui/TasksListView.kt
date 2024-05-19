@@ -30,6 +30,7 @@ import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.launchEx
 import me.timeto.shared.vm.TasksListVM
 
+private val inputShape = SquircleShape(len = 70f)
 private val highlightTimeShape = SquircleShape(len = 30f)
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalLayoutApi::class)
@@ -71,7 +72,7 @@ fun TasksListView(
                 Row(
                     modifier = Modifier
                         .padding(start = H_PADDING - 2.dp)
-                        .border(width = onePx, color = c.dividerBg, shape = TasksView__INPUT_SHAPE)
+                        .border(width = onePx, color = c.dividerBg, shape = inputShape)
                         .height(IntrinsicSize.Min), // To use fillMaxHeight() inside
                     verticalAlignment = Alignment.CenterVertically
                 ) {
