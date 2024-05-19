@@ -27,60 +27,61 @@ struct EventTemplatesView: View {
                     ForEach(state.templatesUI, id: \.templateDB.id) { templateUI in
 
                         Button(
-                                action: {
-                                    // In onTapGesture()/onLongPressGesture()
-                                },
-                                label: {
-                                    Text(templateUI.text)
-                                            .padding(.vertical, buttonVPadding)
-                                            .padding(.horizontal, buttonHPadding)
-                                            /// Ordering is important
-                                            .onTapGesture {
-                                                nativeSheet.EventFormSheet__show(
-                                                        editedEvent: nil,
-                                                        defText: templateUI.templateDB.text,
-                                                        defTime: templateUI.timeForEventForm.toInt()
-                                                ) {}
-                                            }
-                                            .onLongPressGesture(minimumDuration: 0.1) {
-                                                nativeSheet.show { isPresented in
-                                                    EventTemplateFormSheet(
-                                                            isPresented: isPresented,
-                                                            eventTemplateDb: templateUI.templateDB
-                                                    )
-                                                }
-                                            }
-                                            //////
-                                            .foregroundColor(.blue)
-                                            .font(buttonFont)
+                            action: {
+                                // In onTapGesture()/onLongPressGesture()
+                            },
+                            label: {
+                                Text(templateUI.text)
+                                .padding(.vertical, buttonVPadding)
+                                .padding(.horizontal, buttonHPadding)
+                                /// Ordering is important
+                                .onTapGesture {
+                                    nativeSheet.EventFormSheet__show(
+                                        editedEvent: nil,
+                                        defText: templateUI.templateDB.text,
+                                        defTime: templateUI.timeForEventForm.toInt()
+                                    ) {
+                                    }
                                 }
+                                .onLongPressGesture(minimumDuration: 0.1) {
+                                    nativeSheet.show { isPresented in
+                                        EventTemplateFormSheet(
+                                            isPresented: isPresented,
+                                            eventTemplateDb: templateUI.templateDB
+                                        )
+                                    }
+                                }
+                                //////
+                                .foregroundColor(.blue)
+                                .font(buttonFont)
+                            }
                         )
 
                         MySpacerSize(width: 8)
                     }
 
                     Button(
-                            action: {
-                                nativeSheet.show { isPresented in
-                                    EventTemplateFormSheet(
-                                            isPresented: isPresented,
-                                            eventTemplateDb: nil
-                                    )
-                                }
-                            },
-                            label: {
-                                Text(state.newTemplateText)
-                                        .padding(.vertical, buttonVPadding)
-                                        .padding(.horizontal, buttonHPadding)
-                                        .foregroundColor(.blue)
-                                        .font(buttonFont)
+                        action: {
+                            nativeSheet.show { isPresented in
+                                EventTemplateFormSheet(
+                                    isPresented: isPresented,
+                                    eventTemplateDb: nil
+                                )
                             }
+                        },
+                        label: {
+                            Text(state.newTemplateText)
+                                .padding(.vertical, buttonVPadding)
+                                .padding(.horizontal, buttonHPadding)
+                                .foregroundColor(.blue)
+                                .font(buttonFont)
+                        }
                     )
 
                     MySpacerSize(width: spaceAround)
                 }
             }
-                    .padding(.top, paddingTop)
+            .padding(.top, paddingTop)
         }
     }
 }
