@@ -2,13 +2,10 @@ import SwiftUI
 import shared
 
 private let buttonFont: Font = .system(size: 15, weight: .light)
-private let buttonHPadding = 2.0
-private let buttonVPadding = 4.0
 
 struct EventTemplatesView: View {
 
-    let spaceAround: Double
-    let paddingTop: Double
+    let onPick: (EventTemplatesVM.TemplateUI) -> Void
 
     @State private var vm = EventTemplatesVM()
 
@@ -22,7 +19,7 @@ struct EventTemplatesView: View {
 
                 HStack {
 
-                    MySpacerSize(width: spaceAround)
+                    MySpacerSize(width: H_PADDING_HALF)
 
                     ForEach(state.templatesUI, id: \.templateDB.id) { templateUI in
 
@@ -31,17 +28,12 @@ struct EventTemplatesView: View {
                                 // In onTapGesture()/onLongPressGesture()
                             },
                             label: {
-                                Text(templateUI.text)
-                                .padding(.vertical, buttonVPadding)
-                                .padding(.horizontal, buttonHPadding)
-                                /// Ordering is important
+                                ListButton(
+                                    text: templateUI.text
+                                )
+                                    /// Ordering is important
                                 .onTapGesture {
-                                    nativeSheet.EventFormSheet__show(
-                                        editedEvent: nil,
-                                        defText: templateUI.templateDB.text,
-                                        defTime: templateUI.timeForEventForm.toInt()
-                                    ) {
-                                    }
+                                    onPick(templateUI)
                                 }
                                 .onLongPressGesture(minimumDuration: 0.1) {
                                     nativeSheet.show { isPresented in
@@ -52,12 +44,8 @@ struct EventTemplatesView: View {
                                     }
                                 }
                                 //////
-                                .foregroundColor(.blue)
-                                .font(buttonFont)
                             }
                         )
-
-                        MySpacerSize(width: 8)
                     }
 
                     Button(
@@ -70,18 +58,28 @@ struct EventTemplatesView: View {
                             }
                         },
                         label: {
-                            Text(state.newTemplateText)
-                                .padding(.vertical, buttonVPadding)
-                                .padding(.horizontal, buttonHPadding)
-                                .foregroundColor(.blue)
-                                .font(buttonFont)
+                            ListButton(
+                                text: state.newTemplateText
+                            )
                         }
                     )
 
-                    MySpacerSize(width: spaceAround)
+                    MySpacerSize(width: H_PADDING_HALF)
                 }
             }
-            .padding(.top, paddingTop)
         }
+    }
+}
+
+private struct ListButton: View {
+
+    let text: String
+
+    var body: some View {
+        Text(text)
+            .padding(.vertical, 4)
+            .padding(.horizontal, H_PADDING_HALF)
+            .foregroundColor(.blue)
+            .font(buttonFont)
     }
 }
