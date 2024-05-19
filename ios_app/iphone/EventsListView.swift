@@ -58,40 +58,6 @@ struct EventsListView: View {
                                 paddingTop: 20
                             )
 
-                            ZStack(alignment: .trailing) {
-
-                                Button(
-                                    action: {
-                                        nativeSheet.EventFormSheet__show(editedEvent: nil) {
-                                            scrollDown(scrollProxy: scrollProxy, toAnimate: true)
-                                        }
-                                    },
-                                    label: {
-                                        Text("Event")
-                                                .foregroundColor(.primary)
-                                                .multilineTextAlignment(.leading)
-                                                .opacity(0.4)
-                                                .frame(maxWidth: .infinity, alignment: .leading)
-                                                .padding(.leading, 18)
-                                                .padding(.trailing, 6)
-                                                .padding(.vertical, 8)
-                                    }
-                                )
-
-                                Text("DATE")
-                                        .font(.system(size: 14, weight: .bold))
-                                        .frame(width: 68, height: 34)
-                                        .foregroundColor(.white)
-                                        .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(.blue.opacity(0.6)))
-                                        .padding(.trailing, 5)
-                            }
-                                    .padding(.top, 5)
-                                    .padding(.bottom, 5)
-                                    .overlay(squircleShape.stroke(c.dividerBg, lineWidth: onePx))
-                                    .padding(.top, 19)
-                                    .padding(.bottom, 20)
-                                    .padding(.leading, H_PADDING)
-
                             HStack {
                             }
                                     .id(LIST_BOTTOM_ITEM_ID)
