@@ -94,12 +94,20 @@ private fun EventFormSheet(
             DaytimePickerSliderView(
                 daytimeModel = state.daytimeModel,
                 modifier = Modifier
-                    .padding(top = 16.dp, bottom = 12.dp),
+                    .padding(top = 16.dp, bottom = 10.dp),
                 onChange = { daytimeModel ->
                     vm.setDaytime(daytimeModel)
                 },
             )
         }
+
+        EventTemplatesView(
+            modifier = Modifier
+                .padding(bottom = 8.dp),
+            onPick = { templateUi ->
+                vm.setTemplate(templateUi)
+            },
+        )
 
         HStack(
             modifier = Modifier
