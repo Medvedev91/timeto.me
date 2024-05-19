@@ -12,7 +12,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
@@ -92,6 +91,5 @@ private fun ListButton(
             .padding(horizontal = H_PADDING_HALF, vertical = 2.dp),
         color = c.blue,
         fontSize = 14.sp,
-        fontWeight = FontWeight.Light,
     )
 }
