@@ -73,23 +73,20 @@ private fun EventFormSheet(
 
             SpacerW1()
 
-            HStack {
-
-                DateTimeButton(
-                    text = state.selectedDateText,
-                    paddingStart = H_PADDING,
-                    onClick = {
-                        Dialog.showDatePicker(
-                            unixTime = state.selectedUnixTime,
-                            minTime = UnixTime(state.minTime),
-                            maxTime = UnixTime(UnixTime.MAX_TIME),
-                            onSelect = {
-                                vm.setUnixDay(it.localDay)
-                            },
-                        )
-                    },
-                )
-            }
+            DateTimeButton(
+                text = state.selectedDateText,
+                paddingStart = H_PADDING,
+                onClick = {
+                    Dialog.showDatePicker(
+                        unixTime = state.selectedUnixTime,
+                        minTime = UnixTime(state.minTime),
+                        maxTime = UnixTime(UnixTime.MAX_TIME),
+                        onSelect = {
+                            vm.setUnixDay(it.localDay)
+                        },
+                    )
+                },
+            )
 
             DaytimePickerSliderView(
                 daytimeModel = state.daytimeModel,
