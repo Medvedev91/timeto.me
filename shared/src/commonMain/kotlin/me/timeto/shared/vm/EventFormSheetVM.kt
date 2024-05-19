@@ -70,6 +70,15 @@ class EventFormSheetVM(
         it.copy(textFeatures = it.textFeatures.copy(textNoFeatures = text))
     }
 
+    fun setTemplate(templateUi: EventTemplatesVM.TemplateUI) {
+        state.update {
+            it.copy(
+                textFeatures = templateUi.templateDB.text.textFeatures(),
+                daytimeModel = DaytimeModel.byHms(templateUi.templateDB.daytime),
+            )
+        }
+    }
+
     fun save(
         onSuccess: () -> Unit
     ) = scopeVM().launchEx {
