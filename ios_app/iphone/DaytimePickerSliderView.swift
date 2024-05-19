@@ -1,10 +1,12 @@
 import SwiftUI
 import shared
 
+private let hPadding = H_PADDING + 1
+
 // Slider line a little wider to nice ui
 private let sliderInternalPadding = 3.0
 private let circleSize = 24.0
-private let circleDefaultOffset = H_PADDING - (circleSize / 2) + sliderInternalPadding
+private let circleDefaultOffset = hPadding - (circleSize / 2) + sliderInternalPadding
 
 // No size of tick, but for absolute positioned view
 private let tickNoteWidthDp = 20.0
@@ -94,7 +96,7 @@ private struct SliderView: View {
                 })
                 .padding(.horizontal, sliderInternalPadding)
                 .background(roundedShape.fill(c.sheetFg))
-                .padding(.horizontal, H_PADDING)
+                .padding(.horizontal, hPadding)
 
                 //
                 // Circle
@@ -159,7 +161,7 @@ private struct SliderView: View {
             }
             .zIndex(0.0)
             .padding(.top, 18)
-            .padding(.horizontal, H_PADDING + sliderInternalPadding)
+            .padding(.horizontal, hPadding + sliderInternalPadding)
         }
         .highPriorityGesture(gesture)
     }
