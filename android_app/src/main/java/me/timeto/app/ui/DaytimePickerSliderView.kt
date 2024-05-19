@@ -24,8 +24,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import me.timeto.app.*
 import me.timeto.shared.libs.DaytimeModel
-import me.timeto.shared.limitMax
-import me.timeto.shared.limitMinMax
 import me.timeto.shared.vm.ui.DaytimePickerSliderUi
 
 // Slider line a little wider to nice ui
