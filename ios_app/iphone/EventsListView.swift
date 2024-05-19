@@ -42,16 +42,16 @@ struct EventsListView: View {
                                     }
                                 }
                             }
-                                    .padding(.bottom, 20)
+                            .padding(.bottom, 20)
 
                             HStack {
                                 Spacer()
                                 Text(state.curTimeString)
-                                        .font(.system(size: 14, weight: .light))
+                                    .font(.system(size: 14, weight: .light))
 
                                 Spacer()
                             }
-                                    .padding(.leading, MyListView.PADDING_OUTER_HORIZONTAL)
+                            .padding(.leading, MyListView.PADDING_OUTER_HORIZONTAL)
 
                             EventTemplatesView(
                                 spaceAround: H_PADDING,
@@ -60,28 +60,28 @@ struct EventsListView: View {
 
                             HStack {
                             }
-                                    .id(LIST_BOTTOM_ITEM_ID)
+                            .id(LIST_BOTTOM_ITEM_ID)
                         }
-                                .frame(minHeight: geometry.size.height)
+                        .frame(minHeight: geometry.size.height)
                     }
-                            .animation(useAnimation ? Animation.easeOut(duration: 0.25) : nil)
-                            .onAppear {
-                                scrollDown(scrollProxy: scrollProxy, toAnimate: false)
-                            }
+                    .animation(useAnimation ? Animation.easeOut(duration: 0.25) : nil)
+                    .onAppear {
+                        scrollDown(scrollProxy: scrollProxy, toAnimate: false)
+                    }
                 }
             }
         }
             ///
-                .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        useAnimation = true
-                    }
-                }
-                .onDisappear {
-                    useAnimation = false
-                }
-                ///
-                .padding(.trailing, 20)
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                useAnimation = true
+            }
+        }
+        .onDisappear {
+            useAnimation = false
+        }
+        ///
+        .padding(.trailing, 20)
     }
 
     private func scrollDown(
