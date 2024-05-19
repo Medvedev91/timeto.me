@@ -26,10 +26,12 @@ import me.timeto.app.*
 import me.timeto.shared.libs.DaytimeModel
 import me.timeto.shared.vm.ui.DaytimePickerSliderUi
 
+private val hPadding = H_PADDING + 1.dp
+
 // Slider line a little wider to nice ui
 private val sliderInternalPadding = 3.dp
 private val circleSize = 22.dp
-private val circleDefaultOffset = H_PADDING - (circleSize / 2) + sliderInternalPadding
+private val circleDefaultOffset = hPadding - (circleSize / 2) + sliderInternalPadding
 private val circleAnimation = spring(
     visibilityThreshold = Dp.VisibilityThreshold,
     stiffness = Spring.StiffnessHigh,
@@ -126,7 +128,7 @@ private fun SliderView(
             ZStack(
                 modifier = Modifier
                     .align(Alignment.Center)
-                    .padding(horizontal = H_PADDING)
+                    .padding(horizontal = hPadding)
                     .fillMaxWidth()
                     .height(4.dp)
                     .clip(roundedShape)
@@ -186,7 +188,7 @@ private fun SliderView(
             modifier = Modifier
                 .zIndex(0f)
                 .padding(top = 16.dp)
-                .padding(horizontal = H_PADDING + sliderInternalPadding)
+                .padding(horizontal = hPadding + sliderInternalPadding)
                 .fillMaxWidth(),
         ) {
 
