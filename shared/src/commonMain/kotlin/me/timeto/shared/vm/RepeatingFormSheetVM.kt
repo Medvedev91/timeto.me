@@ -83,7 +83,7 @@ class RepeatingFormSheetVM(
                 headerTitle = if (repeating != null) "Edit Repeating" else "New Repeating",
                 headerDoneText = if (repeating != null) "Save" else "Create",
                 textFeatures = (repeating?.text ?: "").textFeatures(),
-                daytimeModel = repeating?.daytime?.let { DaytimeModel.byHms(it) },
+                daytimeModel = repeating?.daytime?.let { DaytimeModel.byDaytime(it) },
                 isImportant = repeating?.is_important?.toBoolean10() ?: false,
                 activePeriodIndex = activePeriodIndex,
                 selectedNDays = selectedNDays,

@@ -32,7 +32,7 @@ class EventTemplateFormSheetVM(
             headerTitle = if (eventTemplateDB != null) "Edit Template" else "New Template",
             doneText = "Save",
             textFeatures = (eventTemplateDB?.text ?: "").textFeatures(),
-            daytimeModel = eventTemplateDB?.daytime?.let { DaytimeModel.byHms(it) },
+            daytimeModel = eventTemplateDB?.daytime?.let { DaytimeModel.byDaytime(it) },
         )
     )
 

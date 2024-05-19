@@ -74,7 +74,7 @@ class EventFormSheetVM(
         state.update {
             it.copy(
                 textFeatures = templateUi.templateDB.text.textFeatures(),
-                daytimeModel = DaytimeModel.byHms(templateUi.templateDB.daytime),
+                daytimeModel = DaytimeModel.byDaytime(templateUi.templateDB.daytime),
             )
         }
     }

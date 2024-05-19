@@ -13,7 +13,7 @@ data class DaytimeModel(
 
     companion object {
 
-        fun byHms(daytime: Int): DaytimeModel {
+        fun byDaytime(daytime: Int): DaytimeModel {
             val (h, m) = daytime.toHms()
             return DaytimeModel(hour = h, minute = m)
         }
