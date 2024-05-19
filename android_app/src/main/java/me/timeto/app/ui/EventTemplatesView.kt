@@ -13,20 +13,15 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.shared.vm.EventTemplatesVM
 
-private val listButtonShape = SquircleShape(len = 40f)
-private val listButtonPadding = PaddingValues(horizontal = 2.dp)
-
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun EventTemplatesView(
-    spaceAround: Dp,
-    paddingTop: Dp,
+    modifier: Modifier,
 ) {
 
     val (_, state) = rememberVM { EventTemplatesVM() }
@@ -39,10 +34,9 @@ fun EventTemplatesView(
     }
 
     LazyRow(
-        modifier = Modifier
-            .padding(top = paddingTop),
-        contentPadding = PaddingValues(horizontal = spaceAround),
-        state = scrollState
+        modifier = modifier,
+        contentPadding = PaddingValues(horizontal = H_PADDING_HALF),
+        state = scrollState,
     ) {
 
         itemsIndexed(
@@ -53,8 +47,7 @@ fun EventTemplatesView(
             ListButton(
                 text = templateUI.text,
                 modifier = Modifier
-                    .padding(end = 8.dp)
-                    .clip(listButtonShape)
+                    .clip(squircleShape)
                     .animateItemPlacement()
                     .combinedClickable(
                         onClick = {
@@ -72,8 +65,7 @@ fun EventTemplatesView(
                                 )
                             }
                         },
-                    )
-                    .padding(listButtonPadding),
+                    ),
             )
         }
 
@@ -81,13 +73,12 @@ fun EventTemplatesView(
             ListButton(
                 text = state.newTemplateText,
                 modifier = Modifier
-                    .clip(listButtonShape)
+                    .clip(squircleShape)
                     .clickable {
                         Sheet.show { layer ->
                             EventTemplateFormSheet(layer = layer, eventTemplate = null)
                         }
-                    }
-                    .padding(listButtonPadding),
+                    },
             )
         }
     }
@@ -100,7 +91,8 @@ private fun ListButton(
 ) {
     Text(
         text = text,
-        modifier = modifier,
+        modifier = modifier
+            .padding(horizontal = H_PADDING_HALF, vertical = 2.dp),
         color = c.blue,
         fontSize = 14.sp,
         fontWeight = FontWeight.Light,
