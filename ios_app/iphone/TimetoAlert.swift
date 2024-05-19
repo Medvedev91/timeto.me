@@ -2,6 +2,9 @@ import SwiftUI
 import Combine
 import shared
 
+// todo remove
+private var modifiersStacks: [UUID] = []
+
 extension View {
 
     func attachTimetoAlert() -> some View {
@@ -16,6 +19,8 @@ private struct TimetoAlert__Modifier: ViewModifier {
 
     private let alertPublisher: AnyPublisher<UIAlertData, Never> = Utils_kmpKt.uiAlertFlow.toPublisher()
     private let confirmationPublisher: AnyPublisher<UIConfirmationData, Never> = Utils_kmpKt.uiConfirmationFlow.toPublisher()
+
+    @State private var uuid = UUID()
 
     func body(content: Content) -> some View {
 
@@ -45,15 +50,29 @@ private struct TimetoAlert__Modifier: ViewModifier {
             }
         }
         .onReceive(alertPublisher) { data in
+            if modifiersStacks.last != uuid {
+                return
+            }
             timetoAlert.alert(data.message)
         }
         .onReceive(confirmationPublisher) { data in
+            if modifiersStacks.last != uuid {
+                return
+            }
             timetoAlert.confirm(
                 data.text,
                 confirmationText: data.buttonText,
                 onConfirm: data.onConfirm,
                 isDestructive: data.isRed
             )
+        }
+        .onAppear {
+            modifiersStacks.append(uuid)
+        }
+        .onDisappear {
+            modifiersStacks.removeAll {
+                $0 == uuid
+            }
         }
     }
 }
