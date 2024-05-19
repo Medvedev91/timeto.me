@@ -22,6 +22,7 @@ import me.timeto.shared.vm.EventTemplatesVM
 @Composable
 fun EventTemplatesView(
     modifier: Modifier,
+    onPick: (EventTemplatesVM.TemplateUI) -> Unit,
 ) {
 
     val (_, state) = rememberVM { EventTemplatesVM() }
@@ -51,11 +52,7 @@ fun EventTemplatesView(
                     .animateItemPlacement()
                     .combinedClickable(
                         onClick = {
-                            EventFormSheet__show(
-                                editedEvent = null,
-                                defText = templateUI.templateDB.text,
-                                defTime = templateUI.timeForEventForm,
-                            ) {}
+                            onPick(templateUI)
                         },
                         onLongClick = {
                             Sheet.show { layer ->
