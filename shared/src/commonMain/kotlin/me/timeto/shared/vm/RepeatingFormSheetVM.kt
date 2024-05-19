@@ -81,7 +81,7 @@ class RepeatingFormSheetVM(
         state = MutableStateFlow(
             State(
                 headerTitle = if (repeating != null) "Edit Repeating" else "New Repeating",
-                headerDoneText = if (repeating != null) "Done" else "Create",
+                headerDoneText = if (repeating != null) "Save" else "Create",
                 textFeatures = (repeating?.text ?: "").textFeatures(),
                 daytimeModel = repeating?.daytime?.let { DaytimeModel.byHms(it) },
                 isImportant = repeating?.is_important?.toBoolean10() ?: false,
