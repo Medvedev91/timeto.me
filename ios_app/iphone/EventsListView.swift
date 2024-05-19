@@ -53,11 +53,6 @@ struct EventsListView: View {
                             }
                             .padding(.leading, MyListView.PADDING_OUTER_HORIZONTAL)
 
-                            EventTemplatesView(
-                                spaceAround: H_PADDING,
-                                paddingTop: 20
-                            )
-
                             HStack {
                             }
                             .id(LIST_BOTTOM_ITEM_ID)
