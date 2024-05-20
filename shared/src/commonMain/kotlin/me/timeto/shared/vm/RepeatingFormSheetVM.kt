@@ -161,14 +161,21 @@ class RepeatingFormSheetVM(
         onSuccess: () -> Unit,
     ) = scopeVM().launchEx {
         try {
-            // todo check if a text without features
-            val nameWithFeatures = state.value.textFeatures.textWithFeatures()
+            val textFeatures = state.value.textFeatures
+            if (textFeatures.textNoFeatures.isBlank())
+                throw UIException("No text")
+            if (textFeatures.activity == null)
+                throw UIException("Activity not selected")
+            if (textFeatures.timer == null)
+                throw UIException("Timer not selected")
+
+            val nameWithFeatures = textFeatures.textWithFeatures()
             val isImportant = state.value.isImportant
 
             val daytime: Int? = state.value.daytimeModel?.seconds
 
-            // !! Because "enabled" contains the checking
-            val period = when (state.value.activePeriodIndex!!) {
+            val periodIndex = state.value.activePeriodIndex ?: throw UIException("Period not selected")
+            val period = when (periodIndex) {
                 0 -> RepeatingDb.Period.EveryNDays(1)
                 1 -> RepeatingDb.Period.EveryNDays(state.value.selectedNDays)
                 2 -> RepeatingDb.Period.DaysOfWeek(state.value.selectedWeekDays)
