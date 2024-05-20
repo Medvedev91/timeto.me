@@ -83,6 +83,7 @@ fun RepeatingFormSheet(
             TextFeaturesTriggersFormView(
                 textFeatures = state.textFeatures,
                 bgColor = c.fg,
+                dividerColor = c.dividerFg,
             ) {
                 vm.upTextFeatures(it)
             }
@@ -92,6 +93,7 @@ fun RepeatingFormSheet(
             TextFeaturesTimerFormView(
                 textFeatures = state.textFeatures,
                 bgColor = c.fg,
+                dividerColor = c.dividerFg,
             ) {
                 vm.upTextFeatures(it)
             }
@@ -135,6 +137,7 @@ fun RepeatingFormSheet(
                 isFirst = false,
                 isLast = true,
                 withTopDivider = true,
+                dividerColor = c.dividerFg,
             ) {
                 MyListView__ItemView__SwitchView(
                     text = state.isImportantHeader,
@@ -163,6 +166,7 @@ fun RepeatingFormSheet(
                     isFirst = isFirst,
                     isLast = periods.last() == periodTitle,
                     withTopDivider = !isFirst,
+                    dividerColor = c.dividerFg,
                     bgColor = c.fg,
                 ) {
                     val isActive = index == state.activePeriodIndex
