@@ -40,16 +40,15 @@ fun RepeatingFormSheet(
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .background(c.sheetBg)
+            .background(c.bg)
     ) {
 
         val scrollState = rememberScrollState()
 
-        Sheet.HeaderViewOld(
-            onCancel = { layer.close() },
+        FS__HeaderAction(
             title = state.headerTitle,
-            doneText = state.headerDoneText,
-            isDoneEnabled = state.isHeaderDoneEnabled,
+            actionText = state.headerDoneText,
+            onCancel = { layer.close() },
             scrollState = scrollState,
         ) {
             vm.save {
