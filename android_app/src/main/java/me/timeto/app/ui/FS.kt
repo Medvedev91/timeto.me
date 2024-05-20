@@ -104,7 +104,8 @@ fun FS__HeaderAction(
                         .clickable {
                             onDone()
                         }
-                        .padding(horizontal = 11.dp, vertical = 3.dp),
+                        .padding(horizontal = 10.dp)
+                        .padding(top = 2.dp + onePx, bottom = 2.dp),
                     color = c.white,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.SemiBold,
