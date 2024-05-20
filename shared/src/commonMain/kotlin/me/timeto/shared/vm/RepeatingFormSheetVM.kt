@@ -31,10 +31,6 @@ class RepeatingFormSheetVM(
         val isImportantHeader = "Is Important"
 
         val inputTextValue = textFeatures.textNoFeatures
-        val isHeaderDoneEnabled = inputTextValue.isNotBlank() &&
-                                  activePeriodIndex != null &&
-                                  textFeatures.activity != null &&
-                                  textFeatures.timer != null
 
         // TRICK The order is hardcoded in ui
         val periods = listOf(
