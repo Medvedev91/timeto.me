@@ -3,13 +3,16 @@ package me.timeto.app.ui
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import me.timeto.app.c
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.vm.ui.TextFeaturesTriggersFormUI
 
 @Composable
 fun TextFeaturesTriggersFormView(
     textFeatures: TextFeatures,
+    bgColor: Color = c.sheetFg,
     onChange: (TextFeatures) -> Unit,
 ) {
 
@@ -24,6 +27,7 @@ fun TextFeaturesTriggersFormView(
             MyListView__ItemView__ButtonView(
                 text = formUI.checklistsTitle,
                 withArrow = true,
+                bgColor = bgColor,
                 rightView = {
                     MyListView__ItemView__ButtonView__RightText(
                         text = formUI.checklistsNote,
@@ -50,6 +54,7 @@ fun TextFeaturesTriggersFormView(
             MyListView__ItemView__ButtonView(
                 text = formUI.shortcutsTitle,
                 withArrow = true,
+                bgColor = bgColor,
                 rightView = {
                     MyListView__ItemView__ButtonView__RightText(
                         text = formUI.shortcutsNote,
