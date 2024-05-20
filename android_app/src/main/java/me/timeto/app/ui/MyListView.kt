@@ -37,6 +37,8 @@ import me.timeto.app.H_PADDING
 import me.timeto.app.c
 import me.timeto.app.roundedShape
 
+// todo remove bgColor
+
 object MyListView {
 
     val ITEM_MIN_HEIGHT = 46.dp
@@ -129,6 +131,7 @@ fun MyListView__ItemView(
     withTopDivider: Boolean = false,
     dividerPadding: PaddingValues = PaddingValues(start = MyListView.PADDING_INNER_HORIZONTAL),
     outerPadding: PaddingValues = PaddingValues(horizontal = MyListView.PADDING_OUTER_HORIZONTAL),
+    bgColor: Color = c.sheetFg,
     content: @Composable () -> Unit
 ) {
     Box(
@@ -141,7 +144,7 @@ fun MyListView__ItemView(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(c.sheetFg),
+                .background(bgColor),
             contentAlignment = Alignment.CenterStart,
         ) {
             content()
@@ -232,10 +235,12 @@ fun MyListView__ItemView__TextInputView(
 fun MyListView__ItemView__RadioView(
     text: String,
     isActive: Boolean,
+    bgColor: Color = c.sheetFg,
     onClick: () -> Unit,
 ) {
     MyListView__ItemView__ButtonView(
         text = text,
+        bgColor = bgColor,
         rightView = {
             Icon(
                 if (isActive) Icons.Default.RadioButtonChecked
@@ -286,10 +291,12 @@ fun MyListView__ItemView__CheckboxView(
 fun MyListView__ItemView__SwitchView(
     text: String,
     isActive: Boolean,
+    bgColor: Color = c.sheetFg,
     onClick: () -> Unit,
 ) {
     MyListView__ItemView__ButtonView(
         text = text,
+        bgColor = bgColor,
         rightView = {
             Switch(
                 checked = isActive,
@@ -317,13 +324,14 @@ fun MyListView__ItemView__ButtonView(
     textModifier: Modifier = Modifier,
     withArrow: Boolean = false,
     maxLines: Int = Int.MAX_VALUE,
+    bgColor: Color = c.sheetFg,
     rightView: @Composable (() -> Unit)? = null,
     onClick: () -> Unit,
 ) {
 
     Row(
         modifier = modifier
-            .background(c.sheetFg) // Fix swipe to action bg on swipe
+            .background(bgColor) // Fix swipe to action bg on swipe
             .clickable {
                 onClick()
             }
