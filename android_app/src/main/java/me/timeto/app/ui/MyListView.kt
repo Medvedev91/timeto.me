@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.R
 import kotlinx.coroutines.delay
+import me.timeto.app.H_PADDING
 import me.timeto.app.c
 import me.timeto.app.roundedShape
 
@@ -40,8 +41,9 @@ object MyListView {
 
     val ITEM_MIN_HEIGHT = 46.dp
 
-    val PADDING_OUTER_HORIZONTAL = 20.dp
-    val PADDING_INNER_HORIZONTAL = 16.dp
+    // todo remove AI
+    val PADDING_OUTER_HORIZONTAL = H_PADDING
+    val PADDING_INNER_HORIZONTAL = H_PADDING
 }
 
 ///
