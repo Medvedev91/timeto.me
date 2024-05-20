@@ -13,6 +13,7 @@ import me.timeto.shared.vm.ui.TextFeaturesTriggersFormUI
 fun TextFeaturesTriggersFormView(
     textFeatures: TextFeatures,
     bgColor: Color = c.sheetFg,
+    dividerColor: Color = c.sheetDividerFg,
     onChange: (TextFeatures) -> Unit,
 ) {
 
@@ -50,6 +51,7 @@ fun TextFeaturesTriggersFormView(
             isFirst = false,
             isLast = true,
             withTopDivider = true,
+            dividerColor = dividerColor,
         ) {
             MyListView__ItemView__ButtonView(
                 text = formUI.shortcutsTitle,
