@@ -69,6 +69,7 @@ fun RepeatingFormSheet(
             MyListView__ItemView(
                 isFirst = true,
                 isLast = true,
+                bgColor = c.fg,
             ) {
                 MyListView__ItemView__TextInputView(
                     placeholder = "Task",
@@ -79,13 +80,19 @@ fun RepeatingFormSheet(
 
             MyListView__Padding__SectionSection()
 
-            TextFeaturesTriggersFormView(state.textFeatures) {
+            TextFeaturesTriggersFormView(
+                textFeatures = state.textFeatures,
+                bgColor = c.fg,
+            ) {
                 vm.upTextFeatures(it)
             }
 
             MyListView__Padding__SectionSection()
 
-            TextFeaturesTimerFormView(state.textFeatures) {
+            TextFeaturesTimerFormView(
+                textFeatures = state.textFeatures,
+                bgColor = c.fg,
+            ) {
                 vm.upTextFeatures(it)
             }
 
@@ -98,6 +105,7 @@ fun RepeatingFormSheet(
                 MyListView__ItemView__ButtonView(
                     text = state.daytimeHeader,
                     withArrow = true,
+                    bgColor = c.fg,
                     rightView = {
                         MyListView__ItemView__ButtonView__RightText(
                             text = state.daytimeNote,
@@ -131,6 +139,7 @@ fun RepeatingFormSheet(
                 MyListView__ItemView__SwitchView(
                     text = state.isImportantHeader,
                     isActive = state.isImportant,
+                    bgColor = c.fg,
                 ) {
                     vm.toggleIsImportant()
                 }
@@ -154,6 +163,7 @@ fun RepeatingFormSheet(
                     isFirst = isFirst,
                     isLast = periods.last() == periodTitle,
                     withTopDivider = !isFirst,
+                    bgColor = c.fg,
                 ) {
                     val isActive = index == state.activePeriodIndex
 
@@ -161,7 +171,8 @@ fun RepeatingFormSheet(
 
                         MyListView__ItemView__RadioView(
                             text = periodTitle,
-                            isActive = isActive
+                            isActive = isActive,
+                            bgColor = c.fg,
                         ) {
                             vm.setActivePeriodIndex(if (isActive) null else index)
                             if (state.activePeriodIndex != null) {
