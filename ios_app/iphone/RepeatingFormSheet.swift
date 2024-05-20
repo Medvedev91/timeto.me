@@ -33,7 +33,7 @@ struct RepeatingsFormSheet: View {
                 onCancel: { isPresented.toggle() },
                 title: state.headerTitle,
                 doneText: state.headerDoneText,
-                isDoneEnabled: state.isHeaderDoneEnabled,
+                isDoneEnabled: true,
                 scrollToHeader: sheetHeaderScroll
             ) {
                 vm.save {
