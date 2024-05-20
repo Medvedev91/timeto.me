@@ -3,7 +3,9 @@ package me.timeto.app.ui
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import me.timeto.app.c
 import me.timeto.app.toColor
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.vm.ui.TextFeaturesTimerFormUI
@@ -11,6 +13,7 @@ import me.timeto.shared.vm.ui.TextFeaturesTimerFormUI
 @Composable
 fun TextFeaturesTimerFormView(
     textFeatures: TextFeatures,
+    bgColor: Color = c.sheetFg,
     onChange: (TextFeatures) -> Unit,
 ) {
 
@@ -25,6 +28,7 @@ fun TextFeaturesTimerFormView(
             MyListView__ItemView__ButtonView(
                 text = formUI.activityTitle,
                 withArrow = true,
+                bgColor = bgColor,
                 rightView = {
                     MyListView__ItemView__ButtonView__RightText(
                         text = formUI.activityNote,
@@ -51,6 +55,7 @@ fun TextFeaturesTimerFormView(
             MyListView__ItemView__ButtonView(
                 text = formUI.timerTitle,
                 withArrow = true,
+                bgColor = bgColor,
                 rightView = {
                     MyListView__ItemView__ButtonView__RightText(
                         text = formUI.timerNote,
