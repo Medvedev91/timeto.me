@@ -65,10 +65,11 @@ fun RepeatingFormSheet(
                 .imePadding()
         ) {
 
+            MyListView__PaddingFirst()
+
             MyListView__ItemView(
                 isFirst = true,
                 isLast = true,
-                modifier = Modifier.padding(top = 8.dp)
             ) {
                 MyListView__ItemView__TextInputView(
                     placeholder = "Task",
