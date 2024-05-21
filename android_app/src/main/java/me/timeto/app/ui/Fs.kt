@@ -52,7 +52,7 @@ object Fs {
 }
 
 @Composable
-fun FS__Header(
+fun Fs__Header(
     scrollState: ScrollableState?,
     content: @Composable () -> Unit,
 ) {
@@ -115,7 +115,7 @@ fun FS__HeaderAction(
     onDone: () -> Unit,
 ) {
 
-    FS__Header(
+    Fs__Header(
         scrollState = scrollState,
     ) {
 
