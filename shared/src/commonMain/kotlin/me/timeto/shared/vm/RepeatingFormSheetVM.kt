@@ -14,14 +14,14 @@ class RepeatingFormSheetVM(
         val headerTitle: String,
         val headerDoneText: String,
         val textFeatures: TextFeatures,
+        val period: RepeatingDb.Period?,
         val daytimeModel: DaytimeModel?,
         val isImportant: Boolean,
-        val activePeriodIndex: Int?,
-        val selectedNDays: Int,
-        val selectedWeekDays: List<Int>,
-        val selectedDaysOfMonth: Set<Int>,
-        val selectedDaysOfYear: List<RepeatingDb.Period.DaysOfYear.MonthDayItem>,
     ) {
+
+        val periodTitle = "Period"
+        val periodNote: String = period?.title ?: "Not Selected"
+        val periodFsDoneText = "Done"
 
         val daytimeHeader = "Time of the Day"
         val daytimeNote: String = daytimeModel?.text ?: "None"
@@ -31,64 +31,18 @@ class RepeatingFormSheetVM(
         val isImportantHeader = "Is Important"
 
         val inputTextValue = textFeatures.textNoFeatures
-
-        // TRICK The order is hardcoded in ui
-        val periods = listOf(
-            "Every Day",
-            "Every N Days",
-            "Days of the Week",
-            "Days of the Month",
-            "Days of the Year",
-        )
     }
 
-    override val state: MutableStateFlow<State>
-
-    init {
-        val activePeriodIndex = if (repeating == null) null else {
-            when (val period = repeating.getPeriod()) {
-                is RepeatingDb.Period.EveryNDays -> if (period.nDays == 1) 0 else 1
-                is RepeatingDb.Period.DaysOfWeek -> 2
-                is RepeatingDb.Period.DaysOfMonth -> 3
-                is RepeatingDb.Period.DaysOfYear -> 4
-            }
-        }
-
-        // For UI "Every Day" and "Every N Days" is a different, but the logic is same EveryNDays.
-        // That's by if the EveryNDays == 1, the "Every Day" would be checked, and for
-        // Every N Days it's needed to set 2 as a default value instead of 1.
-        val selectedNDays: Int = run {
-            val period = (repeating?.getPeriod() as? RepeatingDb.Period.EveryNDays) ?: return@run 2
-            if (period.nDays == 1) 2 else period.nDays
-        }
-
-        val selectedWeekDays: List<Int> = run {
-            (repeating?.getPeriod() as? RepeatingDb.Period.DaysOfWeek)?.weekDays ?: listOf()
-        }
-
-        val selectedDaysOfMonth: Set<Int> = run {
-            (repeating?.getPeriod() as? RepeatingDb.Period.DaysOfMonth)?.days ?: setOf()
-        }
-
-        val selectedDaysOfYear: List<RepeatingDb.Period.DaysOfYear.MonthDayItem> = run {
-            (repeating?.getPeriod() as? RepeatingDb.Period.DaysOfYear)?.items ?: listOf()
-        }
-
-        state = MutableStateFlow(
-            State(
-                headerTitle = if (repeating != null) "Edit Repeating" else "New Repeating",
-                headerDoneText = if (repeating != null) "Save" else "Create",
-                textFeatures = (repeating?.text ?: "").textFeatures(),
-                daytimeModel = repeating?.daytime?.let { DaytimeModel.byDaytime(it) },
-                isImportant = repeating?.is_important?.toBoolean10() ?: false,
-                activePeriodIndex = activePeriodIndex,
-                selectedNDays = selectedNDays,
-                selectedWeekDays = selectedWeekDays,
-                selectedDaysOfMonth = selectedDaysOfMonth,
-                selectedDaysOfYear = selectedDaysOfYear,
-            )
+    override val state: MutableStateFlow<State> = MutableStateFlow(
+        State(
+            headerTitle = if (repeating != null) "Edit Repeating" else "New Repeating",
+            headerDoneText = if (repeating != null) "Save" else "Create",
+            textFeatures = (repeating?.text ?: "").textFeatures(),
+            period = repeating?.getPeriod(),
+            daytimeModel = repeating?.daytime?.let { DaytimeModel.byDaytime(it) },
+            isImportant = repeating?.is_important?.toBoolean10() ?: false,
         )
-    }
+    )
 
     fun setTextValue(text: String) {
         state.update { it.copy(textFeatures = it.textFeatures.copy(textNoFeatures = text)) }
@@ -98,59 +52,16 @@ class RepeatingFormSheetVM(
         state.update { it.copy(textFeatures = textFeatures) }
     }
 
+    fun setPeriod(period: RepeatingDb.Period?) {
+        state.update { it.copy(period = period) }
+    }
+
     fun upDaytime(daytimeModel: DaytimeModel?) {
         state.update { it.copy(daytimeModel = daytimeModel) }
     }
 
     fun toggleIsImportant() {
         state.update { it.copy(isImportant = !it.isImportant) }
-    }
-
-    fun setActivePeriodIndex(index: Int?) {
-        state.update { it.copy(activePeriodIndex = index) }
-    }
-
-    fun setSelectedNDays(nDays: Int) {
-        state.update { it.copy(selectedNDays = nDays) }
-    }
-
-    fun upWeekDays(newWeekDays: List<Int>) {
-        state.update { it.copy(selectedWeekDays = newWeekDays) }
-    }
-
-    fun toggleDayOfMonth(day: Int) {
-        val isDaySelected = day in state.value.selectedDaysOfMonth
-        state.update {
-            it.copy(
-                selectedDaysOfMonth = it.selectedDaysOfMonth
-                    .toMutableSet()
-                    .apply {
-                        if (isDaySelected) remove(day)
-                        else add(day)
-                    }
-            )
-        }
-    }
-
-    fun addDayOfTheYear(item: RepeatingDb.Period.DaysOfYear.MonthDayItem) {
-        state.update {
-            it.copy(
-                selectedDaysOfYear = it.selectedDaysOfYear
-                    .toMutableList()
-                    .apply { add(item) }
-                    .sortedWith(compareBy({ it.monthId }, { it.dayId }))
-            )
-        }
-    }
-
-    fun delDayOfTheYear(item: RepeatingDb.Period.DaysOfYear.MonthDayItem) {
-        state.update {
-            it.copy(
-                selectedDaysOfYear = it.selectedDaysOfYear
-                    .toMutableList()
-                    .apply { remove(item) }
-            )
-        }
     }
 
     fun save(
@@ -170,15 +81,7 @@ class RepeatingFormSheetVM(
 
             val daytime: Int? = state.value.daytimeModel?.seconds
 
-            val periodIndex = state.value.activePeriodIndex ?: throw UIException("Period not selected")
-            val period = when (periodIndex) {
-                0 -> RepeatingDb.Period.EveryNDays(1)
-                1 -> RepeatingDb.Period.EveryNDays(state.value.selectedNDays)
-                2 -> RepeatingDb.Period.DaysOfWeek(state.value.selectedWeekDays)
-                3 -> RepeatingDb.Period.DaysOfMonth(state.value.selectedDaysOfMonth)
-                4 -> RepeatingDb.Period.DaysOfYear(state.value.selectedDaysOfYear)
-                else -> throw Exception()
-            }
+            val period = state.value.period ?: throw UIException("Period not selected")
 
             if (repeating != null) {
                 repeating.upWithValidation(
