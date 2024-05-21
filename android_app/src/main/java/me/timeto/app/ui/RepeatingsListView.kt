@@ -49,7 +49,7 @@ fun RepeatingsListView() {
                     .clip(squircleShape)
                     .background(c.blue)
                     .clickable {
-                        FS.show { layer ->
+                        Fs.show { layer ->
                             RepeatingFormSheet(
                                 layer = layer,
                                 editedRepeating = null
@@ -87,7 +87,7 @@ fun RepeatingsListView() {
                     }
                 },
                 onStart = {
-                    FS.show { layer ->
+                    Fs.show { layer ->
                         RepeatingFormSheet(
                             layer = layer,
                             editedRepeating = repeatingUI.repeating,

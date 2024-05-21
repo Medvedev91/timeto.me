@@ -28,7 +28,7 @@ import me.timeto.app.*
 private val enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessMedium))
 private val exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessMedium))
 
-object FS {
+object Fs {
 
     fun show(
         content: @Composable (WrapperView.Layer) -> Unit,
