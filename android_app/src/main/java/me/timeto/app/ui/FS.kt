@@ -52,6 +52,61 @@ object FS {
 }
 
 @Composable
+fun FS__Header(
+    scrollState: ScrollableState?,
+    content: @Composable () -> Unit,
+) {
+
+    val alphaValue = remember {
+        derivedStateOf {
+            val animRatio = 50f
+            when (scrollState) {
+                null -> 0f
+                is LazyListState -> {
+                    val offset = scrollState.firstVisibleItemScrollOffset
+                    when {
+                        scrollState.firstVisibleItemIndex > 0 -> 1f
+                        offset == 0 -> 0f
+                        offset > animRatio -> 1f
+                        else -> offset / animRatio
+                    }
+                }
+                is ScrollState -> {
+                    val offset = scrollState.value
+                    when {
+                        offset == 0 -> 0f
+                        offset > animRatio -> 1f
+                        else -> offset / animRatio
+                    }
+                }
+                else -> throw Exception("todo FS.kt")
+            }
+        }
+    }
+
+    val alphaAnimate = animateFloatAsState(alphaValue.value)
+
+    ZStack(
+        modifier = Modifier
+            .padding(top = statusBarHeight),
+    ) {
+
+        content()
+
+        ZStack(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .height(onePx)
+                .padding(horizontal = H_PADDING)
+                .fillMaxWidth()
+                .drawBehind {
+                    drawRect(color = c.dividerBg.copy(alpha = alphaAnimate.value))
+                },
+        )
+    }
+}
+
+@Composable
 fun FS__HeaderAction(
     title: String,
     actionText: String,
@@ -112,60 +167,5 @@ fun FS__HeaderAction(
                 )
             }
         }
-    }
-}
-
-@Composable
-fun FS__Header(
-    scrollState: ScrollableState?,
-    content: @Composable () -> Unit,
-) {
-
-    val alphaValue = remember {
-        derivedStateOf {
-            val animRatio = 50f
-            when (scrollState) {
-                null -> 0f
-                is LazyListState -> {
-                    val offset = scrollState.firstVisibleItemScrollOffset
-                    when {
-                        scrollState.firstVisibleItemIndex > 0 -> 1f
-                        offset == 0 -> 0f
-                        offset > animRatio -> 1f
-                        else -> offset / animRatio
-                    }
-                }
-                is ScrollState -> {
-                    val offset = scrollState.value
-                    when {
-                        offset == 0 -> 0f
-                        offset > animRatio -> 1f
-                        else -> offset / animRatio
-                    }
-                }
-                else -> throw Exception("todo FS.kt")
-            }
-        }
-    }
-
-    val alphaAnimate = animateFloatAsState(alphaValue.value)
-
-    ZStack(
-        modifier = Modifier
-            .padding(top = statusBarHeight),
-    ) {
-
-        content()
-
-        ZStack(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .height(onePx)
-                .padding(horizontal = H_PADDING)
-                .fillMaxWidth()
-                .drawBehind {
-                    drawRect(color = c.dividerBg.copy(alpha = alphaAnimate.value))
-                },
-        )
     }
 }
