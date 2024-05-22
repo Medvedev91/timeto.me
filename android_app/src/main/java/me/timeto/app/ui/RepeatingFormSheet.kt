@@ -64,7 +64,7 @@ fun RepeatingFormSheet(
 
             MyListView__ItemView(
                 isFirst = true,
-                isLast = true,
+                isLast = false,
             ) {
                 MyListView__ItemView__ButtonView(
                     text = state.periodTitle,
@@ -91,31 +91,11 @@ fun RepeatingFormSheet(
                 }
             }
 
-            MyListView__Padding__SectionSection()
-
-            TextFeaturesTriggersFormView(
-                textFeatures = state.textFeatures,
-                bgColor = c.fg,
-                dividerColor = c.dividerFg,
-            ) {
-                vm.upTextFeatures(it)
-            }
-
-            MyListView__Padding__SectionSection()
-
-            TextFeaturesTimerFormView(
-                textFeatures = state.textFeatures,
-                bgColor = c.fg,
-                dividerColor = c.dividerFg,
-            ) {
-                vm.upTextFeatures(it)
-            }
-
-            MyListView__Padding__SectionSection()
-
             MyListView__ItemView(
-                isFirst = true,
-                isLast = false,
+                isFirst = false,
+                isLast = true,
+                withTopDivider = true,
+                dividerColor = c.dividerFg,
             ) {
                 MyListView__ItemView__ButtonView(
                     text = state.daytimeHeader,
@@ -146,11 +126,31 @@ fun RepeatingFormSheet(
                 }
             }
 
-            MyListView__ItemView(
-                isFirst = false,
-                isLast = true,
-                withTopDivider = true,
+            MyListView__Padding__SectionSection()
+
+            TextFeaturesTimerFormView(
+                textFeatures = state.textFeatures,
+                bgColor = c.fg,
                 dividerColor = c.dividerFg,
+            ) {
+                vm.upTextFeatures(it)
+            }
+
+            MyListView__Padding__SectionSection()
+
+            TextFeaturesTriggersFormView(
+                textFeatures = state.textFeatures,
+                bgColor = c.fg,
+                dividerColor = c.dividerFg,
+            ) {
+                vm.upTextFeatures(it)
+            }
+
+            MyListView__Padding__SectionSection()
+
+            MyListView__ItemView(
+                isFirst = true,
+                isLast = true,
             ) {
                 MyListView__ItemView__SwitchView(
                     text = state.isImportantHeader,
