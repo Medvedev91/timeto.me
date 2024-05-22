@@ -50,8 +50,10 @@ fun RepeatingFormPeriodFs(
                 layer.close()
             },
             onDone = {
-                onPick(vm.buildSelectedPeriod())
-                layer.close()
+                vm.buildSelectedPeriod { period ->
+                    onPick(period)
+                    layer.close()
+                }
             },
         )
 

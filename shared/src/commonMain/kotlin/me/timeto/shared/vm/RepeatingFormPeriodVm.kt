@@ -1,7 +1,9 @@
 package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
+import me.timeto.shared.UIException
 import me.timeto.shared.db.RepeatingDb
+import me.timeto.shared.showUiAlert
 
 class RepeatingFormPeriodVm(
     defaultPeriod: RepeatingDb.Period?,
@@ -67,15 +69,23 @@ class RepeatingFormPeriodVm(
         )
     }
 
-    fun buildSelectedPeriod(): RepeatingDb.Period? {
-        val periodIndex = state.value.activePeriodIndex ?: return null
-        return when (periodIndex) {
-            0 -> RepeatingDb.Period.EveryNDays(1)
-            1 -> RepeatingDb.Period.EveryNDays(state.value.selectedNDays)
-            2 -> RepeatingDb.Period.DaysOfWeek(state.value.selectedWeekDays)
-            3 -> RepeatingDb.Period.DaysOfMonth(state.value.selectedDaysOfMonth)
-            4 -> RepeatingDb.Period.DaysOfYear(state.value.selectedDaysOfYear)
-            else -> throw Exception()
+    fun buildSelectedPeriod(
+        onSuccess: (RepeatingDb.Period?) -> Unit,
+    ) {
+        try {
+            val periodIndex = state.value.activePeriodIndex
+            val period: RepeatingDb.Period? = when (periodIndex) {
+                0 -> RepeatingDb.Period.EveryNDays(1)
+                1 -> RepeatingDb.Period.EveryNDays(state.value.selectedNDays)
+                2 -> RepeatingDb.Period.DaysOfWeek(state.value.selectedWeekDays)
+                3 -> RepeatingDb.Period.DaysOfMonth(state.value.selectedDaysOfMonth)
+                4 -> RepeatingDb.Period.DaysOfYear(state.value.selectedDaysOfYear)
+                null -> null
+                else -> throw Exception()
+            }
+            onSuccess(period)
+        } catch (e: UIException) {
+            showUiAlert(e.uiMessage)
         }
     }
 
