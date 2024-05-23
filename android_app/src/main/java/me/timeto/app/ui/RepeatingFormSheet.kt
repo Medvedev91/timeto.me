@@ -80,6 +80,7 @@ fun RepeatingFormSheet(
                         MyListView__ItemView__ButtonView__RightText(
                             text = state.periodNote,
                             paddingEnd = 2.dp,
+                            color = state.periodNoteColor?.toColor(),
                         )
                     }
                 ) {
