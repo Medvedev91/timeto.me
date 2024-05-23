@@ -22,7 +22,7 @@ fun RepeatingFormSheet(
         RepeatingFormSheetVM(editedRepeating)
     }
 
-    Column(
+    VStack(
         modifier = Modifier
             .fillMaxHeight()
             .background(c.bg)
@@ -41,7 +41,7 @@ fun RepeatingFormSheet(
             }
         }
 
-        Column(
+        VStack(
             modifier = Modifier
                 .verticalScroll(state = scrollState)
                 .padding(bottom = 20.dp)
