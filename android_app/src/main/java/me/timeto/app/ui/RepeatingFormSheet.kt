@@ -2,9 +2,12 @@ package me.timeto.app.ui
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.vm.RepeatingFormSheetVM
@@ -135,6 +138,22 @@ fun RepeatingFormSheet(
             ) {
                 vm.upTextFeatures(it)
             }
+
+            Text(
+                text = state.moreSettingText,
+                modifier = Modifier
+                    .padding(horizontal = H_PADDING_HALF)
+                    .padding(top = 19.dp)
+                    .clip(squircleShape)
+                    .clickable {
+                    }
+                    .padding(
+                        horizontal = H_PADDING_HALF,
+                        vertical = 4.dp,
+                    ),
+                color = c.blue,
+                fontSize = 14.sp,
+            )
 
             MyListView__Padding__SectionSection()
 
