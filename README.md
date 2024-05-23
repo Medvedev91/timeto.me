@@ -31,9 +31,6 @@ I built this app to manage my productivity. Here I will show how I use it.
 
 **This guide is not just a list of features, but my real day-to-day experience.**
 
-I will start with the most important things: timer, repeating tasks and checklists, that is 90% I use. Then tasks,
-calendar, goals, shortcuts, etc.
-
 Enjoy!
 
 # Timer
