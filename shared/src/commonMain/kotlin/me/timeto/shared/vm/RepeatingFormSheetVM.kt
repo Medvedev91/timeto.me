@@ -26,7 +26,7 @@ class RepeatingFormSheetVM(
         val periodFsDoneText = "Done"
 
         val daytimeHeader = "Time of the Day"
-        val daytimeNote: String = daytimeModel?.text ?: "None"
+        val daytimeNote: String = daytimeModel?.text?.let { "at $it" } ?: "None"
 
         val defDaytimeModel: DaytimeModel = daytimeModel ?: DaytimeModel(hour = 12, minute = 0)
 
