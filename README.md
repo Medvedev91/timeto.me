@@ -25,6 +25,8 @@ Any questions [hi@timeto.me](mailto:hi@timeto.me?subject=[GitHub]%20Feedback)
 
 Hi,
 
+Developer is here.
+
 I built this app to manage my productivity. Here I will show how I use it.
 
 **This guide is not just a list of features, but my real day-to-day experience.**
@@ -189,7 +191,7 @@ We learned the timer, repeating tasks, and checklists. The most important points
 **You can already use the app!**
 
 Right now, try playing with the app: start a new activity, create repeating tasks, checklists. You can rely on my
-examples. 
+examples.
 
 Then move on to advanced features.
 
