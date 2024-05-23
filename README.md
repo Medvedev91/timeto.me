@@ -63,7 +63,7 @@ The app has some activities by default, but you can add your own. Here are mine:
 
 ### Practice
 
-Try to start a new activity. Back to the home screen, tap the timer at the bottom left, "Work", and start the timer.
+Let's start a new activity.
 
 <p float="left">
   <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_timer_practice_1.jpg" width="150" />
