@@ -1,5 +1,8 @@
 package me.timeto.app.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
@@ -139,44 +142,62 @@ fun RepeatingFormSheet(
                 vm.upTextFeatures(it)
             }
 
-            Text(
-                text = state.moreSettingText,
-                modifier = Modifier
-                    .padding(horizontal = H_PADDING_HALF)
-                    .padding(top = 19.dp)
-                    .clip(squircleShape)
-                    .clickable {
-                    }
-                    .padding(
-                        horizontal = H_PADDING_HALF,
-                        vertical = 4.dp,
-                    ),
-                color = c.blue,
-                fontSize = 14.sp,
-            )
+            val isMoreSettingsVisible = remember { mutableStateOf(false) }
 
-            MyListView__Padding__SectionSection()
-
-            TextFeaturesTriggersFormView(
-                textFeatures = state.textFeatures,
-                bgColor = c.fg,
-                dividerColor = c.dividerFg,
+            AnimatedVisibility(
+                visible = !isMoreSettingsVisible.value,
             ) {
-                vm.upTextFeatures(it)
+
+                Text(
+                    text = state.moreSettingText,
+                    modifier = Modifier
+                        .padding(horizontal = H_PADDING_HALF)
+                        .padding(top = 19.dp)
+                        .clip(squircleShape)
+                        .clickable {
+                            isMoreSettingsVisible.value = !isMoreSettingsVisible.value
+                        }
+                        .padding(
+                            horizontal = H_PADDING_HALF,
+                            vertical = 4.dp,
+                        ),
+                    color = c.blue,
+                    fontSize = 14.sp,
+                )
             }
 
-            MyListView__Padding__SectionSection()
-
-            MyListView__ItemView(
-                isFirst = true,
-                isLast = true,
+            AnimatedVisibility(
+                visible = isMoreSettingsVisible.value,
+                enter = fadeIn(),
+                exit = fadeOut(),
             ) {
-                MyListView__ItemView__SwitchView(
-                    text = state.isImportantHeader,
-                    isActive = state.isImportant,
-                    bgColor = c.fg,
-                ) {
-                    vm.toggleIsImportant()
+
+                VStack {
+
+                    MyListView__Padding__SectionSection()
+
+                    TextFeaturesTriggersFormView(
+                        textFeatures = state.textFeatures,
+                        bgColor = c.fg,
+                        dividerColor = c.dividerFg,
+                    ) {
+                        vm.upTextFeatures(it)
+                    }
+
+                    MyListView__Padding__SectionSection()
+
+                    MyListView__ItemView(
+                        isFirst = true,
+                        isLast = true,
+                    ) {
+                        MyListView__ItemView__SwitchView(
+                            text = state.isImportantHeader,
+                            isActive = state.isImportant,
+                            bgColor = c.fg,
+                        ) {
+                            vm.toggleIsImportant()
+                        }
+                    }
                 }
             }
         }
