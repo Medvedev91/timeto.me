@@ -45,7 +45,7 @@ It helps to always stay focused on what I have to do. Most of the time my screen
   <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_timer_1.jpg" width="200" />
 </p>
 
-This way also provides real 24/7 data on how long everything takes:
+This way also provides 24/7 data on how long everything takes:
 
 <p float="left">
   <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_chart_1.jpg" width="200" />
