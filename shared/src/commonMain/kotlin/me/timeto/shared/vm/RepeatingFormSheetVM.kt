@@ -19,6 +19,8 @@ class RepeatingFormSheetVM(
         val isImportant: Boolean,
     ) {
 
+        val moreSettingText = "More settings"
+
         val periodTitle = "Period"
         val periodNote: String = period?.title ?: "Not Selected"
         val periodFsDoneText = "Done"
