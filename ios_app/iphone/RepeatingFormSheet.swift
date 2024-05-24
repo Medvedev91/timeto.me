@@ -126,15 +126,6 @@ struct RepeatingsFormSheet: View {
                         }
                     }
 
-                    VStack {
-
-                        MyListView__Padding__SectionHeader()
-
-                        MyListView__HeaderView(title: "REPETITION PERIOD")
-
-                        MyListView__Padding__HeaderSection()
-                    }
-
                     Spacer()
                         .frame(minHeight: 20)
                 }
