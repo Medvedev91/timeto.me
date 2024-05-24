@@ -37,11 +37,24 @@ Enjoy!
 
 You must set a timer for each activity, like eating, working, reading, etc.
 
-Timer is running all the time!
+**Timer is running all the time, even for sleep or breakfast. There is no stop option! To stop the current activity, you
+have to start the next one.**
 
+In other words, once you complete one activity, you must start the timer for the next one.
+
+<!--
+
+**Timer is running all the time, even for sleep or breakfast.**
+
+There is NO stop option! To stop the current task, you have to start the next one.
+
+In other words, once you complete one task, you must start the timer for the next one.
+-->
+<!--
 **There is NO stop option! To finish the current activity, you have to start the next one.**
 
 In other words, once you complete one activity, you must start the timer for the next one, even sleep or breakfast.
+-->
 
 It helps to always stay focused on what I have to do. Most of the time my screen looks like a typical pomodoro timer:
 
