@@ -25,6 +25,19 @@ struct RepeatingFormPeriodFs: View {
 
         VMView(vm: vm, stack: .VStack()) { state in
 
+            SheetHeaderView(
+                onCancel: { isPresented.toggle() },
+                title: state.title,
+                doneText: state.doneText,
+                isDoneEnabled: true,
+                scrollToHeader: 0
+            ) {
+                vm.buildSelectedPeriod { period in
+                    onPick(period)
+                    isPresented = false
+                }
+            }
+
             ForEach(0..<state.periods.count, id: \.self) { periodIndex in
 
                 let isFirst = periodIndex == 0
