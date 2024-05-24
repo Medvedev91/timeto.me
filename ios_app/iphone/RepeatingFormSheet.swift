@@ -8,6 +8,7 @@ struct RepeatingsFormSheet: View {
     private let onSave: () -> ()
 
     @State private var isDaytimeSheetPresented = false
+    @State private var isPeriodFsPresented = false
 
     @State private var sheetHeaderScroll = 0
 
@@ -58,6 +59,36 @@ struct RepeatingsFormSheet: View {
                             }
                         }
                         .padding(.top, 10)
+
+                        MyListView__Padding__SectionSection()
+
+                        MyListView__ItemView(
+                            isFirst: true,
+                            isLast: false
+                        ) {
+
+                            MyListView__ItemView__ButtonView(
+                                text: state.periodTitle,
+                                withArrow: true,
+                                rightView: AnyView(
+                                    MyListView__ItemView__ButtonView__RightText(
+                                        text: state.periodNote,
+                                        paddingEnd: 2,
+                                        textColor: state.periodNoteColor?.toColor()
+                                    )
+                                )
+                            ) {
+                                isPeriodFsPresented = true
+                            }
+                            .sheetEnv(isPresented: $isPeriodFsPresented) {
+                                RepeatingFormPeriodFs(
+                                    isPresented: $isPeriodFsPresented,
+                                    defaultPeriod: state.period
+                                ) { period in
+                                    vm.setPeriod(period: period)
+                                }
+                            }
+                        }
 
                         MyListView__Padding__SectionSection()
 

@@ -4,15 +4,21 @@ import shared
 struct RepeatingFormPeriodFs: View {
 
     @State private var vm: RepeatingFormPeriodVm
+    @Binding private var isPresented: Bool
+    private let onPick: (RepeatingDbPeriod?) -> Void
 
     // Needed for SwiftUI picker, up via onChange(). Set in onAppear().
     @State private var pickerNDaysTemp = 2
     @State private var isAddDayOfYearSheetPresented = false
 
     init(
-        defaultPeriod: RepeatingDbPeriod?
+        isPresented: Binding<Bool>,
+        defaultPeriod: RepeatingDbPeriod?,
+        onPick: @escaping (RepeatingDbPeriod?) -> Void
     ) {
         _vm = State(initialValue: RepeatingFormPeriodVm(defaultPeriod: defaultPeriod))
+        _isPresented = isPresented
+        self.onPick = onPick
     }
 
     var body: some View {
@@ -157,6 +163,8 @@ struct RepeatingFormPeriodFs: View {
                     }
                 }
             }
+
+            Spacer()
         }
     }
 }
