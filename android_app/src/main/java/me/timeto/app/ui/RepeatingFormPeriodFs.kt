@@ -26,8 +26,6 @@ import me.timeto.shared.vm.RepeatingFormPeriodVm
 @Composable
 fun RepeatingFormPeriodFs(
     layer: WrapperView.Layer,
-    title: String,
-    dontText: String,
     defaultPeriod: RepeatingDb.Period?,
     onPick: (RepeatingDb.Period?) -> Unit,
 ) {
@@ -43,8 +41,8 @@ fun RepeatingFormPeriodFs(
     ) {
 
         Fs__HeaderAction(
-            title = title,
-            actionText = dontText,
+            title = state.title,
+            actionText = state.doneText,
             scrollState = null,
             onCancel = {
                 layer.close()

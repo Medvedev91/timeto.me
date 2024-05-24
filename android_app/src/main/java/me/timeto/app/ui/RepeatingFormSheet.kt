@@ -87,8 +87,6 @@ fun RepeatingFormSheet(
                     Fs.show { layer ->
                         RepeatingFormPeriodFs(
                             layer = layer,
-                            title = state.periodTitle,
-                            dontText = state.periodFsDoneText,
                             defaultPeriod = state.period,
                             onPick = { period ->
                                 vm.setPeriod(period)

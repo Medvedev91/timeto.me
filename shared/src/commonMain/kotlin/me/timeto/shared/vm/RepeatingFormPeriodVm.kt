@@ -17,6 +17,9 @@ class RepeatingFormPeriodVm(
         val selectedDaysOfYear: List<RepeatingDb.Period.DaysOfYear.MonthDayItem>,
     ) {
 
+        val title = "Period"
+        val doneText = "Done"
+
         // TRICK The order is hardcoded in the UI
         val periods = listOf(
             "Every Day",
