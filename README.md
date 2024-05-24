@@ -37,8 +37,9 @@ Enjoy!
 
 You must set a timer for each activity, like eating, working, reading, etc.
 
-**Timer is running all the time, even for sleep or breakfast. There is no stop option! To stop the current activity, you
-have to start the next one.**
+**Timer is running all the time, even for sleep or breakfast.**
+
+There is no stop option! To stop the current activity, you have to start the next one.
 
 In other words, once you complete one activity, you must start the timer for the next one.
 
