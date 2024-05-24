@@ -33,59 +33,59 @@ struct RepeatingsListView: View {
                                         RepeatingsView__ItemView(repeatingUI: repeatingUI)
                                         if !isFirst {
                                             DividerBg()
-                                                    .padding(.leading, H_PADDING)
+                                                .padding(.leading, H_PADDING)
                                         }
                                     }
                                 }
                             }
-                                    .padding(.bottom, 20)
+                            .padding(.bottom, 20)
 
                             Button(
-                                    action: {
-                                        withAnimation {
-                                            isAddRepeatingPresented = true
-                                        }
-                                    },
-                                    label: {
-                                        Text("New Repeating Task")
-                                                .font(.system(size: 15, weight: .bold))
-                                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                                .foregroundColor(.white)
-                                                .background(squircleShape.fill(.blue))
+                                action: {
+                                    withAnimation {
+                                        isAddRepeatingPresented = true
                                     }
+                                },
+                                label: {
+                                    Text("New Repeating Task")
+                                        .font(.system(size: 15, weight: .bold))
+                                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                        .foregroundColor(.white)
+                                        .background(squircleShape.fill(.blue))
+                                }
                             )
-                                    .frame(height: minListRowHeight)
-                                    .sheetEnv(
-                                            isPresented: $isAddRepeatingPresented
-                                    ) {
-                                        RepeatingsFormSheet(
-                                                isPresented: $isAddRepeatingPresented,
-                                                editedRepeating: nil
-                                        ) {
-                                            scrollDown(scrollProxy: scrollProxy, toAnimate: false)
-                                        }
-                                    }
-                                    .padding(.bottom, 20)
-                                    .padding(.leading, H_PADDING - 2.0)
+                            .frame(height: minListRowHeight)
+                            .sheetEnv(
+                                isPresented: $isAddRepeatingPresented
+                            ) {
+                                RepeatingsFormSheet(
+                                    isPresented: $isAddRepeatingPresented,
+                                    editedRepeating: nil
+                                ) {
+                                    scrollDown(scrollProxy: scrollProxy, toAnimate: false)
+                                }
+                            }
+                            .padding(.bottom, 20)
+                            .padding(.leading, H_PADDING - 2.0)
 
                             HStack {
                             }
-                                    .id(LIST_BOTTOM_ITEM_ID)
+                            .id(LIST_BOTTOM_ITEM_ID)
                         }
-                                .frame(minHeight: geometry.size.height)
+                        .frame(minHeight: geometry.size.height)
                     }
-                            .onAppear {
-                                scrollDown(scrollProxy: scrollProxy, toAnimate: false)
-                            }
+                    .onAppear {
+                        scrollDown(scrollProxy: scrollProxy, toAnimate: false)
+                    }
                 }
             }
-                    .padding(.trailing, H_PADDING)
+            .padding(.trailing, H_PADDING)
         }
     }
 
     private func scrollDown(
-            scrollProxy: ScrollViewProxy,
-            toAnimate: Bool
+        scrollProxy: ScrollViewProxy,
+        toAnimate: Bool
     ) {
         if (toAnimate) {
             withAnimation {
@@ -112,25 +112,25 @@ struct RepeatingsView__ItemView: View {
 
     var body: some View {
         MyListSwipeToActionItem(
-                deletionHint: repeatingUI.listText,
-                deletionConfirmationNote: repeatingUI.deletionNote,
-                onEdit: {
-                    isEditSheetPresented = true
-                },
-                onDelete: {
-                    withAnimation {
-                        // WARNING WTF! // todo is it actual after migration to KMM?
-                        // Without async the getPeriod() calls with NPE on typeId
-                        myAsyncAfter(0.1) {
-                            repeatingUI.delete()
-                        }
+            deletionHint: repeatingUI.listText,
+            deletionConfirmationNote: repeatingUI.deletionNote,
+            onEdit: {
+                isEditSheetPresented = true
+            },
+            onDelete: {
+                withAnimation {
+                    // WARNING WTF! // todo is it actual after migration to KMM?
+                    // Without async the getPeriod() calls with NPE on typeId
+                    myAsyncAfter(0.1) {
+                        repeatingUI.delete()
                     }
                 }
+            }
         ) {
             AnyView(safeView)
-                    .padding(.leading, H_PADDING)
-                    // todo remove after removing MyListSwipeToActionItem()
-                    .background(c.bg)
+                .padding(.leading, H_PADDING)
+                // todo remove after removing MyListSwipeToActionItem()
+                .background(c.bg)
         }
     }
 
@@ -140,22 +140,22 @@ struct RepeatingsView__ItemView: View {
 
             HStack {
                 Text(repeatingUI.dayLeftString)
-                        .font(.system(size: 14, weight: .light))
-                        .foregroundColor(.secondary)
+                    .font(.system(size: 14, weight: .light))
+                    .foregroundColor(.secondary)
 
                 Spacer()
 
                 Text(repeatingUI.dayRightString)
-                        .font(.system(size: 14, weight: .light))
-                        .foregroundColor(.secondary)
+                    .font(.system(size: 14, weight: .light))
+                    .foregroundColor(.secondary)
             }
 
             HStack {
 
                 Text(repeatingUI.listText)
-                        .lineSpacing(4)
-                        .multilineTextAlignment(.leading)
-                        .myMultilineText()
+                    .lineSpacing(4)
+                    .multilineTextAlignment(.leading)
+                    .myMultilineText()
 
                 Spacer()
 
@@ -163,26 +163,26 @@ struct RepeatingsView__ItemView: View {
 
                 if (repeatingUI.isImportant) {
                     Image(systemName: "flag.fill")
-                            .font(.system(size: 18))
-                            .foregroundColor(c.red)
-                            .padding(.leading, 8)
+                        .font(.system(size: 18))
+                        .foregroundColor(c.red)
+                        .padding(.leading, 8)
                 }
             }
-                    .padding(.top, 4)
+            .padding(.top, 4)
         }
-                .padding(.top, 10)
-                .padding(.bottom, 10)
-                .foregroundColor(.primary)
-                .sheetEnv(
-                        isPresented: $isEditSheetPresented,
-                        content: {
-                            RepeatingsFormSheet(
-                                    isPresented: $isEditSheetPresented,
-                                    editedRepeating: repeatingUI.repeating
-                            ) {
-                            }
-                        }
-                )
-                .id("\(repeatingUI.repeating.id) \(repeatingUI.repeating.text)") /// #TruncationDynamic
+        .padding(.top, 10)
+        .padding(.bottom, 10)
+        .foregroundColor(.primary)
+        .sheetEnv(
+            isPresented: $isEditSheetPresented,
+            content: {
+                RepeatingsFormSheet(
+                    isPresented: $isEditSheetPresented,
+                    editedRepeating: repeatingUI.repeating
+                ) {
+                }
+            }
+        )
+        .id("\(repeatingUI.repeating.id) \(repeatingUI.repeating.text)") /// #TruncationDynamic
     }
 }
