@@ -15,7 +15,9 @@ class MyListView {
 struct MyListView__Padding__SectionSection: View {
 
     var body: some View {
-        ZStack {}.frame(height: 34)
+        ZStack {
+        }
+        .frame(height: 34)
     }
 }
 
@@ -24,14 +26,18 @@ struct MyListView__Padding__SectionHeader: View {
     var extraHeight = 0.0
 
     var body: some View {
-        ZStack {}.frame(height: 30.0 + extraHeight)
+        ZStack {
+        }
+        .frame(height: 30.0 + extraHeight)
     }
 }
 
 struct MyListView__Padding__HeaderSection: View {
 
     var body: some View {
-        ZStack {}.frame(height: 6)
+        ZStack {
+        }
+        .frame(height: 6)
     }
 }
 
@@ -48,9 +54,9 @@ struct MyListView__HeaderView: View {
         HStack {
 
             Text(title)
-                    .foregroundColor(.primary.opacity(0.55))
-                    .fontWeight(.regular)
-                    .font(.system(size: 13.5))
+                .foregroundColor(.primary.opacity(0.55))
+                .fontWeight(.regular)
+                .font(.system(size: 13.5))
 
             Spacer()
 
@@ -58,7 +64,7 @@ struct MyListView__HeaderView: View {
                 rightView
             }
         }
-                .padding(.horizontal, MyListView.PADDING_OUTER_HORIZONTAL + MyListView.PADDING_INNER_HORIZONTAL)
+        .padding(.horizontal, MyListView.PADDING_OUTER_HORIZONTAL + MyListView.PADDING_INNER_HORIZONTAL)
     }
 }
 
@@ -83,17 +89,17 @@ struct MyListView__ItemView<Content: View>: View {
         ZStack(alignment: .top) {
 
             content()
-                    .frame(maxWidth: .infinity)
+                .frame(maxWidth: .infinity)
 
             if withTopDivider {
                 SheetDividerFg()
-                        .padding(.leading, dividerPaddingStart)
+                    .padding(.leading, dividerPaddingStart)
             }
         }
-                .background(c.sheetFg)
-                .cornerRadius(10, onTop: isFirst, onBottom: isLast)
-                .padding(.leading, outerPaddingStart)
-                .padding(.trailing, outerPaddingEnd)
+        .background(c.sheetFg)
+        .cornerRadius(10, onTop: isFirst, onBottom: isLast)
+        .padding(.leading, outerPaddingStart)
+        .padding(.trailing, outerPaddingEnd)
     }
 }
 
@@ -109,14 +115,14 @@ struct MyListView__ItemView__TextInputView: View {
     var body: some View {
 
         TextField__VMState(
-                text: text,
-                placeholder: placeholder,
-                isFocused: $isFocused,
-                onValueChanged: onValueChanged
+            text: text,
+            placeholder: placeholder,
+            isFocused: $isFocused,
+            onValueChanged: onValueChanged
         )
-                .onAppear {
-                    isFocused = isAutofocus
-                }
+            .onAppear {
+                isFocused = isAutofocus
+            }
     }
 }
 
@@ -129,12 +135,12 @@ struct MyListView__ItemView__RadioView: View {
     var body: some View {
 
         MyListView__ItemView__ButtonView(
-                text: text,
-                rightView: AnyView(
-                        Image(systemName: isActive ? "circle.inset.filled" : "circle")
-                                .foregroundColor(isActive ? .blue : .primary)
-                                .padding(.trailing, MyListView.PADDING_INNER_HORIZONTAL - 2)
-                )
+            text: text,
+            rightView: AnyView(
+                Image(systemName: isActive ? "circle.inset.filled" : "circle")
+                    .foregroundColor(isActive ? .blue : .primary)
+                    .padding(.trailing, MyListView.PADDING_INNER_HORIZONTAL - 2)
+            )
         ) {
             onClick()
         }
@@ -150,9 +156,9 @@ struct MyListView__ItemView__SwitchView: View {
     private let onClick: () -> Void
 
     init(
-            text: String,
-            isActive: Bool,
-            onClick: @escaping () -> Void
+        text: String,
+        isActive: Bool,
+        onClick: @escaping () -> Void
     ) {
         self.text = text
         self.onClick = onClick
@@ -164,15 +170,15 @@ struct MyListView__ItemView__SwitchView: View {
     var body: some View {
 
         MyListView__ItemView__ButtonView(
-                text: text,
-                rightView: AnyView(
-                        Toggle("", isOn: $isActive)
-                                .padding(.trailing, 10)
-                                .labelsHidden()
-                                .onChange(of: isActiveState) { newValue in
-                                    isActive = newValue
-                                }
-                )
+            text: text,
+            rightView: AnyView(
+                Toggle("", isOn: $isActive)
+                    .padding(.trailing, 10)
+                    .labelsHidden()
+                    .onChange(of: isActiveState) { newValue in
+                        isActive = newValue
+                    }
+            )
         ) {
             onClick()
         }
@@ -188,12 +194,12 @@ struct MyListView__ItemView__CheckboxView: View {
     var body: some View {
 
         MyListView__ItemView__ButtonView(
-                text: text,
-                rightView: AnyView(
-                        Image(systemName: "checkmark")
-                                .foregroundColor(isChecked ? .blue : .clear)
-                                .padding(.trailing, MyListView.PADDING_INNER_HORIZONTAL)
-                )
+            text: text,
+            rightView: AnyView(
+                Image(systemName: "checkmark")
+                    .foregroundColor(isChecked ? .blue : .clear)
+                    .padding(.trailing, MyListView.PADDING_INNER_HORIZONTAL)
+            )
         ) {
             onClick()
         }
@@ -214,35 +220,35 @@ struct MyListView__ItemView__ButtonView: View {
     var body: some View {
 
         Button(
-                action: {
-                    onClick()
-                },
-                label: {
+            action: {
+                onClick()
+            },
+            label: {
 
-                    HStack {
+                HStack {
 
-                        Text(text)
-                                .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL)
-                                .lineLimit(maxLines)
+                    Text(text)
+                        .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL)
+                        .lineLimit(maxLines)
 
-                        Spacer()
+                    Spacer()
 
-                        if let rightView = rightView {
-                            rightView
-                        }
-
-                        if withArrow {
-                            Image(systemName: "chevron.right")
-                                    .foregroundColor(.secondary)
-                                    .font(.system(size: 16, weight: .medium))
-                                    .padding(.trailing, 12)
-                        }
+                    if let rightView = rightView {
+                        rightView
                     }
-                            .frame(maxWidth: .infinity)
-                            .frame(minHeight: MyListView.ITEM_MIN_HEIGHT)
+
+                    if withArrow {
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(.secondary)
+                            .font(.system(size: 16, weight: .medium))
+                            .padding(.trailing, 12)
+                    }
                 }
+                .frame(maxWidth: .infinity)
+                .frame(minHeight: MyListView.ITEM_MIN_HEIGHT)
+            }
         )
-                .foregroundColor(.primary)
+        .foregroundColor(.primary)
     }
 }
 
@@ -255,26 +261,26 @@ struct MyListView__ItemView__ActionView: View {
     var body: some View {
 
         Button(
-                action: {
-                    onClick()
-                },
-                label: {
+            action: {
+                onClick()
+            },
+            label: {
 
-                    HStack {
+                HStack {
 
-                        Spacer()
+                    Spacer()
 
-                        Text(text)
-                                .foregroundColor(textColor.toColor())
-                                .fontWeight(.medium)
+                    Text(text)
+                        .foregroundColor(textColor.toColor())
+                        .fontWeight(.medium)
 
-                        Spacer()
-                    }
-                            .frame(maxWidth: .infinity)
-                            .frame(minHeight: MyListView.ITEM_MIN_HEIGHT)
+                    Spacer()
                 }
+                .frame(maxWidth: .infinity)
+                .frame(minHeight: MyListView.ITEM_MIN_HEIGHT)
+            }
         )
-                .foregroundColor(.primary)
+        .foregroundColor(.primary)
     }
 }
 
@@ -286,9 +292,9 @@ struct MyListView__ItemView__ButtonView__RightText: View {
 
     var body: some View {
         Text(text)
-                .foregroundColor(textColor ?? c.formButtonRightNoteText)
-                .padding(.leading, 10)
-                .padding(.trailing, 10)
-                .lineLimit(1)
+            .foregroundColor(textColor ?? c.formButtonRightNoteText)
+            .padding(.leading, 10)
+            .padding(.trailing, 10)
+            .lineLimit(1)
     }
 }
