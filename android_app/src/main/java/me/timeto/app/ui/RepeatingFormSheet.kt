@@ -100,7 +100,6 @@ fun RepeatingFormSheet(
                 isFirst = false,
                 isLast = true,
                 withTopDivider = true,
-                dividerColor = c.dividerFg,
             ) {
                 MyListView__ItemView__ButtonView(
                     text = state.daytimeHeader,
@@ -136,7 +135,6 @@ fun RepeatingFormSheet(
             TextFeaturesTimerFormView(
                 textFeatures = state.textFeatures,
                 bgColor = c.fg,
-                dividerColor = c.dividerFg,
             ) {
                 vm.upTextFeatures(it)
             }
@@ -178,7 +176,6 @@ fun RepeatingFormSheet(
                     TextFeaturesTriggersFormView(
                         textFeatures = state.textFeatures,
                         bgColor = c.fg,
-                        dividerColor = c.dividerFg,
                     ) {
                         vm.upTextFeatures(it)
                     }

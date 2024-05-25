@@ -14,7 +14,6 @@ import me.timeto.shared.vm.ui.TextFeaturesTimerFormUI
 fun TextFeaturesTimerFormView(
     textFeatures: TextFeatures,
     bgColor: Color = c.sheetFg,
-    dividerColor: Color = c.sheetDividerFg,
     onChange: (TextFeatures) -> Unit,
 ) {
 
@@ -52,7 +51,6 @@ fun TextFeaturesTimerFormView(
             isFirst = false,
             isLast = true,
             withTopDivider = true,
-            dividerColor = dividerColor,
         ) {
             MyListView__ItemView__ButtonView(
                 text = formUI.timerTitle,

@@ -129,7 +129,6 @@ fun MyListView__ItemView(
     isLast: Boolean,
     modifier: Modifier = Modifier,
     withTopDivider: Boolean = false,
-    dividerColor: Color = c.sheetDividerFg,
     dividerPadding: PaddingValues = PaddingValues(start = MyListView.PADDING_INNER_HORIZONTAL),
     outerPadding: PaddingValues = PaddingValues(horizontal = MyListView.PADDING_OUTER_HORIZONTAL),
     bgColor: Color = c.sheetFg,
@@ -152,7 +151,7 @@ fun MyListView__ItemView(
         }
 
         if (withTopDivider)
-            Divider(dividerColor, Modifier.padding(dividerPadding), true)
+            Divider(c.dividerFg, Modifier.padding(dividerPadding), true)
     }
 }
 

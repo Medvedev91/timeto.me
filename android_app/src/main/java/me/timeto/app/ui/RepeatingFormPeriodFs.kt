@@ -64,7 +64,6 @@ fun RepeatingFormPeriodFs(
                 isFirst = isFirst,
                 isLast = periods.last() == periodTitle,
                 withTopDivider = !isFirst,
-                dividerColor = c.dividerFg,
                 bgColor = c.fg,
             ) {
                 val isActive = index == state.activePeriodIndex
