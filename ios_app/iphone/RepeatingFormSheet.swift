@@ -47,6 +47,8 @@ struct RepeatingsFormSheet: View {
 
                     VStack {
 
+                        MyListView__PaddingFirst()
+
                         MyListView__ItemView(
                             isFirst: true,
                             isLast: true
@@ -60,7 +62,6 @@ struct RepeatingsFormSheet: View {
                                 vm.setTextValue(text: newValue)
                             }
                         }
-                        .padding(.top, 10)
 
                         MyListView__Padding__SectionSection()
 
