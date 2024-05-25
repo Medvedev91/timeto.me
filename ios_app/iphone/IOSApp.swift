@@ -32,6 +32,7 @@ struct IOSApp: App {
                 if state.isAppReady {
 
                     HomeView()
+                            .attachFs()
                             .attachTimetoSheet()
                             .attachTimetoAlert()
                             .attachAutoBackupIos()
