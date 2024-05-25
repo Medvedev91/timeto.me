@@ -86,6 +86,8 @@ struct MyListView__ItemView<Content: View>: View {
     var isFirst: Bool
     var isLast: Bool
 
+    var bgColor: Color = c.sheetFg
+
     var withTopDivider: Bool = false
     var dividerPaddingStart = MyListView.PADDING_INNER_HORIZONTAL
 
@@ -106,7 +108,7 @@ struct MyListView__ItemView<Content: View>: View {
                     .padding(.leading, dividerPaddingStart)
             }
         }
-        .background(c.sheetFg)
+        .background(bgColor)
         .cornerRadius(10, onTop: isFirst, onBottom: isLast)
         .padding(.leading, outerPaddingStart)
         .padding(.trailing, outerPaddingEnd)
