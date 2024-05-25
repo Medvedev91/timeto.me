@@ -53,7 +53,7 @@ object MyListView {
 
 @Composable
 fun MyListView__PaddingFirst() {
-    Box(Modifier.height(16.dp))
+    Box(Modifier.height(20.dp))
 }
 
 @Composable
