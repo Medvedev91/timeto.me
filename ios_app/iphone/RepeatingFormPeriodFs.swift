@@ -25,18 +25,22 @@ struct RepeatingFormPeriodFs: View {
 
         VMView(vm: vm, stack: .VStack()) { state in
 
-            SheetHeaderView(
-                onCancel: { isPresented.toggle() },
+            Fs__HeaderAction(
                 title: state.title,
-                doneText: state.doneText,
-                isDoneEnabled: true,
-                scrollToHeader: 0
-            ) {
-                vm.buildSelectedPeriod { period in
-                    onPick(period)
+                actionText: state.doneText,
+                scrollToHeader: 0,
+                onCancel: {
                     isPresented = false
+                },
+                onDone: {
+                    vm.buildSelectedPeriod { period in
+                        onPick(period)
+                        isPresented = false
+                    }
                 }
-            }
+            )
+
+            MyListView__PaddingFirst()
 
             ForEach(0..<state.periods.count, id: \.self) { periodIndex in
 
@@ -179,6 +183,7 @@ struct RepeatingFormPeriodFs: View {
 
             Spacer()
         }
+        .background(c.bg)
     }
 }
 

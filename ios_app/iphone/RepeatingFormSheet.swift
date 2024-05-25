@@ -8,9 +8,10 @@ struct RepeatingsFormSheet: View {
     private let onSave: () -> ()
 
     @State private var isDaytimeSheetPresented = false
-    @State private var isPeriodFsPresented = false
 
     @State private var sheetHeaderScroll = 0
+
+    @EnvironmentObject private var fs: Fs
 
     init(
         isPresented: Binding<Bool>,
@@ -81,14 +82,13 @@ struct RepeatingsFormSheet: View {
                                     )
                                 )
                             ) {
-                                isPeriodFsPresented = true
-                            }
-                            .sheetEnv(isPresented: $isPeriodFsPresented) {
-                                RepeatingFormPeriodFs(
-                                    isPresented: $isPeriodFsPresented,
-                                    defaultPeriod: state.period
-                                ) { period in
-                                    vm.setPeriod(period: period)
+                                fs.show { isPeriodPresented in
+                                    RepeatingFormPeriodFs(
+                                        isPresented: isPeriodPresented,
+                                        defaultPeriod: state.period
+                                    ) { period in
+                                        vm.setPeriod(period: period)
+                                    }
                                 }
                             }
                         }
