@@ -151,7 +151,7 @@ fun MyListView__ItemView(
         }
 
         if (withTopDivider)
-            Divider(c.dividerFg, Modifier.padding(dividerPadding), true)
+            DividerFg(Modifier.padding(dividerPadding), true)
     }
 }
 
