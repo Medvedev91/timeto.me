@@ -5,8 +5,8 @@ class MyListView {
 
     static let ITEM_MIN_HEIGHT = 44.0
 
-    static let PADDING_OUTER_HORIZONTAL = 20.0
-    static let PADDING_INNER_HORIZONTAL = 16.0
+    static let PADDING_OUTER_HORIZONTAL = H_PADDING
+    static let PADDING_INNER_HORIZONTAL = H_PADDING
 }
 
 ///
