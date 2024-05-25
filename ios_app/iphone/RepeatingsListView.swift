@@ -6,8 +6,7 @@ struct RepeatingsListView: View {
     @State private var vm = RepeatingsListVM()
 
     @Environment(\.defaultMinListRowHeight) private var minListRowHeight
-
-    @State private var isAddRepeatingPresented = false
+    @EnvironmentObject private var fs: Fs
 
     private let LIST_BOTTOM_ITEM_ID = "bottom_id"
 
@@ -42,8 +41,13 @@ struct RepeatingsListView: View {
 
                             Button(
                                 action: {
-                                    withAnimation {
-                                        isAddRepeatingPresented = true
+                                    fs.show { isPresented in
+                                        RepeatingsFormSheet(
+                                            isPresented: isPresented,
+                                            editedRepeating: nil
+                                        ) {
+                                            scrollDown(scrollProxy: scrollProxy, toAnimate: false)
+                                        }
                                     }
                                 },
                                 label: {
@@ -55,16 +59,6 @@ struct RepeatingsListView: View {
                                 }
                             )
                             .frame(height: minListRowHeight)
-                            .sheetEnv(
-                                isPresented: $isAddRepeatingPresented
-                            ) {
-                                RepeatingsFormSheet(
-                                    isPresented: $isAddRepeatingPresented,
-                                    editedRepeating: nil
-                                ) {
-                                    scrollDown(scrollProxy: scrollProxy, toAnimate: false)
-                                }
-                            }
                             .padding(.bottom, 20)
                             .padding(.leading, H_PADDING - 2.0)
 
@@ -108,14 +102,20 @@ struct RepeatingsView__ItemView: View {
 
     let repeatingUI: RepeatingsListVM.RepeatingUI
 
-    @State private var isEditSheetPresented = false
+    @EnvironmentObject private var fs: Fs
 
     var body: some View {
         MyListSwipeToActionItem(
             deletionHint: repeatingUI.listText,
             deletionConfirmationNote: repeatingUI.deletionNote,
             onEdit: {
-                isEditSheetPresented = true
+                fs.show { isPresented in
+                    RepeatingsFormSheet(
+                        isPresented: isPresented,
+                        editedRepeating: repeatingUI.repeating
+                    ) {
+                    }
+                }
             },
             onDelete: {
                 withAnimation {
@@ -173,16 +173,6 @@ struct RepeatingsView__ItemView: View {
         .padding(.top, 10)
         .padding(.bottom, 10)
         .foregroundColor(.primary)
-        .sheetEnv(
-            isPresented: $isEditSheetPresented,
-            content: {
-                RepeatingsFormSheet(
-                    isPresented: $isEditSheetPresented,
-                    editedRepeating: repeatingUI.repeating
-                ) {
-                }
-            }
-        )
         .id("\(repeatingUI.repeating.id) \(repeatingUI.repeating.text)") /// #TruncationDynamic
     }
 }
