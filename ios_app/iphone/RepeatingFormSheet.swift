@@ -131,7 +131,7 @@ struct RepeatingsFormSheet: View {
 
                         MyListView__Padding__SectionSection()
 
-                        TextFeaturesTriggersFormView(
+                        TextFeaturesTimerFormView(
                             textFeatures: state.textFeatures
                         ) { textFeatures in
                             vm.upTextFeatures(textFeatures: textFeatures)
@@ -139,12 +139,11 @@ struct RepeatingsFormSheet: View {
 
                         MyListView__Padding__SectionSection()
 
-                        TextFeaturesTimerFormView(
+                        TextFeaturesTriggersFormView(
                             textFeatures: state.textFeatures
                         ) { textFeatures in
                             vm.upTextFeatures(textFeatures: textFeatures)
                         }
-
                         MyListView__Padding__SectionSection()
 
                         MyListView__ItemView(
