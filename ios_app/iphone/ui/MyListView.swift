@@ -102,7 +102,7 @@ struct MyListView__ItemView<Content: View>: View {
                 .frame(maxWidth: .infinity)
 
             if withTopDivider {
-                SheetDividerFg()
+                DividerFg()
                     .padding(.leading, dividerPaddingStart)
             }
         }
