@@ -26,18 +26,20 @@ struct RepeatingsFormSheet: View {
 
         VMView(vm: vm, stack: .VStack()) { state in
 
-            SheetHeaderView(
-                onCancel: { isPresented.toggle() },
+            Fs__HeaderAction(
                 title: state.headerTitle,
-                doneText: state.headerDoneText,
-                isDoneEnabled: true,
-                scrollToHeader: sheetHeaderScroll
-            ) {
-                vm.save {
-                    onSave()
-                    isPresented = false
+                actionText: state.headerDoneText,
+                scrollToHeader: sheetHeaderScroll,
+                onCancel: {
+                    isPresented.toggle()
+                },
+                onDone: {
+                    vm.save {
+                        onSave()
+                        isPresented = false
+                    }
                 }
-            }
+            )
 
             ScrollViewWithVListener(showsIndicators: false, vScroll: $sheetHeaderScroll) {
 
@@ -162,7 +164,7 @@ struct RepeatingsFormSheet: View {
                 }
             }
         }
-        .background(c.sheetBg)
+        .background(c.bg)
     }
 }
 
