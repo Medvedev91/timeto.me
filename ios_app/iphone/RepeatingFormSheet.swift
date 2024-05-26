@@ -8,8 +8,8 @@ struct RepeatingsFormSheet: View {
     private let onSave: () -> ()
 
     @State private var isDaytimeSheetPresented = false
-
     @State private var sheetHeaderScroll = 0
+    @State private var isMoreSettingsVisible = false
 
     @EnvironmentObject private var fs: Fs
 
@@ -141,26 +141,51 @@ struct RepeatingsFormSheet: View {
                             vm.upTextFeatures(textFeatures: textFeatures)
                         }
 
-                        MyListView__Padding__SectionSection()
+                        if !isMoreSettingsVisible {
 
-                        TextFeaturesTriggersFormView(
-                            textFeatures: state.textFeatures,
-                            bgColor: c.fg
-                        ) { textFeatures in
-                            vm.upTextFeatures(textFeatures: textFeatures)
+                            HStack {
+
+                                Button(
+                                    action: {
+                                        withAnimation {
+                                            isMoreSettingsVisible = true
+                                        }
+                                    },
+                                    label: {
+                                        Text(state.moreSettingText)
+                                            .font(.system(size: 15))
+                                    }
+                                )
+                                .padding(.top, 26)
+                                .padding(.leading, H_PADDING)
+
+                                Spacer()
+                            }
                         }
-                        MyListView__Padding__SectionSection()
 
-                        MyListView__ItemView(
-                            isFirst: true,
-                            isLast: true,
-                            bgColor: c.fg
-                        ) {
-                            MyListView__ItemView__SwitchView(
-                                text: state.isImportantHeader,
-                                isActive: state.isImportant
+                        if isMoreSettingsVisible {
+
+                            MyListView__Padding__SectionSection()
+
+                            TextFeaturesTriggersFormView(
+                                textFeatures: state.textFeatures,
+                                bgColor: c.fg
+                            ) { textFeatures in
+                                vm.upTextFeatures(textFeatures: textFeatures)
+                            }
+                            MyListView__Padding__SectionSection()
+
+                            MyListView__ItemView(
+                                isFirst: true,
+                                isLast: true,
+                                bgColor: c.fg
                             ) {
-                                vm.toggleIsImportant()
+                                MyListView__ItemView__SwitchView(
+                                    text: state.isImportantHeader,
+                                    isActive: state.isImportant
+                                ) {
+                                    vm.toggleIsImportant()
+                                }
                             }
                         }
                     }
