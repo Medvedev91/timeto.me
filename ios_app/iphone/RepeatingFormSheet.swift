@@ -153,7 +153,7 @@ struct RepeatingsFormSheet: View {
                                     },
                                     label: {
                                         Text(state.moreSettingText)
-                                            .font(.system(size: 15))
+                                            .font(.system(size: 16))
                                     }
                                 )
                                 .padding(.top, 26)
