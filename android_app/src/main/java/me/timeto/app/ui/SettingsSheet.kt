@@ -60,7 +60,7 @@ fun SettingsSheet(
         scope.launch {
             try {
                 val jsonBytes = Backup.create("manual").toByteArray()
-                val stream = context.contentResolver.openOutputStream(destinationUri!!) ?: throw Exception()
+                val stream = context.contentResolver.openOutputStream(destinationUri) ?: throw Exception()
                 stream.write(jsonBytes)
                 stream.close()
                 // todo
