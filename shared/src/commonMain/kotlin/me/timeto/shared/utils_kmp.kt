@@ -466,6 +466,8 @@ val uiChecklistFlow = MutableSharedFlow<ChecklistDb>()
 
 val keepScreenOnStateFlow = MutableStateFlow(false)
 
+val backupStateFlow = MutableStateFlow<String?>(null)
+
 ///
 /// KMP init/await
 
