@@ -12,10 +12,10 @@ struct IOSApp: App {
     @StateObject private var myInAppNotificationDelegate = MyInAppNotificationDelegate()
 
     private let scheduledNotificationsDataPublisher: AnyPublisher<NSArray, Never> =
-            Utils_kmpKt.scheduledNotificationsDataFlow.toPublisher()
+        Utils_kmpKt.scheduledNotificationsDataFlow.toPublisher()
 
     private let keepScreenOnDataPublisher: AnyPublisher<KotlinBoolean, Never> =
-            Utils_kmpKt.keepScreenOnStateFlow.toPublisher()
+        Utils_kmpKt.keepScreenOnStateFlow.toPublisher()
 
     private let batteryManager = BatteryManager() // Keep the object
 
@@ -32,45 +32,47 @@ struct IOSApp: App {
                 if state.isAppReady {
 
                     HomeView()
-                            .attachFs()
-                            .attachTimetoSheet()
-                            .attachTimetoAlert()
-                            .attachAutoBackupIos()
-                            .attachNativeSheet()
-                            .onReceive(scheduledNotificationsDataPublisher) {
-                                let center = UNUserNotificationCenter.current()
-                                center.removeAllPendingNotificationRequests()
-                                let dataItems = $0 as! [ScheduledNotificationData]
-                                dataItems.forEach { data in schedulePush(data: data) }
+                    .attachFs()
+                    .attachTimetoSheet()
+                    .attachTimetoAlert()
+                    .attachAutoBackupIos()
+                    .attachNativeSheet()
+                    .onReceive(scheduledNotificationsDataPublisher) {
+                        let center = UNUserNotificationCenter.current()
+                        center.removeAllPendingNotificationRequests()
+                        let dataItems = $0 as! [ScheduledNotificationData]
+                        dataItems.forEach { data in
+                            schedulePush(data: data)
+                        }
+                    }
+                    .onReceive(keepScreenOnDataPublisher) { keepScreenOn in
+                        UIApplication.shared.isIdleTimerDisabled = (keepScreenOn == true)
+                    }
+                    .onAppear {
+                        /// Use together
+                        UNUserNotificationCenter
+                            .current()
+                            .requestAuthorization(options: [.badge, .sound, .alert]) { isGranted, _ in
+                                if isGranted {
+                                    // Without delay the first event does not handled. 50mls enough.
+                                    vm.onNotificationsPermissionReady(delayMls: Int64(500))
+                                }
                             }
-                            .onReceive(keepScreenOnDataPublisher) { keepScreenOn in
-                                UIApplication.shared.isIdleTimerDisabled = (keepScreenOn == true)
-                            }
-                            .onAppear {
-                                /// Use together
-                                UNUserNotificationCenter
-                                        .current()
-                                        .requestAuthorization(options: [.badge, .sound, .alert]) { isGranted, _ in
-                                            if isGranted {
-                                                // Without delay the first event does not handled. 50mls enough.
-                                                vm.onNotificationsPermissionReady(delayMls: Int64(500))
-                                            }
-                                        }
-                                UNUserNotificationCenter.current().delegate = myInAppNotificationDelegate
-                                ///
-                            }
+                        UNUserNotificationCenter.current().delegate = myInAppNotificationDelegate
+                        ///
+                    }
                 }
             }
         }
-                .onChange(of: scenePhase) { phase in
-                    // Remove notifications and badges
-                    // https://stackoverflow.com/a/41487410
-                    // https://betterprogramming.pub/swiftui-tips-detecting-a-swiftui-apps-active-inactive-and-background-state-a5ff8acf5db1
-                    if phase == .active {
-                        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-                        UIApplication.shared.applicationIconBadgeNumber = 0
-                    }
-                }
+        .onChange(of: scenePhase) { phase in
+            // Remove notifications and badges
+            // https://stackoverflow.com/a/41487410
+            // https://betterprogramming.pub/swiftui-tips-detecting-a-swiftui-apps-active-inactive-and-background-state-a5ff8acf5db1
+            if phase == .active {
+                UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+                UIApplication.shared.applicationIconBadgeNumber = 0
+            }
+        }
     }
 }
 
@@ -81,16 +83,16 @@ private class BatteryManager {
         BatteryManager.upBatteryState()
         BatteryManager.upBatteryLevel()
         NotificationCenter.default.addObserver(
-                self,
-                selector: #selector(batteryStateDidChange(notification:)),
-                name: UIDevice.batteryStateDidChangeNotification,
-                object: nil
+            self,
+            selector: #selector(batteryStateDidChange(notification:)),
+            name: UIDevice.batteryStateDidChangeNotification,
+            object: nil
         )
         NotificationCenter.default.addObserver(
-                self,
-                selector: #selector(batteryLevelDidChange(notification:)),
-                name: UIDevice.batteryLevelDidChangeNotification,
-                object: nil
+            self,
+            selector: #selector(batteryLevelDidChange(notification:)),
+            name: UIDevice.batteryLevelDidChangeNotification,
+            object: nil
         )
     }
 
