@@ -6,13 +6,17 @@ struct TextFeaturesTriggersFormView: View {
     private let formUI: TextFeaturesTriggersFormUI
     private let onChange: (TextFeatures) -> Void
 
+    private let bgColor: Color
+
     @State private var isChecklistsPickerPresented = false
     @State private var isShortcutsPickerPresented = false
 
     init(
             textFeatures: TextFeatures,
+            bgColor: Color = c.sheetFg,
             onChange: @escaping (TextFeatures) -> Void
     ) {
+        self.bgColor = bgColor
         self.onChange = onChange
         formUI = TextFeaturesTriggersFormUI(textFeatures: textFeatures)
     }
@@ -23,7 +27,8 @@ struct TextFeaturesTriggersFormView: View {
 
             MyListView__ItemView(
                     isFirst: true,
-                    isLast: false
+                    isLast: false,
+                    bgColor: bgColor
             ) {
 
                 MyListView__ItemView__ButtonView(
@@ -51,6 +56,7 @@ struct TextFeaturesTriggersFormView: View {
             MyListView__ItemView(
                     isFirst: false,
                     isLast: true,
+                    bgColor: bgColor,
                     withTopDivider: true
             ) {
 
