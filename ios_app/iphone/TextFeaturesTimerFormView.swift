@@ -6,13 +6,17 @@ struct TextFeaturesTimerFormView: View {
     private let formUI: TextFeaturesTimerFormUI
     private let onChange: (TextFeatures) -> Void
 
+    private let bgColor: Color
+
     @State private var isActivitySheetPresented = false
     @State private var isTimerSheetPresented = false
 
     init(
             textFeatures: TextFeatures,
+            bgColor: Color = c.sheetFg,
             onChange: @escaping (TextFeatures) -> Void
     ) {
+        self.bgColor = bgColor
         self.onChange = onChange
         formUI = TextFeaturesTimerFormUI(textFeatures: textFeatures)
     }
@@ -23,7 +27,8 @@ struct TextFeaturesTimerFormView: View {
 
             MyListView__ItemView(
                     isFirst: true,
-                    isLast: false
+                    isLast: false,
+                    bgColor: bgColor
             ) {
 
                 MyListView__ItemView__ButtonView(
@@ -51,6 +56,7 @@ struct TextFeaturesTimerFormView: View {
             MyListView__ItemView(
                     isFirst: false,
                     isLast: true,
+                    bgColor: bgColor,
                     withTopDivider: true
             ) {
 
