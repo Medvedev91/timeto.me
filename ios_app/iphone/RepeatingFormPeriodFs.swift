@@ -49,6 +49,7 @@ struct RepeatingFormPeriodFs: View {
                 MyListView__ItemView(
                     isFirst: isFirst,
                     isLast: state.periods.count == periodIndex + 1,
+                    bgColor: c.fg,
                     withTopDivider: !isFirst
                 ) {
 
