@@ -44,7 +44,7 @@ class AppVM : __VM<AppVM.State>() {
                 .anyChangeFlow()
                 .skipFirst()
                 .onEachExIn(this) {
-                    // In case the pomodoro changed
+                    // In case the pomodoro changes
                     rescheduleNotifications()
                 }
 
