@@ -52,7 +52,8 @@ struct RepeatingsFormSheet: View {
 
                         MyListView__ItemView(
                             isFirst: true,
-                            isLast: true
+                            isLast: true,
+                            bgColor: c.fg
                         ) {
 
                             MyListView__ItemView__TextInputView(
@@ -68,7 +69,8 @@ struct RepeatingsFormSheet: View {
 
                         MyListView__ItemView(
                             isFirst: true,
-                            isLast: false
+                            isLast: false,
+                            bgColor: c.fg
                         ) {
 
                             MyListView__ItemView__ButtonView(
@@ -96,6 +98,7 @@ struct RepeatingsFormSheet: View {
                         MyListView__ItemView(
                             isFirst: false,
                             isLast: true,
+                            bgColor: c.fg,
                             withTopDivider: true
                         ) {
 
@@ -132,7 +135,8 @@ struct RepeatingsFormSheet: View {
                         MyListView__Padding__SectionSection()
 
                         TextFeaturesTimerFormView(
-                            textFeatures: state.textFeatures
+                            textFeatures: state.textFeatures,
+                            bgColor: c.fg
                         ) { textFeatures in
                             vm.upTextFeatures(textFeatures: textFeatures)
                         }
@@ -140,7 +144,8 @@ struct RepeatingsFormSheet: View {
                         MyListView__Padding__SectionSection()
 
                         TextFeaturesTriggersFormView(
-                            textFeatures: state.textFeatures
+                            textFeatures: state.textFeatures,
+                            bgColor: c.fg
                         ) { textFeatures in
                             vm.upTextFeatures(textFeatures: textFeatures)
                         }
@@ -148,7 +153,8 @@ struct RepeatingsFormSheet: View {
 
                         MyListView__ItemView(
                             isFirst: true,
-                            isLast: true
+                            isLast: true,
+                            bgColor: c.fg
                         ) {
                             MyListView__ItemView__SwitchView(
                                 text: state.isImportantHeader,
