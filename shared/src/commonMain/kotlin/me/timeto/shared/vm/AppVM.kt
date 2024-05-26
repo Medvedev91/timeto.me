@@ -42,7 +42,7 @@ class AppVM : __VM<AppVM.State>() {
 
             ActivityDb
                 .anyChangeFlow()
-                .ignoreFirst()
+                .skipFirst()
                 .onEachExIn(this) {
                     // In case the pomodoro changed
                     rescheduleNotifications()

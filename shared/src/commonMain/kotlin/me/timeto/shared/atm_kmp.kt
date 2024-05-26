@@ -11,7 +11,7 @@ fun zlog(message: Any?) = println(";; ${message.toString().replace("\n", "\n;; "
 
 fun defaultScope() = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
-fun <T> Flow<T>.ignoreFirst(): Flow<T> = flow {
+fun <T> Flow<T>.skipFirst(): Flow<T> = flow {
     var isFirst = true
     collect { value ->
         if (isFirst) {
