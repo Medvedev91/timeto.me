@@ -29,7 +29,9 @@ struct IOSApp: App {
 
             VMView(vm: vm) { state in
 
-                if state.isAppReady {
+                if let backupMessage = state.backupMessage {
+                    BackupMessageView(message: backupMessage)
+                } else if state.isAppReady {
 
                     HomeView()
                     .attachFs()
@@ -75,6 +77,25 @@ struct IOSApp: App {
         }
     }
 }
+
+private struct BackupMessageView: View {
+
+    let message: String
+
+    var body: some View {
+        VStack {
+            HStack {
+                Spacer()
+            }
+            Spacer()
+            Text(message)
+                .foregroundColor(c.white)
+            Spacer()
+        }
+        .background(c.black)
+    }
+}
+
 
 private class BatteryManager {
 

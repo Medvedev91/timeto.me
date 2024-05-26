@@ -430,9 +430,7 @@ struct SettingsSheet: View {
                 fileUrl.stopAccessingSecurityScopedResource()
                 //////
 
-                try Backup.shared.restore(jString: jString)
-
-                isPresented = false
+                vm.procRestore(jString: jString)
             } catch {
                 Utils_kmpKt.showUiAlert(message: "Error", reportApiText: "iOS restore exception\n" + error.myMessage())
             }
