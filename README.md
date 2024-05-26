@@ -79,7 +79,7 @@ The app has some activities by default, but you can add your own. Here are mine:
 
 ### Practice
 
-Let's start a new activity.
+Let's start a timer to work.
 
 <p float="left">
   <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_timer_practice_1.jpg" width="150" />
