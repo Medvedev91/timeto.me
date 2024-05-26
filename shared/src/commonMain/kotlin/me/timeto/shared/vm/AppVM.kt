@@ -10,11 +10,13 @@ class AppVM : __VM<AppVM.State>() {
 
     data class State(
         val isAppReady: Boolean,
+        val backupMessage: String?,
     )
 
     override val state = MutableStateFlow(
         State(
-            isAppReady = false
+            isAppReady = false,
+            backupMessage = null,
         )
     )
 
@@ -29,6 +31,12 @@ class AppVM : __VM<AppVM.State>() {
             state.update { it.copy(isAppReady = true) }
 
             ///
+
+            backupStateFlow
+                .skipFirst()
+                .onEachExIn(this) { newMessage ->
+                    state.update { it.copy(backupMessage = newMessage) }
+                }
 
             IntervalDb
                 .getLastOneOrNullFlow()
