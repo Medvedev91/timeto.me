@@ -92,8 +92,7 @@ fun SettingsSheet(
                 }
                 inputStream!!.close()
                 val jString = stringBuilder.toString()
-                Backup.restore(jString)
-                layer.close()
+                vm.procRestore(jString)
             } catch (e: Exception) {
                 showUiAlert("Error", "launcherRestore exception:\n$e")
             }

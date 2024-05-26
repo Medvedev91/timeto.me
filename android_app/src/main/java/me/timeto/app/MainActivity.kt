@@ -13,8 +13,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -60,7 +64,10 @@ class MainActivity : ComponentActivity() {
 
             MaterialTheme(colors = darkColors()) {
 
-                if (state.isAppReady) {
+                val backupMessage = state.backupMessage
+                if (backupMessage != null)
+                    BackupMessageView(backupMessage)
+                else if (state.isAppReady) {
 
                     WrapperView.LayoutView {
                         HomeView()
@@ -146,6 +153,25 @@ class MainActivity : ComponentActivity() {
                 requester.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         }
+    }
+}
+
+@Composable
+private fun BackupMessageView(
+    message: String,
+) {
+    ZStack(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(c.black),
+    ) {
+
+        Text(
+            text = message,
+            modifier = Modifier
+                .align(Alignment.Center),
+            color = c.white,
+        )
     }
 }
 
