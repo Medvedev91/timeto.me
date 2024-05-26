@@ -103,6 +103,21 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
         }
     }
 
+    fun procRestore(
+        jString: String,
+    ) {
+        launchExDefault {
+            try {
+                backupStateFlow.emit("Loading..")
+                Backup.restore(jString)
+                backupStateFlow.emit("Please restart the app.")
+            } catch (e: Throwable) {
+                backupStateFlow.emit("Error")
+                reportApi("SettingsSheetVM.procRestore() error:\n$e")
+            }
+        }
+    }
+
     fun prepBackupFileName() = Backup.prepFileName(UnixTime(), prefix = "timetome_")
 
     companion object {
