@@ -57,7 +57,7 @@ In other words, once you complete one task, you must start the timer for the nex
 In other words, once you complete one activity, you must start the timer for the next one, even sleep or breakfast.
 -->
 
-It helps to always stay focused on what I have to do. Most of the time my screen looks like a typical pomodoro timer:
+This way I always remember what I have to do. Most of the time my screen looks like a typical pomodoro timer:
 
 <p float="left">
   <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_timer_1.jpg" width="200" />
