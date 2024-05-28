@@ -140,14 +140,8 @@ fun Fs__HeaderAction(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
 
-                Text(
-                    text = title,
-                    modifier = Modifier
-                        .padding(start = H_PADDING)
-                        .weight(1f),
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = c.text,
+                HeaderTitle(
+                    title = title,
                 )
 
                 Text(
@@ -168,4 +162,19 @@ fun Fs__HeaderAction(
             }
         }
     }
+}
+
+@Composable
+private fun RowScope.HeaderTitle(
+    title: String,
+) {
+    Text(
+        text = title,
+        modifier = Modifier
+            .padding(start = H_PADDING)
+            .weight(1f),
+        fontSize = 24.sp,
+        fontWeight = FontWeight.SemiBold,
+        color = c.text,
+    )
 }
