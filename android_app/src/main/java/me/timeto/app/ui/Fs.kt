@@ -173,8 +173,8 @@ private fun RowScope.HeaderTitle(
         modifier = Modifier
             .padding(start = H_PADDING)
             .weight(1f),
-        fontSize = 24.sp,
-        fontWeight = FontWeight.SemiBold,
+        fontSize = 26.sp, // Golden ratio to lists text
+        fontWeight = FontWeight.Medium,
         color = c.text,
     )
 }
