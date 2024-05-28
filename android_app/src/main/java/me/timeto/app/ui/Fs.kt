@@ -11,6 +11,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -20,10 +21,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
+import me.timeto.app.R
 
 private val enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessMedium))
 private val exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessMedium))
@@ -48,6 +51,31 @@ object Fs {
                 }
             }
         ).show()
+    }
+}
+
+@Composable
+fun Fs__CloseButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) {
+    ZStack(
+        modifier = modifier
+            .size(31.dp)
+            .clip(roundedShape)
+            .background(c.fg)
+            .clickable {
+                onClick()
+            },
+        contentAlignment = Alignment.Center,
+    ) {
+        Icon(
+            painterResource(R.drawable.sf_xmark_small_medium),
+            contentDescription = "Close",
+            tint = c.fsCloseButton,
+            modifier = Modifier
+                .size(11.dp),
+        )
     }
 }
 
