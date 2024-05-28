@@ -124,11 +124,10 @@ fun Fs__HeaderAction(
             Text(
                 text = "Cancel",
                 modifier = Modifier
-                    .offset(y = 1.dp)
-                    .padding(start = H_PADDING_HALF, top = 4.dp)
+                    .padding(start = H_PADDING_HALF, top = 12.dp)
                     .clip(roundedShape)
                     .clickable { onCancel() }
-                    .padding(horizontal = H_PADDING_HALF, vertical = 2.dp),
+                    .padding(horizontal = H_PADDING_HALF),
                 color = c.textSecondary,
                 fontWeight = FontWeight.Light,
                 fontSize = 14.sp,
@@ -136,7 +135,7 @@ fun Fs__HeaderAction(
 
             HStack(
                 modifier = Modifier
-                    .padding(bottom = 8.dp),
+                    .padding(bottom = 6.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
 
@@ -154,10 +153,10 @@ fun Fs__HeaderAction(
                             onDone()
                         }
                         .padding(horizontal = 10.dp)
-                        .padding(top = 2.dp + onePx, bottom = 2.dp),
+                        .padding(top = 3.dp + onePx, bottom = 3.dp),
                     color = c.white,
                     fontSize = 15.sp,
-                    fontWeight = FontWeight.SemiBold,
+                    fontWeight = FontWeight.Medium,
                 )
             }
         }
