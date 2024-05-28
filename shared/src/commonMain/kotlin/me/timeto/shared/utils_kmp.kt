@@ -278,8 +278,6 @@ data class ColorRgba(
         val bg = black
         val fg = ColorRgba(28, 28, 30)
 
-        val fsCloseButton = AppleColors.gray2Dark
-
         val dividerBg = ColorRgba(50, 50, 53)
         val dividerFg = ColorRgba(61, 61, 65)
 

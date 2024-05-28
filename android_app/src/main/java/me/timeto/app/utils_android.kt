@@ -255,8 +255,6 @@ object c {
     val bg = ColorRgba.bg.toColor()
     val fg = ColorRgba.fg.toColor()
 
-    val fsCloseButton = ColorRgba.fsCloseButton.toColor()
-
     val dividerBg = ColorRgba.dividerBg.toColor()
     val dividerFg = ColorRgba.dividerFg.toColor()
 
