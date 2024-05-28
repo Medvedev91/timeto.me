@@ -135,6 +135,37 @@ fun Fs__Header(
 }
 
 @Composable
+fun Fs__HeaderClose(
+    title: String,
+    scrollState: ScrollableState?,
+    onClose: () -> Unit,
+) {
+
+    Fs__Header(
+        scrollState = scrollState,
+    ) {
+
+        HStack(
+            modifier = Modifier
+                .padding(top = 28.dp, bottom = 6.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+
+            HeaderTitle(
+                title = title,
+            )
+
+            Fs__CloseButton(
+                modifier = Modifier
+                    .padding(end = H_PADDING),
+            ) {
+                onClose()
+            }
+        }
+    }
+}
+
+@Composable
 fun Fs__HeaderAction(
     title: String,
     actionText: String,
