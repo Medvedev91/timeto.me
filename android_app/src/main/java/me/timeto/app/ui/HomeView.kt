@@ -635,7 +635,7 @@ private fun NavigationView(
                 .clip(squircleShape)
                 .motionEventSpy { event ->
                     if (event.action == MotionEvent.ACTION_DOWN)
-                        Sheet.show { layer ->
+                        Fs.show { layer ->
                             SettingsSheet(layer = layer)
                         }
                 },
