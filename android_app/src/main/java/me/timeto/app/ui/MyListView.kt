@@ -31,13 +31,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import me.timeto.app.R
 import kotlinx.coroutines.delay
-import me.timeto.app.H_PADDING
-import me.timeto.app.c
-import me.timeto.app.roundedShape
+import me.timeto.app.*
+import me.timeto.app.R
 
 // todo remove bgColor
+
+private val paddingSectionSection: Dp = MyListView.ITEM_MIN_HEIGHT.goldenRatioDown()
 
 object MyListView {
 
@@ -53,12 +53,12 @@ object MyListView {
 
 @Composable
 fun MyListView__PaddingFirst() {
-    Box(Modifier.height(20.dp))
+    Box(Modifier.height(15.dp))
 }
 
 @Composable
 fun MyListView__Padding__SectionSection() {
-    Box(Modifier.height(34.dp))
+    Box(Modifier.height(paddingSectionSection))
 }
 
 @Composable
