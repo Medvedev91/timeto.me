@@ -147,7 +147,7 @@ fun Fs__HeaderClose(
 
         HStack(
             modifier = Modifier
-                .padding(top = 20.dp, bottom = 6.dp),
+                .padding(top = 16.dp, bottom = 6.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
 
