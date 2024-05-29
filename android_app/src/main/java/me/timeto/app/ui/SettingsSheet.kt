@@ -124,7 +124,7 @@ fun SettingsSheet(
 
             item {
 
-                MyListView__Padding__SectionHeader(extraHeight = (-8).dp)
+                MyListView__PaddingFirst()
 
                 MyListView__ItemView(
                     isFirst = true,
@@ -133,6 +133,7 @@ fun SettingsSheet(
                 ) {
                     MyListView__ItemView__ButtonView(
                         text = state.readmeTitle,
+                        bgColor = c.fg,
                         rightView = {
                             Icon(
                                 painterResource(id = R.drawable.sf_info_circle_medium_regular),
@@ -157,6 +158,7 @@ fun SettingsSheet(
                 ) {
                     MyListView__ItemView__ButtonView(
                         text = state.whatsNewTitle,
+                        bgColor = c.fg,
                         rightView = {
                             MyListView__ItemView__ButtonView__RightText(
                                 text = state.whatsNewNote,
@@ -245,6 +247,7 @@ fun SettingsSheet(
 
                         MyListView__ItemView__ButtonView(
                             text = checklist.name,
+                            bgColor = c.fg,
                         ) {
                             checklist.performUI()
                         }
@@ -318,6 +321,7 @@ fun SettingsSheet(
                     ) {
                         MyListView__ItemView__ButtonView(
                             text = shortcut.name,
+                            bgColor = c.fg,
                         ) {
                             shortcut.performUI()
                         }
@@ -363,6 +367,7 @@ fun SettingsSheet(
                     MyListView__ItemView__ButtonView(
                         text = note.title,
                         maxLines = 1,
+                        bgColor = c.fg,
                     ) {
                         Sheet.show { layer ->
                             NoteSheet(layer, initNote = note)
@@ -388,6 +393,7 @@ fun SettingsSheet(
                     MyListView__ItemView__ButtonView(
                         text = "Folders",
                         withArrow = true,
+                        bgColor = c.fg,
                     ) {
                         Sheet.show { layer ->
                             FoldersSettingsSheet(layer)
@@ -406,6 +412,7 @@ fun SettingsSheet(
                     MyListView__ItemView__ButtonView(
                         text = "Day Start",
                         withArrow = false,
+                        bgColor = c.fg,
                         rightView = {
                             MyListView__ItemView__ButtonView__RightText(
                                 text = state.dayStartNote
@@ -441,6 +448,7 @@ fun SettingsSheet(
 
                     MyListView__ItemView__ButtonView(
                         text = "Create",
+                        bgColor = c.fg,
                     ) {
                         scope.launch {
                             launcherBackup.launch(vm.prepBackupFileName())
@@ -456,6 +464,7 @@ fun SettingsSheet(
 
                     MyListView__ItemView__ButtonView(
                         text = "Restore",
+                        bgColor = c.fg,
                     ) {
                         scope.launch {
                             launcherRestore.launch("*/*")
@@ -473,6 +482,7 @@ fun SettingsSheet(
                         MyListView__ItemView__ButtonView(
                             text = "Auto Backup",
                             withArrow = true,
+                            bgColor = c.fg,
                             rightView = {
                                 MyListView__ItemView__ButtonView__RightText(
                                     text = state.autoBackupTimeString,
@@ -502,7 +512,10 @@ fun SettingsSheet(
                     isLast = false,
                     withTopDivider = false,
                 ) {
-                    MyListView__ItemView__ButtonView(text = "Time to Break") {
+                    MyListView__ItemView__ButtonView(
+                        text = "Time to Break",
+                        bgColor = c.fg,
+                    ) {
                         context.startActivity(
                             Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).apply {
                                 putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
@@ -517,7 +530,10 @@ fun SettingsSheet(
                     isLast = true,
                     withTopDivider = true,
                 ) {
-                    MyListView__ItemView__ButtonView(text = "Timer Overdue") {
+                    MyListView__ItemView__ButtonView(
+                        text = "Timer Overdue",
+                        bgColor = c.fg,
+                    ) {
                         context.startActivity(
                             Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).apply {
                                 putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
@@ -537,7 +553,10 @@ fun SettingsSheet(
                     isLast = false,
                     withTopDivider = false,
                 ) {
-                    MyListView__ItemView__ButtonView(text = "Ask a Question") {
+                    MyListView__ItemView__ButtonView(
+                        text = "Ask a Question",
+                        bgColor = c.fg,
+                    ) {
                         askAQuestion(subject = state.feedbackSubject)
                     }
                 }
@@ -547,7 +566,10 @@ fun SettingsSheet(
                     isLast = false,
                     withTopDivider = true,
                 ) {
-                    MyListView__ItemView__ButtonView(text = "Open Source") {
+                    MyListView__ItemView__ButtonView(
+                        text = "Open Source",
+                        bgColor = c.fg,
+                    ) {
                         showOpenSource()
                     }
                 }
@@ -559,6 +581,7 @@ fun SettingsSheet(
                 ) {
                     MyListView__ItemView__ButtonView(
                         text = "Privacy",
+                        bgColor = c.fg,
                         rightView = {
                             val privacyNote = state.privacyNote
                             if (privacyNote == null)
