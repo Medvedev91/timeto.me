@@ -149,7 +149,7 @@ fun RepeatingFormSheet(
                     text = state.moreSettingText,
                     modifier = Modifier
                         .padding(horizontal = H_PADDING_HALF)
-                        .padding(top = 19.dp)
+                        .padding(top = 18.dp)
                         .clip(squircleShape)
                         .clickable {
                             isMoreSettingsVisible.value = !isMoreSettingsVisible.value
