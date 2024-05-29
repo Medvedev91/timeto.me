@@ -276,7 +276,7 @@ data class ColorRgba(
         val textSecondary = ColorRgba(255, 255, 255, 170)
 
         val bg = black
-        val fg = ColorRgba(28, 28, 30)
+        val fg = ColorRgba(30, 30, 32)
 
         val dividerBg = ColorRgba(50, 50, 53)
         val dividerFg = ColorRgba(61, 61, 65)
