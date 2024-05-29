@@ -182,16 +182,14 @@ private suspend fun fillInitData() {
     val cYellow = colorsWheel.next()
     val cPurple = colorsWheel.next()
 
-    val min5Sec = 5 * 60
-
     // @formatter:off
     val goals = listOf<ActivityDb.Goal>()
     val defData = ActivityDb__Data.buildDefault()
     val aNormal = ActivityDb.TYPE.NORMAL
     val actMed = ActivityDb.addWithValidation("Meditation", "🧘‍♀️", 20 * 60, 1, aNormal, cYellow, defData, true, goals, 0)
-    val actWork = ActivityDb.addWithValidation("Work", "📁", 40 * 60, 2, aNormal, cBlue, defData, true, goals, min5Sec)
+    val actWork = ActivityDb.addWithValidation("Work", "📁", 40 * 60, 2, aNormal, cBlue, defData, true, goals, 0)
     ActivityDb.addWithValidation("Hobby", "🎸", 3600, 3, aNormal, cRed, defData, true, goals, 0)
-    val actPd = ActivityDb.addWithValidation("Personal development", "📖", 30 * 60, 4, aNormal, cPurple, defData, true, goals, min5Sec)
+    val actPd = ActivityDb.addWithValidation("Personal development", "📖", 30 * 60, 4, aNormal, cPurple, defData, true, goals, 0)
     val actEx = ActivityDb.addWithValidation("Exercises / Health", "💪", 20 * 60, 5, aNormal, colorsWheel.next(), defData, false, goals, 0)
     ActivityDb.addWithValidation("Walk", "👟", 30 * 60, 6, aNormal, colorsWheel.next(), defData, false, goals, 0)
     val actGr = ActivityDb.addWithValidation("Getting ready", "🚀", 30 * 60, 7, aNormal, colorsWheel.next(), defData, true, goals, 0)
