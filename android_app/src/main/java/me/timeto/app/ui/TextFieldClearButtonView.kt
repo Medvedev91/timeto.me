@@ -31,7 +31,7 @@ fun TextFieldClearButtonView(
             Icon(
                 painterResource(id = R.drawable.sf_xmark_circle_fill_medium_medium),
                 "Clear",
-                tint = c.textSecondary.copy(alpha = 0.3f),
+                tint = c.white.copy(alpha = 0.3f),
                 modifier = Modifier
                     .padding(end = 2.dp)
                     .size(32.dp)
