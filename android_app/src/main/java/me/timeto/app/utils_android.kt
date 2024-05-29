@@ -271,5 +271,4 @@ object c {
     val summaryDatePicker = ColorRgba.summaryDatePicker.toColor()
 
     val tasksDropFocused = ColorRgba.tasksDropFocused.toColor()
-    val formButtonRightNoteText = ColorRgba.formButtonRightNoteText.toColor()
 }
