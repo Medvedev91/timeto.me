@@ -48,8 +48,8 @@ object MyListView {
     val PADDING_INNER_HORIZONTAL = H_PADDING
 }
 
-///
-/// Paddings
+//
+// Paddings
 
 @Composable
 fun MyListView__PaddingFirst() {
@@ -71,8 +71,8 @@ fun MyListView__Padding__HeaderSection() {
     Box(Modifier.height(4.dp))
 }
 
-///
-/// Header
+//
+// Header
 
 @Composable
 fun MyListView__HeaderView(
@@ -120,8 +120,8 @@ fun MyListView__HeaderView__RightIcon(
     )
 }
 
-///
-/// Item
+//
+// Item
 
 @Composable
 fun MyListView__ItemView(
@@ -314,8 +314,8 @@ fun MyListView__ItemView__SwitchView(
     }
 }
 
-///
-/// Button
+//
+// Button
 
 @Composable
 fun MyListView__ItemView__ButtonView(
