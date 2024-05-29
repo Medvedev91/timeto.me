@@ -107,14 +107,13 @@ fun SettingsSheet(
 
         val scrollState = rememberLazyListState()
 
-        Sheet.HeaderViewOld(
-            onCancel = { layer.close() },
+        Fs__HeaderClose(
             title = state.headerTitle,
-            doneText = null,
-            isDoneEnabled = false,
             scrollState = scrollState,
-            cancelText = "Back",
-        ) {}
+            onClose = {
+                layer.close()
+            },
+        )
 
         LazyColumn(
             modifier = Modifier
