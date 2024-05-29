@@ -251,6 +251,7 @@ object c {
 
     val text = ColorRgba.text.toColor()
     val textSecondary = ColorRgba.textSecondary.toColor()
+    val tertiaryText = ColorRgba.tertiaryText.toColor()
 
     val bg = ColorRgba.bg.toColor()
     val fg = ColorRgba.fg.toColor()
