@@ -82,7 +82,7 @@ fun MyListView__HeaderView(
 ) {
     Row(
         modifier = modifier
-            .padding(horizontal = MyListView.PADDING_OUTER_HORIZONTAL + MyListView.PADDING_INNER_HORIZONTAL),
+            .padding(horizontal = MyListView.PADDING_OUTER_HORIZONTAL + H_PADDING),
         verticalAlignment = Alignment.Bottom,
     ) {
         Text(
@@ -129,7 +129,7 @@ fun MyListView__ItemView(
     isLast: Boolean,
     modifier: Modifier = Modifier,
     withTopDivider: Boolean = false,
-    dividerPadding: PaddingValues = PaddingValues(start = MyListView.PADDING_INNER_HORIZONTAL),
+    dividerPadding: PaddingValues = PaddingValues(start = H_PADDING),
     outerPadding: PaddingValues = PaddingValues(horizontal = MyListView.PADDING_OUTER_HORIZONTAL),
     bgColor: Color = c.sheetFg,
     content: @Composable () -> Unit
@@ -195,8 +195,8 @@ fun MyListView__ItemView__TextInputView(
                         .fillMaxWidth()
                         .sizeIn(minHeight = MyListView.ITEM_MIN_HEIGHT)
                         .padding(
-                            start = MyListView.PADDING_INNER_HORIZONTAL,
-                            end = MyListView.PADDING_INNER_HORIZONTAL + 12.dp, // for clear button
+                            start = H_PADDING,
+                            end = H_PADDING + 12.dp, // for clear button
                             // top and bottom for multiline padding
                             top = 8.dp,
                             bottom = 8.dp,
@@ -276,7 +276,7 @@ fun MyListView__ItemView__CheckboxView(
                     "Checkmark",
                     tint = c.blue,
                     modifier = Modifier
-                        .padding(end = MyListView.PADDING_INNER_HORIZONTAL)
+                        .padding(end = H_PADDING)
                         .size(20.dp)
                         .padding(2.dp)
                 )
@@ -342,7 +342,7 @@ fun MyListView__ItemView__ButtonView(
         Text(
             text,
             modifier = textModifier
-                .padding(start = MyListView.PADDING_INNER_HORIZONTAL, end = 10.dp),
+                .padding(start = H_PADDING, end = 10.dp),
             color = c.text,
             maxLines = maxLines,
             overflow = TextOverflow.Ellipsis,
@@ -393,7 +393,7 @@ fun MyListView__ItemView__ActionView(
             Text(
                 text,
                 modifier = Modifier
-                    .padding(horizontal = MyListView.PADDING_INNER_HORIZONTAL),
+                    .padding(horizontal = H_PADDING),
                 color = textColor,
                 fontWeight = FontWeight.W600,
             )
@@ -406,7 +406,7 @@ fun MyListView__ItemView__ActionView(
 @Composable
 fun MyListView__ItemView__ButtonView__RightText(
     text: String,
-    paddingEnd: Dp = MyListView.PADDING_INNER_HORIZONTAL,
+    paddingEnd: Dp = H_PADDING,
     color: Color? = null,
 ) {
     Text(
