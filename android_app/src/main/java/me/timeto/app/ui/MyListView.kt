@@ -414,7 +414,7 @@ fun MyListView__ItemView__ButtonView__RightText(
         modifier = Modifier
             .padding(end = paddingEnd)
             .offset(),
-        color = color ?: c.formButtonRightNoteText,
+        color = color ?: c.tertiaryText,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
     )

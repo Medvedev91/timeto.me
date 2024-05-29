@@ -72,7 +72,7 @@ fun Fs__CloseButton(
         Icon(
             painterResource(R.drawable.sf_xmark_small_medium),
             contentDescription = "Close",
-            tint = c.formButtonRightNoteText,
+            tint = c.tertiaryText,
             modifier = Modifier
                 .size(11.dp),
         )
