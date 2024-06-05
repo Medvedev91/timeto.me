@@ -27,7 +27,7 @@ struct MyListView__Padding__SectionSection: View {
     var body: some View {
         ZStack {
         }
-        .frame(height: 34)
+        .frame(height: 27)
     }
 }
 
