@@ -135,7 +135,7 @@ fun Fs__Header(
 }
 
 @Composable
-fun Fs__HeaderClose(
+fun Fs__HeaderTitle(
     title: String,
     scrollState: ScrollableState?,
     onClose: () -> Unit,

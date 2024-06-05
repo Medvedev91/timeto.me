@@ -107,7 +107,7 @@ fun SettingsSheet(
 
         val scrollState = rememberLazyListState()
 
-        Fs__HeaderClose(
+        Fs__HeaderTitle(
             title = state.headerTitle,
             scrollState = scrollState,
             onClose = {
