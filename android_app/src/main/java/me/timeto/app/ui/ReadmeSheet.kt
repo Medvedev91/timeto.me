@@ -45,15 +45,17 @@ fun ReadmeSheet(
 
     VStack(
         modifier = Modifier
-            .background(c.sheetBg)
+            .background(c.bg)
     ) {
 
         val scrollState = rememberScrollState()
 
-        Sheet__HeaderView(
+        Fs__HeaderTitle(
             title = state.title,
             scrollState = scrollState,
-            bgColor = c.sheetBg,
+            onClose = {
+                layer.close()
+            },
         )
 
         VStack(
@@ -210,10 +212,11 @@ fun ReadmeSheet(
                     }
                 }
             }
-        }
 
-        Sheet__BottomViewClose {
-            layer.close()
+            ZStack(
+                modifier = Modifier
+                    .navigationBarsPadding(),
+            )
         }
     }
 }

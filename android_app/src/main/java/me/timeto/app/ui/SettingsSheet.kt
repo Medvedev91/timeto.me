@@ -145,7 +145,7 @@ fun SettingsSheet(
                             )
                         }
                     ) {
-                        Sheet.show { layer ->
+                        Fs.show { layer ->
                             ReadmeSheet(layer)
                         }
                     }

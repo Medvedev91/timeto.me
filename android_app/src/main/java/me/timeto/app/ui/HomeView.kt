@@ -202,7 +202,7 @@ fun HomeView() {
                 title = readmeMessage,
                 onClick = {
                     vm.onReadmeOpen()
-                    Sheet.show { layer ->
+                    Fs.show { layer ->
                         ReadmeSheet(layer)
                     }
                 }
