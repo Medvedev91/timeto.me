@@ -213,7 +213,7 @@ fun Fs__HeaderAction(
                         }
                         .padding(horizontal = 10.dp)
                         .padding(top = 3.dp + onePx, bottom = 3.dp),
-                    color = c.white,
+                    color = c.text,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Medium,
                 )
