@@ -156,7 +156,7 @@ struct RepeatingsFormSheet: View {
                                             .font(.system(size: 16))
                                     }
                                 )
-                                .padding(.top, 26)
+                                .padding(.top, 23)
                                 .padding(.leading, H_PADDING)
 
                                 Spacer()
@@ -173,6 +173,7 @@ struct RepeatingsFormSheet: View {
                             ) { textFeatures in
                                 vm.upTextFeatures(textFeatures: textFeatures)
                             }
+                            
                             MyListView__Padding__SectionSection()
 
                             MyListView__ItemView(
