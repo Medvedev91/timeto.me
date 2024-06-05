@@ -135,12 +135,13 @@ struct Fs__HeaderAction: View {
                             .padding(.leading, H_PADDING)
                     }
                 )
-                .padding(.bottom, 4)
+                .padding(.bottom, 2)
 
                 HStack {
 
                     Text(title)
-                        .font(.system(size: 26, weight: .semibold))
+                        .foregroundColor(c.text)
+                        .font(.system(size: 27, weight: .semibold))
                         .padding(.leading, H_PADDING)
 
                     Spacer()
@@ -151,16 +152,16 @@ struct Fs__HeaderAction: View {
                         },
                         label: {
                             Text(actionText)
-                                .foregroundColor(c.white)
+                                .foregroundColor(c.text)
                                 .font(.system(size: 16, weight: .semibold))
                                 .padding(.horizontal, 10)
-                                .padding(.vertical, 5)
+                                .padding(.vertical, 6)
                                 .background(roundedShape.fill(c.blue))
                         }
                     )
                     .padding(.trailing, H_PADDING)
                 }
-                .padding(.bottom, 8)
+                .padding(.bottom, 6)
             }
         }
     }
