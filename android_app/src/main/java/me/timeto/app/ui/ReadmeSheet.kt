@@ -28,8 +28,6 @@ import me.timeto.app.R
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.vm.ReadmeSheetVM
 
-private val hPadding = MyListView.PADDING_OUTER_HORIZONTAL
-
 private val imagesHBetween = 4.dp
 private val imagesHBlock = 14.dp
 private val imagesShape = SquircleShape(len = 50f)
@@ -76,7 +74,7 @@ fun ReadmeSheet(
                             text = paragraph.text,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = hPadding)
+                                .padding(horizontal = H_PADDING)
                                 .padding(top = 36.dp),
                             color = c.white,
                             fontWeight = FontWeight.Bold,
@@ -229,7 +227,7 @@ private fun PTitleView(
         text = text,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = hPadding)
+            .padding(horizontal = H_PADDING)
             .padding(top = 48.dp),
         color = c.white,
         fontWeight = FontWeight.Bold,
@@ -246,7 +244,7 @@ private fun PTextView(
         text = text,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = hPadding)
+            .padding(horizontal = H_PADDING)
             .padding(top = topPadding),
         color = c.white,
         lineHeight = pTextLineHeight,
@@ -264,7 +262,7 @@ private fun PTextHighlightView(
             .fillMaxWidth()
             .padding(top = 16.dp)
             .background(c.blue)
-            .padding(horizontal = hPadding)
+            .padding(horizontal = H_PADDING)
             .padding(top = 12.dp, bottom = 10.dp),
         color = c.white,
         lineHeight = pTextLineHeight,
@@ -289,7 +287,7 @@ private fun PListDashedView(
                     painter = painterResource(R.drawable.sf_minus_medium_regular),
                     contentDescription = item,
                     modifier = Modifier
-                        .padding(start = hPadding, top = 5.dp)
+                        .padding(start = H_PADDING, top = 5.dp)
                         .size(12.dp),
                     tint = c.white,
                 )
@@ -298,7 +296,7 @@ private fun PListDashedView(
                     text = item,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 12.dp, end = hPadding),
+                        .padding(start = 12.dp, end = H_PADDING),
                     color = c.white,
                     lineHeight = pTextLineHeight,
                     fontWeight = FontWeight.Normal,
