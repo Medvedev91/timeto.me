@@ -25,6 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import me.timeto.app.*
 import me.timeto.app.R
 
@@ -218,6 +219,28 @@ fun Fs__HeaderAction(
                     fontWeight = FontWeight.Medium,
                 )
             }
+        }
+    }
+}
+
+@Composable
+fun Fs__HeaderClose(
+    onClose: () -> Unit,
+) {
+
+    HStack(
+        modifier = Modifier
+            .padding(top = statusBarHeight + H_PADDING)
+            .zIndex(1f),
+    ) {
+
+        SpacerW1()
+
+        Fs__CloseButton(
+            modifier = Modifier
+                .padding(end = H_PADDING),
+        ) {
+            onClose()
         }
     }
 }
