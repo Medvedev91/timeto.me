@@ -184,6 +184,7 @@ fun Fs__HeaderAction(
             Text(
                 text = "Cancel",
                 modifier = Modifier
+                    .offset(y = 1.dp)
                     .padding(start = H_PADDING_HALF, top = 12.dp)
                     .clip(roundedShape)
                     .clickable { onCancel() }
