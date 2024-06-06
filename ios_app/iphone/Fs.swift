@@ -45,7 +45,7 @@ struct Fs__Item<Content: View>: View, Identifiable {
             if isPresented {
                 content($isPresented)
                     .transition(.opacity)
-                    .ignoresSafeArea()
+                    .ignoresSafeArea(.container)
                     .onDisappear {
                         fs.items.removeAll {
                             $0.id == id
@@ -54,7 +54,7 @@ struct Fs__Item<Content: View>: View, Identifiable {
             }
         }
         .animation(fsAnimation, value: isPresented)
-        .ignoresSafeArea()
+        .ignoresSafeArea(.container)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
         .onAppear {
             isPresented = true
