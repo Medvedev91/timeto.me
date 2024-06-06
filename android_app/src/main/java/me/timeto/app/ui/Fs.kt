@@ -217,7 +217,7 @@ fun Fs__HeaderAction(
                         .padding(top = 3.dp + onePx, bottom = 3.dp),
                     color = c.text,
                     fontSize = 15.sp,
-                    fontWeight = FontWeight.Medium,
+                    fontWeight = FontWeight.Bold,
                 )
             }
         }
@@ -256,7 +256,7 @@ private fun RowScope.HeaderTitle(
             .padding(start = H_PADDING)
             .weight(1f),
         fontSize = 26.sp, // Golden ratio to lists text
-        fontWeight = FontWeight.Medium,
+        fontWeight = FontWeight.Bold,
         color = c.text,
     )
 }
