@@ -329,14 +329,14 @@ fun MyListView__ItemView__ButtonView(
     onClick: () -> Unit,
 ) {
 
-    Row(
+    HStack(
         modifier = modifier
             .background(bgColor) // Fix swipe to action bg on swipe
             .clickable {
                 onClick()
             }
             .sizeIn(minHeight = MyListView.ITEM_MIN_HEIGHT),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
 
         Text(
@@ -348,7 +348,7 @@ fun MyListView__ItemView__ButtonView(
             overflow = TextOverflow.Ellipsis,
         )
 
-        Row(Modifier.weight(1f)) {
+        HStack(Modifier.weight(1f)) {
             SpacerW1()
             rightView?.invoke()
         }
@@ -360,7 +360,7 @@ fun MyListView__ItemView__ButtonView(
                 tint = c.textSecondary.copy(alpha = 0.4f),
                 modifier = Modifier
                     .padding(end = 4.dp)
-                    .size(28.dp)
+                    .size(28.dp),
             )
         }
     }
