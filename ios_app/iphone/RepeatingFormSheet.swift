@@ -173,7 +173,7 @@ struct RepeatingsFormSheet: View {
                             ) { textFeatures in
                                 vm.upTextFeatures(textFeatures: textFeatures)
                             }
-                            
+
                             MyListView__Padding__SectionSection()
 
                             MyListView__ItemView(
