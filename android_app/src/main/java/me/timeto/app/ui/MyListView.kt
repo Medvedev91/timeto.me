@@ -41,7 +41,7 @@ private val paddingSectionSection: Dp = MyListView.ITEM_MIN_HEIGHT.goldenRatioDo
 
 object MyListView {
 
-    val ITEM_MIN_HEIGHT = 46.dp
+    val ITEM_MIN_HEIGHT = 44.dp
 
     // todo remove AI
     val PADDING_OUTER_HORIZONTAL = H_PADDING
@@ -53,7 +53,7 @@ object MyListView {
 
 @Composable
 fun MyListView__PaddingFirst() {
-    Box(Modifier.height(15.dp))
+    Box(Modifier.height(14.dp))
 }
 
 @Composable
@@ -198,7 +198,7 @@ fun MyListView__ItemView__TextInputView(
                             start = H_PADDING,
                             end = H_PADDING + 12.dp, // for clear button
                             // top and bottom for multiline padding
-                            top = 8.dp,
+                            top = 9.dp,
                             bottom = 8.dp,
                         ),
                     contentAlignment = Alignment.CenterStart,
@@ -335,7 +335,8 @@ fun MyListView__ItemView__ButtonView(
             .clickable {
                 onClick()
             }
-            .sizeIn(minHeight = MyListView.ITEM_MIN_HEIGHT),
+            .sizeIn(minHeight = MyListView.ITEM_MIN_HEIGHT)
+            .padding(top = 1.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
 
