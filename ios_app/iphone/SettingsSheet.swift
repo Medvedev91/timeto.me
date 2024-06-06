@@ -33,19 +33,19 @@ struct SettingsSheet: View {
 
         VMView(vm: vm, stack: .VStack()) { state in
 
-            SheetHeaderView(
-                onCancel: { isPresented.toggle() },
+            Fs__HeaderTitle(
                 title: state.headerTitle,
-                doneText: nil,
-                isDoneEnabled: false,
                 scrollToHeader: sheetHeaderScroll,
-                cancelText: "Back"
-            ) {
-            }
+                onClose: {
+                    isPresented = false
+                }
+            )
 
             ScrollViewWithVListener(showsIndicators: false, vScroll: $sheetHeaderScroll) {
 
                 VStack {
+
+                    MyListView__PaddingFirst()
 
                     MyListView__ItemView(
                         isFirst: true,
@@ -64,7 +64,6 @@ struct SettingsSheet: View {
                             isReadmePresented.toggle()
                         }
                     }
-                    .padding(.top, 16)
                     .sheetEnv(isPresented: $isReadmePresented) {
                         ReadmeSheet(isPresented: $isReadmePresented)
                     }
@@ -378,7 +377,6 @@ struct SettingsSheet: View {
                 .padding(.bottom, 34)
             }
         }
-        .background(c.sheetBg)
         .sheetEnv(isPresented: $isAddChecklistPresented) {
             ChecklistNameDialog(isPresented: $isAddChecklistPresented, checklist: nil, onSave: { _ in })
         }
