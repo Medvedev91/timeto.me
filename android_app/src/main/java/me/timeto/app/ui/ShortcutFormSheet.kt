@@ -211,7 +211,7 @@ private fun AppsListSheet(
                             onAppSelected(shortcutApp)
                             layer.close()
                         }
-                        .padding(horizontal = MyListView.PADDING_OUTER_HORIZONTAL),
+                        .padding(horizontal = H_PADDING),
                 ) {
 
                     Text(

@@ -18,8 +18,6 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.shared.vm.FDroidSheetVM
 
-private val hPadding = MyListView.PADDING_OUTER_HORIZONTAL
-
 @Composable
 fun FDroidSheet(
     layer: WrapperView.Layer,
@@ -76,7 +74,7 @@ fun FDroidSheet(
                 text = "Open Source",
                 modifier = Modifier
                     .padding(top = 16.dp)
-                    .padding(horizontal = MyListView.PADDING_OUTER_HORIZONTAL - 8.dp)
+                    .padding(horizontal = H_PADDING - 8.dp)
                     .clip(squircleShape)
                     .clickable {
                         showOpenSource()
@@ -113,7 +111,7 @@ private fun PView(
     Text(
         text = text,
         modifier = Modifier
-            .padding(horizontal = hPadding)
+            .padding(horizontal = H_PADDING)
             .padding(top = topPadding),
         color = c.white,
         lineHeight = 22.sp,

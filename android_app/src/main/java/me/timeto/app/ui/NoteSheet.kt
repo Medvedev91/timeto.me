@@ -50,7 +50,7 @@ fun NoteSheet(
                 modifier = Modifier
                     .padding(
                         top = 10.dp,
-                        end = MyListView.PADDING_OUTER_HORIZONTAL - 8.dp,
+                        end = H_PADDING - 8.dp,
                         bottom = 10.dp,
                     ),
                 verticalAlignment = Alignment.CenterVertically,

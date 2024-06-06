@@ -73,7 +73,7 @@ fun NoteFormSheet(
                         "Delete Note",
                         tint = c.red,
                         modifier = Modifier
-                            .padding(start = MyListView.PADDING_OUTER_HORIZONTAL - 0.dp)
+                            .padding(start = H_PADDING - 0.dp)
                             .size(33.dp)
                             .clip(roundedShape)
                             .clickable {

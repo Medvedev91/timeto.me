@@ -18,8 +18,6 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.shared.vm.PrivacySheetVM
 
-private val hPadding = MyListView.PADDING_OUTER_HORIZONTAL
-
 @Composable
 fun PrivacySheet(
     layer: WrapperView.Layer,
@@ -117,7 +115,7 @@ private fun PView(
     Text(
         text = text,
         modifier = Modifier
-            .padding(horizontal = hPadding)
+            .padding(horizontal = H_PADDING)
             .padding(top = topPadding),
         color = c.white,
         lineHeight = 22.sp,

@@ -291,7 +291,7 @@ fun Sheet__BottomViewDefault(
                 modifier = Modifier
                     .padding(
                         top = 10.dp,
-                        end = MyListView.PADDING_OUTER_HORIZONTAL,
+                        end = H_PADDING,
                         bottom = 10.dp,
                     )
             ) {
@@ -316,7 +316,7 @@ fun Sheet__BottomViewDone(
             modifier = Modifier
                 .padding(
                     top = 10.dp,
-                    end = MyListView.PADDING_OUTER_HORIZONTAL,
+                    end = H_PADDING,
                     bottom = 10.dp,
                 )
         ) {
@@ -338,7 +338,7 @@ fun Sheet__BottomViewClose(
             modifier = Modifier
                 .padding(
                     top = 10.dp,
-                    end = MyListView.PADDING_OUTER_HORIZONTAL,
+                    end = H_PADDING,
                     bottom = 10.dp,
                 ),
             verticalAlignment = Alignment.CenterVertically,

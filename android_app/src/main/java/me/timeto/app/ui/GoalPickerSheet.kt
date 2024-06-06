@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import me.timeto.app.H_PADDING
 import me.timeto.app.VStack
 import me.timeto.app.c
 import me.timeto.app.rememberVM
@@ -71,7 +72,7 @@ fun GoalPickerSheet(
                 size = 36.dp,
                 modifier = Modifier
                     .padding(
-                        start = MyListView.PADDING_OUTER_HORIZONTAL,
+                        start = H_PADDING,
                         top = 20.dp,
                     ),
                 onChange = { newWeekDays ->

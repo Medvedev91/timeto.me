@@ -29,8 +29,7 @@ import me.timeto.shared.vm.ActivityColorSheetVM
 
 private val circleSize = 40.dp
 private val circlePadding = 4.dp
-private val sheetHPadding = MyListView.PADDING_OUTER_HORIZONTAL
-private val dividerPadding = sheetHPadding.goldenRatioDown()
+private val dividerPadding = H_PADDING.goldenRatioDown()
 
 private val bgColor = c.sheetBg
 private val dividerColor = c.sheetDividerBg
@@ -85,7 +84,7 @@ fun ActivityColorSheet(
                 modifier = Modifier
                     .verticalScroll(state = activitiesScrollState)
                     .padding(top = 4.dp)
-                    .padding(start = sheetHPadding)
+                    .padding(start = H_PADDING)
                     .height(IntrinsicSize.Max)
                     .weight(1f),
             ) {
@@ -156,7 +155,7 @@ fun ActivityColorSheet(
                     .verticalScroll(state = circleScrollState)
                     .padding(
                         start = dividerPadding - circlePadding,
-                        end = sheetHPadding - circlePadding,
+                        end = H_PADDING - circlePadding,
                         bottom = 20.dp,
                     ),
             ) {
@@ -261,7 +260,7 @@ fun ActivityColorSheet(
                     "RGB Picker",
                     tint = state.rgbSlidersBtnColor.toColor(),
                     modifier = Modifier
-                        .padding(start = sheetHPadding - 2.dp)
+                        .padding(start = H_PADDING - 2.dp)
                         .size(33.dp)
                         .clip(roundedShape)
                         .drawBehind {
@@ -289,7 +288,7 @@ private fun ColorSliderView(
         // Animation works bad with manual slide
         value = if (isAnimated) animatedValue.value else value,
         onValueChange = { onChange(it) },
-        modifier = Modifier.padding(horizontal = sheetHPadding - 6.dp),
+        modifier = Modifier.padding(horizontal = H_PADDING - 6.dp),
         valueRange = 0f..255f,
         colors = SliderDefaults.colors(
             thumbColor = color,

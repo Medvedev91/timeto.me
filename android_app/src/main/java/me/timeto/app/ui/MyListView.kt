@@ -40,12 +40,6 @@ import me.timeto.app.R
 private val itemMinHeight = 44.dp
 private val paddingSectionSection: Dp = itemMinHeight.goldenRatioDown()
 
-object MyListView {
-
-    // todo remove AI
-    val PADDING_OUTER_HORIZONTAL = H_PADDING
-}
-
 //
 // Paddings
 
@@ -80,7 +74,7 @@ fun MyListView__HeaderView(
 ) {
     Row(
         modifier = modifier
-            .padding(horizontal = MyListView.PADDING_OUTER_HORIZONTAL + H_PADDING),
+            .padding(horizontal = H_PADDING + H_PADDING),
         verticalAlignment = Alignment.Bottom,
     ) {
         Text(
@@ -128,7 +122,7 @@ fun MyListView__ItemView(
     modifier: Modifier = Modifier,
     withTopDivider: Boolean = false,
     dividerPadding: PaddingValues = PaddingValues(start = H_PADDING),
-    outerPadding: PaddingValues = PaddingValues(horizontal = MyListView.PADDING_OUTER_HORIZONTAL),
+    outerPadding: PaddingValues = PaddingValues(horizontal = H_PADDING),
     bgColor: Color = c.sheetFg,
     content: @Composable () -> Unit
 ) {
