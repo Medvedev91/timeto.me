@@ -44,7 +44,6 @@ object MyListView {
 
     // todo remove AI
     val PADDING_OUTER_HORIZONTAL = H_PADDING
-    val PADDING_INNER_HORIZONTAL = H_PADDING
 }
 
 //

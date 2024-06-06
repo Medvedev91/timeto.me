@@ -220,7 +220,7 @@ fun ActivityFormSheet(
 
                         HStack(
                             modifier = Modifier
-                                .padding(start = MyListView.PADDING_INNER_HORIZONTAL, bottom = 8.dp),
+                                .padding(start = H_PADDING, bottom = 8.dp),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
 
@@ -305,7 +305,7 @@ fun ActivityFormSheet(
                                                 modifier = Modifier
                                                     .padding(
                                                         bottom = 8.dp,
-                                                        start = MyListView.PADDING_INNER_HORIZONTAL
+                                                        start = H_PADDING
                                                     ),
                                                 verticalAlignment = Alignment.CenterVertically,
                                             ) {
@@ -340,7 +340,7 @@ fun ActivityFormSheet(
                                             "Add",
                                             modifier = Modifier
                                                 .padding(
-                                                    start = MyListView.PADDING_INNER_HORIZONTAL - 8.dp,
+                                                    start = H_PADDING - 8.dp,
                                                     bottom = 8.dp,
                                                 )
                                                 .clip(roundedShape)

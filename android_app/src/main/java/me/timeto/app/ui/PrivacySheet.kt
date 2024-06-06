@@ -91,7 +91,7 @@ fun PrivacySheet(
                 text = "Open Source",
                 modifier = Modifier
                     .padding(top = 16.dp)
-                    .padding(horizontal = MyListView.PADDING_INNER_HORIZONTAL)
+                    .padding(horizontal = H_PADDING)
                     .clip(squircleShape)
                     .clickable {
                         showOpenSource()

@@ -590,7 +590,7 @@ fun SettingsSheet(
                                 Text(
                                     text = PrivacySheetVM.prayEmoji,
                                     modifier = Modifier
-                                        .padding(end = MyListView.PADDING_INNER_HORIZONTAL),
+                                        .padding(end = H_PADDING),
                                     fontSize = 18.sp,
                                 )
                         },

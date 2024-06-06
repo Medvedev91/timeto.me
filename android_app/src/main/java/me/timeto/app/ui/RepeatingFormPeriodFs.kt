@@ -87,7 +87,7 @@ fun RepeatingFormPeriodFs(
                                 Column(
                                     modifier = Modifier
                                         .padding(
-                                            start = MyListView.PADDING_INNER_HORIZONTAL,
+                                            start = H_PADDING,
                                             top = 4.dp,
                                             bottom = 12.dp,
                                         )
@@ -112,7 +112,7 @@ fun RepeatingFormPeriodFs(
                                     size = 30.dp,
                                     modifier = Modifier
                                         .padding(
-                                            start = MyListView.PADDING_INNER_HORIZONTAL - 2.dp,
+                                            start = H_PADDING - 2.dp,
                                             top = 4.dp,
                                             bottom = 12.dp,
                                         ),
@@ -125,7 +125,7 @@ fun RepeatingFormPeriodFs(
                                 Column(
                                     modifier = Modifier
                                         .padding(
-                                            start = MyListView.PADDING_INNER_HORIZONTAL - 2.dp,
+                                            start = H_PADDING - 2.dp,
                                             top = 4.dp,
                                             bottom = 6.dp,
                                         )
@@ -162,7 +162,7 @@ fun RepeatingFormPeriodFs(
                                 Column(
                                     modifier = Modifier
                                         .padding(
-                                            start = MyListView.PADDING_INNER_HORIZONTAL - 1.dp,
+                                            start = H_PADDING - 1.dp,
                                             bottom = 12.dp,
                                         )
                                 ) {
