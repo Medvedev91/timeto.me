@@ -141,7 +141,7 @@ struct Fs__HeaderAction: View {
 
                     Text(title)
                         .foregroundColor(c.text)
-                        .font(.system(size: 27, weight: .semibold))
+                        .font(.system(size: 27, weight: .bold))
                         .padding(.leading, H_PADDING)
 
                     Spacer()
@@ -153,7 +153,7 @@ struct Fs__HeaderAction: View {
                         label: {
                             Text(actionText)
                                 .foregroundColor(c.text)
-                                .font(.system(size: 16, weight: .semibold))
+                                .font(.system(size: 16, weight: .bold))
                                 .padding(.horizontal, 10)
                                 .padding(.vertical, 6)
                                 .background(roundedShape.fill(c.blue))
