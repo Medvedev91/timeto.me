@@ -62,6 +62,7 @@ struct c {
 
     static let text = ColorRgba.companion.text.toColor()
     static let textSecondary = ColorRgba.companion.textSecondary.toColor()
+    static let tertiaryText = ColorRgba.companion.tertiaryText.toColor()
 
     static let bg = ColorRgba.companion.bg.toColor()
     static let fg = ColorRgba.companion.fg.toColor()
