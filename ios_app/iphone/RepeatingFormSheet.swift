@@ -191,13 +191,12 @@ struct RepeatingsFormSheet: View {
                         }
                     }
 
-                    Spacer()
-                        .frame(minHeight: 20)
+                    ZStack {
+                    }
+                    .safeAreaPadding(.bottom)
                 }
             }
-            .safeAreaPadding(.bottom)
         }
-        .background(c.bg)
     }
 }
 
