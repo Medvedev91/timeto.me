@@ -29,9 +29,8 @@ struct HomeView: View {
 
     @State private var vm = HomeVM()
 
-    @State private var isSettingsSheetPresented = false
-
     @EnvironmentObject private var nativeSheet: NativeSheet
+    @EnvironmentObject private var fs: Fs
 
     @State private var isPurpleAnim = true
     @State private var timerHeight = 30.0
@@ -374,7 +373,9 @@ struct HomeView: View {
 
                 Button(
                     action: {
-                        isSettingsSheetPresented = true
+                        fs.show { isFsPresented in
+                            SettingsSheet(isPresented: isFsPresented)
+                        }
                     },
                     label: {
                         VStack {
@@ -407,11 +408,6 @@ struct HomeView: View {
             if let checklist = triggersChecklist {
                 ChecklistSheet(isPresented: $isTriggersChecklistPresented, checklist: checklist)
             }
-        }
-        .sheetEnv(
-            isPresented: $isSettingsSheetPresented
-        ) {
-            SettingsSheet(isPresented: $isSettingsSheetPresented)
         }
         .onAppear {
             HomeView.lastInstance = self
