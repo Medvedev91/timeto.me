@@ -195,6 +195,7 @@ struct RepeatingsFormSheet: View {
                         .frame(minHeight: 20)
                 }
             }
+            .safeAreaPadding(.bottom)
         }
         .background(c.bg)
     }
