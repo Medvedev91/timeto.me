@@ -43,21 +43,34 @@ struct Fs__Item<Content: View>: View, Identifiable {
         ZStack {
 
             if isPresented {
-                content($isPresented)
-                    .transition(.opacity)
-                    .ignoresSafeArea(.container)
-                    .onDisappear {
-                        fs.items.removeAll {
-                            $0.id == id
+
+                ZStack {
+
+                    VStack {
+                        HStack {
+                            Spacer()
                         }
+                        Spacer()
                     }
+                    .background(c.bg)
+                    .ignoresSafeArea()
+
+                    content($isPresented)
+                        .ignoresSafeArea(.container) // Keep keyboard's paddings
+                        .onDisappear {
+                            fs.items.removeAll {
+                                $0.id == id
+                            }
+                        }
+                }
+                .transition(.opacity)
             }
         }
         .animation(fsAnimation, value: isPresented)
-        .ignoresSafeArea(.container)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
         .onAppear {
             isPresented = true
+            hideKeyboard()
         }
     }
 }
