@@ -332,6 +332,7 @@ struct SettingsSheet: View {
                         subject: state.feedbackSubject,
                         isFirst: true,
                         isLast: false,
+                        bgColor: c.fg,
                         withTopDivider: false
                     )
 

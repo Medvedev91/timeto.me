@@ -7,6 +7,7 @@ struct AskAQuestionButtonView: View {
     let subject: String
     let isFirst: Bool
     let isLast: Bool
+    var bgColor: Color = c.sheetFg
     let withTopDivider: Bool
 
     @State private var isMailViewPresented = false
@@ -17,6 +18,7 @@ struct AskAQuestionButtonView: View {
         MyListView__ItemView(
             isFirst: isFirst,
             isLast: isLast,
+            bgColor: bgColor,
             withTopDivider: withTopDivider
         ) {
 
