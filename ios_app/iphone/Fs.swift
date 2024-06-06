@@ -137,6 +137,37 @@ struct Fs__Header<Content: View>: View {
     }
 }
 
+struct Fs__HeaderTitle: View {
+
+    let title: String
+    let scrollToHeader: Int
+    let onClose: () -> Void
+
+    var body: some View {
+
+        Fs__Header(
+            scrollToHeader: scrollToHeader
+        ) {
+
+            HStack {
+
+                HeaderTitle(
+                    title: title
+                )
+
+                Spacer()
+
+                Fs__CloseButton(
+                    onClick: {
+                        onClose()
+                    }
+                )
+                .padding(.trailing, H_PADDING)
+            }
+            .padding(.bottom, 6)
+        }
+    }
+}
 
 struct Fs__HeaderAction: View {
 
