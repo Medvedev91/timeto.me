@@ -152,10 +152,9 @@ struct Fs__HeaderAction: View {
 
                 HStack {
 
-                    Text(title)
-                        .foregroundColor(c.text)
-                        .font(.system(size: 27, weight: .bold))
-                        .padding(.leading, H_PADDING)
+                    HeaderTitle(
+                        title: title
+                    )
 
                     Spacer()
 
@@ -177,5 +176,17 @@ struct Fs__HeaderAction: View {
                 .padding(.bottom, 6)
             }
         }
+    }
+}
+
+private struct HeaderTitle: View {
+
+    let title: String
+
+    var body: some View {
+        Text(title)
+            .foregroundColor(c.text)
+            .font(.system(size: 27, weight: .bold))
+            .padding(.leading, H_PADDING)
     }
 }
