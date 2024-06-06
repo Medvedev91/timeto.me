@@ -92,6 +92,27 @@ private struct Fs__Modifier: ViewModifier {
 
 ///
 
+struct Fs__CloseButton: View {
+
+    let onClick: () -> Void
+
+    var body: some View {
+
+        Button(
+            action: {
+                onClick()
+            },
+            label: {
+                Image(systemName: "xmark")
+                    .font(.system(size: 14, weight: .medium))
+                    .foregroundColor(c.tertiaryText)
+            }
+        )
+        .frame(width: 32, height: 32)
+        .background(roundedShape.fill(c.fg))
+    }
+}
+
 struct Fs__Header<Content: View>: View {
 
     let scrollToHeader: Int
