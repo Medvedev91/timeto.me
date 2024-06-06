@@ -545,6 +545,7 @@ struct ToolsView_ChecklistView: View {
 
     var body: some View {
         MyListSwipeToActionItem(
+            bgColor: c.fg,
             deletionHint: checklist.name,
             deletionConfirmationNote: "Are you sure you want to delete \"\(checklist.name)\" checklist?",
             onEdit: {
@@ -598,6 +599,7 @@ struct ToolsView_ShortcutView: View {
 
     var body: some View {
         MyListSwipeToActionItem(
+            bgColor: c.fg,
             deletionHint: shortcut.name,
             deletionConfirmationNote: "Are you sure you want to delete \"\(shortcut.name)\" shortcut?",
             onEdit: {

@@ -3,6 +3,7 @@ import shared
 
 struct MyListSwipeToActionItem<Content: View>: View {
 
+    var bgColor: Color = c.sheetFg
     let deletionHint: String
     let deletionConfirmationNote: String?
     let onEdit: () -> Void
@@ -103,13 +104,12 @@ struct MyListSwipeToActionItem<Content: View>: View {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                             itemHeight = geometry.size.height
                         }
-                        return c.sheetFg
+                        return bgColor
                     })
                     .highPriorityGesture(gesture)
                     .offset(x: xSwipeOffset)
         }
                 .frame(maxWidth: .infinity)
-                .background(c.sheetFg)
                 .animation(Animation.easeOut(duration: 0.25), value: xSwipeOffset)
     }
 
