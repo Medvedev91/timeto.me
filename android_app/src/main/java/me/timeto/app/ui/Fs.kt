@@ -213,8 +213,10 @@ fun Fs__HeaderAction(
                         .clickable {
                             onDone()
                         }
-                        .padding(horizontal = 10.dp)
-                        .padding(top = 3.dp + onePx, bottom = 3.dp),
+                        .padding(
+                            horizontal = 10.dp,
+                            vertical = 3.dp,
+                        ),
                     color = c.text,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Bold,
