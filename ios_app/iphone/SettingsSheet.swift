@@ -50,6 +50,7 @@ struct SettingsSheet: View {
                     MyListView__ItemView(
                         isFirst: true,
                         isLast: false,
+                        bgColor: c.fg,
                         withTopDivider: false
                     ) {
                         MyListView__ItemView__ButtonView(
@@ -71,6 +72,7 @@ struct SettingsSheet: View {
                     MyListView__ItemView(
                         isFirst: false,
                         isLast: true,
+                        bgColor: c.fg,
                         withTopDivider: true
                     ) {
                         MyListView__ItemView__ButtonView(
@@ -195,6 +197,7 @@ struct SettingsSheet: View {
                             MyListView__ItemView(
                                 isFirst: isFirst,
                                 isLast: notes.last == note,
+                                bgColor: c.fg,
                                 withTopDivider: !isFirst
                             ) {
                                 NoteListItemView(note: note)
@@ -215,7 +218,8 @@ struct SettingsSheet: View {
 
                         MyListView__ItemView(
                             isFirst: true,
-                            isLast: false
+                            isLast: false,
+                            bgColor: c.fg
                         ) {
                             MyListView__ItemView__ButtonView(
                                 text: "Folders",
@@ -231,6 +235,7 @@ struct SettingsSheet: View {
                         MyListView__ItemView(
                             isFirst: false,
                             isLast: true,
+                            bgColor: c.fg,
                             withTopDivider: true
                         ) {
                             MyListView__ItemView__ButtonView(
@@ -266,7 +271,8 @@ struct SettingsSheet: View {
 
                         MyListView__ItemView(
                             isFirst: true,
-                            isLast: false
+                            isLast: false,
+                            bgColor: c.fg
                         ) {
 
                             MyListView__ItemView__ButtonView(text: "Create") {
@@ -282,6 +288,7 @@ struct SettingsSheet: View {
                         MyListView__ItemView(
                             isFirst: false,
                             isLast: false,
+                            bgColor: c.fg,
                             withTopDivider: true
                         ) {
 
@@ -293,6 +300,7 @@ struct SettingsSheet: View {
                         MyListView__ItemView(
                             isFirst: false,
                             isLast: true,
+                            bgColor: c.fg,
                             withTopDivider: true
                         ) {
 
@@ -330,6 +338,7 @@ struct SettingsSheet: View {
                     MyListView__ItemView(
                         isFirst: false,
                         isLast: false,
+                        bgColor: c.fg,
                         withTopDivider: true
                     ) {
 
@@ -341,6 +350,7 @@ struct SettingsSheet: View {
                     MyListView__ItemView(
                         isFirst: false,
                         isLast: true,
+                        bgColor: c.fg,
                         withTopDivider: true
                     ) {
 
