@@ -37,11 +37,10 @@ import me.timeto.app.R
 
 // todo remove bgColor
 
-private val paddingSectionSection: Dp = MyListView.ITEM_MIN_HEIGHT.goldenRatioDown()
+private val itemMinHeight = 44.dp
+private val paddingSectionSection: Dp = itemMinHeight.goldenRatioDown()
 
 object MyListView {
-
-    val ITEM_MIN_HEIGHT = 44.dp
 
     // todo remove AI
     val PADDING_OUTER_HORIZONTAL = H_PADDING
@@ -193,7 +192,7 @@ fun MyListView__ItemView__TextInputView(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .sizeIn(minHeight = MyListView.ITEM_MIN_HEIGHT)
+                        .sizeIn(minHeight = itemMinHeight)
                         .padding(
                             start = H_PADDING,
                             end = H_PADDING + 12.dp, // for clear button
@@ -335,7 +334,7 @@ fun MyListView__ItemView__ButtonView(
             .clickable {
                 onClick()
             }
-            .sizeIn(minHeight = MyListView.ITEM_MIN_HEIGHT)
+            .sizeIn(minHeight = itemMinHeight)
             .padding(top = 1.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -386,7 +385,7 @@ fun MyListView__ItemView__ActionView(
 
         Row(
             modifier = Modifier
-                .sizeIn(minHeight = MyListView.ITEM_MIN_HEIGHT),
+                .sizeIn(minHeight = itemMinHeight),
             verticalAlignment = Alignment.CenterVertically
         ) {
 
