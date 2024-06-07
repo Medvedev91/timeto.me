@@ -36,7 +36,9 @@ fun pxToDp(px: Int) = (px / density)
 val H_PADDING = 16.dp
 val H_PADDING_HALF = H_PADDING / 2
 val onePx = pxToDp(1).dp
-val halfDp = (dpToPx(1f) / 2).dp
+
+val halfDpFloor = pxToDp(dpToPx(1f) / 2).dp // -=
+val halfDpCeil = 1.dp - halfDpFloor // +=
 
 fun Dp.limitMin(dp: Dp) = if (this < dp) dp else this
 fun Dp.limitMax(dp: Dp) = if (this > dp) dp else this

@@ -53,7 +53,7 @@ fun EventsView() {
             ModeButton(
                 text = "Calendar",
                 modifier = Modifier
-                    .padding(start = H_PADDING - halfDp),
+                    .padding(start = H_PADDING - halfDpCeil),
                 isActive = state.isCalendarOrList,
                 onClick = {
                     vm.setIsCalendarOrList(true)
