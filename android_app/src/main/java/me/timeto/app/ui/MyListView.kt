@@ -190,7 +190,7 @@ fun MyListView__ItemView__TextInputView(
                             start = H_PADDING,
                             end = H_PADDING + 12.dp, // for clear button
                             // top and bottom for multiline padding
-                            top = 9.dp,
+                            top = 8.dp + halfDpCeil,
                             bottom = 8.dp,
                         ),
                     contentAlignment = Alignment.CenterStart,
@@ -328,7 +328,7 @@ fun MyListView__ItemView__ButtonView(
                 onClick()
             }
             .sizeIn(minHeight = itemMinHeight)
-            .padding(top = 1.dp),
+            .padding(top = halfDpCeil),
         verticalAlignment = Alignment.CenterVertically,
     ) {
 
