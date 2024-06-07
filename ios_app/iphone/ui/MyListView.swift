@@ -301,7 +301,7 @@ struct MyListView__ItemView__ButtonView__RightText: View {
 
     var body: some View {
         Text(text)
-            .foregroundColor(textColor ?? c.formButtonRightNoteText)
+            .foregroundColor(textColor ?? c.tertiaryText)
             .padding(.leading, 10)
             .padding(.trailing, 10)
             .lineLimit(1)
