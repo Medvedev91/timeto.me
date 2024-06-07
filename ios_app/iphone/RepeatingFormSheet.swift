@@ -156,7 +156,7 @@ struct RepeatingsFormSheet: View {
                                             .font(.system(size: 16))
                                     }
                                 )
-                                .padding(.top, 25)
+                                .padding(.top, 24)
                                 .padding(.leading, H_PADDING)
 
                                 Spacer()

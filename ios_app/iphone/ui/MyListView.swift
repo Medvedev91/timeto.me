@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-private let itemMinHeight = 46.0
+private let itemMinHeight = 45.0
 private let paddingSectionSection: CGFloat = itemMinHeight.goldenRatioDown()
 
 ///
@@ -12,7 +12,7 @@ struct MyListView__PaddingFirst: View {
     var body: some View {
         ZStack {
         }
-        .frame(height: 15)
+        .frame(height: 14)
     }
 }
 
