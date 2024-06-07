@@ -1,10 +1,7 @@
 import SwiftUI
 import shared
 
-class MyListView {
-
-    static let ITEM_MIN_HEIGHT = 44.0
-}
+private let minItemHeight = 44.0
 
 ///
 /// Paddings
@@ -126,6 +123,7 @@ struct MyListView__ItemView__TextInputView: View {
         TextField__VMState(
             text: text,
             placeholder: placeholder,
+            minItemHeight: minItemHeight,
             isFocused: $isFocused,
             onValueChanged: onValueChanged
         )
@@ -254,7 +252,7 @@ struct MyListView__ItemView__ButtonView: View {
                     }
                 }
                 .frame(maxWidth: .infinity)
-                .frame(minHeight: MyListView.ITEM_MIN_HEIGHT)
+                .frame(minHeight: minItemHeight)
             }
         )
         .foregroundColor(.primary)
@@ -286,7 +284,7 @@ struct MyListView__ItemView__ActionView: View {
                     Spacer()
                 }
                 .frame(maxWidth: .infinity)
-                .frame(minHeight: MyListView.ITEM_MIN_HEIGHT)
+                .frame(minHeight: minItemHeight)
             }
         )
         .foregroundColor(.primary)

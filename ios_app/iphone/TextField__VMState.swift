@@ -12,11 +12,13 @@ struct TextField__VMState: View {
     private let stateText: String
 
     private let placeholder: String
+    private let minItemHeight: CGFloat
     private let onValueChanged: (String) -> Void
 
     init(
             text: String,
             placeholder: String,
+            minItemHeight: CGFloat,
             isFocused: FocusState<Bool>.Binding,
             onValueChanged: @escaping (String) -> Void
     ) {
@@ -24,6 +26,7 @@ struct TextField__VMState: View {
         _text = State(initialValue: text)
         stateText = text
         self.placeholder = placeholder
+        self.minItemHeight = minItemHeight
         self.onValueChanged = onValueChanged
     }
 
@@ -56,7 +59,7 @@ struct TextField__VMState: View {
                     ///
                     .focused($isFocused)
                     .textFieldStyle(.plain)
-                    .frame(minHeight: MyListView.ITEM_MIN_HEIGHT)
+                    .frame(minHeight: minItemHeight)
                     .padding(.leading, H_PADDING)
                     .padding(.trailing, H_PADDING + 16) // for clear button
 

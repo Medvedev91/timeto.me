@@ -85,6 +85,7 @@ struct TasksListView: View {
                                     TextField__VMState(
                                         text: state.addFormInputTextValue,
                                         placeholder: "Task",
+                                        minItemHeight: 44,
                                         isFocused: $isAddFormFocused,
                                         onValueChanged: { newText in
                                             vm.setAddFormInputTextValue(text: newText)
