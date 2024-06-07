@@ -29,9 +29,9 @@ fun isSDKQPlus() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
 
 fun Date.toUnixTime() = UnixTime((this.time / 1_000L).toInt())
 
-private val density by lazy { Resources.getSystem().displayMetrics.density }
-fun dpToPx(dp: Float) = (dp * density).toInt()
-fun pxToDp(px: Int) = (px / density)
+private val density: Float = Resources.getSystem().displayMetrics.density
+fun dpToPx(dp: Float): Int = (dp * density).toInt()
+fun pxToDp(px: Int): Float = (px / density)
 
 val H_PADDING = 16.dp
 val H_PADDING_HALF = H_PADDING / 2
