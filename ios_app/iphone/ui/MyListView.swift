@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-private let minItemHeight = 44.0
+private let minItemHeight = 46.0
 
 ///
 /// Paddings
@@ -252,6 +252,7 @@ struct MyListView__ItemView__ButtonView: View {
                     }
                 }
                 .frame(maxWidth: .infinity)
+                .padding(.bottom, halfDpFloor)
                 .frame(minHeight: minItemHeight)
             }
         )

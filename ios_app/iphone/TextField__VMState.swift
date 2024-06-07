@@ -59,6 +59,7 @@ struct TextField__VMState: View {
                     ///
                     .focused($isFocused)
                     .textFieldStyle(.plain)
+                    .padding(.top, 1)
                     .frame(minHeight: minItemHeight)
                     .padding(.leading, H_PADDING)
                     .padding(.trailing, H_PADDING + 16) // for clear button
