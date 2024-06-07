@@ -82,7 +82,6 @@ struct c {
     static let homeFg = ColorRgba.companion.homeFg.toColor()
 
     static let tasksDropFocused = ColorRgba.companion.tasksDropFocused.toColor()
-    static let formButtonRightNoteText = ColorRgba.companion.formButtonRightNoteText.toColor()
 }
 
 extension View {

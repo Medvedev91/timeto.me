@@ -294,7 +294,6 @@ data class ColorRgba(
         val summaryDatePicker = sheetFg
 
         val tasksDropFocused = green
-        val formButtonRightNoteText = ColorRgba(255, 255, 255, 136)
 
         fun fromRgbaString(rgbaString: String): ColorRgba =
             rgbaString.split(',').map { it.toInt() }.let {
