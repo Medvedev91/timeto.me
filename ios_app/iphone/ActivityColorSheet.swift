@@ -4,8 +4,7 @@ import shared
 private let circleSize = 42.0
 private let circlePadding = 4.0
 private let circleCellSize = circleSize + (circlePadding * 2.0)
-private let sheetHPadding = MyListView.PADDING_OUTER_HORIZONTAL
-private let dividerPadding = sheetHPadding.goldenRatioDown()
+private let dividerPadding = H_PADDING.goldenRatioDown()
 private let bgColor = c.sheetBg
 
 struct ActivityColorSheet: View {
@@ -92,7 +91,7 @@ struct ActivityColorSheet: View {
                                 Padding(vertical: 20)
                             }
                                     .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(.leading, sheetHPadding)
+                                    .padding(.leading, H_PADDING)
                                     .padding(.trailing, dividerPadding)
 
                             ZStack {}
@@ -123,7 +122,7 @@ struct ActivityColorSheet: View {
                             }
                         }
                                 .padding(.leading, dividerPadding - circlePadding)
-                                .padding(.trailing, sheetHPadding - circlePadding)
+                                .padding(.trailing, H_PADDING - circlePadding)
                                 .padding(.bottom, 16)
                     }
                 }
@@ -197,7 +196,7 @@ struct ActivityColorSheet: View {
                                 )
                             }
                                     .animateVmValue(value: state.isRgbSlidersShowed, state: $isRgbSlidersShowedAnim)
-                                    .padding(.leading, sheetHPadding)
+                                    .padding(.leading, H_PADDING)
                         }
                 )
                         .safeAreaPadding(.bottom)
@@ -272,7 +271,7 @@ private struct ColorSliderView: View {
                 .animateVmValue(value: valueVM, state: $value)
                 ///
                 .accentColor(color)
-                .padding(.horizontal, sheetHPadding)
+                .padding(.horizontal, H_PADDING)
                 .padding(.vertical, 6)
     }
 }

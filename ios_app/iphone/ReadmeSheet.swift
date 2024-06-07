@@ -1,7 +1,6 @@
 import SwiftUI
 import shared
 
-private let hPadding = MyListView.PADDING_OUTER_HORIZONTAL
 private let pTextLineHeight = 4.0
 
 struct ReadmeSheet: View {
@@ -32,7 +31,7 @@ struct ReadmeSheet: View {
                                 Text(paragraph.text)
                                     .font(.system(size: 28, weight: .bold))
                                     .padding(.top, 44)
-                                    .padding(.horizontal, hPadding)
+                                    .padding(.horizontal, H_PADDING)
                                 Spacer()
                             }
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphSubtitle {
@@ -40,7 +39,7 @@ struct ReadmeSheet: View {
                                 Text(paragraph.text)
                                     .font(.system(size: 20, weight: .bold))
                                     .padding(.top, 36)
-                                    .padding(.horizontal, hPadding)
+                                    .padding(.horizontal, H_PADDING)
                                 Spacer()
                             }
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphText {
@@ -48,7 +47,7 @@ struct ReadmeSheet: View {
                                 Text(paragraph.text)
                                     .font(.system(size: 18))
                                     .padding(.top, 24)
-                                    .padding(.horizontal, hPadding)
+                                    .padding(.horizontal, H_PADDING)
                                     .lineSpacing(pTextLineHeight)
                                 Spacer()
                             }
@@ -58,7 +57,7 @@ struct ReadmeSheet: View {
                                     .font(.system(size: 18))
                                     .padding(.top, 16)
                                     .padding(.bottom, 16)
-                                    .padding(.horizontal, hPadding)
+                                    .padding(.horizontal, H_PADDING)
                                     .lineSpacing(pTextLineHeight)
                                 Spacer()
                             }
@@ -84,7 +83,7 @@ struct ReadmeSheet: View {
                                     .padding(.top, 12)
                                 }
                             }
-                            .padding(.horizontal, hPadding)
+                            .padding(.horizontal, H_PADDING)
                             .padding(.top, 12)
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTimerTypical {
                             ImagePreviewsView(

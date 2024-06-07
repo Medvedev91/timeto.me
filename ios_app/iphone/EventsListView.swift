@@ -51,7 +51,7 @@ struct EventsListView: View {
 
                                 Spacer()
                             }
-                            .padding(.leading, MyListView.PADDING_OUTER_HORIZONTAL)
+                            .padding(.leading, H_PADDING)
 
                             HStack {
                             }

@@ -56,7 +56,7 @@ struct NoteSheet: View {
                     }
                 }
                         .padding(.top, 10)
-                        .padding(.trailing, MyListView.PADDING_OUTER_HORIZONTAL - 8)
+                        .padding(.trailing, H_PADDING - 8)
                         .padding(.bottom, 10)
             }
         }

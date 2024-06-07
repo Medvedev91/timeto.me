@@ -86,7 +86,7 @@ struct NoteFormSheet: View {
                                             }
                                     )
                                 }
-                                        .padding(.leading, MyListView.PADDING_OUTER_HORIZONTAL)
+                                        .padding(.leading, H_PADDING)
                             } else {
                                 EmptyView()
                             }

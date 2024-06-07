@@ -5,7 +5,6 @@ class MyListView {
 
     static let ITEM_MIN_HEIGHT = 44.0
 
-    static let PADDING_OUTER_HORIZONTAL = H_PADDING
     static let PADDING_INNER_HORIZONTAL = H_PADDING
 }
 
@@ -74,7 +73,7 @@ struct MyListView__HeaderView: View {
                 rightView
             }
         }
-        .padding(.horizontal, MyListView.PADDING_OUTER_HORIZONTAL + MyListView.PADDING_INNER_HORIZONTAL)
+        .padding(.horizontal, H_PADDING + MyListView.PADDING_INNER_HORIZONTAL)
     }
 }
 
@@ -91,8 +90,8 @@ struct MyListView__ItemView<Content: View>: View {
     var withTopDivider: Bool = false
     var dividerPaddingStart = MyListView.PADDING_INNER_HORIZONTAL
 
-    var outerPaddingStart = MyListView.PADDING_OUTER_HORIZONTAL
-    var outerPaddingEnd = MyListView.PADDING_OUTER_HORIZONTAL
+    var outerPaddingStart = H_PADDING
+    var outerPaddingEnd = H_PADDING
 
     @ViewBuilder var content: () -> Content
 

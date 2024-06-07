@@ -79,7 +79,7 @@ struct Sheet__BottomViewDefault<C1, C2>: View where C1: View, C2: View {
                     }
                 }
                         .padding(.top, 10)
-                        .padding(.trailing, MyListView.PADDING_OUTER_HORIZONTAL)
+                        .padding(.trailing, H_PADDING)
                         .padding(.bottom, 10)
             }
         }
@@ -104,7 +104,7 @@ struct Sheet__BottomViewDone: View {
                 }
             }
                     .padding(.top, 10)
-                    .padding(.trailing, MyListView.PADDING_OUTER_HORIZONTAL)
+                    .padding(.trailing, H_PADDING)
                     .padding(.bottom, 10)
         }
     }
@@ -128,7 +128,7 @@ struct Sheet__BottomViewClose: View {
                 }
             }
                     .padding(.top, 10)
-                    .padding(.trailing, MyListView.PADDING_OUTER_HORIZONTAL)
+                    .padding(.trailing, H_PADDING)
                     .padding(.bottom, 10)
         }
     }

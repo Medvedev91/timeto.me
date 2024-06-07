@@ -58,7 +58,7 @@ struct GoalPickerSheet: View {
                     }
             )
                     .padding(.top, 20)
-                    .padding(.leading, MyListView.PADDING_OUTER_HORIZONTAL - 1)
+                    .padding(.leading, H_PADDING - 1)
 
             Spacer()
 

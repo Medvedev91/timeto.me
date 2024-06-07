@@ -1,8 +1,6 @@
 import SwiftUI
 import shared
 
-private let hPadding = MyListView.PADDING_OUTER_HORIZONTAL
-
 struct PrivacySheet: View {
 
     @Binding var isPresented: Bool
@@ -69,7 +67,7 @@ struct PrivacySheet: View {
 
                                 Text("Open Source")
                                         .padding(.top, 16)
-                                        .padding(.horizontal, MyListView.PADDING_OUTER_HORIZONTAL)
+                                        .padding(.horizontal, H_PADDING)
                                         .padding(.top, 8)
                                         .foregroundColor(c.blue)
                                         .font(.system(size: 15))
@@ -99,7 +97,7 @@ private struct PView: View {
 
         Text(text)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, hPadding)
+                .padding(.horizontal, H_PADDING)
                 .padding(.top, topPadding)
                 .foregroundColor(c.white)
                 .font(.system(size: 17, weight: fontWeight))
