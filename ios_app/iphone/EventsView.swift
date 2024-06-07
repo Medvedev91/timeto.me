@@ -33,7 +33,7 @@ struct EventsView: View {
                             vm.setIsCalendarOrList(isCalendarOrList: true)
                         }
                     )
-                            .padding(.leading, H_PADDING - halfDp)
+                            .padding(.leading, H_PADDING - halfDpCeil)
 
                     ModeButton(
                         text: "List",
