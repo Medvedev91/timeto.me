@@ -1,7 +1,8 @@
 import SwiftUI
 import shared
 
-private let minItemHeight = 46.0
+private let itemMinHeight = 46.0
+private let paddingSectionSection: CGFloat = itemMinHeight.goldenRatioDown()
 
 ///
 /// Paddings
@@ -123,7 +124,7 @@ struct MyListView__ItemView__TextInputView: View {
         TextField__VMState(
             text: text,
             placeholder: placeholder,
-            minItemHeight: minItemHeight,
+            itemMinHeight: itemMinHeight,
             isFocused: $isFocused,
             onValueChanged: onValueChanged
         )
@@ -253,7 +254,7 @@ struct MyListView__ItemView__ButtonView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.bottom, halfDpFloor)
-                .frame(minHeight: minItemHeight)
+                .frame(minHeight: itemMinHeight)
             }
         )
         .foregroundColor(.primary)
@@ -285,7 +286,7 @@ struct MyListView__ItemView__ActionView: View {
                     Spacer()
                 }
                 .frame(maxWidth: .infinity)
-                .frame(minHeight: minItemHeight)
+                .frame(minHeight: itemMinHeight)
             }
         )
         .foregroundColor(.primary)
