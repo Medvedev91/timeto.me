@@ -108,7 +108,7 @@ private struct FoldersSettingsSheet__FolderItem: View {
                                 }
                         )
                                 .buttonStyle(.plain)
-                                .padding(.trailing, MyListView.PADDING_INNER_HORIZONTAL)
+                                .padding(.trailing, H_PADDING)
                 )
         ) {
             isEditPresented = true

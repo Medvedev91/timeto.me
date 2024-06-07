@@ -4,8 +4,6 @@ import shared
 class MyListView {
 
     static let ITEM_MIN_HEIGHT = 44.0
-
-    static let PADDING_INNER_HORIZONTAL = H_PADDING
 }
 
 ///
@@ -73,7 +71,7 @@ struct MyListView__HeaderView: View {
                 rightView
             }
         }
-        .padding(.horizontal, H_PADDING + MyListView.PADDING_INNER_HORIZONTAL)
+        .padding(.horizontal, H_PADDING + H_PADDING)
     }
 }
 
@@ -88,7 +86,7 @@ struct MyListView__ItemView<Content: View>: View {
     var bgColor: Color = c.sheetFg
 
     var withTopDivider: Bool = false
-    var dividerPaddingStart = MyListView.PADDING_INNER_HORIZONTAL
+    var dividerPaddingStart = H_PADDING
 
     var outerPaddingStart = H_PADDING
     var outerPaddingEnd = H_PADDING
@@ -150,7 +148,7 @@ struct MyListView__ItemView__RadioView: View {
             rightView: AnyView(
                 Image(systemName: isActive ? "circle.inset.filled" : "circle")
                     .foregroundColor(isActive ? .blue : .primary)
-                    .padding(.trailing, MyListView.PADDING_INNER_HORIZONTAL - 2)
+                    .padding(.trailing, H_PADDING - 2)
             )
         ) {
             onClick()
@@ -209,7 +207,7 @@ struct MyListView__ItemView__CheckboxView: View {
             rightView: AnyView(
                 Image(systemName: "checkmark")
                     .foregroundColor(isChecked ? .blue : .clear)
-                    .padding(.trailing, MyListView.PADDING_INNER_HORIZONTAL)
+                    .padding(.trailing, H_PADDING)
             )
         ) {
             onClick()
@@ -239,7 +237,7 @@ struct MyListView__ItemView__ButtonView: View {
                 HStack {
 
                     Text(text)
-                        .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL)
+                        .padding(.leading, H_PADDING)
                         .lineLimit(maxLines)
 
                     Spacer()
@@ -298,7 +296,7 @@ struct MyListView__ItemView__ActionView: View {
 struct MyListView__ItemView__ButtonView__RightText: View {
 
     let text: String
-    var paddingEnd = MyListView.PADDING_INNER_HORIZONTAL
+    var paddingEnd = H_PADDING
     var textColor: Color? = nil
 
     var body: some View {

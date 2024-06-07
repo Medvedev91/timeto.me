@@ -362,7 +362,7 @@ struct SettingsSheet: View {
                                     if let privacyNote = state.privacyNote {
                                         Text(privacyNote)
                                             .font(.system(size: 21))
-                                            .padding(.trailing, MyListView.PADDING_INNER_HORIZONTAL)
+                                            .padding(.trailing, H_PADDING)
                                     } else {
                                         Text("")
                                     }
@@ -581,7 +581,7 @@ private struct NoteListItemView: View {
         MyListView__ItemView__ButtonView(
             text: note.title,
             maxLines: 1,
-            rightView: AnyView(Padding(horizontal: MyListView.PADDING_INNER_HORIZONTAL))
+            rightView: AnyView(Padding(horizontal: H_PADDING))
         ) {
             nativeSheet.show { isPresented in
                 NoteSheet(isPresented: isPresented, initNote: note)

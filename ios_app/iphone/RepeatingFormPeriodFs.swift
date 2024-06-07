@@ -101,7 +101,7 @@ struct RepeatingFormPeriodFs: View {
                                 )
                                 .padding(.top, 4)
                                 .padding(.bottom, 16)
-                                .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL - 1)
+                                .padding(.leading, H_PADDING - 1)
                             } else if periodIndex == 3 {
                                 let dayNumbers: [Int] = Array(1..<(RepeatingDb.companion.MAX_DAY_OF_MONTH.toInt() + 1))
                                 VStack(alignment: .leading, spacing: 8) {
@@ -131,7 +131,7 @@ struct RepeatingFormPeriodFs: View {
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                 .padding(.top, 6)
                                 .padding(.bottom, 16)
-                                .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL - 1)
+                                .padding(.leading, H_PADDING - 1)
                             } else if periodIndex == 4 {
 
                                 VStack(alignment: .leading, spacing: 0) {
@@ -165,7 +165,7 @@ struct RepeatingFormPeriodFs: View {
                                     )
                                 }
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL)
+                                .padding(.leading, H_PADDING)
                                 .padding(.bottom, 14)
                                 .sheetEnv(isPresented: $isAddDayOfYearSheetPresented) {
                                     AddDayOfYearSheet(

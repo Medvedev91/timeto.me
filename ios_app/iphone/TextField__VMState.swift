@@ -57,8 +57,8 @@ struct TextField__VMState: View {
                     .focused($isFocused)
                     .textFieldStyle(.plain)
                     .frame(minHeight: MyListView.ITEM_MIN_HEIGHT)
-                    .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL)
-                    .padding(.trailing, MyListView.PADDING_INNER_HORIZONTAL + 16) // for clear button
+                    .padding(.leading, H_PADDING)
+                    .padding(.trailing, H_PADDING + 16) // for clear button
 
             TextFieldClearButtonView(
                     text: $text,

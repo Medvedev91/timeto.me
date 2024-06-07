@@ -223,7 +223,7 @@ struct ActivityFormSheet: View {
                                     }
                                 }
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL)
+                                .padding(.leading, H_PADDING)
                             }
                         }
                     }
@@ -304,7 +304,7 @@ struct ActivityFormSheet: View {
                                                 )
                                             }
                                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                            .padding(.leading, MyListView.PADDING_INNER_HORIZONTAL)
+                                            .padding(.leading, H_PADDING)
                                             .padding(.bottom, 14)
                                         }
                                     }
