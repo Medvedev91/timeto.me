@@ -73,8 +73,7 @@ struct SearchEmojiSheet: View {
 
                         TextFieldClearButtonView(
                                 text: $inputText,
-                                leadingPadding: 4,
-                                trailingPadding: 4
+                                isFocused: $isFocused
                         ) {
                             isFocused = true
                         }

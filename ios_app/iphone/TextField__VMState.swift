@@ -67,7 +67,7 @@ struct TextField__VMState: View {
 
             TextFieldClearButtonView(
                 text: $text,
-                trailingPadding: 8
+                isFocused: $isFocused
             ) {
                 isFocused = true
             }
