@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import me.timeto.app.c
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.vm.ui.TextFeaturesTriggersFormUI
@@ -23,15 +22,13 @@ fun TextFeaturesTriggersFormView(
         MyListView__ItemView(
             isFirst = true,
             isLast = false,
+            bgColor = bgColor,
         ) {
-            MyListView__ItemView__ButtonView(
+            MyListView__Item__Button(
                 text = formUI.checklistsTitle,
-                withArrow = true,
-                bgColor = bgColor,
                 rightView = {
-                    MyListView__ItemView__ButtonView__RightText(
+                    MyListView__Item__Button__RightText(
                         text = formUI.checklistsNote,
-                        paddingEnd = 2.dp,
                     )
                 }
             ) {
@@ -49,16 +46,14 @@ fun TextFeaturesTriggersFormView(
         MyListView__ItemView(
             isFirst = false,
             isLast = true,
+            bgColor = bgColor,
             withTopDivider = true,
         ) {
-            MyListView__ItemView__ButtonView(
+            MyListView__Item__Button(
                 text = formUI.shortcutsTitle,
-                withArrow = true,
-                bgColor = bgColor,
                 rightView = {
-                    MyListView__ItemView__ButtonView__RightText(
+                    MyListView__Item__Button__RightText(
                         text = formUI.shortcutsNote,
-                        paddingEnd = 2.dp,
                     )
                 }
             ) {
