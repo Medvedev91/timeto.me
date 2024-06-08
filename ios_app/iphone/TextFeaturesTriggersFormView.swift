@@ -12,9 +12,9 @@ struct TextFeaturesTriggersFormView: View {
     @State private var isShortcutsPickerPresented = false
 
     init(
-            textFeatures: TextFeatures,
-            bgColor: Color = c.sheetFg,
-            onChange: @escaping (TextFeatures) -> Void
+        textFeatures: TextFeatures,
+        bgColor: Color = c.sheetFg,
+        onChange: @escaping (TextFeatures) -> Void
     ) {
         self.bgColor = bgColor
         self.onChange = onChange
@@ -26,61 +26,61 @@ struct TextFeaturesTriggersFormView: View {
         VStack {
 
             MyListView__ItemView(
-                    isFirst: true,
-                    isLast: false,
-                    bgColor: bgColor
+                isFirst: true,
+                isLast: false,
+                bgColor: bgColor
             ) {
 
                 MyListView__ItemView__ButtonView(
-                        text: formUI.checklistsTitle,
-                        withArrow: true,
-                        rightView: AnyView(
-                                MyListView__ItemView__ButtonView__RightText(
-                                        text: formUI.checklistsNote,
-                                        paddingEnd: 2
-                                )
+                    text: formUI.checklistsTitle,
+                    withArrow: true,
+                    rightView: AnyView(
+                        MyListView__ItemView__ButtonView__RightText(
+                            text: formUI.checklistsNote,
+                            paddingEnd: 2
                         )
+                    )
                 ) {
                     isChecklistsPickerPresented = true
                 }
             }
-                    .sheetEnv(isPresented: $isChecklistsPickerPresented) {
-                        ChecklistsPickerSheet(
-                                isPresented: $isChecklistsPickerPresented,
-                                selectedChecklists: formUI.textFeatures.checklists
-                        ) { checklists in
-                            onChange(formUI.setChecklists(checklists: checklists))
-                        }
-                    }
+            .sheetEnv(isPresented: $isChecklistsPickerPresented) {
+                ChecklistsPickerSheet(
+                    isPresented: $isChecklistsPickerPresented,
+                    selectedChecklists: formUI.textFeatures.checklists
+                ) { checklists in
+                    onChange(formUI.setChecklists(checklists: checklists))
+                }
+            }
 
             MyListView__ItemView(
-                    isFirst: false,
-                    isLast: true,
-                    bgColor: bgColor,
-                    withTopDivider: true
+                isFirst: false,
+                isLast: true,
+                bgColor: bgColor,
+                withTopDivider: true
             ) {
 
                 MyListView__ItemView__ButtonView(
-                        text: formUI.shortcutsTitle,
-                        withArrow: true,
-                        rightView: AnyView(
-                                MyListView__ItemView__ButtonView__RightText(
-                                        text: formUI.shortcutsNote,
-                                        paddingEnd: 2
-                                )
+                    text: formUI.shortcutsTitle,
+                    withArrow: true,
+                    rightView: AnyView(
+                        MyListView__ItemView__ButtonView__RightText(
+                            text: formUI.shortcutsNote,
+                            paddingEnd: 2
                         )
+                    )
                 ) {
                     isShortcutsPickerPresented = true
                 }
             }
-                    .sheetEnv(isPresented: $isShortcutsPickerPresented) {
-                        ShortcutsPickerSheet(
-                                isPresented: $isShortcutsPickerPresented,
-                                selectedShortcuts: formUI.textFeatures.shortcuts
-                        ) { shortcut in
-                            onChange(formUI.setShortcuts(shortcuts: shortcut))
-                        }
-                    }
+            .sheetEnv(isPresented: $isShortcutsPickerPresented) {
+                ShortcutsPickerSheet(
+                    isPresented: $isShortcutsPickerPresented,
+                    selectedShortcuts: formUI.textFeatures.shortcuts
+                ) { shortcut in
+                    onChange(formUI.setShortcuts(shortcuts: shortcut))
+                }
+            }
         }
     }
 }
