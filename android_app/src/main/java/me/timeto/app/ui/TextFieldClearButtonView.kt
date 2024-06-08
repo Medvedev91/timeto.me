@@ -14,15 +14,19 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import me.timeto.app.R
+import me.timeto.app.ZStack
 import me.timeto.app.c
 import me.timeto.app.roundedShape
 
 @Composable
 fun TextFieldClearButtonView(
     text: String,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
-    Row {
+    ZStack(
+        modifier = modifier,
+    ) {
         AnimatedVisibility(
             visible = text.isNotEmpty(),
             enter = fadeIn(),
@@ -31,15 +35,14 @@ fun TextFieldClearButtonView(
             Icon(
                 painterResource(id = R.drawable.sf_xmark_circle_fill_medium_medium),
                 "Clear",
-                tint = c.white.copy(alpha = 0.3f),
+                tint = c.tertiaryText,
                 modifier = Modifier
-                    .padding(end = 2.dp)
                     .size(32.dp)
                     .clip(roundedShape)
                     .clickable {
                         onClick()
                     }
-                    .padding(8.dp)
+                    .padding(8.dp),
             )
         }
     }
