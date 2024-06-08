@@ -293,6 +293,27 @@ struct MyListView__ItemView__ActionView: View {
     }
 }
 
+struct MyListView__Item__Button__RightText: View {
+
+    let text: String
+    var color: Color? = nil
+
+    var body: some View {
+
+        HStack {
+
+            Text(text)
+                .foregroundColor(color ?? c.tertiaryText)
+                .padding(.leading, 10)
+                .padding(.trailing, 8 + halfDpFloor)
+                .lineLimit(1)
+
+            MyListView__Item__Button__RightArrow()
+        }
+    }
+}
+
+// todo remove
 struct MyListView__ItemView__ButtonView__RightText: View {
 
     let text: String
