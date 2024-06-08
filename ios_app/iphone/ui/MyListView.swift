@@ -307,3 +307,14 @@ struct MyListView__ItemView__ButtonView__RightText: View {
             .lineLimit(1)
     }
 }
+
+struct MyListView__Item__Button__RightArrow: View {
+
+    var body: some View {
+        Image(systemName: "chevron.right")
+            .offset(y: onePx)
+            .foregroundColor(c.tertiaryText)
+            .font(.system(size: 14, weight: .medium))
+            .padding(.trailing, H_PADDING - 1)
+    }
+}
