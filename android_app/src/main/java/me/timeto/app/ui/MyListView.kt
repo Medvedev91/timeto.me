@@ -20,6 +20,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -163,6 +164,8 @@ fun MyListView__ItemView__TextInputView(
         contentAlignment = Alignment.CenterEnd
     ) {
 
+        val isFocused = remember { mutableStateOf(false) }
+
         BasicTextField__VMState(
             text = text,
             onValueChange = {
@@ -207,10 +210,14 @@ fun MyListView__ItemView__TextInputView(
             },
             modifier = Modifier
                 .focusRequester(focusRequester)
+                .onFocusChanged {
+                    isFocused.value = it.isFocused
+                },
         )
 
         TextFieldClearButtonView(
             text = text,
+            isFocused = isFocused.value,
             modifier = Modifier
                 .padding(end = 6.dp),
         ) {

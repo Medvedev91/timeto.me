@@ -21,6 +21,7 @@ import me.timeto.app.roundedShape
 @Composable
 fun TextFieldClearButtonView(
     text: String,
+    isFocused: Boolean,
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
@@ -28,7 +29,7 @@ fun TextFieldClearButtonView(
         modifier = modifier,
     ) {
         AnimatedVisibility(
-            visible = text.isNotEmpty(),
+            visible = text.isNotEmpty() && isFocused,
             enter = fadeIn(),
             exit = fadeOut(),
         ) {

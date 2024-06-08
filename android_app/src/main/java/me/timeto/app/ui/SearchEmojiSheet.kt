@@ -111,10 +111,13 @@ fun SearchEmojiSheet(
                             }
                         },
                         modifier = Modifier
-                            .focusRequester(focusRequester)
+                            .focusRequester(focusRequester),
                     )
 
-                    TextFieldClearButtonView(text = state.inputValue) {
+                    TextFieldClearButtonView(
+                        text = state.inputValue,
+                        isFocused = true,
+                    ) {
                         focusRequester.requestFocus()
                         vm.setInputValue("")
                     }
