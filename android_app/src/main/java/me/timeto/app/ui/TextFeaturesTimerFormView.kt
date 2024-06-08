@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import me.timeto.app.c
 import me.timeto.app.toColor
 import me.timeto.shared.TextFeatures
@@ -31,6 +32,7 @@ fun TextFeaturesTimerFormView(
                     MyListView__Item__Button__RightText(
                         text = formUI.activityNote,
                         color = formUI.activityColorOrNull?.toColor(),
+                        extraEndPadding = (-1).dp,
                     )
                 }
             ) {
