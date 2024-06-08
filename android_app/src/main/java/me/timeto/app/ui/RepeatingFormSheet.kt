@@ -71,15 +71,13 @@ fun RepeatingFormSheet(
             MyListView__ItemView(
                 isFirst = true,
                 isLast = false,
+                bgColor = c.fg,
             ) {
-                MyListView__ItemView__ButtonView(
+                MyListView__Item__Button(
                     text = state.periodTitle,
-                    withArrow = true,
-                    bgColor = c.fg,
                     rightView = {
-                        MyListView__ItemView__ButtonView__RightText(
+                        MyListView__Item__Button__RightText(
                             text = state.periodNote,
-                            paddingEnd = 2.dp,
                             color = state.periodNoteColor?.toColor(),
                         )
                     }
@@ -99,16 +97,14 @@ fun RepeatingFormSheet(
             MyListView__ItemView(
                 isFirst = false,
                 isLast = true,
+                bgColor = c.fg,
                 withTopDivider = true,
             ) {
-                MyListView__ItemView__ButtonView(
+                MyListView__Item__Button(
                     text = state.daytimeHeader,
-                    withArrow = true,
-                    bgColor = c.fg,
                     rightView = {
-                        MyListView__ItemView__ButtonView__RightText(
+                        MyListView__Item__Button__RightText(
                             text = state.daytimeNote,
-                            paddingEnd = 2.dp,
                         )
                     }
                 ) {
