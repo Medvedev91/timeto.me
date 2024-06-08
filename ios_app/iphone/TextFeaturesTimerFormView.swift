@@ -31,16 +31,14 @@ struct TextFeaturesTimerFormView: View {
                 bgColor: bgColor
             ) {
 
-                MyListView__ItemView__ButtonView(
+                MyListView__Item__Button(
                     text: formUI.activityTitle,
-                    withArrow: true,
-                    rightView: AnyView(
-                        MyListView__ItemView__ButtonView__RightText(
+                    rightView: {
+                        MyListView__Item__Button__RightText(
                             text: formUI.activityNote,
-                            paddingEnd: 2,
-                            textColor: formUI.activityColorOrNull?.toColor()
+                            color: formUI.activityColorOrNull?.toColor()
                         )
-                    )
+                    }
                 ) {
                     isActivitySheetPresented = true
                 }
@@ -60,16 +58,14 @@ struct TextFeaturesTimerFormView: View {
                 withTopDivider: true
             ) {
 
-                MyListView__ItemView__ButtonView(
+                MyListView__Item__Button(
                     text: formUI.timerTitle,
-                    withArrow: true,
-                    rightView: AnyView(
-                        MyListView__ItemView__ButtonView__RightText(
+                    rightView: {
+                        MyListView__Item__Button__RightText(
                             text: formUI.timerNote,
-                            paddingEnd: 2,
-                            textColor: formUI.timerColorOrNull?.toColor()
+                            color: formUI.timerColorOrNull?.toColor()
                         )
-                    )
+                    }
                 ) {
                     isTimerSheetPresented = true
                 }
