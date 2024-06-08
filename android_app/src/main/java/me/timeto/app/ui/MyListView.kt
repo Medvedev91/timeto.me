@@ -283,17 +283,16 @@ fun MyListView__ItemView__CheckboxView(
 fun MyListView__ItemView__SwitchView(
     text: String,
     isActive: Boolean,
-    bgColor: Color = c.sheetFg,
     onClick: () -> Unit,
 ) {
-    MyListView__ItemView__ButtonView(
+    MyListView__Item__Button(
         text = text,
-        bgColor = bgColor,
         rightView = {
             Switch(
                 checked = isActive,
                 onCheckedChange = { onClick() },
-                modifier = Modifier.padding(end = 6.dp),
+                modifier = Modifier
+                    .padding(end = 9.dp, bottom = halfDpFloor),
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = c.blue,
                     uncheckedThumbColor = Color.Gray,
