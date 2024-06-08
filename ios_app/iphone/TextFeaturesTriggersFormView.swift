@@ -31,15 +31,13 @@ struct TextFeaturesTriggersFormView: View {
                 bgColor: bgColor
             ) {
 
-                MyListView__ItemView__ButtonView(
+                MyListView__Item__Button(
                     text: formUI.checklistsTitle,
-                    withArrow: true,
-                    rightView: AnyView(
-                        MyListView__ItemView__ButtonView__RightText(
-                            text: formUI.checklistsNote,
-                            paddingEnd: 2
+                    rightView: {
+                        MyListView__Item__Button__RightText(
+                            text: formUI.checklistsNote
                         )
-                    )
+                    }
                 ) {
                     isChecklistsPickerPresented = true
                 }
@@ -60,15 +58,13 @@ struct TextFeaturesTriggersFormView: View {
                 withTopDivider: true
             ) {
 
-                MyListView__ItemView__ButtonView(
+                MyListView__Item__Button(
                     text: formUI.shortcutsTitle,
-                    withArrow: true,
-                    rightView: AnyView(
-                        MyListView__ItemView__ButtonView__RightText(
-                            text: formUI.shortcutsNote,
-                            paddingEnd: 2
+                    rightView: {
+                        MyListView__Item__Button__RightText(
+                            text: formUI.shortcutsNote
                         )
-                    )
+                    }
                 ) {
                     isShortcutsPickerPresented = true
                 }
