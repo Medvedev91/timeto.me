@@ -398,6 +398,31 @@ fun MyListView__ItemView__ActionView(
 }
 
 @Composable
+fun MyListView__Item__Button__RightText(
+    text: String,
+    color: Color? = null,
+) {
+
+    HStack(
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+
+        Text(
+            text,
+            modifier = Modifier
+                .padding(end = 8.dp)
+                .offset(),
+            color = color ?: c.tertiaryText,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
+
+        MyListView__Item__Button__RightArrow()
+    }
+}
+
+// todo remove
+@Composable
 fun MyListView__ItemView__ButtonView__RightText(
     text: String,
     paddingEnd: Dp = H_PADDING,
