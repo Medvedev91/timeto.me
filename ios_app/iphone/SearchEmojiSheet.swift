@@ -77,6 +77,8 @@ struct SearchEmojiSheet: View {
                         ) {
                             isFocused = true
                         }
+                                .padding(.leading, 4)
+                                .padding(.trailing, 4)
                                 .padding(.top, 5)
                     }
                             .padding(.trailing, 25)

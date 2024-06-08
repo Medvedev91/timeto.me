@@ -63,7 +63,7 @@ struct TextField__VMState: View {
             .padding(.top, 1)
             .frame(minHeight: itemMinHeight)
             .padding(.leading, H_PADDING)
-            .padding(.trailing, H_PADDING + 16) // for clear button
+            .padding(.trailing, H_PADDING + 24) // for clear button
 
             TextFieldClearButtonView(
                 text: $text,
@@ -71,6 +71,7 @@ struct TextField__VMState: View {
             ) {
                 isFocused = true
             }
+            .padding(.trailing, 13)
         }
         .onTapGesture {
             isFocused = true
