@@ -310,6 +310,40 @@ fun MyListView__ItemView__SwitchView(
 // Button
 
 @Composable
+fun MyListView__Item__Button(
+    text: String,
+    maxLines: Int = Int.MAX_VALUE,
+    rightView: @Composable () -> Unit,
+    onClick: () -> Unit,
+) {
+
+    HStack(
+        modifier = Modifier
+            .clickable {
+                onClick()
+            }
+            .sizeIn(minHeight = itemMinHeight)
+            .padding(top = halfDpCeil),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+
+        Text(
+            text,
+            modifier = Modifier
+                .padding(start = H_PADDING, end = 10.dp),
+            color = c.text,
+            maxLines = maxLines,
+            overflow = TextOverflow.Ellipsis,
+        )
+
+        SpacerW1()
+
+        rightView()
+    }
+}
+
+// todo remove
+@Composable
 fun MyListView__ItemView__ButtonView(
     text: String,
     modifier: Modifier = Modifier,
