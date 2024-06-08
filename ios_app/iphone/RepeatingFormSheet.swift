@@ -73,16 +73,14 @@ struct RepeatingsFormSheet: View {
                             bgColor: c.fg
                         ) {
 
-                            MyListView__ItemView__ButtonView(
+                            MyListView__Item__Button(
                                 text: state.periodTitle,
-                                withArrow: true,
-                                rightView: AnyView(
-                                    MyListView__ItemView__ButtonView__RightText(
+                                rightView: {
+                                    MyListView__Item__Button__RightText(
                                         text: state.periodNote,
-                                        paddingEnd: 2,
-                                        textColor: state.periodNoteColor?.toColor()
+                                        color: state.periodNoteColor?.toColor()
                                     )
-                                )
+                                }
                             ) {
                                 fs.show { isPeriodPresented in
                                     RepeatingFormPeriodFs(
@@ -102,15 +100,13 @@ struct RepeatingsFormSheet: View {
                             withTopDivider: true
                         ) {
 
-                            MyListView__ItemView__ButtonView(
+                            MyListView__Item__Button(
                                 text: state.daytimeHeader,
-                                withArrow: true,
-                                rightView: AnyView(
-                                    MyListView__ItemView__ButtonView__RightText(
-                                        text: state.daytimeNote,
-                                        paddingEnd: 2
+                                rightView: {
+                                    MyListView__Item__Button__RightText(
+                                        text: state.daytimeNote
                                     )
-                                )
+                                }
                             ) {
                                 isDaytimeSheetPresented = true
                             }
