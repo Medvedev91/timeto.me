@@ -188,7 +188,7 @@ fun MyListView__ItemView__TextInputView(
                         .sizeIn(minHeight = itemMinHeight)
                         .padding(
                             start = H_PADDING,
-                            end = H_PADDING + 12.dp, // for clear button
+                            end = H_PADDING + 16.dp, // for clear button
                             // top and bottom for multiline padding
                             top = 8.dp + halfDpCeil,
                             bottom = 8.dp,
@@ -209,7 +209,11 @@ fun MyListView__ItemView__TextInputView(
                 .focusRequester(focusRequester)
         )
 
-        TextFieldClearButtonView(text = text) {
+        TextFieldClearButtonView(
+            text = text,
+            modifier = Modifier
+                .padding(end = 6.dp),
+        ) {
             focusRequester.requestFocus()
             onTextChanged("")
         }
