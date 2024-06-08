@@ -182,7 +182,7 @@ struct MyListView__ItemView__SwitchView: View {
             rightView: {
                 Toggle("", isOn: $isActive)
                     .padding(.top, halfDpFloor)
-                    .padding(.trailing, H_PADDING + 2)
+                    .padding(.trailing, H_PADDING + 1)
                     .labelsHidden()
                     .onChange(of: isActiveState) { newValue in
                         isActive = newValue
