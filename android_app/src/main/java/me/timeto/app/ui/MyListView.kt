@@ -480,6 +480,7 @@ fun MyListView__Item__Button__RightArrow() {
         "Expand",
         tint = c.tertiaryText,
         modifier = Modifier
+            .offset(y = -halfDpFloor)
             .padding(end = H_PADDING - 2.dp - halfDpFloor)
             .size(12.dp),
     )
