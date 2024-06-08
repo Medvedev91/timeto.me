@@ -177,16 +177,17 @@ struct MyListView__ItemView__SwitchView: View {
 
     var body: some View {
 
-        MyListView__ItemView__ButtonView(
+        MyListView__Item__Button(
             text: text,
-            rightView: AnyView(
+            rightView: {
                 Toggle("", isOn: $isActive)
-                    .padding(.trailing, 10)
+                    .padding(.top, halfDpFloor)
+                    .padding(.trailing, H_PADDING + 2)
                     .labelsHidden()
                     .onChange(of: isActiveState) { newValue in
                         isActive = newValue
                     }
-            )
+            }
         ) {
             onClick()
         }
