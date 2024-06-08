@@ -16,11 +16,11 @@ struct TextField__VMState: View {
     private let onValueChanged: (String) -> Void
 
     init(
-            text: String,
-            placeholder: String,
-            itemMinHeight: CGFloat,
-            isFocused: FocusState<Bool>.Binding,
-            onValueChanged: @escaping (String) -> Void
+        text: String,
+        placeholder: String,
+        itemMinHeight: CGFloat,
+        isFocused: FocusState<Bool>.Binding,
+        onValueChanged: @escaping (String) -> Void
     ) {
         _isFocused = isFocused
         _text = State(initialValue: text)
@@ -37,42 +37,43 @@ struct TextField__VMState: View {
             ZStack {
                 if #available(iOS 16.0, *) {
                     TextField(
-                            text: $text,
-                            prompt: Text(placeholder),
-                            axis: .vertical
+                        text: $text,
+                        prompt: Text(placeholder),
+                        axis: .vertical
                     ) {
                         // todo what is it?
                     }
-                            .padding(.vertical, 8)
+                    .padding(.vertical, 8)
                 } else {
                     // One line ;(
-                    TextField(text: $text, prompt: Text(placeholder)) {}
+                    TextField(text: $text, prompt: Text(placeholder)) {
+                    }
                 }
             }
-                    ///
-                    .onChange(of: text) { newValue in
-                        onValueChanged(newValue)
-                    }
-                    .onChange(of: stateText) { newValue in
-                        text = newValue
-                    }
-                    ///
-                    .focused($isFocused)
-                    .textFieldStyle(.plain)
-                    .padding(.top, 1)
-                    .frame(minHeight: itemMinHeight)
-                    .padding(.leading, H_PADDING)
-                    .padding(.trailing, H_PADDING + 16) // for clear button
+                ///
+            .onChange(of: text) { newValue in
+                onValueChanged(newValue)
+            }
+            .onChange(of: stateText) { newValue in
+                text = newValue
+            }
+            ///
+            .focused($isFocused)
+            .textFieldStyle(.plain)
+            .padding(.top, 1)
+            .frame(minHeight: itemMinHeight)
+            .padding(.leading, H_PADDING)
+            .padding(.trailing, H_PADDING + 16) // for clear button
 
             TextFieldClearButtonView(
-                    text: $text,
-                    trailingPadding: 8
+                text: $text,
+                trailingPadding: 8
             ) {
                 isFocused = true
             }
         }
-                .onTapGesture {
-                    isFocused = true
-                }
+        .onTapGesture {
+            isFocused = true
+        }
     }
 }
