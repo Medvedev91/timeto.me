@@ -181,11 +181,11 @@ fun RepeatingFormSheet(
                     MyListView__ItemView(
                         isFirst = true,
                         isLast = true,
+                        bgColor = c.fg,
                     ) {
                         MyListView__ItemView__SwitchView(
                             text = state.isImportantHeader,
                             isActive = state.isImportant,
-                            bgColor = c.fg,
                         ) {
                             vm.toggleIsImportant()
                         }
