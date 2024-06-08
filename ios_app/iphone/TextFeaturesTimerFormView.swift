@@ -36,7 +36,8 @@ struct TextFeaturesTimerFormView: View {
                     rightView: {
                         MyListView__Item__Button__RightText(
                             text: formUI.activityNote,
-                            color: formUI.activityColorOrNull?.toColor()
+                            color: formUI.activityColorOrNull?.toColor(),
+                            paddingEndExtra: -1.0
                         )
                     }
                 ) {
