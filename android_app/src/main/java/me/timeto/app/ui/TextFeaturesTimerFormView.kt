@@ -32,7 +32,7 @@ fun TextFeaturesTimerFormView(
                     MyListView__Item__Button__RightText(
                         text = formUI.activityNote,
                         color = formUI.activityColorOrNull?.toColor(),
-                        extraEndPadding = (-1).dp,
+                        paddingEndExtra = (-1).dp,
                     )
                 }
             ) {
