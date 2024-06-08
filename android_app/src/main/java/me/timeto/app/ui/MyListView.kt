@@ -413,3 +413,15 @@ fun MyListView__ItemView__ButtonView__RightText(
         overflow = TextOverflow.Ellipsis,
     )
 }
+
+@Composable
+fun MyListView__Item__Button__RightArrow() {
+    Icon(
+        painterResource(id = R.drawable.sf_chevron_right_medium_medium),
+        "Expand",
+        tint = c.tertiaryText,
+        modifier = Modifier
+            .padding(end = H_PADDING - 2.dp - halfDpFloor)
+            .size(12.dp),
+    )
+}
