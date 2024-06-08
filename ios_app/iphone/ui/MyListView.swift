@@ -217,6 +217,41 @@ struct MyListView__ItemView__CheckboxView: View {
 ///
 /// Button
 
+struct MyListView__Item__Button<Content: View>: View {
+
+    let text: String
+    var maxLines: Int = Int.max
+    @ViewBuilder var rightView: () -> Content
+    let onClick: () -> Void
+
+    var body: some View {
+
+        Button(
+            action: {
+                onClick()
+            },
+            label: {
+
+                HStack {
+
+                    Text(text)
+                        .foregroundColor(c.text)
+                        .lineLimit(maxLines)
+                        .padding(.leading, H_PADDING)
+
+                    Spacer()
+
+                    rightView()
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.bottom, halfDpFloor)
+                .frame(minHeight: itemMinHeight)
+            }
+        )
+    }
+}
+
+// todo remove
 struct MyListView__ItemView__ButtonView: View {
 
     let text: String
