@@ -435,6 +435,7 @@ fun MyListView__ItemView__ActionView(
 fun MyListView__Item__Button__RightText(
     text: String,
     color: Color? = null,
+    extraEndPadding: Dp = 0.dp,
 ) {
 
     HStack(
@@ -444,7 +445,7 @@ fun MyListView__Item__Button__RightText(
         Text(
             text,
             modifier = Modifier
-                .padding(end = 8.dp)
+                .padding(end = 8.dp + extraEndPadding)
                 .offset(),
             color = color ?: c.tertiaryText,
             maxLines = 1,
