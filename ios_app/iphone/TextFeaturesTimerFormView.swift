@@ -12,9 +12,9 @@ struct TextFeaturesTimerFormView: View {
     @State private var isTimerSheetPresented = false
 
     init(
-            textFeatures: TextFeatures,
-            bgColor: Color = c.sheetFg,
-            onChange: @escaping (TextFeatures) -> Void
+        textFeatures: TextFeatures,
+        bgColor: Color = c.sheetFg,
+        onChange: @escaping (TextFeatures) -> Void
     ) {
         self.bgColor = bgColor
         self.onChange = onChange
@@ -26,64 +26,64 @@ struct TextFeaturesTimerFormView: View {
         VStack {
 
             MyListView__ItemView(
-                    isFirst: true,
-                    isLast: false,
-                    bgColor: bgColor
+                isFirst: true,
+                isLast: false,
+                bgColor: bgColor
             ) {
 
                 MyListView__ItemView__ButtonView(
-                        text: formUI.activityTitle,
-                        withArrow: true,
-                        rightView: AnyView(
-                                MyListView__ItemView__ButtonView__RightText(
-                                        text: formUI.activityNote,
-                                        paddingEnd: 2,
-                                        textColor: formUI.activityColorOrNull?.toColor()
-                                )
+                    text: formUI.activityTitle,
+                    withArrow: true,
+                    rightView: AnyView(
+                        MyListView__ItemView__ButtonView__RightText(
+                            text: formUI.activityNote,
+                            paddingEnd: 2,
+                            textColor: formUI.activityColorOrNull?.toColor()
                         )
+                    )
                 ) {
                     isActivitySheetPresented = true
                 }
-                        .sheetEnv(isPresented: $isActivitySheetPresented) {
-                            ActivityPickerSheet(
-                                    isPresented: $isActivitySheetPresented
-                            ) { activity in
-                                onChange(formUI.setActivity(activity: activity))
-                            }
-                        }
+                .sheetEnv(isPresented: $isActivitySheetPresented) {
+                    ActivityPickerSheet(
+                        isPresented: $isActivitySheetPresented
+                    ) { activity in
+                        onChange(formUI.setActivity(activity: activity))
+                    }
+                }
             }
 
             MyListView__ItemView(
-                    isFirst: false,
-                    isLast: true,
-                    bgColor: bgColor,
-                    withTopDivider: true
+                isFirst: false,
+                isLast: true,
+                bgColor: bgColor,
+                withTopDivider: true
             ) {
 
                 MyListView__ItemView__ButtonView(
-                        text: formUI.timerTitle,
-                        withArrow: true,
-                        rightView: AnyView(
-                                MyListView__ItemView__ButtonView__RightText(
-                                        text: formUI.timerNote,
-                                        paddingEnd: 2,
-                                        textColor: formUI.timerColorOrNull?.toColor()
-                                )
+                    text: formUI.timerTitle,
+                    withArrow: true,
+                    rightView: AnyView(
+                        MyListView__ItemView__ButtonView__RightText(
+                            text: formUI.timerNote,
+                            paddingEnd: 2,
+                            textColor: formUI.timerColorOrNull?.toColor()
                         )
+                    )
                 ) {
                     isTimerSheetPresented = true
                 }
-                        .sheetEnv(isPresented: $isTimerSheetPresented) {
-                            TimerPickerSheet(
-                                    isPresented: $isTimerSheetPresented,
-                                    title: "Timer",
-                                    doneText: "Done",
-                                    defMinutes: 30
-                            ) { seconds in
-                                onChange(formUI.setTimer(seconds: seconds.toInt32()))
-                            }
-                                    .presentationDetentsMediumIf16()
-                        }
+                .sheetEnv(isPresented: $isTimerSheetPresented) {
+                    TimerPickerSheet(
+                        isPresented: $isTimerSheetPresented,
+                        title: "Timer",
+                        doneText: "Done",
+                        defMinutes: 30
+                    ) { seconds in
+                        onChange(formUI.setTimer(seconds: seconds.toInt32()))
+                    }
+                    .presentationDetentsMediumIf16()
+                }
             }
         }
     }
