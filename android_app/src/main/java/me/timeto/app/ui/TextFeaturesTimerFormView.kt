@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import me.timeto.app.c
 import me.timeto.app.toColor
 import me.timeto.shared.TextFeatures
@@ -24,15 +23,13 @@ fun TextFeaturesTimerFormView(
         MyListView__ItemView(
             isFirst = true,
             isLast = false,
+            bgColor = bgColor,
         ) {
-            MyListView__ItemView__ButtonView(
+            MyListView__Item__Button(
                 text = formUI.activityTitle,
-                withArrow = true,
-                bgColor = bgColor,
                 rightView = {
-                    MyListView__ItemView__ButtonView__RightText(
+                    MyListView__Item__Button__RightText(
                         text = formUI.activityNote,
-                        paddingEnd = 2.dp,
                         color = formUI.activityColorOrNull?.toColor(),
                     )
                 }
@@ -50,16 +47,14 @@ fun TextFeaturesTimerFormView(
         MyListView__ItemView(
             isFirst = false,
             isLast = true,
+            bgColor = bgColor,
             withTopDivider = true,
         ) {
-            MyListView__ItemView__ButtonView(
+            MyListView__Item__Button(
                 text = formUI.timerTitle,
-                withArrow = true,
-                bgColor = bgColor,
                 rightView = {
-                    MyListView__ItemView__ButtonView__RightText(
+                    MyListView__Item__Button__RightText(
                         text = formUI.timerNote,
-                        paddingEnd = 2.dp,
                         color = formUI.timerColorOrNull?.toColor(),
                     )
                 }
