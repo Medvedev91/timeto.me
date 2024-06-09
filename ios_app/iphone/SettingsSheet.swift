@@ -54,13 +54,7 @@ struct SettingsSheet: View {
                         withTopDivider: false
                     ) {
                         MyListView__ItemView__ButtonView(
-                            text: state.readmeTitle,
-                            rightView: AnyView(
-                                Image(systemName: "info.circle")
-                                    .font(.system(size: 20))
-                                    .padding(.trailing, 8)
-                                    .foregroundColor(.blue)
-                            )
+                            text: state.readmeTitle
                         ) {
                             isReadmePresented.toggle()
                         }
