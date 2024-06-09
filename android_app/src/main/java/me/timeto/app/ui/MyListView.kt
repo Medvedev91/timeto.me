@@ -181,8 +181,8 @@ fun MyListView__ItemView__TextInputView(
             singleLine = isSingleLine,
             cursorBrush = SolidColor(MaterialTheme.colors.primary),
             textStyle = LocalTextStyle.current.copy(
-                color = MaterialTheme.colors.onSurface,
-                fontSize = 16.sp
+                color = c.text,
+                fontSize = 16.sp,
             ),
             decorationBox = { innerTextField ->
                 Box(
