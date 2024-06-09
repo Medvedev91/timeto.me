@@ -134,16 +134,6 @@ fun SettingsSheet(
                     MyListView__ItemView__ButtonView(
                         text = state.readmeTitle,
                         bgColor = c.fg,
-                        rightView = {
-                            Icon(
-                                painterResource(id = R.drawable.sf_info_circle_medium_regular),
-                                "How to Use the App",
-                                tint = c.blue,
-                                modifier = Modifier
-                                    .padding(end = 12.dp)
-                                    .size(22.dp),
-                            )
-                        }
                     ) {
                         Fs.show { layer ->
                             ReadmeSheet(layer)
