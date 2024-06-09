@@ -201,7 +201,7 @@ fun MyListView__ItemView__TextInputView(
                     if (text.isEmpty()) Text(
                         placeholder,
                         style = LocalTextStyle.current.copy(
-                            color = MaterialTheme.colors.onSurface.copy(alpha = 0.3f),
+                            color = c.text.copy(alpha = 0.3f),
                             fontSize = 16.sp
                         )
                     )
