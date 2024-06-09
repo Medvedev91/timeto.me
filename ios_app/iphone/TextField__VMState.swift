@@ -50,7 +50,8 @@ struct TextField__VMState: View {
                     }
                 }
             }
-                ///
+            .foregroundColor(c.text)
+            ///
             .onChange(of: text) { newValue in
                 onValueChanged(newValue)
             }
