@@ -104,7 +104,8 @@ struct RepeatingsFormSheet: View {
                                 text: state.daytimeHeader,
                                 rightView: {
                                     MyListView__Item__Button__RightText(
-                                        text: state.daytimeNote
+                                        text: state.daytimeNote,
+                                        color: state.daytimeNoteColor?.toColor()
                                     )
                                 }
                             ) {
