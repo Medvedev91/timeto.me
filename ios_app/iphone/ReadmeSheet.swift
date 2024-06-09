@@ -34,14 +34,6 @@ struct ReadmeSheet: View {
                                     .padding(.horizontal, H_PADDING)
                                 Spacer()
                             }
-                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphSubtitle {
-                            HStack {
-                                Text(paragraph.text)
-                                    .font(.system(size: 20, weight: .bold))
-                                    .padding(.top, 36)
-                                    .padding(.horizontal, H_PADDING)
-                                Spacer()
-                            }
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphText {
                             HStack {
                                 Text(paragraph.text)

@@ -21,7 +21,6 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
     sealed class Paragraph {
 
         class Title(val text: String) : Paragraph()
-        class Subtitle(val text: String) : Paragraph()
         class Text(val text: String) : Paragraph()
         class TextHighlight(val text: String) : Paragraph()
         class ListDash(val items: List<String>) : Paragraph()
@@ -59,7 +58,6 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
 //
 
 private typealias PTitle = ReadmeSheetVM.Paragraph.Title
-private typealias PSubtitle = ReadmeSheetVM.Paragraph.Subtitle
 private typealias PText = ReadmeSheetVM.Paragraph.Text
 private typealias PTextHighlight = ReadmeSheetVM.Paragraph.TextHighlight
 
@@ -84,7 +82,7 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     paragraphs.add(ReadmeSheetVM.Paragraph.TimerCharts())
     paragraphs.add(PText("The app has some activities by default, but you can add your own. Here are mine:"))
     paragraphs.add(ReadmeSheetVM.Paragraph.TimerMyActivities())
-    paragraphs.add(PSubtitle("Practice"))
+    paragraphs.add(PTitle("Practice"))
     paragraphs.add(PText("Try to start a new activity. To do so, back to the home screen, tap the timer at the bottom left, tap \"Work\" and start the timer."))
     paragraphs.add(ReadmeSheetVM.Paragraph.TimerPractice1())
     paragraphs.add(PText("The timer starts. Then tap the timer again to see the \"Summary\" and \"History\"."))
@@ -100,7 +98,7 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     paragraphs.add(PTextHighlight("The most important, when I press it, it automatically starts a timer with the right activity."))
     paragraphs.add(PText("You can create not only everyday tasks. For example, watering a cactus once a week or paying for internet once a month, etc."))
     paragraphs.add(PText("I believe this is the main feature of the app. I recommend using it to the max."))
-    paragraphs.add(PSubtitle("Practice"))
+    paragraphs.add(PTitle("Practice"))
     paragraphs.add(PText("Let's create a repeating task for a daily workout at 18:00."))
     paragraphs.add(PText("On the home screen, tap at the bottom center to open tasks, tap the repeating icon, tap \"New Repeating Task\" and fill the form:"))
     paragraphs.add(
@@ -123,7 +121,7 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     paragraphs.add(PTitle("Checklists"))
     paragraphs.add(PText("Checklists are an addition to repeating tasks that are placed under the timer."))
     paragraphs.add(ReadmeSheetVM.Paragraph.ChecklistsExamples())
-    paragraphs.add(PSubtitle("Practice"))
+    paragraphs.add(PTitle("Practice"))
     paragraphs.add(PText("Let's create a repeating task for a daily morning routine at 7:00 with a checklist."))
     paragraphs.add(PText("On the home screen, tap at the bottom center to open tasks, tap the repeating icon, tap \"New Repeating Task\" and fill the form:"))
     paragraphs.add(
