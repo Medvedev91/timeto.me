@@ -26,7 +26,8 @@ class RepeatingFormSheetVM(
         val periodNoteColor: ColorRgba? = if (period == null) ColorRgba.red else null
 
         val daytimeHeader = "Time of the Day"
-        val daytimeNote: String = daytimeModel?.text?.let { "at $it" } ?: "None"
+        val daytimeNote: String = daytimeModel?.text?.let { "at $it" } ?: "Not Selected"
+        val daytimeNoteColor: ColorRgba? = if (daytimeModel == null) ColorRgba.red else null
 
         val defDaytimeModel: DaytimeModel = daytimeModel ?: DaytimeModel(hour = 12, minute = 0)
 
