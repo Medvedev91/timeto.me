@@ -105,6 +105,7 @@ fun RepeatingFormSheet(
                     rightView = {
                         MyListView__Item__Button__RightText(
                             text = state.daytimeNote,
+                            color = state.daytimeNoteColor?.toColor(),
                         )
                     }
                 ) {
