@@ -138,27 +138,22 @@ fun RepeatingFormSheet(
 
             val isMoreSettingsVisible = remember { mutableStateOf(false) }
 
-            AnimatedVisibility(
-                visible = !isMoreSettingsVisible.value,
-            ) {
-
-                Text(
-                    text = state.moreSettingText,
-                    modifier = Modifier
-                        .padding(horizontal = H_PADDING_HALF)
-                        .padding(top = 17.dp)
-                        .clip(squircleShape)
-                        .clickable {
-                            isMoreSettingsVisible.value = !isMoreSettingsVisible.value
-                        }
-                        .padding(
-                            horizontal = H_PADDING_HALF,
-                            vertical = 4.dp,
-                        ),
-                    color = c.blue,
-                    fontSize = 14.sp,
-                )
-            }
+            Text(
+                text = state.moreSettingText,
+                modifier = Modifier
+                    .padding(horizontal = H_PADDING_HALF)
+                    .padding(top = 17.dp, bottom = 16.dp)
+                    .clip(squircleShape)
+                    .clickable {
+                        isMoreSettingsVisible.value = !isMoreSettingsVisible.value
+                    }
+                    .padding(
+                        horizontal = H_PADDING_HALF,
+                        vertical = 4.dp,
+                    ),
+                color = c.blue,
+                fontSize = 14.sp,
+            )
 
             AnimatedVisibility(
                 visible = isMoreSettingsVisible.value,
@@ -167,8 +162,6 @@ fun RepeatingFormSheet(
             ) {
 
                 VStack {
-
-                    MyListView__Padding__SectionSection()
 
                     TextFeaturesTriggersFormView(
                         textFeatures = state.textFeatures,
