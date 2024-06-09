@@ -138,31 +138,27 @@ struct RepeatingsFormSheet: View {
                             vm.upTextFeatures(textFeatures: textFeatures)
                         }
 
-                        if !isMoreSettingsVisible {
+                        HStack {
 
-                            HStack {
-
-                                Button(
-                                    action: {
-                                        withAnimation {
-                                            isMoreSettingsVisible = true
-                                        }
-                                    },
-                                    label: {
-                                        Text(state.moreSettingText)
-                                            .font(.system(size: 16))
+                            Button(
+                                action: {
+                                    withAnimation {
+                                        isMoreSettingsVisible = !isMoreSettingsVisible
                                     }
-                                )
-                                .padding(.top, 24)
-                                .padding(.leading, H_PADDING)
+                                },
+                                label: {
+                                    Text(state.moreSettingText)
+                                        .font(.system(size: 16))
+                                }
+                            )
+                            .padding(.top, 24)
+                            .padding(.bottom, 24)
+                            .padding(.leading, H_PADDING)
 
-                                Spacer()
-                            }
+                            Spacer()
                         }
 
                         if isMoreSettingsVisible {
-
-                            MyListView__Padding__SectionSection()
 
                             TextFeaturesTriggersFormView(
                                 textFeatures: state.textFeatures,
