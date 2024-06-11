@@ -269,8 +269,8 @@ private fun PTextHighlightView(
             .padding(horizontal = H_PADDING - 2.dp)
             .clip(squircleShape)
             .background(c.blue)
-            .padding(horizontal = 12.dp)
-            .padding(top = 12.dp, bottom = 10.dp),
+            .padding(horizontal = 14.dp)
+            .padding(top = 11.dp, bottom = 11.dp),
         color = c.text,
         lineHeight = pTextLineHeight,
         fontWeight = FontWeight.Normal,
