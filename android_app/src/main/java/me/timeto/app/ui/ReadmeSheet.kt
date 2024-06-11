@@ -32,7 +32,7 @@ private val imagesHBetween = 4.dp
 private val imagesHBlock = 14.dp
 private val imagesShape = SquircleShape(len = 50f)
 
-private val pTextLineHeight = 22.sp
+private val pTextLineHeight = 22.sp // 1.38 ratio
 
 @Composable
 fun ReadmeSheet(
