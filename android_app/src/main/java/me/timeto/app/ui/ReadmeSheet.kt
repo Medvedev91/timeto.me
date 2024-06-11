@@ -63,13 +63,16 @@ fun ReadmeSheet(
                 .weight(1f),
         ) {
 
-            state.paragraphs.forEach { paragraph ->
+            state.paragraphs.forEachIndexed { idx, paragraph ->
+
+                val prevP: ReadmeSheetVM.Paragraph? =
+                    if (idx == 0) null else state.paragraphs[idx - 1]
 
                 when (paragraph) {
 
                     is ReadmeSheetVM.Paragraph.Title -> PTitleView(paragraph.text)
 
-                    is ReadmeSheetVM.Paragraph.Text -> PTextView(paragraph.text)
+                    is ReadmeSheetVM.Paragraph.Text -> PTextView(paragraph.text, prevP)
 
                     is ReadmeSheetVM.Paragraph.TextHighlight -> PTextHighlightView(paragraph.text)
 
@@ -225,14 +228,22 @@ private fun PTitleView(
 @Composable
 private fun PTextView(
     text: String,
-    topPadding: Dp = 16.dp,
+    prevP: ReadmeSheetVM.Paragraph?,
 ) {
+    val paddingTop: Dp = when {
+        prevP == null -> 13.dp
+        prevP.isSlider -> 10.dp
+        prevP is ReadmeSheetVM.Paragraph.Title -> 18.dp
+        prevP is ReadmeSheetVM.Paragraph.Text -> 12.dp // 1.62 * 1.62
+        prevP is ReadmeSheetVM.Paragraph.TextHighlight -> 18.dp // Equals to paragraph padding
+        else -> throw Exception()
+    }
     Text(
         text = text,
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = H_PADDING)
-            .padding(top = topPadding),
+            .padding(top = paddingTop),
         color = c.text,
         lineHeight = pTextLineHeight,
         fontWeight = FontWeight.Normal,
