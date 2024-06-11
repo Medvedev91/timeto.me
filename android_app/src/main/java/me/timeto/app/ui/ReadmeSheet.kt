@@ -70,7 +70,7 @@ fun ReadmeSheet(
 
                 when (paragraph) {
 
-                    is ReadmeSheetVM.Paragraph.Title -> PTitleView(paragraph.text)
+                    is ReadmeSheetVM.Paragraph.Title -> PTitleView(paragraph.text, prevP)
 
                     is ReadmeSheetVM.Paragraph.Text -> PTextView(paragraph.text, prevP)
 
@@ -212,13 +212,20 @@ fun ReadmeSheet(
 @Composable
 private fun PTitleView(
     text: String,
+    prevP: ReadmeSheetVM.Paragraph?,
 ) {
+    val paddingTop: Dp = when {
+        prevP == null -> 0.dp // todo
+        prevP.isSlider -> 36.dp
+        prevP is ReadmeSheetVM.Paragraph.Text -> 40.dp
+        else -> throw Exception()
+    }
     Text(
         text = text,
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = H_PADDING)
-            .padding(top = 48.dp),
+            .padding(top = paddingTop),
         color = c.text,
         fontWeight = Fs__TITLE_FONT_WEIGHT,
         fontSize = Fs__TITLE_FONT_SIZE,
@@ -263,7 +270,7 @@ private fun PTextHighlightView(
             .clip(squircleShape)
             .background(c.blue)
             .padding(horizontal = 12.dp)
-            .padding(top = 10.dp, bottom = 10.dp),
+            .padding(top = 12.dp, bottom = 10.dp),
         color = c.text,
         lineHeight = pTextLineHeight,
         fontWeight = FontWeight.Normal,
