@@ -216,9 +216,9 @@ private fun PTitleView(
             .fillMaxWidth()
             .padding(horizontal = H_PADDING)
             .padding(top = 48.dp),
-        color = c.white,
-        fontWeight = FontWeight.Bold,
-        fontSize = 28.sp,
+        color = c.text,
+        fontWeight = Fs__TITLE_FONT_WEIGHT,
+        fontSize = Fs__TITLE_FONT_SIZE,
     )
 }
 
