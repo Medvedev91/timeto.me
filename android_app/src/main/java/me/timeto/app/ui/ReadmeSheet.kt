@@ -233,7 +233,7 @@ private fun PTextView(
             .fillMaxWidth()
             .padding(horizontal = H_PADDING)
             .padding(top = topPadding),
-        color = c.white,
+        color = c.text,
         lineHeight = pTextLineHeight,
         fontWeight = FontWeight.Normal,
     )
@@ -248,10 +248,12 @@ private fun PTextHighlightView(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 16.dp)
+            .padding(horizontal = H_PADDING - 2.dp)
+            .clip(squircleShape)
             .background(c.blue)
-            .padding(horizontal = H_PADDING)
-            .padding(top = 12.dp, bottom = 10.dp),
-        color = c.white,
+            .padding(horizontal = 12.dp)
+            .padding(top = 10.dp, bottom = 10.dp),
+        color = c.text,
         lineHeight = pTextLineHeight,
         fontWeight = FontWeight.Normal,
     )
