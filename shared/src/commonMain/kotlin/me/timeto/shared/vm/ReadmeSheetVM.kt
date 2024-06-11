@@ -18,31 +18,33 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
         )
     )
 
-    sealed class Paragraph {
+    sealed class Paragraph(
+        val isSlider: Boolean = false,
+    ) {
 
         class Title(val text: String) : Paragraph()
         class Text(val text: String) : Paragraph()
         class TextHighlight(val text: String) : Paragraph()
         class ListDash(val items: List<String>) : Paragraph()
 
-        class TimerTypical() : Paragraph()
-        class TimerCharts() : Paragraph()
-        class TimerMyActivities() : Paragraph()
-        class TimerPractice1() : Paragraph()
-        class TimerPractice2() : Paragraph()
+        class TimerTypical() : Paragraph(isSlider = true)
+        class TimerCharts() : Paragraph(isSlider = true)
+        class TimerMyActivities() : Paragraph(isSlider = true)
+        class TimerPractice1() : Paragraph(isSlider = true)
+        class TimerPractice2() : Paragraph(isSlider = true)
 
-        class RepeatingsMy() : Paragraph()
-        class RepeatingsToday() : Paragraph()
-        class RepeatingsPractice1() : Paragraph()
-        class RepeatingsPractice2() : Paragraph()
+        class RepeatingsMy() : Paragraph(isSlider = true)
+        class RepeatingsToday() : Paragraph(isSlider = true)
+        class RepeatingsPractice1() : Paragraph(isSlider = true)
+        class RepeatingsPractice2() : Paragraph(isSlider = true)
 
-        class ChecklistsExamples() : Paragraph()
-        class ChecklistsPractice1() : Paragraph()
-        class ChecklistsPractice2() : Paragraph()
+        class ChecklistsExamples() : Paragraph(isSlider = true)
+        class ChecklistsPractice1() : Paragraph(isSlider = true)
+        class ChecklistsPractice2() : Paragraph(isSlider = true)
 
-        class GoalsExamples() : Paragraph()
+        class GoalsExamples() : Paragraph(isSlider = true)
 
-        class CalendarExamples() : Paragraph()
+        class CalendarExamples() : Paragraph(isSlider = true)
 
         class AskAQuestion() : Paragraph() {
             val title = "Ask a Question"
