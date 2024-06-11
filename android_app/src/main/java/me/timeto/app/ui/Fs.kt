@@ -32,6 +32,9 @@ import me.timeto.app.R
 private val enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessMedium))
 private val exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessMedium))
 
+val Fs__TITLE_FONT_SIZE = 26.sp // Golden ratio to lists text
+val Fs__TITLE_FONT_WEIGHT = FontWeight.Bold
+
 object Fs {
 
     fun show(
@@ -257,8 +260,8 @@ private fun RowScope.HeaderTitle(
         modifier = Modifier
             .padding(start = H_PADDING)
             .weight(1f),
-        fontSize = 26.sp, // Golden ratio to lists text
-        fontWeight = FontWeight.Bold,
+        fontSize = Fs__TITLE_FONT_SIZE,
+        fontWeight = Fs__TITLE_FONT_WEIGHT,
         color = c.text,
     )
 }
