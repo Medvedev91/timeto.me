@@ -28,7 +28,7 @@ import me.timeto.app.R
 import me.timeto.shared.vm.ReadmeSheetVM
 
 private val imagesHBetween = 4.dp
-private val imagesHBlock = 14.dp
+private val imagesHBlock = H_PADDING - imagesHBetween
 private val imagesShape = SquircleShape(len = 50f)
 
 private val pTextLineHeight = 22.sp // 1.38 ratio
@@ -343,13 +343,16 @@ private val imageSliderExitAnimation: ExitTransition = slideOutVertically(
 private fun ImagePreviewsView(
     vararg resIds: Int,
 ) {
+
     val scrollState = rememberScrollState()
+
     HStack(
         modifier = Modifier
             .padding(top = 20.dp, bottom = 8.dp)
-            .padding(horizontal = imagesHBlock)
             .horizontalScroll(scrollState),
     ) {
+
+        Padding(horizontal = imagesHBlock)
 
         resIds.forEach { resId ->
 
@@ -367,6 +370,8 @@ private fun ImagePreviewsView(
                 contentScale = ContentScale.Fit,
             )
         }
+
+        Padding(horizontal = imagesHBlock)
     }
 }
 
