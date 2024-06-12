@@ -240,7 +240,7 @@ private fun PTextView(
     val paddingTop: Dp = when {
         prevP == null -> 13.dp
         prevP.isSlider -> 10.dp
-        prevP is ReadmeSheetVM.Paragraph.Title -> 18.dp
+        prevP is ReadmeSheetVM.Paragraph.Title -> 15.dp
         prevP is ReadmeSheetVM.Paragraph.Text -> 12.dp // 1.62 * 1.62
         prevP is ReadmeSheetVM.Paragraph.TextHighlight -> 18.dp // Equals to paragraph padding
         else -> throw Exception()
