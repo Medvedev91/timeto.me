@@ -343,12 +343,11 @@ private val imageSliderExitAnimation: ExitTransition = slideOutVertically(
 @Composable
 private fun ImagePreviewsView(
     vararg resIds: Int,
-    paddingTop: Dp = 20.dp,
 ) {
     val scrollState = rememberScrollState()
     HStack(
         modifier = Modifier
-            .padding(top = paddingTop, bottom = 8.dp)
+            .padding(top = 20.dp, bottom = 8.dp)
             .padding(horizontal = imagesHBlock)
             .horizontalScroll(scrollState),
     ) {
