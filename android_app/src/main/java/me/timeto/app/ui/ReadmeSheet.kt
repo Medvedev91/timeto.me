@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
-import me.timeto.shared.ColorRgba
 import me.timeto.shared.vm.ReadmeSheetVM
 
 private val imagesHBetween = 4.dp
@@ -321,7 +320,7 @@ private fun PListDashedView(
     }
 }
 
-private val imageBorderColor = ColorRgba(96, 96, 96).toColor()
+private val imageBorderColor = c.dividerBg
 private val imageSliderShape = SquircleShape(len = 90f, angleParam = 10f)
 
 private val imageSliderEnterAnimation: EnterTransition = slideInVertically(
