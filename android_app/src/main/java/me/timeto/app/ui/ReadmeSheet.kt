@@ -74,7 +74,7 @@ fun ReadmeSheet(
 
                     is ReadmeSheetVM.Paragraph.Text -> PTextView(paragraph.text, prevP)
 
-                    is ReadmeSheetVM.Paragraph.TextHighlight -> PTextHighlightView(paragraph.text)
+                    is ReadmeSheetVM.Paragraph.TextHighlight -> PTextHighlightView(paragraph.text, prevP)
 
                     is ReadmeSheetVM.Paragraph.ListDash -> PListDashedView(paragraph.items)
 
@@ -260,12 +260,20 @@ private fun PTextView(
 @Composable
 private fun PTextHighlightView(
     text: String,
+    prevP: ReadmeSheetVM.Paragraph?,
 ) {
+    val paddingTop: Dp = when {
+        prevP == null -> throw Exception()
+        prevP.isSlider -> 18.dp
+        prevP is ReadmeSheetVM.Paragraph.Text -> 19.dp
+        prevP is ReadmeSheetVM.Paragraph.ListDash -> 20.dp
+        else -> throw Exception()
+    }
     Text(
         text = text,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 16.dp)
+            .padding(top = paddingTop)
             .padding(horizontal = H_PADDING - 2.dp)
             .clip(squircleShape)
             .background(c.blue)
