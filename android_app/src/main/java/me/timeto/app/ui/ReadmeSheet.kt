@@ -190,9 +190,12 @@ fun ReadmeSheet(
                             isFirst = true,
                             isLast = true,
                             modifier = Modifier
-                                .padding(top = 24.dp),
+                                .padding(top = 20.dp),
                         ) {
-                            MyListView__ItemView__ButtonView(text = paragraph.title) {
+                            MyListView__ItemView__ButtonView(
+                                text = paragraph.title,
+                                bgColor = c.fg,
+                            ) {
                                 askAQuestion(subject = paragraph.subject)
                             }
                         }
