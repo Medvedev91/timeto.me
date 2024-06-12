@@ -31,7 +31,7 @@ private val imagesHBetween = 4.dp
 private val imagesHBlock = H_PADDING - imagesHBetween
 private val imagesShape = SquircleShape(len = 50f)
 
-private val pTextLineHeight = 22.sp // 1.38 ratio
+private val pTextLineHeight = 23.sp
 
 @Composable
 fun ReadmeSheet(
@@ -243,7 +243,7 @@ private fun PTextView(
         prevP == null -> 13.dp
         prevP.isSlider -> 10.dp
         prevP is ReadmeSheetVM.Paragraph.Title -> 15.dp
-        prevP is ReadmeSheetVM.Paragraph.Text -> 12.dp // 1.62 * 1.62
+        prevP is ReadmeSheetVM.Paragraph.Text -> 12.dp // Text height * 3
         prevP is ReadmeSheetVM.Paragraph.TextHighlight -> 18.dp // Equals to paragraph padding
         else -> throw Exception()
     }
