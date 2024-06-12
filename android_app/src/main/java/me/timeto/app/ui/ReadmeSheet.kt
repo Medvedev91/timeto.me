@@ -77,6 +77,23 @@ fun ReadmeSheet(
 
                     is ReadmeSheetVM.Paragraph.ListDash -> PListDashedView(paragraph.items)
 
+                    is ReadmeSheetVM.Paragraph.AskAQuestion -> {
+
+                        MyListView__ItemView(
+                            isFirst = true,
+                            isLast = true,
+                            modifier = Modifier
+                                .padding(top = 20.dp),
+                        ) {
+                            MyListView__ItemView__ButtonView(
+                                text = paragraph.title,
+                                bgColor = c.fg,
+                            ) {
+                                askAQuestion(subject = paragraph.subject)
+                            }
+                        }
+                    }
+
                     is ReadmeSheetVM.Paragraph.TimerTypical -> {
                         ImagePreviewsView(
                             R.drawable.readme_timer_1,
@@ -182,23 +199,6 @@ fun ReadmeSheet(
                             R.drawable.readme_calendar_1,
                             R.drawable.readme_calendar_2,
                         )
-                    }
-
-                    is ReadmeSheetVM.Paragraph.AskAQuestion -> {
-
-                        MyListView__ItemView(
-                            isFirst = true,
-                            isLast = true,
-                            modifier = Modifier
-                                .padding(top = 20.dp),
-                        ) {
-                            MyListView__ItemView__ButtonView(
-                                text = paragraph.title,
-                                bgColor = c.fg,
-                            ) {
-                                askAQuestion(subject = paragraph.subject)
-                            }
-                        }
                     }
                 }
             }
