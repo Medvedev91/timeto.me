@@ -112,20 +112,6 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     paragraphs.add(ReadmeSheetVM.Paragraph.ChecklistsExamples())
     paragraphs.add(PTitle("Practice"))
     paragraphs.add(PText("Let's create a repeating task for a daily morning routine at 7:00 with a checklist."))
-    paragraphs.add(PText("On the home screen, tap at the bottom center to open tasks, tap the repeating icon, tap \"New Repeating Task\" and fill the form:"))
-    paragraphs.add(
-        ReadmeSheetVM.Paragraph.ListDash(
-            items = listOf(
-                "Task: Morning Routine;",
-                "Activity: Getting Ready;",
-                "Timer: 1h;",
-                "Time of the Day: 7:00;",
-                "Repetition Period: Every Day;",
-                "Checklists: Tap \"+ new checklist\", type \"Morning Routine\", \"Save\", \"+ new item\". Create few items like Drink a glass of water, Warm up, Shower, Light breakfast, Medication, Yesterday's reflection, Day plan. Tap \"Done\", again \"Done\";",
-                "Tap \"Create\".",
-            ),
-        )
-    )
     paragraphs.add(ReadmeSheetVM.Paragraph.ChecklistsPractice1())
     paragraphs.add(PText("Test it! Open \"Today\" and tap the \"Morning Routine\" task. You will see the checklist."))
     paragraphs.add(ReadmeSheetVM.Paragraph.ChecklistsPractice2())
@@ -135,9 +121,9 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     paragraphs.add(
         ReadmeSheetVM.Paragraph.ListDash(
             items = listOf(
-                "Timer is running all the time;",
-                "Using repeating tasks to the max;",
-                "Timer, activity and checklist will be set automatically.",
+                "timer is running all the time;",
+                "using repeating tasks to the max;",
+                "timer, activity and checklist will be set automatically.",
             ),
         )
     )
