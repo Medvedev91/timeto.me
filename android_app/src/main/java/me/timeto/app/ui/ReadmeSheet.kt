@@ -267,7 +267,7 @@ private fun PTextHighlightView(
     val paddingTop: Dp = when {
         prevP == null -> throw Exception()
         prevP.isSlider -> 18.dp
-        prevP is ReadmeSheetVM.Paragraph.Text -> 19.dp
+        prevP is ReadmeSheetVM.Paragraph.Text -> 20.dp
         prevP is ReadmeSheetVM.Paragraph.ListDash -> 20.dp
         else -> throw Exception()
     }
