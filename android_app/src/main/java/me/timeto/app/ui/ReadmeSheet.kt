@@ -304,7 +304,7 @@ private fun PListDashedView(
                     modifier = Modifier
                         .padding(start = H_PADDING, top = 5.dp)
                         .size(12.dp),
-                    tint = c.white,
+                    tint = c.text,
                 )
 
                 Text(
@@ -312,7 +312,7 @@ private fun PListDashedView(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 12.dp, end = H_PADDING),
-                    color = c.white,
+                    color = c.text,
                     lineHeight = pTextLineHeight,
                     fontWeight = FontWeight.Normal,
                 )
