@@ -109,7 +109,7 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
 
     paragraphs.add(PTitle("First Steps"))
     paragraphs.add(PText("We learned timer and repeating tasks. It is 80% I use."))
-    paragraphs.add(PText("From now on, you have to set a timer for everything you do."))
+    paragraphs.add(PText("From now on, you have to use a timer for everything you do."))
     paragraphs.add(PText("Right now, try playing with the app: start a new activity, create repeating tasks, checklists. You can rely on my examples."))
     paragraphs.add(PText("Then move on to advanced features."))
     paragraphs.add(PText("Good luck!  🍀"))
