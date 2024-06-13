@@ -108,6 +108,13 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     paragraphs.add(PText("This task is already created for today. Open \"Today\" and tap the \"Workout\" task. The timer will start automatically."))
     paragraphs.add(ReadmeSheetVM.Paragraph.RepeatingsPractice2())
 
+    paragraphs.add(PTitle("First Steps"))
+    paragraphs.add(PText("We learned timer and repeating tasks. It is 80% I use."))
+    paragraphs.add(PText("From now on, you have to set a timer for everything you do."))
+    paragraphs.add(PText("Right now, try playing with the app: start a new activity, create repeating tasks, checklists. You can rely on my examples."))
+    paragraphs.add(PText("Then move on to advanced features."))
+    paragraphs.add(PText("Good luck!  🍀"))
+
     paragraphs.add(PTitle("Checklists"))
     paragraphs.add(PText("Checklists are an addition to repeating tasks that are placed under the timer."))
     paragraphs.add(ReadmeSheetVM.Paragraph.ChecklistsExamples())
@@ -116,22 +123,6 @@ private fun prepParagraphs(): List<ReadmeSheetVM.Paragraph> {
     paragraphs.add(ReadmeSheetVM.Paragraph.ChecklistsPractice1())
     paragraphs.add(PText("Test it! Open \"Today\" and tap the \"Morning Routine\" task. You will see the checklist."))
     paragraphs.add(ReadmeSheetVM.Paragraph.ChecklistsPractice2())
-
-    paragraphs.add(PTitle("First Steps"))
-    paragraphs.add(PText("We learned the timer, repeating tasks, and checklists. The most important points:"))
-    paragraphs.add(
-        ReadmeSheetVM.Paragraph.ListDash(
-            items = listOf(
-                "timer is running all the time;",
-                "using repeating tasks to the max;",
-                "timer, activity and checklist will be set automatically.",
-            ),
-        )
-    )
-    paragraphs.add(PTextHighlight("You can already use the app!"))
-    paragraphs.add(PText("Right now, try playing with the app: start a new activity, create repeating tasks, checklists. You can rely on my examples."))
-    paragraphs.add(PText("Then move on to advanced features."))
-    paragraphs.add(PText("Good luck!  🍀"))
 
     paragraphs.add(PTitle("Goals"))
     paragraphs.add(PText("Look at the bottom of the screenshot. For me, I set a goal to work 8 hours a day and read for 30 minutes."))
