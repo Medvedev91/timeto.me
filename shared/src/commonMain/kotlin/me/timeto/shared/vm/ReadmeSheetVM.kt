@@ -25,7 +25,6 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
         class Title(val text: String) : Paragraph()
         class Text(val text: String) : Paragraph()
         class TextHighlight(val text: String) : Paragraph()
-        class ListDash(val items: List<String>) : Paragraph()
 
         class TimerTypical() : Paragraph(isSlider = true)
         class TimerCharts() : Paragraph(isSlider = true)

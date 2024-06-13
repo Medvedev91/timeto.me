@@ -9,7 +9,6 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -74,8 +73,6 @@ fun ReadmeSheet(
                     is ReadmeSheetVM.Paragraph.Text -> PTextView(paragraph.text, prevP)
 
                     is ReadmeSheetVM.Paragraph.TextHighlight -> PTextHighlightView(paragraph.text, prevP)
-
-                    is ReadmeSheetVM.Paragraph.ListDash -> PListDashedView(paragraph.items)
 
                     is ReadmeSheetVM.Paragraph.AskAQuestion -> {
 
@@ -268,7 +265,6 @@ private fun PTextHighlightView(
         prevP == null -> throw Exception()
         prevP.isSlider -> 18.dp
         prevP is ReadmeSheetVM.Paragraph.Text -> 20.dp
-        prevP is ReadmeSheetVM.Paragraph.ListDash -> 20.dp
         else -> throw Exception()
     }
     Text(
@@ -285,42 +281,6 @@ private fun PTextHighlightView(
         lineHeight = pTextLineHeight,
         fontWeight = FontWeight.Normal,
     )
-}
-
-@Composable
-private fun PListDashedView(
-    items: List<String>,
-) {
-    VStack {
-
-        items.forEach { item ->
-
-            HStack(
-                modifier = Modifier
-                    .padding(top = 8.dp),
-            ) {
-
-                Icon(
-                    painter = painterResource(R.drawable.sf_minus_medium_regular),
-                    contentDescription = item,
-                    modifier = Modifier
-                        .padding(start = H_PADDING, top = 5.dp)
-                        .size(12.dp),
-                    tint = c.text,
-                )
-
-                Text(
-                    text = item,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 12.dp, end = H_PADDING),
-                    color = c.text,
-                    lineHeight = pTextLineHeight,
-                    fontWeight = FontWeight.Normal,
-                )
-            }
-        }
-    }
 }
 
 private val imageBorderColor = c.dividerBg

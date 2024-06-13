@@ -55,28 +55,6 @@ struct ReadmeSheet: View {
                             }
                             .background(c.blue)
                             .padding(.top, 24)
-                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphListDash {
-                            VStack {
-                                ForEachIndexed(paragraph.items) { _, item in
-
-                                    HStack {
-
-                                        Image(systemName: "minus")
-                                            .font(.system(size: 18))
-                                            .foregroundColor(c.text)
-
-                                        Text(item)
-                                            .font(.system(size: 18))
-                                            .padding(.leading, 12)
-                                            .lineSpacing(pTextLineHeight)
-
-                                        Spacer()
-                                    }
-                                    .padding(.top, 12)
-                                }
-                            }
-                            .padding(.horizontal, H_PADDING)
-                            .padding(.top, 12)
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTimerTypical {
                             ImagePreviewsView(
                                 images: [
