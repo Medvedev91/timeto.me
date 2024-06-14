@@ -100,19 +100,19 @@ struct ReadmeSheet: View {
                                 withTopDivider: false
                             )
                                 .padding(.top, 36)
-                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTimerTypical {
+                        } else if paragraph is ReadmeSheetVM.ParagraphTimerTypical {
                             ImagePreviewsView(
                                 images: [
                                     "readme_timer_1"
                                 ]
                             )
-                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTimerMyActivities {
+                        } else if paragraph is ReadmeSheetVM.ParagraphTimerMyActivities {
                             ImagePreviewsView(
                                 images: [
                                     "readme_activities_1"
                                 ]
                             )
-                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTimerCharts {
+                        } else if paragraph is ReadmeSheetVM.ParagraphTimerCharts {
                             ImagePreviewsView(
                                 images: [
                                     "readme_chart_1",
@@ -120,7 +120,7 @@ struct ReadmeSheet: View {
                                     "readme_chart_3"
                                 ]
                             )
-                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTimerPractice1 {
+                        } else if paragraph is ReadmeSheetVM.ParagraphTimerPractice1 {
                             ImagePreviewsView(
                                 images: [
                                     "readme_timer_practice_1",
@@ -129,7 +129,7 @@ struct ReadmeSheet: View {
                                     "readme_timer_practice_4"
                                 ]
                             )
-                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTimerPractice2 {
+                        } else if paragraph is ReadmeSheetVM.ParagraphTimerPractice2 {
                             ImagePreviewsView(
                                 images: [
                                     "readme_timer_practice_5",
@@ -137,19 +137,19 @@ struct ReadmeSheet: View {
                                     "readme_chart_3"
                                 ]
                             )
-                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphRepeatingsMy {
+                        } else if paragraph is ReadmeSheetVM.ParagraphRepeatingsMy {
                             ImagePreviewsView(
                                 images: [
                                     "readme_repeatings_1"
                                 ]
                             )
-                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphRepeatingsToday {
+                        } else if paragraph is ReadmeSheetVM.ParagraphRepeatingsToday {
                             ImagePreviewsView(
                                 images: [
                                     "readme_repeatings_2"
                                 ]
                             )
-                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphRepeatingsPractice1 {
+                        } else if paragraph is ReadmeSheetVM.ParagraphRepeatingsPractice1 {
                             ImagePreviewsView(
                                 images: [
                                     "readme_repeating_practice_1",
@@ -157,14 +157,14 @@ struct ReadmeSheet: View {
                                     "readme_repeating_practice_3"
                                 ]
                             )
-                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphRepeatingsPractice2 {
+                        } else if paragraph is ReadmeSheetVM.ParagraphRepeatingsPractice2 {
                             ImagePreviewsView(
                                 images: [
                                     "readme_repeating_practice_4",
                                     "readme_repeating_practice_5"
                                 ]
                             )
-                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphChecklistsExamples {
+                        } else if paragraph is ReadmeSheetVM.ParagraphChecklistsExamples {
                             ImagePreviewsView(
                                 images: [
                                     "readme_checklists_1",
@@ -172,7 +172,7 @@ struct ReadmeSheet: View {
                                     "readme_checklists_3"
                                 ]
                             )
-                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphChecklistsPractice1 {
+                        } else if paragraph is ReadmeSheetVM.ParagraphChecklistsPractice1 {
                             ImagePreviewsView(
                                 images: [
                                     "readme_checklists_practice_1",
@@ -184,20 +184,20 @@ struct ReadmeSheet: View {
                                     "readme_checklists_practice_7"
                                 ]
                             )
-                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphChecklistsPractice2 {
+                        } else if paragraph is ReadmeSheetVM.ParagraphChecklistsPractice2 {
                             ImagePreviewsView(
                                 images: [
                                     "readme_checklists_practice_8",
                                     "readme_checklists_practice_9"
                                 ]
                             )
-                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphGoalsExamples {
+                        } else if paragraph is ReadmeSheetVM.ParagraphGoalsExamples {
                             ImagePreviewsView(
                                 images: [
                                     "readme_goals_1"
                                 ]
                             )
-                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphCalendarExamples {
+                        } else if paragraph is ReadmeSheetVM.ParagraphCalendarExamples {
                             ImagePreviewsView(
                                 images: [
                                     "readme_calendar_1",
