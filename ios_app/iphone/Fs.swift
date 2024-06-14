@@ -1,5 +1,8 @@
 import SwiftUI
 
+let Fs__TITLE_FONT_SIZE = 27.0 // Golden ratio to lists text
+let Fs__TITLE_FONT_WEIGHT: Font.Weight = .bold
+
 class Fs: ObservableObject {
 
     @Published var items = [Fs__Item<AnyView>]()
@@ -238,7 +241,7 @@ private struct HeaderTitle: View {
     var body: some View {
         Text(title)
             .foregroundColor(c.text)
-            .font(.system(size: 27, weight: .bold))
+            .font(.system(size: Fs__TITLE_FONT_SIZE, weight: Fs__TITLE_FONT_WEIGHT))
             .padding(.leading, H_PADDING)
     }
 }
