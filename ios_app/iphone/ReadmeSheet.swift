@@ -83,14 +83,14 @@ struct ReadmeSheet: View {
                             HStack {
                                 Text(paragraph.text)
                                     .foregroundColor(c.text)
-                                    .padding(.top, 16)
-                                    .padding(.bottom, 16)
-                                    .padding(.horizontal, H_PADDING)
+                                    .padding(.vertical, 13)
+                                    .padding(.horizontal, 14)
                                     .lineSpacing(pTextLineHeight)
                                 Spacer()
                             }
-                            .background(c.blue)
+                            .background(squircleShape.fill(c.blue))
                             .padding(.top, 24)
+                            .padding(.horizontal, H_PADDING - 2)
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphAskAQuestion {
                             AskAQuestionButtonView(
                                 subject: paragraph.subject,
