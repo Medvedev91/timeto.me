@@ -2,7 +2,6 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.db.KvDb
-import me.timeto.shared.developerEmoji
 
 class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
 
