@@ -190,7 +190,7 @@ private struct ImagePreviewsView: View {
 
     let images: [String]
 
-    @EnvironmentObject private var nativeSheet: NativeSheet
+    @EnvironmentObject private var fs: Fs
 
     var body: some View {
 
@@ -204,7 +204,7 @@ private struct ImagePreviewsView: View {
 
                     Button(
                         action: {
-                            nativeSheet.show { isSliderPresented in
+                            fs.show { isSliderPresented in
                                 ImagesSlider(
                                     isPresented: isSliderPresented,
                                     images: images
@@ -281,5 +281,6 @@ private struct ImagesSlider: View {
                 .padding(.trailing, 36)
             }
         }
+        .safeAreaPadding(.vertical)
     }
 }
