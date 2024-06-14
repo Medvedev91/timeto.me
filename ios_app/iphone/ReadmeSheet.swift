@@ -63,6 +63,7 @@ struct ReadmeSheet: View {
                                 subject: paragraph.subject,
                                 isFirst: true,
                                 isLast: true,
+                                bgColor: c.fg,
                                 withTopDivider: false
                             )
                                 .padding(.top, 36)
