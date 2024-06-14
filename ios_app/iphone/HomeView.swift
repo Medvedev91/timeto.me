@@ -29,8 +29,8 @@ struct HomeView: View {
 
     @State private var vm = HomeVM()
 
-    @EnvironmentObject private var nativeSheet: NativeSheet
     @EnvironmentObject private var fs: Fs
+    @EnvironmentObject private var nativeSheet: NativeSheet
 
     @State private var isPurpleAnim = true
     @State private var timerHeight = 30.0
@@ -171,7 +171,7 @@ struct HomeView: View {
                             Button(
                                 action: {
                                     vm.onReadmeOpen()
-                                    nativeSheet.show { isReadmePresented in
+                                    fs.show { isReadmePresented in
                                         ReadmeSheet(isPresented: isReadmePresented)
                                     }
                                 },
