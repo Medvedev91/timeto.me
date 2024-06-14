@@ -58,6 +58,14 @@ struct ReadmeSheet: View {
                             }
                             .background(c.blue)
                             .padding(.top, 24)
+                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphAskAQuestion {
+                            AskAQuestionButtonView(
+                                subject: paragraph.subject,
+                                isFirst: true,
+                                isLast: true,
+                                withTopDivider: false
+                            )
+                                .padding(.top, 36)
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTimerTypical {
                             ImagePreviewsView(
                                 images: [
@@ -162,14 +170,6 @@ struct ReadmeSheet: View {
                                     "readme_calendar_2"
                                 ]
                             )
-                        } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphAskAQuestion {
-                            AskAQuestionButtonView(
-                                subject: paragraph.subject,
-                                isFirst: true,
-                                isLast: true,
-                                withTopDivider: false
-                            )
-                                .padding(.top, 36)
                         } else {
                             fatalError()
                         }
