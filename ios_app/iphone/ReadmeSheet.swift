@@ -20,7 +20,7 @@ struct ReadmeSheet: View {
                 bgColor: c.sheetBg
             )
 
-            ScrollViewWithVListener(showsIndicators: false, vScroll: $scroll) {
+            ScrollViewWithVListener(showsIndicators: true, vScroll: $scroll) {
 
                 VStack {
 
