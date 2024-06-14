@@ -31,6 +31,7 @@ struct ReadmeSheet: View {
                         if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTitle {
                             HStack {
                                 Text(paragraph.text)
+                                    .foregroundColor(c.text)
                                     .font(.system(size: Fs__TITLE_FONT_SIZE, weight: Fs__TITLE_FONT_WEIGHT))
                                     .padding(.top, 44)
                                     .padding(.horizontal, H_PADDING)
@@ -39,6 +40,7 @@ struct ReadmeSheet: View {
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphText {
                             HStack {
                                 Text(paragraph.text)
+                                    .foregroundColor(c.text)
                                     .padding(.top, 24)
                                     .padding(.horizontal, H_PADDING)
                                     .lineSpacing(pTextLineHeight)
@@ -47,6 +49,7 @@ struct ReadmeSheet: View {
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTextHighlight {
                             HStack {
                                 Text(paragraph.text)
+                                    .foregroundColor(c.text)
                                     .padding(.top, 16)
                                     .padding(.bottom, 16)
                                     .padding(.horizontal, H_PADDING)
