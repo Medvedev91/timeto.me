@@ -80,6 +80,18 @@ struct ReadmeSheet: View {
                                 Spacer()
                             }
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTextHighlight {
+                            let paddingTop: CGFloat = {
+                                guard let prevP = prevP else {
+                                    fatalError()
+                                }
+                                if prevP.isSlider {
+                                    return 24
+                                }
+                                if prevP is ReadmeSheetVM.ParagraphText {
+                                    return 23
+                                }
+                                fatalError()
+                            }()
                             HStack {
                                 Text(paragraph.text)
                                     .foregroundColor(c.text)
@@ -89,7 +101,7 @@ struct ReadmeSheet: View {
                                 Spacer()
                             }
                             .background(squircleShape.fill(c.blue))
-                            .padding(.top, 24)
+                            .padding(.top, paddingTop)
                             .padding(.horizontal, H_PADDING - 2)
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphAskAQuestion {
                             AskAQuestionButtonView(
