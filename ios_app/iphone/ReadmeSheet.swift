@@ -111,7 +111,7 @@ struct ReadmeSheet: View {
                                 bgColor: c.fg,
                                 withTopDivider: false
                             )
-                                .padding(.top, 36)
+                                .padding(.top, 24)
                         } else if paragraph is ReadmeSheetVM.ParagraphTimerTypical {
                             ImagePreviewsView(
                                 images: [
