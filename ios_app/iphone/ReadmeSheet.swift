@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-private let pTextLineHeight = 4.0
+private let pTextLineHeight = 3.2
 
 struct ReadmeSheet: View {
 
