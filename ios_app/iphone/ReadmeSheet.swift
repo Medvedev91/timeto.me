@@ -176,13 +176,11 @@ struct ReadmeSheet: View {
                         }
                     }
 
-                    Spacer()
-                        .padding(.top, 36)
+                    ZStack {
+                    }
+                    .safeAreaPadding(.bottom)
+                    .padding(.top, 16)
                 }
-            }
-
-            Sheet__BottomViewClose {
-                isPresented = false
             }
         }
     }
