@@ -31,7 +31,7 @@ struct ReadmeSheet: View {
                         if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTitle {
                             HStack {
                                 Text(paragraph.text)
-                                    .font(.system(size: 28, weight: .bold))
+                                    .font(.system(size: Fs__TITLE_FONT_SIZE, weight: Fs__TITLE_FONT_WEIGHT))
                                     .padding(.top, 44)
                                     .padding(.horizontal, H_PADDING)
                                 Spacer()
