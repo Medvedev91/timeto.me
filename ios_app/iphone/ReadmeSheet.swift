@@ -216,7 +216,7 @@ private struct ImagePreviewsView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .cornerRadius(16)
-                                .shadow(radius: 4)
+                                .shadow(color: c.text, radius: onePx)
                                 .frame(height: 350)
                                 .padding(.horizontal, 6)
                                 // Paddings for shadow radius
@@ -253,12 +253,11 @@ private struct ImagesSlider: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .cornerRadius(16)
-                            .shadow(radius: 8)
+                            .shadow(color: c.text, radius: onePx)
                             .frame(height: .infinity)
                             .padding(.horizontal, 12)
                             // Paddings for shadow radius
-                            .padding(.top, 16)
-                            .padding(.bottom, 12)
+                            .padding(.vertical, 8)
                     }
 
                     Padding(horizontal: 10)
