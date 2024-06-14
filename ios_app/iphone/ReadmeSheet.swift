@@ -26,7 +26,9 @@ struct ReadmeSheet: View {
 
                 VStack {
 
-                    ForEachIndexed(state.paragraphs) { _, paragraph in
+                    ForEachIndexed(state.paragraphs) { idx, paragraph in
+
+                        let prevP: ReadmeSheetVM.Paragraph? = (idx == 0) ? nil : state.paragraphs[idx - 1]
 
                         if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTitle {
                             HStack {
@@ -38,10 +40,28 @@ struct ReadmeSheet: View {
                                 Spacer()
                             }
                         } else if let paragraph = paragraph as? ReadmeSheetVM.ParagraphText {
+                            let paddingTop: CGFloat = {
+                                guard let prevP = prevP else {
+                                    return 14
+                                }
+                                if prevP.isSlider {
+                                    return 16
+                                }
+                                if prevP is ReadmeSheetVM.ParagraphTitle {
+                                    return 17
+                                }
+                                if prevP is ReadmeSheetVM.ParagraphText {
+                                    return 16
+                                }
+                                if prevP is ReadmeSheetVM.ParagraphTextHighlight {
+                                    return 20
+                                }
+                                fatalError()
+                            }()
                             HStack {
                                 Text(paragraph.text)
                                     .foregroundColor(c.text)
-                                    .padding(.top, 24)
+                                    .padding(.top, paddingTop)
                                     .padding(.horizontal, H_PADDING)
                                     .lineSpacing(pTextLineHeight)
                                 Spacer()
@@ -220,8 +240,7 @@ private struct ImagePreviewsView: View {
                                 .frame(height: 350)
                                 .padding(.horizontal, 6)
                                 // Paddings for shadow radius
-                                .padding(.top, 28)
-                                .padding(.bottom, 4)
+                                .padding(.vertical, 4)
                         }
                     )
                 }
