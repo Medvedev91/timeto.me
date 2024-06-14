@@ -273,6 +273,7 @@ private struct ImagePreviewsView: View {
                 Padding(horizontal: 10)
             }
         }
+        .padding(.top, 20)
     }
 }
 
