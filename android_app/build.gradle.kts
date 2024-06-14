@@ -50,7 +50,7 @@ android {
     buildFeatures.compose = true
     buildFeatures.buildConfig = true
 
-    composeOptions.kotlinCompilerExtensionVersion = "1.5.6"
+    composeOptions.kotlinCompilerExtensionVersion = "1.5.14"
 }
 
 dependencies {
