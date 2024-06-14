@@ -8,8 +8,6 @@ struct SettingsSheet: View {
 
     @State private var vm = SettingsSheetVM()
 
-    @State private var isReadmePresented = false
-
     @State private var isFileImporterPresented = false
 
     @State private var isFoldersSettingsPresented = false
@@ -25,6 +23,7 @@ struct SettingsSheet: View {
 
     @State private var sheetHeaderScroll = 0
 
+    @EnvironmentObject private var fs: Fs
     @EnvironmentObject private var nativeSheet: NativeSheet
 
     //////
@@ -56,11 +55,10 @@ struct SettingsSheet: View {
                         MyListView__ItemView__ButtonView(
                             text: state.readmeTitle
                         ) {
-                            isReadmePresented.toggle()
+                            fs.show { isReadmePresented in
+                                ReadmeSheet(isPresented: isReadmePresented)
+                            }
                         }
-                    }
-                    .sheetEnv(isPresented: $isReadmePresented) {
-                        ReadmeSheet(isPresented: $isReadmePresented)
                     }
 
                     MyListView__ItemView(
