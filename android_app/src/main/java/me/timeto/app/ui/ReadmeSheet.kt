@@ -1,12 +1,5 @@
 package me.timeto.app.ui
 
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.VisibilityThreshold
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
@@ -14,12 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
@@ -286,22 +277,6 @@ private fun PTextHighlightView(
 private val imageBorderColor = c.dividerBg
 private val imageSliderShape = SquircleShape(len = 90f, angleParam = 10f)
 
-private val imageSliderEnterAnimation: EnterTransition = slideInVertically(
-    animationSpec = spring(
-        stiffness = Spring.StiffnessMedium,
-        visibilityThreshold = IntOffset.VisibilityThreshold,
-    ),
-    initialOffsetY = { it },
-)
-
-private val imageSliderExitAnimation: ExitTransition = slideOutVertically(
-    animationSpec = spring(
-        stiffness = Spring.StiffnessMedium,
-        visibilityThreshold = IntOffset.VisibilityThreshold,
-    ),
-    targetOffsetY = { it },
-)
-
 @Composable
 private fun ImagePreviewsView(
     vararg resIds: Int,
@@ -342,64 +317,58 @@ private fun showImagesSlider(
     vararg resIds: Int,
 ) {
 
-    WrapperView.Layer(
-        enterAnimation = imageSliderEnterAnimation,
-        exitAnimation = imageSliderExitAnimation,
-        alignment = Alignment.BottomCenter,
-        onClose = {},
-        content = { layer ->
-            VStack(
+    Fs.show { layer ->
+
+        VStack(
+            modifier = Modifier
+                .background(c.bg)
+                .fillMaxSize()
+                .padding(top = statusBarHeight + 2.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+
+            val scrollState = rememberScrollState()
+            HStack(
                 modifier = Modifier
-                    .background(c.black)
-                    .fillMaxSize()
-                    .padding(top = statusBarHeight)
-                    .pointerInput(Unit) { },
-                horizontalAlignment = Alignment.CenterHorizontally,
+                    .weight(1f)
+                    .horizontalScroll(scrollState),
             ) {
 
-                val scrollState = rememberScrollState()
-                HStack(
-                    modifier = Modifier
-                        .weight(1f)
-                        .horizontalScroll(scrollState),
-                ) {
+                Padding(horizontal = 8.dp)
 
-                    Padding(horizontal = 8.dp)
-
-                    resIds.forEach { resId ->
-                        Image(
-                            painter = painterResource(resId),
-                            modifier = Modifier
-                                .padding(horizontal = 8.dp)
-                                .fillMaxHeight()
-                                .clip(imageSliderShape)
-                                .border(1.dp, imageBorderColor, shape = imageSliderShape),
-                            contentDescription = "Screenshot",
-                            contentScale = ContentScale.FillHeight,
-                        )
-                    }
-
-                    Padding(horizontal = 8.dp)
+                resIds.forEach { resId ->
+                    Image(
+                        painter = painterResource(resId),
+                        modifier = Modifier
+                            .padding(horizontal = 8.dp)
+                            .fillMaxHeight()
+                            .clip(imageSliderShape)
+                            .border(1.dp, imageBorderColor, shape = imageSliderShape),
+                        contentDescription = "Screenshot",
+                        contentScale = ContentScale.FillHeight,
+                    )
                 }
 
-                Text(
-                    text = "Close",
-                    modifier = Modifier
-                        .padding(end = 16.dp)
-                        .padding(vertical = 8.dp)
-                        .align(Alignment.End)
-                        .navigationBarsPadding()
-                        .clip(roundedShape)
-                        .clickable {
-                            layer.close()
-                        }
-                        .padding(horizontal = 14.dp)
-                        .padding(top = 6.dp, bottom = 7.dp),
-                    color = c.textSecondary,
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Light,
-                )
+                Padding(horizontal = 8.dp)
             }
+
+            Text(
+                text = "Close",
+                modifier = Modifier
+                    .padding(end = 16.dp)
+                    .padding(vertical = 8.dp)
+                    .align(Alignment.End)
+                    .navigationBarsPadding()
+                    .clip(roundedShape)
+                    .clickable {
+                        layer.close()
+                    }
+                    .padding(horizontal = 14.dp)
+                    .padding(top = 6.dp, bottom = 7.dp),
+                color = c.textSecondary,
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Light,
+            )
         }
-    ).show()
+    }
 }
