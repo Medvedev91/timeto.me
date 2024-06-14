@@ -31,11 +31,24 @@ struct ReadmeSheet: View {
                         let prevP: ReadmeSheetVM.Paragraph? = (idx == 0) ? nil : state.paragraphs[idx - 1]
 
                         if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTitle {
+                            let paddingTop: CGFloat = {
+                                guard let prevP = prevP else {
+                                    // todo
+                                    return 0
+                                }
+                                if prevP.isSlider {
+                                    return 40
+                                }
+                                if prevP is ReadmeSheetVM.ParagraphText {
+                                    return 39
+                                }
+                                fatalError()
+                            }()
                             HStack {
                                 Text(paragraph.text)
                                     .foregroundColor(c.text)
                                     .font(.system(size: Fs__TITLE_FONT_SIZE, weight: Fs__TITLE_FONT_WEIGHT))
-                                    .padding(.top, 44)
+                                    .padding(.top, paddingTop)
                                     .padding(.horizontal, H_PADDING)
                                 Spacer()
                             }
