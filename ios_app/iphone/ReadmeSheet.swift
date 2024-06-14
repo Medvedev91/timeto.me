@@ -14,10 +14,12 @@ struct ReadmeSheet: View {
 
         VMView(vm: vm, stack: .VStack()) { state in
 
-            Sheet__HeaderView(
+            Fs__HeaderTitle(
                 title: state.title,
                 scrollToHeader: scroll,
-                bgColor: c.sheetBg
+                onClose: {
+                    isPresented = false
+                }
             )
 
             ScrollViewWithVListener(showsIndicators: true, vScroll: $scroll) {
