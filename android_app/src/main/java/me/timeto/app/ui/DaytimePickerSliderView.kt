@@ -132,7 +132,7 @@ private fun SliderView(
                     .fillMaxWidth()
                     .height(4.dp)
                     .clip(roundedShape)
-                    .background(c.sheetFg)
+                    .background(c.fg)
                     .padding(horizontal = sliderInternalPadding)
                     .onGloballyPositioned { coords ->
                         val newSliderXPx = coords.positionInWindow().x.toInt()
@@ -174,7 +174,7 @@ private fun SliderView(
                         text = ticks[tickIdx].text,
                         modifier = Modifier
                             .offset(y = -onePx * 2),
-                        color = c.white,
+                        color = c.text,
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Medium,
                     )
@@ -209,7 +209,7 @@ private fun SliderView(
                             modifier = Modifier
                                 .width(1.dp)
                                 .height(5.dp)
-                                .background(c.sheetFg),
+                                .background(c.fg),
                         )
                     }
 
