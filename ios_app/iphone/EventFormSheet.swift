@@ -99,17 +99,17 @@ private struct EventFormSheet: View {
                         )
                         .padding(.top, 16)
                         .padding(.bottom, 12)
+
+                        EventTemplatesView(
+                            onPick: { templateUi in
+                                vm.setTemplate(templateUi: templateUi)
+                            }
+                        )
+                        .padding(.bottom, 10)
                     }
                     .frame(minHeight: geometry.size.height)
                 }
             }
-
-            EventTemplatesView(
-                onPick: { templateUi in
-                    vm.setTemplate(templateUi: templateUi)
-                }
-            )
-            .padding(.bottom, 10)
 
             HStack {
 
