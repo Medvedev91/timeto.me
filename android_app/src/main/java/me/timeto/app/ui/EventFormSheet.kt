@@ -62,6 +62,10 @@ private fun EventFormSheet(
             .background(c.bg),
     ) {
 
+        Fs__HeaderClose {
+            layer.close()
+        }
+
         VStack(
             modifier = Modifier
                 .weight(1f)
