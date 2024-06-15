@@ -234,6 +234,27 @@ struct Fs__HeaderAction: View {
     }
 }
 
+struct Fs__HeaderClose: View {
+
+    let onClose: () -> Void
+
+    var body: some View {
+
+        HStack {
+
+            Spacer()
+
+            Fs__CloseButton {
+                onClose()
+            }
+            .padding(.trailing, H_PADDING)
+        }
+        .safeAreaPadding(.top)
+        .padding(.top, H_PADDING)
+        .zIndex(2)
+    }
+}
+
 private struct HeaderTitle: View {
 
     let title: String
