@@ -96,15 +96,15 @@ private fun EventFormSheet(
                     vm.setDaytime(daytimeModel)
                 },
             )
-        }
 
-        EventTemplatesView(
-            modifier = Modifier
-                .padding(bottom = 8.dp),
-            onPick = { templateUi ->
-                vm.setTemplate(templateUi)
-            },
-        )
+            EventTemplatesView(
+                modifier = Modifier
+                    .padding(bottom = 8.dp),
+                onPick = { templateUi ->
+                    vm.setTemplate(templateUi)
+                },
+            )
+        }
 
         HStack(
             modifier = Modifier
