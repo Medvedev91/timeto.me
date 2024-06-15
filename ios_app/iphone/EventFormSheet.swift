@@ -64,6 +64,10 @@ private struct EventFormSheet: View {
                 hideKeyboard()
             }
 
+            Fs__HeaderClose {
+                isPresented = false
+            }
+
             GeometryReader { geometry in
 
                 ScrollViewWithVListener(showsIndicators: false, vScroll: $sheetHeaderScroll) {
