@@ -95,7 +95,7 @@ private struct SliderView: View {
                     return Color.clear
                 })
                 .padding(.horizontal, sliderInternalPadding)
-                .background(roundedShape.fill(c.sheetFg))
+                .background(roundedShape.fill(c.dividerBg))
                 .padding(.horizontal, hPadding)
 
                 //
@@ -111,7 +111,7 @@ private struct SliderView: View {
                         HStack {
 
                             Text(ticks[tickIdx].text)
-                                .foregroundColor(c.white)
+                                .foregroundColor(c.text)
                                 .font(.system(size: 12, weight: .medium))
                         }
                         .frame(width: circleSize, height: circleSize, alignment: .center)
@@ -145,7 +145,7 @@ private struct SliderView: View {
                             ZStack {
                             }
                             .frame(width: 1, height: 5)
-                            .background(c.sheetFg)
+                            .background(c.dividerFg)
                         }
 
                         if let sliderStickText = tick.sliderStickText {
