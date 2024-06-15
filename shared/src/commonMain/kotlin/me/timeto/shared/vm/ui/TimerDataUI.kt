@@ -12,7 +12,6 @@ class TimerDataUI(
 
     val status: STATUS
     val title: String // 12:34
-    val subtitle: String? // NULL / BREAK / OVERDUE
     val color: ColorRgba
 
     private val restartTimer = interval.note?.textFeatures()?.paused?.timer ?: interval.timer
@@ -22,20 +21,19 @@ class TimerDataUI(
         val now = time()
         val timeLeft = interval.id + interval.timer - now
 
-        class TmpDTO(val subtitle: String?, val color: ColorRgba, val timeLeft: Int, val status: STATUS)
+        class TmpDTO(val color: ColorRgba, val timeLeft: Int, val status: STATUS)
 
         val pomodoro: Int = interval.getActivityDI().pomodoro_timer
         val tmpData: TmpDTO = when {
-            timeLeft < -pomodoro -> TmpDTO("OVERDUE", ColorRgba.red, -timeLeft - pomodoro, STATUS.OVERDUE)
-            timeLeft <= 0 -> TmpDTO("BREAK", ColorRgba.green, timeLeft + pomodoro, STATUS.BREAK)
-            else -> TmpDTO(null, defColor, timeLeft, STATUS.PROCESS)
+            timeLeft < -pomodoro -> TmpDTO(ColorRgba.red, -timeLeft - pomodoro, STATUS.OVERDUE)
+            timeLeft <= 0 -> TmpDTO(ColorRgba.green, timeLeft + pomodoro, STATUS.BREAK)
+            else -> TmpDTO(defColor, timeLeft, STATUS.PROCESS)
         }
 
         val timeForTitle = if (isPurple) (now - interval.id) else tmpData.timeLeft
 
         status = tmpData.status
         title = secondsToString(timeForTitle)
-        subtitle = tmpData.subtitle
         color = if (isPurple) ColorRgba.purple else tmpData.color
     }
 
