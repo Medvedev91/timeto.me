@@ -59,7 +59,7 @@ private fun EventFormSheet(
     VStack(
         modifier = Modifier
             .fillMaxSize()
-            .background(c.sheetBg),
+            .background(c.bg),
     ) {
 
         VStack(
@@ -108,7 +108,7 @@ private fun EventFormSheet(
 
         HStack(
             modifier = Modifier
-                .background(c.sheetFg)
+                .background(c.fg)
                 .padding(vertical = 4.dp)
                 .navigationBarsPadding()
                 .imePadding(),
@@ -143,7 +143,7 @@ private fun EventFormSheet(
                         }
                     }
                     .padding(horizontal = 12.dp, vertical = 4.dp),
-                color = c.white,
+                color = c.text,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
             )
@@ -162,7 +162,7 @@ private fun DateTimeButton(
         modifier = Modifier
             .padding(start = paddingStart)
             .clip(squircleShape)
-            .background(c.sheetFg)
+            .background(c.fg)
             .clickable {
                 onClick()
             }
