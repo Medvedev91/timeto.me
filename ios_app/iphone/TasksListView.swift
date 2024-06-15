@@ -196,6 +196,7 @@ private let taskRowButtonStyle = TasksView__TaskRowView.MyButtonStyle()
 
 struct TasksView__TaskRowView: View {
 
+    @EnvironmentObject private var fs: Fs
     @EnvironmentObject private var nativeSheet: NativeSheet
 
     private let taskUI: TasksListVM.TaskUI
@@ -469,7 +470,7 @@ struct TasksView__TaskRowView: View {
             if let drop = drop {
                 xSwipeOffset = 0
                 if drop is DropItem__Calendar {
-                    nativeSheet.EventFormSheet__show(
+                    fs.EventFormSheet__show(
                         editedEvent: nil,
                         defText: taskUI.task.text,
                         defTime: nil

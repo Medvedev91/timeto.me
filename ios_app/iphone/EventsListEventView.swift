@@ -10,7 +10,7 @@ struct EventsListEventView: View {
     let dividerColor: Color
     let withTopDivider: Bool
 
-    @EnvironmentObject private var nativeSheet: NativeSheet
+    @EnvironmentObject private var fs: Fs
 
     var body: some View {
 
@@ -20,7 +20,7 @@ struct EventsListEventView: View {
                 deletionHint: eventUi.event.text,
                 deletionConfirmationNote: eventUi.deletionNote,
                 onEdit: {
-                    nativeSheet.EventFormSheet__show(editedEvent: eventUi.event) {
+                    fs.EventFormSheet__show(editedEvent: eventUi.event) {
                     }
                 },
                 onDelete: {

@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-extension NativeSheet {
+extension Fs {
 
     func EventFormSheet__show(
         editedEvent: EventDb?,
@@ -129,7 +129,7 @@ private struct EventFormSheet: View {
                             .font(.system(size: 16, weight: .medium))
                             .padding(.horizontal, 12)
                             .padding(.vertical, 6)
-                            .foregroundColor(c.white)
+                            .foregroundColor(c.text)
                             .background(roundedShape.fill(c.blue))
                     }
                 )
@@ -137,8 +137,8 @@ private struct EventFormSheet: View {
                 .padding(.trailing, H_PADDING)
             }
             .padding(.vertical, 4)
-            .background(c.sheetFg)
+            .background(c.fg)
         }
-        .background(c.sheetBg)
+        .background(c.bg)
     }
 }

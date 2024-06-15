@@ -7,7 +7,7 @@ private let hPadding = 8.0
 struct EventsCalendarDayView: View {
 
     @State private var vm: EventsCalendarDayVM
-    @EnvironmentObject private var nativeSheet: NativeSheet
+    @EnvironmentObject private var fs: Fs
 
     init(
         unixDay: Int
@@ -31,7 +31,7 @@ struct EventsCalendarDayView: View {
 
                 Button(
                     action: {
-                        nativeSheet.EventFormSheet__show(
+                        fs.EventFormSheet__show(
                             editedEvent: nil,
                             defTime: state.formDefTime.toInt()
                         ) {
