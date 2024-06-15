@@ -132,7 +132,7 @@ private fun SliderView(
                     .fillMaxWidth()
                     .height(4.dp)
                     .clip(roundedShape)
-                    .background(c.fg)
+                    .background(c.dividerBg)
                     .padding(horizontal = sliderInternalPadding)
                     .onGloballyPositioned { coords ->
                         val newSliderXPx = coords.positionInWindow().x.toInt()
@@ -209,7 +209,7 @@ private fun SliderView(
                             modifier = Modifier
                                 .width(1.dp)
                                 .height(5.dp)
-                                .background(c.fg),
+                                .background(c.dividerFg),
                         )
                     }
 
