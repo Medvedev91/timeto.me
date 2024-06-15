@@ -33,7 +33,7 @@ private val enterAnimation = fadeIn(spring(stiffness = Spring.StiffnessMedium))
 private val exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessMedium))
 
 val Fs__TITLE_FONT_SIZE = 26.sp // Golden ratio to lists text
-val Fs__TITLE_FONT_WEIGHT = FontWeight.Bold
+val Fs__TITLE_FONT_WEIGHT = FontWeight.ExtraBold
 
 object Fs {
 
@@ -182,7 +182,10 @@ fun Fs__HeaderAction(
         scrollState = scrollState,
     ) {
 
-        VStack {
+        VStack(
+            modifier = Modifier
+                .padding(start = halfDpCeil),
+        ) {
 
             Text(
                 text = "Cancel",
@@ -222,7 +225,7 @@ fun Fs__HeaderAction(
                         ),
                     color = c.text,
                     fontSize = 15.sp,
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = Fs__TITLE_FONT_WEIGHT,
                 )
             }
         }
