@@ -1,4 +1,4 @@
-# Productivity Tools - timeto.me
+# timeto.me - Productivity Tools
 
 App Store https://apps.apple.com/us/app/id6448869727
 
