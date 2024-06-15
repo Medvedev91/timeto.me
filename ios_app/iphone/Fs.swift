@@ -1,7 +1,7 @@
 import SwiftUI
 
 let Fs__TITLE_FONT_SIZE = 27.0 // Golden ratio to lists text
-let Fs__TITLE_FONT_WEIGHT: Font.Weight = .bold
+let Fs__TITLE_FONT_WEIGHT: Font.Weight = .heavy
 
 class Fs: ObservableObject {
 
@@ -220,7 +220,7 @@ struct Fs__HeaderAction: View {
                         label: {
                             Text(actionText)
                                 .foregroundColor(c.text)
-                                .font(.system(size: 16, weight: .bold))
+                                .font(.system(size: 16, weight: Fs__TITLE_FONT_WEIGHT))
                                 .padding(.horizontal, 10)
                                 .padding(.vertical, 6)
                                 .background(roundedShape.fill(c.blue))
@@ -230,6 +230,7 @@ struct Fs__HeaderAction: View {
                 }
                 .padding(.bottom, 6)
             }
+            .padding(.leading, halfDpCeil)
         }
     }
 }
