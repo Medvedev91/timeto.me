@@ -11,7 +11,7 @@ class TimerDataUI(
 ) {
 
     val status: STATUS
-    val title: String // 12:34
+    val title: String
     val color: ColorRgba
 
     private val restartTimer = interval.note?.textFeatures()?.paused?.timer ?: interval.timer
