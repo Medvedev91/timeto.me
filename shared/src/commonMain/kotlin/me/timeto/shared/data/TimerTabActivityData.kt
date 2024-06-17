@@ -17,7 +17,6 @@ class TimerTabActivityData(
         TimerDataUI(
             interval = lastInterval,
             isPurple = isPurple,
-            defColor = ColorRgba.blue,
         )
     }
 

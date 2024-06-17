@@ -7,7 +7,6 @@ import kotlin.math.absoluteValue
 class TimerDataUI(
     interval: IntervalDb,
     isPurple: Boolean,
-    defColor: ColorRgba,
 ) {
 
     val status: STATUS

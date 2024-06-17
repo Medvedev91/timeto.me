@@ -22,7 +22,7 @@ class HomeVM : __VM<HomeVM.State>() {
         val idToUpdate: Long,
     ) {
 
-        val timerData = TimerDataUI(interval, isPurple, ColorRgba.white)
+        val timerData = TimerDataUI(interval, isPurple)
         val timerButtonExpandSheetContext = ActivityTimerSheetVM.TimerContext.Interval(interval)
 
         val timerButtonsColor = if (timerData.status.isProcess() && !isPurple)
