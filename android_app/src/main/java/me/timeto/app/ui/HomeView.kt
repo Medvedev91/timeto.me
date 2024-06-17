@@ -115,7 +115,7 @@ fun HomeView() {
             }
 
             Text(
-                text = state.timerData.title,
+                text = state.timerData.timerText,
                 modifier = Modifier
                     .clip(squircleShape)
                     .clickable {
@@ -123,7 +123,7 @@ fun HomeView() {
                     }
                     .padding(horizontal = 8.dp, vertical = 12.dp),
                 fontSize = run {
-                    val len = state.timerData.title.count()
+                    val len = state.timerData.timerText.count()
                     when {
                         len <= 5 -> 40.sp
                         len <= 7 -> 35.sp
