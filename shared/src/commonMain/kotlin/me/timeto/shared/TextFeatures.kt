@@ -24,8 +24,7 @@ data class TextFeatures(
     }
 
     val triggers: List<Trigger> by lazy {
-        checklists.map { Trigger.Checklist(it) } +
-        shortcuts.map { Trigger.Shortcut(it) }
+        checklists.map { Trigger.Checklist(it) } + shortcuts.map { Trigger.Shortcut(it) }
     }
 
     fun textUi(
