@@ -59,7 +59,7 @@ fun HomeView() {
 
     val checklistDb = state.checklistDb
 
-    val timerColor = animateColorAsState(state.timerData.color.toColor()).value
+    val timerColor = animateColorAsState(state.timerData.timerColor.toColor()).value
     val timerButtonsColor = state.timerButtonsColor.toColor()
 
     VStack(
