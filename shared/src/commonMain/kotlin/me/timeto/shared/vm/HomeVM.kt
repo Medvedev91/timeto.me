@@ -22,7 +22,7 @@ class HomeVM : __VM<HomeVM.State>() {
         val idToUpdate: Long,
     ) {
 
-        val timerData = TimerDataUI(interval, isPurple)
+        val timerData = TimerDataUI(interval, tasksToday, isPurple)
         val timerButtonExpandSheetContext = ActivityTimerSheetVM.TimerContext.Interval(interval)
 
         val activity = interval.getActivityDI()
