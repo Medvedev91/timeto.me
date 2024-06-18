@@ -13,6 +13,7 @@ data class TextFeatures(
     val fromEvent: FromEvent?,
     val activity: ActivityDb?,
     val timer: Int?,
+    val pause: Pause?,
     val paused: Paused?,
     val isImportant: Boolean,
 ) {
@@ -57,6 +58,8 @@ data class TextFeatures(
             strings.add("#a${activity.id}")
         if (timer != null)
             strings.add("#t$timer")
+        if (pause != null)
+            strings.add("##pause_${pause.pausedTaskId}")
         if (paused != null)
             strings.add("#paused${paused.intervalId}_${paused.timer}")
         if (isImportant)
@@ -69,6 +72,8 @@ data class TextFeatures(
     class FromRepeating(val id: Int, val day: Int, val time: Int?)
 
     class FromEvent(val unixTime: UnixTime)
+
+    class Pause(val pausedTaskId: Int)
 
     class Paused(val intervalId: Int, val timer: Int)
 
@@ -170,6 +175,7 @@ private val fromRepeatingRegex = "#r(\\d{10})_(\\d{5})_(\\d{10})?".toRegex()
 private val fromEventRegex = "#e(\\d{10})".toRegex()
 private val activityRegex = "#a(\\d{10})".toRegex()
 private val timerRegex = "#t(\\d+)".toRegex()
+private val pauseRegex = "##pause_(\\d{10})".toRegex()
 private val pausedRegex = "#paused(\\d{10})_(\\d+)".toRegex()
 private const val isImportantSubstring = "#important"
 
@@ -233,6 +239,13 @@ private fun parseLocal(initText: String): TextFeatures {
             return@let time
         }
 
+    val pause: TextFeatures.Pause? = pauseRegex
+        .find(textNoFeatures)?.let { match ->
+            val taskId = match.groupValues[1].toInt()
+            match.clean()
+            return@let TextFeatures.Pause(taskId)
+        }
+
     val paused: TextFeatures.Paused? = pausedRegex
         .find(textNoFeatures)?.let { match ->
             val intervalId = match.groupValues[1].toInt()
@@ -253,6 +266,7 @@ private fun parseLocal(initText: String): TextFeatures {
         fromEvent = fromEvent,
         activity = activity,
         timer = timer,
+        pause = pause,
         paused = paused,
         isImportant = isImportant,
     )
