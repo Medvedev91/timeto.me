@@ -2,10 +2,12 @@ package me.timeto.shared.vm.ui
 
 import me.timeto.shared.*
 import me.timeto.shared.db.IntervalDb
+import me.timeto.shared.db.TaskDb
 import kotlin.math.absoluteValue
 
 class TimerDataUI(
     interval: IntervalDb,
+    todayTasks: List<TaskDb>,
     isPurple: Boolean,
 ) {
 
