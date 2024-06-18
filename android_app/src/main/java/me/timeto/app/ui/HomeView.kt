@@ -61,7 +61,7 @@ fun HomeView() {
 
     val noteColor = animateColorAsState(state.timerData.noteColor.toColor()).value
     val timerColor = animateColorAsState(state.timerData.timerColor.toColor()).value
-    val timerButtonsColor = state.timerButtonsColor.toColor()
+    val timerControlsColor = animateColorAsState(state.timerData.controlsColor.toColor()).value
 
     VStack(
         modifier = Modifier
@@ -109,7 +109,7 @@ fun HomeView() {
                 Icon(
                     painterResource(id = R.drawable.sf_pause_medium_thin),
                     contentDescription = "Pause",
-                    tint = timerButtonsColor,
+                    tint = timerControlsColor,
                     modifier = Modifier
                         .size(16.dp),
                 )
@@ -152,7 +152,7 @@ fun HomeView() {
                         .padding(bottom = 2.dp),
                     fontSize = 19.sp,
                     fontWeight = FontWeight.Thin,
-                    color = timerButtonsColor,
+                    color = timerControlsColor,
                 )
             }
         }

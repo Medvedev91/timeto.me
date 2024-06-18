@@ -14,6 +14,8 @@ class TimerDataUI(
 
     val status: STATUS
 
+    val controlsColor: ColorRgba
+
     val note: String
     val noteColor: ColorRgba
 
@@ -95,6 +97,8 @@ class TimerDataUI(
         fun isOverdue() = this == OVERDUE
     }
 }
+
+private val defControlsColor = ColorRgba(255, 255, 255, 180)
 
 private fun secondsToString(seconds: Int): String {
     val hms = seconds.absoluteValue.toHms()
