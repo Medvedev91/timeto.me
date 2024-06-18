@@ -250,12 +250,6 @@ class HomeVM : __VM<HomeVM.State>() {
         state.update { it.copy(isTasksVisible = !it.isTasksVisible) }
     }
 
-    fun pauseTask() {
-        launchExDefault {
-            IntervalDb.pauseLastInterval()
-        }
-    }
-
     private suspend fun upTodayIntervalsUI() {
         val utcOffset = localUtcOffsetWithDayStart
         val todayDS = UnixTime(utcOffset = utcOffset).localDay

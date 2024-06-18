@@ -102,7 +102,7 @@ fun HomeView() {
                     .offset(x = 4.dp)
                     .clip(squircleShape)
                     .clickable {
-                        vm.pauseTask()
+                        state.timerData.togglePomodoro()
                     },
                 contentAlignment = Alignment.Center,
             ) {
