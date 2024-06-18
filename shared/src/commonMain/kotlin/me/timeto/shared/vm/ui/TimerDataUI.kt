@@ -12,8 +12,6 @@ class TimerDataUI(
     isPurple: Boolean,
 ) {
 
-    val status: STATUS
-
     val controlsColor: ColorRgba
 
     val note: String
@@ -50,10 +48,19 @@ class TimerDataUI(
         )
     }
 
-    private val restartTimer = interval.note?.textFeatures()?.paused?.timer ?: interval.timer
-    val restartText = restartTimer.toTimerHintNote(isShort = true)
-
     init {
+
+        val now = time()
+        val secondsToEnd = interval.id + interval.timer - now
+
+        timerText = secondsToString(if (isPurple) (now - interval.id) else secondsToEnd)
+        timerColor = when {
+            isPurple -> ColorRgba.purple
+            secondsToEnd < 0 -> ColorRgba.red
+            pausedTaskData != null -> ColorRgba.green
+            else -> ColorRgba.white
+        }
+
         note = pausedTaskData?.note ?: run {
             val tf = (interval.note ?: activity.name)
             tf.textFeatures().textUi(
@@ -61,40 +68,27 @@ class TimerDataUI(
                 withTimer = false,
             )
         }
+        noteColor = if (pausedTaskData != null) ColorRgba.green else timerColor
 
-        val now = time()
-        val timeLeft = interval.id + interval.timer - now
-
-        class TmpDTO(val color: ColorRgba, val timeLeft: Int, val status: STATUS)
-
-        val pomodoro: Int = interval.getActivityDI().pomodoro_timer
-        val tmpData: TmpDTO = when {
-            timeLeft < -pomodoro -> TmpDTO(ColorRgba.red, -timeLeft - pomodoro, STATUS.OVERDUE)
-            timeLeft <= 0 -> TmpDTO(ColorRgba.green, timeLeft + pomodoro, STATUS.BREAK)
-            else -> TmpDTO(defColor, timeLeft, STATUS.PROCESS)
+        controlsColor = when {
+            isPurple -> ColorRgba.purple
+            secondsToEnd < 0 -> ColorRgba.red
+            pausedTaskData != null -> ColorRgba.green
+            else -> defControlsColor
         }
-
-        val timeForTitle = if (isPurple) (now - interval.id) else tmpData.timeLeft
-
-        status = tmpData.status
-        title = secondsToString(timeForTitle)
-        color = if (isPurple) ColorRgba.purple else tmpData.color
     }
 
-    fun restart() {
+    fun togglePomodoro() {
         launchExDefault {
-            val lastInterval = IntervalDb.getLastOneOrNull()!!
-            IntervalDb.addWithValidation(restartTimer, lastInterval.getActivityDI(), lastInterval.note)
+            if (pausedTaskData != null) {
+                pausedTaskData.taskDb.startInterval(
+                    pausedTaskData.timer,
+                    pausedTaskData.activityDb,
+                )
+            } else {
+                IntervalDb.pauseLastInterval()
+            }
         }
-    }
-
-    enum class STATUS {
-
-        PROCESS, BREAK, OVERDUE;
-
-        fun isProcess() = this == PROCESS
-        fun isBreak() = this == BREAK
-        fun isOverdue() = this == OVERDUE
     }
 }
 
