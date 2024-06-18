@@ -13,8 +13,13 @@ class TimerDataUI(
 ) {
 
     val status: STATUS
+
+    val note: String
+
     val timerText: String
     val timerColor: ColorRgba
+
+    ///
 
     private val activity: ActivityDb = interval.getActivityDI()
     private val pausedTaskData: PausedTaskData? = run {
@@ -46,6 +51,14 @@ class TimerDataUI(
     val restartText = restartTimer.toTimerHintNote(isShort = true)
 
     init {
+        note = pausedTaskData?.note ?: run {
+            val tf = (interval.note ?: activity.name)
+            tf.textFeatures().textUi(
+                withActivityEmoji = false,
+                withTimer = false,
+            )
+        }
+
         val now = time()
         val timeLeft = interval.id + interval.timer - now
 
