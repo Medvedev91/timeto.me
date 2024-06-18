@@ -1,6 +1,7 @@
 package me.timeto.shared.vm.ui
 
 import me.timeto.shared.*
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.TaskDb
 import kotlin.math.absoluteValue
@@ -14,6 +15,28 @@ class TimerDataUI(
     val status: STATUS
     val timerText: String
     val timerColor: ColorRgba
+
+    private val activity: ActivityDb = interval.getActivityDI()
+    private val pausedTaskData: PausedTaskData? = run {
+        if (!activity.isOther())
+            return@run null
+        val note: String = interval.note
+            ?: return@run null
+        val pausedTaskId: Int = note.textFeatures().pause?.pausedTaskId
+            ?: return@run null
+        val pausedTask: TaskDb = todayTasks.firstOrNull { it.id == pausedTaskId }
+            ?: return@run null
+        val pausedTaskTf: TextFeatures = pausedTask.text.textFeatures()
+        val pausedTaskTimer: Int = pausedTaskTf.paused?.timer
+            ?: return@run null
+        val pausedActivityDb: ActivityDb = pausedTaskTf.activity
+            ?: return@run null
+        PausedTaskData(
+            taskDb = pausedTask,
+            activityDb = pausedActivityDb,
+            timer = pausedTaskTimer,
+        )
+    }
 
     private val restartTimer = interval.note?.textFeatures()?.paused?.timer ?: interval.timer
     val restartText = restartTimer.toTimerHintNote(isShort = true)
@@ -62,3 +85,9 @@ private fun secondsToString(seconds: Int): String {
     val s = hms[2].toString().padStart(2, '0')
     return "$h$m$s"
 }
+
+private data class PausedTaskData(
+    val taskDb: TaskDb,
+    val activityDb: ActivityDb,
+    val timer: Int,
+)
