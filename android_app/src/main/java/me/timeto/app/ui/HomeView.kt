@@ -273,7 +273,7 @@ fun HomeView() {
                     calcAlpha = {
                         val isMiddleDividerVisible =
                             (checklistDb != null && (checklistScrollState.canScrollBackward || checklistScrollState.canScrollForward)) ||
-                            (isMainTasksExists && (mainTasksScrollState.canScrollBackward || mainTasksScrollState.canScrollForward))
+                                    (isMainTasksExists && (mainTasksScrollState.canScrollBackward || mainTasksScrollState.canScrollForward))
                         if (isMiddleDividerVisible) 1f else 0f
                     }
                 )
@@ -284,8 +284,8 @@ fun HomeView() {
                     else
                         Modifier.height(
                             mainTasksContentTopPadding +
-                            // 4.5f for the smallest emulator
-                            (HomeView__MTG_ITEM_HEIGHT * state.mainTasks.size.toFloat().limitMax(4.5f))
+                                    // 4.5f for the smallest emulator
+                                    (HomeView__MTG_ITEM_HEIGHT * state.mainTasks.size.toFloat().limitMax(4.5f))
                         )
                     MainTasksView(
                         tasks = state.mainTasks,
