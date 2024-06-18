@@ -35,6 +35,10 @@ class TimerDataUI(
             taskDb = pausedTask,
             activityDb = pausedActivityDb,
             timer = pausedTaskTimer,
+            note = "Break - " + pausedTaskTf.textUi(
+                withActivityEmoji = false,
+                withTimer = false,
+            ),
         )
     }
 
@@ -90,4 +94,5 @@ private data class PausedTaskData(
     val taskDb: TaskDb,
     val activityDb: ActivityDb,
     val timer: Int,
+    val note: String,
 )
