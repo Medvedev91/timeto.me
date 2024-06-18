@@ -142,17 +142,16 @@ fun HomeView() {
                     .offset(x = (-2).dp)
                     .clip(squircleShape)
                     .clickable {
-                        state.timerData.restart()
+                        vm.toggleIsPurple()
                     },
                 contentAlignment = Alignment.Center,
             ) {
-                Text(
-                    text = state.timerData.restartText,
+                Icon(
+                    painterResource(id = R.drawable.sf_plus_medium_thin),
+                    contentDescription = "Plus",
+                    tint = timerControlsColor,
                     modifier = Modifier
-                        .padding(bottom = 2.dp),
-                    fontSize = 19.sp,
-                    fontWeight = FontWeight.Thin,
-                    color = timerControlsColor,
+                        .size(16.dp),
                 )
             }
         }
