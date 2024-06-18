@@ -127,10 +127,12 @@ class HomeVM : __VM<HomeVM.State>() {
                     batteryTextColor = ColorRgba.white
                     batteryBackground = if (batteryLevelOrNull == 100) ColorRgba.green else ColorRgba.blue
                 }
+
                 batteryLevelOrNull in 0..20 -> {
                     batteryTextColor = ColorRgba.white
                     batteryBackground = ColorRgba.red
                 }
+
                 else -> {
                     batteryTextColor = ColorRgba.homeFontSecondary
                     batteryBackground = ColorRgba.transparent
