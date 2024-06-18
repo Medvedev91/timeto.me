@@ -15,6 +15,7 @@ class TimerDataUI(
     val status: STATUS
 
     val note: String
+    val noteColor: ColorRgba
 
     val timerText: String
     val timerColor: ColorRgba

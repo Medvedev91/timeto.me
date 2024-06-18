@@ -59,6 +59,7 @@ fun HomeView() {
 
     val checklistDb = state.checklistDb
 
+    val noteColor = animateColorAsState(state.timerData.noteColor.toColor()).value
     val timerColor = animateColorAsState(state.timerData.timerColor.toColor()).value
     val timerButtonsColor = state.timerButtonsColor.toColor()
 
@@ -78,7 +79,7 @@ fun HomeView() {
                 .offset(y = 1.dp),
             fontSize = 19.sp,
             fontWeight = FontWeight.Medium,
-            color = timerColor,
+            color = noteColor,
             textAlign = TextAlign.Center,
         )
 
