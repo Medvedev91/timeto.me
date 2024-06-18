@@ -72,7 +72,7 @@ fun HomeView() {
     ) {
 
         Text(
-            text = state.title,
+            text = state.timerData.note,
             modifier = Modifier
                 .padding(horizontal = 24.dp)
                 .offset(y = 1.dp),

@@ -41,10 +41,6 @@ class HomeVM : __VM<HomeVM.State>() {
 
         // todo or use interval.getTriggers()
         val textFeatures = (interval.note ?: activity.name).textFeatures()
-        val title = textFeatures.textUi(
-            withActivityEmoji = false,
-            withTimer = false,
-        )
 
         val checklistDb: ChecklistDb? = textFeatures.checklists.firstOrNull()
 
