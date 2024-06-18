@@ -120,7 +120,7 @@ fun HomeView() {
                 modifier = Modifier
                     .clip(squircleShape)
                     .clickable {
-                        vm.toggleIsPurple()
+                        state.timerData.togglePomodoro()
                     }
                     .padding(horizontal = 8.dp, vertical = 12.dp),
                 fontSize = run {
