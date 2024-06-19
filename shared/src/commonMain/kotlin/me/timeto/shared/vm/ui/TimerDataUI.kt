@@ -39,6 +39,7 @@ class TimerDataUI(
             ?: return@run null
         PausedTaskData(
             taskDb = pausedTask,
+            taskTextTf = pausedTaskTf,
             activityDb = pausedActivityDb,
             timer = pausedTaskTimer,
         )
@@ -100,6 +101,7 @@ private fun secondsToString(seconds: Int): String {
 
 private data class PausedTaskData(
     val taskDb: TaskDb,
+    val taskTextTf: TextFeatures,
     val activityDb: ActivityDb,
     val timer: Int,
 )
