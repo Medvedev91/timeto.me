@@ -77,7 +77,7 @@ class ActivityFormSheetVM(
             textFeatures = (activity?.name ?: "").textFeatures(),
             keepScreenOn = activity?.keepScreenOn ?: true,
             colorRgba = activity?.colorRgba ?: ActivityDb.nextColorDI(),
-            pomodoroTimer = activity?.pomodoro_timer ?: 0,
+            pomodoroTimer = activity?.pomodoro_timer ?: (5 * 60),
         )
     )
 
