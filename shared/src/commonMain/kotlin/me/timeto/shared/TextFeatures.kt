@@ -62,7 +62,7 @@ data class TextFeatures(
         if (pause != null)
             strings.add("##pause_${pause.pausedTaskId}")
         if (paused != null)
-            strings.add("#paused${paused.intervalId}_${paused.timer}")
+            strings.add("#paused${paused.intervalId}_${paused.originalTimer}")
         if (prolonged != null)
             strings.add("##prolonged_${prolonged.originalTimer}")
         if (isImportant)
@@ -78,7 +78,7 @@ data class TextFeatures(
 
     class Pause(val pausedTaskId: Int)
 
-    class Paused(val intervalId: Int, val timer: Int)
+    class Paused(val intervalId: Int, val originalTimer: Int)
 
     class Prolonged(val originalTimer: Int)
 

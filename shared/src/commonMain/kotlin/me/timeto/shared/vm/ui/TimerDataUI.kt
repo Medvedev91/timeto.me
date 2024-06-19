@@ -36,7 +36,7 @@ class TimerDataUI(
         val pausedTask: TaskDb = todayTasks.firstOrNull { it.id == pausedTaskId }
             ?: return@run null
         val pausedTaskTf: TextFeatures = pausedTask.text.textFeatures()
-        val pausedTaskTimer: Int = pausedTaskTf.paused?.timer
+        val pausedTaskTimer: Int = pausedTaskTf.paused?.originalTimer
             ?: return@run null
         val pausedActivityDb: ActivityDb = pausedTaskTf.activity
             ?: return@run null
