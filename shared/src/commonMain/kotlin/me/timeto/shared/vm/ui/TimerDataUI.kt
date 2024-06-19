@@ -41,10 +41,6 @@ class TimerDataUI(
             taskDb = pausedTask,
             activityDb = pausedActivityDb,
             timer = pausedTaskTimer,
-            note = "Break - " + pausedTaskTf.textUi(
-                withActivityEmoji = false,
-                withTimer = false,
-            ),
         )
     }
 
@@ -61,7 +57,7 @@ class TimerDataUI(
             else -> ColorRgba.white
         }
 
-        note = pausedTaskData?.note ?: run {
+        note = run {
             val tf = (interval.note ?: activity.name)
             tf.textFeatures().textUi(
                 withActivityEmoji = false,
@@ -106,5 +102,4 @@ private data class PausedTaskData(
     val taskDb: TaskDb,
     val activityDb: ActivityDb,
     val timer: Int,
-    val note: String,
 )
