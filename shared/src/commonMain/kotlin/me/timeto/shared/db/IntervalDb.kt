@@ -185,6 +185,19 @@ data class IntervalDb(
         )
     }
 
+    suspend fun up(
+        timer: Int,
+        note: String?,
+        activityDb: ActivityDb,
+    ): Unit = dbIO {
+        db.intervalQueries.upById(
+            id = id,
+            timer = timer,
+            note = note,
+            activity_id = activityDb.id,
+        )
+    }
+
     suspend fun delete(): Unit = dbIO {
         db.intervalQueries.deleteById(id)
     }
