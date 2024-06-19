@@ -47,12 +47,14 @@ data class TaskDb(
         fun addWithValidation_transactionRequired(
             text: String,
             folder: TaskFolderDb,
-        ) {
+        ): Int {
+            val newId = getNextId_ioRequired()
             db.taskQueries.insert(
-                id = getNextId_ioRequired(),
+                id = newId,
                 text = validateText(text),
                 folder_id = folder.id
             )
+            return newId
         }
 
         private fun getNextId_ioRequired(): Int = max(
