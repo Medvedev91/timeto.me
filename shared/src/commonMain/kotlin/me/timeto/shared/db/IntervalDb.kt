@@ -141,7 +141,7 @@ data class IntervalDb(
                     pause = TextFeatures.Pause(pausedTaskId = pausedTaskId),
                 )
                 addWithValidationNeedTransaction(
-                    TIMER_AFTER_PAUSE,
+                    activity.pomodoro_timer,
                     ActivityDb.getOther(),
                     pauseIntervalTf.textWithFeatures(),
                 )
