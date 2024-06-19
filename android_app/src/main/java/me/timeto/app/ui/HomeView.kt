@@ -11,8 +11,6 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ExpandCircleDown
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -172,34 +170,23 @@ fun HomeView() {
             HStack(
                 modifier = Modifier
                     .offset(y = (-4).dp),
-                verticalAlignment = Alignment.CenterVertically,
             ) {
-
-                TimerHintsView(
-                    modifier = Modifier,
-                    timerHintsUI = state.timerHints,
-                    hintHPadding = 10.dp,
-                    fontSize = 19.sp,
-                    fontWeight = FontWeight.Thin,
-                    fontColor = timerColor,
-                    onStart = {},
-                )
-
-                Icon(
-                    Icons.Rounded.ExpandCircleDown,
-                    contentDescription = "More",
-                    tint = timerColor,
-                    modifier = Modifier
-                        .padding(start = 8.dp)
-                        .size(28.dp)
-                        .clip(roundedShape)
-                        .clickable {
-                            ActivityTimerSheet__show(
-                                activity = state.activity,
-                                timerContext = state.timerButtonExpandSheetContext,
-                            ) {}
-                        },
-                )
+                state.timerData.prolongHints.forEach { hint ->
+                    Text(
+                        text = hint.text,
+                        modifier = Modifier
+                            .clip(roundedShape)
+                            .align(Alignment.CenterVertically)
+                            .clickable {
+                                hint.prolong()
+                                vm.toggleIsPurple()
+                            }
+                            .padding(horizontal = 10.dp, vertical = 4.dp),
+                        color = timerColor,
+                        fontSize = 19.sp,
+                        fontWeight = FontWeight.Thin,
+                    )
+                }
             }
         }
 
