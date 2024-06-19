@@ -132,11 +132,19 @@ data class IntervalDb(
                     timer = timer,
                     paused = paused,
                 )
-                TaskDb.addWithValidation_transactionRequired(
+
+                val pausedTaskId: Int = TaskDb.addWithValidation_transactionRequired(
                     text = tf.textWithFeatures(),
                     folder = DI.getTodayFolder(),
                 )
-                addWithValidationNeedTransaction(TIMER_AFTER_PAUSE, ActivityDb.getOther(), null)
+                val pauseIntervalTf = "Break".textFeatures().copy(
+                    pause = TextFeatures.Pause(pausedTaskId = pausedTaskId),
+                )
+                addWithValidationNeedTransaction(
+                    TIMER_AFTER_PAUSE,
+                    ActivityDb.getOther(),
+                    pauseIntervalTf.textWithFeatures(),
+                )
             }
         }
 
