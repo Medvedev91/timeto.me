@@ -15,6 +15,7 @@ data class TextFeatures(
     val timer: Int?,
     val pause: Pause?,
     val paused: Paused?,
+    val prolonged: Prolonged?,
     val isImportant: Boolean,
 ) {
 
@@ -62,6 +63,8 @@ data class TextFeatures(
             strings.add("##pause_${pause.pausedTaskId}")
         if (paused != null)
             strings.add("#paused${paused.intervalId}_${paused.timer}")
+        if (prolonged != null)
+            strings.add("##prolonged_${prolonged.originalTimer}")
         if (isImportant)
             strings.add(isImportantSubstring)
         return strings.joinToString(" ")
@@ -76,6 +79,8 @@ data class TextFeatures(
     class Pause(val pausedTaskId: Int)
 
     class Paused(val intervalId: Int, val timer: Int)
+
+    class Prolonged(val originalTimer: Int)
 
     sealed class Trigger(
         val id: String,
@@ -177,6 +182,7 @@ private val activityRegex = "#a(\\d{10})".toRegex()
 private val timerRegex = "#t(\\d+)".toRegex()
 private val pauseRegex = "##pause_(\\d{10})".toRegex()
 private val pausedRegex = "#paused(\\d{10})_(\\d+)".toRegex()
+private val prolongedRegex = "##prolonged_(\\d+)".toRegex()
 private const val isImportantSubstring = "#important"
 
 private fun parseLocal(initText: String): TextFeatures {
@@ -254,6 +260,13 @@ private fun parseLocal(initText: String): TextFeatures {
             return@let TextFeatures.Paused(intervalId, intervalTimer)
         }
 
+    val prolonged: TextFeatures.Prolonged? = prolongedRegex
+        .find(textNoFeatures)?.let { match ->
+            val originalTimer = match.groupValues[1].toInt()
+            match.clean()
+            return@let TextFeatures.Prolonged(originalTimer)
+        }
+
     val isImportant = isImportantSubstring in textNoFeatures
     if (isImportant)
         textNoFeatures = textNoFeatures.replace(isImportantSubstring, "")
@@ -268,6 +281,7 @@ private fun parseLocal(initText: String): TextFeatures {
         timer = timer,
         pause = pause,
         paused = paused,
+        prolonged = prolonged,
         isImportant = isImportant,
     )
 }
