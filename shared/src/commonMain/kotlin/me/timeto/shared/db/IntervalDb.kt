@@ -125,7 +125,7 @@ data class IntervalDb(
                     if (timeLeft > 0) timeLeft else null
                 }
                 val paused = lastInterval.note?.textFeatures()?.paused
-                             ?: TextFeatures.Paused(lastInterval.id, lastInterval.timer)
+                    ?: TextFeatures.Paused(lastInterval.id, lastInterval.timer)
                 val text = lastInterval.note ?: activity.name
                 val tf = text.textFeatures().copy(
                     activity = activity,
