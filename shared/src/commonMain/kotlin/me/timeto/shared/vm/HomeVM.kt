@@ -23,18 +23,8 @@ class HomeVM : __VM<HomeVM.State>() {
     ) {
 
         val timerData = TimerDataUI(interval, tasksToday, isPurple)
-        val timerButtonExpandSheetContext = ActivityTimerSheetVM.TimerContext.Interval(interval)
 
         val activity = interval.getActivityDI()
-
-        val timerHints = activity.data.timer_hints.getTimerHintsUI(
-            historyLimit = 6,
-            customLimit = 6,
-            onSelect = { hintUI ->
-                val context = ActivityTimerSheetVM.TimerContext.Interval(interval)
-                ActivityTimerSheetVM.startIntervalByContext(context, activity, hintUI.seconds)
-            }
-        )
 
         // todo or use interval.getTriggers()
         val textFeatures = (interval.note ?: activity.name).textFeatures()
