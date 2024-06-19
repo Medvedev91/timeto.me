@@ -11,7 +11,6 @@ class ActivityPomodoroSheetVm(
 
         fun prepPomodoroTimeString(timer: Int): String = when {
             timer < 0 -> throw Exception("prepPomodoroTimeString(0)")
-            timer == 0 -> "None"
             timer < 3_600 -> "${timer / 60} min"
             else -> {
                 val (h, m, _) = timer.toHms()
@@ -60,4 +59,4 @@ class ActivityPomodoroSheetVm(
     )
 }
 
-private val pomodoroTimers = listOf(0, 5, 10, 15, 30, 60).map { it * 60 }
+private val pomodoroTimers = listOf(5, 10, 15, 30, 60).map { it * 60 }
