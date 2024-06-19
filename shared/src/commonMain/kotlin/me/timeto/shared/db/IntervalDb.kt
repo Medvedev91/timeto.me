@@ -118,28 +118,28 @@ data class IntervalDb(
 
         suspend fun pauseLastInterval(): Unit = dbIO {
             db.transaction {
-                val lastInterval = db.intervalQueries.getDesc(limit = 1).executeAsOne().toModel()
-                val activity = lastInterval.getActivityDI()
-                val timer: Int? = run {
-                    val timeLeft = lastInterval.id + lastInterval.timer - time()
+                val interval = db.intervalQueries.getDesc(limit = 1).executeAsOne().toModel()
+                val activity = interval.getActivityDI()
+                val pausedTimer: Int? = run {
+                    val timeLeft = interval.id + interval.timer - time()
                     if (timeLeft > 0) timeLeft else null
                 }
                 val paused: TextFeatures.Paused = run {
-                    val intervalTf = (lastInterval.note ?: "").textFeatures()
+                    val intervalTf = (interval.note ?: "").textFeatures()
                     intervalTf.paused ?: run {
-                        val originalTimer: Int = intervalTf.prolonged?.originalTimer ?: lastInterval.timer
-                        TextFeatures.Paused(lastInterval.id, originalTimer)
+                        val originalTimer: Int = intervalTf.prolonged?.originalTimer ?: interval.timer
+                        TextFeatures.Paused(interval.id, originalTimer)
                     }
                 }
-                val text = lastInterval.note ?: activity.name
-                val tf = text.textFeatures().copy(
+                val pausedText = interval.note ?: activity.name
+                val pausedTf = pausedText.textFeatures().copy(
                     activity = activity,
-                    timer = timer,
+                    timer = pausedTimer,
                     paused = paused,
                 )
 
                 val pausedTaskId: Int = TaskDb.addWithValidation_transactionRequired(
-                    text = tf.textWithFeatures(),
+                    text = pausedTf.textWithFeatures(),
                     folder = DI.getTodayFolder(),
                 )
                 val pauseIntervalTf = "Break".textFeatures().copy(
