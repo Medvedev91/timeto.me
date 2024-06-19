@@ -32,6 +32,7 @@ import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.shared.*
 import me.timeto.shared.vm.HomeVM
+import me.timeto.shared.vm.ui.TimerDataUI
 
 val HomeView__BOTTOM_NAVIGATION_HEIGHT = 56.dp
 val HomeView__PRIMARY_FONT_SIZE = 16.sp
@@ -106,8 +107,14 @@ fun HomeView() {
                     },
                 contentAlignment = Alignment.Center,
             ) {
+                val resId: Int = when (state.timerData.pomodoroIcon) {
+                    TimerDataUI.PomodoroIcon.PLAY -> R.drawable.sf_play_medium_thin
+                    TimerDataUI.PomodoroIcon.PAUSE -> R.drawable.sf_pause_medium_thin
+                    // todo
+                    TimerDataUI.PomodoroIcon.FORWARD -> R.drawable.sf_play_medium_thin
+                }
                 Icon(
-                    painterResource(id = R.drawable.sf_pause_medium_thin),
+                    painterResource(id = resId),
                     contentDescription = "Pause",
                     tint = timerControlsColor,
                     modifier = Modifier
@@ -151,7 +158,7 @@ fun HomeView() {
                     contentDescription = "Plus",
                     tint = timerControlsColor,
                     modifier = Modifier
-                        .size(16.dp),
+                        .size(17.dp),
                 )
             }
         }
