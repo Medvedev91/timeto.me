@@ -59,26 +59,7 @@ class TimerDataUI(
 
         fun prolong() {
             launchExDefault {
-                val interval = IntervalDb.getLastOneOrNull()!!
-                val activityDb = interval.getActivity()
-                val newTf: TextFeatures = run {
-                    val oldTf = (interval.note ?: activityDb.name).textFeatures()
-                    val prolonged = oldTf.prolonged ?: TextFeatures.Prolonged(interval.timer)
-                    oldTf.copy(prolonged = prolonged)
-                }
-                val newTimer: Int = run {
-                    val now = time()
-                    val secondsToEnd = interval.id + interval.timer - now
-                    if (secondsToEnd > 0)
-                        interval.timer + timer
-                    else
-                        now + timer - interval.id
-                }
-                interval.up(
-                    timer = newTimer,
-                    note = newTf.textWithFeatures(),
-                    activityDb = activityDb,
-                )
+                IntervalDb.prolongLastInterval(timer)
             }
         }
     }
