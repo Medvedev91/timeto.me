@@ -165,9 +165,30 @@ fun HomeView() {
 
             HStack(
                 modifier = Modifier
-                    .offset(y = (-4).dp),
+                    .offset(y = (-2).dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
+
+                TimerInfoButton(
+                    text = infoUi.untilDaytimeUi.text,
+                    color = timerColor,
+                    onClick = {
+                        Sheet.show { layer ->
+                            DaytimePickerSheet(
+                                layer = layer,
+                                title = infoUi.untilPickerTitle,
+                                doneText = "Start",
+                                daytimeModel = infoUi.untilDaytimeUi,
+                                withRemove = false,
+                                onPick = { daytimePickerUi ->
+                                    infoUi.setUntilDaytime(daytimePickerUi)
+                                    vm.toggleIsPurple()
+                                },
+                                onRemove = {},
+                            )
+                        }
+                    },
+                )
 
                 TimerInfoButton(
                     text = infoUi.timerText,
