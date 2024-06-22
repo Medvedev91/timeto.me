@@ -654,3 +654,23 @@ private fun MainDivider(
             },
     )
 }
+
+@Composable
+private fun TimerInfoButton(
+    text: String,
+    color: Color,
+    onClick: () -> Unit,
+) {
+    Text(
+        text = text,
+        modifier = Modifier
+            .clip(roundedShape)
+            .clickable {
+                onClick()
+            }
+            .padding(horizontal = 10.dp, vertical = 4.dp),
+        color = color,
+        fontSize = 19.sp,
+        fontWeight = FontWeight.Thin,
+    )
+}
