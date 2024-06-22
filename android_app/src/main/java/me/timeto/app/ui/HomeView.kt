@@ -150,7 +150,7 @@ fun HomeView() {
                     contentDescription = "Plus",
                     tint = timerControlsColor,
                     modifier = Modifier
-                        .size(17.dp),
+                        .size(16.dp),
                 )
             }
         }
