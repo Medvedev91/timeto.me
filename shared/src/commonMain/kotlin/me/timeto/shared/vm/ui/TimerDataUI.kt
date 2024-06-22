@@ -4,6 +4,7 @@ import me.timeto.shared.*
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.TaskDb
+import me.timeto.shared.libs.DaytimeModel
 import me.timeto.shared.vm.ActivityTimerSheetVM
 import kotlin.math.absoluteValue
 
@@ -100,11 +101,32 @@ class TimerDataUI(
     ///
 
     class InfoUi(
-        intervalDb: IntervalDb,
+        private val intervalDb: IntervalDb,
     ) {
+
+        val untilPickerTitle = "Until Time"
+        val untilDaytimeUi: DaytimeModel = run {
+            val unixTime = UnixTime(intervalDb.id + intervalDb.timer)
+            val daytime = unixTime.time - unixTime.localDayStartTime()
+            DaytimeModel.byDaytime(daytime)
+        }
 
         val timerText = "Timer"
         val timerContext = ActivityTimerSheetVM.TimerContext.Interval(intervalDb)
+
+        fun setUntilDaytime(daytimeUi: DaytimeModel) {
+            val unixTimeNow = UnixTime()
+            val dayStartNow = unixTimeNow.localDayStartTime()
+            val finishTimeTmp = dayStartNow + daytimeUi.seconds
+            // Today / Tomorrow
+            val finishTime: Int =
+                if (finishTimeTmp > intervalDb.id) finishTimeTmp
+                else finishTimeTmp + (3_600 * 24)
+            val newTimer = finishTime - intervalDb.id
+            launchExDefault {
+                intervalDb.upTimer(newTimer)
+            }
+        }
     }
 }
 
