@@ -161,26 +161,27 @@ fun HomeView() {
             exit = purpleAnimExit,
         ) {
 
+            val infoUi = state.timerData.infoUi
+
             HStack(
                 modifier = Modifier
                     .offset(y = (-4).dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                state.timerData.prolongHints.forEach { hint ->
-                    Text(
-                        text = hint.text,
-                        modifier = Modifier
-                            .clip(roundedShape)
-                            .align(Alignment.CenterVertically)
-                            .clickable {
-                                hint.prolong()
+
+                TimerInfoButton(
+                    text = infoUi.timerText,
+                    color = timerColor,
+                    onClick = {
+                        ActivityTimerSheet__show(
+                            activity = state.activity,
+                            timerContext = state.timerData.infoUi.timerContext,
+                            onStarted = {
                                 vm.toggleIsPurple()
-                            }
-                            .padding(horizontal = 10.dp, vertical = 4.dp),
-                        color = timerColor,
-                        fontSize = 19.sp,
-                        fontWeight = FontWeight.Thin,
-                    )
-                }
+                            },
+                        )
+                    },
+                )
             }
         }
 
