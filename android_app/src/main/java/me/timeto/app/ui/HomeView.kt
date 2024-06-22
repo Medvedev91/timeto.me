@@ -101,7 +101,7 @@ fun HomeView() {
                     .offset(x = 4.dp)
                     .clip(squircleShape)
                     .clickable {
-                        state.timerData.togglePomodoro()
+                        vm.toggleIsPurple()
                     },
                 contentAlignment = Alignment.Center,
             ) {
@@ -141,7 +141,7 @@ fun HomeView() {
                     .offset(x = (-2).dp)
                     .clip(squircleShape)
                     .clickable {
-                        vm.toggleIsPurple()
+                        state.timerData.prolong()
                     },
                 contentAlignment = Alignment.Center,
             ) {
