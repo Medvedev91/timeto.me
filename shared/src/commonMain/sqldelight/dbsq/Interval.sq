@@ -52,6 +52,11 @@ UPDATE IntervalSQ
 SET timer = ?, note = ?, activity_id = ?
 WHERE id = ?;
 
+upTimerById:
+UPDATE IntervalSQ
+SET timer = ?
+WHERE id = ?;
+
 upActivityIdById:
 UPDATE IntervalSQ
 SET activity_id = ?
