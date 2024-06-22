@@ -4,6 +4,7 @@ import me.timeto.shared.*
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.TaskDb
+import me.timeto.shared.vm.ActivityTimerSheetVM
 import kotlin.math.absoluteValue
 
 class TimerDataUI(
@@ -19,6 +20,8 @@ class TimerDataUI(
 
     val timerText: String
     val timerColor: ColorRgba
+
+    val infoUi: InfoUi = InfoUi(interval)
 
     ///
 
@@ -92,6 +95,16 @@ class TimerDataUI(
         launchExDefault {
             IntervalDb.prolongLastInterval(5 * 60)
         }
+    }
+
+    ///
+
+    class InfoUi(
+        intervalDb: IntervalDb,
+    ) {
+
+        val timerText = "Timer"
+        val timerContext = ActivityTimerSheetVM.TimerContext.Interval(intervalDb)
     }
 }
 
