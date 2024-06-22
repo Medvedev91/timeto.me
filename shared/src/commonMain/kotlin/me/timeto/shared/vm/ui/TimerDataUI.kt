@@ -112,6 +112,12 @@ class TimerDataUI(
             }
         }
     }
+
+    fun prolong() {
+        launchExDefault {
+            IntervalDb.prolongLastInterval(5 * 60)
+        }
+    }
 }
 
 private val defControlsColor = ColorRgba(255, 255, 255, 180)
