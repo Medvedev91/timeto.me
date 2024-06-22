@@ -105,15 +105,9 @@ fun HomeView() {
                     },
                 contentAlignment = Alignment.Center,
             ) {
-                val resId: Int = when (state.timerData.pomodoroIcon) {
-                    TimerDataUI.PomodoroIcon.PLAY -> R.drawable.sf_play_medium_thin
-                    TimerDataUI.PomodoroIcon.PAUSE -> R.drawable.sf_pause_medium_thin
-                    // todo
-                    TimerDataUI.PomodoroIcon.FORWARD -> R.drawable.sf_play_medium_thin
-                }
                 Icon(
-                    painterResource(id = resId),
-                    contentDescription = "Pause",
+                    painterResource(id = R.drawable.sf_info_medium_thin),
+                    contentDescription = "Timer Info",
                     tint = timerControlsColor,
                     modifier = Modifier
                         .size(16.dp),

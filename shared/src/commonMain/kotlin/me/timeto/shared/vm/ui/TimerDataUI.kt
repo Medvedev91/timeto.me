@@ -12,7 +12,6 @@ class TimerDataUI(
     isPurple: Boolean,
 ) {
 
-    val pomodoroIcon: PomodoroIcon
     val controlsColor: ColorRgba
 
     val note: String
@@ -48,10 +47,6 @@ class TimerDataUI(
         )
     }
 
-    enum class PomodoroIcon {
-        PAUSE, PLAY, FORWARD,
-    }
-
     class ProlongHint(
         val timer: Int,
         val text: String,
@@ -68,12 +63,6 @@ class TimerDataUI(
 
         val now = time()
         val secondsToEnd = interval.id + interval.timer - now
-
-        pomodoroIcon = when {
-            pausedTaskData == null -> PomodoroIcon.PAUSE
-            pausedTaskData.taskTextTf.timer != null -> PomodoroIcon.FORWARD
-            else -> PomodoroIcon.PLAY
-        }
 
         timerText = secondsToString(if (isPurple) (now - interval.id) else secondsToEnd)
         timerColor = when {
