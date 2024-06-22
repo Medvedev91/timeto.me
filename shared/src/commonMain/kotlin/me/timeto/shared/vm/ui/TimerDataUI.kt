@@ -20,8 +20,6 @@ class TimerDataUI(
     val timerText: String
     val timerColor: ColorRgba
 
-    val prolongHints: List<ProlongHint> = prolongHintsLocal
-
     ///
 
     private val activity: ActivityDb = interval.getActivityDI()
@@ -45,18 +43,6 @@ class TimerDataUI(
             activityDb = pausedActivityDb,
             timer = pausedTaskTimer,
         )
-    }
-
-    class ProlongHint(
-        val timer: Int,
-        val text: String,
-    ) {
-
-        fun prolong() {
-            launchExDefault {
-                IntervalDb.prolongLastInterval(timer)
-            }
-        }
     }
 
     init {
@@ -110,13 +96,6 @@ class TimerDataUI(
 }
 
 private val defControlsColor = ColorRgba(255, 255, 255, 180)
-
-private val prolongHintsLocal: List<TimerDataUI.ProlongHint> = listOf(
-    TimerDataUI.ProlongHint(5 * 60, "5"),
-    TimerDataUI.ProlongHint(15 * 60, "15"),
-    TimerDataUI.ProlongHint(30 * 60, "30"),
-    TimerDataUI.ProlongHint(60 * 60, "1h"),
-)
 
 private fun secondsToString(seconds: Int): String {
     val hms = seconds.absoluteValue.toHms()
