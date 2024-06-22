@@ -215,6 +215,13 @@ data class IntervalDb(
         )
     }
 
+    suspend fun upTimer(timer: Int): Unit = dbIO {
+        db.intervalQueries.upTimerById(
+            id = id,
+            timer = timer,
+        )
+    }
+
     suspend fun up(
         timer: Int,
         note: String?,
