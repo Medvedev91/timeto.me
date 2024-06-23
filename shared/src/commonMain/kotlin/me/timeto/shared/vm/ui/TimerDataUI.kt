@@ -23,6 +23,7 @@ class TimerDataUI(
     val timerColor: ColorRgba
 
     val infoUi: InfoUi = InfoUi(interval)
+    val prolongText: String?
 
     ///
 
@@ -60,6 +61,12 @@ class TimerDataUI(
             secondsToEnd < 0 -> ColorRgba.red
             pausedTaskData != null -> ColorRgba.green
             else -> ColorRgba.white
+        }
+
+        prolongText = run {
+            val prolonged: TextFeatures.Prolonged = intervalNoteTf?.prolonged
+                ?: return@run null
+            (interval.timer - prolonged.originalTimer).toTimerHintNote(true)
         }
 
         note = (intervalNoteTf ?: activity.name.textFeatures()).textUi(
