@@ -136,6 +136,7 @@ data class IntervalDb(
                     activity = activity,
                     timer = pausedTimer,
                     paused = paused,
+                    prolonged = null,
                 )
 
                 val pausedTaskId: Int = TaskDb.addWithValidation_transactionRequired(
