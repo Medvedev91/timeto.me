@@ -392,6 +392,17 @@ suspend fun rescheduleNotifications() {
         return
 
     val totalMinutes = lastInterval.timer / 60
+    scheduledNotificationsDataFlow.emit(
+        listOf(
+            ScheduledNotificationData(
+                title = "Time Is Over ⏰",
+                text = if (totalMinutes == 1) "1 minute has expired" else "$totalMinutes minutes have expired",
+                inSeconds = inSeconds,
+                type = ScheduledNotificationData.TYPE.BREAK,
+            ),
+        )
+    )
+    /*
     val activityDb = lastInterval.getActivity()
     val pomodoroTimer = activityDb.pomodoro_timer
     if (pomodoroTimer > 0) {
@@ -423,6 +434,7 @@ suspend fun rescheduleNotifications() {
             )
         )
     }
+    */
 }
 
 ///
