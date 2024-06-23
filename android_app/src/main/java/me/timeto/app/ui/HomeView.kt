@@ -145,13 +145,23 @@ fun HomeView() {
                     },
                 contentAlignment = Alignment.Center,
             ) {
-                Icon(
-                    painterResource(id = R.drawable.sf_plus_medium_thin),
-                    contentDescription = "Plus",
-                    tint = timerControlsColor,
-                    modifier = Modifier
-                        .size(16.dp),
-                )
+                val prolongedText = state.timerData.prolongText
+                if (prolongedText != null) {
+                    Text(
+                        text = prolongedText,
+                        color = timerControlsColor,
+                        fontSize = 19.sp,
+                        fontWeight = FontWeight.Thin,
+                    )
+                } else {
+                    Icon(
+                        painterResource(id = R.drawable.sf_plus_medium_thin),
+                        contentDescription = "Plus",
+                        tint = timerControlsColor,
+                        modifier = Modifier
+                            .size(16.dp),
+                    )
+                }
             }
         }
 
