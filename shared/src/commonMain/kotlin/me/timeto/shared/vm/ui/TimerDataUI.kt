@@ -26,13 +26,13 @@ class TimerDataUI(
 
     ///
 
+    private val intervalNoteTf: TextFeatures? = interval.note?.textFeatures()
+
     private val activity: ActivityDb = interval.getActivityDI()
     private val pausedTaskData: PausedTaskData? = run {
         if (!activity.isOther())
             return@run null
-        val note: String = interval.note
-            ?: return@run null
-        val pausedTaskId: Int = note.textFeatures().pause?.pausedTaskId
+        val pausedTaskId: Int = intervalNoteTf?.pause?.pausedTaskId
             ?: return@run null
         val pausedTask: TaskDb = todayTasks.firstOrNull { it.id == pausedTaskId }
             ?: return@run null
@@ -62,13 +62,10 @@ class TimerDataUI(
             else -> ColorRgba.white
         }
 
-        note = run {
-            val tf = (interval.note ?: activity.name)
-            tf.textFeatures().textUi(
-                withActivityEmoji = false,
-                withTimer = false,
-            )
-        }
+        note = (intervalNoteTf ?: activity.name.textFeatures()).textUi(
+            withActivityEmoji = false,
+            withTimer = false,
+        )
         noteColor = if (pausedTaskData != null) ColorRgba.green else timerColor
 
         controlsColor = when {
