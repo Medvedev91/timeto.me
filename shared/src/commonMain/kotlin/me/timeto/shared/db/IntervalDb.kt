@@ -163,16 +163,8 @@ data class IntervalDb(
                 val prolonged = oldTf.prolonged ?: TextFeatures.Prolonged(interval.timer)
                 oldTf.copy(prolonged = prolonged)
             }
-            val newTimer: Int = run {
-                val now = time()
-                val secondsToEnd = interval.id + interval.timer - now
-                if (secondsToEnd > 0)
-                    interval.timer + timer
-                else
-                    now + timer - interval.id
-            }
             interval.up(
-                timer = newTimer,
+                timer = interval.timer + timer,
                 note = newTf.textWithFeatures(),
                 activityDb = activityDb,
             )
