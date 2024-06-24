@@ -112,10 +112,11 @@ struct HomeView: View {
 
                     Button(
                         action: {
-                            state.timerData.restart()
+                            state.timerData.prolong()
                         },
                         label: {
-                            Text(state.timerData.restartText)
+                            Image(systemName: "plus")
+                                .foregroundColor(timerControlsColor)
                                 .font(.system(size: 22, weight: .thin))
                                 .foregroundColor(timerButtonsColor)
                                 .frame(maxWidth: .infinity)
