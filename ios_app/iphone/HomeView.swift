@@ -162,7 +162,7 @@ struct HomeView: View {
                             onClick: {
                                 nativeSheet.showActivityTimerSheet(
                                     activity: state.activity,
-                                    timerContext: state.timerButtonExpandSheetContext,
+                                    timerContext: state.timerData.infoUi.timerContext,
                                     hideOnStart: true,
                                     onStart: {}
                                 )
