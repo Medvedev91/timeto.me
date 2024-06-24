@@ -70,12 +70,12 @@ struct HomeView: View {
 
                     Button(
                         action: {
-                            vm.pauseTask()
+                            vm.toggleIsPurple()
                         },
                         label: {
-                            Image(systemName: "pause")
-                                .foregroundColor(timerButtonsColor)
-                                .font(.system(size: 22, weight: .thin))
+                            Image(systemName: "info")
+                                .foregroundColor(timerControlsColor)
+                                .font(.system(size: 23, weight: .thin))
                                 .frame(maxWidth: .infinity)
                                 .frame(height: timerHeight)
                         }
