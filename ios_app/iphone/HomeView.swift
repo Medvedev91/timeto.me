@@ -116,14 +116,21 @@ struct HomeView: View {
                             state.timerData.prolong()
                         },
                         label: {
-                            Image(systemName: "plus")
-                                .foregroundColor(timerControlsColor)
-                                .font(.system(size: 22, weight: .thin))
-                                .frame(maxWidth: .infinity)
-                                .frame(height: timerHeight)
+                            ZStack {
+                                if let prolongText = timerData.prolongText {
+                                    Text(prolongText)
+                                        .font(.system(size: 22, weight: .thin))
+                                        .foregroundColor(timerControlsColor)
+                                } else {
+                                    Image(systemName: "plus")
+                                        .foregroundColor(timerControlsColor)
+                                        .font(.system(size: 22, weight: .thin))
+                                }
+                            }
+                            .frame(maxWidth: .infinity)
+                            .frame(height: timerHeight)
                         }
                     )
-                    .offset(x: 2)
                 }
                 .padding(.top, 13)
                 .padding(.bottom, 14)
