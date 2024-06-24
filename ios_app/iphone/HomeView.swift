@@ -83,11 +83,11 @@ struct HomeView: View {
 
                     Button(
                         action: {
-                            vm.toggleIsPurple()
+                            state.timerData.togglePomodoro()
                         },
                         label: {
                             let timerFont: Font = {
-                                let len = timerData.title.count
+                                let len = timerData.timerText.count
                                 if len <= 5 {
                                     return timerFont1
                                 }
@@ -96,7 +96,7 @@ struct HomeView: View {
                                 }
                                 return timerFont3
                             }()
-                            Text(timerData.title)
+                            Text(timerData.timerText)
                                 .font(timerFont)
                                 .foregroundColor(timerColor)
                                 .lineLimit(1)
