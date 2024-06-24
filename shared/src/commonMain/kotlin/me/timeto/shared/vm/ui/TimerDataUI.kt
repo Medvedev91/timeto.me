@@ -22,7 +22,7 @@ class TimerDataUI(
     val timerText: String
     val timerColor: ColorRgba
 
-    val infoUi: InfoUi = InfoUi(interval)
+    val infoUi = InfoUi(interval)
     val prolongText: String?
 
     ///
