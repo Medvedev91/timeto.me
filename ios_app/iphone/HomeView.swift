@@ -535,3 +535,28 @@ private struct MainDivider: View {
             .padding(.horizontal, H_PADDING)
     }
 }
+
+private struct TimerInfoButton: View {
+
+    let text: String
+    let color: Color
+    let onClick: () -> Void
+
+    var body: some View {
+
+        Button(
+            action: {
+                onClick()
+            },
+            label: {
+                Text(text)
+                    .font(.system(size: 22, weight: .thin))
+                    .foregroundColor(color)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 4)
+                    .cornerRadius(99)
+            }
+        )
+        .buttonStyle(.borderless)
+    }
+}
