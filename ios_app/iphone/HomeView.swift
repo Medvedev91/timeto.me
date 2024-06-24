@@ -129,34 +129,44 @@ struct HomeView: View {
 
                 if state.isPurple {
 
+                    let infoUi = state.timerData.infoUi
+
                     HStack {
 
-                        TimerHintsView(
-                            timerHintsUI: state.timerHints,
-                            hintHPadding: 10.0,
-                            fontSize: 22.0,
-                            fontWeight: .thin,
-                            fontColor: timerColor,
-                            onStart: {}
+                        TimerInfoButton(
+                            text: infoUi.untilDaytimeUi.text,
+                            color: timerColor,
+                            onClick: {
+                                nativeSheet.show { isTimerPickerPresented in
+                                    DaytimePickerSheet(
+                                        isPresented: isTimerPickerPresented,
+                                        title: infoUi.untilPickerTitle,
+                                        doneText: "Start",
+                                        daytimeModel: infoUi.untilDaytimeUi,
+                                        onPick: { daytimePickerUi in
+                                            infoUi.setUntilDaytime(daytimeUi: daytimePickerUi)
+                                            vm.toggleIsPurple()
+
+                                        },
+                                        onRemove: {}
+                                    )
+                                    .presentationDetentsMediumIf16()
+                                }
+                            }
                         )
 
-                        Button(
-                            action: {
+                        TimerInfoButton(
+                            text: infoUi.timerText,
+                            color: timerColor,
+                            onClick: {
                                 nativeSheet.showActivityTimerSheet(
                                     activity: state.activity,
                                     timerContext: state.timerButtonExpandSheetContext,
                                     hideOnStart: true,
                                     onStart: {}
                                 )
-                            },
-                            label: {
-                                Image(systemName: "chevron.down.circle.fill")
-                                    .foregroundColor(timerColor)
-                                    .font(.system(size: 22, weight: .regular))
                             }
                         )
-                        .padding(.leading, 9)
-                        .offset(y: -onePx)
                     }
                     .offset(y: -4)
                 }
