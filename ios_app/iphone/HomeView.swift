@@ -57,12 +57,13 @@ struct HomeView: View {
             VStack {
 
                 let timerData = state.timerData
-                let timerColor = timerData.color.toColor()
-                let timerButtonsColor = state.timerButtonsColor.toColor()
+                let noteColor = timerData.noteColor.toColor()
+                let timerColor = timerData.timerColor.toColor()
+                let timerControlsColor = state.timerData.controlsColor.toColor()
 
-                Text(state.title)
+                Text(state.timerData.note)
                     .font(.system(size: 21, weight: .semibold))
-                    .foregroundColor(timerColor)
+                    .foregroundColor(noteColor)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 20)
 
