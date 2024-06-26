@@ -12,8 +12,8 @@ android {
         applicationId = "me.timeto.app"
         minSdk = 26
         targetSdk = 34
-        versionCode = 546
-        versionName = "2024.06.14"
+        versionCode = 551
+        versionName = "2024.06.26"
     }
 
     buildTypes {
