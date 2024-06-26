@@ -518,10 +518,14 @@ private struct MainTaskItemView: View {
                     }
 
                     if mainTask.textFeatures.paused != nil {
-                        Image(systemName: "pause")
-                            .foregroundColor(c.homeFontSecondary)
-                            .font(.system(size: 12, weight: .black))
-                            .padding(.trailing, 5)
+                        ZStack {
+                            Image(systemName: "pause")
+                                .foregroundColor(c.white)
+                                .font(.system(size: 12, weight: .black))
+                        }
+                        .frame(width: mtgCircleHeight, height: mtgCircleHeight)
+                        .background(roundedShape.fill(c.green))
+                        .padding(.trailing, 7)
                     }
 
                     Text(mainTask.text)
