@@ -11,27 +11,27 @@ struct W_TabTimerView: View {
 
             ScrollViewReader { scrollProxy in
 
-                VStack(spacing: 0) {
-
-                    TimerView()
-                            .offset(y: -2)
-                            // The height on the devices can be different, set approximately.
-                            .frame(minHeight: 30, maxHeight: 30)
+                VStack {
 
                     // Tried by List, but listRowBackground() does not work on screen transition.
                     ScrollView(.vertical, showsIndicators: false) {
+                        
                         VStack(spacing: 5) {
+                            
+                            TimerView()
+                                    .id("timer_view")
+                                    .padding(.bottom, 16)
+
                             ForEach(state.activitiesUI, id: \.activity.id) { activityUI in
-                                ActivityView(activityUI: activityUI, lastInterval: state.lastInterval)
+                                ActivityView(activityUI: activityUI)
                                         .id("aid__\(activityUI.activity.id)")
                             }
                         }
                     }
                             .animation(.default)
-                            .padding(.top, 4)
                 }
                         .onChange(of: state.lastInterval) { newLastInterval in
-                            scrollProxy.scrollTo("aid__\(newLastInterval.activity_id)", anchor: .top)
+                            scrollProxy.scrollTo("timer_view", anchor: .top)
                         }
             }
         }
@@ -42,11 +42,17 @@ struct W_TabTimerView: View {
         @State private var vm = WatchTimerVM()
 
         var body: some View {
-            VMView(vm: vm, stack: .ZStack()) { state in
-                Text(state.timerData.title)
+            
+            VMView(vm: vm, stack: .VStack()) { state in
+                
+                Text(state.timerData.note)
+                    .foregroundColor(state.timerData.noteColor.toColor())
+                    .font(.system(size: 14))
+                
+                Text(state.timerData.timerText)
                         .font(.system(size: 28, design: .monospaced))
                         .fontWeight(.medium)
-                        .foregroundColor(state.timerData.color.toColor())
+                        .foregroundColor(state.timerData.timerColor.toColor())
             }
                     .onTapGesture {
                         vm.toggleIsPurple()
@@ -57,56 +63,26 @@ struct W_TabTimerView: View {
     struct ActivityView: View {
 
         var activityUI: WatchTabTimerVM.ActivityUI
-        var lastInterval: IntervalDb
         @State private var isTickerPresented = false
 
         let defBgColor = Color(rgba: [34, 34, 35])
 
         var body: some View {
 
-            let timerData = activityUI.data.timerData
-            let isActive = timerData != nil
-
             Button(
                     action: {
                         isTickerPresented = true
                     },
                     label: {
+                        
                         VStack {
 
                             HStack(alignment: .center) {
 
-                                VStack {
-                                    Text(activityUI.data.text)
+                                    Text(activityUI.text)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                             .lineLimit(1)
                                             .truncationMode(.middle)
-
-                                    if let listNote = activityUI.data.note {
-
-                                        Text(listNote)
-                                                .frame(maxWidth: .infinity, alignment: .leading)
-                                                .font(.system(size: 14, weight: .light))
-                                    }
-                                }
-
-                                if let timerData = timerData {
-
-                                    Button(
-                                            action: {
-                                                WatchToIosSync.shared.pauseWithLocal()
-                                            },
-                                            label: {
-                                                Image(systemName: "pause.fill")
-                                                        .foregroundColor(.blue)
-                                                        .font(.system(size: 16))
-                                            }
-                                    )
-                                            .buttonStyle(.borderless)
-                                            .frame(width: 30, height: 30)
-                                            .background(roundedShape.fill(.white))
-                                            .padding(.leading, 6)
-                                }
                             }
 
                             if !activityUI.timerHints.isEmpty {
@@ -135,7 +111,7 @@ struct W_TabTimerView: View {
                     .padding([.horizontal], 8)
                     .padding([.vertical], 4)
                     .buttonStyle(.plain)
-                    .background(squircleShape.fill(isActive ? .blue : defBgColor))
+                    .background(squircleShape.fill(defBgColor))
                     .sheet(isPresented: $isTickerPresented) {
                         W_TickerDialog(
                                 activity: activityUI.activity,

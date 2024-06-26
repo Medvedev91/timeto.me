@@ -16,7 +16,8 @@ class WatchTimerVM : __VM<WatchTimerVM.State>() {
         val lastInterval: IntervalDb,
         val idToUpdate: Int = 0,
     ) {
-        val timerData = TimerDataUI(lastInterval, isPurple, ColorRgba.text)
+        // todo
+        val timerData = TimerDataUI(lastInterval, listOf(), isPurple)
     }
 
     override val state = MutableStateFlow(

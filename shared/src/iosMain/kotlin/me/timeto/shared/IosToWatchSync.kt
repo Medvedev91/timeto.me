@@ -79,12 +79,6 @@ object IosToWatchSync {
             return@launchExDefault
         }
 
-        if (command == "pause") {
-            IntervalDb.pauseLastInterval()
-            onFinish("{}")
-            return@launchExDefault
-        }
-
         if (command == "sync") {
             syncWatch()
             onFinish("{}")

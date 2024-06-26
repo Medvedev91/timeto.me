@@ -22,8 +22,6 @@ data class IntervalDb(
 
         const val HOT_INTERVALS_LIMIT = 200 // todo 200? Remember limit for WatchToIosSync
 
-        const val TIMER_AFTER_PAUSE = 5 * 60
-
         fun anyChangeFlow() = db.intervalQueries.anyChange().asFlow()
 
         suspend fun getCount(): Int = dbIO {

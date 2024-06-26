@@ -1,7 +1,6 @@
 package me.timeto.shared
 
 import kotlinx.coroutines.flow.*
-import me.timeto.shared.data.TimerTabActivityData
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.vm.__VM
@@ -10,11 +9,9 @@ class WatchTabTimerVM : __VM<WatchTabTimerVM.State>() {
 
     class ActivityUI(
         val activity: ActivityDb,
-        val lastInterval: IntervalDb,
-        val isPurple: Boolean,
     ) {
 
-        val data = TimerTabActivityData(activity, lastInterval, isPurple)
+        val text: String = activity.name.textFeatures().textUi()
 
         val timerHints = activity.data.timer_hints.getTimerHintsUI(
             historyLimit = 4,
@@ -32,7 +29,7 @@ class WatchTabTimerVM : __VM<WatchTabTimerVM.State>() {
         val lastInterval: IntervalDb,
         val isPurple: Boolean,
     ) {
-        val activitiesUI = activities.toUiList(lastInterval, isPurple)
+        val activitiesUI = activities.toUiList(lastInterval)
     }
 
     override val state = MutableStateFlow(
@@ -59,15 +56,12 @@ class WatchTabTimerVM : __VM<WatchTabTimerVM.State>() {
 
 private fun List<ActivityDb>.toUiList(
     lastInterval: IntervalDb,
-    isPurple: Boolean,
 ): List<WatchTabTimerVM.ActivityUI> {
     // On top the active activity :)
     val sorted = this.sortedByDescending { it.id == lastInterval.activity_id }
     return sorted.mapIndexed { idx, activity ->
         WatchTabTimerVM.ActivityUI(
             activity = activity,
-            lastInterval = lastInterval,
-            isPurple = isPurple,
         )
     }
 }

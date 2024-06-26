@@ -32,21 +32,6 @@ object WatchToIosSync {
         )
     }
 
-    fun pauseWithLocal(): Unit = defaultScope().launchEx {
-        IntervalDb.addWithValidation(
-            timer = IntervalDb.TIMER_AFTER_PAUSE,
-            activity = ActivityDb.getOther(),
-            note = null,
-        )
-        launchEx {
-            delay(LOCAL_DELAY_MLS)
-            requestFromAppleWatch(
-                command = "pause",
-                jData = JsonObject(mapOf())
-            )
-        }
-    }
-
     fun startIntervalWithLocal(
         activity: ActivityDb,
         timer: Int,
