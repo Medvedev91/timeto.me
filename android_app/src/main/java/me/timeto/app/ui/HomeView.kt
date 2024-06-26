@@ -508,7 +508,7 @@ private fun MainTasksView(
                 if (mainTask.textFeatures.paused != null) {
                     ZStack(
                         modifier = Modifier
-                            .padding(end = 8.dp)
+                            .padding(end = 7.dp)
                             .size(mtgCircleHeight)
                             .clip(roundedShape)
                             .background(c.green),
