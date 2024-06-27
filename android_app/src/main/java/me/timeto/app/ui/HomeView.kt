@@ -35,7 +35,7 @@ val HomeView__BOTTOM_NAVIGATION_HEIGHT = 56.dp
 val HomeView__PRIMARY_FONT_SIZE = 16.sp
 
 // MTG - Main Tasks & Goals
-val HomeView__MTG_ITEM_HEIGHT = 40.dp
+val HomeView__MTG_ITEM_HEIGHT = 36.dp
 private val mtgCircleHPadding = 6.dp
 private val mtgCircleHeight = 22.dp
 private val mtgCircleFontSize = 13.sp
@@ -484,7 +484,7 @@ private fun MainTasksView(
                 if (timeUI != null) {
                     HStack(
                         modifier = Modifier
-                            .padding(end = 8.dp)
+                            .padding(end = if (mainTask.textFeatures.paused != null) 9.dp else 8.dp)
                             .height(mtgCircleHeight)
                             .clip(roundedShape)
                             .background(timeUI.textBgColor.toColor())
@@ -506,7 +506,7 @@ private fun MainTasksView(
                 if (mainTask.textFeatures.paused != null) {
                     ZStack(
                         modifier = Modifier
-                            .padding(end = 7.dp)
+                            .padding(end = 8.dp)
                             .size(mtgCircleHeight)
                             .clip(roundedShape)
                             .background(c.green),
