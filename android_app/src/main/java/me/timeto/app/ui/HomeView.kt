@@ -326,7 +326,6 @@ fun HomeView() {
 
                         ZStack(
                             modifier = Modifier
-                                .padding(top = 1.dp)
                                 .padding(horizontal = H_PADDING)
                                 .height(mtgCircleHeight)
                                 .fillMaxWidth()
