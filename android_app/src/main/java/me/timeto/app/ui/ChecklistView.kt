@@ -22,6 +22,10 @@ import me.timeto.shared.vm.ui.ChecklistStateUI
 
 private val checklistItemMinHeight = HomeView__MTG_ITEM_HEIGHT
 
+private val itemStartPadding = 8.dp
+private val checkboxSize = 18.dp
+private val checklistMenuInnerIconPadding = (checklistItemMinHeight - checkboxSize) / 2
+
 @Composable
 fun ChecklistView(
     checklistDb: ChecklistDb,
@@ -40,11 +44,7 @@ fun ChecklistView(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
-        val itemStartPadding = 8.dp
-        val checkboxSize = 18.dp
-
         val completionState = state.checklistUI.stateUI
-        val checklistMenuInnerIconPadding = (checklistItemMinHeight - checkboxSize) / 2
 
         HStack(
             modifier = Modifier
