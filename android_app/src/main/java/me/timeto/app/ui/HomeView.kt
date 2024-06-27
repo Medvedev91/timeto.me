@@ -30,7 +30,6 @@ import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.shared.*
 import me.timeto.shared.vm.HomeVM
-import me.timeto.shared.vm.ui.TimerDataUI
 
 val HomeView__BOTTOM_NAVIGATION_HEIGHT = 56.dp
 val HomeView__PRIMARY_FONT_SIZE = 16.sp
