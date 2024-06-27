@@ -23,7 +23,7 @@ import me.timeto.shared.vm.ui.ChecklistStateUI
 private val checklistItemMinHeight = HomeView__MTG_ITEM_HEIGHT
 
 private val itemStartPadding = 8.dp
-private val checkboxSize = 18.dp
+private val checkboxSize = 17.dp
 private val checklistMenuInnerIconPadding = (checklistItemMinHeight - checkboxSize) / 2
 
 @Composable
@@ -97,7 +97,7 @@ fun ChecklistView(
                                 color = c.white,
                                 modifier = Modifier
                                     .padding(vertical = 4.dp)
-                                    .padding(start = 14.dp),
+                                    .padding(start = 12.dp - halfDpFloor),
                                 fontSize = HomeView__PRIMARY_FONT_SIZE,
                                 textAlign = TextAlign.Start,
                             )
