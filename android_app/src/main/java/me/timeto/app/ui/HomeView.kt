@@ -320,6 +320,7 @@ fun HomeView() {
 
                     HStack(
                         modifier = Modifier
+                            .offset(y = halfDpCeil)
                             .height(HomeView__MTG_ITEM_HEIGHT),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
