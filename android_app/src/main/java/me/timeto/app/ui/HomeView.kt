@@ -74,9 +74,9 @@ fun HomeView() {
             text = state.timerData.note,
             modifier = Modifier
                 .padding(horizontal = 24.dp)
-                .offset(y = 1.dp),
-            fontSize = 19.sp,
-            fontWeight = FontWeight.Medium,
+                .offset(y = 2.dp),
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
             color = noteColor,
             textAlign = TextAlign.Center,
         )
