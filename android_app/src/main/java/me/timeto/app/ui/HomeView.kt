@@ -44,7 +44,7 @@ private val mtgCircleFontWeight = FontWeight.SemiBold
 private val mainTasksContentTopPadding = 4.dp
 private val mainTaskHalfHPadding = H_PADDING / 2
 
-private val navigationNoteHeight = 38.dp
+private val navigationNoteHeight = 25.dp
 private val navigationButtonModifier = Modifier.size(HomeView__BOTTOM_NAVIGATION_HEIGHT).padding(14.dp)
 
 private val purpleAnimEnter = fadeIn() + expandVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
@@ -319,7 +319,7 @@ fun HomeView() {
 
                     HStack(
                         modifier = Modifier
-                            .offset(y = halfDpCeil)
+                            .offset(y = 1.dp)
                             .height(HomeView__MTG_ITEM_HEIGHT),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
@@ -589,15 +589,20 @@ private fun NavigationView(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
-            Text(
-                text = state.menuNote,
+            VStack(
                 modifier = Modifier
                     .height(navigationNoteHeight)
-                    .padding(top = 8.dp),
-                color = c.homeFontSecondary,
-                fontSize = 13.sp,
-                fontWeight = FontWeight.Light,
-            )
+                    .offset(y = 1.dp),
+            ) {
+                SpacerW1()
+                Text(
+                    text = state.menuNote,
+                    modifier = Modifier,
+                    color = c.homeFontSecondary,
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Light,
+                )
+            }
 
             val menuTasksBg = animateColorAsState(if (state.isTasksVisible) c.sheetFg else c.black)
 
