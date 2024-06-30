@@ -97,11 +97,7 @@ class HomeVM : __VM<HomeVM.State>() {
                 null
             }
             .sortedBy {
-                val timeData = it.textFeatures.timeData
-                if (timeData != null)
-                    timeData.unixTime.time
-                else
-                    Int.MAX_VALUE
+                it.textFeatures.timeData?.unixTime?.time ?: Int.MAX_VALUE
             }
 
         val batteryText = "${batteryLevelOrNull ?: "--"}"
