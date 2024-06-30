@@ -551,14 +551,15 @@ private fun NavigationView(
     state: HomeVM.State,
     modifier: Modifier,
 ) {
-    Row(
+
+    HStack(
         modifier = modifier
             .fillMaxWidth()
             .height(IntrinsicSize.Max),
         verticalAlignment = Alignment.Bottom,
     ) {
 
-        Box(
+        ZStack(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxHeight()
@@ -651,7 +652,7 @@ private fun NavigationView(
             }
         }
 
-        Box(
+        ZStack(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxHeight()
