@@ -555,7 +555,7 @@ private fun NavigationView(
     HStack(
         modifier = modifier
             .fillMaxWidth()
-            .height(IntrinsicSize.Max),
+            .height(HomeView__BOTTOM_NAVIGATION_HEIGHT),
         verticalAlignment = Alignment.Bottom,
     ) {
 
@@ -583,7 +583,7 @@ private fun NavigationView(
         VStack(
             modifier = Modifier
                 .weight(1f)
-                .height(HomeView__BOTTOM_NAVIGATION_HEIGHT)
+                .fillMaxHeight()
                 .clip(squircleShape)
                 .background(menuTasksBg.value)
                 .motionEventSpy { event ->
