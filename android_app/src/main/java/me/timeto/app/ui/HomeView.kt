@@ -80,12 +80,6 @@ fun HomeView() {
             textAlign = TextAlign.Center,
         )
 
-        TextFeaturesTriggersView(
-            triggers = state.triggers,
-            modifier = Modifier.padding(top = 10.dp),
-            contentPadding = PaddingValues(horizontal = 50.dp)
-        )
-
         HStack(
             modifier = Modifier
                 .height(IntrinsicSize.Min),
@@ -213,6 +207,12 @@ fun HomeView() {
                 )
             }
         }
+
+        TextFeaturesTriggersView(
+            triggers = state.triggers,
+            modifier = Modifier.padding(top = 10.dp),
+            contentPadding = PaddingValues(horizontal = 50.dp)
+        )
 
         val readmeMessage = state.readmeMessage
         if (readmeMessage != null) {
