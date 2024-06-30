@@ -44,7 +44,6 @@ private val mtgCircleFontWeight = FontWeight.SemiBold
 private val mainTasksContentTopPadding = 4.dp
 private val mainTaskHalfHPadding = H_PADDING / 2
 
-private val navigationNoteHeight = 25.dp
 private val navigationButtonModifier = Modifier.size(HomeView__BOTTOM_NAVIGATION_HEIGHT).padding(14.dp)
 
 private val purpleAnimEnter = fadeIn() + expandVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
@@ -260,7 +259,7 @@ fun HomeView() {
             VStack(
                 modifier = Modifier
                     .zIndex(1f)
-                    .padding(bottom = HomeView__BOTTOM_NAVIGATION_HEIGHT + navigationNoteHeight),
+                    .padding(bottom = HomeView__BOTTOM_NAVIGATION_HEIGHT),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
@@ -578,84 +577,77 @@ private fun NavigationView(
             )
         }
 
+        val menuTasksBg = animateColorAsState(if (state.isTasksVisible) c.sheetFg else c.black)
+
         VStack(
             modifier = Modifier
                 .weight(1f)
+                .height(HomeView__BOTTOM_NAVIGATION_HEIGHT)
                 .clip(squircleShape)
+                .background(menuTasksBg.value)
                 .motionEventSpy { event ->
                     if (event.action == MotionEvent.ACTION_DOWN)
                         vm.toggleIsTasksVisible()
                 },
+            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
-            VStack(
+            Text(
+                text = state.menuTime,
+                color = c.homeMenuTime,
+                fontSize = 9.sp,
+                lineHeight = 14.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = timerFont,
                 modifier = Modifier
-                    .height(navigationNoteHeight)
-                    .offset(y = 1.dp),
+                    .padding(top = 3.dp, bottom = 5.dp)
+            )
+
+            HStack(
+                modifier = Modifier
+                    .padding(end = 3.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                SpacerW1()
+
+                val batteryTextColor = animateColorAsState(state.batteryTextColor.toColor())
+
+                Icon(
+                    painterResource(id = R.drawable.sf_bolt_fill_medium_light),
+                    contentDescription = "Battery",
+                    tint = batteryTextColor.value,
+                    modifier = Modifier
+                        .offset(y = -halfDpFloor)
+                        .size(10.dp)
+                )
+
                 Text(
-                    text = state.menuNote,
-                    modifier = Modifier,
-                    color = c.homeFontSecondary,
-                    fontSize = 13.sp,
+                    text = state.batteryText,
+                    color = batteryTextColor.value,
+                    fontSize = 12.sp,
+                    lineHeight = 14.sp,
                     fontWeight = FontWeight.Light,
                 )
-            }
 
-            val menuTasksBg = animateColorAsState(if (state.isTasksVisible) c.sheetFg else c.black)
-
-            VStack(
-                modifier = Modifier
-                    .height(HomeView__BOTTOM_NAVIGATION_HEIGHT)
-                    .fillMaxWidth()
-                    .clip(squircleShape)
-                    .background(menuTasksBg.value),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-
-                Text(
-                    text = state.menuTime,
-                    color = c.homeMenuTime,
-                    fontSize = 9.sp,
-                    lineHeight = 14.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = timerFont,
+                Icon(
+                    painterResource(id = R.drawable.sf_smallcircle_filled_circle_small_light),
+                    contentDescription = "Tasks",
+                    tint = c.homeFontSecondary,
                     modifier = Modifier
-                        .padding(top = 4.dp, bottom = 4.dp)
+                        .padding(start = 8.dp)
+                        .size(10.dp + halfDpFloor)
+                        .offset(y = -halfDpFloor),
                 )
 
-                Row(
+                Text(
+                    text = state.menuTasksNote,
                     modifier = Modifier
-                        .padding(end = 2.dp, bottom = 1.dp)
-                        .clip(roundedShape)
-                        .background(animateColorAsState(state.batteryBackground.toColor()).value)
-                        .padding(start = 4.dp, end = 5.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-
-                    val batteryTextColor = state.batteryTextColor.toColor()
-
-                    Icon(
-                        painterResource(id = R.drawable.sf_bolt_fill_medium_light),
-                        contentDescription = "Battery",
-                        tint = batteryTextColor,
-                        modifier = Modifier
-                            .offset(y = onePx)
-                            .size(10.dp)
-                    )
-
-                    Text(
-                        text = state.batteryText,
-                        modifier = Modifier,
-                        color = batteryTextColor,
-                        fontSize = 12.sp,
-                        lineHeight = 14.sp,
-                        fontWeight = FontWeight.Light,
-                    )
-                }
+                        .padding(start = 2.dp + halfDpFloor),
+                    color = c.homeFontSecondary,
+                    fontSize = 12.sp,
+                    lineHeight = 14.sp,
+                    fontWeight = FontWeight.Light,
+                )
             }
         }
 
