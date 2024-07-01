@@ -28,7 +28,6 @@ struct HomeView: View {
     @EnvironmentObject private var nativeSheet: NativeSheet
 
     @State private var isPurpleAnim = true
-    @State private var timerHeight = 30.0
 
     static var lastInstance: HomeView? = nil
 
@@ -67,68 +66,96 @@ struct HomeView: View {
                     return timerFont3
                 }()
 
-                TimerDataNoteText(
-                    text: state.timerData.note,
-                    color: noteColor
-                )
+                ZStack(alignment: .top) {
 
-                HStack {
-
-                    Button(
-                        action: {
-                            vm.toggleIsPurple()
-                        },
-                        label: {
-                            Image(systemName: "info")
-                                .foregroundColor(timerControlsColor)
-                                .font(.system(size: 23, weight: .thin))
-                                .frame(maxWidth: .infinity)
-                                .frame(height: timerHeight)
-                        }
+                    TimerDataNoteText(
+                        text: state.timerData.note,
+                        color: noteColor
                     )
 
-                    Button(
-                        action: {
-                            state.timerData.togglePomodoro()
-                        },
-                        label: {
-                            TimerDataTimerText(
-                                text: timerData.timerText,
-                                font: timerFont,
-                                color: timerColor
+                    HStack {
+
+                        VStack {
+
+                            TimerDataNoteText(text: " ", color: c.transparent)
+
+                            Button(
+                                action: {
+                                    vm.toggleIsPurple()
+                                },
+                                label: {
+
+                                    ZStack {
+
+                                        TimerDataTimerText(
+                                            text: " ",
+                                            font: timerFont,
+                                            color: c.transparent
+                                        )
+
+                                        Image(systemName: "info")
+                                            .foregroundColor(timerControlsColor)
+                                            .font(.system(size: 23, weight: .thin))
+                                            .frame(maxWidth: .infinity)
+                                    }
+                                }
                             )
                         }
-                    )
-                    .background(GeometryReader { geometry -> Color in
-                        myAsyncAfter(0.01) {
-                            timerHeight = geometry.size.height
-                        }
-                        return Color.clear
-                    })
 
-                    Button(
-                        action: {
-                            state.timerData.prolong()
-                        },
-                        label: {
-                            ZStack {
-                                if let prolongText = timerData.prolongText {
-                                    Text(prolongText)
-                                        .font(.system(size: 22, weight: .thin))
-                                        .foregroundColor(timerControlsColor)
-                                } else {
-                                    Image(systemName: "plus")
-                                        .foregroundColor(timerControlsColor)
-                                        .font(.system(size: 22, weight: .thin))
+                        Button(
+                            action: {
+                                state.timerData.togglePomodoro()
+                            },
+                            label: {
+
+                                VStack {
+
+                                    TimerDataNoteText(text: " ", color: c.transparent)
+
+                                    TimerDataTimerText(
+                                        text: timerData.timerText,
+                                        font: timerFont,
+                                        color: timerColor
+                                    )
                                 }
                             }
-                            .frame(maxWidth: .infinity)
-                            .frame(height: timerHeight)
+                        )
+
+                        VStack {
+
+                            TimerDataNoteText(text: " ", color: c.transparent)
+
+                            Button(
+                                action: {
+                                    state.timerData.prolong()
+                                },
+                                label: {
+
+                                    ZStack {
+
+                                        TimerDataTimerText(
+                                            text: " ",
+                                            font: timerFont,
+                                            color: c.transparent
+                                        )
+
+                                        if let prolongText = timerData.prolongText {
+                                            Text(prolongText)
+                                                .font(.system(size: 22, weight: .thin))
+                                                .foregroundColor(timerControlsColor)
+                                        } else {
+                                            Image(systemName: "plus")
+                                                .foregroundColor(timerControlsColor)
+                                                .font(.system(size: 22, weight: .thin))
+                                        }
+                                    }
+                                    .frame(maxWidth: .infinity)
+                                }
+                            )
                         }
-                    )
+                    }
                 }
-                .padding(.top, 13)
-                .padding(.bottom, 14)
+                .padding(.bottom, 11)
 
                 if state.isPurple {
 
@@ -585,6 +612,7 @@ private struct TimerDataNoteText: View {
             .foregroundColor(color)
             .multilineTextAlignment(.center)
             .padding(.horizontal, H_PADDING)
+            .padding(.bottom, 9)
     }
 }
 
