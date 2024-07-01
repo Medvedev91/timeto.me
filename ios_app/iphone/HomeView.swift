@@ -16,8 +16,7 @@ private let mtgCircleFontWeight: Font.Weight = .semibold
 
 private let mainTasksContentTopPadding = 4.0
 
-private let navigationNoteHeight = 36.0
-private let navigationButtonHeight = HomeView__BOTTOM_NAVIGATION_HEIGHT + navigationNoteHeight
+private let navigationButtonHeight = HomeView__BOTTOM_NAVIGATION_HEIGHT
 
 private let menuTimeFont = buildTimerFont(size: 10)
 
@@ -341,53 +340,40 @@ struct HomeView: View {
                     },
                     label: {
 
-                        VStack {
+                        VStack(alignment: .center) {
 
-                            if (!state.isTasksVisible) {
+                            Text(state.menuTime)
+                                .foregroundColor(c.homeMenuTime)
+                                .font(menuTimeFont)
+                                .padding(.top, 3)
+                                .padding(.bottom, 7)
 
-                                Text(state.menuNote)
+                            HStack {
+
+                                let batteryTextColor = state.batteryTextColor.toColor()
+
+                                Image(systemName: "bolt.fill")
+                                    .foregroundColor(batteryTextColor)
+                                    .font(.system(size: 12, weight: .ultraLight))
+
+                                Text(state.batteryText)
+                                    .foregroundColor(batteryTextColor)
+                                    .font(.system(size: 13, weight: .regular))
+
+                                Image(systemName: "smallcircle.filled.circle")
                                     .foregroundColor(c.homeFontSecondary)
-                                    .font(.system(size: 15, weight: .regular))
-                                    .padding(.top, 4)
+                                    .font(.system(size: 11 + halfDpCeil, weight: .regular))
+                                    .padding(.leading, 6)
+                                    .padding(.trailing, 1 + halfDpFloor)
 
-                                Spacer()
+                                Text(state.menuTasksNote)
+                                    .foregroundColor(c.homeFontSecondary)
+                                    .font(.system(size: 13, weight: .regular))
                             }
-
-                            VStack(alignment: .center) {
-
-                                Text(state.menuTime)
-                                    .foregroundColor(c.homeMenuTime)
-                                    .font(menuTimeFont)
-                                    .padding(.top, 3)
-                                    .padding(.bottom, 7)
-
-                                HStack {
-
-                                    let batteryTextColor = state.batteryTextColor.toColor()
-
-                                    Image(systemName: "bolt.fill")
-                                        .foregroundColor(batteryTextColor)
-                                        .font(.system(size: 12, weight: .ultraLight))
-
-                                    Text(state.batteryText)
-                                        .foregroundColor(batteryTextColor)
-                                        .font(.system(size: 13, weight: .regular))
-
-                                    Image(systemName: "smallcircle.filled.circle")
-                                        .foregroundColor(c.homeFontSecondary)
-                                        .font(.system(size: 11 + halfDpCeil, weight: .regular))
-                                        .padding(.leading, 6)
-                                        .padding(.trailing, 1 + halfDpFloor)
-
-                                    Text(state.menuTasksNote)
-                                        .foregroundColor(c.homeFontSecondary)
-                                        .font(.system(size: 13, weight: .regular))
-                                }
-                                .padding(.trailing, 2)
-                            }
-                            .padding(.top, 2)
-                            .frame(height: HomeView__BOTTOM_NAVIGATION_HEIGHT)
+                            .padding(.trailing, 2)
                         }
+                        .padding(.top, 2)
+                        .frame(height: HomeView__BOTTOM_NAVIGATION_HEIGHT)
                         .frame(maxWidth: .infinity)
                         .background(state.isTasksVisible ? Color(.systemGray5) : .black)
                         .cornerRadius(10, onTop: true, onBottom: true)
