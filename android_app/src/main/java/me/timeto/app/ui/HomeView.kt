@@ -23,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
@@ -69,90 +70,115 @@ fun HomeView() {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
-        Text(
-            text = state.timerData.note,
+        ZStack(
             modifier = Modifier
-                .padding(horizontal = 24.dp)
-                .offset(y = 2.dp),
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-            color = noteColor,
-            textAlign = TextAlign.Center,
-        )
-
-        HStack(
-            modifier = Modifier
-                .height(IntrinsicSize.Min),
-            verticalAlignment = Alignment.CenterVertically,
+                .fillMaxWidth()
+                .padding(bottom = 7.dp),
+            contentAlignment = Alignment.TopCenter,
         ) {
 
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-                    .offset(x = 4.dp)
-                    .clip(squircleShape)
-                    .clickable {
-                        vm.toggleIsPurple()
-                    },
-                contentAlignment = Alignment.Center,
-            ) {
-                Icon(
-                    painterResource(id = R.drawable.sf_info_medium_thin),
-                    contentDescription = "Timer Info",
-                    tint = timerControlsColor,
-                    modifier = Modifier
-                        .size(16.dp),
-                )
-            }
+            TimerDataNoteText(
+                text = state.timerData.note,
+                color = noteColor,
+            )
 
-            Text(
-                text = state.timerData.timerText,
-                modifier = Modifier
-                    .clip(squircleShape)
-                    .clickable {
-                        state.timerData.togglePomodoro()
-                    }
-                    .padding(horizontal = 8.dp, vertical = 12.dp),
-                fontSize = run {
-                    val len = state.timerData.timerText.count()
+            HStack {
+
+                val timerText = state.timerData.timerText
+                val timerFontSize: TextUnit = run {
+                    val len = timerText.count()
                     when {
                         len <= 5 -> 40.sp
                         len <= 7 -> 35.sp
                         else -> 28.sp
                     }
-                },
-                fontFamily = timerFont,
-                color = timerColor,
-            )
+                }
 
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-                    .offset(x = (-2).dp)
-                    .clip(squircleShape)
-                    .clickable {
-                        state.timerData.prolong()
-                    },
-                contentAlignment = Alignment.Center,
-            ) {
-                val prolongedText = state.timerData.prolongText
-                if (prolongedText != null) {
-                    Text(
-                        text = prolongedText,
-                        color = timerControlsColor,
-                        fontSize = 19.sp,
-                        fontWeight = FontWeight.Thin,
-                    )
-                } else {
-                    Icon(
-                        painterResource(id = R.drawable.sf_plus_medium_thin),
-                        contentDescription = "Plus",
-                        tint = timerControlsColor,
+                VStack(
+                    modifier = Modifier
+                        .weight(1f)
+                        .offset(x = 3.dp),
+                ) {
+
+                    TimerDataNoteText(" ", c.transparent)
+
+                    ZStack(
                         modifier = Modifier
-                            .size(16.dp),
+                            .fillMaxWidth()
+                            .clip(squircleShape)
+                            .clickable {
+                                vm.toggleIsPurple()
+                            },
+                        contentAlignment = Alignment.Center,
+                    ) {
+
+                        TimerDataTimerText(" ", timerFontSize, c.transparent)
+
+                        Icon(
+                            painterResource(id = R.drawable.sf_info_medium_thin),
+                            contentDescription = "Timer Info",
+                            tint = timerControlsColor,
+                            modifier = Modifier
+                                .size(16.dp),
+                        )
+                    }
+                }
+
+                VStack(
+                    modifier = Modifier
+                        .clip(squircleShape)
+                        .clickable {
+                            state.timerData.togglePomodoro()
+                        },
+                ) {
+
+                    TimerDataNoteText(" ", c.transparent)
+
+                    TimerDataTimerText(
+                        text = timerText,
+                        fontSize = timerFontSize,
+                        color = timerColor,
                     )
+                }
+
+                VStack(
+                    modifier = Modifier
+                        .weight(1f)
+                        .offset(x = (-2).dp),
+                ) {
+
+                    TimerDataNoteText(" ", c.transparent)
+
+                    ZStack(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(squircleShape)
+                            .clickable {
+                                state.timerData.prolong()
+                            },
+                        contentAlignment = Alignment.Center,
+                    ) {
+
+                        TimerDataTimerText(" ", timerFontSize, c.transparent)
+
+                        val prolongedText = state.timerData.prolongText
+                        if (prolongedText != null) {
+                            Text(
+                                text = prolongedText,
+                                color = timerControlsColor,
+                                fontSize = 19.sp,
+                                fontWeight = FontWeight.Thin,
+                            )
+                        } else {
+                            Icon(
+                                painterResource(id = R.drawable.sf_plus_medium_thin),
+                                contentDescription = "Plus",
+                                tint = timerControlsColor,
+                                modifier = Modifier
+                                    .size(16.dp),
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -708,5 +734,42 @@ private fun TimerInfoButton(
         color = color,
         fontSize = 19.sp,
         fontWeight = FontWeight.Thin,
+    )
+}
+
+///
+
+@Composable
+private fun TimerDataNoteText(
+    text: String,
+    color: Color,
+) {
+    Text(
+        text = text,
+        modifier = Modifier
+            .padding(bottom = 5.dp)
+            .padding(horizontal = H_PADDING),
+        fontSize = 18.sp,
+        fontWeight = FontWeight.Bold,
+        color = color,
+        textAlign = TextAlign.Center,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
+    )
+}
+
+@Composable
+private fun TimerDataTimerText(
+    text: String,
+    fontSize: TextUnit,
+    color: Color,
+) {
+    Text(
+        text = text,
+        modifier = Modifier
+            .padding(vertical = 4.dp),
+        fontSize = fontSize,
+        fontFamily = timerFont,
+        color = color,
     )
 }
