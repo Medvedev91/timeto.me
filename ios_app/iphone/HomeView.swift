@@ -5,8 +5,6 @@ import shared
 let HomeView__BOTTOM_NAVIGATION_HEIGHT = 56.0
 let HomeView__PRIMARY_FONT_SIZE = 18.0
 
-private let menuIconSize = HomeView__BOTTOM_NAVIGATION_HEIGHT
-
 // MTG - Main Tasks & Goals
 let HomeView__MTG_ITEM_HEIGHT = 38.0
 private let mtgCircleHPadding = 7.0
@@ -15,8 +13,6 @@ private let mtgCircleFontSize = 15.0
 private let mtgCircleFontWeight: Font.Weight = .semibold
 
 private let mainTasksContentTopPadding = 4.0
-
-private let navigationButtonHeight = HomeView__BOTTOM_NAVIGATION_HEIGHT
 
 private let menuTimeFont = buildTimerFont(size: 10)
 
@@ -298,7 +294,7 @@ struct HomeView: View {
 
                         Padding(vertical: 16.0)
                     }
-                    .padding(.bottom, navigationButtonHeight)
+                    .padding(.bottom, HomeView__BOTTOM_NAVIGATION_HEIGHT)
 
                     if (state.isTasksVisible) {
                         TasksView()
@@ -325,7 +321,7 @@ struct HomeView: View {
                         VStack {
                             Spacer()
                             Image(systemName: "timer")
-                                .frame(height: menuIconSize)
+                                .frame(height: HomeView__BOTTOM_NAVIGATION_HEIGHT)
                                 .foregroundColor(c.homeFontSecondary)
                                 .font(.system(size: 30, weight: .thin))
                                 .frame(maxWidth: .infinity)
@@ -390,7 +386,7 @@ struct HomeView: View {
                         VStack {
                             Spacer()
                             Image(systemName: "ellipsis.circle")
-                                .frame(height: menuIconSize)
+                                .frame(height: HomeView__BOTTOM_NAVIGATION_HEIGHT)
                                 .foregroundColor(c.homeFontSecondary)
                                 .font(.system(size: 30, weight: .thin))
                                 .frame(maxWidth: .infinity)
@@ -398,7 +394,7 @@ struct HomeView: View {
                     }
                 )
             }
-            .frame(width: .infinity, height: state.isTasksVisible ? HomeView__BOTTOM_NAVIGATION_HEIGHT : navigationButtonHeight)
+            .frame(width: .infinity, height: HomeView__BOTTOM_NAVIGATION_HEIGHT)
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
         .onReceive(shortcutPublisher) { shortcut in
