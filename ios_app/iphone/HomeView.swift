@@ -383,11 +383,7 @@ struct HomeView: View {
                                         .foregroundColor(c.homeFontSecondary)
                                         .font(.system(size: 13, weight: .regular))
                                 }
-                                .padding(.top, 2)
-                                .padding(.bottom, 1)
-                                .padding(.leading, 3)
-                                .padding(.trailing, 4)
-                                .background(roundedShape.fill(state.batteryBackground.toColor()))
+                                .padding(.trailing, 2)
                             }
                             .padding(.top, 2)
                             .frame(height: HomeView__BOTTOM_NAVIGATION_HEIGHT)
