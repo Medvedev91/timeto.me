@@ -502,7 +502,7 @@ private struct MainTaskItemView: View {
                             .padding(.horizontal, mtgCircleHPadding)
                             .frame(height: mtgCircleHeight)
                             .background(roundedShape.fill(timeUI.textBgColor.toColor()))
-                            .padding(.trailing, 8)
+                            .padding(.trailing, mainTask.textFeatures.paused != nil ? 9 : 8)
                     }
 
                     if mainTask.textFeatures.paused != nil {
@@ -513,7 +513,7 @@ private struct MainTaskItemView: View {
                         }
                         .frame(width: mtgCircleHeight, height: mtgCircleHeight)
                         .background(roundedShape.fill(c.green))
-                        .padding(.trailing, 7)
+                        .padding(.trailing, 8)
                     }
 
                     Text(mainTask.text)

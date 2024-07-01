@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-private let checkboxSize = 20.0
+private let checkboxSize = 21.0
 private let checklistItemMinHeight = HomeView__MTG_ITEM_HEIGHT
 
 struct ChecklistView: View {
@@ -51,7 +51,7 @@ struct ChecklistView: View {
                                             Image(systemName: itemUI.item.isChecked ? "checkmark.square.fill" : "square")
                                                 .foregroundColor(c.white)
                                                 .font(.system(size: checkboxSize, weight: .regular))
-                                                .padding(.trailing, 12)
+                                                .padding(.trailing, 10)
 
                                             Text(itemUI.item.text)
                                                 .padding(.vertical, 4)
