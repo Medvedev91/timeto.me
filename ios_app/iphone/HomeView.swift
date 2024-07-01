@@ -8,7 +8,7 @@ let HomeView__PRIMARY_FONT_SIZE = 18.0
 private let menuIconSize = HomeView__BOTTOM_NAVIGATION_HEIGHT
 
 // MTG - Main Tasks & Goals
-let HomeView__MTG_ITEM_HEIGHT = 42.0
+let HomeView__MTG_ITEM_HEIGHT = 38.0
 private let mtgCircleHPadding = 7.0
 private let mtgCircleHeight = 24.0
 private let mtgCircleFontSize = 15.0
