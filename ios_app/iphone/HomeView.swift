@@ -612,7 +612,7 @@ private struct TimerDataNoteText: View {
             .foregroundColor(color)
             .multilineTextAlignment(.center)
             .padding(.horizontal, H_PADDING)
-            .padding(.bottom, 9)
+            .padding(.bottom, 10)
     }
 }
 
