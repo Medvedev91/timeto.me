@@ -372,7 +372,16 @@ struct HomeView: View {
                                     Text(state.batteryText)
                                         .foregroundColor(batteryTextColor)
                                         .font(.system(size: 13, weight: .regular))
-                                        .padding(.trailing, 1)
+
+                                    Image(systemName: "smallcircle.filled.circle")
+                                        .foregroundColor(c.homeFontSecondary)
+                                        .font(.system(size: 11 + halfDpCeil, weight: .regular))
+                                        .padding(.leading, 6)
+                                        .padding(.trailing, 1 + halfDpFloor)
+
+                                    Text(state.menuTasksNote)
+                                        .foregroundColor(c.homeFontSecondary)
+                                        .font(.system(size: 13, weight: .regular))
                                 }
                                 .padding(.top, 2)
                                 .padding(.bottom, 1)
