@@ -56,11 +56,10 @@ struct HomeView: View {
                 let timerColor = timerData.timerColor.toColor()
                 let timerControlsColor = state.timerData.controlsColor.toColor()
 
-                Text(state.timerData.note)
-                    .font(.system(size: 21, weight: .semibold))
-                    .foregroundColor(noteColor)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 20)
+                TimerDataNoteText(
+                    text: state.timerData.note,
+                    color: noteColor
+                )
 
                 HStack {
 
@@ -568,5 +567,22 @@ private struct TimerInfoButton: View {
             }
         )
         .buttonStyle(.borderless)
+    }
+}
+
+///
+
+private struct TimerDataNoteText: View {
+
+    let text: String
+    let color: Color
+
+    var body: some View {
+
+        Text(text)
+            .font(.system(size: 20, weight: .bold))
+            .foregroundColor(color)
+            .multilineTextAlignment(.center)
+            .padding(.horizontal, H_PADDING)
     }
 }
