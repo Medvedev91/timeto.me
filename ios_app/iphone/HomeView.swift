@@ -289,10 +289,11 @@ struct HomeView: View {
                                     .padding(.horizontal, H_PADDING)
                                 }
                                 .frame(height: HomeView__MTG_ITEM_HEIGHT, alignment: .center)
+                                .offset(y: 1)
                             }
                         )
 
-                        Padding(vertical: 16.0)
+                        Padding(vertical: 10.0)
                     }
                     .padding(.bottom, HomeView__BOTTOM_NAVIGATION_HEIGHT)
 
