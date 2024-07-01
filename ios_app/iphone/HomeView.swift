@@ -56,6 +56,17 @@ struct HomeView: View {
                 let timerColor = timerData.timerColor.toColor()
                 let timerControlsColor = state.timerData.controlsColor.toColor()
 
+                let timerFont: Font = {
+                    let len = timerData.timerText.count
+                    if len <= 5 {
+                        return timerFont1
+                    }
+                    if len <= 7 {
+                        return timerFont2
+                    }
+                    return timerFont3
+                }()
+
                 TimerDataNoteText(
                     text: state.timerData.note,
                     color: noteColor
@@ -81,21 +92,11 @@ struct HomeView: View {
                             state.timerData.togglePomodoro()
                         },
                         label: {
-                            let timerFont: Font = {
-                                let len = timerData.timerText.count
-                                if len <= 5 {
-                                    return timerFont1
-                                }
-                                if len <= 7 {
-                                    return timerFont2
-                                }
-                                return timerFont3
-                            }()
-                            Text(timerData.timerText)
-                                .font(timerFont)
-                                .foregroundColor(timerColor)
-                                .lineLimit(1)
-                                .fixedSize()
+                            TimerDataTimerText(
+                                text: timerData.timerText,
+                                font: timerFont,
+                                color: timerColor
+                            )
                         }
                     )
                     .background(GeometryReader { geometry -> Color in
@@ -584,5 +585,21 @@ private struct TimerDataNoteText: View {
             .foregroundColor(color)
             .multilineTextAlignment(.center)
             .padding(.horizontal, H_PADDING)
+    }
+}
+
+private struct TimerDataTimerText: View {
+
+    let text: String
+    let font: Font
+    let color: Color
+
+    var body: some View {
+
+        Text(text)
+            .font(font)
+            .foregroundColor(color)
+            .lineLimit(1)
+            .fixedSize()
     }
 }
