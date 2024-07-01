@@ -358,8 +358,8 @@ struct HomeView: View {
                                 Text(state.menuTime)
                                     .foregroundColor(c.homeMenuTime)
                                     .font(menuTimeFont)
-                                    .padding(.top, 4)
-                                    .padding(.bottom, 4)
+                                    .padding(.top, 3)
+                                    .padding(.bottom, 7)
 
                                 HStack {
 
