@@ -97,7 +97,7 @@ fun HomeView() {
                 VStack(
                     modifier = Modifier
                         .weight(1f)
-                        .offset(x = 3.dp),
+                        .offset(x = 1.dp),
                 ) {
 
                     TimerDataNoteText(" ", c.transparent)
@@ -144,7 +144,7 @@ fun HomeView() {
                 VStack(
                     modifier = Modifier
                         .weight(1f)
-                        .offset(x = (-2).dp),
+                        .offset(x = (-1).dp),
                 ) {
 
                     TimerDataNoteText(" ", c.transparent)
@@ -747,7 +747,7 @@ private fun TimerDataNoteText(
     Text(
         text = text,
         modifier = Modifier
-            .padding(bottom = 5.dp)
+            .padding(bottom = 4.dp)
             .padding(horizontal = H_PADDING),
         fontSize = 18.sp,
         fontWeight = FontWeight.Bold,
