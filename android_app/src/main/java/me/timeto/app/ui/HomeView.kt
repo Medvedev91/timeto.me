@@ -637,10 +637,16 @@ private fun NavigationView(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
 
-                val batteryTextColor = animateColorAsState(state.batteryTextColor.toColor())
+                val batteryUi = state.batteryUi
+                val batteryTextColor = animateColorAsState(batteryUi.colorRgba.toColor())
 
                 Icon(
-                    painterResource(id = R.drawable.sf_bolt_fill_medium_light),
+                    painterResource(
+                        id = if (batteryUi.isHighlighted)
+                            R.drawable.sf_bolt_fill_medium_bold
+                        else
+                            R.drawable.sf_bolt_fill_medium_light
+                    ),
                     contentDescription = "Battery",
                     tint = batteryTextColor.value,
                     modifier = Modifier
@@ -653,7 +659,7 @@ private fun NavigationView(
                     color = batteryTextColor.value,
                     fontSize = 12.sp,
                     lineHeight = 14.sp,
-                    fontWeight = FontWeight.Light,
+                    fontWeight = if (batteryUi.isHighlighted) FontWeight.Bold else FontWeight.Light,
                 )
 
                 Icon(
