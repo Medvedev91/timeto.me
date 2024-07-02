@@ -228,7 +228,7 @@ class HomeVM : __VM<HomeVM.State>() {
         state.update { it.copy(todayIntervalsUI = todayIntervalsUI) }
     }
 
-    //////
+    ///
 
     class GoalUI(
         val textLeft: String,
