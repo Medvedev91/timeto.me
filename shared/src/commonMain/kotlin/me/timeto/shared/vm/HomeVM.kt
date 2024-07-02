@@ -95,11 +95,18 @@ class HomeVM : __VM<HomeVM.State>() {
                 it.textFeatures.timeData?.unixTime?.time ?: Int.MAX_VALUE
             }
 
-        val batteryText = "${batteryLevelOrNull ?: "--"}"
-        val batteryUi: BatteryUi = when {
-            isBatteryChargingOrNull == true -> BatteryUi(ColorRgba.blue, true)
-            batteryLevelOrNull in 0..20 -> BatteryUi(ColorRgba.red, true)
-            else -> BatteryUi(ColorRgba.homeFontSecondary, false)
+        val batteryUi: BatteryUi = run {
+            val level: Int? = batteryLevelOrNull
+            val text = "${level ?: "--"}"
+            when {
+                isBatteryChargingOrNull == true ->
+                    BatteryUi(text, if (level == 100) ColorRgba.green else ColorRgba.blue, true)
+
+                batteryLevelOrNull in 0..20 ->
+                    BatteryUi(text, ColorRgba.red, true)
+
+                else -> BatteryUi(text, ColorRgba.homeFontSecondary, false)
+            }
         }
     }
 
@@ -231,6 +238,7 @@ class HomeVM : __VM<HomeVM.State>() {
     ///
 
     data class BatteryUi(
+        val text: String,
         val colorRgba: ColorRgba,
         val isHighlighted: Boolean,
     )

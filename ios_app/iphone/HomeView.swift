@@ -381,7 +381,7 @@ struct HomeView: View {
                                     .foregroundColor(batteryTextColor)
                                     .font(.system(size: 12, weight: batteryUi.isHighlighted ? .regular : .ultraLight))
 
-                                Text(state.batteryText)
+                                Text(batteryUi.text)
                                     .foregroundColor(batteryTextColor)
                                     .font(.system(size: 13, weight: batteryUi.isHighlighted ? .bold : .regular))
 

@@ -655,7 +655,7 @@ private fun NavigationView(
                 )
 
                 Text(
-                    text = state.batteryText,
+                    text = batteryUi.text,
                     color = batteryTextColor.value,
                     fontSize = 12.sp,
                     lineHeight = 14.sp,
