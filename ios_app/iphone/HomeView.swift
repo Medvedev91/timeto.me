@@ -374,15 +374,16 @@ struct HomeView: View {
 
                             HStack {
 
-                                let batteryTextColor = state.batteryTextColor.toColor()
+                                let batteryUi = state.batteryUi
+                                let batteryTextColor = batteryUi.colorRgba.toColor()
 
                                 Image(systemName: "bolt.fill")
                                     .foregroundColor(batteryTextColor)
-                                    .font(.system(size: 12, weight: .ultraLight))
+                                    .font(.system(size: 12, weight: batteryUi.isHighlighted ? .regular : .ultraLight))
 
                                 Text(state.batteryText)
                                     .foregroundColor(batteryTextColor)
-                                    .font(.system(size: 13, weight: .regular))
+                                    .font(.system(size: 13, weight: batteryUi.isHighlighted ? .bold : .regular))
 
                                 Image(systemName: "smallcircle.filled.circle")
                                     .foregroundColor(c.homeFontSecondary)
