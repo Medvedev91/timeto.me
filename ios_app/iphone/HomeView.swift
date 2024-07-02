@@ -614,6 +614,7 @@ private struct TimerDataNoteText: View {
             .multilineTextAlignment(.center)
             .padding(.horizontal, H_PADDING)
             .padding(.bottom, 10)
+            .lineLimit(1)
     }
 }
 
