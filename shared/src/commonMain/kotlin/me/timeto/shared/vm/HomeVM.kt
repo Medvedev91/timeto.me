@@ -96,10 +96,10 @@ class HomeVM : __VM<HomeVM.State>() {
             }
 
         val batteryText = "${batteryLevelOrNull ?: "--"}"
-        val batteryTextColor: ColorRgba = when {
-            isBatteryChargingOrNull == true -> ColorRgba.blue
-            batteryLevelOrNull in 0..20 -> ColorRgba.red
-            else -> ColorRgba.homeFontSecondary
+        val batteryUi: BatteryUi = when {
+            isBatteryChargingOrNull == true -> BatteryUi(ColorRgba.blue, true)
+            batteryLevelOrNull in 0..20 -> BatteryUi(ColorRgba.red, true)
+            else -> BatteryUi(ColorRgba.homeFontSecondary, false)
         }
     }
 
@@ -229,6 +229,11 @@ class HomeVM : __VM<HomeVM.State>() {
     }
 
     ///
+
+    data class BatteryUi(
+        val colorRgba: ColorRgba,
+        val isHighlighted: Boolean,
+    )
 
     class GoalUI(
         val textLeft: String,
