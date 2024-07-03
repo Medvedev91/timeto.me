@@ -28,7 +28,7 @@ fun ReadmeSheet(
     layer: WrapperView.Layer,
 ) {
 
-    val (_, state) = rememberVM { ReadmeSheetVM() }
+    val (vm, state) = rememberVM { ReadmeSheetVM() }
 
     VStack(
         modifier = Modifier
@@ -209,6 +209,7 @@ fun ReadmeSheet(
                     title = tabUi.title,
                     isActive = state.tabUi.id == tabUi.id,
                     onClick = {
+                        vm.setTabUi(tabUi)
                     },
                 )
                 Padding(horizontal = 6.dp)
