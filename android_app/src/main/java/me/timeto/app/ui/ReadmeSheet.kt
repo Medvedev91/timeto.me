@@ -32,7 +32,7 @@ fun ReadmeSheet(
 
     VStack(
         modifier = Modifier
-            .background(c.bg)
+            .background(c.bg),
     ) {
 
         val scrollState = rememberScrollState()
