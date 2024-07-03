@@ -48,7 +48,7 @@ fun DividerBgScroll(
                     }
                 }
 
-                else -> throw Exception("todo FS.kt")
+                else -> throw Exception("todo DividerBgScroll.kt")
             }
         }
     }
