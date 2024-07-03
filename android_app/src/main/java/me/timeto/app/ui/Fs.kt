@@ -1,25 +1,19 @@
 package me.timeto.app.ui
 
 import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -89,35 +83,6 @@ fun Fs__Header(
     content: @Composable () -> Unit,
 ) {
 
-    val alphaValue = remember {
-        derivedStateOf {
-            val animRatio = 50f
-            when (scrollState) {
-                null -> 0f
-                is LazyListState -> {
-                    val offset = scrollState.firstVisibleItemScrollOffset
-                    when {
-                        scrollState.firstVisibleItemIndex > 0 -> 1f
-                        offset == 0 -> 0f
-                        offset > animRatio -> 1f
-                        else -> offset / animRatio
-                    }
-                }
-                is ScrollState -> {
-                    val offset = scrollState.value
-                    when {
-                        offset == 0 -> 0f
-                        offset > animRatio -> 1f
-                        else -> offset / animRatio
-                    }
-                }
-                else -> throw Exception("todo FS.kt")
-            }
-        }
-    }
-
-    val alphaAnimate = animateFloatAsState(alphaValue.value)
-
     ZStack(
         modifier = Modifier
             .padding(top = statusBarHeight),
@@ -125,15 +90,11 @@ fun Fs__Header(
 
         content()
 
-        ZStack(
+        DividerBgScroll(
+            scrollState = scrollState,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .height(onePx)
-                .padding(horizontal = H_PADDING)
-                .fillMaxWidth()
-                .drawBehind {
-                    drawRect(color = c.dividerBg.copy(alpha = alphaAnimate.value))
-                },
+                .padding(horizontal = H_PADDING),
         )
     }
 }
