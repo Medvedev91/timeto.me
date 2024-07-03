@@ -18,6 +18,10 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
         )
     )
 
+    fun setTabUi(tabUi: TabUi) {
+        state.update { it.copy(tabUi = tabUi) }
+    }
+
     ///
 
     data class TabUi(
