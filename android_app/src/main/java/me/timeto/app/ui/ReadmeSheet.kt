@@ -192,18 +192,57 @@ fun ReadmeSheet(
                 }
             }
 
-            Padding(vertical = 20.dp)
+            Padding(vertical = 26.dp)
         }
 
         DividerBg(Modifier.padding(horizontal = H_PADDING))
 
         HStack(
             modifier = Modifier
+                .padding(top = 9.dp, bottom = 4.dp)
+                .padding(horizontal = H_PADDING)
                 .navigationBarsPadding(),
         ) {
+
+            state.tabsUi.forEach { tabUi ->
+                TabView(
+                    title = tabUi.title,
+                    isActive = state.tabUi.id == tabUi.id,
+                    onClick = {
+                    },
+                )
+                Padding(horizontal = 6.dp)
+            }
         }
     }
 }
+
+///
+
+private val tabViewShape = SquircleShape(len = 55f)
+
+@Composable
+private fun TabView(
+    title: String,
+    isActive: Boolean,
+    onClick: () -> Unit,
+) {
+    Text(
+        text = title,
+        modifier = Modifier
+            .clip(tabViewShape)
+            .background(if (isActive) c.blue else c.transparent)
+            .clickable {
+                onClick()
+            }
+            .padding(horizontal = 8.dp)
+            .padding(top = 1.dp, bottom = halfDpCeil),
+        color = if (isActive) c.white else c.text,
+        fontWeight = if (isActive) FontWeight.Medium else FontWeight.Normal,
+    )
+}
+
+///
 
 @Composable
 private fun PTitleView(
