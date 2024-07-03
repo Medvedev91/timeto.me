@@ -251,7 +251,7 @@ private fun PTitleView(
     prevP: ReadmeSheetVM.Paragraph?,
 ) {
     val paddingTop: Dp = when {
-        prevP == null -> 0.dp // todo
+        prevP == null -> 14.dp
         prevP.isSlider -> 36.dp
         prevP is ReadmeSheetVM.Paragraph.Text -> 38.dp
         else -> throw Exception()
