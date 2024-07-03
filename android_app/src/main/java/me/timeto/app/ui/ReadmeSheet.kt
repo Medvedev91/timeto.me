@@ -51,10 +51,12 @@ fun ReadmeSheet(
                 .weight(1f),
         ) {
 
-            state.paragraphs.forEachIndexed { idx, paragraph ->
+            val paragraphs = state.tabUi.paragraphs
+
+            paragraphs.forEachIndexed { idx, paragraph ->
 
                 val prevP: ReadmeSheetVM.Paragraph? =
-                    if (idx == 0) null else state.paragraphs[idx - 1]
+                    if (idx == 0) null else paragraphs[idx - 1]
 
                 when (paragraph) {
 
