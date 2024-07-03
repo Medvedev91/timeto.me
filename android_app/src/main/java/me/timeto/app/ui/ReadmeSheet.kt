@@ -192,11 +192,15 @@ fun ReadmeSheet(
                 }
             }
 
-            ZStack(
-                modifier = Modifier
-                    .padding(bottom = 20.dp)
-                    .navigationBarsPadding(),
-            )
+            Padding(vertical = 20.dp)
+        }
+
+        DividerBg(Modifier.padding(horizontal = H_PADDING))
+
+        HStack(
+            modifier = Modifier
+                .navigationBarsPadding(),
+        ) {
         }
     }
 }
