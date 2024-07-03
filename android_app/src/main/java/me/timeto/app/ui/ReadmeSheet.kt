@@ -1,5 +1,6 @@
 package me.timeto.app.ui
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
@@ -228,11 +229,13 @@ private fun TabView(
     isActive: Boolean,
     onClick: () -> Unit,
 ) {
+    val bgColorAnimate =
+        animateColorAsState(if (isActive) c.blue else c.transparent)
     Text(
         text = title,
         modifier = Modifier
             .clip(tabViewShape)
-            .background(if (isActive) c.blue else c.transparent)
+            .background(bgColorAnimate.value)
             .clickable {
                 onClick()
             }
