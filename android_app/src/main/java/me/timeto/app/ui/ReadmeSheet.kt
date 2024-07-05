@@ -216,7 +216,7 @@ fun ReadmeSheet(
         ) {
 
             state.tabsUi.forEach { tabUi ->
-                TabView(
+                TabBarItemView(
                     title = tabUi.title,
                     isActive = state.tabUi.id == tabUi.id,
                     onClick = {
@@ -231,10 +231,10 @@ fun ReadmeSheet(
 
 ///
 
-private val tabViewShape = SquircleShape(len = 55f)
+private val tabBarItemViewShape = SquircleShape(len = 55f)
 
 @Composable
-private fun TabView(
+private fun TabBarItemView(
     title: String,
     isActive: Boolean,
     onClick: () -> Unit,
@@ -244,7 +244,7 @@ private fun TabView(
     Text(
         text = title,
         modifier = Modifier
-            .clip(tabViewShape)
+            .clip(tabBarItemViewShape)
             .background(bgColorAnimate.value)
             .clickable {
                 onClick()
