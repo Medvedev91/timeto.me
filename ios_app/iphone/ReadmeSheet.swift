@@ -224,7 +224,7 @@ struct ReadmeSheet: View {
 
                     ZStack {
                     }
-                    .padding(.top, 16)
+                    .padding(.top, 28)
                 }
             }
 
