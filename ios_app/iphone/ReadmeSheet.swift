@@ -234,7 +234,7 @@ struct ReadmeSheet: View {
             HStack {
 
                 ForEachIndexed(state.tabsUi) { idx, tabUi in
-                    TabView(
+                    TabBarItemView(
                         title: tabUi.title,
                         isActive: state.tabUi.id == tabUi.id,
                         onClick: {
@@ -256,9 +256,9 @@ struct ReadmeSheet: View {
 
 ///
 
-private let tabViewShape = RoundedRectangle(cornerRadius: 10, style: .continuous)
+private let tabBarItemViewShape = RoundedRectangle(cornerRadius: 10, style: .continuous)
 
-private struct TabView: View {
+private struct TabBarItemView: View {
 
     let title: String
     let isActive: Bool
@@ -277,7 +277,7 @@ private struct TabView: View {
                     .padding(.top, 3)
                     .padding(.bottom, 3 + halfDpFloor)
                     .foregroundColor(isActive ? c.white : c.text)
-                    .background(tabViewShape.fill(isActive ? c.blue : c.transparent))
+                    .background(tabBarItemViewShape.fill(isActive ? c.blue : c.transparent))
             }
         )
     }
