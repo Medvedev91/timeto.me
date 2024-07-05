@@ -26,9 +26,11 @@ struct ReadmeSheet: View {
 
                 VStack {
 
-                    ForEachIndexed(state.paragraphs) { idx, paragraph in
+                    let paragraphs = state.tabUi.paragraphs
 
-                        let prevP: ReadmeSheetVM.Paragraph? = (idx == 0) ? nil : state.paragraphs[idx - 1]
+                    ForEachIndexed(paragraphs) { idx, paragraph in
+
+                        let prevP: ReadmeSheetVM.Paragraph? = (idx == 0) ? nil : paragraphs[idx - 1]
 
                         if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTitle {
                             let paddingTop: CGFloat = {
