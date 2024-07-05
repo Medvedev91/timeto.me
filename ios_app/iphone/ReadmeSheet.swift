@@ -35,8 +35,7 @@ struct ReadmeSheet: View {
                         if let paragraph = paragraph as? ReadmeSheetVM.ParagraphTitle {
                             let paddingTop: CGFloat = {
                                 guard let prevP = prevP else {
-                                    // todo
-                                    return 0
+                                    return 12
                                 }
                                 if prevP.isSlider {
                                     return 40
@@ -225,7 +224,6 @@ struct ReadmeSheet: View {
 
                     ZStack {
                     }
-                    .safeAreaPadding(.bottom)
                     .padding(.top, 16)
                 }
             }
