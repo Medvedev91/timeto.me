@@ -229,7 +229,59 @@ struct ReadmeSheet: View {
                     .padding(.top, 16)
                 }
             }
+
+            DividerBg()
+                .padding(.horizontal, H_PADDING)
+
+            HStack {
+
+                ForEachIndexed(state.tabsUi) { idx, tabUi in
+                    TabView(
+                        title: tabUi.title,
+                        isActive: state.tabUi.id == tabUi.id,
+                        onClick: {
+                            vm.setTabUi(tabUi: tabUi)
+                        }
+                    )
+                    Padding(horizontal: 6)
+                }
+
+                Spacer()
+            }
+            .padding(.top, 9)
+            .padding(.bottom, 4)
+            .padding(.horizontal, H_PADDING)
+            .safeAreaPadding(.bottom)
         }
+    }
+}
+
+///
+
+private let tabViewShape = RoundedRectangle(cornerRadius: 10, style: .continuous)
+
+private struct TabView: View {
+
+    let title: String
+    let isActive: Bool
+    let onClick: () -> Void
+
+    var body: some View {
+
+        Button(
+            action: {
+                onClick()
+            },
+            label: {
+                Text(title)
+                    .fontWeight(.medium)
+                    .padding(.horizontal, 9)
+                    .padding(.top, 3)
+                    .padding(.bottom, 3 + halfDpFloor)
+                    .foregroundColor(isActive ? c.white : c.text)
+                    .background(tabViewShape.fill(isActive ? c.blue : c.transparent))
+            }
+        )
     }
 }
 
