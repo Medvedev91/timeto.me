@@ -197,6 +197,14 @@ struct HomeView: View {
                                 )
                             }
                         )
+
+                        TimerInfoButton(
+                            text: "?",
+                            color: timerColor,
+                            onClick: {
+                                fs.ReadmeSheet__open(defaultItem: .pomodoro)
+                            }
+                        )
                     }
                     .offset(y: -4)
                 }
