@@ -252,6 +252,7 @@ private fun TabBarItemView(
             .padding(horizontal = 8.dp)
             .padding(top = 1.dp, bottom = halfDpCeil),
         color = if (isActive) c.white else c.text,
+        fontSize = 14.sp,
         fontWeight = if (isActive) FontWeight.Medium else FontWeight.Normal,
     )
 }
