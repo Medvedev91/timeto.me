@@ -4,7 +4,7 @@ import shared
 private let pTextLineHeight = 3.2
 
 extension Fs {
-    
+
     func ReadmeSheet__open(
         defaultItem: ReadmeSheetVM.DefaultItem = .basics
     ) {
@@ -22,7 +22,7 @@ private struct ReadmeSheet: View {
     @Binding private var isPresented: Bool
 
     @State private var vm: ReadmeSheetVM
-    
+
     init(
         isPresented: Binding<Bool>,
         defaultItem: ReadmeSheetVM.DefaultItem
