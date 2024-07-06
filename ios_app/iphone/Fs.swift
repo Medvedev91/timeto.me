@@ -121,10 +121,6 @@ struct Fs__Header<Content: View>: View {
     let scrollToHeader: Int
     @ViewBuilder var content: () -> Content
 
-    private var bgAlpha: Double {
-        (Double(scrollToHeader) / 30).limitMinMax(0, 1)
-    }
-
     var body: some View {
 
         // .bottom for divider
@@ -132,9 +128,7 @@ struct Fs__Header<Content: View>: View {
 
             content()
 
-            DividerBg()
-                .opacity(bgAlpha)
-                .padding(.horizontal, H_PADDING)
+            DividerBgScroll(scrollToHeader: scrollToHeader)
         }
         .safeAreaPadding(.top)
     }
