@@ -53,6 +53,8 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
         class ChecklistsPractice1() : Paragraph(isSlider = true)
         class ChecklistsPractice2() : Paragraph(isSlider = true)
 
+        class PomodoroExamples() : Paragraph(isSlider = true)
+
         class GoalsExamples() : Paragraph(isSlider = true)
 
         class CalendarExamples() : Paragraph(isSlider = true)
@@ -135,6 +137,12 @@ private val tabAdvanced = ReadmeSheetVM.TabUi(
     id = "tab_advanced",
     title = "Advanced",
     paragraphs = listOf(
+
+        PTitle("Pomodoro"),
+        PText("I use the Pomodoro only for work:"),
+        PText("- Start the timer for 45 min,\n- tap the timer to start a break,\n- tap it again to restart."),
+        PTextHighlight("In other words you only need one tap before the break and one tap after the break."),
+        ReadmeSheetVM.Paragraph.PomodoroExamples(),
 
         PTitle("Checklists"),
         PText("Checklists are an addition to repeating tasks that are placed under the timer."),
