@@ -149,7 +149,7 @@ private val tabAdvanced = ReadmeSheetVM.TabUi(
 
         PTitle("Pomodoro"),
         PText("I use the Pomodoro only for work:"),
-        PText("- Start the timer for 45 min,\n- tap the timer to start a break,\n- tap it again to restart."),
+        PText("- start the timer for 45 min,\n- tap the timer to start a break,\n- tap it again to restart."),
         PTextHighlight("In other words you only need one tap before the break and one tap after the break."),
         ReadmeSheetVM.Paragraph.PomodoroExamples(),
 
