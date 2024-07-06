@@ -3,7 +3,13 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.db.KvDb
 
-class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
+class ReadmeSheetVM(
+    defaultItem: DefaultItem,
+) : __VM<ReadmeSheetVM.State>() {
+
+    enum class DefaultItem {
+        basics, pomodoro,
+    }
 
     data class State(
         val tabUi: TabUi,
@@ -14,7 +20,10 @@ class ReadmeSheetVM : __VM<ReadmeSheetVM.State>() {
 
     override val state = MutableStateFlow(
         State(
-            tabUi = tabBasics,
+            tabUi = when (defaultItem) {
+                DefaultItem.basics -> tabBasics
+                DefaultItem.pomodoro -> tabAdvanced
+            },
         )
     )
 

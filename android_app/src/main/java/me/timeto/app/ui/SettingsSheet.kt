@@ -132,9 +132,7 @@ fun SettingsSheet(
                         text = state.readmeTitle,
                         bgColor = c.fg,
                     ) {
-                        Fs.show { layer ->
-                            ReadmeSheet(layer)
-                        }
+                        ReadmeSheet__show()
                     }
                 }
 

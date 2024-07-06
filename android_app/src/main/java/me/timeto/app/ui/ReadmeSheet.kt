@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.shared.vm.ReadmeSheetVM
+import me.timeto.shared.vm.ReadmeSheetVM.DefaultItem
 
 private val imagesHBetween = 4.dp
 private val imagesHBlock = H_PADDING - imagesHBetween
@@ -25,12 +26,26 @@ private val imagesShape = SquircleShape(len = 50f)
 
 private val pTextLineHeight = 23.sp
 
+fun ReadmeSheet__show(
+    defaultItem: DefaultItem = DefaultItem.basics,
+) {
+    Fs.show { layer ->
+        ReadmeSheet(
+            layer = layer,
+            defaultItem = defaultItem,
+        )
+    }
+}
+
 @Composable
-fun ReadmeSheet(
+private fun ReadmeSheet(
     layer: WrapperView.Layer,
+    defaultItem: DefaultItem,
 ) {
 
-    val (vm, state) = rememberVM { ReadmeSheetVM() }
+    val (vm, state) = rememberVM {
+        ReadmeSheetVM(defaultItem = defaultItem)
+    }
 
     VStack(
         modifier = Modifier

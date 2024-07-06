@@ -246,9 +246,7 @@ fun HomeView() {
                 title = readmeMessage,
                 onClick = {
                     vm.onReadmeOpen()
-                    Fs.show { layer ->
-                        ReadmeSheet(layer)
-                    }
+                    ReadmeSheet__show()
                 }
             )
         }
