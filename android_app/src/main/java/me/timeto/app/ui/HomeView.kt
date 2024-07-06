@@ -31,6 +31,7 @@ import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.shared.*
 import me.timeto.shared.vm.HomeVM
+import me.timeto.shared.vm.ReadmeSheetVM
 
 val HomeView__BOTTOM_NAVIGATION_HEIGHT = 56.dp
 val HomeView__PRIMARY_FONT_SIZE = 16.sp
@@ -229,6 +230,14 @@ fun HomeView() {
                                 vm.toggleIsPurple()
                             },
                         )
+                    },
+                )
+
+                TimerInfoButton(
+                    text = "?",
+                    color = timerColor,
+                    onClick = {
+                        ReadmeSheet__show(ReadmeSheetVM.DefaultItem.pomodoro)
                     },
                 )
             }
