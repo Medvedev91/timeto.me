@@ -55,9 +55,7 @@ struct SettingsSheet: View {
                         MyListView__ItemView__ButtonView(
                             text: state.readmeTitle
                         ) {
-                            fs.show { isReadmePresented in
-                                ReadmeSheet(isPresented: isReadmePresented)
-                            }
+                            fs.ReadmeSheet__open()
                         }
                     }
 

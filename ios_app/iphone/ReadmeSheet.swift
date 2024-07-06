@@ -3,11 +3,33 @@ import shared
 
 private let pTextLineHeight = 3.2
 
-struct ReadmeSheet: View {
+extension Fs {
+    
+    func ReadmeSheet__open(
+        defaultItem: ReadmeSheetVM.DefaultItem = ReadmeSheetVM.DefaultItem.basics
+    ) {
+        self.show { isPresented in
+            ReadmeSheet(
+                isPresented: isPresented,
+                defaultItem: defaultItem
+            )
+        }
+    }
+}
 
-    @Binding var isPresented: Bool
+private struct ReadmeSheet: View {
 
-    @State private var vm = ReadmeSheetVM()
+    @Binding private var isPresented: Bool
+
+    @State private var vm: ReadmeSheetVM
+    
+    init(
+        isPresented: Binding<Bool>,
+        defaultItem: ReadmeSheetVM.DefaultItem
+    ) {
+        _isPresented = isPresented
+        vm = ReadmeSheetVM(defaultItem: defaultItem)
+    }
 
     var body: some View {
 

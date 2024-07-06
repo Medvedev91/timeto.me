@@ -211,9 +211,7 @@ struct HomeView: View {
                             Button(
                                 action: {
                                     vm.onReadmeOpen()
-                                    fs.show { isReadmePresented in
-                                        ReadmeSheet(isPresented: isReadmePresented)
-                                    }
+                                    fs.ReadmeSheet__open()
                                 },
                                 label: {
                                     Text(readmeMessage)
