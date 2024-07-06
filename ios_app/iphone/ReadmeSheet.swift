@@ -6,7 +6,7 @@ private let pTextLineHeight = 3.2
 extension Fs {
     
     func ReadmeSheet__open(
-        defaultItem: ReadmeSheetVM.DefaultItem = ReadmeSheetVM.DefaultItem.basics
+        defaultItem: ReadmeSheetVM.DefaultItem = .basics
     ) {
         self.show { isPresented in
             ReadmeSheet(
@@ -90,12 +90,12 @@ private struct TabBarItemView: View {
             },
             label: {
                 Text(title)
-                    .fontWeight(.medium)
                     .padding(.horizontal, 9)
                     .padding(.top, 3)
                     .padding(.bottom, 3 + halfDpFloor)
                     .foregroundColor(isActive ? c.white : c.text)
                     .background(tabBarItemViewShape.fill(isActive ? c.blue : c.transparent))
+                    .font(.system(size: 15, weight: .medium))
             }
         )
     }
