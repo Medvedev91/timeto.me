@@ -30,6 +30,7 @@
 		2C82BF7228726E400041BCA3 /* timeto.me.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 2C82BF5728726E3F0041BCA3 /* timeto.me.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2C82BF7C287272520041BCA3 /* W_Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82BF7B287272520041BCA3 /* W_Delegate.swift */; };
 		2C95BA8D280D74AA0027FC35 /* IOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C95BA7A280D74AA0027FC35 /* IOSApp.swift */; };
+		2CA9C0372C39F0E300A321FA /* DividerBgScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA9C0362C39F0E300A321FA /* DividerBgScroll.swift */; };
 		2CB73DE3292FACE00053B2D6 /* SearchEmojiSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB73DE2292FACE00053B2D6 /* SearchEmojiSheet.swift */; };
 		2CDEAB582C00E27600519C3D /* Fs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDEAB572C00E27600519C3D /* Fs.swift */; };
 		2CDEAB5A2C00F90C00519C3D /* RepeatingFormPeriodFs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDEAB592C00F90C00519C3D /* RepeatingFormPeriodFs.swift */; };
@@ -156,6 +157,7 @@
 		2C82BF7B287272520041BCA3 /* W_Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = W_Delegate.swift; sourceTree = "<group>"; };
 		2C95BA7A280D74AA0027FC35 /* IOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSApp.swift; sourceTree = "<group>"; };
 		2C95BA82280D74AA0027FC35 /* TimeTo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeTo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CA9C0362C39F0E300A321FA /* DividerBgScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividerBgScroll.swift; sourceTree = "<group>"; };
 		2CB73DE2292FACE00053B2D6 /* SearchEmojiSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEmojiSheet.swift; sourceTree = "<group>"; };
 		2CDEAB572C00E27600519C3D /* Fs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fs.swift; sourceTree = "<group>"; };
 		2CDEAB592C00F90C00519C3D /* RepeatingFormPeriodFs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatingFormPeriodFs.swift; sourceTree = "<group>"; };
@@ -354,6 +356,7 @@
 				31821E53EB27CE7F81AF0F69 /* DialogCloseButton.swift */,
 				318216B917315DE1929486AC /* Divider.swift */,
 				31821D886EB022A0AD988588 /* DividerBg.swift */,
+				2CA9C0362C39F0E300A321FA /* DividerBgScroll.swift */,
 				31821CCA60BF87AA05635423 /* DividerFg.swift */,
 				31821CF31C64B32D614C6A9D /* EditActivitiesSheet.swift */,
 				318212B384624F1CF416C576 /* EventFormSheet.swift */,
@@ -646,6 +649,7 @@
 				31821D1716CFA24F74C1BE6C /* NoteFormSheet.swift in Sources */,
 				31821A31BFF9D29DD019E05D /* NoteSheet.swift in Sources */,
 				31821EE26161D262CC020E3D /* SummarySheet.swift in Sources */,
+				2CA9C0372C39F0E300A321FA /* DividerBgScroll.swift in Sources */,
 				2CDEAB5A2C00F90C00519C3D /* RepeatingFormPeriodFs.swift in Sources */,
 				31821859FBE8390BA3346A0E /* EventTemplateFormSheet.swift in Sources */,
 				2C2C205D2B7A824A00D4B325 /* PrivacySheet.swift in Sources */,
