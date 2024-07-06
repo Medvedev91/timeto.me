@@ -366,6 +366,14 @@ private struct TabView: View {
                                 "readme_checklists_practice_9"
                             ]
                         )
+                    } else if paragraph is ReadmeSheetVM.ParagraphPomodoroExamples {
+                        ImagePreviewsView(
+                            images: [
+                                "readme_pomodoro_1",
+                                "readme_pomodoro_2",
+                                "readme_pomodoro_3",
+                            ]
+                        )
                     } else if paragraph is ReadmeSheetVM.ParagraphGoalsExamples {
                         ImagePreviewsView(
                             images: [
