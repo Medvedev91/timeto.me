@@ -187,6 +187,14 @@ fun ReadmeSheet(
                             )
                         }
 
+                        is ReadmeSheetVM.Paragraph.PomodoroExamples -> {
+                            ImagePreviewsView(
+                                R.drawable.readme_pomodoro_1,
+                                R.drawable.readme_pomodoro_2,
+                                R.drawable.readme_pomodoro_3,
+                            )
+                        }
+
                         is ReadmeSheetVM.Paragraph.GoalsExamples -> {
                             ImagePreviewsView(
                                 R.drawable.readme_goals_1,
