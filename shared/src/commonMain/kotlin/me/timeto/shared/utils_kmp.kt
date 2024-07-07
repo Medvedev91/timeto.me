@@ -21,7 +21,7 @@ import me.timeto.shared.db.KvDb.Companion.isSendingReports
 
 const val GOLDEN_RATIO = 1.618f
 
-const val OPEN_SOURCE_URL = "https://github.com/Medvedev91/timetome"
+const val OPEN_SOURCE_URL = "https://github.com/Medvedev91/timeto.me"
 const val HI_EMAIL = "hi@timeto.me"
 
 const val developerEmoji = "👨‍💻"
