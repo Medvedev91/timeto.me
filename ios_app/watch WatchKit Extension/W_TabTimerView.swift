@@ -47,10 +47,10 @@ struct W_TabTimerView: View {
                 
                 Text(state.timerData.note)
                     .foregroundColor(state.timerData.noteColor.toColor())
-                    .font(.system(size: 14))
+                    .font(.system(size: 15))
                 
                 Text(state.timerData.timerText)
-                        .font(.system(size: 28, design: .monospaced))
+                        .font(.system(size: 35, weight:.bold, design: .monospaced))
                         .fontWeight(.medium)
                         .foregroundColor(state.timerData.timerColor.toColor())
             }
