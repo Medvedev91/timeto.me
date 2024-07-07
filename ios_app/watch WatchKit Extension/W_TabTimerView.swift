@@ -55,7 +55,7 @@ struct W_TabTimerView: View {
                     .foregroundColor(state.timerData.timerColor.toColor())
             }
             .onTapGesture {
-                vm.toggleIsPurple()
+                vm.togglePomodoro()
             }
         }
     }

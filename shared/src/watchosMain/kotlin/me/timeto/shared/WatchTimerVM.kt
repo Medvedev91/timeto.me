@@ -42,7 +42,7 @@ class WatchTimerVM : __VM<WatchTimerVM.State>() {
         }
     }
 
-    fun toggleIsPurple() {
-        state.update { it.copy(isPurple = !it.isPurple) }
+    fun togglePomodoro() {
+        WatchToIosSync.togglePomodoro()
     }
 }

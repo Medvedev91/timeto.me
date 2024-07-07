@@ -8,6 +8,7 @@ import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.TaskDb
 import platform.WatchConnectivity.WCSession
 import me.timeto.shared.db.ActivityDb
+import me.timeto.shared.vm.ui.TimerDataUI
 
 object IosToWatchSync {
 
@@ -75,6 +76,16 @@ object IosToWatchSync {
                 timer = timer,
                 activity = activity,
             )
+            onFinish("{}")
+            return@launchExDefault
+        }
+
+        if (command == "toggle_pomodoro") {
+            TimerDataUI(
+                interval = IntervalDb.getLastOneOrNull()!!,
+                todayTasks = DI.tasks.filter { it.isToday },
+                isPurple = false,
+            ).togglePomodoro()
             onFinish("{}")
             return@launchExDefault
         }

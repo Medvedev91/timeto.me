@@ -71,6 +71,16 @@ object WatchToIosSync {
         }
     }
 
+    fun togglePomodoro() {
+        launchExDefault {
+            val map = mapOf<String, JsonPrimitive>()
+            requestFromAppleWatch(
+                command = "toggle_pomodoro",
+                jData = JsonObject(map)
+            )
+        }
+    }
+
     ///
     /// Smart Restore
 
