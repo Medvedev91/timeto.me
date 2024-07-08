@@ -7,6 +7,8 @@ struct WhatsNewFs: View {
 
     @Binding var isPresented: Bool
 
+    @EnvironmentObject private var fs: Fs
+
     @State private var vm = WhatsNewVm()
     @State private var scroll = 0
 
@@ -50,6 +52,29 @@ struct WhatsNewFs: View {
                                     .foregroundColor(c.text)
                                     .font(.system(size: fontSize, weight: .bold))
                                     .padding(.top, 8)
+
+                                Spacer()
+                            }
+
+                            HStack {
+
+                                if let buttonUi = historyItemUi.buttonUi {
+                                    Button(
+                                        action: {
+                                            if (buttonUi == WhatsNewVm.HistoryItemUiButtonUi.pomodoro) {
+                                                fs.ReadmeSheet__open(defaultItem: .pomodoro)
+                                            } else {
+                                                fatalError()
+                                            }
+                                        },
+                                        label: {
+                                            Text(buttonUi.text)
+                                                .padding(.top, 8)
+                                                .foregroundColor(.blue)
+                                        }
+                                    )
+                                    .offset(x: -halfDpFloor)
+                                }
 
                                 Spacer()
                             }
