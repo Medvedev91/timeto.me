@@ -31,6 +31,7 @@ class WhatsNewVm : __VM<WhatsNewVm.State>() {
     companion object {
 
         fun prepHistoryItemsUi(): List<HistoryItemUi> = listOf(
+            HistoryItemUi(19912, "New Pomodoro"),
             HistoryItemUi(19870, "Calendar Templates"),
             HistoryItemUi(19858, "Optional Pomodoro"),
             HistoryItemUi(19844, "New Calendar Form"),
