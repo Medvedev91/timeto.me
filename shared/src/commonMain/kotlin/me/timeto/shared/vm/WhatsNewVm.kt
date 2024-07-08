@@ -32,7 +32,7 @@ class WhatsNewVm : __VM<WhatsNewVm.State>() {
 
         fun prepHistoryItemsUi(): List<HistoryItemUi> = listOf(
             HistoryItemUi(19870, "Calendar Templates"),
-            HistoryItemUi(19858, "Optional Pomodoro for Activities"),
+            HistoryItemUi(19858, "Optional Pomodoro"),
             HistoryItemUi(19844, "New Calendar Form"),
             HistoryItemUi(19831, "What's New Changelog"),
             HistoryItemUi(19823, "Checklist Sorting"),
