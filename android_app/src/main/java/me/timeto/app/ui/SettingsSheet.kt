@@ -151,7 +151,7 @@ fun SettingsSheet(
                         },
                     ) {
                         Sheet.show { layer ->
-                            WhatsNewSheet(layer)
+                            WhatsNewFs(layer)
                         }
                     }
                 }

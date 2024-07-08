@@ -278,7 +278,7 @@ fun HomeView() {
                 title = whatsNewMessage,
                 onClick = {
                     Sheet.show { layer ->
-                        WhatsNewSheet(layer)
+                        WhatsNewFs(layer)
                     }
                 }
             )

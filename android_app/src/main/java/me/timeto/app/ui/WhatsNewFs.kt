@@ -14,7 +14,7 @@ import me.timeto.app.*
 import me.timeto.shared.vm.WhatsNewVm
 
 @Composable
-fun WhatsNewSheet(
+fun WhatsNewFs(
     layer: WrapperView.Layer,
 ) {
 
