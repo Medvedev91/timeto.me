@@ -73,7 +73,7 @@ struct SettingsSheet: View {
                                 )
                             )
                         ) {
-                            nativeSheet.show { isWhatsNewPresented in
+                            fs.show { isWhatsNewPresented in
                                 WhatsNewFs(isPresented: isWhatsNewPresented)
                             }
                         }

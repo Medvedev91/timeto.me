@@ -236,7 +236,7 @@ struct HomeView: View {
                         if let whatsNewMessage = state.whatsNewMessage {
                             Button(
                                 action: {
-                                    nativeSheet.show { isWhatsNewPresented in
+                                    fs.show { isWhatsNewPresented in
                                         WhatsNewFs(isPresented: isWhatsNewPresented)
                                     }
                                 },

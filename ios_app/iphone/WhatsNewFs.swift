@@ -15,10 +15,12 @@ struct WhatsNewFs: View {
 
         VMView(vm: vm, stack: .VStack()) { state in
 
-            Sheet__HeaderView(
+            Fs__HeaderTitle(
                 title: state.headerTitle,
                 scrollToHeader: scroll,
-                bgColor: c.sheetBg
+                onClose: {
+                    isPresented = false
+                }
             )
 
             ScrollViewWithVListener(showsIndicators: false, vScroll: $scroll) {
@@ -32,21 +34,21 @@ struct WhatsNewFs: View {
                             HStack {
 
                                 Text(historyItemUi.title)
-                                    .foregroundColor(c.text)
-                                    .font(.system(size: fontSize, weight: .bold))
+                                    .foregroundColor(c.textSecondary)
+                                    .font(.system(size: 15, weight: .light))
 
                                 Spacer()
 
                                 Text(historyItemUi.timeAgoText)
-                                    .foregroundColor(c.text)
-                                    .font(.system(size: fontSize))
+                                    .foregroundColor(c.textSecondary)
+                                    .font(.system(size: 15, weight: .light))
                             }
 
                             HStack {
 
                                 Text(historyItemUi.text)
                                     .foregroundColor(c.text)
-                                    .font(.system(size: fontSize))
+                                    .font(.system(size: fontSize, weight: .bold))
                                     .padding(.top, 8)
 
                                 Spacer()
@@ -63,9 +65,10 @@ struct WhatsNewFs: View {
                 .padding(.bottom, 16)
             }
 
-            Sheet__BottomViewClose {
-                isPresented = false
+            ZStack {
             }
+            .safeAreaPadding(.bottom)
+            .padding(.bottom, 16)
         }
     }
 }
