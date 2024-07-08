@@ -2,6 +2,7 @@ package me.timeto.app.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -10,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.shared.vm.WhatsNewVm
 
@@ -25,21 +27,22 @@ fun WhatsNewFs(
     VStack(
         modifier = Modifier
             .fillMaxHeight()
-            .background(c.sheetBg),
+            .background(c.bg),
     ) {
 
         val scrollState = rememberScrollState()
 
-        Sheet__HeaderView(
+        Fs__HeaderTitle(
             title = state.headerTitle,
             scrollState = scrollState,
-            bgColor = c.sheetBg,
+            onClose = {
+                layer.close()
+            },
         )
 
         VStack(
             modifier = Modifier
                 .verticalScroll(state = scrollState)
-                .padding(bottom = 20.dp)
                 .weight(1f),
         ) {
 
@@ -57,13 +60,16 @@ fun WhatsNewFs(
                             text = historyItemUi.title,
                             modifier = Modifier
                                 .weight(1f),
-                            color = c.text,
-                            fontWeight = FontWeight.Bold,
+                            color = c.textSecondary,
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Light,
                         )
 
                         Text(
                             text = historyItemUi.timeAgoText,
-                            color = c.text,
+                            color = c.textSecondary,
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Light,
                         )
                     }
 
@@ -72,16 +78,19 @@ fun WhatsNewFs(
                         modifier = Modifier
                             .padding(top = 2.dp),
                         color = c.text,
+                        fontWeight = FontWeight.Bold,
                     )
 
                     if (state.historyItemsUi.last() != historyItemUi)
-                        SheetDividerBg(Modifier.padding(top = 12.dp))
+                        DividerBg(Modifier.padding(top = 12.dp))
                 }
             }
-        }
 
-        Sheet__BottomViewClose {
-            layer.close()
+            ZStack(
+                modifier = Modifier
+                    .navigationBarsPadding()
+                    .padding(bottom = H_PADDING),
+            ) {}
         }
     }
 }

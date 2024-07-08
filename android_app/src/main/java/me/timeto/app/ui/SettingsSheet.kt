@@ -150,7 +150,7 @@ fun SettingsSheet(
                             )
                         },
                     ) {
-                        Sheet.show { layer ->
+                        Fs.show { layer ->
                             WhatsNewFs(layer)
                         }
                     }
