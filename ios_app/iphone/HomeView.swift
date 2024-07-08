@@ -237,7 +237,7 @@ struct HomeView: View {
                             Button(
                                 action: {
                                     nativeSheet.show { isWhatsNewPresented in
-                                        WhatsNewSheet(isPresented: isWhatsNewPresented)
+                                        WhatsNewFs(isPresented: isWhatsNewPresented)
                                     }
                                 },
                                 label: {

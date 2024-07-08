@@ -3,7 +3,7 @@ import shared
 
 private let fontSize = 17.0
 
-struct WhatsNewSheet: View {
+struct WhatsNewFs: View {
 
     @Binding var isPresented: Bool
 
