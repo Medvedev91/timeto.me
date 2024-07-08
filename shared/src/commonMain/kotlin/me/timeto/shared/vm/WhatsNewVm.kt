@@ -31,7 +31,7 @@ class WhatsNewVm : __VM<WhatsNewVm.State>() {
     companion object {
 
         fun prepHistoryItemsUi(): List<HistoryItemUi> = listOf(
-            HistoryItemUi(19912, "New Pomodoro"),
+            HistoryItemUi(19912, "New Pomodoro", HistoryItemUi.ButtonUi.pomodoro),
             HistoryItemUi(19870, "Calendar Templates"),
             HistoryItemUi(19858, "Optional Pomodoro"),
             HistoryItemUi(19844, "New Calendar Form"),
@@ -46,6 +46,7 @@ class WhatsNewVm : __VM<WhatsNewVm.State>() {
     data class HistoryItemUi(
         val unixDay: Int,
         val text: String,
+        val buttonUi: ButtonUi? = null,
     ) {
 
         val title: String
@@ -68,6 +69,12 @@ class WhatsNewVm : __VM<WhatsNewVm.State>() {
                 daysAgo > 30 -> "${daysAgo / 30}mo"
                 else -> "${daysAgo}d"
             }
+        }
+
+        ///
+
+        enum class ButtonUi(val text: String) {
+            pomodoro("Read how it works")
         }
     }
 }
