@@ -535,7 +535,7 @@ val localUtcOffsetWithDayStart: Int
     get() = localUtcOffset - dayStartOffsetSeconds()
 
 fun dayStartOffsetSeconds(): Int =
-    KvDb.KEY.DAY_START_OFFSET_SECONDS.getFromDIOrNull().asDayStartOffsetSeconds()
+    KvDb.KEY.DAY_START_OFFSET_SECONDS.selectStringOrNullCached().asDayStartOffsetSeconds()
 
 // todo deprecated. Use DaytimePickerUi.text
 fun daytimeToString(daytime: Int): String {

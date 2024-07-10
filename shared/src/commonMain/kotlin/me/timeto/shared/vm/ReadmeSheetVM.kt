@@ -71,7 +71,7 @@ class ReadmeSheetVM(
         class AskAQuestion() : Paragraph() {
             val title = "Ask a Question"
             val subject: String =
-                when (val fs = KvDb.KEY.FEEDBACK_SUBJECT.getFromDIOrNull()) {
+                when (val fs = KvDb.KEY.FEEDBACK_SUBJECT.selectStringOrNullCached()) {
                     null -> "Feedback Readme"
                     else -> "$fs Readme"
                 }
