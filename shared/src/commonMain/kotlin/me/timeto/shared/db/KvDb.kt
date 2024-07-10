@@ -68,6 +68,9 @@ data class KvDb(
 
         fun getFromDIOrNull(): String? = DI.kv.firstOrNull { it.key == this.name }?.value
 
+        fun selectStringOrNullCached(): String? =
+            DI.kv.firstOrNull { it.key == this.name }?.value
+
         fun getOrNullFlow(): Flow<KvDb?> = db.kVQueries.getByKey(this.name).asFlow()
             .mapToOneOrNull(Dispatchers.IO).map { it?.toModel() }
 
