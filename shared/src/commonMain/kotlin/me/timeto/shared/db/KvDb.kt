@@ -58,6 +58,7 @@ data class KvDb(
         TOKEN_PASSWORD,
         WHATS_NEW_CHECK_UNIX_DAY,
         FEEDBACK_SUBJECT,
+        TODAY_ON_HOME_SCREEN,
         IS_SENDING_REPORTS,
         HOME_README_OPEN_TIME;
 
