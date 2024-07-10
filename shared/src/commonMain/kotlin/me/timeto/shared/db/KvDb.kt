@@ -37,6 +37,11 @@ data class KvDb(
         }
 
         //
+
+        fun todayOnHomeScreenCached(): Boolean =
+            KEY.TODAY_ON_HOME_SCREEN.selectBooleanOrNullCached() ?: true
+
+        //
         // Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
