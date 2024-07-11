@@ -3,11 +3,11 @@ CREATE TABLE KVSQ (
     value TEXT NOT NULL
 );
 
-getAll:
+selectAll:
 SELECT *
 FROM KVSQ;
 
-getByKey:
+selectByKey:
 SELECT *
 FROM KVSQ
 WHERE key = ?
@@ -17,7 +17,7 @@ upsert:
 INSERT OR REPLACE INTO KVSQ
 (key, value) VALUES (?, ?);
 
-delByKey:
+deleteByKey:
 DELETE FROM KVSQ
 WHERE key=?;
 

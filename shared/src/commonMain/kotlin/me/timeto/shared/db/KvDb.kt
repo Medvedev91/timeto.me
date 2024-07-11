@@ -20,10 +20,10 @@ data class KvDb(
     companion object : Backupable__Holder {
 
         suspend fun selectAll(): List<KvDb> = dbIO {
-            db.kVQueries.getAll().executeAsList().map { it.toModel() }
+            db.kVQueries.selectAll().executeAsList().map { it.toModel() }
         }
 
-        fun selectAllFlow(): Flow<List<KvDb>> = db.kVQueries.getAll().asFlow()
+        fun selectAllFlow(): Flow<List<KvDb>> = db.kVQueries.selectAll().asFlow()
             .mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
 
         ///
@@ -57,7 +57,7 @@ data class KvDb(
         // Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.kVQueries.getAll().executeAsList().map { it.toModel() }
+            db.kVQueries.selectAll().executeAsList().map { it.toModel() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
@@ -92,7 +92,7 @@ data class KvDb(
             selectStringOrNullCached()?.toBoolean10()
 
         fun selectStringOrNullFlow(): Flow<String?> = db.kVQueries
-            .getByKey(this.name)
+            .selectByKey(this.name)
             .asFlow()
             .mapToOneOrNull(Dispatchers.IO)
             .map { it?.value_ }
@@ -100,12 +100,12 @@ data class KvDb(
         fun selectBooleanOrNullFlow(): Flow<Boolean?> =
             selectStringOrNullFlow().map { it?.toBoolean10() }
 
-        fun getOrNullFlow(): Flow<KvDb?> = db.kVQueries.getByKey(this.name).asFlow()
+        fun getOrNullFlow(): Flow<KvDb?> = db.kVQueries.selectByKey(this.name).asFlow()
             .mapToOneOrNull(Dispatchers.IO).map { it?.toModel() }
 
         suspend fun upsert(value: String?): Unit = dbIO {
             if (value == null)
-                db.kVQueries.delByKey(key = name)
+                db.kVQueries.deleteByKey(key = name)
             else
                 db.kVQueries.upsert(key = name, value_ = value)
         }
@@ -148,7 +148,7 @@ data class KvDb(
     }
 
     override fun backupable__delete() {
-        db.kVQueries.delByKey(key)
+        db.kVQueries.deleteByKey(key)
     }
 }
 
