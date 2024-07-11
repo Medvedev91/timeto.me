@@ -19,7 +19,9 @@ data class KvDb(
 
     companion object : Backupable__Holder {
 
-        suspend fun getAll(): List<KvDb> = dbIO { selectAllPlain() }
+        suspend fun selectAll(): List<KvDb> = dbIO {
+            db.kVQueries.getAll().executeAsList().map { it.toModel() }
+        }
 
         fun selectAllPlain(): List<KvDb> =
             db.kVQueries.getAll().executeAsList().map { it.toModel() }
@@ -67,7 +69,8 @@ data class KvDb(
         IS_SENDING_REPORTS,
         HOME_README_OPEN_TIME;
 
-        suspend fun selectOrNull(): String? = getAll().firstOrNull { it.key == this.name }?.value
+        suspend fun selectOrNull(): String? =
+            selectAll().firstOrNull { it.key == this.name }?.value
 
         fun selectOrNullPlain(): String? = selectAllPlain().firstOrNull { it.key == this.name }?.value
 
