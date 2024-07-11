@@ -24,6 +24,7 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
         val feedbackSubject: String,
         val autoBackupTimeString: String,
         val privacyNote: String?,
+        val todayOnHomeScreen: Boolean,
     ) {
 
         val headerTitle = "Settings"
@@ -60,6 +61,7 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
             feedbackSubject = "Feedback",
             autoBackupTimeString = prepAutoBackupTimeString(AutoBackup.lastTimeCache.value),
             privacyNote = null, // todo init value
+            todayOnHomeScreen = KvDb.todayOnHomeScreenCached(),
         )
     )
 
