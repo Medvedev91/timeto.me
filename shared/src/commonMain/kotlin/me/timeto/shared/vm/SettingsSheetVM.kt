@@ -32,6 +32,8 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
         val whatsNewTitle = "What's New"
         val whatsNewNote: String = WhatsNewVm.prepHistoryItemsUi().first().timeAgoText
 
+        val todayOnHomeScreenText = "Today on Home Screen"
+
         val dayStartNote = dayStartSecondsToString(dayStartSeconds)
         val dayStartListItems = (-6..6).map { hour ->
             DayStartOffsetListItem(
