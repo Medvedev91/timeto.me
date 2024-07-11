@@ -74,6 +74,9 @@ data class KvDb(
 
         fun selectOrNullPlain(): String? = selectAllPlain().firstOrNull { it.key == this.name }?.value
 
+        suspend fun selectStringOrNull(): String? =
+            selectAll().firstOrNull { it.key == this.name }?.value
+
         fun selectStringOrNullCached(): String? =
             DI.kv.firstOrNull { it.key == this.name }?.value
 
