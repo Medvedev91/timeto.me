@@ -104,6 +104,13 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
         }
     }
 
+    fun toggleTodayOnHomeScreen() {
+        launchExDefault {
+            val newValue = !state.value.todayOnHomeScreen
+            KvDb.KEY.TODAY_ON_HOME_SCREEN.upsertBool(newValue)
+        }
+    }
+
     fun upDayStartOffsetSeconds(
         seconds: Int,
         onSuccess: () -> Unit,
