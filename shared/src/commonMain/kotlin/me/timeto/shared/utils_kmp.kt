@@ -45,6 +45,7 @@ fun reportApi(
         zlog("reportApi $message")
         try {
             HttpClient().use {
+                val token = KvDb.selectTokenOrNullSafe()
                 it.submitForm(
                     url = "https://api.timeto.me/report",
                     formParameters = Parameters.build {
@@ -52,7 +53,7 @@ fun reportApi(
                         append("message", message)
                     }
                 ) {
-                    appendDeviceData()
+                    appendDeviceData(token)
                 }
             }
         } catch (e: Throwable) {
@@ -86,10 +87,11 @@ suspend fun ping(
 
         HttpClient().use { client ->
             val httpResponse = client.get("https://api.timeto.me/ping") {
+                val token = KvDb.selectTokenOrNullSafe()
                 val password = getsertTokenPassword()
                 url {
                     parameters.append("password", password)
-                    appendDeviceData()
+                    appendDeviceData(token)
                 }
             }
             val plainJson = httpResponse.bodyAsText()
@@ -160,16 +162,9 @@ fun taskAutostartData(
     return activity to timerTime
 }
 
-fun HttpRequestBuilder.appendDeviceData() {
-
-    val token: String? = try {
-        // todo no plain?
-        KvDb.KEY.TOKEN.selectOrNullPlain()
-    } catch (e: Throwable) {
-        // todo report fallback
-        null
-    }
-
+fun HttpRequestBuilder.appendDeviceData(
+    token: String?,
+) {
     url {
         parameters.append("__token", token ?: "")
         parameters.append("__build", deviceData.build.toString())
