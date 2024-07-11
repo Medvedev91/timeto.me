@@ -47,10 +47,11 @@ data class KvDb(
 
         //
 
-        private val defTodayOnHomeScreen = true
+        const val TODAY_ON_HOME_SCREEN_DEFAULT = true
 
         fun todayOnHomeScreenCached(): Boolean =
-            KEY.TODAY_ON_HOME_SCREEN.selectBooleanOrNullCached() ?: defTodayOnHomeScreen
+            KEY.TODAY_ON_HOME_SCREEN.selectBooleanOrNullCached()
+            ?: TODAY_ON_HOME_SCREEN_DEFAULT
 
         //
         // Backupable Holder
