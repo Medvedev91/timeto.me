@@ -390,7 +390,7 @@ fun SettingsSheet(
 
                 MyListView__ItemView(
                     isFirst = false,
-                    isLast = true,
+                    isLast = false,
                     withTopDivider = true,
                 ) {
 
@@ -411,6 +411,21 @@ fun SettingsSheet(
                                 onClose = layer::close
                             )
                         }
+                    }
+                }
+
+                MyListView__ItemView(
+                    isFirst = false,
+                    isLast = true,
+                    withTopDivider = true,
+                    bgColor = c.fg,
+                ) {
+
+                    MyListView__ItemView__SwitchView(
+                        text = state.todayOnHomeScreenText,
+                        isActive = state.todayOnHomeScreen,
+                    ) {
+                        vm.toggleTodayOnHomeScreen()
                     }
                 }
             }
