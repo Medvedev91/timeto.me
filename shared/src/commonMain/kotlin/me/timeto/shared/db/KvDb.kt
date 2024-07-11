@@ -29,6 +29,16 @@ data class KvDb(
         fun getAllFlow() = db.kVQueries.getAll().asFlow()
             .mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
 
+        ///
+
+        suspend fun selectTokenOrNullSafe(): String? = try {
+            KEY.TOKEN.selectStringOrNull()
+        } catch (e: Throwable) {
+            // todo fallback report
+            zlog("KvDb.selectTokenOrNullSafe():$e")
+            null
+        }
+
         //
 
         fun String?.asDayStartOffsetSeconds(): Int = this?.toInt() ?: 0
