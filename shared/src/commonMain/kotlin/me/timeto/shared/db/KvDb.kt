@@ -47,8 +47,10 @@ data class KvDb(
 
         //
 
+        private val defTodayOnHomeScreen = true
+
         fun todayOnHomeScreenCached(): Boolean =
-            KEY.TODAY_ON_HOME_SCREEN.selectBooleanOrNullCached() ?: true
+            KEY.TODAY_ON_HOME_SCREEN.selectBooleanOrNullCached() ?: defTodayOnHomeScreen
 
         //
         // Backupable Holder
