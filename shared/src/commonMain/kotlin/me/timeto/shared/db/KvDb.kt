@@ -96,6 +96,9 @@ data class KvDb(
             .mapToOneOrNull(Dispatchers.IO)
             .map { it?.value_ }
 
+        fun selectBooleanOrNullFlow(): Flow<Boolean?> =
+            selectStringOrNullFlow().map { it?.toBoolean10() }
+
         fun getOrNullFlow(): Flow<KvDb?> = db.kVQueries.getByKey(this.name).asFlow()
             .mapToOneOrNull(Dispatchers.IO).map { it?.toModel() }
 
