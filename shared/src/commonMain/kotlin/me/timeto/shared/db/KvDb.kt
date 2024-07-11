@@ -23,9 +23,6 @@ data class KvDb(
             db.kVQueries.getAll().executeAsList().map { it.toModel() }
         }
 
-        fun selectAllPlain(): List<KvDb> =
-            db.kVQueries.getAll().executeAsList().map { it.toModel() }
-
         fun getAllFlow() = db.kVQueries.getAll().asFlow()
             .mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
 
@@ -81,8 +78,6 @@ data class KvDb(
 
         suspend fun selectOrNull(): String? =
             selectAll().firstOrNull { it.key == this.name }?.value
-
-        fun selectOrNullPlain(): String? = selectAllPlain().firstOrNull { it.key == this.name }?.value
 
         suspend fun selectStringOrNull(): String? =
             selectAll().firstOrNull { it.key == this.name }?.value
