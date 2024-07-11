@@ -23,7 +23,7 @@ data class KvDb(
             db.kVQueries.getAll().executeAsList().map { it.toModel() }
         }
 
-        fun getAllFlow() = db.kVQueries.getAll().asFlow()
+        fun selectAllFlow(): Flow<List<KvDb>> = db.kVQueries.getAll().asFlow()
             .mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
 
         ///

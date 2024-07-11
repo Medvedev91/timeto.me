@@ -69,7 +69,7 @@ object DI {
         NoteDb.getAscFlow().onEachExIn(scope) { notes = it }
 
         kv = KvDb.selectAll()
-        KvDb.getAllFlow().onEachExIn(scope) { kv = it }
+        KvDb.selectAllFlow().onEachExIn(scope) { kv = it }
 
         tasks = TaskDb.getAsc()
         TaskDb.getAscFlow().onEachExIn(scope) { tasks = it }
