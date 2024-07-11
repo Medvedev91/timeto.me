@@ -87,6 +87,13 @@ class SettingsSheetVM : __VM<SettingsSheetVM.State>() {
                 val isEnabled = kv?.value.isSendingReports()
                 state.update { it.copy(privacyNote = if (isEnabled) null else PrivacySheetVM.prayEmoji) }
             }
+        KvDb.KEY.TODAY_ON_HOME_SCREEN
+            .selectBooleanOrNullFlow()
+            .onEachExIn(scope) { kvValue ->
+                state.update {
+                    it.copy(todayOnHomeScreen = kvValue ?: KvDb.TODAY_ON_HOME_SCREEN_DEFAULT)
+                }
+            }
         AutoBackup.lastTimeCache.onEachExIn(scope) { unixTime ->
             state.update { it.copy(autoBackupTimeString = prepAutoBackupTimeString(unixTime)) }
         }
