@@ -597,9 +597,8 @@ private fun NavigationView(
                 .weight(1f)
                 .fillMaxHeight()
                 .clip(squircleShape)
-                .motionEventSpy { event ->
-                    if (event.action == MotionEvent.ACTION_DOWN)
-                        ActivitiesTimerSheet__show(timerContext = null, withMenu = true)
+                .clickable {
+                    ActivitiesTimerSheet__show(timerContext = null, withMenu = true)
                 },
             contentAlignment = Alignment.BottomCenter,
         ) {
@@ -619,9 +618,8 @@ private fun NavigationView(
                 .fillMaxHeight()
                 .clip(squircleShape)
                 .background(menuTasksBg.value)
-                .motionEventSpy { event ->
-                    if (event.action == MotionEvent.ACTION_DOWN)
-                        vm.toggleIsTasksVisible()
+                .clickable {
+                    vm.toggleIsTasksVisible()
                 },
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -696,11 +694,10 @@ private fun NavigationView(
                 .weight(1f)
                 .fillMaxHeight()
                 .clip(squircleShape)
-                .motionEventSpy { event ->
-                    if (event.action == MotionEvent.ACTION_DOWN)
-                        Fs.show { layer ->
-                            SettingsSheet(layer = layer)
-                        }
+                .clickable {
+                    Fs.show { layer ->
+                        SettingsSheet(layer = layer)
+                    }
                 },
             contentAlignment = Alignment.BottomCenter,
         ) {
