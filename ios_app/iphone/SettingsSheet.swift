@@ -224,7 +224,7 @@ struct SettingsSheet: View {
 
                         MyListView__ItemView(
                             isFirst: false,
-                            isLast: true,
+                            isLast: false,
                             bgColor: c.fg,
                             withTopDivider: true
                         ) {
@@ -244,6 +244,21 @@ struct SettingsSheet: View {
                                     settingsSheetVM: vm,
                                     settingsSheetState: state
                                 )
+                            }
+                        }
+                        
+                        MyListView__ItemView(
+                            isFirst: false,
+                            isLast: true,
+                            bgColor: c.fg,
+                            withTopDivider: true
+                        ) {
+
+                            MyListView__ItemView__SwitchView(
+                                text: state.todayOnHomeScreenText,
+                                isActive: state.todayOnHomeScreen
+                            ) {
+                                vm.toggleTodayOnHomeScreen()
                             }
                         }
                     }
