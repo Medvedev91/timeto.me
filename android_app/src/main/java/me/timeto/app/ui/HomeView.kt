@@ -485,7 +485,7 @@ private fun MainTasksView(
 
         items(
             items = tasks,
-            key = { it.task.id }
+            key = { it.taskUi.taskDb.id }
         ) { mainTask ->
 
             HStack(
@@ -495,7 +495,7 @@ private fun MainTasksView(
                     .padding(horizontal = mainTaskHalfHPadding)
                     .clip(roundedShape)
                     .clickable {
-                        mainTask.task.startIntervalForUI(
+                        mainTask.taskUi.taskDb.startIntervalForUI(
                             onStarted = {},
                             activitiesSheet = {
                                 ActivitiesTimerSheet__show(mainTask.timerContext, withMenu = false)
@@ -516,7 +516,7 @@ private fun MainTasksView(
                 if (timeUI != null) {
                     HStack(
                         modifier = Modifier
-                            .padding(end = if (mainTask.textFeatures.paused != null) 9.dp else 8.dp)
+                            .padding(end = if (mainTask.taskUi.taskTf.paused != null) 9.dp else 8.dp)
                             .height(mtgCircleHeight)
                             .clip(roundedShape)
                             .background(timeUI.textBgColor.toColor())
@@ -535,7 +535,7 @@ private fun MainTasksView(
                     }
                 }
 
-                if (mainTask.textFeatures.paused != null) {
+                if (mainTask.taskUi.taskTf.paused != null) {
                     ZStack(
                         modifier = Modifier
                             .padding(end = 8.dp)
