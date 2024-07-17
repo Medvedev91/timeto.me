@@ -2,7 +2,6 @@ package me.timeto.shared
 
 import kotlinx.coroutines.flow.filter
 import me.timeto.shared.db.*
-import me.timeto.shared.models.TaskUi
 
 object DI {
 
@@ -12,7 +11,6 @@ object DI {
     var notes = listOf<NoteDb>()
     var kv = listOf<KvDb>()
     var tasks = listOf<TaskDb>()
-    var tasksUi = listOf<TaskUi>()
     var taskFolders = listOf<TaskFolderDb>()
     var activitiesSorted = listOf<ActivityDb>()
     var events = listOf<EventDb>()
@@ -75,9 +73,6 @@ object DI {
 
         tasks = TaskDb.getAsc()
         TaskDb.getAscFlow().onEachExIn(scope) { tasks = it }
-
-        tasksUi = TaskDb.getAsc().map { it.toUi() }
-        TaskDb.getAscFlow().onEachExIn(scope) { tasksUi = it.map { it.toUi() } }
 
         taskFolders = TaskFolderDb.getAscBySort()
         TaskFolderDb.getAscBySortFlow().onEachExIn(scope) { taskFolders = it }
