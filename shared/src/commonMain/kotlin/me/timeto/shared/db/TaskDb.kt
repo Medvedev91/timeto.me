@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
+import me.timeto.shared.models.TaskUi
 import kotlin.math.max
 
 data class TaskDb(
@@ -111,6 +112,8 @@ data class TaskDb(
 
     val isToday = folder_id == TaskFolderDb.ID_TODAY
     val isTmrw = folder_id == TaskFolderDb.ID_TMRW
+
+    fun toUi() = TaskUi(this)
 
     fun unixTime(utcOffset: Int = localUtcOffset) = UnixTime(id, utcOffset = utcOffset)
 
