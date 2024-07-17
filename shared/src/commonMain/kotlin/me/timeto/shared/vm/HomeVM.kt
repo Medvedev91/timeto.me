@@ -114,7 +114,7 @@ class HomeVM : __VM<HomeVM.State>() {
         State(
             interval = DI.lastInterval,
             isPurple = false,
-            todayTasksUi = DI.tasksUi.filter { it.taskDb.isToday },
+            todayTasksUi = listOf(),
             isTasksVisible = false,
             todayIntervalsUI = null, // todo init data
             fdroidMessage = null, // todo init data
