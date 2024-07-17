@@ -82,18 +82,18 @@ class HomeVM : __VM<HomeVM.State>() {
                 val taskTf = taskUi.taskTf
 
                 if (taskTf.paused != null)
-                    return@mapNotNull MainTask(taskUi.taskDb, taskTf)
+                    return@mapNotNull MainTask(taskUi)
 
                 if (taskTf.timeData?.type?.isEvent() == true)
-                    return@mapNotNull MainTask(taskUi.taskDb, taskTf)
+                    return@mapNotNull MainTask(taskUi)
 
                 if (taskTf.isImportant)
-                    return@mapNotNull MainTask(taskUi.taskDb, taskTf)
+                    return@mapNotNull MainTask(taskUi)
 
                 null
             }
             .sortedBy {
-                it.textFeatures.timeData?.unixTime?.time ?: Int.MAX_VALUE
+                it.taskUi.taskTf.timeData?.unixTime?.time ?: Int.MAX_VALUE
             }
 
         val batteryUi: BatteryUi = run {
@@ -252,13 +252,12 @@ class HomeVM : __VM<HomeVM.State>() {
     )
 
     class MainTask(
-        val task: TaskDb,
-        val textFeatures: TextFeatures,
+        val taskUi: TaskUi,
     ) {
 
-        val text = textFeatures.textUi()
-        val timerContext = ActivityTimerSheetVM.TimerContext.Task(task)
-        val timeUI: TimeUI? = textFeatures.timeData?.let { timeData ->
+        val text = taskUi.taskTf.textUi()
+        val timerContext = ActivityTimerSheetVM.TimerContext.Task(taskUi.taskDb)
+        val timeUI: TimeUI? = taskUi.taskTf.timeData?.let { timeData ->
             val bgColor = when (timeData.status) {
                 TextFeatures.TimeData.STATUS.IN -> ColorRgba.homeFg
                 TextFeatures.TimeData.STATUS.SOON -> ColorRgba.blue
