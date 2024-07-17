@@ -83,16 +83,12 @@ class HomeVM : __VM<HomeVM.State>() {
             todayTasksUi
                 .mapNotNull { taskUi ->
                     val taskTf = taskUi.taskTf
-
                     if (taskTf.paused != null)
                         return@mapNotNull MainTask(taskUi)
-
                     if (taskTf.timeData?.type?.isEvent() == true)
                         return@mapNotNull MainTask(taskUi)
-
                     if (taskTf.isImportant)
                         return@mapNotNull MainTask(taskUi)
-
                     null
                 }
                 .sortedBy {
