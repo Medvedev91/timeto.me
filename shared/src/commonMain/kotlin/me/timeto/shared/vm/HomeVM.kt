@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import me.timeto.shared.*
 import me.timeto.shared.db.*
+import me.timeto.shared.models.TaskUi
 import me.timeto.shared.vm.ui.DayIntervalsUI
 import me.timeto.shared.vm.ui.TimerDataUI
 
@@ -13,7 +14,7 @@ class HomeVM : __VM<HomeVM.State>() {
     data class State(
         val interval: IntervalDb,
         val isPurple: Boolean,
-        val tasksToday: List<TaskDb>,
+        val todayTasksUi: List<TaskUi>,
         val isTasksVisible: Boolean,
         val todayIntervalsUI: DayIntervalsUI?,
         val fdroidMessage: String?,
@@ -22,7 +23,7 @@ class HomeVM : __VM<HomeVM.State>() {
         val idToUpdate: Long,
     ) {
 
-        val timerData = TimerDataUI(interval, tasksToday, isPurple)
+        val timerData = TimerDataUI(interval, todayTasksUi.map { it.taskDb }, isPurple)
 
         val activity = interval.getActivityDI()
 
@@ -76,18 +77,18 @@ class HomeVM : __VM<HomeVM.State>() {
         val menuTime: String = UnixTime().getStringByComponents(UnixTime.StringComponent.hhmm24)
         val menuTasksNote = "${DI.tasks.count { it.isToday }}"
 
-        val mainTasks: List<MainTask> = tasksToday
-            .mapNotNull { task ->
-                val taskTextFeatures = task.text.textFeatures()
+        val mainTasks: List<MainTask> = todayTasksUi
+            .mapNotNull { taskUi ->
+                val taskTf = taskUi.taskTf
 
-                if (taskTextFeatures.paused != null)
-                    return@mapNotNull MainTask(task, taskTextFeatures)
+                if (taskTf.paused != null)
+                    return@mapNotNull MainTask(taskUi.taskDb, taskTf)
 
-                if (taskTextFeatures.timeData?.type?.isEvent() == true)
-                    return@mapNotNull MainTask(task, taskTextFeatures)
+                if (taskTf.timeData?.type?.isEvent() == true)
+                    return@mapNotNull MainTask(taskUi.taskDb, taskTf)
 
-                if (taskTextFeatures.isImportant)
-                    return@mapNotNull MainTask(task, taskTextFeatures)
+                if (taskTf.isImportant)
+                    return@mapNotNull MainTask(taskUi.taskDb, taskTf)
 
                 null
             }
@@ -114,7 +115,7 @@ class HomeVM : __VM<HomeVM.State>() {
         State(
             interval = DI.lastInterval,
             isPurple = false,
-            tasksToday = DI.tasks.filter { it.isToday },
+            todayTasksUi = DI.tasksUi.filter { it.taskDb.isToday },
             isTasksVisible = false,
             todayIntervalsUI = null, // todo init data
             fdroidMessage = null, // todo init data
@@ -142,7 +143,7 @@ class HomeVM : __VM<HomeVM.State>() {
             .getAscFlow()
             .map { it.filter { task -> task.isToday } }
             .onEachExIn(scope) { tasks ->
-                state.update { it.copy(tasksToday = tasks) }
+                state.update { it.copy(todayTasksUi = tasks.map { it.toUi() }) }
             }
         if (deviceData.isFdroid)
             KvDb.KEY.IS_SENDING_REPORTS
