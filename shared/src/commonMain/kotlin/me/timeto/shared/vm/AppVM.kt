@@ -42,7 +42,7 @@ class AppVM : __VM<AppVM.State>() {
             ///
 
             backupStateFlow
-                .skipFirst()
+                .drop(1)
                 .onEachExIn(this) { newMessage ->
                     state.update { it.copy(backupMessage = newMessage) }
                 }
@@ -59,7 +59,7 @@ class AppVM : __VM<AppVM.State>() {
 
             ActivityDb
                 .anyChangeFlow()
-                .skipFirst()
+                .drop(1)
                 .onEachExIn(this) {
                     // In case the pomodoro changes
                     rescheduleNotifications()
