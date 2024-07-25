@@ -477,7 +477,7 @@ private struct MainTasksView: View {
                         }
                         .frame(height: mainTasksContentTopPadding)
 
-                        ForEach(tasks.reversed(), id: \.self.task.id) { mainTask in
+                        ForEach(tasks.reversed(), id: \.self.taskUi.taskDb.id) { mainTask in
                             MainTaskItemView(mainTask: mainTask)
                         }
 
@@ -506,7 +506,7 @@ private struct MainTaskItemView: View {
 
         Button(
             action: {
-                mainTask.task.startIntervalForUI(
+                mainTask.taskUi.taskDb.startIntervalForUI(
                     onStarted: {},
                     activitiesSheet: {
                         nativeSheet.showActivitiesTimerSheet(
@@ -536,10 +536,10 @@ private struct MainTaskItemView: View {
                             .padding(.horizontal, mtgCircleHPadding)
                             .frame(height: mtgCircleHeight)
                             .background(roundedShape.fill(timeUI.textBgColor.toColor()))
-                            .padding(.trailing, mainTask.textFeatures.paused != nil ? 9 : 8)
+                            .padding(.trailing, mainTask.taskUi.taskTf.paused != nil ? 9 : 8)
                     }
 
-                    if mainTask.textFeatures.paused != nil {
+                    if mainTask.taskUi.taskTf.paused != nil {
                         ZStack {
                             Image(systemName: "pause")
                                 .foregroundColor(c.white)
