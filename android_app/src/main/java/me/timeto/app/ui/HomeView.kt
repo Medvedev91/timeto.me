@@ -19,6 +19,7 @@ import androidx.compose.ui.draw.*
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.motionEventSpy
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -29,7 +30,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import me.timeto.app.*
 import me.timeto.app.R
-import me.timeto.shared.*
 import me.timeto.shared.vm.HomeVM
 import me.timeto.shared.vm.ReadmeSheetVM
 
@@ -43,7 +43,6 @@ private val mtgCircleHeight = 22.dp
 private val mtgCircleFontSize = 13.sp
 private val mtgCircleFontWeight = FontWeight.SemiBold
 
-private val mainTasksContentTopPadding = 4.dp
 private val mainTaskHalfHPadding = H_PADDING / 2
 
 private val navigationButtonModifier = Modifier.size(HomeView__BOTTOM_NAVIGATION_HEIGHT).padding(14.dp)
@@ -296,56 +295,49 @@ fun HomeView() {
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
-                val checklistScrollState = rememberLazyListState()
-                val mainTasksScrollState = rememberLazyListState()
+                //
+                // Checklist + Main Tasks
 
-                val isMainTasksExists = state.mainTasks.isNotEmpty()
+                VStack(
+                    modifier = Modifier
+                        .weight(1f)
+                        .onGloballyPositioned { coords ->
+                            val totalHeight = coords.size.height
+                            vm.upListsContainerSize(
+                                totalHeight = pxToDp(totalHeight),
+                                itemHeight = HomeView__MTG_ITEM_HEIGHT.value,
+                            )
+                        },
+                ) {
 
-                if (checklistDb != null) {
+                    val checklistScrollState = rememberLazyListState()
+                    val mainTasksScrollState = rememberLazyListState()
 
-                    MainDivider(
-                        calcAlpha = {
-                            if (checklistScrollState.firstVisibleItemIndex > 0) 1f
-                            else (checklistScrollState.firstVisibleItemScrollOffset.toFloat() * 0.05f).limitMax(1f)
-                        }
-                    )
+                    val isMainTasksExists = state.mainTasks.isNotEmpty()
+                    val listSizes = state.listsSizes
 
-                    ChecklistView(
-                        checklistDb = checklistDb,
-                        modifier = Modifier
-                            .weight(1f),
-                        scrollState = checklistScrollState,
-                        onDelete = {},
-                    )
-                }
-
-                MainDivider(
-                    calcAlpha = {
-                        val isMiddleDividerVisible =
-                            (checklistDb != null && (checklistScrollState.canScrollBackward || checklistScrollState.canScrollForward)) ||
-                                    (isMainTasksExists && (mainTasksScrollState.canScrollBackward || mainTasksScrollState.canScrollForward))
-                        if (isMiddleDividerVisible) 1f else 0f
-                    }
-                )
-
-                if (isMainTasksExists) {
-                    val mainTasksModifier = if (checklistDb == null)
-                        Modifier.weight(1f)
-                    else
-                        Modifier.height(
-                            mainTasksContentTopPadding +
-                                    // 4.5f for the smallest emulator
-                                    (HomeView__MTG_ITEM_HEIGHT * state.mainTasks.size.toFloat().limitMax(4.5f))
+                    if (checklistDb != null) {
+                        ChecklistView(
+                            checklistDb = checklistDb,
+                            modifier = Modifier
+                                .height(listSizes.checklist.dp),
+                            scrollState = checklistScrollState,
+                            onDelete = {},
                         )
-                    MainTasksView(
-                        tasks = state.mainTasks,
-                        modifier = mainTasksModifier,
-                        scrollState = mainTasksScrollState,
-                    )
-                }
+                    }
 
-                if (!isMainTasksExists && checklistDb == null)
-                    SpacerW1()
+                    if (isMainTasksExists) {
+                        MainTasksView(
+                            tasks = state.mainTasks,
+                            modifier = Modifier
+                                .height(listSizes.mainTasks.dp),
+                            scrollState = mainTasksScrollState,
+                        )
+                    }
+
+                    if (!isMainTasksExists && checklistDb == null)
+                        SpacerW1()
+                }
 
                 state.goalsUI.forEach { goalUi ->
 
@@ -477,9 +469,6 @@ private fun MainTasksView(
         modifier = modifier
             .fillMaxWidth(),
         state = scrollState,
-        contentPadding = PaddingValues(
-            top = mainTasksContentTopPadding,
-        ),
         reverseLayout = true,
     ) {
 
@@ -712,22 +701,6 @@ private fun NavigationView(
             )
         }
     }
-}
-
-@Composable
-private fun MainDivider(
-    calcAlpha: () -> Float,
-) {
-    val alphaAnimate = animateFloatAsState(remember { derivedStateOf(calcAlpha) }.value)
-    ZStack(
-        modifier = Modifier
-            .padding(horizontal = H_PADDING)
-            .height(onePx)
-            .fillMaxWidth()
-            .drawBehind {
-                drawRect(color = c.dividerBg.copy(alpha = alphaAnimate.value))
-            },
-    )
 }
 
 @Composable
