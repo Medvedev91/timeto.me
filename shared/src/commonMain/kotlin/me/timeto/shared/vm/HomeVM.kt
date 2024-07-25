@@ -20,6 +20,7 @@ class HomeVM : __VM<HomeVM.State>() {
         val fdroidMessage: String?,
         val readmeMessage: String?,
         val whatsNewMessage: String?,
+        val listsContainerSize: ListsContainerSize?,
         val idToUpdate: Long,
     ) {
 
@@ -95,6 +96,41 @@ class HomeVM : __VM<HomeVM.State>() {
                     it.taskUi.taskTf.timeData?.unixTime?.time ?: Int.MAX_VALUE
                 }
 
+        val listsSizes: ListsSizes = run {
+            val lc = listsContainerSize ?: return@run ListsSizes(0f, 0f)
+            //
+            // No one
+            if (checklistDb == null && mainTasks.isEmpty())
+                return@run ListsSizes(0f, 0f)
+            //
+            // Only one
+            if (checklistDb != null && mainTasks.isEmpty())
+                return@run ListsSizes(checklist = lc.totalHeight, mainTasks = 0f)
+            if (checklistDb == null && mainTasks.isNotEmpty())
+                return@run ListsSizes(checklist = 0f, mainTasks = lc.totalHeight)
+            //
+            // Both
+            checklistDb!!
+            val halfHeight: Float = lc.totalHeight / 2
+            val tasksCount: Int = mainTasks.size
+            val tasksFullHeight: Float = tasksCount * lc.itemHeight
+            // Tasks smaller the half
+            if (tasksFullHeight < halfHeight)
+                return@run ListsSizes(
+                    checklist = lc.totalHeight - tasksFullHeight,
+                    mainTasks = tasksFullHeight,
+                )
+            // Tasks bigger the half
+            val checklistCount: Int = checklistDb.getItemsCached().size
+            val checklistFullHeight: Float = checklistCount * lc.itemHeight
+            if (checklistFullHeight < halfHeight)
+                return@run ListsSizes(
+                    checklist = checklistFullHeight,
+                    mainTasks = lc.totalHeight - checklistFullHeight,
+                )
+            ListsSizes(checklist = halfHeight, mainTasks = halfHeight)
+        }
+
         val batteryUi: BatteryUi = run {
             val level: Int? = batteryLevelOrNull
             val text = "${level ?: "--"}"
@@ -120,6 +156,7 @@ class HomeVM : __VM<HomeVM.State>() {
             fdroidMessage = null, // todo init data
             readmeMessage = null, // todo init data
             whatsNewMessage = null, // todo init data
+            listsContainerSize = null,
             idToUpdate = 0,
         )
     )
@@ -208,6 +245,16 @@ class HomeVM : __VM<HomeVM.State>() {
         }
     }
 
+    fun upListsContainerSize(
+        totalHeight: Float,
+        itemHeight: Float,
+    ) {
+        val lc = ListsContainerSize(totalHeight, itemHeight)
+        if (lc == state.value.listsContainerSize)
+            return
+        state.update { it.copy(listsContainerSize = lc) }
+    }
+
     fun onReadmeOpen() {
         launchExDefault {
             KvDb.KEY.HOME_README_OPEN_TIME.upsertInt(time())
@@ -234,6 +281,18 @@ class HomeVM : __VM<HomeVM.State>() {
             .first()
         state.update { it.copy(todayIntervalsUI = todayIntervalsUI) }
     }
+
+    ///
+
+    data class ListsContainerSize(
+        val totalHeight: Float,
+        val itemHeight: Float,
+    )
+
+    data class ListsSizes(
+        val checklist: Float,
+        val mainTasks: Float,
+    )
 
     ///
 
