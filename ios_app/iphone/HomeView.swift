@@ -22,7 +22,7 @@ private let timerFont3 = buildTimerFont(size: 30)
 
 struct HomeView: View {
 
-    @State private var vm = HomeVM()
+    @State private var vm = HomeVm()
 
     @EnvironmentObject private var fs: Fs
     @EnvironmentObject private var nativeSheet: NativeSheet
@@ -457,7 +457,7 @@ struct HomeView: View {
 
 private struct MainTasksView: View {
 
-    let tasks: [HomeVM.MainTask]
+    let tasks: [HomeVm.MainTask]
 
     private let LIST_BOTTOM_ITEM_ID = "bottom_id"
 
@@ -498,7 +498,7 @@ private struct MainTasksView: View {
 
 private struct MainTaskItemView: View {
 
-    let mainTask: HomeVM.MainTask
+    let mainTask: HomeVm.MainTask
 
     @EnvironmentObject private var nativeSheet: NativeSheet
 

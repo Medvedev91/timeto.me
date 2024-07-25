@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import me.timeto.app.*
 import me.timeto.app.R
-import me.timeto.shared.vm.HomeVM
+import me.timeto.shared.vm.HomeVm
 import me.timeto.shared.vm.ReadmeSheetVM
 
 val HomeView__BOTTOM_NAVIGATION_HEIGHT = 56.dp
@@ -53,7 +53,7 @@ private val purpleAnimExit = fadeOut() + shrinkVertically(animationSpec = spring
 @Composable
 fun HomeView() {
 
-    val (vm, state) = rememberVM { HomeVM() }
+    val (vm, state) = rememberVM { HomeVm() }
 
     val checklistDb = state.checklistDb
 
@@ -461,7 +461,7 @@ private fun MessageButton(
 
 @Composable
 private fun MainTasksView(
-    tasks: List<HomeVM.MainTask>,
+    tasks: List<HomeVm.MainTask>,
     modifier: Modifier,
     scrollState: LazyListState,
 ) {
@@ -569,8 +569,8 @@ private fun MainTasksView(
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun NavigationView(
-    vm: HomeVM,
-    state: HomeVM.State,
+    vm: HomeVm,
+    state: HomeVm.State,
     modifier: Modifier,
 ) {
 

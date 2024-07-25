@@ -9,7 +9,7 @@ import me.timeto.shared.models.TaskUi
 import me.timeto.shared.vm.ui.DayIntervalsUI
 import me.timeto.shared.vm.ui.TimerDataUI
 
-class HomeVM : __VM<HomeVM.State>() {
+class HomeVm : __VM<HomeVm.State>() {
 
     data class State(
         val interval: IntervalDb,
