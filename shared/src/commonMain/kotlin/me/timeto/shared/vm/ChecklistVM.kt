@@ -18,7 +18,7 @@ class ChecklistVM(
 
     override val state = MutableStateFlow(
         State(
-            checklistUI = ChecklistUI.build(checklistDb, DI.checklistItems),
+            checklistUI = ChecklistUI.build(checklistDb, checklistDb.getItemsCached()),
         )
     )
 
