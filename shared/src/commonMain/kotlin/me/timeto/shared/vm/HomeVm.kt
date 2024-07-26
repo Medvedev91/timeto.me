@@ -78,23 +78,25 @@ class HomeVm : __VM<HomeVm.State>() {
         val menuTime: String = UnixTime().getStringByComponents(UnixTime.StringComponent.hhmm24)
         val menuTasksNote = "${DI.tasks.count { it.isToday }}"
 
-        val mainTasks: List<MainTask> = if (KvDb.todayOnHomeScreenCached())
-            todayTasksUi.map { MainTask(it) }
-        else
-            todayTasksUi
-                .mapNotNull { taskUi ->
-                    val taskTf = taskUi.taskTf
-                    if (taskTf.paused != null)
-                        return@mapNotNull MainTask(taskUi)
-                    if (taskTf.timeData?.type?.isEvent() == true)
-                        return@mapNotNull MainTask(taskUi)
-                    if (taskTf.isImportant)
-                        return@mapNotNull MainTask(taskUi)
-                    null
-                }
-                .sortedBy {
-                    it.taskUi.taskTf.timeData?.unixTime?.time ?: Int.MAX_VALUE
-                }
+        val mainTasks: List<MainTask> = (
+                if (KvDb.todayOnHomeScreenCached())
+                    todayTasksUi.map { MainTask(it) }
+                else
+                    todayTasksUi
+                        .mapNotNull { taskUi ->
+                            val taskTf = taskUi.taskTf
+                            if (taskTf.paused != null)
+                                return@mapNotNull MainTask(taskUi)
+                            if (taskTf.timeData?.type?.isEvent() == true)
+                                return@mapNotNull MainTask(taskUi)
+                            if (taskTf.isImportant)
+                                return@mapNotNull MainTask(taskUi)
+                            null
+                        }
+                                        )
+            .sortedBy {
+                it.taskUi.taskTf.timeData?.unixTime?.time ?: Int.MIN_VALUE
+            }
 
         val listsSizes: ListsSizes = run {
             val lc = listsContainerSize ?: return@run ListsSizes(0f, 0f)
