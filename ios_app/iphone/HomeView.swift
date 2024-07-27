@@ -12,8 +12,6 @@ private let mtgCircleHeight = 24.0
 private let mtgCircleFontSize = 15.0
 private let mtgCircleFontWeight: Font.Weight = .semibold
 
-private let mainTasksContentTopPadding = 4.0
-
 private let menuTimeFont = buildTimerFont(size: 10)
 
 private let timerFont1 = buildTimerFont(size: 44)
@@ -478,10 +476,6 @@ private struct MainTasksView: View {
                     VStack {
 
                         Spacer()
-
-                        ZStack {
-                        }
-                        .frame(height: mainTasksContentTopPadding)
 
                         ForEach(tasks.reversed(), id: \.self.taskUi.taskDb.id) { mainTask in
                             MainTaskItemView(mainTask: mainTask)
