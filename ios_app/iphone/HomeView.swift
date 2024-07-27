@@ -254,32 +254,38 @@ struct HomeView: View {
 
                         let isMainTasksExists = !state.mainTasks.isEmpty
 
-                        if let checklistDb = checklistDb {
-                            VStack {
-                                ChecklistView(
-                                    checklistDb: checklistDb,
-                                    onDelete: {},
-                                    bottomPadding: 0
-                                )
-                                MainDivider()
+                        VStack {
+
+                            if let checklistDb = checklistDb {
+                                VStack {
+                                    ChecklistView(
+                                        checklistDb: checklistDb,
+                                        onDelete: {},
+                                        bottomPadding: 0
+                                    )
+                                }
+                                .frame(height: CGFloat(state.listsSizes.checklist))
+                                .id("home_checklist_id_\(checklistDb.id)") // Force update on change
                             }
-                            .id("home_checklist_id_\(checklistDb.id)") // Force update on change
-                        }
 
-                        if isMainTasksExists {
-                            let listHeight: CGFloat =
-                                checklistDb == nil ? .infinity :
-                                    mainTasksContentTopPadding +
-                                    (HomeView__MTG_ITEM_HEIGHT * state.mainTasks.count.toDouble().limitMax(5.45))
-                            MainTasksView(
-                                tasks: state.mainTasks
-                            )
-                                .frame(height: listHeight)
-                        }
+                            if isMainTasksExists {
+                                MainTasksView(
+                                    tasks: state.mainTasks
+                                )
+                                    .frame(height: CGFloat(state.listsSizes.mainTasks))
+                            }
 
-                        if !isMainTasksExists && checklistDb == nil {
                             Spacer()
                         }
+                        .background(GeometryReader { geometry -> Color in
+                            myAsyncAfter(0.01) {
+                                vm.upListsContainerSize(
+                                    totalHeight: Float(geometry.size.height),
+                                    itemHeight: Float(HomeView__MTG_ITEM_HEIGHT)
+                                )
+                            }
+                            return Color.clear
+                        })
 
                         ForEachIndexed(
                             state.goalsUI,
@@ -567,16 +573,6 @@ private struct MainTaskItemView: View {
                 .padding(.horizontal, H_PADDING)
             }
         )
-    }
-}
-
-private struct MainDivider: View {
-
-    var isVisible = true
-
-    var body: some View {
-        DividerBg(isVisible: isVisible)
-            .padding(.horizontal, H_PADDING)
     }
 }
 
