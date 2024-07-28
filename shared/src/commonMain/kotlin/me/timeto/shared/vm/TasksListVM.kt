@@ -7,6 +7,8 @@ import me.timeto.shared.db.EventDb
 import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.db.TaskDb
+import me.timeto.shared.models.TaskUi
+import me.timeto.shared.models.sortedUi
 import me.timeto.shared.vm.ui.sortedByFolder
 
 // todo live tmrw data?
@@ -190,7 +192,7 @@ private fun prepTmrwData(
     allEvents: List<EventDb>,
 ): TasksListVM.TmrwData {
 
-    val rawTasks = mutableListOf<TaskDb>()
+    val tasksDb = mutableListOf<TaskDb>()
     val unixTmrwDS = UnixTime(utcOffset = localUtcOffsetWithDayStart).inDays(1)
     val tmrwDSDay = unixTmrwDS.localDay
     var lastFakeTaskId = unixTmrwDS.localDayStartTime()
@@ -199,7 +201,7 @@ private fun prepTmrwData(
     allRepeatings
         .filter { it.getNextDay() == tmrwDSDay }
         .forEach { repeating ->
-            rawTasks.add(
+            tasksDb.add(
                 TaskDb(
                     id = ++lastFakeTaskId,
                     text = repeating.prepTextForTask(tmrwDSDay),
@@ -212,7 +214,7 @@ private fun prepTmrwData(
     allEvents
         .filter { it.getLocalTime().localDay == tmrwDSDay }
         .forEach { event ->
-            rawTasks.add(
+            tasksDb.add(
                 TaskDb(
                     id = ++lastFakeTaskId,
                     text = event.prepTextForTask(),
@@ -221,9 +223,10 @@ private fun prepTmrwData(
             )
         }
 
-    val resTasks = rawTasks
-        .sortedByFolder(DI.getTodayFolder())
-        .map { TasksListVM.TmrwTaskUI(it) }
+    val resTasks = tasksDb
+        .map { TaskUi(it) }
+        .sortedUi(isToday = true)
+        .map { TasksListVM.TmrwTaskUI(it.taskDb) }
 
     val curTimeString = unixTmrwDS.getStringByComponents(
         UnixTime.StringComponent.dayOfMonth,
