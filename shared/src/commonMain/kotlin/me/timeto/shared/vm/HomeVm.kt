@@ -123,7 +123,7 @@ class HomeVm : __VM<HomeVm.State>() {
                     mainTasks = tasksFullHeight,
                 )
             // Tasks bigger the half
-            val checklistCount: Int = checklistDb.getItemsCached().size
+            val checklistCount: Int = checklistDb.getItemsCached().size.limitMin(2)
             val checklistFullHeight: Float = checklistCount * lc.itemHeight
             if (checklistFullHeight < halfHeight)
                 return@run ListsSizes(
