@@ -391,9 +391,9 @@ fun TasksListView(
                                         .weight(1f),
                                 )
 
-                                TriggersListIconsView(vmTaskUi.taskUi.taskTf.triggers, 14.sp)
+                                TriggersListIconsView(vmTaskUi.taskUi.tf.triggers, 14.sp)
 
-                                if (vmTaskUi.taskUi.taskTf.isImportant) {
+                                if (vmTaskUi.taskUi.tf.isImportant) {
                                     Icon(
                                         painterResource(R.drawable.sf_flag_fill_medium_regular),
                                         contentDescription = "Important",

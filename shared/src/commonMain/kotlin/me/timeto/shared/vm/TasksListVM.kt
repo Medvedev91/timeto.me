@@ -116,8 +116,8 @@ class TasksListVM(
         val taskUi: TaskUi,
     ) {
 
-        val text = taskUi.taskTf.textUi(withPausedEmoji = true)
-        val timeUI: TimeUI? = taskUi.taskTf.timeData?.let { timeData ->
+        val text = taskUi.tf.textUi(withPausedEmoji = true)
+        val timeUI: TimeUI? = taskUi.tf.timeData?.let { timeData ->
             val unixTime = timeData.unixTime
             val isHighlight = timeData.type.isEvent() || timeData._textFeatures.isImportant
 

@@ -85,7 +85,7 @@ class HomeVm : __VM<HomeVm.State>() {
                     todayTasksUi
                 else
                     todayTasksUi.filter { taskUi ->
-                        val taskTf = taskUi.taskTf
+                        val taskTf = taskUi.tf
                         // Condition
                         (taskTf.paused != null) ||
                         (taskTf.timeData?.type?.isEvent() == true) ||
@@ -311,9 +311,9 @@ class HomeVm : __VM<HomeVm.State>() {
         val taskUi: TaskUi,
     ) {
 
-        val text = taskUi.taskTf.textUi()
+        val text = taskUi.tf.textUi()
         val timerContext = ActivityTimerSheetVM.TimerContext.Task(taskUi.taskDb)
-        val timeUI: TimeUI? = taskUi.taskTf.timeData?.let { timeData ->
+        val timeUI: TimeUI? = taskUi.tf.timeData?.let { timeData ->
             val bgColor = when (timeData.status) {
                 TextFeatures.TimeData.STATUS.IN -> ColorRgba.homeFg
                 TextFeatures.TimeData.STATUS.SOON -> ColorRgba.blue

@@ -8,7 +8,7 @@ data class TaskUi(
     val taskDb: TaskDb,
 ) {
 
-    val taskTf: TextFeatures = taskDb.text.textFeatures()
+    val tf: TextFeatures = taskDb.text.textFeatures()
 }
 
 fun List<TaskUi>.sortedUi(
@@ -17,7 +17,7 @@ fun List<TaskUi>.sortedUi(
 
     if (isToday)
         return sortedBy {
-            it.taskTf.timeData?.unixTime?.time ?: Int.MIN_VALUE
+            it.tf.timeData?.unixTime?.time ?: Int.MIN_VALUE
         }
 
     return sortedByDescending {

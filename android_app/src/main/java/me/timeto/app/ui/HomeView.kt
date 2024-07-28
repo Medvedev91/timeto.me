@@ -506,7 +506,7 @@ private fun MainTasksView(
                 if (timeUI != null) {
                     HStack(
                         modifier = Modifier
-                            .padding(end = if (mainTask.taskUi.taskTf.paused != null) 9.dp else 8.dp)
+                            .padding(end = if (mainTask.taskUi.tf.paused != null) 9.dp else 8.dp)
                             .height(mtgCircleHeight)
                             .clip(roundedShape)
                             .background(timeUI.textBgColor.toColor())
@@ -525,7 +525,7 @@ private fun MainTasksView(
                     }
                 }
 
-                if (mainTask.taskUi.taskTf.paused != null) {
+                if (mainTask.taskUi.tf.paused != null) {
                     ZStack(
                         modifier = Modifier
                             .padding(end = 8.dp)
