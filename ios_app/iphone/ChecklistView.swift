@@ -11,6 +11,7 @@ struct ChecklistView: View {
     @State private var vm: ChecklistVM
 
     private let onDelete: () -> Void
+    private let maxLines: Int
     private let bottomPadding: CGFloat
 
     //
@@ -20,11 +21,13 @@ struct ChecklistView: View {
     init(
         checklistDb: ChecklistDb,
         onDelete: @escaping () -> Void,
+        maxLines: Int,
         bottomPadding: CGFloat = 0
     ) {
         self._vm = State(initialValue: ChecklistVM(checklistDb: checklistDb))
         self.onDelete = onDelete
         self.bottomPadding = bottomPadding
+        self.maxLines = maxLines
     }
 
     var body: some View {
@@ -57,6 +60,7 @@ struct ChecklistView: View {
                                                 .padding(.vertical, 4)
                                                 .foregroundColor(.white)
                                                 .font(.system(size: HomeView__PRIMARY_FONT_SIZE))
+                                                .lineLimit(maxLines)
                                         }
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .frame(minHeight: checklistItemMinHeight)

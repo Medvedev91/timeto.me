@@ -259,6 +259,7 @@ struct HomeView: View {
                                     ChecklistView(
                                         checklistDb: checklistDb,
                                         onDelete: {},
+                                        maxLines: 1,
                                         bottomPadding: 0
                                     )
                                 }

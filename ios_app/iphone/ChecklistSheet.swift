@@ -31,6 +31,7 @@ struct ChecklistSheet: View {
                     onDelete: {
                         isPresented = false
                     },
+                    maxLines: 9,
                     bottomPadding: 0
                 )
             }
