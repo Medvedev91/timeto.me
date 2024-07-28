@@ -52,18 +52,18 @@ struct TasksListView: View {
                                 DividerBg()
                                     .padding(.horizontal, 80)
                                     .padding(.top, 20)
-                                    .padding(.bottom, state.tasksUI.isEmpty ? 0 : 20)
+                                    .padding(.bottom, state.vmTasksUi.isEmpty ? 0 : 20)
                             }
 
-                            let tasksUIReversed = state.tasksUI.reversed()
+                            let tasksUIReversed = state.vmTasksUi.reversed()
                             VStack {
-                                ForEach(tasksUIReversed, id: \.task.id) { taskUI in
+                                ForEach(tasksUIReversed, id: \.taskUi.taskDb.id) { vmTaskUi in
                                     TasksView__TaskRowView(
-                                        taskUI: taskUI,
+                                        vmTaskUi: vmTaskUi,
                                         tasksListView: self,
-                                        withDivider: tasksUIReversed.last != taskUI
+                                        withDivider: tasksUIReversed.last != vmTaskUi
                                     )
-                                        .id(taskUI.task.id)
+                                        .id(vmTaskUi.taskUi.taskDb.id)
                                 }
                             }
 
@@ -199,7 +199,7 @@ struct TasksView__TaskRowView: View {
     @EnvironmentObject private var fs: Fs
     @EnvironmentObject private var nativeSheet: NativeSheet
 
-    private let taskUI: TasksListVM.TaskUI
+    private let vmTaskUi: TasksListVM.VmTaskUi
 
     let tasksListView: TasksListView
     @State private var dragItem: DragItem
@@ -213,8 +213,8 @@ struct TasksView__TaskRowView: View {
 
     private let withDivider: Bool
 
-    init(taskUI: TasksListVM.TaskUI, tasksListView: TasksListView, withDivider: Bool) {
-        self.taskUI = taskUI
+    init(vmTaskUi: TasksListVM.VmTaskUi, tasksListView: TasksListView, withDivider: Bool) {
+        self.vmTaskUi = vmTaskUi
         self.tasksListView = tasksListView
         self.withDivider = withDivider
 
@@ -224,7 +224,7 @@ struct TasksView__TaskRowView: View {
                     return true
                 }
                 if let dropFolder = drop as? DropItem__Folder {
-                    return dropFolder.folder.id != taskUI.task.folder_id
+                    return dropFolder.folder.id != vmTaskUi.taskUi.taskDb.folder_id
                 }
                 fatalError("Unknown tasks list drop type")
             }
@@ -275,7 +275,7 @@ struct TasksView__TaskRowView: View {
 
                 HStack {
 
-                    Text(taskUI.text)
+                    Text(vmTaskUi.text)
                         .padding(.leading, 12)
                         .padding(.trailing, 4)
                         .foregroundColor(.white)
@@ -292,7 +292,7 @@ struct TasksView__TaskRowView: View {
 
                     Button(
                         action: {
-                            taskUI.delete()
+                            vmTaskUi.delete()
                         },
                         label: {
                             Text("Delete")
@@ -320,11 +320,11 @@ struct TasksView__TaskRowView: View {
                 Button(
                     action: {
                         hideKeyboard()
-                        taskUI.task.startIntervalForUI(
+                        vmTaskUi.taskUi.taskDb.startIntervalForUI(
                             onStarted: {},
                             activitiesSheet: {
                                 nativeSheet.showActivitiesTimerSheet(
-                                    timerContext: taskUI.timerContext,
+                                    timerContext: vmTaskUi.timerContext,
                                     withMenu: false,
                                     onStart: {}
                                 )
@@ -332,7 +332,7 @@ struct TasksView__TaskRowView: View {
                             timerSheet: { activity in
                                 nativeSheet.showActivityTimerSheet(
                                     activity: activity,
-                                    timerContext: taskUI.timerContext,
+                                    timerContext: vmTaskUi.timerContext,
                                     hideOnStart: true,
                                     onStart: {}
                                 )
@@ -343,7 +343,7 @@ struct TasksView__TaskRowView: View {
 
                         VStack {
 
-                            if let timeUI = taskUI.timeUI as? TasksListVM.TaskUITimeUIHighlightUI {
+                            if let timeUI = vmTaskUi.timeUI as? TasksListVM.VmTaskUiTimeUIHighlightUI {
 
                                 HStack {
 
@@ -389,7 +389,7 @@ struct TasksView__TaskRowView: View {
                                 .padding(.bottom, 6)
                                 .padding(.leading, H_PADDING - 1)
 
-                            } else if let timeUI = taskUI.timeUI as? TasksListVM.TaskUITimeUIRegularUI {
+                            } else if let timeUI = vmTaskUi.timeUI as? TasksListVM.VmTaskUiTimeUIRegularUI {
                                 HStack {
                                     Text(timeUI.text)
                                         .padding(.leading, H_PADDING)
@@ -404,16 +404,16 @@ struct TasksView__TaskRowView: View {
 
                             HStack {
 
-                                Text(taskUI.text)
+                                Text(vmTaskUi.text)
                                     .lineSpacing(4)
                                     .multilineTextAlignment(.leading)
                                     .myMultilineText()
 
                                 Spacer()
 
-                                TriggersListIconsView(triggers: taskUI.textFeatures.triggers, fontSize: 15)
+                                TriggersListIconsView(triggers: vmTaskUi.taskUi.tf.triggers, fontSize: 15)
 
-                                if (taskUI.textFeatures.isImportant) {
+                                if (vmTaskUi.taskUi.tf.isImportant) {
                                     Image(systemName: "flag.fill")
                                         .font(.system(size: 18))
                                         .foregroundColor(c.red)
@@ -445,12 +445,12 @@ struct TasksView__TaskRowView: View {
                     .padding(.leading, H_PADDING)
             }
         }
-        .id("\(taskUI.task.id) \(taskUI.task.text)") /// #TruncationDynamic
+        .id("\(vmTaskUi.taskUi.taskDb.id) \(vmTaskUi.taskUi.taskDb.text)") /// #TruncationDynamic
         .sheetEnv(
             isPresented: $isEditTaskPresented,
             content: {
                 TaskFormSheet(
-                    task: taskUI.task,
+                    task: vmTaskUi.taskUi.taskDb,
                     isPresented: $isEditTaskPresented
                 )
             }
@@ -472,13 +472,13 @@ struct TasksView__TaskRowView: View {
                 if drop is DropItem__Calendar {
                     fs.EventFormSheet__show(
                         editedEvent: nil,
-                        defText: taskUI.task.text,
+                        defText: vmTaskUi.taskUi.taskDb.text,
                         defTime: nil
                     ) {
-                        taskUI.delete()
+                        vmTaskUi.delete()
                     }
                 } else if let dropFolder = drop as? DropItem__Folder {
-                    taskUI.upFolder(newFolder: dropFolder.folder)
+                    vmTaskUi.upFolder(newFolder: dropFolder.folder)
                 }
             } else if value.translation.width < -80 {
                 xSwipeOffset = (width ?? 999) * -1
