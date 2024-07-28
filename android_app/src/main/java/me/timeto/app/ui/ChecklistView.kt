@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import me.timeto.app.*
@@ -32,6 +33,7 @@ fun ChecklistView(
     modifier: Modifier,
     scrollState: LazyListState,
     onDelete: () -> Unit,
+    maxLines: Int,
     bottomPadding: Dp = 0.dp,
 ) {
 
@@ -100,6 +102,8 @@ fun ChecklistView(
                                     .padding(start = 12.dp),
                                 fontSize = HomeView__PRIMARY_FONT_SIZE,
                                 textAlign = TextAlign.Start,
+                                maxLines = maxLines,
+                                overflow = TextOverflow.Ellipsis,
                             )
                         }
                     }

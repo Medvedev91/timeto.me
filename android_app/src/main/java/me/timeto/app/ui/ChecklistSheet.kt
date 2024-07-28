@@ -54,6 +54,7 @@ fun ChecklistSheet(
                 .weight(1f),
             scrollState = scrollState,
             onDelete = { layer.close() },
+            maxLines = 9,
             bottomPadding = 32.dp,
         )
 

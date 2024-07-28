@@ -323,6 +323,7 @@ fun HomeView() {
                                 .height(listSizes.checklist.dp),
                             scrollState = checklistScrollState,
                             onDelete = {},
+                            maxLines = 1,
                         )
                     }
 
