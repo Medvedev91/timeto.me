@@ -6,6 +6,7 @@ import kotlinx.coroutines.launch
 import me.timeto.shared.*
 import me.timeto.shared.db.*
 import me.timeto.shared.models.TaskUi
+import me.timeto.shared.models.sortedUi
 import me.timeto.shared.vm.ui.DayIntervalsUI
 import me.timeto.shared.vm.ui.TimerDataUI
 
@@ -78,25 +79,20 @@ class HomeVm : __VM<HomeVm.State>() {
         val menuTime: String = UnixTime().getStringByComponents(UnixTime.StringComponent.hhmm24)
         val menuTasksNote = "${DI.tasks.count { it.isToday }}"
 
-        val mainTasks: List<MainTask> = (
+        val mainTasks: List<MainTask> = run {
+            val tasksUi: List<TaskUi> =
                 if (KvDb.todayOnHomeScreenCached())
-                    todayTasksUi.map { MainTask(it) }
-                else
                     todayTasksUi
-                        .mapNotNull { taskUi ->
-                            val taskTf = taskUi.taskTf
-                            if (taskTf.paused != null)
-                                return@mapNotNull MainTask(taskUi)
-                            if (taskTf.timeData?.type?.isEvent() == true)
-                                return@mapNotNull MainTask(taskUi)
-                            if (taskTf.isImportant)
-                                return@mapNotNull MainTask(taskUi)
-                            null
-                        }
-                                        )
-            .sortedBy {
-                it.taskUi.taskTf.timeData?.unixTime?.time ?: Int.MIN_VALUE
-            }
+                else
+                    todayTasksUi.filter { taskUi ->
+                        val taskTf = taskUi.taskTf
+                        // Condition
+                        (taskTf.paused != null) ||
+                        (taskTf.timeData?.type?.isEvent() == true) ||
+                        taskTf.isImportant
+                    }
+            tasksUi.sortedUi(true).map { MainTask(it) }
+        }
 
         val listsSizes: ListsSizes = run {
             val lc = listsContainerSize ?: return@run ListsSizes(0f, 0f)
