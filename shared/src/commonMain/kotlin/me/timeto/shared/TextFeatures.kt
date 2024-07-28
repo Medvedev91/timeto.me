@@ -19,7 +19,7 @@ data class TextFeatures(
     val isImportant: Boolean,
 ) {
 
-    val timeData: TimeData? = when {
+    fun calcTimeData(): TimeData? = when {
         fromRepeating?.time != null -> TimeData(UnixTime(fromRepeating.time), TimeData.TYPE.REPEATING, this)
         fromEvent != null -> TimeData(fromEvent.unixTime, TimeData.TYPE.EVENT, this)
         else -> null

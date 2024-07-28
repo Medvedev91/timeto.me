@@ -17,7 +17,7 @@ fun List<TaskUi>.sortedUi(
 
     if (isToday)
         return sortedBy {
-            it.tf.timeData?.unixTime?.time ?: Int.MIN_VALUE
+            it.tf.calcTimeData()?.unixTime?.time ?: Int.MIN_VALUE
         }
 
     return sortedByDescending {

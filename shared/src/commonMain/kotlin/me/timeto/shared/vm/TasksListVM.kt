@@ -87,7 +87,7 @@ class TasksListVM(
         val textFeatures = task.text.textFeatures()
         val text = textFeatures.textUi()
 
-        val timeUI = textFeatures.timeData?.let { timeData ->
+        val timeUI = textFeatures.calcTimeData()?.let { timeData ->
             val text = timeData.unixTime.getStringByComponents(
                 UnixTime.StringComponent.dayOfMonth,
                 UnixTime.StringComponent.space,
@@ -117,7 +117,7 @@ class TasksListVM(
     ) {
 
         val text = taskUi.tf.textUi(withPausedEmoji = true)
-        val timeUI: TimeUI? = taskUi.tf.timeData?.let { timeData ->
+        val timeUI: TimeUI? = taskUi.tf.calcTimeData()?.let { timeData ->
             val unixTime = timeData.unixTime
             val isHighlight = timeData.type.isEvent() || timeData._textFeatures.isImportant
 

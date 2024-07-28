@@ -89,7 +89,7 @@ class HomeVm : __VM<HomeVm.State>() {
                         // Condition
                         (taskTf.paused != null) ||
                         taskTf.isImportant ||
-                        (taskTf.timeData?.type?.isEvent() == true)
+                        (taskTf.calcTimeData()?.type?.isEvent() == true)
                     }
             tasksUi.sortedUi(true).map { MainTask(it) }
         }
@@ -313,7 +313,7 @@ class HomeVm : __VM<HomeVm.State>() {
 
         val text = taskUi.tf.textUi()
         val timerContext = ActivityTimerSheetVM.TimerContext.Task(taskUi.taskDb)
-        val timeUI: TimeUI? = taskUi.tf.timeData?.let { timeData ->
+        val timeUI: TimeUI? = taskUi.tf.calcTimeData()?.let { timeData ->
             val bgColor = when (timeData.status) {
                 TextFeatures.TimeData.STATUS.IN -> ColorRgba.homeFg
                 TextFeatures.TimeData.STATUS.SOON -> ColorRgba.blue

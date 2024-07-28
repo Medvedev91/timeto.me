@@ -19,7 +19,7 @@ class WatchTabTasksVM : __VM<WatchTabTasksVM.State>() {
         val textFeatures = task.text.textFeatures()
         val listText = textFeatures.textUi()
 
-        val timeUI: TimeUI? = textFeatures.timeData?.let { timeData ->
+        val timeUI: TimeUI? = textFeatures.calcTimeData()?.let { timeData ->
             val unixTime = timeData.unixTime
             val timeLeftText = timeData.timeLeftText()
             val daytimeText = daytimeToString(unixTime.time - unixTime.localDayStartTime())
