@@ -88,8 +88,8 @@ class HomeVm : __VM<HomeVm.State>() {
                         val taskTf = taskUi.tf
                         // Condition
                         (taskTf.paused != null) ||
-                        (taskTf.timeData?.type?.isEvent() == true) ||
-                        taskTf.isImportant
+                        taskTf.isImportant ||
+                        (taskTf.timeData?.type?.isEvent() == true)
                     }
             tasksUi.sortedUi(true).map { MainTask(it) }
         }
