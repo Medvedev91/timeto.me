@@ -9,7 +9,6 @@ import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.models.TaskUi
 import me.timeto.shared.models.sortedUi
-import me.timeto.shared.vm.ui.sortedByFolder
 
 // todo live tmrw data?
 class TasksListVM(
@@ -17,14 +16,14 @@ class TasksListVM(
 ) : __VM<TasksListVM.State>() {
 
     data class State(
-        val tasksUI: List<TaskUI>,
+        val vmTasksUi: List<VmTaskUi>,
         val tmrwData: TmrwData?,
         val addFormInputTextValue: String,
     )
 
     override val state = MutableStateFlow(
         State(
-            tasksUI = DI.tasks.toUiList(),
+            vmTasksUi = DI.tasks.toUiList(),
             tmrwData = if (folder.isTmrw)
                 prepTmrwData(
                     allRepeatings = DI.repeatings,
@@ -38,13 +37,13 @@ class TasksListVM(
         val scope = scopeVM()
         TaskDb.getAscFlow()
             .onEachExIn(scope) { list ->
-                state.update { it.copy(tasksUI = list.toUiList()) }
+                state.update { it.copy(vmTasksUi = list.toUiList()) }
             }
         // To update daytime badges
         scope.launch {
             while (true) {
                 delayToNextMinute()
-                state.update { it.copy(tasksUI = TaskDb.getAsc().toUiList()) }
+                state.update { it.copy(vmTasksUi = TaskDb.getAsc().toUiList()) }
             }
         }
     }
@@ -69,8 +68,9 @@ class TasksListVM(
 
     private fun List<TaskDb>.toUiList() = this
         .filter { it.folder_id == folder.id }
-        .sortedByFolder(folder)
-        .map { TaskUI(it) }
+        .map { TaskUi(it) }
+        .sortedUi(isToday = folder.isToday)
+        .map { VmTaskUi(it) }
 
     ///
     ///
@@ -112,13 +112,12 @@ class TasksListVM(
 
     ///
 
-    class TaskUI(
-        val task: TaskDb,
+    class VmTaskUi(
+        val taskUi: TaskUi,
     ) {
 
-        val textFeatures = task.text.textFeatures()
-        val text = textFeatures.textUi(withPausedEmoji = true)
-        val timeUI: TimeUI? = textFeatures.timeData?.let { timeData ->
+        val text = taskUi.taskTf.textUi(withPausedEmoji = true)
+        val timeUI: TimeUI? = taskUi.taskTf.timeData?.let { timeData ->
             val unixTime = timeData.unixTime
             val isHighlight = timeData.type.isEvent() || timeData._textFeatures.isImportant
 
@@ -148,11 +147,11 @@ class TasksListVM(
                 textColor = textColor,
             )
         }
-        val timerContext = ActivityTimerSheetVM.TimerContext.Task(task)
+        val timerContext = ActivityTimerSheetVM.TimerContext.Task(taskUi.taskDb)
 
         fun upFolder(newFolder: TaskFolderDb) {
             launchExDefault {
-                task.upFolder(newFolder, replaceIfTmrw = true)
+                taskUi.taskDb.upFolder(newFolder, replaceIfTmrw = true)
             }
         }
 
@@ -161,7 +160,7 @@ class TasksListVM(
         // - By starting from activity sheet;
         fun delete() {
             launchExDefault {
-                task.delete()
+                taskUi.taskDb.delete()
             }
         }
 

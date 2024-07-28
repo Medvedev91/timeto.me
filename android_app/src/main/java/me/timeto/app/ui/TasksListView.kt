@@ -178,12 +178,12 @@ fun TasksListView(
             }
         }
 
-        val tasksUI = state.tasksUI
+        val vmTasksUi = state.vmTasksUi
         items(
-            tasksUI,
-            key = { taskUI -> taskUI.task.id }
-        ) { taskUI ->
-            val isFirst = taskUI == tasksUI.firstOrNull()
+            vmTasksUi,
+            key = { it.taskUi.taskDb.id }
+        ) { vmTaskUi ->
+            val isFirst = vmTaskUi == vmTasksUi.firstOrNull()
 
             Box(
                 modifier = Modifier
@@ -195,13 +195,13 @@ fun TasksListView(
                 val isEditOrDelete = remember { mutableStateOf<Boolean?>(null) }
                 val stateOffsetAbsDp = remember { mutableStateOf(0.dp) }
 
-                val localDragItem = remember(tasksUI) {
+                val localDragItem = remember(vmTasksUi) {
                     DragItem(
                         mutableStateOf(null),
                         { drop ->
                             when (drop) {
                                 is DropItem.Type__Calendar -> true
-                                is DropItem.Type__Folder -> drop.folder.id != taskUI.task.folder_id
+                                is DropItem.Type__Folder -> drop.folder.id != vmTaskUi.taskUi.taskDb.folder_id
                             }
                         }
                     ) { drop ->
@@ -214,14 +214,14 @@ fun TasksListView(
                                     vibrateShort()
                                     EventFormSheet__show(
                                         editedEvent = null,
-                                        defText = taskUI.task.text,
+                                        defText = vmTaskUi.taskUi.taskDb.text,
                                     ) {
-                                        taskUI.delete()
+                                        vmTaskUi.delete()
                                     }
                                 }
                                 is DropItem.Type__Folder -> {
                                     vibrateLong()
-                                    taskUI.upFolder(drop.folder)
+                                    vmTaskUi.upFolder(drop.folder)
                                 }
                             }
                         }
@@ -250,15 +250,15 @@ fun TasksListView(
                         )
                     },
                     endView = { state ->
-                        SwipeToAction__DeleteView(state, taskUI.task.text) {
+                        SwipeToAction__DeleteView(state, vmTaskUi.taskUi.taskDb.text) {
                             vibrateLong()
-                            taskUI.delete()
+                            vmTaskUi.delete()
                         }
                     },
                     onStart = {
                         Sheet.show { layer ->
                             TaskFormSheet(
-                                task = taskUI.task,
+                                task = vmTaskUi.taskUi.taskDb,
                                 layer = layer,
                             )
                         }
@@ -275,15 +275,15 @@ fun TasksListView(
                         modifier = Modifier
                             .background(c.bg)
                             .clickable {
-                                taskUI.task.startIntervalForUI(
+                                vmTaskUi.taskUi.taskDb.startIntervalForUI(
                                     onStarted = {},
                                     activitiesSheet = {
-                                        ActivitiesTimerSheet__show(taskUI.timerContext, withMenu = false)
+                                        ActivitiesTimerSheet__show(vmTaskUi.timerContext, withMenu = false)
                                     },
                                     timerSheet = { activity ->
                                         ActivityTimerSheet__show(
                                             activity = activity,
-                                            timerContext = taskUI.timerContext,
+                                            timerContext = vmTaskUi.timerContext,
                                         ) {}
                                     },
                                 )
@@ -300,7 +300,7 @@ fun TasksListView(
 
                             val vPadding = 3.dp
 
-                            val timeUI = taskUI.timeUI
+                            val timeUI = vmTaskUi.timeUI
                             if (timeUI != null) {
                                 Row(
                                     modifier = Modifier
@@ -310,7 +310,7 @@ fun TasksListView(
 
                                     when (timeUI) {
 
-                                        is TasksListVM.TaskUI.TimeUI.HighlightUI -> {
+                                        is TasksListVM.VmTaskUi.TimeUI.HighlightUI -> {
                                             Row(
                                                 modifier = Modifier
                                                     .offset(x = (-1).dp)
@@ -367,7 +367,7 @@ fun TasksListView(
                                             )
                                         }
 
-                                        is TasksListVM.TaskUI.TimeUI.RegularUI -> {
+                                        is TasksListVM.VmTaskUi.TimeUI.RegularUI -> {
                                             Text(
                                                 timeUI.text,
                                                 fontSize = 13.sp,
@@ -385,15 +385,15 @@ fun TasksListView(
                             ) {
 
                                 Text(
-                                    taskUI.text,
+                                    vmTaskUi.text,
                                     color = c.text,
                                     modifier = Modifier
                                         .weight(1f),
                                 )
 
-                                TriggersListIconsView(taskUI.textFeatures.triggers, 14.sp)
+                                TriggersListIconsView(vmTaskUi.taskUi.taskTf.triggers, 14.sp)
 
-                                if (taskUI.textFeatures.isImportant) {
+                                if (vmTaskUi.taskUi.taskTf.isImportant) {
                                     Icon(
                                         painterResource(R.drawable.sf_flag_fill_medium_regular),
                                         contentDescription = "Important",
@@ -420,7 +420,7 @@ fun TasksListView(
                 Divider(
                     Modifier
                         .padding(horizontal = 80.dp)
-                        .padding(top = 22.dp, bottom = if (tasksUI.isEmpty()) 0.dp else 18.dp)
+                        .padding(top = 22.dp, bottom = if (vmTasksUi.isEmpty()) 0.dp else 18.dp)
                 )
             }
 
