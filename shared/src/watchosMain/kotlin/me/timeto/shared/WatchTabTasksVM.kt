@@ -6,8 +6,9 @@ import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.db.TaskFolderDb.Companion.sortedFolders
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.TextFeatures.TimeData
+import me.timeto.shared.models.TaskUi
+import me.timeto.shared.models.sortedUi
 import me.timeto.shared.vm.__VM
-import me.timeto.shared.vm.ui.sortedByFolder
 
 class WatchTabTasksVM : __VM<WatchTabTasksVM.State>() {
 
@@ -85,8 +86,9 @@ class WatchTabTasksVM : __VM<WatchTabTasksVM.State>() {
                 title = folder.name,
                 tasks = allTasks
                     .filter { it.folder_id == folder.id }
-                    .sortedByFolder(folder)
-                    .map { TaskUI(it) }
+                    .map { TaskUi(it) }
+                    .sortedUi(isToday = folder.isToday)
+                    .map { TaskUI(it.taskDb) }
             )
         }
         state.update { it.copy(foldersUI = foldersUI) }
