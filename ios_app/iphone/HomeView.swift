@@ -537,10 +537,10 @@ private struct MainTaskItemView: View {
                             .padding(.horizontal, mtgCircleHPadding)
                             .frame(height: mtgCircleHeight)
                             .background(roundedShape.fill(timeUI.textBgColor.toColor()))
-                            .padding(.trailing, mainTask.taskUi.taskTf.paused != nil ? 9 : 8)
+                            .padding(.trailing, mainTask.taskUi.tf.paused != nil ? 9 : 8)
                     }
 
-                    if mainTask.taskUi.taskTf.paused != nil {
+                    if mainTask.taskUi.tf.paused != nil {
                         ZStack {
                             Image(systemName: "pause")
                                 .foregroundColor(c.white)
