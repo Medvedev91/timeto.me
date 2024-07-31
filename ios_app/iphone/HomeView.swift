@@ -252,39 +252,38 @@ struct HomeView: View {
 
                         let isMainTasksExists = !state.mainTasks.isEmpty
 
-                        VStack {
+                        GeometryReader { geometry in
 
-                            if let checklistDb = checklistDb {
-                                VStack {
-                                    ChecklistView(
-                                        checklistDb: checklistDb,
-                                        onDelete: {},
-                                        maxLines: 1,
-                                        bottomPadding: 0
-                                    )
+                            let _ = vm.upListsContainerSize(
+                                totalHeight: Float(geometry.size.height),
+                                itemHeight: Float(HomeView__MTG_ITEM_HEIGHT)
+                            )
+
+                            VStack {
+
+                                if let checklistDb = checklistDb {
+                                    VStack {
+                                        ChecklistView(
+                                            checklistDb: checklistDb,
+                                            onDelete: {},
+                                            maxLines: 1,
+                                            bottomPadding: 0
+                                        )
+                                    }
+                                    .frame(height: CGFloat(state.listsSizes.checklist))
+                                    .id("home_checklist_id_\(checklistDb.id)") // Force update on change
                                 }
-                                .frame(height: CGFloat(state.listsSizes.checklist))
-                                .id("home_checklist_id_\(checklistDb.id)") // Force update on change
-                            }
 
-                            if isMainTasksExists {
-                                MainTasksView(
-                                    tasks: state.mainTasks
-                                )
-                                    .frame(height: CGFloat(state.listsSizes.mainTasks))
-                            }
+                                if isMainTasksExists {
+                                    MainTasksView(
+                                        tasks: state.mainTasks
+                                    )
+                                        .frame(height: CGFloat(state.listsSizes.mainTasks))
+                                }
 
-                            Spacer()
+                                Spacer()
+                            }
                         }
-                        .background(GeometryReader { geometry -> Color in
-                            myAsyncAfter(0.01) {
-                                vm.upListsContainerSize(
-                                    totalHeight: Float(geometry.size.height),
-                                    itemHeight: Float(HomeView__MTG_ITEM_HEIGHT)
-                                )
-                            }
-                            return Color.clear
-                        })
 
                         ForEachIndexed(
                             state.goalsUI,
