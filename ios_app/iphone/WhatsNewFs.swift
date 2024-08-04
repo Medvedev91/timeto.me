@@ -55,6 +55,19 @@ struct WhatsNewFs: View {
 
                                 Spacer()
                             }
+                            
+                            if let text = historyItemUi.text {
+                                
+                                HStack {
+                                    
+                                    Text(text)
+                                        .foregroundColor(c.textSecondary)
+                                        .font(.system(size: 15, weight: .light))
+                                        .padding(.top, 8)
+                                    
+                                    Spacer()
+                                }
+                            }
 
                             HStack {
 
