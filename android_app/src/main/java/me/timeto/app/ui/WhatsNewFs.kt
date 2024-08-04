@@ -87,6 +87,19 @@ fun WhatsNewFs(
                         fontWeight = FontWeight.Bold,
                     )
 
+                    val text = historyItemUi.text
+                    if (text != null) {
+                        Text(
+                            text = text,
+                            modifier = Modifier
+                                .padding(top = 2.dp)
+                                .padding(horizontal = H_PADDING),
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Light,
+                            color = c.textSecondary,
+                        )
+                    }
+
                     val buttonUi = historyItemUi.buttonUi
                     if (buttonUi != null) {
                         Text(
