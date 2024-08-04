@@ -79,7 +79,7 @@ fun WhatsNewFs(
                     }
 
                     Text(
-                        text = historyItemUi.text,
+                        text = historyItemUi.title,
                         modifier = Modifier
                             .padding(top = 2.dp)
                             .padding(horizontal = H_PADDING),

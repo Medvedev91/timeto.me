@@ -45,7 +45,7 @@ class WhatsNewVm : __VM<WhatsNewVm.State>() {
 
     data class HistoryItemUi(
         val unixDay: Int,
-        val text: String,
+        val title: String,
         val buttonUi: ButtonUi? = null,
     ) {
 
