@@ -62,7 +62,7 @@ fun WhatsNewFs(
                     ) {
 
                         Text(
-                            text = historyItemUi.title,
+                            text = historyItemUi.dateText,
                             modifier = Modifier
                                 .weight(1f),
                             color = c.textSecondary,

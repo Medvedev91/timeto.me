@@ -49,13 +49,13 @@ class WhatsNewVm : __VM<WhatsNewVm.State>() {
         val buttonUi: ButtonUi? = null,
     ) {
 
-        val title: String
+        val dateText: String
         val timeAgoText: String
 
         init {
             val unixTime = UnixTime.byLocalDay(unixDay)
             val today = UnixTime().localDay
-            title = unixTime.getStringByComponents(
+            dateText = unixTime.getStringByComponents(
                 UnixTime.StringComponent.dayOfMonth,
                 UnixTime.StringComponent.space,
                 UnixTime.StringComponent.month3,

@@ -35,7 +35,7 @@ struct WhatsNewFs: View {
 
                             HStack {
 
-                                Text(historyItemUi.title)
+                                Text(historyItemUi.dateText)
                                     .foregroundColor(c.textSecondary)
                                     .font(.system(size: 15, weight: .light))
 
