@@ -83,7 +83,6 @@ class SquircleShape(
 class SquircleShapeDp(
     private val lenDp: Dp,
     private val attackRatio: Float = 6f,
-    // top left, top right, bottom right, bottom left
     private val angles: List<Boolean> = listOf(true, true, true, true),
 ) : Shape {
 
@@ -113,7 +112,8 @@ private fun buildOutline(
     size: Size,
     totalLen: Float,
     attackLen: Float,
-    angles: List<Boolean> = listOf(true, true, true, true), // top left, top right, ...
+    // top left, top right, bottom right, bottom left.
+    angles: List<Boolean> = listOf(true, true, true, true),
 ): Outline {
 
     val w: Float = size.width
