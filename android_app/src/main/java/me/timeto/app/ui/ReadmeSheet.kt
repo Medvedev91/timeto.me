@@ -22,7 +22,7 @@ import me.timeto.shared.vm.ReadmeSheetVM.DefaultItem
 
 private val imagesHBetween = 4.dp
 private val imagesHBlock = H_PADDING - imagesHBetween
-private val imagesShape = SquircleShape(len = 50f)
+private val imagesShape = SquircleShapeDp(10.dp)
 
 private val pTextLineHeight = 23.sp
 
@@ -254,7 +254,7 @@ private fun ReadmeSheet(
 
 ///
 
-private val tabBarItemViewShape = SquircleShape(len = 55f)
+private val tabBarItemViewShape = SquircleShapeDp(10.dp)
 
 @Composable
 private fun TabBarItemView(
@@ -358,7 +358,7 @@ private fun PTextHighlightView(
 }
 
 private val imageBorderColor = c.dividerBg
-private val imageSliderShape = SquircleShape(len = 90f, angleParam = 10f)
+private val imageSliderShape = SquircleShapeDp(24.dp)
 
 @Composable
 private fun ImagePreviewsView(
