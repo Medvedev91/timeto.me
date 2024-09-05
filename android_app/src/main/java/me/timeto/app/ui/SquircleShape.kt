@@ -7,10 +7,13 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 
-// Based on https://github.com/mizoguche/ui-bezier-curved-image-compose/blob/master/app/src/main/java/dev/mizoguche/beziercurvedimageview/MainActivity.kt
+/**
+ * cubicTo() adds a cubic bezier segment that curves from the current point
+ * to the given point (x3, y3), using the control points (x1, y1) and (x2, y2).
+ */
 class SquircleShape(
-    private val len: Float = 60f, // Длинна закругления
-    private val angleParam: Float = -2f, // Острота загругления,
+    private val len: Float = 60f,
+    private val angleParam: Float = -2f,
     private val angles: List<Boolean> = listOf(true, true, true, true), // top left, top right, ...
 ) : Shape {
 
