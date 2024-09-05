@@ -24,8 +24,6 @@ import me.timeto.app.R
 import me.timeto.shared.UnixTime
 import me.timeto.shared.vm.SummarySheetVM
 
-private val periodHintShape = SquircleShape(len = 50f)
-
 private val barsHeaderHeight = 35.dp
 private val hPadding = 8.dp
 
@@ -256,11 +254,11 @@ fun SummarySheet(
                         Text(
                             period.title,
                             modifier = Modifier
-                                .clip(periodHintShape)
+                                .clip(squircleShape)
                                 .clickable {
                                     vm.setPeriod(period.pickerTimeStart, period.pickerTimeFinish)
                                 }
-                                .padding(start = 8.dp, end = 8.dp, top = 6.dp, bottom = 7.dp),
+                                .padding(horizontal = 8.dp, vertical = 6.dp),
                             textAlign = TextAlign.Center,
                             fontSize = 12.sp,
                             lineHeight = 14.sp,
