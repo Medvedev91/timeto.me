@@ -30,8 +30,8 @@ import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.launchEx
 import me.timeto.shared.vm.TasksListVM
 
-private val inputShape = SquircleShape(len = 70f)
-private val highlightTimeShape = SquircleShape(len = 30f)
+private val inputShape = SquircleShapeDp(16.dp)
+private val highlightTimeShape = SquircleShapeDp(8.dp)
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalLayoutApi::class)
 @Composable
