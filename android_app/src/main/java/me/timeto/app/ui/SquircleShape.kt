@@ -82,7 +82,7 @@ class SquircleShape(
 
 class SquircleShapeDp(
     private val lenDp: Dp,
-    private val attackRatio: Float = 6f,
+    private val attackRatio: Float = 4f,
     private val angles: List<Boolean> = listOf(true, true, true, true),
 ) : Shape {
 
