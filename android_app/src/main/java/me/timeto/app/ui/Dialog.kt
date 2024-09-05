@@ -32,7 +32,7 @@ import me.timeto.shared.toHms
 import java.text.SimpleDateFormat
 import java.util.*
 
-private val dialogShape = SquircleShapeDp(16.dp)
+private val dialogShape = SquircleShape(16.dp)
 
 object Dialog {
 

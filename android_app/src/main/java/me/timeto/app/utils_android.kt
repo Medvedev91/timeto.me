@@ -20,7 +20,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import me.timeto.app.ui.SquircleShapeDp
+import me.timeto.app.ui.SquircleShape
 import me.timeto.shared.*
 import me.timeto.shared.vm.__VM
 import java.util.*
@@ -45,7 +45,7 @@ fun Dp.limitMax(dp: Dp) = if (this > dp) dp else this
 fun Dp.goldenRatioUp() = this * GOLDEN_RATIO
 fun Dp.goldenRatioDown() = this / GOLDEN_RATIO
 
-val squircleShape = SquircleShapeDp(12.dp)
+val squircleShape = SquircleShape(12.dp)
 val roundedShape = RoundedCornerShape(99.dp)
 
 fun MutableState<Boolean>.setTrue() {

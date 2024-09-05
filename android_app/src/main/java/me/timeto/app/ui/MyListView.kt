@@ -130,7 +130,7 @@ fun MyListView__ItemView(
     Box(
         modifier = modifier
             .padding(outerPadding)
-            .clip(SquircleShapeDp(12.dp, angles = listOf(isFirst, isFirst, isLast, isLast))),
+            .clip(SquircleShape(12.dp, angles = listOf(isFirst, isFirst, isLast, isLast))),
         contentAlignment = Alignment.TopCenter,
     ) {
 
