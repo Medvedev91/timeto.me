@@ -5,7 +5,7 @@ import shared
 //
 // KMP
 
-let DI = shared.DI.shared
+let Cache = shared.Cache.shared
 
 func time() -> Int {
     Atm_kmp_appleKt.time().toInt()
