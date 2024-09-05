@@ -61,7 +61,7 @@ private fun ActivitiesTimerSheet(
     withMenu: Boolean,
 ) {
 
-    val (_, state) = rememberVM(timerContext) { ActivitiesTimerSheetVM(timerContext) }
+    val (_, state) = rememberVm(timerContext) { ActivitiesTimerSheetVM(timerContext) }
 
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
     val contentHeight = (listItemHeight * state.allActivities.size) +

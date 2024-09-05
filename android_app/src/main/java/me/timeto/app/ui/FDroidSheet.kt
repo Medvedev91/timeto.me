@@ -23,7 +23,7 @@ fun FDroidSheet(
     layer: WrapperView.Layer,
 ) {
 
-    val (vm, state) = rememberVM { FDroidSheetVM() }
+    val (vm, state) = rememberVm { FDroidSheetVM() }
 
     VStack(
         modifier = Modifier

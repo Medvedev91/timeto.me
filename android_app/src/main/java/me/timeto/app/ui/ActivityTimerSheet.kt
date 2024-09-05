@@ -42,7 +42,7 @@ private fun ActivityTimerSheet(
     onStarted: () -> Unit,
 ) {
 
-    val (vm, state) = rememberVM(activity, timerContext) {
+    val (vm, state) = rememberVm(activity, timerContext) {
         ActivityTimerSheetVM(activity, timerContext)
     }
 

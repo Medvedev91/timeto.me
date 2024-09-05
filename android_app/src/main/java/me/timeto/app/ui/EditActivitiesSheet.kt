@@ -20,7 +20,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.c
-import me.timeto.app.rememberVM
+import me.timeto.app.rememberVm
 import me.timeto.app.roundedShape
 import me.timeto.app.squircleShape
 import me.timeto.shared.vm.EditActivitiesVM
@@ -30,7 +30,7 @@ fun EditActivitiesSheet(
     layer: WrapperView.Layer
 ) {
 
-    val (vm, state) = rememberVM { EditActivitiesVM() }
+    val (vm, state) = rememberVm { EditActivitiesVM() }
 
     Box(
         modifier = Modifier

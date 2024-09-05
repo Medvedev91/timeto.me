@@ -17,7 +17,7 @@ fun ActivityPomodoroSheet(
     onPick: (Int) -> Unit,
 ) {
 
-    val (vm, state) = rememberVM(selectedTimer) {
+    val (vm, state) = rememberVm(selectedTimer) {
         ActivityPomodoroSheetVm(selectedTimer = selectedTimer)
     }
 

@@ -32,7 +32,7 @@ fun SummarySheet(
     layer: WrapperView.Layer,
 ) {
 
-    val (vm, state) = rememberVM { SummarySheetVM() }
+    val (vm, state) = rememberVm { SummarySheetVM() }
 
     VStack(
         modifier = Modifier

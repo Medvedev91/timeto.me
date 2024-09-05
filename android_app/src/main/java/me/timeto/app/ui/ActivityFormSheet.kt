@@ -24,7 +24,7 @@ fun ActivityFormSheet(
     activity: ActivityDb?,
 ) {
 
-    val (vm, state) = rememberVM(activity) { ActivityFormSheetVM(activity) }
+    val (vm, state) = rememberVm(activity) { ActivityFormSheetVM(activity) }
 
     Column(
         modifier = Modifier

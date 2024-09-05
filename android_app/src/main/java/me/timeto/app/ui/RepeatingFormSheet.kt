@@ -21,7 +21,7 @@ fun RepeatingFormSheet(
     editedRepeating: RepeatingDb?,
 ) {
 
-    val (vm, state) = rememberVM(editedRepeating) {
+    val (vm, state) = rememberVm(editedRepeating) {
         RepeatingFormSheetVM(editedRepeating)
     }
 

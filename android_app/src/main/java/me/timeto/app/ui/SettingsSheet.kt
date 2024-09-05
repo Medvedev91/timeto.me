@@ -43,7 +43,7 @@ fun SettingsSheet(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    val (vm, state) = rememberVM { SettingsSheetVM() }
+    val (vm, state) = rememberVm { SettingsSheetVM() }
 
     val launcherBackup = rememberLauncherForActivityResult(
         ActivityResultContracts.CreateDocument()

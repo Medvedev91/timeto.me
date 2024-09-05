@@ -23,7 +23,7 @@ fun PrivacySheet(
     layer: WrapperView.Layer,
 ) {
 
-    val (vm, state) = rememberVM { PrivacySheetVM() }
+    val (vm, state) = rememberVm { PrivacySheetVM() }
 
     VStack(
         modifier = Modifier

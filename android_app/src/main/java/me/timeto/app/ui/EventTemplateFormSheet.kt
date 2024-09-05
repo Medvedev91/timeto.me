@@ -17,7 +17,7 @@ fun EventTemplateFormSheet(
     eventTemplate: EventTemplateDb?,
 ) {
 
-    val (vm, state) = rememberVM(eventTemplate) {
+    val (vm, state) = rememberVm(eventTemplate) {
         EventTemplateFormSheetVM(eventTemplate)
     }
 

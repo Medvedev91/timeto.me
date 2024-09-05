@@ -24,7 +24,7 @@ fun EventTemplatesView(
     onPick: (EventTemplatesVM.TemplateUI) -> Unit,
 ) {
 
-    val (_, state) = rememberVM { EventTemplatesVM() }
+    val (_, state) = rememberVm { EventTemplatesVM() }
     val templatesUI = state.templatesUI
 
     val scrollState = rememberLazyListState()

@@ -54,7 +54,7 @@ private val purpleAnimExit = fadeOut() + shrinkVertically(animationSpec = spring
 @Composable
 fun HomeView() {
 
-    val (vm, state) = rememberVM { HomeVm() }
+    val (vm, state) = rememberVm { HomeVm() }
 
     val checklistDb = state.checklistDb
 

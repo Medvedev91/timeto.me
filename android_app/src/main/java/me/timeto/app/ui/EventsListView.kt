@@ -18,7 +18,7 @@ fun EventsListView(
     modifier: Modifier,
 ) {
 
-    val (_, state) = rememberVM { EventsListVM() }
+    val (_, state) = rememberVm { EventsListVM() }
 
     LazyColumn(
         modifier = modifier,

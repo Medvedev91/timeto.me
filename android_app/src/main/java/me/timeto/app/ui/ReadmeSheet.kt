@@ -44,7 +44,7 @@ private fun ReadmeSheet(
     defaultItem: DefaultItem,
 ) {
 
-    val (vm, state) = rememberVM {
+    val (vm, state) = rememberVm {
         ReadmeSheetVM(defaultItem = defaultItem)
     }
 

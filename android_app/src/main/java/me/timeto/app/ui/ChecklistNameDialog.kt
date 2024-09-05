@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.HStack
 import me.timeto.app.c
-import me.timeto.app.rememberVM
+import me.timeto.app.rememberVm
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.vm.ChecklistNameDialogVM
 
@@ -25,7 +25,7 @@ fun ChecklistNameDialog(
     onSave: (ChecklistDb) -> Unit,
 ) {
 
-    val (vm, state) = rememberVM(editedChecklist) {
+    val (vm, state) = rememberVm(editedChecklist) {
         ChecklistNameDialogVM(editedChecklist)
     }
 

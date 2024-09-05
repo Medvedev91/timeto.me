@@ -21,7 +21,7 @@ private val menuBottomPadding = menuTopPadding.goldenRatioUp().goldenRatioUp()
 @Composable
 fun EventsView() {
 
-    val (vm, state) = rememberVM { EventsVM() }
+    val (vm, state) = rememberVm { EventsVM() }
 
     VStack(
         modifier = Modifier

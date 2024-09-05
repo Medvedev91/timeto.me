@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.timeto.app.c
-import me.timeto.app.rememberVM
+import me.timeto.app.rememberVm
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.vm.ActivityPickerSheetVM
 
@@ -18,7 +18,7 @@ fun ActivityPickerSheet(
     onPick: (ActivityDb) -> Unit,
 ) {
 
-    val (_, state) = rememberVM { ActivityPickerSheetVM() }
+    val (_, state) = rememberVm { ActivityPickerSheetVM() }
 
     Column(
         modifier = Modifier

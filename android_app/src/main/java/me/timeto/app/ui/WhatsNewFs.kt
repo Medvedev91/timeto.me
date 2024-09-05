@@ -23,7 +23,7 @@ fun WhatsNewFs(
     layer: WrapperView.Layer,
 ) {
 
-    val (_, state) = rememberVM {
+    val (_, state) = rememberVm {
         WhatsNewVm()
     }
 

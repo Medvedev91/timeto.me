@@ -37,7 +37,7 @@ fun ChecklistView(
     bottomPadding: Dp = 0.dp,
 ) {
 
-    val (_, state) = rememberVM(checklistDb) {
+    val (_, state) = rememberVm(checklistDb) {
         ChecklistVM(checklistDb)
     }
 

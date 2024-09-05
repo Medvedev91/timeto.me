@@ -137,7 +137,7 @@ fun cancelAllAlarms() {
 
 
 @Composable
-fun <State, VM : __VM<State>> rememberVM(
+fun <State, VM : __VM<State>> rememberVm(
     key1: Any? = null,
     key2: Any? = null,
     key3: Any? = null,

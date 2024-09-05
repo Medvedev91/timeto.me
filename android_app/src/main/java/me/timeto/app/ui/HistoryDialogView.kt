@@ -36,7 +36,7 @@ fun HistoryDialogView(
     val scope = rememberCoroutineScope()
     var isEditMode by remember { mutableStateOf(false) }
 
-    val (vm, state) = rememberVM { HistoryVM() }
+    val (vm, state) = rememberVm { HistoryVM() }
 
     Box(
         contentAlignment = Alignment.BottomCenter,

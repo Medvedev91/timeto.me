@@ -8,7 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.timeto.app.c
-import me.timeto.app.rememberVM
+import me.timeto.app.rememberVm
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.vm.FolderFormSheetVM
 
@@ -17,7 +17,7 @@ fun FolderFormSheet(
     layer: WrapperView.Layer,
     folder: TaskFolderDb?,
 ) {
-    val (vm, state) = rememberVM(folder) { FolderFormSheetVM(folder) }
+    val (vm, state) = rememberVm(folder) { FolderFormSheetVM(folder) }
 
     Column(
         modifier = Modifier

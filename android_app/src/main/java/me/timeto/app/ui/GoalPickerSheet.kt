@@ -8,7 +8,7 @@ import androidx.compose.ui.unit.dp
 import me.timeto.app.H_PADDING
 import me.timeto.app.VStack
 import me.timeto.app.c
-import me.timeto.app.rememberVM
+import me.timeto.app.rememberVm
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.vm.GoalPickerSheetVM
 
@@ -18,7 +18,7 @@ fun GoalPickerSheet(
     onPick: (ActivityDb.Goal) -> Unit,
 ) {
 
-    val (vm, state) = rememberVM { GoalPickerSheetVM() }
+    val (vm, state) = rememberVm { GoalPickerSheetVM() }
 
     VStack(
         modifier = Modifier

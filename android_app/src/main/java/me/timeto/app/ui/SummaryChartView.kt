@@ -29,7 +29,7 @@ fun SummaryChartView(
     activitiesUI: List<SummarySheetVM.ActivityUI>,
 ) {
 
-    val (vm, state) = rememberVM(activitiesUI) { SummaryChartVM(activitiesUI) }
+    val (vm, state) = rememberVm(activitiesUI) { SummaryChartVM(activitiesUI) }
 
     VStack(
         modifier = Modifier

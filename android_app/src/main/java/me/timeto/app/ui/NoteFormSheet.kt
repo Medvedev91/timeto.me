@@ -21,7 +21,7 @@ fun NoteFormSheet(
     onDelete: () -> Unit,
 ) {
 
-    val (vm, state) = rememberVM(note) { NoteFormSheetVM(note) }
+    val (vm, state) = rememberVm(note) { NoteFormSheetVM(note) }
 
     VStack(
         modifier = Modifier

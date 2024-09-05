@@ -46,7 +46,7 @@ private fun EventFormSheet(
     onSave: () -> Unit,
 ) {
 
-    val (vm, state) = rememberVM(editedEvent, defText, defTime) {
+    val (vm, state) = rememberVm(editedEvent, defText, defTime) {
         EventFormSheetVM(
             event = editedEvent,
             defText = defText,

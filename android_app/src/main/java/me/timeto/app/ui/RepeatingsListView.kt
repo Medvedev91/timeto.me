@@ -26,7 +26,7 @@ import me.timeto.shared.vm.RepeatingsListVM
 @Composable
 fun RepeatingsListView() {
 
-    val (_, state) = rememberVM { RepeatingsListVM() }
+    val (_, state) = rememberVm { RepeatingsListVM() }
 
     LazyColumn(
         reverseLayout = true,

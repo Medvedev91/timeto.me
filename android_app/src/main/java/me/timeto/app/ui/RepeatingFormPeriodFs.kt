@@ -30,7 +30,7 @@ fun RepeatingFormPeriodFs(
     onPick: (RepeatingDb.Period?) -> Unit,
 ) {
 
-    val (vm, state) = rememberVM(defaultPeriod) {
+    val (vm, state) = rememberVm(defaultPeriod) {
         RepeatingFormPeriodVm(defaultPeriod = defaultPeriod)
     }
 

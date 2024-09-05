@@ -21,7 +21,7 @@ fun ChecklistsPickerSheet(
     onPick: (List<ChecklistDb>) -> Unit,
 ) {
 
-    val (vm, state) = rememberVM { ChecklistsPickerSheetVM(selectedChecklists) }
+    val (vm, state) = rememberVm { ChecklistsPickerSheetVM(selectedChecklists) }
 
     VStack(
         modifier = Modifier

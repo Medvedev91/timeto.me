@@ -18,7 +18,7 @@ fun NoteSheet(
     initNote: NoteDb, // TRICK Can change, use VM!
 ) {
 
-    val (_, state) = rememberVM(initNote) { NoteSheetVM(initNote) }
+    val (_, state) = rememberVm(initNote) { NoteSheetVM(initNote) }
 
     VStack(
         modifier = Modifier

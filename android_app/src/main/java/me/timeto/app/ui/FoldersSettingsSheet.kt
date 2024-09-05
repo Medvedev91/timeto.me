@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import me.timeto.app.c
-import me.timeto.app.rememberVM
+import me.timeto.app.rememberVm
 import me.timeto.app.roundedShape
 import me.timeto.shared.vm.FoldersSettingsVM
 
@@ -22,7 +22,7 @@ import me.timeto.shared.vm.FoldersSettingsVM
 fun FoldersSettingsSheet(
     layer: WrapperView.Layer,
 ) {
-    val (vm, state) = rememberVM { FoldersSettingsVM() }
+    val (vm, state) = rememberVm { FoldersSettingsVM() }
 
     Column(
         modifier = Modifier

@@ -25,7 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.R
-import me.timeto.app.rememberVM
+import me.timeto.app.rememberVm
 import kotlinx.coroutines.delay
 import me.timeto.app.c
 import me.timeto.app.roundedShape
@@ -37,7 +37,7 @@ fun SearchEmojiSheet(
     onSelectEmoji: (String) -> Unit
 ) {
     // Outside TimetoSheet to have data at open time
-    val (vm, state) = rememberVM { SearchEmojiSheetVM() }
+    val (vm, state) = rememberVm { SearchEmojiSheetVM() }
 
     val focusRequester = remember { FocusRequester() }
 

@@ -52,7 +52,7 @@ fun TasksView(
     onClose: () -> Unit,
 ) {
 
-    val (_, state) = rememberVM { TabTasksVM() }
+    val (_, state) = rememberVm { TabTasksVM() }
 
     var activeTab by remember { mutableStateOf<Tab>(Tab.Folder(state.initFolder)) }
 

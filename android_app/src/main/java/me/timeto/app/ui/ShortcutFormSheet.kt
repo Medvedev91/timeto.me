@@ -30,7 +30,7 @@ fun ShortcutFormSheet(
     editedShortcut: ShortcutDb?,
 ) {
 
-    val (vm, state) = rememberVM(editedShortcut) { ShortcutFormSheetVM(editedShortcut) }
+    val (vm, state) = rememberVm(editedShortcut) { ShortcutFormSheetVM(editedShortcut) }
 
     val keyboardController = LocalSoftwareKeyboardController.current
 

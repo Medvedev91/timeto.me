@@ -39,7 +39,7 @@ fun TasksListView(
     activeFolder: TaskFolderDb,
     dragItem: MutableState<DragItem?>,
 ) {
-    val (vm, state) = rememberVM(activeFolder) { TasksListVM(activeFolder) }
+    val (vm, state) = rememberVm(activeFolder) { TasksListVM(activeFolder) }
     val tmrwData = state.tmrwData
 
     val scope = rememberCoroutineScope()

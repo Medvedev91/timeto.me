@@ -22,7 +22,7 @@ fun EventsCalendarView(
     modifier: Modifier,
 ) {
 
-    val (vm, state) = rememberVM { EventsCalendarVM() }
+    val (vm, state) = rememberVm { EventsCalendarVM() }
 
     VStack(
         modifier = modifier

@@ -41,7 +41,7 @@ fun ActivityColorSheet(
     onPick: (ColorRgba) -> Unit,
 ) {
 
-    val (vm, state) = rememberVM { ActivityColorSheetVM(initData) }
+    val (vm, state) = rememberVm { ActivityColorSheetVM(initData) }
 
     Column(
         modifier = Modifier

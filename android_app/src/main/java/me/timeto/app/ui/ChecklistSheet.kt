@@ -19,7 +19,7 @@ fun ChecklistSheet(
     layer: WrapperView.Layer,
     checklist: ChecklistDb,
 ) {
-    val (_, state) = rememberVM { ChecklistSheetVM(checklist) }
+    val (_, state) = rememberVm { ChecklistSheetVM(checklist) }
 
     VStack(
         modifier = Modifier

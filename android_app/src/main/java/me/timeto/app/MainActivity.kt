@@ -60,7 +60,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
 
-            val (vm, state) = rememberVM { AppVM() }
+            val (vm, state) = rememberVm { AppVM() }
 
             MaterialTheme(colors = darkColors()) {
 

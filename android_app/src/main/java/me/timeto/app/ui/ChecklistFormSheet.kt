@@ -34,7 +34,7 @@ fun ChecklistFormSheet(
     onDelete: () -> Unit,
 ) {
 
-    val (vm, state) = rememberVM(checklistDb) {
+    val (vm, state) = rememberVm(checklistDb) {
         ChecklistFormSheetVM(checklistDb)
     }
 

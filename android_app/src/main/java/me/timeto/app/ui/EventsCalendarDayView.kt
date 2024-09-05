@@ -24,7 +24,7 @@ fun EventsCalendarDayView(
     unixDay: Int,
 ) {
 
-    val (_, state) = rememberVM(unixDay) { EventsCalendarDayVM(unixDay) }
+    val (_, state) = rememberVm(unixDay) { EventsCalendarDayVM(unixDay) }
 
     VStack(
         modifier = Modifier
