@@ -43,7 +43,7 @@ class RepeatingsListVm : __Vm<RepeatingsListVm.State>() {
 
     override fun onAppear() {
         RepeatingDb.getAscFlow()
-            .onEachExIn(scopeVM()) { list ->
+            .onEachExIn(scopeVm()) { list ->
                 state.update { it.copy(repeatingsUI = list.toUiList()) }
             }
     }

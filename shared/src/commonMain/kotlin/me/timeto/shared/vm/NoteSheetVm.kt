@@ -19,7 +19,7 @@ class NoteSheetVm(
     )
 
     override fun onAppear() {
-        val scope = scopeVM()
+        val scope = scopeVm()
         NoteDb.getAscFlow().onEachExIn(scope) { notes ->
             // Null on deletion
             val newNote = notes.firstOrNull { it.id == note.id }

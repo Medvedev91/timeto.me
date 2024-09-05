@@ -34,7 +34,7 @@ class ChecklistItemFormVm(
 
     fun save(
         onSuccess: () -> Unit
-    ) = scopeVM().launchEx {
+    ) = scopeVm().launchEx {
         try {
             if (checklistItem != null)
                 checklistItem.upTextWithValidation(state.value.inputNameValue)

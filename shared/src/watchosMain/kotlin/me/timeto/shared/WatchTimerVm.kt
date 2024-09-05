@@ -28,7 +28,7 @@ class WatchTimerVm : __Vm<WatchTimerVm.State>() {
     )
 
     override fun onAppear() {
-        val scope = scopeVM()
+        val scope = scopeVm()
         IntervalDb.getLastOneOrNullFlow()
             .filterNotNull()
             .onEachExIn(scope) { newInterval ->

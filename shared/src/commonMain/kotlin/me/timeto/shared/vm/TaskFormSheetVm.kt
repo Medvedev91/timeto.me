@@ -35,7 +35,7 @@ class TaskFormSheetVm(
 
     fun save(
         onSuccess: () -> Unit,
-    ) = scopeVM().launchEx {
+    ) = scopeVm().launchEx {
         try {
             // todo check if the text without features
             val textWithFeatures = state.value.textFeatures.textWithFeatures()

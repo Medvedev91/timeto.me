@@ -37,7 +37,7 @@ class ChecklistNameDialogVm(
     fun save(
         onSuccess: (ChecklistDb) -> Unit,
     ) {
-        scopeVM().launchEx {
+        scopeVm().launchEx {
             try {
                 val checklist = state.value.checklist
                 val newChecklist: ChecklistDb = if (checklist != null)

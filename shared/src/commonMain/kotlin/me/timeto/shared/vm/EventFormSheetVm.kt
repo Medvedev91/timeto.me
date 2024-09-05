@@ -81,7 +81,7 @@ class EventFormSheetVm(
 
     fun save(
         onSuccess: () -> Unit
-    ) = scopeVM().launchEx {
+    ) = scopeVm().launchEx {
         try {
             // todo check if a text without features
             val nameWithFeatures = state.value.textFeatures.textWithFeatures()

@@ -22,7 +22,7 @@ class WatchAppVm : __Vm<WatchAppVm.State>() {
     )
 
     override fun onAppear() {
-        scopeVM().launchEx {
+        scopeVm().launchEx {
 
             initKmpDeferred.join()
 

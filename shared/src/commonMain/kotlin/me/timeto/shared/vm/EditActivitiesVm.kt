@@ -21,7 +21,7 @@ class EditActivitiesVm : __Vm<EditActivitiesVm.State>() {
     )
 
     override fun onAppear() {
-        val scope = scopeVM()
+        val scope = scopeVm()
         ActivityDb.getAscSortedFlow().onEachExIn(scope) { activities ->
             state.update { it.copy(activitiesUI = activities.toUiList()) }
         }

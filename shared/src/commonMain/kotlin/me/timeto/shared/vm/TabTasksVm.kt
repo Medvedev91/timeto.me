@@ -25,7 +25,7 @@ class TabTasksVm : __Vm<TabTasksVm.State>() {
     )
 
     override fun onAppear() {
-        val scope = scopeVM()
+        val scope = scopeVm()
         TaskFolderDb.getAscBySortFlow().onEachExIn(scope) { folders ->
             val taskFoldersUI = folders.sortedFolders().map { TaskFolderUI(it) }
             state.update { it.copy(taskFoldersUI = taskFoldersUI) }

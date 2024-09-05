@@ -22,7 +22,7 @@ class ChecklistVm(
     )
 
     override fun onAppear() {
-        val scopeVm = scopeVM()
+        val scopeVm = scopeVm()
         ChecklistItemDb
             .getSortedFlow()
             .onEachExIn(scopeVm) { items ->

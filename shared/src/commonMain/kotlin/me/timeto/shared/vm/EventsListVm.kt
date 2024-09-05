@@ -38,14 +38,14 @@ class EventsListVm : __Vm<EventsListVm.State>() {
     )
 
     override fun onAppear() {
-        scopeVM().launch {
+        scopeVm().launch {
             while (true) {
                 delay(1_000)
                 state.update { it.copy(curTimeString = getCurTimeString()) }
             }
         }
         EventDb.getAscByTimeFlow()
-            .onEachExIn(scopeVM()) { list ->
+            .onEachExIn(scopeVm()) { list ->
                 state.update { it.copy(uiEvents = list.toUiList()) }
             }
     }

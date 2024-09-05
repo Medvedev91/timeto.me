@@ -160,7 +160,7 @@ class HomeVm : __Vm<HomeVm.State>() {
     )
 
     override fun onAppear() {
-        val scope = scopeVM()
+        val scope = scopeVm()
         IntervalDb.getLastOneOrNullFlow()
             .filterNotNull()
             .onEachExIn(scope) { interval ->

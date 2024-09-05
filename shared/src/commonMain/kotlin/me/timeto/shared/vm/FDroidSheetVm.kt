@@ -35,7 +35,7 @@ class FDroidSheetVm : __Vm<FDroidSheetVm.State>() {
         isSendReports: Boolean,
         onSuccess: () -> Unit,
     ) {
-        val scope = scopeVM()
+        val scope = scopeVm()
         scope.launchEx {
             KvDb.KEY.IS_SENDING_REPORTS.upsertIsSendingReports(isSendReports)
             if (isSendReports) {

@@ -158,7 +158,7 @@ class ActivityFormSheetVm(
 
     fun save(
         onSuccess: () -> Unit
-    ): Unit = scopeVM().launchEx {
+    ): Unit = scopeVm().launchEx {
         try {
             val selectedEmoji = state.value.emoji ?: return@launchEx showUiAlert("Emoji not selected")
             // todo check if a text without features

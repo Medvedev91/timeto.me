@@ -33,7 +33,7 @@ class PrivacySheetVm : __Vm<PrivacySheetVm.State>() {
     )
 
     override fun onAppear() {
-        val scope = scopeVM()
+        val scope = scopeVm()
         KvDb.KEY.IS_SENDING_REPORTS.getOrNullFlow().onEachExIn(scope) { kvDb ->
             state.update {
                 val newVal = kvDb?.value.isSendingReports()
@@ -43,7 +43,7 @@ class PrivacySheetVm : __Vm<PrivacySheetVm.State>() {
     }
 
     fun toggleIsSendingReports() {
-        val scope = scopeVM()
+        val scope = scopeVm()
         scope.launchEx {
             val newValue = !KvDb.KEY.IS_SENDING_REPORTS.selectOrNull().isSendingReports()
             KvDb.KEY.IS_SENDING_REPORTS.upsertIsSendingReports(newValue)

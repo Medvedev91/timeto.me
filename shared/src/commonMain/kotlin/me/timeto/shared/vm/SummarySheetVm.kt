@@ -63,7 +63,7 @@ class SummarySheetVm : __Vm<SummarySheetVm.State>() {
         pickerTimeStart: UnixTime,
         pickerTimeFinish: UnixTime,
     ) {
-        scopeVM().launchEx {
+        scopeVm().launchEx {
             val daysIntervalsUI = DayIntervalsUI.buildList(
                 dayStart = pickerTimeStart.localDay,
                 dayFinish = pickerTimeFinish.localDay,

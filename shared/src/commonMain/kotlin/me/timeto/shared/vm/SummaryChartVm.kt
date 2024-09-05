@@ -20,7 +20,7 @@ class SummaryChartVm(
     )
 
     override fun onAppear() {
-        scopeVM().launchEx {
+        scopeVm().launchEx {
             val items = activitiesUI.map { activityUI ->
                 val activity = activityUI.activity
                 val seconds = activityUI.seconds

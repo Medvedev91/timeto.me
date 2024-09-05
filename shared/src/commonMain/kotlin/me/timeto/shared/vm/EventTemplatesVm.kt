@@ -26,7 +26,7 @@ class EventTemplatesVm : __Vm<EventTemplatesVm.State>() {
     )
 
     override fun onAppear() {
-        val scope = scopeVM()
+        val scope = scopeVm()
         EventTemplateDb.selectAscSortedFlow().onEachExIn(scope) { templatesDB ->
             state.update {
                 it.copy(templatesUI = templatesDB.toTemplatesUI())

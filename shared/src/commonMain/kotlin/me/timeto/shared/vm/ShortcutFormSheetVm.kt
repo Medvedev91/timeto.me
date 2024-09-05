@@ -50,7 +50,7 @@ class ShortcutFormSheetVm(
 
     fun save(
         onSuccess: () -> Unit
-    ): Unit = scopeVM().launchEx {
+    ): Unit = scopeVm().launchEx {
         try {
             if (shortcut != null)
                 shortcut.upWithValidation(

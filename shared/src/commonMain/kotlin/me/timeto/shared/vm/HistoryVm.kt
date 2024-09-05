@@ -22,7 +22,7 @@ class HistoryVm : __Vm<HistoryVm.State>() {
     )
 
     override fun onAppear() {
-        IntervalDb.getAscFlow().onEachExIn(scopeVM()) { intervalsAsc ->
+        IntervalDb.getAscFlow().onEachExIn(scopeVm()) { intervalsAsc ->
             state.update {
                 it.copy(
                     sections = prepHistorySections(allIntervalsAsc = intervalsAsc),

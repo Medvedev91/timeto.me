@@ -40,7 +40,7 @@ class ChecklistsPickerSheetVm(
     )
 
     override fun onAppear() {
-        val scope = scopeVM()
+        val scope = scopeVm()
         ChecklistDb.getAscFlow().onEachExIn(scope) { newChecklistsDb ->
             state.update {
                 it.copy(checklistsDb = newChecklistsDb)

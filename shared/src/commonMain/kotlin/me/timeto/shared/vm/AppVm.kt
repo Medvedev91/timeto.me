@@ -21,7 +21,7 @@ class AppVm : __Vm<AppVm.State>() {
     )
 
     override fun onAppear() {
-        scopeVM().launchEx {
+        scopeVm().launchEx {
 
             initKmpDeferred.await()
 
@@ -105,7 +105,7 @@ class AppVm : __Vm<AppVm.State>() {
     }
 
     fun onNotificationsPermissionReady(delayMls: Long) {
-        scopeVM().launchEx {
+        scopeVm().launchEx {
             delay(delayMls)
             rescheduleNotifications()
         }

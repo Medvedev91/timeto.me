@@ -69,7 +69,7 @@ class RepeatingFormSheetVm(
 
     fun save(
         onSuccess: () -> Unit,
-    ) = scopeVM().launchEx {
+    ) = scopeVm().launchEx {
         try {
             val textFeatures = state.value.textFeatures
             if (textFeatures.textNoFeatures.isBlank())

@@ -33,7 +33,7 @@ class EventsCalendarVm : __Vm<EventsCalendarVm.State>() {
 
     override fun onAppear() {
 
-        val scope = scopeVM()
+        val scope = scopeVm()
 
         EventDb.getAscByTimeFlow().onEachExIn(scope) { newEvents ->
 

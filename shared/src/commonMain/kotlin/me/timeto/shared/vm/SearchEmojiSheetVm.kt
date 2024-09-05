@@ -31,7 +31,7 @@ class SearchEmojiSheetVm : __Vm<SearchEmojiSheetVm.State>() {
     private var allEmojis = listOf<Emoji>()
 
     override fun onAppear() {
-        scopeVM().launchEx {
+        scopeVm().launchEx {
             val jString = getResourceContent("emojis", "json")
             allEmojis = Json.parseToJsonElement(jString).jsonArray.map { jElement ->
                 val strings = jElement.jsonArray.map { it.jsonPrimitive.content }

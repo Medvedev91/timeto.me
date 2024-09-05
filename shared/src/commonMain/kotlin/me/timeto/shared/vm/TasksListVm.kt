@@ -34,7 +34,7 @@ class TasksListVm(
     )
 
     override fun onAppear() {
-        val scope = scopeVM()
+        val scope = scopeVm()
         TaskDb.getAscFlow()
             .onEachExIn(scope) { list ->
                 state.update { it.copy(vmTasksUi = list.toUiList()) }
@@ -56,7 +56,7 @@ class TasksListVm(
 
     fun addTask(
         onSuccess: () -> Unit,
-    ) = scopeVM().launchEx {
+    ) = scopeVm().launchEx {
         try {
             TaskDb.addWithValidation(state.value.addFormInputTextValue, folder)
             setAddFormInputTextValue("")

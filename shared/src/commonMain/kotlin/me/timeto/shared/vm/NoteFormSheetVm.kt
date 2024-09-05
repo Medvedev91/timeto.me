@@ -52,7 +52,7 @@ class NoteFormSheetVm(
 
     fun save(
         onSuccess: () -> Unit
-    ): Unit = scopeVM().launchEx {
+    ): Unit = scopeVm().launchEx {
         try {
             val text = state.value.inputTextValue
             if (note != null)

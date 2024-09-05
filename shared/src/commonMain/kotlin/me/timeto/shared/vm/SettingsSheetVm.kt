@@ -68,7 +68,7 @@ class SettingsSheetVm : __Vm<SettingsSheetVm.State>() {
     )
 
     override fun onAppear() {
-        val scope = scopeVM()
+        val scope = scopeVm()
         ChecklistDb.getAscFlow()
             .onEachExIn(scope) { checklists -> state.update { it.copy(checklists = checklists) } }
         ShortcutDb.getAscFlow()
@@ -115,7 +115,7 @@ class SettingsSheetVm : __Vm<SettingsSheetVm.State>() {
         seconds: Int,
         onSuccess: () -> Unit,
     ) {
-        scopeVM().launchEx {
+        scopeVm().launchEx {
             KvDb.KEY.DAY_START_OFFSET_SECONDS.upsert(seconds.toString())
             onSuccess()
         }

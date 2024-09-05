@@ -51,7 +51,7 @@ class EventTemplateFormSheetVm(
     fun save(
         onSuccess: () -> Unit,
     ) {
-        scopeVM().launchEx {
+        scopeVm().launchEx {
             try {
                 val daytime = state.value.daytimeModel?.seconds ?: throw UIException("The time is not set")
                 val textFeatures = state.value.textFeatures
@@ -84,7 +84,7 @@ class EventTemplateFormSheetVm(
                 buttonText = "Remove",
                 isRed = true,
             ) {
-                scopeVM().launchEx {
+                scopeVm().launchEx {
                     templateDB.backupable__delete()
                     onSuccess()
                 }

@@ -20,7 +20,7 @@ abstract class __Vm<T> {
 
     private val scopes = mutableListOf<CoroutineScope>()
 
-    protected fun scopeVM() = defaultScope().apply { scopes.add(this) }
+    protected fun scopeVm() = defaultScope().apply { scopes.add(this) }
 
     ///
 
