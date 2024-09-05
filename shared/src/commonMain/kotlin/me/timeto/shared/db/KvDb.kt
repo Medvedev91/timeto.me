@@ -19,7 +19,7 @@ data class KvDb(
 
     companion object : Backupable__Holder {
 
-        suspend fun selectAll(): List<KvDb> = dbIO {
+        suspend fun selectAll(): List<KvDb> = dbIo {
             db.kVQueries.selectAll().executeAsList().map { it.toModel() }
         }
 
@@ -103,14 +103,14 @@ data class KvDb(
         fun getOrNullFlow(): Flow<KvDb?> = db.kVQueries.selectByKey(this.name).asFlow()
             .mapToOneOrNull(Dispatchers.IO).map { it?.toModel() }
 
-        suspend fun upsert(value: String?): Unit = dbIO {
+        suspend fun upsert(value: String?): Unit = dbIo {
             if (value == null)
                 db.kVQueries.deleteByKey(key = name)
             else
                 db.kVQueries.upsert(key = name, value_ = value)
         }
 
-        suspend fun upsertBool(value: Boolean?): Unit = dbIO {
+        suspend fun upsertBool(value: Boolean?): Unit = dbIo {
             val newVal: String? = when (value) {
                 true -> "1"
                 false -> "0"
@@ -119,7 +119,7 @@ data class KvDb(
             upsert(newVal)
         }
 
-        suspend fun upsertInt(value: Int?): Unit = dbIO {
+        suspend fun upsertInt(value: Int?): Unit = dbIo {
             upsert(value?.toString())
         }
 

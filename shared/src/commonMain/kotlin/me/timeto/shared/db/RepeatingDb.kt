@@ -28,7 +28,7 @@ data class RepeatingDb(
         const val LAST_DAY_OF_MONTH = 0
         const val MAX_DAY_OF_MONTH = 27
 
-        suspend fun getAsc() = dbIO {
+        suspend fun getAsc() = dbIo {
             db.repeatingQueries.getAsc().executeAsList().map { it.toModel() }
         }
 
@@ -37,7 +37,7 @@ data class RepeatingDb(
 
         fun todayWithOffset(): Int = UnixTime(time() - dayStartOffsetSeconds()).localDay
 
-        suspend fun getByIdOrNull(id: Int) = dbIO {
+        suspend fun getByIdOrNull(id: Int) = dbIo {
             db.repeatingQueries.getById(id).executeAsOneOrNull()?.toModel()
         }
 
@@ -47,7 +47,7 @@ data class RepeatingDb(
             lastDay: Int,
             daytime: Int?,
             isImportant: Boolean,
-        ) = dbIO {
+        ) = dbIo {
             db.transaction {
                 db.repeatingQueries.insert(
                     id = max(time(), db.repeatingQueries.getDesc(1).executeAsOneOrNull()?.id?.plus(1) ?: 0),
@@ -61,7 +61,7 @@ data class RepeatingDb(
             }
         }
 
-        suspend fun syncTodaySafe(today: Int): Unit = dbIO {
+        suspend fun syncTodaySafe(today: Int): Unit = dbIo {
             // Select within a transaction to avoid duplicate additions
             db.transaction {
                 db.repeatingQueries.getAsc().executeAsList()
@@ -227,7 +227,7 @@ data class RepeatingDb(
         period: Period,
         daytime: Int?,
         isImportant: Boolean,
-    ): Unit = dbIO {
+    ): Unit = dbIo {
         db.repeatingQueries.upById(
             id = id,
             text = validateText(text),
@@ -239,7 +239,7 @@ data class RepeatingDb(
         )
     }
 
-    suspend fun delete(): Unit = dbIO {
+    suspend fun delete(): Unit = dbIo {
         db.repeatingQueries.deleteById(id)
     }
 

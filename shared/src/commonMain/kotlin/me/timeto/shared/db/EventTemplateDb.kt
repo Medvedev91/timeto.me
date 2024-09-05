@@ -20,7 +20,7 @@ data class EventTemplateDb(
 
     companion object : Backupable__Holder {
 
-        suspend fun selectAscSorted(): List<EventTemplateDb> = dbIO {
+        suspend fun selectAscSorted(): List<EventTemplateDb> = dbIo {
             db.eventTemplateQueries.selectAscSorted().executeAsList().toDBList()
         }
 
@@ -31,7 +31,7 @@ data class EventTemplateDb(
             daytime: Int,
             text: String,
         ) {
-            dbIO {
+            dbIo {
                 val templates = db.eventTemplateQueries.selectAscSorted().executeAsList().toDBList()
                 db.eventTemplateQueries.insertObject(
                     EventTemplateSQ(
@@ -67,7 +67,7 @@ data class EventTemplateDb(
         daytime: Int,
         text: String,
     ) {
-        dbIO {
+        dbIo {
             db.transaction {
                 val templates = db.eventTemplateQueries
                     .selectAscSorted()

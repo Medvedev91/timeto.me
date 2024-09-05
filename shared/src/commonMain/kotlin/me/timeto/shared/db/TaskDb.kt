@@ -22,14 +22,14 @@ data class TaskDb(
 
         fun anyChangeFlow() = db.taskQueries.anyChange().asFlow()
 
-        suspend fun getAsc() = dbIO {
+        suspend fun getAsc() = dbIo {
             db.taskQueries.getAsc().executeAsList().map { it.toModel() }
         }
 
         fun getAscFlow() = db.taskQueries.getAsc().asFlow()
             .mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
 
-        suspend fun getByIdOrNull(id: Int): TaskDb? = dbIO {
+        suspend fun getByIdOrNull(id: Int): TaskDb? = dbIo {
             db.taskQueries.getById(id).executeAsOneOrNull()?.toModel()
         }
 
@@ -39,7 +39,7 @@ data class TaskDb(
         suspend fun addWithValidation(
             text: String,
             folder: TaskFolderDb,
-        ): Unit = dbIO {
+        ): Unit = dbIo {
             db.transaction {
                 addWithValidation_transactionRequired(text = text, folder = folder)
             }
@@ -121,7 +121,7 @@ data class TaskDb(
         timer: Int,
         activity: ActivityDb,
         intervalId: Int = time(),
-    ) = dbIO {
+    ) = dbIo {
         db.transaction {
             IntervalDb.addWithValidationNeedTransaction(
                 timer = timer,
@@ -160,7 +160,7 @@ data class TaskDb(
         activitiesSheet()
     }
 
-    suspend fun upTextWithValidation(newText: String): Unit = dbIO {
+    suspend fun upTextWithValidation(newText: String): Unit = dbIo {
         db.taskQueries.upTextById(
             id = id, text = validateText(newText)
         )
@@ -169,7 +169,7 @@ data class TaskDb(
     suspend fun upFolder(
         newFolder: TaskFolderDb,
         replaceIfTmrw: Boolean,
-    ): Unit = dbIO {
+    ): Unit = dbIo {
         db.taskQueries.upFolderIdById(
             id = id,
             folder_id = newFolder.id,
@@ -183,7 +183,7 @@ data class TaskDb(
         }
     }
 
-    suspend fun delete(): Unit = dbIO {
+    suspend fun delete(): Unit = dbIo {
         db.taskQueries.deleteById(id)
     }
 

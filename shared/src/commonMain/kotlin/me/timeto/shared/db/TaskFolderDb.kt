@@ -23,7 +23,7 @@ data class TaskFolderDb(
 
         fun anyChangeFlow() = db.taskFolderQueries.anyChange().asFlow()
 
-        suspend fun getAscBySort() = dbIO {
+        suspend fun getAscBySort() = dbIo {
             db.taskFolderQueries.getAscBySort().executeAsList().map { it.toModel() }
         }
 
@@ -32,9 +32,9 @@ data class TaskFolderDb(
 
         //////
 
-        suspend fun addTmrw() = dbIO { addRaw(id = ID_TMRW, name = "TMRW", sort = 2) }
+        suspend fun addTmrw() = dbIo { addRaw(id = ID_TMRW, name = "TMRW", sort = 2) }
 
-        suspend fun addWithValidation(name: String) = dbIO {
+        suspend fun addWithValidation(name: String) = dbIo {
             addRaw(
                 id = time(),
                 name = validateName(name),

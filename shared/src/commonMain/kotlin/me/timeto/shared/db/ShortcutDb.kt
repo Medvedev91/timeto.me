@@ -23,25 +23,25 @@ data class ShortcutDb(
 
         fun anyChangeFlow() = db.shortcutQueries.anyChange().asFlow()
 
-        suspend fun getCount(): Int = dbIO {
+        suspend fun getCount(): Int = dbIo {
             db.shortcutQueries.getCount().executeAsOne().toInt()
         }
 
-        suspend fun getAsc() = dbIO {
+        suspend fun getAsc() = dbIo {
             db.shortcutQueries.getAsc().executeAsList().map { it.toModel() }
         }
 
         fun getAscFlow() = db.shortcutQueries.getAsc().asFlow()
             .mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
 
-        suspend fun getByIdOrNull(id: Int) = dbIO {
+        suspend fun getByIdOrNull(id: Int) = dbIo {
             db.shortcutQueries.getById(id).executeAsOneOrNull()?.toModel()
         }
 
         suspend fun addWithValidation(
             name: String,
             uri: String,
-        ) = dbIO {
+        ) = dbIo {
             val validatedName = validateName(name) // todo to inside transaction
             db.transaction {
                 addRaw(
@@ -115,13 +115,13 @@ data class ShortcutDb(
         launchExDefault { uiShortcutFlow.emit(this@ShortcutDb) }
     }
 
-    suspend fun upWithValidation(name: String, uri: String) = dbIO {
+    suspend fun upWithValidation(name: String, uri: String) = dbIo {
         db.shortcutQueries.updateById(
             id = id, name = validateName(name, setOf(id)), uri = validateUri(uri)
         )
     }
 
-    suspend fun delete() = dbIO { db.shortcutQueries.deleteById(id) }
+    suspend fun delete() = dbIo { db.shortcutQueries.deleteById(id) }
 
     ///
     /// Backupable Item

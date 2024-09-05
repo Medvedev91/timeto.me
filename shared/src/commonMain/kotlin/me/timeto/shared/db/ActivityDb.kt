@@ -36,7 +36,7 @@ data class ActivityDb(
         ///
         /// Select many
 
-        suspend fun getAscSorted() = dbIO {
+        suspend fun getAscSorted() = dbIo {
             db.activityQueries.getAscSorted().executeAsList().map { it.toModel() }
         }
 
@@ -46,7 +46,7 @@ data class ActivityDb(
         ///
         /// Select One
 
-        suspend fun getByIdOrNull(id: Int) = dbIO {
+        suspend fun getByIdOrNull(id: Int) = dbIo {
             db.activityQueries.getById(id).executeAsOneOrNull()?.toModel()
         }
 
@@ -73,7 +73,7 @@ data class ActivityDb(
             keepScreenOn: Boolean,
             goals: List<Goal>,
             pomodoroTimer: Int,
-        ): ActivityDb = dbIO {
+        ): ActivityDb = dbIo {
 
             if (type == TYPE.OTHER && getAscSorted().find { it.getType() == TYPE.OTHER } != null)
                 throw UIException("Other already exists") // todo report
@@ -257,7 +257,7 @@ data class ActivityDb(
         colorRgba: ColorRgba,
         goals: List<Goal>,
         pomodoroTimer: Int,
-    ) = dbIO {
+    ) = dbIo {
         if (isOther())
             throw UIException("It's impossible to change \"Other\" activity")
 
@@ -276,7 +276,7 @@ data class ActivityDb(
         )
     }
 
-    suspend fun upData(data: ActivityDb__Data) = dbIO {
+    suspend fun upData(data: ActivityDb__Data) = dbIo {
         val newDataString = data.toJString()
         if (data_json != newDataString)
             db.activityQueries.upData(
@@ -284,13 +284,13 @@ data class ActivityDb(
             )
     }
 
-    suspend fun upSort(newSort: Int) = dbIO {
+    suspend fun upSort(newSort: Int) = dbIo {
         db.activityQueries.upSort(
             id = id, sort = newSort
         )
     }
 
-    suspend fun delete() = dbIO {
+    suspend fun delete() = dbIo {
         if (isOther())
             throw UIException("It's impossible to delete \"other\" activity")
 

@@ -24,21 +24,21 @@ data class IntervalDb(
 
         fun anyChangeFlow() = db.intervalQueries.anyChange().asFlow()
 
-        suspend fun getCount(): Int = dbIO {
+        suspend fun getCount(): Int = dbIo {
             db.intervalQueries.getCount().executeAsOne().toInt()
         }
 
         ///
         /// Select many
 
-        suspend fun getAsc(limit: Int = Int.MAX_VALUE) = dbIO {
+        suspend fun getAsc(limit: Int = Int.MAX_VALUE) = dbIo {
             db.intervalQueries.getAsc(limit = limit.toLong()).executeAsList().map { it.toModel() }
         }
 
         fun getAscFlow(limit: Int = Int.MAX_VALUE) = db.intervalQueries.getAsc(limit = limit.toLong())
             .asFlow().mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
 
-        suspend fun getDesc(limit: Int): List<IntervalDb> = dbIO {
+        suspend fun getDesc(limit: Int): List<IntervalDb> = dbIo {
             db.intervalQueries.getDesc(limit.toLong()).executeAsList().map { it.toModel() }
         }
 
@@ -49,7 +49,7 @@ data class IntervalDb(
             timeStart: Int,
             timeFinish: Int,
             limit: Int = Int.MAX_VALUE,
-        ) = dbIO {
+        ) = dbIo {
             db.intervalQueries.getBetweenIdDesc(
                 timeStart = timeStart, timeFinish = timeFinish, limit = limit.toLong()
             )
@@ -65,11 +65,11 @@ data class IntervalDb(
         ///
         /// Select One
 
-        suspend fun getByIdOrNull(id: Int): IntervalDb? = dbIO {
+        suspend fun getByIdOrNull(id: Int): IntervalDb? = dbIo {
             db.intervalQueries.getById(id).executeAsOneOrNull()?.toModel()
         }
 
-        suspend fun getLastOneOrNull(): IntervalDb? = dbIO {
+        suspend fun getLastOneOrNull(): IntervalDb? = dbIo {
             db.intervalQueries.getDesc(limit = 1).executeAsOneOrNull()?.toModel()
         }
 
@@ -84,7 +84,7 @@ data class IntervalDb(
             activity: ActivityDb,
             note: String?,
             id: Int = time(),
-        ): IntervalDb = dbIO {
+        ): IntervalDb = dbIo {
             db.transactionWithResult {
                 addWithValidationNeedTransaction(
                     timer = timer,
@@ -114,7 +114,7 @@ data class IntervalDb(
 
         //////
 
-        suspend fun pauseLastInterval(): Unit = dbIO {
+        suspend fun pauseLastInterval(): Unit = dbIo {
 
             db.transaction {
 
@@ -156,7 +156,7 @@ data class IntervalDb(
 
         suspend fun prolongLastInterval(
             timer: Int,
-        ): Unit = dbIO {
+        ): Unit = dbIo {
             val interval = getLastOneOrNull()!!
             val activityDb = interval.getActivity()
             val newTf: TextFeatures = run {
@@ -196,19 +196,19 @@ data class IntervalDb(
 
     fun getActivityDI(): ActivityDb = DI.activitiesSorted.first { it.id == activity_id }
 
-    suspend fun upActivity(newActivity: ActivityDb): Unit = dbIO {
+    suspend fun upActivity(newActivity: ActivityDb): Unit = dbIo {
         db.intervalQueries.upActivityIdById(
             id = id, activity_id = newActivity.id
         )
     }
 
-    suspend fun upId(newId: Int): Unit = dbIO {
+    suspend fun upId(newId: Int): Unit = dbIo {
         db.intervalQueries.upId(
             oldId = id, newId = newId
         )
     }
 
-    suspend fun upTimer(timer: Int): Unit = dbIO {
+    suspend fun upTimer(timer: Int): Unit = dbIo {
         db.intervalQueries.upTimerById(
             id = id,
             timer = timer,
@@ -219,7 +219,7 @@ data class IntervalDb(
         timer: Int,
         note: String?,
         activityDb: ActivityDb,
-    ): Unit = dbIO {
+    ): Unit = dbIo {
         db.intervalQueries.upById(
             id = id,
             timer = timer,
@@ -228,7 +228,7 @@ data class IntervalDb(
         )
     }
 
-    suspend fun delete(): Unit = dbIO {
+    suspend fun delete(): Unit = dbIo {
         db.intervalQueries.deleteById(id)
     }
 

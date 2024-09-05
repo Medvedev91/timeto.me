@@ -22,7 +22,7 @@ data class NoteDb(
 
         fun anyChangeFlow() = db.noteQueries.anyChange().asFlow()
 
-        suspend fun getAsc(): List<NoteDb> = dbIO {
+        suspend fun getAsc(): List<NoteDb> = dbIo {
             db.noteQueries.getAsc().toModels()
         }
 
@@ -31,7 +31,7 @@ data class NoteDb(
 
         suspend fun addWithValidation(
             text: String,
-        ) = dbIO {
+        ) = dbIo {
             db.transaction {
                 val nextId = time() // todo
                 val otherNotes = db.noteQueries.getAsc().toModels()
@@ -69,7 +69,7 @@ data class NoteDb(
 
     suspend fun upWithValidation(
         newText: String,
-    ): Unit = dbIO {
+    ): Unit = dbIo {
         db.transaction {
             val otherNotes = db.noteQueries.getAsc().toModels()
                 .filter { it.id != id }
@@ -81,7 +81,7 @@ data class NoteDb(
         }
     }
 
-    suspend fun delete(): Unit = dbIO {
+    suspend fun delete(): Unit = dbIo {
         db.noteQueries.deleteById(id)
     }
 

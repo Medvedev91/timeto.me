@@ -18,7 +18,7 @@ data class EventDb(
 
     companion object : Backupable__Holder {
 
-        suspend fun getAscByTime() = dbIO {
+        suspend fun getAscByTime() = dbIo {
             db.eventQueries.getAscByTime().executeAsList().map { it.toModel() }
         }
 
@@ -28,7 +28,7 @@ data class EventDb(
         suspend fun addWithValidation(
             text: String,
             localTime: Int,
-        ): Unit = dbIO {
+        ): Unit = dbIo {
             db.eventQueries.insertObject(
                 EventSQ(
                     id = time(), // todo check unique
@@ -38,7 +38,7 @@ data class EventDb(
             )
         }
 
-        suspend fun syncTodaySafe(today: Int): Unit = dbIO {
+        suspend fun syncTodaySafe(today: Int): Unit = dbIo {
             // Select within a transaction to avoid duplicate additions
             db.transaction {
                 db.eventQueries.getAscByTime().executeAsList()
@@ -88,14 +88,14 @@ data class EventDb(
     suspend fun upWithValidation(
         text: String,
         localTime: Int,
-    ) = dbIO {
+    ) = dbIo {
         val utcTime = localTime + localUtcOffset
         db.eventQueries.updateById(
             id = id, text = validateText(text), utc_time = utcTime
         )
     }
 
-    suspend fun delete() = dbIO { db.eventQueries.deleteById(id) }
+    suspend fun delete() = dbIo { db.eventQueries.deleteById(id) }
 
     //
     // Backupable Item

@@ -19,7 +19,7 @@ data class ChecklistDb(
 
         fun anyChangeFlow() = db.checklistQueries.anyChange().asFlow()
 
-        suspend fun getAsc() = dbIO {
+        suspend fun getAsc() = dbIo {
             db.checklistQueries.getAsc().executeAsList().map { it.toModel() }
         }
 
@@ -28,7 +28,7 @@ data class ChecklistDb(
 
         suspend fun addWithValidation(
             name: String,
-        ): ChecklistDb = dbIO {
+        ): ChecklistDb = dbIo {
             val nextId = time()
             val sqModel = ChecklistSQ(
                 id = nextId,
@@ -83,7 +83,7 @@ data class ChecklistDb(
 
     suspend fun upNameWithValidation(
         newName: String,
-    ): ChecklistDb = dbIO {
+    ): ChecklistDb = dbIo {
         val newName = validateName(newName, setOf(id))
         db.checklistQueries.upNameById(
             id = id,
@@ -92,7 +92,7 @@ data class ChecklistDb(
         this@ChecklistDb.copy(name = newName)
     }
 
-    suspend fun deleteWithDependencies(): Unit = dbIO {
+    suspend fun deleteWithDependencies(): Unit = dbIo {
         ChecklistItemDb.getSorted().filter { it.list_id == id }.forEach { it.delete() }
         db.checklistQueries.deleteById(id)
     }

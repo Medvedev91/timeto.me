@@ -22,7 +22,7 @@ data class ChecklistItemDb(
 
         fun anyChangeFlow() = db.checklistItemQueries.anyChange().asFlow()
 
-        suspend fun getSorted() = dbIO {
+        suspend fun getSorted() = dbIo {
             db.checklistItemQueries.getSorted().executeAsList().map { it.toModel() }
         }
 
@@ -55,7 +55,7 @@ data class ChecklistItemDb(
         suspend fun toggleByList(
             list: ChecklistDb,
             checkOrUncheck: Boolean
-        ) = dbIO {
+        ) = dbIo {
             db.checklistItemQueries.upCheckTimeByList(
                 check_time = if (checkOrUncheck) time() else 0,
                 list_id = list.id
@@ -82,26 +82,26 @@ data class ChecklistItemDb(
 
     val isChecked = check_time > 0
 
-    suspend fun toggle(): Unit = dbIO {
+    suspend fun toggle(): Unit = dbIo {
         db.checklistItemQueries.upCheckTimeById(
             id = id, check_time = if (isChecked) 0 else time()
         )
     }
 
-    suspend fun upTextWithValidation(newText: String): Unit = dbIO {
+    suspend fun upTextWithValidation(newText: String): Unit = dbIo {
         db.checklistItemQueries.upTextById(
             id = id, text = validateText(newText)
         )
     }
 
-    suspend fun upSort(newSort: Int): Unit = dbIO {
+    suspend fun upSort(newSort: Int): Unit = dbIo {
         db.checklistItemQueries.upSortById(
             id = id,
             sort = newSort,
         )
     }
 
-    suspend fun delete() = dbIO { db.checklistItemQueries.deleteById(id) }
+    suspend fun delete() = dbIo { db.checklistItemQueries.deleteById(id) }
 
     ///
     /// Backupable Item
