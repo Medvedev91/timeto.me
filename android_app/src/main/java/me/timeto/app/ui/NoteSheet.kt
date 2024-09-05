@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.timeto.app.*
 import me.timeto.shared.db.NoteDb
-import me.timeto.shared.vm.NoteSheetVM
+import me.timeto.shared.vm.NoteSheetVm
 
 @Composable
 fun NoteSheet(
@@ -18,7 +18,7 @@ fun NoteSheet(
     initNote: NoteDb, // TRICK Can change, use VM!
 ) {
 
-    val (_, state) = rememberVm(initNote) { NoteSheetVM(initNote) }
+    val (_, state) = rememberVm(initNote) { NoteSheetVm(initNote) }
 
     VStack(
         modifier = Modifier

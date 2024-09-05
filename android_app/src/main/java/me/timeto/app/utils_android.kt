@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import me.timeto.app.ui.SquircleShape
 import me.timeto.shared.*
-import me.timeto.shared.vm.__VM
+import me.timeto.shared.vm.__Vm
 import java.util.*
 
 fun isSDKQPlus() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
@@ -137,7 +137,7 @@ fun cancelAllAlarms() {
 
 
 @Composable
-fun <State, VM : __VM<State>> rememberVm(
+fun <State, VM : __Vm<State>> rememberVm(
     key1: Any? = null,
     key2: Any? = null,
     key3: Any? = null,

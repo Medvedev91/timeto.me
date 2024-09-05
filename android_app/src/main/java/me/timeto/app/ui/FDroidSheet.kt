@@ -16,14 +16,14 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
-import me.timeto.shared.vm.FDroidSheetVM
+import me.timeto.shared.vm.FDroidSheetVm
 
 @Composable
 fun FDroidSheet(
     layer: WrapperView.Layer,
 ) {
 
-    val (vm, state) = rememberVm { FDroidSheetVM() }
+    val (vm, state) = rememberVm { FDroidSheetVm() }
 
     VStack(
         modifier = Modifier

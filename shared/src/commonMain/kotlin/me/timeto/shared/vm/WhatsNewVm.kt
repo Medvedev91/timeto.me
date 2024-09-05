@@ -5,7 +5,7 @@ import me.timeto.shared.UnixTime
 import me.timeto.shared.db.KvDb
 import me.timeto.shared.launchExDefault
 
-class WhatsNewVm : __VM<WhatsNewVm.State>() {
+class WhatsNewVm : __Vm<WhatsNewVm.State>() {
 
     data class State(
         val historyItemsUi: List<HistoryItemUi>,

@@ -5,7 +5,7 @@ import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.libs.DaytimeModel
-import me.timeto.shared.vm.ActivityTimerSheetVM
+import me.timeto.shared.vm.ActivityTimerSheetVm
 import kotlin.math.absoluteValue
 
 class TimerDataUI(
@@ -116,7 +116,7 @@ class TimerDataUI(
         }
 
         val timerText = "Timer"
-        val timerContext = ActivityTimerSheetVM.TimerContext.Interval(intervalDb)
+        val timerContext = ActivityTimerSheetVm.TimerContext.Interval(intervalDb)
 
         fun setUntilDaytime(daytimeUi: DaytimeModel) {
             val unixTimeNow = UnixTime()

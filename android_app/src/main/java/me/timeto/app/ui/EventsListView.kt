@@ -11,14 +11,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
-import me.timeto.shared.vm.EventsListVM
+import me.timeto.shared.vm.EventsListVm
 
 @Composable
 fun EventsListView(
     modifier: Modifier,
 ) {
 
-    val (_, state) = rememberVm { EventsListVM() }
+    val (_, state) = rememberVm { EventsListVm() }
 
     LazyColumn(
         modifier = modifier,

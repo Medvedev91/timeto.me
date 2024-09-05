@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.EventDb
-import me.timeto.shared.vm.EventFormSheetVM
+import me.timeto.shared.vm.EventFormSheetVm
 
 fun EventFormSheet__show(
     editedEvent: EventDb?,
@@ -47,7 +47,7 @@ private fun EventFormSheet(
 ) {
 
     val (vm, state) = rememberVm(editedEvent, defText, defTime) {
-        EventFormSheetVM(
+        EventFormSheetVm(
             event = editedEvent,
             defText = defText,
             defTime = defTime,

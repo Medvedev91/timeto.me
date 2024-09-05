@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.shared.db.ChecklistDb
-import me.timeto.shared.vm.ChecklistVM
+import me.timeto.shared.vm.ChecklistVm
 import me.timeto.shared.vm.ui.ChecklistStateUI
 
 private val checklistItemMinHeight = HomeView__MTG_ITEM_HEIGHT
@@ -38,7 +38,7 @@ fun ChecklistView(
 ) {
 
     val (_, state) = rememberVm(checklistDb) {
-        ChecklistVM(checklistDb)
+        ChecklistVm(checklistDb)
     }
 
     VStack(

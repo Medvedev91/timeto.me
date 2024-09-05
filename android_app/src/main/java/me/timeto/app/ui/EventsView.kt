@@ -13,7 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
-import me.timeto.shared.vm.EventsVM
+import me.timeto.shared.vm.EventsVm
 
 private val menuTopPadding = 8.dp
 private val menuBottomPadding = menuTopPadding.goldenRatioUp().goldenRatioUp()
@@ -21,7 +21,7 @@ private val menuBottomPadding = menuTopPadding.goldenRatioUp().goldenRatioUp()
 @Composable
 fun EventsView() {
 
-    val (vm, state) = rememberVm { EventsVM() }
+    val (vm, state) = rememberVm { EventsVm() }
 
     VStack(
         modifier = Modifier

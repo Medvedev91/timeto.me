@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.shared.*
-import me.timeto.shared.vm.ActivityColorSheetVM
+import me.timeto.shared.vm.ActivityColorSheetVm
 
 private val circleSize = 40.dp
 private val circlePadding = 4.dp
@@ -37,11 +37,11 @@ private val dividerColor = c.sheetDividerBg
 @Composable
 fun ActivityColorSheet(
     layer: WrapperView.Layer,
-    initData: ActivityColorSheetVM.InitData,
+    initData: ActivityColorSheetVm.InitData,
     onPick: (ColorRgba) -> Unit,
 ) {
 
-    val (vm, state) = rememberVm { ActivityColorSheetVM(initData) }
+    val (vm, state) = rememberVm { ActivityColorSheetVm(initData) }
 
     Column(
         modifier = Modifier

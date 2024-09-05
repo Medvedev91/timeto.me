@@ -16,7 +16,7 @@ import me.timeto.app.c
 import me.timeto.app.rememberVm
 import me.timeto.shared.db.ChecklistItemDb
 import me.timeto.shared.db.ChecklistDb
-import me.timeto.shared.vm.ChecklistItemFormVM
+import me.timeto.shared.vm.ChecklistItemFormVm
 
 @Composable
 fun ChecklistItemEditDialog(
@@ -26,7 +26,7 @@ fun ChecklistItemEditDialog(
 ) {
 
     val (vm, state) = rememberVm(checklist, editedChecklistItem) {
-        ChecklistItemFormVM(checklist, editedChecklistItem)
+        ChecklistItemFormVm(checklist, editedChecklistItem)
     }
 
     Column(

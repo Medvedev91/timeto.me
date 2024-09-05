@@ -30,8 +30,8 @@ import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.*
 import kotlinx.coroutines.launch
 import me.timeto.shared.*
-import me.timeto.shared.vm.PrivacySheetVM
-import me.timeto.shared.vm.SettingsSheetVM
+import me.timeto.shared.vm.PrivacySheetVm
+import me.timeto.shared.vm.SettingsSheetVm
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -43,7 +43,7 @@ fun SettingsSheet(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    val (vm, state) = rememberVm { SettingsSheetVM() }
+    val (vm, state) = rememberVm { SettingsSheetVm() }
 
     val launcherBackup = rememberLauncherForActivityResult(
         ActivityResultContracts.CreateDocument()
@@ -588,7 +588,7 @@ fun SettingsSheet(
                                 Text("")
                             else
                                 Text(
-                                    text = PrivacySheetVM.prayEmoji,
+                                    text = PrivacySheetVm.prayEmoji,
                                     modifier = Modifier
                                         .padding(end = H_PADDING),
                                     fontSize = 18.sp,
@@ -632,8 +632,8 @@ fun SettingsSheet(
 
 @Composable
 private fun DayStartDialogView(
-    settingsSheetVM: SettingsSheetVM,
-    settingsSheetState: SettingsSheetVM.State,
+    settingsSheetVM: SettingsSheetVm,
+    settingsSheetState: SettingsSheetVm.State,
     onClose: () -> Unit,
 ) {
     Column(

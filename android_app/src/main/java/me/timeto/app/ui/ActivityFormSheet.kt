@@ -16,7 +16,7 @@ import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.ActivityDb__Data.TimerHints.HINT_TYPE
-import me.timeto.shared.vm.ActivityFormSheetVM
+import me.timeto.shared.vm.ActivityFormSheetVm
 
 @Composable
 fun ActivityFormSheet(
@@ -24,7 +24,7 @@ fun ActivityFormSheet(
     activity: ActivityDb?,
 ) {
 
-    val (vm, state) = rememberVm(activity) { ActivityFormSheetVM(activity) }
+    val (vm, state) = rememberVm(activity) { ActivityFormSheetVm(activity) }
 
     Column(
         modifier = Modifier

@@ -12,14 +12,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.shared.db.ChecklistDb
-import me.timeto.shared.vm.ChecklistSheetVM
+import me.timeto.shared.vm.ChecklistSheetVm
 
 @Composable
 fun ChecklistSheet(
     layer: WrapperView.Layer,
     checklist: ChecklistDb,
 ) {
-    val (_, state) = rememberVm { ChecklistSheetVM(checklist) }
+    val (_, state) = rememberVm { ChecklistSheetVm(checklist) }
 
     VStack(
         modifier = Modifier

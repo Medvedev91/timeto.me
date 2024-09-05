@@ -29,7 +29,7 @@ import me.timeto.app.rememberVm
 import kotlinx.coroutines.delay
 import me.timeto.app.c
 import me.timeto.app.roundedShape
-import me.timeto.shared.vm.SearchEmojiSheetVM
+import me.timeto.shared.vm.SearchEmojiSheetVm
 
 @Composable
 fun SearchEmojiSheet(
@@ -37,7 +37,7 @@ fun SearchEmojiSheet(
     onSelectEmoji: (String) -> Unit
 ) {
     // Outside TimetoSheet to have data at open time
-    val (vm, state) = rememberVm { SearchEmojiSheetVM() }
+    val (vm, state) = rememberVm { SearchEmojiSheetVm() }
 
     val focusRequester = remember { FocusRequester() }
 

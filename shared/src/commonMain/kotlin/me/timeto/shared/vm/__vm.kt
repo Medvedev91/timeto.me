@@ -12,7 +12,7 @@ import me.timeto.shared.defaultScope
  * - onDisappear() does not mean the destroy of view models, on iOS
  *   it can be restarted after onDisappear() by calling onAppear().
  */
-abstract class __VM<T> {
+abstract class __Vm<T> {
 
     abstract val state: MutableStateFlow<T>
 

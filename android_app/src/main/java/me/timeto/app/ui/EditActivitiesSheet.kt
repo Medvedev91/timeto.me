@@ -23,14 +23,14 @@ import me.timeto.app.c
 import me.timeto.app.rememberVm
 import me.timeto.app.roundedShape
 import me.timeto.app.squircleShape
-import me.timeto.shared.vm.EditActivitiesVM
+import me.timeto.shared.vm.EditActivitiesVm
 
 @Composable
 fun EditActivitiesSheet(
     layer: WrapperView.Layer
 ) {
 
-    val (vm, state) = rememberVm { EditActivitiesVM() }
+    val (vm, state) = rememberVm { EditActivitiesVm() }
 
     Box(
         modifier = Modifier

@@ -5,7 +5,7 @@ import me.timeto.shared.toHms
 
 class ActivityPomodoroSheetVm(
     selectedTimer: Int,
-) : __VM<ActivityPomodoroSheetVm.State>() {
+) : __Vm<ActivityPomodoroSheetVm.State>() {
 
     companion object {
 

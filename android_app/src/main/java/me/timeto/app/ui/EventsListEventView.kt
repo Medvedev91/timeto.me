@@ -16,12 +16,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
-import me.timeto.shared.vm.EventsListVM
+import me.timeto.shared.vm.EventsListVm
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun EventsListEventView(
-    eventUi: EventsListVM.EventUi,
+    eventUi: EventsListVm.EventUi,
     bgColor: Color,
     paddingStart: Dp,
     paddingEnd: Dp,

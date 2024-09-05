@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import me.timeto.app.c
 import me.timeto.app.rememberVm
 import me.timeto.shared.db.TaskDb
-import me.timeto.shared.vm.TaskFormSheetVM
+import me.timeto.shared.vm.TaskFormSheetVm
 
 @Composable
 fun TaskFormSheet(
@@ -20,7 +20,7 @@ fun TaskFormSheet(
     layer: WrapperView.Layer,
 ) {
 
-    val (vm, state) = rememberVm(task) { TaskFormSheetVM(task) }
+    val (vm, state) = rememberVm(task) { TaskFormSheetVm(task) }
 
     val keyboardController = LocalSoftwareKeyboardController.current
 

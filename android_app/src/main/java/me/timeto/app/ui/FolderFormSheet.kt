@@ -10,14 +10,14 @@ import androidx.compose.ui.unit.dp
 import me.timeto.app.c
 import me.timeto.app.rememberVm
 import me.timeto.shared.db.TaskFolderDb
-import me.timeto.shared.vm.FolderFormSheetVM
+import me.timeto.shared.vm.FolderFormSheetVm
 
 @Composable
 fun FolderFormSheet(
     layer: WrapperView.Layer,
     folder: TaskFolderDb?,
 ) {
-    val (vm, state) = rememberVm(folder) { FolderFormSheetVM(folder) }
+    val (vm, state) = rememberVm(folder) { FolderFormSheetVm(folder) }
 
     Column(
         modifier = Modifier

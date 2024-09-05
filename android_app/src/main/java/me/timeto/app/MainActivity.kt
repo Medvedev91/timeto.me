@@ -30,7 +30,7 @@ import me.timeto.app.ui.*
 import kotlinx.coroutines.delay
 import me.timeto.shared.*
 import me.timeto.shared.db.ShortcutDb
-import me.timeto.shared.vm.AppVM
+import me.timeto.shared.vm.AppVm
 
 class MainActivity : ComponentActivity() {
 
@@ -60,7 +60,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
 
-            val (vm, state) = rememberVm { AppVM() }
+            val (vm, state) = rememberVm { AppVm() }
 
             MaterialTheme(colors = darkColors()) {
 

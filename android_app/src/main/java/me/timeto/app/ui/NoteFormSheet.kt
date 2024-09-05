@@ -12,7 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import me.timeto.app.*
 import me.timeto.shared.db.NoteDb
-import me.timeto.shared.vm.NoteFormSheetVM
+import me.timeto.shared.vm.NoteFormSheetVm
 
 @Composable
 fun NoteFormSheet(
@@ -21,7 +21,7 @@ fun NoteFormSheet(
     onDelete: () -> Unit,
 ) {
 
-    val (vm, state) = rememberVm(note) { NoteFormSheetVM(note) }
+    val (vm, state) = rememberVm(note) { NoteFormSheetVm(note) }
 
     VStack(
         modifier = Modifier

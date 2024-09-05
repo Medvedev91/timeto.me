@@ -7,7 +7,7 @@ import me.timeto.shared.showUiAlert
 
 class RepeatingFormPeriodVm(
     defaultPeriod: RepeatingDb.Period?,
-) : __VM<RepeatingFormPeriodVm.State>() {
+) : __Vm<RepeatingFormPeriodVm.State>() {
 
     data class State(
         val activePeriodIndex: Int?,

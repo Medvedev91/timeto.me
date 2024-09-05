@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.shared.db.ShortcutDb
-import me.timeto.shared.vm.ShortcutFormSheetVM
+import me.timeto.shared.vm.ShortcutFormSheetVm
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -30,7 +30,7 @@ fun ShortcutFormSheet(
     editedShortcut: ShortcutDb?,
 ) {
 
-    val (vm, state) = rememberVm(editedShortcut) { ShortcutFormSheetVM(editedShortcut) }
+    val (vm, state) = rememberVm(editedShortcut) { ShortcutFormSheetVm(editedShortcut) }
 
     val keyboardController = LocalSoftwareKeyboardController.current
 

@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.shared.*
-import me.timeto.shared.vm.HistoryVM
+import me.timeto.shared.vm.HistoryVm
 
 @Composable
 fun HistoryDialogView(
@@ -36,7 +36,7 @@ fun HistoryDialogView(
     val scope = rememberCoroutineScope()
     var isEditMode by remember { mutableStateOf(false) }
 
-    val (vm, state) = rememberVm { HistoryVM() }
+    val (vm, state) = rememberVm { HistoryVm() }
 
     Box(
         contentAlignment = Alignment.BottomCenter,
@@ -71,7 +71,7 @@ fun HistoryDialogView(
                     key = { _, interval -> "${section.day}__${interval.id}" }
                 ) { _, interval ->
 
-                    val intervalUI = remember(interval) { HistoryVM.IntervalUI.build(interval, section) }
+                    val intervalUI = remember(interval) { HistoryVm.IntervalUI.build(interval, section) }
                     val timeHeight = (intervalUI.secondsForBar / 60).dp // 60 is the coefficient, you can change it
 
                     Row(
@@ -309,7 +309,7 @@ fun HistoryDialogView(
 
 @Composable
 private fun AddIntervalDialogView(
-    state: HistoryVM.State,
+    state: HistoryVm.State,
     defaultTime: Int,
     onClose: () -> Unit,
 ) {

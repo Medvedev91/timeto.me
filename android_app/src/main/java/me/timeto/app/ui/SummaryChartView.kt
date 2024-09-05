@@ -21,15 +21,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
-import me.timeto.shared.vm.SummaryChartVM
-import me.timeto.shared.vm.SummarySheetVM
+import me.timeto.shared.vm.SummaryChartVm
+import me.timeto.shared.vm.SummarySheetVm
 
 @Composable
 fun SummaryChartView(
-    activitiesUI: List<SummarySheetVM.ActivityUI>,
+    activitiesUI: List<SummarySheetVm.ActivityUI>,
 ) {
 
-    val (vm, state) = rememberVm(activitiesUI) { SummaryChartVM(activitiesUI) }
+    val (vm, state) = rememberVm(activitiesUI) { SummaryChartVm(activitiesUI) }
 
     VStack(
         modifier = Modifier

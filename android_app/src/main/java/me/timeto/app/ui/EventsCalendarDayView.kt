@@ -14,7 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
-import me.timeto.shared.vm.EventsCalendarDayVM
+import me.timeto.shared.vm.EventsCalendarDayVm
 
 private val bgColor = c.fg
 private val hPadding = 8.dp
@@ -24,7 +24,7 @@ fun EventsCalendarDayView(
     unixDay: Int,
 ) {
 
-    val (_, state) = rememberVm(unixDay) { EventsCalendarDayVM(unixDay) }
+    val (_, state) = rememberVm(unixDay) { EventsCalendarDayVm(unixDay) }
 
     VStack(
         modifier = Modifier

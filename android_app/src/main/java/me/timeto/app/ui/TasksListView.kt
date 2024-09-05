@@ -28,7 +28,7 @@ import kotlinx.coroutines.delay
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.launchEx
-import me.timeto.shared.vm.TasksListVM
+import me.timeto.shared.vm.TasksListVm
 
 private val inputShape = SquircleShape(16.dp)
 private val highlightTimeShape = SquircleShape(8.dp)
@@ -39,7 +39,7 @@ fun TasksListView(
     activeFolder: TaskFolderDb,
     dragItem: MutableState<DragItem?>,
 ) {
-    val (vm, state) = rememberVm(activeFolder) { TasksListVM(activeFolder) }
+    val (vm, state) = rememberVm(activeFolder) { TasksListVm(activeFolder) }
     val tmrwData = state.tmrwData
 
     val scope = rememberCoroutineScope()
@@ -310,7 +310,7 @@ fun TasksListView(
 
                                     when (timeUI) {
 
-                                        is TasksListVM.VmTaskUi.TimeUI.HighlightUI -> {
+                                        is TasksListVm.VmTaskUi.TimeUI.HighlightUI -> {
                                             Row(
                                                 modifier = Modifier
                                                     .offset(x = (-1).dp)
@@ -367,7 +367,7 @@ fun TasksListView(
                                             )
                                         }
 
-                                        is TasksListVM.VmTaskUi.TimeUI.RegularUI -> {
+                                        is TasksListVm.VmTaskUi.TimeUI.RegularUI -> {
                                             Text(
                                                 timeUI.text,
                                                 fontSize = 13.sp,
@@ -443,7 +443,7 @@ fun TasksListView(
 
 @Composable
 private fun TasksListView__TmrwTaskView(
-    taskUI: TasksListVM.TmrwTaskUI,
+    taskUI: TasksListVm.TmrwTaskUI,
     isFirst: Boolean,
 ) {
     Column(

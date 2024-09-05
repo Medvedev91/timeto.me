@@ -20,13 +20,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
-import me.timeto.shared.vm.RepeatingsListVM
+import me.timeto.shared.vm.RepeatingsListVm
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RepeatingsListView() {
 
-    val (_, state) = rememberVm { RepeatingsListVM() }
+    val (_, state) = rememberVm { RepeatingsListVm() }
 
     LazyColumn(
         reverseLayout = true,

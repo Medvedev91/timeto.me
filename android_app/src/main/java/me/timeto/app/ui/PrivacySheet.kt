@@ -16,14 +16,14 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
-import me.timeto.shared.vm.PrivacySheetVM
+import me.timeto.shared.vm.PrivacySheetVm
 
 @Composable
 fun PrivacySheet(
     layer: WrapperView.Layer,
 ) {
 
-    val (vm, state) = rememberVm { PrivacySheetVM() }
+    val (vm, state) = rememberVm { PrivacySheetVm() }
 
     VStack(
         modifier = Modifier

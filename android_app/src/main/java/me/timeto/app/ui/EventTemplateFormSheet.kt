@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.timeto.app.*
 import me.timeto.shared.db.EventTemplateDb
-import me.timeto.shared.vm.EventTemplateFormSheetVM
+import me.timeto.shared.vm.EventTemplateFormSheetVm
 
 @Composable
 fun EventTemplateFormSheet(
@@ -18,7 +18,7 @@ fun EventTemplateFormSheet(
 ) {
 
     val (vm, state) = rememberVm(eventTemplate) {
-        EventTemplateFormSheetVM(eventTemplate)
+        EventTemplateFormSheetVm(eventTemplate)
     }
 
     VStack(

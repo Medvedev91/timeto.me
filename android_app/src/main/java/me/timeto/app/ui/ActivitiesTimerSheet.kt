@@ -24,11 +24,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
-import me.timeto.shared.vm.ActivityTimerSheetVM
-import me.timeto.shared.vm.ActivitiesTimerSheetVM
+import me.timeto.shared.vm.ActivityTimerSheetVm
+import me.timeto.shared.vm.ActivitiesTimerSheetVm
 
 fun ActivitiesTimerSheet__show(
-    timerContext: ActivityTimerSheetVM.TimerContext?,
+    timerContext: ActivityTimerSheetVm.TimerContext?,
     withMenu: Boolean,
 ) {
     Sheet.show { layer ->
@@ -57,11 +57,11 @@ private val listEngPadding = 8.dp
 @Composable
 private fun ActivitiesTimerSheet(
     layerActivitiesSheet: WrapperView.Layer,
-    timerContext: ActivityTimerSheetVM.TimerContext?,
+    timerContext: ActivityTimerSheetVm.TimerContext?,
     withMenu: Boolean,
 ) {
 
-    val (_, state) = rememberVm(timerContext) { ActivitiesTimerSheetVM(timerContext) }
+    val (_, state) = rememberVm(timerContext) { ActivitiesTimerSheetVm(timerContext) }
 
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
     val contentHeight = (listItemHeight * state.allActivities.size) +

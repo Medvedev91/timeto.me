@@ -15,16 +15,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
-import me.timeto.shared.vm.EventTemplatesVM
+import me.timeto.shared.vm.EventTemplatesVm
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun EventTemplatesView(
     modifier: Modifier,
-    onPick: (EventTemplatesVM.TemplateUI) -> Unit,
+    onPick: (EventTemplatesVm.TemplateUI) -> Unit,
 ) {
 
-    val (_, state) = rememberVm { EventTemplatesVM() }
+    val (_, state) = rememberVm { EventTemplatesVm() }
     val templatesUI = state.templatesUI
 
     val scrollState = rememberLazyListState()

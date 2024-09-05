@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.shared.UnixTime
-import me.timeto.shared.vm.SummarySheetVM
+import me.timeto.shared.vm.SummarySheetVm
 
 private val barsHeaderHeight = 35.dp
 private val hPadding = 8.dp
@@ -32,7 +32,7 @@ fun SummarySheet(
     layer: WrapperView.Layer,
 ) {
 
-    val (vm, state) = rememberVm { SummarySheetVM() }
+    val (vm, state) = rememberVm { SummarySheetVm() }
 
     VStack(
         modifier = Modifier

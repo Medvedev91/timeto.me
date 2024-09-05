@@ -10,7 +10,7 @@ import me.timeto.app.VStack
 import me.timeto.app.c
 import me.timeto.app.rememberVm
 import me.timeto.shared.db.ActivityDb
-import me.timeto.shared.vm.GoalPickerSheetVM
+import me.timeto.shared.vm.GoalPickerSheetVm
 
 @Composable
 fun GoalPickerSheet(
@@ -18,7 +18,7 @@ fun GoalPickerSheet(
     onPick: (ActivityDb.Goal) -> Unit,
 ) {
 
-    val (vm, state) = rememberVm { GoalPickerSheetVM() }
+    val (vm, state) = rememberVm { GoalPickerSheetVm() }
 
     VStack(
         modifier = Modifier

@@ -10,7 +10,7 @@ import me.timeto.shared.models.sortedUi
 import me.timeto.shared.vm.ui.DayIntervalsUI
 import me.timeto.shared.vm.ui.TimerDataUI
 
-class HomeVm : __VM<HomeVm.State>() {
+class HomeVm : __Vm<HomeVm.State>() {
 
     data class State(
         val interval: IntervalDb,
@@ -312,7 +312,7 @@ class HomeVm : __VM<HomeVm.State>() {
     ) {
 
         val text = taskUi.tf.textUi()
-        val timerContext = ActivityTimerSheetVM.TimerContext.Task(taskUi.taskDb)
+        val timerContext = ActivityTimerSheetVm.TimerContext.Task(taskUi.taskDb)
         val timeUI: TimeUI? = taskUi.tf.calcTimeData()?.let { timeData ->
             val bgColor = when (timeData.status) {
                 TextFeatures.TimeData.STATUS.IN -> ColorRgba.homeFg

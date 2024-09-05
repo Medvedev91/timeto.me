@@ -30,7 +30,7 @@ import me.timeto.app.*
 import me.timeto.app.R
 import kotlinx.coroutines.delay
 import me.timeto.shared.db.TaskFolderDb
-import me.timeto.shared.vm.TabTasksVM
+import me.timeto.shared.vm.TabTasksVm
 import kotlin.random.Random
 
 val TasksView__TAB_BUTTON_WIDTH = 32.dp
@@ -52,7 +52,7 @@ fun TasksView(
     onClose: () -> Unit,
 ) {
 
-    val (_, state) = rememberVm { TabTasksVM() }
+    val (_, state) = rememberVm { TabTasksVm() }
 
     var activeTab by remember { mutableStateOf<Tab>(Tab.Folder(state.initFolder)) }
 

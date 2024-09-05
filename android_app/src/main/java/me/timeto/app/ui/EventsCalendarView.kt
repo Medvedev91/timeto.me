@@ -15,14 +15,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
-import me.timeto.shared.vm.EventsCalendarVM
+import me.timeto.shared.vm.EventsCalendarVm
 
 @Composable
 fun EventsCalendarView(
     modifier: Modifier,
 ) {
 
-    val (vm, state) = rememberVm { EventsCalendarVM() }
+    val (vm, state) = rememberVm { EventsCalendarVm() }
 
     VStack(
         modifier = modifier

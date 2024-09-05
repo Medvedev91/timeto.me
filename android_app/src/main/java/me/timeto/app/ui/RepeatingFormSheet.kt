@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.shared.db.RepeatingDb
-import me.timeto.shared.vm.RepeatingFormSheetVM
+import me.timeto.shared.vm.RepeatingFormSheetVm
 
 @Composable
 fun RepeatingFormSheet(
@@ -22,7 +22,7 @@ fun RepeatingFormSheet(
 ) {
 
     val (vm, state) = rememberVm(editedRepeating) {
-        RepeatingFormSheetVM(editedRepeating)
+        RepeatingFormSheetVm(editedRepeating)
     }
 
     VStack(

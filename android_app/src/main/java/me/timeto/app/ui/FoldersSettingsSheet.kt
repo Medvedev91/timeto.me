@@ -15,14 +15,14 @@ import androidx.compose.ui.unit.dp
 import me.timeto.app.c
 import me.timeto.app.rememberVm
 import me.timeto.app.roundedShape
-import me.timeto.shared.vm.FoldersSettingsVM
+import me.timeto.shared.vm.FoldersSettingsVm
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FoldersSettingsSheet(
     layer: WrapperView.Layer,
 ) {
-    val (vm, state) = rememberVm { FoldersSettingsVM() }
+    val (vm, state) = rememberVm { FoldersSettingsVm() }
 
     Column(
         modifier = Modifier

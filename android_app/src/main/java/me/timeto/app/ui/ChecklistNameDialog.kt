@@ -16,7 +16,7 @@ import me.timeto.app.HStack
 import me.timeto.app.c
 import me.timeto.app.rememberVm
 import me.timeto.shared.db.ChecklistDb
-import me.timeto.shared.vm.ChecklistNameDialogVM
+import me.timeto.shared.vm.ChecklistNameDialogVm
 
 @Composable
 fun ChecklistNameDialog(
@@ -26,7 +26,7 @@ fun ChecklistNameDialog(
 ) {
 
     val (vm, state) = rememberVm(editedChecklist) {
-        ChecklistNameDialogVM(editedChecklist)
+        ChecklistNameDialogVm(editedChecklist)
     }
 
     Column(
