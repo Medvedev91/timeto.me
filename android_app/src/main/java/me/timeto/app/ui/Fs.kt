@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -85,7 +86,7 @@ fun Fs__Header(
 
     ZStack(
         modifier = Modifier
-            .padding(top = statusBarHeight),
+            .padding(top = (LocalContext.current as MainActivity).statusBarHeightDp),
     ) {
 
         content()
@@ -200,7 +201,7 @@ fun Fs__HeaderClose(
 
     HStack(
         modifier = Modifier
-            .padding(top = statusBarHeight + H_PADDING)
+            .padding(top = (LocalContext.current as MainActivity).statusBarHeightDp + H_PADDING)
             .zIndex(1f),
     ) {
 

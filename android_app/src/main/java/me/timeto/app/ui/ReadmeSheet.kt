@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
@@ -406,7 +407,7 @@ private fun showImagesSlider(
             modifier = Modifier
                 .background(c.bg)
                 .fillMaxSize()
-                .padding(top = statusBarHeight + 2.dp),
+                .padding(top = (LocalContext.current as MainActivity).statusBarHeightDp + 2.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 

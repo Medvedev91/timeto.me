@@ -32,9 +32,9 @@ import me.timeto.shared.*
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.vm.AppVM
 
-var statusBarHeight = 0.dp // todo remove?
-
 class MainActivity : ComponentActivity() {
+
+    var statusBarHeightDp: Dp = 0.dp
 
     private val batteryReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent) {
@@ -53,7 +53,7 @@ class MainActivity : ComponentActivity() {
         // Remove system paddings including status and navigation bars.
         // Needs android:windowSoftInputMode="adjustResize" in the manifest.
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        statusBarHeight = getStatusBarHeight(this@MainActivity)
+        statusBarHeightDp = getStatusBarHeight(this@MainActivity)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
             notificationsPermissionProcessing()

@@ -22,6 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -65,7 +66,7 @@ object Sheet {
                      * by height wouldn't work on close click.
                      */
                     modifier = Modifier
-                        .padding(top = topPadding + statusBarHeight) // Restriction max height
+                        .padding(top = topPadding + (LocalContext.current as MainActivity).statusBarHeightDp) // Restriction max height
                         .clip(sheetShape)
                         .pointerInput(Unit) { }
                 ) {
