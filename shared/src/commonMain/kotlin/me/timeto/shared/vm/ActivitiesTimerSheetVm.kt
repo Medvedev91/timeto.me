@@ -1,7 +1,7 @@
 package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
-import me.timeto.shared.DI
+import me.timeto.shared.Cache
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.textFeatures
@@ -38,7 +38,7 @@ class ActivitiesTimerSheetVm(
         val timerHints: List<TimerHintUI>,
     ) {
         val listText = activity.name.textFeatures().textUi()
-        val isActive = DI.lastInterval.activity_id == activity.id
+        val isActive = Cache.lastInterval.activity_id == activity.id
     }
 
     data class State(
@@ -47,7 +47,7 @@ class ActivitiesTimerSheetVm(
 
     override val state = MutableStateFlow(
         State(
-            allActivities = prepActivitiesUI(timerContext, DI.activitiesSorted),
+            allActivities = prepActivitiesUI(timerContext, Cache.activitiesSorted),
         )
     )
 

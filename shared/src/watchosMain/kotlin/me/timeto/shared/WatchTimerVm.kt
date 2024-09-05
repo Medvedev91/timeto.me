@@ -23,7 +23,7 @@ class WatchTimerVm : __Vm<WatchTimerVm.State>() {
     override val state = MutableStateFlow(
         State(
             isPurple = false,
-            lastInterval = DI.lastInterval
+            lastInterval = Cache.lastInterval
         )
     )
 

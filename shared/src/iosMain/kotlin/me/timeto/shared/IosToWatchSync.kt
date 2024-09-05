@@ -83,7 +83,7 @@ object IosToWatchSync {
         if (command == "toggle_pomodoro") {
             TimerDataUI(
                 interval = IntervalDb.getLastOneOrNull()!!,
-                todayTasks = DI.tasks.filter { it.isToday },
+                todayTasks = Cache.tasks.filter { it.isToday },
                 isPurple = false,
             ).togglePomodoro()
             onFinish("{}")

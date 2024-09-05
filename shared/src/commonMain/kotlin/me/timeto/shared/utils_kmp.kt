@@ -516,7 +516,7 @@ internal fun initKmp(
         NoteSQAdapter = NoteSQ.Adapter(IntColumnAdapter, IntColumnAdapter),
     )
     deviceData = deviceData_
-    initKmpDeferred = defaultScope().async { DI.init() }
+    initKmpDeferred = defaultScope().async { Cache.init() }
 }
 
 ///

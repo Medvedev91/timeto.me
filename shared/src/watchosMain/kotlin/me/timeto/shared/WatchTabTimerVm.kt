@@ -34,8 +34,8 @@ class WatchTabTimerVm : __Vm<WatchTabTimerVm.State>() {
 
     override val state = MutableStateFlow(
         State(
-            activities = DI.activitiesSorted,
-            lastInterval = DI.lastInterval,
+            activities = Cache.activitiesSorted,
+            lastInterval = Cache.lastInterval,
             isPurple = false,
         )
     )

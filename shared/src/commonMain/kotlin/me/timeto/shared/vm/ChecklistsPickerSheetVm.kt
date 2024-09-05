@@ -1,7 +1,7 @@
 package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
-import me.timeto.shared.DI
+import me.timeto.shared.Cache
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.onEachExIn
 
@@ -34,7 +34,7 @@ class ChecklistsPickerSheetVm(
 
     override val state = MutableStateFlow(
         State(
-            checklistsDb = DI.checklists,
+            checklistsDb = Cache.checklists,
             selectedIds = selectedChecklists.map { it.id }.toSet(),
         )
     )

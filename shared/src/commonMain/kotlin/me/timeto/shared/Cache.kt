@@ -3,7 +3,7 @@ package me.timeto.shared
 import kotlinx.coroutines.flow.filter
 import me.timeto.shared.db.*
 
-object DI {
+object Cache {
 
     var checklists = listOf<ChecklistDb>()
     var checklistItems = listOf<ChecklistItemDb>()

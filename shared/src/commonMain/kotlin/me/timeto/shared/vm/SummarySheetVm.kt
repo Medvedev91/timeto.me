@@ -15,7 +15,7 @@ class SummarySheetVm : __Vm<SummarySheetVm.State>() {
         val isChartVisible: Boolean,
     ) {
 
-        val minPickerTime: UnixTime = DI.firstInterval.unixTime()
+        val minPickerTime: UnixTime = Cache.firstInterval.unixTime()
         val maxPickerTime: UnixTime = UnixTime()
 
         val timeStartText: String = pickerTimeStart.getStringByComponents(buttonDateStringComponents)
@@ -152,7 +152,7 @@ private fun prepActivitiesUI(
     }
     return mapActivitySeconds
         .map { (activityId, seconds) ->
-            val activity = DI.getActivityByIdOrNull(activityId)!!
+            val activity = Cache.getActivityByIdOrNull(activityId)!!
             SummarySheetVm.ActivityUI(
                 activity = activity,
                 seconds = seconds,

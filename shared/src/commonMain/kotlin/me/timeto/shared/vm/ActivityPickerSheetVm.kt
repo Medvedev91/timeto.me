@@ -1,7 +1,7 @@
 package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
-import me.timeto.shared.DI
+import me.timeto.shared.Cache
 import me.timeto.shared.db.ActivityDb
 
 class ActivityPickerSheetVm : __Vm<ActivityPickerSheetVm.State>() {
@@ -14,7 +14,7 @@ class ActivityPickerSheetVm : __Vm<ActivityPickerSheetVm.State>() {
 
     override val state = MutableStateFlow(
         State(
-            activitiesUI = DI.activitiesSorted.map { ActivityUI(it) }
+            activitiesUI = Cache.activitiesSorted.map { ActivityUI(it) }
         )
     )
 

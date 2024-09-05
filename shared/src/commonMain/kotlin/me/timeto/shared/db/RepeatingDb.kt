@@ -70,7 +70,7 @@ data class RepeatingDb(
                     .forEach { repeating ->
                         TaskDb.addWithValidation_transactionRequired(
                             text = repeating.prepTextForTask(today),
-                            folder = DI.getTodayFolder(),
+                            folder = Cache.getTodayFolder(),
                         )
                         db.repeatingQueries.upLastDayById(last_day = today, id = repeating.id)
                     }

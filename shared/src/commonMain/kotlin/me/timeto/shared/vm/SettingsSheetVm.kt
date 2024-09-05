@@ -56,9 +56,9 @@ class SettingsSheetVm : __Vm<SettingsSheetVm.State>() {
 
     override val state = MutableStateFlow(
         State(
-            checklists = DI.checklists,
-            shortcuts = DI.shortcuts,
-            notes = DI.notes,
+            checklists = Cache.checklists,
+            shortcuts = Cache.shortcuts,
+            notes = Cache.notes,
             dayStartSeconds = dayStartOffsetSeconds(),
             feedbackSubject = "Feedback",
             autoBackupTimeString = prepAutoBackupTimeString(AutoBackup.lastTimeCache.value),

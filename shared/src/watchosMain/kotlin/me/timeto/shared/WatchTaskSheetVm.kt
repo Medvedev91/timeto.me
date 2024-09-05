@@ -33,7 +33,7 @@ class WatchTaskSheetVm(
 
     override val state = MutableStateFlow(
         State(
-            activitiesUI = DI.activitiesSorted.map { activity ->
+            activitiesUI = Cache.activitiesSorted.map { activity ->
                 ActivityUI(
                     activity = activity,
                 )

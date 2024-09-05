@@ -86,7 +86,7 @@ data class KvDb(
             selectAll().firstOrNull { it.key == this.name }?.value
 
         fun selectStringOrNullCached(): String? =
-            DI.kv.firstOrNull { it.key == this.name }?.value
+            Cache.kv.firstOrNull { it.key == this.name }?.value
 
         fun selectBooleanOrNullCached(): Boolean? =
             selectStringOrNullCached()?.toBoolean10()

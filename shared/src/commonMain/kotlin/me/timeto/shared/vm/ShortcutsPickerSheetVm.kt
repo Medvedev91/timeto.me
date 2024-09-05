@@ -1,7 +1,7 @@
 package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
-import me.timeto.shared.DI
+import me.timeto.shared.Cache
 import me.timeto.shared.db.ShortcutDb
 
 class ShortcutsPickerSheetVm(
@@ -24,7 +24,7 @@ class ShortcutsPickerSheetVm(
 
     override val state = MutableStateFlow(
         State(
-            shortcutsUI = DI.shortcuts.map {
+            shortcutsUI = Cache.shortcuts.map {
                 ShortcutUI(it, it.id in selectedShortcuts.map { it.id })
             },
         )

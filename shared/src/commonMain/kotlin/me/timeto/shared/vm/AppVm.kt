@@ -25,7 +25,7 @@ class AppVm : __Vm<AppVm.State>() {
 
             initKmpDeferred.await()
 
-            if (!DI.isLateInitInitialized())
+            if (!Cache.isLateInitInitialized())
                 fillInitData()
 
             state.update { it.copy(isAppReady = true) }
@@ -156,8 +156,8 @@ private fun syncTmrw() {
     // Using .localDayWithDayStart() everywhere
     val utcOffsetDS = localUtcOffsetWithDayStart
     val todayDay = UnixTime(utcOffset = utcOffsetDS).localDay
-    val todayFolder = DI.getTodayFolder()
-    DI.tasks
+    val todayFolder = Cache.getTodayFolder()
+    Cache.tasks
         .filter { it.isTmrw && (it.unixTime(utcOffset = utcOffsetDS).localDay < todayDay) }
         .forEach { task ->
             launchExDefault {
@@ -207,7 +207,7 @@ private suspend fun fillInitData() {
     val actOther = ActivityDb.addWithValidation("Other", "💡", 3600, 9, ActivityDb.TYPE.OTHER, colorsWheel.next(), defData, true, goals, min5)
 
     val interval = IntervalDb.addWithValidation(30 * 60, actPd, null)
-    DI.fillLateInit(interval, interval) // To 100% ensure
+    Cache.fillLateInit(interval, interval) // To 100% ensure
 
     val todayDay = UnixTime().localDay
     fun prepRep(title: String, activity: ActivityDb, timerMin: Int): String =

@@ -23,11 +23,11 @@ class TasksListVm(
 
     override val state = MutableStateFlow(
         State(
-            vmTasksUi = DI.tasks.toUiList(),
+            vmTasksUi = Cache.tasks.toUiList(),
             tmrwData = if (folder.isTmrw)
                 prepTmrwData(
-                    allRepeatings = DI.repeatings,
-                    allEvents = DI.events,
+                    allRepeatings = Cache.repeatings,
+                    allEvents = Cache.events,
                 ) else null,
             addFormInputTextValue = "",
         )

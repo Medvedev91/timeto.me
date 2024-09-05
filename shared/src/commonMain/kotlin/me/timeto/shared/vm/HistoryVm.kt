@@ -11,7 +11,7 @@ class HistoryVm : __Vm<HistoryVm.State>() {
         val sections: List<HistorySection>,
         val activitiesFormAddUI: List<ActivityFormAddUI>,
     ) {
-        val minPickerDay = DI.firstInterval.unixTime().localDay
+        val minPickerDay = Cache.firstInterval.unixTime().localDay
     }
 
     override val state = MutableStateFlow(

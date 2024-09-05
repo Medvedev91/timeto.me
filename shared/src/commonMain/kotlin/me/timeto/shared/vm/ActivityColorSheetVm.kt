@@ -3,7 +3,7 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.AppleColors
 import me.timeto.shared.ColorRgba
-import me.timeto.shared.DI
+import me.timeto.shared.Cache
 import me.timeto.shared.textFeatures
 
 class ActivityColorSheetVm(
@@ -61,7 +61,7 @@ class ActivityColorSheetVm(
             }
             .chunked(3)
 
-        val allActivities: List<ActivityUI> = DI.activitiesSorted.map {
+        val allActivities: List<ActivityUI> = Cache.activitiesSorted.map {
             ActivityUI(
                 text = "${it.emoji} ${it.name.textFeatures().textNoFeatures}",
                 colorRgba = it.colorRgba,

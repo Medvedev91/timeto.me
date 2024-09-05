@@ -12,7 +12,7 @@ class FoldersSettingsVm : __Vm<FoldersSettingsVm.State>() {
         val text = "Add \"Tomorrow\" Folder"
 
         fun add(): Unit = launchExDefault {
-            if (DI.getTmrwFolderOrNull() != null) {
+            if (Cache.getTmrwFolderOrNull() != null) {
                 showUiAlert("Tmrw already exists", "Tmrw already exists")
                 return@launchExDefault
             }
@@ -29,7 +29,7 @@ class FoldersSettingsVm : __Vm<FoldersSettingsVm.State>() {
 
     override val state = MutableStateFlow(
         State(
-            folders = DI.taskFolders.toUIList()
+            folders = Cache.taskFolders.toUIList()
         )
     )
 

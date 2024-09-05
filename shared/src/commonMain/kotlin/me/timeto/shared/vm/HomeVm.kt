@@ -42,7 +42,7 @@ class HomeVm : __Vm<HomeVm.State>() {
 
         val goalsUI: List<GoalUI> = if (todayIntervalsUI == null)
             listOf()
-        else DI.activitiesSorted
+        else Cache.activitiesSorted
             .map { activity ->
                 val activityName = activity.name.textFeatures().textNoFeatures
                 activity.goals
@@ -77,7 +77,7 @@ class HomeVm : __Vm<HomeVm.State>() {
             .flatten()
 
         val menuTime: String = UnixTime().getStringByComponents(UnixTime.StringComponent.hhmm24)
-        val menuTasksNote = "${DI.tasks.count { it.isToday }}"
+        val menuTasksNote = "${Cache.tasks.count { it.isToday }}"
 
         val mainTasks: List<MainTask> = run {
             val tasksUi: List<TaskUi> =
@@ -146,7 +146,7 @@ class HomeVm : __Vm<HomeVm.State>() {
 
     override val state = MutableStateFlow(
         State(
-            interval = DI.lastInterval,
+            interval = Cache.lastInterval,
             isPurple = false,
             todayTasksUi = listOf(),
             isTasksVisible = false,
@@ -226,7 +226,7 @@ class HomeVm : __Vm<HomeVm.State>() {
             while (true) {
                 state.update {
                     it.copy(
-                        interval = DI.lastInterval,
+                        interval = Cache.lastInterval,
                         idToUpdate = it.idToUpdate + 1, // Force update
                     )
                 }

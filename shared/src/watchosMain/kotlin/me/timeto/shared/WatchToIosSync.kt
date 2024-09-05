@@ -123,7 +123,7 @@ object WatchToIosSync {
 
             // To 100% ensure
             val ifl = IntervalDb.getFirstAndLastNeedTransaction()
-            DI.fillLateInit(firstInterval = ifl[0], lastInterval = ifl[1])
+            Cache.fillLateInit(firstInterval = ifl[0], lastInterval = ifl[1])
         }
     }
 }

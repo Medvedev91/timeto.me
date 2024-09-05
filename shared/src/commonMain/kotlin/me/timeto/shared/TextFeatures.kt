@@ -196,7 +196,7 @@ private fun parseLocal(initText: String): TextFeatures {
         .findAll(textNoFeatures)
         .map { match ->
             val id = match.groupValues[1].toInt()
-            val checklist = DI.getChecklistByIdOrNull(id) ?: return@map null
+            val checklist = Cache.getChecklistByIdOrNull(id) ?: return@map null
             match.clean()
             checklist
         }
@@ -207,7 +207,7 @@ private fun parseLocal(initText: String): TextFeatures {
         .findAll(textNoFeatures)
         .map { match ->
             val id = match.groupValues[1].toInt()
-            val shortcut = DI.getShortcutByIdOrNull(id) ?: return@map null
+            val shortcut = Cache.getShortcutByIdOrNull(id) ?: return@map null
             match.clean()
             shortcut
         }
@@ -233,7 +233,7 @@ private fun parseLocal(initText: String): TextFeatures {
     val activity: ActivityDb? = activityRegex
         .find(textNoFeatures)?.let { match ->
             val id = match.groupValues[1].toInt()
-            val activity = DI.getActivityByIdOrNull(id) ?: return@let null
+            val activity = Cache.getActivityByIdOrNull(id) ?: return@let null
             match.clean()
             return@let activity
         }
