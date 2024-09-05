@@ -32,6 +32,8 @@ import me.timeto.shared.toHms
 import java.text.SimpleDateFormat
 import java.util.*
 
+private val dialogShape = SquircleShapeDp(16.dp)
+
 object Dialog {
 
     fun show(
@@ -50,7 +52,7 @@ object Dialog {
                         .systemBarsPadding()
                         .imePadding()
                         .padding(margin)
-                        .clip(SquircleShape(80f))
+                        .clip(dialogShape)
                         .pointerInput(Unit) { }
                 ) {
                     content(layer)
