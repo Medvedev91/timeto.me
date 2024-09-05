@@ -15,6 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.c
+import me.timeto.app.squircleShape
 import me.timeto.app.toColor
 import me.timeto.shared.TextFeatures
 
@@ -42,7 +43,7 @@ fun TextFeaturesTriggersView(
                 modifier = Modifier
                     .padding(end = if (isLast) 0.dp else 8.dp)
                     .height(itemHeight)
-                    .clip(SquircleShape(len = 50f))
+                    .clip(squircleShape)
                     .background(trigger.color.toColor())
                     .clickable {
                         trigger.performUI()
@@ -52,8 +53,6 @@ fun TextFeaturesTriggersView(
             ) {
                 Text(
                     trigger.title,
-                    modifier = Modifier
-                        .offset(y = (-0.8).dp),
                     textAlign = TextAlign.Center,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.W400,
