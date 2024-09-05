@@ -76,8 +76,6 @@ fun EventsView() {
 //
 // Mode Button
 
-private val modeButtonShape = SquircleShape(len = 50f)
-
 @Composable
 private fun ModeButton(
     text: String,
@@ -89,7 +87,7 @@ private fun ModeButton(
     Text(
         text = text,
         modifier = modifier
-            .clip(shape = modeButtonShape)
+            .clip(shape = squircleShape)
             .clickable {
                 onClick()
             }
