@@ -56,13 +56,6 @@ fun MutableState<Boolean>.setFalse() {
     value = false
 }
 
-fun Modifier.conditional(
-    condition: Boolean,
-    modifier: Modifier.() -> Modifier,
-): Modifier {
-    return if (condition) then(modifier(Modifier)) else this
-}
-
 val timerFont = FontFamily(Font(R.font.timer_font))
 
 fun showOpenSource() {
