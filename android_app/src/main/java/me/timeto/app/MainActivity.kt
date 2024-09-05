@@ -51,7 +51,7 @@ class MainActivity : ComponentActivity() {
         registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
 
         // Remove system paddings including status and navigation bars.
-        // Needs android:windowSoftInputMode="adjustNothing" in the manifest.
+        // Needs android:windowSoftInputMode="adjustResize" in the manifest.
         WindowCompat.setDecorFitsSystemWindows(window, false)
         statusBarHeight = getStatusBarHeight(this@MainActivity)
 
