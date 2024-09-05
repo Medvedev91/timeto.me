@@ -3,7 +3,7 @@ import shared
 
 struct ShortcutFormSheet: View {
 
-    @State private var vm: ShortcutFormSheetVM
+    @State private var vm: ShortcutFormSheetVm
     @Binding private var isPresented: Bool
     @State private var sheetHeaderScroll = 0
 
@@ -12,7 +12,7 @@ struct ShortcutFormSheet: View {
             editedShortcut: ShortcutDb?
     ) {
         _isPresented = isPresented
-        vm = ShortcutFormSheetVM(shortcut: editedShortcut)
+        vm = ShortcutFormSheetVm(shortcut: editedShortcut)
     }
 
     var body: some View {

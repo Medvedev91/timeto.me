@@ -3,7 +3,7 @@ import shared
 
 struct RepeatingsFormSheet: View {
 
-    @State private var vm: RepeatingFormSheetVM
+    @State private var vm: RepeatingFormSheetVm
     @Binding private var isPresented: Bool
     private let onSave: () -> ()
 
@@ -20,7 +20,7 @@ struct RepeatingsFormSheet: View {
     ) {
         _isPresented = isPresented
         self.onSave = onSave
-        vm = RepeatingFormSheetVM(repeating: editedRepeating)
+        vm = RepeatingFormSheetVm(repeating: editedRepeating)
     }
 
     var body: some View {

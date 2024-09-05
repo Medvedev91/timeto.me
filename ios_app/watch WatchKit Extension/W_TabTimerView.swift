@@ -3,7 +3,7 @@ import shared
 
 struct W_TabTimerView: View {
 
-    @State private var vm = WatchTabTimerVM()
+    @State private var vm = WatchTabTimerVm()
 
     var body: some View {
 
@@ -39,7 +39,7 @@ struct W_TabTimerView: View {
 
     struct TimerView: View {
 
-        @State private var vm = WatchTimerVM()
+        @State private var vm = WatchTimerVm()
 
         var body: some View {
 
@@ -62,7 +62,7 @@ struct W_TabTimerView: View {
 
     struct ActivityView: View {
 
-        var activityUI: WatchTabTimerVM.ActivityUI
+        var activityUI: WatchTabTimerVm.ActivityUI
         @State private var isTickerPresented = false
 
         let defBgColor = Color(rgba: [34, 34, 35])

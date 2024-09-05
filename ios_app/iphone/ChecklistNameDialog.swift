@@ -3,7 +3,7 @@ import shared
 
 struct ChecklistNameDialog: View {
 
-    @State private var vm: ChecklistNameDialogVM
+    @State private var vm: ChecklistNameDialogVm
 
     @Binding private var isPresented: Bool
     private let onSave: (ChecklistDb) -> Void
@@ -14,7 +14,7 @@ struct ChecklistNameDialog: View {
         onSave: @escaping (ChecklistDb) -> Void
     ) {
         _isPresented = isPresented
-        vm = ChecklistNameDialogVM(checklist: checklist)
+        vm = ChecklistNameDialogVm(checklist: checklist)
         self.onSave = onSave
     }
 

@@ -5,9 +5,9 @@ private let buttonFont: Font = .system(size: 15, weight: .light)
 
 struct EventTemplatesView: View {
 
-    let onPick: (EventTemplatesVM.TemplateUI) -> Void
+    let onPick: (EventTemplatesVm.TemplateUI) -> Void
 
-    @State private var vm = EventTemplatesVM()
+    @State private var vm = EventTemplatesVm()
 
     @EnvironmentObject private var nativeSheet: NativeSheet
 

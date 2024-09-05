@@ -5,7 +5,7 @@ import shared
 @main
 struct IOSApp: App {
 
-    @State private var vm = AppVM()
+    @State private var vm = AppVm()
 
     @Environment(\.scenePhase) private var scenePhase
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate

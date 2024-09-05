@@ -6,7 +6,7 @@ struct ChecklistsPickerSheet: View {
     @Binding private var isPresented: Bool
     private let onPick: ([ChecklistDb]) -> Void
 
-    @State private var vm: ChecklistsPickerSheetVM
+    @State private var vm: ChecklistsPickerSheetVm
     @State private var sheetHeaderScroll = 0
 
     @EnvironmentObject private var nativeSheet: NativeSheet
@@ -18,7 +18,7 @@ struct ChecklistsPickerSheet: View {
     ) {
         self.onPick = onPick
         _isPresented = isPresented
-        _vm = State(initialValue: ChecklistsPickerSheetVM(selectedChecklists: selectedChecklists))
+        _vm = State(initialValue: ChecklistsPickerSheetVm(selectedChecklists: selectedChecklists))
     }
 
     var body: some View {

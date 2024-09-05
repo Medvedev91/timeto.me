@@ -9,7 +9,7 @@ struct GoalPickerSheet: View {
     ///
 
     @EnvironmentObject private var nativeSheet: NativeSheet
-    @State private var vm = GoalPickerSheetVM()
+    @State private var vm = GoalPickerSheetVm()
 
     var body: some View {
 

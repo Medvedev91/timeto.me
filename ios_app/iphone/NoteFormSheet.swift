@@ -6,7 +6,7 @@ struct NoteFormSheet: View {
     @EnvironmentObject private var nativeSheet: NativeSheet
 
     @Binding private var isPresented: Bool
-    @State private var vm: NoteFormSheetVM
+    @State private var vm: NoteFormSheetVm
     private let onDelete: () -> Void
 
     init(
@@ -15,7 +15,7 @@ struct NoteFormSheet: View {
             onDelete: @escaping () -> Void
     ) {
         _isPresented = isPresented
-        _vm = State(initialValue: NoteFormSheetVM(note: note))
+        _vm = State(initialValue: NoteFormSheetVm(note: note))
         self.onDelete = onDelete
     }
 

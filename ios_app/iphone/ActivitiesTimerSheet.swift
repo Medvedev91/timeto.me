@@ -4,7 +4,7 @@ import shared
 extension NativeSheet {
 
     func showActivitiesTimerSheet(
-            timerContext: ActivityTimerSheetVM.TimerContext?,
+            timerContext: ActivityTimerSheetVm.TimerContext?,
             withMenu: Bool,
             onStart: @escaping () -> Void
     ) {
@@ -40,7 +40,7 @@ private struct ActivitiesTimerSheet: View {
 
     @EnvironmentObject private var nativeSheet: NativeSheet
 
-    @State private var vm: ActivitiesTimerSheetVM
+    @State private var vm: ActivitiesTimerSheetVm
 
     @Binding private var isPresented: Bool
 
@@ -49,13 +49,13 @@ private struct ActivitiesTimerSheet: View {
     @State private var isHistoryPresented = false
     @State private var isEditActivitiesPresented = false
 
-    private let timerContext: ActivityTimerSheetVM.TimerContext?
+    private let timerContext: ActivityTimerSheetVm.TimerContext?
     private let withMenu: Bool
     private let onStart: () -> Void
 
     init(
             isPresented: Binding<Bool>,
-            timerContext: ActivityTimerSheetVM.TimerContext?,
+            timerContext: ActivityTimerSheetVm.TimerContext?,
             withMenu: Bool,
             onStart: @escaping () -> Void
     ) {
@@ -64,10 +64,10 @@ private struct ActivitiesTimerSheet: View {
         self.withMenu = withMenu
         self.onStart = onStart
 
-        let vm = ActivitiesTimerSheetVM(timerContext: timerContext)
+        let vm = ActivitiesTimerSheetVm(timerContext: timerContext)
         _vm = State(initialValue: vm)
 
-        let vmState = vm.state.value as! ActivitiesTimerSheetVM.State
+        let vmState = vm.state.value as! ActivitiesTimerSheetVm.State
         _sheetHeight = State(initialValue: calcSheetHeight(
                 activitiesCount: vmState.allActivities.count,
                 withMenu: withMenu

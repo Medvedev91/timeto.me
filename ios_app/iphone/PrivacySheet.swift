@@ -5,7 +5,7 @@ struct PrivacySheet: View {
 
     @Binding var isPresented: Bool
 
-    @State private var vm = PrivacySheetVM()
+    @State private var vm = PrivacySheetVm()
     @State private var scroll = 0
 
     var body: some View {

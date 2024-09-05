@@ -3,7 +3,7 @@ import shared
 
 struct ChecklistSheet: View {
     
-    @State private var vm: ChecklistSheetVM
+    @State private var vm: ChecklistSheetVm
     
     @Binding private var isPresented: Bool
     
@@ -12,7 +12,7 @@ struct ChecklistSheet: View {
         checklist: ChecklistDb
     ) {
         _isPresented = isPresented
-        _vm = State(initialValue: ChecklistSheetVM(checklistDb: checklist))
+        _vm = State(initialValue: ChecklistSheetVm(checklistDb: checklist))
     }
     
     var body: some View {

@@ -3,7 +3,7 @@ import shared
 
 struct EventsCalendarView: View {
 
-    @State private var vm = EventsCalendarVM()
+    @State private var vm = EventsCalendarVm()
 
     var body: some View {
 
@@ -59,7 +59,7 @@ struct EventsCalendarView: View {
                                 }
                             }
 
-                            let weeks = month.weeks as! [[EventsCalendarVM.MonthDay?]]
+                            let weeks = month.weeks as! [[EventsCalendarVm.MonthDay?]]
 
                             // Fix nested ForEachIndexed()
                             ForEach(weeks, id: \.self) { week in

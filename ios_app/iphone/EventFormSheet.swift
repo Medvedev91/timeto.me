@@ -24,7 +24,7 @@ extension Fs {
 
 private struct EventFormSheet: View {
 
-    @State private var vm: EventFormSheetVM
+    @State private var vm: EventFormSheetVm
 
     @Binding private var isPresented: Bool
     private let onSave: () -> Void
@@ -41,7 +41,7 @@ private struct EventFormSheet: View {
         onSave: @escaping () -> Void = {
         }
     ) {
-        _vm = State(initialValue: EventFormSheetVM(
+        _vm = State(initialValue: EventFormSheetVm(
             event: editedEvent,
             defText: defText,
             defTime: defTime?.toKotlinInt()

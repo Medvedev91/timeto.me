@@ -15,7 +15,7 @@ struct SummarySheet: View {
 
     ///
 
-    @State private var vm = SummarySheetVM()
+    @State private var vm = SummarySheetVm()
 
     var body: some View {
 

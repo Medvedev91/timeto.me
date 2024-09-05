@@ -5,7 +5,7 @@ struct FoldersSettingsSheet: View {
 
     @Binding var isPresented: Bool
 
-    @State private var vm = FoldersSettingsVM()
+    @State private var vm = FoldersSettingsVm()
     @State private var sheetHeaderScroll = 0
 
     @State private var isAddSheetPresented = false
@@ -87,7 +87,7 @@ struct FoldersSettingsSheet: View {
 
 private struct FoldersSettingsSheet__FolderItem: View {
 
-    let vm: FoldersSettingsVM
+    let vm: FoldersSettingsVm
     let folder: TaskFolderDb
 
     @State private var isEditPresented = false

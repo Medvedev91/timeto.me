@@ -5,7 +5,7 @@ extension NativeSheet {
 
     func showActivityTimerSheet(
             activity: ActivityDb,
-            timerContext: ActivityTimerSheetVM.TimerContext?,
+            timerContext: ActivityTimerSheetVm.TimerContext?,
             // Set false for nested sheet to speed up closing
             hideOnStart: Bool,
             onStart: @escaping () -> Void
@@ -27,7 +27,7 @@ extension NativeSheet {
 
 private struct ActivityTimerSheet: View {
 
-    @State private var vm: ActivityTimerSheetVM
+    @State private var vm: ActivityTimerSheetVm
 
     @Binding private var isPresented: Bool
     private let onStart: () -> ()
@@ -37,12 +37,12 @@ private struct ActivityTimerSheet: View {
     init(
             activity: ActivityDb,
             isPresented: Binding<Bool>,
-            timerContext: ActivityTimerSheetVM.TimerContext?,
+            timerContext: ActivityTimerSheetVm.TimerContext?,
             onStart: @escaping () -> ()
     ) {
         self._isPresented = isPresented
         self.onStart = onStart
-        _vm = State(initialValue: ActivityTimerSheetVM(activity: activity, timerContext: timerContext))
+        _vm = State(initialValue: ActivityTimerSheetVm(activity: activity, timerContext: timerContext))
     }
 
     var body: some View {

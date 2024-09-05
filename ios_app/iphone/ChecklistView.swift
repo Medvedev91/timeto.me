@@ -8,7 +8,7 @@ struct ChecklistView: View {
 
     @EnvironmentObject private var nativeSheet: NativeSheet
 
-    @State private var vm: ChecklistVM
+    @State private var vm: ChecklistVm
 
     private let onDelete: () -> Void
     private let maxLines: Int
@@ -24,7 +24,7 @@ struct ChecklistView: View {
         maxLines: Int,
         bottomPadding: CGFloat = 0
     ) {
-        self._vm = State(initialValue: ChecklistVM(checklistDb: checklistDb))
+        self._vm = State(initialValue: ChecklistVm(checklistDb: checklistDb))
         self.onDelete = onDelete
         self.bottomPadding = bottomPadding
         self.maxLines = maxLines

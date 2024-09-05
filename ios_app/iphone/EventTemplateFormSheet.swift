@@ -5,7 +5,7 @@ struct EventTemplateFormSheet: View {
 
     @Binding private var isPresented: Bool
 
-    @State private var vm: EventTemplateFormSheetVM
+    @State private var vm: EventTemplateFormSheetVm
 
     @EnvironmentObject private var nativeSheet: NativeSheet
 
@@ -16,7 +16,7 @@ struct EventTemplateFormSheet: View {
         eventTemplateDb: EventTemplateDb?
     ) {
         _isPresented = isPresented
-        _vm = State(initialValue: EventTemplateFormSheetVM(
+        _vm = State(initialValue: EventTemplateFormSheetVm(
             eventTemplateDB: eventTemplateDb
         ))
     }

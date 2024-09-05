@@ -3,12 +3,12 @@ import shared
 
 struct SummaryChartView: View {
 
-    @State private var vm: SummaryChartVM
+    @State private var vm: SummaryChartVm
 
     init(
-            activitiesUI: [SummarySheetVM.ActivityUI]
+            activitiesUI: [SummarySheetVm.ActivityUI]
     ) {
-        _vm = State(initialValue: SummaryChartVM(activitiesUI: activitiesUI))
+        _vm = State(initialValue: SummaryChartVm(activitiesUI: activitiesUI))
     }
 
     var body: some View {

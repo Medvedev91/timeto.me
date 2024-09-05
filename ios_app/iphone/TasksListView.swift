@@ -3,7 +3,7 @@ import shared
 
 struct TasksListView: View {
 
-    @State private var vm: TasksListVM
+    @State private var vm: TasksListVm
 
     private let activeFolder: TaskFolderDb
     let tabTasksView: TasksView
@@ -18,7 +18,7 @@ struct TasksListView: View {
     init(activeFolder: TaskFolderDb, tabTasksView: TasksView) {
         self.tabTasksView = tabTasksView
         self.activeFolder = activeFolder
-        _vm = State(initialValue: TasksListVM(folder: activeFolder))
+        _vm = State(initialValue: TasksListVm(folder: activeFolder))
     }
 
     var body: some View {
@@ -199,7 +199,7 @@ struct TasksView__TaskRowView: View {
     @EnvironmentObject private var fs: Fs
     @EnvironmentObject private var nativeSheet: NativeSheet
 
-    private let vmTaskUi: TasksListVM.VmTaskUi
+    private let vmTaskUi: TasksListVm.VmTaskUi
 
     let tasksListView: TasksListView
     @State private var dragItem: DragItem
@@ -213,7 +213,7 @@ struct TasksView__TaskRowView: View {
 
     private let withDivider: Bool
 
-    init(vmTaskUi: TasksListVM.VmTaskUi, tasksListView: TasksListView, withDivider: Bool) {
+    init(vmTaskUi: TasksListVm.VmTaskUi, tasksListView: TasksListView, withDivider: Bool) {
         self.vmTaskUi = vmTaskUi
         self.tasksListView = tasksListView
         self.withDivider = withDivider
@@ -343,7 +343,7 @@ struct TasksView__TaskRowView: View {
 
                         VStack {
 
-                            if let timeUI = vmTaskUi.timeUI as? TasksListVM.VmTaskUiTimeUIHighlightUI {
+                            if let timeUI = vmTaskUi.timeUI as? TasksListVm.VmTaskUiTimeUIHighlightUI {
 
                                 HStack {
 
@@ -389,7 +389,7 @@ struct TasksView__TaskRowView: View {
                                 .padding(.bottom, 6)
                                 .padding(.leading, H_PADDING - 1)
 
-                            } else if let timeUI = vmTaskUi.timeUI as? TasksListVM.VmTaskUiTimeUIRegularUI {
+                            } else if let timeUI = vmTaskUi.timeUI as? TasksListVm.VmTaskUiTimeUIRegularUI {
                                 HStack {
                                     Text(timeUI.text)
                                         .padding(.leading, H_PADDING)
@@ -494,7 +494,7 @@ struct TasksView__TaskRowView: View {
 
 private struct TasksListView__TmrwTaskView: View {
 
-    let taskUI: TasksListVM.TmrwTaskUI
+    let taskUI: TasksListVm.TmrwTaskUI
 
     var body: some View {
 

@@ -3,7 +3,7 @@ import shared
 
 struct ChecklistFormSheet: View {
 
-    @State private var vm: ChecklistFormSheetVM
+    @State private var vm: ChecklistFormSheetVm
     @Binding private var isPresented: Bool
     private let onDelete: () -> Void
 
@@ -14,7 +14,7 @@ struct ChecklistFormSheet: View {
         isPresented: Binding<Bool>,
         onDelete: @escaping () -> Void
     ) {
-        _vm = State(initialValue: ChecklistFormSheetVM(checklistDb: checklistDb))
+        _vm = State(initialValue: ChecklistFormSheetVm(checklistDb: checklistDb))
         _isPresented = isPresented
         self.onDelete = onDelete
     }

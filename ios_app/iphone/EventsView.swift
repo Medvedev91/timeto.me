@@ -6,7 +6,7 @@ private let menuBottomPadding = menuTopPadding.goldenRatioUp().goldenRatioUp()
 
 struct EventsView: View {
 
-    @State private var vm = EventsVM()
+    @State private var vm = EventsVm()
 
     var body: some View {
 

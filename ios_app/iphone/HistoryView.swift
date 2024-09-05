@@ -6,7 +6,7 @@ import shared
 ///
 struct HistoryView: View {
 
-    @State private var vm = HistoryVM()
+    @State private var vm = HistoryVm()
 
     @Binding var isHistoryPresented: Bool
 
@@ -31,7 +31,7 @@ struct HistoryView: View {
                                 .fixedSize(horizontal: false, vertical: true)
                                 .frame(height: 70)
 
-                        ForEach(state.sections.reversed(), id: \.self.day) { (section: HistoryVM.HistorySection) in
+                        ForEach(state.sections.reversed(), id: \.self.day) { (section: HistoryVm.HistorySection) in
 
                             Section(
                                     footer:
@@ -64,7 +64,7 @@ struct HistoryView: View {
                             ) {
                                 ForEach(section.intervals.reversed(), id: \.id) { (interval: IntervalDb) in
 
-                                    let intervalUI = HistoryVM.IntervalUI.companion.build(interval: interval, section: section)
+                                    let intervalUI = HistoryVm.IntervalUI.companion.build(interval: interval, section: section)
 
                                     HStack(alignment: .top, spacing: 10) {
 
@@ -207,7 +207,7 @@ struct HistoryView: View {
     private struct EditIntervalButtonView: View {
 
         let historyView: HistoryView
-        var intervalUI: HistoryVM.IntervalUI
+        var intervalUI: HistoryVm.IntervalUI
         @State private var isSheetPresented = false
 
         var body: some View {
@@ -235,11 +235,11 @@ struct HistoryView: View {
 
             @Binding private var isPresented: Bool
             @State private var selectedDate: Date
-            private let intervalUI: HistoryVM.IntervalUI
+            private let intervalUI: HistoryVm.IntervalUI
 
             init(
                     isPresented: Binding<Bool>,
-                    intervalUI: HistoryVM.IntervalUI
+                    intervalUI: HistoryVm.IntervalUI
             ) {
                 _isPresented = isPresented
                 _selectedDate = State(initialValue: intervalUI.interval.unixTime().toDate())
@@ -287,7 +287,7 @@ struct HistoryView: View {
     private struct AddButtonView: View {
 
         @State var selectedDate: Date
-        let state: HistoryVM.State
+        let state: HistoryVm.State
 
         @State private var isSheetPresented = false
 
@@ -320,14 +320,14 @@ struct HistoryView: View {
 
             @Binding private var isPresented: Bool
             @State private var selectedDate: Date
-            private let state: HistoryVM.State
+            private let state: HistoryVm.State
 
             @State private var selectedActivityId: Int32
 
             init(
                     isPresented: Binding<Bool>,
                     selectedDate: Date,
-                    state: HistoryVM.State
+                    state: HistoryVm.State
             ) {
                 self.state = state
                 _isPresented = isPresented

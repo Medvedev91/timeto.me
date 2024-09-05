@@ -5,7 +5,7 @@ struct ActivityFormSheet: View {
 
     @EnvironmentObject private var nativeSheet: NativeSheet
 
-    @State private var vm: ActivityFormSheetVM
+    @State private var vm: ActivityFormSheetVm
 
     @Binding private var isPresented: Bool
     private let onSave: () -> ()
@@ -23,7 +23,7 @@ struct ActivityFormSheet: View {
     ) {
         self.onSave = onSave
         _isPresented = isPresented
-        vm = ActivityFormSheetVM(activity: activity)
+        vm = ActivityFormSheetVm(activity: activity)
     }
 
     var body: some View {

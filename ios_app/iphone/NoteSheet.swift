@@ -6,14 +6,14 @@ struct NoteSheet: View {
     @EnvironmentObject private var nativeSheet: NativeSheet
 
     @Binding private var isPresented: Bool
-    @State private var vm: NoteSheetVM
+    @State private var vm: NoteSheetVm
 
     init(
             isPresented: Binding<Bool>,
             initNote: NoteDb
     ) {
         _isPresented = isPresented
-        _vm = State(initialValue: NoteSheetVM(note: initNote))
+        _vm = State(initialValue: NoteSheetVm(note: initNote))
     }
 
     var body: some View {

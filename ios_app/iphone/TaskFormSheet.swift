@@ -3,14 +3,14 @@ import shared
 
 struct TaskFormSheet: View {
 
-    @State private var vm: TaskFormSheetVM
+    @State private var vm: TaskFormSheetVm
     @Binding private var isPresented: Bool
 
     init(
             task: TaskDb?,
             isPresented: Binding<Bool>
     ) {
-        _vm = State(initialValue: TaskFormSheetVM(task: task))
+        _vm = State(initialValue: TaskFormSheetVm(task: task))
         _isPresented = isPresented
     }
 

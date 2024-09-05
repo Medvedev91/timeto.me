@@ -6,7 +6,7 @@ struct ShortcutsPickerSheet: View {
     @Binding private var isPresented: Bool
     private let onPick: ([ShortcutDb]) -> Void
 
-    @State private var vm: ShortcutsPickerSheetVM
+    @State private var vm: ShortcutsPickerSheetVm
     @State private var sheetHeaderScroll = 0
 
     init(
@@ -16,7 +16,7 @@ struct ShortcutsPickerSheet: View {
     ) {
         self.onPick = onPick
         _isPresented = isPresented
-        _vm = State(initialValue: ShortcutsPickerSheetVM(selectedShortcuts: selectedShortcuts))
+        _vm = State(initialValue: ShortcutsPickerSheetVm(selectedShortcuts: selectedShortcuts))
     }
 
     var body: some View {

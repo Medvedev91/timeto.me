@@ -9,7 +9,7 @@ private let bgColor = c.sheetBg
 
 struct ActivityColorSheet: View {
 
-    @State private var vm: ActivityColorSheetVM
+    @State private var vm: ActivityColorSheetVm
     @Binding private var isPresented: Bool
     private let onPick: (ColorRgba) -> Void
 
@@ -20,10 +20,10 @@ struct ActivityColorSheet: View {
 
     init(
             isPresented: Binding<Bool>,
-            initData: ActivityColorSheetVM.InitData,
+            initData: ActivityColorSheetVm.InitData,
             onPick: @escaping (ColorRgba) -> Void
     ) {
-        vm = ActivityColorSheetVM(initData: initData)
+        vm = ActivityColorSheetVm(initData: initData)
         _isPresented = isPresented
         self.onPick = onPick
     }
@@ -209,7 +209,7 @@ struct ActivityColorSheet: View {
 
 private struct ColorCircleView: View {
 
-    let colorItem: ActivityColorSheetVM.ColorItem
+    let colorItem: ActivityColorSheetVm.ColorItem
     let onClick: () -> Void
 
     @State private var isSelectedAnim = false

@@ -6,13 +6,13 @@ private let hPadding = 8.0
 
 struct EventsCalendarDayView: View {
 
-    @State private var vm: EventsCalendarDayVM
+    @State private var vm: EventsCalendarDayVm
     @EnvironmentObject private var fs: Fs
 
     init(
         unixDay: Int
     ) {
-        _vm = State(initialValue: EventsCalendarDayVM(unixDay: unixDay.toInt32()))
+        _vm = State(initialValue: EventsCalendarDayVm(unixDay: unixDay.toInt32()))
     }
 
     var body: some View {

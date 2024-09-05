@@ -3,7 +3,7 @@ import shared
 
 struct RepeatingsListView: View {
 
-    @State private var vm = RepeatingsListVM()
+    @State private var vm = RepeatingsListVm()
 
     @Environment(\.defaultMinListRowHeight) private var minListRowHeight
     @EnvironmentObject private var fs: Fs
@@ -100,7 +100,7 @@ struct RepeatingsListView: View {
 
 struct RepeatingsView__ItemView: View {
 
-    let repeatingUI: RepeatingsListVM.RepeatingUI
+    let repeatingUI: RepeatingsListVm.RepeatingUI
 
     @EnvironmentObject private var fs: Fs
 

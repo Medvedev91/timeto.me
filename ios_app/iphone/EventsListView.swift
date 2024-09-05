@@ -3,7 +3,7 @@ import shared
 
 struct EventsListView: View {
 
-    @State private var vm = EventsListVM()
+    @State private var vm = EventsListVm()
 
     /// Avoiding animation on start, but it is needed for editing
     @State private var useAnimation = false

@@ -3,7 +3,7 @@ import shared
 
 struct FolderFormSheet: View {
 
-    @State private var vm: FolderFormSheetVM
+    @State private var vm: FolderFormSheetVm
     @Binding private var isPresented: Bool
     @State private var sheetHeaderScroll = 0
 
@@ -12,7 +12,7 @@ struct FolderFormSheet: View {
             folder: TaskFolderDb?
     ) {
         _isPresented = isPresented
-        vm = FolderFormSheetVM(folder: folder)
+        vm = FolderFormSheetVm(folder: folder)
     }
 
     var body: some View {

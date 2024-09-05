@@ -6,7 +6,7 @@ struct SettingsSheet: View {
 
     @Binding var isPresented: Bool
 
-    @State private var vm = SettingsSheetVM()
+    @State private var vm = SettingsSheetVm()
 
     @State private var isFileImporterPresented = false
 
@@ -479,13 +479,13 @@ struct SettingsSheet: View {
 
         @Binding private var isPresented: Bool
         @State private var selectedDayStart: Int32 // WARNING Int32!
-        private let settingsSheetVM: SettingsSheetVM
-        private let settingsSheetState: SettingsSheetVM.State
+        private let settingsSheetVM: SettingsSheetVm
+        private let settingsSheetState: SettingsSheetVm.State
 
         init(
             isPresented: Binding<Bool>,
-            settingsSheetVM: SettingsSheetVM,
-            settingsSheetState: SettingsSheetVM.State
+            settingsSheetVM: SettingsSheetVm,
+            settingsSheetState: SettingsSheetVm.State
         ) {
             _isPresented = isPresented
             self.settingsSheetVM = settingsSheetVM

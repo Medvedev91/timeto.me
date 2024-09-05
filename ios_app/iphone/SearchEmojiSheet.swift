@@ -3,7 +3,7 @@ import shared
 
 struct SearchEmojiSheet: View {
 
-    @State private var vm = SearchEmojiSheetVM()
+    @State private var vm = SearchEmojiSheetVm()
     @Binding var isPresented: Bool
     let onSelect: (String) -> Void
 

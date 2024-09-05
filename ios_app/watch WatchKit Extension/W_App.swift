@@ -4,7 +4,7 @@ import shared
 @main
 struct W_App: App {
 
-    @State private var vm = WatchAppVM()
+    @State private var vm = WatchAppVm()
 
     @Environment(\.scenePhase) private var scenePhase
     @WKApplicationDelegateAdaptor(W_Delegate.self) var delegate

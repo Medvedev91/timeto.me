@@ -30,14 +30,14 @@ extension Kotlinx_coroutines_coreFlow {
 
 struct VMView<VMState: AnyObject, Content: View>: View {
 
-    private let vm: __VM<VMState>
+    private let vm: __Vm<VMState>
     @State private var state: VMState
     private let publisher: AnyPublisher<VMState, Never>
     @ViewBuilder private let content: (VMState) -> Content
     private let stack: StackType
 
     init(
-        vm: __VM<VMState>,
+        vm: __Vm<VMState>,
         stack: StackType = .ZStack(),
         @ViewBuilder content: @escaping (VMState) -> Content
     ) {

@@ -3,7 +3,7 @@ import shared
 
 struct W_TabTasksView: View {
 
-    @State private var vm = WatchTabTasksVM()
+    @State private var vm = WatchTabTasksVm()
 
     var body: some View {
         VMView(vm: vm) { state in
@@ -18,7 +18,7 @@ struct W_TabTasksView: View {
     private struct FolderView: View {
 
         let title: String
-        let tasksUI: [WatchTabTasksVM.TaskUI]
+        let tasksUI: [WatchTabTasksVm.TaskUI]
 
         var body: some View {
 
@@ -31,7 +31,7 @@ struct W_TabTasksView: View {
 
         private struct TaskView: View {
 
-            var taskUI: WatchTabTasksVM.TaskUI
+            var taskUI: WatchTabTasksVm.TaskUI
             @State private var isActivitiesPresented = false
 
             var body: some View {
@@ -71,7 +71,7 @@ struct W_TabTasksView: View {
 
             private struct TaskSheetDialog: View {
 
-                @State private var vm: WatchTaskSheetVM
+                @State private var vm: WatchTaskSheetVm
 
                 let task: TaskDb
                 @Binding var isPresented: Bool
@@ -79,7 +79,7 @@ struct W_TabTasksView: View {
                 init(task: TaskDb, isPresented: Binding<Bool>) {
                     self.task = task
                     _isPresented = isPresented
-                    _vm = State(initialValue: WatchTaskSheetVM(task: task))
+                    _vm = State(initialValue: WatchTaskSheetVm(task: task))
                 }
 
                 var body: some View {
@@ -99,7 +99,7 @@ struct W_TabTasksView: View {
                 private struct ActivityView: View {
 
                     let taskSheetDialog: TaskSheetDialog
-                    let activityUI: WatchTaskSheetVM.ActivityUI
+                    let activityUI: WatchTaskSheetVm.ActivityUI
                     var task: TaskDb
                     @State private var isTickerPresented = false
 

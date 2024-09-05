@@ -8,7 +8,7 @@ struct TasksView: View {
 
     //////
 
-    @State private var vm = TabTasksVM()
+    @State private var vm = TabTasksVm()
 
     static var lastInstance: TasksView? = nil
 
@@ -174,14 +174,14 @@ struct TasksView: View {
 private struct TabTasksView__FolderView: View {
 
     private let isActive: Bool
-    private let folderUI: TabTasksVM.TaskFolderUI
+    private let folderUI: TabTasksVm.TaskFolderUI
     private let tabTasksView: TasksView
 
     @State private var drop: DropItem__Folder
 
     init(
         isActive: Bool,
-        folderUI: TabTasksVM.TaskFolderUI,
+        folderUI: TabTasksVm.TaskFolderUI,
         tabTasksView: TasksView
     ) {
         self.isActive = isActive

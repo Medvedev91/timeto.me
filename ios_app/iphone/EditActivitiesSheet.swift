@@ -7,7 +7,7 @@ struct EditActivitiesSheet: View {
 
     @EnvironmentObject private var nativeSheet: NativeSheet
 
-    @State private var vm = EditActivitiesVM()
+    @State private var vm = EditActivitiesVm()
 
     var body: some View {
 
@@ -53,8 +53,8 @@ struct EditActivitiesSheet: View {
 
     private struct ActivityItemView: View {
 
-        var vm: EditActivitiesVM
-        var activityUI: EditActivitiesVM.ActivityUI
+        var vm: EditActivitiesVm
+        var activityUI: EditActivitiesVm.ActivityUI
 
         @State private var isEditSheetPresented = false
 

@@ -3,7 +3,7 @@ import shared
 
 struct EventsListEventView: View {
 
-    let eventUi: EventsListVM.EventUi
+    let eventUi: EventsListVm.EventUi
     let bgColor: Color
     let paddingStart: CGFloat
     let paddingEnd: CGFloat
