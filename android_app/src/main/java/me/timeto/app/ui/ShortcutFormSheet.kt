@@ -10,7 +10,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
@@ -23,7 +22,6 @@ import me.timeto.app.R
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.vm.ShortcutFormSheetVm
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ShortcutFormSheet(
     layer: WrapperView.Layer,
