@@ -3,7 +3,7 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.EventDb
-import me.timeto.shared.libs.DaytimeModel
+import me.timeto.shared.models.DaytimeUi
 
 /**
  * Different logic for platform. For iOS, we use a Date() object
@@ -19,11 +19,11 @@ class EventFormSheetVm(
         val saveText: String,
         val textFeatures: TextFeatures,
         val unixDay: Int,
-        val daytimeModel: DaytimeModel,
+        val daytimeUi: DaytimeUi,
     ) {
 
         val selectedUnixTime: UnixTime = UnixTime.byLocalDay(unixDay).inSeconds(
-            daytimeModel.hour * 3_600 + daytimeModel.minute * 60
+            daytimeUi.hour * 3_600 + daytimeUi.minute * 60
         )
 
         val inputTextValue = textFeatures.textNoFeatures
@@ -53,13 +53,13 @@ class EventFormSheetVm(
                 saveText = if (event != null) "Save" else "Create",
                 textFeatures = textFeatures,
                 unixDay = initUnixTime.localDay,
-                daytimeModel = DaytimeModel(hour = hms[0], minute = hms[1]),
+                daytimeUi = DaytimeUi(hour = hms[0], minute = hms[1]),
             )
         )
     }
 
-    fun setDaytime(daytimeModel: DaytimeModel) {
-        state.update { it.copy(daytimeModel = daytimeModel) }
+    fun setDaytime(daytimeUi: DaytimeUi) {
+        state.update { it.copy(daytimeUi = daytimeUi) }
     }
 
     fun setUnixDay(unixDay: Int) {
@@ -74,7 +74,7 @@ class EventFormSheetVm(
         state.update {
             it.copy(
                 textFeatures = templateUi.templateDB.text.textFeatures(),
-                daytimeModel = DaytimeModel.byDaytime(templateUi.templateDB.daytime),
+                daytimeUi = DaytimeUi.byDaytime(templateUi.templateDB.daytime),
             )
         }
     }

@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import me.timeto.app.VStack
 import me.timeto.app.c
 import me.timeto.app.roundedShape
-import me.timeto.shared.libs.DaytimeModel
+import me.timeto.shared.models.DaytimeUi
 
 @Composable
 fun DaytimePickerSheet(
@@ -23,14 +23,14 @@ fun DaytimePickerSheet(
     modifier: Modifier = Modifier,
     title: String,
     doneText: String,
-    daytimeModel: DaytimeModel,
+    daytimeUi: DaytimeUi,
     withRemove: Boolean,
-    onPick: (DaytimeModel) -> Unit,
+    onPick: (DaytimeUi) -> Unit,
     onRemove: () -> Unit,
 ) {
 
-    val selectedHour = remember { mutableIntStateOf(daytimeModel.hour) }
-    val selectedMinute = remember { mutableIntStateOf(daytimeModel.minute) }
+    val selectedHour = remember { mutableIntStateOf(daytimeUi.hour) }
+    val selectedMinute = remember { mutableIntStateOf(daytimeUi.minute) }
 
     VStack(
         modifier = modifier
@@ -44,11 +44,11 @@ fun DaytimePickerSheet(
             isDoneEnabled = true,
             scrollState = null,
         ) {
-            val newDaytimeModel = DaytimeModel(
+            val newDaytimeUi = DaytimeUi(
                 hour = selectedHour.intValue,
                 minute = selectedMinute.intValue,
             )
-            onPick(newDaytimeModel)
+            onPick(newDaytimeUi)
             layer.close()
         }
 

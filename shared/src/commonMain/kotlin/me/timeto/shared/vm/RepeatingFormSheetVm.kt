@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.db.TaskDb
-import me.timeto.shared.libs.DaytimeModel
+import me.timeto.shared.models.DaytimeUi
 
 class RepeatingFormSheetVm(
     private val repeating: RepeatingDb?
@@ -15,7 +15,7 @@ class RepeatingFormSheetVm(
         val headerDoneText: String,
         val textFeatures: TextFeatures,
         val period: RepeatingDb.Period?,
-        val daytimeModel: DaytimeModel?,
+        val daytimeUi: DaytimeUi?,
         val isImportant: Boolean,
     ) {
 
@@ -26,10 +26,10 @@ class RepeatingFormSheetVm(
         val periodNoteColor: ColorRgba? = if (period == null) ColorRgba.red else null
 
         val daytimeHeader = "Time of the Day"
-        val daytimeNote: String = daytimeModel?.text?.let { "at $it" } ?: "Not Selected"
-        val daytimeNoteColor: ColorRgba? = if (daytimeModel == null) ColorRgba.red else null
+        val daytimeNote: String = daytimeUi?.text?.let { "at $it" } ?: "Not Selected"
+        val daytimeNoteColor: ColorRgba? = if (daytimeUi == null) ColorRgba.red else null
 
-        val defDaytimeModel: DaytimeModel = daytimeModel ?: DaytimeModel(hour = 12, minute = 0)
+        val defDaytimeUi: DaytimeUi = daytimeUi ?: DaytimeUi(hour = 12, minute = 0)
 
         val isImportantHeader = "Is Important"
 
@@ -42,7 +42,7 @@ class RepeatingFormSheetVm(
             headerDoneText = if (repeating != null) "Save" else "Create",
             textFeatures = (repeating?.text ?: "").textFeatures(),
             period = repeating?.getPeriod(),
-            daytimeModel = repeating?.daytime?.let { DaytimeModel.byDaytime(it) },
+            daytimeUi = repeating?.daytime?.let { DaytimeUi.byDaytime(it) },
             isImportant = repeating?.is_important?.toBoolean10() ?: false,
         )
     )
@@ -59,8 +59,8 @@ class RepeatingFormSheetVm(
         state.update { it.copy(period = period) }
     }
 
-    fun upDaytime(daytimeModel: DaytimeModel?) {
-        state.update { it.copy(daytimeModel = daytimeModel) }
+    fun upDaytime(daytimeUi: DaytimeUi?) {
+        state.update { it.copy(daytimeUi = daytimeUi) }
     }
 
     fun toggleIsImportant() {
@@ -82,7 +82,7 @@ class RepeatingFormSheetVm(
             val nameWithFeatures = textFeatures.textWithFeatures()
             val isImportant = state.value.isImportant
 
-            val daytime: Int? = state.value.daytimeModel?.seconds
+            val daytime: Int? = state.value.daytimeUi?.seconds
 
             val period = state.value.period ?: throw UIException("Period not selected")
 

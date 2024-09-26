@@ -79,7 +79,7 @@ fun EventTemplateFormSheet(
                             layer = layer,
                             title = state.daytimeTitle,
                             doneText = "Done",
-                            daytimeModel = state.defDaytimeModel,
+                            daytimeUi = state.defDaytimeUi,
                             withRemove = true,
                             onPick = { daytimePickerUi ->
                                 vm.setDaytime(daytimePickerUi)

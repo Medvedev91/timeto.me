@@ -3,7 +3,7 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.EventTemplateDb
-import me.timeto.shared.libs.DaytimeModel
+import me.timeto.shared.models.DaytimeUi
 
 class EventTemplateFormSheetVm(
     val eventTemplateDB: EventTemplateDb?,
@@ -13,15 +13,15 @@ class EventTemplateFormSheetVm(
         val headerTitle: String,
         val doneText: String,
         val textFeatures: TextFeatures,
-        val daytimeModel: DaytimeModel?,
+        val daytimeUi: DaytimeUi?,
     ) {
 
         val daytimeTitle = "Time"
 
-        val daytimeNote: String = daytimeModel?.text ?: "None"
-        val daytimeNoteColor: ColorRgba? = if (daytimeModel != null) null else ColorRgba.red
+        val daytimeNote: String = daytimeUi?.text ?: "None"
+        val daytimeNoteColor: ColorRgba? = if (daytimeUi != null) null else ColorRgba.red
 
-        val defDaytimeModel: DaytimeModel = daytimeModel ?: DaytimeModel(hour = 12, minute = 0)
+        val defDaytimeUi: DaytimeUi = daytimeUi ?: DaytimeUi(hour = 12, minute = 0)
 
         val inputTextValue = textFeatures.textNoFeatures
         val deleteText = "Delete Template"
@@ -32,7 +32,7 @@ class EventTemplateFormSheetVm(
             headerTitle = if (eventTemplateDB != null) "Edit Template" else "New Template",
             doneText = "Save",
             textFeatures = (eventTemplateDB?.text ?: "").textFeatures(),
-            daytimeModel = eventTemplateDB?.daytime?.let { DaytimeModel.byDaytime(it) },
+            daytimeUi = eventTemplateDB?.daytime?.let { DaytimeUi.byDaytime(it) },
         )
     )
 
@@ -44,8 +44,8 @@ class EventTemplateFormSheetVm(
         it.copy(textFeatures = newTextFeatures)
     }
 
-    fun setDaytime(daytimeModel: DaytimeModel?) {
-        state.update { it.copy(daytimeModel = daytimeModel) }
+    fun setDaytime(daytimeUi: DaytimeUi?) {
+        state.update { it.copy(daytimeUi = daytimeUi) }
     }
 
     fun save(
@@ -53,7 +53,7 @@ class EventTemplateFormSheetVm(
     ) {
         scopeVm().launchEx {
             try {
-                val daytime = state.value.daytimeModel?.seconds ?: throw UIException("The time is not set")
+                val daytime = state.value.daytimeUi?.seconds ?: throw UIException("The time is not set")
                 val textFeatures = state.value.textFeatures
                 val textWithFeatures = textFeatures.textWithFeatures()
                 if (textFeatures.textNoFeatures.isBlank())

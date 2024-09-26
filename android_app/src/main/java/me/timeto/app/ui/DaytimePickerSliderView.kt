@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import me.timeto.app.*
-import me.timeto.shared.libs.DaytimeModel
+import me.timeto.shared.models.DaytimeUi
 import me.timeto.shared.vm.ui.DaytimePickerSliderUi
 
 private val hPadding = H_PADDING + 1.dp
@@ -48,14 +48,14 @@ private val allowedMotionEventActions = setOf(
 
 @Composable
 fun DaytimePickerSliderView(
-    daytimeModel: DaytimeModel,
+    daytimeUi: DaytimeUi,
     modifier: Modifier,
-    onChange: (DaytimeModel) -> Unit,
+    onChange: (DaytimeUi) -> Unit,
 ) {
 
     val sliderUi = DaytimePickerSliderUi(
-        hour = daytimeModel.hour,
-        minute = daytimeModel.minute,
+        hour = daytimeUi.hour,
+        minute = daytimeUi.minute,
     )
 
     VStack(
@@ -67,7 +67,7 @@ fun DaytimePickerSliderView(
             ticks = sliderUi.hourTicks,
             stepTicks = sliderUi.hourStepSlide,
             onChange = { newHour ->
-                onChange(daytimeModel.copy(hour = newHour))
+                onChange(daytimeUi.copy(hour = newHour))
             },
         )
 
@@ -78,7 +78,7 @@ fun DaytimePickerSliderView(
             ticks = sliderUi.minuteTicks,
             stepTicks = sliderUi.minuteStepSlide,
             onChange = { newMinute ->
-                onChange(daytimeModel.copy(minute = newMinute))
+                onChange(daytimeUi.copy(minute = newMinute))
             },
         )
     }

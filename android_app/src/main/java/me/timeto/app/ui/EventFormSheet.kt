@@ -93,11 +93,11 @@ private fun EventFormSheet(
             )
 
             DaytimePickerSliderView(
-                daytimeModel = state.daytimeModel,
+                daytimeUi = state.daytimeUi,
                 modifier = Modifier
                     .padding(top = 16.dp, bottom = 10.dp),
-                onChange = { daytimeModel ->
-                    vm.setDaytime(daytimeModel)
+                onChange = { daytimeUi ->
+                    vm.setDaytime(daytimeUi)
                 },
             )
 

@@ -207,7 +207,7 @@ fun HomeView() {
                                 layer = layer,
                                 title = infoUi.untilPickerTitle,
                                 doneText = "Start",
-                                daytimeModel = infoUi.untilDaytimeUi,
+                                daytimeUi = infoUi.untilDaytimeUi,
                                 withRemove = false,
                                 onPick = { daytimePickerUi ->
                                     infoUi.setUntilDaytime(daytimePickerUi)
