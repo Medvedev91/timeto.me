@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.HStack
 import me.timeto.app.c
 import me.timeto.app.roundedShape
-import me.timeto.shared.vm.ui.WeekDaysFormUI
+import me.timeto.shared.models.WeekDaysFormUi
 
 @Composable
 fun WeekDaysFormView(
@@ -28,15 +28,15 @@ fun WeekDaysFormView(
     modifier: Modifier,
     onChange: (List<Int>) -> Unit,
 ) {
-    val formUI = WeekDaysFormUI(weekDays)
+    val formUi = WeekDaysFormUi(weekDays)
     HStack(
         modifier = modifier
     ) {
-        formUI.weekDaysUI.forEach { weekDayUI ->
-            val isSelected = weekDayUI.isSelected
+        formUi.weekDaysUi.forEach { weekDayUi ->
+            val isSelected = weekDayUi.isSelected
             val bgColor = animateColorAsState(if (isSelected) c.blue else c.sheetBg)
             Text(
-                weekDayUI.title,
+                weekDayUi.title,
                 modifier = Modifier
                     .padding(end = 6.dp)
                     .size(size)
@@ -48,7 +48,7 @@ fun WeekDaysFormView(
                     .clip(roundedShape)
                     .background(bgColor.value)
                     .clickable {
-                        onChange(formUI.toggleWeekDay(weekDayUI.idx))
+                        onChange(formUi.toggleWeekDay(weekDayUi.idx))
                     }
                     .wrapContentHeight(), // To center vertical
                 fontWeight = FontWeight.W500,

@@ -9,22 +9,22 @@ struct WeekDaysFormView: View {
 
     var body: some View {
 
-        let formUI = WeekDaysFormUI(weekDays: weekDays)
+        let formUi = WeekDaysFormUi(weekDays: weekDays)
 
         HStack(spacing: 10) {
 
-            ForEach(formUI.weekDaysUI, id: \.idx) { weekDayUI in
+            ForEach(formUi.weekDaysUi, id: \.idx) { weekDayUi in
 
-                let isSelected = weekDayUI.isSelected
+                let isSelected = weekDayUi.isSelected
 
                 Button(
                         action: {
                             withAnimation {
-                                onChange(formUI.toggleWeekDay(idx: weekDayUI.idx))
+                                onChange(formUi.toggleWeekDay(idx: weekDayUi.idx))
                             }
                         },
                         label: {
-                            Text(weekDayUI.title)
+                            Text(weekDayUi.title)
                                     .font(.system(size: 16))
                         }
                 )

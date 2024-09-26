@@ -1,17 +1,17 @@
-package me.timeto.shared.vm.ui
+package me.timeto.shared.models
 
 import me.timeto.shared.UnixTime
 
-class WeekDaysFormUI(
+class WeekDaysFormUi(
     weekDays: List<Int>,
 ) {
 
-    val weekDaysUI: List<WeekDayUI> = UnixTime.dayOfWeekNames1.mapIndexed { idx, title ->
+    val weekDaysUi: List<WeekDayUI> = UnixTime.dayOfWeekNames1.mapIndexed { idx, title ->
         WeekDayUI(idx = idx, title = title, isSelected = idx in weekDays)
     }
 
     fun toggleWeekDay(idx: Int): List<Int> {
-        val newWeekDays = weekDaysUI.toMutableList()
+        val newWeekDays = weekDaysUi.toMutableList()
         val weekDay = newWeekDays[idx]
         newWeekDays[idx] = weekDay.copy(isSelected = !weekDay.isSelected)
         return newWeekDays.filter { it.isSelected }.map { it.idx }
