@@ -3,7 +3,7 @@ import shared
 
 struct TextFeaturesTimerFormView: View {
 
-    private let formUI: TextFeaturesTimerFormUI
+    private let formUI: TextFeaturesTimerFormUi
     private let onChange: (TextFeatures) -> Void
 
     private let bgColor: Color
@@ -18,7 +18,7 @@ struct TextFeaturesTimerFormView: View {
     ) {
         self.bgColor = bgColor
         self.onChange = onChange
-        formUI = TextFeaturesTimerFormUI(textFeatures: textFeatures)
+        formUI = TextFeaturesTimerFormUi(textFeatures: textFeatures)
     }
 
     var body: some View {

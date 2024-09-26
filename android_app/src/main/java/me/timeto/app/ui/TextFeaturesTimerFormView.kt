@@ -8,7 +8,7 @@ import androidx.compose.ui.unit.dp
 import me.timeto.app.c
 import me.timeto.app.toColor
 import me.timeto.shared.TextFeatures
-import me.timeto.shared.vm.ui.TextFeaturesTimerFormUI
+import me.timeto.shared.models.TextFeaturesTimerFormUi
 
 @Composable
 fun TextFeaturesTimerFormView(
@@ -17,7 +17,7 @@ fun TextFeaturesTimerFormView(
     onChange: (TextFeatures) -> Unit,
 ) {
 
-    val formUI = remember(textFeatures) { TextFeaturesTimerFormUI(textFeatures) }
+    val formUI = remember(textFeatures) { TextFeaturesTimerFormUi(textFeatures) }
 
     Column {
 

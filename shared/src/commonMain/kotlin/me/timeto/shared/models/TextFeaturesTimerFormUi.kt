@@ -1,4 +1,4 @@
-package me.timeto.shared.vm.ui
+package me.timeto.shared.models
 
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.TextFeatures
@@ -6,7 +6,7 @@ import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toTimerHintNote
 
-class TextFeaturesTimerFormUI(
+class TextFeaturesTimerFormUi(
     val textFeatures: TextFeatures,
 ) {
 
