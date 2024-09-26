@@ -1,14 +1,13 @@
-package me.timeto.shared.vm.ui
+package me.timeto.shared.models
 
 import me.timeto.shared.*
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.TaskDb
-import me.timeto.shared.models.DaytimeUi
 import me.timeto.shared.vm.ActivityTimerSheetVm
 import kotlin.math.absoluteValue
 
-class TimerDataUI(
+class TimerDataUi(
     interval: IntervalDb,
     todayTasks: List<TaskDb>,
     isPurple: Boolean,
@@ -34,14 +33,14 @@ class TimerDataUI(
         if (!activity.isOther())
             return@run null
         val pausedTaskId: Int = intervalNoteTf?.pause?.pausedTaskId
-            ?: return@run null
+                                ?: return@run null
         val pausedTask: TaskDb = todayTasks.firstOrNull { it.id == pausedTaskId }
-            ?: return@run null
+                                 ?: return@run null
         val pausedTaskTf: TextFeatures = pausedTask.text.textFeatures()
         val pausedTaskTimer: Int = pausedTaskTf.paused?.originalTimer
-            ?: return@run null
+                                   ?: return@run null
         val pausedActivityDb: ActivityDb = pausedTaskTf.activity
-            ?: return@run null
+                                           ?: return@run null
         PausedTaskData(
             taskDb = pausedTask,
             taskTextTf = pausedTaskTf,
@@ -65,7 +64,7 @@ class TimerDataUI(
 
         prolongText = run {
             val prolonged: TextFeatures.Prolonged = intervalNoteTf?.prolonged
-                ?: return@run null
+                                                    ?: return@run null
             (interval.timer - prolonged.originalTimer).toTimerHintNote(true)
         }
 

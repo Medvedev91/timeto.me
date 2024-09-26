@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.vm.__Vm
-import me.timeto.shared.vm.ui.TimerDataUI
+import me.timeto.shared.models.TimerDataUi
 
 class WatchTimerVm : __Vm<WatchTimerVm.State>() {
 
@@ -17,7 +17,7 @@ class WatchTimerVm : __Vm<WatchTimerVm.State>() {
         val idToUpdate: Int = 0,
     ) {
         // todo
-        val timerData = TimerDataUI(lastInterval, listOf(), isPurple)
+        val timerData = TimerDataUi(lastInterval, listOf(), isPurple)
     }
 
     override val state = MutableStateFlow(

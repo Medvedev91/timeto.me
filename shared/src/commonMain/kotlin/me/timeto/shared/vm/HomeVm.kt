@@ -8,7 +8,7 @@ import me.timeto.shared.db.*
 import me.timeto.shared.models.TaskUi
 import me.timeto.shared.models.sortedUi
 import me.timeto.shared.models.DayIntervalsUi
-import me.timeto.shared.vm.ui.TimerDataUI
+import me.timeto.shared.models.TimerDataUi
 
 class HomeVm : __Vm<HomeVm.State>() {
 
@@ -25,7 +25,7 @@ class HomeVm : __Vm<HomeVm.State>() {
         val idToUpdate: Long,
     ) {
 
-        val timerData = TimerDataUI(interval, todayTasksUi.map { it.taskDb }, isPurple)
+        val timerData = TimerDataUi(interval, todayTasksUi.map { it.taskDb }, isPurple)
 
         val activity = interval.getActivityDI()
 
