@@ -7,7 +7,7 @@ import me.timeto.shared.*
 import me.timeto.shared.db.*
 import me.timeto.shared.models.TaskUi
 import me.timeto.shared.models.sortedUi
-import me.timeto.shared.vm.ui.DayIntervalsUI
+import me.timeto.shared.models.DayIntervalsUi
 import me.timeto.shared.vm.ui.TimerDataUI
 
 class HomeVm : __Vm<HomeVm.State>() {
@@ -17,7 +17,7 @@ class HomeVm : __Vm<HomeVm.State>() {
         val isPurple: Boolean,
         val todayTasksUi: List<TaskUi>,
         val isTasksVisible: Boolean,
-        val todayIntervalsUI: DayIntervalsUI?,
+        val todayIntervalsUi: DayIntervalsUi?,
         val fdroidMessage: String?,
         val readmeMessage: String?,
         val whatsNewMessage: String?,
@@ -40,7 +40,7 @@ class HomeVm : __Vm<HomeVm.State>() {
             return@filter clt.checklist.id != clDb.id
         }
 
-        val goalsUI: List<GoalUI> = if (todayIntervalsUI == null)
+        val goalsUI: List<GoalUI> = if (todayIntervalsUi == null)
             listOf()
         else Cache.activitiesSorted
             .map { activity ->
@@ -48,9 +48,9 @@ class HomeVm : __Vm<HomeVm.State>() {
                 activity.goals
                     .filter { it.period.isToday() }
                     .map { goal ->
-                        var totalSeconds: Int = todayIntervalsUI.intervalsUI
+                        var totalSeconds: Int = todayIntervalsUi.intervalsUI
                             .sumOf { if (it.activity?.id == activity.id) it.seconds else 0 }
-                        val lastWithActivity = todayIntervalsUI.intervalsUI
+                        val lastWithActivity = todayIntervalsUi.intervalsUI
                             .lastOrNull { it.activity != null }
                         if (lastWithActivity?.activity?.id == activity.id) {
                             val timeFinish = lastWithActivity.timeFinish()
@@ -150,7 +150,7 @@ class HomeVm : __Vm<HomeVm.State>() {
             isPurple = false,
             todayTasksUi = listOf(),
             isTasksVisible = false,
-            todayIntervalsUI = null, // todo init data
+            todayIntervalsUi = null, // todo init data
             fdroidMessage = null, // todo init data
             readmeMessage = null, // todo init data
             whatsNewMessage = null, // todo init data
@@ -270,14 +270,14 @@ class HomeVm : __Vm<HomeVm.State>() {
     private suspend fun upTodayIntervalsUI() {
         val utcOffset = localUtcOffsetWithDayStart
         val todayDS = UnixTime(utcOffset = utcOffset).localDay
-        val todayIntervalsUI = DayIntervalsUI
+        val todayIntervalsUI = DayIntervalsUi
             .buildList(
                 dayStart = todayDS,
                 dayFinish = todayDS,
                 utcOffset = utcOffset,
             )
             .first()
-        state.update { it.copy(todayIntervalsUI = todayIntervalsUI) }
+        state.update { it.copy(todayIntervalsUi = todayIntervalsUI) }
     }
 
     ///

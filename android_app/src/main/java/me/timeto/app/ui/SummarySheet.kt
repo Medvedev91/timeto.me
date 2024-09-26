@@ -101,7 +101,7 @@ fun SummarySheet(
                             reverseLayout = true,
                         ) {
 
-                            state.daysIntervalsUI.forEach { dayIntervalsUI ->
+                            state.daysIntervalsUi.forEach { dayIntervalsUI ->
 
                                 item {
 

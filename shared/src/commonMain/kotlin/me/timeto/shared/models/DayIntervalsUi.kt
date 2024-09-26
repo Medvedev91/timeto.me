@@ -1,10 +1,10 @@
-package me.timeto.shared.vm.ui
+package me.timeto.shared.models
 
 import me.timeto.shared.*
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
 
-class DayIntervalsUI(
+class DayIntervalsUi(
     val unixDay: Int,
     val intervalsUI: List<IntervalUI>,
     dayStringFormat: DAY_STRING_FORMAT,
@@ -38,7 +38,7 @@ class DayIntervalsUI(
             dayStart: Int,
             dayFinish: Int,
             utcOffset: Int,
-        ): List<DayIntervalsUI> {
+        ): List<DayIntervalsUi> {
 
             val timeStart: Int = UnixTime.byLocalDay(dayStart, utcOffset).time
             val timeFinish: Int = UnixTime.byLocalDay(dayFinish + 1, utcOffset).time - 1
@@ -60,7 +60,7 @@ class DayIntervalsUI(
 
             val now = time()
             val barDayFormat = if (dayStart == dayFinish) DAY_STRING_FORMAT.ALL else DAY_STRING_FORMAT.EVEN
-            val daysIntervalsUI: List<DayIntervalsUI> = (dayStart..dayFinish).map { day ->
+            val daysIntervalsUI: List<DayIntervalsUi> = (dayStart..dayFinish).map { day ->
                 val dayTimeStart: Int = UnixTime.byLocalDay(day, utcOffset).time
                 val dayTimeFinish: Int = dayTimeStart + 86_400
                 val dayMaxTimeFinish: Int = dayTimeFinish.limitMax(now)
@@ -69,7 +69,7 @@ class DayIntervalsUI(
                     intervalsAsc.isEmpty() ||
                     (dayTimeFinish <= intervalsAsc.first().id)
                 ) {
-                    return@map DayIntervalsUI(
+                    return@map DayIntervalsUi(
                         unixDay = day,
                         intervalsUI = listOf(IntervalUI(null, dayTimeStart, 86_400)),
                         dayStringFormat = barDayFormat,
@@ -107,7 +107,7 @@ class DayIntervalsUI(
                 if (trailingPadding > 0)
                     daySections.add(IntervalUI(null, dayMaxTimeFinish, trailingPadding))
 
-                DayIntervalsUI(day, daySections, barDayFormat)
+                DayIntervalsUi(day, daySections, barDayFormat)
             }
 
             return daysIntervalsUI

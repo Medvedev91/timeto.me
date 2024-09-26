@@ -61,7 +61,7 @@ struct SummarySheet: View {
 
                                     Spacer()
 
-                                    ForEachIndexed(state.daysIntervalsUI.reversed()) { _, dayIntervalsUI in
+                                    ForEachIndexed(state.daysIntervalsUi.reversed()) { _, dayIntervalsUI in
 
                                         VStack {
 
