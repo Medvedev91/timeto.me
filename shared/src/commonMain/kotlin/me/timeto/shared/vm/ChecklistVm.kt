@@ -5,7 +5,7 @@ import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.ChecklistItemDb
 import me.timeto.shared.launchExDefault
 import me.timeto.shared.onEachExIn
-import me.timeto.shared.vm.ui.ChecklistStateUI
+import me.timeto.shared.models.ChecklistStateUi
 
 class ChecklistVm(
     private val checklistDb: ChecklistDb,
@@ -50,7 +50,7 @@ class ChecklistVm(
             )
         }
 
-        val stateUI = ChecklistStateUI.build(checklistDb, items)
+        val stateUI = ChecklistStateUi.build(checklistDb, items)
         val itemsUI = items.map { ItemUI(it) }
 
         class ItemUI(

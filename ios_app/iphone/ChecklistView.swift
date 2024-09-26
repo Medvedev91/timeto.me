@@ -74,13 +74,13 @@ struct ChecklistView: View {
 
                     let stateUI = state.checklistUI.stateUI
                     let stateIconResource: String = {
-                        if stateUI is ChecklistStateUI.Completed {
+                        if stateUI is ChecklistStateUi.Completed {
                             return "checkmark.square.fill"
                         }
-                        if stateUI is ChecklistStateUI.Empty {
+                        if stateUI is ChecklistStateUi.Empty {
                             return "square"
                         }
-                        if stateUI is ChecklistStateUI.Partial {
+                        if stateUI is ChecklistStateUi.Partial {
                             return "minus.square.fill"
                         }
                         fatalError()

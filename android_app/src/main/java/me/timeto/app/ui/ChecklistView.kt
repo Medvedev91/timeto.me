@@ -19,7 +19,7 @@ import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.vm.ChecklistVm
-import me.timeto.shared.vm.ui.ChecklistStateUI
+import me.timeto.shared.models.ChecklistStateUi
 
 private val checklistItemMinHeight = HomeView__MTG_ITEM_HEIGHT
 
@@ -123,9 +123,9 @@ fun ChecklistView(
                 Icon(
                     painterResource(
                         id = when (completionState) {
-                            is ChecklistStateUI.Completed -> R.drawable.sf_checkmark_square_fill_medium_regular
-                            is ChecklistStateUI.Empty -> R.drawable.sf_square_medium_regular
-                            is ChecklistStateUI.Partial -> R.drawable.sf_minus_square_fill_medium_medium
+                            is ChecklistStateUi.Completed -> R.drawable.sf_checkmark_square_fill_medium_regular
+                            is ChecklistStateUi.Empty -> R.drawable.sf_square_medium_regular
+                            is ChecklistStateUi.Partial -> R.drawable.sf_minus_square_fill_medium_medium
                         }
                     ),
                     contentDescription = completionState.actionDesc,

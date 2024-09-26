@@ -1,10 +1,10 @@
-package me.timeto.shared.vm.ui
+package me.timeto.shared.models
 
 import me.timeto.shared.db.ChecklistItemDb
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.launchExDefault
 
-sealed class ChecklistStateUI(
+sealed class ChecklistStateUi(
     val actionDesc: String,
     val onClick: () -> Unit,
 ) {
@@ -14,7 +14,7 @@ sealed class ChecklistStateUI(
         fun build(
             checklist: ChecklistDb,
             items: List<ChecklistItemDb>,
-        ): ChecklistStateUI = when {
+        ): ChecklistStateUi = when {
             items.all { it.isChecked } -> Completed(checklist)
             items.none { it.isChecked } -> Empty(checklist)
             else -> Partial(checklist)
@@ -23,19 +23,19 @@ sealed class ChecklistStateUI(
 
     //////
 
-    class Completed(checklist: ChecklistDb) : ChecklistStateUI("Uncheck All", {
+    class Completed(checklist: ChecklistDb) : ChecklistStateUi("Uncheck All", {
         launchExDefault {
             ChecklistItemDb.toggleByList(checklist, false)
         }
     })
 
-    class Empty(checklist: ChecklistDb) : ChecklistStateUI("Check All", {
+    class Empty(checklist: ChecklistDb) : ChecklistStateUi("Check All", {
         launchExDefault {
             ChecklistItemDb.toggleByList(checklist, true)
         }
     })
 
-    class Partial(checklist: ChecklistDb) : ChecklistStateUI("Uncheck All", {
+    class Partial(checklist: ChecklistDb) : ChecklistStateUi("Uncheck All", {
         launchExDefault {
             ChecklistItemDb.toggleByList(checklist, false)
         }
