@@ -92,9 +92,9 @@ private struct EventFormSheet: View {
                         }
 
                         DaytimePickerSliderView(
-                            daytimeModel: state.daytimeModel,
-                            onChange: { daytimeModel in
-                                vm.setDaytime(daytimeModel: daytimeModel)
+                            daytimeUi: state.daytimeUi,
+                            onChange: { daytimeUi in
+                                vm.setDaytime(daytimeUi: daytimeUi)
                             }
                         )
                         .padding(.top, 16)

@@ -170,7 +170,7 @@ struct HomeView: View {
                                         isPresented: isTimerPickerPresented,
                                         title: infoUi.untilPickerTitle,
                                         doneText: "Start",
-                                        daytimeModel: infoUi.untilDaytimeUi,
+                                        daytimeUi: infoUi.untilDaytimeUi,
                                         onPick: { daytimePickerUi in
                                             infoUi.setUntilDaytime(daytimeUi: daytimePickerUi)
                                             vm.toggleIsPurple()

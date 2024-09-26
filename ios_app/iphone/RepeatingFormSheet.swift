@@ -116,12 +116,12 @@ struct RepeatingsFormSheet: View {
                                     isPresented: $isDaytimeSheetPresented,
                                     title: state.daytimeHeader,
                                     doneText: "Done",
-                                    daytimeModel: state.defDaytimeModel,
-                                    onPick: { daytimeModel in
-                                        vm.upDaytime(daytimeModel: daytimeModel)
+                                    daytimeUi: state.defDaytimeUi,
+                                    onPick: { daytimeUi in
+                                        vm.upDaytime(daytimeUi: daytimeUi)
                                     },
                                     onRemove: {
-                                        vm.upDaytime(daytimeModel: nil)
+                                        vm.upDaytime(daytimeUi: nil)
                                     }
 
                                 )

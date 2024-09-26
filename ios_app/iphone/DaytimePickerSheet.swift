@@ -6,7 +6,7 @@ struct DaytimePickerSheet: View {
     @Binding private var isPresented: Bool
     private let title: String
     private let doneText: String
-    private let onPick: (_ daytimeModel: DaytimeModel) -> Void
+    private let onPick: (_ daytimeUi: DaytimeUi) -> Void
     private let onRemove: () -> Void
 
     ///
@@ -19,8 +19,8 @@ struct DaytimePickerSheet: View {
         isPresented: Binding<Bool>,
         title: String,
         doneText: String,
-        daytimeModel: DaytimeModel,
-        onPick: @escaping (_ daytimeModel: DaytimeModel) -> Void,
+        daytimeUi: DaytimeUi,
+        onPick: @escaping (_ daytimeUi: DaytimeUi) -> Void,
         onRemove: @escaping () -> Void
     ) {
         _isPresented = isPresented
@@ -29,7 +29,7 @@ struct DaytimePickerSheet: View {
         self.onPick = onPick
         self.onRemove = onRemove
         ///
-        _dateTrick = State(initialValue: Date().startOfDay().inSeconds((daytimeModel.seconds).toInt()))
+        _dateTrick = State(initialValue: Date().startOfDay().inSeconds((daytimeUi.seconds).toInt()))
     }
 
     var body: some View {
@@ -55,11 +55,11 @@ struct DaytimePickerSheet: View {
                 Button(
                     action: {
                         let calendar = Calendar.current
-                        let newDaytimeModel = DaytimeModel(
+                        let newDaytimeUi = DaytimeUi(
                             hour: calendar.component(.hour, from: dateTrick).toInt32(),
                             minute: calendar.component(.minute, from: dateTrick).toInt32()
                         )
-                        onPick(newDaytimeModel)
+                        onPick(newDaytimeUi)
                         isPresented = false
                     },
                     label: {

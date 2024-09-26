@@ -13,14 +13,14 @@ private let tickNoteWidthDp = 20.0
 
 struct DaytimePickerSliderView: View {
 
-    let daytimeModel: DaytimeModel
-    let onChange: (DaytimeModel) -> Void
+    let daytimeUi: DaytimeUi
+    let onChange: (DaytimeUi) -> Void
 
     var body: some View {
 
         let sliderUi = DaytimePickerSliderUi(
-            hour: daytimeModel.hour,
-            minute: daytimeModel.minute
+            hour: daytimeUi.hour,
+            minute: daytimeUi.minute
         )
 
         VStack {
@@ -30,11 +30,11 @@ struct DaytimePickerSliderView: View {
                 ticks: sliderUi.hourTicks,
                 stepTicks: sliderUi.hourStepSlide.toInt(),
                 onChange: { hour in
-                    let newDaytimeModel = DaytimeModel(
+                    let newDaytimeUi = DaytimeUi(
                         hour: hour.toInt32(),
-                        minute: daytimeModel.minute
+                        minute: daytimeUi.minute
                     )
-                    onChange(newDaytimeModel)
+                    onChange(newDaytimeUi)
                 }
             )
             .padding(.top, 4)
@@ -44,11 +44,11 @@ struct DaytimePickerSliderView: View {
                 ticks: sliderUi.minuteTicks,
                 stepTicks: sliderUi.minuteStepSlide.toInt(),
                 onChange: { minute in
-                    let newDaytimeModel = DaytimeModel(
-                        hour: daytimeModel.hour,
+                    let newDaytimeUi = DaytimeUi(
+                        hour: daytimeUi.hour,
                         minute: minute.toInt32()
                     )
-                    onChange(newDaytimeModel)
+                    onChange(newDaytimeUi)
                 }
             )
             .padding(.top, 14)

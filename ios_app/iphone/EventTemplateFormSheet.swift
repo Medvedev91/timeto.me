@@ -72,12 +72,12 @@ struct EventTemplateFormSheet: View {
                                     isPresented: isTimerPickerPresented,
                                     title: state.daytimeTitle,
                                     doneText: "Done",
-                                    daytimeModel: state.defDaytimeModel,
-                                    onPick: { daytimeModel in
-                                        vm.setDaytime(daytimeModel: daytimeModel)
+                                    daytimeUi: state.defDaytimeUi,
+                                    onPick: { daytimeUi in
+                                        vm.setDaytime(daytimeUi: daytimeUi)
                                     },
                                     onRemove: {
-                                        vm.setDaytime(daytimeModel: nil)
+                                        vm.setDaytime(daytimeUi: nil)
                                     }
                                 )
                                 .presentationDetentsMediumIf16()
