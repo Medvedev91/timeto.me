@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import me.timeto.app.*
 import me.timeto.shared.models.DaytimeUi
-import me.timeto.shared.vm.ui.DaytimePickerSliderUi
+import me.timeto.shared.models.DaytimePickerSliderUi
 
 private val hPadding = H_PADDING + 1.dp
 
