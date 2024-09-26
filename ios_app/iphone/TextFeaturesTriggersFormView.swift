@@ -3,7 +3,7 @@ import shared
 
 struct TextFeaturesTriggersFormView: View {
 
-    private let formUI: TextFeaturesTriggersFormUI
+    private let formUI: TextFeaturesTriggersFormUi
     private let onChange: (TextFeatures) -> Void
 
     private let bgColor: Color
@@ -18,7 +18,7 @@ struct TextFeaturesTriggersFormView: View {
     ) {
         self.bgColor = bgColor
         self.onChange = onChange
-        formUI = TextFeaturesTriggersFormUI(textFeatures: textFeatures)
+        formUI = TextFeaturesTriggersFormUi(textFeatures: textFeatures)
     }
 
     var body: some View {

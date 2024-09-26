@@ -6,7 +6,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import me.timeto.app.c
 import me.timeto.shared.TextFeatures
-import me.timeto.shared.vm.ui.TextFeaturesTriggersFormUI
+import me.timeto.shared.models.TextFeaturesTriggersFormUi
 
 @Composable
 fun TextFeaturesTriggersFormView(
@@ -15,7 +15,7 @@ fun TextFeaturesTriggersFormView(
     onChange: (TextFeatures) -> Unit,
 ) {
 
-    val formUI = remember(textFeatures) { TextFeaturesTriggersFormUI(textFeatures) }
+    val formUI = remember(textFeatures) { TextFeaturesTriggersFormUi(textFeatures) }
 
     Column {
 

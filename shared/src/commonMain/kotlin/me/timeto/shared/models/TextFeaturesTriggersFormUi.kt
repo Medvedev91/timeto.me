@@ -1,10 +1,10 @@
-package me.timeto.shared.vm.ui
+package me.timeto.shared.models
 
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.ShortcutDb
 
-class TextFeaturesTriggersFormUI(
+class TextFeaturesTriggersFormUi(
     val textFeatures: TextFeatures,
 ) {
 
