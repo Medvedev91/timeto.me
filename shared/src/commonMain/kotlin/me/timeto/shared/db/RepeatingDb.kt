@@ -29,16 +29,16 @@ data class RepeatingDb(
         const val MAX_DAY_OF_MONTH = 27
 
         suspend fun getAsc() = dbIo {
-            db.repeatingQueries.getAsc().executeAsList().map { it.toModel() }
+            db.repeatingQueries.getAsc().executeAsList().map { it.toDb() }
         }
 
         fun getAscFlow() = db.repeatingQueries.getAsc().asFlow()
-            .mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
+            .mapToList(Dispatchers.IO).map { list -> list.map { it.toDb() } }
 
         fun todayWithOffset(): Int = UnixTime(time() - dayStartOffsetSeconds()).localDay
 
         suspend fun getByIdOrNull(id: Int) = dbIo {
-            db.repeatingQueries.getById(id).executeAsOneOrNull()?.toModel()
+            db.repeatingQueries.getById(id).executeAsOneOrNull()?.toDb()
         }
 
         suspend fun addWithValidation(
@@ -65,7 +65,7 @@ data class RepeatingDb(
             // Select within a transaction to avoid duplicate additions
             db.transaction {
                 db.repeatingQueries.getAsc().executeAsList()
-                    .map { it.toModel() }
+                    .map { it.toDb() }
                     .filter { it.getNextDay() <= today }
                     .forEach { repeating ->
                         TaskDb.addWithValidation_transactionRequired(
@@ -81,7 +81,7 @@ data class RepeatingDb(
         /// Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.repeatingQueries.getAsc().executeAsList().map { it.toModel() }
+            db.repeatingQueries.getAsc().executeAsList().map { it.toDb() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
@@ -102,12 +102,6 @@ data class RepeatingDb(
                 throw UIException("Empty text")
             return validatedText
         }
-
-        private fun RepeatingSQ.toModel() = RepeatingDb(
-            id = id, text = text, last_day = last_day,
-            type_id = type_id, value = value_, daytime = daytime,
-            is_important = is_important,
-        )
     }
 
     fun daytimeToTimeWithDayStart(today: Int): Int? {
@@ -458,3 +452,9 @@ data class RepeatingDb(
         }
     }
 }
+
+private fun RepeatingSQ.toDb() = RepeatingDb(
+    id = id, text = text, last_day = last_day,
+    type_id = type_id, value = value_, daytime = daytime,
+    is_important = is_important,
+)
