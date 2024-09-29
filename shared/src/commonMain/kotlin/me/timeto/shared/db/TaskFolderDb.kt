@@ -24,11 +24,11 @@ data class TaskFolderDb(
         fun anyChangeFlow() = db.taskFolderQueries.anyChange().asFlow()
 
         suspend fun getAscBySort() = dbIo {
-            db.taskFolderQueries.getAscBySort().executeAsList().map { it.toModel() }
+            db.taskFolderQueries.getAscBySort().executeAsList().map { it.toDb() }
         }
 
         fun getAscBySortFlow() = db.taskFolderQueries.getAscBySort().asFlow()
-            .mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
+            .mapToList(Dispatchers.IO).map { list -> list.map { it.toDb() } }
 
         //////
 
@@ -56,15 +56,11 @@ data class TaskFolderDb(
             compareBy({ it.sort }, { it.id })
         )
 
-        private fun TaskFolderSQ.toModel() = TaskFolderDb(
-            id = id, name = name, sort = sort
-        )
-
         ///
         /// Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.taskFolderQueries.getAscBySort().executeAsList().map { it.toModel() }
+            db.taskFolderQueries.getAscBySort().executeAsList().map { it.toDb() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
@@ -116,3 +112,7 @@ private fun validateName(name: String): String {
         throw UIException("Invalid folder name")
     return validatedName
 }
+
+private fun TaskFolderSQ.toDb() = TaskFolderDb(
+    id = id, name = name, sort = sort,
+)
