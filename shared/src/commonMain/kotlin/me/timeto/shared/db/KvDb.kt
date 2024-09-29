@@ -20,11 +20,11 @@ data class KvDb(
     companion object : Backupable__Holder {
 
         suspend fun selectAll(): List<KvDb> = dbIo {
-            db.kVQueries.selectAll().executeAsList().map { it.toModel() }
+            db.kVQueries.selectAll().executeAsList().map { it.toDb() }
         }
 
         fun selectAllFlow(): Flow<List<KvDb>> = db.kVQueries.selectAll().asFlow()
-            .mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
+            .mapToList(Dispatchers.IO).map { list -> list.map { it.toDb() } }
 
         ///
 
@@ -57,7 +57,7 @@ data class KvDb(
         // Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.kVQueries.selectAll().executeAsList().map { it.toModel() }
+            db.kVQueries.selectAll().executeAsList().map { it.toDb() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
@@ -101,7 +101,7 @@ data class KvDb(
             selectStringOrNullFlow().map { it?.toBoolean10() }
 
         fun getOrNullFlow(): Flow<KvDb?> = db.kVQueries.selectByKey(this.name).asFlow()
-            .mapToOneOrNull(Dispatchers.IO).map { it?.toModel() }
+            .mapToOneOrNull(Dispatchers.IO).map { it?.toDb() }
 
         suspend fun upsert(value: String?): Unit = dbIo {
             if (value == null)
@@ -152,7 +152,7 @@ data class KvDb(
     }
 }
 
-private fun KVSQ.toModel() = KvDb(
+private fun KVSQ.toDb() = KvDb(
     key = key, value = value_
 )
 
