@@ -20,11 +20,11 @@ data class ChecklistDb(
         fun anyChangeFlow() = db.checklistQueries.anyChange().asFlow()
 
         suspend fun getAsc() = dbIo {
-            db.checklistQueries.getAsc().executeAsList().map { it.toModel() }
+            db.checklistQueries.getAsc().executeAsList().map { it.toDb() }
         }
 
         fun getAscFlow() = db.checklistQueries.getAsc().asFlow()
-            .mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
+            .mapToList(Dispatchers.IO).map { list -> list.map { it.toDb() } }
 
         suspend fun addWithValidation(
             name: String,
@@ -35,7 +35,7 @@ data class ChecklistDb(
                 name = validateName(name),
             )
             db.checklistQueries.insert(sqModel)
-            sqModel.toModel()
+            sqModel.toDb()
         }
 
         private suspend fun validateName(
@@ -61,7 +61,7 @@ data class ChecklistDb(
         /// Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.checklistQueries.getAsc().executeAsList().map { it.toModel() }
+            db.checklistQueries.getAsc().executeAsList().map { it.toDb() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
@@ -119,6 +119,6 @@ data class ChecklistDb(
     }
 }
 
-private fun ChecklistSQ.toModel() = ChecklistDb(
-    id = id, name = name
+private fun ChecklistSQ.toDb() = ChecklistDb(
+    id = id, name = name,
 )
