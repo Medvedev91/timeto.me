@@ -23,11 +23,11 @@ data class ChecklistItemDb(
         fun anyChangeFlow() = db.checklistItemQueries.anyChange().asFlow()
 
         suspend fun getSorted() = dbIo {
-            db.checklistItemQueries.getSorted().executeAsList().map { it.toModel() }
+            db.checklistItemQueries.getSorted().executeAsList().map { it.toDb() }
         }
 
         fun getSortedFlow() = db.checklistItemQueries.getSorted().asFlow()
-            .mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
+            .mapToList(Dispatchers.IO).map { list -> list.map { it.toDb() } }
 
         suspend fun addWithValidation(
             text: String,
@@ -66,7 +66,7 @@ data class ChecklistItemDb(
         /// Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.checklistItemQueries.getSorted().executeAsList().map { it.toModel() }
+            db.checklistItemQueries.getSorted().executeAsList().map { it.toDb() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
@@ -135,7 +135,7 @@ private fun validateText(text: String): String {
     return validatedText
 }
 
-private fun ChecklistItemSQ.toModel() = ChecklistItemDb(
+private fun ChecklistItemSQ.toDb() = ChecklistItemDb(
     id = id, text = text, list_id = list_id,
     check_time = check_time, sort = sort,
 )
