@@ -23,18 +23,18 @@ data class NoteDb(
         fun anyChangeFlow() = db.noteQueries.anyChange().asFlow()
 
         suspend fun getAsc(): List<NoteDb> = dbIo {
-            db.noteQueries.getAsc().toModels()
+            db.noteQueries.getAsc().toDbList()
         }
 
         fun getAscFlow(): Flow<List<NoteDb>> = db.noteQueries.getAsc().asFlow()
-            .mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
+            .mapToList(Dispatchers.IO).map { list -> list.map { it.toDb() } }
 
         suspend fun addWithValidation(
             text: String,
         ) = dbIo {
             db.transaction {
                 val nextId = time() // todo
-                val otherNotes = db.noteQueries.getAsc().toModels()
+                val otherNotes = db.noteQueries.getAsc().toDbList()
                 db.noteQueries.insert(
                     NoteSQ(
                         id = nextId,
@@ -49,7 +49,7 @@ data class NoteDb(
         // Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.noteQueries.getAsc().toModels()
+            db.noteQueries.getAsc().toDbList()
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
@@ -71,7 +71,7 @@ data class NoteDb(
         newText: String,
     ): Unit = dbIo {
         db.transaction {
-            val otherNotes = db.noteQueries.getAsc().toModels()
+            val otherNotes = db.noteQueries.getAsc().toDbList()
                 .filter { it.id != id }
             db.noteQueries.upById(
                 id = id,
@@ -110,12 +110,12 @@ data class NoteDb(
 
 ///
 
-private fun NoteSQ.toModel() = NoteDb(
+private fun NoteSQ.toDb() = NoteDb(
     id = id, sort = sort, text = text
 )
 
-private fun Query<NoteSQ>.toModels(): List<NoteDb> =
-    executeAsList().map { it.toModel() }
+private fun Query<NoteSQ>.toDbList(): List<NoteDb> =
+    executeAsList().map { it.toDb() }
 
 ///
 
