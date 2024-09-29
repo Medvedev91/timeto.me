@@ -32,18 +32,18 @@ data class IntervalDb(
         /// Select many
 
         suspend fun getAsc(limit: Int = Int.MAX_VALUE) = dbIo {
-            db.intervalQueries.getAsc(limit = limit.toLong()).executeAsList().map { it.toModel() }
+            db.intervalQueries.getAsc(limit = limit.toLong()).executeAsList().map { it.toDb() }
         }
 
         fun getAscFlow(limit: Int = Int.MAX_VALUE) = db.intervalQueries.getAsc(limit = limit.toLong())
-            .asFlow().mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
+            .asFlow().mapToList(Dispatchers.IO).map { list -> list.map { it.toDb() } }
 
         suspend fun getDesc(limit: Int): List<IntervalDb> = dbIo {
-            db.intervalQueries.getDesc(limit.toLong()).executeAsList().map { it.toModel() }
+            db.intervalQueries.getDesc(limit.toLong()).executeAsList().map { it.toDb() }
         }
 
         fun getDescFlow(limit: Int = Int.MAX_VALUE) = db.intervalQueries.getDesc(limit.toLong()).asFlow()
-            .mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
+            .mapToList(Dispatchers.IO).map { list -> list.map { it.toDb() } }
 
         suspend fun getBetweenIdDesc(
             timeStart: Int,
@@ -54,27 +54,27 @@ data class IntervalDb(
                 timeStart = timeStart, timeFinish = timeFinish, limit = limit.toLong()
             )
                 .executeAsList()
-                .map { it.toModel() }
+                .map { it.toDb() }
         }
 
         fun getFirstAndLastNeedTransaction() = listOf(
-            db.intervalQueries.getAsc(limit = 1).executeAsOne().toModel(),
-            db.intervalQueries.getDesc(limit = 1).executeAsOne().toModel(),
+            db.intervalQueries.getAsc(limit = 1).executeAsOne().toDb(),
+            db.intervalQueries.getDesc(limit = 1).executeAsOne().toDb(),
         )
 
         ///
         /// Select One
 
         suspend fun getByIdOrNull(id: Int): IntervalDb? = dbIo {
-            db.intervalQueries.getById(id).executeAsOneOrNull()?.toModel()
+            db.intervalQueries.getById(id).executeAsOneOrNull()?.toDb()
         }
 
         suspend fun getLastOneOrNull(): IntervalDb? = dbIo {
-            db.intervalQueries.getDesc(limit = 1).executeAsOneOrNull()?.toModel()
+            db.intervalQueries.getDesc(limit = 1).executeAsOneOrNull()?.toDb()
         }
 
         fun getLastOneOrNullFlow() = db.intervalQueries.getDesc(limit = 1).asFlow()
-            .mapToOneOrNull(Dispatchers.IO).map { it?.toModel() }
+            .mapToOneOrNull(Dispatchers.IO).map { it?.toDb() }
 
         ///
         /// Add
@@ -109,7 +109,7 @@ data class IntervalDb(
                 note = note?.trim()?.takeIf { it.isNotBlank() },
             )
             db.intervalQueries.insert(intervalSQ)
-            return intervalSQ.toModel()
+            return intervalSQ.toDb()
         }
 
         //////
@@ -118,7 +118,7 @@ data class IntervalDb(
 
             db.transaction {
 
-                val interval = db.intervalQueries.getDesc(limit = 1).executeAsOne().toModel()
+                val interval = db.intervalQueries.getDesc(limit = 1).executeAsOne().toDb()
                 val activity = interval.getActivityDI()
                 val paused: TextFeatures.Paused = run {
                     val intervalTf = (interval.note ?: "").textFeatures()
@@ -175,7 +175,7 @@ data class IntervalDb(
         /// Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.intervalQueries.getAsc(Int.MAX_VALUE.toLong()).executeAsList().map { it.toModel() }
+            db.intervalQueries.getAsc(Int.MAX_VALUE.toLong()).executeAsList().map { it.toDb() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
@@ -256,6 +256,6 @@ data class IntervalDb(
     }
 }
 
-private fun IntervalSQ.toModel() = IntervalDb(
-    id = id, timer = timer, note = note, activity_id = activity_id
+private fun IntervalSQ.toDb() = IntervalDb(
+    id = id, timer = timer, note = note, activity_id = activity_id,
 )
