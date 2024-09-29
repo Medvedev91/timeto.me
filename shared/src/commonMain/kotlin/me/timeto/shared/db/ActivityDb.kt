@@ -37,17 +37,17 @@ data class ActivityDb(
         /// Select many
 
         suspend fun getAscSorted() = dbIo {
-            db.activityQueries.getAscSorted().executeAsList().map { it.toModel() }
+            db.activityQueries.getAscSorted().executeAsList().map { it.toDb() }
         }
 
         fun getAscSortedFlow() = db.activityQueries.getAscSorted().asFlow()
-            .mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
+            .mapToList(Dispatchers.IO).map { list -> list.map { it.toDb() } }
 
         ///
         /// Select One
 
         suspend fun getByIdOrNull(id: Int) = dbIo {
-            db.activityQueries.getById(id).executeAsOneOrNull()?.toModel()
+            db.activityQueries.getById(id).executeAsOneOrNull()?.toDb()
         }
 
         fun getOther(): ActivityDb {
@@ -99,7 +99,7 @@ data class ActivityDb(
                     pomodoro_timer = pomodoroTimer,
                 )
                 db.activityQueries.insert(activitySQ)
-                activitySQ.toModel()
+                activitySQ.toDb()
             }
         }
 
@@ -187,18 +187,11 @@ data class ActivityDb(
             return colors.random()
         }
 
-        private fun ActivitySQ.toModel() = ActivityDb(
-            id = id, name = name, emoji = emoji, timer = timer, sort = sort,
-            type_id = type_id, color_rgba = color_rgba, data_json = data_json,
-            keep_screen_on = keep_screen_on, goals_json = goals_json,
-            pomodoro_timer = pomodoro_timer,
-        )
-
         ///
         /// Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.activityQueries.getAscSorted().executeAsList().map { it.toModel() }
+            db.activityQueries.getAscSorted().executeAsList().map { it.toDb() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
@@ -450,6 +443,13 @@ data class ActivityDb(
         }
     }
 }
+
+private fun ActivitySQ.toDb() = ActivityDb(
+    id = id, name = name, emoji = emoji, timer = timer, sort = sort,
+    type_id = type_id, color_rgba = color_rgba, data_json = data_json,
+    keep_screen_on = keep_screen_on, goals_json = goals_json,
+    pomodoro_timer = pomodoro_timer,
+)
 
 data class ActivityDb__Data(
     val timer_hints: TimerHints,
