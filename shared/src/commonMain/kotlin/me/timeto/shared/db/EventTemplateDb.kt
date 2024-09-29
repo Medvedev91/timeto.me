@@ -21,18 +21,18 @@ data class EventTemplateDb(
     companion object : Backupable__Holder {
 
         suspend fun selectAscSorted(): List<EventTemplateDb> = dbIo {
-            db.eventTemplateQueries.selectAscSorted().executeAsList().toDBList()
+            db.eventTemplateQueries.selectAscSorted().executeAsList().toDbList()
         }
 
         fun selectAscSortedFlow(): Flow<List<EventTemplateDb>> = db.eventTemplateQueries
-            .selectAscSorted().asFlow().mapToList(Dispatchers.IO).map { it.toDBList() }
+            .selectAscSorted().asFlow().mapToList(Dispatchers.IO).map { it.toDbList() }
 
         suspend fun insertWithValidation(
             daytime: Int,
             text: String,
         ) {
             dbIo {
-                val templates = db.eventTemplateQueries.selectAscSorted().executeAsList().toDBList()
+                val templates = db.eventTemplateQueries.selectAscSorted().executeAsList().toDbList()
                 db.eventTemplateQueries.insertObject(
                     EventTemplateSQ(
                         id = time(), // todo validation
@@ -48,7 +48,7 @@ data class EventTemplateDb(
         // Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.eventTemplateQueries.selectAscSorted().executeAsList().toDBList()
+            db.eventTemplateQueries.selectAscSorted().executeAsList().toDbList()
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
@@ -72,7 +72,7 @@ data class EventTemplateDb(
                 val templates = db.eventTemplateQueries
                     .selectAscSorted()
                     .executeAsList()
-                    .toDBList()
+                    .toDbList()
                     .filter { id != it.id }
                 db.eventTemplateQueries.updateById(
                     id = id,
@@ -108,11 +108,12 @@ data class EventTemplateDb(
     }
 }
 
-private fun EventTemplateSQ.toDB() = EventTemplateDb(
+private fun EventTemplateSQ.toDb() = EventTemplateDb(
     id = id, sort = sort, daytime = daytime, text = text,
 )
 
-private fun List<EventTemplateSQ>.toDBList() = this.map { it.toDB() }
+private fun List<EventTemplateSQ>.toDbList(): List<EventTemplateDb> =
+    this.map { it.toDb() }
 
 private fun dayTimeValidation(daytime: Int): Int {
     if (daytime < 0)
