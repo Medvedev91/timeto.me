@@ -19,11 +19,11 @@ data class EventDb(
     companion object : Backupable__Holder {
 
         suspend fun getAscByTime() = dbIo {
-            db.eventQueries.getAscByTime().executeAsList().map { it.toModel() }
+            db.eventQueries.getAscByTime().executeAsList().map { it.toDb() }
         }
 
         fun getAscByTimeFlow() = db.eventQueries.getAscByTime().asFlow()
-            .mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
+            .mapToList(Dispatchers.IO).map { list -> list.map { it.toDb() } }
 
         suspend fun addWithValidation(
             text: String,
@@ -42,7 +42,7 @@ data class EventDb(
             // Select within a transaction to avoid duplicate additions
             db.transaction {
                 db.eventQueries.getAscByTime().executeAsList()
-                    .map { it.toModel() }
+                    .map { it.toDb() }
                     .filter { it.getLocalTime().localDay <= today }
                     .sortedBy { event ->
                         // 00:00 - to the end
@@ -64,7 +64,7 @@ data class EventDb(
         // Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.eventQueries.getAscByTime().executeAsList().map { it.toModel() }
+            db.eventQueries.getAscByTime().executeAsList().map { it.toDb() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
@@ -127,6 +127,6 @@ private fun validateText(text: String): String {
     return validatedText
 }
 
-private fun EventSQ.toModel() = EventDb(
-    id = id, text = text, utc_time = utc_time
+private fun EventSQ.toDb() = EventDb(
+    id = id, text = text, utc_time = utc_time,
 )
