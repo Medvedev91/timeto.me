@@ -23,14 +23,14 @@ data class TaskDb(
         fun anyChangeFlow() = db.taskQueries.anyChange().asFlow()
 
         suspend fun getAsc() = dbIo {
-            db.taskQueries.getAsc().executeAsList().map { it.toModel() }
+            db.taskQueries.getAsc().executeAsList().map { it.toDb() }
         }
 
         fun getAscFlow() = db.taskQueries.getAsc().asFlow()
-            .mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
+            .mapToList(Dispatchers.IO).map { list -> list.map { it.toDb() } }
 
         suspend fun getByIdOrNull(id: Int): TaskDb? = dbIo {
-            db.taskQueries.getById(id).executeAsOneOrNull()?.toModel()
+            db.taskQueries.getById(id).executeAsOneOrNull()?.toDb()
         }
 
         ///
@@ -90,15 +90,11 @@ data class TaskDb(
             return validatedText
         }
 
-        private fun TaskSQ.toModel() = TaskDb(
-            id = id, text = text, folder_id = folder_id
-        )
-
         ///
         /// Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.taskQueries.getAsc().executeAsList().map { it.toModel() }
+            db.taskQueries.getAsc().executeAsList().map { it.toDb() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
@@ -209,3 +205,7 @@ data class TaskDb(
         db.taskQueries.deleteById(id)
     }
 }
+
+private fun TaskSQ.toDb() = TaskDb(
+    id = id, text = text, folder_id = folder_id,
+)
