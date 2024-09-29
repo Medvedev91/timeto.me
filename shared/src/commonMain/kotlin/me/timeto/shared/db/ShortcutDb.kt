@@ -28,14 +28,14 @@ data class ShortcutDb(
         }
 
         suspend fun getAsc() = dbIo {
-            db.shortcutQueries.getAsc().executeAsList().map { it.toModel() }
+            db.shortcutQueries.getAsc().executeAsList().map { it.toDb() }
         }
 
         fun getAscFlow() = db.shortcutQueries.getAsc().asFlow()
-            .mapToList(Dispatchers.IO).map { list -> list.map { it.toModel() } }
+            .mapToList(Dispatchers.IO).map { list -> list.map { it.toDb() } }
 
         suspend fun getByIdOrNull(id: Int) = dbIo {
-            db.shortcutQueries.getById(id).executeAsOneOrNull()?.toModel()
+            db.shortcutQueries.getById(id).executeAsOneOrNull()?.toDb()
         }
 
         suspend fun addWithValidation(
@@ -99,7 +99,7 @@ data class ShortcutDb(
         /// Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.shortcutQueries.getAsc().executeAsList().map { it.toModel() }
+            db.shortcutQueries.getAsc().executeAsList().map { it.toDb() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
@@ -146,6 +146,6 @@ data class ShortcutDb(
     }
 }
 
-private fun ShortcutSQ.toModel() = ShortcutDb(
-    id = id, name = name, uri = uri
+private fun ShortcutSQ.toDb() = ShortcutDb(
+    id = id, name = name, uri = uri,
 )
