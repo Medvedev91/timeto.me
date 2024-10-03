@@ -9,7 +9,7 @@ CREATE TABLE GoalSq (
     finish_text TEXT NOT NULL
 );
 
-getAll:
+selectAll:
 SELECT *
 FROM GoalSq;
 
