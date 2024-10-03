@@ -1,0 +1,21 @@
+import kotlin.Int;
+
+CREATE TABLE GoalSq (
+    id INTEGER AS Int NOT NULL PRIMARY KEY,
+    activity_id INTEGER AS Int NOT NULL,
+    seconds INTEGER AS Int NOT NULL,
+    period_json TEXT NOT NULL,
+    note TEXT NOT NULL,
+    finish_text TEXT NOT NULL
+);
+
+getAll:
+SELECT *
+FROM GoalSq;
+
+insert:
+INSERT INTO GoalSq
+VALUES ?;
+
+truncate:
+DELETE FROM GoalSq;
