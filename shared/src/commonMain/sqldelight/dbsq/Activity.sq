@@ -54,11 +54,6 @@ UPDATE ActivitySQ
 SET sort = ?
 WHERE id = ?;
 
-upPomodoroTodo:
-UPDATE ActivitySQ
-SET pomodoro_timer = ?
-WHERE id = ?;
-
 deleteById:
 DELETE FROM ActivitySQ
 WHERE id = ?;

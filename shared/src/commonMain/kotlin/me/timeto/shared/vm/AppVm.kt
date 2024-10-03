@@ -30,15 +30,6 @@ class AppVm : __Vm<AppVm.State>() {
 
             state.update { it.copy(isAppReady = true) }
 
-            // todo remove. migration started 2024-07-01.
-            ActivityDb.getAscSorted().forEach { activityDb ->
-                if (activityDb.pomodoro_timer == 0)
-                    db.activityQueries.upPomodoroTodo(
-                        pomodoro_timer = (5 * 60),
-                        id = activityDb.id,
-                    )
-            }
-
             ///
 
             backupStateFlow
