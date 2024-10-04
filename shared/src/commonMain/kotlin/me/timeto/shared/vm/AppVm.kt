@@ -3,6 +3,7 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
+import kotlinx.serialization.json.*
 import me.timeto.shared.*
 import me.timeto.shared.db.*
 
@@ -29,6 +30,24 @@ class AppVm : __Vm<AppVm.State>() {
                 fillInitData()
 
             state.update { it.copy(isAppReady = true) }
+
+            // todo migration starts ~2024-11-01
+            ActivityDb.getAscSorted().forEach { activityDb ->
+                val jGoals: List<JsonObject> =
+                    Json.parseToJsonElement(activityDb.goals_json).jsonArray.map { it.jsonObject }
+                jGoals.forEach { jGoal ->
+                    val seconds: Int = jGoal["seconds"]!!.jsonPrimitive.int
+                    val jDays: String = jGoal["period"]!!.jsonObject["data"]!!.jsonPrimitive.content
+                    GoalDb.insertWithValidation(
+                        activityDb = activityDb,
+                        seconds = seconds,
+                        period = GoalDb.Period.DaysOfWeek(jDays.split(",").map { it.toInt() }),
+                        note = "",
+                        finishText = "todo",
+                    )
+                }
+                db.activityQueries.updateGoalsByIdTodo("[]", activityDb.id)
+            }
 
             ///
 
