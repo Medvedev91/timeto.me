@@ -131,7 +131,7 @@ private fun performShortcut(
 
     val shortcut: ShortcutDb? =
         interval.note?.textFeatures()?.shortcuts?.firstOrNull()
-            ?: interval.getActivityDI().name.textFeatures().shortcuts.firstOrNull()
+        ?: interval.getActivityDI().name.textFeatures().shortcuts.firstOrNull()
 
     shortcut?.performUI()
 }
