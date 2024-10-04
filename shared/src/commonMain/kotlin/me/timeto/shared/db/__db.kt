@@ -18,5 +18,5 @@ internal suspend fun <T> dbIo(
     block: suspend CoroutineScope.() -> T,
 ): T = withContext(Dispatchers.IO, block)
 
-fun <T : Any, R : Any> Query<T>.asListFlow(mapper: (T) -> R): Flow<List<R>> =
+internal fun <T : Any, R : Any> Query<T>.asListFlow(mapper: (T) -> R): Flow<List<R>> =
     asFlow().mapToList(Dispatchers.IO).map { list -> list.map { mapper(it) } }
