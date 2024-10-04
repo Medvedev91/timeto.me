@@ -15,7 +15,9 @@ FROM GoalSq;
 
 insert:
 INSERT INTO GoalSq
-VALUES ?;
+(activity_id, seconds, period_json, note, finish_text)
+VALUES
+(?, ?, ?, ?, ?);
 
 truncate:
 DELETE FROM GoalSq;
