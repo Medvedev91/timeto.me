@@ -2,10 +2,13 @@ package me.timeto.shared
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.serialization.json.*
 
 fun zlog(message: Any?) = println(";; ${message.toString().replace("\n", "\n;; ")}")
+
+fun ioScope() = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
 fun defaultScope() = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
