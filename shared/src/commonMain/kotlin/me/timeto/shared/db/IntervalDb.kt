@@ -141,7 +141,7 @@ data class IntervalDb(
 
                 val pausedTaskId: Int = TaskDb.addWithValidation_transactionRequired(
                     text = pausedTf.textWithFeatures(),
-                    folder = Cache.getTodayFolder(),
+                    folder = Cache.getTodayFolderDb(),
                 )
                 val pauseIntervalTf = "Break".textFeatures().copy(
                     pause = TextFeatures.Pause(pausedTaskId = pausedTaskId),

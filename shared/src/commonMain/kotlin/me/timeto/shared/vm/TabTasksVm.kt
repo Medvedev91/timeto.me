@@ -15,7 +15,7 @@ class TabTasksVm : __Vm<TabTasksVm.State>() {
 
     data class State(
         val taskFoldersUI: List<TaskFolderUI>,
-        val initFolder: TaskFolderDb = Cache.getTodayFolder(),
+        val initFolder: TaskFolderDb = Cache.getTodayFolderDb(),
     )
 
     override val state = MutableStateFlow(

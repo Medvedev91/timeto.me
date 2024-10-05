@@ -12,7 +12,8 @@ struct TasksView: View {
 
     static var lastInstance: TasksView? = nil
 
-    @State var activeSection: TabTasksView_Section? = TabTasksView_Section_Folder(folder: Cache.getTodayFolder())
+    @State var activeSection: TabTasksView_Section? =
+        TabTasksView_Section_Folder(folder: Cache.getTodayFolderDb())
 
     /// No more fits when the keyboard is open on the SE
     private let tabPadding: CGFloat = 15
@@ -141,7 +142,7 @@ struct TasksView: View {
             }
             .onDisappear {
                 /// On onDisappear(), otherwise on onAppear() twitching (hide old and open new).
-                activeSection = TabTasksView_Section_Folder(folder: Cache.getTodayFolder())
+                activeSection = TabTasksView_Section_Folder(folder: Cache.getTodayFolderDb())
             }
         }
         .onAppear {

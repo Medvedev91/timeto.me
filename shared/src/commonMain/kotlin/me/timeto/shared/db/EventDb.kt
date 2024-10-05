@@ -53,7 +53,7 @@ data class EventDb(
                     .forEach { event ->
                         TaskDb.addWithValidation_transactionRequired(
                             event.prepTextForTask(),
-                            Cache.getTodayFolder()
+                            Cache.getTodayFolderDb()
                         )
                         db.eventQueries.deleteById(event.id)
                     }

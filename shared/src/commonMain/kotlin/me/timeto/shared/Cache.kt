@@ -31,13 +31,10 @@ object Cache {
         this.lastInterval = lastInterval
     }
 
-    //
-    // Task Folders
+    ///
 
-    fun getTodayFolder(): TaskFolderDb = taskFolders.first { it.isToday }
-
-    //
-    // Mics
+    fun getTodayFolderDb(): TaskFolderDb =
+        taskFolders.first { it.isToday }
 
     fun getActivityByIdOrNull(id: Int) = activitiesSorted.firstOrNull { id == it.id }
 

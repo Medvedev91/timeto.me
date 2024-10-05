@@ -42,7 +42,7 @@ class TaskFormSheetVm(
             if (task != null) {
                 task.upTextWithValidation(textWithFeatures)
             } else {
-                TaskDb.addWithValidation(textWithFeatures, Cache.getTodayFolder())
+                TaskDb.addWithValidation(textWithFeatures, Cache.getTodayFolderDb())
             }
             onSuccess()
         } catch (e: UIException) {
