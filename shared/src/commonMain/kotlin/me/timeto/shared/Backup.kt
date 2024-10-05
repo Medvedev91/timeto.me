@@ -18,7 +18,7 @@ object Backup {
 
             "activities" to ActivityDb.getAscSorted().modelsToJsonArray(),
             "intervals" to IntervalDb.getDesc(intervalsLimit).modelsToJsonArray(),
-            "task_folders" to TaskFolderDb.getAscBySort().modelsToJsonArray(),
+            "task_folders" to TaskFolderDb.selectAllSorted().modelsToJsonArray(),
             "tasks" to TaskDb.getAsc().modelsToJsonArray(),
             "checklists" to ChecklistDb.getAsc().modelsToJsonArray(),
             "checklist_items" to ChecklistItemDb.getSorted().modelsToJsonArray(),

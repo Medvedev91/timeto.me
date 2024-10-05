@@ -23,7 +23,7 @@ data class TaskFolderDb(
 
         fun anyChangeFlow() = db.taskFolderQueries.anyChange().asFlow()
 
-        suspend fun getAscBySort() = dbIo {
+        suspend fun selectAllSorted(): List<TaskFolderDb> = dbIo {
             db.taskFolderQueries.getAscBySort().executeAsList().map { it.toDb() }
         }
 
@@ -38,7 +38,7 @@ data class TaskFolderDb(
             addRaw(
                 id = time(),
                 name = validateName(name),
-                sort = getAscBySort().maxOf { it.sort } + 1,
+                sort = selectAllSorted().maxOf { it.sort } + 1,
             )
         }
 
