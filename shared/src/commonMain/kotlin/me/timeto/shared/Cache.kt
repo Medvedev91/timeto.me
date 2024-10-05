@@ -24,7 +24,8 @@ object Cache {
     //
     // Late Init
 
-    fun isLateInitInitialized() = ::firstInterval.isInitialized && ::lastInterval.isInitialized
+    fun isLateInitInitialized(): Boolean =
+        ::firstInterval.isInitialized && ::lastInterval.isInitialized
 
     fun fillLateInit(firstInterval: IntervalDb, lastInterval: IntervalDb) {
         this.firstInterval = firstInterval
