@@ -30,7 +30,7 @@ data class TaskFolderDb(
         fun getAscBySortFlow() = db.taskFolderQueries.getAscBySort().asFlow()
             .mapToList(Dispatchers.IO).map { list -> list.map { it.toDb() } }
 
-        //////
+        ///
 
         suspend fun insertTmrw(): Unit = dbIo {
             addRaw(id = ID_TMRW, name = "TMRW", sort = 2)
