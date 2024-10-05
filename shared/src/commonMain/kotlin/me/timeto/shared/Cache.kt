@@ -37,8 +37,6 @@ object Cache {
     fun getTodayFolderDb(): TaskFolderDb =
         taskFoldersDbSorted.first { it.isToday }
 
-    fun getChecklistByIdOrNull(id: Int) = checklists.firstOrNull { id == it.id }
-
     fun getShortcutByIdOrNull(id: Int) = shortcuts.firstOrNull { id == it.id }
 
     //
