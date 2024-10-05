@@ -43,16 +43,16 @@ class HomeVm : __Vm<HomeVm.State>() {
         val goalsUi: List<GoalUi> = if (todayIntervalsUi == null)
             listOf()
         else Cache.activitiesSorted
-            .map { activity ->
-                val activityName = activity.name.textFeatures().textNoFeatures
-                activity.goals
+            .map { activityDb ->
+                val activityName = activityDb.name.textFeatures().textNoFeatures
+                activityDb.goals
                     .filter { it.period.isToday() }
                     .map { goal ->
                         var totalSeconds: Int = todayIntervalsUi.intervalsUI
-                            .sumOf { if (it.activity?.id == activity.id) it.seconds else 0 }
+                            .sumOf { if (it.activity?.id == activityDb.id) it.seconds else 0 }
                         val lastWithActivity = todayIntervalsUi.intervalsUI
                             .lastOrNull { it.activity != null }
-                        if (lastWithActivity?.activity?.id == activity.id) {
+                        if (lastWithActivity?.activity?.id == activityDb.id) {
                             val timeFinish = lastWithActivity.timeFinish()
                             val now = time()
                             if (now < timeFinish)
@@ -70,7 +70,7 @@ class HomeVm : __Vm<HomeVm.State>() {
                             ),
                             textRight = textRight,
                             ratio = timeDone.toFloat() / goal.seconds.toFloat(),
-                            bgColor = activity.colorRgba,
+                            bgColor = activityDb.colorRgba,
                         )
                     }
             }
