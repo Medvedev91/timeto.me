@@ -58,7 +58,7 @@ class SettingsSheetVm : __Vm<SettingsSheetVm.State>() {
         State(
             checklists = Cache.checklistsDb,
             shortcuts = Cache.shortcutsDb,
-            notes = Cache.notes,
+            notes = Cache.notesDb,
             dayStartSeconds = dayStartOffsetSeconds(),
             feedbackSubject = "Feedback",
             autoBackupTimeString = prepAutoBackupTimeString(AutoBackup.lastTimeCache.value),

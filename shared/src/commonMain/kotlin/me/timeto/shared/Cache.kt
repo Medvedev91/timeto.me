@@ -8,7 +8,7 @@ object Cache {
     var checklistsDb = listOf<ChecklistDb>()
     var checklistItemsDb = listOf<ChecklistItemDb>()
     var shortcutsDb = listOf<ShortcutDb>()
-    var notes = listOf<NoteDb>()
+    var notesDb = listOf<NoteDb>()
     var kv = listOf<KvDb>()
     var tasks = listOf<TaskDb>()
     var taskFoldersDbSorted = listOf<TaskFolderDb>()
@@ -55,8 +55,8 @@ object Cache {
         shortcutsDb = ShortcutDb.getAsc()
         ShortcutDb.getAscFlow().onEachExIn(scope) { shortcutsDb = it }
 
-        notes = NoteDb.getAsc()
-        NoteDb.getAscFlow().onEachExIn(scope) { notes = it }
+        notesDb = NoteDb.getAsc()
+        NoteDb.getAscFlow().onEachExIn(scope) { notesDb = it }
 
         kv = KvDb.selectAll()
         KvDb.selectAllFlow().onEachExIn(scope) { kv = it }
