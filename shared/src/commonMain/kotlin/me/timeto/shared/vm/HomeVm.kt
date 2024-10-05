@@ -27,10 +27,10 @@ class HomeVm : __Vm<HomeVm.State>() {
 
         val timerData = TimerDataUi(interval, todayTasksUi.map { it.taskDb }, isPurple)
 
-        val activity = interval.getActivityDI()
+        val activeActivityDb = interval.getActivityDI()
 
         // todo or use interval.getTriggers()
-        val textFeatures = (interval.note ?: activity.name).textFeatures()
+        val textFeatures = (interval.note ?: activeActivityDb.name).textFeatures()
 
         val checklistDb: ChecklistDb? = textFeatures.checklists.firstOrNull()
 

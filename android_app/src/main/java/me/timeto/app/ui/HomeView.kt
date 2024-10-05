@@ -224,7 +224,7 @@ fun HomeView() {
                     color = timerColor,
                     onClick = {
                         ActivityTimerSheet__show(
-                            activity = state.activity,
+                            activity = state.activeActivityDb,
                             timerContext = state.timerData.infoUi.timerContext,
                             onStarted = {
                                 vm.toggleIsPurple()

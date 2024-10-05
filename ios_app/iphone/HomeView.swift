@@ -188,7 +188,7 @@ struct HomeView: View {
                             color: timerColor,
                             onClick: {
                                 nativeSheet.showActivityTimerSheet(
-                                    activity: state.activity,
+                                    activity: state.activeActivityDb,
                                     timerContext: state.timerData.infoUi.timerContext,
                                     hideOnStart: true,
                                     onStart: {}
