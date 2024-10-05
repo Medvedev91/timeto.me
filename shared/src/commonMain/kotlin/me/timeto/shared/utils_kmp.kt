@@ -142,6 +142,10 @@ fun launchExDefault(
     block: suspend CoroutineScope.() -> Unit,
 ) = defaultScope().launchEx(block)
 
+fun launchExIo(
+    block: suspend CoroutineScope.() -> Unit,
+) = ioScope().launchEx(block)
+
 fun <T> Flow<T>.onEachExIn(
     scope: CoroutineScope,
     action: suspend (T) -> Unit,
