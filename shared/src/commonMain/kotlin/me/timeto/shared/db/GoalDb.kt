@@ -3,6 +3,7 @@ package me.timeto.shared.db
 import dbsq.GoalSq
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.*
+import me.timeto.shared.UnixTime
 
 data class GoalDb(
     val id: Int,
@@ -46,7 +47,11 @@ data class GoalDb(
 
     sealed interface Period {
 
+        fun isToday(): Boolean
+
         fun toJson(): JsonObject
+
+        ///
 
         enum class Type(val id: Int) {
             daysOfWeek(1),
@@ -75,6 +80,11 @@ data class GoalDb(
                     weekDays = json["days"]!!.jsonArray.map { it.jsonPrimitive.int },
                 )
             }
+
+            ///
+
+            override fun isToday(): Boolean =
+                UnixTime().dayOfWeek() in weekDays
 
             override fun toJson() = JsonObject(
                 mapOf(
