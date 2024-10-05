@@ -209,7 +209,7 @@ private fun parseLocal(initText: String): TextFeatures {
         .map { match ->
             val id = match.groupValues[1].toInt()
             val shortcutDb: ShortcutDb =
-                Cache.shortcuts.firstOrNull { it.id == id } ?: return@map null
+                Cache.shortcutsDb.firstOrNull { it.id == id } ?: return@map null
             match.clean()
             shortcutDb
         }

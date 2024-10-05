@@ -24,7 +24,7 @@ class ShortcutsPickerSheetVm(
 
     override val state = MutableStateFlow(
         State(
-            shortcutsUI = Cache.shortcuts.map {
+            shortcutsUI = Cache.shortcutsDb.map {
                 ShortcutUI(it, it.id in selectedShortcuts.map { it.id })
             },
         )
