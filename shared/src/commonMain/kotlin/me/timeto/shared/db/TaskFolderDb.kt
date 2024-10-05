@@ -68,8 +68,8 @@ data class TaskFolderDb(
         }
     }
 
-    val isToday = id == ID_TODAY
-    val isTmrw = id == ID_TMRW
+    val isToday: Boolean = id == ID_TODAY
+    val isTmrw: Boolean = id == ID_TMRW
 
     fun upNameWithValidation(newName: String) {
         db.taskFolderQueries.upNameById(id = id, name = validateName(newName))
