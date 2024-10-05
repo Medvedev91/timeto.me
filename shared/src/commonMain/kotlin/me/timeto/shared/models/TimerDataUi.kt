@@ -28,7 +28,7 @@ class TimerDataUi(
 
     private val intervalNoteTf: TextFeatures? = interval.note?.textFeatures()
 
-    private val activity: ActivityDb = interval.getActivityDI()
+    private val activity: ActivityDb = interval.getActivityDbCached()
     private val pausedTaskData: PausedTaskData? = run {
         if (!activity.isOther())
             return@run null

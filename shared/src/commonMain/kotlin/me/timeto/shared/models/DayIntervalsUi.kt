@@ -89,7 +89,7 @@ class DayIntervalsUi(
                     if ((todayFirstIntervalOrNull == null) || (todayFirstIntervalOrNull.id > dayTimeStart)) {
                         val prevInterval = intervalsAsc.last { it.id < dayTimeStart }
                         val seconds = (todayFirstIntervalOrNull?.id ?: dayMaxTimeFinish) - dayTimeStart
-                        daySections.add(IntervalUI(prevInterval.getActivityDI(), dayTimeStart, seconds))
+                        daySections.add(IntervalUI(prevInterval.getActivityDbCached(), dayTimeStart, seconds))
                     }
                 }
 
@@ -99,7 +99,7 @@ class DayIntervalsUi(
                         if ((idx + 1) == dayIntervals.size) dayMaxTimeFinish
                         else dayIntervals[idx + 1].id
                     val seconds = nextIntervalTime - interval.id
-                    daySections.add(IntervalUI(interval.getActivityDI(), interval.id, seconds))
+                    daySections.add(IntervalUI(interval.getActivityDbCached(), interval.id, seconds))
                 }
 
                 // For today

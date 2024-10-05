@@ -64,7 +64,7 @@ class AppVm : __Vm<AppVm.State>() {
                     ActivityDb.syncTimeHints()
                     rescheduleNotifications()
                     performShortcut(lastInterval, secondsLimit = 3)
-                    keepScreenOnStateFlow.emit(lastInterval.getActivityDI().keepScreenOn)
+                    keepScreenOnStateFlow.emit(lastInterval.getActivityDbCached().keepScreenOn)
                 }
 
             ActivityDb
@@ -131,7 +131,7 @@ private fun performShortcut(
 
     val shortcut: ShortcutDb? =
         interval.note?.textFeatures()?.shortcuts?.firstOrNull()
-        ?: interval.getActivityDI().name.textFeatures().shortcuts.firstOrNull()
+        ?: interval.getActivityDbCached().name.textFeatures().shortcuts.firstOrNull()
 
     shortcut?.performUI()
 }

@@ -119,7 +119,7 @@ data class IntervalDb(
             db.transaction {
 
                 val interval = db.intervalQueries.getDesc(limit = 1).executeAsOne().toDb()
-                val activity = interval.getActivityDI()
+                val activity = interval.getActivityDbCached()
                 val paused: TextFeatures.Paused = run {
                     val intervalTf = (interval.note ?: "").textFeatures()
                     intervalTf.paused ?: run {
@@ -194,7 +194,8 @@ data class IntervalDb(
 
     suspend fun getActivity(): ActivityDb = ActivityDb.getByIdOrNull(activity_id)!!
 
-    fun getActivityDI(): ActivityDb = Cache.activitiesSorted.first { it.id == activity_id }
+    fun getActivityDbCached(): ActivityDb =
+        Cache.activitiesSorted.first { it.id == activity_id }
 
     suspend fun upActivity(newActivity: ActivityDb): Unit = dbIo {
         db.intervalQueries.upActivityIdById(

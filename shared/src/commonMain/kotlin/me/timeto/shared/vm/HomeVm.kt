@@ -27,7 +27,7 @@ class HomeVm : __Vm<HomeVm.State>() {
 
         val timerData = TimerDataUi(interval, todayTasksUi.map { it.taskDb }, isPurple)
 
-        val activeActivityDb = interval.getActivityDI()
+        val activeActivityDb: ActivityDb = interval.getActivityDbCached()
 
         // todo or use interval.getTriggers()
         val textFeatures = (interval.note ?: activeActivityDb.name).textFeatures()
