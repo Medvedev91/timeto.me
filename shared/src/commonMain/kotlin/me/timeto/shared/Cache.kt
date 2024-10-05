@@ -36,8 +36,6 @@ object Cache {
 
     fun getTodayFolder(): TaskFolderDb = taskFolders.first { it.isToday }
 
-    fun getTmrwFolderOrNull(): TaskFolderDb? = taskFolders.firstOrNull { it.isTmrw }
-
     //
     // Mics
 
