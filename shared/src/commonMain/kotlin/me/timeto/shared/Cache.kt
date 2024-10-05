@@ -52,7 +52,7 @@ object Cache {
 
     internal suspend fun init() {
 
-        val scope = defaultScope()
+        val scope = ioScope()
 
         //
         // Database Lists
