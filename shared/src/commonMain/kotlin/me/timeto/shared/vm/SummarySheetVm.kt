@@ -152,9 +152,10 @@ private fun prepActivitiesUI(
     }
     return mapActivitySeconds
         .map { (activityId, seconds) ->
-            val activity = Cache.getActivityByIdOrNull(activityId)!!
+            val activityDb: ActivityDb =
+                Cache.activitiesSorted.first { it.id == activityId }
             SummarySheetVm.ActivityUI(
-                activity = activity,
+                activity = activityDb,
                 seconds = seconds,
                 ratio = seconds.toFloat() / totalSeconds,
                 secondsPerDay = seconds / daysCount,
