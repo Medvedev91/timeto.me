@@ -75,7 +75,7 @@ data class ChecklistDb(
     }
 
     fun getItemsCached(): List<ChecklistItemDb> =
-        Cache.checklistItems.filter { it.list_id == id }
+        Cache.checklistItemsDb.filter { it.list_id == id }
 
     fun performUI() {
         launchExDefault { uiChecklistFlow.emit(this@ChecklistDb) }

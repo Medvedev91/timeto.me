@@ -6,7 +6,7 @@ import me.timeto.shared.db.*
 object Cache {
 
     var checklistsDb = listOf<ChecklistDb>()
-    var checklistItems = listOf<ChecklistItemDb>()
+    var checklistItemsDb = listOf<ChecklistItemDb>()
     var shortcuts = listOf<ShortcutDb>()
     var notes = listOf<NoteDb>()
     var kv = listOf<KvDb>()
@@ -49,8 +49,8 @@ object Cache {
         checklistsDb = ChecklistDb.getAsc()
         ChecklistDb.getAscFlow().onEachExIn(scope) { checklistsDb = it }
 
-        checklistItems = ChecklistItemDb.getSorted()
-        ChecklistItemDb.getSortedFlow().onEachExIn(scope) { checklistItems = it }
+        checklistItemsDb = ChecklistItemDb.getSorted()
+        ChecklistItemDb.getSortedFlow().onEachExIn(scope) { checklistItemsDb = it }
 
         shortcuts = ShortcutDb.getAsc()
         ShortcutDb.getAscFlow().onEachExIn(scope) { shortcuts = it }

@@ -29,7 +29,7 @@ class ChecklistFormSheetVm(
     override val state = MutableStateFlow(
         State(
             checklistDb = checklistDb,
-            checklistItemsDb = Cache.checklistItems.filter { it.list_id == checklistDb.id },
+            checklistItemsDb = Cache.checklistItemsDb.filter { it.list_id == checklistDb.id },
         )
     )
 

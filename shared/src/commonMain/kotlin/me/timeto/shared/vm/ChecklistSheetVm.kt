@@ -18,7 +18,7 @@ class ChecklistSheetVm(
     override val state = MutableStateFlow(
         State(
             checklistDb = checklistDb,
-            items = Cache.checklistItems.prepChecklistItems(checklistDb),
+            items = Cache.checklistItemsDb.prepChecklistItems(checklistDb),
         )
     )
 
