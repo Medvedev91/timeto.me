@@ -1,11 +1,8 @@
 package me.timeto.shared.db
 
 import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
 import dbsq.TaskFolderSQ
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
@@ -27,8 +24,8 @@ data class TaskFolderDb(
             db.taskFolderQueries.selectAllSorted().executeAsList().map { it.toDb() }
         }
 
-        fun getAscBySortFlow() = db.taskFolderQueries.selectAllSorted().asFlow()
-            .mapToList(Dispatchers.IO).map { list -> list.map { it.toDb() } }
+        fun selectAllSortedFlow(): Flow<List<TaskFolderDb>> =
+            db.taskFolderQueries.selectAllSorted().asListFlow { it.toDb() }
 
         ///
 

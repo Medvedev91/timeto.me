@@ -36,7 +36,7 @@ class FoldersSettingsVm : __Vm<FoldersSettingsVm.State>() {
 
     override fun onAppear() {
         val scope = scopeVm()
-        TaskFolderDb.getAscBySortFlow().onEachExIn(scope) { folders ->
+        TaskFolderDb.selectAllSortedFlow().onEachExIn(scope) { folders ->
             state.update { it.copy(folders = folders.toUIList()) }
         }
     }
