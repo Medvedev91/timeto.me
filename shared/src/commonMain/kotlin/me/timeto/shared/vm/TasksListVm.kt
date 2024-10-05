@@ -27,7 +27,7 @@ class TasksListVm(
             tmrwData = if (folder.isTmrw)
                 prepTmrwData(
                     allRepeatings = Cache.repeatings,
-                    allEvents = Cache.events,
+                    allEvents = Cache.eventsDb,
                 ) else null,
             addFormInputTextValue = "",
         )

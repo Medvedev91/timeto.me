@@ -33,7 +33,7 @@ class EventsListVm : __Vm<EventsListVm.State>() {
     override val state = MutableStateFlow(
         State(
             curTimeString = getCurTimeString(),
-            uiEvents = Cache.events.toUiList()
+            uiEvents = Cache.eventsDb.toUiList()
         )
     )
 
