@@ -11,10 +11,10 @@ class FoldersSettingsVm : __Vm<FoldersSettingsVm.State>() {
 
         val text = "Add \"Tomorrow\" Folder"
 
-        fun add(): Unit = launchExDefault {
-            if (Cache.getTmrwFolderOrNull() != null) {
+        fun add(): Unit = launchExIo {
+            if (TaskFolderDb.selectAllSorted().any { it.isTmrw }) {
                 showUiAlert("Tmrw already exists", "Tmrw already exists")
-                return@launchExDefault
+                return@launchExIo
             }
             TaskFolderDb.insertTmrw()
         }
