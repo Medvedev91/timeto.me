@@ -208,9 +208,10 @@ private fun parseLocal(initText: String): TextFeatures {
         .findAll(textNoFeatures)
         .map { match ->
             val id = match.groupValues[1].toInt()
-            val shortcut = Cache.getShortcutByIdOrNull(id) ?: return@map null
+            val shortcutDb: ShortcutDb =
+                Cache.shortcuts.firstOrNull { it.id == id } ?: return@map null
             match.clean()
-            shortcut
+            shortcutDb
         }
         .filterNotNull()
         .toList()
