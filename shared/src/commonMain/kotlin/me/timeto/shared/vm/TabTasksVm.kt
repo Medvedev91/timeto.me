@@ -3,7 +3,6 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.TaskFolderDb
-import me.timeto.shared.db.TaskFolderDb.Companion.sortedFolders
 
 class TabTasksVm : __Vm<TabTasksVm.State>() {
 
@@ -20,14 +19,14 @@ class TabTasksVm : __Vm<TabTasksVm.State>() {
 
     override val state = MutableStateFlow(
         State(
-            taskFoldersUI = Cache.taskFolders.sortedFolders().map { TaskFolderUI(it) },
+            taskFoldersUI = Cache.taskFolders.map { TaskFolderUI(it) },
         )
     )
 
     override fun onAppear() {
         val scope = scopeVm()
         TaskFolderDb.selectAllSortedFlow().onEachExIn(scope) { folders ->
-            val taskFoldersUI = folders.sortedFolders().map { TaskFolderUI(it) }
+            val taskFoldersUI = folders.map { TaskFolderUI(it) }
             state.update { it.copy(taskFoldersUI = taskFoldersUI) }
         }
     }

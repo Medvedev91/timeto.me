@@ -3,6 +3,7 @@ package me.timeto.shared.db
 import app.cash.sqldelight.coroutines.asFlow
 import dbsq.TaskFolderSQ
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
@@ -21,11 +22,11 @@ data class TaskFolderDb(
         fun anyChangeFlow() = db.taskFolderQueries.anyChange().asFlow()
 
         suspend fun selectAllSorted(): List<TaskFolderDb> = dbIo {
-            db.taskFolderQueries.selectAllSorted().executeAsList().map { it.toDb() }
+            db.taskFolderQueries.selectAllSorted().executeAsList().map { it.toDb() }.uiSorted()
         }
 
         fun selectAllSortedFlow(): Flow<List<TaskFolderDb>> =
-            db.taskFolderQueries.selectAllSorted().asListFlow { it.toDb() }
+            db.taskFolderQueries.selectAllSorted().asListFlow { it.toDb() }.map { it.uiSorted() }
 
         ///
 
@@ -50,10 +51,6 @@ data class TaskFolderDb(
                 id = id, name = name, sort = sort
             )
         }
-
-        fun List<TaskFolderDb>.sortedFolders() = this.sortedWith(
-            compareBy({ it.sort }, { it.id })
-        )
 
         ///
         /// Backupable Holder
@@ -115,3 +112,6 @@ private fun validateName(name: String): String {
 private fun TaskFolderSQ.toDb() = TaskFolderDb(
     id = id, name = name, sort = sort,
 )
+
+private fun List<TaskFolderDb>.uiSorted(): List<TaskFolderDb> =
+    sortedWith(compareBy({ it.sort }, { it.id }))
