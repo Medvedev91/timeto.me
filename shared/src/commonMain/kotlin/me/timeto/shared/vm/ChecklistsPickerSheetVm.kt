@@ -34,7 +34,7 @@ class ChecklistsPickerSheetVm(
 
     override val state = MutableStateFlow(
         State(
-            checklistsDb = Cache.checklists,
+            checklistsDb = Cache.checklistsDb,
             selectedIds = selectedChecklists.map { it.id }.toSet(),
         )
     )

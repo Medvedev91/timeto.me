@@ -197,7 +197,7 @@ private fun parseLocal(initText: String): TextFeatures {
         .map { match ->
             val id = match.groupValues[1].toInt()
             val checklistDb: ChecklistDb =
-                Cache.checklists.firstOrNull { it.id == id } ?: return@map null
+                Cache.checklistsDb.firstOrNull { it.id == id } ?: return@map null
             match.clean()
             checklistDb
         }

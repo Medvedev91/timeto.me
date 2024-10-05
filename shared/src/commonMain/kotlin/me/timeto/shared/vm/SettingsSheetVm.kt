@@ -56,7 +56,7 @@ class SettingsSheetVm : __Vm<SettingsSheetVm.State>() {
 
     override val state = MutableStateFlow(
         State(
-            checklists = Cache.checklists,
+            checklists = Cache.checklistsDb,
             shortcuts = Cache.shortcuts,
             notes = Cache.notes,
             dayStartSeconds = dayStartOffsetSeconds(),
