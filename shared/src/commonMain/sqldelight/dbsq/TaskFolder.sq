@@ -8,7 +8,7 @@ CREATE TABLE TaskFolderSQ (
 
 anyChange: SELECT id FROM TaskFolderSQ LIMIT 1;
 
-getAscBySort:
+selectAllSorted:
 SELECT *
 FROM TaskFolderSQ
 ORDER BY sort ASC;

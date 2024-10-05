@@ -24,10 +24,10 @@ data class TaskFolderDb(
         fun anyChangeFlow() = db.taskFolderQueries.anyChange().asFlow()
 
         suspend fun selectAllSorted(): List<TaskFolderDb> = dbIo {
-            db.taskFolderQueries.getAscBySort().executeAsList().map { it.toDb() }
+            db.taskFolderQueries.selectAllSorted().executeAsList().map { it.toDb() }
         }
 
-        fun getAscBySortFlow() = db.taskFolderQueries.getAscBySort().asFlow()
+        fun getAscBySortFlow() = db.taskFolderQueries.selectAllSorted().asFlow()
             .mapToList(Dispatchers.IO).map { list -> list.map { it.toDb() } }
 
         ///
@@ -62,7 +62,7 @@ data class TaskFolderDb(
         /// Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.taskFolderQueries.getAscBySort().executeAsList().map { it.toDb() }
+            db.taskFolderQueries.selectAllSorted().executeAsList().map { it.toDb() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
