@@ -1,6 +1,7 @@
 package me.timeto.shared.db
 
 import dbsq.GoalSq
+import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.*
 
 data class GoalDb(
@@ -17,6 +18,9 @@ data class GoalDb(
         suspend fun selectAll(): List<GoalDb> = dbIo {
             db.goalQueries.selectAll().executeAsList().map { it.toDb() }
         }
+
+        fun selectAllFlow(): Flow<List<GoalDb>> =
+            db.goalQueries.selectAll().asListFlow { it.toDb() }
 
         suspend fun insertWithValidation(
             activityDb: ActivityDb,
