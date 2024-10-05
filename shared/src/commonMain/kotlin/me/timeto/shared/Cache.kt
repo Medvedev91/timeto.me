@@ -37,8 +37,6 @@ object Cache {
     fun getTodayFolderDb(): TaskFolderDb =
         taskFoldersDbSorted.first { it.isToday }
 
-    fun getShortcutByIdOrNull(id: Int) = shortcuts.firstOrNull { id == it.id }
-
     //
     // Init
 
