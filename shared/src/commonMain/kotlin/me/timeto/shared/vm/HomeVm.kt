@@ -40,7 +40,7 @@ class HomeVm : __Vm<HomeVm.State>() {
             return@filter clt.checklist.id != clDb.id
         }
 
-        val goalsUI: List<GoalUI> = if (todayIntervalsUi == null)
+        val goalsUi: List<GoalUi> = if (todayIntervalsUi == null)
             listOf()
         else Cache.activitiesSorted
             .map { activity ->
@@ -63,7 +63,7 @@ class HomeVm : __Vm<HomeVm.State>() {
                         val timeDone = totalSeconds.limitMax(goal.seconds)
                         val timeLeft = goal.seconds - timeDone
                         val textRight = if (timeLeft > 0) timeLeft.toTimerHintNote(isShort = false) else "👍"
-                        GoalUI(
+                        GoalUi(
                             textLeft = prepGoalTextLeft(
                                 activityName = activityName,
                                 secondsLeft = totalSeconds,
@@ -300,7 +300,7 @@ class HomeVm : __Vm<HomeVm.State>() {
         val isHighlighted: Boolean,
     )
 
-    class GoalUI(
+    class GoalUi(
         val textLeft: String,
         val textRight: String,
         val ratio: Float,

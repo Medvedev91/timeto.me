@@ -341,7 +341,7 @@ fun HomeView() {
                         SpacerW1()
                 }
 
-                state.goalsUI.forEach { goalUi ->
+                state.goalsUi.forEach { goalUi ->
 
                     HStack(
                         modifier = Modifier
