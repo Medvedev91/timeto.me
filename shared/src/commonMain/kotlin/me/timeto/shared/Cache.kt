@@ -14,7 +14,7 @@ object Cache {
     var taskFoldersDbSorted = listOf<TaskFolderDb>()
     var activitiesDbSorted = listOf<ActivityDb>()
     var eventsDb = listOf<EventDb>()
-    var eventTemplatesSorted = listOf<EventTemplateDb>()
+    var eventTemplatesDbSorted = listOf<EventTemplateDb>()
     var repeatings = listOf<RepeatingDb>()
     var goalsDb = listOf<GoalDb>()
 
@@ -73,8 +73,8 @@ object Cache {
         eventsDb = EventDb.getAscByTime()
         EventDb.getAscByTimeFlow().onEachExIn(scope) { eventsDb = it }
 
-        eventTemplatesSorted = EventTemplateDb.selectAscSorted()
-        EventTemplateDb.selectAscSortedFlow().onEachExIn(scope) { eventTemplatesSorted = it }
+        eventTemplatesDbSorted = EventTemplateDb.selectAscSorted()
+        EventTemplateDb.selectAscSortedFlow().onEachExIn(scope) { eventTemplatesDbSorted = it }
 
         repeatings = RepeatingDb.getAsc()
         RepeatingDb.getAscFlow().onEachExIn(scope) { repeatings = it }
