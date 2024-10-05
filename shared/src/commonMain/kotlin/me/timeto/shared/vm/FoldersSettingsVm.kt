@@ -7,7 +7,7 @@ import me.timeto.shared.db.TaskFolderDb.Companion.sortedFolders
 
 class FoldersSettingsVm : __Vm<FoldersSettingsVm.State>() {
 
-    class TmrwButtonUI {
+    class TmrwButtonUi {
 
         val text = "Add \"Tomorrow\" Folder"
 
@@ -24,7 +24,8 @@ class FoldersSettingsVm : __Vm<FoldersSettingsVm.State>() {
         val folders: List<TaskFolderDb>,
     ) {
         val headerTitle = "Folders"
-        val tmrwButtonUI = if (folders.any { it.isTmrw }) null else TmrwButtonUI()
+        val tmrwButtonUi: TmrwButtonUi? =
+            if (folders.any { it.isTmrw }) null else TmrwButtonUi()
     }
 
     override val state = MutableStateFlow(

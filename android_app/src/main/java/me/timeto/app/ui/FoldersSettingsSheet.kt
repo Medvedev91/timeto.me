@@ -115,8 +115,8 @@ fun FoldersSettingsSheet(
 
             ////
 
-            val tmrwButtonUI = state.tmrwButtonUI
-            if (tmrwButtonUI != null) {
+            val tmrwButtonUi = state.tmrwButtonUi
+            if (tmrwButtonUi != null) {
                 item {
 
                     MyListView__Padding__SectionSection()
@@ -126,9 +126,9 @@ fun FoldersSettingsSheet(
                         isLast = true,
                     ) {
                         MyListView__ItemView__ButtonView(
-                            text = tmrwButtonUI.text,
+                            text = tmrwButtonUi.text,
                         ) {
-                            tmrwButtonUI.add()
+                            tmrwButtonUi.add()
                         }
                     }
                 }

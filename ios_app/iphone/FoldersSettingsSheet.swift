@@ -63,7 +63,7 @@ struct FoldersSettingsSheet: View {
                                 }
                     }
 
-                    if let tmrwButtonUI = state.tmrwButtonUI {
+                    if let tmrwButtonUi = state.tmrwButtonUi {
 
                         MyListView__Padding__SectionSection()
 
@@ -72,9 +72,9 @@ struct FoldersSettingsSheet: View {
                                 isLast: true
                         ) {
                             MyListView__ItemView__ButtonView(
-                                    text: tmrwButtonUI.text
+                                    text: tmrwButtonUi.text
                             ) {
-                                tmrwButtonUI.add()
+                                tmrwButtonUi.add()
                             }
                         }
                     }
