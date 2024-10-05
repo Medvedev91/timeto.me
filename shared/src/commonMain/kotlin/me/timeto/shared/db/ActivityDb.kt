@@ -34,7 +34,6 @@ data class ActivityDb(
         fun anyChangeFlow() = db.activityQueries.anyChange().asFlow()
 
         ///
-        /// Select many
 
         suspend fun getAscSorted() = dbIo {
             db.activityQueries.getAscSorted().executeAsList().map { it.toDb() }
@@ -42,9 +41,6 @@ data class ActivityDb(
 
         fun getAscSortedFlow() = db.activityQueries.getAscSorted().asFlow()
             .mapToList(Dispatchers.IO).map { list -> list.map { it.toDb() } }
-
-        ///
-        /// Select One
 
         suspend fun getByIdOrNull(id: Int) = dbIo {
             db.activityQueries.getById(id).executeAsOneOrNull()?.toDb()
@@ -60,7 +56,6 @@ data class ActivityDb(
         suspend fun getByEmojiOrNull(string: String) = getAscSorted().firstOrNull { it.emoji == string }
 
         ///
-        /// Add
 
         suspend fun addWithValidation(
             name: String,
