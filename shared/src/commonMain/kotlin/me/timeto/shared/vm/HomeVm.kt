@@ -47,7 +47,7 @@ class HomeVm : __Vm<HomeVm.State>() {
                 val activityName = activityDb.name.textFeatures().textNoFeatures
                 activityDb.goals
                     .filter { it.period.isToday() }
-                    .map { goal ->
+                    .map { goalDb ->
                         var totalSeconds: Int = todayIntervalsUi.intervalsUI
                             .sumOf { if (it.activity?.id == activityDb.id) it.seconds else 0 }
                         val lastWithActivity = todayIntervalsUi.intervalsUI
@@ -60,8 +60,8 @@ class HomeVm : __Vm<HomeVm.State>() {
                             totalSeconds += (now - timeFinish)
                         }
 
-                        val timeDone = totalSeconds.limitMax(goal.seconds)
-                        val timeLeft = goal.seconds - timeDone
+                        val timeDone = totalSeconds.limitMax(goalDb.seconds)
+                        val timeLeft = goalDb.seconds - timeDone
                         val textRight = if (timeLeft > 0) timeLeft.toTimerHintNote(isShort = false) else "👍"
                         GoalUi(
                             textLeft = prepGoalTextLeft(
@@ -69,7 +69,7 @@ class HomeVm : __Vm<HomeVm.State>() {
                                 secondsLeft = totalSeconds,
                             ),
                             textRight = textRight,
-                            ratio = timeDone.toFloat() / goal.seconds.toFloat(),
+                            ratio = timeDone.toFloat() / goalDb.seconds.toFloat(),
                             bgColor = activityDb.colorRgba,
                         )
                     }
