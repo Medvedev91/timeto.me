@@ -233,9 +233,10 @@ private fun parseLocal(initText: String): TextFeatures {
     val activity: ActivityDb? = activityRegex
         .find(textNoFeatures)?.let { match ->
             val id = match.groupValues[1].toInt()
-            val activity = Cache.getActivityByIdOrNull(id) ?: return@let null
+            val activityDb: ActivityDb =
+                Cache.activitiesSorted.firstOrNull { it.id == id } ?: return@let null
             match.clean()
-            return@let activity
+            return@let activityDb
         }
 
     val timer: Int? = timerRegex
