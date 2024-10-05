@@ -189,7 +189,7 @@ private suspend fun fillInitData() {
 
     // TRICK time() only for SMDAY
     TaskFolderDb.addRaw(TaskFolderDb.ID_TODAY, "Today", 1)
-    TaskFolderDb.addTmrw()
+    TaskFolderDb.insertTmrw()
     TaskFolderDb.addRaw(time(), "SMDAY", 3)
 
     KvDb.KEY.WHATS_NEW_CHECK_UNIX_DAY.upsertInt(WhatsNewVm.prepHistoryItemsUi().first().unixDay)

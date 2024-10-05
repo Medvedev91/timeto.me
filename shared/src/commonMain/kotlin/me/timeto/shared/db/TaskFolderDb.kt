@@ -32,7 +32,9 @@ data class TaskFolderDb(
 
         //////
 
-        suspend fun addTmrw() = dbIo { addRaw(id = ID_TMRW, name = "TMRW", sort = 2) }
+        suspend fun insertTmrw(): Unit = dbIo {
+            addRaw(id = ID_TMRW, name = "TMRW", sort = 2)
+        }
 
         suspend fun addWithValidation(name: String) = dbIo {
             addRaw(

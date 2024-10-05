@@ -16,7 +16,7 @@ class FoldersSettingsVm : __Vm<FoldersSettingsVm.State>() {
                 showUiAlert("Tmrw already exists", "Tmrw already exists")
                 return@launchExDefault
             }
-            TaskFolderDb.addTmrw()
+            TaskFolderDb.insertTmrw()
         }
     }
 
