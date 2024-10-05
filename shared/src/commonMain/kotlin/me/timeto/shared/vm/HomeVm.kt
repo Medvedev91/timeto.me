@@ -40,13 +40,14 @@ class HomeVm : __Vm<HomeVm.State>() {
             return@filter clt.checklist.id != clDb.id
         }
 
+        // todo performance?
         val goalsUi: List<GoalUi> = if (todayIntervalsUi == null)
             listOf()
         else Cache.activitiesSorted
             .map { activityDb ->
                 val activityName = activityDb.name.textFeatures().textNoFeatures
-                activityDb.goals
-                    .filter { it.period.isToday() }
+                Cache.goalsDb.filter { it.activity_id == activityDb.id }
+                    .filter { it.buildPeriod().isToday() }
                     .map { goalDb ->
                         var totalSeconds: Int = todayIntervalsUi.intervalsUI
                             .sumOf { if (it.activity?.id == activityDb.id) it.seconds else 0 }
