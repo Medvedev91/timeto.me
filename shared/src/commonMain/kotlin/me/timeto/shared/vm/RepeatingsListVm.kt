@@ -37,7 +37,7 @@ class RepeatingsListVm : __Vm<RepeatingsListVm.State>() {
 
     override val state = MutableStateFlow(
         State(
-            repeatingsUI = Cache.repeatings.toUiList()
+            repeatingsUI = Cache.repeatingsDb.toUiList()
         )
     )
 
