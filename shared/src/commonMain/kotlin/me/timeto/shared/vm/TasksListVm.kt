@@ -23,7 +23,7 @@ class TasksListVm(
 
     override val state = MutableStateFlow(
         State(
-            vmTasksUi = Cache.tasks.toUiList(),
+            vmTasksUi = Cache.tasksDb.toUiList(),
             tmrwData = if (folder.isTmrw)
                 prepTmrwData(
                     allRepeatings = Cache.repeatings,

@@ -78,7 +78,7 @@ class HomeVm : __Vm<HomeVm.State>() {
             .flatten()
 
         val menuTime: String = UnixTime().getStringByComponents(UnixTime.StringComponent.hhmm24)
-        val menuTasksNote = "${Cache.tasks.count { it.isToday }}"
+        val menuTasksNote = "${Cache.tasksDb.count { it.isToday }}"
 
         val mainTasks: List<MainTask> = run {
             val tasksUi: List<TaskUi> =

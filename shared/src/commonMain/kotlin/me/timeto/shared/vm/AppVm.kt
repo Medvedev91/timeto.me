@@ -167,7 +167,7 @@ private fun syncTmrw() {
     val utcOffsetDS = localUtcOffsetWithDayStart
     val todayDay = UnixTime(utcOffset = utcOffsetDS).localDay
     val todayFolder = Cache.getTodayFolderDb()
-    Cache.tasks
+    Cache.tasksDb
         .filter { it.isTmrw && (it.unixTime(utcOffset = utcOffsetDS).localDay < todayDay) }
         .forEach { task ->
             launchExDefault {
