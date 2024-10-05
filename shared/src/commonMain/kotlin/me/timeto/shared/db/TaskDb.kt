@@ -76,7 +76,7 @@ data class TaskDb(
                 )
             }
 
-            val activity = Cache.activitiesSorted.firstOrNull { it.emoji in textFeatures.textNoFeatures }
+            val activity = Cache.activitiesDbSorted.firstOrNull { it.emoji in textFeatures.textNoFeatures }
             if (activity != null) {
                 textFeatures = textFeatures.copy(
                     activity = activity,

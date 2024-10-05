@@ -12,7 +12,7 @@ object Cache {
     var kvDb = listOf<KvDb>()
     var tasksDb = listOf<TaskDb>()
     var taskFoldersDbSorted = listOf<TaskFolderDb>()
-    var activitiesSorted = listOf<ActivityDb>()
+    var activitiesDbSorted = listOf<ActivityDb>()
     var events = listOf<EventDb>()
     var eventTemplatesSorted = listOf<EventTemplateDb>()
     var repeatings = listOf<RepeatingDb>()
@@ -67,8 +67,8 @@ object Cache {
         taskFoldersDbSorted = TaskFolderDb.selectAllSorted()
         TaskFolderDb.selectAllSortedFlow().onEachExIn(scope) { taskFoldersDbSorted = it }
 
-        activitiesSorted = ActivityDb.getAscSorted()
-        ActivityDb.getAscSortedFlow().onEachExIn(scope) { activitiesSorted = it }
+        activitiesDbSorted = ActivityDb.getAscSorted()
+        ActivityDb.getAscSortedFlow().onEachExIn(scope) { activitiesDbSorted = it }
 
         events = EventDb.getAscByTime()
         EventDb.getAscByTimeFlow().onEachExIn(scope) { events = it }

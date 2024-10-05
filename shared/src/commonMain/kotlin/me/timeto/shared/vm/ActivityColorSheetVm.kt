@@ -61,7 +61,7 @@ class ActivityColorSheetVm(
             }
             .chunked(3)
 
-        val allActivities: List<ActivityUI> = Cache.activitiesSorted.map {
+        val allActivities: List<ActivityUI> = Cache.activitiesDbSorted.map {
             ActivityUI(
                 text = "${it.emoji} ${it.name.textFeatures().textNoFeatures}",
                 colorRgba = it.colorRgba,

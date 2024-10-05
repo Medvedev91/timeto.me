@@ -51,7 +51,7 @@ data class ActivityDb(
         }
 
         fun getOther(): ActivityDb {
-            val activities = Cache.activitiesSorted.filter { it.type_id == TYPE.OTHER.id }
+            val activities = Cache.activitiesDbSorted.filter { it.type_id == TYPE.OTHER.id }
             if (activities.size != 1)
                 throw UIException("System error") // todo report: "getOther() size ${activities.size}"
             return activities.first()
@@ -178,7 +178,7 @@ data class ActivityDb(
         )
 
         fun nextColorDI(): ColorRgba {
-            val activityColors = Cache.activitiesSorted.map { activity ->
+            val activityColors = Cache.activitiesDbSorted.map { activity ->
                 activity.colorRgba.toRgbaString()
             }
             for (color in colors)

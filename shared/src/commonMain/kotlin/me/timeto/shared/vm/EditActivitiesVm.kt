@@ -17,7 +17,7 @@ class EditActivitiesVm : __Vm<EditActivitiesVm.State>() {
     )
 
     override val state = MutableStateFlow(
-        State(activitiesUI = Cache.activitiesSorted.toUiList())
+        State(activitiesUI = Cache.activitiesDbSorted.toUiList())
     )
 
     override fun onAppear() {

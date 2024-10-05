@@ -14,7 +14,7 @@ class ActivityPickerSheetVm : __Vm<ActivityPickerSheetVm.State>() {
 
     override val state = MutableStateFlow(
         State(
-            activitiesUI = Cache.activitiesSorted.map { ActivityUI(it) }
+            activitiesUI = Cache.activitiesDbSorted.map { ActivityUI(it) }
         )
     )
 

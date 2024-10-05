@@ -43,7 +43,7 @@ class HomeVm : __Vm<HomeVm.State>() {
         // todo performance?
         val goalsUi: List<GoalUi> = if (todayIntervalsUi == null)
             listOf()
-        else Cache.activitiesSorted
+        else Cache.activitiesDbSorted
             .map { activityDb ->
                 val activityName = activityDb.name.textFeatures().textNoFeatures
                 Cache.goalsDb.filter { it.activity_id == activityDb.id }

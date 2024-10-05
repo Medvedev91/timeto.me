@@ -153,7 +153,7 @@ private fun prepActivitiesUI(
     return mapActivitySeconds
         .map { (activityId, seconds) ->
             val activityDb: ActivityDb =
-                Cache.activitiesSorted.first { it.id == activityId }
+                Cache.activitiesDbSorted.first { it.id == activityId }
             SummarySheetVm.ActivityUI(
                 activity = activityDb,
                 seconds = seconds,

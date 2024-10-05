@@ -47,7 +47,7 @@ class ActivitiesTimerSheetVm(
 
     override val state = MutableStateFlow(
         State(
-            allActivities = prepActivitiesUI(timerContext, Cache.activitiesSorted),
+            allActivities = prepActivitiesUI(timerContext, Cache.activitiesDbSorted),
         )
     )
 
