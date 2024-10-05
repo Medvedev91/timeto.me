@@ -81,7 +81,7 @@ class WatchTabTasksVm : __Vm<WatchTabTasksVm.State>() {
     }
 
     private suspend fun upFolders(allTasks: List<TaskDb>) {
-        val foldersUI = TaskFolderDb.getAscBySort().sortedFolders().map { folder ->
+        val foldersUI = TaskFolderDb.selectAllSorted().sortedFolders().map { folder ->
             FolderUI(
                 title = folder.name,
                 tasks = allTasks
