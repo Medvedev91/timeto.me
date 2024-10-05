@@ -29,7 +29,7 @@ class FoldersSettingsVm : __Vm<FoldersSettingsVm.State>() {
 
     override val state = MutableStateFlow(
         State(
-            folders = Cache.taskFolders.toUiList()
+            folders = Cache.taskFoldersDbSorted.toUiList()
         )
     )
 

@@ -19,7 +19,7 @@ class TabTasksVm : __Vm<TabTasksVm.State>() {
 
     override val state = MutableStateFlow(
         State(
-            taskFoldersUI = Cache.taskFolders.map { TaskFolderUI(it) },
+            taskFoldersUI = Cache.taskFoldersDbSorted.map { TaskFolderUI(it) },
         )
     )
 
