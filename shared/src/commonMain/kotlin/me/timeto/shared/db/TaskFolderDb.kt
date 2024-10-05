@@ -52,8 +52,8 @@ data class TaskFolderDb(
             )
         }
 
-        ///
-        /// Backupable Holder
+        //
+        // Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
             db.taskFolderQueries.selectAllSorted().executeAsList().map { it.toDb() }
@@ -68,6 +68,8 @@ data class TaskFolderDb(
         }
     }
 
+    ///
+
     val isToday: Boolean = id == ID_TODAY
     val isTmrw: Boolean = id == ID_TMRW
 
@@ -79,8 +81,8 @@ data class TaskFolderDb(
         db.taskFolderQueries.upSortById(id = id, sort = newSort)
     }
 
-    ///
-    /// Backupable Item
+    //
+    // Backupable Item
 
     override fun backupable__getId(): String = id.toString()
 
