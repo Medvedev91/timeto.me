@@ -37,8 +37,7 @@ object Cache {
     fun getTodayFolderDb(): TaskFolderDb =
         taskFoldersDbSorted.first { it.isToday }
 
-    //
-    // Init
+    ///
 
     internal suspend fun init() {
 
