@@ -145,7 +145,7 @@ struct ActivityFormSheet: View {
 
                     MyListView__ItemView(
                         isFirst: false,
-                        isLast: true,
+                        isLast: false,
                         withTopDivider: true
                     ) {
                         MyListView__ItemView__ButtonView(
@@ -170,60 +170,30 @@ struct ActivityFormSheet: View {
 
                     VStack {
 
-                        MyListView__Padding__SectionSection()
-
                         MyListView__ItemView(
-                            isFirst: true,
-                            isLast: true
+                            isFirst: false,
+                            isLast: true,
+                            withTopDivider: true
                         ) {
-
-                            VStack {
-
-                                MyListView__ItemView__ButtonView(
-                                    text: state.goalsTitle,
-                                    withArrow: true,
-                                    rightView: AnyView(
-                                        MyListView__ItemView__ButtonView__RightText(
-                                            text: state.goalsAddNote,
-                                            paddingEnd: 2
-                                        )
+                            
+                            MyListView__ItemView__ButtonView(
+                                text: state.goalsTitle,
+                                withArrow: true,
+                                rightView: AnyView(
+                                    MyListView__ItemView__ButtonView__RightText(
+                                        text: state.goalsNote,
+                                        paddingEnd: 2
                                     )
-                                ) {
-                                    nativeSheet.show { isGoalsSheetPresented in
-                                        GoalPickerSheet(
-                                            isPresented: isGoalsSheetPresented,
-                                            onPick: { goal in
-                                                vm.addGoal(goal: goal)
-                                            }
-                                        )
-                                    }
-                                }
-
-                                VStack(alignment: .leading) {
-
-                                    ForEach(0..<state.goalsUI.count, id: \.self) { idx in
-
-                                        let goalUI = state.goalsUI[idx]
-
-                                        HStack(spacing: 10) {
-
-                                            Button(
-                                                action: {
-                                                    vm.delGoal(goal: goalUI.goal)
-                                                },
-                                                label: {
-                                                    Image(systemName: "minus.circle.fill")
-                                                        .foregroundColor(.red)
-                                                }
-                                            )
-
-                                            Text(goalUI.text)
+                                )
+                            ) {
+                                nativeSheet.show { isGoalsSheetPresented in
+                                    GoalPickerSheet(
+                                        isPresented: isGoalsSheetPresented,
+                                        onPick: { goals in
+                                            // vm.setGoals(goal: goal)
                                         }
-                                        .padding(.bottom, 10)
-                                    }
+                                    )
                                 }
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .padding(.leading, H_PADDING)
                             }
                         }
                     }
