@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.*
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.ActivityDb__Data
+import me.timeto.shared.db.GoalDb
 
 class ActivityFormSheetVm(
     val activity: ActivityDb?
@@ -15,12 +16,13 @@ class ActivityFormSheetVm(
         val headerDoneText: String,
         val emoji: String?,
         val activityData: ActivityDb__Data,
-        val goals: List<ActivityDb.Goal>,
+        val goalsUi: List<GoalVmUi>,
         val textFeatures: TextFeatures,
         val keepScreenOn: Boolean,
         val colorRgba: ColorRgba,
         val pomodoroTimer: Int,
     ) {
+
         val inputNameValue = textFeatures.textNoFeatures
         val isHeaderDoneEnabled = (inputNameValue.isNotBlank() && emoji != null)
         val inputNameHeader = "ACTIVITY NAME"
@@ -35,8 +37,7 @@ class ActivityFormSheetVm(
         val pomodoroNote: String = ActivityPomodoroSheetVm.prepPomodoroTimeString(pomodoroTimer)
 
         val goalsTitle = "Goals"
-        val goalsAddNote = "New"
-        val goalsUI: List<GoalUI> = goals.map { GoalUI(it) }
+        val goalsNote: String = if (goalsUi.isEmpty()) "None" else goalsUi.size.toString()
 
         val deleteText = "Delete Activity"
         val timerHintsCustomItems = activityData.timer_hints.custom_list.map { seconds ->
@@ -44,21 +45,23 @@ class ActivityFormSheetVm(
         }
     }
 
-    class GoalUI(
-        val goal: ActivityDb.Goal,
+    class GoalVmUi(
+        val id: Int?, // null if new
+        val seconds: Int,
+        val period: GoalDb.Period,
+        val note: String,
+        val finishText: String,
     ) {
-        val text: String = run {
-            val timeString = goal.seconds.toTimerHintNote(isShort = false)
-            val periodString: String = when (goal.period) {
-                is ActivityDb.Goal.Period.DaysOfWeek -> {
-                    val weekDays = goal.period.weekDays
-                    if (weekDays.size == 7)
-                        "Every day"
-                    else
-                        weekDays.joinToString(", ") { UnixTime.dayOfWeekNames3[it] }
-                }
-            }
-            "$timeString. $periodString."
+
+        companion object {
+
+            fun fromGoalDb(goalDb: GoalDb) = GoalVmUi(
+                id = null,
+                seconds = goalDb.seconds,
+                period = goalDb.buildPeriod(),
+                note = goalDb.note,
+                finishText = goalDb.finish_text,
+            )
         }
     }
 
@@ -73,7 +76,7 @@ class ActivityFormSheetVm(
             headerDoneText = if (activity != null) "Save" else "Create",
             emoji = activity?.emoji,
             activityData = activity?.data ?: ActivityDb__Data.buildDefault(),
-            goals = activity?.goals ?: listOf(),
+            goalsUi = activity?.getGoalsDbCached()?.map { GoalVmUi.fromGoalDb(it) } ?: emptyList(),
             textFeatures = (activity?.name ?: "").textFeatures(),
             keepScreenOn = activity?.keepScreenOn ?: true,
             colorRgba = activity?.colorRgba ?: ActivityDb.nextColorDI(),
@@ -103,12 +106,8 @@ class ActivityFormSheetVm(
         it.copy(pomodoroTimer = pomodoroTimer)
     }
 
-    fun addGoal(goal: ActivityDb.Goal) = state.update {
-        it.copy(goals = it.goals.toMutableList().apply { add(goal) })
-    }
-
-    fun delGoal(goal: ActivityDb.Goal) = state.update { curState ->
-        curState.copy(goals = curState.goals.toMutableList().apply { remove(goal) })
+    fun setGoals(goalsUi: List<GoalVmUi>): Unit = state.update {
+        it.copy(goalsUi = goalsUi)
     }
 
     ///
