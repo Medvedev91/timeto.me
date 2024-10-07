@@ -20,6 +20,7 @@ data class ActivityDb(
     val color_rgba: String,
     val data_json: String,
     val keep_screen_on: Int,
+    // todo remove after migration
     val goals_json: String,
     val pomodoro_timer: Int,
 ) : Backupable__Item {
