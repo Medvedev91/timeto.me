@@ -211,10 +211,6 @@ data class ActivityDb(
 
     val keepScreenOn = keep_screen_on.toBoolean10()
 
-    val goals: List<Goal> by lazy {
-        Json.parseToJsonElement(goals_json).jsonArray.map { Goal.parseJson(it) }
-    }
-
     val colorRgba: ColorRgba by lazy {
         ColorRgba.fromRgbaString(color_rgba)
     }
