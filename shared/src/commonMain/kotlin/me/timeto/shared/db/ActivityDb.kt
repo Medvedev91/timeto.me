@@ -229,6 +229,9 @@ data class ActivityDb(
 
     fun isOther() = getType() == TYPE.OTHER
 
+    fun getGoalsDbCached(): List<GoalDb> =
+        Cache.goalsDb.filter { it.activity_id == id }
+
     suspend fun startInterval(
         timer: Int,
     ): IntervalDb = IntervalDb.addWithValidation(
