@@ -46,7 +46,7 @@ class HomeVm : __Vm<HomeVm.State>() {
         else Cache.activitiesDbSorted
             .map { activityDb ->
                 val activityName = activityDb.name.textFeatures().textNoFeatures
-                Cache.goalsDb.filter { it.activity_id == activityDb.id }
+                activityDb.getGoalsDbCached()
                     .filter { it.buildPeriod().isToday() }
                     .map { goalDb ->
                         var totalSeconds: Int = todayIntervalsUi.intervalsUI
