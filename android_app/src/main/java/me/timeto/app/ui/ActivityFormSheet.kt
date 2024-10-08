@@ -24,12 +24,14 @@ fun ActivityFormSheet(
     activity: ActivityDb?,
 ) {
 
-    val (vm, state) = rememberVm(activity) { ActivityFormSheetVm(activity) }
+    val (vm, state) = rememberVm(activity) {
+        ActivityFormSheetVm(activity)
+    }
 
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .background(c.sheetBg)
+            .background(c.sheetBg),
     ) {
 
         val scrollState = rememberScrollState()
