@@ -3,11 +3,11 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 
 class GoalsFormVm(
-    initGoalsVmUi: List<ActivityFormSheetVm.GoalFormUi>,
+    initGoalFormsUi: List<ActivityFormSheetVm.GoalFormUi>,
 ) : __Vm<GoalsFormVm.State>() {
 
     data class State(
-        val goalsVmUi: List<ActivityFormSheetVm.GoalFormUi>,
+        val goalFormsUi: List<ActivityFormSheetVm.GoalFormUi>,
     ) {
 
         val headerTitle = "Goals"
@@ -16,7 +16,7 @@ class GoalsFormVm(
 
     override val state = MutableStateFlow(
         State(
-            goalsVmUi = initGoalsVmUi,
+            goalFormsUi = initGoalFormsUi,
         )
     )
 }
