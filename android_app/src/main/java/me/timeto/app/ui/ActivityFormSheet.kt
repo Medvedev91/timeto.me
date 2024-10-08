@@ -203,11 +203,12 @@ fun ActivityFormSheet(
                         )
                     },
                 ) {
-                    Sheet.show { layer ->
-                        GoalPickerSheet(
-                            layer = layer,
-                            onPick = { goals ->
-                                // vm.setGoals(goals)
+                    Fs.show { layer ->
+                        GoalsFormFs(
+                            _layer = layer,
+                            _initGoalsVmUi = state.goalFormsUi,
+                            _onSelected = { goals ->
+                                vm.setGoals(goals)
                             },
                         )
                     }
