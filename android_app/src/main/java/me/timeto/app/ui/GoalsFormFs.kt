@@ -36,7 +36,7 @@ fun GoalsFormFs(
             onCancel = { _layer.close() },
             scrollState = scrollState,
             onDone = {
-                _onSelected(state.goalsVmUi)
+                _onSelected(state.goalFormsUi)
                 _layer.close()
             },
         )
