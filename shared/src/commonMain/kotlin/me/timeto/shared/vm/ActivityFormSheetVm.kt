@@ -16,7 +16,7 @@ class ActivityFormSheetVm(
         val headerDoneText: String,
         val emoji: String?,
         val activityData: ActivityDb__Data,
-        val goalsUi: List<GoalVmUi>,
+        val goalFormsUi: List<GoalFormUi>,
         val textFeatures: TextFeatures,
         val keepScreenOn: Boolean,
         val colorRgba: ColorRgba,
@@ -37,7 +37,7 @@ class ActivityFormSheetVm(
         val pomodoroNote: String = ActivityPomodoroSheetVm.prepPomodoroTimeString(pomodoroTimer)
 
         val goalsTitle = "Goals"
-        val goalsNote: String = if (goalsUi.isEmpty()) "None" else goalsUi.size.toString()
+        val goalsNote: String = if (goalFormsUi.isEmpty()) "None" else goalFormsUi.size.toString()
 
         val deleteText = "Delete Activity"
         val timerHintsCustomItems = activityData.timer_hints.custom_list.map { seconds ->
@@ -45,7 +45,7 @@ class ActivityFormSheetVm(
         }
     }
 
-    class GoalVmUi(
+    class GoalFormUi(
         val id: Int?, // null if new
         val seconds: Int,
         val period: GoalDb.Period,
@@ -55,7 +55,7 @@ class ActivityFormSheetVm(
 
         companion object {
 
-            fun fromGoalDb(goalDb: GoalDb) = GoalVmUi(
+            fun fromGoalDb(goalDb: GoalDb) = GoalFormUi(
                 id = null,
                 seconds = goalDb.seconds,
                 period = goalDb.buildPeriod(),
@@ -76,7 +76,7 @@ class ActivityFormSheetVm(
             headerDoneText = if (activity != null) "Save" else "Create",
             emoji = activity?.emoji,
             activityData = activity?.data ?: ActivityDb__Data.buildDefault(),
-            goalsUi = activity?.getGoalsDbCached()?.map { GoalVmUi.fromGoalDb(it) } ?: emptyList(),
+            goalFormsUi = activity?.getGoalsDbCached()?.map { GoalFormUi.fromGoalDb(it) } ?: emptyList(),
             textFeatures = (activity?.name ?: "").textFeatures(),
             keepScreenOn = activity?.keepScreenOn ?: true,
             colorRgba = activity?.colorRgba ?: ActivityDb.nextColorDI(),
@@ -106,8 +106,8 @@ class ActivityFormSheetVm(
         it.copy(pomodoroTimer = pomodoroTimer)
     }
 
-    fun setGoals(goalsUi: List<GoalVmUi>): Unit = state.update {
-        it.copy(goalsUi = goalsUi)
+    fun setGoals(goalFormsUi: List<GoalFormUi>): Unit = state.update {
+        it.copy(goalFormsUi = goalFormsUi)
     }
 
     ///
