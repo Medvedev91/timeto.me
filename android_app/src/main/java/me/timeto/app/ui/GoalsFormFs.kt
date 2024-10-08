@@ -14,12 +14,12 @@ import me.timeto.shared.vm.GoalsFormVm
 @Composable
 fun GoalsFormFs(
     _layer: WrapperView.Layer,
-    _initGoalsVmUi: List<ActivityFormSheetVm.GoalFormUi>,
+    _initGoalFormsVmUi: List<ActivityFormSheetVm.GoalFormUi>,
     _onSelected: (List<ActivityFormSheetVm.GoalFormUi>) -> Unit,
 ) {
 
-    val (vm, state) = rememberVm(_initGoalsVmUi) {
-        GoalsFormVm(_initGoalsVmUi)
+    val (vm, state) = rememberVm(_initGoalFormsVmUi) {
+        GoalsFormVm(_initGoalFormsVmUi)
     }
 
     VStack(
