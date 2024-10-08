@@ -3,6 +3,7 @@ import shared
 
 struct ActivityFormSheet: View {
 
+    @EnvironmentObject private var fs: Fs
     @EnvironmentObject private var nativeSheet: NativeSheet
 
     @State private var vm: ActivityFormSheetVm
@@ -186,11 +187,13 @@ struct ActivityFormSheet: View {
                                     )
                                 )
                             ) {
-                                nativeSheet.show { isGoalsSheetPresented in
-                                    GoalPickerSheet(
-                                        isPresented: isGoalsSheetPresented,
-                                        onPick: { goals in
-                                            // vm.setGoals(goal: goal)
+                                
+                                fs.show { isGoalsFormPresented in
+                                    GoalsFormFs(
+                                        isPresented: isGoalsFormPresented,
+                                        initGoalFormsUi: state.goalFormsUi,
+                                        onSelected: { goals in
+                                            vm.setGoals(goalFormsUi: goals)
                                         }
                                     )
                                 }
