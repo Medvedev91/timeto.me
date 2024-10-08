@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2C0BE02D295732110099AD7C /* DatePickerStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0BE02C295732110099AD7C /* DatePickerStateView.swift */; };
 		2C0BE02F295751B70099AD7C /* PickerStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0BE02E295751B70099AD7C /* PickerStateView.swift */; };
+		2C1531D02CB566CC00360615 /* GoalsFormFs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1531CF2CB566C300360615 /* GoalsFormFs.swift */; };
 		2C246BCF2AD563AC008780E1 /* sound_timer_expired.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2C246BCE2AD563AC008780E1 /* sound_timer_expired.mp3 */; };
 		2C273F2B2BA4ACEB0016F11D /* AskAQuestionListButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C273F2A2BA4ACEB0016F11D /* AskAQuestionListButtonView.swift */; };
 		2C273F2D2BB99A200016F11D /* ChecklistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C273F2C2BB99A200016F11D /* ChecklistView.swift */; };
@@ -135,6 +136,7 @@
 /* Begin PBXFileReference section */
 		2C0BE02C295732110099AD7C /* DatePickerStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerStateView.swift; sourceTree = "<group>"; };
 		2C0BE02E295751B70099AD7C /* PickerStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerStateView.swift; sourceTree = "<group>"; };
+		2C1531CF2CB566C300360615 /* GoalsFormFs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsFormFs.swift; sourceTree = "<group>"; };
 		2C246BCE2AD563AC008780E1 /* sound_timer_expired.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = sound_timer_expired.mp3; path = ../android_app/src/main/res/raw/sound_timer_expired.mp3; sourceTree = "<group>"; };
 		2C273F2A2BA4ACEB0016F11D /* AskAQuestionListButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskAQuestionListButtonView.swift; sourceTree = "<group>"; };
 		2C273F2C2BB99A200016F11D /* ChecklistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChecklistView.swift; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 		31821F4C09E35259CCF747CD /* iphone */ = {
 			isa = PBXGroup;
 			children = (
+				2C1531CF2CB566C300360615 /* GoalsFormFs.swift */,
 				318213DE3B58FA098A8DBAE7 /* ActivitiesTimerSheet.swift */,
 				318211488ABF627A2A9935A7 /* ActivityColorSheet.swift */,
 				31821794CA93E29D6889286D /* ActivityFormSheet.swift */,
@@ -595,6 +598,7 @@
 				318214F11883D036EC488EA5 /* TaskFormSheet.swift in Sources */,
 				2C273F2F2BBAE3090016F11D /* ChecklistFormSheet.swift in Sources */,
 				318219E30EE52A96A502BF30 /* KeyboardManager.swift in Sources */,
+				2C1531D02CB566CC00360615 /* GoalsFormFs.swift in Sources */,
 				2C2E93F8290117E300EAADBE /* HomeView.swift in Sources */,
 				2C2E93FA2905B57700EAADBE /* ScrollViewWithVListener.swift in Sources */,
 				318213413EE00D5D8F3FA396 /* EventsListView.swift in Sources */,
