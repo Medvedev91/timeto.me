@@ -106,8 +106,8 @@ class ActivityFormSheetVm(
         it.copy(pomodoroTimer = pomodoroTimer)
     }
 
-    fun setGoals(goalFormsUi: List<GoalFormUi>): Unit = state.update {
-        it.copy(goalFormsUi = goalFormsUi)
+    fun setGoals(goalFormsUi: List<GoalFormUi>) {
+        state.update { it.copy(goalFormsUi = goalFormsUi) }
     }
 
     ///
