@@ -14,7 +14,10 @@ CREATE TABLE ActivitySQ (
     pomodoro_timer INTEGER AS Int NOT NULL
 );
 
-anyChange: SELECT id FROM ActivitySQ LIMIT 1;
+anyChange:
+SELECT id
+FROM ActivitySQ
+LIMIT 1;
 
 getAscSorted:
 SELECT *
