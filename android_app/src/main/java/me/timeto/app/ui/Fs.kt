@@ -230,3 +230,22 @@ private fun RowScope.HeaderTitle(
         color = c.text,
     )
 }
+
+//
+// Bottom
+
+@Composable
+fun Fs__BottomBar(
+    content: @Composable () -> Unit,
+) {
+
+    VStack(
+        modifier = Modifier
+            .navigationBarsPadding(),
+    ) {
+
+        DividerBg()
+
+        content()
+    }
+}
