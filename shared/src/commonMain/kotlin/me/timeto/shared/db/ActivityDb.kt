@@ -1,11 +1,9 @@
 package me.timeto.shared.db
 
+import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
 import dbsq.ActivitySQ
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.*
 import me.timeto.shared.*
 import kotlin.math.max
@@ -32,18 +30,19 @@ data class ActivityDb(
 
     companion object : Backupable__Holder {
 
-        fun anyChangeFlow() = db.activityQueries.anyChange().asFlow()
+        fun anyChangeFlow(): Flow<Query<Int>> =
+            db.activityQueries.anyChange().asFlow()
 
         ///
 
-        suspend fun getAscSorted() = dbIo {
+        suspend fun getAscSorted(): List<ActivityDb> = dbIo {
             db.activityQueries.getAscSorted().executeAsList().map { it.toDb() }
         }
 
-        fun getAscSortedFlow() = db.activityQueries.getAscSorted().asFlow()
-            .mapToList(Dispatchers.IO).map { list -> list.map { it.toDb() } }
+        fun getAscSortedFlow(): Flow<List<ActivityDb>> =
+            db.activityQueries.getAscSorted().asListFlow { it.toDb() }
 
-        suspend fun getByIdOrNull(id: Int) = dbIo {
+        suspend fun getByIdOrNull(id: Int): ActivityDb? = dbIo {
             db.activityQueries.getById(id).executeAsOneOrNull()?.toDb()
         }
 
@@ -54,7 +53,8 @@ data class ActivityDb(
             return activities.first()
         }
 
-        suspend fun getByEmojiOrNull(string: String) = getAscSorted().firstOrNull { it.emoji == string }
+        suspend fun getByEmojiOrNull(string: String): ActivityDb? =
+            getAscSorted().firstOrNull { it.emoji == string }
 
         ///
 
