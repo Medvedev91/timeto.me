@@ -36,11 +36,11 @@ data class ActivityDb(
         ///
 
         suspend fun getAscSorted(): List<ActivityDb> = dbIo {
-            db.activityQueries.getAscSorted().executeAsList().map { it.toDb() }
+            db.activityQueries.selectAllSorted().executeAsList().map { it.toDb() }
         }
 
         fun getAscSortedFlow(): Flow<List<ActivityDb>> =
-            db.activityQueries.getAscSorted().asListFlow { it.toDb() }
+            db.activityQueries.selectAllSorted().asListFlow { it.toDb() }
 
         suspend fun getByIdOrNull(id: Int): ActivityDb? = dbIo {
             db.activityQueries.getById(id).executeAsOneOrNull()?.toDb()
@@ -187,7 +187,7 @@ data class ActivityDb(
         /// Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.activityQueries.getAscSorted().executeAsList().map { it.toDb() }
+            db.activityQueries.selectAllSorted().executeAsList().map { it.toDb() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
