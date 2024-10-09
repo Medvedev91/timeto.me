@@ -35,6 +35,24 @@ struct GoalsFormFs: View {
                     isPresented = false
                 }
             )
+            
+            Spacer()
+            
+            Fs__BottomBar {
+                
+                HStack {
+                    
+                    Fs__BottomBar__PlusButton(
+                        text: state.newGoalButtonText,
+                        onClick: {
+                        }
+                    )
+                    .padding(.leading, H_PADDING_HALF)
+                    .padding(.vertical, 8)
+                    
+                    Spacer()
+                }
+            }
         }
     }
 }
