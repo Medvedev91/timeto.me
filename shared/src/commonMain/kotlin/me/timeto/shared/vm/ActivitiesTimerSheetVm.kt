@@ -53,7 +53,7 @@ class ActivitiesTimerSheetVm(
 
     override fun onAppear() {
         val scope = scopeVm()
-        ActivityDb.getAscSortedFlow().onEachExIn(scope) { activities ->
+        ActivityDb.selectAllSortedFlow().onEachExIn(scope) { activities ->
             state.update {
                 it.copy(allActivities = prepActivitiesUI(timerContext, activities))
             }

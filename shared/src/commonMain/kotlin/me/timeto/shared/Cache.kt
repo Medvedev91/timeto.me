@@ -68,7 +68,7 @@ object Cache {
         TaskFolderDb.selectAllSortedFlow().onEachExIn(scope) { taskFoldersDbSorted = it }
 
         activitiesDbSorted = ActivityDb.selectAllSorted()
-        ActivityDb.getAscSortedFlow().onEachExIn(scope) { activitiesDbSorted = it }
+        ActivityDb.selectAllSortedFlow().onEachExIn(scope) { activitiesDbSorted = it }
 
         eventsDb = EventDb.getAscByTime()
         EventDb.getAscByTimeFlow().onEachExIn(scope) { eventsDb = it }

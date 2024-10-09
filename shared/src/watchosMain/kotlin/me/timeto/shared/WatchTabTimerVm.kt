@@ -42,7 +42,7 @@ class WatchTabTimerVm : __Vm<WatchTabTimerVm.State>() {
 
     override fun onAppear() {
         val scope = scopeVm()
-        ActivityDb.getAscSortedFlow()
+        ActivityDb.selectAllSortedFlow()
             .onEachExIn(scope) { activities ->
                 state.update { it.copy(activities = activities) }
             }
