@@ -2,12 +2,12 @@ package me.timeto.app.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import me.timeto.app.VStack
-import me.timeto.app.c
-import me.timeto.app.rememberVm
+import androidx.compose.ui.unit.dp
+import me.timeto.app.*
 import me.timeto.shared.vm.ActivityFormSheetVm
 import me.timeto.shared.vm.GoalsFormVm
 
@@ -42,5 +42,17 @@ fun GoalsFormFs(
         )
 
         SpacerW1()
+
+        Fs__BottomBar {
+
+            Fs__BottomBar__PlusButton(
+                text = "New Goal",
+                modifier = Modifier
+                    .padding(start = H_PADDING_HALF)
+                    .padding(vertical = 8.dp),
+                onClick = {
+                },
+            )
+        }
     }
 }
