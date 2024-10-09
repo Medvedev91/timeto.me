@@ -250,3 +250,42 @@ fun Fs__BottomBar(
         content()
     }
 }
+
+@Composable
+fun Fs__BottomBar__PlusButton(
+    text: String,
+    modifier: Modifier,
+    onClick: () -> Unit,
+) {
+
+    HStack(
+        modifier = modifier
+            .clip(roundedShape)
+            .clickable {
+                onClick()
+            }
+            .padding(horizontal = H_PADDING_HALF, vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+
+        Icon(
+            painter = painterResource(R.drawable.sf_plus_medium_bold),
+            contentDescription = "Plus",
+            tint = c.white,
+            modifier = Modifier
+                .size(24.dp)
+                .clip(roundedShape)
+                .background(c.blue)
+                .padding(6.dp),
+        )
+
+        Text(
+            text = text,
+            modifier = Modifier
+                .padding(start = 10.dp),
+            color = c.white,
+            fontSize = Fs__BUTTON_FONT_SIZE,
+            fontWeight = FontWeight.Bold,
+        )
+    }
+}
