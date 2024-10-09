@@ -336,7 +336,6 @@
 		31821F4C09E35259CCF747CD /* iphone */ = {
 			isa = PBXGroup;
 			children = (
-				2C1531CF2CB566C300360615 /* GoalsFormFs.swift */,
 				318213DE3B58FA098A8DBAE7 /* ActivitiesTimerSheet.swift */,
 				318211488ABF627A2A9935A7 /* ActivityColorSheet.swift */,
 				31821794CA93E29D6889286D /* ActivityFormSheet.swift */,
@@ -374,6 +373,7 @@
 				31821E3EB266890584C3EF87 /* FoldersSettingsSheet.swift */,
 				2CDEAB572C00E27600519C3D /* Fs.swift */,
 				31821E790D2C94A9CD07EF8E /* GoalPickerSheet.swift */,
+				2C1531CF2CB566C300360615 /* GoalsFormFs.swift */,
 				31821ACA6C9306A2CD2016A0 /* HistoryView.swift */,
 				31821ED2142F08DDD1E0CC75 /* HomeView.swift */,
 				2C95BA7A280D74AA0027FC35 /* IOSApp.swift */,
