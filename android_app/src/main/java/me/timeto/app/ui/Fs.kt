@@ -239,14 +239,10 @@ private fun RowScope.HeaderTitle(
 fun Fs__BottomBar(
     content: @Composable () -> Unit,
 ) {
-
     VStack(
         modifier = Modifier
             .navigationBarsPadding(),
     ) {
-
-        DividerBg()
-
         content()
     }
 }
