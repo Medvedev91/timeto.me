@@ -29,6 +29,7 @@ private val exitAnimation = fadeOut(spring(stiffness = Spring.StiffnessMedium))
 
 val Fs__TITLE_FONT_SIZE = 26.sp // Golden ratio to lists text
 val Fs__TITLE_FONT_WEIGHT = FontWeight.ExtraBold
+val Fs__BUTTON_FONT_SIZE = 15.sp
 
 object Fs {
 
@@ -186,7 +187,7 @@ fun Fs__HeaderAction(
                             vertical = 3.dp,
                         ),
                     color = c.text,
-                    fontSize = 15.sp,
+                    fontSize = Fs__BUTTON_FONT_SIZE,
                     fontWeight = Fs__TITLE_FONT_WEIGHT,
                 )
             }
