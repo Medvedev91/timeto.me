@@ -46,7 +46,7 @@ fun GoalsFormFs(
         Fs__BottomBar {
 
             Fs__BottomBar__PlusButton(
-                text = "New Goal",
+                text = state.newGoalButtonText,
                 modifier = Modifier
                     .padding(start = H_PADDING_HALF)
                     .padding(vertical = 8.dp),

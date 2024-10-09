@@ -12,6 +12,8 @@ class GoalsFormVm(
 
         val headerTitle = "Goals"
         val headerDoneText = "Done"
+
+        val newGoalButtonText = "New Goal"
     }
 
     override val state = MutableStateFlow(
