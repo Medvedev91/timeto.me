@@ -2,6 +2,7 @@ import SwiftUI
 
 let Fs__TITLE_FONT_SIZE = 27.0 // Golden ratio to lists text
 let Fs__TITLE_FONT_WEIGHT: Font.Weight = .heavy
+let Fs__BUTTON_FONT_SIZE = 16.0
 
 class Fs: ObservableObject {
 
@@ -214,7 +215,7 @@ struct Fs__HeaderAction: View {
                         label: {
                             Text(actionText)
                                 .foregroundColor(c.text)
-                                .font(.system(size: 16, weight: Fs__TITLE_FONT_WEIGHT))
+                                .font(.system(size: Fs__BUTTON_FONT_SIZE, weight: Fs__TITLE_FONT_WEIGHT))
                                 .padding(.horizontal, 10)
                                 .padding(.vertical, 6)
                                 .background(roundedShape.fill(c.blue))
