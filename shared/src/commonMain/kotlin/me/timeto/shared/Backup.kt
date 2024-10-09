@@ -16,7 +16,7 @@ object Backup {
             "version" to JsonPrimitive(1),
             "type" to JsonPrimitive(type),
 
-            "activities" to ActivityDb.getAscSorted().modelsToJsonArray(),
+            "activities" to ActivityDb.selectAllSorted().modelsToJsonArray(),
             "intervals" to IntervalDb.getDesc(intervalsLimit).modelsToJsonArray(),
             "task_folders" to TaskFolderDb.selectAllSorted().modelsToJsonArray(),
             "tasks" to TaskDb.getAsc().modelsToJsonArray(),

@@ -35,7 +35,7 @@ data class ActivityDb(
 
         ///
 
-        suspend fun getAscSorted(): List<ActivityDb> = dbIo {
+        suspend fun selectAllSorted(): List<ActivityDb> = dbIo {
             db.activityQueries.selectAllSorted().executeAsList().map { it.toDb() }
         }
 
@@ -54,7 +54,7 @@ data class ActivityDb(
         }
 
         suspend fun getByEmojiOrNull(string: String): ActivityDb? =
-            getAscSorted().firstOrNull { it.emoji == string }
+            selectAllSorted().firstOrNull { it.emoji == string }
 
         ///
 
@@ -71,7 +71,7 @@ data class ActivityDb(
             pomodoroTimer: Int,
         ): ActivityDb = dbIo {
 
-            if (type == TYPE.OTHER && getAscSorted().find { it.getType() == TYPE.OTHER } != null)
+            if (type == TYPE.OTHER && selectAllSorted().find { it.getType() == TYPE.OTHER } != null)
                 throw UIException("Other already exists") // todo report
 
             val validatedEmoji = validateEmoji(emoji)
@@ -107,7 +107,7 @@ data class ActivityDb(
             zlog("ActivityModel__.syncTimeHints()")
 
             val intervals = IntervalDb.getBetweenIdDesc(time() - 30 * 24 * 3600, time())
-            getAscSorted().forEach { activity ->
+            selectAllSorted().forEach { activity ->
                 // Do not use "set" to save sorting by time
                 val hints = mutableListOf<Int>()
                 for (interval in intervals) {

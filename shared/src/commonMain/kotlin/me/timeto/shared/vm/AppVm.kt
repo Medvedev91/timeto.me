@@ -32,7 +32,7 @@ class AppVm : __Vm<AppVm.State>() {
             state.update { it.copy(isAppReady = true) }
 
             // todo migration starts ~2024-11-01
-            ActivityDb.getAscSorted().forEach { activityDb ->
+            ActivityDb.selectAllSorted().forEach { activityDb ->
                 val jGoals: List<JsonObject> =
                     Json.parseToJsonElement(activityDb.goals_json).jsonArray.map { it.jsonObject }
                 jGoals.forEach { jGoal ->

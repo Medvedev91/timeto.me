@@ -26,7 +26,7 @@ class HistoryVm : __Vm<HistoryVm.State>() {
             state.update {
                 it.copy(
                     sections = prepHistorySections(allIntervalsAsc = intervalsAsc),
-                    activitiesFormAddUI = ActivityDb.getAscSorted().map { ActivityFormAddUI(it) },
+                    activitiesFormAddUI = ActivityDb.selectAllSorted().map { ActivityFormAddUI(it) },
                 )
             }
         }
