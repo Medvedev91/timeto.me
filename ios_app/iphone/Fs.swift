@@ -262,3 +262,51 @@ private struct HeaderTitle: View {
             .padding(.leading, H_PADDING)
     }
 }
+
+//
+// Bottom
+
+struct Fs__BottomBar<Content: View>: View {
+
+    @ViewBuilder var content: () -> Content
+
+    var body: some View {
+        ZStack {
+            content()
+        }
+        .safeAreaPadding(.bottom)
+    }
+}
+
+struct Fs__BottomBar__PlusButton: View {
+
+    let text: String
+    let onClick: () -> Void
+
+    var body: some View {
+        
+        Button(
+            action: {
+                onClick()
+            },
+            label: {
+                
+                HStack {
+
+                    Image(systemName: "plus")
+                        .foregroundColor(.white)
+                        .padding(5)
+                        .background(roundedShape.fill(.blue))
+                        .font(.system(size: 14, weight: .bold))
+
+                    Text(text)
+                        .foregroundColor(.white)
+                        .font(.system(size: Fs__BUTTON_FONT_SIZE, weight: .bold))
+                        .padding(.leading, 10)
+                }
+                .padding(.horizontal, H_PADDING_HALF)
+                .padding(.vertical, 4)
+            }
+        )
+    }
+}
