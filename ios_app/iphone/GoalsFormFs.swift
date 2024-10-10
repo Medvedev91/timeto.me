@@ -8,6 +8,8 @@ struct GoalsFormFs: View {
     private let onSelected: ([ActivityFormSheetVm.GoalFormUi]) -> ()
     
     @State private var sheetHeaderScroll = 0
+    
+    @EnvironmentObject private var fs: Fs
 
     init(
         isPresented: Binding<Bool>,
@@ -45,6 +47,14 @@ struct GoalsFormFs: View {
                     Fs__BottomBar__PlusButton(
                         text: state.newGoalButtonText,
                         onClick: {
+                            fs.show { fsGoalFormLayer in
+                                GoalFormFs(
+                                    isPresented: fsGoalFormLayer,
+                                    initGoalFormUi: nil,
+                                    onSelect: { newGoalFormUi in
+                                    }
+                                )
+                            }
                         }
                     )
                     .padding(.leading, H_PADDING_HALF)
