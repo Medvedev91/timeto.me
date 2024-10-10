@@ -51,6 +51,14 @@ fun GoalsFormFs(
                     .padding(start = H_PADDING_HALF)
                     .padding(vertical = 8.dp),
                 onClick = {
+                    Fs.show { goalFormLayer ->
+                        GoalFormFs(
+                            _layer = goalFormLayer,
+                            _initGoalFormUi = null,
+                            _onSelect = {
+                            },
+                        )
+                    }
                 },
             )
         }
