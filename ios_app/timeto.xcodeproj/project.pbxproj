@@ -19,6 +19,7 @@
 		2C2E93F92905759100EAADBE /* TimerPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821AE61EE1FC22CCF8E753 /* TimerPickerSheet.swift */; };
 		2C2E93FA2905B57700EAADBE /* ScrollViewWithVListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318218D93C3456758557A6E0 /* ScrollViewWithVListener.swift */; };
 		2C4044982951FCA800A24521 /* emojis.json in Resources */ = {isa = PBXBuildFile; fileRef = 2C4044972951FCA800A24521 /* emojis.json */; };
+		2C4A5EE12CB7F71600340578 /* GoalFormFs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4A5EE02CB7F71600340578 /* GoalFormFs.swift */; };
 		2C4F676F2A5C743D00F6013B /* timer_font.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4F676E2A5C743D00F6013B /* timer_font.otf */; };
 		2C5BD61B2A6076F000AD4042 /* ReadmeSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5BD61A2A6076F000AD4042 /* ReadmeSheet.swift */; };
 		2C672A102B74CC01002BC21C /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C672A0F2B74CC01002BC21C /* EventsView.swift */; };
@@ -145,6 +146,7 @@
 		2C2C419628C4CF2A00923267 /* timeto (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "timeto (iOS).entitlements"; sourceTree = "<group>"; };
 		2C2C419728C4D83400923267 /* timeto--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "timeto--iOS--Info.plist"; sourceTree = "<group>"; };
 		2C4044972951FCA800A24521 /* emojis.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = emojis.json; path = ../android_app/src/main/res/raw/emojis.json; sourceTree = "<group>"; };
+		2C4A5EE02CB7F71600340578 /* GoalFormFs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalFormFs.swift; sourceTree = "<group>"; };
 		2C4F676E2A5C743D00F6013B /* timer_font.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = timer_font.otf; path = ../android_app/src/main/res/font/timer_font.otf; sourceTree = "<group>"; };
 		2C5BD61A2A6076F000AD4042 /* ReadmeSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadmeSheet.swift; sourceTree = "<group>"; };
 		2C672A0F2B74CC01002BC21C /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsView.swift; sourceTree = "<group>"; };
@@ -372,6 +374,7 @@
 				31821514C5F55F9A34FBC8AD /* FolderFormSheet.swift */,
 				31821E3EB266890584C3EF87 /* FoldersSettingsSheet.swift */,
 				2CDEAB572C00E27600519C3D /* Fs.swift */,
+				2C4A5EE02CB7F71600340578 /* GoalFormFs.swift */,
 				31821E790D2C94A9CD07EF8E /* GoalPickerSheet.swift */,
 				2C1531CF2CB566C300360615 /* GoalsFormFs.swift */,
 				31821ACA6C9306A2CD2016A0 /* HistoryView.swift */,
@@ -624,6 +627,7 @@
 				318210CF629A7E593B9F8FE4 /* ChecklistItemFormSheet.swift in Sources */,
 				2C273F2B2BA4ACEB0016F11D /* AskAQuestionListButtonView.swift in Sources */,
 				31821DF974247D110D01C3A2 /* ActivitiesTimerSheet.swift in Sources */,
+				2C4A5EE12CB7F71600340578 /* GoalFormFs.swift in Sources */,
 				31821611D065F54C0BC007A9 /* DaytimePickerSheet.swift in Sources */,
 				318212D55BBA074155F95EB0 /* TextField__VMState.swift in Sources */,
 				318215958A7A06F6610DF5AF /* TimetoAlert.swift in Sources */,
