@@ -208,7 +208,7 @@ fun ActivityFormSheet(
                     Fs.show { layer ->
                         GoalsFormFs(
                             _layer = layer,
-                            _initGoalFormsVmUi = state.goalFormsUi,
+                            _initGoalFormsUi = state.goalFormsUi,
                             _onSelected = { goals ->
                                 vm.setGoals(goals)
                             },
