@@ -2,9 +2,14 @@ package me.timeto.app.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import me.timeto.app.*
 import me.timeto.shared.vm.ActivityFormSheetVm
 import me.timeto.shared.vm.GoalFormVm
@@ -41,6 +46,29 @@ fun GoalFormFs(
             },
         )
 
-        SpacerW1()
+        VStack(
+            modifier = Modifier
+                .verticalScroll(state = scrollState)
+                .padding(bottom = 20.dp)
+                .navigationBarsPadding()
+                .imePadding(),
+        ) {
+
+            MyListView__PaddingFirst()
+
+            MyListView__ItemView(
+                isFirst = true,
+                isLast = true,
+                bgColor = c.fg,
+            ) {
+                MyListView__ItemView__TextInputView(
+                    placeholder = state.notePlaceholder,
+                    text = state.note,
+                    onTextChanged = { newNote ->
+                        vm.setNote(newNote)
+                    },
+                )
+            }
+        }
     }
 }
