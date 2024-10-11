@@ -334,6 +334,7 @@ struct MyListView__Item__Button__RightText: View {
     let text: String
     var color: Color? = nil
     var paddingEndExtra: CGFloat = 0
+    var fontSize: CGFloat = 17
 
     var body: some View {
 
@@ -341,6 +342,7 @@ struct MyListView__Item__Button__RightText: View {
 
             Text(text)
                 .foregroundColor(color ?? c.tertiaryText)
+                .font(.system(size: fontSize))
                 .padding(.leading, 10)
                 .padding(.trailing, 8 + halfDpFloor + paddingEndExtra)
                 .lineLimit(1)
