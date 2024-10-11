@@ -8,6 +8,8 @@ struct GoalFormFs: View {
     private let onSelect: (ActivityFormSheetVm.GoalFormUi) -> ()
     
     @State private var fsHeaderScroll = 0
+    
+    @EnvironmentObject private var nativeSheet: NativeSheet
 
     init(
         isPresented: Binding<Bool>,
@@ -56,6 +58,33 @@ struct GoalFormFs: View {
                         ) { newValue in
                             vm.setNote(note: newValue)
                         }
+                    }
+                    
+                    MyListView__Padding__SectionSection()
+                    
+                    MyListView__ItemView(
+                        isFirst: true,
+                        isLast: true
+                    ) {
+
+                        MyListView__Item__Button(
+                            text: state.finishedTitle,
+                            rightView: {
+                                MyListView__Item__Button__RightText(
+                                    text: state.finishedText,
+                                    color: .white
+                                )
+                            },
+                            onClick: {
+                                nativeSheet.show { isEmojiSheetPresented in
+                                    SearchEmojiSheet(
+                                        isPresented: isEmojiSheetPresented
+                                    ) { emoji in
+                                        vm.setFinishedText(text: emoji)
+                                    }
+                                }
+                            }
+                        )
                     }
                 }
             }
