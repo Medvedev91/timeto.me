@@ -1,15 +1,13 @@
 package me.timeto.app.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.shared.vm.ActivityFormSheetVm
 import me.timeto.shared.vm.GoalFormVm
@@ -68,6 +66,31 @@ fun GoalFormFs(
                         vm.setNote(newNote)
                     },
                 )
+            }
+
+            MyListView__Padding__SectionSection()
+
+            MyListView__ItemView(
+                isFirst = true,
+                isLast = true,
+                bgColor = c.fg,
+            ) {
+                MyListView__Item__Button(
+                    text = state.finishedTitle,
+                    rightView = {
+                        MyListView__Item__Button__RightText(
+                            text = state.finishedText,
+                            color = c.white,
+                            fontSize = 22.sp,
+                        )
+                    }
+                ) {
+                    Sheet.show { layer ->
+                        SearchEmojiSheet(layer = layer) {
+                            vm.setFinishedText(it)
+                        }
+                    }
+                }
             }
         }
     }
