@@ -8,19 +8,25 @@ class GoalFormVm(
 
     data class State(
         val id: Int?,
-        val note: String?,
+        val note: String,
     ) {
 
         val headerTitle: String = if (id != null) "Edit Goal" else "New Goal"
         val headerDoneText = "Done"
+
+        val notePlaceholder = "Note (optional)"
     }
 
     override val state = MutableStateFlow(
         State(
             id = initGoalFormUi?.id,
-            note = initGoalFormUi?.note,
+            note = initGoalFormUi?.note ?: "",
         )
     )
+
+    fun setNote(note: String) {
+        state.update { it.copy(note = note) }
+    }
 
     fun buildFormUi(
         onBuild: (ActivityFormSheetVm.GoalFormUi) -> Unit,
