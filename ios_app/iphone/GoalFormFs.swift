@@ -72,7 +72,8 @@ struct GoalFormFs: View {
                             rightView: {
                                 MyListView__Item__Button__RightText(
                                     text: state.finishedText,
-                                    color: .white
+                                    color: .white,
+                                    fontSize: 26
                                 )
                             },
                             onClick: {
