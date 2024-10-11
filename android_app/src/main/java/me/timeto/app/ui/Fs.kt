@@ -278,7 +278,7 @@ fun Fs__BottomBar__PlusButton(
         Text(
             text = text,
             modifier = Modifier
-                .padding(start = 10.dp),
+                .padding(start = 10.dp, top = halfDpFloor),
             color = c.white,
             fontSize = Fs__BUTTON_FONT_SIZE,
             fontWeight = FontWeight.Bold,
