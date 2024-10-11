@@ -38,7 +38,27 @@ struct GoalFormFs: View {
                 }
             )
             
-            Spacer()
+            ScrollViewWithVListener(showsIndicators: false, vScroll: $fsHeaderScroll) {
+                
+                VStack {
+                    
+                    MyListView__PaddingFirst()
+                    
+                    MyListView__ItemView(
+                        isFirst: true,
+                        isLast: true
+                    ) {
+                        
+                        MyListView__ItemView__TextInputView(
+                            text: state.note,
+                            placeholder: state.notePlaceholder,
+                            isAutofocus: false
+                        ) { newValue in
+                            vm.setNote(note: newValue)
+                        }
+                    }
+                }
+            }
         }
     }
 }
