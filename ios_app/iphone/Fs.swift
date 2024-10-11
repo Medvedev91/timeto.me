@@ -303,6 +303,7 @@ struct Fs__BottomBar__PlusButton: View {
                         .foregroundColor(.white)
                         .font(.system(size: Fs__BUTTON_FONT_SIZE, weight: .bold))
                         .padding(.leading, 10)
+                        .padding(.top, halfDpFloor)
                 }
                 .padding(.horizontal, H_PADDING_HALF)
                 .padding(.vertical, 4)
