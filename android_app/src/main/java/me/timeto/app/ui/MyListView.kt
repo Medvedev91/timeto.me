@@ -30,6 +30,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
@@ -446,6 +447,7 @@ fun MyListView__Item__Button__RightText(
     text: String,
     color: Color? = null,
     paddingEndExtra: Dp = 0.dp,
+    fontSize: TextUnit = TextUnit.Unspecified,
 ) {
 
     HStack(
@@ -458,6 +460,7 @@ fun MyListView__Item__Button__RightText(
                 .padding(end = 8.dp + paddingEndExtra)
                 .offset(),
             color = color ?: c.tertiaryText,
+            fontSize = fontSize,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
