@@ -27,7 +27,7 @@ class GoalFormVm(
         State(
             id = initGoalFormUi?.id,
             textFeatures = (initGoalFormUi?.note ?: "").textFeatures(),
-            finishedText = initGoalFormUi?.finishText ?: "👍"
+            finishedText = initGoalFormUi?.finishText ?: "👍",
         )
     )
 
