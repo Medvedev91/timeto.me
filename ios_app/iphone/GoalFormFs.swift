@@ -61,6 +61,36 @@ struct GoalFormFs: View {
                     }
                     
                     MyListView__Padding__SectionSection()
+
+                    MyListView__ItemView(
+                        isFirst: true,
+                        isLast: true
+                    ) {
+
+                        MyListView__Item__Button(
+                            text: state.timerTitle,
+                            rightView: {
+                                MyListView__Item__Button__RightText(
+                                    text: state.timerNote,
+                                    color: state.timerNoteColor?.toColor()
+                                )
+                            }
+                        ) {
+                            nativeSheet.show { isTimerPickerPresented in
+                                TimerPickerSheet(
+                                    isPresented: isTimerPickerPresented,
+                                    title: state.timerPickerSheetTitle,
+                                    doneText: "Done",
+                                    defMinutes: state.timerDefaultMinutes.toInt()
+                                ) { seconds in
+                                    vm.setTimer(timer: seconds.toInt32())
+                                }
+                                .presentationDetentsMediumIf16()
+                            }
+                        }
+                    }
+                    
+                    MyListView__Padding__SectionSection()
                     
                     MyListView__ItemView(
                         isFirst: true,
