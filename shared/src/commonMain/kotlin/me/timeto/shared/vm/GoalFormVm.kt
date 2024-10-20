@@ -23,7 +23,7 @@ class GoalFormVm(
         val note: String = textFeatures.textNoFeatures
 
         private val timer: Int? = textFeatures.timer
-        val timerTitle = "Timer on Bar Press"
+        val timerTitle = "Timer on Bar Pressed"
         val timerNote: String = timer?.toTimerHintNote(isShort = false) ?: "None"
         val timerNoteColor: ColorRgba? = if (timer == null) ColorRgba.red else null
         val timerPickerSheetTitle = "Timer"
