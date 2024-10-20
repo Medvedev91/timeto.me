@@ -120,6 +120,15 @@ struct GoalFormFs: View {
                             }
                         )
                     }
+                    
+                    MyListView__Padding__SectionSection()
+
+                    TextFeaturesTriggersFormView(
+                        textFeatures: state.textFeatures,
+                        bgColor: c.fg
+                    ) { newTf in
+                        vm.setTextFeatures(tf: newTf)
+                    }
                 }
             }
         }
