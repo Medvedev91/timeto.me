@@ -122,6 +122,15 @@ fun GoalFormFs(
                     }
                 }
             }
+
+            MyListView__Padding__SectionSection()
+
+            TextFeaturesTriggersFormView(
+                textFeatures = state.textFeatures,
+                bgColor = c.fg,
+            ) {
+                vm.setTextFeatures(it)
+            }
         }
     }
 }
