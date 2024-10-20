@@ -58,6 +58,10 @@ class GoalFormVm(
         state.update { it.copy(finishedText = text) }
     }
 
+    fun setTextFeatures(tf: TextFeatures) {
+        state.update { it.copy(textFeatures = tf) }
+    }
+
     fun buildFormUi(
         onBuild: (ActivityFormSheetVm.GoalFormUi) -> Unit,
     ) {
