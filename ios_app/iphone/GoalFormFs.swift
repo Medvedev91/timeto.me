@@ -48,7 +48,8 @@ struct GoalFormFs: View {
                     
                     MyListView__ItemView(
                         isFirst: true,
-                        isLast: true
+                        isLast: true,
+                        bgColor: c.fg
                     ) {
                         
                         MyListView__ItemView__TextInputView(
@@ -64,7 +65,8 @@ struct GoalFormFs: View {
 
                     MyListView__ItemView(
                         isFirst: true,
-                        isLast: true
+                        isLast: true,
+                        bgColor: c.fg
                     ) {
 
                         MyListView__Item__Button(
@@ -94,7 +96,8 @@ struct GoalFormFs: View {
                     
                     MyListView__ItemView(
                         isFirst: true,
-                        isLast: true
+                        isLast: true,
+                        bgColor: c.fg
                     ) {
 
                         MyListView__Item__Button(
