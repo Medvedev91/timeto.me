@@ -12,6 +12,7 @@ class GoalFormVm(
 
     data class State(
         val id: Int?,
+        val seconds: Int,
         val textFeatures: TextFeatures,
         val finishedText: String,
     ) {
@@ -21,6 +22,11 @@ class GoalFormVm(
 
         val notePlaceholder = "Note (optional)"
         val note: String = textFeatures.textNoFeatures
+
+        val durationTitle = "Target Duration"
+        val durationNote: String = seconds.toTimerHintNote(isShort = false)
+        val durationDefMinutes: Int = seconds / 60
+        val durationPickerSheetTitle = "Target Duration"
 
         private val timer: Int? = textFeatures.timer
         val timerTitle = "Timer on Bar Pressed"
@@ -35,6 +41,7 @@ class GoalFormVm(
     override val state = MutableStateFlow(
         State(
             id = initGoalFormUi?.id,
+            seconds = initGoalFormUi?.seconds ?: (3 * 3_600),
             textFeatures = (initGoalFormUi?.note ?: "").textFeatures(),
             finishedText = initGoalFormUi?.finishText ?: "👍",
         )
@@ -45,6 +52,10 @@ class GoalFormVm(
             val tf = it.textFeatures.copy(textNoFeatures = note)
             it.copy(textFeatures = tf)
         }
+    }
+
+    fun setDuration(seconds: Int) {
+        state.update { it.copy(seconds = seconds) }
     }
 
     fun setTimer(timer: Int) {
