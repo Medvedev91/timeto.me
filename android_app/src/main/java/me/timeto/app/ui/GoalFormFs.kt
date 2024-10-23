@@ -76,6 +76,35 @@ fun GoalFormFs(
                 bgColor = c.fg,
             ) {
                 MyListView__Item__Button(
+                    text = state.durationTitle,
+                    rightView = {
+                        MyListView__Item__Button__RightText(
+                            text = state.durationNote,
+                        )
+                    },
+                ) {
+                    Sheet.show { layer ->
+                        TimerPickerSheet(
+                            layer = layer,
+                            title = state.durationPickerSheetTitle,
+                            doneText = "Done",
+                            defMinutes = state.durationDefMinutes,
+                            onPick = { seconds ->
+                                vm.setDuration(seconds)
+                            }
+                        )
+                    }
+                }
+            }
+
+            MyListView__Padding__SectionSection()
+
+            MyListView__ItemView(
+                isFirst = true,
+                isLast = true,
+                bgColor = c.fg,
+            ) {
+                MyListView__Item__Button(
                     text = state.timerTitle,
                     rightView = {
                         MyListView__Item__Button__RightText(
