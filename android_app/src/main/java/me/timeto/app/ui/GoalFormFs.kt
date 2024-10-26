@@ -72,8 +72,28 @@ fun GoalFormFs(
 
             MyListView__ItemView(
                 isFirst = true,
+                isLast = false,
+                bgColor = c.fg,
+            ) {
+                MyListView__Item__Button(
+                    text = state.periodTitle,
+                    rightView = {
+                        MyListView__Item__Button__RightText(
+                            text = state.periodNote,
+                            color = state.periodNoteColor?.toColor(),
+                        )
+                    },
+                ) {
+                    Sheet.show { layer ->
+                    }
+                }
+            }
+
+            MyListView__ItemView(
+                isFirst = false,
                 isLast = true,
                 bgColor = c.fg,
+                withTopDivider = true,
             ) {
                 MyListView__Item__Button(
                     text = state.durationTitle,
