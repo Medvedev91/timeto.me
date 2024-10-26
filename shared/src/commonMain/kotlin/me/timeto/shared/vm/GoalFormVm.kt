@@ -3,6 +3,7 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.TextFeatures
+import me.timeto.shared.db.GoalDb
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toTimerHintNote
 
@@ -13,12 +14,17 @@ class GoalFormVm(
     data class State(
         val id: Int?,
         val seconds: Int,
+        val period: GoalDb.Period?,
         val textFeatures: TextFeatures,
         val finishedText: String,
     ) {
 
         val headerTitle: String = if (id != null) "Edit Goal" else "New Goal"
         val headerDoneText = "Done"
+
+        val periodTitle = "Period"
+        val periodNote: String = period?.note() ?: "None"
+        val periodNoteColor: ColorRgba? = if (period == null) ColorRgba.red else null
 
         val notePlaceholder = "Note (optional)"
         val note: String = textFeatures.textNoFeatures
@@ -42,6 +48,7 @@ class GoalFormVm(
         State(
             id = initGoalFormUi?.id,
             seconds = initGoalFormUi?.seconds ?: (3 * 3_600),
+            period = initGoalFormUi?.period,
             textFeatures = (initGoalFormUi?.note ?: "").textFeatures(),
             finishedText = initGoalFormUi?.finishText ?: "👍",
         )
