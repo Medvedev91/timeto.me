@@ -23,7 +23,7 @@ class GoalFormVm(
         val notePlaceholder = "Note (optional)"
         val note: String = textFeatures.textNoFeatures
 
-        val durationTitle = "Target Duration"
+        val durationTitle = "Duration"
         val durationNote: String = seconds.toTimerHintNote(isShort = false)
         val durationDefMinutes: Int = seconds / 60
         val durationPickerSheetTitle = "Target Duration"
