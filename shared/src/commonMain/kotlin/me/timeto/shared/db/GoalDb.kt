@@ -49,6 +49,8 @@ data class GoalDb(
 
         fun isToday(): Boolean
 
+        fun note(): String
+
         fun toJson(): JsonObject
 
         ///
@@ -85,6 +87,13 @@ data class GoalDb(
 
             override fun isToday(): Boolean =
                 UnixTime().dayOfWeek() in weekDays
+
+            override fun note(): String {
+                if (weekDays.size == 7)
+                    return "Every Day"
+                // todo if size is zero?
+                return weekDays.map { UnixTime.dayOfWeekNames2 }.joinToString(", ")
+            }
 
             override fun toJson() = JsonObject(
                 mapOf(
