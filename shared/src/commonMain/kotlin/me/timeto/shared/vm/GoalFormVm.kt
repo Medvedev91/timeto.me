@@ -61,6 +61,10 @@ class GoalFormVm(
         }
     }
 
+    fun setPeriod(period: GoalDb.Period?) {
+        state.update { it.copy(period = period) }
+    }
+
     fun setDuration(seconds: Int) {
         state.update { it.copy(seconds = seconds) }
     }
