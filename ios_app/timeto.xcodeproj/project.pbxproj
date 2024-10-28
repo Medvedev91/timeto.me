@@ -33,6 +33,7 @@
 		2C82BF7C287272520041BCA3 /* W_Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82BF7B287272520041BCA3 /* W_Delegate.swift */; };
 		2C95BA8D280D74AA0027FC35 /* IOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C95BA7A280D74AA0027FC35 /* IOSApp.swift */; };
 		2CA9C0372C39F0E300A321FA /* DividerBgScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA9C0362C39F0E300A321FA /* DividerBgScroll.swift */; };
+		2CAF3CE22CD0110200CC6DE5 /* GoalPeriodFormFs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAF3CE12CD0110200CC6DE5 /* GoalPeriodFormFs.swift */; };
 		2CB73DE3292FACE00053B2D6 /* SearchEmojiSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB73DE2292FACE00053B2D6 /* SearchEmojiSheet.swift */; };
 		2CDEAB582C00E27600519C3D /* Fs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDEAB572C00E27600519C3D /* Fs.swift */; };
 		2CDEAB5A2C00F90C00519C3D /* RepeatingFormPeriodFs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDEAB592C00F90C00519C3D /* RepeatingFormPeriodFs.swift */; };
@@ -162,6 +163,7 @@
 		2C95BA7A280D74AA0027FC35 /* IOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSApp.swift; sourceTree = "<group>"; };
 		2C95BA82280D74AA0027FC35 /* TimeTo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeTo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CA9C0362C39F0E300A321FA /* DividerBgScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividerBgScroll.swift; sourceTree = "<group>"; };
+		2CAF3CE12CD0110200CC6DE5 /* GoalPeriodFormFs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalPeriodFormFs.swift; sourceTree = "<group>"; };
 		2CB73DE2292FACE00053B2D6 /* SearchEmojiSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEmojiSheet.swift; sourceTree = "<group>"; };
 		2CDEAB572C00E27600519C3D /* Fs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fs.swift; sourceTree = "<group>"; };
 		2CDEAB592C00F90C00519C3D /* RepeatingFormPeriodFs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatingFormPeriodFs.swift; sourceTree = "<group>"; };
@@ -375,6 +377,7 @@
 				31821E3EB266890584C3EF87 /* FoldersSettingsSheet.swift */,
 				2CDEAB572C00E27600519C3D /* Fs.swift */,
 				2C4A5EE02CB7F71600340578 /* GoalFormFs.swift */,
+				2CAF3CE12CD0110200CC6DE5 /* GoalPeriodFormFs.swift */,
 				31821E790D2C94A9CD07EF8E /* GoalPickerSheet.swift */,
 				2C1531CF2CB566C300360615 /* GoalsFormFs.swift */,
 				31821ACA6C9306A2CD2016A0 /* HistoryView.swift */,
@@ -651,6 +654,7 @@
 				31821CF86EDC2A5C5CB362E0 /* SheetDividerFg.swift in Sources */,
 				318214AB1E16DF8DC1C357F6 /* NativeSheet.swift in Sources */,
 				318214AF2E65AEC255D6204D /* TimerHintsView.swift in Sources */,
+				2CAF3CE22CD0110200CC6DE5 /* GoalPeriodFormFs.swift in Sources */,
 				3182172EBDF607665AA6DBD2 /* ActivityTimerSheet.swift in Sources */,
 				31821F9ADE8CC50422F28059 /* WeekDaysFormView.swift in Sources */,
 				3182178E6CDEEFEDCC11F8EA /* GoalPickerSheet.swift in Sources */,
