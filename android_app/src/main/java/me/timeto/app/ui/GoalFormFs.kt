@@ -84,7 +84,14 @@ fun GoalFormFs(
                         )
                     },
                 ) {
-                    Sheet.show { layer ->
+                    Fs.show { layer ->
+                        GoalPeriodFormFs(
+                            _layer = layer,
+                            _initPeriod = state.period,
+                            _onSelect = { newPeriod ->
+                                vm.setPeriod(newPeriod)
+                            }
+                        )
                     }
                 }
             }
