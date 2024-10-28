@@ -9,6 +9,7 @@ struct GoalFormFs: View {
     
     @State private var fsHeaderScroll = 0
     
+    @EnvironmentObject private var fs: Fs
     @EnvironmentObject private var nativeSheet: NativeSheet
 
     init(
@@ -77,6 +78,15 @@ struct GoalFormFs: View {
                                 )
                             }
                         ) {
+                            fs.show { ip in
+                                GoalPeriodFormFs(
+                                    isPresented: ip,
+                                    initPeriod: state.period,
+                                    onSelect: { newPeriod in
+                                        vm.setPeriod(period: newPeriod)
+                                    }
+                                )
+                            }
                         }
                     }
 
