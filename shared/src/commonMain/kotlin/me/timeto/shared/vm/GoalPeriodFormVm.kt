@@ -32,6 +32,10 @@ class GoalPeriodFormVm(
         state.update { it.copy(daysOfWeek = daysOfWeek) }
     }
 
+    fun setTypeDaysOfWeek() {
+        state.update { it.copy(selectedType = GoalDb.Period.Type.daysOfWeek) }
+    }
+
     fun buildPeriod(
         onSuccess: (GoalDb.Period) -> Unit,
     ) {
