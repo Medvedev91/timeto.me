@@ -47,6 +47,8 @@ data class GoalDb(
 
     sealed interface Period {
 
+        val type: Type
+
         fun isToday(): Boolean
 
         fun note(): String
@@ -85,6 +87,8 @@ data class GoalDb(
 
             ///
 
+            override val type = Type.daysOfWeek
+
             override fun isToday(): Boolean =
                 UnixTime().dayOfWeek() in weekDays
 
@@ -97,7 +101,7 @@ data class GoalDb(
 
             override fun toJson() = JsonObject(
                 mapOf(
-                    "type" to JsonPrimitive(Type.daysOfWeek.id),
+                    "type" to JsonPrimitive(type.id),
                     "days" to JsonArray(weekDays.map { JsonPrimitive(it) }),
                 )
             )
