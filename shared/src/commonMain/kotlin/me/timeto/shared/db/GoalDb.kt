@@ -58,7 +58,7 @@ data class GoalDb(
         ///
 
         enum class Type(val id: Int) {
-            daysOfWeek(1),
+            daysOfWeek(1), weekly(2),
         }
 
         companion object {
