@@ -9,7 +9,6 @@ class GoalPeriodFormVm(
 ) : __Vm<GoalPeriodFormVm.State>() {
 
     data class State(
-        val period: GoalDb.Period?,
         val selectedType: GoalDb.Period.Type,
         val daysOfWeek: List<Int>,
     ) {
@@ -23,7 +22,6 @@ class GoalPeriodFormVm(
 
     override val state = MutableStateFlow(
         State(
-            period = initPeriod,
             selectedType = initPeriod?.type ?: GoalDb.Period.Type.daysOfWeek,
             daysOfWeek = if (initPeriod is GoalDb.Period.DaysOfWeek)
                 initPeriod.days else listOf(0, 1, 2, 3, 4),
@@ -37,11 +35,6 @@ class GoalPeriodFormVm(
     fun buildPeriod(
         onSuccess: (GoalDb.Period) -> Unit,
     ) {
-        val period: GoalDb.Period? = state.value.period
-        if (period == null) {
-            showUiAlert("Period not selected")
-            return
-        }
-        onSuccess(period)
+//        onSuccess(period)
     }
 }
