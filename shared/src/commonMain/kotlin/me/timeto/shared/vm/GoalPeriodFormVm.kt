@@ -10,15 +10,20 @@ class GoalPeriodFormVm(
 
     data class State(
         val period: GoalDb.Period?,
+        val selectedType: GoalDb.Period.Type,
     ) {
 
         val headerTitle = "Period"
         val headerDoneText = "Done"
+
+        val daysOfWeekTitle = "Days of Week"
+        val isDaysOfWeekSelected: Boolean = selectedType == GoalDb.Period.Type.daysOfWeek
     }
 
     override val state = MutableStateFlow(
         State(
             period = initPeriod,
+            selectedType = initPeriod?.type ?: GoalDb.Period.Type.daysOfWeek,
         )
     )
 
