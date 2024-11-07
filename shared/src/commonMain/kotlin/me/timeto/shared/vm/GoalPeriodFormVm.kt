@@ -18,6 +18,9 @@ class GoalPeriodFormVm(
 
         val daysOfWeekTitle = "Days of Week"
         val isDaysOfWeekSelected: Boolean = selectedType == GoalDb.Period.Type.daysOfWeek
+
+        val weeklyTitle = "Weekly"
+        val isWeeklySelected: Boolean = selectedType == GoalDb.Period.Type.weekly
     }
 
     override val state = MutableStateFlow(
@@ -34,6 +37,10 @@ class GoalPeriodFormVm(
 
     fun setTypeDaysOfWeek() {
         state.update { it.copy(selectedType = GoalDb.Period.Type.daysOfWeek) }
+    }
+
+    fun setTypeWeekly() {
+        state.update { it.copy(selectedType = GoalDb.Period.Type.weekly) }
     }
 
     fun buildPeriod(
