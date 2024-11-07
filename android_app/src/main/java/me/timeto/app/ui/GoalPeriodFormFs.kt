@@ -50,6 +50,37 @@ fun GoalPeriodFormFs(
                 .navigationBarsPadding()
                 .imePadding(),
         ) {
+
+            MyListView__PaddingFirst()
+
+            MyListView__ItemView(
+                isFirst = true,
+                isLast = true,
+                bgColor = c.fg,
+            ) {
+
+                VStack {
+
+                    MyListView__ItemView__RadioView(
+                        text = state.daysOfWeekTitle,
+                        isActive = state.isDaysOfWeekSelected,
+                        bgColor = c.fg,
+                        onClick = {
+                            vm.setTypeDaysOfWeek()
+                        },
+                    )
+
+                    WeekDaysFormView(
+                        weekDays = state.daysOfWeek,
+                        size = 36.dp,
+                        modifier = Modifier
+                            .padding(start = H_PADDING, top = 4.dp, bottom = 16.dp),
+                        onChange = { newWeekDays ->
+                            vm.setDaysOfWeek(newWeekDays)
+                        },
+                    )
+                }
+            }
         }
     }
 }
