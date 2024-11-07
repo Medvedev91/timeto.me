@@ -1,5 +1,6 @@
 package me.timeto.app.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -70,15 +71,18 @@ fun GoalPeriodFormFs(
                         },
                     )
 
-                    WeekDaysFormView(
-                        weekDays = state.daysOfWeek,
-                        size = 36.dp,
-                        modifier = Modifier
-                            .padding(start = H_PADDING, top = 4.dp, bottom = 16.dp),
-                        onChange = { newWeekDays ->
-                            vm.setDaysOfWeek(newWeekDays)
-                        },
-                    )
+                    AnimatedVisibility(state.isDaysOfWeekSelected) {
+
+                        WeekDaysFormView(
+                            weekDays = state.daysOfWeek,
+                            size = 36.dp,
+                            modifier = Modifier
+                                .padding(start = H_PADDING, top = 4.dp, bottom = 16.dp),
+                            onChange = { newWeekDays ->
+                                vm.setDaysOfWeek(newWeekDays)
+                            },
+                        )
+                    }
                 }
             }
 
