@@ -75,13 +75,13 @@ data class GoalDb(
         ///
 
         class DaysOfWeek(
-            val weekDays: List<Int>,
+            val days: List<Int>,
         ) : Period {
 
             companion object {
 
                 fun fromJson(json: JsonObject) = DaysOfWeek(
-                    weekDays = json["days"]!!.jsonArray.map { it.jsonPrimitive.int },
+                    days = json["days"]!!.jsonArray.map { it.jsonPrimitive.int },
                 )
             }
 
@@ -90,19 +90,19 @@ data class GoalDb(
             override val type = Type.daysOfWeek
 
             override fun isToday(): Boolean =
-                UnixTime().dayOfWeek() in weekDays
+                UnixTime().dayOfWeek() in days
 
             override fun note(): String {
-                if (weekDays.size == 7)
+                if (days.size == 7)
                     return "Every Day"
                 // todo if size is zero?
-                return weekDays.map { UnixTime.dayOfWeekNames2 }.joinToString(", ")
+                return days.map { UnixTime.dayOfWeekNames2 }.joinToString(", ")
             }
 
             override fun toJson() = JsonObject(
                 mapOf(
                     "type" to JsonPrimitive(type.id),
-                    "days" to JsonArray(weekDays.map { JsonPrimitive(it) }),
+                    "days" to JsonArray(days.map { JsonPrimitive(it) }),
                 )
             )
         }
