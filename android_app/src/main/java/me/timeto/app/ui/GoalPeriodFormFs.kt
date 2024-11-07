@@ -81,6 +81,24 @@ fun GoalPeriodFormFs(
                     )
                 }
             }
+
+            MyListView__Padding__SectionSection()
+
+            MyListView__ItemView(
+                isFirst = true,
+                isLast = true,
+                bgColor = c.fg,
+            ) {
+
+                MyListView__ItemView__RadioView(
+                    text = state.weeklyTitle,
+                    isActive = state.isWeeklySelected,
+                    bgColor = c.fg,
+                    onClick = {
+                        vm.setTypeWeekly()
+                    },
+                )
+            }
         }
     }
 }
