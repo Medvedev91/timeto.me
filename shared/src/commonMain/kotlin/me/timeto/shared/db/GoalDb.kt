@@ -106,7 +106,7 @@ data class GoalDb(
                 if (days.size == 7)
                     return "Every Day"
                 // todo if size is zero?
-                return days.map { UnixTime.dayOfWeekNames2 }.joinToString(", ")
+                return days.joinToString(", ") { UnixTime.dayOfWeekNames2[it] }
             }
 
             override fun toJson() = JsonObject(
