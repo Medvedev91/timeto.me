@@ -83,6 +83,14 @@ data class GoalDb(
                 fun fromJson(json: JsonObject) = DaysOfWeek(
                     days = json["days"]!!.jsonArray.map { it.jsonPrimitive.int },
                 )
+
+                fun buildWithValidation(days: Set<Int>): DaysOfWeek {
+                    if (days.isEmpty())
+                        throw Exception("Days not selected")
+                    if (days.any { it !in 0..6 })
+                        throw Exception("Invalid days: $days")
+                    return DaysOfWeek(days.toList())
+                }
             }
 
             ///
