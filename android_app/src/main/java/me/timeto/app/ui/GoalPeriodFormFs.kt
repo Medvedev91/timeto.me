@@ -74,12 +74,12 @@ fun GoalPeriodFormFs(
                     AnimatedVisibility(state.isDaysOfWeekSelected) {
 
                         WeekDaysFormView(
-                            weekDays = state.daysOfWeek,
+                            weekDays = state.daysOfWeek.toList(),
                             size = 36.dp,
                             modifier = Modifier
                                 .padding(start = H_PADDING, top = 4.dp, bottom = 16.dp),
                             onChange = { newWeekDays ->
-                                vm.setDaysOfWeek(newWeekDays)
+                                vm.setDaysOfWeek(newWeekDays.toSet())
                             },
                         )
                     }

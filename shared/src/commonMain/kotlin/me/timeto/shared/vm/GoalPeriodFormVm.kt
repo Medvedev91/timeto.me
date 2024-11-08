@@ -10,7 +10,7 @@ class GoalPeriodFormVm(
 
     data class State(
         val selectedType: GoalDb.Period.Type,
-        val daysOfWeek: List<Int>,
+        val daysOfWeek: Set<Int>,
     ) {
 
         val headerTitle = "Period"
@@ -27,11 +27,11 @@ class GoalPeriodFormVm(
         State(
             selectedType = initPeriod?.type ?: GoalDb.Period.Type.daysOfWeek,
             daysOfWeek = if (initPeriod is GoalDb.Period.DaysOfWeek)
-                initPeriod.days else listOf(0, 1, 2, 3, 4),
+                initPeriod.days.toSet() else setOf(0, 1, 2, 3, 4),
         )
     )
 
-    fun setDaysOfWeek(daysOfWeek: List<Int>) {
+    fun setDaysOfWeek(daysOfWeek: Set<Int>) {
         state.update { it.copy(daysOfWeek = daysOfWeek) }
     }
 
@@ -46,6 +46,13 @@ class GoalPeriodFormVm(
     fun buildPeriod(
         onSuccess: (GoalDb.Period) -> Unit,
     ) {
-//        onSuccess(period)
+        val stateValue = state.value
+        val period: GoalDb.Period = when (stateValue.selectedType) {
+            GoalDb.Period.Type.daysOfWeek ->
+                GoalDb.Period.DaysOfWeek.buildWithValidation(stateValue.daysOfWeek)
+            GoalDb.Period.Type.weekly ->
+                TODO()
+        }
+        onSuccess(period)
     }
 }
