@@ -3,6 +3,7 @@ package me.timeto.shared.db
 import dbsq.GoalSq
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.*
+import me.timeto.shared.UIException
 import me.timeto.shared.UnixTime
 
 data class GoalDb(
@@ -86,9 +87,9 @@ data class GoalDb(
 
                 fun buildWithValidation(days: Set<Int>): DaysOfWeek {
                     if (days.isEmpty())
-                        throw Exception("Days not selected")
+                        throw UIException("Days not selected")
                     if (days.any { it !in 0..6 })
-                        throw Exception("Invalid days: $days")
+                        throw UIException("Invalid days: $days")
                     return DaysOfWeek(days)
                 }
             }
