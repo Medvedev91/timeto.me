@@ -75,13 +75,13 @@ data class GoalDb(
         ///
 
         class DaysOfWeek(
-            val days: List<Int>,
+            val days: Set<Int>,
         ) : Period {
 
             companion object {
 
                 fun fromJson(json: JsonObject) = DaysOfWeek(
-                    days = json["days"]!!.jsonArray.map { it.jsonPrimitive.int },
+                    days = json["days"]!!.jsonArray.map { it.jsonPrimitive.int }.toSet(),
                 )
 
                 fun buildWithValidation(days: Set<Int>): DaysOfWeek {
@@ -89,7 +89,7 @@ data class GoalDb(
                         throw Exception("Days not selected")
                     if (days.any { it !in 0..6 })
                         throw Exception("Invalid days: $days")
-                    return DaysOfWeek(days.toList())
+                    return DaysOfWeek(days)
                 }
             }
 

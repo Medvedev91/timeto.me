@@ -41,7 +41,7 @@ class AppVm : __Vm<AppVm.State>() {
                     GoalDb.insertWithValidation(
                         activityDb = activityDb,
                         seconds = seconds,
-                        period = GoalDb.Period.DaysOfWeek(jDays.split(",").map { it.toInt() }),
+                        period = GoalDb.Period.DaysOfWeek(jDays.split(",").map { it.toInt() }.toSet()),
                         note = "",
                         finishText = "todo",
                     )
