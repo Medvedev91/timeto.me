@@ -68,6 +68,7 @@ data class GoalDb(
                 val typeRaw: Int = json["type"]!!.jsonPrimitive.int
                 return when (typeRaw) {
                     Type.daysOfWeek.id -> DaysOfWeek.fromJson(json)
+                    Type.weekly.id -> Weekly()
                     else -> throw Exception("GoalDb.Period.fromJson() type: $typeRaw")
                 }
             }
@@ -112,6 +113,21 @@ data class GoalDb(
                 mapOf(
                     "type" to JsonPrimitive(type.id),
                     "days" to JsonArray(days.map { JsonPrimitive(it) }),
+                )
+            )
+        }
+
+        class Weekly() : Period {
+
+            override val type = Type.weekly
+
+            override fun isToday(): Boolean = true
+
+            override fun note(): String = "Weekly"
+
+            override fun toJson() = JsonObject(
+                mapOf(
+                    "type" to JsonPrimitive(type.id),
                 )
             )
         }

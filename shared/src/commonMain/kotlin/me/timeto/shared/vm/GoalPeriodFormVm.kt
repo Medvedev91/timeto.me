@@ -1,6 +1,7 @@
 package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
+import me.timeto.shared.UIException
 import me.timeto.shared.db.GoalDb
 import me.timeto.shared.showUiAlert
 
@@ -46,13 +47,17 @@ class GoalPeriodFormVm(
     fun buildPeriod(
         onSuccess: (GoalDb.Period) -> Unit,
     ) {
-        val stateValue = state.value
-        val period: GoalDb.Period = when (stateValue.selectedType) {
-            GoalDb.Period.Type.daysOfWeek ->
-                GoalDb.Period.DaysOfWeek.buildWithValidation(stateValue.daysOfWeek)
-            GoalDb.Period.Type.weekly ->
-                TODO()
+        try {
+            val stateValue = state.value
+            val period: GoalDb.Period = when (stateValue.selectedType) {
+                GoalDb.Period.Type.daysOfWeek ->
+                    GoalDb.Period.DaysOfWeek.buildWithValidation(stateValue.daysOfWeek)
+                GoalDb.Period.Type.weekly ->
+                    GoalDb.Period.Weekly()
+            }
+            onSuccess(period)
+        } catch (e: UIException) {
+            showUiAlert(e.uiMessage)
         }
-        onSuccess(period)
     }
 }
