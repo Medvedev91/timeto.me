@@ -63,6 +63,10 @@ class ActivityFormSheetVm(
                 finishText = goalDb.finish_text,
             )
         }
+
+        ///
+
+        val durationString: String = seconds.toTimerHintNote(isShort = false)
     }
 
     data class TimerHintCustomItem(
