@@ -43,7 +43,7 @@ class AppVm : __Vm<AppVm.State>() {
                         seconds = seconds,
                         period = GoalDb.Period.DaysOfWeek(jDays.split(",").map { it.toInt() }.toSet()),
                         note = "",
-                        finishText = "todo",
+                        finishText = "👍",
                     )
                 }
                 db.activityQueries.updateGoalsByIdTodo("[]", activityDb.id)
