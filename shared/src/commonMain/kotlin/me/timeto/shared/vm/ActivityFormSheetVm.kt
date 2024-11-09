@@ -56,7 +56,7 @@ class ActivityFormSheetVm(
         companion object {
 
             fun fromGoalDb(goalDb: GoalDb) = GoalFormUi(
-                id = null,
+                id = goalDb.id,
                 seconds = goalDb.seconds,
                 period = goalDb.buildPeriod(),
                 note = goalDb.note,
