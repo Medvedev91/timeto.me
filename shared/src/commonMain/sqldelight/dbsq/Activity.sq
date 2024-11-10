@@ -57,11 +57,6 @@ UPDATE ActivitySQ
 SET sort = ?
 WHERE id = ?;
 
-updateGoalsByIdTodo:
-UPDATE ActivitySQ
-SET goals_json = ?
-WHERE id = ?;
-
 deleteById:
 DELETE FROM ActivitySQ
 WHERE id = ?;
