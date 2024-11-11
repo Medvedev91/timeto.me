@@ -55,7 +55,8 @@ fun GoalsFormFs(
                         GoalFormFs(
                             _layer = goalFormLayer,
                             _initGoalFormUi = null,
-                            _onSelect = {
+                            _onSelect = { newGoalFormUi ->
+                                vm.addGoalFormUi(newGoalFormUi)
                             },
                         )
                     }
