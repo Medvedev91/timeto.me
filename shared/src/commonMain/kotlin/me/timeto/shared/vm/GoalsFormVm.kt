@@ -21,4 +21,8 @@ class GoalsFormVm(
             goalFormsUi = initGoalFormsUi,
         )
     )
+
+    fun addGoalFormUi(goalFormUi: ActivityFormSheetVm.GoalFormUi) {
+        state.update { it.copy(goalFormsUi = it.goalFormsUi + goalFormUi) }
+    }
 }
