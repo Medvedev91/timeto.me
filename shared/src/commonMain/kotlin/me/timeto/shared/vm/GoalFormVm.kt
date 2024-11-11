@@ -1,11 +1,8 @@
 package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
-import me.timeto.shared.ColorRgba
-import me.timeto.shared.TextFeatures
+import me.timeto.shared.*
 import me.timeto.shared.db.GoalDb
-import me.timeto.shared.textFeatures
-import me.timeto.shared.toTimerHintNote
 
 class GoalFormVm(
     initGoalFormUi: ActivityFormSheetVm.GoalFormUi?,
@@ -87,6 +84,27 @@ class GoalFormVm(
     fun buildFormUi(
         onBuild: (ActivityFormSheetVm.GoalFormUi) -> Unit,
     ) {
-        TODO()
+
+        val stateValue = state.value
+        val timer: Int? = stateValue.textFeatures.timer
+        if (timer == null) {
+            showUiAlert("Timer on bar pressed not selected")
+            return
+        }
+
+        val period = stateValue.period
+        if (period == null) {
+            showUiAlert("Period not selected")
+            return
+        }
+
+        val newGoalForm = ActivityFormSheetVm.GoalFormUi(
+            id = stateValue.id,
+            seconds = stateValue.seconds,
+            period = stateValue.period,
+            note = stateValue.note,
+            finishText = stateValue.finishedText
+        )
+        onBuild(newGoalForm)
     }
 }
