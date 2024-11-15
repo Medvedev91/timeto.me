@@ -20,4 +20,5 @@ VALUES
 (?, ?, ?, ?, ?);
 
 truncate:
-DELETE FROM GoalSq;
+DELETE
+FROM GoalSq;
