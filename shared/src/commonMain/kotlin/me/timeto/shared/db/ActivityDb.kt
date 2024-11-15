@@ -6,6 +6,7 @@ import dbsq.ActivitySQ
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.*
 import me.timeto.shared.*
+import me.timeto.shared.models.GoalFormUi
 import kotlin.math.max
 
 data class ActivityDb(
@@ -65,6 +66,7 @@ data class ActivityDb(
             colorRgba: ColorRgba,
             data: ActivityDb__Data,
             keepScreenOn: Boolean,
+            goalFormsUi: List<GoalFormUi>,
             pomodoroTimer: Int,
         ): ActivityDb = dbIo {
 
@@ -91,7 +93,10 @@ data class ActivityDb(
                     pomodoro_timer = pomodoroTimer,
                 )
                 db.activityQueries.insert(activitySQ)
-                activitySQ.toDb()
+                val activityDb = activitySQ.toDb()
+                GoalDb.deleteByActivityDbSync(activityDb)
+                GoalDb.insertManySync(activityDb, goalFormsUi)
+                activityDb
             }
         }
 
