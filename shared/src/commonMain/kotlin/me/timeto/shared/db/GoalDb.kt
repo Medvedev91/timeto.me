@@ -39,6 +39,10 @@ data class GoalDb(
                 finish_text = finishText.trim(),
             )
         }
+
+        fun deleteByActivityDbSync(activityDb: ActivityDb) {
+            db.goalQueries.deleteByActivityId(activity_id = activityDb.id)
+        }
     }
 
     fun buildPeriod(): Period =
