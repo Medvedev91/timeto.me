@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.*
 import me.timeto.shared.UIException
 import me.timeto.shared.UnixTime
+import me.timeto.shared.models.GoalFormUi
 
 data class GoalDb(
     val id: Int,
@@ -24,20 +25,19 @@ data class GoalDb(
         fun selectAllFlow(): Flow<List<GoalDb>> =
             db.goalQueries.selectAll().asListFlow { it.toDb() }
 
-        suspend fun insertWithValidation(
+        fun insertManySync(
             activityDb: ActivityDb,
-            seconds: Int,
-            period: Period,
-            note: String,
-            finishText: String,
-        ): Unit = dbIo {
-            db.goalQueries.insert(
-                activity_id = activityDb.id,
-                seconds = seconds,
-                period_json = period.toJson().toString(),
-                note = note.trim(),
-                finish_text = finishText.trim(),
-            )
+            goalFormsUi: List<GoalFormUi>,
+        ) {
+            goalFormsUi.forEach { goalFormUi ->
+                db.goalQueries.insert(
+                    activity_id = activityDb.id,
+                    seconds = goalFormUi.seconds,
+                    period_json = goalFormUi.period.toJson().toString(),
+                    note = goalFormUi.note.trim(),
+                    finish_text = goalFormUi.finishText.trim(),
+                )
+            }
         }
 
         fun deleteByActivityDbSync(activityDb: ActivityDb) {
