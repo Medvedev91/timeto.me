@@ -19,6 +19,11 @@ INSERT INTO GoalSq
 VALUES
 (?, ?, ?, ?, ?);
 
+deleteByActivityId:
+DELETE
+FROM GoalSq
+WHERE activity_id=?;
+
 truncate:
 DELETE
 FROM GoalSq;
