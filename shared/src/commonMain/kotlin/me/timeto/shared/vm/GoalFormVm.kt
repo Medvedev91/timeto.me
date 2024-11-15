@@ -3,20 +3,21 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.GoalDb
+import me.timeto.shared.models.GoalFormUi
 
 class GoalFormVm(
-    initGoalFormUi: ActivityFormSheetVm.GoalFormUi?,
+    initGoalFormUi: GoalFormUi?,
 ) : __Vm<GoalFormVm.State>() {
 
     data class State(
-        val id: Int?,
+        val isNew: Boolean,
         val seconds: Int,
         val period: GoalDb.Period?,
         val textFeatures: TextFeatures,
         val finishedText: String,
     ) {
 
-        val headerTitle: String = if (id != null) "Edit Goal" else "New Goal"
+        val headerTitle: String = if (isNew) "New Goal" else "Edit Goal"
         val headerDoneText = "Done"
 
         val periodTitle = "Period"
@@ -43,7 +44,7 @@ class GoalFormVm(
 
     override val state = MutableStateFlow(
         State(
-            id = initGoalFormUi?.id,
+            isNew = initGoalFormUi == null,
             seconds = initGoalFormUi?.seconds ?: (3 * 3_600),
             period = initGoalFormUi?.period,
             textFeatures = (initGoalFormUi?.note ?: "").textFeatures(),
@@ -82,7 +83,7 @@ class GoalFormVm(
     }
 
     fun buildFormUi(
-        onBuild: (ActivityFormSheetVm.GoalFormUi) -> Unit,
+        onBuild: (GoalFormUi) -> Unit,
     ) {
 
         val stateValue = state.value
@@ -98,8 +99,7 @@ class GoalFormVm(
             return
         }
 
-        val newGoalForm = ActivityFormSheetVm.GoalFormUi(
-            id = stateValue.id,
+        val newGoalForm = GoalFormUi(
             seconds = stateValue.seconds,
             period = stateValue.period,
             note = stateValue.note,

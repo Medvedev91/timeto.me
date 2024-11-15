@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.*
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.ActivityDb__Data
-import me.timeto.shared.db.GoalDb
+import me.timeto.shared.models.GoalFormUi
 
 class ActivityFormSheetVm(
     val activity: ActivityDb?
@@ -43,30 +43,6 @@ class ActivityFormSheetVm(
         val timerHintsCustomItems = activityData.timer_hints.custom_list.map { seconds ->
             TimerHintCustomItem(seconds = seconds, text = seconds.toTimerHintNote(isShort = false))
         }
-    }
-
-    class GoalFormUi(
-        val id: Int?, // null if new
-        val seconds: Int,
-        val period: GoalDb.Period,
-        val note: String,
-        val finishText: String,
-    ) {
-
-        companion object {
-
-            fun fromGoalDb(goalDb: GoalDb) = GoalFormUi(
-                id = goalDb.id,
-                seconds = goalDb.seconds,
-                period = goalDb.buildPeriod(),
-                note = goalDb.note,
-                finishText = goalDb.finish_text,
-            )
-        }
-
-        ///
-
-        val durationString: String = seconds.toTimerHintNote(isShort = false)
     }
 
     data class TimerHintCustomItem(

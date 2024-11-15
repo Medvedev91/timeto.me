@@ -1,13 +1,14 @@
 package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
+import me.timeto.shared.models.GoalFormUi
 
 class GoalsFormVm(
-    initGoalFormsUi: List<ActivityFormSheetVm.GoalFormUi>,
+    initGoalFormsUi: List<GoalFormUi>,
 ) : __Vm<GoalsFormVm.State>() {
 
     data class State(
-        val goalFormsUi: List<ActivityFormSheetVm.GoalFormUi>,
+        val goalFormsUi: List<GoalFormUi>,
     ) {
 
         val headerTitle = "Goals"
@@ -22,13 +23,13 @@ class GoalsFormVm(
         )
     )
 
-    fun addGoalFormUi(goalFormUi: ActivityFormSheetVm.GoalFormUi) {
+    fun addGoalFormUi(goalFormUi: GoalFormUi) {
         state.update { it.copy(goalFormsUi = it.goalFormsUi + goalFormUi) }
     }
 
     fun upGoalFormUi(
         idx: Int,
-        goalFormUi: ActivityFormSheetVm.GoalFormUi,
+        goalFormUi: GoalFormUi,
     ) {
         state.update {
             val newGoalFormsUi = it.goalFormsUi.toMutableList()
