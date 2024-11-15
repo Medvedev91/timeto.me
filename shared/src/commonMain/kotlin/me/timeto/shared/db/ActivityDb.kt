@@ -280,6 +280,7 @@ data class ActivityDb(
         )
     }
 
+    // todo use transaction
     suspend fun delete() = dbIo {
         if (isOther())
             throw UIException("It's impossible to delete \"other\" activity")
@@ -292,6 +293,7 @@ data class ActivityDb(
                 it.upActivity(other)
             }
 
+        GoalDb.deleteByActivityDbSync(this@ActivityDb)
         db.activityQueries.deleteById(id)
     }
 
