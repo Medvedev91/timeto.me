@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -41,7 +42,45 @@ fun GoalsFormFs(
             },
         )
 
-        SpacerW1()
+        VStack(
+            modifier = Modifier
+                .weight(1f)
+                .verticalScroll(state = scrollState),
+        ) {
+
+            MyListView__PaddingFirst()
+
+            val goalFormsUi = state.goalFormsUi
+            state.goalFormsUi.forEachIndexed { idx, formUi ->
+
+                MyListView__ItemView(
+                    isFirst = idx == 0,
+                    isLast = goalFormsUi.size -1 == idx,
+                    bgColor = c.fg,
+                    withTopDivider = idx > 0,
+                ) {
+
+                    MyListView__Item__Button(
+                        text = formUi.period.note(),
+                        rightView = {
+                            MyListView__Item__Button__RightText(
+                                text = formUi.durationString,
+                            )
+                        },
+                    ) {
+                        Fs.show { layer_ ->
+                            GoalFormFs(
+                                _layer = layer_,
+                                _initGoalFormUi = formUi,
+                                _onSelect = { newFormUi ->
+                                    vm.upGoalFormUi(idx = idx, goalFormUi = newFormUi)
+                                },
+                            )
+                        }
+                    }
+                }
+            }
+        }
 
         Fs__BottomBar {
 
