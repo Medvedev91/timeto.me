@@ -5,6 +5,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.*
+import me.timeto.shared.models.GoalFormUi
 
 class AppVm : __Vm<AppVm.State>() {
 
@@ -183,7 +184,7 @@ private suspend fun fillInitData() {
     val cPurple = colorsWheel.next()
 
     // @formatter:off
-    val goals = listOf<ActivityDb.Goal>()
+    val goals = listOf<GoalFormUi>()
     val defData = ActivityDb__Data.buildDefault()
     val aNormal = ActivityDb.TYPE.NORMAL
     val min5 = 5 * 60
