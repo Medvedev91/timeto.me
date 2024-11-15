@@ -94,7 +94,6 @@ data class ActivityDb(
                 )
                 db.activityQueries.insert(activitySQ)
                 val activityDb = activitySQ.toDb()
-                GoalDb.deleteByActivityDbSync(activityDb)
                 GoalDb.insertManySync(activityDb, goalFormsUi)
                 activityDb
             }
@@ -237,6 +236,7 @@ data class ActivityDb(
         note = null,
     )
 
+    // todo use transaction
     suspend fun upByIdWithValidation(
         name: String,
         emoji: String,
