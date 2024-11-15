@@ -18,8 +18,6 @@ data class ActivityDb(
     val color_rgba: String,
     val data_json: String,
     val keep_screen_on: Int,
-    // todo remove after migration
-    val goals_json: String,
     val pomodoro_timer: Int,
 ) : Backupable__Item {
 
@@ -67,7 +65,6 @@ data class ActivityDb(
             colorRgba: ColorRgba,
             data: ActivityDb__Data,
             keepScreenOn: Boolean,
-            goals: List<Goal>,
             pomodoroTimer: Int,
         ): ActivityDb = dbIo {
 
@@ -91,7 +88,6 @@ data class ActivityDb(
                     color_rgba = colorRgba.toRgbaString(),
                     data_json = data.toJString(),
                     keep_screen_on = keepScreenOn.toInt10(),
-                    goals_json = goals.map { it.buildJson() }.toJsonArray().toString(),
                     pomodoro_timer = pomodoroTimer,
                 )
                 db.activityQueries.insert(activitySQ)
@@ -202,8 +198,7 @@ data class ActivityDb(
                     data_json = j.getString(6),
                     emoji = j.getString(7),
                     keep_screen_on = j.getInt(8),
-                    goals_json = j.getString(9),
-                    pomodoro_timer = j.getInt(10),
+                    pomodoro_timer = j.getInt(9),
                 )
             )
         }
@@ -243,7 +238,6 @@ data class ActivityDb(
         data: ActivityDb__Data,
         keepScreenOn: Boolean,
         colorRgba: ColorRgba,
-        goals: List<Goal>,
         pomodoroTimer: Int,
     ) = dbIo {
         if (isOther())
@@ -259,7 +253,6 @@ data class ActivityDb(
             data_json = data.toJString(),
             emoji = validateEmoji(emoji, exActivity = this@ActivityDb),
             keep_screen_on = keepScreenOn.toInt10(),
-            goals_json = goals.map { it.buildJson() }.toJsonArray().toString(),
             pomodoro_timer = pomodoroTimer,
         )
     }
@@ -300,7 +293,7 @@ data class ActivityDb(
 
     override fun backupable__backup(): JsonElement = listOf(
         id, name, timer, sort, type_id, color_rgba,
-        data_json, emoji, keep_screen_on, goals_json,
+        data_json, emoji, keep_screen_on,
         pomodoro_timer,
     ).toJsonArray()
 
@@ -316,134 +309,19 @@ data class ActivityDb(
             data_json = j.getString(6),
             emoji = j.getString(7),
             keep_screen_on = j.getInt(8),
-            goals_json = j.getString(9),
-            pomodoro_timer = j.getInt(10),
+            pomodoro_timer = j.getInt(9),
         )
     }
 
     override fun backupable__delete() {
         db.activityQueries.deleteById(id)
     }
-
-    ///
-    ///
-
-    class Goal(
-        val seconds: Int,
-        val period: Period,
-    ) {
-
-        companion object {
-
-            private const val J_SECONDS = "seconds"
-            private const val J_PERIOD = "period"
-
-            fun parseJson(j: JsonElement): Goal {
-                val seconds: Int = j.jsonObject[J_SECONDS]!!.jsonPrimitive.int
-                val jPeriod: JsonElement = j.jsonObject[J_PERIOD]!!
-                return Goal(seconds, Period.parseJson(jPeriod))
-            }
-        }
-
-        fun buildJson(): JsonElement {
-            val map: Map<String, JsonElement> = mapOf(
-                J_SECONDS to JsonPrimitive(seconds),
-                J_PERIOD to period.buildJson(),
-            )
-            return JsonObject(map)
-        }
-
-        ///
-
-        sealed interface Period {
-
-            enum class TYPE(val id: Int) {
-                days_of_week(1)
-            }
-
-            companion object {
-
-                private const val J_TYPE = "type"
-                private const val J_DATA = "data"
-
-                fun parseJson(j: JsonElement): Period {
-                    val type: Int = j.jsonObject[J_TYPE]!!.jsonPrimitive.int
-                    val data: String = j.jsonObject[J_DATA]!!.jsonPrimitive.content
-                    return when (type) {
-                        TYPE.days_of_week.id -> DaysOfWeek.parse(data)
-                        else -> throw Exception()
-                    }
-                }
-            }
-
-            //
-            // Override
-
-            fun isToday(): Boolean
-
-            fun buildData(): String
-
-            fun assertValidation()
-
-            //
-            // Helpers
-
-            fun buildJson(): JsonObject {
-                assertValidation()
-                val type: Int = when (this) {
-                    is DaysOfWeek -> TYPE.days_of_week.id
-                }
-                val map: Map<String, JsonPrimitive> = mapOf(
-                    J_TYPE to JsonPrimitive(type),
-                    J_DATA to JsonPrimitive(buildData()),
-                )
-                return JsonObject(map)
-            }
-
-            //
-            // Sealed
-
-            class DaysOfWeek(
-                val weekDays: List<Int>,
-            ) : Period {
-
-                companion object {
-
-                    fun parse(data: String) = DaysOfWeek(
-                        weekDays = data.split(",").map { it.toInt() },
-                    )
-                }
-
-                override fun isToday() = UnixTime().dayOfWeek() in weekDays
-
-                override fun buildData(): String = weekDays.joinToString(",")
-
-                override fun assertValidation() {
-                    val strDays = weekDays.joinToString(",")
-
-                    if (weekDays.isEmpty())
-                        throw UIException("No days selected for the goal")
-
-                    if (weekDays.size != weekDays.distinct().size) {
-                        reportApi("ActivityModel.Goal.Period.DaysOfWeek not distinct $strDays")
-                        throw UIException("Error")
-                    }
-
-                    if (weekDays.any { it < 0 || it > 6 }) {
-                        reportApi("ActivityModel.Goal.Period.DaysOfWeek invalid $strDays")
-                        throw UIException("Error")
-                    }
-                }
-            }
-        }
-    }
 }
 
 private fun ActivitySQ.toDb() = ActivityDb(
     id = id, name = name, emoji = emoji, timer = timer, sort = sort,
     type_id = type_id, color_rgba = color_rgba, data_json = data_json,
-    keep_screen_on = keep_screen_on, goals_json = goals_json,
-    pomodoro_timer = pomodoro_timer,
+    keep_screen_on = keep_screen_on, pomodoro_timer = pomodoro_timer,
 )
 
 data class ActivityDb__Data(
