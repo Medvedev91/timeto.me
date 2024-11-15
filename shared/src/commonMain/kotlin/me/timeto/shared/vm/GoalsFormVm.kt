@@ -25,4 +25,15 @@ class GoalsFormVm(
     fun addGoalFormUi(goalFormUi: ActivityFormSheetVm.GoalFormUi) {
         state.update { it.copy(goalFormsUi = it.goalFormsUi + goalFormUi) }
     }
+
+    fun upGoalFormUi(
+        idx: Int,
+        goalFormUi: ActivityFormSheetVm.GoalFormUi,
+    ) {
+        state.update {
+            val newGoalFormsUi = it.goalFormsUi.toMutableList()
+            newGoalFormsUi[idx] = goalFormUi
+            it.copy(goalFormsUi = newGoalFormsUi)
+        }
+    }
 }
