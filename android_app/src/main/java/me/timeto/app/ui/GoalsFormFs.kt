@@ -9,14 +9,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.timeto.app.*
-import me.timeto.shared.vm.ActivityFormSheetVm
+import me.timeto.shared.models.GoalFormUi
 import me.timeto.shared.vm.GoalsFormVm
 
 @Composable
 fun GoalsFormFs(
     _layer: WrapperView.Layer,
-    _initGoalFormsUi: List<ActivityFormSheetVm.GoalFormUi>,
-    _onSelected: (List<ActivityFormSheetVm.GoalFormUi>) -> Unit,
+    _initGoalFormsUi: List<GoalFormUi>,
+    _onSelected: (List<GoalFormUi>) -> Unit,
 ) {
 
     val (vm, state) = rememberVm(_initGoalFormsUi) {
