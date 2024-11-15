@@ -10,7 +10,6 @@ CREATE TABLE ActivitySQ (
     color_rgba TEXT NOT NULL,
     data_json TEXT NOT NULL,
     keep_screen_on INTEGER AS Int NOT NULL,
-    goals_json TEXT NOT NULL,
     pomodoro_timer INTEGER AS Int NOT NULL
 );
 
@@ -44,7 +43,7 @@ upById:
 UPDATE ActivitySQ
 SET name=?, emoji=?, timer=?, sort=?, type_id=?,
     color_rgba=?, data_json=?, keep_screen_on=?,
-    goals_json=?, pomodoro_timer=?
+    pomodoro_timer=?
 WHERE id=?;
 
 upData:
