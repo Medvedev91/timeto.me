@@ -149,7 +149,7 @@ class ActivityFormSheetVm(
             val keepScreenOn = state.value.keepScreenOn
             val colorRgba = state.value.colorRgba
 
-            val goals = state.value.goals
+            val goalFormsUi = state.value.goalFormsUi
 
             val pomodoroTimer = state.value.pomodoroTimer
 
@@ -173,7 +173,7 @@ class ActivityFormSheetVm(
                     colorRgba = colorRgba,
                     data = activityData,
                     keepScreenOn = keepScreenOn,
-                    goals = goals,
+                    goalFormsUi = goalFormsUi,
                     pomodoroTimer = pomodoroTimer,
                 )
             }
