@@ -160,7 +160,7 @@ class ActivityFormSheetVm(
                     data = activityData,
                     keepScreenOn = keepScreenOn,
                     colorRgba = colorRgba,
-                    goals = goals,
+                    goalFormsUi = goalFormsUi,
                     pomodoroTimer = pomodoroTimer,
                 )
             } else {

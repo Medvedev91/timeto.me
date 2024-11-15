@@ -243,6 +243,7 @@ data class ActivityDb(
         data: ActivityDb__Data,
         keepScreenOn: Boolean,
         colorRgba: ColorRgba,
+        goalFormsUi: List<GoalFormUi>,
         pomodoroTimer: Int,
     ) = dbIo {
         if (isOther())
@@ -260,6 +261,9 @@ data class ActivityDb(
             keep_screen_on = keepScreenOn.toInt10(),
             pomodoro_timer = pomodoroTimer,
         )
+
+        GoalDb.deleteByActivityDbSync(this@ActivityDb)
+        GoalDb.insertManySync(this@ActivityDb, goalFormsUi)
     }
 
     suspend fun upData(data: ActivityDb__Data) = dbIo {
