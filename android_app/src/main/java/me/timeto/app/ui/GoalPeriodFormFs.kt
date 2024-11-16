@@ -86,6 +86,7 @@ fun GoalPeriodFormFs(
                 }
             }
 
+            /*
             MyListView__Padding__SectionSection()
 
             MyListView__ItemView(
@@ -103,6 +104,7 @@ fun GoalPeriodFormFs(
                     },
                 )
             }
+            */
         }
     }
 }

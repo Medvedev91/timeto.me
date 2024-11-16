@@ -75,6 +75,7 @@ struct GoalPeriodFormFs: View {
                         }
                     }
                     
+                    /*
                     MyListView__Padding__SectionSection()
                     
                     MyListView__ItemView(
@@ -91,6 +92,7 @@ struct GoalPeriodFormFs: View {
                             }
                         )
                     }
+                    */
                 }
             }
         }
