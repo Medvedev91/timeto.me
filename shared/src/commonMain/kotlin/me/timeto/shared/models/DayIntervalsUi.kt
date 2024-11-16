@@ -22,8 +22,7 @@ class DayIntervalsUi(
     ) {
 
         val ratio: Float = seconds.toFloat() / 86_400
-
-        fun timeFinish(): Int = timeStart + seconds
+        val timeFinish: Int = timeStart + seconds
     }
 
     enum class DAY_STRING_FORMAT {
@@ -81,7 +80,7 @@ class DayIntervalsUi(
                 val daySections = mutableListOf<IntervalUi>()
                 val dayIntervals = intervalsAsc.filter { it.id >= dayTimeStart && it.id < dayTimeFinish }
 
-                // Adding leading section
+                // Adding leading section. Relevant for the beginning of history.
                 if (firstInterval.id > dayTimeStart)
                     daySections.add(IntervalUi(null, dayTimeStart, firstInterval.id - dayTimeStart))
                 else {

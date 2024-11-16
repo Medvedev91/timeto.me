@@ -52,7 +52,7 @@ class HomeVm : __Vm<HomeVm.State>() {
                         val lastWithActivity = todayIntervalsUi.intervalsUi
                             .lastOrNull { it.activity != null }
                         if (lastWithActivity?.activity?.id == activityDb.id) {
-                            val timeFinish = lastWithActivity.timeFinish()
+                            val timeFinish = lastWithActivity.timeFinish
                             val now = time()
                             if (now < timeFinish)
                                 reportApi("MainActivity goal bad time $now $timeFinish")
