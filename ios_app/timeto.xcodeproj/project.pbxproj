@@ -69,7 +69,6 @@
 		318216E60DD4CA4153065416 /* utils_apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E58DC92CD5673A6B49E /* utils_apple.swift */; };
 		318216F271691CC07FC67AFC /* ChecklistNameDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318212FEA97CBD2AEC3AA1D6 /* ChecklistNameDialog.swift */; };
 		3182172EBDF607665AA6DBD2 /* ActivityTimerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318211757B7EE8E4805AD047 /* ActivityTimerSheet.swift */; };
-		3182178E6CDEEFEDCC11F8EA /* GoalPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E790D2C94A9CD07EF8E /* GoalPickerSheet.swift */; };
 		318217982A5F8106B497432F /* SheetDividerBg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821956E237470E838F18A0 /* SheetDividerBg.swift */; };
 		31821859FBE8390BA3346A0E /* EventTemplateFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821C3C168B3948A5636451 /* EventTemplateFormSheet.swift */; };
 		31821874203EAD4F021DAD0E /* AutoBackupIos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821D5928C18299586075F4 /* AutoBackupIos.swift */; };
@@ -232,7 +231,6 @@
 		31821E53EB27CE7F81AF0F69 /* DialogCloseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogCloseButton.swift; sourceTree = "<group>"; };
 		31821E54E02F361F1AD21375 /* SummarySheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummarySheet.swift; sourceTree = "<group>"; };
 		31821E58DC92CD5673A6B49E /* utils_apple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = utils_apple.swift; sourceTree = "<group>"; };
-		31821E790D2C94A9CD07EF8E /* GoalPickerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalPickerSheet.swift; sourceTree = "<group>"; };
 		31821ED2142F08DDD1E0CC75 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		31821F2108CAA3ADBA741879 /* WeekDaysFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekDaysFormView.swift; sourceTree = "<group>"; };
 		31821F29E288957ABB3DF794 /* TextFeaturesTimerFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFeaturesTimerFormView.swift; sourceTree = "<group>"; };
@@ -378,7 +376,6 @@
 				2CDEAB572C00E27600519C3D /* Fs.swift */,
 				2C4A5EE02CB7F71600340578 /* GoalFormFs.swift */,
 				2CAF3CE12CD0110200CC6DE5 /* GoalPeriodFormFs.swift */,
-				31821E790D2C94A9CD07EF8E /* GoalPickerSheet.swift */,
 				2C1531CF2CB566C300360615 /* GoalsFormFs.swift */,
 				31821ACA6C9306A2CD2016A0 /* HistoryView.swift */,
 				31821ED2142F08DDD1E0CC75 /* HomeView.swift */,
@@ -657,7 +654,6 @@
 				2CAF3CE22CD0110200CC6DE5 /* GoalPeriodFormFs.swift in Sources */,
 				3182172EBDF607665AA6DBD2 /* ActivityTimerSheet.swift in Sources */,
 				31821F9ADE8CC50422F28059 /* WeekDaysFormView.swift in Sources */,
-				3182178E6CDEEFEDCC11F8EA /* GoalPickerSheet.swift in Sources */,
 				31821D1716CFA24F74C1BE6C /* NoteFormSheet.swift in Sources */,
 				31821A31BFF9D29DD019E05D /* NoteSheet.swift in Sources */,
 				31821EE26161D262CC020E3D /* SummarySheet.swift in Sources */,
