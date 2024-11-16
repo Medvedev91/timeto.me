@@ -28,7 +28,7 @@ class GoalPeriodFormVm(
         State(
             selectedType = initPeriod?.type ?: GoalDb.Period.Type.daysOfWeek,
             daysOfWeek = if (initPeriod is GoalDb.Period.DaysOfWeek)
-                initPeriod.days.toSet() else setOf(0, 1, 2, 3, 4),
+                initPeriod.days.toSet() else setOf(0, 1, 2, 3, 4, 5, 6),
         )
     )
 
