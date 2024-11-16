@@ -69,13 +69,13 @@ class HomeVm : __Vm<HomeVm.State>() {
                         val goalTf: TextFeatures = goalDb.note.textFeatures()
 
                         GoalUi(
+                            activityDb = activityDb,
                             textLeft = prepGoalTextLeft(
                                 note = goalTf.textNoFeatures.takeIf { it.isNotBlank() } ?: activityName,
                                 secondsLeft = totalSeconds,
                             ),
                             textRight = textRight,
                             ratio = timeDone.toFloat() / goalDb.seconds.toFloat(),
-                            bgColor = activityDb.colorRgba,
                         )
                     }
             }
@@ -306,11 +306,13 @@ class HomeVm : __Vm<HomeVm.State>() {
     )
 
     class GoalUi(
+        val activityDb: ActivityDb,
         val textLeft: String,
         val textRight: String,
         val ratio: Float,
-        val bgColor: ColorRgba,
-    )
+    ) {
+        val bgColor: ColorRgba = activityDb.colorRgba
+    }
 
     class MainTask(
         val taskUi: TaskUi,
