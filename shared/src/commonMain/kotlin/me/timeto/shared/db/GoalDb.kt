@@ -8,8 +8,8 @@ import me.timeto.shared.UnixTime
 import me.timeto.shared.models.GoalFormUi
 
 data class GoalDb(
-    val id: Int,
     val activity_id: Int,
+    val sort: Int,
     val seconds: Int,
     val period_json: String,
     val note: String,
@@ -29,9 +29,10 @@ data class GoalDb(
             activityDb: ActivityDb,
             goalFormsUi: List<GoalFormUi>,
         ) {
-            goalFormsUi.forEach { goalFormUi ->
+            goalFormsUi.forEachIndexed { idx, goalFormUi ->
                 db.goalQueries.insert(
                     activity_id = activityDb.id,
+                    sort = idx,
                     seconds = goalFormUi.seconds,
                     period_json = goalFormUi.period.toJson().toString(),
                     note = goalFormUi.note.trim(),
@@ -139,8 +140,8 @@ data class GoalDb(
 }
 
 private fun GoalSq.toDb() = GoalDb(
-    id = id,
     activity_id = activity_id,
+    sort = sort,
     seconds = seconds,
     period_json = period_json,
     note = note,
