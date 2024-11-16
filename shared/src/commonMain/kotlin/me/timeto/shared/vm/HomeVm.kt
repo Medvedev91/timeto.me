@@ -5,10 +5,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import me.timeto.shared.*
 import me.timeto.shared.db.*
-import me.timeto.shared.models.TaskUi
-import me.timeto.shared.models.sortedUi
-import me.timeto.shared.models.DayIntervalsUi
-import me.timeto.shared.models.TimerDataUi
+import me.timeto.shared.models.*
 
 class HomeVm : __Vm<HomeVm.State>() {
 
@@ -69,6 +66,8 @@ class HomeVm : __Vm<HomeVm.State>() {
                         val goalTf: TextFeatures = goalDb.note.textFeatures()
 
                         GoalBarUi(
+                            goalDb = goalDb,
+                            goalTf = goalTf,
                             activityDb = activityDb,
                             textLeft = prepGoalTextLeft(
                                 note = goalTf.textNoFeatures.takeIf { it.isNotBlank() } ?: activityName,
@@ -306,12 +305,26 @@ class HomeVm : __Vm<HomeVm.State>() {
     )
 
     class GoalBarUi(
+        val goalDb: GoalDb,
+        val goalTf: TextFeatures,
         val activityDb: ActivityDb,
         val textLeft: String,
         val textRight: String,
         val ratio: Float,
     ) {
+
         val bgColor: ColorRgba = activityDb.colorRgba
+
+        fun startInterval() {
+            val timer: Int = goalTf.timer ?: (45 * 60)
+            launchExIo {
+                IntervalDb.addWithValidation(
+                    timer = timer,
+                    activity = activityDb,
+                    note = goalDb.note,
+                )
+            }
+        }
     }
 
     class MainTask(

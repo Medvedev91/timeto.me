@@ -356,7 +356,10 @@ fun HomeView() {
                                 .height(mtgCircleHeight)
                                 .fillMaxWidth()
                                 .clip(roundedShape)
-                                .background(c.homeFg),
+                                .background(c.homeFg)
+                                .clickable {
+                                    goalBarUi.startInterval()
+                                },
                         ) {
 
                             ZStack(
