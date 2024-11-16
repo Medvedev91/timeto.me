@@ -51,11 +51,11 @@ fun GoalsFormFs(
             MyListView__PaddingFirst()
 
             val goalFormsUi = state.goalFormsUi
-            state.goalFormsUi.forEachIndexed { idx, formUi ->
+            goalFormsUi.forEachIndexed { idx, formUi ->
 
                 MyListView__ItemView(
                     isFirst = idx == 0,
-                    isLast = goalFormsUi.size -1 == idx,
+                    isLast = (goalFormsUi.size - 1) == idx,
                     bgColor = c.fg,
                     withTopDivider = idx > 0,
                 ) {
