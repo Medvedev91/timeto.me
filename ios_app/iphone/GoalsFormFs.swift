@@ -5,7 +5,7 @@ struct GoalsFormFs: View {
     
     @State private var vm: GoalsFormVm
     @Binding private var isPresented: Bool
-    private let onSelected: ([ActivityFormSheetVm.GoalFormUi]) -> ()
+    private let onSelected: ([GoalFormUi]) -> ()
     
     @State private var sheetHeaderScroll = 0
     
@@ -13,8 +13,8 @@ struct GoalsFormFs: View {
 
     init(
         isPresented: Binding<Bool>,
-        initGoalFormsUi: [ActivityFormSheetVm.GoalFormUi],
-        onSelected: @escaping ([ActivityFormSheetVm.GoalFormUi]) -> ()
+        initGoalFormsUi: [GoalFormUi],
+        onSelected: @escaping ([GoalFormUi]) -> ()
     ) {
         _isPresented = isPresented
         self.onSelected = onSelected

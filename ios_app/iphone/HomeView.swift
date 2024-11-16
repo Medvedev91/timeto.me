@@ -286,8 +286,8 @@ struct HomeView: View {
                         }
 
                         ForEachIndexed(
-                            state.goalsUi,
-                            content: { idx, goalUi in
+                            state.goalBarsUi,
+                            content: { idx, goalBarUi in
 
                                 ZStack {
 
@@ -298,8 +298,8 @@ struct HomeView: View {
                                                 ZStack {
                                                 }
                                                 .frame(maxHeight: .infinity)
-                                                .frame(width: geometry.size.width * Double(goalUi.ratio))
-                                                .background(goalUi.bgColor.toColor())
+                                                .frame(width: geometry.size.width * Double(goalBarUi.ratio))
+                                                .background(goalBarUi.bgColor.toColor())
                                                 Spacer()
                                             }
                                         }
@@ -308,14 +308,14 @@ struct HomeView: View {
 
                                         HStack {
 
-                                            Text(goalUi.textLeft)
+                                            Text(goalBarUi.textLeft)
                                                 .padding(.leading, mtgCircleHPadding)
                                                 .foregroundColor(c.white)
                                                 .font(.system(size: mtgCircleFontSize, weight: mtgCircleFontWeight))
 
                                             Spacer()
 
-                                            Text(goalUi.textRight)
+                                            Text(goalBarUi.textRight)
                                                 .padding(.trailing, mtgCircleHPadding)
                                                 .foregroundColor(c.white)
                                                 .font(.system(size: mtgCircleFontSize, weight: mtgCircleFontWeight))
