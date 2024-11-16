@@ -4,6 +4,7 @@ import me.timeto.shared.*
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
 
+// todo rename smth with "day sections" or related
 class DayIntervalsUi(
     val unixDay: Int,
     val intervalsUi: List<IntervalUi>,
@@ -15,6 +16,7 @@ class DayIntervalsUi(
             "${UnixTime.byLocalDay(unixDay).dayOfMonth()}"
         else ""
 
+    // todo rename smth like "SectionUi"
     class IntervalUi(
         val intervalDb: IntervalDb?,
         val timeStart: Int,
