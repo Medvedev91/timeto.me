@@ -46,6 +46,7 @@ class HomeVm : __Vm<HomeVm.State>() {
                 activityDb.getGoalsDbCached()
                     .filter { it.buildPeriod().isToday() }
                     .map { goalDb ->
+
                         var totalSeconds: Int = todayIntervalsUi.intervalsUI
                             .sumOf { if (it.activity?.id == activityDb.id) it.seconds else 0 }
                         val lastWithActivity = todayIntervalsUi.intervalsUI
