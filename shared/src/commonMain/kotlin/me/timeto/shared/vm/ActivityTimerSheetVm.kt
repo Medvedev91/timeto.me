@@ -33,7 +33,7 @@ class ActivityTimerSheetVm(
     override val state: MutableStateFlow<State>
 
     init {
-        val note = when (timerContext) {
+        val note: String? = when (timerContext) {
             is TimerContext.Task -> timerContext.task.text
             is TimerContext.Interval -> timerContext.interval.note
             null -> null
