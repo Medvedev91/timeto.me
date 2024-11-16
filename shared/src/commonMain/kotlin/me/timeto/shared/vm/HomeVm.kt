@@ -65,9 +65,12 @@ class HomeVm : __Vm<HomeVm.State>() {
                         val timeLeft: Int = goalDb.seconds - timeDone
                         val textRight: String =
                             if (timeLeft > 0) timeLeft.toTimerHintNote(isShort = false) else goalDb.finish_text
+
+                        val goalTf: TextFeatures = goalDb.note.textFeatures()
+
                         GoalUi(
                             textLeft = prepGoalTextLeft(
-                                activityName = activityName,
+                                note = goalTf.textNoFeatures.takeIf { it.isNotBlank() } ?: activityName,
                                 secondsLeft = totalSeconds,
                             ),
                             textRight = textRight,
@@ -346,12 +349,12 @@ class HomeVm : __Vm<HomeVm.State>() {
 }
 
 private fun prepGoalTextLeft(
-    activityName: String,
+    note: String,
     secondsLeft: Int,
 ): String {
     if (secondsLeft == 0)
-        return activityName
+        return note
     val rem = secondsLeft % 60
     val secondsToUi = if (rem == 0) secondsLeft else (secondsLeft + (60 - rem))
-    return "$activityName ${secondsToUi.toTimerHintNote(isShort = false)}"
+    return "$note ${secondsToUi.toTimerHintNote(isShort = false)}"
 }
