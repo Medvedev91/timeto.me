@@ -87,7 +87,8 @@ class GoalFormVm(
     ) {
 
         val stateValue = state.value
-        val timer: Int? = stateValue.textFeatures.timer
+        val textFeatures = stateValue.textFeatures
+        val timer: Int? = textFeatures.timer
         if (timer == null) {
             showUiAlert("Timer on bar pressed not selected")
             return
@@ -102,7 +103,7 @@ class GoalFormVm(
         val newGoalForm = GoalFormUi(
             seconds = stateValue.seconds,
             period = stateValue.period,
-            note = stateValue.note,
+            note = textFeatures.textWithFeatures(),
             finishText = stateValue.finishedText
         )
         onBuild(newGoalForm)
