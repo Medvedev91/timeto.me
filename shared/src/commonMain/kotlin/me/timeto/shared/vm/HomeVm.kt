@@ -47,9 +47,9 @@ class HomeVm : __Vm<HomeVm.State>() {
                     .filter { it.buildPeriod().isToday() }
                     .map { goalDb ->
 
-                        var totalSeconds: Int = todayIntervalsUi.intervalsUI
+                        var totalSeconds: Int = todayIntervalsUi.intervalsUi
                             .sumOf { if (it.activity?.id == activityDb.id) it.seconds else 0 }
-                        val lastWithActivity = todayIntervalsUi.intervalsUI
+                        val lastWithActivity = todayIntervalsUi.intervalsUi
                             .lastOrNull { it.activity != null }
                         if (lastWithActivity?.activity?.id == activityDb.id) {
                             val timeFinish = lastWithActivity.timeFinish()

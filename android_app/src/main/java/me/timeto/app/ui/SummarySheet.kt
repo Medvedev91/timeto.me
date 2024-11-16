@@ -101,7 +101,7 @@ fun SummarySheet(
                             reverseLayout = true,
                         ) {
 
-                            state.daysIntervalsUi.forEach { dayIntervalsUI ->
+                            state.daysIntervalsUi.forEach { dayIntervalsUi ->
 
                                 item {
 
@@ -119,7 +119,7 @@ fun SummarySheet(
                                         ) {
 
                                             Text(
-                                                text = dayIntervalsUI.dayString,
+                                                text = dayIntervalsUi.dayString,
                                                 modifier = Modifier
                                                     .align(Alignment.BottomCenter),
                                                 color = c.textSecondary,
@@ -135,12 +135,12 @@ fun SummarySheet(
                                                 .padding(start = 4.dp, end = 4.dp)
                                                 .clip(roundedShape),
                                         ) {
-                                            dayIntervalsUI.intervalsUI.forEach { intervalUI ->
+                                            dayIntervalsUi.intervalsUi.forEach { intervalUi ->
                                                 ZStack(
                                                     modifier = Modifier
                                                         .fillMaxWidth()
-                                                        .weight(intervalUI.ratio)
-                                                        .background(intervalUI.activity?.colorRgba?.toColor() ?: c.sheetFg),
+                                                        .weight(intervalUi.ratio)
+                                                        .background(intervalUi.activity?.colorRgba?.toColor() ?: c.sheetFg),
                                                 )
                                             }
                                         }
