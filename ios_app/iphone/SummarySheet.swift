@@ -83,7 +83,7 @@ struct SummarySheet: View {
                                                         ZStack {}
                                                                 .frame(minWidth: 0, maxWidth: .infinity)
                                                                 .frame(height: CGFloat(intervalUi.ratio) * geometry.size.height)
-                                                                .background(intervalUi.activity?.colorRgba.toColor() ?? c.sheetFg)
+                                                                .background(intervalUi.activityDb?.colorRgba.toColor() ?? c.sheetFg)
                                                     }
                                                 }
                                                         .clipShape(roundedShape)
