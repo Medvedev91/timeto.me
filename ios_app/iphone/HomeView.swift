@@ -289,44 +289,52 @@ struct HomeView: View {
                             state.goalBarsUi,
                             content: { idx, goalBarUi in
 
-                                ZStack {
+                                Button(
+                                    action: {
+                                        goalBarUi.startInterval()
+                                    },
+                                    label: {
+                                        
+                                        ZStack {
 
-                                    ZStack {
+                                            ZStack {
 
-                                        GeometryReader { geometry in
-                                            VStack {
-                                                ZStack {
+                                                GeometryReader { geometry in
+                                                    VStack {
+                                                        ZStack {
+                                                        }
+                                                        .frame(maxHeight: .infinity)
+                                                        .frame(width: geometry.size.width * Double(goalBarUi.ratio))
+                                                        .background(goalBarUi.bgColor.toColor())
+                                                        Spacer()
+                                                    }
                                                 }
-                                                .frame(maxHeight: .infinity)
-                                                .frame(width: geometry.size.width * Double(goalBarUi.ratio))
-                                                .background(goalBarUi.bgColor.toColor())
-                                                Spacer()
+                                                .frame(width: .infinity)
+                                                .clipShape(roundedShape)
+
+                                                HStack {
+
+                                                    Text(goalBarUi.textLeft)
+                                                        .padding(.leading, mtgCircleHPadding)
+                                                        .foregroundColor(c.white)
+                                                        .font(.system(size: mtgCircleFontSize, weight: mtgCircleFontWeight))
+
+                                                    Spacer()
+
+                                                    Text(goalBarUi.textRight)
+                                                        .padding(.trailing, mtgCircleHPadding)
+                                                        .foregroundColor(c.white)
+                                                        .font(.system(size: mtgCircleFontSize, weight: mtgCircleFontWeight))
+                                                }
                                             }
+                                            .frame(height: mtgCircleHeight, alignment: .center)
+                                            .background(roundedShape.fill(c.homeFg))
+                                            .padding(.horizontal, H_PADDING)
                                         }
-                                        .frame(width: .infinity)
-                                        .clipShape(roundedShape)
-
-                                        HStack {
-
-                                            Text(goalBarUi.textLeft)
-                                                .padding(.leading, mtgCircleHPadding)
-                                                .foregroundColor(c.white)
-                                                .font(.system(size: mtgCircleFontSize, weight: mtgCircleFontWeight))
-
-                                            Spacer()
-
-                                            Text(goalBarUi.textRight)
-                                                .padding(.trailing, mtgCircleHPadding)
-                                                .foregroundColor(c.white)
-                                                .font(.system(size: mtgCircleFontSize, weight: mtgCircleFontWeight))
-                                        }
+                                        .frame(height: HomeView__MTG_ITEM_HEIGHT, alignment: .center)
+                                        .offset(y: 1)
                                     }
-                                    .frame(height: mtgCircleHeight, alignment: .center)
-                                    .background(roundedShape.fill(c.homeFg))
-                                    .padding(.horizontal, H_PADDING)
-                                }
-                                .frame(height: HomeView__MTG_ITEM_HEIGHT, alignment: .center)
-                                .offset(y: 1)
+                                )
                             }
                         )
 
