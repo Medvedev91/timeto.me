@@ -341,7 +341,7 @@ fun HomeView() {
                         SpacerW1()
                 }
 
-                state.goalsUi.forEach { goalUi ->
+                state.goalBarsUi.forEach { goalBarUi ->
 
                     HStack(
                         modifier = Modifier
@@ -362,14 +362,14 @@ fun HomeView() {
                             ZStack(
                                 modifier = Modifier
                                     .fillMaxHeight()
-                                    .fillMaxWidth(goalUi.ratio)
-                                    .background(goalUi.bgColor.toColor())
+                                    .fillMaxWidth(goalBarUi.ratio)
+                                    .background(goalBarUi.bgColor.toColor())
                                     .clip(roundedShape)
                                     .align(Alignment.CenterStart),
                             )
 
                             Text(
-                                text = goalUi.textLeft,
+                                text = goalBarUi.textLeft,
                                 modifier = Modifier
                                     .padding(start = mtgCircleHPadding, top = onePx)
                                     .align(Alignment.CenterStart),
@@ -380,7 +380,7 @@ fun HomeView() {
                             )
 
                             Text(
-                                text = goalUi.textRight,
+                                text = goalBarUi.textRight,
                                 modifier = Modifier
                                     .padding(end = mtgCircleHPadding, top = onePx)
                                     .align(Alignment.CenterEnd),

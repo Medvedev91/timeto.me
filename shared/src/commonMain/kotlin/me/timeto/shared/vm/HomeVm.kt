@@ -41,7 +41,7 @@ class HomeVm : __Vm<HomeVm.State>() {
         }
 
         // todo performance?
-        val goalsUi: List<GoalUi> = if (todayIntervalsUi == null)
+        val goalBarsUi: List<GoalBarUi> = if (todayIntervalsUi == null)
             listOf()
         else Cache.activitiesDbSorted
             .map { activityDb ->
@@ -68,7 +68,7 @@ class HomeVm : __Vm<HomeVm.State>() {
 
                         val goalTf: TextFeatures = goalDb.note.textFeatures()
 
-                        GoalUi(
+                        GoalBarUi(
                             activityDb = activityDb,
                             textLeft = prepGoalTextLeft(
                                 note = goalTf.textNoFeatures.takeIf { it.isNotBlank() } ?: activityName,
@@ -305,7 +305,7 @@ class HomeVm : __Vm<HomeVm.State>() {
         val isHighlighted: Boolean,
     )
 
-    class GoalUi(
+    class GoalBarUi(
         val activityDb: ActivityDb,
         val textLeft: String,
         val textRight: String,
