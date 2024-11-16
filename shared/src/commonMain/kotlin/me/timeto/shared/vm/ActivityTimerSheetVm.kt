@@ -84,16 +84,13 @@ class ActivityTimerSheetVm(
             activity: ActivityDb,
             timer: Int,
         ) {
-            val when_: Any = when (timerContext) {
-                is TimerContext.Task -> {
+            when (timerContext) {
+                is TimerContext.Task ->
                     timerContext.task.startInterval(timer, activity)
-                }
-                is TimerContext.Interval -> {
+                is TimerContext.Interval ->
                     IntervalDb.addWithValidation(timer, activity, timerContext.interval.note)
-                }
-                null -> {
+                null ->
                     activity.startInterval(timer)
-                }
             }
         }
     }
