@@ -40,6 +40,8 @@ class GoalFormVm(
         val timerDefaultMinutes: Int = (if (timer != null) (timer / 60) else 45)
 
         val finishedTitle = "Finished Emoji"
+
+        val deleteGoalText = "Delete Goal"
     }
 
     override val state = MutableStateFlow(
@@ -107,5 +109,19 @@ class GoalFormVm(
             finishText = stateValue.finishedText
         )
         onBuild(newGoalForm)
+    }
+
+    fun deleteConfirmation(
+        onConfirm: () -> Unit,
+    ) {
+        showUiConfirmation(
+            UIConfirmationData(
+                text = "Are you sure you want to delete the goal",
+                buttonText = "Delete",
+                isRed = true,
+            ) {
+                onConfirm()
+            }
+        )
     }
 }
