@@ -145,7 +145,7 @@ private fun prepActivitiesUI(
     val mapActivitySeconds: MutableMap<Int, Int> = mutableMapOf()
     daysIntervalsUi.forEach { dayIntervalsUi ->
         dayIntervalsUi.intervalsUi.forEach { sectionItem ->
-            val activity = sectionItem.activity
+            val activity = sectionItem.activityDb
             if (activity != null)
                 mapActivitySeconds.incOrSet(activity.id, sectionItem.seconds)
         }
