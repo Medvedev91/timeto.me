@@ -47,11 +47,22 @@ class HomeVm : __Vm<HomeVm.State>() {
                     .filter { it.buildPeriod().isToday() }
                     .map { goalDb ->
 
-                        var totalSeconds: Int = todayIntervalsUi.intervalsUi
-                            .sumOf { if (it.activity?.id == activityDb.id) it.seconds else 0 }
+                        val goalTf: TextFeatures = goalDb.note.textFeatures()
+
+                        val dayIntervalsUiForGoal = todayIntervalsUi.intervalsUi
+                            .filter { it.activityDb?.id == activityDb.id }
+                            .filter {
+                                // Goal without note is common for activity
+                                if (goalTf.textNoFeatures.isBlank()) true
+                                else goalDb.note == it.intervalDb?.note
+                            }
+                        var totalSeconds: Int = dayIntervalsUiForGoal.sumOf { it.seconds }
                         val lastWithActivity = todayIntervalsUi.intervalsUi
-                            .lastOrNull { it.activity != null }
-                        if (lastWithActivity?.activity?.id == activityDb.id) {
+                            .lastOrNull { it.activityDb != null }
+                        if (
+                            lastWithActivity != null &&
+                            lastWithActivity == dayIntervalsUiForGoal.lastOrNull()
+                        ) {
                             val timeFinish = lastWithActivity.timeFinish
                             val now = time()
                             if (now < timeFinish)
@@ -63,8 +74,6 @@ class HomeVm : __Vm<HomeVm.State>() {
                         val timeLeft: Int = goalDb.seconds - timeDone
                         val textRight: String =
                             if (timeLeft > 0) timeLeft.toTimerHintNote(isShort = false) else goalDb.finish_text
-
-                        val goalTf: TextFeatures = goalDb.note.textFeatures()
 
                         GoalBarUi(
                             goalDb = goalDb,
