@@ -38,6 +38,51 @@ struct GoalsFormFs: View {
                 }
             )
             
+            ScrollViewWithVListener(
+                showsIndicators: false,
+                vScroll: $sheetHeaderScroll
+            ) {
+                
+                VStack {
+                    
+                    MyListView__PaddingFirst()
+                    
+                    let goalFormsUi = state.goalFormsUi
+                    ForEachIndexed(goalFormsUi) { idx, formUi in
+                        
+                        MyListView__ItemView(
+                            isFirst: idx == 0,
+                            isLast: goalFormsUi.count - 1 == idx,
+                            bgColor: c.fg,
+                            withTopDivider: idx > 0
+                        ) {
+                            
+                            MyListView__Item__Button(
+                                text: formUi.period.note(),
+                                rightView: {
+                                    MyListView__Item__Button__RightText(
+                                        text: formUi.durationString
+                                    )
+                                }
+                            ) {
+                                fs.show { ip in
+                                    GoalFormFs(
+                                        isPresented: ip,
+                                        initGoalFormUi: formUi,
+                                        onSelect: { newFormUi in
+                                            vm.upGoalFormUi(idx: idx.toInt32(), goalFormUi: newFormUi)
+                                        },
+                                        onDelete: {
+                                            vm.deleteGoalFormUi(idx: idx.toInt32())
+                                        }
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
             Spacer()
             
             Fs__BottomBar {
@@ -52,7 +97,9 @@ struct GoalsFormFs: View {
                                     isPresented: fsGoalFormLayer,
                                     initGoalFormUi: nil,
                                     onSelect: { newGoalFormUi in
-                                    }
+                                        vm.addGoalFormUi(goalFormUi: newGoalFormUi)
+                                    },
+                                    onDelete: nil
                                 )
                             }
                         }

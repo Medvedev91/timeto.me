@@ -6,6 +6,7 @@ struct GoalFormFs: View {
     @State private var vm: GoalFormVm
     @Binding private var isPresented: Bool
     private let onSelect: (GoalFormUi) -> ()
+    private let onDelete: (() -> ())?
     
     @State private var fsHeaderScroll = 0
     
@@ -15,10 +16,12 @@ struct GoalFormFs: View {
     init(
         isPresented: Binding<Bool>,
         initGoalFormUi: GoalFormUi?,
-        onSelect: @escaping (GoalFormUi) -> ()
+        onSelect: @escaping (GoalFormUi) -> (),
+        onDelete: (() -> ())?
     ) {
         _isPresented = isPresented
         self.onSelect = onSelect
+        self.onDelete = onDelete
         vm = GoalFormVm(initGoalFormUi: initGoalFormUi)
     }
     
@@ -186,6 +189,25 @@ struct GoalFormFs: View {
                         bgColor: c.fg
                     ) { newTf in
                         vm.setTextFeatures(tf: newTf)
+                    }
+                    
+                    if let onDelete = onDelete {
+                        
+                        MyListView__Padding__SectionSection()
+                        
+                        MyListView__ItemView(
+                            isFirst: true,
+                            isLast: true
+                        ) {
+                            MyListView__ItemView__ActionView(
+                                text: state.deleteGoalText
+                            ) {
+                                vm.deleteConfirmation {
+                                    onDelete()
+                                    isPresented = false
+                                }
+                            }
+                        }
                     }
                 }
             }
