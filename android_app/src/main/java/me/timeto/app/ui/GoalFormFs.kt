@@ -17,6 +17,7 @@ fun GoalFormFs(
     _layer: WrapperView.Layer,
     _initGoalFormUi: GoalFormUi?,
     _onSelect: (GoalFormUi) -> Unit,
+    onDelete: (() -> Unit)?,
 ) {
 
     val (vm, state) = rememberVm(_initGoalFormUi) {
@@ -186,6 +187,25 @@ fun GoalFormFs(
                 bgColor = c.fg,
             ) {
                 vm.setTextFeatures(it)
+            }
+
+            if (onDelete != null) {
+
+                MyListView__Padding__SectionSection()
+
+                MyListView__ItemView(
+                    isFirst = true,
+                    isLast = true,
+                ) {
+                    MyListView__ItemView__ActionView(
+                        text = state.deleteGoalText,
+                    ) {
+                        vm.deleteConfirmation {
+                            onDelete()
+                            _layer.close()
+                        }
+                    }
+                }
             }
         }
     }
