@@ -61,9 +61,10 @@ class HomeVm : __Vm<HomeVm.State>() {
                             totalSeconds += (now - timeFinish)
                         }
 
-                        val timeDone = totalSeconds.limitMax(goalDb.seconds)
-                        val timeLeft = goalDb.seconds - timeDone
-                        val textRight = if (timeLeft > 0) timeLeft.toTimerHintNote(isShort = false) else "👍"
+                        val timeDone: Int = totalSeconds.limitMax(goalDb.seconds)
+                        val timeLeft: Int = goalDb.seconds - timeDone
+                        val textRight: String =
+                            if (timeLeft > 0) timeLeft.toTimerHintNote(isShort = false) else goalDb.finish_text
                         GoalUi(
                             textLeft = prepGoalTextLeft(
                                 activityName = activityName,
