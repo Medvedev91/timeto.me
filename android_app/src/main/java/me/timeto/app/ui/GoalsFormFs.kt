@@ -75,6 +75,9 @@ fun GoalsFormFs(
                                 _onSelect = { newFormUi ->
                                     vm.upGoalFormUi(idx = idx, goalFormUi = newFormUi)
                                 },
+                                onDelete = {
+                                    vm.deleteGoalFormUi(idx = idx)
+                                },
                             )
                         }
                     }
@@ -97,6 +100,7 @@ fun GoalsFormFs(
                             _onSelect = { newGoalFormUi ->
                                 vm.addGoalFormUi(newGoalFormUi)
                             },
+                            onDelete = null,
                         )
                     }
                 },
