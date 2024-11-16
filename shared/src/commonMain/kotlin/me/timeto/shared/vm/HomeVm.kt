@@ -70,10 +70,12 @@ class HomeVm : __Vm<HomeVm.State>() {
                             totalSeconds += (now - timeFinish)
                         }
 
-                        val timeDone: Int = totalSeconds.limitMax(goalDb.seconds)
-                        val timeLeft: Int = goalDb.seconds - timeDone
-                        val textRight: String =
-                            if (timeLeft > 0) timeLeft.toTimerHintNote(isShort = false) else goalDb.finish_text
+                        val timeLeft: Int = goalDb.seconds - totalSeconds
+                        val textRight: String = run {
+                            if (timeLeft > 0) timeLeft.toTimerHintNote(isShort = false)
+                            else if (timeLeft == 0) goalDb.finish_text
+                            else "+ ${(timeLeft * -1).toTimerHintNote(isShort = false)} ${goalDb.finish_text}"
+                        }
 
                         GoalBarUi(
                             goalDb = goalDb,
@@ -84,7 +86,7 @@ class HomeVm : __Vm<HomeVm.State>() {
                                 secondsLeft = totalSeconds,
                             ),
                             textRight = textRight,
-                            ratio = timeDone.toFloat() / goalDb.seconds.toFloat(),
+                            ratio = totalSeconds.limitMax(goalDb.seconds).toFloat() / goalDb.seconds.toFloat(),
                         )
                     }
             }
