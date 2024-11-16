@@ -236,7 +236,7 @@ private fun parseLocal(initText: String): TextFeatures {
         .find(textNoFeatures)?.let { match ->
             val id = match.groupValues[1].toInt()
             val activityDb: ActivityDb =
-                Cache.activitiesDbSorted.firstOrNull { it.id == id } ?: return@let null
+                Cache.getActivityDbByIdOrNull(id) ?: return@let null
             match.clean()
             return@let activityDb
         }
