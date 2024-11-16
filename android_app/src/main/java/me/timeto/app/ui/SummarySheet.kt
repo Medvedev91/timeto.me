@@ -140,7 +140,7 @@ fun SummarySheet(
                                                     modifier = Modifier
                                                         .fillMaxWidth()
                                                         .weight(intervalUi.ratio)
-                                                        .background(intervalUi.activity?.colorRgba?.toColor() ?: c.sheetFg),
+                                                        .background(intervalUi.activityDb?.colorRgba?.toColor() ?: c.sheetFg),
                                                 )
                                             }
                                         }
