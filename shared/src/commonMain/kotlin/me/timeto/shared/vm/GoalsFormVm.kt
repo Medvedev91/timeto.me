@@ -37,4 +37,12 @@ class GoalsFormVm(
             it.copy(goalFormsUi = newGoalFormsUi)
         }
     }
+
+    fun deleteGoalFormUi(idx: Int) {
+        state.update {
+            val newGoalFormsUi = it.goalFormsUi.toMutableList()
+            newGoalFormsUi.removeAt(idx)
+            it.copy(goalFormsUi = newGoalFormsUi)
+        }
+    }
 }
