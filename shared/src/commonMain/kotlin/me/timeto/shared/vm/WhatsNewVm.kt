@@ -31,6 +31,7 @@ class WhatsNewVm : __Vm<WhatsNewVm.State>() {
     companion object {
 
         fun prepHistoryItemsUi(): List<HistoryItemUi> = listOf(
+            HistoryItemUi(20044, "New Goals"),
             HistoryItemUi(19939, "Today on Home Screen", text = "Can be disabled in settings."),
             HistoryItemUi(19912, "New Pomodoro", buttonUi = HistoryItemUi.ButtonUi.pomodoro),
             HistoryItemUi(19870, "Calendar Templates"),
