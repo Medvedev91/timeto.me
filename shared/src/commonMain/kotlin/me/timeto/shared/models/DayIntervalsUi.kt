@@ -22,6 +22,7 @@ class DayIntervalsUi(
         val timeStart: Int,
         val seconds: Int,
     ) {
+        val intervalTf: TextFeatures = (intervalDb?.note ?: "").textFeatures()
         val activityDb: ActivityDb? = intervalDb?.getActivityDbCached()
         val ratio: Float = seconds.toFloat() / 86_400
         val timeFinish: Int = timeStart + seconds

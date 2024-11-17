@@ -54,7 +54,7 @@ class HomeVm : __Vm<HomeVm.State>() {
                             .filter {
                                 // Goal without note is common for activity
                                 if (goalTf.textNoFeatures.isBlank()) true
-                                else goalDb.note == it.intervalDb?.note
+                                else goalTf.textNoFeatures == it.intervalTf.textNoFeatures
                             }
                         var totalSeconds: Int = dayIntervalsUiForGoal.sumOf { it.seconds }
                         val lastWithActivity = todayIntervalsUi.intervalsUi
