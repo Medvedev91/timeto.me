@@ -18,6 +18,7 @@ object Backup {
 
             "activities" to ActivityDb.selectAllSorted().modelsToJsonArray(),
             "intervals" to IntervalDb.getDesc(intervalsLimit).modelsToJsonArray(),
+            "goals" to GoalDb.selectAll().modelsToJsonArray(),
             "task_folders" to TaskFolderDb.selectAllSorted().modelsToJsonArray(),
             "tasks" to TaskDb.getAsc().modelsToJsonArray(),
             "checklists" to ChecklistDb.getAsc().modelsToJsonArray(),
@@ -42,6 +43,7 @@ object Backup {
 
             db.taskQueries.truncate()
             db.taskFolderQueries.truncate()
+            db.goalQueries.truncate()
             db.intervalQueries.truncate()
             db.activityQueries.truncate()
             db.eventQueries.truncate()
@@ -55,6 +57,7 @@ object Backup {
 
             json.mapJsonArray("activities") { ActivityDb.backupable__restore(it) }
             json.mapJsonArray("intervals") { IntervalDb.backupable__restore(it) }
+            json.mapJsonArray("goals") { GoalDb.backupable__restore(it) }
             json.mapJsonArray("task_folders") { TaskFolderDb.backupable__restore(it) }
             json.mapJsonArray("tasks") { TaskDb.backupable__restore(it) }
             json.mapJsonArray("checklists") { ChecklistDb.backupable__restore(it) }

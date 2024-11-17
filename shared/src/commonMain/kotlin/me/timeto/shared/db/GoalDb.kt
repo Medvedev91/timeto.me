@@ -3,9 +3,9 @@ package me.timeto.shared.db
 import dbsq.GoalSq
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.*
-import me.timeto.shared.UIException
-import me.timeto.shared.UnixTime
+import me.timeto.shared.*
 import me.timeto.shared.models.GoalFormUi
+import me.timeto.shared.toJsonArray
 
 data class GoalDb(
     val id: Int,
@@ -15,9 +15,9 @@ data class GoalDb(
     val period_json: String,
     val note: String,
     val finish_text: String,
-) {
+) : Backupable__Item {
 
-    companion object {
+    companion object : Backupable__Holder {
 
         suspend fun selectAll(): List<GoalDb> = dbIo {
             db.goalQueries.selectAll().executeAsList().map { it.toDb() }
@@ -45,10 +45,58 @@ data class GoalDb(
         fun deleteByActivityDbSync(activityDb: ActivityDb) {
             db.goalQueries.deleteByActivityId(activity_id = activityDb.id)
         }
+
+        //
+        // Backupable Holder
+
+        override fun backupable__getAll(): List<Backupable__Item> =
+            db.goalQueries.selectAll().executeAsList().map { it.toDb() }
+
+        override fun backupable__restore(json: JsonElement) {
+            val j = json.jsonArray
+            db.goalQueries.insertSq(
+                GoalSq(
+                    id = j.getInt(0),
+                    activity_id = j.getInt(1),
+                    sort = j.getInt(2),
+                    seconds = j.getInt(3),
+                    period_json = j.getString(4),
+                    note = j.getString(5),
+                    finish_text = j.getString(6),
+                )
+            )
+        }
     }
 
     fun buildPeriod(): Period =
         Period.fromJson(Json.parseToJsonElement(period_json).jsonObject)
+
+    //
+    // Backupable Item
+
+    override fun backupable__getId(): String = id.toString()
+
+    override fun backupable__backup(): JsonElement = listOf(
+        id, activity_id, sort, seconds, period_json,
+        note, finish_text,
+    ).toJsonArray()
+
+    override fun backupable__update(json: JsonElement) {
+        val j = json.jsonArray
+        db.goalQueries.updateById(
+            id = j.getInt(0),
+            activity_id = j.getInt(1),
+            sort = j.getInt(2),
+            seconds = j.getInt(3),
+            period_json = j.getString(4),
+            note = j.getString(5),
+            finish_text = j.getString(6),
+        )
+    }
+
+    override fun backupable__delete() {
+        db.goalQueries.deleteById(id)
+    }
 
     ///
 

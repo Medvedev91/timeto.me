@@ -20,6 +20,21 @@ INSERT INTO GoalSq
 VALUES
 (?, ?, ?, ?, ?, ?);
 
+insertSq:
+INSERT INTO GoalSq
+VALUES ?;
+
+updateById:
+UPDATE GoalSq
+SET activity_id=?, sort=?, seconds=?, period_json=?,
+    note=?, finish_text=?
+WHERE id = ?;
+
+deleteById:
+DELETE
+FROM GoalSq
+WHERE id=?;
+
 deleteByActivityId:
 DELETE
 FROM GoalSq
