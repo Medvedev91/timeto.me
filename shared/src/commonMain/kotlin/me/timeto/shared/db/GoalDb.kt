@@ -8,6 +8,7 @@ import me.timeto.shared.UnixTime
 import me.timeto.shared.models.GoalFormUi
 
 data class GoalDb(
+    val id: Int,
     val activity_id: Int,
     val sort: Int,
     val seconds: Int,
@@ -140,6 +141,7 @@ data class GoalDb(
 }
 
 private fun GoalSq.toDb() = GoalDb(
+    id = id,
     activity_id = activity_id,
     sort = sort,
     seconds = seconds,

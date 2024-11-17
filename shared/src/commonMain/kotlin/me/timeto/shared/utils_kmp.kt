@@ -516,7 +516,7 @@ internal fun initKmp(
         TaskFolderSQAdapter = TaskFolderSQ.Adapter(IntColumnAdapter, IntColumnAdapter),
         TaskSQAdapter = TaskSQ.Adapter(IntColumnAdapter, IntColumnAdapter),
         NoteSQAdapter = NoteSQ.Adapter(IntColumnAdapter, IntColumnAdapter),
-        GoalSqAdapter = GoalSq.Adapter(IntColumnAdapter, IntColumnAdapter, IntColumnAdapter),
+        GoalSqAdapter = GoalSq.Adapter(IntColumnAdapter, IntColumnAdapter, IntColumnAdapter, IntColumnAdapter),
     )
     deviceData = deviceData_
     initKmpDeferred = defaultScope().async { Cache.init() }
