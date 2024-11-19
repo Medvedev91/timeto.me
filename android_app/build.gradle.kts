@@ -41,6 +41,12 @@ android {
         }
     }
 
+    // https://github.com/Medvedev91/timeto.me/issues/84
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
+    }
+
     // https://f-droid.org/en/docs/Reproducible_Builds/#png-crushcrunch
     packaging.resources { aaptOptions.cruncherEnabled = false }
 
