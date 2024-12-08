@@ -336,6 +336,7 @@
 		31821F4C09E35259CCF747CD /* iphone */ = {
 			isa = PBXGroup;
 			children = (
+				318218DEA96CCDED8A4C448C /* ui */,
 				318213DE3B58FA098A8DBAE7 /* ActivitiesTimerSheet.swift */,
 				318211488ABF627A2A9935A7 /* ActivityColorSheet.swift */,
 				31821794CA93E29D6889286D /* ActivityFormSheet.swift */,
@@ -412,7 +413,6 @@
 				31821AE61EE1FC22CCF8E753 /* TimerPickerSheet.swift */,
 				31821527096D1BDB0A35B178 /* TimetoAlert.swift */,
 				3182157C5CB954867515B4BA /* TriggersListIconsView.swift */,
-				318218DEA96CCDED8A4C448C /* ui */,
 				3182118D8EA3E0D889D4FDC3 /* utils_ios.swift */,
 				31821F2108CAA3ADBA741879 /* WeekDaysFormView.swift */,
 				31821DED445F739FAF7C55D0 /* WhatsNewFs.swift */,
