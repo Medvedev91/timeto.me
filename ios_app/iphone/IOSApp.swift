@@ -4,65 +4,65 @@ import shared
 
 @main
 struct IOSApp: App {
-
+    
     @State private var vm = AppVm()
-
+    
     @Environment(\.scenePhase) private var scenePhase
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @StateObject private var myInAppNotificationDelegate = MyInAppNotificationDelegate()
-
+    
     private let scheduledNotificationsDataPublisher: AnyPublisher<NSArray, Never> =
-        Utils_kmpKt.scheduledNotificationsDataFlow.toPublisher()
-
+    Utils_kmpKt.scheduledNotificationsDataFlow.toPublisher()
+    
     private let keepScreenOnDataPublisher: AnyPublisher<KotlinBoolean, Never> =
-        Utils_kmpKt.keepScreenOnStateFlow.toPublisher()
-
+    Utils_kmpKt.keepScreenOnStateFlow.toPublisher()
+    
     private let batteryManager = BatteryManager() // Keep the object
-
+    
     init() {
         Utils_kmp_iosKt.doInitKmpIos()
     }
-
+    
     var body: some Scene {
-
+        
         WindowGroup {
-
+            
             VMView(vm: vm) { state in
-
+                
                 if let backupMessage = state.backupMessage {
                     BackupMessageView(message: backupMessage)
                 } else if state.isAppReady {
-
+                    
                     HomeView()
-                    .attachFs()
-                    .attachTimetoSheet()
-                    .attachTimetoAlert()
-                    .attachAutoBackupIos()
-                    .attachNativeSheet()
-                    .onReceive(scheduledNotificationsDataPublisher) {
-                        let center = UNUserNotificationCenter.current()
-                        center.removeAllPendingNotificationRequests()
-                        let dataItems = $0 as! [ScheduledNotificationData]
-                        dataItems.forEach { data in
-                            schedulePush(data: data)
-                        }
-                    }
-                    .onReceive(keepScreenOnDataPublisher) { keepScreenOn in
-                        UIApplication.shared.isIdleTimerDisabled = (keepScreenOn == true)
-                    }
-                    .onAppear {
-                        /// Use together
-                        UNUserNotificationCenter
-                            .current()
-                            .requestAuthorization(options: [.badge, .sound, .alert]) { isGranted, _ in
-                                if isGranted {
-                                    // Without delay the first event does not handled. 50mls enough.
-                                    vm.onNotificationsPermissionReady(delayMls: Int64(500))
-                                }
+                        .attachFs()
+                        .attachTimetoSheet()
+                        .attachTimetoAlert()
+                        .attachAutoBackupIos()
+                        .attachNativeSheet()
+                        .onReceive(scheduledNotificationsDataPublisher) {
+                            let center = UNUserNotificationCenter.current()
+                            center.removeAllPendingNotificationRequests()
+                            let dataItems = $0 as! [ScheduledNotificationData]
+                            dataItems.forEach { data in
+                                schedulePush(data: data)
                             }
-                        UNUserNotificationCenter.current().delegate = myInAppNotificationDelegate
-                        ///
-                    }
+                        }
+                        .onReceive(keepScreenOnDataPublisher) { keepScreenOn in
+                            UIApplication.shared.isIdleTimerDisabled = (keepScreenOn == true)
+                        }
+                        .onAppear {
+                            /// Use together
+                            UNUserNotificationCenter
+                                .current()
+                                .requestAuthorization(options: [.badge, .sound, .alert]) { isGranted, _ in
+                                    if isGranted {
+                                        // Without delay the first event does not handled. 50mls enough.
+                                        vm.onNotificationsPermissionReady(delayMls: Int64(500))
+                                    }
+                                }
+                            UNUserNotificationCenter.current().delegate = myInAppNotificationDelegate
+                            ///
+                        }
                 }
             }
         }
@@ -79,9 +79,9 @@ struct IOSApp: App {
 }
 
 private struct BackupMessageView: View {
-
+    
     let message: String
-
+    
     var body: some View {
         VStack {
             HStack {
@@ -98,7 +98,7 @@ private struct BackupMessageView: View {
 
 
 private class BatteryManager {
-
+    
     init() {
         UIDevice.current.isBatteryMonitoringEnabled = true
         BatteryManager.upBatteryState()
@@ -116,23 +116,23 @@ private class BatteryManager {
             object: nil
         )
     }
-
+    
     @objc private func batteryStateDidChange(notification: Notification) {
         BatteryManager.upBatteryState()
     }
-
+    
     @objc private func batteryLevelDidChange(notification: Notification) {
         BatteryManager.upBatteryLevel()
     }
-
+    
     private static func isSimulator() -> Bool {
-        #if targetEnvironment(simulator)
+#if targetEnvironment(simulator)
         return true
-        #else
+#else
         return false
-        #endif
+#endif
     }
-
+    
     private static func upBatteryState() {
         let state = UIDevice.current.batteryState
         switch state {
@@ -140,7 +140,7 @@ private class BatteryManager {
             Utils_kmpKt.isBatteryChargingOrNull = false
             break
         case .charging,
-             .full:
+                .full:
             Utils_kmpKt.isBatteryChargingOrNull = true
             break
         case .unknown:
@@ -151,7 +151,7 @@ private class BatteryManager {
             break
         }
     }
-
+    
     private static func upBatteryLevel() {
         let level = Int(UIDevice.current.batteryLevel * 100)
         if level < 0 {
