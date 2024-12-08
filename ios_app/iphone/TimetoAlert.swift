@@ -145,7 +145,6 @@ extension View {
                 content()
                     .attachFs()
                     .attachTimetoAlert()
-                    .attachTimetoSheet()
                     .attachNativeSheet()
             }
         )

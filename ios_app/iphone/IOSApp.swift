@@ -35,7 +35,6 @@ struct IOSApp: App {
                     
                     HomeView()
                         .attachFs()
-                        .attachTimetoSheet()
                         .attachTimetoAlert()
                         .attachAutoBackupIos()
                         .attachNativeSheet()

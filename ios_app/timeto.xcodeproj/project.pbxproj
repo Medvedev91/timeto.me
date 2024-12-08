@@ -45,7 +45,6 @@
 		3182115F28EDF1E93DC73694 /* DividerBg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821D886EB022A0AD988588 /* DividerBg.swift */; };
 		318211C63D2C7A7AC48659E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821996D20B09EBA4F73C2B /* AppDelegate.swift */; };
 		318211D5994178629ED2FA09 /* W_TabTasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182161C9947F88C6A1D3B80 /* W_TabTasksView.swift */; };
-		31821286152F9C43BA2C4B7B /* TimetoSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318210AB991EB1C25EA1B565 /* TimetoSheet.swift */; };
 		318212C07B5351BA8C7C9671 /* PieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E01EC49E0964E5CB2F5 /* PieView.swift */; };
 		318212D55BBA074155F95EB0 /* TextField__VMState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821CC7588164B713321141 /* TextField__VMState.swift */; };
 		3182132BB1D4C32160A2EBCE /* TasksListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821AD0C2CE87BF5AE03022 /* TasksListView.swift */; };
@@ -167,7 +166,6 @@
 		2CDEAB572C00E27600519C3D /* Fs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fs.swift; sourceTree = "<group>"; };
 		2CDEAB592C00F90C00519C3D /* RepeatingFormPeriodFs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatingFormPeriodFs.swift; sourceTree = "<group>"; };
 		3182106A0DA4A0D8844CFA11 /* ShortcutFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutFormSheet.swift; sourceTree = "<group>"; };
-		318210AB991EB1C25EA1B565 /* TimetoSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetoSheet.swift; sourceTree = "<group>"; };
 		31821110E735778C88CDF821 /* Sheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
 		318211488ABF627A2A9935A7 /* ActivityColorSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityColorSheet.swift; sourceTree = "<group>"; };
 		318211757B7EE8E4805AD047 /* ActivityTimerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityTimerSheet.swift; sourceTree = "<group>"; };
@@ -413,7 +411,6 @@
 				3182151E7DF53609AA812ED1 /* TimerHintsView.swift */,
 				31821AE61EE1FC22CCF8E753 /* TimerPickerSheet.swift */,
 				31821527096D1BDB0A35B178 /* TimetoAlert.swift */,
-				318210AB991EB1C25EA1B565 /* TimetoSheet.swift */,
 				3182157C5CB954867515B4BA /* TriggersListIconsView.swift */,
 				318218DEA96CCDED8A4C448C /* ui */,
 				3182118D8EA3E0D889D4FDC3 /* utils_ios.swift */,
@@ -592,7 +589,6 @@
 				2C2E93F92905759100EAADBE /* TimerPickerSheet.swift in Sources */,
 				31821E89257A3F8032DE116A /* SummaryChartView.swift in Sources */,
 				2CB73DE3292FACE00053B2D6 /* SearchEmojiSheet.swift in Sources */,
-				31821286152F9C43BA2C4B7B /* TimetoSheet.swift in Sources */,
 				318212C07B5351BA8C7C9671 /* PieView.swift in Sources */,
 				318214BD0E34368A953B17CD /* MyListSwipeToActionItem.swift in Sources */,
 				2C0BE02F295751B70099AD7C /* PickerStateView.swift in Sources */,
