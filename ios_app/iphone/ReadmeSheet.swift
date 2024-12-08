@@ -18,11 +18,11 @@ extension Fs {
 }
 
 private struct ReadmeSheet: View {
-
+    
     @Binding private var isPresented: Bool
-
+    
     @State private var vm: ReadmeSheetVm
-
+    
     init(
         isPresented: Binding<Bool>,
         defaultItem: ReadmeSheetVm.DefaultItem
@@ -30,11 +30,11 @@ private struct ReadmeSheet: View {
         _isPresented = isPresented
         vm = ReadmeSheetVm(defaultItem: defaultItem)
     }
-
+    
     var body: some View {
-
+        
         VMView(vm: vm, stack: .VStack()) { state in
-
+            
             Fs__HeaderTitle(
                 title: state.title,
                 scrollToHeader: 0,
@@ -42,15 +42,15 @@ private struct ReadmeSheet: View {
                     isPresented = false
                 }
             )
-
+            
             TabView(tabUi: state.tabUi)
                 .id("tab_\(state.tabUi.id)")
-
+            
             DividerBg()
                 .padding(.horizontal, H_PADDING)
-
+            
             HStack {
-
+                
                 ForEachIndexed(state.tabsUi) { idx, tabUi in
                     TabBarItemView(
                         title: tabUi.title,
@@ -61,7 +61,7 @@ private struct ReadmeSheet: View {
                     )
                     Padding(horizontal: 6)
                 }
-
+                
                 Spacer()
             }
             .padding(.top, 9)
@@ -77,13 +77,13 @@ private struct ReadmeSheet: View {
 private let tabBarItemViewShape = RoundedRectangle(cornerRadius: 10, style: .continuous)
 
 private struct TabBarItemView: View {
-
+    
     let title: String
     let isActive: Bool
     let onClick: () -> Void
-
+    
     var body: some View {
-
+        
         Button(
             action: {
                 onClick()
@@ -102,21 +102,21 @@ private struct TabBarItemView: View {
 }
 
 private struct ImagePreviewsView: View {
-
+    
     let images: [String]
-
+    
     @EnvironmentObject private var fs: Fs
-
+    
     var body: some View {
-
+        
         ScrollView(.horizontal, showsIndicators: false) {
-
+            
             HStack {
-
+                
                 Padding(horizontal: 10)
-
+                
                 ForEachIndexed(images) { _, item in
-
+                    
                     Button(
                         action: {
                             fs.show { isSliderPresented in
@@ -134,12 +134,11 @@ private struct ImagePreviewsView: View {
                                 .shadow(color: c.text, radius: onePx)
                                 .frame(height: 350)
                                 .padding(.horizontal, 6)
-                                // Paddings for shadow radius
-                                .padding(.vertical, 4)
+                                .padding(.vertical, 4) // Paddings for shadow radius
                         }
                     )
                 }
-
+                
                 Padding(horizontal: 10)
             }
         }
@@ -148,22 +147,22 @@ private struct ImagePreviewsView: View {
 }
 
 private struct ImagesSlider: View {
-
+    
     @Binding var isPresented: Bool
     let images: [String]
-
+    
     var body: some View {
-
+        
         VStack {
-
+            
             ScrollView(.horizontal, showsIndicators: false) {
-
+                
                 HStack {
-
+                    
                     Padding(horizontal: 10)
-
+                    
                     ForEachIndexed(images) { _, item in
-
+                        
                         Image(item)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
@@ -171,14 +170,14 @@ private struct ImagesSlider: View {
                             .shadow(color: c.text, radius: onePx)
                             .frame(height: .infinity)
                             .padding(.horizontal, 12)
-                            // Paddings for shadow radius
+                        // Paddings for shadow radius
                             .padding(.vertical, 8)
                     }
-
+                    
                     Padding(horizontal: 10)
                 }
             }
-
+            
             HStack {
                 Spacer()
                 Button(
@@ -200,26 +199,26 @@ private struct ImagesSlider: View {
 }
 
 private struct TabView: View {
-
+    
     let tabUi: ReadmeSheetVm.TabUi
     @State private var scroll = 0
-
+    
     var body: some View {
-
+        
         VStack {
-
+            
             DividerBgScroll(scrollToHeader: scroll)
-
+            
             ScrollViewWithVListener(showsIndicators: true, vScroll: $scroll) {
-
+                
                 VStack {
-
+                    
                     let paragraphs = tabUi.paragraphs
-
+                    
                     ForEachIndexed(paragraphs) { idx, paragraph in
-
+                        
                         let prevP: ReadmeSheetVm.Paragraph? = (idx == 0) ? nil : paragraphs[idx - 1]
-
+                        
                         if let paragraph = paragraph as? ReadmeSheetVm.ParagraphTitle {
                             let paddingTop: CGFloat = {
                                 guard let prevP = prevP else {
@@ -300,7 +299,7 @@ private struct TabView: View {
                                 bgColor: c.fg,
                                 withTopDivider: false
                             )
-                                .padding(.top, 24)
+                            .padding(.top, 24)
                         } else if paragraph is ReadmeSheetVm.ParagraphTimerTypical {
                             ImagePreviewsView(
                                 images: [
@@ -417,7 +416,7 @@ private struct TabView: View {
                             fatalError()
                         }
                     }
-
+                    
                     ZStack {
                     }
                     .padding(.top, 28)
