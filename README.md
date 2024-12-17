@@ -206,7 +206,7 @@ We learned the timer, repeating tasks, and checklists. The most important points
 
 **You can already use the app!**
 
-Right now, try playing with the app: start a new activity, create repeating tasks, and checklists. You can rely on my
+Right now, try playing with the app: start a new activity, create repeating tasks, and creating checklists. You can rely on my
 examples.
 
 Then move on to advanced features.
@@ -255,7 +255,7 @@ timer and video starts.
 
 # Day Start Time
 
-Especially for night owls. You can set the time when repeating tasks will be added for the next day. Default 00:00.
+Especially useful for night owls. You can set the time when repeating tasks will be added for the next day. Default 00:00.
 
 # Conclusion
 
