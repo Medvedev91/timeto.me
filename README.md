@@ -116,7 +116,7 @@ like a schedule:
   <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_repeatings_2.jpg" width="200" />
 </p>
 
-**The most important, when I press it, it automatically starts a timer with the right activity.**
+**The most important thing, is that when I press the task, it automatically starts a timer with the right activity.**
 
 You can create not only everyday tasks. For example, watering a cactus once a week or paying for internet
 once a month, etc.
