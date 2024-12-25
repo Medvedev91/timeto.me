@@ -18,6 +18,8 @@
 		2C2E93F8290117E300EAADBE /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821ED2142F08DDD1E0CC75 /* HomeView.swift */; };
 		2C2E93F92905759100EAADBE /* TimerPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821AE61EE1FC22CCF8E753 /* TimerPickerSheet.swift */; };
 		2C2E93FA2905B57700EAADBE /* ScrollViewWithVListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318218D93C3456758557A6E0 /* ScrollViewWithVListener.swift */; };
+		2C3588312D1C04A60094D2F7 /* ui.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3588302D1C04A30094D2F7 /* ui.swift */; };
+		2C3588322D1C04A60094D2F7 /* ui.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3588302D1C04A30094D2F7 /* ui.swift */; };
 		2C4044982951FCA800A24521 /* emojis.json in Resources */ = {isa = PBXBuildFile; fileRef = 2C4044972951FCA800A24521 /* emojis.json */; };
 		2C4A5EE12CB7F71600340578 /* GoalFormFs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4A5EE02CB7F71600340578 /* GoalFormFs.swift */; };
 		2C4F676F2A5C743D00F6013B /* timer_font.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4F676E2A5C743D00F6013B /* timer_font.otf */; };
@@ -144,6 +146,7 @@
 		2C2C205C2B7A824A00D4B325 /* PrivacySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacySheet.swift; sourceTree = "<group>"; };
 		2C2C419628C4CF2A00923267 /* timeto (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "timeto (iOS).entitlements"; sourceTree = "<group>"; };
 		2C2C419728C4D83400923267 /* timeto--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "timeto--iOS--Info.plist"; sourceTree = "<group>"; };
+		2C3588302D1C04A30094D2F7 /* ui.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ui.swift; sourceTree = "<group>"; };
 		2C4044972951FCA800A24521 /* emojis.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = emojis.json; path = ../android_app/src/main/res/raw/emojis.json; sourceTree = "<group>"; };
 		2C4A5EE02CB7F71600340578 /* GoalFormFs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalFormFs.swift; sourceTree = "<group>"; };
 		2C4F676E2A5C743D00F6013B /* timer_font.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = timer_font.otf; path = ../android_app/src/main/res/font/timer_font.otf; sourceTree = "<group>"; };
@@ -308,8 +311,9 @@
 				2C82BF6328726E400041BCA3 /* watch WatchKit Extension */,
 				2C2C419628C4CF2A00923267 /* timeto (iOS).entitlements */,
 				2C2C419728C4D83400923267 /* timeto--iOS--Info.plist */,
-				31821E58DC92CD5673A6B49E /* utils_apple.swift */,
 				31821346E2128825E6DBB9F8 /* atm_apple.swift */,
+				2C3588302D1C04A30094D2F7 /* ui.swift */,
+				31821E58DC92CD5673A6B49E /* utils_apple.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -568,6 +572,7 @@
 				2C82BF6528726E400041BCA3 /* W_TabsView.swift in Sources */,
 				2C82BF6728726E400041BCA3 /* W_App.swift in Sources */,
 				318214C7567540476671C2FB /* W_TabTimerView.swift in Sources */,
+				2C3588312D1C04A60094D2F7 /* ui.swift in Sources */,
 				318211D5994178629ED2FA09 /* W_TabTasksView.swift in Sources */,
 				31821ED40BEA91336DBFE0B4 /* W_TickerDialog.swift in Sources */,
 				318216E60DD4CA4153065416 /* utils_apple.swift in Sources */,
@@ -646,6 +651,7 @@
 				318217982A5F8106B497432F /* SheetDividerBg.swift in Sources */,
 				31821CF86EDC2A5C5CB362E0 /* SheetDividerFg.swift in Sources */,
 				318214AB1E16DF8DC1C357F6 /* NativeSheet.swift in Sources */,
+				2C3588322D1C04A60094D2F7 /* ui.swift in Sources */,
 				318214AF2E65AEC255D6204D /* TimerHintsView.swift in Sources */,
 				2CAF3CE22CD0110200CC6DE5 /* GoalPeriodFormFs.swift in Sources */,
 				3182172EBDF607665AA6DBD2 /* ActivityTimerSheet.swift in Sources */,
