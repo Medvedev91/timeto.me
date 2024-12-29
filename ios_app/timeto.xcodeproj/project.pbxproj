@@ -20,6 +20,8 @@
 		2C2E93FA2905B57700EAADBE /* ScrollViewWithVListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318218D93C3456758557A6E0 /* ScrollViewWithVListener.swift */; };
 		2C3588312D1C04A60094D2F7 /* ui.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3588302D1C04A30094D2F7 /* ui.swift */; };
 		2C3588322D1C04A60094D2F7 /* ui.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3588302D1C04A30094D2F7 /* ui.swift */; };
+		2C37C4152D216A6500995840 /* VmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C37C4142D2169DE00995840 /* VmView.swift */; };
+		2C37C4162D216A6500995840 /* VmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C37C4142D2169DE00995840 /* VmView.swift */; };
 		2C4044982951FCA800A24521 /* emojis.json in Resources */ = {isa = PBXBuildFile; fileRef = 2C4044972951FCA800A24521 /* emojis.json */; };
 		2C4A5EE12CB7F71600340578 /* GoalFormFs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4A5EE02CB7F71600340578 /* GoalFormFs.swift */; };
 		2C4F676F2A5C743D00F6013B /* timer_font.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4F676E2A5C743D00F6013B /* timer_font.otf */; };
@@ -147,6 +149,7 @@
 		2C2C419628C4CF2A00923267 /* timeto (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "timeto (iOS).entitlements"; sourceTree = "<group>"; };
 		2C2C419728C4D83400923267 /* timeto--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "timeto--iOS--Info.plist"; sourceTree = "<group>"; };
 		2C3588302D1C04A30094D2F7 /* ui.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ui.swift; sourceTree = "<group>"; };
+		2C37C4142D2169DE00995840 /* VmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VmView.swift; sourceTree = "<group>"; };
 		2C4044972951FCA800A24521 /* emojis.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = emojis.json; path = ../android_app/src/main/res/raw/emojis.json; sourceTree = "<group>"; };
 		2C4A5EE02CB7F71600340578 /* GoalFormFs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalFormFs.swift; sourceTree = "<group>"; };
 		2C4F676E2A5C743D00F6013B /* timer_font.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = timer_font.otf; path = ../android_app/src/main/res/font/timer_font.otf; sourceTree = "<group>"; };
@@ -269,6 +272,7 @@
 		2C37C4132D2167FF00995840 /* common */ = {
 			isa = PBXGroup;
 			children = (
+				2C37C4142D2169DE00995840 /* VmView.swift */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -587,6 +591,7 @@
 				2C82BF7C287272520041BCA3 /* W_Delegate.swift in Sources */,
 				2C82BF6528726E400041BCA3 /* W_TabsView.swift in Sources */,
 				2C82BF6728726E400041BCA3 /* W_App.swift in Sources */,
+				2C37C4162D216A6500995840 /* VmView.swift in Sources */,
 				318214C7567540476671C2FB /* W_TabTimerView.swift in Sources */,
 				2C3588312D1C04A60094D2F7 /* ui.swift in Sources */,
 				318211D5994178629ED2FA09 /* W_TabTasksView.swift in Sources */,
@@ -609,6 +614,7 @@
 				31821A46712E80148E00481B /* MailView.swift in Sources */,
 				2C2E93F92905759100EAADBE /* TimerPickerSheet.swift in Sources */,
 				31821E89257A3F8032DE116A /* SummaryChartView.swift in Sources */,
+				2C37C4152D216A6500995840 /* VmView.swift in Sources */,
 				2CB73DE3292FACE00053B2D6 /* SearchEmojiSheet.swift in Sources */,
 				318212C07B5351BA8C7C9671 /* PieView.swift in Sources */,
 				318214BD0E34368A953B17CD /* MyListSwipeToActionItem.swift in Sources */,
