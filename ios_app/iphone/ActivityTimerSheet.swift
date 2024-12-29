@@ -136,7 +136,8 @@ private struct ActivityTimerSheet: View {
                 .safeAreaPadding(.bottom)
             }
         }
-        .presentationDetentsHeightIf16(400, withDragIndicator: true)
+        .presentationDetents([.height(400)])
+        .presentationDragIndicator(.visible)
         .ignoresSafeArea()
     }
 }
