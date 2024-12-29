@@ -2,15 +2,15 @@ import SwiftUI
 import shared
 
 struct TextFeaturesTimerFormView: View {
-
+    
     private let formUI: TextFeaturesTimerFormUi
     private let onChange: (TextFeatures) -> Void
-
+    
     private let bgColor: Color
-
+    
     @State private var isActivitySheetPresented = false
     @State private var isTimerSheetPresented = false
-
+    
     init(
         textFeatures: TextFeatures,
         bgColor: Color = c.sheetFg,
@@ -20,17 +20,17 @@ struct TextFeaturesTimerFormView: View {
         self.onChange = onChange
         formUI = TextFeaturesTimerFormUi(textFeatures: textFeatures)
     }
-
+    
     var body: some View {
-
+        
         VStack {
-
+            
             MyListView__ItemView(
                 isFirst: true,
                 isLast: false,
                 bgColor: bgColor
             ) {
-
+                
                 MyListView__Item__Button(
                     text: formUI.activityTitle,
                     rightView: {
@@ -51,14 +51,14 @@ struct TextFeaturesTimerFormView: View {
                     }
                 }
             }
-
+            
             MyListView__ItemView(
                 isFirst: false,
                 isLast: true,
                 bgColor: bgColor,
                 withTopDivider: true
             ) {
-
+                
                 MyListView__Item__Button(
                     text: formUI.timerTitle,
                     rightView: {
