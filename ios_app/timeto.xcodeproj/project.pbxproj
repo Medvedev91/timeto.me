@@ -266,6 +266,13 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		2C37C4132D2167FF00995840 /* common */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
 		2C4044962951FC5400A24521 /* resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -312,6 +319,7 @@
 			isa = PBXGroup;
 			children = (
 				31821F4C09E35259CCF747CD /* iphone */,
+				2C37C4132D2167FF00995840 /* common */,
 				2C95BA83280D74AA0027FC35 /* Products */,
 				2C4044962951FC5400A24521 /* resources */,
 				2C82BF5828726E3F0041BCA3 /* watch */,
