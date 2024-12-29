@@ -35,20 +35,14 @@ struct TextField__VMState: View {
         ZStack(alignment: .trailing) {
             
             ZStack {
-                if #available(iOS 16.0, *) {
-                    TextField(
-                        text: $text,
-                        prompt: Text(placeholder),
-                        axis: .vertical
-                    ) {
-                        // todo what is it?
-                    }
-                    .padding(.vertical, 8)
-                } else {
-                    // One line ;(
-                    TextField(text: $text, prompt: Text(placeholder)) {
-                    }
+                TextField(
+                    text: $text,
+                    prompt: Text(placeholder),
+                    axis: .vertical
+                ) {
+                    // todo what is it?
                 }
+                .padding(.vertical, 8)
             }
             .foregroundColor(c.text)
             ///
