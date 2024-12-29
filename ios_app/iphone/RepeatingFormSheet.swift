@@ -125,7 +125,8 @@ struct RepeatingsFormSheet: View {
                                     }
                                     
                                 )
-                                .presentationDetentsMediumIf16()
+                                .presentationDetents([.medium])
+                                .presentationDragIndicator(.visible)
                             }
                         }
                         

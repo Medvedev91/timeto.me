@@ -117,7 +117,8 @@ struct GoalFormFs: View {
                                         vm.setDuration(seconds: seconds.toInt32())
                                     }
                                 )
-                                .presentationDetentsMediumIf16()
+                                .presentationDetents([.medium])
+                                .presentationDragIndicator(.visible)
                             }
                         }
                     }
@@ -148,7 +149,8 @@ struct GoalFormFs: View {
                                 ) { seconds in
                                     vm.setTimer(timer: seconds.toInt32())
                                 }
-                                .presentationDetentsMediumIf16()
+                                .presentationDetents([.medium])
+                                .presentationDragIndicator(.visible)
                             }
                         }
                     }

@@ -178,7 +178,8 @@ struct HomeView: View {
                                         },
                                         onRemove: {}
                                     )
-                                    .presentationDetentsMediumIf16()
+                                    .presentationDetents([.medium])
+                                    .presentationDragIndicator(.visible)
                                 }
                             }
                         )

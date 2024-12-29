@@ -80,7 +80,8 @@ struct EventTemplateFormSheet: View {
                                         vm.setDaytime(daytimeUi: nil)
                                     }
                                 )
-                                .presentationDetentsMediumIf16()
+                                .presentationDetents([.medium])
+                                .presentationDragIndicator(.visible)
                             }
                         }
                     }

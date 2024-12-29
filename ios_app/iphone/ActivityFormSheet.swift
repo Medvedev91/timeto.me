@@ -325,7 +325,8 @@ struct ActivityFormSheet: View {
             ) { seconds in
                 vm.addCustomTimerHint(seconds: seconds.toInt32())
             }
-            .presentationDetentsMediumIf16()
+            .presentationDetents([.medium])
+            .presentationDragIndicator(.visible)
         }
         .sheetEnv(isPresented: $isEmojiSheetPresented) {
             SearchEmojiSheet(isPresented: $isEmojiSheetPresented) { emoji in

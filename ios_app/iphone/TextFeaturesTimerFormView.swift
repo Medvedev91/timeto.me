@@ -79,7 +79,8 @@ struct TextFeaturesTimerFormView: View {
                     ) { seconds in
                         onChange(formUI.setTimer(seconds: seconds.toInt32()))
                     }
-                    .presentationDetentsMediumIf16()
+                    .presentationDetents([.medium])
+                    .presentationDragIndicator(.visible)
                 }
             }
         }

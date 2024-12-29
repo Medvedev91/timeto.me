@@ -151,20 +151,6 @@ func vibrate(_ type: UINotificationFeedbackGenerator.FeedbackType) {
     UINotificationFeedbackGenerator().notificationOccurred(type)
 }
 
-extension View {
-
-    func presentationDetentsMediumIf16(
-        withDragIndicator: Bool = true
-    ) -> some View {
-        if #available(iOS 16.0, *) {
-            return self
-                .presentationDetents([.medium])
-                .presentationDragIndicator(withDragIndicator ? .visible : .hidden)
-        }
-        return self
-    }
-}
-
 ///
 /// Rounded corners https://stackoverflow.com/a/58606176/5169420
 
