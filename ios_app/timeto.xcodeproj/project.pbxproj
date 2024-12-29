@@ -22,6 +22,9 @@
 		2C37C4162D216A6500995840 /* VmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C37C4142D2169DE00995840 /* VmView.swift */; };
 		2C37C4182D216D0200995840 /* view_extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C37C4172D216CF500995840 /* view_extensions.swift */; };
 		2C37C4192D216D0200995840 /* view_extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C37C4172D216CF500995840 /* view_extensions.swift */; };
+		2C37C41B2D217F6E00995840 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C37C41A2D217F6C00995840 /* SettingsScreen.swift */; };
+		2C37C41F2D219C6900995840 /* SettingsNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C37C41E2D219C5400995840 /* SettingsNavigation.swift */; };
+		2C37C4212D219FA800995840 /* WhatsNewScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C37C4202D219FA200995840 /* WhatsNewScreen.swift */; };
 		2C4044982951FCA800A24521 /* emojis.json in Resources */ = {isa = PBXBuildFile; fileRef = 2C4044972951FCA800A24521 /* emojis.json */; };
 		2C4A5EE12CB7F71600340578 /* GoalFormFs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4A5EE02CB7F71600340578 /* GoalFormFs.swift */; };
 		2C4F676F2A5C743D00F6013B /* timer_font.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4F676E2A5C743D00F6013B /* timer_font.otf */; };
@@ -150,6 +153,9 @@
 		2C2C419728C4D83400923267 /* timeto--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "timeto--iOS--Info.plist"; sourceTree = "<group>"; };
 		2C37C4142D2169DE00995840 /* VmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VmView.swift; sourceTree = "<group>"; };
 		2C37C4172D216CF500995840 /* view_extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = view_extensions.swift; sourceTree = "<group>"; };
+		2C37C41A2D217F6C00995840 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
+		2C37C41E2D219C5400995840 /* SettingsNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNavigation.swift; sourceTree = "<group>"; };
+		2C37C4202D219FA200995840 /* WhatsNewScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewScreen.swift; sourceTree = "<group>"; };
 		2C4044972951FCA800A24521 /* emojis.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = emojis.json; path = ../android_app/src/main/res/raw/emojis.json; sourceTree = "<group>"; };
 		2C4A5EE02CB7F71600340578 /* GoalFormFs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalFormFs.swift; sourceTree = "<group>"; };
 		2C4F676E2A5C743D00F6013B /* timer_font.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = timer_font.otf; path = ../android_app/src/main/res/font/timer_font.otf; sourceTree = "<group>"; };
@@ -265,6 +271,8 @@
 		2C37C4122D21658600995840 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				2C37C41E2D219C5400995840 /* SettingsNavigation.swift */,
+				2C37C41A2D217F6C00995840 /* SettingsScreen.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -353,6 +361,7 @@
 				318218D93C3456758557A6E0 /* ScrollViewWithVListener.swift */,
 				31821BCB57EC030987E8342E /* SheetHeaderView.swift */,
 				318216D54CC429737780D176 /* TextFieldClearButtonView.swift */,
+				2C37C4202D219FA200995840 /* WhatsNewScreen.swift */,
 			);
 			path = ui;
 			sourceTree = "<group>";
@@ -611,6 +620,7 @@
 				318213463760A308F3C143A0 /* SettingsSheet.swift in Sources */,
 				31821D960D04B6FF21EA9918 /* ActivityFormSheet.swift in Sources */,
 				31821F3DCAF6792F0E78CEBD /* HistoryView.swift in Sources */,
+				2C37C4212D219FA800995840 /* WhatsNewScreen.swift in Sources */,
 				31821A46712E80148E00481B /* MailView.swift in Sources */,
 				2C2E93F92905759100EAADBE /* TimerPickerSheet.swift in Sources */,
 				31821E89257A3F8032DE116A /* SummaryChartView.swift in Sources */,
@@ -641,6 +651,7 @@
 				31821C4D6DA83EF42B805658 /* MySpacerSize.swift in Sources */,
 				3182144AE3592F81006F06BC /* TextFieldClearButtonView.swift in Sources */,
 				31821BCAB8BA795D691FADF8 /* MyListView.swift in Sources */,
+				2C37C41F2D219C6900995840 /* SettingsNavigation.swift in Sources */,
 				31821874203EAD4F021DAD0E /* AutoBackupIos.swift in Sources */,
 				3182135819CDEB457816DD2B /* SheetHeaderView.swift in Sources */,
 				318213F14285EE686F7C1AF4 /* RepeatingFormSheet.swift in Sources */,
@@ -671,6 +682,7 @@
 				31821C0BB92532D84114C15C /* TriggersListIconsView.swift in Sources */,
 				31821BCA3B405E8B0F65AB72 /* DividerFg.swift in Sources */,
 				318219F4F07E446C4B3C607D /* Divider.swift in Sources */,
+				2C37C41B2D217F6E00995840 /* SettingsScreen.swift in Sources */,
 				318217982A5F8106B497432F /* SheetDividerBg.swift in Sources */,
 				31821CF86EDC2A5C5CB362E0 /* SheetDividerFg.swift in Sources */,
 				318214AB1E16DF8DC1C357F6 /* NativeSheet.swift in Sources */,
