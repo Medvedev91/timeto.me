@@ -221,7 +221,8 @@ private struct ActivitiesTimerSheet: View {
                 .background(bgColor)
                 .listStyle(.plain)
                 .listSectionSeparatorTint(.clear)
-                .presentationDetentsHeightIf16(sheetHeight, withDragIndicator: true)
+                .presentationDetents([.height(sheetHeight)])
+                .presentationDragIndicator(.visible)
     }
 }
 
