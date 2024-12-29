@@ -153,18 +153,6 @@ func vibrate(_ type: UINotificationFeedbackGenerator.FeedbackType) {
 
 extension View {
 
-    func presentationDetentsHeightIf16(
-        _ height: CGFloat,
-        withDragIndicator: Bool = true
-    ) -> some View {
-        if #available(iOS 16.0, *) {
-            return self
-                .presentationDetents([.height(height)])
-                .presentationDragIndicator(withDragIndicator ? .visible : .hidden)
-        }
-        return self
-    }
-
     func presentationDetentsMediumIf16(
         withDragIndicator: Bool = true
     ) -> some View {
