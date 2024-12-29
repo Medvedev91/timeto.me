@@ -2,17 +2,17 @@ import SwiftUI
 import shared
 
 struct RepeatingsFormSheet: View {
-
+    
     @State private var vm: RepeatingFormSheetVm
     @Binding private var isPresented: Bool
     private let onSave: () -> ()
-
+    
     @State private var isDaytimeSheetPresented = false
     @State private var sheetHeaderScroll = 0
     @State private var isMoreSettingsVisible = false
-
+    
     @EnvironmentObject private var fs: Fs
-
+    
     init(
         isPresented: Binding<Bool>,
         editedRepeating: RepeatingDb?,
@@ -22,11 +22,11 @@ struct RepeatingsFormSheet: View {
         self.onSave = onSave
         vm = RepeatingFormSheetVm(repeating: editedRepeating)
     }
-
+    
     var body: some View {
-
+        
         VMView(vm: vm, stack: .VStack()) { state in
-
+            
             Fs__HeaderAction(
                 title: state.headerTitle,
                 actionText: state.headerDoneText,
@@ -41,21 +41,21 @@ struct RepeatingsFormSheet: View {
                     }
                 }
             )
-
+            
             ScrollViewWithVListener(showsIndicators: false, vScroll: $sheetHeaderScroll) {
-
+                
                 VStack {
-
+                    
                     VStack {
-
+                        
                         MyListView__PaddingFirst()
-
+                        
                         MyListView__ItemView(
                             isFirst: true,
                             isLast: true,
                             bgColor: c.fg
                         ) {
-
+                            
                             MyListView__ItemView__TextInputView(
                                 text: state.inputTextValue,
                                 placeholder: "Task",
@@ -64,15 +64,15 @@ struct RepeatingsFormSheet: View {
                                 vm.setTextValue(text: newValue)
                             }
                         }
-
+                        
                         MyListView__Padding__SectionSection()
-
+                        
                         MyListView__ItemView(
                             isFirst: true,
                             isLast: false,
                             bgColor: c.fg
                         ) {
-
+                            
                             MyListView__Item__Button(
                                 text: state.periodTitle,
                                 rightView: {
@@ -92,14 +92,14 @@ struct RepeatingsFormSheet: View {
                                 }
                             }
                         }
-
+                        
                         MyListView__ItemView(
                             isFirst: false,
                             isLast: true,
                             bgColor: c.fg,
                             withTopDivider: true
                         ) {
-
+                            
                             MyListView__Item__Button(
                                 text: state.daytimeHeader,
                                 rightView: {
@@ -123,23 +123,23 @@ struct RepeatingsFormSheet: View {
                                     onRemove: {
                                         vm.upDaytime(daytimeUi: nil)
                                     }
-
+                                    
                                 )
                                 .presentationDetentsMediumIf16()
                             }
                         }
-
+                        
                         MyListView__Padding__SectionSection()
-
+                        
                         TextFeaturesTimerFormView(
                             textFeatures: state.textFeatures,
                             bgColor: c.fg
                         ) { textFeatures in
                             vm.upTextFeatures(textFeatures: textFeatures)
                         }
-
+                        
                         HStack {
-
+                            
                             Button(
                                 action: {
                                     withAnimation {
@@ -154,21 +154,21 @@ struct RepeatingsFormSheet: View {
                             .padding(.top, 24)
                             .padding(.bottom, 24)
                             .padding(.leading, H_PADDING)
-
+                            
                             Spacer()
                         }
-
+                        
                         if isMoreSettingsVisible {
-
+                            
                             TextFeaturesTriggersFormView(
                                 textFeatures: state.textFeatures,
                                 bgColor: c.fg
                             ) { textFeatures in
                                 vm.upTextFeatures(textFeatures: textFeatures)
                             }
-
+                            
                             MyListView__Padding__SectionSection()
-
+                            
                             MyListView__ItemView(
                                 isFirst: true,
                                 isLast: true,
@@ -183,7 +183,7 @@ struct RepeatingsFormSheet: View {
                             }
                         }
                     }
-
+                    
                     ZStack {
                     }
                     .safeAreaPadding(.bottom)
@@ -192,4 +192,3 @@ struct RepeatingsFormSheet: View {
         }
     }
 }
-
