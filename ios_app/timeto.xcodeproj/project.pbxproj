@@ -259,6 +259,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C37C4122D21658600995840 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		2C4044962951FC5400A24521 /* resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -329,6 +336,7 @@
 		318218DEA96CCDED8A4C448C /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				2C37C4122D21658600995840 /* Settings */,
 				31821D7654D0C105DFC60DDD /* MyListView.swift */,
 				318218D93C3456758557A6E0 /* ScrollViewWithVListener.swift */,
 				31821BCB57EC030987E8342E /* SheetHeaderView.swift */,
