@@ -12,7 +12,7 @@ struct GoalFormFs: View {
     
     @EnvironmentObject private var fs: Fs
     @EnvironmentObject private var nativeSheet: NativeSheet
-
+    
     init(
         isPresented: Binding<Bool>,
         initGoalFormUi: GoalFormUi?,
@@ -64,9 +64,9 @@ struct GoalFormFs: View {
                             vm.setNote(note: newValue)
                         }
                     }
-                   
+                    
                     MyListView__Padding__SectionSection()
-
+                    
                     MyListView__ItemView(
                         isFirst: true,
                         isLast: false,
@@ -92,7 +92,7 @@ struct GoalFormFs: View {
                             }
                         }
                     }
-
+                    
                     MyListView__ItemView(
                         isFirst: false,
                         isLast: true,
@@ -123,13 +123,13 @@ struct GoalFormFs: View {
                     }
                     
                     MyListView__Padding__SectionSection()
-
+                    
                     MyListView__ItemView(
                         isFirst: true,
                         isLast: true,
                         bgColor: c.fg
                     ) {
-
+                        
                         MyListView__Item__Button(
                             text: state.timerTitle,
                             rightView: {
@@ -160,7 +160,7 @@ struct GoalFormFs: View {
                         isLast: true,
                         bgColor: c.fg
                     ) {
-
+                        
                         MyListView__Item__Button(
                             text: state.finishedTitle,
                             rightView: {
@@ -183,7 +183,7 @@ struct GoalFormFs: View {
                     }
                     
                     MyListView__Padding__SectionSection()
-
+                    
                     TextFeaturesTriggersFormView(
                         textFeatures: state.textFeatures,
                         bgColor: c.fg
