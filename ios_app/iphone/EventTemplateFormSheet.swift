@@ -2,15 +2,15 @@ import SwiftUI
 import shared
 
 struct EventTemplateFormSheet: View {
-
+    
     @Binding private var isPresented: Bool
-
+    
     @State private var vm: EventTemplateFormSheetVm
-
+    
     @EnvironmentObject private var nativeSheet: NativeSheet
-
+    
     @State private var scroll = 0
-
+    
     init(
         isPresented: Binding<Bool>,
         eventTemplateDb: EventTemplateDb?
@@ -20,26 +20,26 @@ struct EventTemplateFormSheet: View {
             eventTemplateDB: eventTemplateDb
         ))
     }
-
+    
     var body: some View {
-
+        
         VMView(vm: vm, stack: .VStack()) { state in
-
+            
             Sheet__HeaderView(
                 title: state.headerTitle,
                 scrollToHeader: scroll,
                 bgColor: c.sheetBg
             )
-
+            
             ScrollViewWithVListener(showsIndicators: false, vScroll: $scroll) {
-
+                
                 VStack {
-
+                    
                     MyListView__ItemView(
                         isFirst: true,
                         isLast: true
                     ) {
-
+                        
                         MyListView__ItemView__TextInputView(
                             text: state.inputTextValue,
                             placeholder: "Text",
@@ -48,14 +48,14 @@ struct EventTemplateFormSheet: View {
                         )
                     }
                     .padding(.top, 12)
-
+                    
                     MyListView__Padding__SectionSection()
-
+                    
                     MyListView__ItemView(
                         isFirst: true,
                         isLast: true
                     ) {
-
+                        
                         MyListView__ItemView__ButtonView(
                             text: state.daytimeTitle,
                             withArrow: true,
@@ -84,27 +84,27 @@ struct EventTemplateFormSheet: View {
                             }
                         }
                     }
-
+                    
                     MyListView__Padding__SectionSection()
-
+                    
                     TextFeaturesTimerFormView(
                         textFeatures: state.textFeatures
                     ) { textFeatures in
                         vm.setTextFeatures(newTextFeatures: textFeatures)
                     }
-
+                    
                     MyListView__Padding__SectionSection()
-
+                    
                     TextFeaturesTriggersFormView(
                         textFeatures: state.textFeatures
                     ) { textFeatures in
                         vm.setTextFeatures(newTextFeatures: textFeatures)
                     }
-
+                    
                     if let eventTemplate = vm.eventTemplateDB {
-
+                        
                         MyListView__Padding__SectionSection()
-
+                        
                         MyListView__ItemView(
                             isFirst: true,
                             isLast: true
@@ -120,7 +120,7 @@ struct EventTemplateFormSheet: View {
                     }
                 }
             }
-
+            
             Sheet__BottomViewDefault(
                 primaryText: state.doneText,
                 primaryAction: {
