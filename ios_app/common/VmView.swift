@@ -20,9 +20,6 @@ struct VmView<VmState: AnyObject, Vm: __Vm<VmState>, Content: View>: View {
             .onAppear {
                 swiftVm.vm.onAppear()
             }
-            .onDisappear {
-                swiftVm.vm.onDisappear()
-            }
             .onReceive(swiftVm.publisher) { newState in
                 swiftVm.state = newState
             }
@@ -42,5 +39,9 @@ private class SwiftVm<VmState: AnyObject, Vm: __Vm<VmState>>: ObservableObject {
         self.vm = vm
         self.state = vm.state.value as! VmState
         self.publisher = vm.state.toPublisher()
+    }
+    
+    deinit {
+        vm.onDisappear()
     }
 }
