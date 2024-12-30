@@ -14,7 +14,7 @@ struct VmView<VmState: AnyObject, Vm: __Vm<VmState>, Content: View>: View {
         _swiftVm = StateObject(wrappedValue: SwiftVm(buildVm: buildVm))
         self.content = content
     }
-
+    
     var body: some View {
         content(swiftVm.vm, swiftVm.vm.state.value as! VmState)
             .onAppear {
