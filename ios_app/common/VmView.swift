@@ -2,7 +2,11 @@ import SwiftUI
 import Combine
 import shared
 
-struct VmView<VmState: AnyObject, Vm: __Vm<VmState>, Content: View>: View {
+struct VmView<
+    VmState: AnyObject,
+    Vm: __Vm<VmState>,
+    Content: View
+>: View {
     
     @StateObject private var swiftVm: SwiftVm<VmState, Vm>
     @ViewBuilder private let content: (Vm, VmState) -> Content
@@ -28,7 +32,10 @@ struct VmView<VmState: AnyObject, Vm: __Vm<VmState>, Content: View>: View {
 
 ///
 
-private class SwiftVm<VmState: AnyObject, Vm: __Vm<VmState>>: ObservableObject {
+private class SwiftVm<
+    VmState: AnyObject,
+    Vm: __Vm<VmState>
+>: ObservableObject {
     
     let vm: Vm
     @Published var state: VmState
