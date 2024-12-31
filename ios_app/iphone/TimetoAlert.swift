@@ -146,6 +146,7 @@ extension View {
                     .attachFs()
                     .attachTimetoAlert()
                     .attachNativeSheet()
+                    .attachNavigation()
             }
         )
         .onChange(of: isPresented.wrappedValue) { newValue in
