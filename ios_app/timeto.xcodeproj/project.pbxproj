@@ -23,7 +23,6 @@
 		2C37C4182D216D0200995840 /* view_extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C37C4172D216CF500995840 /* view_extensions.swift */; };
 		2C37C4192D216D0200995840 /* view_extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C37C4172D216CF500995840 /* view_extensions.swift */; };
 		2C37C41B2D217F6E00995840 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C37C41A2D217F6C00995840 /* SettingsScreen.swift */; };
-		2C37C41F2D219C6900995840 /* SettingsNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C37C41E2D219C5400995840 /* SettingsNavigation.swift */; };
 		2C37C4212D219FA800995840 /* WhatsNewScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C37C4202D219FA200995840 /* WhatsNewScreen.swift */; };
 		2C37C4232D21A90D00995840 /* ReadmeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C37C4222D21A90700995840 /* ReadmeScreen.swift */; };
 		2C37C4252D22797500995840 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C37C4242D22797100995840 /* Navigation.swift */; };
@@ -156,7 +155,6 @@
 		2C37C4142D2169DE00995840 /* VmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VmView.swift; sourceTree = "<group>"; };
 		2C37C4172D216CF500995840 /* view_extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = view_extensions.swift; sourceTree = "<group>"; };
 		2C37C41A2D217F6C00995840 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
-		2C37C41E2D219C5400995840 /* SettingsNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNavigation.swift; sourceTree = "<group>"; };
 		2C37C4202D219FA200995840 /* WhatsNewScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewScreen.swift; sourceTree = "<group>"; };
 		2C37C4222D21A90700995840 /* ReadmeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadmeScreen.swift; sourceTree = "<group>"; };
 		2C37C4242D22797100995840 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
@@ -275,7 +273,6 @@
 		2C37C4122D21658600995840 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				2C37C41E2D219C5400995840 /* SettingsNavigation.swift */,
 				2C37C41A2D217F6C00995840 /* SettingsScreen.swift */,
 			);
 			path = Settings;
@@ -360,12 +357,12 @@
 		318218DEA96CCDED8A4C448C /* ui */ = {
 			isa = PBXGroup;
 			children = (
-				2C37C4242D22797100995840 /* Navigation.swift */,
 				2C37C4122D21658600995840 /* Settings */,
 				31821D7654D0C105DFC60DDD /* MyListView.swift */,
 				318218D93C3456758557A6E0 /* ScrollViewWithVListener.swift */,
 				31821BCB57EC030987E8342E /* SheetHeaderView.swift */,
 				318216D54CC429737780D176 /* TextFieldClearButtonView.swift */,
+				2C37C4242D22797100995840 /* Navigation.swift */,
 				2C37C4222D21A90700995840 /* ReadmeScreen.swift */,
 				2C37C4202D219FA200995840 /* WhatsNewScreen.swift */,
 			);
@@ -658,7 +655,6 @@
 				31821C4D6DA83EF42B805658 /* MySpacerSize.swift in Sources */,
 				3182144AE3592F81006F06BC /* TextFieldClearButtonView.swift in Sources */,
 				31821BCAB8BA795D691FADF8 /* MyListView.swift in Sources */,
-				2C37C41F2D219C6900995840 /* SettingsNavigation.swift in Sources */,
 				31821874203EAD4F021DAD0E /* AutoBackupIos.swift in Sources */,
 				3182135819CDEB457816DD2B /* SheetHeaderView.swift in Sources */,
 				318213F14285EE686F7C1AF4 /* RepeatingFormSheet.swift in Sources */,
