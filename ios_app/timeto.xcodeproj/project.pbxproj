@@ -25,6 +25,8 @@
 		2C37C41B2D217F6E00995840 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C37C41A2D217F6C00995840 /* SettingsScreen.swift */; };
 		2C37C41F2D219C6900995840 /* SettingsNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C37C41E2D219C5400995840 /* SettingsNavigation.swift */; };
 		2C37C4212D219FA800995840 /* WhatsNewScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C37C4202D219FA200995840 /* WhatsNewScreen.swift */; };
+		2C37C4232D21A90D00995840 /* ReadmeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C37C4222D21A90700995840 /* ReadmeScreen.swift */; };
+		2C37C4252D22797500995840 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C37C4242D22797100995840 /* Navigation.swift */; };
 		2C4044982951FCA800A24521 /* emojis.json in Resources */ = {isa = PBXBuildFile; fileRef = 2C4044972951FCA800A24521 /* emojis.json */; };
 		2C4A5EE12CB7F71600340578 /* GoalFormFs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4A5EE02CB7F71600340578 /* GoalFormFs.swift */; };
 		2C4F676F2A5C743D00F6013B /* timer_font.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4F676E2A5C743D00F6013B /* timer_font.otf */; };
@@ -156,6 +158,8 @@
 		2C37C41A2D217F6C00995840 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
 		2C37C41E2D219C5400995840 /* SettingsNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNavigation.swift; sourceTree = "<group>"; };
 		2C37C4202D219FA200995840 /* WhatsNewScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewScreen.swift; sourceTree = "<group>"; };
+		2C37C4222D21A90700995840 /* ReadmeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadmeScreen.swift; sourceTree = "<group>"; };
+		2C37C4242D22797100995840 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
 		2C4044972951FCA800A24521 /* emojis.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = emojis.json; path = ../android_app/src/main/res/raw/emojis.json; sourceTree = "<group>"; };
 		2C4A5EE02CB7F71600340578 /* GoalFormFs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalFormFs.swift; sourceTree = "<group>"; };
 		2C4F676E2A5C743D00F6013B /* timer_font.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = timer_font.otf; path = ../android_app/src/main/res/font/timer_font.otf; sourceTree = "<group>"; };
@@ -356,11 +360,13 @@
 		318218DEA96CCDED8A4C448C /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				2C37C4242D22797100995840 /* Navigation.swift */,
 				2C37C4122D21658600995840 /* Settings */,
 				31821D7654D0C105DFC60DDD /* MyListView.swift */,
 				318218D93C3456758557A6E0 /* ScrollViewWithVListener.swift */,
 				31821BCB57EC030987E8342E /* SheetHeaderView.swift */,
 				318216D54CC429737780D176 /* TextFieldClearButtonView.swift */,
+				2C37C4222D21A90700995840 /* ReadmeScreen.swift */,
 				2C37C4202D219FA200995840 /* WhatsNewScreen.swift */,
 			);
 			path = ui;
@@ -639,6 +645,7 @@
 				2C2E93FA2905B57700EAADBE /* ScrollViewWithVListener.swift in Sources */,
 				318213413EE00D5D8F3FA396 /* EventsListView.swift in Sources */,
 				31821AAC3BB87DE0D8E46697 /* TasksView.swift in Sources */,
+				2C37C4232D21A90D00995840 /* ReadmeScreen.swift in Sources */,
 				2C5BD61B2A6076F000AD4042 /* ReadmeSheet.swift in Sources */,
 				318210F0EEFF944CD87E3A98 /* TabReadmeView.swift in Sources */,
 				318213FBF8D67B0E8E5463AC /* RepeatingsListView.swift in Sources */,
@@ -700,6 +707,7 @@
 				31821C095E0F97CA52AE37ED /* atm_apple.swift in Sources */,
 				31821B177073394D777AED10 /* EventsCalendarDayView.swift in Sources */,
 				31821FB6B5CC8647F2541328 /* EventsListEventView.swift in Sources */,
+				2C37C4252D22797500995840 /* Navigation.swift in Sources */,
 				31821D335AF5DBA16579CA61 /* WhatsNewFs.swift in Sources */,
 				31821A76C3FAC481BE5C7C66 /* DaytimePickerSliderView.swift in Sources */,
 				31821BD87B0E4B9CC03CD31D /* ActivityPomodoroSheet.swift in Sources */,
