@@ -5,14 +5,9 @@ private let secondaryFontSize = 15.0
 
 struct WhatsNewScreen: View {
     
-    // todo remove
-    @EnvironmentObject private var fs: Fs
-    
-    @State private var vm = WhatsNewVm()
-    
     var body: some View {
         
-        VMView(vm: vm) { state in
+        VmView({ WhatsNewVm() }) { vm, state in
             
             List {
                 
@@ -50,17 +45,17 @@ struct WhatsNewScreen: View {
                             }
                             
                             if let buttonUi = historyItemUi.buttonUi {
-                                Text(buttonUi.text)
-                                    .padding(.top, 6)
-                                    .foregroundColor(.blue)
-                                    .textAlign(.leading)
-                                    .onTapGesture {
-                                        if (buttonUi == WhatsNewVm.HistoryItemUiButtonUi.pomodoro) {
-                                            fs.ReadmeSheet__open(defaultItem: .pomodoro)
-                                        } else {
-                                            fatalError()
-                                        }
+                                let navigationPath: NavigationPath = {
+                                    if (buttonUi == WhatsNewVm.HistoryItemUiButtonUi.pomodoro) {
+                                        return .readme(defaultItem: .pomodoro)
                                     }
+                                    fatalError()
+                                }()
+                                NavigationLink(navigationPath) {
+                                    Text(buttonUi.text)
+                                        .foregroundColor(.blue)
+                                }
+                                .padding(.top, 6)
                             }
                         }
                         .padding(.vertical, 2)
@@ -68,7 +63,7 @@ struct WhatsNewScreen: View {
                 }
                 .listSectionSeparator(.hidden, edges: .top)
             }
-            .listStyle(.plain)
+            .plainList()
             .navigationTitle(state.headerTitle)
         }
     }
