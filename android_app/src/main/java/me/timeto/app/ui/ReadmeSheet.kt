@@ -5,7 +5,7 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.key
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -61,173 +61,174 @@ private fun ReadmeSheet(
             },
         )
 
-        key(state.tabUi.id) {
+        val scrollState = rememberScrollState()
 
-            val scrollState = rememberScrollState()
+        LaunchedEffect(state.tabUi.id) {
+            scrollState.scrollTo(0)
+        }
 
-            DividerBgScroll(
-                scrollState = scrollState,
-                modifier = Modifier
-                    .padding(horizontal = H_PADDING),
-            )
+        DividerBgScroll(
+            scrollState = scrollState,
+            modifier = Modifier
+                .padding(horizontal = H_PADDING),
+        )
 
-            VStack(
-                modifier = Modifier
-                    .verticalScroll(state = scrollState)
-                    .weight(1f),
-            ) {
+        VStack(
+            modifier = Modifier
+                .verticalScroll(state = scrollState)
+                .weight(1f),
+        ) {
 
-                val paragraphs = state.tabUi.paragraphs
+            val paragraphs = state.tabUi.paragraphs
 
-                paragraphs.forEachIndexed { idx, paragraph ->
+            paragraphs.forEachIndexed { idx, paragraph ->
 
-                    val prevP: ReadmeSheetVm.Paragraph? =
-                        if (idx == 0) null else paragraphs[idx - 1]
+                val prevP: ReadmeSheetVm.Paragraph? =
+                    if (idx == 0) null else paragraphs[idx - 1]
 
-                    when (paragraph) {
+                when (paragraph) {
 
-                        is ReadmeSheetVm.Paragraph.Title -> PTitleView(paragraph.text, prevP)
+                    is ReadmeSheetVm.Paragraph.Title -> PTitleView(paragraph.text, prevP)
 
-                        is ReadmeSheetVm.Paragraph.Text -> PTextView(paragraph.text, prevP)
+                    is ReadmeSheetVm.Paragraph.Text -> PTextView(paragraph.text, prevP)
 
-                        is ReadmeSheetVm.Paragraph.TextHighlight -> PTextHighlightView(paragraph.text, prevP)
+                    is ReadmeSheetVm.Paragraph.TextHighlight -> PTextHighlightView(paragraph.text, prevP)
 
-                        is ReadmeSheetVm.Paragraph.AskAQuestion -> {
+                    is ReadmeSheetVm.Paragraph.AskAQuestion -> {
 
-                            MyListView__ItemView(
-                                isFirst = true,
-                                isLast = true,
-                                modifier = Modifier
-                                    .padding(top = 20.dp),
+                        MyListView__ItemView(
+                            isFirst = true,
+                            isLast = true,
+                            modifier = Modifier
+                                .padding(top = 20.dp),
+                        ) {
+                            MyListView__ItemView__ButtonView(
+                                text = paragraph.title,
+                                bgColor = c.fg,
                             ) {
-                                MyListView__ItemView__ButtonView(
-                                    text = paragraph.title,
-                                    bgColor = c.fg,
-                                ) {
-                                    askAQuestion(subject = paragraph.subject)
-                                }
+                                askAQuestion(subject = paragraph.subject)
                             }
                         }
+                    }
 
-                        is ReadmeSheetVm.Paragraph.TimerTypical -> {
-                            ImagePreviewsView(
-                                R.drawable.readme_timer_1,
-                            )
-                        }
+                    is ReadmeSheetVm.Paragraph.TimerTypical -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_timer_1,
+                        )
+                    }
 
-                        is ReadmeSheetVm.Paragraph.TimerMyActivities -> {
-                            ImagePreviewsView(
-                                R.drawable.readme_activities_1,
-                            )
-                        }
+                    is ReadmeSheetVm.Paragraph.TimerMyActivities -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_activities_1,
+                        )
+                    }
 
-                        is ReadmeSheetVm.Paragraph.TimerCharts -> {
-                            ImagePreviewsView(
-                                R.drawable.readme_chart_1,
-                                R.drawable.readme_chart_2,
-                                R.drawable.readme_chart_3,
-                            )
-                        }
+                    is ReadmeSheetVm.Paragraph.TimerCharts -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_chart_1,
+                            R.drawable.readme_chart_2,
+                            R.drawable.readme_chart_3,
+                        )
+                    }
 
-                        is ReadmeSheetVm.Paragraph.TimerPractice1 -> {
-                            ImagePreviewsView(
-                                R.drawable.readme_timer_practice_1,
-                                R.drawable.readme_timer_practice_2,
-                                R.drawable.readme_timer_practice_3,
-                                R.drawable.readme_timer_practice_4,
-                            )
-                        }
+                    is ReadmeSheetVm.Paragraph.TimerPractice1 -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_timer_practice_1,
+                            R.drawable.readme_timer_practice_2,
+                            R.drawable.readme_timer_practice_3,
+                            R.drawable.readme_timer_practice_4,
+                        )
+                    }
 
-                        is ReadmeSheetVm.Paragraph.TimerPractice2 -> {
-                            ImagePreviewsView(
-                                R.drawable.readme_timer_practice_5,
-                                R.drawable.readme_chart_2,
-                                R.drawable.readme_chart_3,
-                            )
-                        }
+                    is ReadmeSheetVm.Paragraph.TimerPractice2 -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_timer_practice_5,
+                            R.drawable.readme_chart_2,
+                            R.drawable.readme_chart_3,
+                        )
+                    }
 
-                        is ReadmeSheetVm.Paragraph.RepeatingsMy -> {
-                            ImagePreviewsView(
-                                R.drawable.readme_repeatings_1,
-                            )
-                        }
-
-
-                        is ReadmeSheetVm.Paragraph.RepeatingsToday -> {
-                            ImagePreviewsView(
-                                R.drawable.readme_repeatings_2,
-                            )
-                        }
+                    is ReadmeSheetVm.Paragraph.RepeatingsMy -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_repeatings_1,
+                        )
+                    }
 
 
-                        is ReadmeSheetVm.Paragraph.RepeatingsPractice1 -> {
-                            ImagePreviewsView(
-                                R.drawable.readme_repeating_practice_1,
-                                R.drawable.readme_repeating_practice_2,
-                                R.drawable.readme_repeating_practice_3,
-                            )
-                        }
+                    is ReadmeSheetVm.Paragraph.RepeatingsToday -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_repeatings_2,
+                        )
+                    }
 
 
-                        is ReadmeSheetVm.Paragraph.RepeatingsPractice2 -> {
-                            ImagePreviewsView(
-                                R.drawable.readme_repeating_practice_4,
-                                R.drawable.readme_repeating_practice_5,
-                            )
-                        }
+                    is ReadmeSheetVm.Paragraph.RepeatingsPractice1 -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_repeating_practice_1,
+                            R.drawable.readme_repeating_practice_2,
+                            R.drawable.readme_repeating_practice_3,
+                        )
+                    }
 
-                        is ReadmeSheetVm.Paragraph.ChecklistsExamples -> {
-                            ImagePreviewsView(
-                                R.drawable.readme_checklists_1,
-                                R.drawable.readme_checklists_2,
-                                R.drawable.readme_checklists_3,
-                            )
-                        }
 
-                        is ReadmeSheetVm.Paragraph.ChecklistsPractice1 -> {
-                            ImagePreviewsView(
-                                R.drawable.readme_checklists_practice_1,
-                                R.drawable.readme_checklists_practice_2,
-                                R.drawable.readme_checklists_practice_3,
-                                R.drawable.readme_checklists_practice_4,
-                                R.drawable.readme_checklists_practice_5,
-                                R.drawable.readme_checklists_practice_6,
-                                R.drawable.readme_checklists_practice_7,
-                            )
-                        }
+                    is ReadmeSheetVm.Paragraph.RepeatingsPractice2 -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_repeating_practice_4,
+                            R.drawable.readme_repeating_practice_5,
+                        )
+                    }
 
-                        is ReadmeSheetVm.Paragraph.ChecklistsPractice2 -> {
-                            ImagePreviewsView(
-                                R.drawable.readme_checklists_practice_8,
-                                R.drawable.readme_checklists_practice_9,
-                            )
-                        }
+                    is ReadmeSheetVm.Paragraph.ChecklistsExamples -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_checklists_1,
+                            R.drawable.readme_checklists_2,
+                            R.drawable.readme_checklists_3,
+                        )
+                    }
 
-                        is ReadmeSheetVm.Paragraph.PomodoroExamples -> {
-                            ImagePreviewsView(
-                                R.drawable.readme_pomodoro_1,
-                                R.drawable.readme_pomodoro_2,
-                                R.drawable.readme_pomodoro_3,
-                            )
-                        }
+                    is ReadmeSheetVm.Paragraph.ChecklistsPractice1 -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_checklists_practice_1,
+                            R.drawable.readme_checklists_practice_2,
+                            R.drawable.readme_checklists_practice_3,
+                            R.drawable.readme_checklists_practice_4,
+                            R.drawable.readme_checklists_practice_5,
+                            R.drawable.readme_checklists_practice_6,
+                            R.drawable.readme_checklists_practice_7,
+                        )
+                    }
 
-                        is ReadmeSheetVm.Paragraph.GoalsExamples -> {
-                            ImagePreviewsView(
-                                R.drawable.readme_goals_1,
-                            )
-                        }
+                    is ReadmeSheetVm.Paragraph.ChecklistsPractice2 -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_checklists_practice_8,
+                            R.drawable.readme_checklists_practice_9,
+                        )
+                    }
 
-                        is ReadmeSheetVm.Paragraph.CalendarExamples -> {
-                            ImagePreviewsView(
-                                R.drawable.readme_calendar_1,
-                                R.drawable.readme_calendar_2,
-                            )
-                        }
+                    is ReadmeSheetVm.Paragraph.PomodoroExamples -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_pomodoro_1,
+                            R.drawable.readme_pomodoro_2,
+                            R.drawable.readme_pomodoro_3,
+                        )
+                    }
+
+                    is ReadmeSheetVm.Paragraph.GoalsExamples -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_goals_1,
+                        )
+                    }
+
+                    is ReadmeSheetVm.Paragraph.CalendarExamples -> {
+                        ImagePreviewsView(
+                            R.drawable.readme_calendar_1,
+                            R.drawable.readme_calendar_2,
+                        )
                     }
                 }
-
-                Padding(vertical = 26.dp)
             }
+
+            Padding(vertical = 26.dp)
         }
 
         DividerBg(Modifier.padding(horizontal = H_PADDING))
