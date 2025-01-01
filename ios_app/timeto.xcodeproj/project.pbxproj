@@ -30,6 +30,7 @@
 		2C4A5EE12CB7F71600340578 /* GoalFormFs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4A5EE02CB7F71600340578 /* GoalFormFs.swift */; };
 		2C4F676F2A5C743D00F6013B /* timer_font.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4F676E2A5C743D00F6013B /* timer_font.otf */; };
 		2C5BD61B2A6076F000AD4042 /* ReadmeSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5BD61A2A6076F000AD4042 /* ReadmeSheet.swift */; };
+		2C6582902D25C7BF00DB8AD4 /* ReadmeImagesPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C65828F2D25C7AA00DB8AD4 /* ReadmeImagesPreview.swift */; };
 		2C672A102B74CC01002BC21C /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C672A0F2B74CC01002BC21C /* EventsView.swift */; };
 		2C672A122B74CF76002BC21C /* EventsCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C672A112B74CF76002BC21C /* EventsCalendarView.swift */; };
 		2C82BF5A28726E400041BCA3 /* WAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C82BF5928726E400041BCA3 /* WAssets.xcassets */; };
@@ -162,6 +163,7 @@
 		2C4A5EE02CB7F71600340578 /* GoalFormFs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalFormFs.swift; sourceTree = "<group>"; };
 		2C4F676E2A5C743D00F6013B /* timer_font.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = timer_font.otf; path = ../android_app/src/main/res/font/timer_font.otf; sourceTree = "<group>"; };
 		2C5BD61A2A6076F000AD4042 /* ReadmeSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadmeSheet.swift; sourceTree = "<group>"; };
+		2C65828F2D25C7AA00DB8AD4 /* ReadmeImagesPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadmeImagesPreview.swift; sourceTree = "<group>"; };
 		2C672A0F2B74CC01002BC21C /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsView.swift; sourceTree = "<group>"; };
 		2C672A112B74CF76002BC21C /* EventsCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsCalendarView.swift; sourceTree = "<group>"; };
 		2C82BF5728726E3F0041BCA3 /* timeto.me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = timeto.me.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -300,6 +302,7 @@
 		2C65828E2D25C69900DB8AD4 /* Readme */ = {
 			isa = PBXGroup;
 			children = (
+				2C65828F2D25C7AA00DB8AD4 /* ReadmeImagesPreview.swift */,
 				2C37C4222D21A90700995840 /* ReadmeScreen.swift */,
 			);
 			path = Readme;
@@ -662,6 +665,7 @@
 				318210E102D112C2860ADF9F /* DialogCloseButton.swift in Sources */,
 				31821C4D6DA83EF42B805658 /* MySpacerSize.swift in Sources */,
 				3182144AE3592F81006F06BC /* TextFieldClearButtonView.swift in Sources */,
+				2C6582902D25C7BF00DB8AD4 /* ReadmeImagesPreview.swift in Sources */,
 				31821BCAB8BA795D691FADF8 /* MyListView.swift in Sources */,
 				31821874203EAD4F021DAD0E /* AutoBackupIos.swift in Sources */,
 				3182135819CDEB457816DD2B /* SheetHeaderView.swift in Sources */,
