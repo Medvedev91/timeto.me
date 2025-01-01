@@ -53,102 +53,6 @@ private struct ReadmeScreenInner: View {
 
 ///
 
-private struct ImagePreviewsView: View {
-    
-    let images: [String]
-    
-    @EnvironmentObject private var fs: Fs
-    
-    var body: some View {
-        
-        ScrollView(.horizontal, showsIndicators: false) {
-            
-            HStack {
-                
-                Padding(horizontal: 10)
-                
-                ForEach(images, id: \.self) { item in
-                    
-                    Button(
-                        action: {
-                            fs.show { isSliderPresented in
-                                ImagesSlider(
-                                    isPresented: isSliderPresented,
-                                    images: images
-                                )
-                            }
-                        },
-                        label: {
-                            Image(item)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .cornerRadius(16)
-                                .shadow(color: .primary, radius: onePx)
-                                .frame(height: 350)
-                                .padding(.horizontal, 6)
-                                .padding(.vertical, 4) // Paddings for shadow radius
-                        }
-                    )
-                }
-                
-                Padding(horizontal: 10)
-            }
-        }
-        .padding(.top, 20)
-    }
-}
-
-private struct ImagesSlider: View {
-    
-    @Binding var isPresented: Bool
-    let images: [String]
-    
-    var body: some View {
-        
-        VStack {
-            
-            ScrollView(.horizontal, showsIndicators: false) {
-                
-                HStack {
-                    
-                    Padding(horizontal: 10)
-                    
-                    ForEach(images, id: \.self) { item in
-                        
-                        Image(item)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .cornerRadius(16)
-                            .shadow(color: .primary, radius: onePx)
-                            .frame(height: .infinity)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 8) // Paddings for shadow radius
-                    }
-                    
-                    Padding(horizontal: 10)
-                }
-            }
-            
-            HStack {
-                Spacer()
-                Button(
-                    action: {
-                        isPresented = false
-                    },
-                    label: {
-                        Text("close")
-                            .foregroundColor(.primary)
-                    }
-                )
-                .padding(.top, 12)
-                .padding(.bottom, 12)
-                .padding(.trailing, 36)
-            }
-        }
-        .safeAreaPadding(.vertical)
-    }
-}
-
 private struct TabView: View {
     
     let tabUi: ReadmeSheetVm.TabUi
@@ -247,19 +151,19 @@ private struct TabView: View {
                         )
                         .padding(.top, 24)
                     } else if paragraph is ReadmeSheetVm.ParagraphTimerTypical {
-                        ImagePreviewsView(
+                        ReadmeImagesPreview(
                             images: [
                                 "readme_timer_1"
                             ]
                         )
                     } else if paragraph is ReadmeSheetVm.ParagraphTimerMyActivities {
-                        ImagePreviewsView(
+                        ReadmeImagesPreview(
                             images: [
                                 "readme_activities_1"
                             ]
                         )
                     } else if paragraph is ReadmeSheetVm.ParagraphTimerCharts {
-                        ImagePreviewsView(
+                        ReadmeImagesPreview(
                             images: [
                                 "readme_chart_1",
                                 "readme_chart_2",
@@ -267,7 +171,7 @@ private struct TabView: View {
                             ]
                         )
                     } else if paragraph is ReadmeSheetVm.ParagraphTimerPractice1 {
-                        ImagePreviewsView(
+                        ReadmeImagesPreview(
                             images: [
                                 "readme_timer_practice_1",
                                 "readme_timer_practice_2",
@@ -276,7 +180,7 @@ private struct TabView: View {
                             ]
                         )
                     } else if paragraph is ReadmeSheetVm.ParagraphTimerPractice2 {
-                        ImagePreviewsView(
+                        ReadmeImagesPreview(
                             images: [
                                 "readme_timer_practice_5",
                                 "readme_chart_2",
@@ -284,19 +188,19 @@ private struct TabView: View {
                             ]
                         )
                     } else if paragraph is ReadmeSheetVm.ParagraphRepeatingsMy {
-                        ImagePreviewsView(
+                        ReadmeImagesPreview(
                             images: [
                                 "readme_repeatings_1"
                             ]
                         )
                     } else if paragraph is ReadmeSheetVm.ParagraphRepeatingsToday {
-                        ImagePreviewsView(
+                        ReadmeImagesPreview(
                             images: [
                                 "readme_repeatings_2"
                             ]
                         )
                     } else if paragraph is ReadmeSheetVm.ParagraphRepeatingsPractice1 {
-                        ImagePreviewsView(
+                        ReadmeImagesPreview(
                             images: [
                                 "readme_repeating_practice_1",
                                 "readme_repeating_practice_2",
@@ -304,14 +208,14 @@ private struct TabView: View {
                             ]
                         )
                     } else if paragraph is ReadmeSheetVm.ParagraphRepeatingsPractice2 {
-                        ImagePreviewsView(
+                        ReadmeImagesPreview(
                             images: [
                                 "readme_repeating_practice_4",
                                 "readme_repeating_practice_5"
                             ]
                         )
                     } else if paragraph is ReadmeSheetVm.ParagraphChecklistsExamples {
-                        ImagePreviewsView(
+                        ReadmeImagesPreview(
                             images: [
                                 "readme_checklists_1",
                                 "readme_checklists_2",
@@ -319,7 +223,7 @@ private struct TabView: View {
                             ]
                         )
                     } else if paragraph is ReadmeSheetVm.ParagraphChecklistsPractice1 {
-                        ImagePreviewsView(
+                        ReadmeImagesPreview(
                             images: [
                                 "readme_checklists_practice_1",
                                 "readme_checklists_practice_2",
@@ -331,14 +235,14 @@ private struct TabView: View {
                             ]
                         )
                     } else if paragraph is ReadmeSheetVm.ParagraphChecklistsPractice2 {
-                        ImagePreviewsView(
+                        ReadmeImagesPreview(
                             images: [
                                 "readme_checklists_practice_8",
                                 "readme_checklists_practice_9"
                             ]
                         )
                     } else if paragraph is ReadmeSheetVm.ParagraphPomodoroExamples {
-                        ImagePreviewsView(
+                        ReadmeImagesPreview(
                             images: [
                                 "readme_pomodoro_1",
                                 "readme_pomodoro_2",
@@ -346,13 +250,13 @@ private struct TabView: View {
                             ]
                         )
                     } else if paragraph is ReadmeSheetVm.ParagraphGoalsExamples {
-                        ImagePreviewsView(
+                        ReadmeImagesPreview(
                             images: [
                                 "readme_goals_1"
                             ]
                         )
                     } else if paragraph is ReadmeSheetVm.ParagraphCalendarExamples {
-                        ImagePreviewsView(
+                        ReadmeImagesPreview(
                             images: [
                                 "readme_calendar_1",
                                 "readme_calendar_2"

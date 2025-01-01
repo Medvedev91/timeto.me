@@ -6,7 +6,6 @@ struct ReadmeImagesPreview: View {
     
     @State private var isFullScreenPresented = false
     
-    
     var body: some View {
         
         ScrollView(.horizontal, showsIndicators: false) {
@@ -26,7 +25,7 @@ struct ReadmeImagesPreview: View {
                                 .cornerRadius(16)
                                 .shadow(color: .primary, radius: onePx)
                                 .frame(height: 350)
-                                .padding(.trailing, 12)
+                                .padding(.trailing, 8)
                                 .padding(.vertical, 4) // Paddings for shadow radius
                         }
                     )
@@ -35,12 +34,11 @@ struct ReadmeImagesPreview: View {
             .scrollTargetLayout()
         }
         .contentMargins(.leading, 16, for: .scrollContent)
-        .contentMargins(.trailing, 4, for: .scrollContent)
+        .contentMargins(.trailing, 8, for: .scrollContent)
         .scrollTargetBehavior(.viewAligned)
         .padding(.top, 20)
         .fullScreenCover(isPresented: $isFullScreenPresented) {
-            ImagesSlider(
-                isPresented: $isFullScreenPresented,
+            ReadmeImagesFullScreen(
                 images: images
             )
         }
