@@ -1,7 +1,7 @@
 package me.timeto.shared.vm
 
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import me.timeto.shared.defaultScope
 
 /**
@@ -14,7 +14,7 @@ import me.timeto.shared.defaultScope
  */
 abstract class __Vm<T> {
 
-    abstract val state: MutableStateFlow<T>
+    abstract val state: StateFlow<T>
 
     ///
 
