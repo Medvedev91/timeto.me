@@ -31,6 +31,7 @@ struct HomeView: View {
 
     @State private var triggersChecklist: ChecklistDb?
     @State private var isTriggersChecklistPresented = false
+    @State private var isSettingsSheetPresented = false
 
     private let shortcutPublisher: AnyPublisher<ShortcutDb, Never> = Utils_kmpKt.uiShortcutFlow.toPublisher()
     private let checklistPublisher: AnyPublisher<ChecklistDb, Never> = Utils_kmpKt.uiChecklistFlow.toPublisher()
@@ -426,9 +427,7 @@ struct HomeView: View {
 
                 Button(
                     action: {
-                        fs.show { isFsPresented in
-                            SettingsSheet(isPresented: isFsPresented)
-                        }
+                        isSettingsSheetPresented = true
                     },
                     label: {
                         VStack {
@@ -441,6 +440,9 @@ struct HomeView: View {
                         }
                     }
                 )
+                .sheetEnv(isPresented: $isSettingsSheetPresented) {
+                    SettingsScreen()
+                }
             }
             .frame(width: .infinity, height: HomeView__BOTTOM_NAVIGATION_HEIGHT)
         }
