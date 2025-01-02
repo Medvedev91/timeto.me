@@ -44,7 +44,6 @@ struct HomeView: View {
             EmptyView().id("MainView checklist \(triggersChecklist?.id ?? 0)")
 
             Color.black.edgesIgnoringSafeArea(.all)
-                .statusBar(hidden: true)
                 .animateVmValue(value: state.isPurple, state: $isPurpleAnim)
 
             VStack {
