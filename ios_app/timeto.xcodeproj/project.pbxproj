@@ -107,7 +107,6 @@
 		31821CF86EDC2A5C5CB362E0 /* SheetDividerFg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182143FB317BCD82F61C777 /* SheetDividerFg.swift */; };
 		31821D021B3DC7EACD7E4EAA /* ShortcutsPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821F858C3344296F2CB750 /* ShortcutsPickerSheet.swift */; };
 		31821D1716CFA24F74C1BE6C /* NoteFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318213EABC97ED666E1FBF91 /* NoteFormSheet.swift */; };
-		31821D335AF5DBA16579CA61 /* WhatsNewFs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821DED445F739FAF7C55D0 /* WhatsNewFs.swift */; };
 		31821D960D04B6FF21EA9918 /* ActivityFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821794CA93E29D6889286D /* ActivityFormSheet.swift */; };
 		31821DF8D1DFB408872C85BD /* FolderFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821514C5F55F9A34FBC8AD /* FolderFormSheet.swift */; };
 		31821DF974247D110D01C3A2 /* ActivitiesTimerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318213DE3B58FA098A8DBAE7 /* ActivitiesTimerSheet.swift */; };
@@ -243,7 +242,6 @@
 		31821D879F9361C3DD65EAC9 /* RepeatingFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepeatingFormSheet.swift; sourceTree = "<group>"; };
 		31821D886EB022A0AD988588 /* DividerBg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DividerBg.swift; sourceTree = "<group>"; };
 		31821DC6AEBDF478C34116FE /* MyListSwipeToActionItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyListSwipeToActionItem.swift; sourceTree = "<group>"; };
-		31821DED445F739FAF7C55D0 /* WhatsNewFs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhatsNewFs.swift; sourceTree = "<group>"; };
 		31821E01EC49E0964E5CB2F5 /* PieView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieView.swift; sourceTree = "<group>"; };
 		31821E3EB266890584C3EF87 /* FoldersSettingsSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoldersSettingsSheet.swift; sourceTree = "<group>"; };
 		31821E53EB27CE7F81AF0F69 /* DialogCloseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogCloseButton.swift; sourceTree = "<group>"; };
@@ -468,7 +466,6 @@
 				3182157C5CB954867515B4BA /* TriggersListIconsView.swift */,
 				3182118D8EA3E0D889D4FDC3 /* utils_ios.swift */,
 				31821F2108CAA3ADBA741879 /* WeekDaysFormView.swift */,
-				31821DED445F739FAF7C55D0 /* WhatsNewFs.swift */,
 			);
 			path = iphone;
 			sourceTree = "<group>";
@@ -724,7 +721,6 @@
 				31821B177073394D777AED10 /* EventsCalendarDayView.swift in Sources */,
 				31821FB6B5CC8647F2541328 /* EventsListEventView.swift in Sources */,
 				2C37C4252D22797500995840 /* Navigation.swift in Sources */,
-				31821D335AF5DBA16579CA61 /* WhatsNewFs.swift in Sources */,
 				31821A76C3FAC481BE5C7C66 /* DaytimePickerSliderView.swift in Sources */,
 				31821BD87B0E4B9CC03CD31D /* ActivityPomodoroSheet.swift in Sources */,
 			);
