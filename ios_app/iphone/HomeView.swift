@@ -24,6 +24,7 @@ struct HomeView: View {
 
     @EnvironmentObject private var fs: Fs
     @EnvironmentObject private var nativeSheet: NativeSheet
+    @EnvironmentObject private var navigation: Navigation
 
     @State private var isPurpleAnim = true
 
@@ -202,7 +203,7 @@ struct HomeView: View {
                             text: "?",
                             color: timerColor,
                             onClick: {
-                                fs.ReadmeSheet__open(defaultItem: .pomodoro)
+                                navigation.path.append(.readme(defaultItem: .pomodoro))
                             }
                         )
                     }
@@ -219,7 +220,7 @@ struct HomeView: View {
                             Button(
                                 action: {
                                     vm.onReadmeOpen()
-                                    fs.ReadmeSheet__open()
+                                    navigation.path.append(.readme(defaultItem: .basics))
                                 },
                                 label: {
                                     Text(readmeMessage)
