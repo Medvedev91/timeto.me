@@ -5,31 +5,31 @@ import MessageUI
 /// https://stackoverflow.com/a/58693164
 ///
 struct MailView: UIViewControllerRepresentable {
-
+    
     @Environment(\.presentationMode) private var presentation
-
+    
     let toEmail: String
     let subject: String
     let body: String?
     @Binding var result: Result<MFMailComposeResult, Error>?
-
+    
     class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
-
+        
         @Binding var presentation: PresentationMode
         @Binding var result: Result<MFMailComposeResult, Error>?
-
+        
         init(
-                presentation: Binding<PresentationMode>,
-                result: Binding<Result<MFMailComposeResult, Error>?>
+            presentation: Binding<PresentationMode>,
+            result: Binding<Result<MFMailComposeResult, Error>?>
         ) {
             _presentation = presentation
             _result = result
         }
-
+        
         func mailComposeController(
-                _ controller: MFMailComposeViewController,
-                didFinishWith result: MFMailComposeResult,
-                error: Error?
+            _ controller: MFMailComposeViewController,
+            didFinishWith result: MFMailComposeResult,
+            error: Error?
         ) {
             defer {
                 $presentation.wrappedValue.dismiss()
@@ -41,13 +41,13 @@ struct MailView: UIViewControllerRepresentable {
             self.result = .success(result)
         }
     }
-
+    
     func makeCoordinator() -> Coordinator {
         Coordinator(presentation: presentation, result: $result)
     }
-
+    
     func makeUIViewController(
-            context: UIViewControllerRepresentableContext<MailView>
+        context: UIViewControllerRepresentableContext<MailView>
     ) -> MFMailComposeViewController {
         let vc = MFMailComposeViewController()
         vc.mailComposeDelegate = context.coordinator
@@ -58,10 +58,10 @@ struct MailView: UIViewControllerRepresentable {
         }
         return vc
     }
-
+    
     func updateUIViewController(
-            _ uiViewController: MFMailComposeViewController,
-            context: UIViewControllerRepresentableContext<MailView>
+        _ uiViewController: MFMailComposeViewController,
+        context: UIViewControllerRepresentableContext<MailView>
     ) {
     }
 }
