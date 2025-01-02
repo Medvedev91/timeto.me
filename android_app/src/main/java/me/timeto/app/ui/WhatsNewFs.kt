@@ -15,7 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
-import me.timeto.shared.vm.ReadmeSheetVm
+import me.timeto.shared.vm.ReadmeVm
 import me.timeto.shared.vm.WhatsNewVm
 
 @Composable
@@ -111,7 +111,7 @@ fun WhatsNewFs(
                                 .clickable {
                                     when (buttonUi) {
                                         WhatsNewVm.HistoryItemUi.ButtonUi.pomodoro -> {
-                                            ReadmeSheet__show(ReadmeSheetVm.DefaultItem.pomodoro)
+                                            ReadmeSheet__show(ReadmeVm.DefaultItem.pomodoro)
                                         }
                                     }
                                 }

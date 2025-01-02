@@ -32,7 +32,7 @@ import androidx.compose.ui.zIndex
 import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.shared.vm.HomeVm
-import me.timeto.shared.vm.ReadmeSheetVm
+import me.timeto.shared.vm.ReadmeVm
 
 val HomeView__BOTTOM_NAVIGATION_HEIGHT = 56.dp
 val HomeView__PRIMARY_FONT_SIZE = 16.sp
@@ -237,7 +237,7 @@ fun HomeView() {
                     text = "?",
                     color = timerColor,
                     onClick = {
-                        ReadmeSheet__show(ReadmeSheetVm.DefaultItem.pomodoro)
+                        ReadmeSheet__show(ReadmeVm.DefaultItem.pomodoro)
                     },
                 )
             }

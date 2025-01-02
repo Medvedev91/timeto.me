@@ -18,8 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
-import me.timeto.shared.vm.ReadmeSheetVm
-import me.timeto.shared.vm.ReadmeSheetVm.DefaultItem
+import me.timeto.shared.vm.ReadmeVm
+import me.timeto.shared.vm.ReadmeVm.DefaultItem
 
 private val imagesHBetween = 4.dp
 private val imagesHBlock = H_PADDING - imagesHBetween
@@ -45,7 +45,7 @@ private fun ReadmeSheet(
 ) {
 
     val (vm, state) = rememberVm {
-        ReadmeSheetVm(defaultItem = defaultItem)
+        ReadmeVm(defaultItem = defaultItem)
     }
 
     VStack(
@@ -83,18 +83,18 @@ private fun ReadmeSheet(
 
             paragraphs.forEachIndexed { idx, paragraph ->
 
-                val prevP: ReadmeSheetVm.Paragraph? =
+                val prevP: ReadmeVm.Paragraph? =
                     if (idx == 0) null else paragraphs[idx - 1]
 
                 when (paragraph) {
 
-                    is ReadmeSheetVm.Paragraph.Title -> PTitleView(paragraph.text, prevP)
+                    is ReadmeVm.Paragraph.Title -> PTitleView(paragraph.text, prevP)
 
-                    is ReadmeSheetVm.Paragraph.Text -> PTextView(paragraph.text, prevP)
+                    is ReadmeVm.Paragraph.Text -> PTextView(paragraph.text, prevP)
 
-                    is ReadmeSheetVm.Paragraph.TextHighlight -> PTextHighlightView(paragraph.text, prevP)
+                    is ReadmeVm.Paragraph.TextHighlight -> PTextHighlightView(paragraph.text, prevP)
 
-                    is ReadmeSheetVm.Paragraph.AskAQuestion -> {
+                    is ReadmeVm.Paragraph.AskAQuestion -> {
 
                         MyListView__ItemView(
                             isFirst = true,
@@ -111,19 +111,19 @@ private fun ReadmeSheet(
                         }
                     }
 
-                    is ReadmeSheetVm.Paragraph.TimerTypical -> {
+                    is ReadmeVm.Paragraph.TimerTypical -> {
                         ImagePreviewsView(
                             R.drawable.readme_timer_1,
                         )
                     }
 
-                    is ReadmeSheetVm.Paragraph.TimerMyActivities -> {
+                    is ReadmeVm.Paragraph.TimerMyActivities -> {
                         ImagePreviewsView(
                             R.drawable.readme_activities_1,
                         )
                     }
 
-                    is ReadmeSheetVm.Paragraph.TimerCharts -> {
+                    is ReadmeVm.Paragraph.TimerCharts -> {
                         ImagePreviewsView(
                             R.drawable.readme_chart_1,
                             R.drawable.readme_chart_2,
@@ -131,7 +131,7 @@ private fun ReadmeSheet(
                         )
                     }
 
-                    is ReadmeSheetVm.Paragraph.TimerPractice1 -> {
+                    is ReadmeVm.Paragraph.TimerPractice1 -> {
                         ImagePreviewsView(
                             R.drawable.readme_timer_practice_1,
                             R.drawable.readme_timer_practice_2,
@@ -140,7 +140,7 @@ private fun ReadmeSheet(
                         )
                     }
 
-                    is ReadmeSheetVm.Paragraph.TimerPractice2 -> {
+                    is ReadmeVm.Paragraph.TimerPractice2 -> {
                         ImagePreviewsView(
                             R.drawable.readme_timer_practice_5,
                             R.drawable.readme_chart_2,
@@ -148,21 +148,21 @@ private fun ReadmeSheet(
                         )
                     }
 
-                    is ReadmeSheetVm.Paragraph.RepeatingsMy -> {
+                    is ReadmeVm.Paragraph.RepeatingsMy -> {
                         ImagePreviewsView(
                             R.drawable.readme_repeatings_1,
                         )
                     }
 
 
-                    is ReadmeSheetVm.Paragraph.RepeatingsToday -> {
+                    is ReadmeVm.Paragraph.RepeatingsToday -> {
                         ImagePreviewsView(
                             R.drawable.readme_repeatings_2,
                         )
                     }
 
 
-                    is ReadmeSheetVm.Paragraph.RepeatingsPractice1 -> {
+                    is ReadmeVm.Paragraph.RepeatingsPractice1 -> {
                         ImagePreviewsView(
                             R.drawable.readme_repeating_practice_1,
                             R.drawable.readme_repeating_practice_2,
@@ -171,14 +171,14 @@ private fun ReadmeSheet(
                     }
 
 
-                    is ReadmeSheetVm.Paragraph.RepeatingsPractice2 -> {
+                    is ReadmeVm.Paragraph.RepeatingsPractice2 -> {
                         ImagePreviewsView(
                             R.drawable.readme_repeating_practice_4,
                             R.drawable.readme_repeating_practice_5,
                         )
                     }
 
-                    is ReadmeSheetVm.Paragraph.ChecklistsExamples -> {
+                    is ReadmeVm.Paragraph.ChecklistsExamples -> {
                         ImagePreviewsView(
                             R.drawable.readme_checklists_1,
                             R.drawable.readme_checklists_2,
@@ -186,7 +186,7 @@ private fun ReadmeSheet(
                         )
                     }
 
-                    is ReadmeSheetVm.Paragraph.ChecklistsPractice1 -> {
+                    is ReadmeVm.Paragraph.ChecklistsPractice1 -> {
                         ImagePreviewsView(
                             R.drawable.readme_checklists_practice_1,
                             R.drawable.readme_checklists_practice_2,
@@ -198,14 +198,14 @@ private fun ReadmeSheet(
                         )
                     }
 
-                    is ReadmeSheetVm.Paragraph.ChecklistsPractice2 -> {
+                    is ReadmeVm.Paragraph.ChecklistsPractice2 -> {
                         ImagePreviewsView(
                             R.drawable.readme_checklists_practice_8,
                             R.drawable.readme_checklists_practice_9,
                         )
                     }
 
-                    is ReadmeSheetVm.Paragraph.PomodoroExamples -> {
+                    is ReadmeVm.Paragraph.PomodoroExamples -> {
                         ImagePreviewsView(
                             R.drawable.readme_pomodoro_1,
                             R.drawable.readme_pomodoro_2,
@@ -213,13 +213,13 @@ private fun ReadmeSheet(
                         )
                     }
 
-                    is ReadmeSheetVm.Paragraph.GoalsExamples -> {
+                    is ReadmeVm.Paragraph.GoalsExamples -> {
                         ImagePreviewsView(
                             R.drawable.readme_goals_1,
                         )
                     }
 
-                    is ReadmeSheetVm.Paragraph.CalendarExamples -> {
+                    is ReadmeVm.Paragraph.CalendarExamples -> {
                         ImagePreviewsView(
                             R.drawable.readme_calendar_1,
                             R.drawable.readme_calendar_2,
@@ -287,12 +287,12 @@ private fun TabBarItemView(
 @Composable
 private fun PTitleView(
     text: String,
-    prevP: ReadmeSheetVm.Paragraph?,
+    prevP: ReadmeVm.Paragraph?,
 ) {
     val paddingTop: Dp = when {
         prevP == null -> 14.dp
         prevP.isSlider -> 36.dp
-        prevP is ReadmeSheetVm.Paragraph.Text -> 38.dp
+        prevP is ReadmeVm.Paragraph.Text -> 38.dp
         else -> throw Exception()
     }
     Text(
@@ -310,14 +310,14 @@ private fun PTitleView(
 @Composable
 private fun PTextView(
     text: String,
-    prevP: ReadmeSheetVm.Paragraph?,
+    prevP: ReadmeVm.Paragraph?,
 ) {
     val paddingTop: Dp = when {
         prevP == null -> 13.dp
         prevP.isSlider -> 10.dp
-        prevP is ReadmeSheetVm.Paragraph.Title -> 15.dp
-        prevP is ReadmeSheetVm.Paragraph.Text -> 12.dp // Text height * 3
-        prevP is ReadmeSheetVm.Paragraph.TextHighlight -> 18.dp // Equals to paragraph padding
+        prevP is ReadmeVm.Paragraph.Title -> 15.dp
+        prevP is ReadmeVm.Paragraph.Text -> 12.dp // Text height * 3
+        prevP is ReadmeVm.Paragraph.TextHighlight -> 18.dp // Equals to paragraph padding
         else -> throw Exception()
     }
     Text(
@@ -335,12 +335,12 @@ private fun PTextView(
 @Composable
 private fun PTextHighlightView(
     text: String,
-    prevP: ReadmeSheetVm.Paragraph?,
+    prevP: ReadmeVm.Paragraph?,
 ) {
     val paddingTop: Dp = when {
         prevP == null -> throw Exception()
         prevP.isSlider -> 18.dp
-        prevP is ReadmeSheetVm.Paragraph.Text -> 20.dp
+        prevP is ReadmeVm.Paragraph.Text -> 20.dp
         else -> throw Exception()
     }
     Text(

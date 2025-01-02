@@ -3,9 +3,9 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.db.KvDb
 
-class ReadmeSheetVm(
+class ReadmeVm(
     defaultItem: DefaultItem,
-) : __Vm<ReadmeSheetVm.State>() {
+) : __Vm<ReadmeVm.State>() {
 
     enum class DefaultItem {
         basics, pomodoro,
@@ -81,11 +81,11 @@ class ReadmeSheetVm(
 
 ///
 
-private typealias PTitle = ReadmeSheetVm.Paragraph.Title
-private typealias PText = ReadmeSheetVm.Paragraph.Text
-private typealias PTextHighlight = ReadmeSheetVm.Paragraph.TextHighlight
+private typealias PTitle = ReadmeVm.Paragraph.Title
+private typealias PText = ReadmeVm.Paragraph.Text
+private typealias PTextHighlight = ReadmeVm.Paragraph.TextHighlight
 
-private val tabBasics = ReadmeSheetVm.TabUi(
+private val tabBasics = ReadmeVm.TabUi(
     id = "tab_basics",
     title = "Basics",
     paragraphs = listOf(
@@ -102,47 +102,47 @@ private val tabBasics = ReadmeSheetVm.TabUi(
         PText("There is NO stop option! To stop the current activity, you have to start the next one."),
         PText("In other words, once you complete one activity, you must start the timer for the next one."),
         PText("This way I always remember what I have to do. Most of the time my screen looks like a typical pomodoro timer:"),
-        ReadmeSheetVm.Paragraph.TimerTypical(),
+        ReadmeVm.Paragraph.TimerTypical(),
         PText("This way also provides 24/7 data on how long everything takes:"),
-        ReadmeSheetVm.Paragraph.TimerCharts(),
+        ReadmeVm.Paragraph.TimerCharts(),
         PText("The app has some activities by default. Here are mine:"),
-        ReadmeSheetVm.Paragraph.TimerMyActivities(),
+        ReadmeVm.Paragraph.TimerMyActivities(),
         PTitle("Practice"),
         PText("Let's start a 45 min timer to work."),
-        ReadmeSheetVm.Paragraph.TimerPractice1(),
+        ReadmeVm.Paragraph.TimerPractice1(),
         PText("The timer starts. Let's see the summary and history."),
-        ReadmeSheetVm.Paragraph.TimerPractice2(),
+        ReadmeVm.Paragraph.TimerPractice2(),
 
         PTitle("Repeating Tasks"),
         PText("You may think choosing activity and timer for each task is overwhelming. This is where repeating tasks come in."),
         PText("How I use it:"),
         PText("Most of my activities are repeated. I wake up at the same time, then 1 hour to get ready, 2 hours working, 1 hour eating, etc. So I created a repeating task for each of these."),
-        ReadmeSheetVm.Paragraph.RepeatingsMy(),
+        ReadmeVm.Paragraph.RepeatingsMy(),
         PText("Each day, these tasks move to the \"Today\" folder. It's like a schedule:"),
-        ReadmeSheetVm.Paragraph.RepeatingsToday(),
+        ReadmeVm.Paragraph.RepeatingsToday(),
         PTextHighlight("The most important, when I press it, it automatically starts a timer. You don't have to choose an activity with a timer."),
         PText("You can create not only everyday tasks. Like watering a cactus once a week or paying for internet once a month."),
         PText("I believe this is the main feature of the app. I recommend using it to the max."),
         PTitle("Practice"),
         PText("Let's create a repeating task for a daily workout at 18:00."),
-        ReadmeSheetVm.Paragraph.RepeatingsPractice1(),
+        ReadmeVm.Paragraph.RepeatingsPractice1(),
         PText("Every day, a \"Workout\" task will be added to the \"Today\" folder."),
         PText("This task is already created for today. Open \"Today\" and tap the \"Workout\" task. The timer will start automatically."),
-        ReadmeSheetVm.Paragraph.RepeatingsPractice2(),
+        ReadmeVm.Paragraph.RepeatingsPractice2(),
 
         PTitle("First Steps"),
         PText("We learned timer and repeating tasks. It is 80% I use."),
         PText("From now on, you have to use a timer for everything you do."),
         PText("Right now, I recommend creating repeating tasks to make a daily schedule. You can rely on my example:"),
-        ReadmeSheetVm.Paragraph.RepeatingsMy(),
+        ReadmeVm.Paragraph.RepeatingsMy(),
         PText("Try to follow that schedule the rest of this day. The next day, move on to advanced features."),
         PText("Good luck!  🍀"),
 
-        ReadmeSheetVm.Paragraph.AskAQuestion(),
+        ReadmeVm.Paragraph.AskAQuestion(),
     ),
 )
 
-private val tabAdvanced = ReadmeSheetVm.TabUi(
+private val tabAdvanced = ReadmeVm.TabUi(
     id = "tab_advanced",
     title = "Advanced",
     paragraphs = listOf(
@@ -150,20 +150,20 @@ private val tabAdvanced = ReadmeSheetVm.TabUi(
         PTitle("Pomodoro"),
         PText("I use the Pomodoro only for work:\n- start the timer for 45 min,\n- work until the timer rings,\n- tap the timer to start a break,\n- tap it again to restart."),
         PTextHighlight("In other words you only need one tap before the break and one tap after the break."),
-        ReadmeSheetVm.Paragraph.PomodoroExamples(),
+        ReadmeVm.Paragraph.PomodoroExamples(),
 
         PTitle("Checklists"),
         PText("Checklists are an addition to repeating tasks that are placed under the timer."),
-        ReadmeSheetVm.Paragraph.ChecklistsExamples(),
+        ReadmeVm.Paragraph.ChecklistsExamples(),
         PTitle("Practice"),
         PText("Let's create a repeating task for a daily morning routine at 7:00 with a checklist."),
-        ReadmeSheetVm.Paragraph.ChecklistsPractice1(),
+        ReadmeVm.Paragraph.ChecklistsPractice1(),
         PText("Test it! Open \"Today\" and tap the \"Morning Routine\" task. You will see the checklist."),
-        ReadmeSheetVm.Paragraph.ChecklistsPractice2(),
+        ReadmeVm.Paragraph.ChecklistsPractice2(),
 
         PTitle("Goals"),
         PText("Look at the bottom of the screenshot. For me, I set a goal to work 8 hours a day and read for 30 minutes."),
-        ReadmeSheetVm.Paragraph.GoalsExamples(),
+        ReadmeVm.Paragraph.GoalsExamples(),
         PText("To create goals, go to the activity edit form."),
 
         PTitle("Tasks List"),
@@ -174,7 +174,7 @@ private val tabAdvanced = ReadmeSheetVm.TabUi(
 
         PTitle("Calendar"),
         PText("A typical calendar. Tasks from the calendar will be displayed not only in \"Today\" but also on the Home Screen. \"Call Ann\" example:"),
-        ReadmeSheetVm.Paragraph.CalendarExamples(),
+        ReadmeVm.Paragraph.CalendarExamples(),
 
         PTitle("Shortcuts"),
         PText("Real life example: I meditate every day, to start I open a special video on YouTube."),
@@ -187,6 +187,6 @@ private val tabAdvanced = ReadmeSheetVm.TabUi(
         PTitle("Conclusion"),
         PText("I hope the app will improve your life like it improved mine. I would be very happy to get feedback and answer questions."),
 
-        ReadmeSheetVm.Paragraph.AskAQuestion(),
+        ReadmeVm.Paragraph.AskAQuestion(),
     ),
 )

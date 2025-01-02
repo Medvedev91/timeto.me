@@ -32,7 +32,7 @@ class Navigation: ObservableObject {
 }
 
 enum NavigationPath: Hashable {
-    case readme(defaultItem: ReadmeSheetVm.DefaultItem)
+    case readme(defaultItem: ReadmeVm.DefaultItem)
     case whatsNew
 }
 

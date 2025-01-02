@@ -5,11 +5,11 @@ private let pTextLineHeight = 3.2
 
 struct ReadmeScreen: View {
     
-    let defaultItem: ReadmeSheetVm.DefaultItem
+    let defaultItem: ReadmeVm.DefaultItem
     
     var body: some View {
         VmView({
-            ReadmeSheetVm(defaultItem: defaultItem)
+            ReadmeVm(defaultItem: defaultItem)
         }) { vm, state in
             ReadmeScreenInner(
                 vm: vm,
@@ -22,10 +22,10 @@ struct ReadmeScreen: View {
 
 private struct ReadmeScreenInner: View {
     
-    let vm: ReadmeSheetVm
-    let state: ReadmeSheetVm.State
+    let vm: ReadmeVm
+    let state: ReadmeVm.State
     
-    @State var selectedTab: ReadmeSheetVm.TabUi
+    @State var selectedTab: ReadmeVm.TabUi
     
     var body: some View {
         
@@ -55,7 +55,7 @@ private struct ReadmeScreenInner: View {
 
 private struct TabView: View {
     
-    let tabUi: ReadmeSheetVm.TabUi
+    let tabUi: ReadmeVm.TabUi
     
     var body: some View {
         
@@ -65,11 +65,11 @@ private struct TabView: View {
             
             ForEachIndexed(paragraphs) { idx, paragraph in
                 
-                let prevP: ReadmeSheetVm.Paragraph? = (idx == 0) ? nil : paragraphs[idx - 1]
+                let prevP: ReadmeVm.Paragraph? = (idx == 0) ? nil : paragraphs[idx - 1]
                 
                 ZStack {
                     
-                    if let paragraph = paragraph as? ReadmeSheetVm.ParagraphTitle {
+                    if let paragraph = paragraph as? ReadmeVm.ParagraphTitle {
                         let paddingTop: CGFloat = {
                             guard let prevP = prevP else {
                                 return 12
@@ -77,7 +77,7 @@ private struct TabView: View {
                             if prevP.isSlider {
                                 return 40
                             }
-                            if prevP is ReadmeSheetVm.ParagraphText {
+                            if prevP is ReadmeVm.ParagraphText {
                                 return 39
                             }
                             fatalError()
@@ -90,7 +90,7 @@ private struct TabView: View {
                                 .padding(.horizontal, H_PADDING)
                             Spacer()
                         }
-                    } else if let paragraph = paragraph as? ReadmeSheetVm.ParagraphText {
+                    } else if let paragraph = paragraph as? ReadmeVm.ParagraphText {
                         let paddingTop: CGFloat = {
                             guard let prevP = prevP else {
                                 return 14
@@ -98,13 +98,13 @@ private struct TabView: View {
                             if prevP.isSlider {
                                 return 16
                             }
-                            if prevP is ReadmeSheetVm.ParagraphTitle {
+                            if prevP is ReadmeVm.ParagraphTitle {
                                 return 17
                             }
-                            if prevP is ReadmeSheetVm.ParagraphText {
+                            if prevP is ReadmeVm.ParagraphText {
                                 return 16
                             }
-                            if prevP is ReadmeSheetVm.ParagraphTextHighlight {
+                            if prevP is ReadmeVm.ParagraphTextHighlight {
                                 return 20
                             }
                             fatalError()
@@ -117,7 +117,7 @@ private struct TabView: View {
                                 .lineSpacing(pTextLineHeight)
                             Spacer()
                         }
-                    } else if let paragraph = paragraph as? ReadmeSheetVm.ParagraphTextHighlight {
+                    } else if let paragraph = paragraph as? ReadmeVm.ParagraphTextHighlight {
                         let paddingTop: CGFloat = {
                             guard let prevP = prevP else {
                                 fatalError()
@@ -125,7 +125,7 @@ private struct TabView: View {
                             if prevP.isSlider {
                                 return 24
                             }
-                            if prevP is ReadmeSheetVm.ParagraphText {
+                            if prevP is ReadmeVm.ParagraphText {
                                 return 23
                             }
                             fatalError()
@@ -141,7 +141,7 @@ private struct TabView: View {
                         .background(squircleShape.fill(.blue))
                         .padding(.top, paddingTop)
                         .padding(.horizontal, H_PADDING - 2)
-                    } else if let paragraph = paragraph as? ReadmeSheetVm.ParagraphAskAQuestion {
+                    } else if let paragraph = paragraph as? ReadmeVm.ParagraphAskAQuestion {
                         AskQuestion(
                             subject: paragraph.subject
                         ) {
@@ -150,19 +150,19 @@ private struct TabView: View {
                         }
                         .padding(.top, 24)
                         .padding(.leading, H_PADDING)
-                    } else if paragraph is ReadmeSheetVm.ParagraphTimerTypical {
+                    } else if paragraph is ReadmeVm.ParagraphTimerTypical {
                         ReadmeImagesPreview(
                             images: [
                                 "readme_timer_1"
                             ]
                         )
-                    } else if paragraph is ReadmeSheetVm.ParagraphTimerMyActivities {
+                    } else if paragraph is ReadmeVm.ParagraphTimerMyActivities {
                         ReadmeImagesPreview(
                             images: [
                                 "readme_activities_1"
                             ]
                         )
-                    } else if paragraph is ReadmeSheetVm.ParagraphTimerCharts {
+                    } else if paragraph is ReadmeVm.ParagraphTimerCharts {
                         ReadmeImagesPreview(
                             images: [
                                 "readme_chart_1",
@@ -170,7 +170,7 @@ private struct TabView: View {
                                 "readme_chart_3"
                             ]
                         )
-                    } else if paragraph is ReadmeSheetVm.ParagraphTimerPractice1 {
+                    } else if paragraph is ReadmeVm.ParagraphTimerPractice1 {
                         ReadmeImagesPreview(
                             images: [
                                 "readme_timer_practice_1",
@@ -179,7 +179,7 @@ private struct TabView: View {
                                 "readme_timer_practice_4"
                             ]
                         )
-                    } else if paragraph is ReadmeSheetVm.ParagraphTimerPractice2 {
+                    } else if paragraph is ReadmeVm.ParagraphTimerPractice2 {
                         ReadmeImagesPreview(
                             images: [
                                 "readme_timer_practice_5",
@@ -187,19 +187,19 @@ private struct TabView: View {
                                 "readme_chart_3"
                             ]
                         )
-                    } else if paragraph is ReadmeSheetVm.ParagraphRepeatingsMy {
+                    } else if paragraph is ReadmeVm.ParagraphRepeatingsMy {
                         ReadmeImagesPreview(
                             images: [
                                 "readme_repeatings_1"
                             ]
                         )
-                    } else if paragraph is ReadmeSheetVm.ParagraphRepeatingsToday {
+                    } else if paragraph is ReadmeVm.ParagraphRepeatingsToday {
                         ReadmeImagesPreview(
                             images: [
                                 "readme_repeatings_2"
                             ]
                         )
-                    } else if paragraph is ReadmeSheetVm.ParagraphRepeatingsPractice1 {
+                    } else if paragraph is ReadmeVm.ParagraphRepeatingsPractice1 {
                         ReadmeImagesPreview(
                             images: [
                                 "readme_repeating_practice_1",
@@ -207,14 +207,14 @@ private struct TabView: View {
                                 "readme_repeating_practice_3"
                             ]
                         )
-                    } else if paragraph is ReadmeSheetVm.ParagraphRepeatingsPractice2 {
+                    } else if paragraph is ReadmeVm.ParagraphRepeatingsPractice2 {
                         ReadmeImagesPreview(
                             images: [
                                 "readme_repeating_practice_4",
                                 "readme_repeating_practice_5"
                             ]
                         )
-                    } else if paragraph is ReadmeSheetVm.ParagraphChecklistsExamples {
+                    } else if paragraph is ReadmeVm.ParagraphChecklistsExamples {
                         ReadmeImagesPreview(
                             images: [
                                 "readme_checklists_1",
@@ -222,7 +222,7 @@ private struct TabView: View {
                                 "readme_checklists_3"
                             ]
                         )
-                    } else if paragraph is ReadmeSheetVm.ParagraphChecklistsPractice1 {
+                    } else if paragraph is ReadmeVm.ParagraphChecklistsPractice1 {
                         ReadmeImagesPreview(
                             images: [
                                 "readme_checklists_practice_1",
@@ -234,14 +234,14 @@ private struct TabView: View {
                                 "readme_checklists_practice_7"
                             ]
                         )
-                    } else if paragraph is ReadmeSheetVm.ParagraphChecklistsPractice2 {
+                    } else if paragraph is ReadmeVm.ParagraphChecklistsPractice2 {
                         ReadmeImagesPreview(
                             images: [
                                 "readme_checklists_practice_8",
                                 "readme_checklists_practice_9"
                             ]
                         )
-                    } else if paragraph is ReadmeSheetVm.ParagraphPomodoroExamples {
+                    } else if paragraph is ReadmeVm.ParagraphPomodoroExamples {
                         ReadmeImagesPreview(
                             images: [
                                 "readme_pomodoro_1",
@@ -249,13 +249,13 @@ private struct TabView: View {
                                 "readme_pomodoro_3",
                             ]
                         )
-                    } else if paragraph is ReadmeSheetVm.ParagraphGoalsExamples {
+                    } else if paragraph is ReadmeVm.ParagraphGoalsExamples {
                         ReadmeImagesPreview(
                             images: [
                                 "readme_goals_1"
                             ]
                         )
-                    } else if paragraph is ReadmeSheetVm.ParagraphCalendarExamples {
+                    } else if paragraph is ReadmeVm.ParagraphCalendarExamples {
                         ReadmeImagesPreview(
                             images: [
                                 "readme_calendar_1",
