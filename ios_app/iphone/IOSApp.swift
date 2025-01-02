@@ -38,6 +38,7 @@ struct IOSApp: App {
                         .attachTimetoAlert()
                         .attachAutoBackupIos()
                         .attachNativeSheet()
+                        .attachNavigation()
                         .onReceive(scheduledNotificationsDataPublisher) {
                             let center = UNUserNotificationCenter.current()
                             center.removeAllPendingNotificationRequests()
