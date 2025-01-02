@@ -29,7 +29,6 @@
 		2C4044982951FCA800A24521 /* emojis.json in Resources */ = {isa = PBXBuildFile; fileRef = 2C4044972951FCA800A24521 /* emojis.json */; };
 		2C4A5EE12CB7F71600340578 /* GoalFormFs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4A5EE02CB7F71600340578 /* GoalFormFs.swift */; };
 		2C4F676F2A5C743D00F6013B /* timer_font.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4F676E2A5C743D00F6013B /* timer_font.otf */; };
-		2C5BD61B2A6076F000AD4042 /* ReadmeSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5BD61A2A6076F000AD4042 /* ReadmeSheet.swift */; };
 		2C6582902D25C7BF00DB8AD4 /* ReadmeImagesPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C65828F2D25C7AA00DB8AD4 /* ReadmeImagesPreview.swift */; };
 		2C6582922D25CF6E00DB8AD4 /* ReadmeImagesFullScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6582912D25CF6900DB8AD4 /* ReadmeImagesFullScreen.swift */; };
 		2C6582942D26829000DB8AD4 /* AskQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6582932D26826D00DB8AD4 /* AskQuestion.swift */; };
@@ -163,7 +162,6 @@
 		2C4044972951FCA800A24521 /* emojis.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = emojis.json; path = ../android_app/src/main/res/raw/emojis.json; sourceTree = "<group>"; };
 		2C4A5EE02CB7F71600340578 /* GoalFormFs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalFormFs.swift; sourceTree = "<group>"; };
 		2C4F676E2A5C743D00F6013B /* timer_font.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = timer_font.otf; path = ../android_app/src/main/res/font/timer_font.otf; sourceTree = "<group>"; };
-		2C5BD61A2A6076F000AD4042 /* ReadmeSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadmeSheet.swift; sourceTree = "<group>"; };
 		2C65828F2D25C7AA00DB8AD4 /* ReadmeImagesPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadmeImagesPreview.swift; sourceTree = "<group>"; };
 		2C6582912D25CF6900DB8AD4 /* ReadmeImagesFullScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadmeImagesFullScreen.swift; sourceTree = "<group>"; };
 		2C6582932D26826D00DB8AD4 /* AskQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskQuestion.swift; sourceTree = "<group>"; };
@@ -440,7 +438,6 @@
 				2C0BE02E295751B70099AD7C /* PickerStateView.swift */,
 				31821E01EC49E0964E5CB2F5 /* PieView.swift */,
 				2C2C205C2B7A824A00D4B325 /* PrivacySheet.swift */,
-				2C5BD61A2A6076F000AD4042 /* ReadmeSheet.swift */,
 				2CDEAB592C00F90C00519C3D /* RepeatingFormPeriodFs.swift */,
 				31821D879F9361C3DD65EAC9 /* RepeatingFormSheet.swift */,
 				31821B68F7E968EF32723112 /* RepeatingsListView.swift */,
@@ -657,7 +654,6 @@
 				318213413EE00D5D8F3FA396 /* EventsListView.swift in Sources */,
 				31821AAC3BB87DE0D8E46697 /* TasksView.swift in Sources */,
 				2C37C4232D21A90D00995840 /* ReadmeScreen.swift in Sources */,
-				2C5BD61B2A6076F000AD4042 /* ReadmeSheet.swift in Sources */,
 				318210F0EEFF944CD87E3A98 /* TabReadmeView.swift in Sources */,
 				318213FBF8D67B0E8E5463AC /* RepeatingsListView.swift in Sources */,
 				3182132BB1D4C32160A2EBCE /* TasksListView.swift in Sources */,
