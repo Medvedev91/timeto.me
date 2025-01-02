@@ -22,7 +22,6 @@ struct HomeView: View {
 
     @State private var vm = HomeVm()
 
-    @EnvironmentObject private var fs: Fs
     @EnvironmentObject private var nativeSheet: NativeSheet
     @EnvironmentObject private var navigation: Navigation
 
