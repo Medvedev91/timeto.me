@@ -10,8 +10,6 @@ struct TasksView: View {
 
     @State private var vm = TabTasksVm()
 
-    static var lastInstance: TasksView? = nil
-
     @State var activeSection: TabTasksView_Section? =
         TabTasksView_Section_Folder(folder: Cache.getTodayFolderDb())
 
@@ -144,9 +142,6 @@ struct TasksView: View {
                 /// On onDisappear(), otherwise on onAppear() twitching (hide old and open new).
                 activeSection = TabTasksView_Section_Folder(folder: Cache.getTodayFolderDb())
             }
-        }
-        .onAppear {
-            TasksView.lastInstance = self
         }
     }
 
