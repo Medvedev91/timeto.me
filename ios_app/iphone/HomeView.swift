@@ -234,22 +234,15 @@ struct HomeView: View {
                         }
 
                         if let whatsNewMessage = state.whatsNewMessage {
-                            Button(
-                                action: {
-                                    fs.show { isWhatsNewPresented in
-                                        WhatsNewFs(isPresented: isWhatsNewPresented)
-                                    }
-                                },
-                                label: {
-                                    Text(whatsNewMessage)
-                                        .foregroundColor(c.white)
-                                        .padding(.horizontal, 12)
-                                        .padding(.vertical, 8)
-                                        .font(.system(size: 17, weight: .medium))
-                                        .background(roundedShape.fill(.red))
-                                        .padding(.top, 8)
-                                }
-                            )
+                            NavigationLink(.whatsNew) {
+                                Text(whatsNewMessage)
+                                    .foregroundColor(.white)
+                                    .padding(.horizontal, 12)
+                                    .padding(.vertical, 8)
+                                    .font(.system(size: 17, weight: .medium))
+                                    .background(roundedShape.fill(.red))
+                                    .padding(.top, 8)
+                            }
                         }
 
                         let isMainTasksExists = !state.mainTasks.isEmpty
