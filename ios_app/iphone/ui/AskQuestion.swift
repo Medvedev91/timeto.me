@@ -14,7 +14,7 @@ struct AskQuestion<Content: View>: View {
         Button(
             action: {
                 if (MFMailComposeViewController.canSendMail()) {
-                    isMailViewPresented.toggle()
+                    isMailViewPresented = true
                 } else {
                     let subjectEncoded = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
                     let url = URL(string: "mailto:\(Utils_kmpKt.HI_EMAIL)?subject=\(subjectEncoded)")!
@@ -25,5 +25,13 @@ struct AskQuestion<Content: View>: View {
                 content()
             }
         )
+        .sheetEnv(isPresented: $isMailViewPresented) {
+            MailView(
+                toEmail: Utils_kmpKt.HI_EMAIL,
+                subject: subject,
+                body: nil,
+                result: $mailViewResult
+            )
+        }
     }
 }
