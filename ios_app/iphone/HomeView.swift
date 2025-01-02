@@ -27,8 +27,6 @@ struct HomeView: View {
 
     @State private var isPurpleAnim = true
 
-    static var lastInstance: HomeView? = nil
-
     @State private var triggersChecklist: ChecklistDb?
     @State private var isTriggersChecklistPresented = false
     @State private var isSettingsSheetPresented = false
@@ -455,9 +453,6 @@ struct HomeView: View {
             if let checklist = triggersChecklist {
                 ChecklistSheet(isPresented: $isTriggersChecklistPresented, checklist: checklist)
             }
-        }
-        .onAppear {
-            HomeView.lastInstance = self
         }
     }
 }
