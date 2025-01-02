@@ -142,14 +142,14 @@ private struct TabView: View {
                         .padding(.top, paddingTop)
                         .padding(.horizontal, H_PADDING - 2)
                     } else if let paragraph = paragraph as? ReadmeSheetVm.ParagraphAskAQuestion {
-                        AskAQuestionButtonView(
-                            subject: paragraph.subject,
-                            isFirst: true,
-                            isLast: true,
-                            bgColor: c.fg,
-                            withTopDivider: false
-                        )
+                        AskQuestion(
+                            subject: paragraph.subject
+                        ) {
+                            Text(paragraph.title)
+                                .foregroundColor(.blue)
+                        }
                         .padding(.top, 24)
+                        .padding(.leading, H_PADDING)
                     } else if paragraph is ReadmeSheetVm.ParagraphTimerTypical {
                         ReadmeImagesPreview(
                             images: [
