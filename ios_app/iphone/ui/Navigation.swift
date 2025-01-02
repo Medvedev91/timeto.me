@@ -26,6 +26,7 @@ struct NavigationLink<Content: View>: View {
     }
 }
 
+@MainActor
 class Navigation: ObservableObject {
     
     @Published var path: [NavigationPath] = []
