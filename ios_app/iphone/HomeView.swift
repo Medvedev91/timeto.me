@@ -434,7 +434,8 @@ struct HomeView: View {
                     SettingsScreen()
                 }
             }
-            .frame(width: .infinity, height: HomeView__BOTTOM_NAVIGATION_HEIGHT)
+            .fillMaxWidth()
+            .frame(height: HomeView__BOTTOM_NAVIGATION_HEIGHT)
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
         .onReceive(shortcutPublisher) { shortcut in
