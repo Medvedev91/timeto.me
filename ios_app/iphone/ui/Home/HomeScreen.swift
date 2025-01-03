@@ -19,12 +19,17 @@ struct HomeScreen: View {
         
         VmView({ HomeVm() }) { vm, state in
             
-            ZStack {
+            VStack {
                 
-                // todo PROVOKE_STATE_UPDATE
-                EmptyView().id("MainView checklist \(triggersChecklist?.id ?? 0)")
-                
-                HomeMainTabView(vm: vm, state: state)
+                ZStack {
+                    
+                    // todo PROVOKE_STATE_UPDATE
+                    EmptyView().id("MainView checklist \(triggersChecklist?.id ?? 0)")
+                    
+                    HomeMainTabView(vm: vm, state: state)
+                }
+
+                HomeTabsView(vm: vm, state: state)
             }
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)

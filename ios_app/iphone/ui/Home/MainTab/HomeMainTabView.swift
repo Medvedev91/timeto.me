@@ -155,8 +155,6 @@ struct HomeMainTabView: View {
                         .clipped() // Fix list offset on IME open
                 }
             }
-            
-            HomeTabsView(vm: vm, state: state)
         }
     }
 }
