@@ -38,16 +38,16 @@ private struct NativeSheetItem<Content>: View, Identifiable where Content: View 
     var body: some View {
         
         ZStack {}
-            .sheetEnv(isPresented: $isPresented) {
+            .sheetEnv(
+                isPresented: $isPresented,
+                onDismiss: {
+                    nativeSheet.items.removeAll { $0.id == id }
+                }
+            ) {
                 content($isPresented)
             }
             .onAppear {
                 isPresented = true
-            }
-            .onChange(of: isPresented) { _, new in
-                if !new {
-                    nativeSheet.items.removeAll { $0.id == id }
-                }
             }
     }
 }
