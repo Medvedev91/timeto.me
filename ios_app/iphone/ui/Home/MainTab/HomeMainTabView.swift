@@ -2,7 +2,6 @@ import SwiftUI
 import shared
 
 // MTG - Main Tasks & Goals
-let HomeMainTabView__MTG_ITEM_HEIGHT = 38.0
 private let mtgCircleHPadding = 7.0
 private let mtgCircleHeight = 24.0
 private let mtgCircleFontSize = 15.0
@@ -65,7 +64,7 @@ struct HomeMainTabView: View {
                         
                         let _ = vm.upListsContainerSize(
                             totalHeight: Float(geometry.size.height),
-                            itemHeight: Float(HomeMainTabView__MTG_ITEM_HEIGHT)
+                            itemHeight: Float(HomeScreen__ITEM_HEIGHT)
                         )
                         
                         VStack {
@@ -140,7 +139,7 @@ struct HomeMainTabView: View {
                                         .background(roundedShape.fill(c.homeFg))
                                         .padding(.horizontal, H_PADDING)
                                     }
-                                    .frame(height: HomeMainTabView__MTG_ITEM_HEIGHT, alignment: .center)
+                                    .frame(height: HomeScreen__ITEM_HEIGHT, alignment: .center)
                                     .offset(y: 1)
                                 }
                             )
@@ -265,7 +264,7 @@ private struct MainTaskItemView: View {
                             .font(.system(size: HomeScreen__PRIMARY_FONT_SIZE))
                     }
                 }
-                .frame(height: HomeMainTabView__MTG_ITEM_HEIGHT)
+                .frame(height: HomeScreen__ITEM_HEIGHT)
                 .padding(.horizontal, H_PADDING)
             }
         )
