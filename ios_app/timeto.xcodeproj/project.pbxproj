@@ -51,6 +51,7 @@
 		2CF9DA842D27ECF000965A76 /* HomeTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA832D27ECEB00965A76 /* HomeTimerView.swift */; };
 		2CF9DA872D281FEF00965A76 /* NavigationPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA862D281FE900965A76 /* NavigationPath.swift */; };
 		2CF9DA892D28211D00965A76 /* NavigationLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA882D28211B00965A76 /* NavigationLink.swift */; };
+		2CF9DA8B2D282F0200965A76 /* NavigationSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA8A2D282EFE00965A76 /* NavigationSheet.swift */; };
 		318210C5F98B5CD4E8D8C104 /* FoldersSettingsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E3EB266890584C3EF87 /* FoldersSettingsSheet.swift */; };
 		318210CF629A7E593B9F8FE4 /* ChecklistItemFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821290CB27918CD444FBB0 /* ChecklistItemFormSheet.swift */; };
 		318210E102D112C2860ADF9F /* DialogCloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E53EB27CE7F81AF0F69 /* DialogCloseButton.swift */; };
@@ -190,6 +191,7 @@
 		2CF9DA832D27ECEB00965A76 /* HomeTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTimerView.swift; sourceTree = "<group>"; };
 		2CF9DA862D281FE900965A76 /* NavigationPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationPath.swift; sourceTree = "<group>"; };
 		2CF9DA882D28211B00965A76 /* NavigationLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationLink.swift; sourceTree = "<group>"; };
+		2CF9DA8A2D282EFE00965A76 /* NavigationSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSheet.swift; sourceTree = "<group>"; };
 		3182106A0DA4A0D8844CFA11 /* ShortcutFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutFormSheet.swift; sourceTree = "<group>"; };
 		31821110E735778C88CDF821 /* Sheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
 		318211488ABF627A2A9935A7 /* ActivityColorSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityColorSheet.swift; sourceTree = "<group>"; };
@@ -390,6 +392,7 @@
 				2C37C4242D22797100995840 /* Navigation.swift */,
 				2CF9DA882D28211B00965A76 /* NavigationLink.swift */,
 				2CF9DA862D281FE900965A76 /* NavigationPath.swift */,
+				2CF9DA8A2D282EFE00965A76 /* NavigationSheet.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -711,6 +714,7 @@
 				2C273F2B2BA4ACEB0016F11D /* AskAQuestionListButtonView.swift in Sources */,
 				31821DF974247D110D01C3A2 /* ActivitiesTimerSheet.swift in Sources */,
 				2C4A5EE12CB7F71600340578 /* GoalFormFs.swift in Sources */,
+				2CF9DA8B2D282F0200965A76 /* NavigationSheet.swift in Sources */,
 				31821611D065F54C0BC007A9 /* DaytimePickerSheet.swift in Sources */,
 				318212D55BBA074155F95EB0 /* TextField__VMState.swift in Sources */,
 				318215958A7A06F6610DF5AF /* TimetoAlert.swift in Sources */,
