@@ -59,7 +59,7 @@ struct ChecklistView: View {
                                             Text(itemUI.item.text)
                                                 .padding(.vertical, 4)
                                                 .foregroundColor(.white)
-                                                .font(.system(size: HomeView__PRIMARY_FONT_SIZE))
+                                                .font(.system(size: HomeScreen__PRIMARY_FONT_SIZE))
                                                 .lineLimit(maxLines)
                                         }
                                         .frame(maxWidth: .infinity, alignment: .leading)

@@ -2,8 +2,7 @@ import SwiftUI
 import Combine
 import shared
 
-let HomeView__BOTTOM_NAVIGATION_HEIGHT = 56.0
-let HomeView__PRIMARY_FONT_SIZE = 18.0
+let HomeScreen__PRIMARY_FONT_SIZE = 18.0
 
 // MTG - Main Tasks & Goals
 let HomeView__MTG_ITEM_HEIGHT = 38.0
@@ -13,8 +12,6 @@ private let mtgCircleFontSize = 15.0
 private let mtgCircleFontWeight: Font.Weight = .semibold
 
 struct HomeScreen: View {
-    
-    @State private var vm = HomeVm()
     
     @EnvironmentObject private var nativeSheet: NativeSheet
     @EnvironmentObject private var navigation: Navigation
@@ -27,16 +24,16 @@ struct HomeScreen: View {
     
     var body: some View {
         
-        VMView(vm: vm, stack: .ZStack(alignment: .bottom)) { state in
-            
-            /// # PROVOKE_STATE_UPDATE
-            EmptyView().id("MainView checklist \(triggersChecklist?.id ?? 0)")
+        VmView({ HomeVm() }) { vm, state in
             
             VStack {
                 
                 HomeTimerView(vm: vm, state: state)
                 
                 ZStack {
+                    
+                    // todo PROVOKE_STATE_UPDATE
+                    EmptyView().id("MainView checklist \(triggersChecklist?.id ?? 0)")
                     
                     let checklistDb = state.checklistDb
                     
@@ -162,17 +159,15 @@ struct HomeScreen: View {
                         
                         Padding(vertical: 10.0)
                     }
-                    .padding(.bottom, HomeView__BOTTOM_NAVIGATION_HEIGHT)
                     
                     if (state.isTasksVisible) {
                         TasksView()
                             .clipped() // Fix list offset on IME open
-                            .padding(.bottom, HomeView__BOTTOM_NAVIGATION_HEIGHT)
                     }
                 }
+                
+                HomeTabsView(vm: vm, state: state)
             }
-            
-            HomeTabsView(vm: vm, state: state)
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
         .onReceive(shortcutPublisher) { shortcut in
@@ -287,7 +282,7 @@ private struct MainTaskItemView: View {
                     }
 
                     Text(mainTask.text)
-                        .font(.system(size: HomeView__PRIMARY_FONT_SIZE))
+                        .font(.system(size: HomeScreen__PRIMARY_FONT_SIZE))
                         .foregroundColor(Color.white)
                         .padding(.trailing, 4)
 
@@ -296,7 +291,7 @@ private struct MainTaskItemView: View {
                     if let timeUI = mainTask.timeUI {
                         Text(timeUI.note)
                             .foregroundColor(timeUI.noteColor.toColor())
-                            .font(.system(size: HomeView__PRIMARY_FONT_SIZE))
+                            .font(.system(size: HomeScreen__PRIMARY_FONT_SIZE))
                     }
                 }
                 .frame(height: HomeView__MTG_ITEM_HEIGHT)

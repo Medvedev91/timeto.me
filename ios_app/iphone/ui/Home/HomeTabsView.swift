@@ -1,6 +1,8 @@
 import SwiftUI
 import shared
 
+let HomeTabsView__HEIGHT = 56.0
+
 private let menuTimeFont = buildTimerFont(size: 10)
 
 struct HomeTabsView: View {
@@ -30,7 +32,7 @@ struct HomeTabsView: View {
                     VStack {
                         Spacer()
                         Image(systemName: "timer")
-                            .frame(height: HomeView__BOTTOM_NAVIGATION_HEIGHT)
+                            .frame(height: HomeTabsView__HEIGHT)
                             .foregroundColor(c.homeFontSecondary)
                             .font(.system(size: 30, weight: .thin))
                             .frame(maxWidth: .infinity)
@@ -79,7 +81,7 @@ struct HomeTabsView: View {
                         .padding(.trailing, 2)
                     }
                     .padding(.top, 2)
-                    .frame(height: HomeView__BOTTOM_NAVIGATION_HEIGHT)
+                    .frame(height: HomeTabsView__HEIGHT)
                     .frame(maxWidth: .infinity)
                     .background(state.isTasksVisible ? Color(.systemGray5) : .black)
                     .cornerRadius(10, onTop: true, onBottom: true)
@@ -94,7 +96,7 @@ struct HomeTabsView: View {
                     VStack {
                         Spacer()
                         Image(systemName: "ellipsis.circle")
-                            .frame(height: HomeView__BOTTOM_NAVIGATION_HEIGHT)
+                            .frame(height: HomeTabsView__HEIGHT)
                             .foregroundColor(c.homeFontSecondary)
                             .font(.system(size: 30, weight: .thin))
                             .frame(maxWidth: .infinity)
@@ -106,6 +108,6 @@ struct HomeTabsView: View {
             }
         }
         .fillMaxWidth()
-        .frame(height: HomeView__BOTTOM_NAVIGATION_HEIGHT)
+        .frame(height: HomeTabsView__HEIGHT)
     }
 }

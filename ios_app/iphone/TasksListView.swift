@@ -137,7 +137,7 @@ struct TasksListView: View {
                         .frame(minHeight: geometry.size.height)
                     }
                     .animation(tabTasksView.withListAnimation ? Animation.easeOut(duration: 0.25) : nil)
-                    .offset(y: keyboardManager.height > 0 && isAddFormFocused ? -(keyboardManager.height - HomeView__BOTTOM_NAVIGATION_HEIGHT) : 0)
+                    .offset(y: keyboardManager.height > 0 && isAddFormFocused ? -(keyboardManager.height - HomeTabsView__HEIGHT) : 0)
                     ///
                     .onChange(of: isAddFormFocused) { _ in
                         scrollDown(scrollProxy: scrollProxy, toAnimate: true)
