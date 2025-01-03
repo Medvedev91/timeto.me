@@ -46,7 +46,7 @@ struct WhatsNewScreen: View {
                             
                             if let buttonUi = historyItemUi.buttonUi {
                                 let navigationPath: NavigationPath = {
-                                    if (buttonUi == WhatsNewVm.HistoryItemUiButtonUi.pomodoro) {
+                                    if buttonUi == .pomodoro {
                                         return .readme(defaultItem: .pomodoro)
                                     }
                                     fatalError()
@@ -65,6 +65,7 @@ struct WhatsNewScreen: View {
             }
             .plainList()
             .navigationTitle(state.headerTitle)
+            .toolbarTitleDisplayMode(.inline)
         }
     }
 }
