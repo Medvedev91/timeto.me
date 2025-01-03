@@ -48,10 +48,11 @@
 		2CDEAB582C00E27600519C3D /* Fs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDEAB572C00E27600519C3D /* Fs.swift */; };
 		2CDEAB5A2C00F90C00519C3D /* RepeatingFormPeriodFs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDEAB592C00F90C00519C3D /* RepeatingFormPeriodFs.swift */; };
 		2CF9DA822D27BB6800965A76 /* HomeTabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA812D27BB5D00965A76 /* HomeTabsView.swift */; };
-		2CF9DA842D27ECF000965A76 /* HomeTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA832D27ECEB00965A76 /* HomeTimerView.swift */; };
+		2CF9DA842D27ECF000965A76 /* HomeMainTabTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA832D27ECEB00965A76 /* HomeMainTabTimerView.swift */; };
 		2CF9DA872D281FEF00965A76 /* NavigationPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA862D281FE900965A76 /* NavigationPath.swift */; };
 		2CF9DA892D28211D00965A76 /* NavigationLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA882D28211B00965A76 /* NavigationLink.swift */; };
 		2CF9DA8B2D282F0200965A76 /* NavigationSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA8A2D282EFE00965A76 /* NavigationSheet.swift */; };
+		2CF9DA8D2D284AA000965A76 /* HomeMainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA8C2D284A9300965A76 /* HomeMainTabView.swift */; };
 		318210C5F98B5CD4E8D8C104 /* FoldersSettingsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E3EB266890584C3EF87 /* FoldersSettingsSheet.swift */; };
 		318210CF629A7E593B9F8FE4 /* ChecklistItemFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821290CB27918CD444FBB0 /* ChecklistItemFormSheet.swift */; };
 		318210E102D112C2860ADF9F /* DialogCloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E53EB27CE7F81AF0F69 /* DialogCloseButton.swift */; };
@@ -188,10 +189,11 @@
 		2CDEAB572C00E27600519C3D /* Fs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fs.swift; sourceTree = "<group>"; };
 		2CDEAB592C00F90C00519C3D /* RepeatingFormPeriodFs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatingFormPeriodFs.swift; sourceTree = "<group>"; };
 		2CF9DA812D27BB5D00965A76 /* HomeTabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabsView.swift; sourceTree = "<group>"; };
-		2CF9DA832D27ECEB00965A76 /* HomeTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTimerView.swift; sourceTree = "<group>"; };
+		2CF9DA832D27ECEB00965A76 /* HomeMainTabTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMainTabTimerView.swift; sourceTree = "<group>"; };
 		2CF9DA862D281FE900965A76 /* NavigationPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationPath.swift; sourceTree = "<group>"; };
 		2CF9DA882D28211B00965A76 /* NavigationLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationLink.swift; sourceTree = "<group>"; };
 		2CF9DA8A2D282EFE00965A76 /* NavigationSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSheet.swift; sourceTree = "<group>"; };
+		2CF9DA8C2D284A9300965A76 /* HomeMainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMainTabView.swift; sourceTree = "<group>"; };
 		3182106A0DA4A0D8844CFA11 /* ShortcutFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutFormSheet.swift; sourceTree = "<group>"; };
 		31821110E735778C88CDF821 /* Sheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
 		318211488ABF627A2A9935A7 /* ActivityColorSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityColorSheet.swift; sourceTree = "<group>"; };
@@ -379,9 +381,9 @@
 		2CF9DA802D27B8E800965A76 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				2CF9DA8E2D284D2B00965A76 /* MainTab */,
 				31821ED2142F08DDD1E0CC75 /* HomeScreen.swift */,
 				2CF9DA812D27BB5D00965A76 /* HomeTabsView.swift */,
-				2CF9DA832D27ECEB00965A76 /* HomeTimerView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -395,6 +397,15 @@
 				2CF9DA8A2D282EFE00965A76 /* NavigationSheet.swift */,
 			);
 			path = Navigation;
+			sourceTree = "<group>";
+		};
+		2CF9DA8E2D284D2B00965A76 /* MainTab */ = {
+			isa = PBXGroup;
+			children = (
+				2CF9DA8C2D284A9300965A76 /* HomeMainTabView.swift */,
+				2CF9DA832D27ECEB00965A76 /* HomeMainTabTimerView.swift */,
+			);
+			path = MainTab;
 			sourceTree = "<group>";
 		};
 		318218DEA96CCDED8A4C448C /* ui */ = {
@@ -684,7 +695,7 @@
 				318219E30EE52A96A502BF30 /* KeyboardManager.swift in Sources */,
 				2C1531D02CB566CC00360615 /* GoalsFormFs.swift in Sources */,
 				2C2E93F8290117E300EAADBE /* HomeScreen.swift in Sources */,
-				2CF9DA842D27ECF000965A76 /* HomeTimerView.swift in Sources */,
+				2CF9DA842D27ECF000965A76 /* HomeMainTabTimerView.swift in Sources */,
 				2C2E93FA2905B57700EAADBE /* ScrollViewWithVListener.swift in Sources */,
 				318213413EE00D5D8F3FA396 /* EventsListView.swift in Sources */,
 				31821AAC3BB87DE0D8E46697 /* TasksView.swift in Sources */,
@@ -737,6 +748,7 @@
 				318219F4F07E446C4B3C607D /* Divider.swift in Sources */,
 				2C37C41B2D217F6E00995840 /* SettingsScreen.swift in Sources */,
 				318217982A5F8106B497432F /* SheetDividerBg.swift in Sources */,
+				2CF9DA8D2D284AA000965A76 /* HomeMainTabView.swift in Sources */,
 				31821CF86EDC2A5C5CB362E0 /* SheetDividerFg.swift in Sources */,
 				318214AB1E16DF8DC1C357F6 /* NativeSheet.swift in Sources */,
 				318214AF2E65AEC255D6204D /* TimerHintsView.swift in Sources */,

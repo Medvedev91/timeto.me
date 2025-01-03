@@ -5,7 +5,7 @@ private let timerFont1 = buildTimerFont(size: 44)
 private let timerFont2 = buildTimerFont(size: 38)
 private let timerFont3 = buildTimerFont(size: 30)
 
-struct HomeTimerView: View {
+struct HomeMainTabTimerView: View {
     
     let vm: HomeVm
     let state: HomeVm.State
