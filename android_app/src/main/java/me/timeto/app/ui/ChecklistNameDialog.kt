@@ -36,7 +36,7 @@ fun ChecklistNameDialog(
     ) {
 
         Text(
-            text = state.header,
+            text = state.title,
             modifier = Modifier
                 .padding(start = 10.dp, bottom = 15.dp),
             fontSize = 24.sp,
@@ -53,9 +53,9 @@ fun ChecklistNameDialog(
             outerPadding = PaddingValues(horizontal = 8.dp)
         ) {
             MyListView__ItemView__TextInputView(
-                placeholder = state.inputNamePlaceholder,
-                text = state.inputNameValue,
-                onTextChanged = { vm.setInputName(it) },
+                placeholder = state.placeholder,
+                text = state.input,
+                onTextChanged = { vm.setInput(it) },
                 isAutofocus = true,
             )
         }

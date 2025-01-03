@@ -7,31 +7,27 @@ import me.timeto.shared.launchEx
 import me.timeto.shared.showUiAlert
 
 class ChecklistNameDialogVm(
-    checklist: ChecklistDb?,
+    checklistDb: ChecklistDb?,
 ) : __Vm<ChecklistNameDialogVm.State>() {
 
     data class State(
-        val checklist: ChecklistDb?,
-        val inputNameValue: String,
+        val checklistDb: ChecklistDb?,
+        val input: String,
     ) {
-        val isSaveEnabled = inputNameValue.isNotBlank()
-        val header = checklist?.name ?: "New Checklist"
-        val inputNamePlaceholder = "Name"
+        val isSaveEnabled: Boolean = input.isNotBlank()
+        val title: String = checklistDb?.name ?: "New Checklist"
+        val placeholder = "Name"
     }
 
-    override val state: MutableStateFlow<State>
-
-    init {
-        state = MutableStateFlow(
-            State(
-                checklist = checklist,
-                inputNameValue = checklist?.name ?: ""
-            )
+    override val state = MutableStateFlow(
+        State(
+            checklistDb = checklistDb,
+            input = checklistDb?.name ?: ""
         )
-    }
+    )
 
-    fun setInputName(name: String) {
-        state.update { it.copy(inputNameValue = name) }
+    fun setInput(value: String) {
+        state.update { it.copy(input = value) }
     }
 
     fun save(
@@ -39,12 +35,12 @@ class ChecklistNameDialogVm(
     ) {
         scopeVm().launchEx {
             try {
-                val checklist = state.value.checklist
-                val newChecklist: ChecklistDb = if (checklist != null)
-                    checklist.upNameWithValidation(state.value.inputNameValue)
+                val oldChecklistDb: ChecklistDb? = state.value.checklistDb
+                val newChecklistDb: ChecklistDb = if (oldChecklistDb != null)
+                    oldChecklistDb.upNameWithValidation(state.value.input)
                 else
-                    ChecklistDb.addWithValidation(state.value.inputNameValue)
-                onSuccess(newChecklist)
+                    ChecklistDb.addWithValidation(state.value.input)
+                onSuccess(newChecklistDb)
             } catch (e: UIException) {
                 showUiAlert(e.uiMessage)
             }

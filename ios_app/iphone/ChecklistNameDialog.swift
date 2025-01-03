@@ -14,7 +14,7 @@ struct ChecklistNameDialog: View {
         onSave: @escaping (ChecklistDb) -> Void
     ) {
         _isPresented = isPresented
-        vm = ChecklistNameDialogVm(checklist: checklist)
+        vm = ChecklistNameDialogVm(checklistDb: checklist)
         self.onSave = onSave
     }
 
@@ -59,11 +59,11 @@ struct ChecklistNameDialog: View {
             ) {
 
                 MyListView__ItemView__TextInputView(
-                    text: state.inputNameValue,
+                    text: state.input,
                     placeholder: "Name",
                     isAutofocus: true,
                     onValueChanged: { newValue in
-                        vm.setInputName(name: newValue)
+                        vm.setInput(value: newValue)
                     }
                 )
             }
