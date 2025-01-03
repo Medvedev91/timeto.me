@@ -48,6 +48,7 @@
 		2CDEAB582C00E27600519C3D /* Fs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDEAB572C00E27600519C3D /* Fs.swift */; };
 		2CDEAB5A2C00F90C00519C3D /* RepeatingFormPeriodFs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDEAB592C00F90C00519C3D /* RepeatingFormPeriodFs.swift */; };
 		2CF9DA822D27BB6800965A76 /* HomeTabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA812D27BB5D00965A76 /* HomeTabsView.swift */; };
+		2CF9DA842D27ECF000965A76 /* HomeTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA832D27ECEB00965A76 /* HomeTimerView.swift */; };
 		318210C5F98B5CD4E8D8C104 /* FoldersSettingsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E3EB266890584C3EF87 /* FoldersSettingsSheet.swift */; };
 		318210CF629A7E593B9F8FE4 /* ChecklistItemFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821290CB27918CD444FBB0 /* ChecklistItemFormSheet.swift */; };
 		318210E102D112C2860ADF9F /* DialogCloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E53EB27CE7F81AF0F69 /* DialogCloseButton.swift */; };
@@ -184,6 +185,7 @@
 		2CDEAB572C00E27600519C3D /* Fs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fs.swift; sourceTree = "<group>"; };
 		2CDEAB592C00F90C00519C3D /* RepeatingFormPeriodFs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatingFormPeriodFs.swift; sourceTree = "<group>"; };
 		2CF9DA812D27BB5D00965A76 /* HomeTabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabsView.swift; sourceTree = "<group>"; };
+		2CF9DA832D27ECEB00965A76 /* HomeTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTimerView.swift; sourceTree = "<group>"; };
 		3182106A0DA4A0D8844CFA11 /* ShortcutFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutFormSheet.swift; sourceTree = "<group>"; };
 		31821110E735778C88CDF821 /* Sheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
 		318211488ABF627A2A9935A7 /* ActivityColorSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityColorSheet.swift; sourceTree = "<group>"; };
@@ -373,6 +375,7 @@
 			children = (
 				31821ED2142F08DDD1E0CC75 /* HomeScreen.swift */,
 				2CF9DA812D27BB5D00965A76 /* HomeTabsView.swift */,
+				2CF9DA832D27ECEB00965A76 /* HomeTimerView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -663,6 +666,7 @@
 				318219E30EE52A96A502BF30 /* KeyboardManager.swift in Sources */,
 				2C1531D02CB566CC00360615 /* GoalsFormFs.swift in Sources */,
 				2C2E93F8290117E300EAADBE /* HomeScreen.swift in Sources */,
+				2CF9DA842D27ECF000965A76 /* HomeTimerView.swift in Sources */,
 				2C2E93FA2905B57700EAADBE /* ScrollViewWithVListener.swift in Sources */,
 				318213413EE00D5D8F3FA396 /* EventsListView.swift in Sources */,
 				31821AAC3BB87DE0D8E46697 /* TasksView.swift in Sources */,
