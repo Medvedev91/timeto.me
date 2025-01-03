@@ -12,8 +12,6 @@ private let mtgCircleHeight = 24.0
 private let mtgCircleFontSize = 15.0
 private let mtgCircleFontWeight: Font.Weight = .semibold
 
-private let menuTimeFont = buildTimerFont(size: 10)
-
 private let timerFont1 = buildTimerFont(size: 44)
 private let timerFont2 = buildTimerFont(size: 38)
 private let timerFont3 = buildTimerFont(size: 30)
@@ -29,7 +27,6 @@ struct HomeScreen: View {
 
     @State private var triggersChecklist: ChecklistDb?
     @State private var isTriggersChecklistPresented = false
-    @State private var isSettingsSheetPresented = false
 
     private let shortcutPublisher: AnyPublisher<ShortcutDb, Never> = Utils_kmpKt.uiShortcutFlow.toPublisher()
     private let checklistPublisher: AnyPublisher<ChecklistDb, Never> = Utils_kmpKt.uiChecklistFlow.toPublisher()
@@ -342,100 +339,7 @@ struct HomeScreen: View {
                 }
             }
 
-            //
-            // Navigation
-
-            HStack(alignment: .bottom) {
-
-                Button(
-                    action: {
-                        nativeSheet.showActivitiesTimerSheet(
-                            timerContext: nil,
-                            withMenu: true,
-                            onStart: {}
-                        )
-                    },
-                    label: {
-                        VStack {
-                            Spacer()
-                            Image(systemName: "timer")
-                                .frame(height: HomeView__BOTTOM_NAVIGATION_HEIGHT)
-                                .foregroundColor(c.homeFontSecondary)
-                                .font(.system(size: 30, weight: .thin))
-                                .frame(maxWidth: .infinity)
-                                .frame(alignment: .bottom)
-                        }
-                    }
-                )
-
-                Button(
-                    action: {
-                        vm.toggleIsTasksVisible()
-                    },
-                    label: {
-
-                        VStack(alignment: .center) {
-
-                            Text(state.menuTime)
-                                .foregroundColor(c.homeMenuTime)
-                                .font(menuTimeFont)
-                                .padding(.top, 3)
-                                .padding(.bottom, 7)
-
-                            HStack {
-
-                                let batteryUi = state.batteryUi
-                                let batteryTextColor = batteryUi.colorRgba.toColor()
-
-                                Image(systemName: "bolt.fill")
-                                    .foregroundColor(batteryTextColor)
-                                    .font(.system(size: 12, weight: batteryUi.isHighlighted ? .regular : .ultraLight))
-
-                                Text(batteryUi.text)
-                                    .foregroundColor(batteryTextColor)
-                                    .font(.system(size: 13, weight: batteryUi.isHighlighted ? .bold : .regular))
-
-                                Image(systemName: "smallcircle.filled.circle")
-                                    .foregroundColor(c.homeFontSecondary)
-                                    .font(.system(size: 11 + halfDpCeil, weight: .regular))
-                                    .padding(.leading, 6)
-                                    .padding(.trailing, 1 + halfDpFloor)
-
-                                Text(state.menuTasksNote)
-                                    .foregroundColor(c.homeFontSecondary)
-                                    .font(.system(size: 13, weight: .regular))
-                            }
-                            .padding(.trailing, 2)
-                        }
-                        .padding(.top, 2)
-                        .frame(height: HomeView__BOTTOM_NAVIGATION_HEIGHT)
-                        .frame(maxWidth: .infinity)
-                        .background(state.isTasksVisible ? Color(.systemGray5) : .black)
-                        .cornerRadius(10, onTop: true, onBottom: true)
-                    }
-                )
-
-                Button(
-                    action: {
-                        isSettingsSheetPresented = true
-                    },
-                    label: {
-                        VStack {
-                            Spacer()
-                            Image(systemName: "ellipsis.circle")
-                                .frame(height: HomeView__BOTTOM_NAVIGATION_HEIGHT)
-                                .foregroundColor(c.homeFontSecondary)
-                                .font(.system(size: 30, weight: .thin))
-                                .frame(maxWidth: .infinity)
-                        }
-                    }
-                )
-                .sheetEnv(isPresented: $isSettingsSheetPresented) {
-                    SettingsScreen()
-                }
-            }
-            .fillMaxWidth()
-            .frame(height: HomeView__BOTTOM_NAVIGATION_HEIGHT)
+            HomeTabsView(vm: vm, state: state)
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
         .onReceive(shortcutPublisher) { shortcut in
