@@ -23,8 +23,6 @@ struct HomeScreen: View {
     @EnvironmentObject private var nativeSheet: NativeSheet
     @EnvironmentObject private var navigation: Navigation
 
-    @State private var isPurpleAnim = true
-
     @State private var triggersChecklist: ChecklistDb?
     @State private var isTriggersChecklistPresented = false
 
@@ -37,9 +35,6 @@ struct HomeScreen: View {
 
             /// # PROVOKE_STATE_UPDATE
             EmptyView().id("MainView checklist \(triggersChecklist?.id ?? 0)")
-
-            Color.black.edgesIgnoringSafeArea(.all)
-                .animateVmValue(value: state.isPurple, state: $isPurpleAnim)
 
             VStack {
 
