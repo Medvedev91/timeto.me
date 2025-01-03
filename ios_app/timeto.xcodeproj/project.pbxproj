@@ -49,6 +49,8 @@
 		2CDEAB5A2C00F90C00519C3D /* RepeatingFormPeriodFs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDEAB592C00F90C00519C3D /* RepeatingFormPeriodFs.swift */; };
 		2CF9DA822D27BB6800965A76 /* HomeTabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA812D27BB5D00965A76 /* HomeTabsView.swift */; };
 		2CF9DA842D27ECF000965A76 /* HomeTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA832D27ECEB00965A76 /* HomeTimerView.swift */; };
+		2CF9DA872D281FEF00965A76 /* NavigationPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA862D281FE900965A76 /* NavigationPath.swift */; };
+		2CF9DA892D28211D00965A76 /* NavigationLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA882D28211B00965A76 /* NavigationLink.swift */; };
 		318210C5F98B5CD4E8D8C104 /* FoldersSettingsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E3EB266890584C3EF87 /* FoldersSettingsSheet.swift */; };
 		318210CF629A7E593B9F8FE4 /* ChecklistItemFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821290CB27918CD444FBB0 /* ChecklistItemFormSheet.swift */; };
 		318210E102D112C2860ADF9F /* DialogCloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E53EB27CE7F81AF0F69 /* DialogCloseButton.swift */; };
@@ -186,6 +188,8 @@
 		2CDEAB592C00F90C00519C3D /* RepeatingFormPeriodFs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatingFormPeriodFs.swift; sourceTree = "<group>"; };
 		2CF9DA812D27BB5D00965A76 /* HomeTabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabsView.swift; sourceTree = "<group>"; };
 		2CF9DA832D27ECEB00965A76 /* HomeTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTimerView.swift; sourceTree = "<group>"; };
+		2CF9DA862D281FE900965A76 /* NavigationPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationPath.swift; sourceTree = "<group>"; };
+		2CF9DA882D28211B00965A76 /* NavigationLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationLink.swift; sourceTree = "<group>"; };
 		3182106A0DA4A0D8844CFA11 /* ShortcutFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutFormSheet.swift; sourceTree = "<group>"; };
 		31821110E735778C88CDF821 /* Sheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
 		318211488ABF627A2A9935A7 /* ActivityColorSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityColorSheet.swift; sourceTree = "<group>"; };
@@ -380,11 +384,22 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		2CF9DA852D281FBD00965A76 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				2C37C4242D22797100995840 /* Navigation.swift */,
+				2CF9DA882D28211B00965A76 /* NavigationLink.swift */,
+				2CF9DA862D281FE900965A76 /* NavigationPath.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
 		318218DEA96CCDED8A4C448C /* ui */ = {
 			isa = PBXGroup;
 			children = (
 				2C6582952D26E45500DB8AD4 /* ChecklistForm */,
 				2CF9DA802D27B8E800965A76 /* Home */,
+				2CF9DA852D281FBD00965A76 /* Navigation */,
 				2C65828E2D25C69900DB8AD4 /* Readme */,
 				2C37C4122D21658600995840 /* Settings */,
 				31821D7654D0C105DFC60DDD /* MyListView.swift */,
@@ -392,7 +407,6 @@
 				31821BCB57EC030987E8342E /* SheetHeaderView.swift */,
 				318216D54CC429737780D176 /* TextFieldClearButtonView.swift */,
 				2C6582932D26826D00DB8AD4 /* AskQuestion.swift */,
-				2C37C4242D22797100995840 /* Navigation.swift */,
 				2C37C4202D219FA200995840 /* WhatsNewScreen.swift */,
 			);
 			path = ui;
@@ -658,6 +672,7 @@
 				2CB73DE3292FACE00053B2D6 /* SearchEmojiSheet.swift in Sources */,
 				318212C07B5351BA8C7C9671 /* PieView.swift in Sources */,
 				318214BD0E34368A953B17CD /* MyListSwipeToActionItem.swift in Sources */,
+				2CF9DA872D281FEF00965A76 /* NavigationPath.swift in Sources */,
 				2C0BE02F295751B70099AD7C /* PickerStateView.swift in Sources */,
 				318216F271691CC07FC67AFC /* ChecklistNameDialog.swift in Sources */,
 				318215D20ED732E4BF4F3071 /* ChecklistSheet.swift in Sources */,
@@ -687,6 +702,7 @@
 				3182135819CDEB457816DD2B /* SheetHeaderView.swift in Sources */,
 				318213F14285EE686F7C1AF4 /* RepeatingFormSheet.swift in Sources */,
 				2C6582942D26829000DB8AD4 /* AskQuestion.swift in Sources */,
+				2CF9DA892D28211D00965A76 /* NavigationLink.swift in Sources */,
 				2C6582922D25CF6E00DB8AD4 /* ReadmeImagesFullScreen.swift in Sources */,
 				318216CD611B132D9DE288F3 /* EventTemplatesView.swift in Sources */,
 				31821A329A5D1AE8F7CB0604 /* EventFormSheet.swift in Sources */,

@@ -46,7 +46,7 @@ struct HomeScreen: View {
                             Button(
                                 action: {
                                     vm.onReadmeOpen()
-                                    navigation.path.append(.readme(defaultItem: .basics))
+                                    navigation.push(.readme(defaultItem: .basics))
                                 },
                                 label: {
                                     Text(readmeMessage)

@@ -170,7 +170,7 @@ struct HomeTimerView: View {
                     text: "?",
                     color: timerColor,
                     onClick: {
-                        navigation.path.append(.readme(defaultItem: .pomodoro))
+                        navigation.push(.readme(defaultItem: .pomodoro))
                     }
                 )
             }
