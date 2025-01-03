@@ -2,7 +2,7 @@ import SwiftUI
 
 class NativeSheet: ObservableObject {
     
-    @Published var items = [NativeSheet__Item<AnyView>]()
+    @Published fileprivate var items = [NativeSheet__Item<AnyView>]()
     
     func show<Content: View>(
         @ViewBuilder content: @escaping (Binding<Bool>) -> Content
@@ -25,9 +25,8 @@ extension View {
 }
 
 ///
-///
 
-struct NativeSheet__Item<Content>: View, Identifiable where Content: View {
+private struct NativeSheet__Item<Content>: View, Identifiable where Content: View {
     
     @ViewBuilder var content: (Binding<Bool>) -> Content
     
