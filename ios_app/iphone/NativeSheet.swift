@@ -2,13 +2,13 @@ import SwiftUI
 
 class NativeSheet: ObservableObject {
     
-    @Published fileprivate var items = [NativeSheet__Item<AnyView>]()
+    @Published fileprivate var items = [NativeSheetItem<AnyView>]()
     
     func show<Content: View>(
         @ViewBuilder content: @escaping (Binding<Bool>) -> Content
     ) {
         items.append(
-            NativeSheet__Item(
+            NativeSheetItem(
                 content: { isPresented in
                     AnyView(content(isPresented))
                 }
@@ -20,13 +20,13 @@ class NativeSheet: ObservableObject {
 extension View {
     
     func attachNativeSheet() -> some View {
-        modifier(NativeSheet__Modifier())
+        modifier(NativeSheetModifier())
     }
 }
 
 ///
 
-private struct NativeSheet__Item<Content>: View, Identifiable where Content: View {
+private struct NativeSheetItem<Content>: View, Identifiable where Content: View {
     
     @ViewBuilder var content: (Binding<Bool>) -> Content
     
@@ -52,7 +52,7 @@ private struct NativeSheet__Item<Content>: View, Identifiable where Content: Vie
     }
 }
 
-private struct NativeSheet__Modifier: ViewModifier {
+private struct NativeSheetModifier: ViewModifier {
     
     @StateObject private var nativeSheet = NativeSheet()
     
