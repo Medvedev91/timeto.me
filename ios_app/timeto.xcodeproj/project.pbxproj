@@ -408,6 +408,14 @@
 			path = MainTab;
 			sourceTree = "<group>";
 		};
+		2CF9DA932D28682700965A76 /* WhatsNew */ = {
+			isa = PBXGroup;
+			children = (
+				2C37C4202D219FA200995840 /* WhatsNewScreen.swift */,
+			);
+			path = WhatsNew;
+			sourceTree = "<group>";
+		};
 		318218DEA96CCDED8A4C448C /* ui */ = {
 			isa = PBXGroup;
 			children = (
@@ -416,12 +424,12 @@
 				2CF9DA852D281FBD00965A76 /* Navigation */,
 				2C65828E2D25C69900DB8AD4 /* Readme */,
 				2C37C4122D21658600995840 /* Settings */,
+				2CF9DA932D28682700965A76 /* WhatsNew */,
 				31821D7654D0C105DFC60DDD /* MyListView.swift */,
 				318218D93C3456758557A6E0 /* ScrollViewWithVListener.swift */,
 				31821BCB57EC030987E8342E /* SheetHeaderView.swift */,
 				318216D54CC429737780D176 /* TextFieldClearButtonView.swift */,
 				2C6582932D26826D00DB8AD4 /* AskQuestion.swift */,
-				2C37C4202D219FA200995840 /* WhatsNewScreen.swift */,
 			);
 			path = ui;
 			sourceTree = "<group>";
