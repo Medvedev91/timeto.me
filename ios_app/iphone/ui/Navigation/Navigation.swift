@@ -11,7 +11,7 @@ extension View {
 @MainActor
 class Navigation: ObservableObject {
     
-    @Published var pathList: [NavigationPath] = []
+    @Published fileprivate var pathList: [NavigationPath] = []
     
     func push(_ path: NavigationPath) {
         pathList.append(path)
