@@ -17,32 +17,32 @@ private let timerFont2 = buildTimerFont(size: 38)
 private let timerFont3 = buildTimerFont(size: 30)
 
 struct HomeScreen: View {
-
+    
     @State private var vm = HomeVm()
-
+    
     @EnvironmentObject private var nativeSheet: NativeSheet
     @EnvironmentObject private var navigation: Navigation
-
+    
     @State private var triggersChecklist: ChecklistDb?
     @State private var isTriggersChecklistPresented = false
-
+    
     private let shortcutPublisher: AnyPublisher<ShortcutDb, Never> = Utils_kmpKt.uiShortcutFlow.toPublisher()
     private let checklistPublisher: AnyPublisher<ChecklistDb, Never> = Utils_kmpKt.uiChecklistFlow.toPublisher()
-
+    
     var body: some View {
-
+        
         VMView(vm: vm, stack: .ZStack(alignment: .bottom)) { state in
-
+            
             /// # PROVOKE_STATE_UPDATE
             EmptyView().id("MainView checklist \(triggersChecklist?.id ?? 0)")
-
+            
             VStack {
-
+                
                 let timerData = state.timerData
                 let noteColor = timerData.noteColor.toColor()
                 let timerColor = timerData.timerColor.toColor()
                 let timerControlsColor = state.timerData.controlsColor.toColor()
-
+                
                 let timerFont: Font = {
                     let len = timerData.timerText.count
                     if len <= 5 {
@@ -53,34 +53,34 @@ struct HomeScreen: View {
                     }
                     return timerFont3
                 }()
-
+                
                 ZStack(alignment: .top) {
-
+                    
                     TimerDataNoteText(
                         text: state.timerData.note,
                         color: noteColor
                     )
-
+                    
                     HStack {
-
+                        
                         VStack {
-
+                            
                             TimerDataNoteText(text: " ", color: c.transparent)
-
+                            
                             Button(
                                 action: {
                                     vm.toggleIsPurple()
                                 },
                                 label: {
-
+                                    
                                     ZStack {
-
+                                        
                                         TimerDataTimerText(
                                             text: " ",
                                             font: timerFont,
                                             color: c.transparent
                                         )
-
+                                        
                                         Image(systemName: "info")
                                             .foregroundColor(timerControlsColor)
                                             .font(.system(size: 23, weight: .thin))
@@ -89,17 +89,17 @@ struct HomeScreen: View {
                                 }
                             )
                         }
-
+                        
                         Button(
                             action: {
                                 state.timerData.togglePomodoro()
                             },
                             label: {
-
+                                
                                 VStack {
-
+                                    
                                     TimerDataNoteText(text: " ", color: c.transparent)
-
+                                    
                                     TimerDataTimerText(
                                         text: timerData.timerText,
                                         font: timerFont,
@@ -108,25 +108,25 @@ struct HomeScreen: View {
                                 }
                             }
                         )
-
+                        
                         VStack {
-
+                            
                             TimerDataNoteText(text: " ", color: c.transparent)
-
+                            
                             Button(
                                 action: {
                                     state.timerData.prolong()
                                 },
                                 label: {
-
+                                    
                                     ZStack {
-
+                                        
                                         TimerDataTimerText(
                                             text: " ",
                                             font: timerFont,
                                             color: c.transparent
                                         )
-
+                                        
                                         if let prolongText = timerData.prolongText {
                                             Text(prolongText)
                                                 .font(.system(size: 22, weight: .thin))
@@ -144,13 +144,13 @@ struct HomeScreen: View {
                     }
                 }
                 .padding(.bottom, 11)
-
+                
                 if state.isPurple {
-
+                    
                     let infoUi = state.timerData.infoUi
-
+                    
                     HStack {
-
+                        
                         TimerInfoButton(
                             text: infoUi.untilDaytimeUi.text,
                             color: timerColor,
@@ -164,7 +164,7 @@ struct HomeScreen: View {
                                         onPick: { daytimePickerUi in
                                             infoUi.setUntilDaytime(daytimeUi: daytimePickerUi)
                                             vm.toggleIsPurple()
-
+                                            
                                         },
                                         onRemove: {}
                                     )
@@ -173,7 +173,7 @@ struct HomeScreen: View {
                                 }
                             }
                         )
-
+                        
                         TimerInfoButton(
                             text: infoUi.timerText,
                             color: timerColor,
@@ -186,7 +186,7 @@ struct HomeScreen: View {
                                 )
                             }
                         )
-
+                        
                         TimerInfoButton(
                             text: "?",
                             color: timerColor,
@@ -197,13 +197,13 @@ struct HomeScreen: View {
                     }
                     .offset(y: -4)
                 }
-
+                
                 ZStack {
-
+                    
                     let checklistDb = state.checklistDb
-
+                    
                     VStack {
-
+                        
                         if let readmeMessage = state.readmeMessage {
                             Button(
                                 action: {
@@ -221,7 +221,7 @@ struct HomeScreen: View {
                                 }
                             )
                         }
-
+                        
                         if let whatsNewMessage = state.whatsNewMessage {
                             NavigationLink(.whatsNew) {
                                 Text(whatsNewMessage)
@@ -233,18 +233,18 @@ struct HomeScreen: View {
                                     .padding(.top, 8)
                             }
                         }
-
+                        
                         let isMainTasksExists = !state.mainTasks.isEmpty
-
+                        
                         GeometryReader { geometry in
-
+                            
                             let _ = vm.upListsContainerSize(
                                 totalHeight: Float(geometry.size.height),
                                 itemHeight: Float(HomeView__MTG_ITEM_HEIGHT)
                             )
-
+                            
                             VStack {
-
+                                
                                 if let checklistDb = checklistDb {
                                     VStack {
                                         ChecklistView(
@@ -257,22 +257,22 @@ struct HomeScreen: View {
                                     .frame(height: CGFloat(state.listsSizes.checklist))
                                     .id("home_checklist_id_\(checklistDb.id)") // Force update on change
                                 }
-
+                                
                                 if isMainTasksExists {
                                     MainTasksView(
                                         tasks: state.mainTasks
                                     )
-                                        .frame(height: CGFloat(state.listsSizes.mainTasks))
+                                    .frame(height: CGFloat(state.listsSizes.mainTasks))
                                 }
-
+                                
                                 Spacer()
                             }
                         }
-
+                        
                         ForEachIndexed(
                             state.goalBarsUi,
                             content: { idx, goalBarUi in
-
+                                
                                 Button(
                                     action: {
                                         goalBarUi.startInterval()
@@ -280,9 +280,9 @@ struct HomeScreen: View {
                                     label: {
                                         
                                         ZStack {
-
+                                            
                                             ZStack {
-
+                                                
                                                 GeometryReader { geometry in
                                                     VStack {
                                                         ZStack {
@@ -295,16 +295,16 @@ struct HomeScreen: View {
                                                 }
                                                 .frame(width: .infinity)
                                                 .clipShape(roundedShape)
-
+                                                
                                                 HStack {
-
+                                                    
                                                     Text(goalBarUi.textLeft)
                                                         .padding(.leading, mtgCircleHPadding)
                                                         .foregroundColor(c.white)
                                                         .font(.system(size: mtgCircleFontSize, weight: mtgCircleFontWeight))
-
+                                                    
                                                     Spacer()
-
+                                                    
                                                     Text(goalBarUi.textRight)
                                                         .padding(.trailing, mtgCircleHPadding)
                                                         .foregroundColor(c.white)
@@ -321,11 +321,11 @@ struct HomeScreen: View {
                                 )
                             }
                         )
-
+                        
                         Padding(vertical: 10.0)
                     }
                     .padding(.bottom, HomeView__BOTTOM_NAVIGATION_HEIGHT)
-
+                    
                     if (state.isTasksVisible) {
                         TasksView()
                             .clipped() // Fix list offset on IME open
@@ -333,7 +333,7 @@ struct HomeScreen: View {
                     }
                 }
             }
-
+            
             HomeTabsView(vm: vm, state: state)
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
