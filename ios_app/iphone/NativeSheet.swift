@@ -45,8 +45,8 @@ struct NativeSheet__Item<Content>: View, Identifiable where Content: View {
             .onAppear {
                 isPresented = true
             }
-            .onChange(of: isPresented) { newValue in
-                if !newValue {
+            .onChange(of: isPresented) { _, new in
+                if !new {
                     nativeSheet.items.removeAll { $0.id == id }
                 }
             }
