@@ -15,7 +15,7 @@
 		2C273F2D2BB99A200016F11D /* ChecklistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C273F2C2BB99A200016F11D /* ChecklistView.swift */; };
 		2C273F2F2BBAE3090016F11D /* ChecklistFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C273F2E2BBAE3090016F11D /* ChecklistFormSheet.swift */; };
 		2C2C205D2B7A824A00D4B325 /* PrivacySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2C205C2B7A824A00D4B325 /* PrivacySheet.swift */; };
-		2C2E93F8290117E300EAADBE /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821ED2142F08DDD1E0CC75 /* HomeView.swift */; };
+		2C2E93F8290117E300EAADBE /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821ED2142F08DDD1E0CC75 /* HomeScreen.swift */; };
 		2C2E93F92905759100EAADBE /* TimerPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821AE61EE1FC22CCF8E753 /* TimerPickerSheet.swift */; };
 		2C2E93FA2905B57700EAADBE /* ScrollViewWithVListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318218D93C3456758557A6E0 /* ScrollViewWithVListener.swift */; };
 		2C37C4152D216A6500995840 /* VmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C37C4142D2169DE00995840 /* VmView.swift */; };
@@ -245,7 +245,7 @@
 		31821E53EB27CE7F81AF0F69 /* DialogCloseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogCloseButton.swift; sourceTree = "<group>"; };
 		31821E54E02F361F1AD21375 /* SummarySheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummarySheet.swift; sourceTree = "<group>"; };
 		31821E58DC92CD5673A6B49E /* utils_apple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = utils_apple.swift; sourceTree = "<group>"; };
-		31821ED2142F08DDD1E0CC75 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		31821ED2142F08DDD1E0CC75 /* HomeScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		31821F2108CAA3ADBA741879 /* WeekDaysFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekDaysFormView.swift; sourceTree = "<group>"; };
 		31821F29E288957ABB3DF794 /* TextFeaturesTimerFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFeaturesTimerFormView.swift; sourceTree = "<group>"; };
 		31821F4527059D286AC0AF41 /* TaskFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskFormSheet.swift; sourceTree = "<group>"; };
@@ -366,9 +366,19 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		2CF9DA802D27B8E800965A76 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				31821ED2142F08DDD1E0CC75 /* HomeScreen.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		318218DEA96CCDED8A4C448C /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				2C6582952D26E45500DB8AD4 /* ChecklistForm */,
+				2CF9DA802D27B8E800965A76 /* Home */,
 				2C65828E2D25C69900DB8AD4 /* Readme */,
 				2C37C4122D21658600995840 /* Settings */,
 				31821D7654D0C105DFC60DDD /* MyListView.swift */,
@@ -426,7 +436,6 @@
 				2CAF3CE12CD0110200CC6DE5 /* GoalPeriodFormFs.swift */,
 				2C1531CF2CB566C300360615 /* GoalsFormFs.swift */,
 				31821ACA6C9306A2CD2016A0 /* HistoryView.swift */,
-				31821ED2142F08DDD1E0CC75 /* HomeView.swift */,
 				2C95BA7A280D74AA0027FC35 /* IOSApp.swift */,
 				3182189A26C9B48C0D2E8A4A /* KeyboardManager.swift */,
 				31821C625A8A199EAEF17182 /* MailView.swift */,
@@ -649,7 +658,7 @@
 				2C273F2F2BBAE3090016F11D /* ChecklistFormSheet.swift in Sources */,
 				318219E30EE52A96A502BF30 /* KeyboardManager.swift in Sources */,
 				2C1531D02CB566CC00360615 /* GoalsFormFs.swift in Sources */,
-				2C2E93F8290117E300EAADBE /* HomeView.swift in Sources */,
+				2C2E93F8290117E300EAADBE /* HomeScreen.swift in Sources */,
 				2C2E93FA2905B57700EAADBE /* ScrollViewWithVListener.swift in Sources */,
 				318213413EE00D5D8F3FA396 /* EventsListView.swift in Sources */,
 				31821AAC3BB87DE0D8E46697 /* TasksView.swift in Sources */,

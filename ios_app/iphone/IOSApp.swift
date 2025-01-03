@@ -33,7 +33,7 @@ struct IOSApp: App {
                     BackupMessageView(message: backupMessage)
                 } else if state.isAppReady {
                     
-                    HomeView()
+                    HomeScreen()
                         .attachFs()
                         .attachTimetoAlert()
                         .attachAutoBackupIos()
