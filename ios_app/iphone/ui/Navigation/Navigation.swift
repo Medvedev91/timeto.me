@@ -27,12 +27,7 @@ private struct NavigationModifier: ViewModifier {
     func body(content: Content) -> some View {
         NavigationStack(path: $navigation.pathList) {
             content.navigationDestination(for: NavigationPath.self) { value in
-                switch value {
-                case .readme(let defaultItem):
-                    ReadmeScreen(defaultItem: defaultItem)
-                case .whatsNew:
-                    WhatsNewScreen()
-                }
+                AnyView(value.rend())
             }
         }
         .environmentObject(navigation)
