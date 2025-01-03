@@ -2,7 +2,7 @@ import SwiftUI
 import MessageUI
 import shared
 
-struct AskQuestion<Content: View>: View {
+struct AskQuestionView<Content: View>: View {
     
     let subject: String
     @ViewBuilder let content: () -> Content
