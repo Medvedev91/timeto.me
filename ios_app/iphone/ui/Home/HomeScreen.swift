@@ -35,6 +35,7 @@ struct HomeScreen: View {
                             .attachNavigation()
                     case nil:
                         HomeMainTabView(vm: vm, state: state)
+                            .attachNavigation()
                     }
                 }
 
