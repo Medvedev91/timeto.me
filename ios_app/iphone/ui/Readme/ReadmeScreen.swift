@@ -142,7 +142,7 @@ private struct TabView: View {
                         .padding(.top, paddingTop)
                         .padding(.horizontal, H_PADDING - 2)
                     } else if let paragraph = paragraph as? ReadmeVm.ParagraphAskAQuestion {
-                        AskQuestion(
+                        AskQuestionView(
                             subject: paragraph.subject
                         ) {
                             Text(paragraph.title)
