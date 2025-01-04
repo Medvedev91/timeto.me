@@ -45,7 +45,7 @@ struct HomeTabsView: View {
                     if tabSelected == .main {
                         vm.toggleIsTasksVisible()
                     } else {
-                        // todo force show home tasks
+                        vm.setIsTaskVisible(isVisible: false)
                         tabSelected = .main
                     }
                 },
@@ -94,6 +94,7 @@ struct HomeTabsView: View {
 
             Button(
                 action: {
+                    vm.setIsTaskVisible(isVisible: false)
                     tabSelected = (tabSelected == .settings ? .main : .settings)
                 },
                 label: {
