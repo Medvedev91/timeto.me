@@ -5,6 +5,10 @@ import shared
 let HomeScreen__ITEM_HEIGHT = 38.0
 let HomeScreen__PRIMARY_FONT_SIZE = 18.0
 
+private let shortcutPublisher: AnyPublisher<ShortcutDb, Never> = Utils_kmpKt.uiShortcutFlow.toPublisher()
+// todo remove
+private let checklistPublisher: AnyPublisher<ChecklistDb, Never> = Utils_kmpKt.uiChecklistFlow.toPublisher()
+
 struct HomeScreen: View {
     
     @EnvironmentObject private var nativeSheet: NativeSheet
@@ -12,9 +16,6 @@ struct HomeScreen: View {
     
     @State private var triggersChecklist: ChecklistDb?
     @State private var isTriggersChecklistPresented = false
-    
-    private let shortcutPublisher: AnyPublisher<ShortcutDb, Never> = Utils_kmpKt.uiShortcutFlow.toPublisher()
-    private let checklistPublisher: AnyPublisher<ChecklistDb, Never> = Utils_kmpKt.uiChecklistFlow.toPublisher()
     
     @State private var tabSelected: HomeTabSelected? = nil
     
