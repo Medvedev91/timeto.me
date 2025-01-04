@@ -283,6 +283,10 @@ class HomeVm : __Vm<HomeVm.State>() {
         state.update { it.copy(isTasksVisible = !it.isTasksVisible) }
     }
 
+    fun setIsTaskVisible(isVisible: Boolean) {
+        state.update { it.copy(isTasksVisible = isVisible) }
+    }
+
     private suspend fun upTodayIntervalsUI() {
         val utcOffset = localUtcOffsetWithDayStart
         val todayDS = UnixTime(utcOffset = utcOffset).localDay
