@@ -9,7 +9,7 @@ struct HomeTabsView: View {
     
     let vm: HomeVm
     let state: HomeVm.State
-    @Binding var tabSelected: HomeTabSelected?
+    @Binding var tabSelected: HomeTabSelected
 
     ///
     
@@ -89,7 +89,7 @@ struct HomeTabsView: View {
 
             Button(
                 action: {
-                    tabSelected = (tabSelected == nil ? .settings : nil)
+                    tabSelected = (tabSelected == .settings ? .main : .settings)
                 },
                 label: {
                     VStack {

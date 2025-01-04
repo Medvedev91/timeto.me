@@ -16,7 +16,7 @@ struct HomeScreen: View {
     @State private var triggersChecklist: ChecklistDb?
     @State private var isTriggersChecklistPresented = false
     
-    @State private var tabSelected: HomeTabSelected? = nil
+    @State private var tabSelected: HomeTabSelected = .main
     
     var body: some View {
         
@@ -30,11 +30,11 @@ struct HomeScreen: View {
                     EmptyView().id("MainView checklist \(triggersChecklist?.id ?? 0)")
                     
                     switch tabSelected {
+                    case .main:
+                        HomeMainTabView(vm: vm, state: state)
+                            .attachNavigation()
                     case .settings:
                         SettingsScreen()
-                            .attachNavigation()
-                    case nil:
-                        HomeMainTabView(vm: vm, state: state)
                             .attachNavigation()
                     }
                 }
