@@ -59,7 +59,6 @@
 		318210CF629A7E593B9F8FE4 /* ChecklistItemFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821290CB27918CD444FBB0 /* ChecklistItemFormSheet.swift */; };
 		318210E102D112C2860ADF9F /* DialogCloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E53EB27CE7F81AF0F69 /* DialogCloseButton.swift */; };
 		318210ECF60308ECF341FEA2 /* utils_ios.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182118D8EA3E0D889D4FDC3 /* utils_ios.swift */; };
-		318210F0EEFF944CD87E3A98 /* TabReadmeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821287721625075228B91E /* TabReadmeView.swift */; };
 		3182115F28EDF1E93DC73694 /* DividerBg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821D886EB022A0AD988588 /* DividerBg.swift */; };
 		318211C63D2C7A7AC48659E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821996D20B09EBA4F73C2B /* AppDelegate.swift */; };
 		318211D5994178629ED2FA09 /* W_TabTasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182161C9947F88C6A1D3B80 /* W_TabTasksView.swift */; };
@@ -206,7 +205,6 @@
 		3182118DB415E858D0B449DB /* SummaryChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryChartView.swift; sourceTree = "<group>"; };
 		3182118FAB48EDF7FE78201B /* TasksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksView.swift; sourceTree = "<group>"; };
 		31821220E2A7C6FBE2EA3D34 /* EventsListEventView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsListEventView.swift; sourceTree = "<group>"; };
-		31821287721625075228B91E /* TabReadmeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabReadmeView.swift; sourceTree = "<group>"; };
 		31821290CB27918CD444FBB0 /* ChecklistItemFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChecklistItemFormSheet.swift; sourceTree = "<group>"; };
 		318212B384624F1CF416C576 /* EventFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventFormSheet.swift; sourceTree = "<group>"; };
 		318212FEA97CBD2AEC3AA1D6 /* ChecklistNameDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChecklistNameDialog.swift; sourceTree = "<group>"; };
@@ -514,7 +512,6 @@
 				31821F858C3344296F2CB750 /* ShortcutsPickerSheet.swift */,
 				3182118DB415E858D0B449DB /* SummaryChartView.swift */,
 				31821E54E02F361F1AD21375 /* SummarySheet.swift */,
-				31821287721625075228B91E /* TabReadmeView.swift */,
 				31821F4527059D286AC0AF41 /* TaskFormSheet.swift */,
 				31821AD0C2CE87BF5AE03022 /* TasksListView.swift */,
 				3182118FAB48EDF7FE78201B /* TasksView.swift */,
@@ -721,7 +718,6 @@
 				318213413EE00D5D8F3FA396 /* EventsListView.swift in Sources */,
 				31821AAC3BB87DE0D8E46697 /* TasksView.swift in Sources */,
 				2C37C4232D21A90D00995840 /* ReadmeScreen.swift in Sources */,
-				318210F0EEFF944CD87E3A98 /* TabReadmeView.swift in Sources */,
 				318213FBF8D67B0E8E5463AC /* RepeatingsListView.swift in Sources */,
 				3182132BB1D4C32160A2EBCE /* TasksListView.swift in Sources */,
 				2C0BE02D295732110099AD7C /* DatePickerStateView.swift in Sources */,
