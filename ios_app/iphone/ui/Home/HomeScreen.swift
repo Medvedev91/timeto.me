@@ -11,7 +11,6 @@ private let checklistPublisher: AnyPublisher<ChecklistDb, Never> = Utils_kmpKt.u
 
 struct HomeScreen: View {
     
-    @EnvironmentObject private var nativeSheet: NativeSheet
     @EnvironmentObject private var navigation: Navigation
     
     @State private var triggersChecklist: ChecklistDb?
