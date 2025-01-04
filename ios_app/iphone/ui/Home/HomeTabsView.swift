@@ -101,7 +101,7 @@ struct HomeTabsView: View {
                         Spacer()
                         Image(systemName: "ellipsis.circle")
                             .frame(height: HomeTabsView__HEIGHT)
-                            .foregroundColor(c.homeFontSecondary)
+                            .foregroundColor(tabSelected == .settings ? .blue : c.homeFontSecondary)
                             .font(.system(size: 30, weight: .thin))
                             .frame(maxWidth: .infinity)
                     }
