@@ -54,6 +54,7 @@
 		2CF9DA892D28211D00965A76 /* NavigationLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA882D28211B00965A76 /* NavigationLink.swift */; };
 		2CF9DA8B2D282F0200965A76 /* NavigationSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA8A2D282EFE00965A76 /* NavigationSheet.swift */; };
 		2CF9DA8D2D284AA000965A76 /* HomeMainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA8C2D284A9300965A76 /* HomeMainTabView.swift */; };
+		2CF9DA902D2855A000965A76 /* HomeTabSelected.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA8F2D28559800965A76 /* HomeTabSelected.swift */; };
 		318210C5F98B5CD4E8D8C104 /* FoldersSettingsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E3EB266890584C3EF87 /* FoldersSettingsSheet.swift */; };
 		318210CF629A7E593B9F8FE4 /* ChecklistItemFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821290CB27918CD444FBB0 /* ChecklistItemFormSheet.swift */; };
 		318210E102D112C2860ADF9F /* DialogCloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E53EB27CE7F81AF0F69 /* DialogCloseButton.swift */; };
@@ -196,6 +197,7 @@
 		2CF9DA882D28211B00965A76 /* NavigationLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationLink.swift; sourceTree = "<group>"; };
 		2CF9DA8A2D282EFE00965A76 /* NavigationSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSheet.swift; sourceTree = "<group>"; };
 		2CF9DA8C2D284A9300965A76 /* HomeMainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMainTabView.swift; sourceTree = "<group>"; };
+		2CF9DA8F2D28559800965A76 /* HomeTabSelected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabSelected.swift; sourceTree = "<group>"; };
 		3182106A0DA4A0D8844CFA11 /* ShortcutFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutFormSheet.swift; sourceTree = "<group>"; };
 		31821110E735778C88CDF821 /* Sheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
 		318211488ABF627A2A9935A7 /* ActivityColorSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityColorSheet.swift; sourceTree = "<group>"; };
@@ -386,6 +388,7 @@
 				2CF9DA8E2D284D2B00965A76 /* MainTab */,
 				31821ED2142F08DDD1E0CC75 /* HomeScreen.swift */,
 				2CF9DA812D27BB5D00965A76 /* HomeTabsView.swift */,
+				2CF9DA8F2D28559800965A76 /* HomeTabSelected.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -768,6 +771,7 @@
 				31821D1716CFA24F74C1BE6C /* NoteFormSheet.swift in Sources */,
 				31821A31BFF9D29DD019E05D /* NoteSheet.swift in Sources */,
 				31821EE26161D262CC020E3D /* SummarySheet.swift in Sources */,
+				2CF9DA902D2855A000965A76 /* HomeTabSelected.swift in Sources */,
 				2CA9C0372C39F0E300A321FA /* DividerBgScroll.swift in Sources */,
 				2CDEAB5A2C00F90C00519C3D /* RepeatingFormPeriodFs.swift in Sources */,
 				31821859FBE8390BA3346A0E /* EventTemplateFormSheet.swift in Sources */,
