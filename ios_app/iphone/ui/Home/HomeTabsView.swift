@@ -9,13 +9,12 @@ struct HomeTabsView: View {
     
     let vm: HomeVm
     let state: HomeVm.State
-    
+    @Binding var tabSelected: HomeTabSelected?
+
     ///
     
     @EnvironmentObject private var nativeSheet: NativeSheet
     
-    @State private var isSettingsSheetPresented = false
-
     var body: some View {
         
         HStack(alignment: .bottom) {
@@ -90,7 +89,7 @@ struct HomeTabsView: View {
 
             Button(
                 action: {
-                    isSettingsSheetPresented = true
+                    tabSelected = (tabSelected == nil ? .settings : nil)
                 },
                 label: {
                     VStack {
@@ -103,9 +102,6 @@ struct HomeTabsView: View {
                     }
                 }
             )
-            .sheetEnv(isPresented: $isSettingsSheetPresented) {
-                SettingsScreen()
-            }
         }
         .fillMaxWidth()
         .frame(height: HomeTabsView__HEIGHT)

@@ -16,6 +16,8 @@ struct HomeScreen: View {
     private let shortcutPublisher: AnyPublisher<ShortcutDb, Never> = Utils_kmpKt.uiShortcutFlow.toPublisher()
     private let checklistPublisher: AnyPublisher<ChecklistDb, Never> = Utils_kmpKt.uiChecklistFlow.toPublisher()
     
+    @State private var tabSelected: HomeTabSelected? = nil
+    
     var body: some View {
         
         VmView({ HomeVm() }) { vm, state in
@@ -24,13 +26,19 @@ struct HomeScreen: View {
                 
                 ZStack {
                     
-                    // todo PROVOKE_STATE_UPDATE
+                    // todo remove PROVOKE_STATE_UPDATE
                     EmptyView().id("MainView checklist \(triggersChecklist?.id ?? 0)")
                     
-                    HomeMainTabView(vm: vm, state: state)
+                    switch tabSelected {
+                    case .settings:
+                        SettingsScreen()
+                            .attachNavigation()
+                    case nil:
+                        HomeMainTabView(vm: vm, state: state)
+                    }
                 }
 
-                HomeTabsView(vm: vm, state: state)
+                HomeTabsView(vm: vm, state: state, tabSelected: $tabSelected)
             }
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
