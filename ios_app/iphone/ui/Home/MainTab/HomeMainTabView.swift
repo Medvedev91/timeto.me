@@ -117,7 +117,7 @@ struct HomeMainTabView: View {
                                                     Spacer()
                                                 }
                                             }
-                                            .frame(width: .infinity)
+                                            .fillMaxWidth()
                                             .clipShape(roundedShape)
                                             
                                             HStack {
