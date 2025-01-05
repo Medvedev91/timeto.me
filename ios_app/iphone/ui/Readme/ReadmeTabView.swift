@@ -223,7 +223,7 @@ struct ReadmeTabView: View {
                 .padding(.top, 28)
                 .plainListItem()
         }
-        .contentMargins(.bottom, HomeTabBar__HEIGHT)
+        .contentMarginsTabBar()
         .plainList()
     }
 }

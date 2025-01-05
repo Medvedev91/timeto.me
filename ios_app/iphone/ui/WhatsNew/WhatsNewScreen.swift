@@ -66,6 +66,7 @@ struct WhatsNewScreen: View {
             .plainList()
             .navigationTitle(state.headerTitle)
             .toolbarTitleDisplayMode(.inline)
+            .contentMarginsTabBar(extra: 20)
         }
     }
 }

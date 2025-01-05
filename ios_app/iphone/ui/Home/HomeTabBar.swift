@@ -5,6 +5,13 @@ let HomeTabBar__HEIGHT = 56.0
 
 private let menuTimeFont = buildTimerFont(size: 10)
 
+extension View {
+    
+    func contentMarginsTabBar(extra: CGFloat = 0) -> some View {
+        contentMargins(.bottom, HomeTabBar__HEIGHT + extra)
+    }
+}
+
 struct HomeTabBar: View {
     
     let vm: HomeVm
