@@ -49,7 +49,7 @@
 		2CDEAB582C00E27600519C3D /* Fs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDEAB572C00E27600519C3D /* Fs.swift */; };
 		2CDEAB5A2C00F90C00519C3D /* RepeatingFormPeriodFs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDEAB592C00F90C00519C3D /* RepeatingFormPeriodFs.swift */; };
 		2CF9DA822D27BB6800965A76 /* HomeTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA812D27BB5D00965A76 /* HomeTabBar.swift */; };
-		2CF9DA842D27ECF000965A76 /* HomeMainTabTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA832D27ECEB00965A76 /* HomeMainTabTimerView.swift */; };
+		2CF9DA842D27ECF000965A76 /* HomeTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA832D27ECEB00965A76 /* HomeTimerView.swift */; };
 		2CF9DA872D281FEF00965A76 /* NavigationPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA862D281FE900965A76 /* NavigationPath.swift */; };
 		2CF9DA892D28211D00965A76 /* NavigationLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA882D28211B00965A76 /* NavigationLink.swift */; };
 		2CF9DA8B2D282F0200965A76 /* NavigationSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA8A2D282EFE00965A76 /* NavigationSheet.swift */; };
@@ -192,7 +192,7 @@
 		2CDEAB572C00E27600519C3D /* Fs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fs.swift; sourceTree = "<group>"; };
 		2CDEAB592C00F90C00519C3D /* RepeatingFormPeriodFs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatingFormPeriodFs.swift; sourceTree = "<group>"; };
 		2CF9DA812D27BB5D00965A76 /* HomeTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBar.swift; sourceTree = "<group>"; };
-		2CF9DA832D27ECEB00965A76 /* HomeMainTabTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMainTabTimerView.swift; sourceTree = "<group>"; };
+		2CF9DA832D27ECEB00965A76 /* HomeTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTimerView.swift; sourceTree = "<group>"; };
 		2CF9DA862D281FE900965A76 /* NavigationPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationPath.swift; sourceTree = "<group>"; };
 		2CF9DA882D28211B00965A76 /* NavigationLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationLink.swift; sourceTree = "<group>"; };
 		2CF9DA8A2D282EFE00965A76 /* NavigationSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSheet.swift; sourceTree = "<group>"; };
@@ -390,6 +390,7 @@
 				31821ED2142F08DDD1E0CC75 /* HomeScreen.swift */,
 				2CF9DA812D27BB5D00965A76 /* HomeTabBar.swift */,
 				2CF9DA8F2D28559800965A76 /* HomeTabSelected.swift */,
+				2CF9DA832D27ECEB00965A76 /* HomeTimerView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -409,7 +410,6 @@
 			isa = PBXGroup;
 			children = (
 				2CF9DA8C2D284A9300965A76 /* HomeMainTabView.swift */,
-				2CF9DA832D27ECEB00965A76 /* HomeMainTabTimerView.swift */,
 			);
 			path = MainTab;
 			sourceTree = "<group>";
@@ -716,7 +716,7 @@
 				318219E30EE52A96A502BF30 /* KeyboardManager.swift in Sources */,
 				2C1531D02CB566CC00360615 /* GoalsFormFs.swift in Sources */,
 				2C2E93F8290117E300EAADBE /* HomeScreen.swift in Sources */,
-				2CF9DA842D27ECF000965A76 /* HomeMainTabTimerView.swift in Sources */,
+				2CF9DA842D27ECF000965A76 /* HomeTimerView.swift in Sources */,
 				2C2E93FA2905B57700EAADBE /* ScrollViewWithVListener.swift in Sources */,
 				318213413EE00D5D8F3FA396 /* EventsListView.swift in Sources */,
 				31821AAC3BB87DE0D8E46697 /* TasksView.swift in Sources */,

@@ -20,7 +20,7 @@ struct HomeMainTabView: View {
         
         VStack {
             
-            HomeMainTabTimerView(vm: vm, state: state)
+            HomeTimerView(vm: vm, state: state)
             
             ZStack {
                 
