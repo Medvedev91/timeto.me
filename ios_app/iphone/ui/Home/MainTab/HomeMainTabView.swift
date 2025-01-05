@@ -156,6 +156,7 @@ struct HomeMainTabView: View {
             }
         }
         .padding(.bottom, HomeTabBar__HEIGHT)
+        .ignoresSafeArea(.keyboard)
     }
 }
 

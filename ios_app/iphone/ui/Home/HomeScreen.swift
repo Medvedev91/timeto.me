@@ -39,7 +39,7 @@ struct HomeScreen: View {
                 HomeTabBar(vm: vm, state: state, tabSelected: $tabSelected)
             }
         }
-        .ignoresSafeArea(.keyboard, edges: .bottom)
+        .ignoresSafeArea(.keyboard) // To hide tab bar under the keyboard
         .onReceive(shortcutPublisher) { shortcut in
             let swiftURL = URL(string: shortcut.uri)!
             if !UIApplication.shared.canOpenURL(swiftURL) {
