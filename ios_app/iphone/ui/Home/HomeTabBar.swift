@@ -14,7 +14,7 @@ struct HomeTabBar: View {
     ///
     
     private var showBackground: Bool {
-        tabSelected != .main
+        tabSelected != .main || state.isTasksVisible
     }
     
     @EnvironmentObject private var nativeSheet: NativeSheet
