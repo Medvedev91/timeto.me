@@ -55,6 +55,7 @@
 		2CF9DA8B2D282F0200965A76 /* NavigationSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA8A2D282EFE00965A76 /* NavigationSheet.swift */; };
 		2CF9DA8D2D284AA000965A76 /* HomeMainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA8C2D284A9300965A76 /* HomeMainTabView.swift */; };
 		2CF9DA902D2855A000965A76 /* HomeTabSelected.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA8F2D28559800965A76 /* HomeTabSelected.swift */; };
+		2CF9DA962D2A94B000965A76 /* ReadmeTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA952D2A944A00965A76 /* ReadmeTabView.swift */; };
 		318210C5F98B5CD4E8D8C104 /* FoldersSettingsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E3EB266890584C3EF87 /* FoldersSettingsSheet.swift */; };
 		318210CF629A7E593B9F8FE4 /* ChecklistItemFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821290CB27918CD444FBB0 /* ChecklistItemFormSheet.swift */; };
 		318210E102D112C2860ADF9F /* DialogCloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E53EB27CE7F81AF0F69 /* DialogCloseButton.swift */; };
@@ -197,6 +198,7 @@
 		2CF9DA8A2D282EFE00965A76 /* NavigationSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSheet.swift; sourceTree = "<group>"; };
 		2CF9DA8C2D284A9300965A76 /* HomeMainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMainTabView.swift; sourceTree = "<group>"; };
 		2CF9DA8F2D28559800965A76 /* HomeTabSelected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabSelected.swift; sourceTree = "<group>"; };
+		2CF9DA952D2A944A00965A76 /* ReadmeTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadmeTabView.swift; sourceTree = "<group>"; };
 		3182106A0DA4A0D8844CFA11 /* ShortcutFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutFormSheet.swift; sourceTree = "<group>"; };
 		31821110E735778C88CDF821 /* Sheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
 		318211488ABF627A2A9935A7 /* ActivityColorSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityColorSheet.swift; sourceTree = "<group>"; };
@@ -316,9 +318,10 @@
 		2C65828E2D25C69900DB8AD4 /* Readme */ = {
 			isa = PBXGroup;
 			children = (
+				2C37C4222D21A90700995840 /* ReadmeScreen.swift */,
+				2CF9DA952D2A944A00965A76 /* ReadmeTabView.swift */,
 				2C6582912D25CF6900DB8AD4 /* ReadmeImagesFullScreen.swift */,
 				2C65828F2D25C7AA00DB8AD4 /* ReadmeImagesPreview.swift */,
-				2C37C4222D21A90700995840 /* ReadmeScreen.swift */,
 			);
 			path = Readme;
 			sourceTree = "<group>";
@@ -731,6 +734,7 @@
 				31821BCAB8BA795D691FADF8 /* MyListView.swift in Sources */,
 				31821874203EAD4F021DAD0E /* AutoBackupIos.swift in Sources */,
 				3182135819CDEB457816DD2B /* SheetHeaderView.swift in Sources */,
+				2CF9DA962D2A94B000965A76 /* ReadmeTabView.swift in Sources */,
 				318213F14285EE686F7C1AF4 /* RepeatingFormSheet.swift in Sources */,
 				2C6582942D26829000DB8AD4 /* AskQuestionView.swift in Sources */,
 				2CF9DA892D28211D00965A76 /* NavigationLink.swift in Sources */,
