@@ -56,6 +56,7 @@
 		2CF9DA8D2D284AA000965A76 /* HomeMainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA8C2D284A9300965A76 /* HomeMainTabView.swift */; };
 		2CF9DA902D2855A000965A76 /* HomeTabSelected.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA8F2D28559800965A76 /* HomeTabSelected.swift */; };
 		2CF9DA962D2A94B000965A76 /* ReadmeTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA952D2A944A00965A76 /* ReadmeTabView.swift */; };
+		2CF9DA9A2D2B244600965A76 /* NavigationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA992D2B243B00965A76 /* NavigationAlert.swift */; };
 		318210C5F98B5CD4E8D8C104 /* FoldersSettingsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E3EB266890584C3EF87 /* FoldersSettingsSheet.swift */; };
 		318210CF629A7E593B9F8FE4 /* ChecklistItemFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821290CB27918CD444FBB0 /* ChecklistItemFormSheet.swift */; };
 		318210E102D112C2860ADF9F /* DialogCloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E53EB27CE7F81AF0F69 /* DialogCloseButton.swift */; };
@@ -199,6 +200,7 @@
 		2CF9DA8C2D284A9300965A76 /* HomeMainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMainTabView.swift; sourceTree = "<group>"; };
 		2CF9DA8F2D28559800965A76 /* HomeTabSelected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabSelected.swift; sourceTree = "<group>"; };
 		2CF9DA952D2A944A00965A76 /* ReadmeTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadmeTabView.swift; sourceTree = "<group>"; };
+		2CF9DA992D2B243B00965A76 /* NavigationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationAlert.swift; sourceTree = "<group>"; };
 		3182106A0DA4A0D8844CFA11 /* ShortcutFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutFormSheet.swift; sourceTree = "<group>"; };
 		31821110E735778C88CDF821 /* Sheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
 		318211488ABF627A2A9935A7 /* ActivityColorSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityColorSheet.swift; sourceTree = "<group>"; };
@@ -402,6 +404,7 @@
 				2CF9DA882D28211B00965A76 /* NavigationLink.swift */,
 				2CF9DA862D281FE900965A76 /* NavigationPath.swift */,
 				2CF9DA8A2D282EFE00965A76 /* NavigationSheet.swift */,
+				2CF9DA992D2B243B00965A76 /* NavigationAlert.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -767,6 +770,7 @@
 				31821C0BB92532D84114C15C /* TriggersListIconsView.swift in Sources */,
 				31821BCA3B405E8B0F65AB72 /* DividerFg.swift in Sources */,
 				318219F4F07E446C4B3C607D /* Divider.swift in Sources */,
+				2CF9DA9A2D2B244600965A76 /* NavigationAlert.swift in Sources */,
 				2C37C41B2D217F6E00995840 /* SettingsScreen.swift in Sources */,
 				318217982A5F8106B497432F /* SheetDividerBg.swift in Sources */,
 				2CF9DA8D2D284AA000965A76 /* HomeMainTabView.swift in Sources */,
