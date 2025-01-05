@@ -22,24 +22,21 @@ struct HomeScreen: View {
         
         VmView({ HomeVm() }) { vm, state in
             
-            VStack {
+            ZStack(alignment: .bottom) {
                 
-                ZStack(alignment: .bottom) {
-                    
-                    // todo remove PROVOKE_STATE_UPDATE
-                    EmptyView().id("MainView checklist \(triggersChecklist?.id ?? 0)")
-                    
-                    switch tabSelected {
-                    case .main:
-                        HomeMainTabView(vm: vm, state: state)
-                            .attachNavigation()
-                    case .settings:
-                        SettingsScreen()
-                            .attachNavigation()
-                    }
-                    
-                    HomeTabsView(vm: vm, state: state, tabSelected: $tabSelected)
+                // todo remove PROVOKE_STATE_UPDATE
+                EmptyView().id("MainView checklist \(triggersChecklist?.id ?? 0)")
+                
+                switch tabSelected {
+                case .main:
+                    HomeMainTabView(vm: vm, state: state)
+                        .attachNavigation()
+                case .settings:
+                    SettingsScreen()
+                        .attachNavigation()
                 }
+                
+                HomeTabsView(vm: vm, state: state, tabSelected: $tabSelected)
             }
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
