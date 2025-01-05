@@ -16,7 +16,7 @@ class ChecklistFormSettingsVm(
         val name: String,
     ) {
 
-        val title: String = checklistDb?.name ?: "New Checklist"
+        val title: String = if (checklistDb != null) "Edit Checklist" else "New Checklist"
         val isSaveEnabled: Boolean = name.isNotBlank()
 
         val namePlaceholder = "Name"
