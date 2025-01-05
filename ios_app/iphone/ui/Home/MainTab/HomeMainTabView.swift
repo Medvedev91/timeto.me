@@ -155,6 +155,7 @@ struct HomeMainTabView: View {
                 }
             }
         }
+        .padding(.bottom, HomeTabsView__HEIGHT)
     }
 }
 

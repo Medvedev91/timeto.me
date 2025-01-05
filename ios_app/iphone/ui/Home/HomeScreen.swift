@@ -24,7 +24,7 @@ struct HomeScreen: View {
             
             VStack {
                 
-                ZStack {
+                ZStack(alignment: .bottom) {
                     
                     // todo remove PROVOKE_STATE_UPDATE
                     EmptyView().id("MainView checklist \(triggersChecklist?.id ?? 0)")
@@ -37,9 +37,9 @@ struct HomeScreen: View {
                         SettingsScreen()
                             .attachNavigation()
                     }
+                    
+                    HomeTabsView(vm: vm, state: state, tabSelected: $tabSelected)
                 }
-
-                HomeTabsView(vm: vm, state: state, tabSelected: $tabSelected)
             }
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
