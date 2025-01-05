@@ -46,7 +46,7 @@ class ChecklistFormSettingsVm(
                     ChecklistDb.addWithValidation(state.value.name)
                 onSuccess(newChecklistDb)
             } catch (e: UIException) {
-                dialogsManager.alert(title = null, message = e.uiMessage)
+                dialogsManager.alert(e.uiMessage)
             }
         }
     }
