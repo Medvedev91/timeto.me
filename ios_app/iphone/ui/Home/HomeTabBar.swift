@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-let HomeTabsView__HEIGHT = 56.0
+let HomeTabBar__HEIGHT = 56.0
 
 private let menuTimeFont = buildTimerFont(size: 10)
 
@@ -86,7 +86,7 @@ struct HomeTabBar: View {
                             .padding(.trailing, 2)
                         }
                         .padding(.top, 2)
-                        .frame(height: HomeTabsView__HEIGHT)
+                        .frame(height: HomeTabBar__HEIGHT)
                         .frame(maxWidth: .infinity)
                     }
                 )
@@ -105,7 +105,7 @@ struct HomeTabBar: View {
                 )
             }
             .fillMaxWidth()
-            .frame(height: HomeTabsView__HEIGHT)
+            .frame(height: HomeTabBar__HEIGHT)
             
             if showBackground {
                 DividerBg()
