@@ -61,7 +61,7 @@ struct WhatsNewScreen: View {
                         .padding(.vertical, 2)
                     }
                 }
-                .listSectionSeparator(.hidden, edges: .top)
+                .listSectionSeparator(.hidden, edges: [.top, .bottom])
             }
             .plainList()
             .navigationTitle(state.headerTitle)
