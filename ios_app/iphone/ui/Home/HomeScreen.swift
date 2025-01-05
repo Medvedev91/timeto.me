@@ -36,7 +36,7 @@ struct HomeScreen: View {
                         .attachNavigation()
                 }
                 
-                HomeTabsView(vm: vm, state: state, tabSelected: $tabSelected)
+                HomeTabBar(vm: vm, state: state, tabSelected: $tabSelected)
             }
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)

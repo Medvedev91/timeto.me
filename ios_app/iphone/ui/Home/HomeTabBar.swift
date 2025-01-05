@@ -5,7 +5,7 @@ let HomeTabsView__HEIGHT = 56.0
 
 private let menuTimeFont = buildTimerFont(size: 10)
 
-struct HomeTabsView: View {
+struct HomeTabBar: View {
     
     let vm: HomeVm
     let state: HomeVm.State
