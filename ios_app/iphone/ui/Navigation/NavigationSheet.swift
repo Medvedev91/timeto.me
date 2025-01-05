@@ -15,13 +15,14 @@ struct NavigationSheet<Content>: View, Identifiable where Content: View {
     var body: some View {
         
         ZStack {}
-            .sheetEnv(
+            .sheet(
                 isPresented: $isPresented,
                 onDismiss: {
                     onRemove(id)
                 }
             ) {
                 content()
+                    .attachNavigation()
             }
             .onAppear {
                 isPresented = true
