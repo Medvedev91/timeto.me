@@ -88,9 +88,6 @@ struct HomeTabBar: View {
                         .padding(.top, 2)
                         .frame(height: HomeTabsView__HEIGHT)
                         .frame(maxWidth: .infinity)
-                        // todo remove?
-                        .background(state.isTasksVisible ? Color(.systemGray5) : .clear)
-                        .cornerRadius(10, onTop: true, onBottom: true)
                     }
                 )
                 
