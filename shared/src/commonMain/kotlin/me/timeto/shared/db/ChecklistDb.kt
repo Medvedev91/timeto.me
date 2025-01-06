@@ -28,10 +28,12 @@ data class ChecklistDb(
             name: String,
         ): ChecklistDb = dbIo {
             db.transactionWithResult {
-                val nextId = time()
+                val nextId: Int = time()
+                val nameValidated: String =
+                    validateNameRaw(name, exIds = emptySet())
                 val sqModel = ChecklistSQ(
                     id = nextId,
-                    name = validateNameRaw(name, exIds = emptySet()),
+                    name = nameValidated,
                 )
                 db.checklistQueries.insert(sqModel)
                 sqModel.toDb()
