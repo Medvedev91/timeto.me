@@ -9,10 +9,11 @@ extension View {
 }
 
 @MainActor
-class Navigation: ObservableObject {
+class Navigation: ObservableObject, DialogsManager {
     
     @Published fileprivate var pathList: [NavigationPath] = []
     @Published fileprivate var sheetViews = [NavigationSheet<AnyView>]()
+    @Published fileprivate var alertViews = [NavigationAlert]()
 
     func push(_ path: NavigationPath) {
         pathList.append(path)
@@ -31,6 +32,14 @@ class Navigation: ObservableObject {
                 }
             )
         )
+    }
+    
+    nonisolated func alert(message: String) {
+        Task { @MainActor in
+            alertViews.append(NavigationAlert(message: message, onRemove: { id in
+                self.alertViews.removeAll { $0.id == id }
+            }))
+        }
     }
 }
 
@@ -52,6 +61,10 @@ private struct NavigationModifier: ViewModifier {
             
             ForEach(navigation.sheetViews) { sheetView in
                 sheetView
+            }
+            
+            ForEach(navigation.alertViews) { alertView in
+                alertView
             }
         }
         .environmentObject(navigation)
