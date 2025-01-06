@@ -14,7 +14,7 @@ struct NavigationAlert: View, Identifiable {
                 "",
                 isPresented: $isPresented,
                 actions: {
-                    Button("OK", role: .cancel) {
+                    Button("Ok", role: .cancel) {
                         onRemove(id)
                     }
                 },
