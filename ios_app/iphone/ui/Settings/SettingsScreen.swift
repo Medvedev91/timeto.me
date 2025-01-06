@@ -39,13 +39,10 @@ private struct SettingsScreenInner: View {
     @State private var fileForExportName: String? = nil
 
     // todo remove
-    @State private var isAddChecklistPresented = false
-    // todo remove
     @State private var selectedFlavor = "c"
 
     // todo remove
     @State private var isAddShortcutPresented = false
-    // todo remove
     @State private var tmp = false
 
     var body: some View {
@@ -69,15 +66,26 @@ private struct SettingsScreenInner: View {
             }
             
             Section("CHECKLISTS") {
+                
+                ForEach(state.checklists, id: \.id) { checklistDb in
+                    NavigationLink(.checklist(checklistDb)) {
+                        Text(checklistDb.name)
+                    }
+                }
+                
+                Button("New Checklist") {
+                    navigation.sheet {
+                        ChecklistFormSettingsScreen(
+                            checklistDb: nil,
+                            onSave: { _ in }
+                        )
+                    }
+                }
             }
 
             ///
             
             Section("aill") {
-                
-                NavigationLink(.whatsNew) {
-                    Text("Edit Username")
-                }
                 
                 Toggle(
                     isOn: $tmp,
@@ -90,15 +98,6 @@ private struct SettingsScreenInner: View {
                     Text("Strawberry").tag("s")
                 }
             }
-            
-            Section {                        Text("d")                    }
-            Section {                        Text("d")                    }
-            Section {                        Text("d")                    }
-            Section {                        Text("d")                    }
-            Section {                        Text("d")                    }
-            Section {                        Text("d")                    }
-            Section {                        Text("d")                    }
-            Section {                        Text("d")                    }
             
             /*
              VStack {
@@ -417,19 +416,10 @@ private struct SettingsScreenInner: View {
              .padding(.bottom, 34)
              */
         }
-        .contentMargins(.top, 14)
-        .toolbarTitleDisplayMode(.inline)
+        .contentMargins(.top, 12)
+        .contentMarginsTabBar(extra: 28)
+        .toolbarTitleDisplayMode(.inlineLarge)
         .navigationTitle(state.headerTitle)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button("Back") {
-                    dismiss()
-                }
-            }
-        }
-        .sheetEnv(isPresented: $isAddChecklistPresented) {
-            ChecklistNameDialog(isPresented: $isAddChecklistPresented, checklist: nil, onSave: { _ in })
-        }
         .sheetEnv(isPresented: $isAddShortcutPresented) {
             ShortcutFormSheet(isPresented: $isAddShortcutPresented, editedShortcut: nil)
         }
