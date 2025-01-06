@@ -441,9 +441,18 @@
 			path = Misc;
 			sourceTree = "<group>";
 		};
+		2CF9DA9B2D2C400900965A76 /* Checklist */ = {
+			isa = PBXGroup;
+			children = (
+				2C273F2C2BB99A200016F11D /* ChecklistView.swift */,
+			);
+			path = Checklist;
+			sourceTree = "<group>";
+		};
 		318218DEA96CCDED8A4C448C /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				2CF9DA9B2D2C400900965A76 /* Checklist */,
 				2C6582952D26E45500DB8AD4 /* ChecklistForm */,
 				2CF9DA802D27B8E800965A76 /* Home */,
 				2CF9DA942D290CEB00965A76 /* Misc */,
@@ -478,7 +487,6 @@
 				318212FEA97CBD2AEC3AA1D6 /* ChecklistNameDialog.swift */,
 				31821A7EADEF749C7A5F04DE /* ChecklistSheet.swift */,
 				31821D2439CE2014EF5FF473 /* ChecklistsPickerSheet.swift */,
-				2C273F2C2BB99A200016F11D /* ChecklistView.swift */,
 				2C0BE02C295732110099AD7C /* DatePickerStateView.swift */,
 				31821D4211F3426B1F444F81 /* DaytimePickerSheet.swift */,
 				31821629888DF1D9B797A39A /* DaytimePickerSliderView.swift */,
