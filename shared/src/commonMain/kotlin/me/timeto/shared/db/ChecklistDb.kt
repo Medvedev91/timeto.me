@@ -30,7 +30,7 @@ data class ChecklistDb(
             db.transactionWithResult {
                 val nextId: Int = time()
                 val nameValidated: String =
-                    validateNameRaw(name, exIds = emptySet())
+                    nameValidationRaw(name, exIds = emptySet())
                 val sqModel = ChecklistSQ(
                     id = nextId,
                     name = nameValidated,
@@ -109,7 +109,7 @@ private fun ChecklistSQ.toDb() = ChecklistDb(
 )
 
 @Throws(UiException::class)
-private fun validateNameRaw(
+private fun nameValidationRaw(
     name: String,
     exIds: Set<Int>,
 ): String {
