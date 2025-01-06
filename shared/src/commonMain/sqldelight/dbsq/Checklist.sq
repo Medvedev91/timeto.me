@@ -7,7 +7,7 @@ CREATE TABLE ChecklistSQ (
 
 anyChange: SELECT id FROM ChecklistSQ LIMIT 1;
 
-getAsc:
+selectAsc:
 SELECT *
 FROM ChecklistSQ
 ORDER BY id ASC;
