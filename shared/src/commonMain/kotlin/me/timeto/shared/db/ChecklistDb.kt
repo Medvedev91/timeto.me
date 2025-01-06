@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
+import me.timeto.shared.misc.UiException
 
 data class ChecklistDb(
     val id: Int,
@@ -26,13 +27,15 @@ data class ChecklistDb(
         suspend fun addWithValidation(
             name: String,
         ): ChecklistDb = dbIo {
-            val nextId = time()
-            val sqModel = ChecklistSQ(
-                id = nextId,
-                name = validateName(name),
-            )
-            db.checklistQueries.insert(sqModel)
-            sqModel.toDb()
+            db.transactionWithResult {
+                val nextId = time()
+                val sqModel = ChecklistSQ(
+                    id = nextId,
+                    name = validateNameRaw(name, exIds = emptySet()),
+                )
+                db.checklistQueries.insert(sqModel)
+                sqModel.toDb()
+            }
         }
 
         //
@@ -103,20 +106,22 @@ private fun ChecklistSQ.toDb() = ChecklistDb(
     id = id, name = name,
 )
 
-private suspend fun validateName(
+@Throws(UiException::class)
+private fun validateNameRaw(
     name: String,
-    exIds: Set<Int> = setOf(),
+    exIds: Set<Int>,
 ): String {
 
     val validatedName = name.trim()
     if (validatedName.isEmpty())
-        throw UIException("Empty name")
+        throw UiException("Empty name")
 
-    ChecklistDb.selectAsc()
+    db.checklistQueries.selectAsc()
+        .asList { toDb() }
         .filter { it.id !in exIds }
-        .forEach { checklist ->
-            if (checklist.name.equals(validatedName, ignoreCase = true))
-                throw UIException("$validatedName already exists.")
+        .forEach { checklistDb ->
+            if (checklistDb.name.equals(validatedName, ignoreCase = true))
+                throw UiException("$validatedName already exists.")
         }
 
     return validatedName
