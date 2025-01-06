@@ -16,6 +16,10 @@ abstract class __Vm<T> {
 
     ///
 
+    suspend fun onUi(block: () -> Unit) {
+        withContext(Dispatchers.Main) { block() }
+    }
+
     open fun onAppear() {}
 
     fun onDisappear() {
