@@ -21,7 +21,7 @@ object Backup {
             "goals" to GoalDb.selectAll().modelsToJsonArray(),
             "task_folders" to TaskFolderDb.selectAllSorted().modelsToJsonArray(),
             "tasks" to TaskDb.getAsc().modelsToJsonArray(),
-            "checklists" to ChecklistDb.getAsc().modelsToJsonArray(),
+            "checklists" to ChecklistDb.selectAsc().modelsToJsonArray(),
             "checklist_items" to ChecklistItemDb.getSorted().modelsToJsonArray(),
             "shortcuts" to ShortcutDb.getAsc().modelsToJsonArray(),
             "repeatings" to RepeatingDb.getAsc().modelsToJsonArray(),

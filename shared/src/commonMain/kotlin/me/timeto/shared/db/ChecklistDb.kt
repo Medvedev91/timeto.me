@@ -19,7 +19,7 @@ data class ChecklistDb(
 
         fun anyChangeFlow() = db.checklistQueries.anyChange().asFlow()
 
-        suspend fun getAsc() = dbIo {
+        suspend fun selectAsc(): List<ChecklistDb> = dbIo {
             db.checklistQueries.selectAsc().executeAsList().map { it.toDb() }
         }
 
@@ -47,7 +47,7 @@ data class ChecklistDb(
             if (validatedName.isEmpty())
                 throw UIException("Empty name")
 
-            getAsc()
+            selectAsc()
                 .filter { it.id !in exIds }
                 .forEach { checklist ->
                     if (checklist.name.equals(validatedName, ignoreCase = true))

@@ -49,7 +49,7 @@ object Cache {
         //
         // Database Lists
 
-        checklistsDb = ChecklistDb.getAsc()
+        checklistsDb = ChecklistDb.selectAsc()
         ChecklistDb.getAscFlow().onEachExIn(scope) { checklistsDb = it }
 
         checklistItemsDb = ChecklistItemDb.getSorted()
