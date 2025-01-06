@@ -126,11 +126,11 @@ private class BatteryManager {
     }
     
     private static func isSimulator() -> Bool {
-#if targetEnvironment(simulator)
+        #if targetEnvironment(simulator)
         return true
-#else
+        #else
         return false
-#endif
+        #endif
     }
     
     private static func upBatteryState() {
