@@ -2,7 +2,7 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.StateFlow
-import me.timeto.shared.defaultScope
+import me.timeto.shared.ioScope
 
 abstract class __Vm<T> {
 
@@ -12,7 +12,8 @@ abstract class __Vm<T> {
 
     private val scopes = mutableListOf<CoroutineScope>()
 
-    protected fun scopeVm() = defaultScope().apply { scopes.add(this) }
+    protected fun scopeVm(): CoroutineScope =
+        ioScope().apply { scopes.add(this) }
 
     ///
 
