@@ -69,7 +69,7 @@ class SettingsSheetVm : __Vm<SettingsSheetVm.State>() {
 
     override fun onAppear() {
         val scope = scopeVm()
-        ChecklistDb.getAscFlow()
+        ChecklistDb.selectAscFlow()
             .onEachExIn(scope) { checklists -> state.update { it.copy(checklists = checklists) } }
         ShortcutDb.getAscFlow()
             .onEachExIn(scope) { shortcuts -> state.update { it.copy(shortcuts = shortcuts) } }

@@ -1,11 +1,8 @@
 package me.timeto.shared.db
 
 import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
 import dbsq.ChecklistSQ
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
@@ -23,8 +20,8 @@ data class ChecklistDb(
             db.checklistQueries.selectAsc().executeAsList().map { it.toDb() }
         }
 
-        fun getAscFlow() = db.checklistQueries.selectAsc().asFlow()
-            .mapToList(Dispatchers.IO).map { list -> list.map { it.toDb() } }
+        fun selectAscFlow(): Flow<List<ChecklistDb>> =
+            db.checklistQueries.selectAsc().asListFlow { it.toDb() }
 
         suspend fun addWithValidation(
             name: String,

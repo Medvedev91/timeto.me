@@ -35,7 +35,7 @@ class ChecklistFormSheetVm(
 
     override fun onAppear() {
         val scope = scopeVm()
-        ChecklistDb.getAscFlow().onEachExIn(scope) { allChecklists ->
+        ChecklistDb.selectAscFlow().onEachExIn(scope) { allChecklists ->
             allChecklists
                 .firstOrNull { it.id == state.value.checklistDb.id }
                 ?.let { newChecklistDb ->
