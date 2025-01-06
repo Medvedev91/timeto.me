@@ -21,7 +21,7 @@ data class ChecklistDb(
         }
 
         fun selectAscFlow(): Flow<List<ChecklistDb>> =
-            db.checklistQueries.selectAsc().asListFlow { it.toDb() }
+            db.checklistQueries.selectAsc().asListFlow { toDb() }
 
         suspend fun addWithValidation(
             name: String,

@@ -26,7 +26,7 @@ data class TaskFolderDb(
         }
 
         fun selectAllSortedFlow(): Flow<List<TaskFolderDb>> =
-            db.taskFolderQueries.selectAllSorted().asListFlow { it.toDb() }.map { it.uiSorted() }
+            db.taskFolderQueries.selectAllSorted().asListFlow { toDb() }.map { it.uiSorted() }
 
         ///
 

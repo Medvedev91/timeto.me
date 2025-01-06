@@ -21,5 +21,5 @@ internal suspend fun <T> dbIo(
 internal fun <T : Any, R : Any> Query<T>.asList(mapper: T.() -> R): List<R> =
     executeAsList().map(mapper)
 
-internal fun <T : Any, R : Any> Query<T>.asListFlow(mapper: (T) -> R): Flow<List<R>> =
+internal fun <T : Any, R : Any> Query<T>.asListFlow(mapper: T.() -> R): Flow<List<R>> =
     asFlow().mapToList(Dispatchers.IO).map { list -> list.map { mapper(it) } }

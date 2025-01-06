@@ -39,7 +39,7 @@ data class ActivityDb(
         }
 
         fun selectAllSortedFlow(): Flow<List<ActivityDb>> =
-            db.activityQueries.selectAllSorted().asListFlow { it.toDb() }
+            db.activityQueries.selectAllSorted().asListFlow { toDb() }
 
         suspend fun getByIdOrNull(id: Int): ActivityDb? = dbIo {
             db.activityQueries.getById(id).executeAsOneOrNull()?.toDb()

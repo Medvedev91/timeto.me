@@ -24,7 +24,7 @@ data class GoalDb(
         }
 
         fun selectAllFlow(): Flow<List<GoalDb>> =
-            db.goalQueries.selectAll().asListFlow { it.toDb() }
+            db.goalQueries.selectAll().asListFlow { toDb() }
 
         fun insertManySync(
             activityDb: ActivityDb,
