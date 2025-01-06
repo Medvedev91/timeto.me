@@ -32,7 +32,7 @@ private struct ChecklistFormSettingsScreenInner: View {
     
     @FocusState private var isFocused: Bool
     @Environment(\.dismiss) private var dismiss
-    @EnvironmentObject private var navigation: Navigation
+    @Environment(Navigation.self) private var navigation
     
     var body: some View {
         

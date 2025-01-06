@@ -23,7 +23,7 @@ private struct SettingsScreenInner: View {
     
     ///
     
-    @EnvironmentObject private var navigation: Navigation
+    @Environment(Navigation.self) private var navigation
     
     // todo
 

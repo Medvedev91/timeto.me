@@ -13,7 +13,7 @@ struct HomeTimerView: View {
     ///
     
     @EnvironmentObject private var nativeSheet: NativeSheet
-    @EnvironmentObject private var navigation: Navigation
+    @Environment(Navigation.self) private var navigation
 
     var body: some View {
         

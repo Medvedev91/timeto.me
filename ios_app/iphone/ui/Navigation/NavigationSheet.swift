@@ -9,7 +9,7 @@ struct NavigationSheet<Content>: View, Identifiable where Content: View {
     
     ///
     
-    @EnvironmentObject private var navigation: Navigation
+    @Environment(Navigation.self) private var navigation
     @State private var isPresented = false
     
     var body: some View {

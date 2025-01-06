@@ -14,7 +14,7 @@ struct HomeMainTabView: View {
     
     ///
     
-    @EnvironmentObject private var navigation: Navigation
+    @Environment(Navigation.self) private var navigation
     
     var body: some View {
         

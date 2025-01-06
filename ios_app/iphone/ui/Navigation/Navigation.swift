@@ -9,12 +9,13 @@ extension View {
 }
 
 @MainActor
-class Navigation: ObservableObject, DialogsManager {
+@Observable
+class Navigation: DialogsManager {
     
-    @Published fileprivate var pathList: [NavigationPath] = []
-    @Published fileprivate var sheetViews = [NavigationSheet<AnyView>]()
-    @Published fileprivate var alertViews = [NavigationAlert]()
-
+    fileprivate var pathList: [NavigationPath] = []
+    fileprivate var sheetViews = [NavigationSheet<AnyView>]()
+    fileprivate var alertViews = [NavigationAlert]()
+    
     func push(_ path: NavigationPath) {
         pathList.append(path)
     }
@@ -46,9 +47,9 @@ class Navigation: ObservableObject, DialogsManager {
 ///
 
 private struct NavigationModifier: ViewModifier {
-
-    @StateObject private var navigation = Navigation()
-
+    
+    @State private var navigation = Navigation()
+    
     func body(content: Content) -> some View {
         
         ZStack {
@@ -67,6 +68,6 @@ private struct NavigationModifier: ViewModifier {
                 alertView
             }
         }
-        .environmentObject(navigation)
+        .environment(navigation)
     }
 }
