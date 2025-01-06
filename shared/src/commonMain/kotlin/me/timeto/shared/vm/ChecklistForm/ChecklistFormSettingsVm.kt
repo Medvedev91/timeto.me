@@ -1,10 +1,10 @@
 package me.timeto.shared.vm.ChecklistForm
 
 import kotlinx.coroutines.flow.*
-import me.timeto.shared.UIException
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.launchEx
 import me.timeto.shared.misc.DialogsManager
+import me.timeto.shared.misc.UiException
 import me.timeto.shared.vm.__Vm
 
 class ChecklistFormSettingsVm(
@@ -12,11 +12,12 @@ class ChecklistFormSettingsVm(
 ) : __Vm<ChecklistFormSettingsVm.State>() {
 
     data class State(
-        val checklistDb: ChecklistDb?,
+        val id: Int?,
         val name: String,
     ) {
 
-        val title: String = if (checklistDb != null) "Edit Checklist" else "New Checklist"
+        val title: String = if (id != null) "Edit Checklist" else "New Checklist"
+        val saveButtonText: String = if (id != null) "Save" else "Next"
         val isSaveEnabled: Boolean = name.isNotBlank()
 
         val namePlaceholder = "Name"
@@ -24,7 +25,7 @@ class ChecklistFormSettingsVm(
 
     override val state = MutableStateFlow(
         State(
-            checklistDb = checklistDb,
+            id = checklistDb?.id,
             name = checklistDb?.name ?: "",
         )
     )
@@ -39,13 +40,14 @@ class ChecklistFormSettingsVm(
     ) {
         scopeVm().launchEx {
             try {
-                val oldChecklistDb: ChecklistDb? = state.value.checklistDb
-                val newChecklistDb: ChecklistDb = if (oldChecklistDb != null)
-                    oldChecklistDb.upNameWithValidation(state.value.name)
+                val oldId: Int? = state.value.id
+                val name: String = state.value.name
+                val newChecklistDb: ChecklistDb = if (oldId != null)
+                    TODO()
                 else
-                    ChecklistDb.addWithValidation(state.value.name)
-                onSuccess(newChecklistDb)
-            } catch (e: UIException) {
+                    ChecklistDb.addWithValidation(name)
+                onUi { onSuccess(newChecklistDb) }
+            } catch (e: UiException) {
                 dialogsManager.alert(e.uiMessage)
             }
         }
