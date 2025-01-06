@@ -92,7 +92,7 @@ struct HomeTabBar: View {
                             }
                             .padding(.trailing, 2)
                         }
-                        .padding(.top, 2)
+                        .padding(.top, 3)
                         .frame(height: HomeTabBar__HEIGHT)
                         .frame(maxWidth: .infinity)
                     }
