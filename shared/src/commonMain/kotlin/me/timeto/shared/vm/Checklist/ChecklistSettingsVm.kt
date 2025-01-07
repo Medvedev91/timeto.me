@@ -37,19 +37,17 @@ class ChecklistSettingsVm(
     fun save(
         dialogsManager: DialogsManager,
         onSuccess: (ChecklistDb) -> Unit,
-    ) {
-        scopeVm().launchEx {
-            try {
-                val oldChecklistDb: ChecklistDb? = state.value.checklistDb
-                val name: String = state.value.name
-                val newChecklistDb: ChecklistDb = if (oldChecklistDb != null)
-                    oldChecklistDb.updateWithValidation(name = name)
-                else
-                    ChecklistDb.insertWithValidation(name = name)
-                onUi { onSuccess(newChecklistDb) }
-            } catch (e: UiException) {
-                dialogsManager.alert(e.uiMessage)
-            }
+    ): Unit = scopeVm().launchEx {
+        try {
+            val oldChecklistDb: ChecklistDb? = state.value.checklistDb
+            val name: String = state.value.name
+            val newChecklistDb: ChecklistDb = if (oldChecklistDb != null)
+                oldChecklistDb.updateWithValidation(name = name)
+            else
+                ChecklistDb.insertWithValidation(name = name)
+            onUi { onSuccess(newChecklistDb) }
+        } catch (e: UiException) {
+            dialogsManager.alert(e.uiMessage)
         }
     }
 }
