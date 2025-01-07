@@ -12,12 +12,12 @@ class ChecklistSettingsVm(
 ) : __Vm<ChecklistSettingsVm.State>() {
 
     data class State(
-        val id: Int?,
+        val checklistDb: ChecklistDb?,
         val name: String,
     ) {
 
-        val title: String = if (id != null) "Edit Checklist" else "New Checklist"
-        val saveButtonText: String = if (id != null) "Save" else "Next"
+        val title: String = if (checklistDb != null) "Edit Checklist" else "New Checklist"
+        val saveButtonText: String = if (checklistDb != null) "Save" else "Next"
         val isSaveEnabled: Boolean = name.isNotBlank()
 
         val namePlaceholder = "Name"
@@ -25,7 +25,7 @@ class ChecklistSettingsVm(
 
     override val state = MutableStateFlow(
         State(
-            id = checklistDb?.id,
+            checklistDb = checklistDb,
             name = checklistDb?.name ?: "",
         )
     )
@@ -40,10 +40,10 @@ class ChecklistSettingsVm(
     ) {
         scopeVm().launchEx {
             try {
-                val oldId: Int? = state.value.id
+                val oldChecklistDb: ChecklistDb? = state.value.checklistDb
                 val name: String = state.value.name
-                val newChecklistDb: ChecklistDb = if (oldId != null)
-                    TODO()
+                val newChecklistDb: ChecklistDb = if (oldChecklistDb != null)
+                    oldChecklistDb.updateWithValidation(name = name)
                 else
                     ChecklistDb.insertWithValidation(name = name)
                 onUi { onSuccess(newChecklistDb) }
