@@ -45,7 +45,7 @@ class ChecklistSettingsVm(
                 val newChecklistDb: ChecklistDb = if (oldId != null)
                     TODO()
                 else
-                    ChecklistDb.addWithValidation(name)
+                    ChecklistDb.insertWithValidation(name)
                 onUi { onSuccess(newChecklistDb) }
             } catch (e: UiException) {
                 dialogsManager.alert(e.uiMessage)
