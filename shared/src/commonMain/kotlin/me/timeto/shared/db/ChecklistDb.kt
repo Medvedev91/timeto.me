@@ -93,7 +93,7 @@ data class ChecklistDb(
 
     override fun backupable__update(json: JsonElement) {
         val j = json.jsonArray
-        db.checklistQueries.upNameById(
+        db.checklistQueries.updateById(
             id = j.getInt(0),
             name = j.getString(1),
         )

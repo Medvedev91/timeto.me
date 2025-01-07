@@ -16,7 +16,7 @@ insert:
 INSERT INTO ChecklistSQ
 VALUES ?;
 
-upNameById:
+updateById:
 UPDATE ChecklistSQ
 SET name = ?
 WHERE id = ?;
