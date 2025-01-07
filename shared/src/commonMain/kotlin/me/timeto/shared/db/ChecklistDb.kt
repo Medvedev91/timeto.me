@@ -7,6 +7,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
 import me.timeto.shared.misc.UiException
+import kotlin.coroutines.cancellation.CancellationException
 
 data class ChecklistDb(
     val id: Int,
@@ -24,6 +25,7 @@ data class ChecklistDb(
         fun selectAscFlow(): Flow<List<ChecklistDb>> =
             db.checklistQueries.selectAsc().asListFlow { toDb() }
 
+        @Throws(UiException::class, CancellationException::class)
         suspend fun insertWithValidation(
             name: String,
         ): ChecklistDb = dbIo {
