@@ -21,7 +21,7 @@ sealed class ChecklistStateUi(
         }
     }
 
-    //////
+    ///
 
     class Completed(checklist: ChecklistDb) : ChecklistStateUi("Uncheck All", {
         launchExDefault {

@@ -28,11 +28,10 @@ struct ChecklistSheet: View {
                 
                 ChecklistView(
                     checklistDb: state.checklistDb,
+                    maxLines: 9,
                     onDelete: {
                         isPresented = false
-                    },
-                    maxLines: 9,
-                    bottomPadding: 0
+                    }
                 )
             }
         }

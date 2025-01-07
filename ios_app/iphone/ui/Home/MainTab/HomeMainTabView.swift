@@ -73,9 +73,8 @@ struct HomeMainTabView: View {
                                 VStack {
                                     ChecklistView(
                                         checklistDb: checklistDb,
-                                        onDelete: {},
                                         maxLines: 1,
-                                        bottomPadding: 0
+                                        onDelete: {}
                                     )
                                 }
                                 .frame(height: CGFloat(state.listsSizes.checklist))
