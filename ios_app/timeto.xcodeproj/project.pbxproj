@@ -441,6 +441,7 @@
 				2C273F2C2BB99A200016F11D /* ChecklistView.swift */,
 				2CF9DA9C2D2CFC9200965A76 /* ChecklistScreen.swift */,
 				2C6582962D26E4A300DB8AD4 /* ChecklistSettingsScreen.swift */,
+				2C273F2E2BBAE3090016F11D /* ChecklistFormSheet.swift */,
 			);
 			path = Checklist;
 			sourceTree = "<group>";
@@ -477,7 +478,6 @@
 				2C273F2A2BA4ACEB0016F11D /* AskAQuestionListButtonView.swift */,
 				3182151D618D3ED8AEE1B80A /* Assets.xcassets */,
 				31821D5928C18299586075F4 /* AutoBackupIos.swift */,
-				2C273F2E2BBAE3090016F11D /* ChecklistFormSheet.swift */,
 				31821290CB27918CD444FBB0 /* ChecklistItemFormSheet.swift */,
 				318212FEA97CBD2AEC3AA1D6 /* ChecklistNameDialog.swift */,
 				31821A7EADEF749C7A5F04DE /* ChecklistSheet.swift */,
