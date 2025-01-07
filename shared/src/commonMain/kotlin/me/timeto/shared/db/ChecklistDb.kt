@@ -66,15 +66,21 @@ data class ChecklistDb(
         launchExDefault { uiChecklistFlow.emit(this@ChecklistDb) }
     }
 
-    suspend fun upNameWithValidation(
-        newName: String,
+    @Throws(UiException::class, CancellationException::class)
+    suspend fun updateWithValidation(
+        name: String,
     ): ChecklistDb = dbIo {
-        val newName = validateName(newName, setOf(id))
-        db.checklistQueries.upNameById(
-            id = id,
-            name = newName,
-        )
-        this@ChecklistDb.copy(name = newName)
+        db.transactionWithResult {
+            val nameValidated: String =
+                nameValidationRaw(name, setOf(id))
+            db.checklistQueries.updateById(
+                id = id,
+                name = nameValidated,
+            )
+            this@ChecklistDb.copy(
+                name = nameValidated,
+            )
+        }
     }
 
     suspend fun deleteWithDependencies(): Unit = dbIo {
