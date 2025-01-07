@@ -9,7 +9,7 @@ struct ChecklistSettingsScreen: View {
     var body: some View {
         
         VmView({
-            ChecklistFormSettingsVm(checklistDb: checklistDb)
+            ChecklistSettingsVm(checklistDb: checklistDb)
         }) { vm, state in
             ChecklistSettingsScreenInner(
                 vm: vm,
@@ -23,8 +23,8 @@ struct ChecklistSettingsScreen: View {
 
 private struct ChecklistSettingsScreenInner: View {
     
-    let vm: ChecklistFormSettingsVm
-    let state: ChecklistFormSettingsVm.State
+    let vm: ChecklistSettingsVm
+    let state: ChecklistSettingsVm.State
     @State var name: String
     let onSave: (ChecklistDb) -> Void
     
