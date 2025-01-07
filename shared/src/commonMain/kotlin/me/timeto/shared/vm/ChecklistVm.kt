@@ -21,7 +21,7 @@ class ChecklistVm(
         )
     )
 
-    override fun onAppear() {
+    init {
         val scopeVm = scopeVm()
         ChecklistItemDb
             .getSortedFlow()
