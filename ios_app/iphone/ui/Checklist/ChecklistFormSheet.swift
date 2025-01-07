@@ -35,7 +35,7 @@ private struct ChecklistFormSheetInner: View {
     
     var body: some View {
 
-        VMView(vm: vm, stack: .VStack()) { state in
+        VStack {
 
             HStack {
 
