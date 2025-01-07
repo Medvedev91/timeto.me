@@ -16,9 +16,17 @@ class Navigation: DialogsManager {
     fileprivate var sheetViews = [NavigationSheet<AnyView>]()
     fileprivate var alertViews = [NavigationAlert]()
     
+    ///
+    
     func push(_ path: NavigationPath) {
         pathList.append(path)
     }
+    
+    func cleanPath() {
+        pathList.removeAll()
+    }
+    
+    ///
     
     func sheet<Content: View>(
         @ViewBuilder content: @escaping () -> Content
