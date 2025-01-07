@@ -81,7 +81,7 @@ private struct SettingsScreenInner: View {
                 
                 Button("New Checklist") {
                     navigation.sheet {
-                        ChecklistFormSettingsScreen(
+                        ChecklistSettingsScreen(
                             checklistDb: nil,
                             onSave: { _ in }
                         )
