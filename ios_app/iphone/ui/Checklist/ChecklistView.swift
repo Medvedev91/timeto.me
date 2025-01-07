@@ -80,6 +80,7 @@ private struct ChecklistViewInner: View {
                                         .foregroundColor(.white)
                                         .font(.system(size: HomeScreen__PRIMARY_FONT_SIZE))
                                         .lineLimit(maxLines)
+                                        .textAlign(.leading)
                                 }
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .frame(minHeight: checklistItemMinHeight)
