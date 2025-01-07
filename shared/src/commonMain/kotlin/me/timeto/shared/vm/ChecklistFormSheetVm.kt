@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.ChecklistItemDb
+import me.timeto.shared.misc.DialogsManager
 
 class ChecklistFormSheetVm(
     checklistDb: ChecklistDb,
@@ -51,9 +52,11 @@ class ChecklistFormSheetVm(
 
     ///
 
-    fun isDoneAllowed(): Boolean {
+    fun isDoneAllowed(
+        dialogsManager: DialogsManager,
+    ): Boolean {
         if (state.value.checklistItemsUi.isEmpty()) {
-            showUiAlert(message = "Please add at least one item.")
+            dialogsManager.alert("Please add at least one item.")
             return false
         }
         return true

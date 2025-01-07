@@ -39,29 +39,6 @@ private struct ChecklistFormSheetInner: View {
 
             HStack {
 
-                Text(state.checklistName)
-                    .padding(.trailing, 8)
-                    .font(.system(size: 24, weight: .bold))
-
-                Button(
-                    action: {
-                        navigation.sheet {
-                            ChecklistSettingsScreen(
-                                checklistDb: state.checklistDb,
-                                onSave: { _ in }
-                            )
-                        }
-                    },
-                    label: {
-                        Image(systemName: "pencil")
-                            .font(.system(size: 20, weight: .regular))
-                            .foregroundColor(c.white)
-                    }
-                )
-                .offset(y: 1)
-
-                Spacer()
-
                 Button(
                     action: {
                         vm.deleteChecklist(
@@ -194,14 +171,30 @@ private struct ChecklistFormSheetInner: View {
                 }
                 .padding(.top, 12)
             }
-
-
-            Sheet__BottomViewDone(text: "Done") {
-                if vm.isDoneAllowed() {
-                    dismiss()
+        }
+        .navigationTitle(state.checklistName)
+        .toolbarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button("Settings") {
+                    navigation.sheet {
+                        ChecklistSettingsScreen(
+                            checklistDb: state.checklistDb,
+                            onSave: { _ in }
+                        )
+                    }
                 }
             }
+            ToolbarItem(placement: .primaryAction) {
+                Button("Done") {
+                    if vm.isDoneAllowed(
+                        dialogsManager: navigation
+                    ) {
+                        dismiss()
+                    }
+                }
+                .fontWeight(.bold)
+            }
         }
-        .background(c.sheetBg)
     }
 }
