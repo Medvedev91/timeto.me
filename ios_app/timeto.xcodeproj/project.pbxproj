@@ -57,6 +57,7 @@
 		2CF9DA902D2855A000965A76 /* HomeTabSelected.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA8F2D28559800965A76 /* HomeTabSelected.swift */; };
 		2CF9DA962D2A94B000965A76 /* ReadmeTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA952D2A944A00965A76 /* ReadmeTabView.swift */; };
 		2CF9DA9A2D2B244600965A76 /* NavigationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA992D2B243B00965A76 /* NavigationAlert.swift */; };
+		2CF9DA9D2D2CFC9900965A76 /* ChecklistScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA9C2D2CFC9200965A76 /* ChecklistScreen.swift */; };
 		318210C5F98B5CD4E8D8C104 /* FoldersSettingsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E3EB266890584C3EF87 /* FoldersSettingsSheet.swift */; };
 		318210CF629A7E593B9F8FE4 /* ChecklistItemFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821290CB27918CD444FBB0 /* ChecklistItemFormSheet.swift */; };
 		318210E102D112C2860ADF9F /* DialogCloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E53EB27CE7F81AF0F69 /* DialogCloseButton.swift */; };
@@ -201,6 +202,7 @@
 		2CF9DA8F2D28559800965A76 /* HomeTabSelected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabSelected.swift; sourceTree = "<group>"; };
 		2CF9DA952D2A944A00965A76 /* ReadmeTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadmeTabView.swift; sourceTree = "<group>"; };
 		2CF9DA992D2B243B00965A76 /* NavigationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationAlert.swift; sourceTree = "<group>"; };
+		2CF9DA9C2D2CFC9200965A76 /* ChecklistScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChecklistScreen.swift; sourceTree = "<group>"; };
 		3182106A0DA4A0D8844CFA11 /* ShortcutFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutFormSheet.swift; sourceTree = "<group>"; };
 		31821110E735778C88CDF821 /* Sheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
 		318211488ABF627A2A9935A7 /* ActivityColorSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityColorSheet.swift; sourceTree = "<group>"; };
@@ -445,6 +447,7 @@
 			isa = PBXGroup;
 			children = (
 				2C273F2C2BB99A200016F11D /* ChecklistView.swift */,
+				2CF9DA9C2D2CFC9200965A76 /* ChecklistScreen.swift */,
 			);
 			path = Checklist;
 			sourceTree = "<group>";
@@ -713,6 +716,7 @@
 			files = (
 				2C95BA8D280D74AA0027FC35 /* IOSApp.swift in Sources */,
 				2CF9DA822D27BB6800965A76 /* HomeTabBar.swift in Sources */,
+				2CF9DA9D2D2CFC9900965A76 /* ChecklistScreen.swift in Sources */,
 				2C672A102B74CC01002BC21C /* EventsView.swift in Sources */,
 				318211C63D2C7A7AC48659E8 /* AppDelegate.swift in Sources */,
 				318213463760A308F3C143A0 /* SettingsSheet.swift in Sources */,
