@@ -68,7 +68,13 @@ private struct SettingsScreenInner: View {
             Section("CHECKLISTS") {
                 
                 ForEach(state.checklists, id: \.id) { checklistDb in
-                    NavigationLink(.checklist(checklistDb)) {
+                    NavigationLink(.checklist(
+                        checklistDb: checklistDb,
+                        maxLines: 9,
+                        onDelete: {
+                            navigation.cleanPath()
+                        }
+                    )) {
                         Text(checklistDb.name)
                     }
                 }
@@ -85,6 +91,14 @@ private struct SettingsScreenInner: View {
 
             ///
             
+            
+            Section("Backups") {
+                
+                Button("Restore") {
+                    isFileImporterPresented = true
+                }
+            }
+
             Section("aill") {
                 
                 Toggle(
