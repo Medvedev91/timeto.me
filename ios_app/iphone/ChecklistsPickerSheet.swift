@@ -73,7 +73,6 @@ struct ChecklistsPickerSheet: View {
                                             nativeSheet.show { isPresentedForm in
                                                 ChecklistFormSheet(
                                                     checklistDb: newChecklistDb,
-                                                    isPresented: isPresentedForm,
                                                     onDelete: {}
                                                 )
                                             }

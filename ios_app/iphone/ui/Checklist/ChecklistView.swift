@@ -109,7 +109,6 @@ private struct ChecklistViewInner: View {
                                 nativeSheet.show { isEditPresented in
                                     ChecklistFormSheet(
                                         checklistDb: state.checklistUI.checklistDb,
-                                        isPresented: isEditPresented,
                                         onDelete: {
                                             onDelete()
                                         }

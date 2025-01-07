@@ -2,23 +2,37 @@ import SwiftUI
 import shared
 
 struct ChecklistFormSheet: View {
+    
+    let checklistDb: ChecklistDb
+    let onDelete: () -> Void
 
-    @State private var vm: ChecklistFormSheetVm
-    @Binding private var isPresented: Bool
-    private let onDelete: () -> Void
+    var body: some View {
+        VmView({
+            ChecklistFormSheetVm(checklistDb: checklistDb)
+        }) { vm, state in
+            ChecklistFormSheetInner(
+                vm: vm,
+                state: state,
+                onDelete: onDelete
+            )
+        }
+    }
+}
+
+private struct ChecklistFormSheetInner: View {
+
+    let vm: ChecklistFormSheetVm
+    let state: ChecklistFormSheetVm.State
+    
+    let onDelete: () -> Void
+    
+    ///
 
     @EnvironmentObject private var nativeSheet: NativeSheet
 
-    init(
-        checklistDb: ChecklistDb,
-        isPresented: Binding<Bool>,
-        onDelete: @escaping () -> Void
-    ) {
-        _vm = State(initialValue: ChecklistFormSheetVm(checklistDb: checklistDb))
-        _isPresented = isPresented
-        self.onDelete = onDelete
-    }
-
+    @Environment(\.dismiss) private var dismiss
+    @Environment(Navigation.self) private var navigation
+    
     var body: some View {
 
         VMView(vm: vm, stack: .VStack()) { state in
@@ -31,10 +45,9 @@ struct ChecklistFormSheet: View {
 
                 Button(
                     action: {
-                        nativeSheet.show { isPresented in
-                            ChecklistNameDialog(
-                                isPresented: isPresented,
-                                checklist: state.checklistDb,
+                        navigation.sheet {
+                            ChecklistSettingsScreen(
+                                checklistDb: state.checklistDb,
                                 onSave: { _ in }
                             )
                         }
@@ -54,7 +67,7 @@ struct ChecklistFormSheet: View {
                         vm.deleteChecklist(
                             onDelete: {
                                 onDelete()
-                                isPresented = false
+                                dismiss()
                             }
                         )
                     },
@@ -185,7 +198,7 @@ struct ChecklistFormSheet: View {
 
             Sheet__BottomViewDone(text: "Done") {
                 if vm.isDoneAllowed() {
-                    isPresented = false
+                    dismiss()
                 }
             }
         }
