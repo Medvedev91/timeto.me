@@ -11,15 +11,12 @@ struct NavigationAlert: View, Identifiable {
     var body: some View {
         ZStack {}
             .alert(
-                "",
+                message,
                 isPresented: $isPresented,
                 actions: {
                     Button("Ok", role: .cancel) {
                         onRemove(id)
                     }
-                },
-                message: {
-                    Text(message)
                 }
             )
     }
