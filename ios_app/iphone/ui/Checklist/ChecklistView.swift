@@ -48,7 +48,6 @@ private struct ChecklistViewInner: View {
             return "minus.square.fill"
         }
         fatalError()
-        // todo by enum
     }
     
     var body: some View {
