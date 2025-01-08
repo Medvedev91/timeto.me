@@ -3,28 +3,41 @@ import shared
 
 struct ChecklistItemFormSheet: View {
     
-    @State private var vm: ChecklistItemFormVm
+    let checklistDb: ChecklistDb
+    let checklistItemDb: ChecklistItemDb?
     
-    @Binding private var isPresented: Bool
-    
-    init(
-        isPresented: Binding<Bool>,
-        checklist: ChecklistDb,
-        checklistItem: ChecklistItemDb?
-    ) {
-        _isPresented = isPresented
-        vm = ChecklistItemFormVm(checklist: checklist, checklistItem: checklistItem)
+    var body: some View {
+        VmView({
+            ChecklistItemFormVm(
+                checklistDb: checklistDb,
+                checklistItemDb: checklistItemDb
+            )
+        }) { vm, state in
+            ChecklistItemFormSheetInner(vm: vm, state: state)
+        }
     }
+}
+
+///
+
+private struct ChecklistItemFormSheetInner: View {
+    
+    let vm: ChecklistItemFormVm
+    let state: ChecklistItemFormVm.State
+    
+    ///
+    
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         
-        VMView(vm: vm, stack: .VStack()) { state in
+        VStack {
             
             HStack {
                 
                 Button(
                     action: {
-                        isPresented = false
+                        dismiss()
                     },
                     label: { Text("Cancel") }
                 )
@@ -35,7 +48,7 @@ struct ChecklistItemFormSheet: View {
                 Button(
                     action: {
                         vm.save {
-                            isPresented = false
+                            dismiss()
                         }
                     },
                     label: {
