@@ -8,8 +8,8 @@ import me.timeto.shared.launchEx
 import me.timeto.shared.showUiAlert
 
 class ChecklistItemFormVm(
-    val checklist: ChecklistDb,
-    val checklistItem: ChecklistItemDb?,
+    val checklistDb: ChecklistDb,
+    val checklistItemDb: ChecklistItemDb?,
 ) : __Vm<ChecklistItemFormVm.State>() {
 
     data class State(
@@ -23,7 +23,7 @@ class ChecklistItemFormVm(
     init {
         state = MutableStateFlow(
             State(
-                inputNameValue = checklistItem?.text ?: ""
+                inputNameValue = checklistItemDb?.text ?: ""
             )
         )
     }
@@ -36,10 +36,10 @@ class ChecklistItemFormVm(
         onSuccess: () -> Unit
     ) = scopeVm().launchEx {
         try {
-            if (checklistItem != null)
-                checklistItem.upTextWithValidation(state.value.inputNameValue)
+            if (checklistItemDb != null)
+                checklistItemDb.upTextWithValidation(state.value.inputNameValue)
             else
-                ChecklistItemDb.addWithValidation(state.value.inputNameValue, checklist)
+                ChecklistItemDb.addWithValidation(state.value.inputNameValue, checklistDb)
             onSuccess()
         } catch (e: UIException) {
             showUiAlert(e.uiMessage)
