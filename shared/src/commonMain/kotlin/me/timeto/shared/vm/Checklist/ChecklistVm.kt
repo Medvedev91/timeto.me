@@ -24,7 +24,7 @@ class ChecklistVm(
     init {
         val scopeVm = scopeVm()
         ChecklistItemDb
-            .getSortedFlow()
+            .selectSortedFlow()
             .onEachExIn(scopeVm) { items ->
                 state.update {
                     it.copy(checklistUI = ChecklistUI.build(checklistDb, items))
