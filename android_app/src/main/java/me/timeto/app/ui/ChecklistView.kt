@@ -19,7 +19,7 @@ import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.vm.Checklist.ChecklistVm
-import me.timeto.shared.models.ChecklistStateUi
+import me.timeto.shared.vm.Checklist.ChecklistStateUi
 
 private val checklistItemMinHeight = HomeView__MTG_ITEM_HEIGHT
 

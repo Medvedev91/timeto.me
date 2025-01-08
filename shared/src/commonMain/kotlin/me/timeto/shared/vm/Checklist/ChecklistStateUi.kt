@@ -1,4 +1,4 @@
-package me.timeto.shared.models
+package me.timeto.shared.vm.Checklist
 
 import me.timeto.shared.db.ChecklistItemDb
 import me.timeto.shared.db.ChecklistDb
