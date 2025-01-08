@@ -1,10 +1,12 @@
 package me.timeto.shared.db
 
+import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import dbsq.ChecklistItemSQ
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
@@ -20,7 +22,8 @@ data class ChecklistItemDb(
 
     companion object : Backupable__Holder {
 
-        fun anyChangeFlow() = db.checklistItemQueries.anyChange().asFlow()
+        fun anyChangeFlow(): Flow<Query<Int>> =
+            db.checklistItemQueries.anyChange().asFlow()
 
         suspend fun getSorted() = dbIo {
             db.checklistItemQueries.getSorted().executeAsList().map { it.toDb() }
