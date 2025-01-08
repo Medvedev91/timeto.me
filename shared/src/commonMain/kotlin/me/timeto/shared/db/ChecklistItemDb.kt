@@ -62,8 +62,8 @@ data class ChecklistItemDb(
             )
         }
 
-        ///
-        /// Backupable Holder
+        //
+        // Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
             db.checklistItemQueries.getSorted().executeAsList().map { it.toDb() }
@@ -103,8 +103,8 @@ data class ChecklistItemDb(
 
     suspend fun delete() = dbIo { db.checklistItemQueries.deleteById(id) }
 
-    ///
-    /// Backupable Item
+    //
+    // Backupable Item
 
     override fun backupable__getId(): String = id.toString()
 
