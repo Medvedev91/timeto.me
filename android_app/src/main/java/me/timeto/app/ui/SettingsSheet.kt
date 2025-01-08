@@ -31,7 +31,7 @@ import me.timeto.app.*
 import kotlinx.coroutines.launch
 import me.timeto.shared.*
 import me.timeto.shared.vm.PrivacySheetVm
-import me.timeto.shared.vm.SettingsSheetVm
+import me.timeto.shared.vm.SettingsVm
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -43,7 +43,7 @@ fun SettingsSheet(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    val (vm, state) = rememberVm { SettingsSheetVm() }
+    val (vm, state) = rememberVm { SettingsVm() }
 
     val launcherBackup = rememberLauncherForActivityResult(
         ActivityResultContracts.CreateDocument()
@@ -632,8 +632,8 @@ fun SettingsSheet(
 
 @Composable
 private fun DayStartDialogView(
-    settingsSheetVM: SettingsSheetVm,
-    settingsSheetState: SettingsSheetVm.State,
+    settingsSheetVM: SettingsVm,
+    settingsSheetState: SettingsVm.State,
     onClose: () -> Unit,
 ) {
     Column(

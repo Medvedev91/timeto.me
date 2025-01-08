@@ -6,7 +6,7 @@ struct SettingsScreen: View {
     
     var body: some View {
         VmView({
-            SettingsSheetVm()
+            SettingsVm()
         }) { vm, state in
             SettingsScreenInner(
                 vm: vm,
@@ -18,8 +18,8 @@ struct SettingsScreen: View {
 
 private struct SettingsScreenInner: View {
     
-    let vm: SettingsSheetVm
-    let state: SettingsSheetVm.State
+    let vm: SettingsVm
+    let state: SettingsVm.State
     
     ///
     
@@ -479,13 +479,13 @@ private struct SettingsScreenInner: View {
 
         @Binding private var isPresented: Bool
         @State private var selectedDayStart: Int32 // WARNING Int32!
-        private let settingsSheetVM: SettingsSheetVm
-        private let settingsSheetState: SettingsSheetVm.State
+        private let settingsSheetVM: SettingsVm
+        private let settingsSheetState: SettingsVm.State
 
         init(
             isPresented: Binding<Bool>,
-            settingsSheetVM: SettingsSheetVm,
-            settingsSheetState: SettingsSheetVm.State
+            settingsSheetVM: SettingsVm,
+            settingsSheetState: SettingsVm.State
         ) {
             _isPresented = isPresented
             self.settingsSheetVM = settingsSheetVM

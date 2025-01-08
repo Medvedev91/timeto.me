@@ -9,7 +9,7 @@ import me.timeto.shared.db.KvDb.Companion.isSendingReports
 import me.timeto.shared.db.NoteDb
 import me.timeto.shared.db.ShortcutDb
 
-class SettingsSheetVm : __Vm<SettingsSheetVm.State>() {
+class SettingsVm : __Vm<SettingsVm.State>() {
 
     data class DayStartOffsetListItem(
         val seconds: Int,
