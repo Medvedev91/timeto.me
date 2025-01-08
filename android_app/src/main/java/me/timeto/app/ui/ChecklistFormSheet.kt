@@ -215,7 +215,7 @@ fun ChecklistFormSheet(
                 key = "new_item"
             ) {
                 Text(
-                    text = state.newItemButton,
+                    text = state.newItemButtonText,
                     modifier = Modifier
                         .padding(top = 4.dp, start = 8.dp)
                         .clip(squircleShape)

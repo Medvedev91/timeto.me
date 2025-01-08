@@ -16,7 +16,7 @@ class ChecklistFormVm(
         val checklistItemsDb: List<ChecklistItemDb>,
     ) {
 
-        val newItemButton = "+ new item"
+        val newItemButtonText = "New Item"
 
         val checklistName: String = checklistDb.name
         val checklistItemsUi: List<ChecklistItemUi> = checklistItemsDb
