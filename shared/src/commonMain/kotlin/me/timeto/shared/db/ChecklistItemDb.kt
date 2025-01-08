@@ -65,7 +65,7 @@ data class ChecklistItemDb(
             list: ChecklistDb,
             checkOrUncheck: Boolean
         ): Unit = dbIo {
-            db.checklistItemQueries.upCheckTimeByList(
+            db.checklistItemQueries.updateCheckTimeByList(
                 check_time = if (checkOrUncheck) time() else 0,
                 list_id = list.id
             )
@@ -92,19 +92,19 @@ data class ChecklistItemDb(
     val isChecked: Boolean = check_time > 0
 
     suspend fun toggle(): Unit = dbIo {
-        db.checklistItemQueries.upCheckTimeById(
+        db.checklistItemQueries.updateCheckTimeById(
             id = id, check_time = if (isChecked) 0 else time()
         )
     }
 
     suspend fun upTextWithValidation(newText: String): Unit = dbIo {
-        db.checklistItemQueries.upTextById(
+        db.checklistItemQueries.updateTextById(
             id = id, text = textValidationRaw(newText)
         )
     }
 
     suspend fun upSort(newSort: Int): Unit = dbIo {
-        db.checklistItemQueries.upSortById(
+        db.checklistItemQueries.updateSortById(
             id = id,
             sort = newSort,
         )
@@ -125,7 +125,7 @@ data class ChecklistItemDb(
 
     override fun backupable__update(json: JsonElement) {
         val j = json.jsonArray
-        db.checklistItemQueries.upById(
+        db.checklistItemQueries.updateById(
             id = j.getInt(0),
             text = j.getString(1),
             list_id = j.getInt(2),

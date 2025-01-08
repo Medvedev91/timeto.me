@@ -24,27 +24,27 @@ deleteById:
 DELETE FROM ChecklistItemSQ
 WHERE id = ?;
 
-upById:
+updateById:
 UPDATE ChecklistItemSQ
 SET text = ?, list_id = ?, check_time = ?, sort = ?
 WHERE id = ?;
 
-upTextById:
+updateTextById:
 UPDATE ChecklistItemSQ
 SET text = ?
 WHERE id = ?;
 
-upCheckTimeById:
+updateCheckTimeById:
 UPDATE ChecklistItemSQ
 SET check_time = ?
 WHERE id = ?;
 
-upSortById:
+updateSortById:
 UPDATE ChecklistItemSQ
 SET sort=?
 WHERE id=?;
 
-upCheckTimeByList:
+updateCheckTimeByList:
 UPDATE ChecklistItemSQ
 SET check_time=?
 WHERE list_id=?;
