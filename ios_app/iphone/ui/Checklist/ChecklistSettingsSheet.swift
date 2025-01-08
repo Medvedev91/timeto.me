@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-struct ChecklistSettingsScreen: View {
+struct ChecklistSettingsSheet: View {
     
     let checklistDb: ChecklistDb?
     let onSave: (ChecklistDb) -> Void

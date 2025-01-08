@@ -153,7 +153,7 @@ private struct ChecklistFormSheetInner: View {
             ToolbarItem(placement: .topBarLeading) {
                 Button("Settings") {
                     navigation.sheet {
-                        ChecklistSettingsScreen(
+                        ChecklistSettingsSheet(
                             checklistDb: state.checklistDb,
                             onSave: { _ in },
                             onDelete: {

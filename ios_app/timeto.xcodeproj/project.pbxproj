@@ -32,7 +32,7 @@
 		2C6582902D25C7BF00DB8AD4 /* ReadmeImagesPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C65828F2D25C7AA00DB8AD4 /* ReadmeImagesPreview.swift */; };
 		2C6582922D25CF6E00DB8AD4 /* ReadmeImagesFullScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6582912D25CF6900DB8AD4 /* ReadmeImagesFullScreen.swift */; };
 		2C6582942D26829000DB8AD4 /* AskQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6582932D26826D00DB8AD4 /* AskQuestionView.swift */; };
-		2C6582972D26E4CC00DB8AD4 /* ChecklistSettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6582962D26E4A300DB8AD4 /* ChecklistSettingsScreen.swift */; };
+		2C6582972D26E4CC00DB8AD4 /* ChecklistSettingsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6582962D26E4A300DB8AD4 /* ChecklistSettingsSheet.swift */; };
 		2C672A102B74CC01002BC21C /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C672A0F2B74CC01002BC21C /* EventsView.swift */; };
 		2C672A122B74CF76002BC21C /* EventsCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C672A112B74CF76002BC21C /* EventsCalendarView.swift */; };
 		2C82BF5A28726E400041BCA3 /* WAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C82BF5928726E400041BCA3 /* WAssets.xcassets */; };
@@ -175,7 +175,7 @@
 		2C65828F2D25C7AA00DB8AD4 /* ReadmeImagesPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadmeImagesPreview.swift; sourceTree = "<group>"; };
 		2C6582912D25CF6900DB8AD4 /* ReadmeImagesFullScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadmeImagesFullScreen.swift; sourceTree = "<group>"; };
 		2C6582932D26826D00DB8AD4 /* AskQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskQuestionView.swift; sourceTree = "<group>"; };
-		2C6582962D26E4A300DB8AD4 /* ChecklistSettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChecklistSettingsScreen.swift; sourceTree = "<group>"; };
+		2C6582962D26E4A300DB8AD4 /* ChecklistSettingsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChecklistSettingsSheet.swift; sourceTree = "<group>"; };
 		2C672A0F2B74CC01002BC21C /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsView.swift; sourceTree = "<group>"; };
 		2C672A112B74CF76002BC21C /* EventsCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsCalendarView.swift; sourceTree = "<group>"; };
 		2C82BF5728726E3F0041BCA3 /* timeto.me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = timeto.me.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -440,7 +440,7 @@
 			children = (
 				2C273F2C2BB99A200016F11D /* ChecklistView.swift */,
 				2CF9DA9C2D2CFC9200965A76 /* ChecklistScreen.swift */,
-				2C6582962D26E4A300DB8AD4 /* ChecklistSettingsScreen.swift */,
+				2C6582962D26E4A300DB8AD4 /* ChecklistSettingsSheet.swift */,
 				2C273F2E2BBAE3090016F11D /* ChecklistFormSheet.swift */,
 			);
 			path = Checklist;
@@ -773,7 +773,7 @@
 				31821AFA9798F3945CA34D09 /* ActivityPickerSheet.swift in Sources */,
 				2C672A122B74CF76002BC21C /* EventsCalendarView.swift in Sources */,
 				3182165F04FA76ED88CD4696 /* TextFeaturesTriggersFormView.swift in Sources */,
-				2C6582972D26E4CC00DB8AD4 /* ChecklistSettingsScreen.swift in Sources */,
+				2C6582972D26E4CC00DB8AD4 /* ChecklistSettingsSheet.swift in Sources */,
 				3182163121ABFB307798FDA9 /* ChecklistsPickerSheet.swift in Sources */,
 				31821D021B3DC7EACD7E4EAA /* ShortcutsPickerSheet.swift in Sources */,
 				3182197D9BDC28A7649BA7E1 /* TextFeaturesTimerFormView.swift in Sources */,
