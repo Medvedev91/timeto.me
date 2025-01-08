@@ -6,9 +6,9 @@ import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.ChecklistItemDb
 import me.timeto.shared.misc.DialogsManager
 
-class ChecklistFormSheetVm(
+class ChecklistFormVm(
     checklistDb: ChecklistDb,
-) : __Vm<ChecklistFormSheetVm.State>() {
+) : __Vm<ChecklistFormVm.State>() {
 
     data class State(
         val checklistDb: ChecklistDb,
