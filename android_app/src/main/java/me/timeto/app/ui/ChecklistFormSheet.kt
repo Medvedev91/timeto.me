@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.shared.db.ChecklistDb
-import me.timeto.shared.vm.ChecklistFormVm
+import me.timeto.shared.vm.Checklist.ChecklistFormVm
 
 private val deleteButtonSize = 28.dp
 private val deleteButtonInnerPadding = 5.dp
