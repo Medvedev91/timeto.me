@@ -31,7 +31,7 @@ data class ChecklistItemDb(
             db.checklistItemQueries.getSorted().asListFlow { toDb() }
 
         @Throws(UiException::class, CancellationException::class)
-        suspend fun addWithValidation(
+        suspend fun insertWithValidation(
             text: String,
             checklist: ChecklistDb,
         ): Unit = dbIo {
