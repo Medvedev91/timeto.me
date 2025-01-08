@@ -1,48 +1,55 @@
 package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
-import me.timeto.shared.UIException
 import me.timeto.shared.db.ChecklistItemDb
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.launchEx
-import me.timeto.shared.showUiAlert
+import me.timeto.shared.misc.DialogsManager
+import me.timeto.shared.misc.UiException
 
 class ChecklistItemFormVm(
-    val checklistDb: ChecklistDb,
-    val checklistItemDb: ChecklistItemDb?,
+    checklistDb: ChecklistDb,
+    checklistItemDb: ChecklistItemDb?,
 ) : __Vm<ChecklistItemFormVm.State>() {
 
     data class State(
-        val inputNameValue: String,
+        val checklistDb: ChecklistDb,
+        val checklistItemDb: ChecklistItemDb?,
+        val text: String,
     ) {
-        val isSaveEnabled = inputNameValue.isNotBlank()
+
+        val title = "New Item"
+        val saveButtonText = "Save"
+        val isSaveEnabled: Boolean = text.isNotBlank()
     }
 
-    override val state: MutableStateFlow<State>
-
-    init {
-        state = MutableStateFlow(
-            State(
-                inputNameValue = checklistItemDb?.text ?: ""
-            )
+    override val state = MutableStateFlow(
+        State(
+            checklistDb = checklistDb,
+            checklistItemDb = checklistItemDb,
+            text = checklistItemDb?.text ?: ""
         )
-    }
+    )
 
-    fun setInputName(name: String) {
-        state.update { it.copy(inputNameValue = name) }
+    fun setText(text: String) {
+        state.update { it.copy(text = text) }
     }
 
     fun save(
+        dialogsManager: DialogsManager,
         onSuccess: () -> Unit
-    ) = scopeVm().launchEx {
+    ): Unit = scopeVm().launchEx {
         try {
-            if (checklistItemDb != null)
-                checklistItemDb.upTextWithValidation(state.value.inputNameValue)
+            val text: String = state.value.text
+            val checklistDb: ChecklistDb = state.value.checklistDb
+            val oldItemDb: ChecklistItemDb? = state.value.checklistItemDb
+            if (oldItemDb != null)
+                oldItemDb.upTextWithValidation(text)
             else
-                ChecklistItemDb.addWithValidation(state.value.inputNameValue, checklistDb)
-            onSuccess()
-        } catch (e: UIException) {
-            showUiAlert(e.uiMessage)
+                ChecklistItemDb.addWithValidation(text, checklistDb)
+            onUi { onSuccess() }
+        } catch (e: UiException) {
+            dialogsManager.alert(e.uiMessage)
         }
     }
 }
