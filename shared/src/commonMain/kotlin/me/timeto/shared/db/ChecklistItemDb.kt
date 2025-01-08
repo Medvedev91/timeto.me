@@ -36,7 +36,7 @@ data class ChecklistItemDb(
             text: String,
             checklist: ChecklistDb,
         ) {
-            val allSorted = getSorted()
+            val allSorted = selectSorted()
 
             val timeId = time()
             val nextId = if (allSorted.any { it.id == timeId })
