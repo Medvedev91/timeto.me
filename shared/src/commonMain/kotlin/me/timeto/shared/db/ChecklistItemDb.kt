@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
+import me.timeto.shared.misc.UiException
+import kotlin.coroutines.cancellation.CancellationException
 
 data class ChecklistItemDb(
     val id: Int,
@@ -28,27 +30,35 @@ data class ChecklistItemDb(
         fun selectSortedFlow(): Flow<List<ChecklistItemDb>> =
             db.checklistItemQueries.getSorted().asListFlow { toDb() }
 
+        @Throws(UiException::class, CancellationException::class)
         suspend fun addWithValidation(
             text: String,
             checklist: ChecklistDb,
-        ) {
-            val allSorted = selectSorted()
+        ): Unit = dbIo {
 
-            val timeId = time()
-            val nextId = if (allSorted.any { it.id == timeId })
-                timeId + 1 // todo test
-            else
-                timeId
+            db.transaction {
 
-            val sort = allSorted.maxOfOrNull { it.sort }?.plus(1) ?: 0
+                val allSorted: List<ChecklistItemDb> =
+                    db.checklistItemQueries.getSorted().asList { toDb() }
 
-            db.checklistItemQueries.insert(
-                id = nextId,
-                text = validateText(text),
-                list_id = checklist.id,
-                check_time = 0,
-                sort = sort,
-            )
+                val timeId = time()
+                val nextId = if (allSorted.any { it.id == timeId })
+                    timeId + 1 // todo test
+                else
+                    timeId
+
+                val sort: Int = allSorted.maxOfOrNull { it.sort }?.plus(1) ?: 0
+
+                val textValidated: String = textValidationRaw(text)
+
+                db.checklistItemQueries.insert(
+                    id = nextId,
+                    text = textValidated,
+                    list_id = checklist.id,
+                    check_time = 0,
+                    sort = sort,
+                )
+            }
         }
 
         suspend fun toggleByList(
@@ -89,7 +99,7 @@ data class ChecklistItemDb(
 
     suspend fun upTextWithValidation(newText: String): Unit = dbIo {
         db.checklistItemQueries.upTextById(
-            id = id, text = validateText(newText)
+            id = id, text = textValidationRaw(newText)
         )
     }
 
@@ -127,10 +137,11 @@ data class ChecklistItemDb(
     }
 }
 
-private fun validateText(text: String): String {
+@Throws(UiException::class)
+private fun textValidationRaw(text: String): String {
     val validatedText = text.trim()
     if (validatedText.isEmpty())
-        throw UIException("Empty text")
+        throw UiException("Empty text")
     return validatedText
 }
 
