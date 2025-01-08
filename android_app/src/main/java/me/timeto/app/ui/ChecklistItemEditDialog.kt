@@ -54,8 +54,8 @@ fun ChecklistItemEditDialog(
         ) {
             MyListView__ItemView__TextInputView(
                 placeholder = "Item",
-                text = state.inputNameValue,
-                onTextChanged = { vm.setInputName(it) },
+                text = state.text,
+                onTextChanged = { vm.setText(it) },
                 isAutofocus = true,
             )
         }
