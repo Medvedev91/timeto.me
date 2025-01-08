@@ -34,8 +34,7 @@ private struct ChecklistViewInner: View {
     
     ///
     
-    @EnvironmentObject private var nativeSheet: NativeSheet
-    // todo remove
+    @Environment(Navigation.self) private var navigation
     
     private var stateIconResource: String {
         let stateUi = state.checklistUI.stateUI
@@ -106,7 +105,7 @@ private struct ChecklistViewInner: View {
                         
                         Button(
                             action: {
-                                nativeSheet.show { isEditPresented in
+                                navigation.sheet {
                                     ChecklistFormSheet(
                                         checklistDb: state.checklistUI.checklistDb,
                                         onDelete: {
