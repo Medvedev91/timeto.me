@@ -20,7 +20,7 @@ struct ChecklistFormSheet: View {
 }
 
 private struct ChecklistFormSheetInner: View {
-
+    
     let vm: ChecklistFormSheetVm
     let state: ChecklistFormSheetVm.State
     
@@ -34,26 +34,26 @@ private struct ChecklistFormSheetInner: View {
     @Environment(Navigation.self) private var navigation
     
     var body: some View {
-
+        
         VStack {
-
+            
             ScrollView {
-
+                
                 Padding(vertical: 8)
-
+                
                 ForEach(state.checklistItemsUi, id: \.checklistItemDb.id) { checklistItemUi in
-
+                    
                     VStack {
-
+                        
                         if !checklistItemUi.isFirst {
                             DividerFg()
                                 .padding(.leading, 27)
                         }
-
+                        
                         Spacer()
-
+                        
                         HStack(spacing: 8) {
-
+                            
                             Button(
                                 action: {
                                     vm.deleteItem(itemDb: checklistItemUi.checklistItemDb)
@@ -65,12 +65,12 @@ private struct ChecklistFormSheetInner: View {
                                 }
                             )
                             .buttonStyle(.plain)
-
+                            
                             Text(checklistItemUi.checklistItemDb.text)
                                 .lineLimit(1)
-
+                            
                             Spacer()
-
+                            
                             Button(
                                 action: {
                                     nativeSheet.show { isPresented in
@@ -89,7 +89,7 @@ private struct ChecklistFormSheetInner: View {
                             )
                             .buttonStyle(.plain)
                             .padding(.leading, 8)
-
+                            
                             Button(
                                 action: {
                                     vm.down(itemUi: checklistItemUi)
@@ -102,7 +102,7 @@ private struct ChecklistFormSheetInner: View {
                             )
                             .buttonStyle(.plain)
                             .padding(.leading, 8)
-
+                            
                             Button(
                                 action: {
                                     vm.up(itemUi: checklistItemUi)
@@ -117,14 +117,14 @@ private struct ChecklistFormSheetInner: View {
                             .padding(.leading, 6)
                         }
                         .padding(.vertical, 12)
-
+                        
                         Spacer()
                     }
                     .padding(.horizontal, H_PADDING)
                 }
-
+                
                 HStack {
-
+                    
                     Button(
                         action: {
                             nativeSheet.show { isPresented in
@@ -141,7 +141,7 @@ private struct ChecklistFormSheetInner: View {
                                 .padding(.leading, H_PADDING)
                         }
                     )
-
+                    
                     Spacer()
                 }
                 .padding(.top, 12)
