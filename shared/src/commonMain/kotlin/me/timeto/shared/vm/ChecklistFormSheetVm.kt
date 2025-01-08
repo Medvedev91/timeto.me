@@ -62,25 +62,6 @@ class ChecklistFormSheetVm(
         return true
     }
 
-    fun deleteChecklist(
-        onDelete: () -> Unit,
-    ) {
-        val checklistDb = state.value.checklistDb
-        showUiConfirmation(
-            UIConfirmationData(
-                text = "Are you sure you want to delete \"${checklistDb.name}\" checklist?",
-                buttonText = "Delete",
-                isRed = true,
-                onConfirm = {
-                    launchExDefault {
-                        checklistDb.deleteWithDependencies()
-                    }
-                    onDelete()
-                }
-            )
-        )
-    }
-
     fun deleteItem(itemDb: ChecklistItemDb) {
         showUiConfirmation(
             UIConfirmationData(
