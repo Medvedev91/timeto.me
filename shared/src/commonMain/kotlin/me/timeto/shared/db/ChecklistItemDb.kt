@@ -25,7 +25,7 @@ data class ChecklistItemDb(
         fun anyChangeFlow(): Flow<Query<Int>> =
             db.checklistItemQueries.anyChange().asFlow()
 
-        suspend fun getSorted() = dbIo {
+        suspend fun selectSorted(): List<ChecklistItemDb> = dbIo {
             db.checklistItemQueries.getSorted().executeAsList().map { it.toDb() }
         }
 

@@ -22,7 +22,7 @@ object Backup {
             "task_folders" to TaskFolderDb.selectAllSorted().modelsToJsonArray(),
             "tasks" to TaskDb.getAsc().modelsToJsonArray(),
             "checklists" to ChecklistDb.selectAsc().modelsToJsonArray(),
-            "checklist_items" to ChecklistItemDb.getSorted().modelsToJsonArray(),
+            "checklist_items" to ChecklistItemDb.selectSorted().modelsToJsonArray(),
             "shortcuts" to ShortcutDb.getAsc().modelsToJsonArray(),
             "repeatings" to RepeatingDb.getAsc().modelsToJsonArray(),
             "events" to EventDb.getAscByTime().modelsToJsonArray(),
