@@ -64,7 +64,7 @@ data class ChecklistItemDb(
         suspend fun toggleByList(
             list: ChecklistDb,
             checkOrUncheck: Boolean
-        ) = dbIo {
+        ): Unit = dbIo {
             db.checklistItemQueries.upCheckTimeByList(
                 check_time = if (checkOrUncheck) time() else 0,
                 list_id = list.id
@@ -89,7 +89,7 @@ data class ChecklistItemDb(
         }
     }
 
-    val isChecked = check_time > 0
+    val isChecked: Boolean = check_time > 0
 
     suspend fun toggle(): Unit = dbIo {
         db.checklistItemQueries.upCheckTimeById(
@@ -110,7 +110,9 @@ data class ChecklistItemDb(
         )
     }
 
-    suspend fun delete() = dbIo { db.checklistItemQueries.deleteById(id) }
+    suspend fun delete(): Unit = dbIo {
+        db.checklistItemQueries.deleteById(id)
+    }
 
     //
     // Backupable Item
