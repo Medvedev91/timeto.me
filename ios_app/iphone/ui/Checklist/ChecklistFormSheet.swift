@@ -37,31 +37,6 @@ private struct ChecklistFormSheetInner: View {
 
         VStack {
 
-            HStack {
-
-                Button(
-                    action: {
-                        vm.deleteChecklist(
-                            onDelete: {
-                                onDelete()
-                                dismiss()
-                            }
-                        )
-                    },
-                    label: {
-                        Image(systemName: "trash")
-                            .foregroundColor(c.red)
-                            .font(.system(size: 19, weight: .regular))
-                    }
-                )
-            }
-            .padding(.top, 24)
-            .padding(.horizontal, H_PADDING)
-
-            DividerBg()
-                .padding(.horizontal, H_PADDING)
-                .padding(.top, 16)
-
             ScrollView {
 
                 Padding(vertical: 8)
@@ -180,7 +155,11 @@ private struct ChecklistFormSheetInner: View {
                     navigation.sheet {
                         ChecklistSettingsScreen(
                             checklistDb: state.checklistDb,
-                            onSave: { _ in }
+                            onSave: { _ in },
+                            onDelete: {
+                                dismiss()
+                                onDelete()
+                            }
                         )
                     }
                 }
