@@ -70,7 +70,6 @@
 		318212D55BBA074155F95EB0 /* TextField__VMState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821CC7588164B713321141 /* TextField__VMState.swift */; };
 		3182132BB1D4C32160A2EBCE /* TasksListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821AD0C2CE87BF5AE03022 /* TasksListView.swift */; };
 		318213413EE00D5D8F3FA396 /* EventsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821F7CBA1480191F065D5E /* EventsListView.swift */; };
-		318213463760A308F3C143A0 /* SettingsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318215C1991B23DE1654074B /* SettingsSheet.swift */; };
 		3182135819CDEB457816DD2B /* SheetHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821BCB57EC030987E8342E /* SheetHeaderView.swift */; };
 		318213F14285EE686F7C1AF4 /* RepeatingFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821D879F9361C3DD65EAC9 /* RepeatingFormSheet.swift */; };
 		318213FBF8D67B0E8E5463AC /* RepeatingsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821B68F7E968EF32723112 /* RepeatingsListView.swift */; };
@@ -227,7 +226,6 @@
 		31821527096D1BDB0A35B178 /* TimetoAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetoAlert.swift; sourceTree = "<group>"; };
 		3182153700935B575E6144A5 /* EventsCalendarDayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsCalendarDayView.swift; sourceTree = "<group>"; };
 		3182157C5CB954867515B4BA /* TriggersListIconsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggersListIconsView.swift; sourceTree = "<group>"; };
-		318215C1991B23DE1654074B /* SettingsSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSheet.swift; sourceTree = "<group>"; };
 		3182161C9947F88C6A1D3B80 /* W_TabTasksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W_TabTasksView.swift; sourceTree = "<group>"; };
 		31821629888DF1D9B797A39A /* DaytimePickerSliderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaytimePickerSliderView.swift; sourceTree = "<group>"; };
 		318216B917315DE1929486AC /* Divider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Divider.swift; sourceTree = "<group>"; };
@@ -524,7 +522,6 @@
 				31821D879F9361C3DD65EAC9 /* RepeatingFormSheet.swift */,
 				31821B68F7E968EF32723112 /* RepeatingsListView.swift */,
 				2CB73DE2292FACE00053B2D6 /* SearchEmojiSheet.swift */,
-				318215C1991B23DE1654074B /* SettingsSheet.swift */,
 				31821110E735778C88CDF821 /* Sheet.swift */,
 				31821956E237470E838F18A0 /* SheetDividerBg.swift */,
 				3182143FB317BCD82F61C777 /* SheetDividerFg.swift */,
@@ -714,7 +711,6 @@
 				2CF9DA9D2D2CFC9900965A76 /* ChecklistScreen.swift in Sources */,
 				2C672A102B74CC01002BC21C /* EventsView.swift in Sources */,
 				318211C63D2C7A7AC48659E8 /* AppDelegate.swift in Sources */,
-				318213463760A308F3C143A0 /* SettingsSheet.swift in Sources */,
 				31821D960D04B6FF21EA9918 /* ActivityFormSheet.swift in Sources */,
 				31821F3DCAF6792F0E78CEBD /* HistoryView.swift in Sources */,
 				2C37C4212D219FA800995840 /* WhatsNewScreen.swift in Sources */,
