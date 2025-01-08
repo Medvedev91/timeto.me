@@ -128,43 +128,6 @@ private struct SettingsScreenInner: View {
             /*
              VStack {
              
-             
-             ///
-             /// Checklists
-             
-             VStack {
-             
-             MyListView__Padding__SectionHeader()
-             
-             MyListView__HeaderView(
-             title: "CHECKLISTS",
-             rightView: AnyView(
-             Button(
-             action: {
-             isAddChecklistPresented.toggle()
-             },
-             label: {
-             Image(systemName: "plus")
-             }
-             )
-             )
-             )
-             
-             MyListView__Padding__HeaderSection()
-             
-             let checklists = state.checklists
-             ForEach(checklists, id: \.id) { checklist in
-             let isFirst = checklists.first == checklist
-             MyListView__ItemView(
-             isFirst: isFirst,
-             isLast: checklists.last == checklist,
-             withTopDivider: !isFirst
-             ) {
-             ToolsView_ChecklistView(checklist: checklist)
-             }
-             }
-             }
-             
              ///
              /// Shortcuts
              
@@ -449,19 +412,6 @@ private struct SettingsScreenInner: View {
         .sheetEnv(isPresented: $isAddShortcutPresented) {
             ShortcutFormSheet(isPresented: $isAddShortcutPresented, editedShortcut: nil)
         }
-        .onAppear {
-            // todo auto backups https://www.hackingwithswift.com/books/ios-swiftui/writing-data-to-the-documents-directory
-            // let str = "Test Message"
-            // let dd = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            // let url = dd.appendingPathComponent("message.txt")
-            // do {
-            // try str.write(to: url, atomically: true, encoding: .utf8)
-            // let input = try String(contentsOf: url)
-            // print(url)
-            // } catch {
-            // print(error.localizedDescription)
-            // }
-        }
         .fileExporter(
             isPresented: $isFileExporterPresented,
             document: fileForExport,
@@ -591,40 +541,7 @@ private struct SettingsScreenInner: View {
 }
 
 /*
-// todo rename
-struct ToolsView_ChecklistView: View {
 
-    let checklist: ChecklistDb
-
-    @State private var isItemsPresented = false
-    @State private var isEditPresented = false
-
-    var body: some View {
-        MyListSwipeToActionItem(
-            bgColor: c.fg,
-            deletionHint: checklist.name,
-            deletionConfirmationNote: "Are you sure you want to delete \"\(checklist.name)\" checklist?",
-            onEdit: {
-                isEditPresented = true
-            },
-            onDelete: {
-                checklist.deleteWithDependencies { _ in
-                    // todo
-                }
-            }
-        ) {
-            MyListView__ItemView__ButtonView(text: checklist.name) {
-                isItemsPresented = true
-            }
-        }
-        .sheetEnv(isPresented: $isItemsPresented) {
-            ChecklistSheet(isPresented: $isItemsPresented, checklist: checklist)
-        }
-        .sheetEnv(isPresented: $isEditPresented) {
-            ChecklistNameDialog(isPresented: $isEditPresented, checklist: checklist, onSave: { _ in })
-        }
-    }
-}
 private struct NoteListItemView: View {
 
     let note: NoteDb
