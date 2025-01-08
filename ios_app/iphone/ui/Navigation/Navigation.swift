@@ -15,6 +15,7 @@ class Navigation: DialogsManager {
     fileprivate var pathList: [NavigationPath] = []
     fileprivate var sheetViews = [NavigationSheet<AnyView>]()
     fileprivate var alertViews = [NavigationAlert]()
+    fileprivate var confirmationViews = [NavigationConfirmation]()
     
     ///
     
@@ -45,9 +46,31 @@ class Navigation: DialogsManager {
     
     nonisolated func alert(message: String) {
         Task { @MainActor in
-            alertViews.append(NavigationAlert(message: message, onRemove: { id in
-                self.alertViews.removeAll { $0.id == id }
-            }))
+            let alert = NavigationAlert(
+                message: message,
+                onRemove: { id in
+                    self.alertViews.removeAll { $0.id == id }
+                }
+            )
+            alertViews.append(alert)
+        }
+    }
+    
+    nonisolated func confirmation(
+        message: String,
+        buttonText: String,
+        onConfirm: @escaping () -> Void
+    ) {
+        Task { @MainActor in
+            let confirmation = NavigationConfirmation(
+                message: message,
+                buttonText: buttonText,
+                onConfirm: onConfirm,
+                onRemove: { id in
+                    self.confirmationViews.removeAll { $0.id == id }
+                }
+            )
+            confirmationViews.append(confirmation)
         }
     }
 }
@@ -74,6 +97,10 @@ private struct NavigationModifier: ViewModifier {
             
             ForEach(navigation.alertViews) { alertView in
                 alertView
+            }
+            
+            ForEach(navigation.confirmationViews) { confirmationView in
+                confirmationView
             }
         }
         .environment(navigation)
