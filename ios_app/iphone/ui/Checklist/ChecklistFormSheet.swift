@@ -27,9 +27,7 @@ private struct ChecklistFormSheetInner: View {
     let onDelete: () -> Void
     
     ///
-
-    @EnvironmentObject private var nativeSheet: NativeSheet
-
+    
     @Environment(\.dismiss) private var dismiss
     @Environment(Navigation.self) private var navigation
     
@@ -73,11 +71,10 @@ private struct ChecklistFormSheetInner: View {
                             
                             Button(
                                 action: {
-                                    nativeSheet.show { isPresented in
+                                    navigation.sheet {
                                         ChecklistItemFormSheet(
-                                            isPresented: isPresented,
-                                            checklist: state.checklistDb,
-                                            checklistItem: checklistItemUi.checklistItemDb
+                                            checklistDb: state.checklistDb,
+                                            checklistItemDb: checklistItemUi.checklistItemDb
                                         )
                                     }
                                 },
@@ -127,11 +124,10 @@ private struct ChecklistFormSheetInner: View {
                     
                     Button(
                         action: {
-                            nativeSheet.show { isPresented in
+                            navigation.sheet {
                                 ChecklistItemFormSheet(
-                                    isPresented: isPresented,
-                                    checklist: state.checklistDb,
-                                    checklistItem: nil
+                                    checklistDb: state.checklistDb,
+                                    checklistItemDb: nil
                                 )
                             }
                         },
