@@ -5,7 +5,8 @@ struct ChecklistSettingsScreen: View {
     
     let checklistDb: ChecklistDb?
     let onSave: (ChecklistDb) -> Void
-    
+    let onDelete: () -> Void
+
     var body: some View {
         
         VmView({
@@ -15,7 +16,8 @@ struct ChecklistSettingsScreen: View {
                 vm: vm,
                 state: state,
                 name: state.name,
-                onSave: onSave
+                onSave: onSave,
+                onDelete: onDelete
             )
         }
     }
@@ -27,6 +29,7 @@ private struct ChecklistSettingsScreenInner: View {
     let state: ChecklistSettingsVm.State
     @State var name: String
     let onSave: (ChecklistDb) -> Void
+    let onDelete: () -> Void
     
     ///
     
@@ -37,6 +40,7 @@ private struct ChecklistSettingsScreenInner: View {
     var body: some View {
         
         List {
+            
             TextField(
                 text: $name,
                 prompt: Text(state.namePlaceholder)
@@ -45,6 +49,22 @@ private struct ChecklistSettingsScreenInner: View {
             .focused($isFocused)
             .onChange(of: name) { _, new in
                 vm.setName(name: new)
+            }
+            
+            if let checklistDb = state.checklistDb {
+                Section {
+                    Button(state.deleteButtonText) {
+                        vm.delete(
+                            checklistDb: checklistDb,
+                            dialogsManager: navigation,
+                            onDelete: {
+                                dismiss()
+                                onDelete()
+                            }
+                        )
+                    }
+                    .foregroundColor(.red)
+                }
             }
         }
         .contentMargins(.top, 14)
