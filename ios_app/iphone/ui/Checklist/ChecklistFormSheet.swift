@@ -33,120 +33,83 @@ private struct ChecklistFormSheetInner: View {
     
     var body: some View {
         
-        VStack {
+        List {
             
-            ScrollView {
+            ForEach(state.checklistItemsUi, id: \.checklistItemDb.id) { checklistItemUi in
                 
-                Padding(vertical: 8)
-                
-                ForEach(state.checklistItemsUi, id: \.checklistItemDb.id) { checklistItemUi in
+                HStack(spacing: 8) {
                     
-                    VStack {
-                        
-                        if !checklistItemUi.isFirst {
-                            DividerFg()
-                                .padding(.leading, 27)
+                    Button(
+                        action: {
+                            vm.deleteItem(itemDb: checklistItemUi.checklistItemDb)
+                        },
+                        label: {
+                            Image(systemName: "minus.circle.fill")
+                                .font(.system(size: 16))
+                                .foregroundColor(.red)
                         }
-                        
-                        Spacer()
-                        
-                        HStack(spacing: 8) {
-                            
-                            Button(
-                                action: {
-                                    vm.deleteItem(itemDb: checklistItemUi.checklistItemDb)
-                                },
-                                label: {
-                                    Image(systemName: "minus.circle.fill")
-                                        .font(.system(size: 16))
-                                        .foregroundColor(.red)
-                                }
-                            )
-                            .buttonStyle(.plain)
-                            
-                            Text(checklistItemUi.checklistItemDb.text)
-                                .lineLimit(1)
-                            
-                            Spacer()
-                            
-                            Button(
-                                action: {
-                                    navigation.sheet {
-                                        ChecklistItemFormSheet(
-                                            checklistDb: state.checklistDb,
-                                            checklistItemDb: checklistItemUi.checklistItemDb
-                                        )
-                                    }
-                                },
-                                label: {
-                                    Image(systemName: "pencil")
-                                        .font(.system(size: 16))
-                                        .foregroundColor(.blue)
-                                }
-                            )
-                            .buttonStyle(.plain)
-                            .padding(.leading, 8)
-                            
-                            Button(
-                                action: {
-                                    vm.down(itemUi: checklistItemUi)
-                                },
-                                label: {
-                                    Image(systemName: "arrow.down")
-                                        .font(.system(size: 15))
-                                        .foregroundColor(.blue)
-                                }
-                            )
-                            .buttonStyle(.plain)
-                            .padding(.leading, 8)
-                            
-                            Button(
-                                action: {
-                                    vm.up(itemUi: checklistItemUi)
-                                },
-                                label: {
-                                    Image(systemName: "arrow.up")
-                                        .font(.system(size: 15))
-                                        .foregroundColor(.blue)
-                                }
-                            )
-                            .buttonStyle(.plain)
-                            .padding(.leading, 6)
-                        }
-                        .padding(.vertical, 12)
-                        
-                        Spacer()
-                    }
-                    .padding(.horizontal, H_PADDING)
-                }
-                
-                HStack {
+                    )
+                    .buttonStyle(.plain)
+                    
+                    Text(checklistItemUi.checklistItemDb.text)
+                        .lineLimit(1)
+                    
+                    Spacer()
                     
                     Button(
                         action: {
                             navigation.sheet {
                                 ChecklistItemFormSheet(
                                     checklistDb: state.checklistDb,
-                                    checklistItemDb: nil
+                                    checklistItemDb: checklistItemUi.checklistItemDb
                                 )
                             }
                         },
                         label: {
-                            Text(state.newItemButton)
-                                .foregroundColor(c.blue)
-                                .padding(.leading, H_PADDING)
+                            Image(systemName: "pencil")
+                                .font(.system(size: 16))
+                                .foregroundColor(.blue)
                         }
                     )
+                    .buttonStyle(.plain)
+                    .padding(.leading, 8)
                     
-                    Spacer()
+                    Button(
+                        action: {
+                            vm.down(itemUi: checklistItemUi)
+                        },
+                        label: {
+                            Image(systemName: "arrow.down")
+                                .font(.system(size: 15))
+                                .foregroundColor(.blue)
+                        }
+                    )
+                    .buttonStyle(.plain)
+                    .padding(.leading, 8)
+                    
+                    Button(
+                        action: {
+                            vm.up(itemUi: checklistItemUi)
+                        },
+                        label: {
+                            Image(systemName: "arrow.up")
+                                .font(.system(size: 15))
+                                .foregroundColor(.blue)
+                        }
+                    )
+                    .buttonStyle(.plain)
+                    .padding(.leading, 6)
                 }
-                .padding(.top, 12)
             }
         }
+        .contentMargins(.vertical, 8)
+        .plainList()
         .navigationTitle(state.checklistName)
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
+            
             ToolbarItem(placement: .topBarLeading) {
+                
                 Button("Settings") {
                     navigation.sheet {
                         ChecklistSettingsSheet(
@@ -160,7 +123,9 @@ private struct ChecklistFormSheetInner: View {
                     }
                 }
             }
+            
             ToolbarItem(placement: .primaryAction) {
+                
                 Button("Done") {
                     if vm.isDoneAllowed(
                         dialogsManager: navigation
@@ -169,6 +134,36 @@ private struct ChecklistFormSheetInner: View {
                     }
                 }
                 .fontWeight(.bold)
+            }
+            
+            ToolbarItemGroup(placement: .bottomBar) {
+                
+                Button(
+                    action: {
+                        navigation.sheet {
+                            ChecklistItemFormSheet(
+                                checklistDb: state.checklistDb,
+                                checklistItemDb: nil
+                            )
+                        }
+                    },
+                    label: {
+                        
+                        HStack(spacing: 8) {
+                            
+                            Image(systemName: "plus.circle.fill")
+                                .foregroundStyle(.blue)
+                                .fontWeight(.bold)
+                            
+                            Text(state.newItemButtonText)
+                                .foregroundColor(.blue)
+                                .fontWeight(.bold)
+                        }
+                    }
+                )
+                .buttonStyle(.plain)
+                
+                Spacer()
             }
         }
     }
