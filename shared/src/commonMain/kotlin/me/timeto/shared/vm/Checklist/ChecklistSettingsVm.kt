@@ -3,6 +3,7 @@ package me.timeto.shared.vm.Checklist
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.launchEx
+import me.timeto.shared.launchExIo
 import me.timeto.shared.misc.DialogsManager
 import me.timeto.shared.misc.UiException
 import me.timeto.shared.vm.__Vm
@@ -21,6 +22,8 @@ class ChecklistSettingsVm(
         val isSaveEnabled: Boolean = name.isNotBlank()
 
         val namePlaceholder = "Name"
+
+        val deleteButtonText = "Delete Checklist"
     }
 
     override val state = MutableStateFlow(
@@ -49,5 +52,22 @@ class ChecklistSettingsVm(
         } catch (e: UiException) {
             dialogsManager.alert(e.uiMessage)
         }
+    }
+
+    fun delete(
+        checklistDb: ChecklistDb,
+        dialogsManager: DialogsManager,
+        onDelete: () -> Unit,
+    ) {
+        dialogsManager.confirmation(
+            message = "Are you sure you want to delete \"${checklistDb.name}\" checklist?",
+            buttonText = "Delete",
+            onConfirm = {
+                launchExIo {
+                    checklistDb.deleteWithDependencies()
+                    onUi { onDelete() }
+                }
+            }
+        )
     }
 }
