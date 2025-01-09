@@ -53,13 +53,17 @@ private struct ChecklistFormSheetInner: View {
                                 }
                             },
                             label: {
-                                Image(systemName: "pencil")
-                                    .font(.system(size: 16))
-                                    .foregroundColor(.blue)
+                                // To tap area
+                                HStack {
+                                    Text(checklistItemUi.checklistItemDb.text)
+                                        .lineLimit(1)
+                                    Spacer()
+                                }
+                                .background(.background)
                             }
                         )
-                        .buttonStyle(.plain)
-                        .padding(.leading, 8)
+
+                        Spacer()
                         
                         Button(
                             action: {
