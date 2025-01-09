@@ -71,6 +71,19 @@ data class ChecklistItemDb(
             )
         }
 
+        suspend fun updateSortMany(
+            itemsDb: List<ChecklistItemDb>,
+        ): Unit = dbIo {
+            db.transaction {
+                itemsDb.forEachIndexed { idx, itemDb ->
+                    db.checklistItemQueries.updateSortById(
+                        id = itemDb.id,
+                        sort = idx,
+                    )
+                }
+            }
+        }
+
         //
         // Backupable Holder
 
