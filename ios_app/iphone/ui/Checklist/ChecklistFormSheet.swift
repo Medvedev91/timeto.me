@@ -41,55 +41,32 @@ private struct ChecklistFormSheetInner: View {
                 
                 ForEach(state.checklistItemsUi, id: \.checklistItemDb.id) { checklistItemUi in
                     
-                    HStack(spacing: 8) {
-                        
-                        Button(
-                            action: {
-                                navigation.sheet {
-                                    ChecklistItemFormSheet(
-                                        checklistDb: state.checklistDb,
-                                        checklistItemDb: checklistItemUi.checklistItemDb
-                                    )
-                                }
-                            },
-                            label: {
-                                // To tap area
-                                HStack {
-                                    Text(checklistItemUi.checklistItemDb.text)
-                                        .lineLimit(1)
-                                    Spacer()
-                                }
-                                .background(.background)
+                    Button(
+                        action: {
+                            navigation.sheet {
+                                ChecklistItemFormSheet(
+                                    checklistDb: state.checklistDb,
+                                    checklistItemDb: checklistItemUi.checklistItemDb
+                                )
                             }
-                        )
-
-                        Spacer()
-                        
-                        Button(
-                            action: {
-                                vm.down(itemUi: checklistItemUi)
-                            },
-                            label: {
-                                Image(systemName: "arrow.down")
-                                    .font(.system(size: 15))
-                                    .foregroundColor(.blue)
+                        },
+                        label: {
+                            // To tap area
+                            HStack {
+                                Text(checklistItemUi.checklistItemDb.text)
+                                    .lineLimit(1)
+                                Spacer()
                             }
+                            .background(.background)
+                        }
+                    )
+                }
+                .onMove { from, to in
+                    from.forEach { fromIdx in
+                        vm.moveByIdxIos(
+                            fromIdx: fromIdx.toInt32(),
+                            toIdx: (fromIdx > to ? to : (to - 1)).toInt32()
                         )
-                        .buttonStyle(.plain)
-                        .padding(.leading, 8)
-                        
-                        Button(
-                            action: {
-                                vm.up(itemUi: checklistItemUi)
-                            },
-                            label: {
-                                Image(systemName: "arrow.up")
-                                    .font(.system(size: 15))
-                                    .foregroundColor(.blue)
-                            }
-                        )
-                        .buttonStyle(.plain)
-                        .padding(.leading, 6)
                     }
                 }
                 .onDelete { indexSet in
