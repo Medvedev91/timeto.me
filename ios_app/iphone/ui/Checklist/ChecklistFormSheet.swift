@@ -35,72 +35,76 @@ private struct ChecklistFormSheetInner: View {
         
         List {
             
-            ForEach(state.checklistItemsUi, id: \.checklistItemDb.id) { checklistItemUi in
+            Section {
                 
-                HStack(spacing: 8) {
+                ForEach(state.checklistItemsUi, id: \.checklistItemDb.id) { checklistItemUi in
                     
-                    Button(
-                        action: {
-                            vm.deleteItem(itemDb: checklistItemUi.checklistItemDb)
-                        },
-                        label: {
-                            Image(systemName: "minus.circle.fill")
-                                .font(.system(size: 16))
-                                .foregroundColor(.red)
-                        }
-                    )
-                    .buttonStyle(.plain)
-                    
-                    Text(checklistItemUi.checklistItemDb.text)
-                        .lineLimit(1)
-                    
-                    Spacer()
-                    
-                    Button(
-                        action: {
-                            navigation.sheet {
-                                ChecklistItemFormSheet(
-                                    checklistDb: state.checklistDb,
-                                    checklistItemDb: checklistItemUi.checklistItemDb
-                                )
+                    HStack(spacing: 8) {
+                        
+                        Button(
+                            action: {
+                                vm.deleteItem(itemDb: checklistItemUi.checklistItemDb)
+                            },
+                            label: {
+                                Image(systemName: "minus.circle.fill")
+                                    .font(.system(size: 16))
+                                    .foregroundColor(.red)
                             }
-                        },
-                        label: {
-                            Image(systemName: "pencil")
-                                .font(.system(size: 16))
-                                .foregroundColor(.blue)
-                        }
-                    )
-                    .buttonStyle(.plain)
-                    .padding(.leading, 8)
-                    
-                    Button(
-                        action: {
-                            vm.down(itemUi: checklistItemUi)
-                        },
-                        label: {
-                            Image(systemName: "arrow.down")
-                                .font(.system(size: 15))
-                                .foregroundColor(.blue)
-                        }
-                    )
-                    .buttonStyle(.plain)
-                    .padding(.leading, 8)
-                    
-                    Button(
-                        action: {
-                            vm.up(itemUi: checklistItemUi)
-                        },
-                        label: {
-                            Image(systemName: "arrow.up")
-                                .font(.system(size: 15))
-                                .foregroundColor(.blue)
-                        }
-                    )
-                    .buttonStyle(.plain)
-                    .padding(.leading, 6)
+                        )
+                        .buttonStyle(.plain)
+                        
+                        Text(checklistItemUi.checklistItemDb.text)
+                            .lineLimit(1)
+                        
+                        Spacer()
+                        
+                        Button(
+                            action: {
+                                navigation.sheet {
+                                    ChecklistItemFormSheet(
+                                        checklistDb: state.checklistDb,
+                                        checklistItemDb: checklistItemUi.checklistItemDb
+                                    )
+                                }
+                            },
+                            label: {
+                                Image(systemName: "pencil")
+                                    .font(.system(size: 16))
+                                    .foregroundColor(.blue)
+                            }
+                        )
+                        .buttonStyle(.plain)
+                        .padding(.leading, 8)
+                        
+                        Button(
+                            action: {
+                                vm.down(itemUi: checklistItemUi)
+                            },
+                            label: {
+                                Image(systemName: "arrow.down")
+                                    .font(.system(size: 15))
+                                    .foregroundColor(.blue)
+                            }
+                        )
+                        .buttonStyle(.plain)
+                        .padding(.leading, 8)
+                        
+                        Button(
+                            action: {
+                                vm.up(itemUi: checklistItemUi)
+                            },
+                            label: {
+                                Image(systemName: "arrow.up")
+                                    .font(.system(size: 15))
+                                    .foregroundColor(.blue)
+                            }
+                        )
+                        .buttonStyle(.plain)
+                        .padding(.leading, 6)
+                    }
                 }
             }
+            .listSectionSeparator(.hidden, edges: [.top, .bottom])
         }
         .contentMargins(.vertical, 8)
         .plainList()
