@@ -13,7 +13,11 @@ struct ChecklistItemFormSheet: View {
                 checklistItemDb: checklistItemDb
             )
         }) { vm, state in
-            ChecklistItemFormSheetInner(vm: vm, state: state)
+            ChecklistItemFormSheetInner(
+                vm: vm,
+                state: state,
+                text: state.text
+            )
         }
     }
 }
@@ -25,60 +29,54 @@ private struct ChecklistItemFormSheetInner: View {
     let vm: ChecklistItemFormVm
     let state: ChecklistItemFormVm.State
     
+    @State var text: String
+    
     ///
     
+    @FocusState private var isFocused: Bool
     @Environment(\.dismiss) private var dismiss
+    @Environment(Navigation.self) private var navigation
     
     var body: some View {
         
-        VStack {
+        List {
             
-            HStack {
-                
-                Button(
-                    action: {
-                        dismiss()
-                    },
-                    label: { Text("Cancel") }
-                )
-                .padding(.leading, 25)
-                
-                Spacer()
-                
-                Button(
-                    action: {
-                        vm.save {
+            TextField(
+                text: $text
+            ) {
+            }
+            .focused($isFocused)
+            .onChange(of: text) { _, new in
+                vm.setText(text: new)
+            }
+        }
+        .contentMargins(.top, 14)
+        .interactiveDismissDisabled()
+        .toolbarTitleDisplayMode(.inline)
+        .navigationTitle(state.title)
+        .toolbar {
+            
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel") {
+                    dismiss()
+                }
+            }
+            
+            ToolbarItem(placement: .primaryAction) {
+                Button(state.saveButtonText) {
+                    vm.save(
+                        dialogsManager: navigation,
+                        onSuccess: {
                             dismiss()
                         }
-                    },
-                    label: {
-                        Text("Save")
-                            .fontWeight(.heavy)
-                            .padding(.trailing, 25)
-                    }
-                )
+                    )
+                }
+                .fontWeight(.bold)
                 .disabled(!state.isSaveEnabled)
             }
-            .padding(.top, 20)
-            
-            MyListView__Padding__SectionSection()
-            
-            MyListView__ItemView(
-                isFirst: true,
-                isLast: true
-            ) {
-                
-                MyListView__ItemView__TextInputView(
-                    text: state.inputNameValue,
-                    placeholder: "Name",
-                    isAutofocus: true,
-                    onValueChanged: { newValue in
-                        vm.setInputName(name: newValue)
-                    }
-                )
-            }
-            
-            Spacer()
+        }
+        .onAppear {
+            isFocused = true
         }
     }
 }
