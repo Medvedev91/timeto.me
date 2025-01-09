@@ -31,6 +31,8 @@ private struct ChecklistFormSheetInner: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(Navigation.self) private var navigation
     
+    @State private var editMode: EditMode = .active
+    
     var body: some View {
         
         List {
@@ -40,23 +42,6 @@ private struct ChecklistFormSheetInner: View {
                 ForEach(state.checklistItemsUi, id: \.checklistItemDb.id) { checklistItemUi in
                     
                     HStack(spacing: 8) {
-                        
-                        Button(
-                            action: {
-                                vm.deleteItem(itemDb: checklistItemUi.checklistItemDb)
-                            },
-                            label: {
-                                Image(systemName: "minus.circle.fill")
-                                    .font(.system(size: 16))
-                                    .foregroundColor(.red)
-                            }
-                        )
-                        .buttonStyle(.plain)
-                        
-                        Text(checklistItemUi.checklistItemDb.text)
-                            .lineLimit(1)
-                        
-                        Spacer()
                         
                         Button(
                             action: {
@@ -103,9 +88,15 @@ private struct ChecklistFormSheetInner: View {
                         .padding(.leading, 6)
                     }
                 }
+                .onDelete { indexSet in
+                    for idx in indexSet {
+                        vm.deleteItem(itemDb: state.checklistItemsUi[idx].checklistItemDb)
+                    }
+                }
             }
             .listSectionSeparator(.hidden, edges: [.top, .bottom])
         }
+        .environment(\.editMode, $editMode)
         .contentMargins(.vertical, 8)
         .plainList()
         .navigationTitle(state.checklistName)
