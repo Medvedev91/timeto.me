@@ -103,6 +103,19 @@ class ChecklistFormVm(
         }
     }
 
+    fun moveByIdxIos(fromIdx: Int, toIdx: Int) {
+        val list = state.value.checklistItemsDb
+        val newList = list.toMutableList()
+        val fromItem = list[fromIdx]
+        newList.removeAt(fromIdx)
+        newList.add(toIdx, fromItem)
+        // Do together
+        state.update { it.copy(checklistItemsDb = newList) }
+        launchExIo {
+            ChecklistItemDb.updateSortMany(itemsDb = newList)
+        }
+    }
+
     ///
 
     data class ChecklistItemUi(
