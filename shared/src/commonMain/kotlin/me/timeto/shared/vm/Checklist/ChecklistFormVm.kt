@@ -63,19 +63,10 @@ class ChecklistFormVm(
         return true
     }
 
-    fun deleteItem(itemDb: ChecklistItemDb) {
-        showUiConfirmation(
-            UIConfirmationData(
-                text = "Are you sure you want to delete \"${itemDb.text}\"?",
-                buttonText = "Delete",
-                isRed = true,
-                onConfirm = {
-                    launchExDefault {
-                        itemDb.delete()
-                    }
-                }
-            )
-        )
+    fun deleteItem(
+        itemDb: ChecklistItemDb,
+    ): Unit = launchExIo {
+        itemDb.delete()
     }
 
     fun up(itemUi: ChecklistItemUi) {
