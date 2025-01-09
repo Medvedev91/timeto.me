@@ -97,13 +97,14 @@ data class ChecklistItemDb(
         )
     }
 
-    suspend fun upTextWithValidation(newText: String): Unit = dbIo {
+    @Throws(UiException::class, CancellationException::class)
+    suspend fun updateTextWithValidation(newText: String): Unit = dbIo {
         db.checklistItemQueries.updateTextById(
             id = id, text = textValidationRaw(newText)
         )
     }
 
-    suspend fun upSort(newSort: Int): Unit = dbIo {
+    suspend fun updateSort(newSort: Int): Unit = dbIo {
         db.checklistItemQueries.updateSortById(
             id = id,
             sort = newSort,

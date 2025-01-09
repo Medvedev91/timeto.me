@@ -44,7 +44,7 @@ class ChecklistItemFormVm(
             val checklistDb: ChecklistDb = state.value.checklistDb
             val oldItemDb: ChecklistItemDb? = state.value.checklistItemDb
             if (oldItemDb != null)
-                oldItemDb.upTextWithValidation(text)
+                oldItemDb.updateTextWithValidation(text)
             else
                 ChecklistItemDb.insertWithValidation(text, checklistDb)
             onUi { onSuccess() }

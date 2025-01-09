@@ -90,7 +90,7 @@ class ChecklistFormVm(
         newItemsUi[prevIdx] = itemUi
         launchExDefault {
             newItemsUi.forEachIndexed { idx, itemUi ->
-                itemUi.checklistItemDb.upSort(idx)
+                itemUi.checklistItemDb.updateSort(idx)
             }
         }
     }
@@ -107,7 +107,7 @@ class ChecklistFormVm(
         newItemsUi[nextIdx] = itemUi
         launchExDefault {
             newItemsUi.forEachIndexed { idx, itemUi ->
-                itemUi.checklistItemDb.upSort(idx)
+                itemUi.checklistItemDb.updateSort(idx)
             }
         }
     }
