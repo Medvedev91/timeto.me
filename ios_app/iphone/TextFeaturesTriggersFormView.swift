@@ -44,8 +44,7 @@ struct TextFeaturesTriggersFormView: View {
             }
             .sheetEnv(isPresented: $isChecklistsPickerPresented) {
                 ChecklistPickerSheet(
-                    isPresented: $isChecklistsPickerPresented,
-                    selectedChecklists: formUI.textFeatures.checklists
+                    selectedChecklistsDb: formUI.textFeatures.checklists
                 ) { checklists in
                     onChange(formUI.setChecklists(checklists: checklists))
                 }

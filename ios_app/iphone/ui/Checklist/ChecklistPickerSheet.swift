@@ -1,16 +1,15 @@
 import SwiftUI
 import shared
 
-// todo ui
 struct ChecklistPickerSheet: View {
     
-    let selectedChecklists: [ChecklistDb]
+    let selectedChecklistsDb: [ChecklistDb]
     let onPick: ([ChecklistDb]) -> Void
     
     var body: some View {
         VmView({
             ChecklistsPickerSheetVm(
-                selectedChecklists: selectedChecklists
+                selectedChecklistsDb: selectedChecklistsDb
             )
         }) { vm, state in
             ChecklistPickerSheetInner(
@@ -42,72 +41,82 @@ private struct ChecklistPickerSheetInner: View {
 
     var body: some View {
         
-        List(selection: $selectedIds) {
-            Section {
-                ForEach(animatedChecklistsDb, id: \.id) { checklistDb in
-                    Text(checklistDb.name)
-                }
-            }
-            .listSectionSeparator(.hidden, edges: [.top, .bottom])
-        }
-        .animateVmValue(value: state.checklistsDbSorted, state: $animatedChecklistsDb)
-        .plainList()
-        .interactiveDismissDisabled()
-        .environment(\.editMode, $editMode)
-        .toolbarTitleDisplayMode(.inline)
-        .navigationTitle(state.title)
-        .toolbar {
+        ScrollViewReader { scrollProxy in
             
-            ToolbarItem(placement: .cancellationAction) {
-                Button("Cancel") {
-                    dismiss()
-                }
-            }
-            
-            ToolbarItem(placement: .primaryAction) {
-                Button(state.doneText) {
-                    dismiss()
-                    onPick(vm.getSelectedChecklistsDb())
-                }
-                .fontWeight(.bold)
-            }
-            
-            ToolbarItemGroup(placement: .bottomBar) {
-                Button(
-                    action: {
-                        navigation.sheet {
-                            ChecklistSettingsSheet(
-                                checklistDb: nil,
-                                onSave: { newChecklistDb in
-                                    selectedIds.insert(newChecklistDb.id)
-                                    navigation.sheet {
-                                        ChecklistFormSheet(
-                                            checklistDb: newChecklistDb,
-                                            onDelete: {}
-                                        )
-                                    }
-                                },
-                                onDelete: {}
-                            )
-                        }
-                    },
-                    label: {
-                        HStack(spacing: 8) {
-                            Image(systemName: "plus.circle.fill")
-                                .foregroundStyle(.blue)
-                                .fontWeight(.bold)
-                            Text(state.newChecklistText)
-                                .foregroundColor(.blue)
-                                .fontWeight(.bold)
-                        }
+            List(selection: $selectedIds) {
+                
+                Section {
+                    
+                    ForEach(animatedChecklistsDb, id: \.id) { checklistDb in
+                        Text(checklistDb.name)
                     }
-                )
-                .buttonStyle(.plain)
-                Spacer()
+                }
+                .listSectionSeparator(.hidden, edges: [.top, .bottom])
             }
-        }
-        .onChange(of: selectedIds) { _, new in
-            vm.setSelectedIds(ids: Set(new.map { $0.toKotlinInt() }))
+            .animateVmValue(value: state.checklistsDbSorted, state: $animatedChecklistsDb)
+            .plainList()
+            .interactiveDismissDisabled()
+            .environment(\.editMode, $editMode)
+            .toolbarTitleDisplayMode(.inline)
+            .navigationTitle(state.title)
+            .toolbar {
+                
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                }
+                
+                ToolbarItem(placement: .primaryAction) {
+                    Button(state.doneText) {
+                        dismiss()
+                        onPick(vm.getSelectedChecklistsDb())
+                    }
+                    .fontWeight(.bold)
+                }
+                
+                ToolbarItemGroup(placement: .bottomBar) {
+                    Button(
+                        action: {
+                            if let firstChecklistDb = state.checklistsDbSorted.first {
+                                withAnimation {
+                                    scrollProxy.scrollTo(firstChecklistDb.id)
+                                }
+                            }
+                            navigation.sheet {
+                                ChecklistSettingsSheet(
+                                    checklistDb: nil,
+                                    onSave: { newChecklistDb in
+                                        selectedIds.insert(newChecklistDb.id)
+                                        navigation.sheet {
+                                            ChecklistFormSheet(
+                                                checklistDb: newChecklistDb,
+                                                onDelete: {}
+                                            )
+                                        }
+                                    },
+                                    onDelete: {}
+                                )
+                            }
+                        },
+                        label: {
+                            HStack(spacing: 8) {
+                                Image(systemName: "plus.circle.fill")
+                                    .foregroundStyle(.blue)
+                                    .fontWeight(.bold)
+                                Text(state.newChecklistText)
+                                    .foregroundColor(.blue)
+                                    .fontWeight(.bold)
+                            }
+                        }
+                    )
+                    .buttonStyle(.plain)
+                    Spacer()
+                }
+            }
+            .onChange(of: selectedIds) { _, new in
+                vm.setSelectedIds(ids: Set(new.map { $0.toKotlinInt() }))
+            }
         }
     }
 }
