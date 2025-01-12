@@ -1,6 +1,8 @@
 import SwiftUI
 import shared
 
+// todo ui
+// todo rename
 struct ChecklistsPickerSheet: View {
 
     @Binding private var isPresented: Bool
@@ -9,7 +11,7 @@ struct ChecklistsPickerSheet: View {
     @State private var vm: ChecklistsPickerSheetVm
     @State private var sheetHeaderScroll = 0
 
-    @EnvironmentObject private var nativeSheet: NativeSheet
+    @Environment(Navigation.self) private var navigation
 
     init(
         isPresented: Binding<Bool>,
@@ -64,19 +66,20 @@ struct ChecklistsPickerSheet: View {
 
                         Button(
                             action: {
-                                nativeSheet.show { isPresentedNameDialog in
-                                    ChecklistNameDialog(
-                                        isPresented: isPresentedNameDialog,
-                                        checklist: nil,
+                                // todo test
+                                navigation.sheet {
+                                    ChecklistSettingsSheet(
+                                        checklistDb: nil,
                                         onSave: { newChecklistDb in
                                             vm.selectById(id: newChecklistDb.id)
-                                            nativeSheet.show { isPresentedForm in
+                                            navigation.sheet {
                                                 ChecklistFormSheet(
                                                     checklistDb: newChecklistDb,
                                                     onDelete: {}
                                                 )
                                             }
-                                        }
+                                        },
+                                        onDelete: {}
                                     )
                                 }
                             },
