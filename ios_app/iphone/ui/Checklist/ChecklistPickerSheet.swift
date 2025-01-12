@@ -76,6 +76,7 @@ private struct ChecklistPickerSheetInner: View {
                 }
                 
                 ToolbarItemGroup(placement: .bottomBar) {
+                    
                     Button(
                         action: {
                             if let firstChecklistDb = state.checklistsDbSorted.first {
@@ -111,6 +112,7 @@ private struct ChecklistPickerSheetInner: View {
                         }
                     )
                     .buttonStyle(.plain)
+                    
                     Spacer()
                 }
             }
