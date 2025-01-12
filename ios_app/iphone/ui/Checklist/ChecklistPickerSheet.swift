@@ -3,99 +3,108 @@ import shared
 
 // todo ui
 struct ChecklistPickerSheet: View {
+    
+    let selectedChecklists: [ChecklistDb]
+    let onPick: ([ChecklistDb]) -> Void
+    
+    var body: some View {
+        VmView({
+            ChecklistsPickerSheetVm(
+                selectedChecklists: selectedChecklists
+            )
+        }) { vm, state in
+            ChecklistPickerSheetInner(
+                vm: vm,
+                state: state,
+                selectedIds: Set(state.selectedIds.map { $0.int32Value }),
+                onPick: onPick
+            )
+        }
+    }
+}
 
-    @Binding private var isPresented: Bool
-    private let onPick: ([ChecklistDb]) -> Void
+private struct ChecklistPickerSheetInner: View {
+    
+    let vm: ChecklistsPickerSheetVm
+    let state: ChecklistsPickerSheetVm.State
+    
+    @State var selectedIds = Set<Int32>()
+    let onPick: ([ChecklistDb]) -> Void
 
-    @State private var vm: ChecklistsPickerSheetVm
-    @State private var sheetHeaderScroll = 0
+    ///
 
+    @State private var editMode: EditMode = .active
+
+    @Environment(\.dismiss) private var dismiss
     @Environment(Navigation.self) private var navigation
 
-    init(
-        isPresented: Binding<Bool>,
-        selectedChecklists: [ChecklistDb],
-        onPick: @escaping ([ChecklistDb]) -> Void
-    ) {
-        self.onPick = onPick
-        _isPresented = isPresented
-        _vm = State(initialValue: ChecklistsPickerSheetVm(selectedChecklists: selectedChecklists))
-    }
-
     var body: some View {
-
-        VMView(vm: vm, stack: .VStack()) { state in
-
-            SheetHeaderView(
-                onCancel: { isPresented = false },
-                title: state.headerTitle,
-                doneText: state.doneTitle,
-                isDoneEnabled: true,
-                scrollToHeader: sheetHeaderScroll
-            ) {
-                onPick(vm.getSelectedChecklists())
-                isPresented = false
+        
+        List(selection: $selectedIds) {
+            Section {
+                ForEach(state.checklistsDb, id: \.id) { checklistDb in
+                    Text(checklistDb.name)
+                }
             }
-
-            ScrollViewWithVListener(showsIndicators: false, vScroll: $sheetHeaderScroll) {
-
-                VStack {
-
-                    let checklistsUI = state.checklistsUI
-                    ForEach(checklistsUI, id: \.checklist.id) { checklistUI in
-
-                        let isFirst = checklistsUI.first == checklistUI
-
-                        MyListView__ItemView(
-                            isFirst: isFirst,
-                            isLast: checklistsUI.last == checklistUI,
-                            withTopDivider: !isFirst
-                        ) {
-
-                            MyListView__ItemView__RadioView(
-                                text: checklistUI.text,
-                                isActive: checklistUI.isSelected
-                            ) {
-                                vm.toggleChecklist(checklistUI: checklistUI)
-                            }
+            .listSectionSeparator(.hidden, edges: [.top, .bottom])
+        }
+        .plainList()
+        .environment(\.editMode, $editMode)
+        .contentMargins(.vertical, 8)
+        .toolbarTitleDisplayMode(.inline)
+        .navigationTitle(state.title)
+        .toolbar {
+            
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel") {
+                    dismiss()
+                }
+            }
+            
+            ToolbarItem(placement: .primaryAction) {
+                Button(state.doneText) {
+                    dismiss()
+                    onPick(vm.getSelectedChecklistsDb())
+                }
+                .fontWeight(.bold)
+            }
+            
+            ToolbarItemGroup(placement: .bottomBar) {
+                Button(
+                    action: {
+                        navigation.sheet {
+                            ChecklistSettingsSheet(
+                                checklistDb: nil,
+                                onSave: { newChecklistDb in
+                                    selectedIds.insert(newChecklistDb.id)
+                                    navigation.sheet {
+                                        ChecklistFormSheet(
+                                            checklistDb: newChecklistDb,
+                                            onDelete: {}
+                                        )
+                                    }
+                                },
+                                onDelete: {}
+                            )
+                        }
+                    },
+                    label: {
+                        HStack(spacing: 8) {
+                            Image(systemName: "plus.circle.fill")
+                                .foregroundStyle(.blue)
+                                .fontWeight(.bold)
+                            Text(state.newChecklistText)
+                                .foregroundColor(.blue)
+                                .fontWeight(.bold)
                         }
                     }
-
-                    HStack {
-
-                        Button(
-                            action: {
-                                // todo test
-                                navigation.sheet {
-                                    ChecklistSettingsSheet(
-                                        checklistDb: nil,
-                                        onSave: { newChecklistDb in
-                                            vm.selectById(id: newChecklistDb.id)
-                                            navigation.sheet {
-                                                ChecklistFormSheet(
-                                                    checklistDb: newChecklistDb,
-                                                    onDelete: {}
-                                                )
-                                            }
-                                        },
-                                        onDelete: {}
-                                    )
-                                }
-                            },
-                            label: {
-                                Text(state.newChecklistButton)
-                                    .foregroundColor(c.blue)
-                                    .padding(.leading, H_PADDING + 6)
-                                    .padding(.top, 16)
-                            }
-                        )
-
-                        Spacer()
-                    }
-                }
-                .padding(.top, 20)
+                )
+                .buttonStyle(.plain)
+                Spacer()
             }
         }
-        .background(c.sheetBg)
+        .onChange(of: selectedIds) { _, new in
+            vm.setSelectedIds(ids: Set(new.map { $0.toKotlinInt() }))
+        }
     }
 }
