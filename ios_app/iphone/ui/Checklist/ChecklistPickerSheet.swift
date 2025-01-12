@@ -17,6 +17,7 @@ struct ChecklistPickerSheet: View {
                 vm: vm,
                 state: state,
                 selectedIds: Set(state.selectedIds.map { $0.int32Value }),
+                animatedChecklistsDb: state.checklistsDbSorted,
                 onPick: onPick
             )
         }
@@ -29,6 +30,7 @@ private struct ChecklistPickerSheetInner: View {
     let state: ChecklistsPickerSheetVm.State
     
     @State var selectedIds = Set<Int32>()
+    @State var animatedChecklistsDb: [ChecklistDb]
     let onPick: ([ChecklistDb]) -> Void
 
     ///
@@ -42,15 +44,16 @@ private struct ChecklistPickerSheetInner: View {
         
         List(selection: $selectedIds) {
             Section {
-                ForEach(state.checklistsDb, id: \.id) { checklistDb in
+                ForEach(animatedChecklistsDb, id: \.id) { checklistDb in
                     Text(checklistDb.name)
                 }
             }
             .listSectionSeparator(.hidden, edges: [.top, .bottom])
         }
+        .animateVmValue(value: state.checklistsDbSorted, state: $animatedChecklistsDb)
         .plainList()
+        .interactiveDismissDisabled()
         .environment(\.editMode, $editMode)
-        .contentMargins(.vertical, 8)
         .toolbarTitleDisplayMode(.inline)
         .navigationTitle(state.title)
         .toolbar {
