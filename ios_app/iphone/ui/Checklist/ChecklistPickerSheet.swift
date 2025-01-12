@@ -2,8 +2,7 @@ import SwiftUI
 import shared
 
 // todo ui
-// todo rename
-struct ChecklistsPickerSheet: View {
+struct ChecklistPickerSheet: View {
 
     @Binding private var isPresented: Bool
     private let onPick: ([ChecklistDb]) -> Void
