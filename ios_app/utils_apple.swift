@@ -316,39 +316,6 @@ extension View {
 }
 
 ///
-///
-
-private struct AnimateVmValueModifier<T: Equatable>: ViewModifier {
-
-    let value: T
-    @Binding var state: T
-    let animation: Animation
-
-    func body(content: Content) -> some View {
-        content
-                .onChange(of: value) { newValue in
-                    withAnimation(animation) {
-                        state = newValue
-                    }
-                }
-                .onAppear {
-                    state = value
-                }
-    }
-}
-
-extension View {
-
-    func animateVmValue<T: Equatable>(
-        value: T,
-        state: Binding<T>,
-        animation: Animation = .spring(response: 0.250)
-    ) -> some View {
-        modifier(AnimateVmValueModifier(value: value, state: state, animation: animation))
-    }
-}
-
-///
 /// https://medium.com/@michael.forrest.music/how-to-make-a-scrollview-or-list-in-swiftui-that-starts-from-the-bottom-b0c4a69beb0d
 
 struct FlippedUpsideDown: ViewModifier {
