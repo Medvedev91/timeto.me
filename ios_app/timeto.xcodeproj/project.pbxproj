@@ -86,7 +86,6 @@
 		3182165F04FA76ED88CD4696 /* TextFeaturesTriggersFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821CC8696F1EF2463FFE14 /* TextFeaturesTriggersFormView.swift */; };
 		318216CD611B132D9DE288F3 /* EventTemplatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821B4BCB049B516BF2DF2E /* EventTemplatesView.swift */; };
 		318216E60DD4CA4153065416 /* utils_apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E58DC92CD5673A6B49E /* utils_apple.swift */; };
-		318216F271691CC07FC67AFC /* ChecklistNameDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318212FEA97CBD2AEC3AA1D6 /* ChecklistNameDialog.swift */; };
 		3182172EBDF607665AA6DBD2 /* ActivityTimerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318211757B7EE8E4805AD047 /* ActivityTimerSheet.swift */; };
 		318217982A5F8106B497432F /* SheetDividerBg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821956E237470E838F18A0 /* SheetDividerBg.swift */; };
 		31821859FBE8390BA3346A0E /* EventTemplateFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821C3C168B3948A5636451 /* EventTemplateFormSheet.swift */; };
@@ -214,7 +213,6 @@
 		31821220E2A7C6FBE2EA3D34 /* EventsListEventView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsListEventView.swift; sourceTree = "<group>"; };
 		31821290CB27918CD444FBB0 /* ChecklistItemFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChecklistItemFormSheet.swift; sourceTree = "<group>"; };
 		318212B384624F1CF416C576 /* EventFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventFormSheet.swift; sourceTree = "<group>"; };
-		318212FEA97CBD2AEC3AA1D6 /* ChecklistNameDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChecklistNameDialog.swift; sourceTree = "<group>"; };
 		318212FFE80A0856A0A88DCF /* MySpacerSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySpacerSize.swift; sourceTree = "<group>"; };
 		31821346E2128825E6DBB9F8 /* atm_apple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = atm_apple.swift; sourceTree = "<group>"; };
 		318213DE3B58FA098A8DBAE7 /* ActivitiesTimerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesTimerSheet.swift; sourceTree = "<group>"; };
@@ -481,7 +479,6 @@
 				2C273F2A2BA4ACEB0016F11D /* AskAQuestionListButtonView.swift */,
 				3182151D618D3ED8AEE1B80A /* Assets.xcassets */,
 				31821D5928C18299586075F4 /* AutoBackupIos.swift */,
-				318212FEA97CBD2AEC3AA1D6 /* ChecklistNameDialog.swift */,
 				31821A7EADEF749C7A5F04DE /* ChecklistSheet.swift */,
 				2C0BE02C295732110099AD7C /* DatePickerStateView.swift */,
 				31821D4211F3426B1F444F81 /* DaytimePickerSheet.swift */,
@@ -724,7 +721,6 @@
 				2CF9DA9F2D2DBBB100965A76 /* NavigationConfirmation.swift in Sources */,
 				2CF9DA872D281FEF00965A76 /* NavigationPath.swift in Sources */,
 				2C0BE02F295751B70099AD7C /* PickerStateView.swift in Sources */,
-				318216F271691CC07FC67AFC /* ChecklistNameDialog.swift in Sources */,
 				318215D20ED732E4BF4F3071 /* ChecklistSheet.swift in Sources */,
 				318214F11883D036EC488EA5 /* TaskFormSheet.swift in Sources */,
 				2C273F2F2BBAE3090016F11D /* ChecklistFormSheet.swift in Sources */,
