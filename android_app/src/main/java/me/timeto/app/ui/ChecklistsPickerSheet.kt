@@ -12,7 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import me.timeto.app.*
 import me.timeto.shared.db.ChecklistDb
-import me.timeto.shared.vm.ChecklistPickerVm
+import me.timeto.shared.vm.Checklist.ChecklistPickerVm
 
 @Composable
 fun ChecklistsPickerSheet(
