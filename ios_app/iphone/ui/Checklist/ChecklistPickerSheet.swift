@@ -8,7 +8,7 @@ struct ChecklistPickerSheet: View {
     
     var body: some View {
         VmView({
-            ChecklistsPickerSheetVm(
+            ChecklistPickerVm(
                 selectedChecklistsDb: selectedChecklistsDb
             )
         }) { vm, state in
@@ -25,8 +25,8 @@ struct ChecklistPickerSheet: View {
 
 private struct ChecklistPickerSheetInner: View {
     
-    let vm: ChecklistsPickerSheetVm
-    let state: ChecklistsPickerSheetVm.State
+    let vm: ChecklistPickerVm
+    let state: ChecklistPickerVm.State
     
     @State var selectedIds = Set<Int32>()
     @State var animatedChecklistsDb: [ChecklistDb]

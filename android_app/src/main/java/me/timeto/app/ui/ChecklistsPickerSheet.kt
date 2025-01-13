@@ -12,7 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import me.timeto.app.*
 import me.timeto.shared.db.ChecklistDb
-import me.timeto.shared.vm.ChecklistsPickerSheetVm
+import me.timeto.shared.vm.ChecklistPickerVm
 
 @Composable
 fun ChecklistsPickerSheet(
@@ -21,7 +21,7 @@ fun ChecklistsPickerSheet(
     onPick: (List<ChecklistDb>) -> Unit,
 ) {
 
-    val (vm, state) = rememberVm { ChecklistsPickerSheetVm(selectedChecklists) }
+    val (vm, state) = rememberVm { ChecklistPickerVm(selectedChecklists) }
 
     VStack(
         modifier = Modifier
