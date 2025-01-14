@@ -51,13 +51,7 @@ private struct ChecklistFormSheetInner: View {
                             }
                         },
                         label: {
-                            // To tap area
-                            HStack {
-                                Text(checklistItemUi.checklistItemDb.text)
-                                    .lineLimit(1)
-                                Spacer()
-                            }
-                            .background(.background)
+                            Text(checklistItemUi.checklistItemDb.text)
                         }
                     )
                 }
