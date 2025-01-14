@@ -21,7 +21,6 @@ extension View {
     func plainList() -> some View {
         self
             .listStyle(.plain)
-            .buttonStyle(PlainButtonStyle()) // Disable cell clickable
             .environment(\.defaultMinListRowHeight, 0)
     }
     
@@ -31,6 +30,11 @@ extension View {
             .listRowSeparator(.hidden)
             #endif
             .listRowInsets(EdgeInsets())
+    }
+    
+    func listItemNotClickable() -> some View {
+        // Disable cell clickable
+        buttonStyle(PlainButtonStyle())
     }
 }
 

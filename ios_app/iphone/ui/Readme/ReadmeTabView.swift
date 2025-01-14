@@ -100,6 +100,7 @@ struct ReadmeTabView: View {
                         }
                         .padding(.top, 24)
                         .padding(.leading, H_PADDING)
+                        .listItemNotClickable()
                     } else if paragraph is ReadmeVm.ParagraphTimerTypical {
                         ReadmeImagesPreview(
                             images: [
