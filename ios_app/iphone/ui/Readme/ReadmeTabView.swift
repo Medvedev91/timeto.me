@@ -219,11 +219,13 @@ struct ReadmeTabView: View {
                 }
             }
             .plainListItem()
+            .listRowSeparator(.hidden)
             
             // Not contentMargin to right scroll bar
             ZStack {}
                 .padding(.top, 28)
                 .plainListItem()
+                .listRowSeparator(.hidden)
         }
         .contentMarginsTabBar()
         .plainList()

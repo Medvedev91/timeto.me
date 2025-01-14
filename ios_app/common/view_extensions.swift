@@ -25,11 +25,7 @@ extension View {
     }
     
     func plainListItem() -> some View {
-        self
-            #if os(iOS)
-            .listRowSeparator(.hidden)
-            #endif
-            .listRowInsets(EdgeInsets())
+        listRowInsets(EdgeInsets())
     }
     
     func listItemNotClickable() -> some View {
