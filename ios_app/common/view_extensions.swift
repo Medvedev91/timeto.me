@@ -29,8 +29,7 @@ extension View {
     }
     
     func listItemNotClickable() -> some View {
-        // Disable cell clickable
-        buttonStyle(PlainButtonStyle())
+        buttonStyle(.plain)
     }
 }
 
@@ -84,4 +83,4 @@ private struct AnimateVmValueModifier<T: Equatable>: ViewModifier {
     }
 }
 
-//
+///
