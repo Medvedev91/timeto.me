@@ -67,7 +67,7 @@ private struct SettingsScreenInner: View {
             
             Section("CHECKLISTS") {
                 
-                ForEach(state.checklists, id: \.id) { checklistDb in
+                ForEach(state.checklistsDb, id: \.id) { checklistDb in
                     NavigationLink(.checklist(
                         checklistDb: checklistDb,
                         maxLines: 9,
