@@ -17,9 +17,9 @@ class SettingsVm : __Vm<SettingsVm.State>() {
     )
 
     data class State(
-        val checklists: List<ChecklistDb>,
-        val shortcuts: List<ShortcutDb>,
-        val notes: List<NoteDb>,
+        val checklistsDb: List<ChecklistDb>,
+        val shortcutsDb: List<ShortcutDb>,
+        val notesDb: List<NoteDb>,
         val dayStartSeconds: Int,
         val feedbackSubject: String,
         val autoBackupTimeString: String,
@@ -56,9 +56,9 @@ class SettingsVm : __Vm<SettingsVm.State>() {
 
     override val state = MutableStateFlow(
         State(
-            checklists = Cache.checklistsDb,
-            shortcuts = Cache.shortcutsDb,
-            notes = Cache.notesDb,
+            checklistsDb = Cache.checklistsDb,
+            shortcutsDb = Cache.shortcutsDb,
+            notesDb = Cache.notesDb,
             dayStartSeconds = dayStartOffsetSeconds(),
             feedbackSubject = "Feedback",
             autoBackupTimeString = prepAutoBackupTimeString(AutoBackup.lastTimeCache.value),
@@ -70,11 +70,11 @@ class SettingsVm : __Vm<SettingsVm.State>() {
     override fun onAppear() {
         val scope = scopeVm()
         ChecklistDb.selectAscFlow()
-            .onEachExIn(scope) { checklists -> state.update { it.copy(checklists = checklists) } }
+            .onEachExIn(scope) { checklists -> state.update { it.copy(checklistsDb = checklists) } }
         ShortcutDb.getAscFlow()
-            .onEachExIn(scope) { shortcuts -> state.update { it.copy(shortcuts = shortcuts) } }
+            .onEachExIn(scope) { shortcuts -> state.update { it.copy(shortcutsDb = shortcuts) } }
         NoteDb.getAscFlow()
-            .onEachExIn(scope) { notes -> state.update { it.copy(notes = notes) } }
+            .onEachExIn(scope) { notes -> state.update { it.copy(notesDb = notes) } }
         KvDb.KEY.DAY_START_OFFSET_SECONDS
             .getOrNullFlow()
             .onEachExIn(scope) { kv ->
