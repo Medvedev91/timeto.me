@@ -219,6 +219,7 @@ struct ReadmeTabView: View {
             }
             .plainListItem()
             
+            // Not contentMargin to right scroll bar
             ZStack {}
                 .padding(.top, 28)
                 .plainListItem()
