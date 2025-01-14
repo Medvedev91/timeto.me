@@ -24,7 +24,7 @@ extension View {
             .environment(\.defaultMinListRowHeight, 0)
     }
     
-    func plainListItem() -> some View {
+    func listItemNoPaddings() -> some View {
         listRowInsets(EdgeInsets())
     }
     
