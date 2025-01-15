@@ -57,6 +57,10 @@ private struct ChecklistFormSheetInner: View {
                 }
                 .onMove { from, to in
                     from.forEach { fromIdx in
+                        // Fix crash if single time
+                        if fromIdx == 0 && to == 0 {
+                            return
+                        }
                         vm.moveByIdxIos(
                             fromIdx: fromIdx.toInt32(),
                             toIdx: (fromIdx > to ? to : (to - 1)).toInt32()
