@@ -77,6 +77,21 @@ private struct SettingsScreenInner: View {
                     )) {
                         Text(checklistDb.name)
                     }
+                    .contextMenu {
+                        Button(
+                            action: {
+                                navigation.sheet {
+                                    ChecklistFormSheet(
+                                        checklistDb: checklistDb,
+                                        onDelete: {}
+                                    )
+                                }
+                            },
+                            label: {
+                                Label("Edit", systemImage: "square.and.pencil")
+                            }
+                        )
+                    }
                 }
                 
                 Button("New Checklist") {
