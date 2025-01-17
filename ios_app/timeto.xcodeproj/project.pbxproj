@@ -385,6 +385,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		2CAC30712D39183D00A28A00 /* Shortcut */ = {
+			isa = PBXGroup;
+			children = (
+				3182106A0DA4A0D8844CFA11 /* ShortcutFormSheet.swift */,
+			);
+			path = Shortcut;
+			sourceTree = "<group>";
+		};
 		2CF9DA802D27B8E800965A76 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -456,6 +464,7 @@
 				2CF9DA852D281FBD00965A76 /* Navigation */,
 				2C65828E2D25C69900DB8AD4 /* Readme */,
 				2C37C4122D21658600995840 /* Settings */,
+				2CAC30712D39183D00A28A00 /* Shortcut */,
 				2CF9DA932D28682700965A76 /* WhatsNew */,
 				31821D7654D0C105DFC60DDD /* MyListView.swift */,
 				318218D93C3456758557A6E0 /* ScrollViewWithVListener.swift */,
@@ -522,7 +531,6 @@
 				31821110E735778C88CDF821 /* Sheet.swift */,
 				31821956E237470E838F18A0 /* SheetDividerBg.swift */,
 				3182143FB317BCD82F61C777 /* SheetDividerFg.swift */,
-				3182106A0DA4A0D8844CFA11 /* ShortcutFormSheet.swift */,
 				31821F858C3344296F2CB750 /* ShortcutsPickerSheet.swift */,
 				3182118DB415E858D0B449DB /* SummaryChartView.swift */,
 				31821E54E02F361F1AD21375 /* SummarySheet.swift */,
