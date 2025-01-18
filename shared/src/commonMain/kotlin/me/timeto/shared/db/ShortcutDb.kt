@@ -39,13 +39,11 @@ data class ShortcutDb(
             uri: String,
         ): ShortcutDb = dbIo {
             db.transactionWithResult {
-                val validatedName: String =
-                    validateNameRaw(name, exIds = setOf())
                 val newId: Int =
                     db.shortcutQueries.selectAsc().asList { toDb() }.lastOrNull()?.id?.plus(1) ?: 0
                 val sqModel = ShortcutSQ(
                     id = newId,
-                    name = validatedName,
+                    name = validateNameRaw(name, exIds = setOf()),
                     uri = validateUriRaw(uri),
                 )
                 db.shortcutQueries.insert(sqModel)
