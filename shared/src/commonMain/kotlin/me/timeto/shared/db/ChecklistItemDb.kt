@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
-import me.timeto.shared.misc.UiException
+import me.timeto.shared.ui.UiException
 import kotlin.coroutines.cancellation.CancellationException
 
 data class ChecklistItemDb(
