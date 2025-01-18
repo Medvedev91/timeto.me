@@ -71,7 +71,7 @@ class SettingsVm : __Vm<SettingsVm.State>() {
         val scope = scopeVm()
         ChecklistDb.selectAscFlow()
             .onEachExIn(scope) { checklists -> state.update { it.copy(checklistsDb = checklists) } }
-        ShortcutDb.getAscFlow()
+        ShortcutDb.selectAscFlow()
             .onEachExIn(scope) { shortcuts -> state.update { it.copy(shortcutsDb = shortcuts) } }
         NoteDb.getAscFlow()
             .onEachExIn(scope) { notes -> state.update { it.copy(notesDb = notes) } }
