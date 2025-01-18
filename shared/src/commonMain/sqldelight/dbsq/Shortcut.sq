@@ -6,33 +6,23 @@ CREATE TABLE ShortcutSQ (
     uri TEXT NOT NULL
 );
 
-anyChange: SELECT id FROM ShortcutSQ LIMIT 1;
+anyChange:
+SELECT id
+FROM ShortcutSQ
+LIMIT 1;
 
 getCount:
 SELECT COUNT(*)
 FROM ShortcutSQ;
 
-getAsc:
+selectAsc:
 SELECT *
 FROM ShortcutSQ
 ORDER BY id ASC;
 
-getDesc:
-SELECT *
-FROM ShortcutSQ
-ORDER BY id DESC
-LIMIT :limit;
-
-getById:
-SELECT *
-FROM ShortcutSQ
-WHERE id = ?
-LIMIT 1;
-
 insert:
 INSERT INTO ShortcutSQ
-( id,  name,  uri) VALUES
-(:id, :name, :uri);
+VALUES ?;
 
 updateById:
 UPDATE ShortcutSQ
