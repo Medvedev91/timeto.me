@@ -35,7 +35,7 @@ class ChecklistFormVm(
         )
     )
 
-    override fun onAppear() {
+    init {
         val scope = scopeVm()
         ChecklistDb.selectAscFlow().onEachExIn(scope) { allChecklists ->
             allChecklists
