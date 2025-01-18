@@ -1,11 +1,13 @@
-package me.timeto.shared.vm
+package me.timeto.shared.vm.shortcuts
 
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.launchEx
 import me.timeto.shared.launchExIo
 import me.timeto.shared.misc.DialogsManager
 import me.timeto.shared.misc.UiException
+import me.timeto.shared.vm.__Vm
 
 class ShortcutFormVm(
     shortcutDb: ShortcutDb?,
@@ -17,9 +19,15 @@ class ShortcutFormVm(
         val uri: String,
     ) {
 
-        val title: String = if (shortcutDb != null) "Edit Shortcut" else "New Shortcut"
-        val saveText: String = if (shortcutDb != null) "Save" else "Create"
-        val isSaveEnabled = (name.isNotBlank() && uri.isNotBlank())
+        val title: String =
+            if (shortcutDb != null) "Edit Shortcut" else "New Shortcut"
+
+        val saveText: String =
+            if (shortcutDb != null) "Save" else "Create"
+
+        val isSaveEnabled: Boolean =
+            (name.isNotBlank() && uri.isNotBlank())
+
         val deleteText = "Delete Shortcut"
 
         val nameHeader = "SHORTCUT NAME"
