@@ -105,7 +105,8 @@ data class ChecklistItemDb(
 
     suspend fun toggle(): Unit = dbIo {
         db.checklistItemQueries.updateCheckTimeById(
-            id = id, check_time = if (isChecked) 0 else time()
+            id = id,
+            check_time = if (isChecked) 0 else time(),
         )
     }
 
