@@ -1,70 +1,65 @@
 package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
-import me.timeto.shared.UIException
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.launchEx
-import me.timeto.shared.showUiAlert
+import me.timeto.shared.misc.DialogsManager
+import me.timeto.shared.misc.UiException
 
 class ShortcutFormSheetVm(
-    val shortcut: ShortcutDb?
+    private val shortcutDb: ShortcutDb?,
 ) : __Vm<ShortcutFormSheetVm.State>() {
 
     data class State(
-        val headerTitle: String,
-        val headerDoneText: String,
-        val inputNameValue: String,
-        val inputUriValue: String,
+        val title: String,
+        val saveText: String,
+        val name: String,
+        val uri: String,
     ) {
-        val isHeaderDoneEnabled = (inputNameValue.isNotBlank() && inputUriValue.isNotBlank())
-        val inputNameHeader = "SHORTCUT NAME"
-        val inputNamePlaceholder = "Name"
-        val inputUriHeader = "SHORTCUT LINK"
-        val inputUriPlaceholder = "Link"
+        val isSaveEnabled = (name.isNotBlank() && uri.isNotBlank())
+        val nameHeader = "SHORTCUT NAME"
+        val namePlaceholder = "Name"
+        val uriHeader = "SHORTCUT LINK"
+        val uriPlaceholder = "Link"
     }
 
-    override val state: MutableStateFlow<State>
-
-    init {
-        state = MutableStateFlow(
-            State(
-                headerTitle = if (shortcut != null) "Edit Shortcut" else "New Shortcut",
-                headerDoneText = if (shortcut != null) "Done" else "Create",
-                inputNameValue = shortcut?.name ?: "",
-                inputUriValue = shortcut?.uri ?: "",
-            )
+    override val state = MutableStateFlow(
+        State(
+            title = if (shortcutDb != null) "Edit Shortcut" else "New Shortcut",
+            saveText = if (shortcutDb != null) "Save" else "Create",
+            name = shortcutDb?.name ?: "",
+            uri = shortcutDb?.uri ?: "",
         )
+    )
+
+    fun setName(name: String) {
+        state.update { it.copy(name = name) }
     }
 
-    fun setInputNameValue(text: String) = state.update {
-        it.copy(inputNameValue = text)
+    fun setUri(uri: String) {
+        state.update { it.copy(uri = uri) }
     }
 
-    fun setInputUriValue(text: String) = state.update {
-        it.copy(inputUriValue = text)
-    }
-
-    fun setAndroidPackage(androidPackage: String) = state.update {
-        it.copy(inputUriValue = "${ShortcutDb.ANDROID_PACKAGE_PREFIX}$androidPackage")
+    fun setAndroidPackage(androidPackage: String) {
+        state.update {
+            it.copy(uri = "${ShortcutDb.ANDROID_PACKAGE_PREFIX}$androidPackage")
+        }
     }
 
     fun save(
-        onSuccess: () -> Unit
+        dialogsManager: DialogsManager,
+        onSuccess: (ShortcutDb) -> Unit,
     ): Unit = scopeVm().launchEx {
         try {
-            if (shortcut != null)
-                shortcut.upWithValidation(
-                    name = state.value.inputNameValue,
-                    uri = state.value.inputUriValue,
-                )
+            val name: String = state.value.name
+            val uri: String = state.value.name
+            val newShortcutDb: ShortcutDb = if (shortcutDb != null)
+                shortcutDb.updateWithValidation(name = name, uri = uri)
             else
-                ShortcutDb.addWithValidation(
-                    name = state.value.inputNameValue,
-                    uri = state.value.inputUriValue,
-                )
-            onSuccess()
-        } catch (e: UIException) {
-            showUiAlert(e.uiMessage)
+                ShortcutDb.insertWithValidation(name = name, uri = uri)
+            onUi { onSuccess(newShortcutDb) }
+        } catch (e: UiException) {
+            dialogsManager.alert(e.uiMessage)
         }
     }
 }
