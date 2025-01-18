@@ -1,15 +1,13 @@
 package me.timeto.shared.db
 
 import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
 import dbsq.ShortcutSQ
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
-import kotlin.math.max
+import me.timeto.shared.misc.UiException
+import kotlin.coroutines.cancellation.CancellationException
 
 data class ShortcutDb(
     val id: Int,
@@ -21,92 +19,54 @@ data class ShortcutDb(
 
         const val ANDROID_PACKAGE_PREFIX = "app://"
 
-        fun anyChangeFlow() = db.shortcutQueries.anyChange().asFlow()
+        fun anyChangeFlow(): Flow<*> =
+            db.shortcutQueries.anyChange().asFlow()
 
         suspend fun getCount(): Int = dbIo {
             db.shortcutQueries.getCount().executeAsOne().toInt()
         }
 
-        suspend fun getAsc() = dbIo {
-            db.shortcutQueries.getAsc().executeAsList().map { it.toDb() }
+        suspend fun selectAsc(): List<ShortcutDb> = dbIo {
+            db.shortcutQueries.selectAsc().asList { toDb() }
         }
 
-        fun getAscFlow() = db.shortcutQueries.getAsc().asFlow()
-            .mapToList(Dispatchers.IO).map { list -> list.map { it.toDb() } }
+        fun selectAscFlow(): Flow<List<ShortcutDb>> =
+            db.shortcutQueries.selectAsc().asListFlow { toDb() }
 
-        suspend fun getByIdOrNull(id: Int) = dbIo {
-            db.shortcutQueries.getById(id).executeAsOneOrNull()?.toDb()
-        }
-
-        suspend fun addWithValidation(
+        @Throws(UiException::class, CancellationException::class)
+        suspend fun insertWithValidation(
             name: String,
             uri: String,
-        ) = dbIo {
-            val validatedName = validateName(name) // todo to inside transaction
-            db.transaction {
-                addRaw(
-                    id = max(time(), db.shortcutQueries.getDesc(1).executeAsOneOrNull()?.id?.plus(1) ?: 0),
+        ): ShortcutDb = dbIo {
+            db.transactionWithResult {
+                val validatedName: String =
+                    validateNameRaw(name, exIds = setOf())
+                val newId: Int =
+                    db.shortcutQueries.selectAsc().asList { toDb() }.lastOrNull()?.id?.plus(1) ?: 0
+                val sqModel = ShortcutSQ(
+                    id = newId,
                     name = validatedName,
-                    uri = validateUri(uri)
+                    uri = validateUriRaw(uri),
                 )
+                db.shortcutQueries.insert(sqModel)
+                sqModel.toDb()
             }
         }
 
-        fun addRaw(
-            id: Int,
-            name: String,
-            uri: String,
-        ) {
-            db.shortcutQueries.insert(
-                id = id, name = name, uri = uri
-            )
-        }
-
-        private suspend fun validateName(
-            name: String,
-            exIds: Set<Int> = setOf(),
-        ): String {
-
-            val validatedName = name.trim()
-            if (validatedName.isEmpty())
-                throw UIException("Empty name")
-
-            getAsc()
-                .filter { it.id !in exIds }
-                .forEach { shortcut ->
-                    if (shortcut.name.equals(validatedName, ignoreCase = true))
-                        throw UIException("$validatedName already exists.")
-                }
-
-            return validatedName
-        }
-
-        private fun validateUri(uri: String): String {
-            val validatedUri = uri.trim()
-            if (validatedUri.isEmpty())
-                throw UIException("Empty shortcut link")
-
-            // https://stackoverflow.com/a/62856745/5169420
-            // Since API level 30 resolveActivity always returns null
-            // val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
-            // if (intent.resolveActivity(context.packageManager) == null)
-            //    throw MyException("Invalid action link")
-
-            return validatedUri
-        }
-
-        ///
-        /// Backupable Holder
+        //
+        // Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.shortcutQueries.getAsc().executeAsList().map { it.toDb() }
+            db.shortcutQueries.selectAsc().executeAsList().map { it.toDb() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
             db.shortcutQueries.insert(
-                id = j.getInt(0),
-                name = j.getString(1),
-                uri = j.getString(2),
+                ShortcutSQ(
+                    id = j.getInt(0),
+                    name = j.getString(1),
+                    uri = j.getString(2),
+                )
             )
         }
     }
@@ -115,16 +75,33 @@ data class ShortcutDb(
         launchExDefault { uiShortcutFlow.emit(this@ShortcutDb) }
     }
 
-    suspend fun upWithValidation(name: String, uri: String) = dbIo {
-        db.shortcutQueries.updateById(
-            id = id, name = validateName(name, setOf(id)), uri = validateUri(uri)
-        )
+    suspend fun updateWithValidation(
+        name: String,
+        uri: String,
+    ): ShortcutDb = dbIo {
+        db.transactionWithResult {
+            val validatedName: String =
+                validateNameRaw(name, setOf(id))
+            val validatedUri: String =
+                validateUriRaw(uri)
+            db.shortcutQueries.updateById(
+                id = id,
+                name = validatedName,
+                uri = validatedUri,
+            )
+            this@ShortcutDb.copy(
+                name = validatedName,
+                uri = validatedUri,
+            )
+        }
     }
 
-    suspend fun delete() = dbIo { db.shortcutQueries.deleteById(id) }
+    suspend fun delete(): Unit = dbIo {
+        db.shortcutQueries.deleteById(id)
+    }
 
-    ///
-    /// Backupable Item
+    //
+    // Backupable Item
 
     override fun backupable__getId(): String = id.toString()
 
@@ -145,6 +122,39 @@ data class ShortcutDb(
         db.shortcutQueries.deleteById(id)
     }
 }
+
+///
+
+@Throws(UiException::class)
+private fun validateNameRaw(
+    name: String,
+    exIds: Set<Int>,
+): String {
+
+    val validatedName: String = name.trim()
+    if (validatedName.isEmpty())
+        throw UiException("Empty name")
+
+    db.shortcutQueries.selectAsc()
+        .asList { toDb() }
+        .filter { it.id !in exIds }
+        .forEach { shortcut ->
+            if (shortcut.name.equals(validatedName, ignoreCase = true))
+                throw UiException("$validatedName already exists.")
+        }
+
+    return validatedName
+}
+
+@Throws(UiException::class)
+private fun validateUriRaw(uri: String): String {
+    val validatedUri: String = uri.trim()
+    if (validatedUri.isEmpty())
+        throw UiException("Empty shortcut link")
+    return validatedUri
+}
+
+///
 
 private fun ShortcutSQ.toDb() = ShortcutDb(
     id = id, name = name, uri = uri,
