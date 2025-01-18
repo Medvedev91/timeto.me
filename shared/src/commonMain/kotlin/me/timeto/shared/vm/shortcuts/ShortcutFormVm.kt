@@ -89,7 +89,7 @@ class ShortcutFormVm(
                     shortcutDb.delete()
                     onUi { onDelete() }
                 }
-            }
+            },
         )
     }
 }
