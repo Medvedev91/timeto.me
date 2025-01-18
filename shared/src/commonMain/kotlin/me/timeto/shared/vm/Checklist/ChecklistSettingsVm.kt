@@ -2,7 +2,6 @@ package me.timeto.shared.vm.Checklist
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.db.ChecklistDb
-import me.timeto.shared.launchEx
 import me.timeto.shared.launchExIo
 import me.timeto.shared.ui.DialogsManager
 import me.timeto.shared.ui.UiException
@@ -39,7 +38,7 @@ class ChecklistSettingsVm(
     fun save(
         dialogsManager: DialogsManager,
         onSuccess: (ChecklistDb) -> Unit,
-    ): Unit = scopeVm().launchEx {
+    ): Unit = launchExIo {
         try {
             val oldChecklistDb: ChecklistDb? = state.value.checklistDb
             val name: String = state.value.name
@@ -66,7 +65,7 @@ class ChecklistSettingsVm(
                     checklistDb.deleteWithDependencies()
                     onUi { onDelete() }
                 }
-            }
+            },
         )
     }
 }
