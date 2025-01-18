@@ -1,4 +1,4 @@
-package me.timeto.shared.vm.Checklist
+package me.timeto.shared.ui.checklists
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
