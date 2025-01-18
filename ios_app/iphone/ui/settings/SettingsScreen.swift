@@ -462,6 +462,7 @@ private struct SettingsScreenInner: View {
         }
     }
 
+    // todo top level?
     /// https://www.hackingwithswift.com/quick-start/swiftui/how-to-export-files-using-fileexporter
     private struct MyJsonFileDocument: FileDocument {
 
@@ -486,6 +487,7 @@ private struct SettingsScreenInner: View {
         }
     }
 
+    // todo top level?
     private struct DayStartDialog: View {
 
         @Binding private var isPresented: Bool

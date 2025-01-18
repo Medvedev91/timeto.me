@@ -290,12 +290,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2C37C4122D21658600995840 /* Settings */ = {
+		2C37C4122D21658600995840 /* settings */ = {
 			isa = PBXGroup;
 			children = (
 				2C37C41A2D217F6C00995840 /* SettingsScreen.swift */,
 			);
-			path = Settings;
+			path = settings;
 			sourceTree = "<group>";
 		};
 		2C37C4132D2167FF00995840 /* common */ = {
@@ -463,7 +463,7 @@
 				2CF9DA942D290CEB00965A76 /* misc */,
 				2CF9DA852D281FBD00965A76 /* navigation */,
 				2C65828E2D25C69900DB8AD4 /* readme */,
-				2C37C4122D21658600995840 /* Settings */,
+				2C37C4122D21658600995840 /* settings */,
 				2CAC30712D39183D00A28A00 /* shortcuts */,
 				2CF9DA932D28682700965A76 /* whats_new */,
 				31821D7654D0C105DFC60DDD /* MyListView.swift */,
