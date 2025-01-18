@@ -1,4 +1,4 @@
-package me.timeto.shared.vm.shortcuts
+package me.timeto.shared.ui.shortcuts
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
