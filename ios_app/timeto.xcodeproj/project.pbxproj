@@ -442,7 +442,7 @@
 			path = misc;
 			sourceTree = "<group>";
 		};
-		2CF9DA9B2D2C400900965A76 /* Checklist */ = {
+		2CF9DA9B2D2C400900965A76 /* checklists */ = {
 			isa = PBXGroup;
 			children = (
 				2C273F2C2BB99A200016F11D /* ChecklistView.swift */,
@@ -452,13 +452,13 @@
 				31821290CB27918CD444FBB0 /* ChecklistItemFormSheet.swift */,
 				31821D2439CE2014EF5FF473 /* ChecklistPickerSheet.swift */,
 			);
-			path = Checklist;
+			path = checklists;
 			sourceTree = "<group>";
 		};
 		318218DEA96CCDED8A4C448C /* ui */ = {
 			isa = PBXGroup;
 			children = (
-				2CF9DA9B2D2C400900965A76 /* Checklist */,
+				2CF9DA9B2D2C400900965A76 /* checklists */,
 				2CF9DA802D27B8E800965A76 /* Home */,
 				2CF9DA942D290CEB00965A76 /* misc */,
 				2CF9DA852D281FBD00965A76 /* navigation */,
