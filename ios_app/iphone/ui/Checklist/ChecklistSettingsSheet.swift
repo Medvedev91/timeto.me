@@ -54,7 +54,7 @@ private struct ChecklistSettingsScreenInner: View {
             
             if let checklistDb = state.checklistDb {
                 Section {
-                    Button(state.deleteButtonText) {
+                    Button(state.deleteText) {
                         vm.delete(
                             checklistDb: checklistDb,
                             dialogsManager: navigation,

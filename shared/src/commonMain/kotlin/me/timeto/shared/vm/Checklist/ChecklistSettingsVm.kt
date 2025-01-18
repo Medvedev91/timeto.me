@@ -20,10 +20,9 @@ class ChecklistSettingsVm(
         val title: String = if (checklistDb != null) "Edit Checklist" else "New Checklist"
         val saveButtonText: String = if (checklistDb != null) "Save" else "Next"
         val isSaveEnabled: Boolean = name.isNotBlank()
+        val deleteText = "Delete Checklist"
 
         val namePlaceholder = "Name"
-
-        val deleteButtonText = "Delete Checklist"
     }
 
     override val state = MutableStateFlow(
