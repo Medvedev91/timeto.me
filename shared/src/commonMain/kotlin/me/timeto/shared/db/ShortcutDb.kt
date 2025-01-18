@@ -75,6 +75,7 @@ data class ShortcutDb(
         }
     }
 
+    @Throws(UiException::class, CancellationException::class)
     suspend fun updateWithValidation(
         name: String,
         uri: String,
