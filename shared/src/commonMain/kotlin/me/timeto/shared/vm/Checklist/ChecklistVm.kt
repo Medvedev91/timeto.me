@@ -5,6 +5,7 @@ import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.ChecklistItemDb
 import me.timeto.shared.launchExDefault
 import me.timeto.shared.onEachExIn
+import me.timeto.shared.ui.checklists.ChecklistStateUi
 import me.timeto.shared.vm.__Vm
 
 class ChecklistVm(

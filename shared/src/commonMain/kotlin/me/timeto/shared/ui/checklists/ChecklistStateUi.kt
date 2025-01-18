@@ -1,7 +1,7 @@
-package me.timeto.shared.vm.Checklist
+package me.timeto.shared.ui.checklists
 
-import me.timeto.shared.db.ChecklistItemDb
 import me.timeto.shared.db.ChecklistDb
+import me.timeto.shared.db.ChecklistItemDb
 import me.timeto.shared.launchExIo
 
 sealed class ChecklistStateUi(
