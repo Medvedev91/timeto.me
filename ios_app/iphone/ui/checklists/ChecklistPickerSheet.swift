@@ -30,15 +30,16 @@ private struct ChecklistPickerSheetInner: View {
     
     @State var selectedIds = Set<Int32>()
     @State var animatedChecklistsDb: [ChecklistDb]
+    
     let onPick: ([ChecklistDb]) -> Void
-
+    
     ///
-
+    
     @State private var editMode: EditMode = .active
-
+    
     @Environment(\.dismiss) private var dismiss
     @Environment(Navigation.self) private var navigation
-
+    
     var body: some View {
         
         ScrollViewReader { scrollProxy in
