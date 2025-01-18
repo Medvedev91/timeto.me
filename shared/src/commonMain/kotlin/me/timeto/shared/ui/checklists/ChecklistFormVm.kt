@@ -1,9 +1,13 @@
-package me.timeto.shared.vm.Checklist
+package me.timeto.shared.ui.checklists
 
-import kotlinx.coroutines.flow.*
-import me.timeto.shared.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
+import me.timeto.shared.Cache
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.ChecklistItemDb
+import me.timeto.shared.launchExDefault
+import me.timeto.shared.launchExIo
+import me.timeto.shared.onEachExIn
 import me.timeto.shared.ui.DialogsManager
 import me.timeto.shared.vm.__Vm
 
@@ -118,6 +122,7 @@ class ChecklistFormVm(
 
     ///
 
+    // todo remove
     data class ChecklistItemUi(
         val checklistItemDb: ChecklistItemDb,
         val isFirst: Boolean,
