@@ -20,6 +20,7 @@ class ShortcutFormVm(
         val title: String = if (shortcutDb != null) "Edit Shortcut" else "New Shortcut"
         val saveText: String = if (shortcutDb != null) "Save" else "Create"
         val isSaveEnabled = (name.isNotBlank() && uri.isNotBlank())
+        val deleteText = "Delete Shortcut"
 
         val nameHeader = "SHORTCUT NAME"
         val namePlaceholder = "Name"
@@ -56,7 +57,7 @@ class ShortcutFormVm(
     ): Unit = scopeVm().launchEx {
         try {
             val name: String = state.value.name
-            val uri: String = state.value.name
+            val uri: String = state.value.uri
             val oldShortcutDb: ShortcutDb? = state.value.shortcutDb
             val newShortcutDb: ShortcutDb = if (oldShortcutDb != null)
                 oldShortcutDb.updateWithValidation(name = name, uri = uri)
