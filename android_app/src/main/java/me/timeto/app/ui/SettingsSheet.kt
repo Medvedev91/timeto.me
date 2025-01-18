@@ -308,7 +308,7 @@ fun SettingsSheet(
                             text = shortcut.name,
                             bgColor = c.fg,
                         ) {
-                            shortcut.performUI()
+                            shortcut.performUi()
                         }
                     }
                 }

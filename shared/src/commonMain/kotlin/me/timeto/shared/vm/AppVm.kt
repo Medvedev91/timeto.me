@@ -115,7 +115,7 @@ private fun performShortcut(
         interval.note?.textFeatures()?.shortcuts?.firstOrNull()
         ?: interval.getActivityDbCached().name.textFeatures().shortcuts.firstOrNull()
 
-    shortcut?.performUI()
+    shortcut?.performUi()
 }
 
 ///

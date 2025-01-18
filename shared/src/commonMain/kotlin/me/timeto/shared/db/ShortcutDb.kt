@@ -69,8 +69,10 @@ data class ShortcutDb(
         }
     }
 
-    fun performUI() {
-        launchExDefault { uiShortcutFlow.emit(this@ShortcutDb) }
+    fun performUi() {
+        launchExDefault {
+            uiShortcutFlow.emit(this@ShortcutDb)
+        }
     }
 
     suspend fun updateWithValidation(
