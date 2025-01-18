@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.*
 import me.timeto.shared.db.ChecklistItemDb
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.launchEx
-import me.timeto.shared.misc.DialogsManager
+import me.timeto.shared.ui.DialogsManager
 import me.timeto.shared.ui.UiException
 
 class ChecklistItemFormVm(

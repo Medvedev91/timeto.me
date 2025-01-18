@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.launchExIo
-import me.timeto.shared.misc.DialogsManager
+import me.timeto.shared.ui.DialogsManager
 import me.timeto.shared.ui.UiException
 import me.timeto.shared.vm.__Vm
 
