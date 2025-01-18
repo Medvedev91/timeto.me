@@ -67,4 +67,21 @@ class ShortcutFormVm(
             dialogsManager.alert(e.uiMessage)
         }
     }
+
+    fun delete(
+        shortcutDb: ShortcutDb,
+        dialogsManager: DialogsManager,
+        onDelete: () -> Unit,
+    ) {
+        dialogsManager.confirmation(
+            message = "Are you sure you want to delete \"${shortcutDb.name}\" shortcut?",
+            buttonText = "Delete",
+            onConfirm = {
+                launchExIo {
+                    shortcutDb.delete()
+                    onUi { onDelete() }
+                }
+            }
+        )
+    }
 }
