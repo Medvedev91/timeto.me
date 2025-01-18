@@ -27,7 +27,7 @@ object Backup {
             "repeatings" to RepeatingDb.getAsc().modelsToJsonArray(),
             "events" to EventDb.getAscByTime().modelsToJsonArray(),
             "event_templates" to EventTemplateDb.selectAscSorted().modelsToJsonArray(),
-            "notes" to NoteDb.getAsc().modelsToJsonArray(),
+            "notes" to NoteDb.selectAsc().modelsToJsonArray(),
             "kv" to KvDb.selectAll().modelsToJsonArray(),
         )
         return JsonObject(map).toString()

@@ -1,16 +1,13 @@
 package me.timeto.shared.db
 
-import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
 import dbsq.NoteSQ
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
+import me.timeto.shared.misc.UiException
+import kotlin.coroutines.cancellation.CancellationException
 
 data class NoteDb(
     val id: Int,
@@ -20,26 +17,27 @@ data class NoteDb(
 
     companion object : Backupable__Holder {
 
-        fun anyChangeFlow() = db.noteQueries.anyChange().asFlow()
+        fun anyChangeFlow(): Flow<*> =
+            db.noteQueries.anyChange().asFlow()
 
-        suspend fun getAsc(): List<NoteDb> = dbIo {
-            db.noteQueries.getAsc().toDbList()
+        suspend fun selectAsc(): List<NoteDb> = dbIo {
+            db.noteQueries.selectAsc().asList { toDb() }
         }
 
-        fun getAscFlow(): Flow<List<NoteDb>> = db.noteQueries.getAsc().asFlow()
-            .mapToList(Dispatchers.IO).map { list -> list.map { it.toDb() } }
+        fun selectAscFlow(): Flow<List<NoteDb>> =
+            db.noteQueries.selectAsc().asListFlow { toDb() }
 
-        suspend fun addWithValidation(
+        @Throws(UiException::class, CancellationException::class)
+        suspend fun insertWithValidation(
             text: String,
-        ) = dbIo {
+        ): Unit = dbIo {
             db.transaction {
                 val nextId = time() // todo
-                val otherNotes = db.noteQueries.getAsc().toDbList()
                 db.noteQueries.insert(
                     NoteSQ(
                         id = nextId,
                         sort = 0,
-                        text = textValidation(text, otherNotes = otherNotes),
+                        text = validateText(text),
                     )
                 )
             }
@@ -49,7 +47,7 @@ data class NoteDb(
         // Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.noteQueries.getAsc().toDbList()
+            db.noteQueries.selectAsc().asList { toDb() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
@@ -67,16 +65,15 @@ data class NoteDb(
         "^(.*?)(\n|$)".toRegex().find(text)!!.value.trim()
     }
 
-    suspend fun upWithValidation(
+    @Throws(UiException::class, CancellationException::class)
+    suspend fun updateWithValidation(
         newText: String,
     ): Unit = dbIo {
         db.transaction {
-            val otherNotes = db.noteQueries.getAsc().toDbList()
-                .filter { it.id != id }
-            db.noteQueries.upById(
+            db.noteQueries.updateById(
                 id = id,
                 sort = sort,
-                text = textValidation(newText, otherNotes = otherNotes)
+                text = validateText(newText),
             )
         }
     }
@@ -96,7 +93,7 @@ data class NoteDb(
 
     override fun backupable__update(json: JsonElement) {
         val j = json.jsonArray
-        db.noteQueries.upById(
+        db.noteQueries.updateById(
             id = j.getInt(0),
             sort = j.getInt(1),
             text = j.getString(2),
@@ -110,28 +107,18 @@ data class NoteDb(
 
 ///
 
-private fun NoteSQ.toDb() = NoteDb(
-    id = id, sort = sort, text = text
-)
-
-private fun Query<NoteSQ>.toDbList(): List<NoteDb> =
-    executeAsList().map { it.toDb() }
+@Throws(UiException::class)
+private fun validateText(
+    text: String,
+): String {
+    val resText = text.trim()
+    if (resText.isEmpty())
+        throw UiException("Empty text")
+    return resText
+}
 
 ///
 
-private fun textValidation(
-    text: String,
-    otherNotes: List<NoteDb>,
-): String {
-
-    val resText = text.trim()
-    if (resText.isEmpty())
-        throw UIException("Empty text")
-
-    otherNotes.forEach { note ->
-        if (note.text.equals(resText, ignoreCase = true))
-            throw UIException("$resText already exists.")
-    }
-
-    return resText
-}
+private fun NoteSQ.toDb() = NoteDb(
+    id = id, sort = sort, text = text,
+)

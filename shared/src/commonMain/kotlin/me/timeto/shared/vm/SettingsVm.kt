@@ -73,7 +73,7 @@ class SettingsVm : __Vm<SettingsVm.State>() {
             .onEachExIn(scope) { checklists -> state.update { it.copy(checklistsDb = checklists) } }
         ShortcutDb.selectAscFlow()
             .onEachExIn(scope) { shortcuts -> state.update { it.copy(shortcutsDb = shortcuts) } }
-        NoteDb.getAscFlow()
+        NoteDb.selectAscFlow()
             .onEachExIn(scope) { notes -> state.update { it.copy(notesDb = notes) } }
         KvDb.KEY.DAY_START_OFFSET_SECONDS
             .getOrNullFlow()

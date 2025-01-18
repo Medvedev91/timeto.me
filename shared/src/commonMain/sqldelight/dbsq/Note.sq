@@ -6,9 +6,12 @@ CREATE TABLE NoteSQ (
     text TEXT NOT NULL
 );
 
-anyChange: SELECT id FROM NoteSQ LIMIT 1;
+anyChange:
+SELECT id
+FROM NoteSQ
+LIMIT 1;
 
-getAsc:
+selectAsc:
 SELECT *
 FROM NoteSQ
 ORDER BY id ASC;
@@ -17,7 +20,7 @@ insert:
 INSERT INTO NoteSQ
 VALUES ?;
 
-upById:
+updateById:
 UPDATE NoteSQ
 SET text = ?, sort = ?
 WHERE id = ?;
