@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-struct ChecklistPickerSheet: View {
+struct ChecklistsPickerSheet: View {
     
     let selectedChecklistsDb: [ChecklistDb]
     let onPick: ([ChecklistDb]) -> Void
@@ -12,7 +12,7 @@ struct ChecklistPickerSheet: View {
                 selectedChecklistsDb: selectedChecklistsDb
             )
         }) { vm, state in
-            ChecklistPickerSheetInner(
+            ChecklistsPickerSheetInner(
                 vm: vm,
                 state: state,
                 selectedIds: Set(state.selectedIds.map { $0.int32Value }),
@@ -23,7 +23,7 @@ struct ChecklistPickerSheet: View {
     }
 }
 
-private struct ChecklistPickerSheetInner: View {
+private struct ChecklistsPickerSheetInner: View {
     
     let vm: ChecklistPickerVm
     let state: ChecklistPickerVm.State
