@@ -23,7 +23,7 @@ object Backup {
             "tasks" to TaskDb.getAsc().modelsToJsonArray(),
             "checklists" to ChecklistDb.selectAsc().modelsToJsonArray(),
             "checklist_items" to ChecklistItemDb.selectSorted().modelsToJsonArray(),
-            "shortcuts" to ShortcutDb.getAsc().modelsToJsonArray(),
+            "shortcuts" to ShortcutDb.selectAsc().modelsToJsonArray(),
             "repeatings" to RepeatingDb.getAsc().modelsToJsonArray(),
             "events" to EventDb.getAscByTime().modelsToJsonArray(),
             "event_templates" to EventTemplateDb.selectAscSorted().modelsToJsonArray(),

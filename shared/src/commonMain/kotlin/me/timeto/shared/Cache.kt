@@ -55,8 +55,8 @@ object Cache {
         checklistItemsDb = ChecklistItemDb.selectSorted()
         ChecklistItemDb.selectSortedFlow().onEachExIn(scope) { checklistItemsDb = it }
 
-        shortcutsDb = ShortcutDb.getAsc()
-        ShortcutDb.getAscFlow().onEachExIn(scope) { shortcutsDb = it }
+        shortcutsDb = ShortcutDb.selectAsc()
+        ShortcutDb.selectAscFlow().onEachExIn(scope) { shortcutsDb = it }
 
         notesDb = NoteDb.getAsc()
         NoteDb.getAscFlow().onEachExIn(scope) { notesDb = it }
