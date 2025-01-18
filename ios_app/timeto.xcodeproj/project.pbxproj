@@ -317,7 +317,7 @@
 			name = resources;
 			sourceTree = "<group>";
 		};
-		2C65828E2D25C69900DB8AD4 /* Readme */ = {
+		2C65828E2D25C69900DB8AD4 /* readme */ = {
 			isa = PBXGroup;
 			children = (
 				2C37C4222D21A90700995840 /* ReadmeScreen.swift */,
@@ -325,7 +325,7 @@
 				2C6582912D25CF6900DB8AD4 /* ReadmeImagesFullScreen.swift */,
 				2C65828F2D25C7AA00DB8AD4 /* ReadmeImagesPreview.swift */,
 			);
-			path = Readme;
+			path = readme;
 			sourceTree = "<group>";
 		};
 		2C82BF5828726E3F0041BCA3 /* watch */ = {
@@ -462,7 +462,7 @@
 				2CF9DA802D27B8E800965A76 /* Home */,
 				2CF9DA942D290CEB00965A76 /* misc */,
 				2CF9DA852D281FBD00965A76 /* navigation */,
-				2C65828E2D25C69900DB8AD4 /* Readme */,
+				2C65828E2D25C69900DB8AD4 /* readme */,
 				2C37C4122D21658600995840 /* Settings */,
 				2CAC30712D39183D00A28A00 /* shortcuts */,
 				2CF9DA932D28682700965A76 /* WhatsNew */,
