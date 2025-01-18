@@ -86,7 +86,7 @@ private struct ChecklistItemsFormSheetInner: View {
                 
                 Button("Settings") {
                     navigation.sheet {
-                        ChecklistSettingsSheet(
+                        ChecklistFormSheet(
                             checklistDb: state.checklistDb,
                             onSave: { _ in },
                             onDelete: {

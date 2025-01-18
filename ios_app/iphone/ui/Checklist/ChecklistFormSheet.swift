@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-struct ChecklistSettingsSheet: View {
+struct ChecklistFormSheet: View {
     
     let checklistDb: ChecklistDb?
     let onSave: (ChecklistDb) -> Void
@@ -12,7 +12,7 @@ struct ChecklistSettingsSheet: View {
         VmView({
             ChecklistSettingsVm(checklistDb: checklistDb)
         }) { vm, state in
-            ChecklistSettingsScreenInner(
+            ChecklistFormSheetInner(
                 vm: vm,
                 state: state,
                 name: state.name,
@@ -23,7 +23,7 @@ struct ChecklistSettingsSheet: View {
     }
 }
 
-private struct ChecklistSettingsScreenInner: View {
+private struct ChecklistFormSheetInner: View {
     
     let vm: ChecklistSettingsVm
     let state: ChecklistSettingsVm.State
