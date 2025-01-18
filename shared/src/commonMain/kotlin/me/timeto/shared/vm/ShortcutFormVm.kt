@@ -6,9 +6,9 @@ import me.timeto.shared.launchEx
 import me.timeto.shared.misc.DialogsManager
 import me.timeto.shared.misc.UiException
 
-class ShortcutFormSheetVm(
+class ShortcutFormVm(
     private val shortcutDb: ShortcutDb?,
-) : __Vm<ShortcutFormSheetVm.State>() {
+) : __Vm<ShortcutFormVm.State>() {
 
     data class State(
         val title: String,

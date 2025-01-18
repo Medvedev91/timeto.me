@@ -8,8 +8,8 @@ struct ShortcutFormSheet: View {
 
     var body: some View {
         VmView({
-            ShortcutFormSheetVm(
-                initShortcutDb: shortcutDb
+            ShortcutFormVm(
+                shortcutDb: shortcutDb
             )
         }) { vm, state in
             ShortcutFormSheetInner(
@@ -25,8 +25,8 @@ struct ShortcutFormSheet: View {
 
 private struct ShortcutFormSheetInner: View {
     
-    let vm: ShortcutFormSheetVm
-    let state: ShortcutFormSheetVm.State
+    let vm: ShortcutFormVm
+    let state: ShortcutFormVm.State
     
     @State var name: String
     @State var uri: String
