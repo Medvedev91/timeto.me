@@ -16,7 +16,8 @@ data class ChecklistDb(
 
     companion object : Backupable__Holder {
 
-        fun anyChangeFlow() = db.checklistQueries.anyChange().asFlow()
+        fun anyChangeFlow(): Flow<*> =
+            db.checklistQueries.anyChange().asFlow()
 
         suspend fun selectAsc(): List<ChecklistDb> = dbIo {
             db.checklistQueries.selectAsc().asList { toDb() }
@@ -32,7 +33,7 @@ data class ChecklistDb(
             db.transactionWithResult {
                 val nextId: Int = time()
                 val nameValidated: String =
-                    nameValidationRaw(name, exIds = emptySet())
+                    validateNameRaw(name, exIds = emptySet())
                 val sqModel = ChecklistSQ(
                     id = nextId,
                     name = nameValidated,
@@ -72,7 +73,7 @@ data class ChecklistDb(
     ): ChecklistDb = dbIo {
         db.transactionWithResult {
             val nameValidated: String =
-                nameValidationRaw(name, setOf(id))
+                validateNameRaw(name, setOf(id))
             db.checklistQueries.updateById(
                 id = id,
                 name = nameValidated,
@@ -112,12 +113,8 @@ data class ChecklistDb(
 
 ///
 
-private fun ChecklistSQ.toDb() = ChecklistDb(
-    id = id, name = name,
-)
-
 @Throws(UiException::class)
-private fun nameValidationRaw(
+private fun validateNameRaw(
     name: String,
     exIds: Set<Int>,
 ): String {
@@ -136,3 +133,9 @@ private fun nameValidationRaw(
 
     return validatedName
 }
+
+///
+
+private fun ChecklistSQ.toDb() = ChecklistDb(
+    id = id, name = name,
+)
