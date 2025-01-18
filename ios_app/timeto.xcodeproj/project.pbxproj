@@ -405,7 +405,7 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
-		2CF9DA852D281FBD00965A76 /* Navigation */ = {
+		2CF9DA852D281FBD00965A76 /* navigation */ = {
 			isa = PBXGroup;
 			children = (
 				2C37C4242D22797100995840 /* Navigation.swift */,
@@ -415,7 +415,7 @@
 				2CF9DA992D2B243B00965A76 /* NavigationAlert.swift */,
 				2CF9DA9E2D2DBBB100965A76 /* NavigationConfirmation.swift */,
 			);
-			path = Navigation;
+			path = navigation;
 			sourceTree = "<group>";
 		};
 		2CF9DA8E2D284D2B00965A76 /* MainTab */ = {
@@ -461,7 +461,7 @@
 				2CF9DA9B2D2C400900965A76 /* Checklist */,
 				2CF9DA802D27B8E800965A76 /* Home */,
 				2CF9DA942D290CEB00965A76 /* Misc */,
-				2CF9DA852D281FBD00965A76 /* Navigation */,
+				2CF9DA852D281FBD00965A76 /* navigation */,
 				2C65828E2D25C69900DB8AD4 /* Readme */,
 				2C37C4122D21658600995840 /* Settings */,
 				2CAC30712D39183D00A28A00 /* shortcuts */,
