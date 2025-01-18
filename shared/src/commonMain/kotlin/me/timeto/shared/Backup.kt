@@ -36,6 +36,7 @@ object Backup {
     @Throws(Exception::class)
     fun restore(jString: String) {
         db.transaction {
+
             //
             // TRICK Do not use coroutines inside, it crashes transaction.
 
