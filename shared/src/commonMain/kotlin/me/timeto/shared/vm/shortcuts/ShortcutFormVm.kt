@@ -3,7 +3,6 @@ package me.timeto.shared.vm.shortcuts
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.db.ShortcutDb
-import me.timeto.shared.launchEx
 import me.timeto.shared.launchExIo
 import me.timeto.shared.misc.DialogsManager
 import me.timeto.shared.misc.UiException
@@ -62,7 +61,7 @@ class ShortcutFormVm(
     fun save(
         dialogsManager: DialogsManager,
         onSuccess: (ShortcutDb) -> Unit,
-    ): Unit = scopeVm().launchEx {
+    ): Unit = launchExIo {
         try {
             val name: String = state.value.name
             val uri: String = state.value.uri
