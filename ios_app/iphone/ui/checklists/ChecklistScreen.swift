@@ -9,13 +9,20 @@ struct ChecklistScreen: View {
     
     var body: some View {
         
-        ChecklistView(
-            checklistDb: checklistDb,
-            maxLines: maxLines,
-            onDelete: onDelete
-        )
-        .contentMarginsTabBar(extra: 12)
-        .navigationTitle(checklistDb.name)
-        .toolbarTitleDisplayMode(.inline)
+        VmView({
+            ChecklistScreenVm(
+                checklistDb: checklistDb
+            )
+        }) { vm, state in
+            
+            ChecklistView(
+                checklistDb: checklistDb,
+                maxLines: maxLines,
+                onDelete: onDelete
+            )
+            .contentMarginsTabBar(extra: 12)
+            .navigationTitle(state.checklistDb.name)
+            .toolbarTitleDisplayMode(.inline)
+        }
     }
 }
