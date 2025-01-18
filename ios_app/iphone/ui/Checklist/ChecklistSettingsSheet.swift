@@ -27,7 +27,9 @@ private struct ChecklistSettingsScreenInner: View {
     
     let vm: ChecklistSettingsVm
     let state: ChecklistSettingsVm.State
+    
     @State var name: String
+    
     let onSave: (ChecklistDb) -> Void
     let onDelete: () -> Void
     
@@ -42,10 +44,9 @@ private struct ChecklistSettingsScreenInner: View {
         List {
             
             TextField(
-                text: $name,
-                prompt: Text(state.namePlaceholder)
-            ) {
-            }
+                state.namePlaceholder,
+                text: $name
+            )
             .focused($isFocused)
             .onChange(of: name) { _, new in
                 vm.setName(name: new)
