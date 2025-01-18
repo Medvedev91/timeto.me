@@ -2,14 +2,14 @@ import SwiftUI
 import shared
 
 private let checkboxSize = 21.0
-private let checklistItemMinHeight = HomeScreen__ITEM_HEIGHT
+private let checklistItemMinHeight: CGFloat = HomeScreen__ITEM_HEIGHT
 
 struct ChecklistView: View {
     
     let checklistDb: ChecklistDb
     let maxLines: Int
     let onDelete: () -> Void
-
+    
     var body: some View {
         VmView({
             ChecklistVm(checklistDb: checklistDb)
@@ -37,7 +37,7 @@ private struct ChecklistViewInner: View {
     @Environment(Navigation.self) private var navigation
     
     private var stateIconResource: String {
-        let stateUi = state.checklistUI.stateUI
+        let stateUi = state.stateUi
         if stateUi is ChecklistStateUi.Completed {
             return "checkmark.square.fill"
         }
@@ -58,7 +58,7 @@ private struct ChecklistViewInner: View {
                 
                 VStack {
                     
-                    ForEach(state.checklistUI.itemsUI, id: \.item.id) { itemUi in
+                    ForEach(state.itemsUi, id: \.itemDb.id) { itemUi in
                         
                         Button(
                             action: {
@@ -68,12 +68,12 @@ private struct ChecklistViewInner: View {
                                 
                                 HStack {
                                     
-                                    Image(systemName: itemUi.item.isChecked ? "checkmark.square.fill" : "square")
+                                    Image(systemName: itemUi.itemDb.isChecked ? "checkmark.square.fill" : "square")
                                         .foregroundColor(c.white)
                                         .font(.system(size: checkboxSize, weight: .regular))
                                         .padding(.trailing, 10)
                                     
-                                    Text(itemUi.item.text)
+                                    Text(itemUi.itemDb.text)
                                         .padding(.vertical, 4)
                                         .foregroundColor(.white)
                                         .font(.system(size: HomeScreen__PRIMARY_FONT_SIZE))
@@ -91,7 +91,7 @@ private struct ChecklistViewInner: View {
             
             Button(
                 action: {
-                    state.checklistUI.stateUI.onClick()
+                    state.stateUi.onClick()
                 },
                 label: {
                     
@@ -106,7 +106,7 @@ private struct ChecklistViewInner: View {
                             action: {
                                 navigation.sheet {
                                     ChecklistItemsFormSheet(
-                                        checklistDb: state.checklistUI.checklistDb,
+                                        checklistDb: state.checklistDb,
                                         onDelete: {
                                             onDelete()
                                         }

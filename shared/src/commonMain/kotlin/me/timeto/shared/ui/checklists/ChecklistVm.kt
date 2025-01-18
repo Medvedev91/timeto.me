@@ -4,62 +4,50 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.ChecklistItemDb
-import me.timeto.shared.launchExDefault
+import me.timeto.shared.launchExIo
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.vm.__Vm
 
 class ChecklistVm(
-    private val checklistDb: ChecklistDb,
+    checklistDb: ChecklistDb,
 ) : __Vm<ChecklistVm.State>() {
 
     data class State(
-        val checklistUI: ChecklistUI,
-    )
+        val checklistDb: ChecklistDb,
+        val itemsDb: List<ChecklistItemDb>,
+    ) {
+
+        val stateUi: ChecklistStateUi =
+            ChecklistStateUi.build(checklistDb, itemsDb)
+
+        val itemsUi: List<ItemUi> =
+            itemsDb.map { ItemUi(itemDb = it) }
+    }
 
     override val state = MutableStateFlow(
         State(
-            checklistUI = ChecklistUI.build(checklistDb, checklistDb.getItemsCached()),
+            checklistDb = checklistDb,
+            itemsDb = checklistDb.getItemsCached(),
         )
     )
 
     init {
         val scopeVm = scopeVm()
-        ChecklistItemDb.selectSortedFlow()
-            .onEachExIn(scopeVm) { items ->
-                state.update {
-                    it.copy(checklistUI = ChecklistUI.build(checklistDb, items))
-                }
+        ChecklistItemDb.selectSortedFlow().onEachExIn(scopeVm) { itemsDb ->
+            state.update {
+                it.copy(itemsDb = itemsDb.filter { it.list_id == checklistDb.id })
             }
+        }
     }
 
     ///
 
-    class ChecklistUI(
-        val checklistDb: ChecklistDb,
-        val items: List<ChecklistItemDb>,
+    class ItemUi(
+        val itemDb: ChecklistItemDb,
     ) {
-
-        companion object {
-
-            fun build(
-                checklistDb: ChecklistDb,
-                allItemsDb: List<ChecklistItemDb>,
-            ) = ChecklistUI(
-                checklistDb = checklistDb,
-                items = allItemsDb.filter { it.list_id == checklistDb.id },
-            )
-        }
-
-        val stateUI = ChecklistStateUi.build(checklistDb, items)
-        val itemsUI = items.map { ItemUI(it) }
-
-        class ItemUI(
-            val item: ChecklistItemDb,
-        ) {
-            fun toggle() {
-                launchExDefault {
-                    item.toggle()
-                }
+        fun toggle() {
+            launchExIo {
+                itemDb.toggle()
             }
         }
     }
