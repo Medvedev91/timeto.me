@@ -434,12 +434,12 @@
 			path = WhatsNew;
 			sourceTree = "<group>";
 		};
-		2CF9DA942D290CEB00965A76 /* Misc */ = {
+		2CF9DA942D290CEB00965A76 /* misc */ = {
 			isa = PBXGroup;
 			children = (
 				2C6582932D26826D00DB8AD4 /* AskQuestionView.swift */,
 			);
-			path = Misc;
+			path = misc;
 			sourceTree = "<group>";
 		};
 		2CF9DA9B2D2C400900965A76 /* Checklist */ = {
@@ -460,7 +460,7 @@
 			children = (
 				2CF9DA9B2D2C400900965A76 /* Checklist */,
 				2CF9DA802D27B8E800965A76 /* Home */,
-				2CF9DA942D290CEB00965A76 /* Misc */,
+				2CF9DA942D290CEB00965A76 /* misc */,
 				2CF9DA852D281FBD00965A76 /* navigation */,
 				2C65828E2D25C69900DB8AD4 /* Readme */,
 				2C37C4122D21658600995840 /* Settings */,
