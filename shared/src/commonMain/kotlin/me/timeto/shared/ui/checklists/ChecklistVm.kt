@@ -1,11 +1,11 @@
-package me.timeto.shared.vm.Checklist
+package me.timeto.shared.ui.checklists
 
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.ChecklistItemDb
 import me.timeto.shared.launchExDefault
 import me.timeto.shared.onEachExIn
-import me.timeto.shared.ui.checklists.ChecklistStateUi
 import me.timeto.shared.vm.__Vm
 
 class ChecklistVm(
@@ -24,8 +24,7 @@ class ChecklistVm(
 
     init {
         val scopeVm = scopeVm()
-        ChecklistItemDb
-            .selectSortedFlow()
+        ChecklistItemDb.selectSortedFlow()
             .onEachExIn(scopeVm) { items ->
                 state.update {
                     it.copy(checklistUI = ChecklistUI.build(checklistDb, items))
