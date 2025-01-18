@@ -10,7 +10,7 @@ struct ChecklistFormSheet: View {
     var body: some View {
         
         VmView({
-            ChecklistSettingsVm(checklistDb: checklistDb)
+            ChecklistFormVm(checklistDb: checklistDb)
         }) { vm, state in
             ChecklistFormSheetInner(
                 vm: vm,
@@ -25,8 +25,8 @@ struct ChecklistFormSheet: View {
 
 private struct ChecklistFormSheetInner: View {
     
-    let vm: ChecklistSettingsVm
-    let state: ChecklistSettingsVm.State
+    let vm: ChecklistFormVm
+    let state: ChecklistFormVm.State
     
     @State var name: String
     
