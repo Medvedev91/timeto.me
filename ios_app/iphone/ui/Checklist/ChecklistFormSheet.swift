@@ -39,19 +39,19 @@ private struct ChecklistFormSheetInner: View {
             
             Section {
                 
-                ForEach(state.checklistItemsUi, id: \.checklistItemDb.id) { checklistItemUi in
+                ForEach(state.checklistItemsDb, id: \.id) { checklistItemDb in
                     
                     Button(
                         action: {
                             navigation.sheet {
                                 ChecklistItemFormSheet(
                                     checklistDb: state.checklistDb,
-                                    checklistItemDb: checklistItemUi.checklistItemDb
+                                    checklistItemDb: checklistItemDb
                                 )
                             }
                         },
                         label: {
-                            Text(checklistItemUi.checklistItemDb.text)
+                            Text(checklistItemDb.text)
                         }
                     )
                 }
@@ -69,7 +69,7 @@ private struct ChecklistFormSheetInner: View {
                 }
                 .onDelete { indexSet in
                     for idx in indexSet {
-                        vm.deleteItem(itemDb: state.checklistItemsUi[idx].checklistItemDb)
+                        vm.deleteItem(itemDb: state.checklistItemsDb[idx])
                     }
                 }
             }
@@ -129,7 +129,7 @@ private struct ChecklistFormSheetInner: View {
                                 .foregroundStyle(.blue)
                                 .fontWeight(.bold)
                             
-                            Text(state.newItemButtonText)
+                            Text(state.newItemText)
                                 .foregroundColor(.blue)
                                 .fontWeight(.bold)
                         }

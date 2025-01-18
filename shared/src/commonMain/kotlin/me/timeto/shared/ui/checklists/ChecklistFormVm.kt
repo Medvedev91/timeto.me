@@ -1,13 +1,13 @@
 package me.timeto.shared.ui.checklists
 
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.ChecklistItemDb
-import me.timeto.shared.launchExDefault
 import me.timeto.shared.launchExIo
-import me.timeto.shared.onEachExIn
 import me.timeto.shared.ui.DialogsManager
 import me.timeto.shared.vm.__Vm
 
@@ -19,40 +19,35 @@ class ChecklistFormVm(
         val checklistDb: ChecklistDb,
         val checklistItemsDb: List<ChecklistItemDb>,
     ) {
-
-        val newItemButtonText = "New Item"
-
         val checklistName: String = checklistDb.name
-        val checklistItemsUi: List<ChecklistItemUi> = checklistItemsDb
-            .mapIndexed { idx, checklistItemDb ->
-                ChecklistItemUi(
-                    checklistItemDb = checklistItemDb,
-                    isFirst = (idx == 0),
-                )
-            }
+        val newItemText = "New Item"
     }
 
     override val state = MutableStateFlow(
         State(
             checklistDb = checklistDb,
-            checklistItemsDb = Cache.checklistItemsDb.filter { it.list_id == checklistDb.id },
+            checklistItemsDb = Cache.checklistItemsDb
+                .filter { it.list_id == checklistDb.id },
         )
     )
 
     init {
-        val scope = scopeVm()
-        ChecklistDb.selectAscFlow().onEachExIn(scope) { allChecklists ->
-            allChecklists
-                .firstOrNull { it.id == state.value.checklistDb.id }
-                ?.let { newChecklistDb ->
-                    state.update { it.copy(checklistDb = newChecklistDb) }
-                }
-        }
-        ChecklistItemDb.selectSortedFlow().onEachExIn(scope) { allChecklistItems ->
-            val newChecklistItemsDb = allChecklistItems
-                .filter { it.list_id == state.value.checklistDb.id }
-            state.update { it.copy(checklistItemsDb = newChecklistItemsDb) }
-        }
+        val scopeVm = scopeVm()
+        combine(
+            ChecklistDb.selectAscFlow(),
+            ChecklistItemDb.selectSortedFlow(),
+        ) { allChecklists, allItems ->
+            val newChecklistDb: ChecklistDb =
+                allChecklists.firstOrNull { it.id == checklistDb.id } ?: checklistDb
+            val newItemsDb: List<ChecklistItemDb> = allItems
+                .filter { it.list_id == checklistDb.id }
+            state.update {
+                it.copy(
+                    checklistDb = newChecklistDb,
+                    checklistItemsDb = newItemsDb,
+                )
+            }
+        }.launchIn(scopeVm)
     }
 
     ///
@@ -60,7 +55,7 @@ class ChecklistFormVm(
     fun isDoneAllowed(
         dialogsManager: DialogsManager,
     ): Boolean {
-        if (state.value.checklistItemsUi.isEmpty()) {
+        if (state.value.checklistItemsDb.isEmpty()) {
             dialogsManager.alert("Please add at least one item")
             return false
         }
@@ -119,12 +114,4 @@ class ChecklistFormVm(
             ChecklistItemDb.updateSortMany(itemsDb = newList)
         }
     }
-
-    ///
-
-    // todo remove
-    data class ChecklistItemUi(
-        val checklistItemDb: ChecklistItemDb,
-        val isFirst: Boolean,
-    )
 }
