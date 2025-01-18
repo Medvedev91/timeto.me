@@ -1,6 +1,5 @@
 package me.timeto.shared.db
 
-import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
 import dbsq.ChecklistItemSQ
 import kotlinx.coroutines.flow.Flow
@@ -20,7 +19,7 @@ data class ChecklistItemDb(
 
     companion object : Backupable__Holder {
 
-        fun anyChangeFlow(): Flow<Query<Int>> =
+        fun anyChangeFlow(): Flow<*> =
             db.checklistItemQueries.anyChange().asFlow()
 
         suspend fun selectSorted(): List<ChecklistItemDb> = dbIo {
@@ -49,7 +48,7 @@ data class ChecklistItemDb(
 
                 val sort: Int = allSorted.maxOfOrNull { it.sort }?.plus(1) ?: 0
 
-                val textValidated: String = textValidationRaw(text)
+                val textValidated: String = validateTextRaw(text)
 
                 db.checklistItemQueries.insert(
                     id = nextId,
@@ -113,7 +112,8 @@ data class ChecklistItemDb(
     @Throws(UiException::class, CancellationException::class)
     suspend fun updateTextWithValidation(newText: String): Unit = dbIo {
         db.checklistItemQueries.updateTextById(
-            id = id, text = textValidationRaw(newText)
+            id = id,
+            text = validateTextRaw(newText),
         )
     }
 
@@ -153,13 +153,17 @@ data class ChecklistItemDb(
     }
 }
 
+///
+
 @Throws(UiException::class)
-private fun textValidationRaw(text: String): String {
+private fun validateTextRaw(text: String): String {
     val validatedText = text.trim()
     if (validatedText.isEmpty())
         throw UiException("Empty text")
     return validatedText
 }
+
+///
 
 private fun ChecklistItemSQ.toDb() = ChecklistItemDb(
     id = id, text = text, list_id = list_id,
