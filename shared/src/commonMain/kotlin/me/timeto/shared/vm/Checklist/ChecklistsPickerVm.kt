@@ -7,9 +7,9 @@ import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.vm.__Vm
 
-class ChecklistPickerVm(
+class ChecklistsPickerVm(
     selectedChecklistsDb: List<ChecklistDb>,
-) : __Vm<ChecklistPickerVm.State>() {
+) : __Vm<ChecklistsPickerVm.State>() {
 
     data class State(
         val checklistsDb: List<ChecklistDb>,
