@@ -100,6 +100,21 @@ private struct ShortcutFormSheetInner: View {
                     )
                 }
             }
+            
+            if let shortcutDb = state.shortcutDb {
+                Section {
+                    Button(state.deleteText) {
+                        vm.delete(
+                            shortcutDb: shortcutDb,
+                            dialogsManager: navigation,
+                            onDelete: {
+                                dismiss()
+                            }
+                        )
+                    }
+                    .foregroundColor(.red)
+                }
+            }
         }
         .interactiveDismissDisabled()
         .toolbarTitleDisplayMode(.inline)
