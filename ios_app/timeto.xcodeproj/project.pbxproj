@@ -385,12 +385,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2CAC30712D39183D00A28A00 /* Shortcut */ = {
+		2CAC30712D39183D00A28A00 /* shortcuts */ = {
 			isa = PBXGroup;
 			children = (
 				3182106A0DA4A0D8844CFA11 /* ShortcutFormSheet.swift */,
 			);
-			path = Shortcut;
+			path = shortcuts;
 			sourceTree = "<group>";
 		};
 		2CF9DA802D27B8E800965A76 /* Home */ = {
@@ -464,7 +464,7 @@
 				2CF9DA852D281FBD00965A76 /* Navigation */,
 				2C65828E2D25C69900DB8AD4 /* Readme */,
 				2C37C4122D21658600995840 /* Settings */,
-				2CAC30712D39183D00A28A00 /* Shortcut */,
+				2CAC30712D39183D00A28A00 /* shortcuts */,
 				2CF9DA932D28682700965A76 /* WhatsNew */,
 				31821D7654D0C105DFC60DDD /* MyListView.swift */,
 				318218D93C3456758557A6E0 /* ScrollViewWithVListener.swift */,
