@@ -108,8 +108,6 @@ class ChecklistFormVm(
         val fromItem = list[fromIdx]
         newList.removeAt(fromIdx)
         newList.add(toIdx, fromItem)
-        // Do together
-        state.update { it.copy(checklistItemsDb = newList) }
         launchExIo {
             ChecklistItemDb.updateSortMany(itemsDb = newList)
         }
