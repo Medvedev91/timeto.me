@@ -426,12 +426,12 @@
 			path = MainTab;
 			sourceTree = "<group>";
 		};
-		2CF9DA932D28682700965A76 /* WhatsNew */ = {
+		2CF9DA932D28682700965A76 /* whats_new */ = {
 			isa = PBXGroup;
 			children = (
 				2C37C4202D219FA200995840 /* WhatsNewScreen.swift */,
 			);
-			path = WhatsNew;
+			path = whats_new;
 			sourceTree = "<group>";
 		};
 		2CF9DA942D290CEB00965A76 /* misc */ = {
@@ -465,7 +465,7 @@
 				2C65828E2D25C69900DB8AD4 /* readme */,
 				2C37C4122D21658600995840 /* Settings */,
 				2CAC30712D39183D00A28A00 /* shortcuts */,
-				2CF9DA932D28682700965A76 /* WhatsNew */,
+				2CF9DA932D28682700965A76 /* whats_new */,
 				31821D7654D0C105DFC60DDD /* MyListView.swift */,
 				318218D93C3456758557A6E0 /* ScrollViewWithVListener.swift */,
 				31821BCB57EC030987E8342E /* SheetHeaderView.swift */,
