@@ -57,7 +57,7 @@ class ChecklistFormVm(
         dialogsManager: DialogsManager,
     ): Boolean {
         if (state.value.checklistItemsUi.isEmpty()) {
-            dialogsManager.alert("Please add at least one item.")
+            dialogsManager.alert("Please add at least one item")
             return false
         }
         return true
