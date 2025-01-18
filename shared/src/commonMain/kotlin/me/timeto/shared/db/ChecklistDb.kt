@@ -128,7 +128,7 @@ private fun validateNameRaw(
         .filter { it.id !in exIds }
         .forEach { checklistDb ->
             if (checklistDb.name.equals(validatedName, ignoreCase = true))
-                throw UiException("$validatedName already exists.")
+                throw UiException("$validatedName already exists")
         }
 
     return validatedName
