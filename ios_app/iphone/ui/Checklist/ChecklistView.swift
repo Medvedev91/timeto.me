@@ -105,7 +105,7 @@ private struct ChecklistViewInner: View {
                         Button(
                             action: {
                                 navigation.sheet {
-                                    ChecklistFormSheet(
+                                    ChecklistItemsFormSheet(
                                         checklistDb: state.checklistUI.checklistDb,
                                         onDelete: {
                                             onDelete()

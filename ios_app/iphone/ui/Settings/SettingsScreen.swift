@@ -80,7 +80,7 @@ private struct SettingsScreenInner: View {
                         Button(
                             action: {
                                 navigation.sheet {
-                                    ChecklistFormSheet(
+                                    ChecklistItemsFormSheet(
                                         checklistDb: checklistDb,
                                         onDelete: {}
                                     )
@@ -99,7 +99,7 @@ private struct SettingsScreenInner: View {
                             checklistDb: nil,
                             onSave: { newChecklistDb in
                                 navigation.sheet {
-                                    ChecklistFormSheet(
+                                    ChecklistItemsFormSheet(
                                         checklistDb: newChecklistDb,
                                         onDelete: {
                                             navigation.cleanPath()

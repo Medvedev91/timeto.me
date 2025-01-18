@@ -90,7 +90,7 @@ private struct ChecklistPickerSheetInner: View {
                                     onSave: { newChecklistDb in
                                         selectedIds.insert(newChecklistDb.id)
                                         navigation.sheet {
-                                            ChecklistFormSheet(
+                                            ChecklistItemsFormSheet(
                                                 checklistDb: newChecklistDb,
                                                 onDelete: {}
                                             )

@@ -13,7 +13,7 @@
 		2C246BCF2AD563AC008780E1 /* sound_timer_expired.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2C246BCE2AD563AC008780E1 /* sound_timer_expired.mp3 */; };
 		2C273F2B2BA4ACEB0016F11D /* AskAQuestionListButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C273F2A2BA4ACEB0016F11D /* AskAQuestionListButtonView.swift */; };
 		2C273F2D2BB99A200016F11D /* ChecklistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C273F2C2BB99A200016F11D /* ChecklistView.swift */; };
-		2C273F2F2BBAE3090016F11D /* ChecklistFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C273F2E2BBAE3090016F11D /* ChecklistFormSheet.swift */; };
+		2C273F2F2BBAE3090016F11D /* ChecklistItemsFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C273F2E2BBAE3090016F11D /* ChecklistItemsFormSheet.swift */; };
 		2C2C205D2B7A824A00D4B325 /* PrivacySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2C205C2B7A824A00D4B325 /* PrivacySheet.swift */; };
 		2C2E93F8290117E300EAADBE /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821ED2142F08DDD1E0CC75 /* HomeScreen.swift */; };
 		2C2E93F92905759100EAADBE /* TimerPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821AE61EE1FC22CCF8E753 /* TimerPickerSheet.swift */; };
@@ -158,7 +158,7 @@
 		2C246BCE2AD563AC008780E1 /* sound_timer_expired.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = sound_timer_expired.mp3; path = ../android_app/src/main/res/raw/sound_timer_expired.mp3; sourceTree = "<group>"; };
 		2C273F2A2BA4ACEB0016F11D /* AskAQuestionListButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskAQuestionListButtonView.swift; sourceTree = "<group>"; };
 		2C273F2C2BB99A200016F11D /* ChecklistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChecklistView.swift; sourceTree = "<group>"; };
-		2C273F2E2BBAE3090016F11D /* ChecklistFormSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChecklistFormSheet.swift; sourceTree = "<group>"; };
+		2C273F2E2BBAE3090016F11D /* ChecklistItemsFormSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChecklistItemsFormSheet.swift; sourceTree = "<group>"; };
 		2C2C205C2B7A824A00D4B325 /* PrivacySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacySheet.swift; sourceTree = "<group>"; };
 		2C2C419628C4CF2A00923267 /* timeto (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "timeto (iOS).entitlements"; sourceTree = "<group>"; };
 		2C2C419728C4D83400923267 /* timeto--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "timeto--iOS--Info.plist"; sourceTree = "<group>"; };
@@ -448,7 +448,7 @@
 				2C273F2C2BB99A200016F11D /* ChecklistView.swift */,
 				2CF9DA9C2D2CFC9200965A76 /* ChecklistScreen.swift */,
 				2C6582962D26E4A300DB8AD4 /* ChecklistSettingsSheet.swift */,
-				2C273F2E2BBAE3090016F11D /* ChecklistFormSheet.swift */,
+				2C273F2E2BBAE3090016F11D /* ChecklistItemsFormSheet.swift */,
 				31821290CB27918CD444FBB0 /* ChecklistItemFormSheet.swift */,
 				31821D2439CE2014EF5FF473 /* ChecklistPickerSheet.swift */,
 			);
@@ -731,7 +731,7 @@
 				2C0BE02F295751B70099AD7C /* PickerStateView.swift in Sources */,
 				318215D20ED732E4BF4F3071 /* ChecklistSheet.swift in Sources */,
 				318214F11883D036EC488EA5 /* TaskFormSheet.swift in Sources */,
-				2C273F2F2BBAE3090016F11D /* ChecklistFormSheet.swift in Sources */,
+				2C273F2F2BBAE3090016F11D /* ChecklistItemsFormSheet.swift in Sources */,
 				318219E30EE52A96A502BF30 /* KeyboardManager.swift in Sources */,
 				2C1531D02CB566CC00360615 /* GoalsFormFs.swift in Sources */,
 				2C2E93F8290117E300EAADBE /* HomeScreen.swift in Sources */,
