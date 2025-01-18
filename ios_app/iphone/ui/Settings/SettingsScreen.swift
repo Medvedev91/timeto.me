@@ -42,7 +42,6 @@ private struct SettingsScreenInner: View {
     @State private var selectedFlavor = "c"
 
     // todo remove
-    @State private var isAddShortcutPresented = false
     @State private var tmp = false
 
     var body: some View {
@@ -115,6 +114,41 @@ private struct SettingsScreenInner: View {
                     }
                 }
             }
+            
+            Section("SHORTCUTS") {
+                
+                ForEach(state.shortcutsDb, id: \.id) { shortcutDb in
+                    
+                    Button(shortcutDb.name) {
+                        shortcutDb.performUi()
+                    }
+                    .foregroundColor(.primary)
+                    .contextMenu {
+                        Button(
+                            action: {
+                                navigation.sheet {
+                                    ShortcutFormSheet(
+                                        shortcutDb: shortcutDb,
+                                        onSave: { _ in }
+                                    )
+                                }
+                            },
+                            label: {
+                                Label("Edit", systemImage: "square.and.pencil")
+                            }
+                        )
+                    }
+                }
+                
+                Button("New Shortcut") {
+                    navigation.sheet {
+                        ShortcutFormSheet(
+                            shortcutDb: nil,
+                            onSave: { _ in }
+                        )
+                    }
+                }
+            }
 
             ///
             
@@ -143,41 +177,6 @@ private struct SettingsScreenInner: View {
             /*
              VStack {
              
-             ///
-             /// Shortcuts
-             
-             VStack {
-             
-             MyListView__Padding__SectionHeader()
-             
-             MyListView__HeaderView(
-             title: "SHORTCUTS",
-             rightView: AnyView(
-             Button(
-             action: {
-             isAddShortcutPresented.toggle()
-             },
-             label: {
-             Image(systemName: "plus")
-             }
-             )
-             )
-             )
-             
-             MyListView__Padding__HeaderSection()
-             
-             let shortcuts = state.shortcuts
-             ForEach(shortcuts, id: \.id) { shortcut in
-             let isFirst = shortcuts.first == shortcut
-             MyListView__ItemView(
-             isFirst: isFirst,
-             isLast: shortcuts.last == shortcut,
-             withTopDivider: !isFirst
-             ) {
-             ToolsView_ShortcutView(shortcut: shortcut)
-             }
-             }
-             }
              
              ///
              /// Shortcuts
@@ -424,9 +423,6 @@ private struct SettingsScreenInner: View {
         .contentMarginsTabBar(extra: 28)
         .toolbarTitleDisplayMode(.inlineLarge)
         .navigationTitle(state.headerTitle)
-        .sheetEnv(isPresented: $isAddShortcutPresented) {
-            ShortcutFormSheet(isPresented: $isAddShortcutPresented, editedShortcut: nil)
-        }
         .fileExporter(
             isPresented: $isFileExporterPresented,
             document: fileForExport,
@@ -576,36 +572,4 @@ private struct NoteListItemView: View {
         }
     }
 }
-
-// todo rename
-struct ToolsView_ShortcutView: View {
-
-    let shortcut: ShortcutDb
-
-    @State private var isEditPresented = false
-
-    var body: some View {
-        MyListSwipeToActionItem(
-            bgColor: c.fg,
-            deletionHint: shortcut.name,
-            deletionConfirmationNote: "Are you sure you want to delete \"\(shortcut.name)\" shortcut?",
-            onEdit: {
-                isEditPresented = true
-            },
-            onDelete: {
-                shortcut.delete { err in
-                    // todo report
-                }
-            }
-        ) {
-            MyListView__ItemView__ButtonView(text: shortcut.name) {
-                shortcut.performUI()
-            }
-        }
-        .sheetEnv(isPresented: $isEditPresented) {
-            ShortcutFormSheet(isPresented: $isEditPresented, editedShortcut: shortcut)
-        }
-    }
-}
-
 */
