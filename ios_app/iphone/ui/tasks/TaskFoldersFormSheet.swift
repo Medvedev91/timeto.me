@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-struct FoldersSettingsSheet: View {
+struct TaskFoldersFormSheet: View {
     
     @Binding var isPresented: Bool
     

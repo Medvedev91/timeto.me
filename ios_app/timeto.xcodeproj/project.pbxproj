@@ -62,7 +62,7 @@
 		2CF9DA9A2D2B244600965A76 /* NavigationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA992D2B243B00965A76 /* NavigationAlert.swift */; };
 		2CF9DA9D2D2CFC9900965A76 /* ChecklistScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA9C2D2CFC9200965A76 /* ChecklistScreen.swift */; };
 		2CF9DA9F2D2DBBB100965A76 /* NavigationConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9DA9E2D2DBBB100965A76 /* NavigationConfirmation.swift */; };
-		318210C5F98B5CD4E8D8C104 /* FoldersSettingsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E3EB266890584C3EF87 /* FoldersSettingsSheet.swift */; };
+		318210C5F98B5CD4E8D8C104 /* TaskFoldersFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E3EB266890584C3EF87 /* TaskFoldersFormSheet.swift */; };
 		318210CF629A7E593B9F8FE4 /* ChecklistItemFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821290CB27918CD444FBB0 /* ChecklistItemFormSheet.swift */; };
 		318210E102D112C2860ADF9F /* DialogCloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E53EB27CE7F81AF0F69 /* DialogCloseButton.swift */; };
 		318210ECF60308ECF341FEA2 /* utils_ios.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182118D8EA3E0D889D4FDC3 /* utils_ios.swift */; };
@@ -262,7 +262,7 @@
 		31821D886EB022A0AD988588 /* DividerBg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DividerBg.swift; sourceTree = "<group>"; };
 		31821DC6AEBDF478C34116FE /* MyListSwipeToActionItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyListSwipeToActionItem.swift; sourceTree = "<group>"; };
 		31821E01EC49E0964E5CB2F5 /* PieView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieView.swift; sourceTree = "<group>"; };
-		31821E3EB266890584C3EF87 /* FoldersSettingsSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoldersSettingsSheet.swift; sourceTree = "<group>"; };
+		31821E3EB266890584C3EF87 /* TaskFoldersFormSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskFoldersFormSheet.swift; sourceTree = "<group>"; };
 		31821E53EB27CE7F81AF0F69 /* DialogCloseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogCloseButton.swift; sourceTree = "<group>"; };
 		31821E54E02F361F1AD21375 /* SummarySheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummarySheet.swift; sourceTree = "<group>"; };
 		31821E58DC92CD5673A6B49E /* utils_apple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = utils_apple.swift; sourceTree = "<group>"; };
@@ -352,6 +352,7 @@
 		2C8147032D3D35A5000948F6 /* tasks */ = {
 			isa = PBXGroup;
 			children = (
+				31821E3EB266890584C3EF87 /* TaskFoldersFormSheet.swift */,
 			);
 			path = tasks;
 			sourceTree = "<group>";
@@ -537,7 +538,6 @@
 				31821C3C168B3948A5636451 /* EventTemplateFormSheet.swift */,
 				31821B4BCB049B516BF2DF2E /* EventTemplatesView.swift */,
 				31821514C5F55F9A34FBC8AD /* FolderFormSheet.swift */,
-				31821E3EB266890584C3EF87 /* FoldersSettingsSheet.swift */,
 				2CDEAB572C00E27600519C3D /* Fs.swift */,
 				2C4A5EE02CB7F71600340578 /* GoalFormFs.swift */,
 				2CAF3CE12CD0110200CC6DE5 /* GoalPeriodFormFs.swift */,
@@ -800,7 +800,7 @@
 				318212D55BBA074155F95EB0 /* TextField__VMState.swift in Sources */,
 				318215958A7A06F6610DF5AF /* TimetoAlert.swift in Sources */,
 				2CDEAB582C00E27600519C3D /* Fs.swift in Sources */,
-				318210C5F98B5CD4E8D8C104 /* FoldersSettingsSheet.swift in Sources */,
+				318210C5F98B5CD4E8D8C104 /* TaskFoldersFormSheet.swift in Sources */,
 				2C273F2D2BB99A200016F11D /* ChecklistView.swift in Sources */,
 				31821DF8D1DFB408872C85BD /* FolderFormSheet.swift in Sources */,
 				2C37C4192D216D0200995840 /* view_extensions.swift in Sources */,
