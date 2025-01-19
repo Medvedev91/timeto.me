@@ -18,8 +18,6 @@
 		2C2E93F8290117E300EAADBE /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821ED2142F08DDD1E0CC75 /* HomeScreen.swift */; };
 		2C2E93F92905759100EAADBE /* TimerPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821AE61EE1FC22CCF8E753 /* TimerPickerSheet.swift */; };
 		2C2E93FA2905B57700EAADBE /* ScrollViewWithVListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318218D93C3456758557A6E0 /* ScrollViewWithVListener.swift */; };
-		2C37C4152D216A6500995840 /* VmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C37C4142D2169DE00995840 /* VmView.swift */; };
-		2C37C4162D216A6500995840 /* VmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C37C4142D2169DE00995840 /* VmView.swift */; };
 		2C37C41B2D217F6E00995840 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C37C41A2D217F6C00995840 /* SettingsScreen.swift */; };
 		2C37C4212D219FA800995840 /* WhatsNewScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C37C4202D219FA200995840 /* WhatsNewScreen.swift */; };
 		2C37C4232D21A90D00995840 /* ReadmeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C37C4222D21A90700995840 /* ReadmeScreen.swift */; };
@@ -34,8 +32,6 @@
 		2C672A102B74CC01002BC21C /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C672A0F2B74CC01002BC21C /* EventsView.swift */; };
 		2C672A122B74CF76002BC21C /* EventsCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C672A112B74CF76002BC21C /* EventsCalendarView.swift */; };
 		2C8146F92D3CF7C4000948F6 /* NoteScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8146F82D3CF7C1000948F6 /* NoteScreen.swift */; };
-		2C8147012D3D08BC000948F6 /* Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8147002D3D08B9000948F6 /* Padding.swift */; };
-		2C8147022D3D08BC000948F6 /* Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8147002D3D08B9000948F6 /* Padding.swift */; };
 		2C82BF5A28726E400041BCA3 /* WAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C82BF5928726E400041BCA3 /* WAssets.xcassets */; };
 		2C82BF6528726E400041BCA3 /* W_TabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82BF6428726E400041BCA3 /* W_TabsView.swift */; };
 		2C82BF6728726E400041BCA3 /* W_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82BF6628726E400041BCA3 /* W_App.swift */; };
@@ -162,7 +158,6 @@
 		2C2C205C2B7A824A00D4B325 /* PrivacySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacySheet.swift; sourceTree = "<group>"; };
 		2C2C419628C4CF2A00923267 /* timeto (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "timeto (iOS).entitlements"; sourceTree = "<group>"; };
 		2C2C419728C4D83400923267 /* timeto--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "timeto--iOS--Info.plist"; sourceTree = "<group>"; };
-		2C37C4142D2169DE00995840 /* VmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VmView.swift; sourceTree = "<group>"; };
 		2C37C41A2D217F6C00995840 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
 		2C37C4202D219FA200995840 /* WhatsNewScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewScreen.swift; sourceTree = "<group>"; };
 		2C37C4222D21A90700995840 /* ReadmeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadmeScreen.swift; sourceTree = "<group>"; };
@@ -177,7 +172,6 @@
 		2C672A0F2B74CC01002BC21C /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsView.swift; sourceTree = "<group>"; };
 		2C672A112B74CF76002BC21C /* EventsCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsCalendarView.swift; sourceTree = "<group>"; };
 		2C8146F82D3CF7C1000948F6 /* NoteScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteScreen.swift; sourceTree = "<group>"; };
-		2C8147002D3D08B9000948F6 /* Padding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Padding.swift; sourceTree = "<group>"; };
 		2C82BF5728726E3F0041BCA3 /* timeto.me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = timeto.me.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C82BF5928726E400041BCA3 /* WAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = WAssets.xcassets; sourceTree = "<group>"; };
 		2C82BF6428726E400041BCA3 /* W_TabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = W_TabsView.swift; sourceTree = "<group>"; };
@@ -273,7 +267,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		2C8147202D3DA968000948F6 /* view_extensions */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = view_extensions; sourceTree = "<group>"; };
+		2C8147512D3DA9F3000948F6 /* common */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = common; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -300,14 +294,6 @@
 				2C37C41A2D217F6C00995840 /* SettingsScreen.swift */,
 			);
 			path = settings;
-			sourceTree = "<group>";
-		};
-		2C37C4132D2167FF00995840 /* common */ = {
-			isa = PBXGroup;
-			children = (
-				2C8146FF2D3D0868000948F6 /* ui */,
-			);
-			path = common;
 			sourceTree = "<group>";
 		};
 		2C4044962951FC5400A24521 /* resources */ = {
@@ -338,16 +324,6 @@
 				2C8146F82D3CF7C1000948F6 /* NoteScreen.swift */,
 			);
 			path = notes;
-			sourceTree = "<group>";
-		};
-		2C8146FF2D3D0868000948F6 /* ui */ = {
-			isa = PBXGroup;
-			children = (
-				2C8147202D3DA968000948F6 /* view_extensions */,
-				2C8147002D3D08B9000948F6 /* Padding.swift */,
-				2C37C4142D2169DE00995840 /* VmView.swift */,
-			);
-			path = ui;
 			sourceTree = "<group>";
 		};
 		2C8147032D3D35A5000948F6 /* tasks */ = {
@@ -394,7 +370,7 @@
 			isa = PBXGroup;
 			children = (
 				31821F4C09E35259CCF747CD /* iphone */,
-				2C37C4132D2167FF00995840 /* common */,
+				2C8147512D3DA9F3000948F6 /* common */,
 				2C95BA83280D74AA0027FC35 /* Products */,
 				2C4044962951FC5400A24521 /* resources */,
 				2C82BF5828726E3F0041BCA3 /* watch */,
@@ -596,7 +572,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				2C8147202D3DA968000948F6 /* view_extensions */,
+				2C8147512D3DA9F3000948F6 /* common */,
 			);
 			name = watch;
 			productName = watch;
@@ -619,7 +595,7 @@
 				2C82BF7128726E400041BCA3 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				2C8147202D3DA968000948F6 /* view_extensions */,
+				2C8147512D3DA9F3000948F6 /* common */,
 			);
 			name = "timeto (iOS)";
 			productName = "timeto (iOS)";
@@ -732,12 +708,10 @@
 				2C82BF7C287272520041BCA3 /* W_Delegate.swift in Sources */,
 				2C82BF6528726E400041BCA3 /* W_TabsView.swift in Sources */,
 				2C82BF6728726E400041BCA3 /* W_App.swift in Sources */,
-				2C37C4162D216A6500995840 /* VmView.swift in Sources */,
 				318214C7567540476671C2FB /* W_TabTimerView.swift in Sources */,
 				318211D5994178629ED2FA09 /* W_TabTasksView.swift in Sources */,
 				31821ED40BEA91336DBFE0B4 /* W_TickerDialog.swift in Sources */,
 				318216E60DD4CA4153065416 /* utils_apple.swift in Sources */,
-				2C8147022D3D08BC000948F6 /* Padding.swift in Sources */,
 				318219F8C525548F4D40DF35 /* atm_apple.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -757,7 +731,6 @@
 				31821A46712E80148E00481B /* MailView.swift in Sources */,
 				2C2E93F92905759100EAADBE /* TimerPickerSheet.swift in Sources */,
 				31821E89257A3F8032DE116A /* SummaryChartView.swift in Sources */,
-				2C37C4152D216A6500995840 /* VmView.swift in Sources */,
 				2CB73DE3292FACE00053B2D6 /* SearchEmojiSheet.swift in Sources */,
 				318212C07B5351BA8C7C9671 /* PieView.swift in Sources */,
 				318214BD0E34368A953B17CD /* MyListSwipeToActionItem.swift in Sources */,
@@ -845,7 +818,6 @@
 				2C37C4252D22797500995840 /* Navigation.swift in Sources */,
 				31821A76C3FAC481BE5C7C66 /* DaytimePickerSliderView.swift in Sources */,
 				31821BD87B0E4B9CC03CD31D /* ActivityPomodoroSheet.swift in Sources */,
-				2C8147012D3D08BC000948F6 /* Padding.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
