@@ -3,69 +3,69 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.NoteDb
+import me.timeto.shared.ui.DialogsManager
+import me.timeto.shared.ui.UiException
 
 class NoteFormSheetVm(
-    val note: NoteDb?,
+    noteDb: NoteDb?,
 ) : __Vm<NoteFormSheetVm.State>() {
 
     data class State(
-        val note: NoteDb?,
-        val inputTextValue: String,
+        val noteDb: NoteDb?,
+        val text: String,
     ) {
 
-        val headerTitle = if (note == null) "New Note" else "Edit Note"
-        val doneTitle = "Save"
+        val title: String =
+            if (noteDb == null) "New Note" else "Edit Note"
 
-        val inputTextPlaceholder = "Text"
+        val saveText = "Save"
+        val isSaveEnabled: Boolean = text.isNotBlank()
 
-        val deleteFun: ((onSuccess: () -> Unit) -> Unit)? =
-            if (note == null) null else { onSuccess ->
-                showUiConfirmation(
-                    UIConfirmationData(
-                        text = "Are you sure you want to delete \"${note.title}\" note?",
-                        buttonText = "Delete",
-                        isRed = true,
-                    ) {
-                        launchExDefault {
-                            try {
-                                note.delete()
-                                onSuccess()
-                            } catch (e: UIException) {
-                                showUiAlert(e.uiMessage)
-                            }
-                        }
-                    }
-                )
-            }
+        val textPlaceholder = "Text"
     }
 
     override val state = MutableStateFlow(
         State(
-            note = note,
-            inputTextValue = note?.text ?: "",
+            noteDb = noteDb,
+            text = noteDb?.text ?: "",
         )
     )
 
-    fun setInputText(newText: String) = state.update {
-        it.copy(inputTextValue = newText)
+    fun setText(text: String) {
+        state.update { it.copy(text = text) }
     }
 
     fun save(
-        onSuccess: () -> Unit
-    ): Unit = scopeVm().launchEx {
+        dialogsManager: DialogsManager,
+        onSuccess: () -> Unit,
+    ): Unit = launchExIo {
         try {
-            val text = state.value.inputTextValue
-            if (note != null)
-                note.upWithValidation(
-                    newText = text,
-                )
+            val noteDb: NoteDb? = state.value.noteDb
+            val text: String = state.value.text
+            if (noteDb != null)
+                noteDb.updateWithValidation(newText = text)
             else
-                NoteDb.addWithValidation(
-                    text = text,
-                )
-            onSuccess()
-        } catch (e: UIException) {
-            showUiAlert(e.uiMessage)
+                NoteDb.insertWithValidation(text = text)
+            onUi { onSuccess() }
+        } catch (e: UiException) {
+            dialogsManager.alert(e.uiMessage)
         }
+    }
+
+    fun delete(
+        noteDb: NoteDb,
+        dialogsManager: DialogsManager,
+        onDelete: () -> Unit,
+    ) {
+        dialogsManager.confirmation(
+            message = "Are you sure you want to delete \"${noteDb.title}\" note?",
+            buttonText = "Delete",
+            onConfirm = {
+                launchExIo {
+                    noteDb.delete()
+                    onUi { onDelete() }
+                }
+            },
+        )
     }
 }
