@@ -149,6 +149,45 @@ private struct SettingsScreenInner: View {
                     }
                 }
             }
+            
+            Section("NOTES") {
+                
+                ForEach(state.notesDb, id: \.id) { noteDb in
+                    
+                    NavigationLink(.note(
+                        noteDb: noteDb,
+                        onDelete: {
+                            navigation.cleanPath()
+                        }
+                    )) {
+                        Text(noteDb.title)
+                    }
+                    .contextMenu {
+                        Button(
+                            action: {
+                                navigation.sheet {
+                                    NoteFormSheet(
+                                        noteDb: noteDb,
+                                        onDelete: {}
+                                    )
+                                }
+                            },
+                            label: {
+                                Label("Edit", systemImage: "square.and.pencil")
+                            }
+                        )
+                    }
+                }
+                
+                Button("New Note") {
+                    navigation.sheet {
+                        NoteFormSheet(
+                            noteDb: nil,
+                            onDelete: {}
+                        )
+                    }
+                }
+            }
 
             ///
             
@@ -175,51 +214,6 @@ private struct SettingsScreenInner: View {
             }
             
             /*
-             VStack {
-             
-             
-             ///
-             /// Shortcuts
-             
-             VStack {
-             
-             MyListView__Padding__SectionHeader()
-             
-             MyListView__HeaderView(
-             title: "NOTES",
-             rightView: AnyView(
-             Button(
-             action: {
-             nativeSheet.show { isPresented in
-             NoteFormSheet(
-             isPresented: isPresented,
-             note: nil,
-             onDelete: {}
-             )
-             }
-             },
-             label: {
-             Image(systemName: "plus")
-             }
-             )
-             )
-             )
-             
-             MyListView__Padding__HeaderSection()
-             
-             let notes = state.notes
-             ForEach(notes, id: \.id) { note in
-             let isFirst = notes.first == note
-             MyListView__ItemView(
-             isFirst: isFirst,
-             isLast: notes.last == note,
-             bgColor: c.fg,
-             withTopDivider: !isFirst
-             ) {
-             NoteListItemView(note: note)
-             }
-             }
-             }
              
              ///
              /// Settings
@@ -552,26 +546,3 @@ private struct SettingsScreenInner: View {
         }
     }
 }
-
-/*
-
-private struct NoteListItemView: View {
-
-    let note: NoteDb
-
-    @EnvironmentObject private var nativeSheet: NativeSheet
-
-    var body: some View {
-
-        MyListView__ItemView__ButtonView(
-            text: note.title,
-            maxLines: 1,
-            rightView: AnyView(Padding(horizontal: H_PADDING))
-        ) {
-            nativeSheet.show { isPresented in
-                NoteSheet(isPresented: isPresented, initNote: note)
-            }
-        }
-    }
-}
-*/
