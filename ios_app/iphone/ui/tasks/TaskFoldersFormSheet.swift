@@ -10,7 +10,7 @@ struct TaskFoldersFormSheet: View {
             TaskFoldersFormSheetInner(
                 vm: vm,
                 state: state,
-                animateFoldersDb: state.foldersDb
+                foldersDbAnimate: state.foldersDb
             )
         }
     }
@@ -21,7 +21,7 @@ private struct TaskFoldersFormSheetInner: View {
     let vm: FoldersSettingsVm
     let state: FoldersSettingsVm.State
     
-    @State var animateFoldersDb: [TaskFolderDb]
+    @State var foldersDbAnimate: [TaskFolderDb]
     
     ///
     
@@ -38,7 +38,7 @@ private struct TaskFoldersFormSheetInner: View {
         
         List {
             
-            ForEach(animateFoldersDb, id: \.id) { folderDb in
+            ForEach(foldersDbAnimate, id: \.id) { folderDb in
                 Button(folderDb.name) {
                 }
                 .foregroundColor(.primary)
@@ -49,7 +49,7 @@ private struct TaskFoldersFormSheetInner: View {
             }
             .onDeleteVm { idx in
                 vm.delete(
-                    folderDb: animateFoldersDb[idx],
+                    folderDb: foldersDbAnimate[idx],
                     dialogsManager: navigation
                 )
             }
@@ -72,7 +72,7 @@ private struct TaskFoldersFormSheetInner: View {
         }
         .animateVmValue(
             value: state.foldersDb,
-            state: $animateFoldersDb,
+            state: $foldersDbAnimate,
             enabled: withFoldersAnimation,
             onChange: {
                 withFoldersAnimation = true
