@@ -38,6 +38,8 @@
 		2C8146F92D3CF7C4000948F6 /* NoteScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8146F82D3CF7C1000948F6 /* NoteScreen.swift */; };
 		2C8147012D3D08BC000948F6 /* Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8147002D3D08B9000948F6 /* Padding.swift */; };
 		2C8147022D3D08BC000948F6 /* Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8147002D3D08B9000948F6 /* Padding.swift */; };
+		2C8147052D3D6220000948F6 /* onMoveVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8147042D3D6217000948F6 /* onMoveVm.swift */; };
+		2C8147062D3D6220000948F6 /* onMoveVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8147042D3D6217000948F6 /* onMoveVm.swift */; };
 		2C82BF5A28726E400041BCA3 /* WAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C82BF5928726E400041BCA3 /* WAssets.xcassets */; };
 		2C82BF6528726E400041BCA3 /* W_TabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82BF6428726E400041BCA3 /* W_TabsView.swift */; };
 		2C82BF6728726E400041BCA3 /* W_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82BF6628726E400041BCA3 /* W_App.swift */; };
@@ -181,6 +183,7 @@
 		2C672A112B74CF76002BC21C /* EventsCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsCalendarView.swift; sourceTree = "<group>"; };
 		2C8146F82D3CF7C1000948F6 /* NoteScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteScreen.swift; sourceTree = "<group>"; };
 		2C8147002D3D08B9000948F6 /* Padding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Padding.swift; sourceTree = "<group>"; };
+		2C8147042D3D6217000948F6 /* onMoveVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onMoveVm.swift; sourceTree = "<group>"; };
 		2C82BF5728726E3F0041BCA3 /* timeto.me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = timeto.me.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C82BF5928726E400041BCA3 /* WAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = WAssets.xcassets; sourceTree = "<group>"; };
 		2C82BF6428726E400041BCA3 /* W_TabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = W_TabsView.swift; sourceTree = "<group>"; };
@@ -342,6 +345,7 @@
 		2C8146FF2D3D0868000948F6 /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				2C8147042D3D6217000948F6 /* onMoveVm.swift */,
 				2C8147002D3D08B9000948F6 /* Padding.swift */,
 				2C37C4142D2169DE00995840 /* VmView.swift */,
 				2C37C4172D216CF500995840 /* view_extensions.swift */,
@@ -726,6 +730,7 @@
 				2C82BF6528726E400041BCA3 /* W_TabsView.swift in Sources */,
 				2C82BF6728726E400041BCA3 /* W_App.swift in Sources */,
 				2C37C4182D216D0200995840 /* view_extensions.swift in Sources */,
+				2C8147062D3D6220000948F6 /* onMoveVm.swift in Sources */,
 				2C37C4162D216A6500995840 /* VmView.swift in Sources */,
 				318214C7567540476671C2FB /* W_TabTimerView.swift in Sources */,
 				318211D5994178629ED2FA09 /* W_TabTasksView.swift in Sources */,
@@ -828,6 +833,7 @@
 				3182172EBDF607665AA6DBD2 /* ActivityTimerSheet.swift in Sources */,
 				31821F9ADE8CC50422F28059 /* WeekDaysFormView.swift in Sources */,
 				31821D1716CFA24F74C1BE6C /* NoteFormSheet.swift in Sources */,
+				2C8147052D3D6220000948F6 /* onMoveVm.swift in Sources */,
 				31821EE26161D262CC020E3D /* SummarySheet.swift in Sources */,
 				2CF9DA902D2855A000965A76 /* HomeTabSelected.swift in Sources */,
 				2CA9C0372C39F0E300A321FA /* DividerBgScroll.swift in Sources */,
