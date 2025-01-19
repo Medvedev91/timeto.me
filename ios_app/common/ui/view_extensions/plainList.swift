@@ -1,7 +1,5 @@
 import SwiftUI
 
-// List
-
 extension View {
     
     func plainList() -> some View {
