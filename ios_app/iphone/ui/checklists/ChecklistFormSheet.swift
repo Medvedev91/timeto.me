@@ -79,7 +79,7 @@ private struct ChecklistFormSheetInner: View {
                 }
             }
             ToolbarItem(placement: .primaryAction) {
-                Button(state.saveButtonText) {
+                Button(state.saveText) {
                     vm.save(
                         dialogsManager: navigation,
                         onSuccess: { newChecklistDb in

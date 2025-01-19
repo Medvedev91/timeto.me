@@ -18,7 +18,7 @@ class ChecklistFormVm(
     ) {
 
         val title: String = if (checklistDb != null) "Edit Checklist" else "New Checklist"
-        val saveButtonText: String = if (checklistDb != null) "Save" else "Next"
+        val saveText: String = if (checklistDb != null) "Save" else "Next"
         val isSaveEnabled: Boolean = name.isNotBlank()
         val deleteText = "Delete Checklist"
 
