@@ -103,9 +103,9 @@ class ChecklistItemsFormVm(
     }
 
     fun moveByIdxIos(fromIdx: Int, toIdx: Int) {
-        val list = state.value.checklistItemsDb
-        val newList = list.toMutableList()
-        val fromItem = list[fromIdx]
+        val oldList = state.value.checklistItemsDb
+        val newList = oldList.toMutableList()
+        val fromItem = oldList[fromIdx]
         newList.removeAt(fromIdx)
         newList.add(toIdx, fromItem)
         launchExIo {
