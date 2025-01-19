@@ -349,6 +349,13 @@
 			path = ui;
 			sourceTree = "<group>";
 		};
+		2C8147032D3D35A5000948F6 /* tasks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = tasks;
+			sourceTree = "<group>";
+		};
 		2C82BF5828726E3F0041BCA3 /* watch */ = {
 			isa = PBXGroup;
 			children = (
@@ -480,6 +487,7 @@
 			isa = PBXGroup;
 			children = (
 				2CF9DA9B2D2C400900965A76 /* checklists */,
+				2C8147032D3D35A5000948F6 /* tasks */,
 				2CF9DA802D27B8E800965A76 /* Home */,
 				2CF9DA942D290CEB00965A76 /* misc */,
 				2CF9DA852D281FBD00965A76 /* navigation */,
