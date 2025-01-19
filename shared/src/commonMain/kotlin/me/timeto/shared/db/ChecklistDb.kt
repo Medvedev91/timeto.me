@@ -47,7 +47,7 @@ data class ChecklistDb(
         // Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.checklistQueries.selectAsc().executeAsList().map { it.toDb() }
+            db.checklistQueries.selectAsc().asList { toDb() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
