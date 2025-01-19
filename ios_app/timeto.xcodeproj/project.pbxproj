@@ -303,8 +303,7 @@
 		2C37C4132D2167FF00995840 /* common */ = {
 			isa = PBXGroup;
 			children = (
-				2C37C4142D2169DE00995840 /* VmView.swift */,
-				2C37C4172D216CF500995840 /* view_extensions.swift */,
+				2C8146FF2D3D0868000948F6 /* ui */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -336,6 +335,15 @@
 				2C8146F82D3CF7C1000948F6 /* NoteScreen.swift */,
 			);
 			path = notes;
+			sourceTree = "<group>";
+		};
+		2C8146FF2D3D0868000948F6 /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				2C37C4142D2169DE00995840 /* VmView.swift */,
+				2C37C4172D216CF500995840 /* view_extensions.swift */,
+			);
+			path = ui;
 			sourceTree = "<group>";
 		};
 		2C82BF5828726E3F0041BCA3 /* watch */ = {
