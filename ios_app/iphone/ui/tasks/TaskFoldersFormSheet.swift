@@ -9,7 +9,8 @@ struct TaskFoldersFormSheet: View {
         }) { vm, state in
             TaskFoldersFormSheetInner(
                 vm: vm,
-                state: state
+                state: state,
+                animateFoldersDb: state.foldersDb
             )
         }
     }
@@ -20,6 +21,8 @@ private struct TaskFoldersFormSheetInner: View {
     let vm: FoldersSettingsVm
     let state: FoldersSettingsVm.State
     
+    @State var animateFoldersDb: [TaskFolderDb]
+    
     ///
     
     @Environment(\.dismiss) private var dismiss
@@ -27,21 +30,26 @@ private struct TaskFoldersFormSheetInner: View {
     
     @State private var editMode: EditMode = .active
     
+    @State private var withFoldersAnimation = true
+    
+    ///
+    
     var body: some View {
         
         List {
             
-            ForEach(state.foldersDb, id: \.id) { folderDb in
+            ForEach(animateFoldersDb, id: \.id) { folderDb in
                 Button(folderDb.name) {
                 }
                 .foregroundColor(.primary)
             }
             .onMoveVm { from, to in
+                withFoldersAnimation = false
                 vm.moveIos(from: from, to: to)
             }
             .onDeleteVm { idx in
                 vm.delete(
-                    folderDb: state.foldersDb[idx],
+                    folderDb: animateFoldersDb[idx],
                     dialogsManager: navigation
                 )
             }
@@ -62,6 +70,14 @@ private struct TaskFoldersFormSheetInner: View {
                 }
             }
         }
+        .animateVmValue(
+            value: state.foldersDb,
+            state: $animateFoldersDb,
+            enabled: withFoldersAnimation,
+            onChange: {
+                withFoldersAnimation = true
+            }
+        )
         .environment(\.editMode, $editMode)
         .contentMargins(.top, 14)
         .toolbarTitleDisplayMode(.inline)
