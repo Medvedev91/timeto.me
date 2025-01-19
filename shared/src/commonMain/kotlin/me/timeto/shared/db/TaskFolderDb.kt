@@ -52,6 +52,19 @@ data class TaskFolderDb(
             )
         }
 
+        suspend fun updateSortMany(
+            foldersDb: List<TaskFolderDb>,
+        ): Unit = dbIo {
+            db.transaction {
+                foldersDb.forEachIndexed { idx, folderDb ->
+                    db.taskFolderQueries.upSortById(
+                        id = folderDb.id,
+                        sort = idx,
+                    )
+                }
+            }
+        }
+
         //
         // Backupable Holder
 
