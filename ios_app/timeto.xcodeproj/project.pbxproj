@@ -335,6 +335,7 @@
 		2C8146F62D3CF363000948F6 /* notes */ = {
 			isa = PBXGroup;
 			children = (
+				318213EABC97ED666E1FBF91 /* NoteFormSheet.swift */,
 				2C8146F82D3CF7C1000948F6 /* NoteScreen.swift */,
 			);
 			path = notes;
@@ -542,7 +543,6 @@
 				31821DC6AEBDF478C34116FE /* MyListSwipeToActionItem.swift */,
 				318212FFE80A0856A0A88DCF /* MySpacerSize.swift */,
 				318219ADD916F23943506F7F /* NativeSheet.swift */,
-				318213EABC97ED666E1FBF91 /* NoteFormSheet.swift */,
 				31821B172A150ADBF8ECF529 /* NoteSheet.swift */,
 				2C0BE02E295751B70099AD7C /* PickerStateView.swift */,
 				31821E01EC49E0964E5CB2F5 /* PieView.swift */,
