@@ -16,7 +16,8 @@ struct NoteScreen: View {
             
             NoteScreenInner(
                 vm: vm,
-                state: state
+                state: state,
+                onDelete: onDelete
             )
         }
     }
@@ -27,7 +28,11 @@ private struct NoteScreenInner: View {
     let vm: NoteVm
     let state: NoteVm.State
     
+    let onDelete: () -> Void
+    
     ///
+    
+    @Environment(Navigation.self) private var navigation
     
     var body: some View {
         
@@ -41,5 +46,17 @@ private struct NoteScreenInner: View {
         }
         .contentMarginsTabBar()
         .toolbarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button("Edit") {
+                    navigation.sheet {
+                        NoteFormSheet(
+                            noteDb: state.noteDb,
+                            onDelete: onDelete
+                        )
+                    }
+                }
+            }
+        }
     }
 }
