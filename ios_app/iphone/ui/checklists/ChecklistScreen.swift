@@ -16,7 +16,7 @@ struct ChecklistScreen: View {
         }) { vm, state in
             
             ChecklistView(
-                checklistDb: checklistDb,
+                checklistDb: state.checklistDb,
                 maxLines: maxLines,
                 onDelete: onDelete
             )
