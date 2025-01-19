@@ -14,10 +14,9 @@ enum NavigationPath: Hashable {
             hasher.combine(defaultItem)
         case .whatsNew:
             hasher.combine("whatsNew")
-        case .checklist(let checklistDb, let maxLines, _):
+        case .checklist(let checklistDb, _, _):
             hasher.combine("checklist")
-            hasher.combine(checklistDb)
-            hasher.combine(maxLines)
+            hasher.combine(checklistDb.id)
         }
     }
     
