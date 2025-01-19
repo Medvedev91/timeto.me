@@ -1,5 +1,7 @@
 import SwiftUI
 
+// Text
+
 extension View {
     
     func textAlign(_ alignment: TextAlignment) -> some View {
