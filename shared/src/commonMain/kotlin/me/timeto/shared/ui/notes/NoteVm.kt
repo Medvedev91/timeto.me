@@ -1,8 +1,10 @@
-package me.timeto.shared.vm
+package me.timeto.shared.ui.notes
 
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import me.timeto.shared.db.NoteDb
 import me.timeto.shared.onEachExIn
+import me.timeto.shared.vm.__Vm
 
 class NoteVm(
     noteDb: NoteDb,
