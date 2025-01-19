@@ -3,96 +3,97 @@ import shared
 
 struct NoteFormSheet: View {
     
-    @EnvironmentObject private var nativeSheet: NativeSheet
-    
-    @Binding private var isPresented: Bool
-    @State private var vm: NoteFormSheetVm
-    private let onDelete: () -> Void
-    
-    init(
-        isPresented: Binding<Bool>,
-        note: NoteDb?,
-        onDelete: @escaping () -> Void
-    ) {
-        _isPresented = isPresented
-        _vm = State(initialValue: NoteFormSheetVm(note: note))
-        self.onDelete = onDelete
-    }
+    let noteDb: NoteDb?
+    let onDelete: () -> Void
     
     var body: some View {
         
-        VMView(vm: vm, stack: .VStack()) { state in
-            
-            Sheet__HeaderView(
-                title: state.headerTitle,
-                scrollToHeader: 0,
-                bgColor: c.sheetBg
+        VmView({
+            NoteFormSheetVm(
+                noteDb: noteDb
             )
+        }) { vm, state in
             
-            MyListView__ItemView(
-                isFirst: true,
-                isLast: true
-            ) {
-                
-                MyListView__ItemView__TextInputView(
-                    text: state.inputTextValue,
-                    placeholder: state.inputTextPlaceholder,
-                    isAutofocus: false,
-                    onValueChanged: { newText in
-                        vm.setInputText(newText: newText)
-                    }
-                )
+            NoteFormSheetInner(
+                vm: vm,
+                state: state,
+                text: state.text,
+                onDelete: onDelete
+            )
+        }
+    }
+}
+
+private struct NoteFormSheetInner: View {
+    
+    let vm: NoteFormSheetVm
+    let state: NoteFormSheetVm.State
+    
+    @State var text: String
+    
+    let onDelete: () -> Void
+    
+    ///
+    
+    @FocusState private var isFocused: Bool
+    @Environment(\.dismiss) private var dismiss
+    @Environment(Navigation.self) private var navigation
+    
+    var body: some View {
+        
+        List {
+            
+            TextField(
+                state.textPlaceholder,
+                text: $text,
+                axis: .vertical
+            )
+            .focused($isFocused)
+            .onChange(of: text) { _, new in
+                vm.setText(text: new)
             }
-            .padding(.bottom, H_PADDING)
             
-            Spacer()
-            
-            Sheet__BottomViewDefault(
-                primaryText: state.doneTitle,
-                primaryAction: {
-                    vm.save {
-                        isPresented = false
-                    }
-                },
-                secondaryText: "Cancel",
-                secondaryAction: {
-                    isPresented = false
-                },
-                topContent: { EmptyView() },
-                startContent: {
-                    
-                    ZStack {
-                        
-                        if let deleteFun = state.deleteFun {
-                            
-                            ZStack {
-                                
-                                Button(
-                                    action: {
-                                        deleteFun {
-                                            // todo don't use to fast hide parent sheet
-                                            isPresented = false
-                                            onDelete()
-                                            return KotlinUnit() // WTF?
-                                        }
-                                    },
-                                    label: {
-                                        ZStack {
-                                            Image(systemName: "trash")
-                                                .font(.system(size: 20, weight: .medium))
-                                                .foregroundColor(c.red)
-                                        }
-                                        .frame(width: 34, height: 34)
-                                    }
-                                )
+            if let noteDb = state.noteDb {
+                Section {
+                    Button("Delete Note") {
+                        vm.delete(
+                            noteDb: noteDb,
+                            dialogsManager: navigation,
+                            onDelete: {
+                                dismiss()
+                                onDelete()
                             }
-                            .padding(.leading, H_PADDING)
-                        } else {
-                            EmptyView()
-                        }
+                        )
                     }
+                    .foregroundColor(.red)
                 }
-            )
+            }
+        }
+        .contentMargins(.top, 14)
+        .interactiveDismissDisabled()
+        .toolbarTitleDisplayMode(.inline)
+        .navigationTitle(state.title)
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel") {
+                    dismiss()
+                }
+            }
+            ToolbarItem(placement: .primaryAction) {
+                Button(state.saveText) {
+                    vm.save(
+                        dialogsManager: navigation,
+                        onSuccess: {
+                            dismiss()
+                        }
+                    )
+                }
+                .fontWeight(.bold)
+                .disabled(!state.isSaveEnabled)
+            }
+        }
+        .onAppear {
+            isFocused = true
         }
     }
 }
