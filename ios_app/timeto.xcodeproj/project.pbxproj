@@ -42,6 +42,8 @@
 		2C8147062D3D6220000948F6 /* onMoveVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8147042D3D6217000948F6 /* onMoveVm.swift */; };
 		2C81470B2D3D62A2000948F6 /* animateVmValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C81470A2D3D62A0000948F6 /* animateVmValue.swift */; };
 		2C81470C2D3D62A2000948F6 /* animateVmValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C81470A2D3D62A0000948F6 /* animateVmValue.swift */; };
+		2C81470E2D3D66F0000948F6 /* onDeleteVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C81470D2D3D66EA000948F6 /* onDeleteVm.swift */; };
+		2C81470F2D3D66F0000948F6 /* onDeleteVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C81470D2D3D66EA000948F6 /* onDeleteVm.swift */; };
 		2C82BF5A28726E400041BCA3 /* WAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C82BF5928726E400041BCA3 /* WAssets.xcassets */; };
 		2C82BF6528726E400041BCA3 /* W_TabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82BF6428726E400041BCA3 /* W_TabsView.swift */; };
 		2C82BF6728726E400041BCA3 /* W_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82BF6628726E400041BCA3 /* W_App.swift */; };
@@ -187,6 +189,7 @@
 		2C8147002D3D08B9000948F6 /* Padding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Padding.swift; sourceTree = "<group>"; };
 		2C8147042D3D6217000948F6 /* onMoveVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onMoveVm.swift; sourceTree = "<group>"; };
 		2C81470A2D3D62A0000948F6 /* animateVmValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = animateVmValue.swift; sourceTree = "<group>"; };
+		2C81470D2D3D66EA000948F6 /* onDeleteVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onDeleteVm.swift; sourceTree = "<group>"; };
 		2C82BF5728726E3F0041BCA3 /* timeto.me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = timeto.me.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C82BF5928726E400041BCA3 /* WAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = WAssets.xcassets; sourceTree = "<group>"; };
 		2C82BF6428726E400041BCA3 /* W_TabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = W_TabsView.swift; sourceTree = "<group>"; };
@@ -349,6 +352,7 @@
 			isa = PBXGroup;
 			children = (
 				2C81470A2D3D62A0000948F6 /* animateVmValue.swift */,
+				2C81470D2D3D66EA000948F6 /* onDeleteVm.swift */,
 				2C8147042D3D6217000948F6 /* onMoveVm.swift */,
 				2C8147002D3D08B9000948F6 /* Padding.swift */,
 				2C37C4142D2169DE00995840 /* VmView.swift */,
@@ -742,6 +746,7 @@
 				31821ED40BEA91336DBFE0B4 /* W_TickerDialog.swift in Sources */,
 				318216E60DD4CA4153065416 /* utils_apple.swift in Sources */,
 				2C8147022D3D08BC000948F6 /* Padding.swift in Sources */,
+				2C81470E2D3D66F0000948F6 /* onDeleteVm.swift in Sources */,
 				318219F8C525548F4D40DF35 /* atm_apple.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -756,6 +761,7 @@
 				2C672A102B74CC01002BC21C /* EventsView.swift in Sources */,
 				318211C63D2C7A7AC48659E8 /* AppDelegate.swift in Sources */,
 				31821D960D04B6FF21EA9918 /* ActivityFormSheet.swift in Sources */,
+				2C81470F2D3D66F0000948F6 /* onDeleteVm.swift in Sources */,
 				31821F3DCAF6792F0E78CEBD /* HistoryView.swift in Sources */,
 				2C37C4212D219FA800995840 /* WhatsNewScreen.swift in Sources */,
 				31821A46712E80148E00481B /* MailView.swift in Sources */,
