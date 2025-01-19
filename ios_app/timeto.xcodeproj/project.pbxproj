@@ -44,6 +44,8 @@
 		2C81470C2D3D62A2000948F6 /* animateVmValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C81470A2D3D62A0000948F6 /* animateVmValue.swift */; };
 		2C81470E2D3D66F0000948F6 /* onDeleteVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C81470D2D3D66EA000948F6 /* onDeleteVm.swift */; };
 		2C81470F2D3D66F0000948F6 /* onDeleteVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C81470D2D3D66EA000948F6 /* onDeleteVm.swift */; };
+		2C8147122D3D6920000948F6 /* textAlign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8147112D3D691E000948F6 /* textAlign.swift */; };
+		2C8147132D3D6920000948F6 /* textAlign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8147112D3D691E000948F6 /* textAlign.swift */; };
 		2C82BF5A28726E400041BCA3 /* WAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C82BF5928726E400041BCA3 /* WAssets.xcassets */; };
 		2C82BF6528726E400041BCA3 /* W_TabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82BF6428726E400041BCA3 /* W_TabsView.swift */; };
 		2C82BF6728726E400041BCA3 /* W_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82BF6628726E400041BCA3 /* W_App.swift */; };
@@ -190,6 +192,7 @@
 		2C8147042D3D6217000948F6 /* onMoveVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onMoveVm.swift; sourceTree = "<group>"; };
 		2C81470A2D3D62A0000948F6 /* animateVmValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = animateVmValue.swift; sourceTree = "<group>"; };
 		2C81470D2D3D66EA000948F6 /* onDeleteVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onDeleteVm.swift; sourceTree = "<group>"; };
+		2C8147112D3D691E000948F6 /* textAlign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = textAlign.swift; sourceTree = "<group>"; };
 		2C82BF5728726E3F0041BCA3 /* timeto.me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = timeto.me.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C82BF5928726E400041BCA3 /* WAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = WAssets.xcassets; sourceTree = "<group>"; };
 		2C82BF6428726E400041BCA3 /* W_TabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = W_TabsView.swift; sourceTree = "<group>"; };
@@ -370,6 +373,7 @@
 		2C8147102D3D68D0000948F6 /* view_extensions */ = {
 			isa = PBXGroup;
 			children = (
+				2C8147112D3D691E000948F6 /* textAlign.swift */,
 				2C81470A2D3D62A0000948F6 /* animateVmValue.swift */,
 				2C81470D2D3D66EA000948F6 /* onDeleteVm.swift */,
 				2C8147042D3D6217000948F6 /* onMoveVm.swift */,
@@ -749,6 +753,7 @@
 				2C37C4182D216D0200995840 /* view_extensions.swift in Sources */,
 				2C8147062D3D6220000948F6 /* onMoveVm.swift in Sources */,
 				2C37C4162D216A6500995840 /* VmView.swift in Sources */,
+				2C8147132D3D6920000948F6 /* textAlign.swift in Sources */,
 				318214C7567540476671C2FB /* W_TabTimerView.swift in Sources */,
 				318211D5994178629ED2FA09 /* W_TabTasksView.swift in Sources */,
 				31821ED40BEA91336DBFE0B4 /* W_TickerDialog.swift in Sources */,
@@ -815,6 +820,7 @@
 				318216CD611B132D9DE288F3 /* EventTemplatesView.swift in Sources */,
 				31821A329A5D1AE8F7CB0604 /* EventFormSheet.swift in Sources */,
 				318219E4F8AFEB280A077F74 /* utils_apple.swift in Sources */,
+				2C8147122D3D6920000948F6 /* textAlign.swift in Sources */,
 				318210CF629A7E593B9F8FE4 /* ChecklistItemFormSheet.swift in Sources */,
 				2C273F2B2BA4ACEB0016F11D /* AskAQuestionListButtonView.swift in Sources */,
 				31821DF974247D110D01C3A2 /* ActivitiesTimerSheet.swift in Sources */,
