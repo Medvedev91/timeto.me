@@ -58,10 +58,8 @@ private struct ChecklistItemsFormSheetInner: View {
                 .onMoveVm { from, to in
                     vm.moveIos(from: from, to: to)
                 }
-                .onDelete { indexSet in
-                    for idx in indexSet {
-                        vm.deleteItem(itemDb: state.checklistItemsDb[idx])
-                    }
+                .onDeleteVm { idx in
+                    vm.deleteItem(itemDb: state.checklistItemsDb[idx])
                 }
             }
             .listSectionSeparator(.hidden, edges: [.top, .bottom])
