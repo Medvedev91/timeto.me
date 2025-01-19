@@ -6,14 +6,16 @@ extension View {
         value: T,
         state: Binding<T>,
         animation: Animation = .spring(response: 0.250),
-        enabled: Bool = true
+        enabled: Bool = true,
+        onChange: @escaping (() -> Void) = {}
     ) -> some View {
         modifier(
             AnimateVmValueModifier(
                 value: value,
                 state: state,
                 animation: animation,
-                enabled: enabled
+                enabled: enabled,
+                onChange: onChange
             )
         )
     }
@@ -29,6 +31,7 @@ private struct AnimateVmValueModifier<
     @Binding var state: T
     let animation: Animation
     let enabled: Bool
+    let onChange: () -> Void
     
     func body(content: Content) -> some View {
         content
