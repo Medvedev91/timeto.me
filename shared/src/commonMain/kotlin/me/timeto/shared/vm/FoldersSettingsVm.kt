@@ -2,41 +2,34 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
+import me.timeto.shared.db.TaskDb
 import me.timeto.shared.db.TaskFolderDb
+import me.timeto.shared.ui.DialogsManager
+import me.timeto.shared.ui.moveIos
 
-class FoldersSettingsVm : __Vm<FoldersSettingsVm.State>() {
-
-    class TmrwButtonUi {
-
-        val text = "Add \"Tomorrow\" Folder"
-
-        fun add(): Unit = launchExIo {
-            if (TaskFolderDb.selectAllSorted().any { it.isTmrw }) {
-                showUiAlert("Tmrw already exists", "Tmrw already exists")
-                return@launchExIo
-            }
-            TaskFolderDb.insertTmrw()
-        }
-    }
+class FoldersSettingsVm(
+) : __Vm<FoldersSettingsVm.State>() {
 
     data class State(
-        val folders: List<TaskFolderDb>,
+        val foldersDb: List<TaskFolderDb>,
     ) {
-        val headerTitle = "Folders"
+
+        val title = "Folders"
+
         val tmrwButtonUi: TmrwButtonUi? =
-            if (folders.any { it.isTmrw }) null else TmrwButtonUi()
+            if (foldersDb.any { it.isTmrw }) null else TmrwButtonUi()
     }
 
     override val state = MutableStateFlow(
         State(
-            folders = Cache.taskFoldersDbSorted.toUiList()
+            foldersDb = Cache.taskFoldersDbSorted.reversed(),
         )
     )
 
-    override fun onAppear() {
-        val scope = scopeVm()
-        TaskFolderDb.selectAllSortedFlow().onEachExIn(scope) { folders ->
-            state.update { it.copy(folders = folders.toUiList()) }
+    init {
+        val scopeVm = scopeVm()
+        TaskFolderDb.selectAllSortedFlow().onEachExIn(scopeVm) { folders ->
+            state.update { it.copy(foldersDb = folders.reversed()) }
         }
     }
 
@@ -57,7 +50,53 @@ class FoldersSettingsVm : __Vm<FoldersSettingsVm.State>() {
             }
         }
     }
-}
+    */
 
-private fun List<TaskFolderDb>.toUiList(): List<TaskFolderDb> =
-    reversed()
+    fun moveIos(from: Int, to: Int) {
+        state.value.foldersDb.moveIos(from, to) {
+            TaskFolderDb.updateSortMany(it.reversed())
+        }
+    }
+
+    fun delete(
+        folderDb: TaskFolderDb,
+        dialogsManager: DialogsManager,
+    ): Unit = launchExIo {
+
+        if (folderDb.isToday) {
+            dialogsManager.alert("It's impossible to delete \"Today\" folder")
+            return@launchExIo
+        }
+
+        if (TaskDb.getAsc().any { it.folder_id == folderDb.id }) {
+            dialogsManager.alert("The folder must be empty before deletion")
+            return@launchExIo
+        }
+
+        dialogsManager.confirmation(
+            message = "Are you sure you want to delete \"${folderDb.name}\" folder",
+            buttonText = "Delete",
+        ) {
+            launchExIo {
+                folderDb.delete()
+            }
+        }
+    }
+
+    ///
+
+    class TmrwButtonUi {
+
+        val text = "Add \"Tomorrow\" Folder"
+
+        fun add(
+            dialogsManager: DialogsManager,
+        ): Unit = launchExIo {
+            if (TaskFolderDb.selectAllSorted().any { it.isTmrw }) {
+                dialogsManager.alert("Tmrw already exists")
+                return@launchExIo
+            }
+            TaskFolderDb.insertTmrw()
+        }
+    }
+}
