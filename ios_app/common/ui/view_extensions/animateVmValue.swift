@@ -43,6 +43,7 @@ private struct AnimateVmValueModifier<
                 } else {
                     state = new
                 }
+                onChange()
             }
             .onAppear {
                 state = value
