@@ -94,6 +94,10 @@ data class TaskFolderDb(
         db.taskFolderQueries.upSortById(id = id, sort = newSort)
     }
 
+    suspend fun delete(): Unit = dbIo {
+        db.taskFolderQueries.deleteById(id)
+    }
+
     //
     // Backupable Item
 
