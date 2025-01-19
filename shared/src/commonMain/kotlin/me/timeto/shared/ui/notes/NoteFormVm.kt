@@ -1,10 +1,12 @@
-package me.timeto.shared.vm
+package me.timeto.shared.ui.notes
 
-import kotlinx.coroutines.flow.*
-import me.timeto.shared.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import me.timeto.shared.db.NoteDb
+import me.timeto.shared.launchExIo
 import me.timeto.shared.ui.DialogsManager
 import me.timeto.shared.ui.UiException
+import me.timeto.shared.vm.__Vm
 
 class NoteFormVm(
     noteDb: NoteDb?,
