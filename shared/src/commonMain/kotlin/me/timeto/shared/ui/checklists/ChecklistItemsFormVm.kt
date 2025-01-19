@@ -9,6 +9,7 @@ import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.ChecklistItemDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.ui.DialogsManager
+import me.timeto.shared.ui.moveIos
 import me.timeto.shared.vm.__Vm
 
 class ChecklistItemsFormVm(
@@ -103,13 +104,8 @@ class ChecklistItemsFormVm(
     }
 
     fun moveIos(from: Int, to: Int) {
-        val oldList = state.value.checklistItemsDb
-        val newList = oldList.toMutableList()
-        val fromItem = oldList[from]
-        newList.removeAt(from)
-        newList.add(to, fromItem)
-        launchExIo {
-            ChecklistItemDb.updateSortMany(itemsDb = newList)
+        state.value.checklistItemsDb.moveIos(from, to) {
+            ChecklistItemDb.updateSortMany(itemsDb = it)
         }
     }
 }
