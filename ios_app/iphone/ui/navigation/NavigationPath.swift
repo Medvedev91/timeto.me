@@ -13,7 +13,7 @@ enum NavigationPath: Hashable {
             hasher.combine("readme")
             hasher.combine(defaultItem)
         case .whatsNew:
-            hasher.combine("whatsNew")
+            hasher.combine("whats_new")
         case .checklist(let checklistDb, _, _):
             hasher.combine("checklist")
             hasher.combine(checklistDb.id)
