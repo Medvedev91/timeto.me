@@ -3,7 +3,7 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.KvDb
-import me.timeto.shared.launchExDefault
+import me.timeto.shared.launchExIo
 
 class WhatsNewVm : __Vm<WhatsNewVm.State>() {
 
@@ -19,10 +19,11 @@ class WhatsNewVm : __Vm<WhatsNewVm.State>() {
         )
     )
 
-    override fun onAppear() {
-        val lastUnixDay: Int = state.value.historyItemsUi.first().unixDay
-        launchExDefault {
-            KvDb.KEY.WHATS_NEW_CHECK_UNIX_DAY.upsertInt(lastUnixDay)
+    init {
+        launchExIo {
+            KvDb.KEY.WHATS_NEW_CHECK_UNIX_DAY.upsertInt(
+                state.value.historyItemsUi.first().unixDay,
+            )
         }
     }
 
