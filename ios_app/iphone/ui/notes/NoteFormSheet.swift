@@ -9,7 +9,7 @@ struct NoteFormSheet: View {
     var body: some View {
         
         VmView({
-            NoteFormSheetVm(
+            NoteFormVm(
                 noteDb: noteDb
             )
         }) { vm, state in
@@ -26,8 +26,8 @@ struct NoteFormSheet: View {
 
 private struct NoteFormSheetInner: View {
     
-    let vm: NoteFormSheetVm
-    let state: NoteFormSheetVm.State
+    let vm: NoteFormVm
+    let state: NoteFormVm.State
     
     @State var text: String
     

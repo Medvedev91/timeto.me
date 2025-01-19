@@ -6,9 +6,9 @@ import me.timeto.shared.db.NoteDb
 import me.timeto.shared.ui.DialogsManager
 import me.timeto.shared.ui.UiException
 
-class NoteFormSheetVm(
+class NoteFormVm(
     noteDb: NoteDb?,
-) : __Vm<NoteFormSheetVm.State>() {
+) : __Vm<NoteFormVm.State>() {
 
     data class State(
         val noteDb: NoteDb?,
