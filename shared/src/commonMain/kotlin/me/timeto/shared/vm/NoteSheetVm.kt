@@ -5,26 +5,26 @@ import me.timeto.shared.db.NoteDb
 import me.timeto.shared.onEachExIn
 
 class NoteSheetVm(
-    val note: NoteDb,
+    noteDb: NoteDb,
 ) : __Vm<NoteSheetVm.State>() {
 
     data class State(
-        val note: NoteDb,
+        val noteDb: NoteDb,
     )
 
     override val state = MutableStateFlow(
         State(
-            note = note,
+            noteDb = noteDb,
         )
     )
 
-    override fun onAppear() {
-        val scope = scopeVm()
-        NoteDb.selectAscFlow().onEachExIn(scope) { notes ->
-            // Null on deletion
-            val newNote = notes.firstOrNull { it.id == note.id }
-            if (newNote != null)
-                state.update { it.copy(note = newNote) }
+    init {
+        val scopeVm = scopeVm()
+        NoteDb.selectAscFlow().onEachExIn(scopeVm) { notesDb ->
+            val newNoteDb: NoteDb? =
+                notesDb.firstOrNull { it.id == noteDb.id }
+            if (newNoteDb != null)
+                state.update { it.copy(noteDb = newNoteDb) }
         }
     }
 }
