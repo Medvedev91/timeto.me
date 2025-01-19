@@ -55,17 +55,8 @@ private struct ChecklistItemsFormSheetInner: View {
                         }
                     )
                 }
-                .onMove { from, to in
-                    from.forEach { fromIdx in
-                        // Fix crash if single time
-                        if fromIdx == 0 && to == 0 {
-                            return
-                        }
-                        vm.moveByIdxIos(
-                            fromIdx: fromIdx.toInt32(),
-                            toIdx: (fromIdx > to ? to : (to - 1)).toInt32()
-                        )
-                    }
+                .onMoveVm { from, to in
+                    vm.moveIos(from: from, to: to)
                 }
                 .onDelete { indexSet in
                     for idx in indexSet {
