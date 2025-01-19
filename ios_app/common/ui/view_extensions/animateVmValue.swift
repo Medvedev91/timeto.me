@@ -5,9 +5,17 @@ extension View {
     func animateVmValue<T: Equatable>(
         value: T,
         state: Binding<T>,
-        animation: Animation = .spring(response: 0.250)
+        animation: Animation = .spring(response: 0.250),
+        enabled: Bool = true
     ) -> some View {
-        modifier(AnimateVmValueModifier(value: value, state: state, animation: animation))
+        modifier(
+            AnimateVmValueModifier(
+                value: value,
+                state: state,
+                animation: animation,
+                enabled: enabled
+            )
+        )
     }
 }
 
@@ -20,11 +28,16 @@ private struct AnimateVmValueModifier<
     let value: T
     @Binding var state: T
     let animation: Animation
+    let enabled: Bool
     
     func body(content: Content) -> some View {
         content
             .onChange(of: value) { _, new in
-                withAnimation(animation) {
+                if enabled {
+                    withAnimation(animation) {
+                        state = new
+                    }
+                } else {
                     state = new
                 }
             }
