@@ -351,9 +351,7 @@
 		2C8146FF2D3D0868000948F6 /* ui */ = {
 			isa = PBXGroup;
 			children = (
-				2C81470A2D3D62A0000948F6 /* animateVmValue.swift */,
-				2C81470D2D3D66EA000948F6 /* onDeleteVm.swift */,
-				2C8147042D3D6217000948F6 /* onMoveVm.swift */,
+				2C8147102D3D68D0000948F6 /* view_extensions */,
 				2C8147002D3D08B9000948F6 /* Padding.swift */,
 				2C37C4142D2169DE00995840 /* VmView.swift */,
 				2C37C4172D216CF500995840 /* view_extensions.swift */,
@@ -367,6 +365,16 @@
 				31821E3EB266890584C3EF87 /* TaskFoldersFormSheet.swift */,
 			);
 			path = tasks;
+			sourceTree = "<group>";
+		};
+		2C8147102D3D68D0000948F6 /* view_extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2C81470A2D3D62A0000948F6 /* animateVmValue.swift */,
+				2C81470D2D3D66EA000948F6 /* onDeleteVm.swift */,
+				2C8147042D3D6217000948F6 /* onMoveVm.swift */,
+			);
+			path = view_extensions;
 			sourceTree = "<group>";
 		};
 		2C82BF5828726E3F0041BCA3 /* watch */ = {
