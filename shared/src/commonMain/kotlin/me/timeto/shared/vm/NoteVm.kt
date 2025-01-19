@@ -4,9 +4,9 @@ import kotlinx.coroutines.flow.*
 import me.timeto.shared.db.NoteDb
 import me.timeto.shared.onEachExIn
 
-class NoteSheetVm(
+class NoteVm(
     noteDb: NoteDb,
-) : __Vm<NoteSheetVm.State>() {
+) : __Vm<NoteVm.State>() {
 
     data class State(
         val noteDb: NoteDb,
