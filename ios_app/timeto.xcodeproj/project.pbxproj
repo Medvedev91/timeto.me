@@ -100,7 +100,6 @@
 		318219E4F8AFEB280A077F74 /* utils_apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E58DC92CD5673A6B49E /* utils_apple.swift */; };
 		318219F4F07E446C4B3C607D /* Divider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318216B917315DE1929486AC /* Divider.swift */; };
 		318219F8C525548F4D40DF35 /* atm_apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821346E2128825E6DBB9F8 /* atm_apple.swift */; };
-		31821A31BFF9D29DD019E05D /* NoteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821B172A150ADBF8ECF529 /* NoteSheet.swift */; };
 		31821A329A5D1AE8F7CB0604 /* EventFormSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318212B384624F1CF416C576 /* EventFormSheet.swift */; };
 		31821A46712E80148E00481B /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821C625A8A199EAEF17182 /* MailView.swift */; };
 		31821A76C3FAC481BE5C7C66 /* DaytimePickerSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821629888DF1D9B797A39A /* DaytimePickerSliderView.swift */; };
@@ -245,7 +244,6 @@
 		31821ACA6C9306A2CD2016A0 /* HistoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		31821AD0C2CE87BF5AE03022 /* TasksListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksListView.swift; sourceTree = "<group>"; };
 		31821AE61EE1FC22CCF8E753 /* TimerPickerSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerPickerSheet.swift; sourceTree = "<group>"; };
-		31821B172A150ADBF8ECF529 /* NoteSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteSheet.swift; sourceTree = "<group>"; };
 		31821B4BCB049B516BF2DF2E /* EventTemplatesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTemplatesView.swift; sourceTree = "<group>"; };
 		31821B68F7E968EF32723112 /* RepeatingsListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepeatingsListView.swift; sourceTree = "<group>"; };
 		31821BCB57EC030987E8342E /* SheetHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SheetHeaderView.swift; sourceTree = "<group>"; };
@@ -543,7 +541,6 @@
 				31821DC6AEBDF478C34116FE /* MyListSwipeToActionItem.swift */,
 				318212FFE80A0856A0A88DCF /* MySpacerSize.swift */,
 				318219ADD916F23943506F7F /* NativeSheet.swift */,
-				31821B172A150ADBF8ECF529 /* NoteSheet.swift */,
 				2C0BE02E295751B70099AD7C /* PickerStateView.swift */,
 				31821E01EC49E0964E5CB2F5 /* PieView.swift */,
 				2C2C205C2B7A824A00D4B325 /* PrivacySheet.swift */,
@@ -823,7 +820,6 @@
 				3182172EBDF607665AA6DBD2 /* ActivityTimerSheet.swift in Sources */,
 				31821F9ADE8CC50422F28059 /* WeekDaysFormView.swift in Sources */,
 				31821D1716CFA24F74C1BE6C /* NoteFormSheet.swift in Sources */,
-				31821A31BFF9D29DD019E05D /* NoteSheet.swift in Sources */,
 				31821EE26161D262CC020E3D /* SummarySheet.swift in Sources */,
 				2CF9DA902D2855A000965A76 /* HomeTabSelected.swift in Sources */,
 				2CA9C0372C39F0E300A321FA /* DividerBgScroll.swift in Sources */,
