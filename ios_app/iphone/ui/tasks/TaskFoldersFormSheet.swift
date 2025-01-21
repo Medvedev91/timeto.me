@@ -10,7 +10,8 @@ struct TaskFoldersFormSheet: View {
             TaskFoldersFormSheetInner(
                 vm: vm,
                 state: state,
-                foldersDbAnimate: state.foldersDb
+                foldersDbAnimate: state.foldersDb,
+                tmrwButtonUiAnimation: state.tmrwButtonUi
             )
         }
     }
@@ -22,6 +23,7 @@ private struct TaskFoldersFormSheetInner: View {
     let state: FoldersSettingsVm.State
     
     @State var foldersDbAnimate: [TaskFolderDb]
+    @State var tmrwButtonUiAnimation: FoldersSettingsVm.TmrwButtonUi?
     
     ///
     
@@ -60,7 +62,7 @@ private struct TaskFoldersFormSheetInner: View {
                 }
             }
             
-            if let tmrwButtonUi = state.tmrwButtonUi {
+            if let tmrwButtonUi = tmrwButtonUiAnimation {
                 Section {
                     Button(tmrwButtonUi.text) {
                         tmrwButtonUi.add(
@@ -77,6 +79,10 @@ private struct TaskFoldersFormSheetInner: View {
             onChange: {
                 withFoldersAnimation = true
             }
+        )
+        .animateVmValue(
+            value: state.tmrwButtonUi,
+            state: $tmrwButtonUiAnimation
         )
         .environment(\.editMode, $editMode)
         .contentMargins(.top, 14)
