@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.db.TaskDb
+import me.timeto.shared.ui.UiException
 
 class FolderFormSheetVm(
     val folder: TaskFolderDb?
@@ -34,16 +35,16 @@ class FolderFormSheetVm(
 
     fun save(
         onSuccess: () -> Unit
-    ) = launchExDefault {
+    ): Unit = launchExIo {
         try {
             val name = state.value.inputNameValue
             if (folder != null) {
-                folder.upNameWithValidation(name)
+                folder.updateNameWithValidation(name)
             } else {
-                TaskFolderDb.addWithValidation(name)
+                TaskFolderDb.insertWithValidation(name)
             }
-            onSuccess()
-        } catch (e: UIException) {
+            onUi { onSuccess() }
+        } catch (e: UiException) {
             showUiAlert(e.uiMessage)
         }
     }
