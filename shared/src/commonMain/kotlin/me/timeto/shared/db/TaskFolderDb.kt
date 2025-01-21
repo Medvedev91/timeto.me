@@ -57,7 +57,7 @@ data class TaskFolderDb(
         ): Unit = dbIo {
             db.transaction {
                 foldersDb.forEachIndexed { idx, folderDb ->
-                    db.taskFolderQueries.upSortById(
+                    db.taskFolderQueries.updateSortById(
                         id = folderDb.id,
                         sort = idx,
                     )
@@ -87,11 +87,11 @@ data class TaskFolderDb(
     val isTmrw: Boolean = id == ID_TMRW
 
     fun upNameWithValidation(newName: String) {
-        db.taskFolderQueries.upNameById(id = id, name = validateName(newName))
+        db.taskFolderQueries.updateNameById(id = id, name = validateName(newName))
     }
 
     fun upSort(newSort: Int) {
-        db.taskFolderQueries.upSortById(id = id, sort = newSort)
+        db.taskFolderQueries.updateSortById(id = id, sort = newSort)
     }
 
     suspend fun delete(): Unit = dbIo {
@@ -109,7 +109,7 @@ data class TaskFolderDb(
 
     override fun backupable__update(json: JsonElement) {
         val j = json.jsonArray
-        db.taskFolderQueries.upById(
+        db.taskFolderQueries.updateById(
             id = j.getInt(0),
             name = j.getString(1),
             sort = j.getInt(2),

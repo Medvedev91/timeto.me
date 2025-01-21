@@ -6,7 +6,10 @@ CREATE TABLE TaskFolderSQ (
     sort INTEGER AS Int NOT NULL
 );
 
-anyChange: SELECT id FROM TaskFolderSQ LIMIT 1;
+anyChange:
+SELECT id
+FROM TaskFolderSQ
+LIMIT 1;
 
 selectAllSorted:
 SELECT *
@@ -17,17 +20,17 @@ insert:
 INSERT INTO TaskFolderSQ
 (id, name, sort) VALUES (?, ?, ?);
 
-upById:
+updateById:
 UPDATE TaskFolderSQ
 SET name = ?, sort = ?
 WHERE id = ?;
 
-upSortById:
+updateSortById:
 UPDATE TaskFolderSQ
 SET sort = ?
 WHERE id = ?;
 
-upNameById:
+updateNameById:
 UPDATE TaskFolderSQ
 SET name = ?
 WHERE id = ?;
