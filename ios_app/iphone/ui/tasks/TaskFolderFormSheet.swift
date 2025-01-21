@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-struct FolderFormSheet: View {
+struct TaskFolderFormSheet: View {
 
     @State private var vm: FolderFormSheetVm
     @Binding private var isPresented: Bool
