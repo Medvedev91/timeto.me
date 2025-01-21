@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
+import me.timeto.shared.ui.UiException
+import kotlin.coroutines.cancellation.CancellationException
 
 data class TaskFolderDb(
     val id: Int,
@@ -19,10 +21,11 @@ data class TaskFolderDb(
         const val ID_TODAY = 1
         const val ID_TMRW = 4
 
-        fun anyChangeFlow() = db.taskFolderQueries.anyChange().asFlow()
+        fun anyChangeFlow(): Flow<*> =
+            db.taskFolderQueries.anyChange().asFlow()
 
         suspend fun selectAllSorted(): List<TaskFolderDb> = dbIo {
-            db.taskFolderQueries.selectAllSorted().executeAsList().map { it.toDb() }.uiSorted()
+            db.taskFolderQueries.selectAllSorted().asList { toDb() }.uiSorted()
         }
 
         fun selectAllSortedFlow(): Flow<List<TaskFolderDb>> =
@@ -31,15 +34,24 @@ data class TaskFolderDb(
         ///
 
         suspend fun insertTmrw(): Unit = dbIo {
-            addRaw(id = ID_TMRW, name = "TMRW", sort = 2)
+            db.taskFolderQueries.insert(
+                id = ID_TMRW,
+                name = "TMRW",
+                sort = 2,
+            )
         }
 
-        suspend fun addWithValidation(name: String) = dbIo {
-            addRaw(
-                id = time(),
-                name = validateName(name),
-                sort = selectAllSorted().maxOf { it.sort } + 1,
-            )
+        @Throws(UiException::class, CancellationException::class)
+        suspend fun insertWithValidation(name: String) = dbIo {
+            db.transaction {
+                val allTaskFoldersDb: List<TaskFolderDb> =
+                    db.taskFolderQueries.selectAllSorted().asList { toDb() }
+                db.taskFolderQueries.insert(
+                    id = time(),
+                    name = validateName(name),
+                    sort = allTaskFoldersDb.maxOf { it.sort } + 1,
+                )
+            }
         }
 
         fun addRaw(
@@ -69,7 +81,7 @@ data class TaskFolderDb(
         // Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.taskFolderQueries.selectAllSorted().executeAsList().map { it.toDb() }
+            db.taskFolderQueries.selectAllSorted().asList { toDb() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
@@ -86,11 +98,12 @@ data class TaskFolderDb(
     val isToday: Boolean = id == ID_TODAY
     val isTmrw: Boolean = id == ID_TMRW
 
-    fun upNameWithValidation(newName: String) {
+    @Throws(UiException::class, CancellationException::class)
+    suspend fun updateNameWithValidation(newName: String): Unit = dbIo {
         db.taskFolderQueries.updateNameById(id = id, name = validateName(newName))
     }
 
-    fun upSort(newSort: Int) {
+    suspend fun updateSort(newSort: Int): Unit = dbIo {
         db.taskFolderQueries.updateSortById(id = id, sort = newSort)
     }
 
@@ -104,7 +117,7 @@ data class TaskFolderDb(
     override fun backupable__getId(): String = id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
-        id, name, sort
+        id, name, sort,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
@@ -121,12 +134,17 @@ data class TaskFolderDb(
     }
 }
 
+///
+
+@Throws(UiException::class)
 private fun validateName(name: String): String {
     val validatedName = name.trim()
     if (validatedName.isBlank())
-        throw UIException("Invalid folder name")
+        throw UiException("Invalid folder name")
     return validatedName
 }
+
+///
 
 private fun TaskFolderSQ.toDb() = TaskFolderDb(
     id = id, name = name, sort = sort,
