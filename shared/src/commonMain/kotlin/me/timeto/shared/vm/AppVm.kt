@@ -170,9 +170,9 @@ private suspend fun fillInitData() {
     pingLastDay = null
 
     // TRICK time() only for SMDAY
-    TaskFolderDb.addRaw(TaskFolderDb.ID_TODAY, "Today", 1)
+    TaskFolderDb.insertNoValidation(TaskFolderDb.ID_TODAY, "Today", 1)
     TaskFolderDb.insertTmrw()
-    TaskFolderDb.addRaw(time(), "SMDAY", 3)
+    TaskFolderDb.insertNoValidation(time(), "SMDAY", 3)
 
     KvDb.KEY.WHATS_NEW_CHECK_UNIX_DAY.upsertInt(WhatsNewVm.prepHistoryItemsUi().first().unixDay)
 

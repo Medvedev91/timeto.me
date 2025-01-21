@@ -54,11 +54,11 @@ data class TaskFolderDb(
             }
         }
 
-        fun addRaw(
+        suspend fun insertNoValidation(
             id: Int,
             name: String,
             sort: Int,
-        ) {
+        ): Unit = dbIo {
             db.taskFolderQueries.insert(
                 id = id, name = name, sort = sort
             )
