@@ -117,7 +117,7 @@ class SettingsVm : __Vm<SettingsVm.State>() {
     ) {
         scopeVm().launchEx {
             KvDb.KEY.DAY_START_OFFSET_SECONDS.upsert(seconds.toString())
-            onSuccess()
+            onUi { onSuccess() }
         }
     }
 
