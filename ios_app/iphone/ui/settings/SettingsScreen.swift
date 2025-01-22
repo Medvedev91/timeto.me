@@ -29,9 +29,6 @@ private struct SettingsScreenInner: View {
 
     @State private var isFileImporterPresented = false
 
-    // todo remove
-    @State private var isDayStartPresented = false
-
     @State private var isFileExporterPresented = false
     @State private var fileForExport: MyJsonFileDocument? = nil
     @State private var fileForExportName: String? = nil
@@ -195,6 +192,27 @@ private struct SettingsScreenInner: View {
                     }
                 }
                 .foregroundColor(.primary)
+                
+                Button(
+                    action: {
+                        navigation.sheet {
+                            SettingsDayStartSheet(
+                                vm: vm,
+                                state: state,
+                                dayStart: state.dayStartSeconds
+                            )
+                        }
+                    },
+                    label: {
+                        HStack {
+                            Text("Day Start")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text(state.dayStartNote)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                )
             }
 
             ///
@@ -222,32 +240,6 @@ private struct SettingsScreenInner: View {
             }
             
             /*
-             
-             MyListView__ItemView(
-             isFirst: false,
-             isLast: false,
-             bgColor: c.fg,
-             withTopDivider: true
-             ) {
-             MyListView__ItemView__ButtonView(
-             text: "Day Start",
-             rightView: AnyView(
-             MyListView__ItemView__ButtonView__RightText(
-             text: state.dayStartNote
-             )
-             )
-             ) {
-             isDayStartPresented = true
-             }
-             .sheetEnv(isPresented: $isDayStartPresented) {
-             DayStartDialog(
-             isPresented: $isDayStartPresented,
-             settingsSheetVM: vm,
-             settingsSheetState: state
-             )
-             }
-             }
-             
              MyListView__ItemView(
              isFirst: false,
              isLast: true,
@@ -459,71 +451,6 @@ private struct SettingsScreenInner: View {
         func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
             let data = Data(text.utf8)
             return FileWrapper(regularFileWithContents: data)
-        }
-    }
-
-    // todo top level?
-    private struct DayStartDialog: View {
-
-        @Binding private var isPresented: Bool
-        @State private var selectedDayStart: Int32 // WARNING Int32!
-        private let settingsSheetVM: SettingsVm
-        private let settingsSheetState: SettingsVm.State
-
-        init(
-            isPresented: Binding<Bool>,
-            settingsSheetVM: SettingsVm,
-            settingsSheetState: SettingsVm.State
-        ) {
-            _isPresented = isPresented
-            self.settingsSheetVM = settingsSheetVM
-            self.settingsSheetState = settingsSheetState
-            _selectedDayStart = State(initialValue: settingsSheetState.dayStartSeconds)
-        }
-
-        var body: some View {
-
-            VStack {
-
-                HStack {
-
-                    Button(
-                        action: { isPresented.toggle() },
-                        label: { Text("Cancel") }
-                    )
-                        .padding(.leading, 25)
-
-                    Spacer()
-
-                    Button(
-                        action: {
-                            settingsSheetVM.upDayStartOffsetSeconds(seconds: selectedDayStart) {
-                                isPresented = false
-                            }
-                        },
-                        label: {
-                            Text("Save")
-                                .fontWeight(.heavy)
-                                .padding(.trailing, 25)
-                        }
-                    )
-                }
-                .padding(.top, 20)
-
-                Spacer()
-
-                Picker(
-                    "",
-                    selection: $selectedDayStart
-                ) {
-                    ForEach(settingsSheetState.dayStartListItems, id: \.seconds) { item in
-                        Text(item.note).tag(item.seconds)
-                    }
-                }
-                .pickerStyle(WheelPickerStyle())
-
-                Spacer()
-            }
         }
     }
 }
