@@ -7,7 +7,7 @@ struct TaskFolderFormSheet: View {
     
     var body: some View {
         VmView({
-            FolderFormSheetVm(
+            TaskFolderFormVm(
                 folderDb: taskFolderDb
             )
         }) { vm, state in
@@ -22,8 +22,8 @@ struct TaskFolderFormSheet: View {
 
 private struct TaskFolderFormSheetInner: View {
     
-    let vm: FolderFormSheetVm
-    let state: FolderFormSheetVm.State
+    let vm: TaskFolderFormVm
+    let state: TaskFolderFormVm.State
     
     @State var name: String
     
