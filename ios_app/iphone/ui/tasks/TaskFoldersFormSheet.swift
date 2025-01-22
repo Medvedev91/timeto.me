@@ -42,6 +42,11 @@ private struct TaskFoldersFormSheetInner: View {
             
             ForEach(foldersDbAnimate, id: \.id) { folderDb in
                 Button(folderDb.name) {
+                    navigation.sheet {
+                        TaskFolderFormSheet(
+                            taskFolderDb: folderDb
+                        )
+                    }
                 }
                 .foregroundColor(.primary)
             }
@@ -49,16 +54,15 @@ private struct TaskFoldersFormSheetInner: View {
                 withFoldersAnimation = false
                 vm.moveIos(from: from, to: to)
             }
-            .onDeleteVm { idx in
-                vm.delete(
-                    folderDb: foldersDbAnimate[idx],
-                    dialogsManager: navigation
-                )
-            }
             
             Section {
                 
                 Button("New Folder") {
+                    navigation.sheet {
+                        TaskFolderFormSheet(
+                            taskFolderDb: nil
+                        )
+                    }
                 }
             }
             
