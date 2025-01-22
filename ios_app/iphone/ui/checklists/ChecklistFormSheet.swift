@@ -73,11 +73,13 @@ private struct ChecklistFormSheetInner: View {
         .toolbarTitleDisplayMode(.inline)
         .navigationTitle(state.title)
         .toolbar {
+            
             ToolbarItem(placement: .cancellationAction) {
                 Button("Cancel") {
                     dismiss()
                 }
             }
+            
             ToolbarItem(placement: .primaryAction) {
                 Button(state.saveText) {
                     vm.save(
