@@ -1,15 +1,17 @@
-package me.timeto.shared.vm
+package me.timeto.shared.ui.tasks
 
-import kotlinx.coroutines.flow.*
-import me.timeto.shared.*
-import me.timeto.shared.db.TaskFolderDb
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import me.timeto.shared.db.TaskDb
+import me.timeto.shared.db.TaskFolderDb
+import me.timeto.shared.launchExIo
 import me.timeto.shared.ui.DialogsManager
 import me.timeto.shared.ui.UiException
+import me.timeto.shared.vm.__Vm
 
-class FolderFormSheetVm(
+class TaskFolderFormVm(
     folderDb: TaskFolderDb?,
-) : __Vm<FolderFormSheetVm.State>() {
+) : __Vm<TaskFolderFormVm.State>() {
 
     data class State(
         val folderDb: TaskFolderDb?,
