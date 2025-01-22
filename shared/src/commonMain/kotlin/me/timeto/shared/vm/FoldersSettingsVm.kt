@@ -2,7 +2,6 @@ package me.timeto.shared.vm
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
-import me.timeto.shared.db.TaskDb
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.ui.DialogsManager
 import me.timeto.shared.ui.moveIos
@@ -33,8 +32,9 @@ class FoldersSettingsVm(
         }
     }
 
+    /* todo
     fun sortUp(folder: TaskFolderDb) {
-        val tmpFolders = state.value.folders.toMutableList()
+        val tmpFolders = state.value.foldersDb.toMutableList()
         val curIndex = tmpFolders.indexOf(folder)
         if ((curIndex <= 0) || ((curIndex + 1) > tmpFolders.size))
             return // todo report
@@ -55,31 +55,6 @@ class FoldersSettingsVm(
     fun moveIos(from: Int, to: Int) {
         state.value.foldersDb.moveIos(from, to) {
             TaskFolderDb.updateSortMany(it.reversed())
-        }
-    }
-
-    fun delete(
-        folderDb: TaskFolderDb,
-        dialogsManager: DialogsManager,
-    ): Unit = launchExIo {
-
-        if (folderDb.isToday) {
-            dialogsManager.alert("It's impossible to delete \"Today\" folder")
-            return@launchExIo
-        }
-
-        if (TaskDb.getAsc().any { it.folder_id == folderDb.id }) {
-            dialogsManager.alert("The folder must be empty before deletion")
-            return@launchExIo
-        }
-
-        dialogsManager.confirmation(
-            message = "Are you sure you want to delete \"${folderDb.name}\" folder",
-            buttonText = "Delete",
-        ) {
-            launchExIo {
-                folderDb.delete()
-            }
         }
     }
 
