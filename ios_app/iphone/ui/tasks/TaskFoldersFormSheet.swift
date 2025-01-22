@@ -5,7 +5,7 @@ struct TaskFoldersFormSheet: View {
     
     var body: some View {
         VmView({
-            FoldersSettingsVm()
+            TaskFoldersFormVm()
         }) { vm, state in
             TaskFoldersFormSheetInner(
                 vm: vm,
@@ -19,11 +19,11 @@ struct TaskFoldersFormSheet: View {
 
 private struct TaskFoldersFormSheetInner: View {
     
-    let vm: FoldersSettingsVm
-    let state: FoldersSettingsVm.State
+    let vm: TaskFoldersFormVm
+    let state: TaskFoldersFormVm.State
     
     @State var foldersDbAnimate: [TaskFolderDb]
-    @State var tmrwButtonUiAnimation: FoldersSettingsVm.TmrwButtonUi?
+    @State var tmrwButtonUiAnimation: TaskFoldersFormVm.TmrwButtonUi?
     
     ///
     
