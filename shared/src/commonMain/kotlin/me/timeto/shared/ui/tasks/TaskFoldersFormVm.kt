@@ -1,13 +1,17 @@
-package me.timeto.shared.vm
+package me.timeto.shared.ui.tasks
 
-import kotlinx.coroutines.flow.*
-import me.timeto.shared.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
+import me.timeto.shared.Cache
 import me.timeto.shared.db.TaskFolderDb
+import me.timeto.shared.launchExIo
+import me.timeto.shared.onEachExIn
 import me.timeto.shared.ui.DialogsManager
 import me.timeto.shared.ui.moveIos
+import me.timeto.shared.vm.__Vm
 
-class FoldersSettingsVm(
-) : __Vm<FoldersSettingsVm.State>() {
+class TaskFoldersFormVm(
+) : __Vm<TaskFoldersFormVm.State>() {
 
     data class State(
         val foldersDb: List<TaskFolderDb>,
@@ -32,7 +36,7 @@ class FoldersSettingsVm(
         }
     }
 
-    /* todo
+    /*
     fun sortUp(folder: TaskFolderDb) {
         val tmpFolders = state.value.foldersDb.toMutableList()
         val curIndex = tmpFolders.indexOf(folder)
