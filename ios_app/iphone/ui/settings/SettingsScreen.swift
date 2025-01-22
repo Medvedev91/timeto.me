@@ -30,8 +30,6 @@ private struct SettingsScreenInner: View {
     @State private var isFileImporterPresented = false
 
     // todo remove
-    @State private var isFoldersSettingsPresented = false
-    // todo remove
     @State private var isDayStartPresented = false
 
     @State private var isFileExporterPresented = false
@@ -188,6 +186,16 @@ private struct SettingsScreenInner: View {
                     }
                 }
             }
+            
+            Section("SETTINGS") {
+                
+                Button("Folders") {
+                    navigation.sheet {
+                        TaskFoldersFormSheet()
+                    }
+                }
+                .foregroundColor(.primary)
+            }
 
             ///
             
@@ -214,33 +222,6 @@ private struct SettingsScreenInner: View {
             }
             
             /*
-             
-             ///
-             /// Settings
-             
-             VStack {
-             
-             MyListView__Padding__SectionHeader()
-             
-             MyListView__HeaderView(title: "SETTINGS")
-             
-             MyListView__Padding__HeaderSection()
-             
-             MyListView__ItemView(
-             isFirst: true,
-             isLast: false,
-             bgColor: c.fg
-             ) {
-             MyListView__ItemView__ButtonView(
-             text: "Folders",
-             withArrow: true
-             ) {
-             isFoldersSettingsPresented = true
-             }
-             .sheetEnv(isPresented: $isFoldersSettingsPresented) {
-             FoldersSettingsSheet(isPresented: $isFoldersSettingsPresented)
-             }
-             }
              
              MyListView__ItemView(
              isFirst: false,
