@@ -1,13 +1,28 @@
-package me.timeto.shared.vm
+package me.timeto.shared.ui.settings
 
-import kotlinx.coroutines.flow.*
-import me.timeto.shared.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
+import me.timeto.shared.AutoBackup
+import me.timeto.shared.Backup
+import me.timeto.shared.Cache
+import me.timeto.shared.UnixTime
+import me.timeto.shared.backupStateFlow
+import me.timeto.shared.dayStartOffsetSeconds
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.KvDb
 import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
 import me.timeto.shared.db.KvDb.Companion.isSendingReports
 import me.timeto.shared.db.NoteDb
 import me.timeto.shared.db.ShortcutDb
+import me.timeto.shared.deviceData
+import me.timeto.shared.launchEx
+import me.timeto.shared.launchExDefault
+import me.timeto.shared.launchExIo
+import me.timeto.shared.onEachExIn
+import me.timeto.shared.reportApi
+import me.timeto.shared.vm.PrivacySheetVm
+import me.timeto.shared.vm.WhatsNewVm
+import me.timeto.shared.vm.__Vm
 
 class SettingsVm : __Vm<SettingsVm.State>() {
 
