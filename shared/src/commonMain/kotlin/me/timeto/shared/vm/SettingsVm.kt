@@ -67,7 +67,7 @@ class SettingsVm : __Vm<SettingsVm.State>() {
         )
     )
 
-    override fun onAppear() {
+    init {
         val scope = scopeVm()
         ChecklistDb.selectAscFlow()
             .onEachExIn(scope) { checklists -> state.update { it.copy(checklistsDb = checklists) } }
