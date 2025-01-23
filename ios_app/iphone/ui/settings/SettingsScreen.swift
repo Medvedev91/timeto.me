@@ -30,8 +30,6 @@ private struct SettingsScreenInner: View {
     
     @State private var isFileImporterPresented = false
     
-    // todo
-    
     @State private var isFileExporterPresented = false
     @State private var fileForExport: MyJsonFileDocument? = nil
     @State private var fileForExportName: String? = nil
@@ -225,6 +223,16 @@ private struct SettingsScreenInner: View {
             
             Section("Backups") {
                 
+                Button("Create") {
+                    Task {
+                        let jString = try await Backup.shared.create(type: "manual", intervalsLimit: 999_999_999.toInt32())
+                        fileForExportName = vm.prepBackupFileName()
+                        fileForExport = MyJsonFileDocument(initialText: jString)
+                        isFileExporterPresented = true
+                    }
+                }
+                .foregroundColor(.primary)
+                
                 Button("Restore") {
                     isFileImporterPresented = true
                 }
@@ -248,28 +256,6 @@ private struct SettingsScreenInner: View {
              /// Backup
              
              VStack {
-             
-             MyListView__Padding__SectionHeader()
-             
-             MyListView__HeaderView(title: "BACKUPS")
-             
-             MyListView__Padding__HeaderSection()
-             
-             MyListView__ItemView(
-             isFirst: true,
-             isLast: false,
-             bgColor: c.fg
-             ) {
-             
-             MyListView__ItemView__ButtonView(text: "Create") {
-             Task {
-             let jString = try await Backup.shared.create(type: "manual", intervalsLimit: 999_999_999.toInt32()) // todo
-             fileForExportName = vm.prepBackupFileName()
-             fileForExport = MyJsonFileDocument(initialText: jString)
-             isFileExporterPresented = true
-             }
-             }
-             }
              
              MyListView__ItemView(
              isFirst: false,
@@ -413,29 +399,30 @@ private struct SettingsScreenInner: View {
             }
         }
     }
+}
+
+//
+// https://www.hackingwithswift.com/quick-start/swiftui/how-to-export-files-using-fileexporter
+
+private struct MyJsonFileDocument: FileDocument {
     
-    // todo top level?
-    /// https://www.hackingwithswift.com/quick-start/swiftui/how-to-export-files-using-fileexporter
-    private struct MyJsonFileDocument: FileDocument {
-        
-        // Otherwise .txt file
-        static var readableContentTypes = [UTType.json]
-        
-        var text = ""
-        
-        init(initialText: String = "") {
-            text = initialText
+    // Otherwise .txt file
+    static var readableContentTypes = [UTType.json]
+    
+    var text = ""
+    
+    init(initialText: String = "") {
+        text = initialText
+    }
+    
+    init(configuration: ReadConfiguration) throws {
+        if let data = configuration.file.regularFileContents {
+            text = String(decoding: data, as: UTF8.self)
         }
-        
-        init(configuration: ReadConfiguration) throws {
-            if let data = configuration.file.regularFileContents {
-                text = String(decoding: data, as: UTF8.self)
-            }
-        }
-        
-        func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-            let data = Data(text.utf8)
-            return FileWrapper(regularFileWithContents: data)
-        }
+    }
+    
+    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+        let data = Data(text.utf8)
+        return FileWrapper(regularFileWithContents: data)
     }
 }
