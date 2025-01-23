@@ -10,7 +10,8 @@ struct SettingsScreen: View {
         }) { vm, state in
             SettingsScreenInner(
                 vm: vm,
-                state: state
+                state: state,
+                todayOnHomeScreen: state.todayOnHomeScreen
             )
         }
     }
@@ -20,6 +21,8 @@ private struct SettingsScreenInner: View {
     
     let vm: SettingsVm
     let state: SettingsVm.State
+    
+    @State var todayOnHomeScreen: Bool
     
     ///
     
@@ -213,6 +216,14 @@ private struct SettingsScreenInner: View {
                         }
                     }
                 )
+                
+                Toggle(
+                    state.todayOnHomeScreenText,
+                    isOn: $todayOnHomeScreen
+                )
+                .onChange(of: todayOnHomeScreen) { _, new in
+                    vm.setTodayOnHomeScreen(isOn: new)
+                }
             }
 
             ///
@@ -227,11 +238,6 @@ private struct SettingsScreenInner: View {
 
             Section("aill") {
                 
-                Toggle(
-                    isOn: $tmp,
-                    label: { Text("ttess") }
-                )
-                
                 Picker("Fll", selection: $selectedFlavor) {
                     Text("Chocolate").tag("c")
                     Text("Vanilla").tag("v")
@@ -240,21 +246,6 @@ private struct SettingsScreenInner: View {
             }
             
             /*
-             MyListView__ItemView(
-             isFirst: false,
-             isLast: true,
-             bgColor: c.fg,
-             withTopDivider: true
-             ) {
-             
-             MyListView__ItemView__SwitchView(
-             text: state.todayOnHomeScreenText,
-             isActive: state.todayOnHomeScreen
-             ) {
-             vm.toggleTodayOnHomeScreen()
-             }
-             }
-             }
              
              ///
              /// Backup
