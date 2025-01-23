@@ -28,9 +28,9 @@ private struct SettingsScreenInner: View {
     
     @Environment(Navigation.self) private var navigation
     
-    // todo
-    
     @State private var isFileImporterPresented = false
+    
+    // todo
     
     @State private var isFileExporterPresented = false
     @State private var fileForExport: MyJsonFileDocument? = nil
@@ -223,15 +223,15 @@ private struct SettingsScreenInner: View {
                 }
             }
             
-            ///
-            
-            
             Section("Backups") {
                 
                 Button("Restore") {
                     isFileImporterPresented = true
                 }
+                .foregroundColor(.primary)
             }
+            
+            ///
             
             Section("aill") {
                 
@@ -268,18 +268,6 @@ private struct SettingsScreenInner: View {
              fileForExport = MyJsonFileDocument(initialText: jString)
              isFileExporterPresented = true
              }
-             }
-             }
-             
-             MyListView__ItemView(
-             isFirst: false,
-             isLast: false,
-             bgColor: c.fg,
-             withTopDivider: true
-             ) {
-             
-             MyListView__ItemView__ButtonView(text: "Restore") {
-             isFileImporterPresented = true
              }
              }
              
@@ -395,24 +383,33 @@ private struct SettingsScreenInner: View {
                 print(error.myMessage())
             }
         }
-        .fileImporter(isPresented: $isFileImporterPresented, allowedContentTypes: [.json]) { res in
+        .fileImporter(
+            isPresented: $isFileImporterPresented,
+            allowedContentTypes: [.json]
+        ) { res in
             do {
+                
+                //
+                // https://stackoverflow.com/a/64351217
+                
                 let fileUrl = try res.get()
                 
-                ///
-                /// https://stackoverflow.com/a/64351217
                 if !fileUrl.startAccessingSecurityScopedResource() {
                     throw MyError("iOS restore !fileUrl.startAccessingSecurityScopedResource()")
                 }
+                
                 guard let jString = String(data: try Data(contentsOf: fileUrl), encoding: .utf8) else {
                     throw MyError("iOS restore jString null")
                 }
+                
                 fileUrl.stopAccessingSecurityScopedResource()
-                //////
+                
+                ///
                 
                 vm.procRestore(jString: jString)
             } catch {
-                Utils_kmpKt.showUiAlert(message: "Error", reportApiText: "iOS restore exception\n" + error.myMessage())
+                navigation.alert(message: "Error")
+                reportApi("iOS restore exception\n" + error.myMessage())
             }
         }
     }
