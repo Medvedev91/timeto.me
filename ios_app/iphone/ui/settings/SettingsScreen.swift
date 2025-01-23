@@ -29,19 +29,16 @@ private struct SettingsScreenInner: View {
     @Environment(Navigation.self) private var navigation
     
     // todo
-
+    
     @State private var isFileImporterPresented = false
-
+    
     @State private var isFileExporterPresented = false
     @State private var fileForExport: MyJsonFileDocument? = nil
     @State private var fileForExportName: String? = nil
-
+    
     // todo remove
     @State private var selectedFlavor = "c"
-
-    // todo remove
-    @State private var tmp = false
-
+    
     var body: some View {
         
         List {
@@ -225,7 +222,7 @@ private struct SettingsScreenInner: View {
                     vm.setTodayOnHomeScreen(isOn: new)
                 }
             }
-
+            
             ///
             
             
@@ -235,7 +232,7 @@ private struct SettingsScreenInner: View {
                     isFileImporterPresented = true
                 }
             }
-
+            
             Section("aill") {
                 
                 Picker("Fll", selection: $selectedFlavor) {
@@ -419,26 +416,26 @@ private struct SettingsScreenInner: View {
             }
         }
     }
-
+    
     // todo top level?
     /// https://www.hackingwithswift.com/quick-start/swiftui/how-to-export-files-using-fileexporter
     private struct MyJsonFileDocument: FileDocument {
-
+        
         // Otherwise .txt file
         static var readableContentTypes = [UTType.json]
-
+        
         var text = ""
-
+        
         init(initialText: String = "") {
             text = initialText
         }
-
+        
         init(configuration: ReadConfiguration) throws {
             if let data = configuration.file.regularFileContents {
                 text = String(decoding: data, as: UTF8.self)
             }
         }
-
+        
         func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
             let data = Data(text.utf8)
             return FileWrapper(regularFileWithContents: data)
