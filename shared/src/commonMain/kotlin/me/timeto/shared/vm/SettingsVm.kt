@@ -104,10 +104,9 @@ class SettingsVm : __Vm<SettingsVm.State>() {
         }
     }
 
-    fun toggleTodayOnHomeScreen() {
-        launchExDefault {
-            val newValue = !state.value.todayOnHomeScreen
-            KvDb.KEY.TODAY_ON_HOME_SCREEN.upsertBool(newValue)
+    fun setTodayOnHomeScreen(isOn: Boolean) {
+        launchExIo {
+            KvDb.KEY.TODAY_ON_HOME_SCREEN.upsertBool(isOn)
         }
     }
 
