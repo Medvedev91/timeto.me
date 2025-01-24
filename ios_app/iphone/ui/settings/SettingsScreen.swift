@@ -263,6 +263,17 @@ private struct SettingsScreenInner: View {
                 )
             }
             
+            Section {
+                
+                AskQuestionView(
+                    subject: state.feedbackSubject,
+                    content: {
+                        Text("Ask a Question")
+                            .foregroundColor(.primary)
+                    }
+                )
+            }
+            
             ///
             
             Section("aill") {
@@ -277,16 +288,6 @@ private struct SettingsScreenInner: View {
             /*
              ///
              /// Mics
-             
-             MyListView__Padding__SectionHeader()
-             
-             AskAQuestionButtonView(
-             subject: state.feedbackSubject,
-             isFirst: true,
-             isLast: false,
-             bgColor: c.fg,
-             withTopDivider: false
-             )
              
              MyListView__ItemView(
              isFirst: false,
