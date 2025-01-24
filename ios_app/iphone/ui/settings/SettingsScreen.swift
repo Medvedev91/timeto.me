@@ -237,6 +237,30 @@ private struct SettingsScreenInner: View {
                     isFileImporterPresented = true
                 }
                 .foregroundColor(.primary)
+                
+                Button(
+                    action: {
+                        do {
+                            // https://stackoverflow.com/a/64592118/5169420
+                            let path = try AutoBackupIos.autoBackupsFolder()
+                                .absoluteString
+                                .replacingOccurrences(of: "file://", with: "shareddocuments://")
+                            UIApplication.shared.open(URL(string: path)!)
+                        } catch {
+                            navigation.alert(message: "Error")
+                            reportApi("AutoBackupIos.autoBackupsFolder() error:\n\(error)")
+                        }
+                    },
+                    label: {
+                        HStack {
+                            Text("Auto Backup")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text(state.autoBackupTimeString)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                )
             }
             
             ///
@@ -251,38 +275,6 @@ private struct SettingsScreenInner: View {
             }
             
             /*
-             
-             ///
-             /// Backup
-             
-             VStack {
-             
-             MyListView__ItemView(
-             isFirst: false,
-             isLast: true,
-             bgColor: c.fg,
-             withTopDivider: true
-             ) {
-             
-             MyListView__ItemView__ButtonView(
-             text: "Auto Backup",
-             rightView: AnyView(
-             MyListView__ItemView__ButtonView__RightText(
-             text: state.autoBackupTimeString
-             )
-             )
-             ) {
-             // todo do catch
-             // https://stackoverflow.com/a/64592118/5169420
-             let path = try! AutoBackupIos.autoBackupsFolder()
-             .absoluteString
-             .replacingOccurrences(of: "file://", with: "shareddocuments://")
-             UIApplication.shared.open(URL(string: path)!)
-             }
-             }
-             }
-             
-             
              ///
              /// Mics
              
