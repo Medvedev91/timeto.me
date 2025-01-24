@@ -272,6 +272,11 @@ private struct SettingsScreenInner: View {
                             .foregroundColor(.primary)
                     }
                 )
+                
+                Button("Open Source") {
+                    showOpenSource()
+                }
+                .foregroundColor(.primary)
             }
             
             ///
@@ -288,18 +293,6 @@ private struct SettingsScreenInner: View {
             /*
              ///
              /// Mics
-             
-             MyListView__ItemView(
-             isFirst: false,
-             isLast: false,
-             bgColor: c.fg,
-             withTopDivider: true
-             ) {
-             
-             MyListView__ItemView__ButtonView(text: "Open Source") {
-             showOpenSource()
-             }
-             }
              
              MyListView__ItemView(
              isFirst: false,
