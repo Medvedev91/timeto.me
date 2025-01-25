@@ -28,7 +28,7 @@ class PrivacyVm : __Vm<PrivacyVm.State>() {
             TextUi("Developer is here."),
             TextUi("The strongest rule I follow is privacy with no compromise."),
             TextUi("The app never sends any personal information!", isBold = true),
-            TextUi("All the data the app sends:\n- ${deviceData.os}\n- ${deviceData.device}"),
+            TextUi("All the data the app sends:\n- ${deviceData.os.fullVersion}\n- ${deviceData.device}"),
             TextUi("I kindly ask you 🙏 to turn on sending reports. It is the only way I can know I have such great user like you, nothing else motivates me to keep going."),
         )
     }

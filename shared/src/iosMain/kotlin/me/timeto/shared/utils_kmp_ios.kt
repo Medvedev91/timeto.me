@@ -15,7 +15,7 @@ fun initKmpIos() {
     val deviceData = DeviceData(
         build = (NSBundle.mainBundle.infoDictionary!!["CFBundleVersion"] as String).toInt(),
         version = NSBundle.mainBundle.infoDictionary!!["CFBundleShortVersionString"] as String,
-        os = "ios-${UIDevice.currentDevice.systemVersion}",
+        os =  DeviceData.Os.Ios(UIDevice.currentDevice.systemVersion),
         device = machineIdentifier(),
         flavor = null,
     )

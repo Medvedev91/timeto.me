@@ -26,7 +26,7 @@ fun initKmpAndroid(
     val deviceData = DeviceData(
         build = build,
         version = version,
-        os = "android-${Build.VERSION.RELEASE}",
+        os = DeviceData.Os.Android(Build.VERSION.RELEASE),
         device = deviceName,
         flavor = flavor,
     )
