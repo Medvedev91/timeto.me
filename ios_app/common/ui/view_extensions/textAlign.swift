@@ -10,6 +10,6 @@ extension View {
         }
         return self
             .frame(maxWidth: .infinity, alignment: frameAlignment)
-            .multilineTextAlignment(.leading)
+            .multilineTextAlignment(alignment)
     }
 }
