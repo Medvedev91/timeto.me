@@ -13,7 +13,7 @@ struct PrivacyScreen: View {
             PrivacyScreenInner(
                 vm: vm,
                 state: state,
-                isSendReportsEnabled: state.isSendReportsEnabled
+                isSendingReportsEnabled: state.isSendingReportsEnabled
             )
             .toolbarTitleDisplayMode(titleDisplayMode)
             .contentMargins(.bottom, scrollBottomMargin)
@@ -26,7 +26,7 @@ private struct PrivacyScreenInner: View {
     let vm: PrivacySheetVm
     let state: PrivacySheetVm.State
     
-    @State var isSendReportsEnabled: Bool
+    @State var isSendingReportsEnabled: Bool
     
     ///
     
@@ -48,11 +48,11 @@ private struct PrivacyScreenInner: View {
             
             Toggle(
                 state.sendReportsTitle,
-                isOn: $isSendReportsEnabled
+                isOn: $isSendingReportsEnabled
             )
             .customListItem()
-            .animateVmValue(value: state.isSendReportsEnabled, state: $isSendReportsEnabled)
-            .onChange(of: isSendReportsEnabled) { _, new in
+            .animateVmValue(value: state.isSendingReportsEnabled, state: $isSendingReportsEnabled)
+            .onChange(of: isSendingReportsEnabled) { _, new in
                 vm.setIsSendingReports(isOn: new)
             }
             .padding(.vertical, 8)
