@@ -34,9 +34,6 @@ private struct SettingsScreenInner: View {
     @State private var fileForExport: MyJsonFileDocument? = nil
     @State private var fileForExportName: String? = nil
     
-    // todo remove
-    @State private var selectedFlavor = "c"
-    
     var body: some View {
         
         List {
@@ -294,17 +291,6 @@ private struct SettingsScreenInner: View {
                 .textAlign(.center)
                 .foregroundColor(.secondary)
                 .listRowBackground(Color(.systemBackground))
-            
-            ///
-            
-            Section("aill") {
-                
-                Picker("Fll", selection: $selectedFlavor) {
-                    Text("Chocolate").tag("c")
-                    Text("Vanilla").tag("v")
-                    Text("Strawberry").tag("s")
-                }
-            }
         }
         .contentMargins(.top, 12)
         .contentMarginsTabBar(extra: 28)
