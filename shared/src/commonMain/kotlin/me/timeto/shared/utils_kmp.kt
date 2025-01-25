@@ -642,5 +642,5 @@ internal data class DeviceData(
     val device: String,
     val flavor: String?,
 ) {
-    val isFdroid = (flavor == "fdroid")
+    val isFdroid: Boolean = (flavor == "fdroid")
 }
