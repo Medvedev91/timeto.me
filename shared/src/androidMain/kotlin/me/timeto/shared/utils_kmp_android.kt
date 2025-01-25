@@ -14,6 +14,7 @@ internal actual val REPORT_API_TITLE = "🤖 Android"
 fun initKmpAndroid(
     application: Application,
     build: Int,
+    version: String,
     flavor: String,
 ) {
     androidApplication = application
@@ -24,6 +25,7 @@ fun initKmpAndroid(
 
     val deviceData = DeviceData(
         build = build,
+        version = version,
         os = "android-${Build.VERSION.RELEASE}",
         device = deviceName,
         flavor = flavor,

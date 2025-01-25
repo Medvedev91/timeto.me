@@ -14,6 +14,11 @@ class App : Application() {
     override fun onCreate() {
         instance = this
         super.onCreate()
-        initKmpAndroid(this, BuildConfig.VERSION_CODE, BuildConfig.FLAVOR)
+        initKmpAndroid(
+            application = this,
+            build = BuildConfig.VERSION_CODE,
+            version = BuildConfig.VERSION_NAME,
+            flavor = BuildConfig.FLAVOR,
+        )
     }
 }

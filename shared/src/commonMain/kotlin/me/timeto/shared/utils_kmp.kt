@@ -638,6 +638,7 @@ class Wheel<T>(
 
 internal data class DeviceData(
     val build: Int,
+    val version: String,
     val os: String,
     val device: String,
     val flavor: String?,

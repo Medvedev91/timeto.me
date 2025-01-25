@@ -14,6 +14,7 @@ internal actual val REPORT_API_TITLE = " iOS"
 fun initKmpIos() {
     val deviceData = DeviceData(
         build = (NSBundle.mainBundle.infoDictionary!!["CFBundleVersion"] as String).toInt(),
+        version = NSBundle.mainBundle.infoDictionary!!["CFBundleShortVersionString"] as String,
         os = "ios-${UIDevice.currentDevice.systemVersion}",
         device = machineIdentifier(),
         flavor = null,
