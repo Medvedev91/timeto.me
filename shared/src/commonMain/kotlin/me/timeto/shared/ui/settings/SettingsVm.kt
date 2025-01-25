@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.AutoBackup
 import me.timeto.shared.Backup
 import me.timeto.shared.Cache
+import me.timeto.shared.DeviceData
 import me.timeto.shared.UnixTime
 import me.timeto.shared.backupStateFlow
 import me.timeto.shared.dayStartOffsetSeconds
@@ -20,7 +21,6 @@ import me.timeto.shared.launchExDefault
 import me.timeto.shared.launchExIo
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.reportApi
-import me.timeto.shared.vm.PrivacySheetVm
 import me.timeto.shared.vm.WhatsNewVm
 import me.timeto.shared.vm.__Vm
 
@@ -66,7 +66,15 @@ class SettingsVm : __Vm<SettingsVm.State>() {
             return@run dayStartListItems.indexOfFirst { it.seconds == 0 }
         }
 
-        val appVersion = deviceData.build.toString()
+        val infoText: String = run {
+            val osName: String = when (deviceData.os) {
+                is DeviceData.Os.Android -> "Android"
+                is DeviceData.Os.Ios -> "iOS"
+                is DeviceData.Os.Watchos -> "watchOS"
+            }
+            val flavor: String = deviceData.flavor?.let { "-$it" } ?: ""
+            "timeto.me for $osName\nv${deviceData.version}.${deviceData.build}$flavor"
+        }
     }
 
     override val state = MutableStateFlow(
