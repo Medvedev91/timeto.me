@@ -7,6 +7,7 @@ enum NavigationPath: Hashable {
     case whatsNew
     case checklist(checklistDb: ChecklistDb, maxLines: Int, onDelete: () -> Void)
     case note(noteDb: NoteDb, onDelete: () -> Void)
+    case privacy
     
     func hash(into hasher: inout Hasher) {
         switch self {
@@ -21,6 +22,8 @@ enum NavigationPath: Hashable {
         case .note(let noteDb, _):
             hasher.combine("note")
             hasher.combine(noteDb.id)
+        case .privacy:
+            hasher.combine("privacy")
         }
     }
     
@@ -41,6 +44,8 @@ extension NavigationPath {
             ChecklistScreen(checklistDb: checklistDb, maxLines: maxLines, onDelete: onDelete)
         case .note(let noteDb, let onDelete):
             NoteScreen(noteDb: noteDb, onDelete: onDelete)
+        case .privacy:
+            PrivacyScreen(titleDisplayMode: .inline)
         }
     }
 }
