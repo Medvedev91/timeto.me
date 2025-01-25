@@ -8,7 +8,7 @@ struct PrivacyScreen: View {
     
     var body: some View {
         VmView({
-            PrivacySheetVm()
+            PrivacyVm()
         }) { vm, state in
             PrivacyScreenInner(
                 vm: vm,
@@ -23,8 +23,8 @@ struct PrivacyScreen: View {
 
 private struct PrivacyScreenInner: View {
     
-    let vm: PrivacySheetVm
-    let state: PrivacySheetVm.State
+    let vm: PrivacyVm
+    let state: PrivacyVm.State
     
     @State var isSendingReportsEnabled: Bool
     

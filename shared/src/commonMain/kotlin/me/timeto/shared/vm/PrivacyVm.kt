@@ -6,7 +6,7 @@ import me.timeto.shared.db.KvDb
 import me.timeto.shared.db.KvDb.Companion.isSendingReports
 import me.timeto.shared.deviceData
 
-class PrivacySheetVm : __Vm<PrivacySheetVm.State>() {
+class PrivacyVm : __Vm<PrivacyVm.State>() {
 
     data class State(
         val isSendingReportsEnabled: Boolean,
