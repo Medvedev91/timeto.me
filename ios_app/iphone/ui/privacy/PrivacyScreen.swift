@@ -4,6 +4,7 @@ import shared
 struct PrivacyScreen: View {
     
     let titleDisplayMode: ToolbarTitleDisplayMode
+    let scrollBottomMargin: CGFloat
     
     var body: some View {
         VmView({
@@ -15,6 +16,7 @@ struct PrivacyScreen: View {
                 isSendReportsEnabled: state.isSendReportsEnabled
             )
             .toolbarTitleDisplayMode(titleDisplayMode)
+            .contentMargins(.bottom, scrollBottomMargin)
         }
     }
 }
@@ -64,7 +66,7 @@ private struct PrivacyScreenInner: View {
             )
             .padding(.top, 20)
             .padding(.horizontal, H_PADDING - 4)
-
+            
             Button(
                 action: {
                     showOpenSource()
@@ -78,6 +80,9 @@ private struct PrivacyScreenInner: View {
             .customListItem()
             .padding(.top, 16)
             .padding(.leading, H_PADDING)
+            
+            Padding(vertical: 20)
+                .customListItem()
         }
         .customList()
         .navigationTitle(state.title)
