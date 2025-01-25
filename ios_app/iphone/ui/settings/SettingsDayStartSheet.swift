@@ -38,9 +38,8 @@ struct SettingsDayStartSheet: View {
             
             ToolbarItem(placement: .primaryAction) {
                 Button("Save") {
-                    vm.upDayStartOffsetSeconds(seconds: dayStart) {
-                        dismiss()
-                    }
+                    vm.setDayStartOffsetSeconds(seconds: dayStart)
+                    dismiss()
                 }
                 .fontWeight(.bold)
             }
