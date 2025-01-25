@@ -25,6 +25,7 @@ const val OPEN_SOURCE_URL = "https://github.com/Medvedev91/timeto.me"
 const val HI_EMAIL = "hi@timeto.me"
 
 const val developerEmoji = "👨‍💻"
+const val prayEmoji = "🙏"
 
 internal lateinit var deviceData: DeviceData
 var batteryLevelOrNull: Int? = null
