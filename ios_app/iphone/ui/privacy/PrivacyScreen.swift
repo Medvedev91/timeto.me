@@ -11,7 +11,8 @@ struct PrivacyScreen: View {
         }) { vm, state in
             PrivacyScreenInner(
                 vm: vm,
-                state: state
+                state: state,
+                isSendReportsEnabled: state.isSendReportsEnabled
             )
             .toolbarTitleDisplayMode(titleDisplayMode)
         }
@@ -23,6 +24,8 @@ private struct PrivacyScreenInner: View {
     let vm: PrivacySheetVm
     let state: PrivacySheetVm.State
     
+    @State var isSendReportsEnabled: Bool
+    
     ///
     
     var body: some View {
@@ -32,15 +35,35 @@ private struct PrivacyScreenInner: View {
             ForEach(state.textsUi, id: \.self) { textUi in
                 
                 Text(textUi.text)
+                    .customListItem()
                     .fontWeight(textUi.isBold ? .bold : .regular)
                     .foregroundColor(.primary)
                     .padding(.top, 16)
                     .padding(.horizontal, H_PADDING)
                     .lineSpacing(3.2)
                     .textAlign(.leading)
-                    .customListItem()
             }
             
+            Toggle(
+                state.sendReportsTitle,
+                isOn: $isSendReportsEnabled
+            )
+            .customListItem()
+            .padding(.vertical, 8)
+            .padding(.horizontal, 12)
+            .onChange(of: isSendReportsEnabled) { _, new in
+                vm.setIsSendingReports(isOn: new)
+            }
+            .background(
+                RoundedRectangle(
+                    cornerRadius: 12,
+                    style: .continuous
+                )
+                .fill(Color(.secondarySystemBackground))
+            )
+            .padding(.top, 20)
+            .padding(.horizontal, H_PADDING - 4)
+
             Button(
                 action: {
                     showOpenSource()
@@ -51,9 +74,9 @@ private struct PrivacyScreenInner: View {
                         .textAlign(.leading)
                 }
             )
+            .customListItem()
             .padding(.top, 16)
             .padding(.leading, H_PADDING)
-            .customListItem()
         }
         .customList()
         .navigationTitle(state.title)
