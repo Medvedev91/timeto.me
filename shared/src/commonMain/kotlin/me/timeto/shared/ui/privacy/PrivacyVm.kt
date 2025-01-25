@@ -1,10 +1,16 @@
-package me.timeto.shared.vm
+package me.timeto.shared.ui.privacy
 
-import kotlinx.coroutines.flow.*
-import me.timeto.shared.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import me.timeto.shared.db.KvDb
 import me.timeto.shared.db.KvDb.Companion.isSendingReports
 import me.timeto.shared.deviceData
+import me.timeto.shared.launchEx
+import me.timeto.shared.launchExIo
+import me.timeto.shared.onEachExIn
+import me.timeto.shared.ping
+import me.timeto.shared.prayEmoji
+import me.timeto.shared.vm.__Vm
 
 class PrivacyVm : __Vm<PrivacyVm.State>() {
 
