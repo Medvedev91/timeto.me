@@ -17,7 +17,6 @@ import me.timeto.shared.db.NoteDb
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.deviceData
 import me.timeto.shared.launchEx
-import me.timeto.shared.launchExDefault
 import me.timeto.shared.launchExIo
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.prayEmoji
@@ -46,11 +45,12 @@ class SettingsVm : __Vm<SettingsVm.State>() {
         val headerTitle = "Settings"
         val readmeTitle = "How to Use the App"
         val whatsNewTitle = "What's New"
-        val whatsNewNote: String = WhatsNewVm.prepHistoryItemsUi().first().timeAgoText
+        val whatsNewNote: String =
+            WhatsNewVm.prepHistoryItemsUi().first().timeAgoText
 
         val todayOnHomeScreenText = "Today on Home Screen"
 
-        val dayStartNote = dayStartSecondsToString(dayStartSeconds)
+        val dayStartNote: String = dayStartSecondsToString(dayStartSeconds)
         val dayStartListItems = (-6..6).map { hour ->
             DayStartOffsetListItem(
                 seconds = hour * 3_600,
@@ -60,7 +60,8 @@ class SettingsVm : __Vm<SettingsVm.State>() {
 
         // Not used in iOS, but useful for report at -1
         val dayStartSelectedIdx = run {
-            val index = dayStartListItems.indexOfFirst { it.seconds == dayStartSeconds }
+            val index: Int =
+                dayStartListItems.indexOfFirst { it.seconds == dayStartSeconds }
             if (index != -1)
                 return@run index
             reportApi("SettingsSheetVM.dayStartSelectedIdx != -1")
@@ -140,10 +141,8 @@ class SettingsVm : __Vm<SettingsVm.State>() {
         }
     }
 
-    fun procRestore(
-        jString: String,
-    ) {
-        launchExDefault {
+    fun procRestore(jString: String) {
+        launchExIo {
             try {
                 backupStateFlow.emit("Loading..")
                 Backup.restore(jString)
@@ -155,39 +154,39 @@ class SettingsVm : __Vm<SettingsVm.State>() {
         }
     }
 
-    fun prepBackupFileName() = Backup.prepFileName(UnixTime(), prefix = "timetome_")
+    fun prepBackupFileName(): String =
+        Backup.prepFileName(UnixTime(), prefix = "timetome_")
+}
 
-    companion object {
+///
 
-        private fun dayStartSecondsToString(seconds: Int): String {
-            if ((seconds % 3_600) != 0) {
-                reportApi("Invalid seconds in TabToolsVM.dayStartSecondsToString($seconds)")
-                return "error"
-            }
-
-            val h = seconds / 3_600
-
-            if (h >= 0)
-                return "$h:00".padStart(5, '0')
-
-            return "${24 + h}:00".padStart(5, '0')
-        }
-
-        private fun prepAutoBackupTimeString(
-            unixTime: UnixTime?
-        ): String {
-            if (unixTime == null)
-                return ""
-            return unixTime.getStringByComponents(
-                UnixTime.StringComponent.dayOfMonth,
-                UnixTime.StringComponent.space,
-                UnixTime.StringComponent.month3,
-                UnixTime.StringComponent.comma,
-                UnixTime.StringComponent.space,
-                UnixTime.StringComponent.dayOfWeek3,
-                UnixTime.StringComponent.space,
-                UnixTime.StringComponent.hhmm24
-            )
-        }
+private fun dayStartSecondsToString(seconds: Int): String {
+    if ((seconds % 3_600) != 0) {
+        reportApi("Invalid seconds in TabToolsVM.dayStartSecondsToString($seconds)")
+        return "error"
     }
+
+    val h = seconds / 3_600
+
+    if (h >= 0)
+        return "$h:00".padStart(5, '0')
+
+    return "${24 + h}:00".padStart(5, '0')
+}
+
+private fun prepAutoBackupTimeString(
+    unixTime: UnixTime?,
+): String {
+    if (unixTime == null)
+        return ""
+    return unixTime.getStringByComponents(
+        UnixTime.StringComponent.dayOfMonth,
+        UnixTime.StringComponent.space,
+        UnixTime.StringComponent.month3,
+        UnixTime.StringComponent.comma,
+        UnixTime.StringComponent.space,
+        UnixTime.StringComponent.dayOfWeek3,
+        UnixTime.StringComponent.space,
+        UnixTime.StringComponent.hhmm24
+    )
 }
