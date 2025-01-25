@@ -20,6 +20,7 @@ import me.timeto.shared.launchEx
 import me.timeto.shared.launchExDefault
 import me.timeto.shared.launchExIo
 import me.timeto.shared.onEachExIn
+import me.timeto.shared.prayEmoji
 import me.timeto.shared.reportApi
 import me.timeto.shared.vm.WhatsNewVm
 import me.timeto.shared.vm.__Vm
@@ -108,7 +109,7 @@ class SettingsVm : __Vm<SettingsVm.State>() {
             .getOrNullFlow()
             .onEachExIn(scope) { kv ->
                 val isEnabled = kv?.value.isSendingReports()
-                state.update { it.copy(privacyNote = if (isEnabled) null else PrivacySheetVm.prayEmoji) }
+                state.update { it.copy(privacyNote = if (isEnabled) null else prayEmoji) }
             }
         KvDb.KEY.TODAY_ON_HOME_SCREEN
             .selectBooleanOrNullFlow()
