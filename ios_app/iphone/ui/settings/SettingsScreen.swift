@@ -289,6 +289,12 @@ private struct SettingsScreenInner: View {
                 }
             }
             
+            Text(state.infoText)
+                .customListItem()
+                .textAlign(.center)
+                .foregroundColor(.secondary)
+                .listRowBackground(Color(.systemBackground))
+            
             ///
             
             Section("aill") {
@@ -299,17 +305,6 @@ private struct SettingsScreenInner: View {
                     Text("Strawberry").tag("s")
                 }
             }
-            
-            /*
-             HStack {
-             Text("timeto.me for iOS\nv\(Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String).\(state.appVersion)")
-             .foregroundColor(.secondary)
-             .font(.system(size: 16))
-             .multilineTextAlignment(.center)
-             }
-             .padding(.top, 24)
-             .padding(.bottom, 34)
-             */
         }
         .contentMargins(.top, 12)
         .contentMarginsTabBar(extra: 28)
