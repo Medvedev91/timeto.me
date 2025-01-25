@@ -55,7 +55,7 @@ private struct ChecklistsPickerSheetInner: View {
                 .listSectionSeparator(.hidden, edges: [.top, .bottom])
             }
             .animateVmValue(value: state.checklistsDbSorted, state: $animatedChecklistsDb)
-            .plainList()
+            .listStyle(.plain)
             .interactiveDismissDisabled()
             .environment(\.editMode, $editMode)
             .toolbarTitleDisplayMode(.inline)

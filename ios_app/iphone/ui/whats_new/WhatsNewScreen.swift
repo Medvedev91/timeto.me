@@ -63,7 +63,7 @@ struct WhatsNewScreen: View {
                 }
                 .listSectionSeparator(.hidden, edges: [.top, .bottom])
             }
-            .plainList()
+            .listStyle(.plain)
             .navigationTitle(state.headerTitle)
             .toolbarTitleDisplayMode(.inline)
             .contentMarginsTabBar(extra: 20)

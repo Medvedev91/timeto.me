@@ -66,7 +66,7 @@ private struct ChecklistItemsFormSheetInner: View {
         }
         .environment(\.editMode, $editMode)
         .contentMargins(.vertical, 8)
-        .plainList()
+        .listStyle(.plain)
         .navigationTitle(state.checklistName)
         .toolbarTitleDisplayMode(.inline)
         .toolbar {

@@ -100,7 +100,6 @@ struct ReadmeTabView: View {
                         }
                         .padding(.top, 24)
                         .padding(.leading, H_PADDING)
-                        .listItemNotClickable()
                     } else if paragraph is ReadmeVm.ParagraphTimerTypical {
                         ReadmeImagesPreview(
                             images: [
@@ -218,16 +217,14 @@ struct ReadmeTabView: View {
                     }
                 }
             }
-            .listItemNoPaddings()
-            .listRowSeparator(.hidden)
+            .customListItem()
             
             // Not contentMargin to right scroll bar
             ZStack {}
                 .padding(.top, 28)
-                .listItemNoPaddings()
-                .listRowSeparator(.hidden)
+                .customListItem()
         }
         .contentMarginsTabBar()
-        .plainList()
+        .customList()
     }
 }
