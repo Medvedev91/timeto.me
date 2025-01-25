@@ -49,11 +49,12 @@ private struct PrivacyScreenInner: View {
                 isOn: $isSendReportsEnabled
             )
             .customListItem()
-            .padding(.vertical, 8)
-            .padding(.horizontal, 12)
+            .animateVmValue(value: state.isSendReportsEnabled, state: $isSendReportsEnabled)
             .onChange(of: isSendReportsEnabled) { _, new in
                 vm.setIsSendingReports(isOn: new)
             }
+            .padding(.vertical, 8)
+            .padding(.horizontal, 12)
             .background(
                 RoundedRectangle(
                     cornerRadius: 12,
