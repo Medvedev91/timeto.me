@@ -289,11 +289,13 @@ private struct SettingsScreenInner: View {
             Text(state.infoText)
                 .customListItem()
                 .textAlign(.center)
+                .font(.system(size: 16))
                 .foregroundColor(.secondary)
                 .listRowBackground(Color(.systemBackground))
+                .padding(.bottom, 40)
         }
         .contentMargins(.top, 12)
-        .contentMarginsTabBar(extra: 28)
+        .contentMarginsTabBar()
         .toolbarTitleDisplayMode(.inlineLarge)
         .navigationTitle(state.headerTitle)
         .fileExporter(
