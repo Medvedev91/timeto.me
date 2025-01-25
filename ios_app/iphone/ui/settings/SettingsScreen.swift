@@ -277,6 +277,16 @@ private struct SettingsScreenInner: View {
                     showOpenSource()
                 }
                 .foregroundColor(.primary)
+                
+                NavigationLink(.privacy) {
+                    HStack {
+                        Text("Privacy")
+                        Spacer()
+                        if let privacyNote = state.privacyNote {
+                            Text(privacyNote)
+                        }
+                    }
+                }
             }
             
             ///
@@ -291,39 +301,6 @@ private struct SettingsScreenInner: View {
             }
             
             /*
-             ///
-             /// Mics
-             
-             MyListView__ItemView(
-             isFirst: false,
-             isLast: true,
-             bgColor: c.fg,
-             withTopDivider: true
-             ) {
-             
-             MyListView__ItemView__ButtonView(
-             text: "Privacy",
-             rightView: AnyView(
-             HStack {
-             if let privacyNote = state.privacyNote {
-             Text(privacyNote)
-             .font(.system(size: 21))
-             .padding(.trailing, H_PADDING)
-             } else {
-             Text("")
-             }
-             }
-             )
-             ) {
-             nativeSheet.show { isPresented in
-             PrivacySheet(
-             isPresented: isPresented
-             )
-             }
-             }
-             }
-             }
-             
              HStack {
              Text("timeto.me for iOS\nv\(Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String).\(state.appVersion)")
              .foregroundColor(.secondary)
