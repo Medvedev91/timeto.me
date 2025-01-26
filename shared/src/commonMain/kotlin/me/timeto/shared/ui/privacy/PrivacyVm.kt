@@ -48,11 +48,10 @@ class PrivacyVm : __Vm<PrivacyVm.State>() {
     }
 
     fun setIsSendingReports(isOn: Boolean) {
-        scopeVm().launchEx {
-            KvDb.KEY.IS_SENDING_REPORTS.upsertIsSendingReports(isOn)
-            if (isOn) launchExIo {
+        launchExIo {
+            KvDb.upsertIsSendingReports(isOn)
+            if (isOn)
                 ping(force = true)
-            }
         }
     }
 

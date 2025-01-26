@@ -1,7 +1,6 @@
 package me.timeto.shared.db
 
 import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneOrNull
 import dbsq.KVSQ
 import kotlinx.coroutines.Dispatchers
@@ -45,6 +44,11 @@ data class KvDb(
         fun KvDb?.isSendingReports(): Boolean {
             val time: Int = this?.value?.toInt() ?: return !deviceData.isFdroid
             return time > 0
+        }
+
+        suspend fun upsertIsSendingReports(isSendingReports: Boolean) {
+            val time: Int = if (isSendingReports) time() else (-time())
+            KEY.IS_SENDING_REPORTS.upsertInt(time)
         }
 
         fun KvDb?.todayOnHomeScreen(): Boolean =
@@ -119,12 +123,6 @@ data class KvDb(
 
         suspend fun upsertInt(value: Int?): Unit = dbIo {
             upsert(value?.toString())
-        }
-
-        //
-
-        suspend fun upsertIsSendingReports(isSendingReports: Boolean) {
-            upsertInt(if (isSendingReports) time() else (-time()))
         }
     }
 
