@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
+import me.timeto.shared.utils.toBoolean10
 
 data class KvDb(
     val key: String,
@@ -45,13 +46,7 @@ data class KvDb(
             return time > 0
         }
 
-        //
-
-        const val TODAY_ON_HOME_SCREEN_DEFAULT = true
-
-        fun todayOnHomeScreenCached(): Boolean =
-            KEY.TODAY_ON_HOME_SCREEN.selectBooleanOrNullCached()
-            ?: TODAY_ON_HOME_SCREEN_DEFAULT
+        fun Boolean?.todayOnHomeScreen(): Boolean = this ?: true
 
         //
         // Backupable Holder

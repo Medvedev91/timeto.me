@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.*
 import me.timeto.shared.*
 import me.timeto.shared.models.GoalFormUi
+import me.timeto.shared.utils.toBoolean10
+import me.timeto.shared.utils.toInt10
 import kotlin.math.max
 
 data class ActivityDb(

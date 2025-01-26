@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import me.timeto.shared.*
 import me.timeto.shared.db.*
+import me.timeto.shared.db.KvDb.Companion.todayOnHomeScreen
 import me.timeto.shared.models.*
 
 class HomeVm : __Vm<HomeVm.State>() {
@@ -97,7 +98,7 @@ class HomeVm : __Vm<HomeVm.State>() {
 
         val mainTasks: List<MainTask> = run {
             val tasksUi: List<TaskUi> =
-                if (KvDb.todayOnHomeScreenCached())
+                if (KvDb.KEY.TODAY_ON_HOME_SCREEN.selectBooleanOrNullCached().todayOnHomeScreen())
                     todayTasksUi
                 else
                     todayTasksUi.filter { taskUi ->
