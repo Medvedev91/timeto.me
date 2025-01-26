@@ -76,6 +76,8 @@ data class KvDb(
         IS_SENDING_REPORTS,
         HOME_README_OPEN_TIME;
 
+        // selectOrNull..
+
         suspend fun selectOrNull(): KvDb? = dbIo {
             db.kVQueries.selectByKey(name).executeAsOneOrNull()?.toDb()
         }
@@ -86,20 +88,21 @@ data class KvDb(
         fun selectOrNullCached(): KvDb? =
             Cache.kvDb.firstOrNull { it.key == name }
 
+        // selectStringOrNull.
+
         suspend fun selectStringOrNull(): String? =
-            selectAll().firstOrNull { it.key == this.name }?.value
+            selectOrNull()?.value
+
+        fun selectStringOrNullFlow(): Flow<String?> =
+            selectOrNullFlow().map { it?.value }
 
         fun selectStringOrNullCached(): String? =
-            Cache.kvDb.firstOrNull { it.key == this.name }?.value
+            selectOrNullCached()?.value
+
+        ///
 
         fun selectBooleanOrNullCached(): Boolean? =
             selectStringOrNullCached()?.toBoolean10()
-
-        fun selectStringOrNullFlow(): Flow<String?> = db.kVQueries
-            .selectByKey(this.name)
-            .asFlow()
-            .mapToOneOrNull(Dispatchers.IO)
-            .map { it?.value_ }
 
         fun selectBooleanOrNullFlow(): Flow<Boolean?> =
             selectStringOrNullFlow().map { it?.toBoolean10() }
