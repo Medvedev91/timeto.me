@@ -40,7 +40,7 @@ fun reportApi(
     // Not launchEx because of recursion
     defaultScope().launch {
 
-        if (!force && !KvDb.KEY.IS_SENDING_REPORTS.selectOrNull().isSendingReports())
+        if (!force && !KvDb.KEY.IS_SENDING_REPORTS.selectStringOrNull().isSendingReports())
             return@launch
 
         zlog("reportApi $message")
@@ -80,7 +80,7 @@ suspend fun ping(
         val today = UnixTime().localDay
 
         if (!force) {
-            if (!KvDb.KEY.IS_SENDING_REPORTS.selectOrNull().isSendingReports())
+            if (!KvDb.KEY.IS_SENDING_REPORTS.selectStringOrNull().isSendingReports())
                 return
             if (pingLastDay == today)
                 return
@@ -110,7 +110,7 @@ suspend fun ping(
 }
 
 private suspend fun getsertTokenPassword(): String {
-    val oldPassword = KvDb.KEY.TOKEN_PASSWORD.selectOrNull()
+    val oldPassword = KvDb.KEY.TOKEN_PASSWORD.selectStringOrNull()
     if (oldPassword != null)
         return oldPassword
 
