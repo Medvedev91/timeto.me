@@ -181,12 +181,9 @@ private struct SettingsScreenInner: View {
             
             Section("SETTINGS") {
                 
-                Button("Folders") {
-                    navigation.sheet {
-                        TaskFoldersFormSheet()
-                    }
+                NavigationLink(.taskFoldersForm) {
+                    Text("Folders")
                 }
-                .foregroundColor(.primary)
                 
                 Button(
                     action: {

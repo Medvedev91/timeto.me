@@ -1,13 +1,13 @@
 import SwiftUI
 import shared
 
-struct TaskFoldersFormSheet: View {
+struct TaskFoldersFormScreen: View {
     
     var body: some View {
         VmView({
             TaskFoldersFormVm()
         }) { vm, state in
-            TaskFoldersFormSheetInner(
+            TaskFoldersFormScreenInner(
                 vm: vm,
                 state: state,
                 foldersDbAnimate: state.foldersDb,
@@ -17,7 +17,7 @@ struct TaskFoldersFormSheet: View {
     }
 }
 
-private struct TaskFoldersFormSheetInner: View {
+private struct TaskFoldersFormScreenInner: View {
     
     let vm: TaskFoldersFormVm
     let state: TaskFoldersFormVm.State
@@ -27,7 +27,6 @@ private struct TaskFoldersFormSheetInner: View {
     
     ///
     
-    @Environment(\.dismiss) private var dismiss
     @Environment(Navigation.self) private var navigation
     
     @State private var editMode: EditMode = .active
@@ -92,13 +91,5 @@ private struct TaskFoldersFormSheetInner: View {
         .contentMargins(.top, 14)
         .toolbarTitleDisplayMode(.inline)
         .navigationTitle(state.title)
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Button("Done") {
-                    dismiss()
-                }
-                .fontWeight(.bold)
-            }
-        }
     }
 }
