@@ -1,6 +1,7 @@
 package me.timeto.shared.ui.settings
 
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.AutoBackup
 import me.timeto.shared.Backup
@@ -13,14 +14,14 @@ import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.KvDb
 import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
 import me.timeto.shared.db.KvDb.Companion.isSendingReports
+import me.timeto.shared.db.KvDb.Companion.todayOnHomeScreen
 import me.timeto.shared.db.NoteDb
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.deviceData
-import me.timeto.shared.launchEx
 import me.timeto.shared.launchExIo
-import me.timeto.shared.onEachExIn
 import me.timeto.shared.prayEmoji
 import me.timeto.shared.reportApi
+import me.timeto.shared.utils.combine
 import me.timeto.shared.vm.WhatsNewVm
 import me.timeto.shared.vm.__Vm
 
@@ -85,47 +86,46 @@ class SettingsVm : __Vm<SettingsVm.State>() {
             shortcutsDb = Cache.shortcutsDb,
             notesDb = Cache.notesDb,
             dayStartSeconds = dayStartOffsetSeconds(),
-            feedbackSubject = "Feedback",
+            feedbackSubject = DEFAULT_FEEDBACK_SUBJECT,
             autoBackupTimeString = prepAutoBackupTimeString(AutoBackup.lastTimeCache.value),
             privacyNote = KvDb.KEY.IS_SENDING_REPORTS.selectStringOrNullCached().privacyNote(),
-            todayOnHomeScreen = KvDb.todayOnHomeScreenCached(),
+            todayOnHomeScreen = KvDb.KEY.TODAY_ON_HOME_SCREEN.selectBooleanOrNullCached().todayOnHomeScreen(),
         )
     )
 
     init {
-        val scope = scopeVm()
-        ChecklistDb.selectAscFlow()
-            .onEachExIn(scope) { checklists -> state.update { it.copy(checklistsDb = checklists) } }
-        ShortcutDb.selectAscFlow()
-            .onEachExIn(scope) { shortcuts -> state.update { it.copy(shortcutsDb = shortcuts) } }
-        NoteDb.selectAscFlow()
-            .onEachExIn(scope) { notes -> state.update { it.copy(notesDb = notes) } }
-        KvDb.KEY.DAY_START_OFFSET_SECONDS
-            .getOrNullFlow()
-            .onEachExIn(scope) { kv ->
-                val seconds = kv?.value.asDayStartOffsetSeconds()
-                state.update { it.copy(dayStartSeconds = seconds) }
+        val scopeVm = scopeVm()
+        combine(
+            ChecklistDb.selectAscFlow(),
+            ShortcutDb.selectAscFlow(),
+            NoteDb.selectAscFlow(),
+            KvDb.KEY.DAY_START_OFFSET_SECONDS.selectStringOrNullFlow(),
+            KvDb.KEY.IS_SENDING_REPORTS.selectStringOrNullFlow(),
+            KvDb.KEY.TODAY_ON_HOME_SCREEN.selectBooleanOrNullFlow(),
+            AutoBackup.lastTimeCache,
+            KvDb.KEY.FEEDBACK_SUBJECT.selectStringOrNullFlow(),
+        ) { checklistsDb: List<ChecklistDb>,
+            shortcutsDb: List<ShortcutDb>,
+            notesDb: List<NoteDb>,
+            dayStartOffsetSeconds: String?,
+            isSendingReports: String?,
+            todayOnHomeScreen: Boolean?,
+            autoBackupLastTime: UnixTime?,
+            feedbackSubject: String?
+            ->
+            state.update {
+                it.copy(
+                    checklistsDb = checklistsDb,
+                    shortcutsDb = shortcutsDb,
+                    notesDb = notesDb,
+                    dayStartSeconds = dayStartOffsetSeconds.asDayStartOffsetSeconds(),
+                    privacyNote = isSendingReports.privacyNote(),
+                    todayOnHomeScreen = todayOnHomeScreen.todayOnHomeScreen(),
+                    autoBackupTimeString = prepAutoBackupTimeString(autoBackupLastTime),
+                    feedbackSubject = feedbackSubject ?: DEFAULT_FEEDBACK_SUBJECT,
+                )
             }
-        KvDb.KEY.IS_SENDING_REPORTS
-            .selectStringOrNullFlow()
-            .onEachExIn(scope) { value: String? ->
-                state.update { it.copy(privacyNote = value.privacyNote()) }
-            }
-        KvDb.KEY.TODAY_ON_HOME_SCREEN
-            .selectBooleanOrNullFlow()
-            .onEachExIn(scope) { kvValue ->
-                state.update {
-                    it.copy(todayOnHomeScreen = kvValue ?: KvDb.TODAY_ON_HOME_SCREEN_DEFAULT)
-                }
-            }
-        AutoBackup.lastTimeCache.onEachExIn(scope) { unixTime ->
-            state.update { it.copy(autoBackupTimeString = prepAutoBackupTimeString(unixTime)) }
-        }
-        scope.launchEx {
-            val subject = KvDb.KEY.FEEDBACK_SUBJECT.selectOrNull()
-            if (subject != null)
-                state.update { it.copy(feedbackSubject = subject) }
-        }
+        }.launchIn(scopeVm)
     }
 
     fun setTodayOnHomeScreen(isOn: Boolean) {
@@ -159,21 +159,19 @@ class SettingsVm : __Vm<SettingsVm.State>() {
 
 ///
 
+private const val DEFAULT_FEEDBACK_SUBJECT = "Feedback"
+
 private fun String?.privacyNote(): String? =
     if (this.isSendingReports()) null else prayEmoji
 
-
 private fun dayStartSecondsToString(seconds: Int): String {
     if ((seconds % 3_600) != 0) {
-        reportApi("Invalid seconds in TabToolsVM.dayStartSecondsToString($seconds)")
+        reportApi("Invalid seconds in SettingsVm.dayStartSecondsToString($seconds)")
         return "error"
     }
-
     val h = seconds / 3_600
-
     if (h >= 0)
         return "$h:00".padStart(5, '0')
-
     return "${24 + h}:00".padStart(5, '0')
 }
 
@@ -190,6 +188,6 @@ private fun prepAutoBackupTimeString(
         UnixTime.StringComponent.space,
         UnixTime.StringComponent.dayOfWeek3,
         UnixTime.StringComponent.space,
-        UnixTime.StringComponent.hhmm24
+        UnixTime.StringComponent.hhmm24,
     )
 }
