@@ -198,21 +198,21 @@ class HomeVm : __Vm<HomeVm.State>() {
             }
         if (deviceData.isFdroid)
             KvDb.KEY.IS_SENDING_REPORTS
-                .getOrNullFlow()
+                .selectOrNullFlow()
                 .onEachExIn(scope) { kvDb ->
                     state.update {
                         it.copy(fdroidMessage = if (kvDb == null) "Message for F-Droid users" else null)
                     }
                 }
         KvDb.KEY.HOME_README_OPEN_TIME
-            .getOrNullFlow()
+            .selectOrNullFlow()
             .onEachExIn(scope) { kvDb ->
                 state.update {
                     it.copy(readmeMessage = if (kvDb == null) "How to use the app" else null)
                 }
             }
         KvDb.KEY.WHATS_NEW_CHECK_UNIX_DAY
-            .getOrNullFlow()
+            .selectOrNullFlow()
             .onEachExIn(scope) { kvDb ->
                 val lastHistoryUnixDay = WhatsNewVm.prepHistoryItemsUi().first().unixDay
                 val message: String? =

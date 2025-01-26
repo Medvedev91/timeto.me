@@ -88,7 +88,7 @@ data class KvDb(
         fun selectOrNullCached(): KvDb? =
             Cache.kvDb.firstOrNull { it.key == name }
 
-        // selectStringOrNull.
+        // selectStringOrNull..
 
         suspend fun selectStringOrNull(): String? =
             selectOrNull()?.value
@@ -106,9 +106,6 @@ data class KvDb(
 
         fun selectBooleanOrNullFlow(): Flow<Boolean?> =
             selectStringOrNullFlow().map { it?.toBoolean10() }
-
-        fun getOrNullFlow(): Flow<KvDb?> = db.kVQueries.selectByKey(this.name).asFlow()
-            .mapToOneOrNull(Dispatchers.IO).map { it?.toDb() }
 
         suspend fun upsert(value: String?): Unit = dbIo {
             if (value == null)
