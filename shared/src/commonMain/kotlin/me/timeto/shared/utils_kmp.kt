@@ -100,8 +100,8 @@ suspend fun ping(
             if (j.getString("status") != "success")
                 throw Exception("status != success\n$plainJson")
             val jData = j.jsonObject["data"]!!.jsonObject
-            KvDb.KEY.TOKEN.upsert(jData.getString("token"))
-            KvDb.KEY.FEEDBACK_SUBJECT.upsert(jData.getString("feedback_subject"))
+            KvDb.KEY.TOKEN.upsertString(jData.getString("token"))
+            KvDb.KEY.FEEDBACK_SUBJECT.upsertString(jData.getString("feedback_subject"))
             pingLastDay = today // After success
         }
     } catch (e: Throwable) {
@@ -113,10 +113,9 @@ private suspend fun getsertTokenPassword(): String {
     val oldPassword = KvDb.KEY.TOKEN_PASSWORD.selectStringOrNull()
     if (oldPassword != null)
         return oldPassword
-
     val chars = ('0'..'9') + ('a'..'z') + ('A'..'Z') + ("!@#%^&*()_+".toList())
     val newPassword = (1..15).map { chars.random() }.joinToString("")
-    KvDb.KEY.TOKEN_PASSWORD.upsert(newPassword)
+    KvDb.KEY.TOKEN_PASSWORD.upsertString(newPassword)
     return newPassword
 }
 

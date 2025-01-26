@@ -130,13 +130,13 @@ class SettingsVm : __Vm<SettingsVm.State>() {
 
     fun setTodayOnHomeScreen(isOn: Boolean) {
         launchExIo {
-            KvDb.KEY.TODAY_ON_HOME_SCREEN.upsertBool(isOn)
+            KvDb.KEY.TODAY_ON_HOME_SCREEN.upsertBoolean(isOn)
         }
     }
 
     fun setDayStartOffsetSeconds(seconds: Int) {
         launchExIo {
-            KvDb.KEY.DAY_START_OFFSET_SECONDS.upsert(seconds.toString())
+            KvDb.KEY.DAY_START_OFFSET_SECONDS.upsertInt(seconds)
         }
     }
 

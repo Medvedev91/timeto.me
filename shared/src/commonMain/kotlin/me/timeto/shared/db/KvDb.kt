@@ -103,27 +103,17 @@ data class KvDb(
         fun selectStringOrNullCached(): String? =
             selectOrNullCached()?.value
 
-        ///
+        // upsert..
 
-        suspend fun upsert(value: String?): Unit = dbIo {
-            if (value == null)
-                db.kVQueries.deleteByKey(key = name)
-            else
-                db.kVQueries.upsert(key = name, value_ = value)
+        suspend fun upsertString(value: String): Unit = dbIo {
+            db.kVQueries.upsert(key = name, value_ = value)
         }
 
-        suspend fun upsertBool(value: Boolean?): Unit = dbIo {
-            val newVal: String? = when (value) {
-                true -> "1"
-                false -> "0"
-                null -> null
-            }
-            upsert(newVal)
-        }
+        suspend fun upsertBoolean(value: Boolean): Unit =
+            upsertString(if (value) "1" else "0")
 
-        suspend fun upsertInt(value: Int?): Unit = dbIo {
-            upsert(value?.toString())
-        }
+        suspend fun upsertInt(value: Int): Unit =
+            upsertString(value.toString())
     }
 
     //
