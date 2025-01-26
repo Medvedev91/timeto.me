@@ -87,7 +87,7 @@ class SettingsVm : __Vm<SettingsVm.State>() {
             dayStartSeconds = dayStartOffsetSeconds(),
             feedbackSubject = "Feedback",
             autoBackupTimeString = prepAutoBackupTimeString(AutoBackup.lastTimeCache.value),
-            privacyNote = null, // todo init value
+            privacyNote = KvDb.KEY.IS_SENDING_REPORTS.selectStringOrNullCached().privacyNote(),
             todayOnHomeScreen = KvDb.todayOnHomeScreenCached(),
         )
     )
@@ -107,10 +107,9 @@ class SettingsVm : __Vm<SettingsVm.State>() {
                 state.update { it.copy(dayStartSeconds = seconds) }
             }
         KvDb.KEY.IS_SENDING_REPORTS
-            .getOrNullFlow()
-            .onEachExIn(scope) { kv ->
-                val isEnabled = kv?.value.isSendingReports()
-                state.update { it.copy(privacyNote = if (isEnabled) null else prayEmoji) }
+            .selectStringOrNullFlow()
+            .onEachExIn(scope) { value: String? ->
+                state.update { it.copy(privacyNote = value.privacyNote()) }
             }
         KvDb.KEY.TODAY_ON_HOME_SCREEN
             .selectBooleanOrNullFlow()
@@ -159,6 +158,10 @@ class SettingsVm : __Vm<SettingsVm.State>() {
 }
 
 ///
+
+private fun String?.privacyNote(): String? =
+    if (this.isSendingReports()) null else prayEmoji
+
 
 private fun dayStartSecondsToString(seconds: Int): String {
     if ((seconds % 3_600) != 0) {
