@@ -74,8 +74,9 @@ data class KvDb(
         IS_SENDING_REPORTS,
         HOME_README_OPEN_TIME;
 
-        suspend fun selectOrNull(): String? =
-            selectAll().firstOrNull { it.key == this.name }?.value
+        suspend fun selectOrNull(): KvDb? = dbIo {
+            db.kVQueries.selectByKey(name).executeAsOneOrNull()?.toDb()
+        }
 
         fun selectOrNullFlow(): Flow<KvDb?> = db.kVQueries.selectByKey(name)
             .asFlow().mapToOneOrNull(Dispatchers.IO).map { it?.toDb() }
