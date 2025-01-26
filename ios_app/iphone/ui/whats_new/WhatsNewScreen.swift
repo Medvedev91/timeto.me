@@ -62,11 +62,15 @@ struct WhatsNewScreen: View {
                     }
                 }
                 .listSectionSeparator(.hidden, edges: [.top, .bottom])
+                
+                Padding(vertical: 20)
+                    .customListItem()
             }
             .listStyle(.plain)
+            .environment(\.defaultMinListRowHeight, 0)
             .navigationTitle(state.headerTitle)
             .toolbarTitleDisplayMode(.inline)
-            .contentMarginsTabBar(extra: 20)
+            .contentMarginsTabBar()
         }
     }
 }
