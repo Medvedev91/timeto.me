@@ -48,6 +48,20 @@ private struct TaskFoldersFormScreenInner: View {
                     }
                 }
                 .foregroundColor(.primary)
+                .contextMenu {
+                    Button(
+                        action: {
+                            navigation.sheet {
+                                TaskFolderFormSheet(
+                                    taskFolderDb: folderDb
+                                )
+                            }
+                        },
+                        label: {
+                            Label("Edit", systemImage: "square.and.pencil")
+                        }
+                    )
+                }
             }
             .onMoveVm { from, to in
                 withFoldersAnimation = false
