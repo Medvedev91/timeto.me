@@ -98,7 +98,7 @@ class HomeVm : __Vm<HomeVm.State>() {
 
         val mainTasks: List<MainTask> = run {
             val tasksUi: List<TaskUi> =
-                if (KvDb.KEY.TODAY_ON_HOME_SCREEN.selectBooleanOrNullCached().todayOnHomeScreen())
+                if (KvDb.KEY.TODAY_ON_HOME_SCREEN.selectOrNullCached().todayOnHomeScreen())
                     todayTasksUi
                 else
                     todayTasksUi.filter { taskUi ->

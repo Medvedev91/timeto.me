@@ -37,16 +37,18 @@ data class KvDb(
             null
         }
 
-        //
+        ///
 
-        fun String?.asDayStartOffsetSeconds(): Int = this?.toInt() ?: 0
+        fun KvDb?.asDayStartOffsetSeconds(): Int =
+            this?.value?.toInt() ?: 0
 
-        fun String?.isSendingReports(): Boolean {
-            val time: Int = this?.toInt() ?: return !deviceData.isFdroid
+        fun KvDb?.isSendingReports(): Boolean {
+            val time: Int = this?.value?.toInt() ?: return !deviceData.isFdroid
             return time > 0
         }
 
-        fun Boolean?.todayOnHomeScreen(): Boolean = this ?: true
+        fun KvDb?.todayOnHomeScreen(): Boolean =
+            this?.value?.toBoolean10() ?: true
 
         //
         // Backupable Holder

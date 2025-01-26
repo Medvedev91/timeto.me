@@ -40,7 +40,7 @@ fun reportApi(
     // Not launchEx because of recursion
     defaultScope().launch {
 
-        if (!force && !KvDb.KEY.IS_SENDING_REPORTS.selectStringOrNull().isSendingReports())
+        if (!force && !KvDb.KEY.IS_SENDING_REPORTS.selectOrNull().isSendingReports())
             return@launch
 
         zlog("reportApi $message")
@@ -80,7 +80,7 @@ suspend fun ping(
         val today = UnixTime().localDay
 
         if (!force) {
-            if (!KvDb.KEY.IS_SENDING_REPORTS.selectStringOrNull().isSendingReports())
+            if (!KvDb.KEY.IS_SENDING_REPORTS.selectOrNull().isSendingReports())
                 return
             if (pingLastDay == today)
                 return
@@ -529,7 +529,7 @@ val localUtcOffsetWithDayStart: Int
     get() = localUtcOffset - dayStartOffsetSeconds()
 
 fun dayStartOffsetSeconds(): Int =
-    KvDb.KEY.DAY_START_OFFSET_SECONDS.selectStringOrNullCached().asDayStartOffsetSeconds()
+    KvDb.KEY.DAY_START_OFFSET_SECONDS.selectOrNullCached().asDayStartOffsetSeconds()
 
 // todo deprecated. Use DaytimePickerUi.text
 fun daytimeToString(daytime: Int): String {

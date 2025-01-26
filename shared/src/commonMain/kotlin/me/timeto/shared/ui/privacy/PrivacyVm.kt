@@ -36,14 +36,14 @@ class PrivacyVm : __Vm<PrivacyVm.State>() {
     override val state = MutableStateFlow(
         State(
             isSendingReportsEnabled =
-                KvDb.KEY.IS_SENDING_REPORTS.selectStringOrNullCached().isSendingReports(),
+                KvDb.KEY.IS_SENDING_REPORTS.selectOrNullCached().isSendingReports(),
         )
     )
 
     init {
         val scopeVm = scopeVm()
-        KvDb.KEY.IS_SENDING_REPORTS.selectStringOrNullFlow().onEachExIn(scopeVm) { value ->
-            state.update { it.copy(isSendingReportsEnabled = value.isSendingReports()) }
+        KvDb.KEY.IS_SENDING_REPORTS.selectOrNullFlow().onEachExIn(scopeVm) { kvDb ->
+            state.update { it.copy(isSendingReportsEnabled = kvDb.isSendingReports()) }
         }
     }
 

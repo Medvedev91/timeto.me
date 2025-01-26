@@ -88,8 +88,8 @@ class SettingsVm : __Vm<SettingsVm.State>() {
             dayStartSeconds = dayStartOffsetSeconds(),
             feedbackSubject = DEFAULT_FEEDBACK_SUBJECT,
             autoBackupTimeString = prepAutoBackupTimeString(AutoBackup.lastTimeCache.value),
-            privacyNote = KvDb.KEY.IS_SENDING_REPORTS.selectStringOrNullCached().privacyNote(),
-            todayOnHomeScreen = KvDb.KEY.TODAY_ON_HOME_SCREEN.selectBooleanOrNullCached().todayOnHomeScreen(),
+            privacyNote = KvDb.KEY.IS_SENDING_REPORTS.selectOrNullCached().privacyNote(),
+            todayOnHomeScreen = KvDb.KEY.TODAY_ON_HOME_SCREEN.selectOrNullCached().todayOnHomeScreen(),
         )
     )
 
@@ -99,17 +99,17 @@ class SettingsVm : __Vm<SettingsVm.State>() {
             ChecklistDb.selectAscFlow(),
             ShortcutDb.selectAscFlow(),
             NoteDb.selectAscFlow(),
-            KvDb.KEY.DAY_START_OFFSET_SECONDS.selectStringOrNullFlow(),
-            KvDb.KEY.IS_SENDING_REPORTS.selectStringOrNullFlow(),
-            KvDb.KEY.TODAY_ON_HOME_SCREEN.selectBooleanOrNullFlow(),
+            KvDb.KEY.DAY_START_OFFSET_SECONDS.selectOrNullFlow(),
+            KvDb.KEY.IS_SENDING_REPORTS.selectOrNullFlow(),
+            KvDb.KEY.TODAY_ON_HOME_SCREEN.selectOrNullFlow(),
             AutoBackup.lastTimeCache,
             KvDb.KEY.FEEDBACK_SUBJECT.selectStringOrNullFlow(),
         ) { checklistsDb: List<ChecklistDb>,
             shortcutsDb: List<ShortcutDb>,
             notesDb: List<NoteDb>,
-            dayStartOffsetSeconds: String?,
-            isSendingReports: String?,
-            todayOnHomeScreen: Boolean?,
+            dayStartOffsetSeconds: KvDb?,
+            isSendingReports: KvDb?,
+            todayOnHomeScreen: KvDb?,
             autoBackupLastTime: UnixTime?,
             feedbackSubject: String?
             ->
@@ -161,7 +161,7 @@ class SettingsVm : __Vm<SettingsVm.State>() {
 
 private const val DEFAULT_FEEDBACK_SUBJECT = "Feedback"
 
-private fun String?.privacyNote(): String? =
+private fun KvDb?.privacyNote(): String? =
     if (this.isSendingReports()) null else prayEmoji
 
 private fun dayStartSecondsToString(seconds: Int): String {
