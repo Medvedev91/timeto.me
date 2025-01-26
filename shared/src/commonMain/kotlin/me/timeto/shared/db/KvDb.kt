@@ -77,6 +77,9 @@ data class KvDb(
         suspend fun selectOrNull(): String? =
             selectAll().firstOrNull { it.key == this.name }?.value
 
+        fun selectOrNullFlow(): Flow<KvDb?> = db.kVQueries.selectByKey(name)
+            .asFlow().mapToOneOrNull(Dispatchers.IO).map { it?.toDb() }
+
         suspend fun selectStringOrNull(): String? =
             selectAll().firstOrNull { it.key == this.name }?.value
 
