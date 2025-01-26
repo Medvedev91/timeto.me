@@ -21,11 +21,11 @@ data class KvDb(
     companion object : Backupable__Holder {
 
         suspend fun selectAll(): List<KvDb> = dbIo {
-            db.kVQueries.selectAll().executeAsList().map { it.toDb() }
+            db.kVQueries.selectAll().asList { toDb() }
         }
 
-        fun selectAllFlow(): Flow<List<KvDb>> = db.kVQueries.selectAll().asFlow()
-            .mapToList(Dispatchers.IO).map { list -> list.map { it.toDb() } }
+        fun selectAllFlow(): Flow<List<KvDb>> =
+            db.kVQueries.selectAll().asListFlow { toDb() }
 
         ///
 
@@ -54,7 +54,7 @@ data class KvDb(
         // Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.kVQueries.selectAll().executeAsList().map { it.toDb() }
+            db.kVQueries.selectAll().asList { toDb() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
@@ -101,12 +101,6 @@ data class KvDb(
 
         ///
 
-        fun selectBooleanOrNullCached(): Boolean? =
-            selectStringOrNullCached()?.toBoolean10()
-
-        fun selectBooleanOrNullFlow(): Flow<Boolean?> =
-            selectStringOrNullFlow().map { it?.toBoolean10() }
-
         suspend fun upsert(value: String?): Unit = dbIo {
             if (value == null)
                 db.kVQueries.deleteByKey(key = name)
@@ -140,7 +134,7 @@ data class KvDb(
     override fun backupable__getId(): String = key
 
     override fun backupable__backup(): JsonElement = listOf(
-        key, value
+        key, value,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
@@ -156,12 +150,8 @@ data class KvDb(
     }
 }
 
-private fun KVSQ.toDb() = KvDb(
-    key = key, value = value_
-)
+///
 
-private fun String.toBool(): Boolean = when (this) {
-    "1" -> true
-    "0" -> false
-    else -> throw Exception()
-}
+private fun KVSQ.toDb() = KvDb(
+    key = key, value = value_,
+)
