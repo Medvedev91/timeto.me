@@ -19,18 +19,19 @@ fun initKmpAndroid(
 ) {
     androidApplication = application
 
-    val manufacturer = Build.MANUFACTURER
-    val model = Build.MODEL
-    val deviceName = if (model.startsWith(manufacturer)) model else "$manufacturer $model"
+    val manufacturer: String = Build.MANUFACTURER
+    val model: String = Build.MODEL
+    val deviceName: String =
+        if (model.startsWith(manufacturer)) model else "$manufacturer $model"
 
-    val deviceData = DeviceData(
+    val systemInfo = SystemInfo(
         build = build,
         version = version,
-        os = DeviceData.Os.Android(Build.VERSION.RELEASE),
+        os = SystemInfo.Os.Android(Build.VERSION.RELEASE),
         device = deviceName,
         flavor = flavor,
     )
-    initKmp(AndroidSqliteDriver(TimetomeDB.Schema, application, DB_NAME), deviceData)
+    initKmp(AndroidSqliteDriver(TimetomeDB.Schema, application, DB_NAME), systemInfo)
 }
 
 actual fun getResourceContent(file: String, type: String) = androidApplication

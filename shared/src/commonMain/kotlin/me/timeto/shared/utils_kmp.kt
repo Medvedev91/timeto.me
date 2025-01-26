@@ -27,7 +27,7 @@ const val HI_EMAIL = "hi@timeto.me"
 const val developerEmoji = "👨‍💻"
 const val prayEmoji = "🙏"
 
-internal lateinit var deviceData: DeviceData
+internal lateinit var systemInfo: SystemInfo
 var batteryLevelOrNull: Int? = null
 var isBatteryChargingOrNull: Boolean? = null
 
@@ -54,7 +54,7 @@ fun reportApi(
                         append("message", message)
                     }
                 ) {
-                    appendDeviceData(token)
+                    appendSystemInfo(token)
                 }
             }
         } catch (e: Throwable) {
@@ -92,7 +92,7 @@ suspend fun ping(
                 val password = getsertTokenPassword()
                 url {
                     parameters.append("password", password)
-                    appendDeviceData(token)
+                    appendSystemInfo(token)
                 }
             }
             val plainJson = httpResponse.bodyAsText()
@@ -164,15 +164,15 @@ fun taskAutostartData(
     return activity to timerTime
 }
 
-fun HttpRequestBuilder.appendDeviceData(
+fun HttpRequestBuilder.appendSystemInfo(
     token: String?,
 ) {
     url {
         parameters.append("__token", token ?: "")
-        parameters.append("__build", deviceData.build.toString())
-        parameters.append("__os", deviceData.os.fullVersion)
-        parameters.append("__device", deviceData.device)
-        parameters.append("__flavor", deviceData.flavor ?: "")
+        parameters.append("__build", systemInfo.build.toString())
+        parameters.append("__os", systemInfo.os.fullVersion)
+        parameters.append("__device", systemInfo.device)
+        parameters.append("__flavor", systemInfo.flavor ?: "")
     }
 }
 
@@ -479,7 +479,7 @@ lateinit var initKmpDeferred: Deferred<Unit>
 
 internal fun initKmp(
     sqlDriver: SqlDriver,
-    deviceData_: DeviceData,
+    systemInfo_: SystemInfo,
 ) {
     db = TimetomeDB(
         driver = sqlDriver,
@@ -509,8 +509,8 @@ internal fun initKmp(
         NoteSQAdapter = NoteSQ.Adapter(IntColumnAdapter, IntColumnAdapter),
         GoalSqAdapter = GoalSq.Adapter(IntColumnAdapter, IntColumnAdapter, IntColumnAdapter, IntColumnAdapter),
     )
-    deviceData = deviceData_
-    initKmpDeferred = defaultScope().async { Cache.init() }
+    systemInfo = systemInfo_
+    initKmpDeferred = ioScope().async { Cache.init() }
 }
 
 ///
@@ -623,38 +623,5 @@ class Wheel<T>(
             nextIndex = 0
         lastIndex = nextIndex
         return items[nextIndex]
-    }
-}
-
-internal data class DeviceData(
-    val build: Int,
-    val version: String,
-    val os: Os,
-    val device: String,
-    val flavor: String?,
-) {
-
-    val isFdroid: Boolean = (flavor == "fdroid")
-
-    ///
-
-    sealed class Os(
-        val version: String,
-    ) {
-
-        val fullVersion: String = run {
-            val prefix: String = when (this) {
-                is Android -> "android"
-                is Ios -> "ios"
-                is Watchos -> "watchos"
-            }
-            "$prefix-$version"
-        }
-
-        ///
-
-        class Android(version: String) : Os(version)
-        class Ios(version: String) : Os(version)
-        class Watchos(version: String) : Os(version)
     }
 }

@@ -196,7 +196,7 @@ class HomeVm : __Vm<HomeVm.State>() {
             .onEachExIn(scope) { tasks ->
                 state.update { it.copy(todayTasksUi = tasks.map { it.toUi() }) }
             }
-        if (deviceData.isFdroid)
+        if (systemInfo.isFdroid)
             KvDb.KEY.IS_SENDING_REPORTS
                 .selectOrNullFlow()
                 .onEachExIn(scope) { kvDb ->

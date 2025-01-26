@@ -12,14 +12,14 @@ import me.timeto.shared.db.*
 internal actual val REPORT_API_TITLE = " iOS"
 
 fun initKmpIos() {
-    val deviceData = DeviceData(
+    val systemInfo = SystemInfo(
         build = (NSBundle.mainBundle.infoDictionary!!["CFBundleVersion"] as String).toInt(),
         version = NSBundle.mainBundle.infoDictionary!!["CFBundleShortVersionString"] as String,
-        os =  DeviceData.Os.Ios(UIDevice.currentDevice.systemVersion),
+        os =  SystemInfo.Os.Ios(UIDevice.currentDevice.systemVersion),
         device = machineIdentifier(),
         flavor = null,
     )
-    initKmp(createNativeDriver(DB_NAME, TimetomeDB.Schema), deviceData)
+    initKmp(createNativeDriver(DB_NAME, TimetomeDB.Schema), systemInfo)
     listenForSyncWatch()
 }
 

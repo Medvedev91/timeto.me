@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.AutoBackup
 import me.timeto.shared.Backup
 import me.timeto.shared.Cache
-import me.timeto.shared.DeviceData
+import me.timeto.shared.SystemInfo
 import me.timeto.shared.UnixTime
 import me.timeto.shared.backupStateFlow
 import me.timeto.shared.dayStartOffsetSeconds
@@ -17,7 +17,7 @@ import me.timeto.shared.db.KvDb.Companion.isSendingReports
 import me.timeto.shared.db.KvDb.Companion.todayOnHomeScreen
 import me.timeto.shared.db.NoteDb
 import me.timeto.shared.db.ShortcutDb
-import me.timeto.shared.deviceData
+import me.timeto.shared.systemInfo
 import me.timeto.shared.launchExIo
 import me.timeto.shared.prayEmoji
 import me.timeto.shared.reportApi
@@ -70,13 +70,13 @@ class SettingsVm : __Vm<SettingsVm.State>() {
         }
 
         val infoText: String = run {
-            val osName: String = when (deviceData.os) {
-                is DeviceData.Os.Android -> "Android"
-                is DeviceData.Os.Ios -> "iOS"
-                is DeviceData.Os.Watchos -> "watchOS"
+            val osName: String = when (systemInfo.os) {
+                is SystemInfo.Os.Android -> "Android"
+                is SystemInfo.Os.Ios -> "iOS"
+                is SystemInfo.Os.Watchos -> "watchOS"
             }
-            val flavor: String = deviceData.flavor?.let { "-$it" } ?: ""
-            "timeto.me for $osName\nv${deviceData.version}.${deviceData.build}$flavor"
+            val flavor: String = systemInfo.flavor?.let { "-$it" } ?: ""
+            "timeto.me for $osName\nv${systemInfo.version}.${systemInfo.build}$flavor"
         }
     }
 
