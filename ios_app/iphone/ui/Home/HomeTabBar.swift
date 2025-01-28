@@ -22,7 +22,7 @@ struct HomeTabBar: View {
     ///
     
     private var showBackground: Bool {
-        tabSelected != .main || state.isTasksVisible
+        tabSelected != .home || state.isTasksVisible
     }
     
     @EnvironmentObject private var nativeSheet: NativeSheet
@@ -51,11 +51,11 @@ struct HomeTabBar: View {
                 
                 Button(
                     action: {
-                        if tabSelected == .main {
+                        if tabSelected == .home {
                             vm.toggleIsTasksVisible()
                         } else {
                             vm.setIsTaskVisible(isVisible: false)
-                            tabSelected = .main
+                            tabSelected = .home
                         }
                     },
                     label: {
@@ -102,7 +102,7 @@ struct HomeTabBar: View {
                 Button(
                     action: {
                         vm.setIsTaskVisible(isVisible: false)
-                        tabSelected = (tabSelected == .settings ? .main : .settings)
+                        tabSelected = (tabSelected == .settings ? .home : .settings)
                     },
                     label: {
                         Image(systemName: "ellipsis.circle")

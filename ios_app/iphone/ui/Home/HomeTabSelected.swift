@@ -1,4 +1,4 @@
 enum HomeTabSelected {
-    case main
+    case home
     case settings
 }
