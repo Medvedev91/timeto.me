@@ -24,7 +24,7 @@ struct HomeMainTabView: View {
             
             ZStack {
                 
-                let checklistDb = state.checklistDb
+                let checklistDb: ChecklistDb? = state.checklistDb
                 
                 VStack {
                     
