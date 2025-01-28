@@ -14,6 +14,7 @@ class Navigation: DialogsManager {
     
     fileprivate var pathList: [NavigationPath] = []
     fileprivate var sheetViews = [NavigationSheet<AnyView>]()
+    fileprivate var fullScreenViews = [NavigationFullScreen<AnyView>]()
     fileprivate var alertViews = [NavigationAlert]()
     fileprivate var confirmationViews = [NavigationConfirmation]()
     
@@ -93,6 +94,10 @@ private struct NavigationModifier: ViewModifier {
             
             ForEach(navigation.sheetViews) { sheetView in
                 sheetView
+            }
+            
+            ForEach(navigation.fullScreenViews) { fullScreenView in
+                fullScreenView
             }
             
             ForEach(navigation.alertViews) { alertView in
