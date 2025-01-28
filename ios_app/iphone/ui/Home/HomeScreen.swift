@@ -27,7 +27,7 @@ struct HomeScreen: View {
                 
                 switch tabSelected {
                 case .main:
-                    HomeMainTabView(vm: vm, state: state)
+                    HomeView(vm: vm, state: state)
                         .attachNavigation()
                 case .settings:
                     SettingsScreen()

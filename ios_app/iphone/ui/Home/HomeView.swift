@@ -7,7 +7,7 @@ private let mtgCircleHeight = 24.0
 private let mtgCircleFontSize = 15.0
 private let mtgCircleFontWeight: Font.Weight = .semibold
 
-struct HomeMainTabView: View {
+struct HomeView: View {
     
     let vm: HomeVm
     let state: HomeVm.State
