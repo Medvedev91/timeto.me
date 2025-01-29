@@ -12,7 +12,7 @@ struct ReadmeScreen: View {
             ReadmeScreenInner(
                 vm: vm,
                 state: state,
-                selectedTab: state.tabUi // @State inited once
+                selectedTab: state.tabUi
             )
         }
     }
@@ -25,15 +25,37 @@ private struct ReadmeScreenInner: View {
     
     @State var selectedTab: ReadmeVm.TabUi
     
+    ///
+    
+    @Environment(\.dismiss) private var dismiss
+    
     var body: some View {
         
         ZStack {
             ReadmeTabView(tabUi: state.tabUi)
                 .id("tab_\(state.tabUi.id)") // To scroll to top
         }
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .principal) {
+        .safeAreaInset(edge: .top) {
+            
+            VStack {
+                
+                ZStack {
+                    
+                    HStack {
+                        Spacer()
+                        Button("Done") {
+                            dismiss()
+                        }
+                        .fontWeight(.semibold)
+                    }
+                    .padding(.horizontal, 16)
+                    
+                    Text(state.title)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.primary)
+                }
+                .padding(.top, 6)
+                
                 Picker("", selection: $selectedTab) {
                     ForEach(state.tabsUi, id: \.id) { tabUi in
                         Text(tabUi.title)
@@ -41,8 +63,16 @@ private struct ReadmeScreenInner: View {
                     }
                 }
                 .pickerStyle(.segmented)
+                .padding(.horizontal, 16)
+                .padding(.top, 16)
+                .padding(.bottom, 12)
+                
+                Color(.systemGray5).frame(height: onePx)
             }
+            .background(.bar)
         }
+        .navigationBarHidden(true)
+        .statusBarHidden(true)
         .onChange(of: selectedTab) { _, new in
             vm.setTabUi(tabUi: new)
         }
