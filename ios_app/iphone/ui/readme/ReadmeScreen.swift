@@ -28,11 +28,12 @@ private struct ReadmeScreenInner: View {
     ///
     
     @Environment(\.dismiss) private var dismiss
+    @State private var isScrolled: Bool = false
     
     var body: some View {
         
         ZStack {
-            ReadmeTabView(tabUi: state.tabUi)
+            ReadmeTabView(tabUi: state.tabUi, isScrolled: $isScrolled)
                 .id("tab_\(state.tabUi.id)") // To scroll to top
         }
         .safeAreaInset(edge: .top) {
@@ -67,9 +68,9 @@ private struct ReadmeScreenInner: View {
                 .padding(.top, 18)
                 .padding(.bottom, 12)
                 
-                Color(.systemGray5).frame(height: onePx)
+                Color(isScrolled ? .systemGray5 : .clear).frame(height: onePx)
             }
-            .background(.bar)
+            .background(isScrolled ? AnyShapeStyle(.bar) : AnyShapeStyle(.clear))
         }
         .navigationBarHidden(true)
         .statusBarHidden(true)

@@ -6,6 +6,7 @@ private let pTextLineHeight = 3.2
 struct ReadmeTabView: View {
     
     let tabUi: ReadmeVm.TabUi
+    @Binding var isScrolled: Bool
     
     var body: some View {
         
@@ -224,7 +225,37 @@ struct ReadmeTabView: View {
                 .padding(.top, 28)
                 .customListItem()
         }
+        .onScrolled { new in
+            DispatchQueue.main.async {
+                isScrolled = new
+            }
+        }
         .contentMarginsTabBar()
         .customList()
+        .scrollTargetLayout()
+    }
+}
+
+///
+
+private extension View {
+    
+    func onScrolled(
+        action: @escaping (Bool) -> Void
+    ) -> some View {
+        if #available(iOS 18.0, *) {
+            return onScrollGeometryChange(
+                for: Double.self,
+                of: { geometry in
+                    let realScroll = geometry.contentInsets.top + geometry.contentOffset.y
+                    action(realScroll > 15)
+                    return geometry.contentSize.height
+                },
+                action: { _, _ in }
+            )
+        } else {
+            action(true)
+            return self
+        }
     }
 }
