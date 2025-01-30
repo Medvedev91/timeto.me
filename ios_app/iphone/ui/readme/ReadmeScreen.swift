@@ -64,7 +64,7 @@ private struct ReadmeScreenInner: View {
                 }
                 .pickerStyle(.segmented)
                 .padding(.horizontal, 16)
-                .padding(.top, 16)
+                .padding(.top, 18)
                 .padding(.bottom, 12)
                 
                 Color(.systemGray5).frame(height: onePx)
