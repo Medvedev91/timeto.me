@@ -45,6 +45,21 @@ class Navigation: DialogsManager {
         )
     }
     
+    func fullScreen<Content: View>(
+        @ViewBuilder content: @escaping () -> Content
+    ) {
+        fullScreenViews.append(
+            NavigationFullScreen(
+                content: {
+                    AnyView(content())
+                },
+                onRemove: { id in
+                    self.fullScreenViews.removeAll { $0.id == id }
+                }
+            )
+        )
+    }
+    
     nonisolated func alert(message: String) {
         Task { @MainActor in
             let alert = NavigationAlert(
