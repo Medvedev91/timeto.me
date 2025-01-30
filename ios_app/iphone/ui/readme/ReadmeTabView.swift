@@ -222,7 +222,7 @@ struct ReadmeTabView: View {
             
             // Not contentMargin to right scroll bar
             ZStack {}
-                .padding(.top, 28)
+                .padding(.top, 8)
                 .customListItem()
         }
         .onScrolled { new in
@@ -230,7 +230,6 @@ struct ReadmeTabView: View {
                 isScrolled = new
             }
         }
-        .contentMarginsTabBar()
         .customList()
         .scrollTargetLayout()
     }
