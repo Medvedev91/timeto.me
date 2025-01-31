@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-struct ReadmeScreen: View {
+struct ReadmeFullScreen: View {
     
     let defaultItem: ReadmeVm.DefaultItem
     
@@ -9,7 +9,7 @@ struct ReadmeScreen: View {
         VmView({
             ReadmeVm(defaultItem: defaultItem)
         }) { vm, state in
-            ReadmeScreenInner(
+            ReadmeFullScreenInner(
                 vm: vm,
                 state: state,
                 selectedTab: state.tabUi
@@ -18,7 +18,7 @@ struct ReadmeScreen: View {
     }
 }
 
-private struct ReadmeScreenInner: View {
+private struct ReadmeFullScreenInner: View {
     
     let vm: ReadmeVm
     let state: ReadmeVm.State
