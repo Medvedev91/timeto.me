@@ -40,9 +40,12 @@ private struct SettingsScreenInner: View {
             
             Section {
                 
-                NavigationLink(.readme(defaultItem: .basics)) {
-                    Text(state.readmeTitle)
+                Button(state.readmeTitle) {
+                    navigation.fullScreen {
+                        ReadmeFullScreen(defaultItem: .basics)
+                    }
                 }
+                .foregroundColor(.primary)
                 
                 NavigationLink(.whatsNew) {
                     HStack {
