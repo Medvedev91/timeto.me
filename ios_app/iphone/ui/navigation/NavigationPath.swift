@@ -6,7 +6,6 @@ enum NavigationPath: Hashable {
     case checklist(checklistDb: ChecklistDb, maxLines: Int, onDelete: () -> Void)
     case note(noteDb: NoteDb, onDelete: () -> Void)
     case privacy
-    case readme(defaultItem: ReadmeVm.DefaultItem)
     case taskFoldersForm
     case whatsNew
     
@@ -20,9 +19,6 @@ enum NavigationPath: Hashable {
             hasher.combine(noteDb.id)
         case .privacy:
             hasher.combine("privacy")
-        case .readme(let defaultItem):
-            hasher.combine("readme")
-            hasher.combine(defaultItem)
         case .taskFoldersForm:
             hasher.combine("task_folders_form")
         case .whatsNew:
@@ -45,8 +41,6 @@ extension NavigationPath {
             NoteScreen(noteDb: noteDb, onDelete: onDelete)
         case .privacy:
             PrivacyScreen(titleDisplayMode: .inline, scrollBottomMargin: HomeTabBar__HEIGHT)
-        case .readme(let defaultItem):
-            ReadmeScreen(defaultItem: defaultItem)
         case .taskFoldersForm:
             TaskFoldersFormScreen()
         case .whatsNew:
