@@ -32,7 +32,9 @@ struct HomeView: View {
                         Button(
                             action: {
                                 vm.onReadmeOpen()
-                                navigation.push(.readme(defaultItem: .basics))
+                                navigation.fullScreen {
+                                    ReadmeFullScreen(defaultItem: .basics)
+                                }
                             },
                             label: {
                                 Text(readmeMessage)
