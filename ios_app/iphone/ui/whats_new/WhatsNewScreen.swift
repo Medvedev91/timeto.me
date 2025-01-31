@@ -5,6 +5,8 @@ private let secondaryFontSize = 15.0
 
 struct WhatsNewScreen: View {
     
+    @Environment(Navigation.self) private var navigation
+    
     var body: some View {
         
         VmView({ WhatsNewVm() }) { vm, state in
@@ -45,17 +47,18 @@ struct WhatsNewScreen: View {
                             }
                             
                             if let buttonUi = historyItemUi.buttonUi {
-                                let navigationPath: NavigationPath = {
-                                    if buttonUi == .pomodoro {
-                                        return .readme(defaultItem: .pomodoro)
+                                if buttonUi == .pomodoro {
+                                    Button(buttonUi.text) {
+                                        navigation.fullScreen {
+                                            ReadmeFullScreen(defaultItem: .basics)
+                                        }
                                     }
+                                    .foregroundColor(.blue)
+                                    .padding(.top, 6)
+                                    .textAlign(.leading)
+                                } else {
                                     fatalError()
-                                }()
-                                NavigationLink(navigationPath) {
-                                    Text(buttonUi.text)
-                                        .foregroundColor(.blue)
                                 }
-                                .padding(.top, 6)
                             }
                         }
                         .padding(.vertical, 2)
