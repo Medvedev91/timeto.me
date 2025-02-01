@@ -40,7 +40,7 @@ extension NavigationPath {
         case .note(let noteDb, let onDelete):
             NoteScreen(noteDb: noteDb, onDelete: onDelete)
         case .privacy:
-            PrivacyScreen(titleDisplayMode: .inline, scrollBottomMargin: HomeTabBar__HEIGHT)
+            PrivacyScreen(titleDisplayMode: .inline, scrollBottomMargin: MainTabsView__HEIGHT)
         case .taskFoldersForm:
             TaskFoldersFormScreen()
         case .whatsNew:
