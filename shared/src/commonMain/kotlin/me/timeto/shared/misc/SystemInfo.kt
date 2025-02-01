@@ -8,6 +8,13 @@ internal data class SystemInfo(
     val flavor: String?,
 ) {
 
+    companion object {
+
+        lateinit var systemInfo: SystemInfo
+    }
+
+    ///
+
     val isFdroid: Boolean = (flavor == "fdroid")
 
     ///

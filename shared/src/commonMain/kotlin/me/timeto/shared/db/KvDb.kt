@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
+import me.timeto.shared.misc.SystemInfo
 import me.timeto.shared.misc.toBoolean10
 
 data class KvDb(
@@ -42,7 +43,8 @@ data class KvDb(
             this?.value?.toInt() ?: 0
 
         fun KvDb?.isSendingReports(): Boolean {
-            val time: Int = this?.value?.toInt() ?: return !systemInfo.isFdroid
+            val time: Int =
+                this?.value?.toInt() ?: return !SystemInfo.systemInfo.isFdroid
             return time > 0
         }
 

@@ -28,8 +28,6 @@ const val HI_EMAIL = "hi@timeto.me"
 const val developerEmoji = "👨‍💻"
 const val prayEmoji = "🙏"
 
-internal lateinit var systemInfo: SystemInfo
-
 internal expect val REPORT_API_TITLE: String
 fun reportApi(
     message: String,

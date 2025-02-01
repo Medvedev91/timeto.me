@@ -17,8 +17,8 @@ import me.timeto.shared.db.KvDb.Companion.isSendingReports
 import me.timeto.shared.db.KvDb.Companion.todayOnHomeScreen
 import me.timeto.shared.db.NoteDb
 import me.timeto.shared.db.ShortcutDb
-import me.timeto.shared.systemInfo
 import me.timeto.shared.launchExIo
+import me.timeto.shared.misc.SystemInfo.Companion.systemInfo
 import me.timeto.shared.prayEmoji
 import me.timeto.shared.reportApi
 import me.timeto.shared.misc.combine
