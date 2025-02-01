@@ -6,7 +6,8 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.serialization.json.*
 
-fun zlog(message: Any?) = println(";; ${message.toString().replace("\n", "\n;; ")}")
+fun zlog(message: Any?): Unit =
+    println(";; ${message.toString().replace("\n", "\n;; ")}")
 
 fun ioScope() = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
