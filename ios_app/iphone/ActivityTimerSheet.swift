@@ -2,19 +2,19 @@ import SwiftUI
 import shared
 
 extension NativeSheet {
-
+    
     func showActivityTimerSheet(
-            activity: ActivityDb,
-            timerContext: ActivityTimerSheetVm.TimerContext?,
-            // Set false for nested sheet to speed up closing
-            hideOnStart: Bool,
-            onStart: @escaping () -> Void
+        activity: ActivityDb,
+        timerContext: ActivityTimerSheetVm.TimerContext?,
+        // Set false for nested sheet to speed up closing
+        hideOnStart: Bool,
+        onStart: @escaping () -> Void
     ) {
         self.show { isPresented in
             ActivityTimerSheet(
-                    activity: activity,
-                    isPresented: isPresented,
-                    timerContext: timerContext
+                activity: activity,
+                isPresented: isPresented,
+                timerContext: timerContext
             ) {
                 if hideOnStart {
                     isPresented.wrappedValue = false
