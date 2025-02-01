@@ -18,142 +18,139 @@ struct HomeView: View {
     
     var body: some View {
         
-        VStack {
+        ZStack {
             
-            HomeTimerView(vm: vm, state: state)
+            let checklistDb: ChecklistDb? = state.checklistDb
             
-            ZStack {
+            VStack {
                 
-                let checklistDb: ChecklistDb? = state.checklistDb
+                HomeTimerView(vm: vm, state: state)
                 
-                VStack {
-                    
-                    if let readmeMessage = state.readmeMessage {
-                        Button(
-                            action: {
-                                vm.onReadmeOpen()
-                                navigation.fullScreen {
-                                    ReadmeFullScreen(defaultItem: .basics)
-                                }
-                            },
-                            label: {
-                                Text(readmeMessage)
-                                    .foregroundColor(c.white)
-                                    .padding(.horizontal, 12)
-                                    .padding(.vertical, 8)
-                                    .font(.system(size: 17, weight: .medium))
-                                    .background(roundedShape.fill(.red))
-                                    .padding(.top, 8)
+                if let readmeMessage = state.readmeMessage {
+                    Button(
+                        action: {
+                            vm.onReadmeOpen()
+                            navigation.fullScreen {
+                                ReadmeFullScreen(defaultItem: .basics)
                             }
-                        )
-                    }
-                    
-                    if let whatsNewMessage = state.whatsNewMessage {
-                        NavigationLink(.whatsNew) {
-                            Text(whatsNewMessage)
-                                .foregroundColor(.white)
+                        },
+                        label: {
+                            Text(readmeMessage)
+                                .foregroundColor(c.white)
                                 .padding(.horizontal, 12)
                                 .padding(.vertical, 8)
                                 .font(.system(size: 17, weight: .medium))
                                 .background(roundedShape.fill(.red))
                                 .padding(.top, 8)
                         }
+                    )
+                }
+                
+                if let whatsNewMessage = state.whatsNewMessage {
+                    NavigationLink(.whatsNew) {
+                        Text(whatsNewMessage)
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
+                            .font(.system(size: 17, weight: .medium))
+                            .background(roundedShape.fill(.red))
+                            .padding(.top, 8)
                     }
+                }
+                
+                let isMainTasksExists = !state.mainTasks.isEmpty
+                
+                GeometryReader { geometry in
                     
-                    let isMainTasksExists = !state.mainTasks.isEmpty
+                    let _ = vm.upListsContainerSize(
+                        totalHeight: Float(geometry.size.height),
+                        itemHeight: Float(HomeScreen__ITEM_HEIGHT)
+                    )
                     
-                    GeometryReader { geometry in
+                    VStack {
                         
-                        let _ = vm.upListsContainerSize(
-                            totalHeight: Float(geometry.size.height),
-                            itemHeight: Float(HomeScreen__ITEM_HEIGHT)
-                        )
-                        
-                        VStack {
-                            
-                            if let checklistDb = checklistDb {
-                                VStack {
-                                    ChecklistView(
-                                        checklistDb: checklistDb,
-                                        maxLines: 1,
-                                        onDelete: {}
-                                    )
-                                }
-                                .frame(height: CGFloat(state.listsSizes.checklist))
-                                .id("home_checklist_id_\(checklistDb.id)") // Force update on change
-                            }
-                            
-                            if isMainTasksExists {
-                                MainTasksView(
-                                    tasks: state.mainTasks
+                        if let checklistDb = checklistDb {
+                            VStack {
+                                ChecklistView(
+                                    checklistDb: checklistDb,
+                                    maxLines: 1,
+                                    onDelete: {}
                                 )
-                                .frame(height: CGFloat(state.listsSizes.mainTasks))
                             }
-                            
-                            Spacer()
+                            .frame(height: CGFloat(state.listsSizes.checklist))
+                            .id("home_checklist_id_\(checklistDb.id)") // Force update on change
                         }
+                        
+                        if isMainTasksExists {
+                            MainTasksView(
+                                tasks: state.mainTasks
+                            )
+                            .frame(height: CGFloat(state.listsSizes.mainTasks))
+                        }
+                        
+                        Spacer()
                     }
-                    
-                    ForEachIndexed(
-                        state.goalBarsUi,
-                        content: { idx, goalBarUi in
-                            
-                            Button(
-                                action: {
-                                    goalBarUi.startInterval()
-                                },
-                                label: {
+                }
+                
+                ForEachIndexed(
+                    state.goalBarsUi,
+                    content: { idx, goalBarUi in
+                        
+                        Button(
+                            action: {
+                                goalBarUi.startInterval()
+                            },
+                            label: {
+                                
+                                ZStack {
                                     
                                     ZStack {
                                         
-                                        ZStack {
-                                            
-                                            GeometryReader { geometry in
-                                                VStack {
-                                                    ZStack {
-                                                    }
-                                                    .frame(maxHeight: .infinity)
-                                                    .frame(width: geometry.size.width * Double(goalBarUi.ratio))
-                                                    .background(goalBarUi.bgColor.toColor())
-                                                    Spacer()
+                                        GeometryReader { geometry in
+                                            VStack {
+                                                ZStack {
                                                 }
-                                            }
-                                            .fillMaxWidth()
-                                            .clipShape(roundedShape)
-                                            
-                                            HStack {
-                                                
-                                                Text(goalBarUi.textLeft)
-                                                    .padding(.leading, mtgCircleHPadding)
-                                                    .foregroundColor(c.white)
-                                                    .font(.system(size: mtgCircleFontSize, weight: mtgCircleFontWeight))
-                                                
+                                                .frame(maxHeight: .infinity)
+                                                .frame(width: geometry.size.width * Double(goalBarUi.ratio))
+                                                .background(goalBarUi.bgColor.toColor())
                                                 Spacer()
-                                                
-                                                Text(goalBarUi.textRight)
-                                                    .padding(.trailing, mtgCircleHPadding)
-                                                    .foregroundColor(c.white)
-                                                    .font(.system(size: mtgCircleFontSize, weight: mtgCircleFontWeight))
                                             }
                                         }
-                                        .frame(height: mtgCircleHeight, alignment: .center)
-                                        .background(roundedShape.fill(c.homeFg))
-                                        .padding(.horizontal, H_PADDING)
+                                        .fillMaxWidth()
+                                        .clipShape(roundedShape)
+                                        
+                                        HStack {
+                                            
+                                            Text(goalBarUi.textLeft)
+                                                .padding(.leading, mtgCircleHPadding)
+                                                .foregroundColor(c.white)
+                                                .font(.system(size: mtgCircleFontSize, weight: mtgCircleFontWeight))
+                                            
+                                            Spacer()
+                                            
+                                            Text(goalBarUi.textRight)
+                                                .padding(.trailing, mtgCircleHPadding)
+                                                .foregroundColor(c.white)
+                                                .font(.system(size: mtgCircleFontSize, weight: mtgCircleFontWeight))
+                                        }
                                     }
-                                    .frame(height: HomeScreen__ITEM_HEIGHT, alignment: .center)
-                                    .offset(y: 1)
+                                    .frame(height: mtgCircleHeight, alignment: .center)
+                                    .background(roundedShape.fill(c.homeFg))
+                                    .padding(.horizontal, H_PADDING)
                                 }
-                            )
-                        }
-                    )
-                    
-                    Padding(vertical: 10.0)
-                }
+                                .frame(height: HomeScreen__ITEM_HEIGHT, alignment: .center)
+                                .offset(y: 1)
+                            }
+                        )
+                    }
+                )
                 
-                if (state.isTasksVisible) {
-                    TasksView()
-                        .clipped() // Fix list offset on IME open
-                }
+                Padding(vertical: 10.0)
+            }
+            
+            if (state.isTasksVisible) {
+                TasksView()
+                    .clipped() // Fix list offset on IME open
             }
         }
         .padding(.bottom, HomeTabBar__HEIGHT)
