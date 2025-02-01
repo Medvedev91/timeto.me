@@ -13,31 +13,28 @@ struct MainScreen: View {
     // todo remove
     @State private var isTriggersChecklistPresented = false
     
-    @State private var tabSelected: MainTabEnum = .home
+    @State private var tab: MainTabEnum = .home
     
     var body: some View {
         
-        VmView({ HomeVm() }) { vm, state in
+        ZStack(alignment: .bottom) {
             
-            ZStack(alignment: .bottom) {
-                
-                // todo remove PROVOKE_STATE_UPDATE
-                EmptyView().id("MainView checklist \(triggersChecklist?.id ?? 0)")
-                
-                switch tabSelected {
-                case .home:
-                    HomeScreen(vm: vm, state: state)
-                        .attachNavigation()
-                case .tasks:
-                    TasksView()
-                        .attachNavigation()
-                case .settings:
-                    SettingsScreen()
-                        .attachNavigation()
-                }
-                
-                HomeTabBar(vm: vm, state: state, tabSelected: $tabSelected)
+            // todo remove PROVOKE_STATE_UPDATE
+            EmptyView().id("MainView checklist \(triggersChecklist?.id ?? 0)")
+            
+            switch tab {
+            case .home:
+                HomeScreen()
+                    .attachNavigation()
+            case .tasks:
+                TasksView()
+                    .attachNavigation()
+            case .settings:
+                SettingsScreen()
+                    .attachNavigation()
             }
+            
+            MainTabsView(tab: $tab)
         }
         .ignoresSafeArea(.keyboard) // To hide tab bar under the keyboard
         .onReceive(shortcutPublisher) { shortcut in
