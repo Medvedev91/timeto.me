@@ -1,16 +1,31 @@
 import SwiftUI
 import shared
 
-let HomeScreen__ITEM_HEIGHT = 38.0
-let HomeScreen__PRIMARY_FONT_SIZE = 18.0
-
-// MTG - Main Tasks & Goals
-private let mtgCircleHPadding = 7.0
-private let mtgCircleHeight = 24.0
-private let mtgCircleFontSize = 15.0
-private let mtgCircleFontWeight: Font.Weight = .semibold
+let HomeScreen__ITEM_HEIGHT: CGFloat = 38
+let HomeScreen__PRIMARY_FONT_SIZE: CGFloat = 18
 
 struct HomeScreen: View {
+    
+    var body: some View {
+        VmView({
+            HomeVm()
+        }) { vm, state in
+            HomeScreenInner(
+                vm: vm,
+                state: state
+            )
+        }
+    }
+}
+
+///
+
+private let itemCircleHPadding: CGFloat = 7
+private let itemCircleHeight: CGFloat = 24
+private let itemCircleFontSize: CGFloat = 15
+private let itemCircleFontWeight: Font.Weight = .semibold
+
+private struct HomeScreenInner: View {
     
     let vm: HomeVm
     let state: HomeVm.State
@@ -125,19 +140,19 @@ struct HomeScreen: View {
                                         HStack {
                                             
                                             Text(goalBarUi.textLeft)
-                                                .padding(.leading, mtgCircleHPadding)
+                                                .padding(.leading, itemCircleHPadding)
                                                 .foregroundColor(c.white)
-                                                .font(.system(size: mtgCircleFontSize, weight: mtgCircleFontWeight))
+                                                .font(.system(size: itemCircleFontSize, weight: itemCircleFontWeight))
                                             
                                             Spacer()
                                             
                                             Text(goalBarUi.textRight)
-                                                .padding(.trailing, mtgCircleHPadding)
+                                                .padding(.trailing, itemCircleHPadding)
                                                 .foregroundColor(c.white)
-                                                .font(.system(size: mtgCircleFontSize, weight: mtgCircleFontWeight))
+                                                .font(.system(size: itemCircleFontSize, weight: itemCircleFontWeight))
                                         }
                                     }
-                                    .frame(height: mtgCircleHeight, alignment: .center)
+                                    .frame(height: itemCircleHeight, alignment: .center)
                                     .background(roundedShape.fill(c.homeFg))
                                     .padding(.horizontal, H_PADDING)
                                 }
@@ -230,9 +245,9 @@ private struct MainTaskItemView: View {
                     if let timeUI = mainTask.timeUI {
                         Text(timeUI.text)
                             .foregroundColor(.white)
-                            .font(.system(size: mtgCircleFontSize, weight: mtgCircleFontWeight))
-                            .padding(.horizontal, mtgCircleHPadding)
-                            .frame(height: mtgCircleHeight)
+                            .font(.system(size: itemCircleFontSize, weight: itemCircleFontWeight))
+                            .padding(.horizontal, itemCircleHPadding)
+                            .frame(height: itemCircleHeight)
                             .background(roundedShape.fill(timeUI.textBgColor.toColor()))
                             .padding(.trailing, mainTask.taskUi.tf.paused != nil ? 9 : 8)
                     }
@@ -243,7 +258,7 @@ private struct MainTaskItemView: View {
                                 .foregroundColor(c.white)
                                 .font(.system(size: 12, weight: .black))
                         }
-                        .frame(width: mtgCircleHeight, height: mtgCircleHeight)
+                        .frame(width: itemCircleHeight, height: itemCircleHeight)
                         .background(roundedShape.fill(c.green))
                         .padding(.trailing, 8)
                     }
