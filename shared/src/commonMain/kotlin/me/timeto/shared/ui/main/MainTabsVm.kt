@@ -50,7 +50,8 @@ class MainTabsVm : __Vm<MainTabsVm.State>() {
     )
 
     init {
-        scopeVm().launch {
+        val scopeVm = scopeVm()
+        scopeVm.launch {
             while (true) {
                 delayToNextMinute()
                 state.update {
