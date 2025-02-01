@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
-import me.timeto.shared.utils.toBoolean10
+import me.timeto.shared.misc.toBoolean10
 
 data class KvDb(
     val key: String,

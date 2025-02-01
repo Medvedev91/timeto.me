@@ -1,4 +1,4 @@
-package me.timeto.shared.utils
+package me.timeto.shared.misc
 
 import kotlinx.coroutines.flow.Flow
 

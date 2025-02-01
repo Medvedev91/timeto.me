@@ -3,7 +3,7 @@ package me.timeto.shared.vm
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.RepeatingDb
-import me.timeto.shared.utils.toBoolean10
+import me.timeto.shared.misc.toBoolean10
 
 class RepeatingsListVm : __Vm<RepeatingsListVm.State>() {
 

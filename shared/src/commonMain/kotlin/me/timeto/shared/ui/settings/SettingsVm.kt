@@ -21,7 +21,7 @@ import me.timeto.shared.systemInfo
 import me.timeto.shared.launchExIo
 import me.timeto.shared.prayEmoji
 import me.timeto.shared.reportApi
-import me.timeto.shared.utils.combine
+import me.timeto.shared.misc.combine
 import me.timeto.shared.vm.WhatsNewVm
 import me.timeto.shared.vm.__Vm
 

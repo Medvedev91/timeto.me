@@ -1,4 +1,4 @@
-package me.timeto.shared.utils
+package me.timeto.shared.misc
 
 fun Boolean.toInt10(): Int = if (this) 1 else 0
 fun Int.toBoolean10(): Boolean = this != 0

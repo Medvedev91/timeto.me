@@ -5,7 +5,7 @@ import me.timeto.shared.*
 import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.models.DaytimeUi
-import me.timeto.shared.utils.toBoolean10
+import me.timeto.shared.misc.toBoolean10
 
 class RepeatingFormSheetVm(
     private val repeating: RepeatingDb?
