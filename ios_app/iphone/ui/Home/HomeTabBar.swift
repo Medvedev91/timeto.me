@@ -1,14 +1,14 @@
 import SwiftUI
 import shared
 
-let HomeTabBar__HEIGHT = 56.0
+let MainTabBar__HEIGHT = 56.0
 
 private let menuTimeFont = buildTimerFont(size: 10)
 
 extension View {
     
     func contentMarginsTabBar(extra: CGFloat = 0) -> some View {
-        contentMargins(.bottom, HomeTabBar__HEIGHT + extra)
+        contentMargins(.bottom, MainTabBar__HEIGHT + extra)
     }
 }
 
