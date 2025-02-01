@@ -170,27 +170,27 @@ private struct HomeScreenInner: View {
 ///
 
 private struct MainTasksView: View {
-
+    
     let tasks: [HomeVm.MainTask]
-
+    
     private let LIST_BOTTOM_ITEM_ID = "bottom_id"
-
+    
     var body: some View {
-
+        
         GeometryReader { geometry in
-
+            
             ScrollViewReader { scrollProxy in
-
+                
                 ScrollView(showsIndicators: false) {
-
+                    
                     VStack {
-
+                        
                         Spacer()
-
+                        
                         ForEach(tasks.reversed(), id: \.self.taskUi.taskDb.id) { mainTask in
                             MainTaskItemView(mainTask: mainTask)
                         }
-
+                        
                         ZStack {
                         }
                         .id(LIST_BOTTOM_ITEM_ID)
@@ -207,13 +207,13 @@ private struct MainTasksView: View {
 }
 
 private struct MainTaskItemView: View {
-
+    
     let mainTask: HomeVm.MainTask
-
+    
     @EnvironmentObject private var nativeSheet: NativeSheet
-
+    
     var body: some View {
-
+        
         Button(
             action: {
                 mainTask.taskUi.taskDb.startIntervalForUI(
@@ -236,9 +236,9 @@ private struct MainTaskItemView: View {
                 )
             },
             label: {
-
+                
                 HStack {
-
+                    
                     if let timeUI = mainTask.timeUI {
                         Text(timeUI.text)
                             .foregroundColor(.white)
@@ -248,7 +248,7 @@ private struct MainTaskItemView: View {
                             .background(roundedShape.fill(timeUI.textBgColor.toColor()))
                             .padding(.trailing, mainTask.taskUi.tf.paused != nil ? 9 : 8)
                     }
-
+                    
                     if mainTask.taskUi.tf.paused != nil {
                         ZStack {
                             Image(systemName: "pause")
@@ -259,14 +259,14 @@ private struct MainTaskItemView: View {
                         .background(roundedShape.fill(c.green))
                         .padding(.trailing, 8)
                     }
-
+                    
                     Text(mainTask.text)
                         .font(.system(size: HomeScreen__PRIMARY_FONT_SIZE))
                         .foregroundColor(Color.white)
                         .padding(.trailing, 4)
-
+                    
                     Spacer()
-
+                    
                     if let timeUI = mainTask.timeUI {
                         Text(timeUI.note)
                             .foregroundColor(timeUI.noteColor.toColor())
