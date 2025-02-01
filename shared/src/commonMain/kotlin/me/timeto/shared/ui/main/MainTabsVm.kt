@@ -5,14 +5,15 @@ import kotlinx.coroutines.launch
 import me.timeto.shared.Cache
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.UnixTime
-import me.timeto.shared.batteryLevelOrNull
 import me.timeto.shared.delayToNextMinute
-import me.timeto.shared.isBatteryChargingOrNull
+import me.timeto.shared.misc.BatteryInfo
 import me.timeto.shared.vm.__Vm
 
 class MainTabsVm : __Vm<MainTabsVm.State>() {
 
     data class State(
+        val batteryLevel: Int?,
+        val isBatteryCharging: Boolean,
         val updateId: Int,
     ) {
 
@@ -23,10 +24,10 @@ class MainTabsVm : __Vm<MainTabsVm.State>() {
             "${Cache.tasksDb.count { it.isToday }}"
 
         val batteryUi: BatteryUi = run {
-            val level: Int? = batteryLevelOrNull
+            val level: Int? = batteryLevel
             val text = "${level ?: "--"}"
             when {
-                isBatteryChargingOrNull == true -> BatteryUi(
+                isBatteryCharging -> BatteryUi(
                     text = text,
                     colorRgba = if (level == 100) ColorRgba.green else ColorRgba.blue,
                     isHighlighted = true,
@@ -46,11 +47,29 @@ class MainTabsVm : __Vm<MainTabsVm.State>() {
     }
 
     override val state = MutableStateFlow(
-        State(updateId = 0)
+        State(
+            batteryLevel = BatteryInfo.levelFlow.value,
+            isBatteryCharging = BatteryInfo.isChargingFlow.value,
+            updateId = 0,
+        )
     )
 
     init {
+
         val scopeVm = scopeVm()
+
+        combine(
+            BatteryInfo.levelFlow,
+            BatteryInfo.isChargingFlow,
+        ) { level, isCharging ->
+            state.update {
+                it.copy(
+                    batteryLevel = level,
+                    isBatteryCharging = isCharging,
+                )
+            }
+        }.launchIn(scopeVm)
+
         scopeVm.launch {
             while (true) {
                 delayToNextMinute()
