@@ -30,6 +30,7 @@ import me.timeto.app.ui.*
 import kotlinx.coroutines.delay
 import me.timeto.shared.*
 import me.timeto.shared.db.ShortcutDb
+import me.timeto.shared.misc.BatteryInfo
 import me.timeto.shared.vm.AppVm
 
 class MainActivity : ComponentActivity() {
@@ -40,9 +41,9 @@ class MainActivity : ComponentActivity() {
         override fun onReceive(context: Context?, intent: Intent) {
             val level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
             val scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
-            batteryLevelOrNull = level * 100 / scale
+            BatteryInfo.emitLevel(level * 100 / scale)
             val plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0)
-            isBatteryChargingOrNull = plugged != 0
+            BatteryInfo.emitIsCharging(plugged != 0)
         }
     }
 
