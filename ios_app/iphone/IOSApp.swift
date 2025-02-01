@@ -33,7 +33,6 @@ struct IOSApp: App {
                 if let backupMessage = state.backupMessage {
                     BackupMessageView(message: backupMessage)
                 } else if state.isAppReady {
-                    
                     MainScreen()
                         .attachFs()
                         .attachTimetoAlert()
@@ -52,7 +51,7 @@ struct IOSApp: App {
                             UIApplication.shared.isIdleTimerDisabled = (keepScreenOn == true)
                         }
                         .onAppear {
-                            /// Use together
+                            // Use together
                             UNUserNotificationCenter
                                 .current()
                                 .requestAuthorization(options: [.badge, .sound, .alert]) { isGranted, _ in
@@ -62,18 +61,14 @@ struct IOSApp: App {
                                     }
                                 }
                             UNUserNotificationCenter.current().delegate = myInAppNotificationDelegate
-                            ///
                         }
                 }
             }
         }
-        .onChange(of: scenePhase) { phase in
-            // Remove notifications and badges
-            // https://stackoverflow.com/a/41487410
-            // https://betterprogramming.pub/swiftui-tips-detecting-a-swiftui-apps-active-inactive-and-background-state-a5ff8acf5db1
+        .onChange(of: scenePhase) { _, phase in
             if phase == .active {
                 UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-                UIApplication.shared.applicationIconBadgeNumber = 0
+                UNUserNotificationCenter.current().setBadgeCount(0)
             }
         }
     }
@@ -84,15 +79,11 @@ private struct BackupMessageView: View {
     let message: String
     
     var body: some View {
-        VStack {
-            HStack {
-                Spacer()
-            }
-            Spacer()
+        ZStack {
             Text(message)
-                .foregroundColor(c.white)
-            Spacer()
+                .foregroundColor(.primary)
         }
-        .background(c.black)
+        .fillMaxSize()
+        .background(.background)
     }
 }
