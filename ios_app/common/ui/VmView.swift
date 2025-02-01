@@ -13,7 +13,7 @@ struct VmView<
     
     init(
         _ buildVm: @escaping () -> Vm,
-        content: @escaping (Vm, VmState) -> Content
+        @ViewBuilder content: @escaping (Vm, VmState) -> Content
     ) {
         _swiftVm = StateObject(wrappedValue: SwiftVm(buildVm: buildVm))
         self.content = content
