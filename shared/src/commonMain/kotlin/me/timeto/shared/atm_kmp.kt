@@ -9,7 +9,8 @@ import kotlinx.serialization.json.*
 fun zlog(message: Any?): Unit =
     println(";; ${message.toString().replace("\n", "\n;; ")}")
 
-fun ioScope() = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+fun ioScope(): CoroutineScope =
+    CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
 fun defaultScope() = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
