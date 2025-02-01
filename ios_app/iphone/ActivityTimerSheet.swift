@@ -11,15 +11,23 @@ extension NativeSheet {
         onStart: @escaping () -> Void
     ) {
         self.show { isPresented in
-            ActivityTimerSheet(
-                activity: activity,
-                isPresented: isPresented,
-                timerContext: timerContext
-            ) {
-                if hideOnStart {
-                    isPresented.wrappedValue = false
-                }
-                onStart()
+            VmView({
+                ActivityTimerSheetVm(
+                    activity: activity,
+                    timerContext: timerContext
+                )
+            }) { vm, state in
+                ActivityTimerSheet(
+                    vm: vm,
+                    state: state,
+                    timerContext: timerContext,
+                    onStart: {
+                        if hideOnStart {
+                            isPresented.wrappedValue = false
+                        }
+                        onStart()
+                    }
+                )
             }
         }
     }
@@ -27,34 +35,27 @@ extension NativeSheet {
 
 private struct ActivityTimerSheet: View {
     
-    @State private var vm: ActivityTimerSheetVm
+    let vm: ActivityTimerSheetVm
+    let state: ActivityTimerSheetVm.State
     
-    @Binding private var isPresented: Bool
-    private let onStart: () -> ()
+    let timerContext: ActivityTimerSheetVm.TimerContext?
+    let onStart: () -> ()
+    
+    ///
+    
+    @Environment(\.dismiss) private var dismiss
     
     @State private var formTimeItemsIdx: Int32 = 0.toInt32()
     
-    init(
-        activity: ActivityDb,
-        isPresented: Binding<Bool>,
-        timerContext: ActivityTimerSheetVm.TimerContext?,
-        onStart: @escaping () -> ()
-    ) {
-        self._isPresented = isPresented
-        self.onStart = onStart
-        _vm = State(initialValue: ActivityTimerSheetVm(activity: activity, timerContext: timerContext))
-    }
-    
     var body: some View {
         
-        VMView(vm: vm, stack: .VStack()) { state in
+        VStack {
             
             HStack(spacing: 4) {
                 
-                Button(
-                    action: { isPresented.toggle() },
-                    label: { Text("Cancel") }
-                )
+                Button("Cancel") {
+                    dismiss()
+                }
                 
                 Spacer()
                 
@@ -65,17 +66,12 @@ private struct ActivityTimerSheet: View {
                 
                 Spacer()
                 
-                Button(
-                    action: {
-                        vm.start {
-                            onStart()
-                        }
-                    },
-                    label: {
-                        Text("Start")
-                            .fontWeight(.bold)
+                Button("Start") {
+                    vm.start {
+                        onStart()
                     }
-                )
+                }
+                .fontWeight(.bold)
             }
             .padding(.horizontal, 25)
             .padding(.top, 24)
