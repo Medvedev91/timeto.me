@@ -1,28 +1,45 @@
 import SwiftUI
 import shared
 
-let MainTabBar__HEIGHT = 56.0
-
-private let menuTimeFont = buildTimerFont(size: 10)
+let MainTabsView__HEIGHT = 56.0
 
 extension View {
     
     func contentMarginsTabBar(extra: CGFloat = 0) -> some View {
-        contentMargins(.bottom, MainTabBar__HEIGHT + extra)
+        contentMargins(.bottom, MainTabsView__HEIGHT + extra)
     }
 }
 
-struct HomeTabBar: View {
+struct MainTabsView: View {
     
-    let vm: HomeVm
-    let state: HomeVm.State
+    @Binding var tab: MainTabEnum
     
-    @Binding var tabSelected: MainTabEnum
+    var body: some View {
+        VmView({
+            MainTabsVm()
+        }) { _, state in
+            MainTabsViewInner(
+                state: state,
+                tab: $tab
+            )
+        }
+    }
+}
+
+///
+
+private let menuTimeFont: Font = buildTimerFont(size: 10)
+
+private struct MainTabsViewInner: View {
+    
+    let state: MainTabsVm.State
+    
+    @Binding var tab: MainTabEnum
     
     ///
     
     private var showBackground: Bool {
-        tabSelected != .home || state.isTasksVisible
+        tab != .home
     }
     
     @EnvironmentObject private var nativeSheet: NativeSheet
@@ -51,13 +68,13 @@ struct HomeTabBar: View {
                 
                 Button(
                     action: {
-                        tabSelected = (tabSelected == .home ? .tasks : .home)
+                        tab = (tab == .home ? .tasks : .home)
                     },
                     label: {
                         
                         VStack(alignment: .center) {
                             
-                            Text(state.menuTime)
+                            Text(state.timeText)
                                 .foregroundColor(c.homeMenuTime)
                                 .font(menuTimeFont)
                                 .padding(.top, 3)
@@ -82,32 +99,32 @@ struct HomeTabBar: View {
                                     .padding(.leading, 6)
                                     .padding(.trailing, 1 + halfDpFloor)
                                 
-                                Text(state.menuTasksNote)
+                                Text(state.tasksText)
                                     .foregroundColor(c.homeFontSecondary)
                                     .font(.system(size: 13, weight: .regular))
                             }
                             .padding(.trailing, 2)
                         }
                         .padding(.top, 3)
-                        .frame(height: HomeTabBar__HEIGHT)
+                        .frame(height: MainTabsView__HEIGHT)
                         .frame(maxWidth: .infinity)
                     }
                 )
                 
                 Button(
                     action: {
-                        tabSelected = (tabSelected == .settings ? .home : .settings)
+                        tab = (tab == .settings ? .home : .settings)
                     },
                     label: {
                         Image(systemName: "ellipsis.circle")
                             .fillMaxSize()
-                            .foregroundColor(tabSelected == .settings ? .blue : c.homeFontSecondary)
+                            .foregroundColor(tab == .settings ? .blue : c.homeFontSecondary)
                             .font(.system(size: 30, weight: .thin))
                     }
                 )
             }
             .fillMaxWidth()
-            .frame(height: HomeTabBar__HEIGHT)
+            .frame(height: MainTabsView__HEIGHT)
             
             if showBackground {
                 DividerBg()
