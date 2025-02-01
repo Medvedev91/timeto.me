@@ -2,6 +2,7 @@ package me.timeto.shared
 
 import me.timeto.appdbsq.TimetomeDB
 import me.timeto.shared.db.DB_NAME
+import me.timeto.shared.misc.SystemInfo
 import platform.Foundation.NSBundle
 import platform.WatchKit.WKInterfaceDevice
 

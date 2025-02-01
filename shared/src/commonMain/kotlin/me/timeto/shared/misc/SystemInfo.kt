@@ -1,4 +1,4 @@
-package me.timeto.shared
+package me.timeto.shared.misc
 
 internal data class SystemInfo(
     val build: Int,

@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.AutoBackup
 import me.timeto.shared.Backup
 import me.timeto.shared.Cache
-import me.timeto.shared.SystemInfo
+import me.timeto.shared.misc.SystemInfo
 import me.timeto.shared.UnixTime
 import me.timeto.shared.backupStateFlow
 import me.timeto.shared.dayStartOffsetSeconds
