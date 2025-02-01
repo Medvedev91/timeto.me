@@ -14,7 +14,7 @@ class MainTabsVm : __Vm<MainTabsVm.State>() {
     data class State(
         val batteryLevel: Int?,
         val isBatteryCharging: Boolean,
-        val updateId: Int,
+        val forceUpdate: Int,
     ) {
 
         val timeText: String =
@@ -50,7 +50,7 @@ class MainTabsVm : __Vm<MainTabsVm.State>() {
         State(
             batteryLevel = BatteryInfo.levelFlow.value,
             isBatteryCharging = BatteryInfo.isChargingFlow.value,
-            updateId = 0,
+            forceUpdate = 0,
         )
     )
 
@@ -74,7 +74,7 @@ class MainTabsVm : __Vm<MainTabsVm.State>() {
             while (true) {
                 delayToNextMinute()
                 state.update {
-                    it.copy(updateId = it.updateId + 1)
+                    it.copy(forceUpdate = it.forceUpdate + 1)
                 }
             }
         }
