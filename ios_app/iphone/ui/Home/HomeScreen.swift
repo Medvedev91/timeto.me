@@ -150,14 +150,8 @@ struct HomeScreen: View {
                 
                 Padding(vertical: 10.0)
             }
-            
-            if (state.isTasksVisible) {
-                TasksView()
-                    .clipped() // Fix list offset on IME open
-            }
         }
-        .padding(.bottom, HomeTabBar__HEIGHT)
-        .ignoresSafeArea(.keyboard)
+        .padding(.bottom, MainTabsView__HEIGHT)
     }
 }
 
