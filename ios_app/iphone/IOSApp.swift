@@ -135,7 +135,13 @@ private class BatteryManager {
         let state = UIDevice.current.batteryState
         let isCharging: Bool
         switch state {
-        case .charging, .full:
+        case .unknown:
+            isCharging = false
+        case .unplugged:
+            isCharging = false
+        case .charging:
+            isCharging = true
+        case .full:
             isCharging = true
         @unknown default:
             isCharging = false
