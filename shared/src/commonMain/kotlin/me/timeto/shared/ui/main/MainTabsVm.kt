@@ -10,7 +10,7 @@ import me.timeto.shared.delayToNextMinute
 import me.timeto.shared.isBatteryChargingOrNull
 import me.timeto.shared.vm.__Vm
 
-class MainTabBarVm : __Vm<MainTabBarVm.State>() {
+class MainTabsVm : __Vm<MainTabsVm.State>() {
 
     data class State(
         val updateId: Int,
