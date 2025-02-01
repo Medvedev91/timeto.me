@@ -7,7 +7,7 @@ struct IosApp: App {
     
     @Environment(\.scenePhase) private var scenePhase
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
-    @StateObject private var myInAppNotificationDelegate = MyInAppNotificationDelegate()
+    @StateObject private var inAppNotificationDelegate = InAppNotificationDelegate()
     
     private let scheduledNotificationsDataPublisher: AnyPublisher<NSArray, Never> =
     Utils_kmpKt.scheduledNotificationsDataFlow.toPublisher()
@@ -55,7 +55,7 @@ struct IosApp: App {
                                         vm.onNotificationsPermissionReady(delayMls: Int64(500))
                                     }
                                 }
-                            UNUserNotificationCenter.current().delegate = myInAppNotificationDelegate
+                            UNUserNotificationCenter.current().delegate = inAppNotificationDelegate
                         }
                 }
             }

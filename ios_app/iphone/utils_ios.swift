@@ -97,33 +97,6 @@ extension View {
     }
 }
 
-
-///
-/// In app notification
-/// https://youtu.be/LSU-QmeUXP0?t=176
-///
-class MyInAppNotificationDelegate: NSObject, ObservableObject, UNUserNotificationCenterDelegate {
-
-    ///
-    /// Called if the notification comes at a time when the app is open - in app.
-    ///
-    func userNotificationCenter(
-        _ center: UNUserNotificationCenter,
-        willPresent notification: UNNotification,
-        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
-    ) {
-        // Haptic vibration
-        UINotificationFeedbackGenerator().notificationOccurred(.success)
-
-        /// https://developer.apple.com/documentation/usernotifications/unnotificationpresentationoptions
-        /// Without .banner there's nothing, not even a sound. Banner is the usual appearance on top.
-        // .sound
-        // .list /// Keep in notification center
-        // .badge /// Set badge on app icon
-        completionHandler([.banner, .sound])
-    }
-}
-
 ///
 /// https://stackoverflow.com/a/66880368/5169420
 
