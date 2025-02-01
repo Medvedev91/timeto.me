@@ -13,7 +13,7 @@ struct MainScreen: View {
     // todo remove
     @State private var isTriggersChecklistPresented = false
     
-    @State private var tabSelected: HomeTabSelected = .home
+    @State private var tabSelected: MainTabEnum = .home
     
     var body: some View {
         

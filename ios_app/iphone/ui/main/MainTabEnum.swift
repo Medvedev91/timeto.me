@@ -1,4 +1,4 @@
-enum HomeTabSelected {
+enum MainTabEnum {
     case home
     case settings
 }

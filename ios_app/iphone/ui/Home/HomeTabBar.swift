@@ -17,7 +17,7 @@ struct HomeTabBar: View {
     let vm: HomeVm
     let state: HomeVm.State
     
-    @Binding var tabSelected: HomeTabSelected
+    @Binding var tabSelected: MainTabEnum
     
     ///
     
