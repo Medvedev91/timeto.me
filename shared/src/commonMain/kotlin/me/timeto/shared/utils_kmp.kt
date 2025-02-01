@@ -18,6 +18,7 @@ import me.timeto.appdbsq.TimetomeDB
 import me.timeto.shared.db.*
 import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
 import me.timeto.shared.db.KvDb.Companion.isSendingReports
+import me.timeto.shared.misc.getString
 import me.timeto.shared.misc.SystemInfo
 
 const val GOLDEN_RATIO = 1.618f

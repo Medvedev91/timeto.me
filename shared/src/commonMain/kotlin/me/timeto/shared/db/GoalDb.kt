@@ -4,8 +4,10 @@ import dbsq.GoalSq
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.*
 import me.timeto.shared.*
+import me.timeto.shared.misc.getInt
+import me.timeto.shared.misc.getString
+import me.timeto.shared.misc.toJsonArray
 import me.timeto.shared.models.GoalFormUi
-import me.timeto.shared.toJsonArray
 
 data class GoalDb(
     val id: Int,

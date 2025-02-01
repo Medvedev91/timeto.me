@@ -6,9 +6,13 @@ import dbsq.ActivitySQ
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.*
 import me.timeto.shared.*
+import me.timeto.shared.misc.getInt
+import me.timeto.shared.misc.getIntArray
+import me.timeto.shared.misc.getString
 import me.timeto.shared.models.GoalFormUi
 import me.timeto.shared.misc.toBoolean10
 import me.timeto.shared.misc.toInt10
+import me.timeto.shared.misc.toJsonArray
 import kotlin.math.max
 
 data class ActivityDb(

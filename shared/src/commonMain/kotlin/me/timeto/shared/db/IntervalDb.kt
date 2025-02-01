@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
+import me.timeto.shared.misc.getInt
+import me.timeto.shared.misc.getStringOrNull
+import me.timeto.shared.misc.toJsonArray
 
 data class IntervalDb(
     val id: Int,
