@@ -28,8 +28,6 @@ const val developerEmoji = "👨‍💻"
 const val prayEmoji = "🙏"
 
 internal lateinit var systemInfo: SystemInfo
-var batteryLevelOrNull: Int? = null
-var isBatteryChargingOrNull: Boolean? = null
 
 internal expect val REPORT_API_TITLE: String
 fun reportApi(

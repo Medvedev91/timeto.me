@@ -125,39 +125,21 @@ private class BatteryManager {
         BatteryManager.upBatteryLevel()
     }
     
-    private static func isSimulator() -> Bool {
-        #if targetEnvironment(simulator)
-        return true
-        #else
-        return false
-        #endif
+    private static func upBatteryLevel() {
+        let rawLevel: Int = Int(UIDevice.current.batteryLevel * 100)
+        let level: Int = rawLevel < 0 ? 100 : rawLevel
+        BatteryInfo.shared.emitLevel(level: level.toInt32())
     }
     
     private static func upBatteryState() {
         let state = UIDevice.current.batteryState
+        let isCharging: Bool
         switch state {
-        case .unplugged:
-            Utils_kmpKt.isBatteryChargingOrNull = false
-            break
-        case .charging,
-                .full:
-            Utils_kmpKt.isBatteryChargingOrNull = true
-            break
-        case .unknown:
-            Utils_kmpKt.isBatteryChargingOrNull = isSimulator() ? false : nil
-            break
+        case .charging, .full:
+            isCharging = true
         @unknown default:
-            Utils_kmpKt.isBatteryChargingOrNull = isSimulator() ? false : nil
-            break
+            isCharging = false
         }
-    }
-    
-    private static func upBatteryLevel() {
-        let level = Int(UIDevice.current.batteryLevel * 100)
-        if level < 0 {
-            Utils_kmpKt.batteryLevelOrNull = isSimulator() ? 100 : nil
-            return
-        }
-        Utils_kmpKt.batteryLevelOrNull = level.toKotlinInt()
+        BatteryInfo.shared.emitIsCharging(isCharging: isCharging)
     }
 }
