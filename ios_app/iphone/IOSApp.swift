@@ -5,8 +5,6 @@ import shared
 @main
 struct IOSApp: App {
     
-    @State private var vm = AppVm()
-    
     @Environment(\.scenePhase) private var scenePhase
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @StateObject private var myInAppNotificationDelegate = MyInAppNotificationDelegate()
@@ -27,8 +25,9 @@ struct IOSApp: App {
         
         WindowGroup {
             
-            // todo refactor
-            VMView(vm: vm) { state in
+            VmView({
+                AppVm()
+            }) { vm, state in
                 
                 if let backupMessage = state.backupMessage {
                     BackupMessageView(message: backupMessage)
@@ -73,6 +72,8 @@ struct IOSApp: App {
         }
     }
 }
+
+///
 
 private struct BackupMessageView: View {
     
