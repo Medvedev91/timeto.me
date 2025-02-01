@@ -134,9 +134,8 @@ struct HomeTimerView: View {
                     text: infoUi.untilDaytimeUi.text,
                     color: timerColor,
                     onClick: {
-                        nativeSheet.show { isTimerPickerPresented in
+                        navigation.sheet {
                             DaytimePickerSheet(
-                                isPresented: isTimerPickerPresented,
                                 title: infoUi.untilPickerTitle,
                                 doneText: "Start",
                                 daytimeUi: infoUi.untilDaytimeUi,

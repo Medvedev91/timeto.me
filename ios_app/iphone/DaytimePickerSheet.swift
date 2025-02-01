@@ -3,7 +3,6 @@ import shared
 
 struct DaytimePickerSheet: View {
     
-    @Binding private var isPresented: Bool
     private let title: String
     private let doneText: String
     private let onPick: (_ daytimeUi: DaytimeUi) -> Void
@@ -13,17 +12,17 @@ struct DaytimePickerSheet: View {
     
     @State private var dateTrick: Date
     
+    @Environment(\.dismiss) private var dismiss
+
     ///
     
     init(
-        isPresented: Binding<Bool>,
         title: String,
         doneText: String,
         daytimeUi: DaytimeUi,
         onPick: @escaping (_ daytimeUi: DaytimeUi) -> Void,
         onRemove: @escaping () -> Void
     ) {
-        _isPresented = isPresented
         self.title = title
         self.doneText = doneText
         self.onPick = onPick
@@ -39,7 +38,7 @@ struct DaytimePickerSheet: View {
             HStack(spacing: 4) {
                 
                 Button(
-                    action: { isPresented.toggle() },
+                    action: { dismiss() },
                     label: { Text("Cancel") }
                 )
                 
@@ -60,7 +59,7 @@ struct DaytimePickerSheet: View {
                             minute: calendar.component(.minute, from: dateTrick).toInt32()
                         )
                         onPick(newDaytimeUi)
-                        isPresented = false
+                        dismiss()
                     },
                     label: {
                         Text(doneText)
@@ -83,7 +82,7 @@ struct DaytimePickerSheet: View {
             
             Button("Remove") {
                 onRemove()
-                isPresented = false
+                dismiss()
             }
             .foregroundColor(.red)
             

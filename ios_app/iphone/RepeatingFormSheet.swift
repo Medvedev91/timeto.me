@@ -113,7 +113,6 @@ struct RepeatingsFormSheet: View {
                             }
                             .sheetEnv(isPresented: $isDaytimeSheetPresented) {
                                 DaytimePickerSheet(
-                                    isPresented: $isDaytimeSheetPresented,
                                     title: state.daytimeHeader,
                                     doneText: "Done",
                                     daytimeUi: state.defDaytimeUi,

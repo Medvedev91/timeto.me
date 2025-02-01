@@ -69,7 +69,6 @@ struct EventTemplateFormSheet: View {
                         ) {
                             nativeSheet.show { isTimerPickerPresented in
                                 DaytimePickerSheet(
-                                    isPresented: isTimerPickerPresented,
                                     title: state.daytimeTitle,
                                     doneText: "Done",
                                     daytimeUi: state.defDaytimeUi,
