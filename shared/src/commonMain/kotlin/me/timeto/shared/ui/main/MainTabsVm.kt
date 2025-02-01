@@ -26,11 +26,21 @@ class MainTabsVm : __Vm<MainTabsVm.State>() {
             val level: Int? = batteryLevelOrNull
             val text = "${level ?: "--"}"
             when {
-                isBatteryChargingOrNull == true ->
-                    BatteryUi(text, if (level == 100) ColorRgba.green else ColorRgba.blue, true)
-                batteryLevelOrNull in 0..20 ->
-                    BatteryUi(text, ColorRgba.red, true)
-                else -> BatteryUi(text, ColorRgba.homeFontSecondary, false)
+                isBatteryChargingOrNull == true -> BatteryUi(
+                    text = text,
+                    colorRgba = if (level == 100) ColorRgba.green else ColorRgba.blue,
+                    isHighlighted = true,
+                )
+                level in 0..20 -> BatteryUi(
+                    text = text,
+                    colorRgba = ColorRgba.red,
+                    isHighlighted = true,
+                )
+                else -> BatteryUi(
+                    text = text,
+                    colorRgba = ColorRgba.homeFontSecondary,
+                    isHighlighted = false,
+                )
             }
         }
     }
