@@ -3,7 +3,7 @@ import Combine
 import shared
 
 @main
-struct IOSApp: App {
+struct IosApp: App {
     
     @Environment(\.scenePhase) private var scenePhase
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
@@ -16,10 +16,6 @@ struct IOSApp: App {
     Utils_kmpKt.keepScreenOnStateFlow.toPublisher()
     
     private let batteryManager = BatteryManager() // Keep the object
-    
-    init() {
-        Utils_kmp_iosKt.doInitKmpIos()
-    }
     
     var body: some Scene {
         

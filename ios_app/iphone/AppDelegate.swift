@@ -8,6 +8,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
+        Utils_kmp_iosKt.doInitKmpIos()
         setupWCSession(self)
         return true
     }
