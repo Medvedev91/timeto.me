@@ -16,7 +16,7 @@ struct AskQuestionView<Content: View>: View {
     var body: some View {
         Button(
             action: {
-                if (MFMailComposeViewController.canSendMail()) {
+                if MFMailComposeViewController.canSendMail() {
                     navigation.sheet {
                         MailView(
                             toEmail: Utils_kmpKt.HI_EMAIL,
