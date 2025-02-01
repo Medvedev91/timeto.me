@@ -51,12 +51,7 @@ struct HomeTabBar: View {
                 
                 Button(
                     action: {
-                        if tabSelected == .home {
-                            vm.toggleIsTasksVisible()
-                        } else {
-                            vm.setIsTaskVisible(isVisible: false)
-                            tabSelected = .home
-                        }
+                        tabSelected = (tabSelected == .home ? .tasks : .home)
                     },
                     label: {
                         
@@ -101,7 +96,6 @@ struct HomeTabBar: View {
                 
                 Button(
                     action: {
-                        vm.setIsTaskVisible(isVisible: false)
                         tabSelected = (tabSelected == .settings ? .home : .settings)
                     },
                     label: {

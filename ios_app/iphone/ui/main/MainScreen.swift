@@ -28,6 +28,9 @@ struct MainScreen: View {
                 case .home:
                     HomeScreen(vm: vm, state: state)
                         .attachNavigation()
+                case .tasks:
+                    TasksView()
+                        .attachNavigation()
                 case .settings:
                     SettingsScreen()
                         .attachNavigation()
