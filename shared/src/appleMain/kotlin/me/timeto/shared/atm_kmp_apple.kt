@@ -23,8 +23,6 @@ import platform.posix.utsname
 
 actual fun time(): Int = NSDate().timeIntervalSince1970.toInt()
 
-actual fun timeMls(): Long = (NSDate().timeIntervalSince1970 * 1_000).toLong()
-
 /**
  * SqlDelight
  *

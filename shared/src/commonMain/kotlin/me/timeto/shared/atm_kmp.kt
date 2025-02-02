@@ -17,5 +17,3 @@ fun defaultScope() = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 // Time
 
 expect fun time(): Int
-
-expect fun timeMls(): Long
