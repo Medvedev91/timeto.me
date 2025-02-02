@@ -19,5 +19,3 @@ fun defaultScope() = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 expect fun time(): Int
 
 expect fun timeMls(): Long
-
-expect fun getLocalUtcOffset(): Int
