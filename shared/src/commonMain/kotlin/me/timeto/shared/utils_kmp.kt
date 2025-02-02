@@ -37,7 +37,7 @@ fun reportApi(
 ) {
 
     // Not launchEx because of recursion
-    defaultScope().launch {
+    ioScope().launch {
 
         if (!force && !KvDb.KEY.IS_SENDING_REPORTS.selectOrNull().isSendingReports())
             return@launch
@@ -138,7 +138,7 @@ fun CoroutineScope.launchEx(
 }
 
 fun launchExDefault(block: suspend CoroutineScope.() -> Unit) =
-    defaultScope().launchEx(block)
+    CoroutineScope(SupervisorJob() + Dispatchers.Default).launchEx(block)
 
 fun launchExIo(block: suspend CoroutineScope.() -> Unit) =
     ioScope().launchEx(block)
@@ -167,6 +167,7 @@ fun HttpRequestBuilder.appendSystemInfo(
     token: String?,
 ) {
     url {
+        val systemInfo = SystemInfo.systemInfo
         parameters.append("__token", token ?: "")
         parameters.append("__build", systemInfo.build.toString())
         parameters.append("__os", systemInfo.os.fullVersion)
@@ -508,7 +509,7 @@ internal fun initKmp(
         NoteSQAdapter = NoteSQ.Adapter(IntColumnAdapter, IntColumnAdapter),
         GoalSqAdapter = GoalSq.Adapter(IntColumnAdapter, IntColumnAdapter, IntColumnAdapter, IntColumnAdapter),
     )
-    systemInfo = systemInfo_
+    SystemInfo.systemInfo = systemInfo_
     initKmpDeferred = ioScope().async { Cache.init() }
 }
 
