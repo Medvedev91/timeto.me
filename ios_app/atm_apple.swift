@@ -2,10 +2,6 @@ import SwiftUI
 import Combine
 import shared
 
-func zlog(_ message: Any?) {
-    UtilsKt.zlog(message: message)
-}
-
 let roundedShape = RoundedRectangle(cornerRadius: 99, style: .circular)
 let squircleShape = RoundedRectangle(cornerRadius: 12, style: .continuous)
 
