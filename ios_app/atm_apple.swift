@@ -5,25 +5,6 @@ import shared
 let roundedShape = RoundedRectangle(cornerRadius: 99, style: .circular)
 let squircleShape = RoundedRectangle(cornerRadius: 12, style: .continuous)
 
-extension Kotlinx_coroutines_coreFlow {
-    
-    func toPublisher<T: AnyObject>() -> AnyPublisher<T, Never> {
-        let swiftFlow = SwiftFlow<T>(kotlinFlow: self)
-        return Deferred<Publishers.HandleEvents<PassthroughSubject<T, Never>>> {
-            let subject = PassthroughSubject<T, Never>()
-            let cancelable = swiftFlow.watch { next in
-                if let next = next {
-                    subject.send(next)
-                }
-            }
-            return subject.handleEvents(receiveCancel: {
-                cancelable.cancel()
-            })
-        }
-        .eraseToAnyPublisher()
-    }
-}
-
 struct VMView<VMState: AnyObject, Content: View>: View {
 
     private let vm: __Vm<VMState>
