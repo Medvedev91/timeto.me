@@ -20,6 +20,7 @@ import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
 import me.timeto.shared.db.KvDb.Companion.isSendingReports
 import me.timeto.shared.misc.getString
 import me.timeto.shared.misc.SystemInfo
+import me.timeto.shared.misc.ioScope
 import me.timeto.shared.misc.time
 import me.timeto.shared.misc.zlog
 

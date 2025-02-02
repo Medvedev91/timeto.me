@@ -1,4 +1,4 @@
-package me.timeto.shared
+package me.timeto.shared.misc
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
