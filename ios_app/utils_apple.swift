@@ -2,25 +2,6 @@ import SwiftUI
 import WatchConnectivity
 import shared
 
-//
-// KMP
-
-let Cache = shared.Cache.shared
-
-func time() -> Int {
-    TimeKt.time().toInt()
-}
-
-func reportApi(_ message: String) {
-    Utils_kmpKt.reportApi(message: message, force: false)
-}
-
-//
-
-func buildTimerFont(size: CGFloat) -> Font {
-    Font.custom("NotoSansMono-ExtraBold", size: size)
-}
-
 func ForEachIndexed<T, Content: View>(
     _ items: Array<T>,
     @ViewBuilder content: @escaping (Int, T) -> Content
