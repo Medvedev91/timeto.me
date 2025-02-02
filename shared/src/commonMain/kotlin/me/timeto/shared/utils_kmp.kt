@@ -21,6 +21,7 @@ import me.timeto.shared.db.KvDb.Companion.isSendingReports
 import me.timeto.shared.misc.getString
 import me.timeto.shared.misc.SystemInfo
 import me.timeto.shared.misc.time
+import me.timeto.shared.misc.zlog
 
 const val GOLDEN_RATIO = 1.618f
 

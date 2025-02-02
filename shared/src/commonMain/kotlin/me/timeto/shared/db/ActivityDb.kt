@@ -14,6 +14,7 @@ import me.timeto.shared.models.GoalFormUi
 import me.timeto.shared.misc.toBoolean10
 import me.timeto.shared.misc.toInt10
 import me.timeto.shared.misc.toJsonArray
+import me.timeto.shared.misc.zlog
 import kotlin.math.max
 
 data class ActivityDb(

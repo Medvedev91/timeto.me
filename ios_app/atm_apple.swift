@@ -3,7 +3,7 @@ import Combine
 import shared
 
 func zlog(_ message: Any?) {
-    Atm_kmpKt.zlog(message: message)
+    UtilsKt.zlog(message: message)
 }
 
 let roundedShape = RoundedRectangle(cornerRadius: 99, style: .circular)
