@@ -3,6 +3,7 @@ package me.timeto.shared.models
 import me.timeto.shared.*
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
+import me.timeto.shared.misc.time
 
 // todo rename smth with "day sections" or related
 class DayIntervalsUi(

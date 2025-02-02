@@ -18,10 +18,6 @@ import platform.Foundation.*
 import platform.posix.uname
 import platform.posix.utsname
 
-//
-// Time
-
-actual fun time(): Int = NSDate().timeIntervalSince1970.toInt()
 
 /**
  * SqlDelight

@@ -1,6 +1,7 @@
 package me.timeto.shared
 
 import kotlinx.datetime.*
+import me.timeto.shared.misc.time
 
 data class UnixTime(
     val time: Int = time(),

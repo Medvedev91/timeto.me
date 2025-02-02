@@ -8,7 +8,7 @@ import shared
 let Cache = shared.Cache.shared
 
 func time() -> Int {
-    Atm_kmp_appleKt.time().toInt()
+    TimeKt.time().toInt()
 }
 
 func reportApi(_ message: String) {
