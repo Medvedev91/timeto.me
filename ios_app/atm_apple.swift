@@ -2,9 +2,6 @@ import SwiftUI
 import Combine
 import shared
 
-let roundedShape = RoundedRectangle(cornerRadius: 99, style: .circular)
-let squircleShape = RoundedRectangle(cornerRadius: 12, style: .continuous)
-
 struct VMView<VMState: AnyObject, Content: View>: View {
 
     private let vm: __Vm<VMState>
