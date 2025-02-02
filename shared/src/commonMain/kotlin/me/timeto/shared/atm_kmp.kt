@@ -10,10 +10,3 @@ fun zlog(message: Any?): Unit =
 
 fun ioScope(): CoroutineScope =
     CoroutineScope(SupervisorJob() + Dispatchers.IO)
-
-fun defaultScope() = CoroutineScope(SupervisorJob() + Dispatchers.Default)
-
-//
-// Time
-
-expect fun time(): Int
