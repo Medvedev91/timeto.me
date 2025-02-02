@@ -35,7 +35,7 @@ object WatchToIosSync {
     fun startIntervalWithLocal(
         activity: ActivityDb,
         timer: Int,
-    ): Unit = defaultScope().launchEx {
+    ): Unit = launchExIo {
         val interval = activity.startInterval(timer)
         launchEx {
             delay(LOCAL_DELAY_MLS)
@@ -55,7 +55,7 @@ object WatchToIosSync {
         activity: ActivityDb,
         timer: Int,
         task: TaskDb,
-    ): Unit = defaultScope().launchEx {
+    ): Unit = launchExIo {
         task.startInterval(timer, activity)
         launchEx {
             delay(LOCAL_DELAY_MLS)
@@ -88,7 +88,7 @@ object WatchToIosSync {
 
     fun smartRestore(
         jsonString: String,
-    ): Unit = defaultScope().launchEx {
+    ): Unit = launchExIo {
         // Transaction to avoid many UI updates
         db.transaction {
             val json = Json.parseToJsonElement(jsonString)
@@ -195,13 +195,13 @@ private fun requestFromAppleWatch(
             onResponse?.invoke(NSString.create(responseData, NSUTF8StringEncoding) as String)
         },
         errorHandler = { error ->
-            defaultScope().launchEx {
+            launchExIo {
                 reportApi("requestFromAppleWatch() errorHandler:\n${error?.localizedDescription}")
                 showUiAlert(error?.localizedDescription ?: "Internal Error")
             }
         }
     )
-    defaultScope().launchEx {
+    launchExIo {
         delay(errDelayMls)
         if (!isResponseReceived) {
             zlog("Sync Error")
