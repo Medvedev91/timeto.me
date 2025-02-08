@@ -1,9 +1,9 @@
 import SwiftUI
 import shared
 
-let HomeScreen__ITEM_HEIGHT: CGFloat = 38
-let HomeScreen__PRIMARY_FONT_SIZE: CGFloat = 18
+let HomeScreen__primaryFortSize: CGFloat = 18
 
+let HomeScreen__itemHeight: CGFloat = 38
 let HomeScreen__itemCircleHPadding: CGFloat = 7
 let HomeScreen__itemCircleHeight: CGFloat = 24
 let HomeScreen__itemCircleFontSize: CGFloat = 15
@@ -80,7 +80,7 @@ private struct HomeScreenInner: View {
                 
                 let _ = vm.upListsContainerSize(
                     totalHeight: Float(geometry.size.height),
-                    itemHeight: Float(HomeScreen__ITEM_HEIGHT)
+                    itemHeight: Float(HomeScreen__itemHeight)
                 )
                 
                 VStack {
@@ -154,7 +154,7 @@ private struct HomeScreenInner: View {
                                 .background(roundedShape.fill(c.homeFg))
                                 .padding(.horizontal, H_PADDING)
                             }
-                            .frame(height: HomeScreen__ITEM_HEIGHT, alignment: .center)
+                            .frame(height: HomeScreen__itemHeight, alignment: .center)
                             .offset(y: 1)
                         }
                     )

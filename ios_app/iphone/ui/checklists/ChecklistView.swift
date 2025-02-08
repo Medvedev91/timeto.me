@@ -2,7 +2,7 @@ import SwiftUI
 import shared
 
 private let checkboxSize = 21.0
-private let checklistItemMinHeight: CGFloat = HomeScreen__ITEM_HEIGHT
+private let checklistItemMinHeight: CGFloat = HomeScreen__itemHeight
 
 struct ChecklistView: View {
     
@@ -76,7 +76,7 @@ private struct ChecklistViewInner: View {
                                     Text(itemUi.itemDb.text)
                                         .padding(.vertical, 4)
                                         .foregroundColor(.white)
-                                        .font(.system(size: HomeScreen__PRIMARY_FONT_SIZE))
+                                        .font(.system(size: HomeScreen__primaryFortSize))
                                         .lineLimit(maxLines)
                                         .textAlign(.leading)
                                 }

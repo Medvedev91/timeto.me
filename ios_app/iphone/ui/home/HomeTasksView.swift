@@ -95,7 +95,7 @@ private struct TaskItemView: View {
                     }
                     
                     Text(mainTask.text)
-                        .font(.system(size: HomeScreen__PRIMARY_FONT_SIZE))
+                        .font(.system(size: HomeScreen__primaryFortSize))
                         .foregroundColor(Color.white)
                         .padding(.trailing, 4)
                     
@@ -104,10 +104,10 @@ private struct TaskItemView: View {
                     if let timeUI = mainTask.timeUI {
                         Text(timeUI.note)
                             .foregroundColor(timeUI.noteColor.toColor())
-                            .font(.system(size: HomeScreen__PRIMARY_FONT_SIZE))
+                            .font(.system(size: HomeScreen__primaryFortSize))
                     }
                 }
-                .frame(height: HomeScreen__ITEM_HEIGHT)
+                .frame(height: HomeScreen__itemHeight)
                 .padding(.horizontal, H_PADDING)
             }
         )
