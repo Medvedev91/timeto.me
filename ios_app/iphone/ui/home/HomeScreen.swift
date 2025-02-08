@@ -20,11 +20,6 @@ struct HomeScreen: View {
 
 ///
 
-private let itemCircleHPadding: CGFloat = 7
-private let itemCircleHeight: CGFloat = 24
-private let itemCircleFontSize: CGFloat = 15
-private let itemCircleFontWeight: Font.Weight = .semibold
-
 private struct HomeScreenInner: View {
     
     let vm: HomeVm
@@ -98,7 +93,7 @@ private struct HomeScreenInner: View {
                     }
                     
                     if isMainTasksExists {
-                        MainTasksView(
+                        HomeTasksView(
                             tasks: state.mainTasks
                         )
                         .frame(height: CGFloat(state.listsSizes.mainTasks))
@@ -138,19 +133,19 @@ private struct HomeScreenInner: View {
                                     HStack {
                                         
                                         Text(goalBarUi.textLeft)
-                                            .padding(.leading, itemCircleHPadding)
+                                            .padding(.leading, HomeItemCircleHPadding)
                                             .foregroundColor(c.white)
-                                            .font(.system(size: itemCircleFontSize, weight: itemCircleFontWeight))
+                                            .font(.system(size: HomeItemCircleFontSize, weight: HomeItemCircleFontWeight))
                                         
                                         Spacer()
                                         
                                         Text(goalBarUi.textRight)
-                                            .padding(.trailing, itemCircleHPadding)
+                                            .padding(.trailing, HomeItemCircleHPadding)
                                             .foregroundColor(c.white)
-                                            .font(.system(size: itemCircleFontSize, weight: itemCircleFontWeight))
+                                            .font(.system(size: HomeItemCircleFontSize, weight: HomeItemCircleFontWeight))
                                     }
                                 }
-                                .frame(height: itemCircleHeight, alignment: .center)
+                                .frame(height: HomeItemCircleHeight, alignment: .center)
                                 .background(roundedShape.fill(c.homeFg))
                                 .padding(.horizontal, H_PADDING)
                             }
@@ -164,118 +159,5 @@ private struct HomeScreenInner: View {
             Padding(vertical: 10.0)
         }
         .padding(.bottom, MainTabsView__HEIGHT)
-    }
-}
-
-///
-
-private struct MainTasksView: View {
-    
-    let tasks: [HomeVm.MainTask]
-    
-    private let LIST_BOTTOM_ITEM_ID = "bottom_id"
-    
-    var body: some View {
-        
-        GeometryReader { geometry in
-            
-            ScrollViewReader { scrollProxy in
-                
-                ScrollView(showsIndicators: false) {
-                    
-                    VStack {
-                        
-                        Spacer()
-                        
-                        ForEach(tasks.reversed(), id: \.self.taskUi.taskDb.id) { mainTask in
-                            MainTaskItemView(mainTask: mainTask)
-                        }
-                        
-                        ZStack {
-                        }
-                        .id(LIST_BOTTOM_ITEM_ID)
-                    }
-                    .frame(minHeight: geometry.size.height)
-                }
-                .frame(maxWidth: .infinity)
-                .onAppear {
-                    scrollProxy.scrollTo(LIST_BOTTOM_ITEM_ID)
-                }
-            }
-        }
-    }
-}
-
-private struct MainTaskItemView: View {
-    
-    let mainTask: HomeVm.MainTask
-    
-    @EnvironmentObject private var nativeSheet: NativeSheet
-    
-    var body: some View {
-        
-        Button(
-            action: {
-                mainTask.taskUi.taskDb.startIntervalForUI(
-                    onStarted: {},
-                    activitiesSheet: {
-                        nativeSheet.showActivitiesTimerSheet(
-                            timerContext: mainTask.timerContext,
-                            withMenu: false,
-                            onStart: {}
-                        )
-                    },
-                    timerSheet: { activity in
-                        nativeSheet.showActivityTimerSheet(
-                            activity: activity,
-                            timerContext: mainTask.timerContext,
-                            hideOnStart: true,
-                            onStart: {}
-                        )
-                    }
-                )
-            },
-            label: {
-                
-                HStack {
-                    
-                    if let timeUI = mainTask.timeUI {
-                        Text(timeUI.text)
-                            .foregroundColor(.white)
-                            .font(.system(size: itemCircleFontSize, weight: itemCircleFontWeight))
-                            .padding(.horizontal, itemCircleHPadding)
-                            .frame(height: itemCircleHeight)
-                            .background(roundedShape.fill(timeUI.textBgColor.toColor()))
-                            .padding(.trailing, mainTask.taskUi.tf.paused != nil ? 9 : 8)
-                    }
-                    
-                    if mainTask.taskUi.tf.paused != nil {
-                        ZStack {
-                            Image(systemName: "pause")
-                                .foregroundColor(c.white)
-                                .font(.system(size: 12, weight: .black))
-                        }
-                        .frame(width: itemCircleHeight, height: itemCircleHeight)
-                        .background(roundedShape.fill(c.green))
-                        .padding(.trailing, 8)
-                    }
-                    
-                    Text(mainTask.text)
-                        .font(.system(size: HomeScreen__PRIMARY_FONT_SIZE))
-                        .foregroundColor(Color.white)
-                        .padding(.trailing, 4)
-                    
-                    Spacer()
-                    
-                    if let timeUI = mainTask.timeUI {
-                        Text(timeUI.note)
-                            .foregroundColor(timeUI.noteColor.toColor())
-                            .font(.system(size: HomeScreen__PRIMARY_FONT_SIZE))
-                    }
-                }
-                .frame(height: HomeScreen__ITEM_HEIGHT)
-                .padding(.horizontal, H_PADDING)
-            }
-        )
     }
 }
