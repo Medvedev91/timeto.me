@@ -4,6 +4,11 @@ import shared
 let HomeScreen__ITEM_HEIGHT: CGFloat = 38
 let HomeScreen__PRIMARY_FONT_SIZE: CGFloat = 18
 
+let HomeScreen__itemCircleHPadding: CGFloat = 7
+let HomeScreen__itemCircleHeight: CGFloat = 24
+let HomeScreen__itemCircleFontSize: CGFloat = 15
+let HomeScreen__itemCircleFontWeight: Font.Weight = .semibold
+
 struct HomeScreen: View {
     
     var body: some View {
@@ -133,19 +138,19 @@ private struct HomeScreenInner: View {
                                     HStack {
                                         
                                         Text(goalBarUi.textLeft)
-                                            .padding(.leading, HomeItemCircleHPadding)
+                                            .padding(.leading, HomeScreen__itemCircleHPadding)
                                             .foregroundColor(c.white)
-                                            .font(.system(size: HomeItemCircleFontSize, weight: HomeItemCircleFontWeight))
+                                            .font(.system(size: HomeScreen__itemCircleFontSize, weight: HomeScreen__itemCircleFontWeight))
                                         
                                         Spacer()
                                         
                                         Text(goalBarUi.textRight)
-                                            .padding(.trailing, HomeItemCircleHPadding)
+                                            .padding(.trailing, HomeScreen__itemCircleHPadding)
                                             .foregroundColor(c.white)
-                                            .font(.system(size: HomeItemCircleFontSize, weight: HomeItemCircleFontWeight))
+                                            .font(.system(size: HomeScreen__itemCircleFontSize, weight: HomeScreen__itemCircleFontWeight))
                                     }
                                 }
-                                .frame(height: HomeItemCircleHeight, alignment: .center)
+                                .frame(height: HomeScreen__itemCircleHeight, alignment: .center)
                                 .background(roundedShape.fill(c.homeFg))
                                 .padding(.horizontal, H_PADDING)
                             }
