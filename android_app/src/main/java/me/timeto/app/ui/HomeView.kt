@@ -1,6 +1,5 @@
 package me.timeto.app.ui
 
-import android.view.MotionEvent
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
@@ -13,12 +12,10 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.*
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -31,6 +28,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import me.timeto.app.*
 import me.timeto.app.R
+import me.timeto.app.ui.main.MainTabEnum
+import me.timeto.app.ui.main.MainTabsView
 import me.timeto.shared.vm.HomeVm
 import me.timeto.shared.vm.ReadmeVm
 
