@@ -16,7 +16,6 @@ class HomeVm : __Vm<HomeVm.State>() {
         val interval: IntervalDb,
         val isPurple: Boolean,
         val todayTasksUi: List<TaskUi>,
-        val isTasksVisible: Boolean,
         val todayIntervalsUi: DayIntervalsUi?,
         val fdroidMessage: String?,
         val readmeMessage: String?,
@@ -151,7 +150,6 @@ class HomeVm : __Vm<HomeVm.State>() {
             interval = Cache.lastInterval,
             isPurple = false,
             todayTasksUi = listOf(),
-            isTasksVisible = false,
             todayIntervalsUi = null, // todo init data
             fdroidMessage = null, // todo init data
             readmeMessage = null, // todo init data
@@ -171,7 +169,6 @@ class HomeVm : __Vm<HomeVm.State>() {
                     it.copy(
                         interval = interval,
                         isPurple = if (isNewInterval) false else it.isPurple,
-                        isTasksVisible = if (isNewInterval) false else it.isTasksVisible,
                     )
                 }
             }

@@ -9,8 +9,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.*
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -204,38 +202,6 @@ fun HomeView() {
                 }
 
                 Padding(vertical = 8.dp)
-            }
-
-            if (state.isTasksVisible) {
-
-                ZStack(
-                    modifier = Modifier
-                        .zIndex(2f),
-                ) {
-
-                    TasksView(
-                        modifier = Modifier
-                            .align(Alignment.CenterEnd),
-                        onClose = {
-                            vm.toggleIsTasksVisible()
-                        },
-                    )
-
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(4.dp)
-                            .align(Alignment.BottomCenter)
-                            .background(
-                                Brush.verticalGradient(
-                                    colorStops = arrayOf(
-                                        0.0f to Color.Transparent,
-                                        1f to Color.Black,
-                                    )
-                                )
-                            )
-                    )
-                }
             }
         }
 
