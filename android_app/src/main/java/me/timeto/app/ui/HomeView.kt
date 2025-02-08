@@ -34,7 +34,6 @@ import me.timeto.app.R
 import me.timeto.shared.vm.HomeVm
 import me.timeto.shared.vm.ReadmeVm
 
-val HomeView__BOTTOM_NAVIGATION_HEIGHT = 56.dp
 val HomeView__PRIMARY_FONT_SIZE = 16.sp
 
 // MTG - Main Tasks & Goals
@@ -46,17 +45,20 @@ private val mtgCircleFontWeight = FontWeight.SemiBold
 
 private val mainTaskHalfHPadding = H_PADDING / 2
 
-private val navigationButtonModifier = Modifier.size(HomeView__BOTTOM_NAVIGATION_HEIGHT).padding(14.dp)
-
 private val purpleAnimEnter = fadeIn() + expandVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
 private val purpleAnimExit = fadeOut() + shrinkVertically(animationSpec = spring(stiffness = Spring.StiffnessHigh))
 
 @Composable
 fun HomeView() {
 
-    val (vm, state) = rememberVm { HomeVm() }
+    val (vm, state) = rememberVm {
+        HomeVm()
+    }
 
     val checklistDb = state.checklistDb
+    val tab = remember {
+        mutableStateOf(MainTabEnum.home)
+    }
 
     val noteColor = animateColorAsState(state.timerData.noteColor.toColor()).value
     val timerColor = animateColorAsState(state.timerData.timerColor.toColor()).value
@@ -66,8 +68,7 @@ fun HomeView() {
         modifier = Modifier
             .fillMaxSize()
             .background(c.black)
-            .padding(top = (LocalContext.current as MainActivity).statusBarHeightDp)
-            .navigationBarsPadding(),
+            .padding(top = (LocalContext.current as MainActivity).statusBarHeightDp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
@@ -291,8 +292,7 @@ fun HomeView() {
 
             VStack(
                 modifier = Modifier
-                    .zIndex(1f)
-                    .padding(bottom = HomeView__BOTTOM_NAVIGATION_HEIGHT),
+                    .zIndex(1f),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
@@ -403,8 +403,7 @@ fun HomeView() {
 
                 ZStack(
                     modifier = Modifier
-                        .zIndex(2f)
-                        .padding(bottom = HomeView__BOTTOM_NAVIGATION_HEIGHT),
+                        .zIndex(2f),
                 ) {
 
                     TasksView(
@@ -431,15 +430,14 @@ fun HomeView() {
                     )
                 }
             }
-
-            NavigationView(
-                vm = vm,
-                state = state,
-                modifier = Modifier
-                    .zIndex(0f)
-                    .align(Alignment.BottomCenter),
-            )
         }
+
+        MainTabsView(
+            tab = tab.value,
+            onTabChanged = { newTab ->
+                tab.value = newTab
+            },
+        )
     }
 }
 
@@ -567,143 +565,6 @@ private fun MainTasksView(
                     )
                 }
             }
-        }
-    }
-}
-
-@OptIn(ExperimentalComposeUiApi::class)
-@Composable
-private fun NavigationView(
-    vm: HomeVm,
-    state: HomeVm.State,
-    modifier: Modifier,
-) {
-
-    HStack(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(HomeView__BOTTOM_NAVIGATION_HEIGHT),
-        verticalAlignment = Alignment.Bottom,
-    ) {
-
-        ZStack(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxHeight()
-                .clip(squircleShape)
-                .motionEventSpy { event ->
-                    if (event.action == MotionEvent.ACTION_DOWN)
-                        ActivitiesTimerSheet__show(timerContext = null, withMenu = true)
-                },
-            contentAlignment = Alignment.BottomCenter,
-        ) {
-            Icon(
-                painterResource(id = R.drawable.sf_timer_medium_thin),
-                contentDescription = "Timer",
-                tint = c.homeFontSecondary,
-                modifier = navigationButtonModifier,
-            )
-        }
-
-        val menuTasksBg = animateColorAsState(if (state.isTasksVisible) c.sheetFg else c.black)
-
-        VStack(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxHeight()
-                .clip(squircleShape)
-                .background(menuTasksBg.value)
-                .motionEventSpy { event ->
-                    if (event.action == MotionEvent.ACTION_DOWN)
-                        vm.toggleIsTasksVisible()
-                },
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-
-            Text(
-                text = state.menuTime,
-                color = c.homeMenuTime,
-                fontSize = 9.sp,
-                lineHeight = 14.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = timerFont,
-                modifier = Modifier
-                    .padding(top = 3.dp, bottom = 5.dp)
-            )
-
-            HStack(
-                modifier = Modifier
-                    .padding(end = 3.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-
-                val batteryUi = state.batteryUi
-                val batteryTextColor = animateColorAsState(batteryUi.colorRgba.toColor())
-
-                Icon(
-                    painterResource(
-                        id = if (batteryUi.isHighlighted)
-                            R.drawable.sf_bolt_fill_medium_bold
-                        else
-                            R.drawable.sf_bolt_fill_medium_light
-                    ),
-                    contentDescription = "Battery",
-                    tint = batteryTextColor.value,
-                    modifier = Modifier
-                        .offset(y = -halfDpFloor)
-                        .size(10.dp)
-                )
-
-                Text(
-                    text = batteryUi.text,
-                    color = batteryTextColor.value,
-                    fontSize = 12.sp,
-                    lineHeight = 14.sp,
-                    fontWeight = if (batteryUi.isHighlighted) FontWeight.Bold else FontWeight.Light,
-                )
-
-                Icon(
-                    painterResource(id = R.drawable.sf_smallcircle_filled_circle_small_light),
-                    contentDescription = "Tasks",
-                    tint = c.homeFontSecondary,
-                    modifier = Modifier
-                        .padding(start = 8.dp)
-                        .size(10.dp + halfDpFloor)
-                        .offset(y = -halfDpFloor),
-                )
-
-                Text(
-                    text = state.menuTasksNote,
-                    modifier = Modifier
-                        .padding(start = 2.dp + halfDpFloor),
-                    color = c.homeFontSecondary,
-                    fontSize = 12.sp,
-                    lineHeight = 14.sp,
-                    fontWeight = FontWeight.Light,
-                )
-            }
-        }
-
-        ZStack(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxHeight()
-                .clip(squircleShape)
-                .motionEventSpy { event ->
-                    if (event.action == MotionEvent.ACTION_DOWN)
-                        Fs.show { layer ->
-                            SettingsSheet(layer = layer)
-                        }
-                },
-            contentAlignment = Alignment.BottomCenter,
-        ) {
-            Icon(
-                painterResource(id = R.drawable.sf_ellipsis_circle_medium_thin),
-                contentDescription = "Menu",
-                tint = c.homeFontSecondary,
-                modifier = navigationButtonModifier,
-            )
         }
     }
 }
