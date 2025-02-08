@@ -95,9 +95,6 @@ class HomeVm : __Vm<HomeVm.State>() {
             }
             .flatten()
 
-        val menuTime: String = UnixTime().getStringByComponents(UnixTime.StringComponent.hhmm24)
-        val menuTasksNote = "${Cache.tasksDb.count { it.isToday }}"
-
         val mainTasks: List<MainTask> = run {
             val tasksUi: List<TaskUi> =
                 if (KvDb.KEY.TODAY_ON_HOME_SCREEN.selectOrNullCached().todayOnHomeScreen())
@@ -146,20 +143,6 @@ class HomeVm : __Vm<HomeVm.State>() {
                     mainTasks = lc.totalHeight - checklistFullHeight,
                 )
             ListsSizes(checklist = halfHeight, mainTasks = halfHeight)
-        }
-
-        val batteryUi: BatteryUi = run {
-            val level: Int? = batteryLevelOrNull
-            val text = "${level ?: "--"}"
-            when {
-                isBatteryChargingOrNull == true ->
-                    BatteryUi(text, if (level == 100) ColorRgba.green else ColorRgba.blue, true)
-
-                batteryLevelOrNull in 0..20 ->
-                    BatteryUi(text, ColorRgba.red, true)
-
-                else -> BatteryUi(text, ColorRgba.homeFontSecondary, false)
-            }
         }
     }
 
@@ -252,14 +235,6 @@ class HomeVm : __Vm<HomeVm.State>() {
                 delay(1_000L)
             }
         }
-
-        if (batteryLevelOrNull == null) {
-            scope.launch {
-                delay(2_000)
-                if (batteryLevelOrNull == null)
-                    reportApi("batteryLevelOrNull null")
-            }
-        }
     }
 
     fun upListsContainerSize(
@@ -280,14 +255,6 @@ class HomeVm : __Vm<HomeVm.State>() {
 
     fun toggleIsPurple() {
         state.update { it.copy(isPurple = !it.isPurple) }
-    }
-
-    fun toggleIsTasksVisible() {
-        state.update { it.copy(isTasksVisible = !it.isTasksVisible) }
-    }
-
-    fun setIsTaskVisible(isVisible: Boolean) {
-        state.update { it.copy(isTasksVisible = isVisible) }
     }
 
     private suspend fun upTodayIntervalsUI() {
@@ -316,12 +283,6 @@ class HomeVm : __Vm<HomeVm.State>() {
     )
 
     ///
-
-    data class BatteryUi(
-        val text: String,
-        val colorRgba: ColorRgba,
-        val isHighlighted: Boolean,
-    )
 
     class GoalBarUi(
         val goalDb: GoalDb,
