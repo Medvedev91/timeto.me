@@ -17,6 +17,7 @@ import me.timeto.app.ui.form.views.FormButtonView
 @Composable
 fun FormButton(
     title: String,
+    titleColor: Color? = null,
     isFirst: Boolean,
     isLast: Boolean,
     note: String? = null,
@@ -27,6 +28,7 @@ fun FormButton(
 
     FormButtonView(
         title = title,
+        titleColor = titleColor ?: c.text,
         isFirst = isFirst,
         isLast = isLast,
         rightView = {
