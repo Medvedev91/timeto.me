@@ -31,7 +31,9 @@ import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.*
 import kotlinx.coroutines.launch
 import me.timeto.app.ui.form.FormButton
+import me.timeto.app.ui.form.FormHeader
 import me.timeto.app.ui.form.FormPaddingFirstItem
+import me.timeto.app.ui.form.FormPaddingHeaderSection
 import me.timeto.app.ui.form.FormPaddingSectionHeader
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.navigation.LocalNavigationFs
@@ -157,40 +159,46 @@ fun SettingsSheet(
                 )
             }
 
+            val checklistsDb = state.checklistsDb
+
             item {
 
                 FormPaddingSectionHeader()
 
-                MyListView__HeaderView(
+                if (checklistsDb.isNotEmpty()) {
+                    FormPaddingHeaderSection()
+                }
+
+                FormHeader(
                     title = "CHECKLISTS",
-                    rightView = {
-                        MyListView__HeaderView__RightIcon(
-                            icon = Icons.Rounded.Add,
-                            contentDescription = "New Checklist"
-                        ) {
-                            Dialog.show { layer ->
-                                ChecklistNameDialog(
-                                    layer = layer,
-                                    editedChecklist = null,
-                                    onSave = {},
-                                )
-                            }
-                        }
-                    }
                 )
             }
 
-            val checklists = state.checklists
-            if (checklists.isNotEmpty())
-                item { MyListView__Padding__HeaderSection() }
+            item {
+                FormButton(
+                    title = "New Checklist",
+                    titleColor = c.blue,
+                    isFirst = checklistsDb.isEmpty(),
+                    isLast = true,
+                    onClick = {
+                        Dialog.show { layer ->
+                            ChecklistNameDialog(
+                                layer = layer,
+                                editedChecklist = null,
+                                onSave = {},
+                            )
+                        }
+                    },
+                )
+            }
 
-            itemsIndexed(checklists, key = { _, checklist -> checklist.id }) { _, checklist ->
+            itemsIndexed(checklistsDb, key = { _, checklist -> checklist.id }) { _, checklist ->
 
-                val isFirst = checklists.first() == checklist
+                val isFirst = checklistsDb.first() == checklist
 
                 MyListView__ItemView(
                     isFirst = isFirst,
-                    isLast = checklists.last() == checklist,
+                    isLast = checklistsDb.last() == checklist,
                     withTopDivider = !isFirst,
                 ) {
 
