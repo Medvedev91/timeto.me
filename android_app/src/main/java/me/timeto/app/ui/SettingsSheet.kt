@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.*
 import kotlinx.coroutines.launch
+import me.timeto.app.ui.checklists.ChecklistFormFs
 import me.timeto.app.ui.form.FormButton
 import me.timeto.app.ui.form.FormHeader
 import me.timeto.app.ui.form.FormPaddingFirstItem
@@ -165,13 +166,13 @@ fun SettingsSheet(
 
                 FormPaddingSectionHeader()
 
-                if (checklistsDb.isNotEmpty()) {
-                    FormPaddingHeaderSection()
-                }
-
                 FormHeader(
                     title = "CHECKLISTS",
                 )
+
+                if (checklistsDb.isNotEmpty()) {
+                    FormPaddingHeaderSection()
+                }
             }
 
             item {
