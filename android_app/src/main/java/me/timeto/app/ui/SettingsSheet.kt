@@ -32,6 +32,7 @@ import me.timeto.app.*
 import kotlinx.coroutines.launch
 import me.timeto.app.ui.form.FormButton
 import me.timeto.app.ui.form.FormPaddingFirstItem
+import me.timeto.app.ui.form.FormPaddingSectionHeader
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.shared.*
@@ -158,7 +159,7 @@ fun SettingsSheet(
 
             item {
 
-                MyListView__Padding__SectionHeader()
+                FormPaddingSectionHeader()
 
                 MyListView__HeaderView(
                     title = "CHECKLISTS",
