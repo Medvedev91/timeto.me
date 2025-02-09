@@ -4,6 +4,7 @@ import android.app.DownloadManager
 import android.content.Intent
 import android.provider.Settings
 import android.widget.NumberPicker
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -29,24 +30,34 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.*
 import kotlinx.coroutines.launch
+import me.timeto.app.ui.header.Header
+import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.shared.*
-import me.timeto.shared.vm.PrivacySheetVm
-import me.timeto.shared.vm.SettingsVm
+import me.timeto.shared.ui.settings.SettingsVm
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SettingsSheet(
-    layer: WrapperView.Layer,
+    onClose: () -> Unit,
 ) {
+
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    val (vm, state) = rememberVm { SettingsVm() }
+    val navigationFs = LocalNavigationFs.current
+
+    BackHandler {
+        onClose()
+    }
+
+    val (vm, state) = rememberVm {
+        SettingsVm()
+    }
 
     val launcherBackup = rememberLauncherForActivityResult(
-        ActivityResultContracts.CreateDocument()
+        ActivityResultContracts.CreateDocument(),
     ) { destinationUri ->
 
         if (destinationUri == null) {
@@ -60,8 +71,6 @@ fun SettingsSheet(
                 val stream = context.contentResolver.openOutputStream(destinationUri) ?: throw Exception()
                 stream.write(jsonBytes)
                 stream.close()
-                // todo
-                zlog("ok")
             } catch (e: Exception) {
                 showUiAlert("Error", "launcherBackup exception:\n$e")
             }
@@ -96,7 +105,7 @@ fun SettingsSheet(
         }
     }
 
-    Column(
+    VStack(
         modifier = Modifier
             .fillMaxHeight()
             .background(c.bg),
@@ -104,11 +113,11 @@ fun SettingsSheet(
 
         val scrollState = rememberLazyListState()
 
-        Fs__HeaderTitle(
+        Header(
             title = state.headerTitle,
             scrollState = scrollState,
             onClose = {
-                layer.close()
+                onClose()
             },
         )
 
