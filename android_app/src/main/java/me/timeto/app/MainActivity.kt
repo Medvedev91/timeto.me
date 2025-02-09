@@ -75,7 +75,7 @@ class MainActivity : ComponentActivity() {
                     NavigationFs {
                         WrapperView.LayoutView {
                             MainScreen()
-                            UIListeners()
+                            UiListeners()
                         }
                     }
 
@@ -181,7 +181,7 @@ private fun BackupMessageView(
 }
 
 @Composable
-private fun UIListeners() {
+private fun UiListeners() {
     val context = LocalContext.current
     LaunchedEffect(Unit) {
         uiAlertFlow.onEachExIn(this) { data ->
