@@ -143,25 +143,17 @@ fun SettingsSheet(
                     },
                 )
 
-                MyListView__ItemView(
+                FormButton(
+                    title = state.whatsNewTitle,
                     isFirst = false,
                     isLast = true,
-                    withTopDivider = true,
-                ) {
-                    MyListView__ItemView__ButtonView(
-                        text = state.whatsNewTitle,
-                        bgColor = c.fg,
-                        rightView = {
-                            MyListView__ItemView__ButtonView__RightText(
-                                text = state.whatsNewNote,
-                            )
-                        },
-                    ) {
-                        Fs.show { layer ->
-                            WhatsNewFs(layer)
+                    note = state.whatsNewNote,
+                    onClick = {
+                        navigationFs.push {
+                            WhatsNewFs()
                         }
-                    }
-                }
+                    },
+                )
             }
 
             item {
