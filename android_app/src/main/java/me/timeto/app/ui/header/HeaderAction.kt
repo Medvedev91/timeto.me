@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,6 +28,7 @@ import me.timeto.app.ui.header.views.HeaderView
 fun HeaderAction(
     title: String,
     actionText: String,
+    isEnabled: Boolean,
     scrollState: ScrollableState?,
     onCancel: () -> Unit,
     onDone: () -> Unit,
@@ -69,15 +71,15 @@ fun HeaderAction(
                     modifier = Modifier
                         .padding(end = H_PADDING)
                         .clip(roundedShape)
-                        .background(c.blue)
-                        .clickable {
+                        .background(if (isEnabled) c.blue else Color.DarkGray)
+                        .clickable(isEnabled) {
                             onDone()
                         }
                         .padding(
                             horizontal = 10.dp,
                             vertical = 3.dp,
                         ),
-                    color = c.text,
+                    color = if (isEnabled) c.text else c.textSecondary,
                     fontSize = Header__buttonFontSize,
                     fontWeight = Header__titleFontWeight,
                 )
