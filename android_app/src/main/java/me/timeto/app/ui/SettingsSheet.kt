@@ -30,6 +30,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.*
 import kotlinx.coroutines.launch
+import me.timeto.app.ui.form.FormButton
+import me.timeto.app.ui.form.FormPaddingFirstItem
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.shared.*
@@ -130,20 +132,16 @@ fun SettingsSheet(
 
             item {
 
-                MyListView__PaddingFirst()
+                FormPaddingFirstItem()
 
-                MyListView__ItemView(
+                FormButton(
+                    title = state.readmeTitle,
                     isFirst = true,
                     isLast = false,
-                    withTopDivider = false,
-                ) {
-                    MyListView__ItemView__ButtonView(
-                        text = state.readmeTitle,
-                        bgColor = c.fg,
-                    ) {
+                    onClick = {
                         ReadmeSheet__show()
-                    }
-                }
+                    },
+                )
 
                 MyListView__ItemView(
                     isFirst = false,
