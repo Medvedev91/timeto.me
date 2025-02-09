@@ -28,6 +28,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import me.timeto.app.ui.*
 import kotlinx.coroutines.delay
+import me.timeto.app.ui.main.MainScreen
+import me.timeto.app.ui.navigation.NavigationFs
 import me.timeto.shared.*
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.misc.BatteryInfo
@@ -70,9 +72,11 @@ class MainActivity : ComponentActivity() {
                     BackupMessageView(backupMessage)
                 else if (state.isAppReady) {
 
-                    WrapperView.LayoutView {
-                        HomeView()
-                        UIListeners()
+                    NavigationFs {
+                        WrapperView.LayoutView {
+                            MainScreen()
+                            UIListeners()
+                        }
                     }
 
                     LaunchedEffect(Unit) {
