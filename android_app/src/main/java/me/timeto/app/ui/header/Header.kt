@@ -12,7 +12,7 @@ import me.timeto.app.HStack
 import me.timeto.app.H_PADDING
 import me.timeto.app.ui.header.views.HeaderCloseButtonView
 import me.timeto.app.ui.header.views.HeaderTitleView
-import me.timeto.app.ui.header.views.HeaderWrapperView
+import me.timeto.app.ui.header.views.HeaderView
 
 val Header__titleFontSize = 26.sp // Golden ratio to list's text
 val Header__titleFontWeight = FontWeight.ExtraBold
@@ -26,7 +26,7 @@ fun Header(
     onClose: () -> Unit,
 ) {
 
-    HeaderWrapperView(
+    HeaderView(
         scrollState = scrollState,
     ) {
 

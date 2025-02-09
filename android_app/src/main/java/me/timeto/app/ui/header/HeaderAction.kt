@@ -21,7 +21,7 @@ import me.timeto.app.c
 import me.timeto.app.halfDpCeil
 import me.timeto.app.roundedShape
 import me.timeto.app.ui.header.views.HeaderTitleView
-import me.timeto.app.ui.header.views.HeaderWrapperView
+import me.timeto.app.ui.header.views.HeaderView
 
 @Composable
 fun HeaderAction(
@@ -32,7 +32,7 @@ fun HeaderAction(
     onDone: () -> Unit,
 ) {
 
-    HeaderWrapperView(
+    HeaderView(
         scrollState = scrollState,
     ) {
 

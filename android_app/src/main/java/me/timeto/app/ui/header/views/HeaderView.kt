@@ -12,7 +12,7 @@ import me.timeto.app.ZStack
 import me.timeto.app.ui.DividerBgScroll
 
 @Composable
-fun HeaderWrapperView(
+fun HeaderView(
     scrollState: ScrollableState?,
     content: @Composable () -> Unit,
 ) {
