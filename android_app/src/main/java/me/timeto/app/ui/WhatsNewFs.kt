@@ -15,13 +15,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
+import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.vm.ReadmeVm
 import me.timeto.shared.vm.WhatsNewVm
 
 @Composable
-fun WhatsNewFs(
-    layer: WrapperView.Layer,
-) {
+fun WhatsNewFs() {
+
+    val navigationLayer = LocalNavigationLayer.current
 
     val (_, state) = rememberVm {
         WhatsNewVm()
@@ -39,7 +40,7 @@ fun WhatsNewFs(
             title = state.headerTitle,
             scrollState = scrollState,
             onClose = {
-                layer.close()
+                navigationLayer.close()
             },
         )
 
