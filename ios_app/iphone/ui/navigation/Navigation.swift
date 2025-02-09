@@ -60,6 +60,8 @@ class Navigation: DialogsManager {
         )
     }
     
+    // DialogsManager
+    
     nonisolated func alert(message: String) {
         Task { @MainActor in
             let alert = NavigationAlert(
