@@ -17,7 +17,7 @@ class SquircleShape(
     override fun createOutline(
         size: Size,
         layoutDirection: LayoutDirection,
-        density: Density
+        density: Density,
     ): Outline {
         val totalLen: Float = density.density * lenDp.value
         val attackLen: Float = totalLen / attackRatio
