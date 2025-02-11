@@ -6,8 +6,9 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
+import me.timeto.shared.ui.DialogsManager
 
-class Navigation {
+class Navigation : DialogsManager {
 
     val layers = mutableStateListOf<NavigationLayer>()
 
@@ -23,6 +24,41 @@ class Navigation {
             content = content,
         )
         layers.add(layer)
+    }
+
+    // DialogsManger
+
+    override fun alert(
+        message: String,
+    ) {
+        push { layer ->
+            NavigationAlert(
+                message = message,
+                withCancelButton = false,
+                buttonText = "Ok",
+                onButtonClick = {
+                    layer.close()
+                },
+            )
+        }
+    }
+
+    override fun confirmation(
+        message: String,
+        buttonText: String,
+        onConfirm: () -> Unit,
+    ) {
+        push { layer ->
+            NavigationAlert(
+                message = message,
+                withCancelButton = true,
+                buttonText = buttonText,
+                onButtonClick = {
+                    onConfirm()
+                    layer.close()
+                },
+            )
+        }
     }
 }
 
