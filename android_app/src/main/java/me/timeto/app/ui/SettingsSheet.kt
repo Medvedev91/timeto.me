@@ -31,6 +31,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.*
 import kotlinx.coroutines.launch
 import me.timeto.app.ui.checklists.ChecklistFormFs
+import me.timeto.app.ui.checklists.ChecklistScreen
 import me.timeto.app.ui.form.FormButton
 import me.timeto.app.ui.form.FormHeader
 import me.timeto.app.ui.form.FormPaddingFirstItem
@@ -38,6 +39,7 @@ import me.timeto.app.ui.form.FormPaddingHeaderSection
 import me.timeto.app.ui.form.FormPaddingSectionHeader
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.navigation.LocalNavigationFs
+import me.timeto.app.ui.navigation.LocalNavigationScreen
 import me.timeto.shared.*
 import me.timeto.shared.ui.settings.SettingsVm
 import java.io.BufferedReader
@@ -53,6 +55,7 @@ fun SettingsSheet(
     val scope = rememberCoroutineScope()
 
     val navigationFs = LocalNavigationFs.current
+    val navigationScreen = LocalNavigationScreen.current
 
     BackHandler {
         onClose()
@@ -175,77 +178,23 @@ fun SettingsSheet(
                 }
             }
 
-            item {
-                FormButton(
-                    title = "New Checklist",
-                    titleColor = c.blue,
-                    isFirst = checklistsDb.isEmpty(),
-                    isLast = true,
-                    onClick = {
-                        Dialog.show { layer ->
-                            ChecklistNameDialog(
-                                layer = layer,
-                                editedChecklist = null,
-                                onSave = {},
-                            )
-                        }
-                    },
-                )
-            }
+            checklistsDb.forEach { checklistDb ->
 
-            itemsIndexed(checklistsDb, key = { _, checklist -> checklist.id }) { _, checklist ->
+                item {
 
-                val isFirst = checklistsDb.first() == checklist
-
-                MyListView__ItemView(
-                    isFirst = isFirst,
-                    isLast = checklistsDb.last() == checklist,
-                    withTopDivider = !isFirst,
-                ) {
-
-                    SwipeToAction(
-                        isStartOrEnd = remember { mutableStateOf(null) },
-                        startView = {
-                            SwipeToAction__StartView(
-                                text = "Edit",
-                                bgColor = c.blue
-                            )
-                        },
-                        endView = { state ->
-                            SwipeToAction__DeleteView(
-                                state = state,
-                                note = checklist.name,
-                                deletionConfirmationNote = "Are you sure you want to delete \"${checklist.name}\" checklist?",
-                            ) {
-                                vibrateLong()
-                                scope.launchEx {
-                                    checklist.deleteWithDependencies()
-                                }
-                            }
-                        },
-                        onStart = {
-                            Dialog.show { layer ->
-                                ChecklistNameDialog(
-                                    layer = layer,
-                                    editedChecklist = checklist,
-                                    onSave = {},
+                    FormButton(
+                        title = checklistDb.name,
+                        isFirst = checklistsDb.first() == checklistDb,
+                        isLast = false,
+                        withArrow = true,
+                        onClick = {
+                            navigationScreen.push {
+                                ChecklistScreen(
+                                    checklistDb = checklistDb,
                                 )
                             }
-                            false
                         },
-                        onEnd = {
-                            true
-                        },
-                        toVibrateStartEnd = listOf(true, false),
-                    ) {
-
-                        MyListView__ItemView__ButtonView(
-                            text = checklist.name,
-                            bgColor = c.fg,
-                        ) {
-                            checklist.performUI()
-                        }
-                    }
+                    )
                 }
             }
 
