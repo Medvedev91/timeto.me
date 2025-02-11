@@ -17,11 +17,13 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import me.timeto.app.*
 import me.timeto.app.R
+import me.timeto.app.ui.home.HomeScreen__itemHeight
+import me.timeto.app.ui.home.HomeScreen__primaryFontSize
 import me.timeto.shared.db.ChecklistDb
-import me.timeto.shared.vm.Checklist.ChecklistVm
-import me.timeto.shared.vm.Checklist.ChecklistStateUi
+import me.timeto.shared.ui.checklists.ChecklistVm
+import me.timeto.shared.ui.checklists.ChecklistStateUi
 
-private val checklistItemMinHeight = HomeView__MTG_ITEM_HEIGHT
+private val checklistItemMinHeight = HomeScreen__itemHeight
 
 private val itemStartPadding = 8.dp
 private val checkboxSize = 18.dp
@@ -46,7 +48,7 @@ fun ChecklistView(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
-        val completionState = state.checklistUI.stateUI
+        val completionState = state.stateUi
 
         HStack(
             modifier = Modifier
@@ -64,7 +66,7 @@ fun ChecklistView(
                 contentPadding = PaddingValues(bottom = bottomPadding),
             ) {
 
-                state.checklistUI.itemsUI.forEach { itemUI ->
+                state.itemsUi.forEach { itemUI ->
 
                     item {
 
@@ -83,7 +85,7 @@ fun ChecklistView(
 
                             Icon(
                                 painterResource(
-                                    id = if (itemUI.item.isChecked)
+                                    id = if (itemUI.itemDb.isChecked)
                                         R.drawable.sf_checkmark_square_fill_medium_regular
                                     else
                                         R.drawable.sf_square_medium_regular
@@ -95,12 +97,12 @@ fun ChecklistView(
                             )
 
                             Text(
-                                text = itemUI.item.text,
+                                text = itemUI.itemDb.text,
                                 color = c.white,
                                 modifier = Modifier
                                     .padding(vertical = 4.dp)
                                     .padding(start = 12.dp),
-                                fontSize = HomeView__PRIMARY_FONT_SIZE,
+                                fontSize = HomeScreen__primaryFontSize,
                                 textAlign = TextAlign.Start,
                                 maxLines = maxLines,
                                 overflow = TextOverflow.Ellipsis,
@@ -146,7 +148,7 @@ fun ChecklistView(
                             Sheet.show { layer ->
                                 ChecklistFormSheet(
                                     layer = layer,
-                                    checklistDb = state.checklistUI.checklistDb,
+                                    checklistDb = state.checklistDb,
                                     onDelete = { onDelete() },
                                 )
                             }
