@@ -6,6 +6,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
+import me.timeto.app.c
 import me.timeto.shared.ui.DialogsManager
 
 class Navigation : DialogsManager {
@@ -36,6 +37,7 @@ class Navigation : DialogsManager {
                 message = message,
                 withCancelButton = false,
                 buttonText = "Ok",
+                buttonColor = c.blue,
                 onButtonClick = {
                     layer.close()
                 },
@@ -53,6 +55,7 @@ class Navigation : DialogsManager {
                 message = message,
                 withCancelButton = true,
                 buttonText = buttonText,
+                buttonColor = c.red,
                 onButtonClick = {
                     onConfirm()
                     layer.close()
