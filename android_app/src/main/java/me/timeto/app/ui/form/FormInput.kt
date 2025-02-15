@@ -53,6 +53,7 @@ fun FormInput(
     FormItemView(
         isFirst = isFirst,
         isLast = isLast,
+        modifier = Modifier,
         content = {
             BasicTextField(
                 value = textField.value,

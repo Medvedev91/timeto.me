@@ -31,6 +31,7 @@ fun FormButton(
         titleColor = titleColor ?: c.text,
         isFirst = isFirst,
         isLast = isLast,
+        modifier = Modifier,
         rightView = {
 
             HStack(

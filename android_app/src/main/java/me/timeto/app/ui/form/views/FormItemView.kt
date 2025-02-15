@@ -21,10 +21,11 @@ fun FormItemView(
     isLast: Boolean,
     dividerPadding: PaddingValues = PaddingValues(start = H_PADDING),
     outerPadding: PaddingValues = PaddingValues(horizontal = H_PADDING),
+    modifier: Modifier,
     content: @Composable () -> Unit
 ) {
     ZStack(
-        modifier = Modifier
+        modifier = modifier
             .padding(outerPadding)
             .clip(SquircleShape(12.dp, angles = listOf(isFirst, isFirst, isLast, isLast))),
         contentAlignment = Alignment.TopCenter,

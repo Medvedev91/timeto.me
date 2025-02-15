@@ -22,6 +22,7 @@ fun FormButtonView(
     titleColor: Color,
     isFirst: Boolean,
     isLast: Boolean,
+    modifier: Modifier,
     rightView: @Composable () -> Unit,
     onClick: () -> Unit,
 ) {
@@ -29,6 +30,7 @@ fun FormButtonView(
     FormItemView(
         isFirst = isFirst,
         isLast = isLast,
+        modifier = modifier,
         content = {
 
             HStack(
