@@ -38,8 +38,7 @@ fun FormButtonView(
                     .clickable {
                         onClick()
                     }
-                    .sizeIn(minHeight = Form__itemMinHeight)
-                    .padding(top = halfDpCeil),
+                    .sizeIn(minHeight = Form__itemMinHeight),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
 
