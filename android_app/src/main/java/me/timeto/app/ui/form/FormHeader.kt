@@ -14,7 +14,7 @@ fun FormHeader(
     title: String,
 ) {
     Text(
-        title,
+        text = title,
         modifier = Modifier
             .padding(horizontal = H_PADDING + H_PADDING)
             .alpha(0.8f),
