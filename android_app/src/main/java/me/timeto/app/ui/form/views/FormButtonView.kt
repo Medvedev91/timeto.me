@@ -12,8 +12,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import me.timeto.app.HStack
 import me.timeto.app.H_PADDING
-import me.timeto.app.halfDpCeil
-import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.form.Form__itemMinHeight
 
 @Composable
@@ -45,13 +43,12 @@ fun FormButtonView(
                 Text(
                     title,
                     modifier = Modifier
-                        .padding(start = H_PADDING, end = 10.dp),
+                        .padding(start = H_PADDING, end = 10.dp)
+                        .weight(1f),
                     color = titleColor,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-
-                SpacerW1()
 
                 rightView()
             }
