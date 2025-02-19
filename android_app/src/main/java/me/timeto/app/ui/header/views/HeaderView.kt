@@ -18,7 +18,7 @@ import me.timeto.app.ZStack
 import me.timeto.app.ui.DividerBgScroll
 
 private const val animRatio = 50f
-private val backgroundColor: Color = Color(red = 32, green = 32, blue = 34)
+private val backgroundColor: Color = Color(red = 26, green = 26, blue = 26)
 
 @Composable
 fun HeaderView(
