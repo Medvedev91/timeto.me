@@ -150,8 +150,9 @@ fun SettingsSheet(
                     isFirst = false,
                     isLast = true,
                     note = state.whatsNewNote,
+                    withArrow = true,
                     onClick = {
-                        navigationFs.push {
+                        navigationScreen.push {
                             WhatsNewFs()
                         }
                     },

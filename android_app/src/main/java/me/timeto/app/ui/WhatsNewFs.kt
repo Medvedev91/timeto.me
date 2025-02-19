@@ -46,8 +46,6 @@ fun WhatsNewFs() {
         )
 
         LazyColumn(
-            modifier = Modifier
-                .navigationBarsPadding(),
             state = scrollState,
             contentPadding = PaddingValues(bottom = H_PADDING),
         ) {
