@@ -114,20 +114,15 @@ fun SettingsSheet(
         }
     }
 
-    VStack(
-        modifier = Modifier
-            .fillMaxHeight()
-            .background(c.bg),
-    ) {
+    Screen {
 
         val scrollState = rememberLazyListState()
 
         Header(
             title = state.headerTitle,
             scrollState = scrollState,
-            onClose = {
-                onClose()
-            },
+            actionButton = null,
+            cancelButton = null,
         )
 
         LazyColumn(
