@@ -8,5 +8,5 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun FormPaddingHeaderSection() {
-    Box(Modifier.height(4.dp))
+    Box(Modifier.height(1.dp))
 }
