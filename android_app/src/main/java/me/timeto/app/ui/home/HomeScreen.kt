@@ -32,7 +32,7 @@ import me.timeto.app.pxToDp
 import me.timeto.app.rememberVm
 import me.timeto.app.roundedShape
 import me.timeto.app.toColor
-import me.timeto.app.ui.ChecklistView
+import me.timeto.app.ui.checklists.ChecklistView
 import me.timeto.app.ui.FDroidSheet
 import me.timeto.app.ui.Fs
 import me.timeto.app.ui.Padding
@@ -147,6 +147,8 @@ fun HomeScreen() {
                         scrollState = checklistScrollState,
                         onDelete = {},
                         maxLines = 1,
+                        topPadding = 0.dp,
+                        bottomPadding = 0.dp,
                     )
                 }
 

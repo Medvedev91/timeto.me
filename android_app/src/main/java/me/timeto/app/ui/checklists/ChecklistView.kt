@@ -17,10 +17,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import me.timeto.app.*
 import me.timeto.app.R
-import me.timeto.app.ui.ChecklistFormSheet
-import me.timeto.app.ui.Sheet
 import me.timeto.app.ui.home.HomeScreen__itemHeight
 import me.timeto.app.ui.home.HomeScreen__primaryFontSize
+import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.ui.checklists.ChecklistVm
 import me.timeto.shared.ui.checklists.ChecklistStateUi
@@ -38,7 +37,8 @@ fun ChecklistView(
     scrollState: LazyListState,
     onDelete: () -> Unit,
     maxLines: Int,
-    bottomPadding: Dp = 0.dp,
+    topPadding: Dp,
+    bottomPadding: Dp,
 ) {
 
     val (_, state) = rememberVm(checklistDb) {
@@ -65,7 +65,7 @@ fun ChecklistView(
                 modifier = Modifier.weight(1f),
                 state = scrollState,
                 horizontalAlignment = Alignment.CenterHorizontally,
-                contentPadding = PaddingValues(bottom = bottomPadding),
+                contentPadding = PaddingValues(top = topPadding, bottom = bottomPadding),
             ) {
 
                 state.itemsUi.forEach { itemUI ->
@@ -117,7 +117,7 @@ fun ChecklistView(
             VStack(
                 modifier = Modifier
                     .fillMaxHeight()
-                    .padding(start = 4.dp)
+                    .padding(start = 4.dp, top = topPadding)
                     .clip(squircleShape)
                     .clickable {
                         completionState.onClick()
