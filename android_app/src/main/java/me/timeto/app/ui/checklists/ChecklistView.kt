@@ -45,6 +45,8 @@ fun ChecklistView(
         ChecklistVm(checklistDb)
     }
 
+    val navigationFs = LocalNavigationFs.current
+
     VStack(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -147,11 +149,12 @@ fun ChecklistView(
                         .size(checklistItemMinHeight)
                         .clip(roundedShape)
                         .clickable {
-                            Sheet.show { layer ->
-                                ChecklistFormSheet(
-                                    layer = layer,
+                            navigationFs.push {
+                                ChecklistItemsFormFs(
                                     checklistDb = state.checklistDb,
-                                    onDelete = { onDelete() },
+                                    onDelete = {
+                                        onDelete()
+                                    },
                                 )
                             }
                         }
