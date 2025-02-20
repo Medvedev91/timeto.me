@@ -127,7 +127,7 @@ fun ChecklistView(
             ) {
 
                 Icon(
-                    painterResource(
+                    painter = painterResource(
                         id = when (completionState) {
                             is ChecklistStateUi.Completed -> R.drawable.sf_checkmark_square_fill_medium_regular
                             is ChecklistStateUi.Empty -> R.drawable.sf_square_medium_regular
@@ -142,7 +142,7 @@ fun ChecklistView(
                 )
 
                 Icon(
-                    painterResource(R.drawable.sf_pencil_medium_medium),
+                    painter = painterResource(R.drawable.sf_pencil_medium_medium),
                     contentDescription = "Edit Checklist",
                     tint = c.white,
                     modifier = Modifier
