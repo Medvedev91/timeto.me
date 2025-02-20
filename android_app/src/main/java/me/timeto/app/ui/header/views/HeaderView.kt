@@ -3,25 +3,20 @@ package me.timeto.app.ui.header.views
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.gestures.ScrollableState
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import me.timeto.app.MainActivity
 import me.timeto.app.ZStack
-import me.timeto.app.onePx
 
 private const val animRatio = 50f
-private val backgroundColor: Color = Color(26, 26, 26)
-private val dividerColor: Color = Color(44, 44, 44)
+private val backgroundColor: Color = Color(44, 44, 44)
 
 @Composable
 fun HeaderView(
@@ -72,17 +67,6 @@ fun HeaderView(
             }
             .padding(top = mainActivity.statusBarHeightDp),
     ) {
-
         content()
-
-        ZStack(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .height(onePx)
-                .fillMaxWidth()
-                .drawBehind {
-                    drawRect(color = dividerColor.copy(alpha = alphaAnimate.value))
-                },
-        )
     }
 }
