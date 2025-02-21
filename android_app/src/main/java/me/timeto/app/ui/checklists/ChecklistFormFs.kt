@@ -1,6 +1,5 @@
 package me.timeto.app.ui.checklists
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,12 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import me.timeto.app.VStack
-import me.timeto.app.c
 import me.timeto.app.rememberVm
+import me.timeto.app.ui.Screen
 import me.timeto.app.ui.form.FormInput
 import me.timeto.app.ui.form.FormPaddingFirstItem
-import me.timeto.app.ui.header.HeaderAction
+import me.timeto.app.ui.header.Header
+import me.timeto.app.ui.header.HeaderActionButton
+import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.db.ChecklistDb
@@ -36,31 +36,32 @@ fun ChecklistFormFs(
         )
     }
 
-    VStack(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(c.bg),
-    ) {
+    Screen {
 
         val scrollState = rememberLazyListState()
 
-        HeaderAction(
+        Header(
             title = state.title,
-            actionText = state.saveText,
-            isEnabled = state.isSaveEnabled,
             scrollState = null,
-            onCancel = {
-                navigationLayer.close()
-            },
-            onDone = {
-                vm.save(
-                    dialogsManager = navigationFs,
-                    onSuccess = { newChecklistDb ->
-                        onSave(newChecklistDb)
-                        navigationLayer.close()
-                    },
-                )
-            },
+            actionButton = HeaderActionButton(
+                text = state.saveText,
+                isEnabled = state.isSaveEnabled,
+                onClick = {
+                    vm.save(
+                        dialogsManager = navigationFs,
+                        onSuccess = { newChecklistDb ->
+                            onSave(newChecklistDb)
+                            navigationLayer.close()
+                        },
+                    )
+                },
+            ),
+            cancelButton = HeaderCancelButton(
+                text = "Cancel",
+                onClick = {
+                    navigationLayer.close()
+                },
+            ),
         )
 
         LazyColumn(
