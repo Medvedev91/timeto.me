@@ -70,42 +70,8 @@ class ChecklistItemsFormVm(
         itemDb.delete()
     }
 
-    fun up(itemUi: ChecklistItemUi) {
-        val itemsUi = state.value.checklistItemsUi
-        if (itemsUi.first() == itemUi)
-            return
-        val idx = itemsUi.indexOf(itemUi)
-        val prevIdx = idx - 1
-        val prevItemUi = itemsUi[prevIdx]
-        val newItemsUi = itemsUi.toMutableList()
-        newItemsUi[idx] = prevItemUi
-        newItemsUi[prevIdx] = itemUi
-        launchExDefault {
-            newItemsUi.forEachIndexed { idx, itemUi ->
-                itemUi.checklistItemDb.updateSort(idx)
-            }
-        }
-    }
-
-    fun down(itemUi: ChecklistItemUi) {
-        val itemsUi = state.value.checklistItemsUi
-        if (itemsUi.last() == itemUi)
-            return
-        val idx = itemsUi.indexOf(itemUi)
-        val nextIdx = idx + 1
-        val nextItemUi = itemsUi[nextIdx]
-        val newItemsUi = itemsUi.toMutableList()
-        newItemsUi[idx] = nextItemUi
-        newItemsUi[nextIdx] = itemUi
-        launchExDefault {
-            newItemsUi.forEachIndexed { idx, itemUi ->
-                itemUi.checklistItemDb.updateSort(idx)
-            }
-        }
-    }
-
-    fun moveIos(from: Int, to: Int) {
-        state.value.checklistItemsDb.moveIos(from, to) {
+    fun moveIos(fromIdx: Int, toIdx: Int) {
+        state.value.checklistItemsDb.moveIos(fromIdx, toIdx) {
             ChecklistItemDb.updateSortMany(itemsDb = it)
         }
     }
