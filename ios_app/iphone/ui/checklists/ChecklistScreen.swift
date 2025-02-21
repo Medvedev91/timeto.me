@@ -18,6 +18,7 @@ struct ChecklistScreen: View {
             ChecklistView(
                 checklistDb: state.checklistDb,
                 maxLines: maxLines,
+                withAddButton: true,
                 onDelete: onDelete
             )
             .contentMarginsTabBar(extra: 12)

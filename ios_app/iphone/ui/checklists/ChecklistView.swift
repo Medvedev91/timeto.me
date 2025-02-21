@@ -3,11 +3,13 @@ import shared
 
 private let checkboxSize = 21.0
 private let checklistItemMinHeight: CGFloat = HomeScreen__itemHeight
+private let itemFontSize: CGFloat = HomeScreen__primaryFortSize
 
 struct ChecklistView: View {
     
     let checklistDb: ChecklistDb
     let maxLines: Int
+    let withAddButton: Bool
     let onDelete: () -> Void
     
     var body: some View {
@@ -18,6 +20,7 @@ struct ChecklistView: View {
                 vm: vm,
                 state: state,
                 maxLines: maxLines,
+                withAddButton: withAddButton,
                 onDelete: onDelete
             )
         }
@@ -30,6 +33,7 @@ private struct ChecklistViewInner: View {
     let state: ChecklistVm.State
     
     let maxLines: Int
+    let withAddButton: Bool
     let onDelete: () -> Void
     
     ///
@@ -76,7 +80,7 @@ private struct ChecklistViewInner: View {
                                     Text(itemUi.itemDb.text)
                                         .padding(.vertical, 4)
                                         .foregroundColor(.white)
-                                        .font(.system(size: HomeScreen__primaryFortSize))
+                                        .font(.system(size: itemFontSize))
                                         .lineLimit(maxLines)
                                         .textAlign(.leading)
                                 }
@@ -84,6 +88,21 @@ private struct ChecklistViewInner: View {
                                 .frame(minHeight: checklistItemMinHeight)
                             }
                         )
+                    }
+                    
+                    if withAddButton {
+                        Button("New Item") {
+                            navigation.sheet {
+                                ChecklistItemFormSheet(
+                                    checklistDb: state.checklistDb,
+                                    checklistItemDb: nil
+                                )
+                            }
+                        }
+                        .font(.system(size: itemFontSize))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .frame(height: checklistItemMinHeight)
+                        .textAlign(.leading)
                     }
                 }
             }

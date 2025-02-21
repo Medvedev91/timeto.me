@@ -90,6 +90,7 @@ private struct HomeScreenInner: View {
                             ChecklistView(
                                 checklistDb: checklistDb,
                                 maxLines: 1,
+                                withAddButton: false,
                                 onDelete: {}
                             )
                         }
