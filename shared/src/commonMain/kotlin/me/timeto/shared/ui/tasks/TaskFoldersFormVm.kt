@@ -36,28 +36,8 @@ class TaskFoldersFormVm(
         }
     }
 
-    /*
-    fun sortUp(folder: TaskFolderDb) {
-        val tmpFolders = state.value.foldersDb.toMutableList()
-        val curIndex = tmpFolders.indexOf(folder)
-        if ((curIndex <= 0) || ((curIndex + 1) > tmpFolders.size))
-            return // todo report
-
-        val prepItemIndex = curIndex - 1
-        val prevItem = tmpFolders[prepItemIndex]
-        tmpFolders[prepItemIndex] = folder
-        tmpFolders[curIndex] = prevItem
-
-        launchExDefault {
-            tmpFolders.reversed().forEachIndexed { newIndex, folder ->
-                folder.upSort(newIndex)
-            }
-        }
-    }
-    */
-
-    fun moveIos(from: Int, to: Int) {
-        state.value.foldersDb.moveIos(from, to) {
+    fun moveIos(fromIdx: Int, toIdx: Int) {
+        state.value.foldersDb.moveIos(fromIdx, toIdx) {
             TaskFolderDb.updateSortMany(it.reversed())
         }
     }

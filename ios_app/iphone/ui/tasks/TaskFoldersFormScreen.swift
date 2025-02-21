@@ -63,9 +63,9 @@ private struct TaskFoldersFormScreenInner: View {
                     )
                 }
             }
-            .onMoveVm { from, to in
+            .onMoveVm { fromIdx, toIdx in
                 withFoldersAnimation = false
-                vm.moveIos(from: from, to: to)
+                vm.moveIos(fromIdx: fromIdx, toIdx: toIdx)
             }
             
             Section {
