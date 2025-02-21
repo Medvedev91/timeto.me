@@ -96,7 +96,7 @@ private struct ChecklistItemsFormSheetInner: View {
                         dismiss()
                     }
                 }
-                .fontWeight(.bold)
+                .fontWeight(.semibold)
             }
             
             ToolbarItemGroup(placement: .bottomBar) {
