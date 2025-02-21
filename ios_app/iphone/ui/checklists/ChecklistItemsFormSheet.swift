@@ -55,8 +55,8 @@ private struct ChecklistItemsFormSheetInner: View {
                         }
                     )
                 }
-                .onMoveVm { from, to in
-                    vm.moveIos(from: from, to: to)
+                .onMoveVm { fromIdx, toIdx in
+                    vm.moveIos(fromIdx: fromIdx, toIdx: toIdx)
                 }
                 .onDeleteVm { idx in
                     vm.deleteItem(itemDb: state.checklistItemsDb[idx])
