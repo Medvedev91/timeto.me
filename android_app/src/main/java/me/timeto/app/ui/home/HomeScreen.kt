@@ -147,6 +147,7 @@ fun HomeScreen() {
                         scrollState = checklistScrollState,
                         onDelete = {},
                         maxLines = 1,
+                        withAddButton = false,
                         topPadding = 0.dp,
                         bottomPadding = 0.dp,
                     )

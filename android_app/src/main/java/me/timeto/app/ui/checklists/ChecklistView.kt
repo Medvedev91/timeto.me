@@ -14,6 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import me.timeto.app.*
 import me.timeto.app.R
@@ -28,7 +29,8 @@ private val checklistItemMinHeight = HomeScreen__itemHeight
 
 private val itemStartPadding = 8.dp
 private val checkboxSize = 18.dp
-private val checklistMenuInnerIconPadding = (checklistItemMinHeight - checkboxSize) / 2
+private val checklistMenuInnerIconPadding: Dp = (checklistItemMinHeight - checkboxSize) / 2
+private val itemFontSize: TextUnit = HomeScreen__primaryFontSize
 
 @Composable
 fun ChecklistView(
@@ -37,6 +39,7 @@ fun ChecklistView(
     scrollState: LazyListState,
     onDelete: () -> Unit,
     maxLines: Int,
+    withAddButton: Boolean,
     topPadding: Dp,
     bottomPadding: Dp,
 ) {
@@ -66,7 +69,6 @@ fun ChecklistView(
             LazyColumn(
                 modifier = Modifier.weight(1f),
                 state = scrollState,
-                horizontalAlignment = Alignment.CenterHorizontally,
                 contentPadding = PaddingValues(top = topPadding, bottom = bottomPadding),
             ) {
 
@@ -106,10 +108,38 @@ fun ChecklistView(
                                 modifier = Modifier
                                     .padding(vertical = 4.dp)
                                     .padding(start = 12.dp),
-                                fontSize = HomeScreen__primaryFontSize,
+                                fontSize = itemFontSize,
                                 textAlign = TextAlign.Start,
                                 maxLines = maxLines,
                                 overflow = TextOverflow.Ellipsis,
+                            )
+                        }
+                    }
+                }
+
+                if (withAddButton) {
+                    item {
+                        ZStack(
+                            modifier = Modifier
+                                .height(checklistItemMinHeight),
+                            contentAlignment = Alignment.CenterStart,
+                        ) {
+                            Text(
+                                text = "New Item",
+                                color = c.blue,
+                                modifier = Modifier
+                                    .clip(squircleShape)
+                                    .clickable {
+                                        navigationFs.push {
+                                            ChecklistItemFormFs(
+                                                checklistDb = checklistDb,
+                                                checklistItemDb = null,
+                                            )
+                                        }
+                                    }
+                                    .padding(vertical = 4.dp)
+                                    .padding(horizontal = itemStartPadding),
+                                fontSize = itemFontSize,
                             )
                         }
                     }
