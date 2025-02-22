@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.*
 import me.timeto.app.*
 import me.timeto.app.R
 import kotlinx.coroutines.delay
-import me.timeto.app.ui.main.MainTabsView__HEIGHT
+import me.timeto.app.ui.main.MainTabsView__height
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.launchEx
@@ -155,7 +155,7 @@ fun TasksListView(
                 if (isFocused && WindowInsets.isImeVisible)
                     Box(
                         modifier = Modifier
-                            .consumeWindowInsets(PaddingValues(bottom = MainTabsView__HEIGHT))
+                            .consumeWindowInsets(PaddingValues(bottom = MainTabsView__height))
                             .imePadding()
                     )
             }
