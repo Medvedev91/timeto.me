@@ -42,7 +42,7 @@ fun ChecklistFormFs(
 
         Header(
             title = state.title,
-            scrollState = null,
+            scrollState = scrollState,
             actionButton = HeaderActionButton(
                 text = state.saveText,
                 isEnabled = state.isSaveEnabled,
