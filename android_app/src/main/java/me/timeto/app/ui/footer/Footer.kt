@@ -22,6 +22,7 @@ import me.timeto.app.ui.main.MainTabsView__dividerColor
 @Composable
 fun Footer(
     scrollState: LazyListState?,
+    contentModifier: Modifier,
     content: @Composable RowScope.() -> Unit,
 ) {
 
@@ -57,7 +58,7 @@ fun Footer(
         )
 
         HStack(
-            modifier = Modifier
+            modifier = contentModifier
                 .align(Alignment.CenterStart)
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
