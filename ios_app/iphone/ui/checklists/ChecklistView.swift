@@ -58,54 +58,54 @@ private struct ChecklistViewInner: View {
         
         HStack(alignment: .top) {
             
-            ScrollView {
+            List {
                 
-                VStack {
+                ForEach(state.itemsUi, id: \.itemDb.id) { itemUi in
                     
-                    ForEach(state.itemsUi, id: \.itemDb.id) { itemUi in
-                        
-                        Button(
-                            action: {
-                                itemUi.toggle()
-                            },
-                            label: {
+                    Button(
+                        action: {
+                            itemUi.toggle()
+                        },
+                        label: {
+                            
+                            HStack {
                                 
-                                HStack {
-                                    
-                                    Image(systemName: itemUi.itemDb.isChecked ? "checkmark.square.fill" : "square")
-                                        .foregroundColor(c.white)
-                                        .font(.system(size: checkboxSize, weight: .regular))
-                                        .padding(.trailing, 10)
-                                    
-                                    Text(itemUi.itemDb.text)
-                                        .padding(.vertical, 4)
-                                        .foregroundColor(.white)
-                                        .font(.system(size: itemFontSize))
-                                        .lineLimit(maxLines)
-                                        .textAlign(.leading)
-                                }
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .frame(minHeight: checklistItemMinHeight)
+                                Image(systemName: itemUi.itemDb.isChecked ? "checkmark.square.fill" : "square")
+                                    .foregroundColor(c.white)
+                                    .font(.system(size: checkboxSize, weight: .regular))
+                                    .padding(.trailing, 10)
+                                
+                                Text(itemUi.itemDb.text)
+                                    .padding(.vertical, 4)
+                                    .foregroundColor(.white)
+                                    .font(.system(size: itemFontSize))
+                                    .lineLimit(maxLines)
+                                    .textAlign(.leading)
                             }
-                        )
-                    }
-                    
-                    if withAddButton {
-                        Button("New Item") {
-                            navigation.sheet {
-                                ChecklistItemFormSheet(
-                                    checklistDb: state.checklistDb,
-                                    checklistItemDb: nil
-                                )
-                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .frame(minHeight: checklistItemMinHeight)
                         }
-                        .font(.system(size: itemFontSize))
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .frame(height: checklistItemMinHeight)
-                        .textAlign(.leading)
+                    )
+                    .customListItem()
+                }
+                
+                if withAddButton {
+                    Button("New Item") {
+                        navigation.sheet {
+                            ChecklistItemFormSheet(
+                                checklistDb: state.checklistDb,
+                                checklistItemDb: nil
+                            )
+                        }
                     }
+                    .font(.system(size: itemFontSize))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .frame(height: checklistItemMinHeight)
+                    .textAlign(.leading)
+                    .customListItem()
                 }
             }
+            .customList()
             .scrollIndicators(.hidden)
             
             Button(
