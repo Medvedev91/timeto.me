@@ -20,6 +20,7 @@ fun <Item>FormSortedList(
     itemTitle: (Item) -> String,
     onItemClick: (Item) -> Unit,
     scrollState: LazyListState,
+    modifier: Modifier,
     onMove: (Int, Int) -> Unit, // from idx / to idx
     onFinish: () -> Unit,
 ) {
@@ -32,6 +33,7 @@ fun <Item>FormSortedList(
     }
 
     LazyColumn(
+        modifier = modifier,
         state = scrollState,
         userScrollEnabled = sortedMovingIdx.value == null,
     ) {
