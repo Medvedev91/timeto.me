@@ -15,7 +15,7 @@ import androidx.compose.ui.draw.drawBehind
 import me.timeto.app.HStack
 import me.timeto.app.ZStack
 import me.timeto.app.onePx
-import me.timeto.app.ui.main.MainTabsView__HEIGHT
+import me.timeto.app.ui.main.MainTabsView__height
 import me.timeto.app.ui.main.MainTabsView__backgroundColor
 import me.timeto.app.ui.main.MainTabsView__dividerColor
 
@@ -43,7 +43,7 @@ fun Footer(
                 drawRect(color = MainTabsView__backgroundColor.copy(alpha = alphaAnimate.value))
             }
             .navigationBarsPadding()
-            .height(MainTabsView__HEIGHT),
+            .height(MainTabsView__height),
     ) {
 
         ZStack(

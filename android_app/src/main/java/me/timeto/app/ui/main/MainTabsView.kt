@@ -39,7 +39,9 @@ import me.timeto.app.toColor
 import me.timeto.app.ui.ActivitiesTimerSheet__show
 import me.timeto.shared.ui.main.MainTabsVm
 
-val MainTabsView__HEIGHT = 56.dp
+val MainTabsView__height = 56.dp
+val MainTabsView__backgroundColor = Color(18, 18, 19)
+val MainTabsView__dividerColor = Color(32, 35, 35)
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -54,10 +56,10 @@ fun MainTabsView(
 
     val withBackground: Boolean = tab != MainTabEnum.home
     val backgroundColor = animateColorAsState(
-        if (withBackground) tabBarBackgroundColor else c.black,
+        if (withBackground) MainTabsView__backgroundColor else c.black,
     )
     val dividerColor = animateColorAsState(
-        if (withBackground) tabBarDividerColor else c.black,
+        if (withBackground) MainTabsView__dividerColor else c.black,
     )
 
     ZStack(
@@ -66,7 +68,7 @@ fun MainTabsView(
                 drawRect(color = backgroundColor.value)
             }
             .navigationBarsPadding()
-            .height(MainTabsView__HEIGHT),
+            .height(MainTabsView__height),
     ) {
 
         ZStack(
@@ -186,15 +188,9 @@ fun MainTabsView(
 
 ///
 
-private val tabBarBackgroundColor: Color =
-    Color(red = 12, green = 13, blue = 13)
-
-private val tabBarDividerColor: Color =
-    Color(red = 32, green = 35, blue = 35)
-
 private val tabButtonModifier: Modifier =
     Modifier
-        .size(MainTabsView__HEIGHT)
+        .size(MainTabsView__height)
         .padding(14.dp)
 
 ///
