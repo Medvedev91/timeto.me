@@ -1,7 +1,6 @@
 package me.timeto.app.ui.form
 
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
@@ -61,13 +60,6 @@ fun <Item>FormSortedList(
                     },
                 )
             }
-        }
-
-        item {
-            ZStack(
-                modifier = Modifier
-                    .navigationBarsPadding(),
-            )
         }
     }
 }
