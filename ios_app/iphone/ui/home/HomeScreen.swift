@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-let HomeScreen__primaryFortSize: CGFloat = 18
+let HomeScreen__primaryFontSize: CGFloat = 18
 
 let HomeScreen__itemHeight: CGFloat = 38
 let HomeScreen__itemCircleHPadding: CGFloat = 7

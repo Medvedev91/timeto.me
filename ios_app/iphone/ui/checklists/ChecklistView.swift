@@ -3,7 +3,7 @@ import shared
 
 private let checkboxSize = 21.0
 private let checklistItemMinHeight: CGFloat = HomeScreen__itemHeight
-private let itemFontSize: CGFloat = HomeScreen__primaryFortSize
+private let itemFontSize: CGFloat = HomeScreen__primaryFontSize
 
 struct ChecklistView: View {
     
