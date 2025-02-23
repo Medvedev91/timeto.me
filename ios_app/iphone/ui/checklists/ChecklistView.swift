@@ -89,6 +89,9 @@ private struct ChecklistViewInner: View {
                     )
                     .customListItem()
                 }
+                .onMoveVm { oldIdx, newIdx in
+                    vm.moveIos(fromIdx: oldIdx, toIdx: newIdx)
+                }
                 
                 if withAddButton {
                     Button("New Item") {
