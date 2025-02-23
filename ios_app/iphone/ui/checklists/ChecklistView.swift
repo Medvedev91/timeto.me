@@ -84,6 +84,7 @@ private struct ChecklistViewInner: View {
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .frame(minHeight: checklistItemMinHeight)
+                            .contentShape(Rectangle()) // Tap area full width
                         }
                     )
                     .customListItem()
@@ -98,6 +99,7 @@ private struct ChecklistViewInner: View {
                             )
                         }
                     }
+                    .foregroundColor(.blue)
                     .font(.system(size: itemFontSize))
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .frame(height: checklistItemMinHeight)
