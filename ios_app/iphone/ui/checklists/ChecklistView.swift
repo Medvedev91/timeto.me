@@ -144,7 +144,9 @@ private struct ChecklistViewInner: View {
                                         ChecklistFormSheet(
                                             checklistDb: state.checklistDb,
                                             onSave: { _ in },
-                                            onDelete: {}
+                                            onDelete: {
+                                                onDelete()
+                                            }
                                         )
                                     }
                                 },
