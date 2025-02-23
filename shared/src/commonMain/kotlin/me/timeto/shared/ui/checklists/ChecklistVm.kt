@@ -6,6 +6,7 @@ import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.ChecklistItemDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.onEachExIn
+import me.timeto.shared.ui.DialogsManager
 import me.timeto.shared.ui.moveIos
 import me.timeto.shared.vm.__Vm
 
@@ -39,6 +40,21 @@ class ChecklistVm(
                 it.copy(itemsDb = itemsDb.filter { it.list_id == checklistDb.id })
             }
         }
+    }
+
+    fun deleteItem(
+        itemDb: ChecklistItemDb,
+        dialogsManager: DialogsManager,
+    ) {
+        dialogsManager.confirmation(
+            message = "Are you sure you want to delete \"${itemDb.text}\"?",
+            buttonText = "Delete",
+            onConfirm = {
+                launchExIo {
+                    itemDb.delete()
+                }
+            },
+        )
     }
 
     fun moveIos(fromIdx: Int, toIdx: Int) {
