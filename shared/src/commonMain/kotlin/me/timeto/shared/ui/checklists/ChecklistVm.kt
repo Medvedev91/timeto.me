@@ -6,6 +6,7 @@ import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.ChecklistItemDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.onEachExIn
+import me.timeto.shared.ui.moveIos
 import me.timeto.shared.vm.__Vm
 
 class ChecklistVm(
@@ -37,6 +38,12 @@ class ChecklistVm(
             state.update {
                 it.copy(itemsDb = itemsDb.filter { it.list_id == checklistDb.id })
             }
+        }
+    }
+
+    fun moveIos(fromIdx: Int, toIdx: Int) {
+        state.value.itemsDb.moveIos(fromIdx, toIdx) {
+            ChecklistItemDb.updateSortMany(itemsDb = it)
         }
     }
 
