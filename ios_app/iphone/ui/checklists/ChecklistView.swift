@@ -90,19 +90,69 @@ private struct ChecklistViewInner: View {
                     )
                     .customListItem()
                     .contextMenu {
-                        Button(
-                            action: {
-                                navigation.sheet {
-                                    ChecklistItemFormSheet(
-                                        checklistDb: state.checklistDb,
-                                        checklistItemDb: itemUi.itemDb
-                                    )
+                        
+                        Section {
+                            
+                            Button(
+                                action: {
+                                    navigation.sheet {
+                                        ChecklistItemFormSheet(
+                                            checklistDb: state.checklistDb,
+                                            checklistItemDb: itemUi.itemDb
+                                        )
+                                    }
+                                },
+                                label: {
+                                    Label("Edit", systemImage: "square.and.pencil")
                                 }
-                            },
-                            label: {
-                                Label("Edit", systemImage: "square.and.pencil")
-                            }
-                        )
+                            )
+                            
+                            Button(
+                                role: .destructive,
+                                action: {
+                                    Haptic.warning()
+                                    vm.deleteItem(
+                                        itemDb: itemUi.itemDb,
+                                        dialogsManager: navigation
+                                    )
+                                },
+                                label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            )
+                        }
+                        
+                        Section(state.checklistDb.name) {
+                            
+                            Button(
+                                action: {
+                                    navigation.sheet {
+                                        ChecklistItemFormSheet(
+                                            checklistDb: state.checklistDb,
+                                            checklistItemDb: nil
+                                        )
+                                    }
+                                },
+                                label: {
+                                    Label("New Item", systemImage: "plus")
+                                }
+                            )
+                            
+                            Button(
+                                action: {
+                                    navigation.sheet {
+                                        ChecklistFormSheet(
+                                            checklistDb: state.checklistDb,
+                                            onSave: { _ in },
+                                            onDelete: {}
+                                        )
+                                    }
+                                },
+                                label: {
+                                    Label("Settings", systemImage: "gear")
+                                }
+                            )
+                        }
                     }
                 }
                 .onMoveVm { oldIdx, newIdx in
