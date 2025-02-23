@@ -88,6 +88,21 @@ private struct ChecklistViewInner: View {
                         }
                     )
                     .customListItem()
+                    .contextMenu {
+                        Button(
+                            action: {
+                                navigation.sheet {
+                                    ChecklistItemFormSheet(
+                                        checklistDb: state.checklistDb,
+                                        checklistItemDb: itemUi.itemDb
+                                    )
+                                }
+                            },
+                            label: {
+                                Label("Edit", systemImage: "square.and.pencil")
+                            }
+                        )
+                    }
                 }
                 .onMoveVm { oldIdx, newIdx in
                     vm.moveIos(fromIdx: oldIdx, toIdx: newIdx)
