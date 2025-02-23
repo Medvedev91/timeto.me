@@ -6,8 +6,18 @@ struct Haptic {
         shot(.soft)
     }
     
+    ///
+    
     static func success() {
         notification(.success)
+    }
+    
+    static func warning() {
+        notification(.warning)
+    }
+    
+    static func error() {
+        notification(.error)
     }
 }
 
