@@ -65,6 +65,7 @@ private struct ChecklistViewInner: View {
                     Button(
                         action: {
                             itemUi.toggle()
+                            Haptic.softShot()
                         },
                         label: {
                             
@@ -131,6 +132,7 @@ private struct ChecklistViewInner: View {
             Button(
                 action: {
                     state.stateUi.onClick()
+                    Haptic.softShot()
                 },
                 label: {
                     
