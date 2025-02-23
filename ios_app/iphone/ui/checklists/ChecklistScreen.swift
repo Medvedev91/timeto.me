@@ -7,6 +7,10 @@ struct ChecklistScreen: View {
     let maxLines: Int
     let onDelete: () -> Void
     
+    ///
+    
+    @Environment(Navigation.self) private var navigation
+    
     var body: some View {
         
         VmView({
@@ -24,6 +28,21 @@ struct ChecklistScreen: View {
             .contentMarginsTabBar(extra: 12)
             .navigationTitle(state.checklistDb.name)
             .toolbarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button("Edit") {
+                        navigation.sheet {
+                            ChecklistFormSheet(
+                                checklistDb: checklistDb,
+                                onSave: { _ in },
+                                onDelete: {
+                                    onDelete()
+                                }
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
 }
