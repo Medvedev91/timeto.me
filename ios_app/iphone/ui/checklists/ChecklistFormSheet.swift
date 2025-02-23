@@ -90,7 +90,7 @@ private struct ChecklistFormSheetInner: View {
                         }
                     )
                 }
-                .fontWeight(.bold)
+                .fontWeight(.semibold)
                 .disabled(!state.isSaveEnabled)
             }
         }
