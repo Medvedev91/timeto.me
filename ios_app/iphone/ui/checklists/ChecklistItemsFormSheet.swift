@@ -120,7 +120,7 @@ private struct ChecklistItemsFormSheetInner: View {
                             
                             Text(state.newItemText)
                                 .foregroundColor(.blue)
-                                .fontWeight(.bold)
+                                .fontWeight(.semibold)
                         }
                     }
                 )
