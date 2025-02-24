@@ -73,7 +73,7 @@ private struct ChecklistsPickerSheetInner: View {
                         dismiss()
                         onPick(vm.getSelectedChecklistsDb())
                     }
-                    .fontWeight(.bold)
+                    .fontWeight(.semibold)
                 }
                 
                 ToolbarItemGroup(placement: .bottomBar) {
@@ -108,7 +108,7 @@ private struct ChecklistsPickerSheetInner: View {
                                     .fontWeight(.bold)
                                 Text(state.newChecklistText)
                                     .foregroundColor(.blue)
-                                    .fontWeight(.bold)
+                                    .fontWeight(.semibold)
                             }
                         }
                     )
