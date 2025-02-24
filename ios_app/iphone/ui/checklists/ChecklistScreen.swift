@@ -9,6 +9,7 @@ struct ChecklistScreen: View {
     
     ///
     
+    @Environment(\.dismiss) private var dismiss
     @Environment(Navigation.self) private var navigation
     
     var body: some View {
@@ -32,11 +33,11 @@ struct ChecklistScreen: View {
                 ToolbarItem(placement: .primaryAction) {
                     Button("Edit") {
                         navigation.sheet {
-                            ChecklistFormSheet(
+                            ChecklistItemsFormSheet(
                                 checklistDb: checklistDb,
-                                onSave: { _ in },
                                 onDelete: {
                                     onDelete()
+                                    dismiss()
                                 }
                             )
                         }
