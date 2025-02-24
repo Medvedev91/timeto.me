@@ -195,25 +195,6 @@ private struct ChecklistViewInner: View {
                             .font(.system(size: checkboxSize, weight: .regular))
                             .frame(height: checklistItemMinHeight)
                         
-                        Button(
-                            action: {
-                                navigation.sheet {
-                                    ChecklistItemsFormSheet(
-                                        checklistDb: state.checklistDb,
-                                        onDelete: {
-                                            onDelete()
-                                        }
-                                    )
-                                }
-                            },
-                            label: {
-                                Image(systemName: "pencil")
-                                    .foregroundColor(Color.white)
-                                    .font(.system(size: checkboxSize, weight: .regular))
-                                    .frame(height: checklistItemMinHeight)
-                            }
-                        )
-                        
                         Spacer()
                     }
                 }
