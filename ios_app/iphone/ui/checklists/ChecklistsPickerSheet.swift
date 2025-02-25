@@ -50,6 +50,18 @@ private struct ChecklistsPickerSheetInner: View {
                     
                     ForEach(animatedChecklistsDb, id: \.id) { checklistDb in
                         Text(checklistDb.name)
+                            .contextMenu {
+                                Button("Edit") {
+                                    navigation.sheet {
+                                        ChecklistItemsFormSheet(
+                                            checklistDb: checklistDb,
+                                            onDelete: {
+                                                self.selectedIds.remove(checklistDb.id)
+                                            }
+                                        )
+                                    }
+                                }
+                            }
                     }
                 }
                 .listSectionSeparator(.hidden, edges: [.top, .bottom])
