@@ -70,11 +70,8 @@ class ChecklistItemsFormVm(
         itemDb.delete()
     }
 
-    fun moveIos(fromIdx: Int, toIdx: Int) {
-        state.value.checklistItemsDb.moveIos(fromIdx, toIdx) {
-            ChecklistItemDb.updateSortMany(itemsDb = it)
-        }
-    }
+    //
+    // Move Android
 
     fun moveAndroidLocal(fromIdx: Int, toIdx: Int) {
         state.value.checklistItemsDb.moveAndroid(fromIdx, toIdx) { newItems ->
@@ -85,6 +82,14 @@ class ChecklistItemsFormVm(
     fun moveAndroidSync() {
         launchExIo {
             ChecklistItemDb.updateSortMany(state.value.checklistItemsDb)
+        }
+    }
+
+    ///
+
+    fun moveIos(fromIdx: Int, toIdx: Int) {
+        state.value.checklistItemsDb.moveIos(fromIdx, toIdx) {
+            ChecklistItemDb.updateSortMany(itemsDb = it)
         }
     }
 }
