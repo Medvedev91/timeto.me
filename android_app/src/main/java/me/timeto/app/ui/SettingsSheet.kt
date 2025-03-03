@@ -31,6 +31,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.*
 import kotlinx.coroutines.launch
 import me.timeto.app.ui.checklists.ChecklistFormFs
+import me.timeto.app.ui.checklists.ChecklistItemsFormFs
 import me.timeto.app.ui.checklists.ChecklistScreen
 import me.timeto.app.ui.form.FormButton
 import me.timeto.app.ui.form.FormHeader
@@ -192,6 +193,31 @@ fun SettingsSheet(
                         },
                     )
                 }
+            }
+
+            item {
+                FormButton(
+                    title = "New Checklist",
+                    titleColor = c.blue,
+                    isFirst = checklistsDb.isEmpty(),
+                    isLast = true,
+                    onClick = {
+                        navigationFs.push {
+                            ChecklistFormFs(
+                                checklistDb = null,
+                                onSave = { newChecklistDb ->
+                                    navigationFs.push {
+                                        ChecklistItemsFormFs(
+                                            checklistDb = newChecklistDb,
+                                            onDelete = {},
+                                        )
+                                    }
+                                },
+                                onDelete = {},
+                            )
+                        }
+                    },
+                )
             }
 
             item {
