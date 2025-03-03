@@ -20,6 +20,7 @@ import me.timeto.app.H_PADDING_HALF
 import me.timeto.app.VStack
 import me.timeto.app.c
 import me.timeto.app.roundedShape
+import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.header.views.HeaderView
 
 val Header__titleFontSize = 26.sp // Golden ratio to list's text
@@ -33,6 +34,7 @@ fun Header(
     scrollState: ScrollableState?,
     actionButton: HeaderActionButton?,
     cancelButton: HeaderCancelButton?,
+    secondaryButtons: List<HeaderSecondaryButton> = listOf(),
 ) {
 
     HeaderView(
@@ -41,21 +43,29 @@ fun Header(
 
         VStack {
 
-            if (cancelButton != null) {
-                Text(
-                    text = cancelButton.text,
+            if (cancelButton != null || secondaryButtons.isNotEmpty()) {
+                HStack(
                     modifier = Modifier
                         .offset(y = 1.dp)
-                        .padding(start = H_PADDING_HALF, top = 12.dp)
-                        .clip(roundedShape)
-                        .clickable {
-                            cancelButton.onClick()
-                        }
-                        .padding(horizontal = H_PADDING_HALF),
-                    color = c.textSecondary,
-                    fontWeight = FontWeight.Light,
-                    fontSize = 14.sp,
-                )
+                        .padding(horizontal = H_PADDING_HALF)
+                        .padding(top = 12.dp),
+                ) {
+                    if (cancelButton != null) {
+                        TopButtonView(
+                            text = cancelButton.text,
+                            color = c.textSecondary,
+                            onClick = cancelButton.onClick,
+                        )
+                    }
+                    SpacerW1()
+                    secondaryButtons.forEach { secondaryButton ->
+                        TopButtonView(
+                            text = secondaryButton.text,
+                            color = c.blue,
+                            onClick = secondaryButton.onClick,
+                        )
+                    }
+                }
             }
 
             HStack(
@@ -102,4 +112,26 @@ fun Header(
             }
         }
     }
+}
+
+///
+
+@Composable
+private fun TopButtonView(
+    text: String,
+    color: Color,
+    onClick: () -> Unit,
+) {
+    Text(
+        text = text,
+        modifier = Modifier
+            .clip(roundedShape)
+            .clickable {
+                onClick()
+            }
+            .padding(horizontal = H_PADDING_HALF),
+        color = color,
+        fontWeight = FontWeight.Light,
+        fontSize = 14.sp,
+    )
 }
