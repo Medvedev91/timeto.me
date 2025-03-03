@@ -8,10 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import me.timeto.app.c
 import me.timeto.app.rememberVm
 import me.timeto.app.ui.Screen
+import me.timeto.app.ui.form.FormButton
 import me.timeto.app.ui.form.FormInput
 import me.timeto.app.ui.form.FormPaddingFirstItem
+import me.timeto.app.ui.form.FormPaddingSectionSection
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
@@ -87,6 +90,28 @@ fun ChecklistFormFs(
                     isAutoFocus = true,
                     imeAction = ImeAction.Done,
                 )
+            }
+
+            if (checklistDb != null) {
+                item {
+                    FormPaddingSectionSection()
+                    FormButton(
+                        title = state.deleteText,
+                        titleColor = c.red,
+                        isFirst = true,
+                        isLast = true,
+                        onClick = {
+                            vm.delete(
+                                checklistDb = checklistDb,
+                                dialogsManager = navigationFs,
+                                onDelete = {
+                                    onDelete()
+                                    navigationLayer.close()
+                                },
+                            )
+                        },
+                    )
+                }
             }
         }
     }
