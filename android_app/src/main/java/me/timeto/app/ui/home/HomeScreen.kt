@@ -145,7 +145,6 @@ fun HomeScreen() {
                         modifier = Modifier
                             .height(listSizes.checklist.dp),
                         scrollState = checklistScrollState,
-                        onDelete = {},
                         maxLines = 1,
                         withAddButton = false,
                         topPadding = 0.dp,

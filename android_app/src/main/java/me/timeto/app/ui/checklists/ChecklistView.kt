@@ -37,7 +37,6 @@ fun ChecklistView(
     checklistDb: ChecklistDb,
     modifier: Modifier,
     scrollState: LazyListState,
-    onDelete: () -> Unit,
     maxLines: Int,
     withAddButton: Boolean,
     topPadding: Dp,
