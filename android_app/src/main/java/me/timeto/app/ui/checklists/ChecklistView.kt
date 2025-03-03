@@ -170,26 +170,6 @@ fun ChecklistView(
                         .size(checklistItemMinHeight)
                         .padding(checklistMenuInnerIconPadding),
                 )
-
-                Icon(
-                    painter = painterResource(R.drawable.sf_pencil_medium_medium),
-                    contentDescription = "Edit Checklist",
-                    tint = c.white,
-                    modifier = Modifier
-                        .size(checklistItemMinHeight)
-                        .clip(roundedShape)
-                        .clickable {
-                            navigationFs.push {
-                                ChecklistItemsFormFs(
-                                    checklistDb = state.checklistDb,
-                                    onDelete = {
-                                        onDelete()
-                                    },
-                                )
-                            }
-                        }
-                        .padding(checklistMenuInnerIconPadding + 1.dp),
-                )
             }
         }
     }
