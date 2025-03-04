@@ -70,6 +70,21 @@ class ChecklistItemsFormVm(
         itemDb.delete()
     }
 
+    fun deleteItemWithConfirmation(
+        itemDb: ChecklistItemDb,
+        dialogsManager: DialogsManager,
+    ) {
+        dialogsManager.confirmation(
+            message = "Are you sure you want to delete \"${itemDb.text}\"?",
+            buttonText = "Delete",
+            onConfirm = {
+                launchExIo {
+                    itemDb.delete()
+                }
+            },
+        )
+    }
+
     //
     // Move Android
 
