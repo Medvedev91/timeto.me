@@ -85,6 +85,12 @@ fun ChecklistItemsFormFs(
             onFinish = {
                 vm.moveAndroidSync()
             },
+            onItemDelete = { itemDb ->
+                vm.deleteItemWithConfirmation(
+                    itemDb = itemDb,
+                    dialogsManager = navigationFs,
+                )
+            },
         )
 
         Footer(
