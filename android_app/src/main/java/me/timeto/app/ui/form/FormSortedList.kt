@@ -13,11 +13,12 @@ import me.timeto.app.ui.form.views.FormSortedItemView
 import me.timeto.app.ui.form.views.FormSortedState
 
 @Composable
-fun <Item>FormSortedList(
+fun <Item> FormSortedList(
     items: List<Item>,
     itemId: (Item) -> Int,
     itemTitle: (Item) -> String,
     onItemClick: (Item) -> Unit,
+    onItemDelete: ((Item) -> Unit)?,
     scrollState: LazyListState,
     modifier: Modifier,
     onMove: (Int, Int) -> Unit, // from idx / to idx
@@ -57,6 +58,9 @@ fun <Item>FormSortedList(
                     },
                     onClick = {
                         onItemClick(item)
+                    },
+                    onDelete = onItemDelete?.let {
+                        { onItemDelete(item) }
                     },
                 )
             }

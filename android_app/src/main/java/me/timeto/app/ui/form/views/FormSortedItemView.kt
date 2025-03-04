@@ -17,21 +17,31 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import me.timeto.app.HStack
 import me.timeto.app.H_PADDING
 import me.timeto.app.R
 import me.timeto.app.ZStack
 import me.timeto.app.c
+import me.timeto.app.goldenRatioDown
 import me.timeto.app.mics.Haptic
+import me.timeto.app.roundedShape
 import me.timeto.app.ui.DividerBg
 import me.timeto.app.ui.form.Form__itemMinHeight
 import kotlin.math.absoluteValue
+
+private val deleteIconSize: Dp = 18.dp
+private val deleteIconTapAreaPadding: Dp = 4.dp
+private val deleteIconLeadingPadding: Dp = H_PADDING - deleteIconTapAreaPadding
+private val deleteIconTrailingPadding: Dp = H_PADDING.goldenRatioDown()
+private val deleteDividerPadding: Dp = deleteIconSize + deleteIconTrailingPadding + 1.dp
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -43,6 +53,7 @@ fun LazyItemScope.FormSortedItemView(
     sortedMovingIdx: MutableState<Int?>,
     onMove: (Int, Int) -> Unit,
     onFinish: () -> Unit,
+    onDelete: (() -> Unit)?,
     onClick: () -> Unit,
 ) {
 
@@ -67,6 +78,27 @@ fun LazyItemScope.FormSortedItemView(
                 .sizeIn(minHeight = Form__itemMinHeight),
             verticalAlignment = Alignment.CenterVertically,
         ) {
+
+            if (onDelete != null) {
+                ZStack(
+                    modifier = Modifier
+                        .padding(start = deleteIconLeadingPadding)
+                        .clip(roundedShape)
+                        .clickable {
+                            onDelete()
+                        }
+                        .padding(deleteIconTapAreaPadding),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.sf_minus_circle_fill_medium_regular),
+                        contentDescription = "Delete",
+                        tint = c.red,
+                        modifier = Modifier
+                            .size(deleteIconSize),
+                    )
+                }
+            }
 
             Text(
                 title,
@@ -129,7 +161,14 @@ fun LazyItemScope.FormSortedItemView(
         }
 
         if (!isFirst) {
-            DividerBg(Modifier.padding(start = H_PADDING), true)
+            val extraDividerPadding: Dp =
+                if (onDelete == null) 0.dp
+                else deleteDividerPadding + deleteIconTrailingPadding
+            DividerBg(
+                modifier = Modifier
+                    .padding(start = H_PADDING + extraDividerPadding),
+                isVisible = true,
+            )
         }
     }
 }
