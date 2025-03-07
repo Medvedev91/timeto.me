@@ -51,8 +51,8 @@ fun LazyItemScope.FormSortedItemView(
     itemIdx: Int,
     sortedState: FormSortedState,
     sortedMovingIdx: MutableState<Int?>,
-    onMove: (Int, Int) -> Unit,
-    onFinish: () -> Unit,
+    onMoveProcess: (Int, Int) -> Unit,
+    onMoveFinish: () -> Unit,
     onDelete: (() -> Unit)?,
     onClick: () -> Unit,
 ) {
@@ -130,20 +130,20 @@ fun LazyItemScope.FormSortedItemView(
                         }
                         if (event.action == MotionEvent.ACTION_UP) {
                             sortedMovingIdx.value = null
-                            onFinish()
+                            onMoveFinish()
                         } else if (event.action == MotionEvent.ACTION_MOVE) {
                             val newIdx: Int? = sortedState.idxToYMap
                                 .map { it.key to (it.value - event.y).absoluteValue }
                                 .minByOrNull { it.second }
                                 ?.first
                             if ((newIdx != null) && (newIdx != itemIdx)) {
-                                onMove(itemIdx, newIdx)
+                                onMoveProcess(itemIdx, newIdx)
                                 hapticFeedback()
                             }
                         } else {
                             // Other action like many taps
                             sortedMovingIdx.value = null
-                            onFinish()
+                            onMoveFinish()
                         }
                     },
                 verticalAlignment = Alignment.CenterVertically,

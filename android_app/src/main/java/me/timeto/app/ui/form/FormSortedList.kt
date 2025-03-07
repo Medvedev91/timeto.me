@@ -50,10 +50,10 @@ fun <Item> FormSortedList(
                     itemIdx = idx,
                     sortedState = sortedState,
                     sortedMovingIdx = sortedMovingIdx,
-                    onMove = { fromIdx, toIdx ->
+                    onMoveProcess = { fromIdx, toIdx ->
                         onMove(fromIdx, toIdx)
                     },
-                    onFinish = {
+                    onMoveFinish = {
                         onFinish()
                     },
                     onClick = {
