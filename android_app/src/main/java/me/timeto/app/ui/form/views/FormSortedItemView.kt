@@ -37,7 +37,7 @@ import me.timeto.app.ui.DividerBg
 import me.timeto.app.ui.form.Form__itemMinHeight
 import kotlin.math.absoluteValue
 
-private val deleteIconSize: Dp = 18.dp
+private val deleteIconSize: Dp = 20.dp
 private val deleteIconTapAreaPadding: Dp = 4.dp
 private val deleteIconLeadingPadding: Dp = H_PADDING - deleteIconTapAreaPadding
 private val deleteIconTrailingPadding: Dp = H_PADDING.goldenRatioDown()
@@ -90,6 +90,12 @@ fun LazyItemScope.FormSortedItemView(
                         .padding(deleteIconTapAreaPadding),
                     contentAlignment = Alignment.Center,
                 ) {
+                    ZStack(
+                        modifier = Modifier
+                            .size(deleteIconSize - 2.dp)
+                            .clip(roundedShape)
+                            .background(c.white),
+                    ) {}
                     Icon(
                         painter = painterResource(id = R.drawable.sf_minus_circle_fill_medium_regular),
                         contentDescription = "Delete",
