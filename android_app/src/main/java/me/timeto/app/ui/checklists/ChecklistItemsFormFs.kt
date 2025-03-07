@@ -13,8 +13,8 @@ import me.timeto.app.ui.footer.FooterAddButton
 import me.timeto.app.ui.footer.FooterRightButton
 import me.timeto.app.ui.form.FormSortedList
 import me.timeto.app.ui.header.Header
+import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
-import me.timeto.app.ui.header.HeaderSecondaryButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.db.ChecklistDb
@@ -40,7 +40,18 @@ fun ChecklistItemsFormFs(
         Header(
             title = state.checklistName,
             scrollState = scrollState,
-            actionButton = null,
+            actionButton = HeaderActionButton(
+                text = "Done",
+                isEnabled = true,
+                onClick = {
+                    val isDoneAllowed = vm.isDoneAllowed(
+                        dialogsManager = navigationFs,
+                    )
+                    if (isDoneAllowed) {
+                        navigationLayer.close()
+                    }
+                },
+            ),
             cancelButton = HeaderCancelButton(
                 text = "Close",
                 onClick = {
