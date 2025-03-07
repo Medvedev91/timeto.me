@@ -7,8 +7,10 @@ import androidx.compose.ui.Modifier
 import me.timeto.app.H_PADDING_HALF
 import me.timeto.app.rememberVm
 import me.timeto.app.ui.Screen
+import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.footer.Footer
 import me.timeto.app.ui.footer.FooterAddButton
+import me.timeto.app.ui.footer.FooterRightButton
 import me.timeto.app.ui.form.FormSortedList
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderCancelButton
@@ -44,23 +46,6 @@ fun ChecklistItemsFormFs(
                 onClick = {
                     navigationLayer.close()
                 },
-            ),
-            secondaryButtons = listOf(
-                HeaderSecondaryButton(
-                    text = "Settings",
-                    onClick = {
-                        navigationFs.push {
-                            ChecklistFormFs(
-                                checklistDb = checklistDb,
-                                onSave = {},
-                                onDelete = {
-                                    onDelete()
-                                    navigationLayer.close()
-                                },
-                            )
-                        }
-                    },
-                )
             ),
         )
 
@@ -105,6 +90,22 @@ fun ChecklistItemsFormFs(
                         ChecklistItemFormFs(
                             checklistDb = checklistDb,
                             checklistItemDb = null,
+                        )
+                    }
+                },
+            )
+            SpacerW1()
+            FooterRightButton(
+                text = "Settings",
+                onClick = {
+                    navigationFs.push {
+                        ChecklistFormFs(
+                            checklistDb = checklistDb,
+                            onSave = {},
+                            onDelete = {
+                                onDelete()
+                                navigationLayer.close()
+                            },
                         )
                     }
                 },
