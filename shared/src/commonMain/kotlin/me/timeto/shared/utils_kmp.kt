@@ -249,6 +249,9 @@ fun Int.toTimerHintNote(
     }
 }
 
+/**
+ * https://sarunw.com/posts/dark-color-cheat-sheet
+ */
 data class ColorRgba(
     val r: Int, val g: Int,
     val b: Int, val a: Int = 255,
@@ -271,7 +274,7 @@ data class ColorRgba(
         val tertiaryText = ColorRgba(255, 255, 255, 136)
 
         val bg = black
-        val fg = ColorRgba(30, 30, 32)
+        val fg = ColorRgba(0x1C, 0x1C, 0x1E) // secondarySystemBackground
 
         val dividerBg = ColorRgba(50, 50, 53)
         val dividerFg = ColorRgba(61, 61, 65)
