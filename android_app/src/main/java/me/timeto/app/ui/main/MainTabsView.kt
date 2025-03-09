@@ -85,7 +85,7 @@ fun MainTabsView(
             TabButton(
                 icon = R.drawable.sf_timer_medium_thin,
                 contentDescription = "Timer",
-                isSelected = false,
+                isSelected = tab == MainTabEnum.activities,
                 onTouch = {
                     ActivitiesTimerSheet__show(timerContext = null, withMenu = true)
                 },
