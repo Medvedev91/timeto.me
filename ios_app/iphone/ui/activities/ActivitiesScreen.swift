@@ -59,6 +59,7 @@ private struct BottomMenu: View {
             .padding(.trailing, ActivitiesView__listEngPadding)
         }
         .frame(height: ActivitiesView__listItemHeight)
+        .background(.background)
     }
 }
 
