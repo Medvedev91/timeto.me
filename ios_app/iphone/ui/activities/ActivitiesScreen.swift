@@ -56,7 +56,7 @@ private struct BottomMenu: View {
                         .padding(.horizontal, ActivitiesView__timerHintHPadding)
                 }
             )
-            .padding(.trailing, ActivitiesView__listEngPadding)
+            .padding(.trailing, ActivitiesView__listEndPadding)
         }
         .frame(height: ActivitiesView__listItemHeight)
         .background(.background)

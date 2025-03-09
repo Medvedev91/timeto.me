@@ -3,7 +3,7 @@ import shared
 
 let ActivitiesView__listItemHeight = 46.0
 let ActivitiesView__timerHintHPadding = 5.0
-let ActivitiesView__listEngPadding = 8.0
+let ActivitiesView__listEndPadding = 8.0
 
 struct ActivitiesView: View {
     
@@ -69,7 +69,7 @@ private struct ActivitiesViewInner: View {
                                     
                                     Spacer()
                                 }
-                                .padding(.trailing, ActivitiesView__listEngPadding)
+                                .padding(.trailing, ActivitiesView__listEndPadding)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                                 
                                 if state.activitiesUi.last != activityUi {
