@@ -123,7 +123,7 @@ fun WhatsNewFs() {
                         }
 
                         if (state.historyItemsUi.last() != historyItemUi)
-                            DividerBg(
+                            Divider(
                                 modifier = Modifier
                                     .padding(top = 12.dp)
                                     .padding(start = H_PADDING),
