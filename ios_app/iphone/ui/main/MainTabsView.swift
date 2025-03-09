@@ -42,8 +42,6 @@ private struct MainTabsViewInner: View {
         tab != .home
     }
     
-    @EnvironmentObject private var nativeSheet: NativeSheet
-    
     var body: some View {
         
         ZStack(alignment: .top) {
@@ -52,16 +50,12 @@ private struct MainTabsViewInner: View {
                 
                 Button(
                     action: {
-                        nativeSheet.showActivitiesTimerSheet(
-                            timerContext: nil,
-                            withMenu: true,
-                            onStart: {}
-                        )
+                        tab = (tab == .activities ? .home : .activities)
                     },
                     label: {
                         Image(systemName: "timer")
                             .fillMaxSize()
-                            .foregroundColor(c.homeFontSecondary)
+                            .foregroundColor(tab == .activities ? .blue : c.homeFontSecondary)
                             .font(.system(size: 30, weight: .thin))
                     }
                 )
