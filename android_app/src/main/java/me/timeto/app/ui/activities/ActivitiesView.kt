@@ -25,7 +25,7 @@ import me.timeto.app.rememberVm
 import me.timeto.app.roundedShape
 import me.timeto.app.ui.ActivityFormSheet
 import me.timeto.app.ui.ActivityTimerSheet__show
-import me.timeto.app.ui.SheetDividerBg
+import me.timeto.app.ui.Divider
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.shared.ui.activities.ActivitiesVm
 
@@ -107,11 +107,9 @@ fun ActivitiesView(
                         )
                     }
 
-                    SheetDividerBg(
-                        modifier = Modifier
-                            .padding(start = activityItemPaddingStart),
-                        isVisible = activitiesUi.first() != activityUi,
-                    )
+                    if (activitiesUi.first() != activityUi) {
+                        Divider(Modifier.padding(start = activityItemPaddingStart))
+                    }
 
                     if (activityUi.isActive) {
                         ZStack(
