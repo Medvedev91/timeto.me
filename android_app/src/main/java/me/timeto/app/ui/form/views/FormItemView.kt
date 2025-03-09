@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import me.timeto.app.H_PADDING
 import me.timeto.app.ZStack
 import me.timeto.app.c
-import me.timeto.app.ui.DividerFg
+import me.timeto.app.ui.Divider
 import me.timeto.app.ui.SquircleShape
 
 @Composable
@@ -31,7 +31,7 @@ fun FormItemView(
         contentAlignment = Alignment.TopCenter,
     ) {
 
-        ZStack (
+        ZStack(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(c.fg),
@@ -41,7 +41,7 @@ fun FormItemView(
         }
 
         if (!isFirst) {
-            DividerFg(Modifier.padding(dividerPadding), true)
+            Divider(Modifier.padding(dividerPadding))
         }
     }
 }
