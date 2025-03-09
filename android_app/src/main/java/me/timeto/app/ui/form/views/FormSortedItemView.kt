@@ -33,7 +33,7 @@ import me.timeto.app.c
 import me.timeto.app.goldenRatioDown
 import me.timeto.app.mics.Haptic
 import me.timeto.app.roundedShape
-import me.timeto.app.ui.DividerBg
+import me.timeto.app.ui.Divider
 import me.timeto.app.ui.form.Form__itemMinHeight
 import kotlin.math.absoluteValue
 
@@ -170,10 +170,9 @@ fun LazyItemScope.FormSortedItemView(
             val extraDividerPadding: Dp =
                 if (onDelete == null) 0.dp
                 else deleteDividerPadding + deleteIconTrailingPadding
-            DividerBg(
+            Divider(
                 modifier = Modifier
                     .padding(start = H_PADDING + extraDividerPadding),
-                isVisible = true,
             )
         }
     }
