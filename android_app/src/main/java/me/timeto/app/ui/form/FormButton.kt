@@ -24,6 +24,7 @@ fun FormButton(
     noteColor: Color? = null,
     withArrow: Boolean = false,
     onClick: () -> Unit,
+    onLongClick: (() -> Unit)? = null,
 ) {
 
     FormButtonView(
@@ -56,5 +57,6 @@ fun FormButton(
             }
         },
         onClick = onClick,
+        onLongClick = onLongClick,
     )
 }

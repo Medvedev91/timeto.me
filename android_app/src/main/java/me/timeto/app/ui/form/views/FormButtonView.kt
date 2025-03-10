@@ -1,6 +1,7 @@
 package me.timeto.app.ui.form.views
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material.Text
@@ -14,6 +15,7 @@ import me.timeto.app.HStack
 import me.timeto.app.H_PADDING
 import me.timeto.app.ui.form.Form__itemMinHeight
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FormButtonView(
     title: String,
@@ -23,6 +25,7 @@ fun FormButtonView(
     modifier: Modifier,
     rightView: @Composable () -> Unit,
     onClick: () -> Unit,
+    onLongClick: (() -> Unit)?,
 ) {
 
     FormItemView(
@@ -33,9 +36,10 @@ fun FormButtonView(
 
             HStack(
                 modifier = Modifier
-                    .clickable {
-                        onClick()
-                    }
+                    .combinedClickable(
+                        onClick = onClick,
+                        onLongClick = onLongClick,
+                    )
                     .sizeIn(minHeight = Form__itemMinHeight),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
