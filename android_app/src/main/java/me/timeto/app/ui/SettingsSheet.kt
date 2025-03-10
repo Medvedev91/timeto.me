@@ -160,23 +160,21 @@ fun SettingsSheet(
                 )
             }
 
+            //
+            // Checklists
+
             val checklistsDb = state.checklistsDb
 
             item {
-
                 FormPaddingSectionHeader()
-
                 FormHeader(
                     title = "CHECKLISTS",
                 )
-
                 FormPaddingHeaderSection()
             }
 
             checklistsDb.forEach { checklistDb ->
-
                 item {
-
                     FormButton(
                         title = checklistDb.name,
                         isFirst = checklistsDb.first() == checklistDb,
