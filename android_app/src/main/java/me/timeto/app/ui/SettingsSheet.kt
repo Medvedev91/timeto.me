@@ -170,9 +170,7 @@ fun SettingsSheet(
                     title = "CHECKLISTS",
                 )
 
-                if (checklistsDb.isNotEmpty()) {
-                    FormPaddingHeaderSection()
-                }
+                FormPaddingHeaderSection()
             }
 
             checklistsDb.forEach { checklistDb ->
