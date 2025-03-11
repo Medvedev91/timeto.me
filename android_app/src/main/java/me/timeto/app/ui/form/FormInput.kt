@@ -39,9 +39,10 @@ fun FormInput(
     isLast: Boolean,
     isAutoFocus: Boolean,
     imeAction: ImeAction,
+    triggerReinit: Any = Unit,
 ) {
 
-    val textField = remember {
+    val textField = remember(triggerReinit) {
         mutableStateOf(TextFieldValue(initText, TextRange(initText.length)))
     }
 
