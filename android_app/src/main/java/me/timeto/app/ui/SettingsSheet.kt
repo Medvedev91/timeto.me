@@ -41,6 +41,7 @@ import me.timeto.app.ui.form.FormPaddingSectionHeader
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationScreen
+import me.timeto.app.ui.shortcuts.ShortcutFormFs
 import me.timeto.shared.*
 import me.timeto.shared.ui.settings.SettingsVm
 import java.io.BufferedReader
@@ -216,78 +217,54 @@ fun SettingsSheet(
                 )
             }
 
+            //
+            // Shortcuts
+
+            val shortcutsDb = state.shortcutsDb
+
             item {
-
-                MyListView__Padding__SectionHeader((-9).dp) // ~9.dp consume icon space
-
-                MyListView__HeaderView(
+                FormPaddingSectionHeader()
+                FormHeader(
                     title = "SHORTCUTS",
-                    rightView = {
-                        MyListView__HeaderView__RightIcon(
-                            icon = Icons.Rounded.Add,
-                            contentDescription = "New Shortcut"
-                        ) {
-                            Sheet.show { layer ->
-                                ShortcutFormSheet(layer = layer, editedShortcut = null)
-                            }
-                        }
-                    }
                 )
+                FormPaddingHeaderSection()
             }
 
-            val shortcuts = state.shortcuts
-            if (shortcuts.isNotEmpty())
-                item { MyListView__Padding__HeaderSection() }
-
-            itemsIndexed(shortcuts, key = { _, shortcut -> shortcut.id }) { _, shortcut ->
-
-                val isFirst = shortcuts.first() == shortcut
-
-                MyListView__ItemView(
-                    isFirst = isFirst,
-                    isLast = shortcuts.last() == shortcut,
-                    withTopDivider = !isFirst,
-                ) {
-
-                    SwipeToAction(
-                        isStartOrEnd = remember { mutableStateOf(null) },
-                        startView = {
-                            SwipeToAction__StartView(
-                                text = "Edit",
-                                bgColor = c.blue
-                            )
+            shortcutsDb.forEach { shortcutDb ->
+                item {
+                    FormButton(
+                        title = shortcutDb.name,
+                        isFirst = shortcutsDb.first() == shortcutDb,
+                        isLast = false,
+                        withArrow = false,
+                        onClick = {
+                            shortcutDb.performUi()
                         },
-                        endView = { state ->
-                            SwipeToAction__DeleteView(
-                                state = state,
-                                note = shortcut.name,
-                                deletionConfirmationNote = "Are you sure you want to delete \"${shortcut.name}\" shortcut?",
-                            ) {
-                                vibrateLong()
-                                scope.launchEx {
-                                    shortcut.delete()
-                                }
+                        onLongClick = {
+                            navigationFs.push {
+                                ShortcutFormFs(
+                                    shortcutDb = shortcutDb,
+                                )
                             }
                         },
-                        onStart = {
-                            Sheet.show { layer ->
-                                ShortcutFormSheet(layer = layer, editedShortcut = shortcut)
-                            }
-                            false
-                        },
-                        onEnd = {
-                            true
-                        },
-                        toVibrateStartEnd = listOf(true, false),
-                    ) {
-                        MyListView__ItemView__ButtonView(
-                            text = shortcut.name,
-                            bgColor = c.fg,
-                        ) {
-                            shortcut.performUi()
-                        }
-                    }
+                    )
                 }
+            }
+
+            item {
+                FormButton(
+                    title = "New Shortcut",
+                    titleColor = c.blue,
+                    isFirst = shortcutsDb.isEmpty(),
+                    isLast = true,
+                    onClick = {
+                        navigationFs.push {
+                            ShortcutFormFs(
+                                shortcutDb = null,
+                            )
+                        }
+                    },
+                )
             }
 
             item {
