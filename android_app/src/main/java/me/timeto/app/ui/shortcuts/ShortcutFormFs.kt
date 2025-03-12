@@ -39,6 +39,7 @@ import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
+import me.timeto.app.ui.shortcuts.apps.ShortcutAppsFs
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.ui.shortcuts.ShortcutFormVm
 
@@ -197,6 +198,28 @@ fun ShortcutFormFs(
                         onLongClick = {},
                     )
                 }
+
+                FormPaddingSectionHeader()
+
+                FormButton(
+                    title = "Apps",
+                    isFirst = true,
+                    isLast = true,
+                    onClick = {
+                        navigationFs.push {
+                            ShortcutAppsFs(
+                                onAppSelected = { shortcutApp ->
+                                    reinitForm(
+                                        name = shortcutApp.name,
+                                        uri = vm.prepUriForAndroidPackage(
+                                            androidPackage = shortcutApp.androidPackage
+                                        ),
+                                    )
+                                }
+                            )
+                        }
+                    },
+                )
 
                 if (shortcutDb != null) {
                     FormPaddingSectionHeader()
