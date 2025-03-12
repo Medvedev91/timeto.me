@@ -98,6 +98,16 @@ fun ShortcutFormFs(
 
                 val triggerReinit = remember { mutableStateOf(false) }
 
+                fun reinitForm(
+                    name: String,
+                    uri: String,
+                ) {
+                    vm.setName(name)
+                    vm.setUri(uri)
+                    triggerReinit.toggle()
+                    keyboardController?.hide()
+                }
+
                 //
                 // Name
 
@@ -179,10 +189,10 @@ fun ShortcutFormFs(
                             }
                         },
                         onClick = {
-                            vm.setName(example.name)
-                            vm.setUri(example.uri)
-                            keyboardController?.hide()
-                            triggerReinit.toggle()
+                            reinitForm(
+                                name = example.name,
+                                uri = example.uri,
+                            )
                         },
                         onLongClick = {},
                     )
