@@ -52,10 +52,8 @@ class ShortcutFormVm(
         state.update { it.copy(uri = uri) }
     }
 
-    fun setAndroidPackage(androidPackage: String) {
-        state.update {
-            it.copy(uri = "${ShortcutDb.ANDROID_PACKAGE_PREFIX}$androidPackage")
-        }
+    fun prepUriForAndroidPackage(androidPackage: String): String {
+        return "${ShortcutDb.ANDROID_PACKAGE_PREFIX}$androidPackage"
     }
 
     fun save(
