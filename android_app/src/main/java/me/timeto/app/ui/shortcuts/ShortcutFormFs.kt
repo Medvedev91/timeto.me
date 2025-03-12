@@ -28,6 +28,7 @@ import me.timeto.app.rememberVm
 import me.timeto.app.roundedShape
 import me.timeto.app.toggle
 import me.timeto.app.ui.Screen
+import me.timeto.app.ui.form.FormButton
 import me.timeto.app.ui.form.FormHeader
 import me.timeto.app.ui.form.FormInput
 import me.timeto.app.ui.form.FormPaddingFirstItem
@@ -142,8 +143,6 @@ fun ShortcutFormFs(
 
                 FormPaddingSectionHeader()
 
-                FormPaddingSectionHeader()
-
                 FormHeader("EXAMPLES")
 
                 shortcutExamples.forEach { example ->
@@ -186,6 +185,25 @@ fun ShortcutFormFs(
                             triggerReinit.toggle()
                         },
                         onLongClick = {},
+                    )
+                }
+
+                if (shortcutDb != null) {
+                    FormPaddingSectionHeader()
+                    FormButton(
+                        title = state.deleteText,
+                        titleColor = c.red,
+                        isFirst = true,
+                        isLast = true,
+                        onClick = {
+                            vm.delete(
+                                shortcutDb = shortcutDb,
+                                dialogsManager = navigationFs,
+                                onDelete = {
+                                    navigationLayer.close()
+                                },
+                            )
+                        },
                     )
                 }
             }
