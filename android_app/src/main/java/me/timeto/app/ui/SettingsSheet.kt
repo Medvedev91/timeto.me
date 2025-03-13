@@ -306,6 +306,7 @@ fun SettingsSheet(
                         navigationFs.push {
                             NoteFormFs(
                                 noteDb = null,
+                                onDelete = {},
                             )
                         }
                     },
