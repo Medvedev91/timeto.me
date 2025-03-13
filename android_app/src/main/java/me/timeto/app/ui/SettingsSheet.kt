@@ -11,13 +11,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,6 +37,8 @@ import me.timeto.app.ui.form.FormPaddingSectionHeader
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationScreen
+import me.timeto.app.ui.notes.NoteFormFs
+import me.timeto.app.ui.notes.NoteFs
 import me.timeto.app.ui.shortcuts.ShortcutFormFs
 import me.timeto.shared.*
 import me.timeto.shared.ui.settings.SettingsVm
@@ -267,51 +265,51 @@ fun SettingsSheet(
                 )
             }
 
+            //
+            // Notes
+
+            val notesDb = state.notesDb
+
             item {
-
-                MyListView__Padding__SectionHeader((-9).dp) // ~9.dp consume icon space
-
-                MyListView__HeaderView(
+                FormPaddingSectionHeader()
+                FormHeader(
                     title = "NOTES",
-                    rightView = {
-                        MyListView__HeaderView__RightIcon(
-                            icon = Icons.Rounded.Add,
-                            contentDescription = "New Note"
-                        ) {
-                            Sheet.show { layer ->
-                                NoteFormSheet(layer, note = null, onDelete = {})
-                            }
-                        }
-                    }
                 )
+                FormPaddingHeaderSection()
             }
 
-            val notes = state.notes
-            if (notes.isNotEmpty())
-                item { MyListView__Padding__HeaderSection() }
-
-            itemsIndexed(
-                items = notes,
-                key = { _, note -> note.id },
-            ) { _, note ->
-
-                val isFirst = notes.first() == note
-
-                MyListView__ItemView(
-                    isFirst = isFirst,
-                    isLast = notes.last() == note,
-                    withTopDivider = !isFirst,
-                ) {
-                    MyListView__ItemView__ButtonView(
-                        text = note.title,
-                        maxLines = 1,
-                        bgColor = c.fg,
-                    ) {
-                        Sheet.show { layer ->
-                            NoteSheet(layer, initNote = note)
-                        }
-                    }
+            notesDb.forEach { noteDb ->
+                item {
+                    FormButton(
+                        title = noteDb.title,
+                        isFirst = notesDb.first() == noteDb,
+                        isLast = false,
+                        withArrow = true,
+                        onClick = {
+                            navigationFs.push {
+                                NoteFs(
+                                    initNoteDb = noteDb,
+                                )
+                            }
+                        },
+                    )
                 }
+            }
+
+            item {
+                FormButton(
+                    title = "New Note",
+                    titleColor = c.blue,
+                    isFirst = notesDb.isEmpty(),
+                    isLast = true,
+                    onClick = {
+                        navigationFs.push {
+                            NoteFormFs(
+                                noteDb = null,
+                            )
+                        }
+                    },
+                )
             }
 
             item {
