@@ -56,6 +56,9 @@ fun NoteFs(
                         navigationFs.push {
                             NoteFormFs(
                                 noteDb = state.noteDb,
+                                onDelete = {
+                                    navigationLayer.close()
+                                },
                             )
                         }
                     },
@@ -67,6 +70,7 @@ fun NoteFs(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
+            state = scrollState,
             contentPadding = PaddingValues(
                 top = 12.dp,
                 bottom = 12.dp,
