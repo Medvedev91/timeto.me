@@ -11,10 +11,11 @@ import me.timeto.app.c
 
 @Composable
 fun Screen(
+    modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     VStack(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(c.bg)
             .pointerInput(Unit) {},
