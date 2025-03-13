@@ -8,6 +8,7 @@ import me.timeto.app.VStack
 import me.timeto.app.ZStack
 import me.timeto.app.ui.SettingsSheet
 import me.timeto.app.ui.TasksView
+import me.timeto.app.ui.activities.ActivitiesScreen
 import me.timeto.app.ui.home.HomeScreen
 import me.timeto.app.ui.navigation.NavigationScreen
 
@@ -28,6 +29,15 @@ fun MainScreen() {
                 MainTabEnum.home -> {
                     NavigationScreen {
                         HomeScreen()
+                    }
+                }
+                MainTabEnum.activities -> {
+                    NavigationScreen {
+                        ActivitiesScreen(
+                            onClose = {
+                                tab.value = MainTabEnum.home
+                            },
+                        )
                     }
                 }
                 MainTabEnum.tasks -> {
