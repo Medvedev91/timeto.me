@@ -40,6 +40,7 @@ import me.timeto.app.ui.navigation.LocalNavigationScreen
 import me.timeto.app.ui.notes.NoteFormFs
 import me.timeto.app.ui.notes.NoteFs
 import me.timeto.app.ui.shortcuts.ShortcutFormFs
+import me.timeto.app.ui.tasks.folders.TaskFoldersFormFs
 import me.timeto.shared.*
 import me.timeto.shared.ui.settings.SettingsVm
 import java.io.BufferedReader
@@ -308,6 +309,30 @@ fun SettingsSheet(
                                 noteDb = null,
                                 onDelete = {},
                             )
+                        }
+                    },
+                )
+            }
+
+            //
+            // Settings
+
+            item {
+
+                FormPaddingSectionHeader()
+
+                FormHeader("SETTINGS")
+
+                FormPaddingHeaderSection()
+
+                FormButton(
+                    title = "Folders",
+                    isFirst = true,
+                    isLast = false,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.push {
+                            TaskFoldersFormFs()
                         }
                     },
                 )
