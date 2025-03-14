@@ -3,27 +3,19 @@ package me.timeto.app.ui
 import android.app.DownloadManager
 import android.content.Intent
 import android.provider.Settings
-import android.widget.NumberPicker
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.*
 import kotlinx.coroutines.launch
 import me.timeto.app.ui.checklists.ChecklistFormFs
@@ -366,32 +358,6 @@ fun SettingsSheet(
 
                 MyListView__ItemView(
                     isFirst = false,
-                    isLast = false,
-                    withTopDivider = true,
-                ) {
-
-                    MyListView__ItemView__ButtonView(
-                        text = "Day Start",
-                        withArrow = false,
-                        bgColor = c.fg,
-                        rightView = {
-                            MyListView__ItemView__ButtonView__RightText(
-                                text = state.dayStartNote
-                            )
-                        }
-                    ) {
-                        Dialog.show { layer ->
-                            DayStartDialogView(
-                                settingsSheetVM = vm,
-                                settingsSheetState = state,
-                                onClose = layer::close
-                            )
-                        }
-                    }
-                }
-
-                MyListView__ItemView(
-                    isFirst = false,
                     isLast = true,
                     withTopDivider = true,
                     bgColor = c.fg,
@@ -601,77 +567,6 @@ fun SettingsSheet(
                         .fillMaxWidth()
                         .navigationBarsPadding(),
                 )
-            }
-        }
-    }
-}
-
-@Composable
-private fun DayStartDialogView(
-    settingsSheetVM: SettingsVm,
-    settingsSheetState: SettingsVm.State,
-    onClose: () -> Unit,
-) {
-    Column(
-        modifier = Modifier
-            .background(c.sheetBg)
-            .padding(20.dp)
-    ) {
-
-        Text(
-            "Day Start",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.W500,
-            color = c.text,
-        )
-
-        val items = settingsSheetState.dayStartListItems
-        var selectedItem by remember { mutableIntStateOf(settingsSheetState.dayStartSelectedIdx) }
-
-        AndroidView(
-            modifier = Modifier
-                .padding(top = 10.dp)
-                .size(100.dp, 150.dp)
-                .align(Alignment.CenterHorizontally),
-            factory = { context ->
-                NumberPicker(context).apply {
-                    displayedValues = items.map { it.note }.toTypedArray()
-                    setOnValueChangedListener { _, _, new ->
-                        selectedItem = new
-                    }
-                    wrapSelectorWheel = false
-                    minValue = 0
-                    maxValue = items.size - 1
-                    value = selectedItem // Set last
-                }
-            }
-        )
-
-        //
-        //
-
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .padding(top = 24.dp),
-            horizontalArrangement = Arrangement.End,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-
-            Text(
-                "Cancel",
-                color = c.textSecondary,
-                modifier = Modifier
-                    .padding(end = 11.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .clickable { onClose() }
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
-            )
-
-            MyButton("Save", true, c.blue) {
-                settingsSheetVM.upDayStartOffsetSeconds(items[selectedItem].seconds) {
-                    onClose()
-                }
             }
         }
     }
