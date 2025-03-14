@@ -1,8 +1,10 @@
 package me.timeto.app.ui.notes
 
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import me.timeto.app.c
 import me.timeto.app.rememberVm
@@ -10,6 +12,7 @@ import me.timeto.app.ui.Screen
 import me.timeto.app.ui.form.FormButton
 import me.timeto.app.ui.form.FormInput
 import me.timeto.app.ui.form.FormPaddingFirstItem
+import me.timeto.app.ui.form.FormPaddingLastItem
 import me.timeto.app.ui.form.FormPaddingSectionSection
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
@@ -34,7 +37,10 @@ fun NoteFormFs(
         )
     }
 
-    Screen {
+    Screen(
+        modifier = Modifier
+            .imePadding(),
+    ) {
 
         val scrollState = rememberLazyListState()
 
@@ -61,13 +67,14 @@ fun NoteFormFs(
             )
         )
 
-        FormPaddingFirstItem()
-
         LazyColumn(
             state = scrollState,
         ) {
 
             item {
+
+                FormPaddingFirstItem()
+
                 FormInput(
                     initText = state.text,
                     placeholder = state.textPlaceholder,
@@ -77,12 +84,10 @@ fun NoteFormFs(
                     isFirst = true,
                     isLast = true,
                     isAutoFocus = true,
-                    imeAction = ImeAction.Done,
+                    imeAction = ImeAction.None,
                 )
-            }
 
-            if (noteDb != null) {
-                item {
+                if (noteDb != null) {
                     FormPaddingSectionSection()
                     FormButton(
                         title = "Delete Note",
@@ -101,6 +106,8 @@ fun NoteFormFs(
                         },
                     )
                 }
+
+                FormPaddingLastItem()
             }
         }
     }
