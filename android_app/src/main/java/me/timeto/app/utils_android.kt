@@ -245,6 +245,8 @@ object c {
     val orange = ColorRgba.orange.toColor()
     val purple = ColorRgba.purple.toColor()
 
+    val gray3 = AppleColors.gray3Dark.toColor()
+
     val text = ColorRgba.text.toColor()
     val textSecondary = ColorRgba.textSecondary.toColor()
     val tertiaryText = ColorRgba.tertiaryText.toColor()
