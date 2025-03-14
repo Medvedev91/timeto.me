@@ -39,6 +39,7 @@ import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationScreen
 import me.timeto.app.ui.notes.NoteFormFs
 import me.timeto.app.ui.notes.NoteFs
+import me.timeto.app.ui.settings.SettingsDayStartFs
 import me.timeto.app.ui.shortcuts.ShortcutFormFs
 import me.timeto.app.ui.tasks.folders.TaskFoldersFormFs
 import me.timeto.shared.*
@@ -336,6 +337,21 @@ fun SettingsSheet(
                         }
                     },
                 )
+
+                FormButton(
+                    title = "Day Start",
+                    isFirst = false,
+                    isLast = false,
+                    note = state.dayStartNote,
+                    onClick = {
+                        navigationFs.push {
+                            SettingsDayStartFs(
+                                vm = vm,
+                                state = state,
+                            )
+                        }
+                    },
+                )
             }
 
             item {
@@ -347,23 +363,6 @@ fun SettingsSheet(
                 )
 
                 MyListView__Padding__HeaderSection()
-
-                MyListView__ItemView(
-                    isFirst = true,
-                    isLast = false,
-                ) {
-                    MyListView__ItemView__ButtonView(
-                        text = "Folders",
-                        withArrow = true,
-                        bgColor = c.fg,
-                    ) {
-                        Sheet.show { layer ->
-                            FoldersSettingsSheet(layer)
-                        }
-                    }
-                }
-
-                //////
 
                 MyListView__ItemView(
                     isFirst = false,
