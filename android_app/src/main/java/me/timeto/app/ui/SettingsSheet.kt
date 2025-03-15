@@ -26,6 +26,7 @@ import me.timeto.app.ui.form.FormHeader
 import me.timeto.app.ui.form.FormPaddingTop
 import me.timeto.app.ui.form.FormPaddingHeaderSection
 import me.timeto.app.ui.form.FormPaddingSectionHeader
+import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationScreen
@@ -344,32 +345,16 @@ fun SettingsSheet(
                         }
                     },
                 )
-            }
 
-            item {
-
-                MyListView__Padding__SectionHeader()
-
-                MyListView__HeaderView(
-                    "SETTINGS",
-                )
-
-                MyListView__Padding__HeaderSection()
-
-                MyListView__ItemView(
+                FormSwitch(
+                    title = state.todayOnHomeScreenText,
+                    isEnabled = state.todayOnHomeScreen,
                     isFirst = false,
                     isLast = true,
-                    withTopDivider = true,
-                    bgColor = c.fg,
-                ) {
-
-                    MyListView__ItemView__SwitchView(
-                        text = state.todayOnHomeScreenText,
-                        isActive = state.todayOnHomeScreen,
-                    ) {
-                        vm.toggleTodayOnHomeScreen()
-                    }
-                }
+                    onChange = { newValue ->
+                        vm.setTodayOnHomeScreen(isOn = newValue)
+                    },
+                )
             }
 
             item {
