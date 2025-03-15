@@ -357,71 +357,50 @@ fun SettingsSheet(
                 )
             }
 
+            //
+            // Backups
+
             item {
 
-                MyListView__Padding__SectionHeader()
+                FormPaddingSectionHeader()
 
-                MyListView__HeaderView(
-                    "BACKUPS",
+                FormHeader(
+                    title = "BACKUPS",
                 )
 
-                MyListView__Padding__HeaderSection()
+                FormPaddingHeaderSection()
 
-                MyListView__ItemView(
+                FormButton(
+                    title = "Create",
                     isFirst = true,
                     isLast = false,
-                    withTopDivider = false,
-                ) {
-
-                    MyListView__ItemView__ButtonView(
-                        text = "Create",
-                        bgColor = c.fg,
-                    ) {
+                    onClick = {
                         scope.launch {
                             launcherBackup.launch(vm.prepBackupFileName())
                         }
-                    }
-                }
+                    },
+                )
 
-                MyListView__ItemView(
+                FormButton(
+                    title = "Restore",
                     isFirst = false,
                     isLast = false,
-                    withTopDivider = true,
-                ) {
-
-                    MyListView__ItemView__ButtonView(
-                        text = "Restore",
-                        bgColor = c.fg,
-                    ) {
+                    onClick = {
                         scope.launch {
                             launcherRestore.launch("*/*")
                         }
-                    }
-                }
+                    },
+                )
 
-                MyListView__ItemView(
+                FormButton(
+                    title = "Auto Backup",
                     isFirst = false,
                     isLast = true,
-                    withTopDivider = true,
-                ) {
-
-                    if (isSDKQPlus()) {
-                        MyListView__ItemView__ButtonView(
-                            text = "Auto Backup",
-                            withArrow = true,
-                            bgColor = c.fg,
-                            rightView = {
-                                MyListView__ItemView__ButtonView__RightText(
-                                    text = state.autoBackupTimeString,
-                                    paddingEnd = 4.dp,
-                                )
-                            }
-                        ) {
-                            // todo doc about folder
-                            context.startActivity(Intent(DownloadManager.ACTION_VIEW_DOWNLOADS))
-                        }
-                    }
-                }
+                    note = state.autoBackupTimeString,
+                    onClick = {
+                        context.startActivity(Intent(DownloadManager.ACTION_VIEW_DOWNLOADS))
+                    },
+                )
             }
 
             item {
