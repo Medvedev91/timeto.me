@@ -28,6 +28,7 @@ import me.timeto.app.ui.form.FormHeader
 import me.timeto.app.ui.form.FormPaddingTop
 import me.timeto.app.ui.form.FormPaddingHeaderSection
 import me.timeto.app.ui.form.FormPaddingSectionHeader
+import me.timeto.app.ui.form.FormPaddingSectionSection
 import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.navigation.LocalNavigationFs
@@ -443,35 +444,35 @@ fun SettingsSheet(
                 )
             }
 
+            //
+            // Misc
+
+            item {
+
+                FormPaddingSectionSection()
+
+                FormButton(
+                    title = "Ask a Question",
+                    isFirst = true,
+                    isLast = false,
+                    onClick = {
+                        askAQuestion(subject = state.feedbackSubject)
+                    },
+                )
+
+                FormButton(
+                    title = "Open Source",
+                    isFirst = false,
+                    isLast = false,
+                    onClick = {
+                        showOpenSource()
+                    },
+                )
+            }
+
             item {
 
                 MyListView__Padding__SectionSection()
-
-                MyListView__ItemView(
-                    isFirst = true,
-                    isLast = false,
-                    withTopDivider = false,
-                ) {
-                    MyListView__ItemView__ButtonView(
-                        text = "Ask a Question",
-                        bgColor = c.fg,
-                    ) {
-                        askAQuestion(subject = state.feedbackSubject)
-                    }
-                }
-
-                MyListView__ItemView(
-                    isFirst = false,
-                    isLast = false,
-                    withTopDivider = true,
-                ) {
-                    MyListView__ItemView__ButtonView(
-                        text = "Open Source",
-                        bgColor = c.fg,
-                    ) {
-                        showOpenSource()
-                    }
-                }
 
                 MyListView__ItemView(
                     isFirst = false,
