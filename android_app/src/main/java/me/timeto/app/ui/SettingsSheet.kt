@@ -1,6 +1,8 @@
 package me.timeto.app.ui
 
 import android.app.DownloadManager
+import android.app.NotificationChannel
+import android.content.Context
 import android.content.Intent
 import android.provider.Settings
 import androidx.activity.compose.BackHandler
@@ -403,51 +405,42 @@ fun SettingsSheet(
                 )
             }
 
+            //
+            // Notifications
+
             item {
 
-                MyListView__Padding__SectionHeader()
+                FormPaddingSectionHeader()
 
-                MyListView__HeaderView(
+                FormHeader(
                     title = "NOTIFICATIONS",
                 )
 
-                MyListView__Padding__HeaderSection()
+                FormPaddingHeaderSection()
 
-                MyListView__ItemView(
+                FormButton(
+                    title = "Time to Break",
                     isFirst = true,
                     isLast = false,
-                    withTopDivider = false,
-                ) {
-                    MyListView__ItemView__ButtonView(
-                        text = "Time to Break",
-                        bgColor = c.fg,
-                    ) {
-                        context.startActivity(
-                            Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).apply {
-                                putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
-                                putExtra(Settings.EXTRA_CHANNEL_ID, NotificationCenter.channelTimerExpired().id)
-                            }
+                    onClick = {
+                        openNotificationChannelSettings(
+                            context = context,
+                            channel = NotificationCenter.channelTimerExpired(),
                         )
-                    }
-                }
+                    },
+                )
 
-                MyListView__ItemView(
+                FormButton(
+                    title = "Timer Overdue",
                     isFirst = false,
                     isLast = true,
-                    withTopDivider = true,
-                ) {
-                    MyListView__ItemView__ButtonView(
-                        text = "Timer Overdue",
-                        bgColor = c.fg,
-                    ) {
-                        context.startActivity(
-                            Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).apply {
-                                putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
-                                putExtra(Settings.EXTRA_CHANNEL_ID, NotificationCenter.channelTimerOverdue().id)
-                            }
+                    onClick = {
+                        openNotificationChannelSettings(
+                            context = context,
+                            channel = NotificationCenter.channelTimerOverdue(),
                         )
-                    }
-                }
+                    },
+                )
             }
 
             item {
@@ -534,4 +527,18 @@ fun SettingsSheet(
             }
         }
     }
+}
+
+///
+
+private fun openNotificationChannelSettings(
+    context: Context,
+    channel: NotificationChannel,
+) {
+    context.startActivity(
+        Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).apply {
+            putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+            putExtra(Settings.EXTRA_CHANNEL_ID, channel.id)
+        }
+    )
 }
