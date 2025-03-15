@@ -23,7 +23,7 @@ import me.timeto.app.ui.checklists.ChecklistItemsFormFs
 import me.timeto.app.ui.checklists.ChecklistScreen
 import me.timeto.app.ui.form.FormButton
 import me.timeto.app.ui.form.FormHeader
-import me.timeto.app.ui.form.FormPaddingFirstItem
+import me.timeto.app.ui.form.FormPaddingTop
 import me.timeto.app.ui.form.FormPaddingHeaderSection
 import me.timeto.app.ui.form.FormPaddingSectionHeader
 import me.timeto.app.ui.header.Header
@@ -128,7 +128,7 @@ fun SettingsSheet(
 
             item {
 
-                FormPaddingFirstItem()
+                FormPaddingTop()
 
                 FormButton(
                     title = state.readmeTitle,

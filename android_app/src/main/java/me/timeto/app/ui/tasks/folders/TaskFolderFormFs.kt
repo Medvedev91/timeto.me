@@ -11,7 +11,7 @@ import me.timeto.app.rememberVm
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.form.FormButton
 import me.timeto.app.ui.form.FormInput
-import me.timeto.app.ui.form.FormPaddingFirstItem
+import me.timeto.app.ui.form.FormPaddingTop
 import me.timeto.app.ui.form.FormPaddingSectionSection
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
@@ -70,7 +70,7 @@ fun TaskFolderFormFs(
 
             item {
 
-                FormPaddingFirstItem()
+                FormPaddingTop()
 
                 FormInput(
                     initText = state.name,

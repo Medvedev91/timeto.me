@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import me.timeto.app.rememberVm
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.form.FormInput
-import me.timeto.app.ui.form.FormPaddingFirstItem
+import me.timeto.app.ui.form.FormPaddingTop
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
@@ -72,7 +72,7 @@ fun ChecklistItemFormFs(
         ) {
 
             item {
-                FormPaddingFirstItem()
+                FormPaddingTop()
             }
 
             item {

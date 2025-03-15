@@ -31,7 +31,7 @@ import me.timeto.app.ui.Screen
 import me.timeto.app.ui.form.FormButton
 import me.timeto.app.ui.form.FormHeader
 import me.timeto.app.ui.form.FormInput
-import me.timeto.app.ui.form.FormPaddingFirstItem
+import me.timeto.app.ui.form.FormPaddingTop
 import me.timeto.app.ui.form.FormPaddingSectionHeader
 import me.timeto.app.ui.form.views.FormButtonView
 import me.timeto.app.ui.header.Header
@@ -112,7 +112,7 @@ fun ShortcutFormFs(
                 //
                 // Name
 
-                FormPaddingFirstItem()
+                FormPaddingTop()
 
                 FormHeader(state.nameHeader)
 
