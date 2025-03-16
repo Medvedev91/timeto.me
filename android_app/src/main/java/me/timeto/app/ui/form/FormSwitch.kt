@@ -17,6 +17,7 @@ fun FormSwitch(
     isEnabled: Boolean,
     isFirst: Boolean,
     isLast: Boolean,
+    modifier: Modifier = Modifier,
     onChange: (Boolean) -> Unit,
 ) {
     FormButtonView(
@@ -24,7 +25,7 @@ fun FormSwitch(
         titleColor = c.text,
         isFirst = isFirst,
         isLast = isLast,
-        modifier = Modifier,
+        modifier = modifier,
         rightView = {
             Switch(
                 checked = isEnabled,
