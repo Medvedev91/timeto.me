@@ -46,11 +46,12 @@ class PrivacyVm : __Vm<PrivacyVm.State>() {
         }
     }
 
-    fun setIsSendingReports(isOn: Boolean) {
+    fun setIsSendingReports(isEnabled: Boolean) {
         launchExIo {
-            KvDb.upsertIsSendingReports(isOn)
-            if (isOn)
+            KvDb.upsertIsSendingReports(isEnabled)
+            if (isEnabled) {
                 ping(force = true)
+            }
         }
     }
 
