@@ -1,4 +1,4 @@
-package me.timeto.app.ui
+package me.timeto.app.ui.settings
 
 import android.app.DownloadManager
 import android.app.NotificationChannel
@@ -20,6 +20,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import kotlinx.coroutines.launch
+import me.timeto.app.ui.ReadmeSheet__show
+import me.timeto.app.ui.Screen
+import me.timeto.app.ui.WhatsNewFs
 import me.timeto.app.ui.checklists.ChecklistFormFs
 import me.timeto.app.ui.checklists.ChecklistItemsFormFs
 import me.timeto.app.ui.checklists.ChecklistScreen
@@ -36,7 +39,6 @@ import me.timeto.app.ui.navigation.LocalNavigationScreen
 import me.timeto.app.ui.notes.NoteFormFs
 import me.timeto.app.ui.notes.NoteFs
 import me.timeto.app.ui.privacy.PrivacyFs
-import me.timeto.app.ui.settings.SettingsDayStartFs
 import me.timeto.app.ui.shortcuts.ShortcutFormFs
 import me.timeto.app.ui.tasks.folders.TaskFoldersFormFs
 import me.timeto.shared.*
@@ -44,9 +46,8 @@ import me.timeto.shared.ui.settings.SettingsVm
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun SettingsSheet(
+fun SettingsScreen(
     onClose: () -> Unit,
 ) {
 

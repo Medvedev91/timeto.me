@@ -6,11 +6,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import me.timeto.app.VStack
 import me.timeto.app.ZStack
-import me.timeto.app.ui.SettingsSheet
 import me.timeto.app.ui.TasksView
 import me.timeto.app.ui.activities.ActivitiesScreen
 import me.timeto.app.ui.home.HomeScreen
 import me.timeto.app.ui.navigation.NavigationScreen
+import me.timeto.app.ui.settings.SettingsScreen
 
 @Composable
 fun MainScreen() {
@@ -51,7 +51,7 @@ fun MainScreen() {
                 }
                 MainTabEnum.settings -> {
                     NavigationScreen {
-                        SettingsSheet(
+                        SettingsScreen(
                             onClose = {
                                 tab.value = MainTabEnum.home
                             },
