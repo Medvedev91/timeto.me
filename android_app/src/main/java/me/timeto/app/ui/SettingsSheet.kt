@@ -485,11 +485,9 @@ fun SettingsSheet(
             }
 
             item {
-
                 Row {
-
                     Text(
-                        text = "timeto.me for Android\nv${BuildConfig.VERSION_NAME}.${state.appVersion}-${BuildConfig.FLAVOR}",
+                        text = state.infoText,
                         modifier = Modifier
                             .padding(top = 24.dp)
                             .weight(1f),
