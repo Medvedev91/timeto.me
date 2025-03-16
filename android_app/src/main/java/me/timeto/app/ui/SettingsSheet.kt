@@ -35,6 +35,7 @@ import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationScreen
 import me.timeto.app.ui.notes.NoteFormFs
 import me.timeto.app.ui.notes.NoteFs
+import me.timeto.app.ui.privacy.PrivacyFs
 import me.timeto.app.ui.settings.SettingsDayStartFs
 import me.timeto.app.ui.shortcuts.ShortcutFormFs
 import me.timeto.app.ui.tasks.folders.TaskFoldersFormFs
@@ -468,38 +469,19 @@ fun SettingsSheet(
                         showOpenSource()
                     },
                 )
-            }
 
-            item {
-
-                MyListView__Padding__SectionSection()
-
-                MyListView__ItemView(
+                FormButton(
+                    title = "Privacy",
                     isFirst = false,
                     isLast = true,
-                    withTopDivider = true,
-                ) {
-                    MyListView__ItemView__ButtonView(
-                        text = "Privacy",
-                        bgColor = c.fg,
-                        rightView = {
-                            val privacyNote = state.privacyNote
-                            if (privacyNote == null)
-                                Text("")
-                            else
-                                Text(
-                                    text = PrivacySheetVm.prayEmoji,
-                                    modifier = Modifier
-                                        .padding(end = H_PADDING),
-                                    fontSize = 18.sp,
-                                )
-                        },
-                    ) {
-                        Sheet.show { layer ->
-                            PrivacySheet(layer)
+                    note = state.privacyNote,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.push {
+                            PrivacyFs()
                         }
-                    }
-                }
+                    },
+                )
             }
 
             item {
