@@ -498,14 +498,6 @@ fun SettingsSheet(
                     )
                 }
             }
-
-            item {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .navigationBarsPadding(),
-                )
-            }
         }
     }
 }
