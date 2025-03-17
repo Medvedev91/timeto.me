@@ -131,12 +131,13 @@ fun WhatsNewFs() {
                             )
                         }
 
-                        if (state.historyItemsUi.last() != historyItemUi)
+                        if (state.historyItemsUi.last() != historyItemUi) {
                             Divider(
                                 modifier = Modifier
                                     .padding(top = 12.dp)
                                     .padding(start = H_PADDING),
                             )
+                        }
                     }
                 }
             }
