@@ -34,13 +34,12 @@ import me.timeto.app.roundedShape
 import me.timeto.app.toColor
 import me.timeto.app.ui.checklists.ChecklistView
 import me.timeto.app.ui.FDroidSheet
-import me.timeto.app.ui.Fs
 import me.timeto.app.ui.Padding
-import me.timeto.app.ui.ReadmeSheet__show
 import me.timeto.app.ui.Sheet
 import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.TextFeaturesTriggersView
-import me.timeto.app.ui.WhatsNewFs
+import me.timeto.app.ui.navigation.LocalNavigationFs
+import me.timeto.app.ui.readme.ReadmeFs
 import me.timeto.shared.vm.HomeVm
 
 val HomeScreen__primaryFontSize = 16.sp
@@ -53,6 +52,8 @@ val HomeScreen__itemCircleFontWeight = FontWeight.SemiBold
 
 @Composable
 fun HomeScreen() {
+
+    val navigationFs = LocalNavigationFs.current
 
     val (vm, state) = rememberVm {
         HomeVm()
@@ -84,7 +85,9 @@ fun HomeScreen() {
                 title = readmeMessage,
                 onClick = {
                     vm.onReadmeOpen()
-                    ReadmeSheet__show()
+                    navigationFs.push {
+                        ReadmeFs()
+                    }
                 }
             )
         }
