@@ -1,4 +1,4 @@
-package me.timeto.app.ui
+package me.timeto.app.ui.readme
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.*
@@ -18,6 +18,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
+import me.timeto.app.ui.DividerBg
+import me.timeto.app.ui.DividerBgScroll
+import me.timeto.app.ui.Fs
+import me.timeto.app.ui.Fs__HeaderTitle
+import me.timeto.app.ui.Fs__TITLE_FONT_SIZE
+import me.timeto.app.ui.Fs__TITLE_FONT_WEIGHT
+import me.timeto.app.ui.MyListView__ItemView
+import me.timeto.app.ui.MyListView__ItemView__ButtonView
+import me.timeto.app.ui.Padding
+import me.timeto.app.ui.SquircleShape
+import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.vm.ReadmeVm
 import me.timeto.shared.vm.ReadmeVm.DefaultItem
 
@@ -27,22 +38,12 @@ private val imagesShape = SquircleShape(10.dp)
 
 private val pTextLineHeight = 23.sp
 
-fun ReadmeSheet__show(
+@Composable
+fun ReadmeFs(
     defaultItem: DefaultItem = DefaultItem.basics,
 ) {
-    Fs.show { layer ->
-        ReadmeSheet(
-            layer = layer,
-            defaultItem = defaultItem,
-        )
-    }
-}
 
-@Composable
-private fun ReadmeSheet(
-    layer: WrapperView.Layer,
-    defaultItem: DefaultItem,
-) {
+    val navigationLayer = LocalNavigationLayer.current
 
     val (vm, state) = rememberVm {
         ReadmeVm(defaultItem = defaultItem)
@@ -57,7 +58,7 @@ private fun ReadmeSheet(
             title = state.title,
             scrollState = null,
             onClose = {
-                layer.close()
+                navigationLayer.close()
             },
         )
 
