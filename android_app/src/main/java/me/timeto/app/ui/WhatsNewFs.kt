@@ -15,13 +15,16 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderCancelButton
+import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
+import me.timeto.app.ui.readme.ReadmeFs
 import me.timeto.shared.vm.ReadmeVm
 import me.timeto.shared.vm.WhatsNewVm
 
 @Composable
 fun WhatsNewFs() {
 
+    val navigationFs = LocalNavigationFs.current
     val navigationLayer = LocalNavigationLayer.current
 
     val (_, state) = rememberVm {
@@ -113,7 +116,11 @@ fun WhatsNewFs() {
                                     .clickable {
                                         when (buttonUi) {
                                             WhatsNewVm.HistoryItemUi.ButtonUi.pomodoro -> {
-                                                ReadmeSheet__show(ReadmeVm.DefaultItem.pomodoro)
+                                                navigationFs.push {
+                                                    ReadmeFs(
+                                                        defaultItem = ReadmeVm.DefaultItem.pomodoro,
+                                                    )
+                                                }
                                             }
                                         }
                                     }
