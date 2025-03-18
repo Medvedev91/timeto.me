@@ -8,57 +8,52 @@ CREATE TABLE ActivitySQ (
     sort INTEGER AS Int NOT NULL,
     type_id INTEGER AS Int NOT NULL,
     color_rgba TEXT NOT NULL,
-    data_json TEXT NOT NULL,
     keep_screen_on INTEGER AS Int NOT NULL,
-    pomodoro_timer INTEGER AS Int NOT NULL
+    pomodoro_timer INTEGER AS Int NOT NULL,
+    timer_hints TEXT NOT NULL
 );
+
+--
+-- Select
 
 anyChange:
 SELECT id
 FROM ActivitySQ
 LIMIT 1;
 
-selectAllSorted:
+selectSorted:
 SELECT *
 FROM ActivitySQ
 ORDER BY sort ASC, id DESC;
 
-getDesc:
-SELECT *
-FROM ActivitySQ
-ORDER BY id DESC
-LIMIT :limit;
-
-getById:
-SELECT *
-FROM ActivitySQ
-WHERE id = ?
-LIMIT 1;
+--
+-- Insert
 
 insert:
 INSERT INTO ActivitySQ
 VALUES ?;
 
-upById:
+--
+-- Update
+
+updateById:
 UPDATE ActivitySQ
 SET name=?, emoji=?, timer=?, sort=?, type_id=?,
-    color_rgba=?, data_json=?, keep_screen_on=?,
-    pomodoro_timer=?
+    color_rgba=?, keep_screen_on=?,
+    pomodoro_timer=?, timer_hints=?
 WHERE id=?;
 
-upData:
+updateSortById:
 UPDATE ActivitySQ
-SET data_json = ?
-WHERE id = ?;
+SET sort=?
+WHERE id=?;
 
-upSort:
-UPDATE ActivitySQ
-SET sort = ?
-WHERE id = ?;
+--
+-- Delete
 
 deleteById:
 DELETE FROM ActivitySQ
-WHERE id = ?;
+WHERE id=?;
 
 truncate:
 DELETE FROM ActivitySQ;
