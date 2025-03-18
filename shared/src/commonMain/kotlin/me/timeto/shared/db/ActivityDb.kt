@@ -7,14 +7,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.*
 import me.timeto.shared.*
 import me.timeto.shared.misc.getInt
-import me.timeto.shared.misc.getIntArray
 import me.timeto.shared.misc.getString
 import me.timeto.shared.misc.time
 import me.timeto.shared.models.GoalFormUi
 import me.timeto.shared.misc.toBoolean10
 import me.timeto.shared.misc.toInt10
 import me.timeto.shared.misc.toJsonArray
-import me.timeto.shared.misc.zlog
+import me.timeto.shared.ui.UiException
+import kotlin.coroutines.cancellation.CancellationException
 import kotlin.math.max
 
 data class ActivityDb(
@@ -25,43 +25,38 @@ data class ActivityDb(
     val sort: Int,
     val type_id: Int,
     val color_rgba: String,
-    val data_json: String,
     val keep_screen_on: Int,
     val pomodoro_timer: Int,
+    val timer_hints: String,
 ) : Backupable__Item {
-
-    enum class TYPE(val id: Int) {
-        NORMAL(0),
-        OTHER(1)
-    }
 
     companion object : Backupable__Holder {
 
         fun anyChangeFlow(): Flow<Query<Int>> =
             db.activityQueries.anyChange().asFlow()
 
-        ///
-
-        suspend fun selectAllSorted(): List<ActivityDb> = dbIo {
-            db.activityQueries.selectAllSorted().executeAsList().map { it.toDb() }
+        suspend fun selectSorted(): List<ActivityDb> = dbIo {
+            db.activityQueries.selectSorted().asList { toDb() }
         }
 
-        fun selectAllSortedFlow(): Flow<List<ActivityDb>> =
-            db.activityQueries.selectAllSorted().asListFlow { toDb() }
+        fun selectSortedFlow(): Flow<List<ActivityDb>> =
+            db.activityQueries.selectSorted().asListFlow { toDb() }
 
-        suspend fun getByIdOrNull(id: Int): ActivityDb? = dbIo {
-            db.activityQueries.getById(id).executeAsOneOrNull()?.toDb()
+        suspend fun selectByIdOrNull(id: Int): ActivityDb? =
+            selectSorted().firstOrNull { it.id == id }
+
+        @Throws(UiException::class)
+        fun selectOtherCached(): ActivityDb {
+            val otherActivities: List<ActivityDb> =
+                Cache.activitiesDbSorted.filter { it.type_id == Type.other.id }
+            val size: Int = otherActivities.size
+            if (size != 1)
+                throw UiException("System error: selectOtherCached() size: $size")
+            return otherActivities.first()
         }
 
-        fun getOther(): ActivityDb {
-            val activities = Cache.activitiesDbSorted.filter { it.type_id == TYPE.OTHER.id }
-            if (activities.size != 1)
-                throw UIException("System error") // todo report: "getOther() size ${activities.size}"
-            return activities.first()
-        }
-
-        suspend fun getByEmojiOrNull(string: String): ActivityDb? =
-            selectAllSorted().firstOrNull { it.emoji == string }
+        suspend fun selectByEmojiOrNull(string: String): ActivityDb? =
+            selectSorted().firstOrNull { it.emoji == string }
 
         ///
 
@@ -335,131 +330,17 @@ data class ActivityDb(
     override fun backupable__delete() {
         db.activityQueries.deleteById(id)
     }
+
+    ///
+
+    enum class Type(val id: Int) {
+        general(0),
+        other(1)
+    }
 }
 
 private fun ActivitySQ.toDb() = ActivityDb(
     id = id, name = name, emoji = emoji, timer = timer, sort = sort,
-    type_id = type_id, color_rgba = color_rgba, data_json = data_json,
-    keep_screen_on = keep_screen_on, pomodoro_timer = pomodoro_timer,
+    type_id = type_id, color_rgba = color_rgba, keep_screen_on = keep_screen_on,
+    pomodoro_timer = pomodoro_timer, timer_hints = timer_hints,
 )
-
-data class ActivityDb__Data(
-    val timer_hints: TimerHints,
-) {
-
-    fun toJString(): String {
-        val map = mapOf(
-            "timer_hints" to timer_hints.toJsonObject()
-        )
-        return JsonObject(map).toString()
-    }
-
-    fun assertValidity() {
-        when (timer_hints.type) {
-            TimerHints.HINT_TYPE.custom -> {
-                if (timer_hints.custom_list.isEmpty())
-                    throw UIException("Empty custom timer hints")
-            }
-            TimerHints.HINT_TYPE.history -> {}
-        }
-    }
-
-    suspend fun saveToActivity(activity: ActivityDb) {
-        activity.upData(this)
-    }
-
-    //////
-
-    companion object {
-
-        fun jParse(jString: String): ActivityDb__Data = try {
-            val jData = Json.parseToJsonElement(jString)
-            val jTimerHints = jData.jsonObject["timer_hints"]!!.jsonObject
-            ActivityDb__Data(TimerHints.fromJsonObject(jTimerHints))
-        } catch (e: Throwable) {
-            // todo migration?
-            reportApi("ActivityModel__Data.jParse() exception:\n$jString\n$e")
-            buildDefault()
-        }
-
-        fun buildDefault() = ActivityDb__Data(
-            timer_hints = TimerHints(
-                type = TimerHints.HINT_TYPE.history,
-                default_list = listOf(),
-                custom_list = listOf(),
-                history_list = listOf()
-            )
-        )
-    }
-
-    //////
-
-    data class TimerHints(
-        val type: HINT_TYPE,
-        val default_list: List<Int>, // Seconds
-        val custom_list: List<Int>, // Seconds
-        val history_list: List<Int>, // Seconds
-    ) {
-
-        companion object {
-
-            fun fromJsonObject(j: JsonObject) = TimerHints(
-                type = HINT_TYPE.valueOf(j.getString("type")),
-                default_list = j.getIntArray("default_list"),
-                custom_list = j.getIntArray("custom_list"),
-                history_list = j.getIntArray("history_list"),
-            )
-        }
-
-        fun toJsonObject() = JsonObject(
-            mapOf(
-                "type" to JsonPrimitive(type.name),
-                "default_list" to default_list.toJsonArray(),
-                "custom_list" to custom_list.toJsonArray(),
-                "history_list" to history_list.toJsonArray(),
-            )
-        )
-
-        fun getTimerHintsUI(
-            historyLimit: Int,
-            customLimit: Int,
-            onSelect: suspend (TimerHintUI) -> Unit,
-        ): List<TimerHintUI> {
-
-            val secondsList = when (type) {
-                HINT_TYPE.history -> history_list.sorted().distinct().take(historyLimit)
-                HINT_TYPE.custom -> custom_list.sorted().distinct().take(customLimit)
-            }
-
-            return secondsList.map { seconds ->
-                TimerHintUI(
-                    seconds = seconds,
-                    onSelect = onSelect,
-                )
-            }
-        }
-
-        class TimerHintUI(
-            val seconds: Int,
-            val onSelect: suspend (TimerHintUI) -> Unit,
-        ) {
-
-            val text = seconds.toTimerHintNote(isShort = true)
-
-            fun startInterval(
-                onSuccess: (() -> Unit) = {},
-            ) {
-                launchExDefault {
-                    onSelect(this@TimerHintUI)
-                    onSuccess()
-                }
-            }
-        }
-
-        //////
-
-        enum class HINT_TYPE {
-            history, custom
-        }
-    }
-}
