@@ -279,18 +279,12 @@ data class ActivityDb(
         GoalDb.insertManySync(this@ActivityDb, goalFormsUi)
     }
 
-    suspend fun upData(data: ActivityDb__Data) = dbIo {
-        val newDataString = data.toJString()
-        if (data_json != newDataString)
-            db.activityQueries.upData(
-                id = id, data_json = newDataString
+    suspend fun updateSort(newSort: Int) {
+        dbIo {
+            db.activityQueries.updateSortById(
+                id = id, sort = newSort,
             )
-    }
-
-    suspend fun upSort(newSort: Int) = dbIo {
-        db.activityQueries.upSort(
-            id = id, sort = newSort
-        )
+        }
     }
 
     // todo use transaction
