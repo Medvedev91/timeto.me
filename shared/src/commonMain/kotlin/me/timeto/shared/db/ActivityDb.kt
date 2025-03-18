@@ -211,22 +211,30 @@ data class ActivityDb(
         }
     }
 
-    val keepScreenOn = keep_screen_on.toBoolean10()
+    val keepScreenOn: Boolean =
+        keep_screen_on.toBoolean10()
 
     val colorRgba: ColorRgba by lazy {
         ColorRgba.fromRgbaString(color_rgba)
     }
 
-    val data: ActivityDb__Data by lazy {
-        ActivityDb__Data.jParse(data_json)
+    val timerHints: List<Int> by lazy {
+        if (timer_hints.isEmpty())
+            return@lazy emptyList()
+        timer_hints
+            .split(",")
+            .map { it.toInt() }
+            .sorted()
     }
 
-    fun nameWithEmoji(isLeading: Boolean = false) =
+    fun nameWithEmoji(isLeading: Boolean = false): String =
         if (isLeading) "$emoji $name" else "$name $emoji"
 
-    fun getType() = TYPE.values().first { it.id == type_id }
+    fun getType(): Type =
+        Type.entries.first { it.id == type_id }
 
-    fun isOther() = getType() == TYPE.OTHER
+    fun isOther(): Boolean =
+        getType() == Type.other
 
     fun getGoalsDbCached(): List<GoalDb> =
         Cache.goalsDb.filter { it.activity_id == id }
