@@ -300,30 +300,30 @@ data class ActivityDb(
         db.activityQueries.deleteById(id)
     }
 
-    ///
-    /// Backupable Item
+    //
+    // Backupable Item
 
-    override fun backupable__getId(): String = id.toString()
+    override fun backupable__getId(): String =
+        id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
         id, name, timer, sort, type_id, color_rgba,
-        data_json, emoji, keep_screen_on,
-        pomodoro_timer,
+        emoji, keep_screen_on, pomodoro_timer, timer_hints,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
         val j = json.jsonArray
-        db.activityQueries.upById(
+        db.activityQueries.updateById(
             id = j.getInt(0),
             name = j.getString(1),
             timer = j.getInt(2),
             sort = j.getInt(3),
             type_id = j.getInt(4),
             color_rgba = j.getString(5),
-            data_json = j.getString(6),
-            emoji = j.getString(7),
-            keep_screen_on = j.getInt(8),
-            pomodoro_timer = j.getInt(9),
+            emoji = j.getString(6),
+            keep_screen_on = j.getInt(7),
+            pomodoro_timer = j.getInt(8),
+            timer_hints = j.getString(9),
         )
     }
 
