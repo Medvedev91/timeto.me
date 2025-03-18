@@ -186,11 +186,11 @@ data class ActivityDb(
             return colors.random()
         }
 
-        ///
-        /// Backupable Holder
+        //
+        // Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.activityQueries.selectAllSorted().executeAsList().map { it.toDb() }
+            db.activityQueries.selectSorted().asList { toDb() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
@@ -202,10 +202,10 @@ data class ActivityDb(
                     sort = j.getInt(3),
                     type_id = j.getInt(4),
                     color_rgba = j.getString(5),
-                    data_json = j.getString(6),
-                    emoji = j.getString(7),
-                    keep_screen_on = j.getInt(8),
-                    pomodoro_timer = j.getInt(9),
+                    emoji = j.getString(6),
+                    keep_screen_on = j.getInt(7),
+                    pomodoro_timer = j.getInt(8),
+                    timer_hints = j.getString(9),
                 )
             )
         }
