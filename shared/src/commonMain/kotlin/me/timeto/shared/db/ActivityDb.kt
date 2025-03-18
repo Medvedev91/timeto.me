@@ -176,13 +176,15 @@ data class ActivityDb(
             ColorRgba(198, 255, 0), // MD lime A_400
         )
 
-        fun nextColorDI(): ColorRgba {
-            val activityColors = Cache.activitiesDbSorted.map { activity ->
-                activity.colorRgba.toRgbaString()
-            }
-            for (color in colors)
+        fun nextColorCached(): ColorRgba {
+            val activityColors: List<String> =
+                Cache.activitiesDbSorted.map { activity ->
+                    activity.colorRgba.toRgbaString()
+                }
+            for (color in colors) {
                 if (!activityColors.contains(color.toRgbaString()))
                     return color
+            }
             return colors.random()
         }
 
