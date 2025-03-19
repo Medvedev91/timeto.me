@@ -64,38 +64,35 @@ data class ActivityDb(
             emoji: String,
             timer: Int,
             sort: Int,
-            type: TYPE,
+            type: Type,
             colorRgba: ColorRgba,
-            data: ActivityDb__Data,
             keepScreenOn: Boolean,
             goalFormsUi: List<GoalFormUi>,
             pomodoroTimer: Int,
+            timerHints: Set<Int>,
         ): ActivityDb = dbIo {
-
-            if (type == TYPE.OTHER && selectAllSorted().find { it.getType() == TYPE.OTHER } != null)
-                throw UIException("Other already exists") // todo report
-
-            val validatedEmoji = validateEmoji(emoji)
-
             db.transactionWithResult {
-                val nextId = max(
-                    time(),
-                    db.activityQueries.getDesc(limit = 1).executeAsOneOrNull()?.id?.plus(1) ?: 0
-                )
+                val validatedName: String = validateName(name)
+                val validatedEmoji: String = validateEmojiSync(emoji)
+                val activitiesDb: List<ActivityDb> = selectSortedSync()
+                if (type == Type.other && activitiesDb.any { it.getType() == Type.other })
+                    throw UiException("System error: \"Other\" already exists")
+                val lastId: Int = activitiesDb.maxOfOrNull { it.id } ?: 0
+                val nextId: Int = max(time(), lastId)
                 val activitySQ = ActivitySQ(
                     id = nextId,
-                    name = validateName(name),
+                    name = validatedName,
                     emoji = validatedEmoji,
                     timer = timer,
                     sort = sort,
                     type_id = type.id,
                     color_rgba = colorRgba.toRgbaString(),
-                    data_json = data.toJString(),
                     keep_screen_on = keepScreenOn.toInt10(),
                     pomodoro_timer = pomodoroTimer,
+                    timer_hints = timerHints.toTimerHintsDb(),
                 )
                 db.activityQueries.insert(activitySQ)
-                val activityDb = activitySQ.toDb()
+                val activityDb: ActivityDb = activitySQ.toDb()
                 GoalDb.insertManySync(activityDb, goalFormsUi)
                 activityDb
             }
