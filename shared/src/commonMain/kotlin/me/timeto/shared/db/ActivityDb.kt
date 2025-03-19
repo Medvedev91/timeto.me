@@ -45,17 +45,8 @@ data class ActivityDb(
             selectSorted().firstOrNull { it.id == id }
 
         @Throws(UiException::class)
-        fun selectOtherCached(): ActivityDb {
-            val otherActivities: List<ActivityDb> =
-                Cache.activitiesDbSorted.filter { it.type_id == Type.other.id }
-            val size: Int = otherActivities.size
-            if (size != 1)
-                throw UiException("System error: selectOtherCached() size: $size")
-            return otherActivities.first()
-        }
-
-        suspend fun selectByEmojiOrNull(string: String): ActivityDb? =
-            selectSorted().firstOrNull { it.emoji == string }
+        fun selectOtherCached(): ActivityDb =
+            Cache.activitiesDbSorted.findOther()
 
         ///
 
@@ -325,6 +316,16 @@ private fun selectSortedSync(): List<ActivityDb> =
 
 private fun selectByEmojiOrNullSync(string: String): ActivityDb? =
     selectSortedSync().firstOrNull { it.emoji == string }
+
+@Throws(UiException::class)
+private fun List<ActivityDb>.findOther(): ActivityDb {
+    val otherActivities: List<ActivityDb> =
+        this.filter { it.type_id == ActivityDb.Type.other.id }
+    val size: Int = otherActivities.size
+    if (size != 1)
+        throw UiException("System error: filterOther() size: $size")
+    return otherActivities.first()
+}
 
 private fun Set<Int>.toTimerHintsDb(): String =
     this.joinToString(",")
