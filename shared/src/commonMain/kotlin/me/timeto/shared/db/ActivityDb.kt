@@ -14,6 +14,7 @@ import me.timeto.shared.misc.toBoolean10
 import me.timeto.shared.misc.toInt10
 import me.timeto.shared.misc.toJsonArray
 import me.timeto.shared.ui.UiException
+import kotlin.coroutines.cancellation.CancellationException
 import kotlin.math.max
 
 data class ActivityDb(
@@ -223,21 +224,21 @@ data class ActivityDb(
         }
     }
 
-    // todo use transaction
-    suspend fun delete() = dbIo {
-        if (isOther())
-            throw UIException("It's impossible to delete \"other\" activity")
-
-        val other = getOther()
-        IntervalDb
-            .getAsc()
-            .filter { id == it.activity_id }
-            .forEach {
-                it.upActivity(other)
-            }
-
-        GoalDb.deleteByActivityDbSync(this@ActivityDb)
-        db.activityQueries.deleteById(id)
+    @Throws(UiException::class, CancellationException::class)
+    suspend fun delete(): Unit = dbIo {
+        db.transaction {
+            if (isOther())
+                throw UiException("It's impossible to delete \"other\" activity")
+            val other: ActivityDb = selectSortedSync().findOther()
+            IntervalDb
+                .selectAscSync(limit = Int.MAX_VALUE)
+                .filter { id == it.activity_id }
+                .forEach {
+                    it.updateActivitySync(newActivity = other)
+                }
+            GoalDb.deleteByActivityDbSync(this@ActivityDb)
+            db.activityQueries.deleteById(id)
+        }
     }
 
     //
