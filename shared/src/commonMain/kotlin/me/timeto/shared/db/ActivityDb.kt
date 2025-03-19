@@ -100,59 +100,6 @@ data class ActivityDb(
 
         ///
 
-        // WARNING Do not update interval's table, otherwise recursive call.
-        suspend fun syncTimeHints() {
-            // Logging for safety. In case of recursive looping, I'll note in the log.
-            zlog("ActivityModel__.syncTimeHints()")
-
-            val intervals = IntervalDb.getBetweenIdDesc(time() - 30 * 24 * 3600, time())
-            selectAllSorted().forEach { activity ->
-                // Do not use "set" to save sorting by time
-                val hints = mutableListOf<Int>()
-                for (interval in intervals) {
-                    if (interval.activity_id != activity.id)
-                        continue
-                    if (hints.contains(interval.timer))
-                        continue
-                    if (interval.note?.textFeatures()?.paused != null)
-                        continue
-                    hints.add(interval.timer)
-                }
-                // todo check
-                val oldData = activity.data
-                val newData = oldData.copy(
-                    timer_hints = oldData.timer_hints.copy(
-                        history_list = hints
-                    )
-                )
-                newData.saveToActivity(activity)
-            }
-        }
-
-        fun validateName(name: String): String {
-            val validatedName = name.trim()
-            if (validatedName.isEmpty())
-                throw UIException("Empty name")
-            return validatedName
-        }
-
-        suspend fun validateEmoji(
-            emoji: String,
-            exActivity: ActivityDb? = null,
-        ): String {
-            val validatedEmoji = emoji.trim()
-            if (validatedEmoji.isEmpty())
-                throw UIException("Emoji not selected")
-
-            val activity = getByEmojiOrNull(emoji) ?: return validatedEmoji
-
-            if (activity.id != exActivity?.id)
-                throw UIException("Emoji $emoji is already used for the \"${activity.name}\" activity.")
-
-            return validatedEmoji
-        }
-
-
         /// attractiveness. In fillInitData() hardcode by indexes.
         /// https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/color
         /// https://material.io/resources/color
