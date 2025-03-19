@@ -192,34 +192,36 @@ data class ActivityDb(
         note = null,
     )
 
-    // todo use transaction
     suspend fun upByIdWithValidation(
         name: String,
         emoji: String,
-        data: ActivityDb__Data,
         keepScreenOn: Boolean,
         colorRgba: ColorRgba,
         goalFormsUi: List<GoalFormUi>,
         pomodoroTimer: Int,
-    ) = dbIo {
-        if (isOther())
-            throw UIException("It's impossible to change \"Other\" activity")
-
-        db.activityQueries.upById(
-            id = id,
-            name = validateName(name),
-            timer = timer,
-            sort = sort,
-            type_id = type_id,
-            color_rgba = colorRgba.toRgbaString(),
-            data_json = data.toJString(),
-            emoji = validateEmoji(emoji, exActivity = this@ActivityDb),
-            keep_screen_on = keepScreenOn.toInt10(),
-            pomodoro_timer = pomodoroTimer,
-        )
-
-        GoalDb.deleteByActivityDbSync(this@ActivityDb)
-        GoalDb.insertManySync(this@ActivityDb, goalFormsUi)
+        timerHints: Set<Int>,
+    ): Unit = dbIo {
+        db.transaction {
+            val activityDb: ActivityDb = this@ActivityDb
+            if (isOther())
+                throw UiException("It's impossible to change \"Other\" activity")
+            val validatedName: String = validateName(name)
+            val validatedEmoji: String = validateEmojiSync(emoji, exActivity = activityDb)
+            db.activityQueries.updateById(
+                id = id,
+                name = validatedName,
+                timer = timer,
+                sort = sort,
+                type_id = type_id,
+                color_rgba = colorRgba.toRgbaString(),
+                emoji = validatedEmoji,
+                keep_screen_on = keepScreenOn.toInt10(),
+                pomodoro_timer = pomodoroTimer,
+                timer_hints = timerHints.toTimerHintsDb(),
+            )
+            GoalDb.deleteByActivityDbSync(activityDb)
+            GoalDb.insertManySync(activityDb, goalFormsUi)
+        }
     }
 
     suspend fun updateSort(newSort: Int) {
