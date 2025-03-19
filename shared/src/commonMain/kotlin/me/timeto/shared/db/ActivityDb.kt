@@ -14,7 +14,6 @@ import me.timeto.shared.misc.toBoolean10
 import me.timeto.shared.misc.toInt10
 import me.timeto.shared.misc.toJsonArray
 import me.timeto.shared.ui.UiException
-import kotlin.coroutines.cancellation.CancellationException
 import kotlin.math.max
 
 data class ActivityDb(
@@ -36,7 +35,7 @@ data class ActivityDb(
             db.activityQueries.anyChange().asFlow()
 
         suspend fun selectSorted(): List<ActivityDb> = dbIo {
-            db.activityQueries.selectSorted().asList { toDb() }
+            selectSortedSync()
         }
 
         fun selectSortedFlow(): Flow<List<ActivityDb>> =
@@ -342,6 +341,47 @@ data class ActivityDb(
         other(1)
     }
 }
+
+///
+
+@Throws(UiException::class)
+private fun validateName(name: String): String {
+    val validatedName: String = name.trim()
+    if (validatedName.isEmpty())
+        throw UiException("Empty name")
+    return validatedName
+}
+
+@Throws(UiException::class)
+private fun validateEmojiSync(
+    emoji: String,
+    exActivity: ActivityDb? = null,
+): String {
+
+    val validatedEmoji: String = emoji.trim()
+    if (validatedEmoji.isEmpty())
+        throw UiException("Emoji not selected")
+
+    val activity: ActivityDb? = selectByEmojiOrNullSync(emoji)
+    if (activity == null)
+        return validatedEmoji
+
+    if (activity.id != exActivity?.id)
+        throw UiException("Emoji $emoji is already used for the \"${activity.name}\" activity.")
+
+    return validatedEmoji
+}
+
+///
+
+private fun selectSortedSync(): List<ActivityDb> =
+    db.activityQueries.selectSorted().asList { toDb() }
+
+private fun selectByEmojiOrNullSync(string: String): ActivityDb? =
+    selectSortedSync().firstOrNull { it.emoji == string }
+
+private fun Set<Int>.toTimerHintsDb(): String =
+    this.joinToString(",")
 
 private fun ActivitySQ.toDb() = ActivityDb(
     id = id, name = name, emoji = emoji, timer = timer, sort = sort,
