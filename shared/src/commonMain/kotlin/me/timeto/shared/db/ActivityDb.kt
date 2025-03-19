@@ -51,6 +51,7 @@ data class ActivityDb(
 
         ///
 
+        @Throws(UiException::class, CancellationException::class)
         suspend fun addWithValidation(
             name: String,
             emoji: String,
@@ -185,6 +186,7 @@ data class ActivityDb(
         note = null,
     )
 
+    @Throws(UiException::class, CancellationException::class)
     suspend fun upByIdWithValidation(
         name: String,
         emoji: String,
@@ -217,12 +219,10 @@ data class ActivityDb(
         }
     }
 
-    suspend fun updateSort(newSort: Int) {
-        dbIo {
-            db.activityQueries.updateSortById(
-                id = id, sort = newSort,
-            )
-        }
+    suspend fun updateSort(newSort: Int): Unit = dbIo {
+        db.activityQueries.updateSortById(
+            id = id, sort = newSort,
+        )
     }
 
     @Throws(UiException::class, CancellationException::class)
