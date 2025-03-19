@@ -92,9 +92,10 @@ data class ActivityDb(
 
         ///
 
-        /// attractiveness. In fillInitData() hardcode by indexes.
-        /// https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/color
-        /// https://material.io/resources/color
+        // todo apple colors
+        // attractiveness. In fillInitData() hardcode by indexes.
+        // https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/color
+        // https://material.io/resources/color
         val colors = listOf(
             ColorRgba(52, 199, 89), // Green
             ColorRgba(0, 122, 255), // Blue
