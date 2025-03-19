@@ -39,11 +39,17 @@ data class ActivityDb(
             selectSortedSync()
         }
 
+        private fun selectSortedSync(): List<ActivityDb> =
+            db.activityQueries.selectSorted().asList { toDb() }
+
         fun selectSortedFlow(): Flow<List<ActivityDb>> =
             db.activityQueries.selectSorted().asListFlow { toDb() }
 
         suspend fun selectByIdOrNull(id: Int): ActivityDb? =
             selectSorted().firstOrNull { it.id == id }
+
+        fun selectByEmojiOrNullSync(string: String): ActivityDb? =
+            selectSortedSync().firstOrNull { it.emoji == string }
 
         @Throws(UiException::class)
         fun selectOtherCached(): ActivityDb =
@@ -301,7 +307,8 @@ private fun validateEmojiSync(
     if (validatedEmoji.isEmpty())
         throw UiException("Emoji not selected")
 
-    val activity: ActivityDb? = selectByEmojiOrNullSync(emoji)
+    val activity: ActivityDb? =
+        ActivityDb.selectByEmojiOrNullSync(emoji)
     if (activity == null)
         return validatedEmoji
 
@@ -312,12 +319,6 @@ private fun validateEmojiSync(
 }
 
 ///
-
-private fun selectSortedSync(): List<ActivityDb> =
-    db.activityQueries.selectSorted().asList { toDb() }
-
-private fun selectByEmojiOrNullSync(string: String): ActivityDb? =
-    selectSortedSync().firstOrNull { it.emoji == string }
 
 @Throws(UiException::class)
 private fun List<ActivityDb>.findOther(): ActivityDb {
