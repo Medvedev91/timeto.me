@@ -135,7 +135,7 @@ private struct ShortcutFormSheetInner: View {
                         }
                     )
                 }
-                .fontWeight(.bold)
+                .fontWeight(.semibold)
                 .disabled(!state.isSaveEnabled)
             }
         }
