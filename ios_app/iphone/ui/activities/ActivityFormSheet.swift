@@ -13,7 +13,8 @@ struct ActivityFormSheet: View {
         }) { vm, state in
             ActivityFormSheetInner(
                 vm: vm,
-                state: state
+                state: state,
+                name: state.name
             )
         }
     }
@@ -24,6 +25,8 @@ private struct ActivityFormSheetInner: View {
     let vm: ActivityFormVm
     let state: ActivityFormVm.State
     
+    @State var name: String
+    
     ///
     
     @Environment(\.dismiss) private var dismiss
@@ -31,6 +34,16 @@ private struct ActivityFormSheetInner: View {
     
     var body: some View {
         List {
+            
+            Section(state.nameHeader) {
+                TextField(
+                    state.namePlaceholder,
+                    text: $name
+                )
+                .onChange(of: name) { _, newName in
+                    vm.setName(newName: newName)
+                }
+            }
         }
         .interactiveDismissDisabled()
         .toolbarTitleDisplayMode(.inline)
