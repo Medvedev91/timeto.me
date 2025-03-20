@@ -23,7 +23,7 @@ class ActivitiesVm : __Vm<ActivitiesVm.State>() {
 
     init {
         val scopeVm = scopeVm()
-        ActivityDb.selectAllSortedFlow().onEachExIn(scopeVm) { activitiesDb ->
+        ActivityDb.selectSortedFlow().onEachExIn(scopeVm) { activitiesDb ->
             state.update { state ->
                 state.copy(activitiesUi = activitiesDb.map { ActivityUi(it) })
             }
