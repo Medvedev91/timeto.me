@@ -63,7 +63,7 @@ private struct HomeScreenInner: View {
             }
             
             if let whatsNewMessage = state.whatsNewMessage {
-                NavigationLink(.whatsNew) {
+                NavigationLinkPush(.whatsNew) {
                     Text(whatsNewMessage)
                         .foregroundColor(.white)
                         .padding(.horizontal, 12)

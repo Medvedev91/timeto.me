@@ -47,7 +47,7 @@ private struct SettingsScreenInner: View {
                 }
                 .foregroundColor(.primary)
                 
-                NavigationLink(.whatsNew) {
+                NavigationLinkPush(.whatsNew) {
                     HStack {
                         Text(state.whatsNewTitle)
                         Spacer()
@@ -60,7 +60,7 @@ private struct SettingsScreenInner: View {
             Section("CHECKLISTS") {
                 
                 ForEach(state.checklistsDb, id: \.id) { checklistDb in
-                    NavigationLink(.checklist(
+                    NavigationLinkPush(.checklist(
                         checklistDb: checklistDb,
                         maxLines: 9,
                         onDelete: {
@@ -147,7 +147,7 @@ private struct SettingsScreenInner: View {
                 
                 ForEach(state.notesDb, id: \.id) { noteDb in
                     
-                    NavigationLink(.note(
+                    NavigationLinkPush(.note(
                         noteDb: noteDb,
                         onDelete: {
                             navigation.cleanPath()
@@ -184,7 +184,7 @@ private struct SettingsScreenInner: View {
             
             Section("SETTINGS") {
                 
-                NavigationLink(.taskFoldersForm) {
+                NavigationLinkPush(.taskFoldersForm) {
                     Text("Folders")
                 }
                 
@@ -275,7 +275,7 @@ private struct SettingsScreenInner: View {
                 }
                 .foregroundColor(.primary)
                 
-                NavigationLink(.privacy) {
+                NavigationLinkPush(.privacy) {
                     HStack {
                         Text("Privacy")
                         Spacer()
