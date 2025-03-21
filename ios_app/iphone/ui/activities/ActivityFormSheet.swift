@@ -35,7 +35,7 @@ private struct ActivityFormSheetInner: View {
     var body: some View {
         List {
             
-            Section(state.nameHeader) {
+            Section {
                 TextField(
                     state.namePlaceholder,
                     text: $name

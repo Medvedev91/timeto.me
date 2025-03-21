@@ -25,7 +25,6 @@ class ActivityFormVm(
         val saveText: String =
             if (activityDb != null) "Save" else "Create"
 
-        val nameHeader = "ACTIVITY NAME"
         val namePlaceholder = "Activity Name"
 
         val checklistsNote: String =
