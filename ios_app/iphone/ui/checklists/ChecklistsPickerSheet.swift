@@ -3,13 +3,13 @@ import shared
 
 struct ChecklistsPickerSheet: View {
     
-    let selectedChecklistsDb: [ChecklistDb]
+    let initChecklistsDb: [ChecklistDb]
     let onPick: ([ChecklistDb]) -> Void
     
     var body: some View {
         VmView({
             ChecklistsPickerVm(
-                selectedChecklistsDb: selectedChecklistsDb
+                initChecklistsDb: initChecklistsDb
             )
         }) { vm, state in
             ChecklistsPickerSheetInner(
