@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct NavigationLink<Content: View>: View {
+struct NavigationLinkPush<Content: View>: View {
     
     private let path: NavigationPath
     private let content: () -> Content
@@ -26,7 +26,7 @@ struct NavigationLink<Content: View>: View {
                 navigation.push(path)
             },
             label: {
-                SwiftUI.NavigationLink(
+                NavigationLink(
                     destination: EmptyView(),
                     label: content
                 )
