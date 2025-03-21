@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.db.ActivityDb
+import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.textFeatures
 import me.timeto.shared.ui.DialogsManager
 import me.timeto.shared.vm.__Vm
@@ -15,6 +16,7 @@ class ActivityFormVm(
     data class State(
         val activityDb: ActivityDb?,
         val name: String,
+        val checklistsDb: List<ChecklistDb>,
     ) {
 
         val title: String =
@@ -25,6 +27,10 @@ class ActivityFormVm(
 
         val nameHeader = "ACTIVITY NAME"
         val namePlaceholder = "Activity Name"
+
+        val checklistsNote: String =
+            if (checklistsDb.isEmpty()) "None"
+            else checklistsDb.joinToString(", ") { it.name }
     }
 
     override val state: MutableStateFlow<State>
@@ -38,6 +44,7 @@ class ActivityFormVm(
             State(
                 activityDb = initActivityDb,
                 name = tf.textNoFeatures,
+                checklistsDb = tf.checklists,
             )
         )
     }
@@ -46,6 +53,10 @@ class ActivityFormVm(
 
     fun setName(newName: String) {
         state.update { it.copy(name = newName) }
+    }
+
+    fun setChecklistsDb(newChecklistsDb: List<ChecklistDb>) {
+        state.update { it.copy(checklistsDb = newChecklistsDb) }
     }
 
     fun save(
