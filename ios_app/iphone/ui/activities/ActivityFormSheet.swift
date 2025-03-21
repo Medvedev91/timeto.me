@@ -44,6 +44,29 @@ private struct ActivityFormSheetInner: View {
                     vm.setName(newName: newName)
                 }
             }
+            
+            Section {
+                
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
+                            Text("Checklists")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text(state.checklistsNote)
+                                .foregroundColor(.secondary)
+                        }
+                    },
+                    sheet: {
+                        ChecklistsPickerSheet(
+                            initChecklistsDb: state.checklistsDb,
+                            onPick: { newChecklistsDb in
+                                vm.setChecklistsDb(newChecklistsDb: newChecklistsDb)
+                            }
+                        )
+                    }
+                )
+            }
         }
         .interactiveDismissDisabled()
         .toolbarTitleDisplayMode(.inline)
