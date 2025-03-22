@@ -8,7 +8,7 @@ import me.timeto.shared.onEachExIn
 import me.timeto.shared.vm.__Vm
 
 class ChecklistsPickerVm(
-    selectedChecklistsDb: List<ChecklistDb>,
+    initChecklistsDb: List<ChecklistDb>,
 ) : __Vm<ChecklistsPickerVm.State>() {
 
     data class State(
@@ -27,7 +27,7 @@ class ChecklistsPickerVm(
     override val state = MutableStateFlow(
         State(
             checklistsDb = Cache.checklistsDb,
-            selectedIds = selectedChecklistsDb.map { it.id }.toSet(),
+            selectedIds = initChecklistsDb.map { it.id }.toSet(),
         )
     )
 
