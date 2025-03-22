@@ -66,8 +66,29 @@ private struct ActivityFormSheetInner: View {
                         )
                     }
                 )
+                
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
+                            Text("Shortcuts")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text(state.shortcutsNote)
+                                .foregroundColor(.secondary)
+                        }
+                    },
+                    sheet: {
+                        ShortcutsPickerSheet(
+                            initShortcutsDb: state.shortcutsDb,
+                            onPick: { newShortcutsDb in
+                                vm.setShortcutsDb(newShortcutsDb: newShortcutsDb)
+                            }
+                        )
+                    }
+                )
             }
         }
+        .myFormContentMargins()
         .interactiveDismissDisabled()
         .toolbarTitleDisplayMode(.inline)
         .navigationTitle(state.title)
