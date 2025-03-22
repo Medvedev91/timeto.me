@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.ChecklistDb
+import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.textFeatures
 import me.timeto.shared.ui.DialogsManager
 import me.timeto.shared.vm.__Vm
@@ -17,6 +18,7 @@ class ActivityFormVm(
         val activityDb: ActivityDb?,
         val name: String,
         val checklistsDb: List<ChecklistDb>,
+        val shortcutsDb: List<ShortcutDb>,
     ) {
 
         val title: String =
@@ -30,6 +32,10 @@ class ActivityFormVm(
         val checklistsNote: String =
             if (checklistsDb.isEmpty()) "None"
             else checklistsDb.joinToString(", ") { it.name }
+
+        val shortcutsNote: String =
+            if (shortcutsDb.isEmpty()) "None"
+            else shortcutsDb.joinToString(", ") { it.name }
     }
 
     override val state: MutableStateFlow<State>
@@ -44,6 +50,7 @@ class ActivityFormVm(
                 activityDb = initActivityDb,
                 name = tf.textNoFeatures,
                 checklistsDb = tf.checklists,
+                shortcutsDb = tf.shortcuts,
             )
         )
     }
@@ -56,6 +63,10 @@ class ActivityFormVm(
 
     fun setChecklistsDb(newChecklistsDb: List<ChecklistDb>) {
         state.update { it.copy(checklistsDb = newChecklistsDb) }
+    }
+
+    fun setShortcutsDb(newShortcutsDb: List<ShortcutDb>) {
+        state.update { it.copy(shortcutsDb = newShortcutsDb) }
     }
 
     fun save(
