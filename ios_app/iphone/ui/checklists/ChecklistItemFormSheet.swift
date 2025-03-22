@@ -50,7 +50,7 @@ private struct ChecklistItemFormSheetInner: View {
                 vm.setText(text: new)
             }
         }
-        .contentMargins(.top, 14)
+        .myFormContentMargins()
         .interactiveDismissDisabled()
         .toolbarTitleDisplayMode(.inline)
         .navigationTitle(state.title)

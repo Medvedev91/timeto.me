@@ -69,7 +69,7 @@ private struct NoteFormSheetInner: View {
                 }
             }
         }
-        .contentMargins(.top, 14)
+        .myFormContentMargins()
         .interactiveDismissDisabled()
         .toolbarTitleDisplayMode(.inline)
         .navigationTitle(state.title)

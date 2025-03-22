@@ -102,7 +102,7 @@ private struct TaskFoldersFormScreenInner: View {
             state: $tmrwButtonUiAnimation
         )
         .environment(\.editMode, $editMode)
-        .contentMargins(.top, 14)
+        .myFormContentMargins()
         .toolbarTitleDisplayMode(.inline)
         .navigationTitle(state.title)
     }
