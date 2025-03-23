@@ -17,6 +17,7 @@ class ActivityFormVm(
     data class State(
         val activityDb: ActivityDb?,
         val name: String,
+        val emoji: String?,
         val checklistsDb: List<ChecklistDb>,
         val shortcutsDb: List<ShortcutDb>,
     ) {
@@ -28,6 +29,9 @@ class ActivityFormVm(
             if (activityDb != null) "Save" else "Create"
 
         val namePlaceholder = "Activity Name"
+
+        val emojiTitle = "Unique Emoji"
+        val emojiNotSelected = "Not Selected"
 
         val checklistsNote: String =
             if (checklistsDb.isEmpty()) "None"
@@ -49,6 +53,7 @@ class ActivityFormVm(
             State(
                 activityDb = initActivityDb,
                 name = tf.textNoFeatures,
+                emoji = initActivityDb?.emoji,
                 checklistsDb = tf.checklists,
                 shortcutsDb = tf.shortcuts,
             )
@@ -59,6 +64,10 @@ class ActivityFormVm(
 
     fun setName(newName: String) {
         state.update { it.copy(name = newName) }
+    }
+
+    fun setEmoji(newEmoji: String) {
+        state.update { it.copy(emoji = newEmoji) }
     }
 
     fun setChecklistsDb(newChecklistsDb: List<ChecklistDb>) {
