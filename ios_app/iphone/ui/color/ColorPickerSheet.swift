@@ -78,7 +78,7 @@ private struct ColorPickerSheetInner: View {
                                 ForEach(secondaryExamples, id: \.self) { exampleData in
                                     Button(
                                         action: {
-                                            vm.setColorRgba(colorRgba: exampleData.colorRgba)
+                                            setColorRgbaLocal(exampleData.colorRgba)
                                         },
                                         label: {
                                             Text(exampleData.title)
@@ -119,7 +119,7 @@ private struct ColorPickerSheetInner: View {
                             HStack {
                                 ForEach(colors, id: \.self) { colorItem in
                                     ColorCircleView(colorItem: colorItem) {
-                                        vm.setColorRgba(colorRgba: colorItem.colorRgba)
+                                        setColorRgbaLocal(colorItem.colorRgba)
                                     }
                                 }
                             }
@@ -164,13 +164,13 @@ private struct ColorPickerSheetInner: View {
                         .padding(.bottom, 8)
                         
                         ColorSliderView(value: Double(state.colorRgba.r), color: .red) { newValue in
-                            vm.setColorRgba(colorRgba: ColorRgba(r: Int(newValue).toInt32(), g: state.colorRgba.g, b: state.colorRgba.b, a: 255))
+                            setColorRgbaLocal(ColorRgba(r: Int(newValue).toInt32(), g: state.colorRgba.g, b: state.colorRgba.b, a: 255))
                         }
                         ColorSliderView(value: Double(state.colorRgba.g), color: .green) { newValue in
-                            vm.setColorRgba(colorRgba: ColorRgba(r: state.colorRgba.r, g: Int(newValue).toInt32(), b: state.colorRgba.b, a: 255))
+                            setColorRgbaLocal(ColorRgba(r: state.colorRgba.r, g: Int(newValue).toInt32(), b: state.colorRgba.b, a: 255))
                         }
                         ColorSliderView(value: Double(state.colorRgba.b), color: .blue) { newValue in
-                            vm.setColorRgba(colorRgba: ColorRgba(r: state.colorRgba.r, g: state.colorRgba.g, b: Int(newValue).toInt32(), a: 255))
+                            setColorRgbaLocal(ColorRgba(r: state.colorRgba.r, g: state.colorRgba.g, b: Int(newValue).toInt32(), a: 255))
                         }
                         .padding(.bottom, 8)
                     }
@@ -205,6 +205,13 @@ private struct ColorPickerSheetInner: View {
         .navigationTitle(title)
         .safeAreaPadding(.top)
         .ignoresSafeArea()
+    }
+    
+    private func setColorRgbaLocal(_ colorRgba: ColorRgba) {
+        vm.setColorRgba(colorRgba: colorRgba)
+        if colorRgba != state.colorRgba {
+            Haptic.softShot()
+        }
     }
 }
 
