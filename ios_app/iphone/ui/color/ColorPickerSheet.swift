@@ -42,7 +42,7 @@ private struct ColorPickerSheetInner: View {
     ///
     
     @Environment(\.dismiss) private var dismiss
-    @State private var isRgbSlidersShowed = false
+    @Environment(Navigation.self) private var navigation
 
     var body: some View {
         
@@ -126,49 +126,6 @@ private struct ColorPickerSheetInner: View {
                     .padding(.bottom, 16)
                 }
             }
-            
-            ZStack {
-                
-                if isRgbSlidersShowed {
-                    
-                    VStack {
-                        
-                        ZStack(alignment: .center) {
-                            
-                            Text(state.rgbText)
-                                .font(.system(size: 16))
-                                .foregroundColor(.white)
-                                .lineLimit(1)
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 4)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                        .fill(state.colorRgba.toColor())
-                                )
-                        }
-                        .padding(.top, 12)
-                        .padding(.bottom, 8)
-                        
-                        ColorSliderView(value: Double(state.colorRgba.r), color: .red) { newValue in
-                            setColorRgbaLocal(ColorRgba(r: Int(newValue).toInt32(), g: state.colorRgba.g, b: state.colorRgba.b, a: 255))
-                        }
-                        ColorSliderView(value: Double(state.colorRgba.g), color: .green) { newValue in
-                            setColorRgbaLocal(ColorRgba(r: state.colorRgba.r, g: Int(newValue).toInt32(), b: state.colorRgba.b, a: 255))
-                        }
-                        ColorSliderView(value: Double(state.colorRgba.b), color: .blue) { newValue in
-                            setColorRgbaLocal(ColorRgba(r: state.colorRgba.r, g: state.colorRgba.g, b: Int(newValue).toInt32(), a: 255))
-                        }
-                        .padding(.bottom, 8)
-                    }
-                    .fillMaxWidth()
-                    .background(.black)
-                    .transition(.move(edge: .bottom))
-                } else {
-                    // Otherwise vertical scale animation
-                    Color.clear.frame(height: 0)
-                }
-            }
-            .clipped()
         }
         .contentMargins(.top, 8)
         .toolbar {
@@ -187,8 +144,13 @@ private struct ColorPickerSheetInner: View {
             ToolbarItemGroup(placement: .bottomBar) {
                 Spacer()
                 Button("Custom Color") {
-                    withAnimation {
-                        isRgbSlidersShowed.toggle()
+                    navigation.sheet {
+                        ColorPickerCustomSheet(
+                            initColorRgba: state.colorRgba,
+                            onPick: { newColorRgba in
+                                setColorRgbaLocal(newColorRgba)
+                            }
+                        )
                     }
                 }
             }
@@ -243,35 +205,5 @@ private struct ColorCircleView: View {
         )
         .frame(width: circleCellSize, height: circleCellSize)
         .animateVmValue(value: colorItem.isSelected, state: $isSelectedAnim)
-    }
-}
-
-private struct ColorSliderView: View {
-    
-    private let valueVm: Double
-    @State private var value: Double = 0
-    private let color: Color
-    private let onChange: (Double) -> Void
-    
-    init(
-        value: Double,
-        color: Color,
-        onChange: @escaping (Double) -> Void
-    ) {
-        _value = State(initialValue: value)
-        valueVm = value
-        self.color = color
-        self.onChange = onChange
-    }
-    
-    var body: some View {
-        Slider(value: $value, in: 0...255)
-            .onChange(of: value) { _, newValue in
-                onChange(newValue)
-            }
-            .animateVmValue(value: valueVm, state: $value)
-            .accentColor(color)
-            .padding(.horizontal, H_PADDING)
-            .padding(.vertical, 6)
     }
 }
