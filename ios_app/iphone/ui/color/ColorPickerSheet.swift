@@ -94,9 +94,6 @@ private struct ColorPickerSheetInner: View {
                                     )
                                 }
                             }
-                            
-                            ZStack {}
-                                .safeAreaPadding(.bottom)
                         }
                         
                         Spacer()
@@ -110,7 +107,8 @@ private struct ColorPickerSheetInner: View {
                 }
                 .contentMargins(.bottom, 12)
                 .padding(.leading, H_PADDING)
-                
+                .clipped()
+
                 ScrollView(showsIndicators: false) {
                     
                     VStack(alignment: .leading) {
@@ -131,9 +129,6 @@ private struct ColorPickerSheetInner: View {
                             }
                         }
                         .padding(.top, 8)
-                        
-                        ZStack {}
-                            .safeAreaPadding(.bottom)
                     }
                     .padding(.leading, dividerPadding - circlePadding)
                     .padding(.trailing, H_PADDING - circlePadding)
@@ -177,7 +172,6 @@ private struct ColorPickerSheetInner: View {
                     .fillMaxWidth()
                     .background(.black)
                     .transition(.move(edge: .bottom))
-                    .safeAreaPadding(.bottom)
                 } else {
                     // Otherwise vertical scale animation
                     Color.clear.frame(height: 0)
@@ -203,8 +197,6 @@ private struct ColorPickerSheetInner: View {
         .interactiveDismissDisabled()
         .toolbarTitleDisplayMode(.inline)
         .navigationTitle(title)
-        .safeAreaPadding(.top)
-        .ignoresSafeArea()
     }
     
     private func setColorRgbaLocal(_ colorRgba: ColorRgba) {
