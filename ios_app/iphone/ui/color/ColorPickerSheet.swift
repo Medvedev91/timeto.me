@@ -110,9 +110,7 @@ private struct ColorPickerSheetInner: View {
                 .clipped()
 
                 ScrollView(showsIndicators: false) {
-                    
                     VStack(alignment: .leading) {
-                        
                         ForEach(state.colorGroups, id: \.self) { colors in
                             HStack {
                                 ForEach(colors, id: \.self) { colorItem in
@@ -122,13 +120,6 @@ private struct ColorPickerSheetInner: View {
                                 }
                             }
                         }
-                        
-                        Button("Custom") {
-                            withAnimation {
-                                isRgbSlidersShowed.toggle()
-                            }
-                        }
-                        .padding(.top, 8)
                     }
                     .padding(.leading, dividerPadding - circlePadding)
                     .padding(.trailing, H_PADDING - circlePadding)
@@ -192,6 +183,14 @@ private struct ColorPickerSheetInner: View {
                     dismiss()
                 }
                 .fontWeight(.semibold)
+            }
+            ToolbarItemGroup(placement: .bottomBar) {
+                Spacer()
+                Button("Custom Color") {
+                    withAnimation {
+                        isRgbSlidersShowed.toggle()
+                    }
+                }
             }
         }
         .interactiveDismissDisabled()
