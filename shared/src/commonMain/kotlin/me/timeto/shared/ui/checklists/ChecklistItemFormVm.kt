@@ -1,11 +1,13 @@
-package me.timeto.shared.vm
+package me.timeto.shared.ui.checklists
 
-import kotlinx.coroutines.flow.*
-import me.timeto.shared.db.ChecklistItemDb
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import me.timeto.shared.db.ChecklistDb
+import me.timeto.shared.db.ChecklistItemDb
 import me.timeto.shared.launchEx
 import me.timeto.shared.ui.DialogsManager
 import me.timeto.shared.ui.UiException
+import me.timeto.shared.vm.__Vm
 
 class ChecklistItemFormVm(
     checklistDb: ChecklistDb,
