@@ -9,17 +9,20 @@ class ColorPickerVm(
     examplesData: ColorPickerExamplesData,
 ) : __Vm<ColorPickerVm.State>() {
 
+    companion object {
+
+        fun prepCustomColorRgbaText(colorRgba: ColorRgba):String {
+            val (r, g, b) = listOf(colorRgba.r, colorRgba.g, colorRgba.b)
+            return "RGB: $r,$g,$b / #${r.toHex()}${g.toHex()}${b.toHex()}".uppercase()
+        }
+    }
+
     data class State(
         val colorRgba: ColorRgba,
         val examplesData: ColorPickerExamplesData,
     ) {
 
         val saveText = "Done"
-
-        val rgbText: String = run {
-            val (r, g, b) = listOf(colorRgba.r, colorRgba.g, colorRgba.b)
-            "RGB: $r,$g,$b / #${r.toHex()}${g.toHex()}${b.toHex()}".uppercase()
-        }
 
         val colorGroups: List<List<ColorItem>> = AppleColors.Palettes.all
             .map { listOf(it.aLight, it.light, it.aDark) }
