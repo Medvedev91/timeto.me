@@ -69,6 +69,27 @@ private struct ActivityFormSheetInner: View {
                         )
                     }
                 )
+                
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
+                            Text(state.colorTitle)
+                            Spacer()
+                            Circle()
+                                .foregroundColor(state.colorRgba.toColor())
+                                .frame(width: 28, height: 28)
+                        }
+                    },
+                    sheet: {
+                        ColorPickerSheet(
+                            title: state.colorPickerTitle,
+                            examplesData: state.buildColorPickerExamplesData(),
+                            onPick: { colorRgba in
+                                vm.setColorRgba(newColorRgba: colorRgba)
+                            }
+                        )
+                    }
+                )
             }
             
             Section {
