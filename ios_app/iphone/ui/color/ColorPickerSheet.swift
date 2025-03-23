@@ -29,6 +29,7 @@ private let circleSize: CGFloat = 42
 private let circlePadding: CGFloat = 4
 private let circleCellSize: CGFloat = circleSize + (circlePadding * 2.0)
 private let exampleShape = RoundedRectangle(cornerRadius: 10, style: .continuous)
+private let dividerPadding: CGFloat = H_PADDING.goldenRatioDown()
 
 private struct ColorPickerSheetInner: View {
     
@@ -50,52 +51,78 @@ private struct ColorPickerSheetInner: View {
                 
                 ScrollView(showsIndicators: false) {
                     
-                    VStack(alignment: .leading) {
+                    HStack {
                         
-                        Text(state.examplesData.mainExample.title)
-                            .font(.system(size: 17, weight: .semibold))
-                            .foregroundColor(.white)
-                            .lineLimit(1)
-                            .padding(.horizontal, 12)
-                            .frame(height: circleSize - 2)
-                            .background(exampleShape.fill(state.colorRgba.toColor()))
-                            .padding(.top, 1)
-                        
-                        let secondaryExamples = state.examplesData.secondaryExamples
-                        if !secondaryExamples.isEmpty {
+                        VStack(alignment: .leading) {
                             
-                            Text(state.examplesData.secondaryHeader)
-                                .foregroundColor(.secondary)
-                                .fontWeight(.medium)
-                                .font(.system(size: 13))
-                                .padding(.leading, 4)
-                                .padding(.top, 28)
+                            Text(state.examplesData.mainExample.title)
+                                .font(.system(size: 17, weight: .semibold))
+                                .foregroundColor(.white)
+                                .lineLimit(1)
+                                .padding(.horizontal, 12)
+                                .frame(height: circleSize - 2)
+                                .background(exampleShape.fill(state.colorRgba.toColor()))
+                                .padding(.top, 1)
                             
-                            ForEach(secondaryExamples, id: \.self) { exampleData in
-                                Button(
-                                    action: {
-                                        vm.setColorRgba(colorRgba: exampleData.colorRgba)
-                                    },
-                                    label: {
-                                        Text(exampleData.title)
-                                            .font(.system(size: 15, weight: .semibold))
-                                            .foregroundColor(.white)
-                                            .lineLimit(1)
-                                            .padding(.horizontal, 12)
-                                            .padding(.top, 6)
-                                            .padding(.bottom, 6)
-                                            .background(exampleShape.fill(exampleData.colorRgba.toColor()))
-                                            .padding(.top, 8)
-                                    }
-                                )
+                            let secondaryExamples = state.examplesData.secondaryExamples
+                            if !secondaryExamples.isEmpty {
+                                
+                                Text(state.examplesData.secondaryHeader)
+                                    .foregroundColor(.secondary)
+                                    .fontWeight(.medium)
+                                    .font(.system(size: 13))
+                                    .padding(.leading, 4)
+                                    .padding(.top, 28)
+                                
+                                ForEach(secondaryExamples, id: \.self) { exampleData in
+                                    Button(
+                                        action: {
+                                            vm.setColorRgba(colorRgba: exampleData.colorRgba)
+                                        },
+                                        label: {
+                                            Text(exampleData.title)
+                                                .font(.system(size: 15, weight: .semibold))
+                                                .foregroundColor(.white)
+                                                .lineLimit(1)
+                                                .padding(.horizontal, 12)
+                                                .padding(.top, 6)
+                                                .padding(.bottom, 6)
+                                                .background(exampleShape.fill(exampleData.colorRgba.toColor()))
+                                                .padding(.top, 8)
+                                        }
+                                    )
+                                }
                             }
                         }
+                        
+                        Spacer()
+                        
+                        ZStack {}
+                            .frame(width: onePx)
+                            .frame(maxHeight: .infinity)
+                            .background(.separator)
+                            .padding(.top, circlePadding)
                     }
                 }
                 .contentMargins(.bottom, 12)
                 .padding(.leading, H_PADDING)
                 
-                Spacer()
+                ScrollView(showsIndicators: false) {
+                    VStack(alignment: .leading) {
+                        ForEach(state.colorGroups, id: \.self) { colors in
+                            HStack {
+                                ForEach(colors, id: \.self) { colorItem in
+                                    ColorCircleView(colorItem: colorItem) {
+                                        vm.setColorRgba(colorRgba: colorItem.colorRgba)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .padding(.leading, dividerPadding - circlePadding)
+                    .padding(.trailing, H_PADDING - circlePadding)
+                    .padding(.bottom, 16)
+                }
             }
         }
         .myFormContentMargins()
@@ -115,5 +142,45 @@ private struct ColorPickerSheetInner: View {
         }
         .toolbarTitleDisplayMode(.inline)
         .navigationTitle(title)
+    }
+}
+
+private struct ColorCircleView: View {
+    
+    let colorItem: ColorPickerVm.ColorItem
+    let onClick: () -> Void
+    
+    ///
+    
+    @State private var isSelectedAnim = false
+    
+    var body: some View {
+        
+        Button(
+            action: {
+                onClick()
+            },
+            label: {
+                
+                ZStack {
+                    
+                    Circle()
+                        .foregroundColor(colorItem.colorRgba.toColor())
+                        .frame(width: circleSize, height: circleSize)
+                        .zIndex(1)
+                    
+                    if isSelectedAnim {
+                        Image(systemName: "checkmark")
+                            .font(.system(size: 18, weight: .medium))
+                            .foregroundColor(.white)
+                            .transition(.opacity)
+                            .zIndex(2)
+                    }
+                }
+                .padding(.all, circlePadding)
+            }
+        )
+        .frame(width: circleCellSize, height: circleCellSize)
+        .animateVmValue(value: colorItem.isSelected, state: $isSelectedAnim)
     }
 }
