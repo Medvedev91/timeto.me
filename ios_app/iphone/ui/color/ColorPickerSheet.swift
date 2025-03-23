@@ -63,7 +63,7 @@ private struct ColorPickerSheetInner: View {
                                 .padding(.horizontal, 12)
                                 .frame(height: circleSize - 2)
                                 .background(exampleShape.fill(state.colorRgba.toColor()))
-                                .padding(.top, 1)
+                                .padding(.top, circlePadding)
                             
                             let secondaryExamples = state.examplesData.secondaryExamples
                             if !secondaryExamples.isEmpty {
