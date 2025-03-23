@@ -18,7 +18,9 @@ class ChecklistItemFormVm(
         val text: String,
     ) {
 
-        val title = "New Item"
+        val title: String =
+            if (checklistItemDb != null) "Edit" else "New Item"
+
         val saveButtonText = "Save"
         val isSaveEnabled: Boolean = text.isNotBlank()
     }
@@ -37,7 +39,7 @@ class ChecklistItemFormVm(
 
     fun save(
         dialogsManager: DialogsManager,
-        onSuccess: () -> Unit
+        onSuccess: () -> Unit,
     ): Unit = scopeVm().launchEx {
         try {
             val text: String = state.value.text
