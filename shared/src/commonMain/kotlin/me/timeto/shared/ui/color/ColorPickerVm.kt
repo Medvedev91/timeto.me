@@ -16,6 +16,11 @@ class ColorPickerVm(
 
         val saveText = "Done"
 
+        val rgbText: String = run {
+            val (r, g, b) = listOf(colorRgba.r, colorRgba.g, colorRgba.b)
+            "RGB: $r,$g,$b / #${r.toHex()}${g.toHex()}${b.toHex()}".uppercase()
+        }
+
         val colorGroups: List<List<ColorItem>> = AppleColors.Palettes.all
             .map { listOf(it.aLight, it.light, it.aDark) }
             .flatten()
@@ -46,3 +51,8 @@ class ColorPickerVm(
         val isSelected: Boolean,
     )
 }
+
+///
+
+private fun Int.toHex(): String =
+    toString(16).padStart(2, '0')
