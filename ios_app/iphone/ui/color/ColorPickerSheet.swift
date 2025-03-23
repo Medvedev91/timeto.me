@@ -179,7 +179,7 @@ private struct ColorPickerSheetInner: View {
             }
             .clipped()
         }
-        .myFormContentMargins()
+        .contentMargins(.top, 8)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button("Cancel") {
