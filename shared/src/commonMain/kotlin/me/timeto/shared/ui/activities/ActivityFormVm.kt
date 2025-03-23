@@ -2,12 +2,16 @@ package me.timeto.shared.ui.activities
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import me.timeto.shared.Cache
+import me.timeto.shared.ColorRgba
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.textFeatures
 import me.timeto.shared.ui.DialogsManager
+import me.timeto.shared.ui.color.ColorPickerExampleData
+import me.timeto.shared.ui.color.ColorPickerExamplesData
 import me.timeto.shared.vm.__Vm
 
 class ActivityFormVm(
@@ -18,6 +22,7 @@ class ActivityFormVm(
         val activityDb: ActivityDb?,
         val name: String,
         val emoji: String?,
+        val colorRgba: ColorRgba,
         val checklistsDb: List<ChecklistDb>,
         val shortcutsDb: List<ShortcutDb>,
     ) {
@@ -33,6 +38,9 @@ class ActivityFormVm(
         val emojiTitle = "Unique Emoji"
         val emojiNotSelected = "Not Selected"
 
+        val colorTitle = "Color"
+        val colorPickerTitle = "Activity Color"
+
         val checklistsNote: String =
             if (checklistsDb.isEmpty()) "None"
             else checklistsDb.joinToString(", ") { it.name }
@@ -40,6 +48,24 @@ class ActivityFormVm(
         val shortcutsNote: String =
             if (shortcutsDb.isEmpty()) "None"
             else shortcutsDb.joinToString(", ") { it.name }
+
+        fun buildColorPickerExamplesData() = ColorPickerExamplesData(
+            mainExample = ColorPickerExampleData(
+                title = activityDb?.name ?: "New Activity",
+                colorRgba = colorRgba,
+            ),
+            secondaryHeader = "OTHER ACTIVITIES",
+            secondaryExamples = Cache.activitiesDbSorted
+                .filter {
+                    it.id != activityDb?.id
+                }
+                .map {
+                    ColorPickerExampleData(
+                        title = it.name,
+                        colorRgba = it.colorRgba,
+                    )
+                },
+        )
     }
 
     override val state: MutableStateFlow<State>
@@ -54,6 +80,7 @@ class ActivityFormVm(
                 activityDb = initActivityDb,
                 name = tf.textNoFeatures,
                 emoji = initActivityDb?.emoji,
+                colorRgba = initActivityDb?.colorRgba ?: ActivityDb.nextColorCached(),
                 checklistsDb = tf.checklists,
                 shortcutsDb = tf.shortcuts,
             )
@@ -68,6 +95,10 @@ class ActivityFormVm(
 
     fun setEmoji(newEmoji: String) {
         state.update { it.copy(emoji = newEmoji) }
+    }
+
+    fun setColorRgba(newColorRgba: ColorRgba) {
+        state.update { it.copy(colorRgba = newColorRgba) }
     }
 
     fun setChecklistsDb(newChecklistsDb: List<ChecklistDb>) {
