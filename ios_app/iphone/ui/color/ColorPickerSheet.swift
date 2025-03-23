@@ -200,6 +200,7 @@ private struct ColorPickerSheetInner: View {
                 .fontWeight(.semibold)
             }
         }
+        .interactiveDismissDisabled()
         .toolbarTitleDisplayMode(.inline)
         .navigationTitle(title)
         .safeAreaPadding(.top)
