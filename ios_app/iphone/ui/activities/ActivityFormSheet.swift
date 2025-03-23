@@ -50,6 +50,32 @@ private struct ActivityFormSheetInner: View {
                 NavigationLinkSheet(
                     label: {
                         HStack {
+                            Text(state.emojiTitle)
+                            Spacer()
+                            if let emoji = state.emoji {
+                                Text(emoji)
+                                    .font(.system(size: 25))
+                            } else {
+                                Text(state.emojiNotSelected)
+                                    .foregroundColor(.red)
+                            }
+                        }
+                    },
+                    sheet: {
+                        EmojiPickerSheet(
+                            onPick: { emoji in
+                                vm.setEmoji(newEmoji: emoji)
+                            }
+                        )
+                    }
+                )
+            }
+            
+            Section {
+                
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
                             Text("Checklists")
                                 .foregroundColor(.primary)
                             Spacer()
