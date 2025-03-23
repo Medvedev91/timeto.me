@@ -15,8 +15,8 @@ object Backup {
         val map: Map<String, JsonElement> = mapOf(
             "version" to JsonPrimitive(1),
             "type" to JsonPrimitive(type),
-
-            "activities" to ActivityDb.selectAllSorted().modelsToJsonArray(),
+            // Data
+            "activities" to ActivityDb.selectSorted().modelsToJsonArray(),
             "intervals" to IntervalDb.getDesc(intervalsLimit).modelsToJsonArray(),
             "goals" to GoalDb.selectAll().modelsToJsonArray(),
             "task_folders" to TaskFolderDb.selectAllSorted().modelsToJsonArray(),
