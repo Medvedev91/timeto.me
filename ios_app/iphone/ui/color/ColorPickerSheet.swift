@@ -48,7 +48,7 @@ private struct ColorPickerSheetInner: View {
             
             HStack {
                 
-                ScrollView {
+                ScrollView(showsIndicators: false) {
                     
                     VStack(alignment: .leading) {
                         
@@ -92,6 +92,7 @@ private struct ColorPickerSheetInner: View {
                         }
                     }
                 }
+                .contentMargins(.bottom, 12)
                 .padding(.leading, H_PADDING)
                 
                 Spacer()
