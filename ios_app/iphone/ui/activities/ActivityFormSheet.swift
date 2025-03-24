@@ -103,6 +103,24 @@ private struct ActivityFormSheetInner: View {
                 .onChange(of: keepScreenOn) { _, new in
                     vm.setKeepScreenOn(newKeepScreenOn: new)
                 }
+                
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
+                            Text(state.pomodoroTitle)
+                            Spacer()
+                            Text(state.pomodoroNote)
+                                .foregroundColor(.secondary)
+                        }
+                    },
+                    sheet: {
+                        ActivityFormPomodoroSheet(
+                            vm: vm,
+                            state: state,
+                            seconds: state.pomodoroTimer.toInt32()
+                        )
+                    }
+                )
             }
             
             Section {
