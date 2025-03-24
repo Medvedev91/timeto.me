@@ -23,6 +23,7 @@ class ActivityFormVm(
         val name: String,
         val emoji: String?,
         val colorRgba: ColorRgba,
+        val keepScreenOn: Boolean,
         val checklistsDb: List<ChecklistDb>,
         val shortcutsDb: List<ShortcutDb>,
     ) {
@@ -40,6 +41,8 @@ class ActivityFormVm(
 
         val colorTitle = "Color"
         val colorPickerTitle = "Activity Color"
+
+        val keepScreenOnTitle = "Keep Screen On"
 
         val checklistsNote: String =
             if (checklistsDb.isEmpty()) "None"
@@ -81,6 +84,7 @@ class ActivityFormVm(
                 name = tf.textNoFeatures,
                 emoji = initActivityDb?.emoji,
                 colorRgba = initActivityDb?.colorRgba ?: ActivityDb.nextColorCached(),
+                keepScreenOn = initActivityDb?.keepScreenOn ?: true,
                 checklistsDb = tf.checklists,
                 shortcutsDb = tf.shortcuts,
             )
@@ -99,6 +103,10 @@ class ActivityFormVm(
 
     fun setColorRgba(newColorRgba: ColorRgba) {
         state.update { it.copy(colorRgba = newColorRgba) }
+    }
+
+    fun setKeepScreenOn(newKeepScreenOn: Boolean) {
+        state.update { it.copy(keepScreenOn = newKeepScreenOn) }
     }
 
     fun setChecklistsDb(newChecklistsDb: List<ChecklistDb>) {
