@@ -9,7 +9,9 @@ import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.textFeatures
+import me.timeto.shared.toHms
 import me.timeto.shared.ui.DialogsManager
+import me.timeto.shared.ui.UiException
 import me.timeto.shared.ui.color.ColorPickerExampleData
 import me.timeto.shared.ui.color.ColorPickerExamplesData
 import me.timeto.shared.vm.__Vm
@@ -24,6 +26,7 @@ class ActivityFormVm(
         val emoji: String?,
         val colorRgba: ColorRgba,
         val keepScreenOn: Boolean,
+        val pomodoroTimer: Int,
         val checklistsDb: List<ChecklistDb>,
         val shortcutsDb: List<ShortcutDb>,
     ) {
@@ -43,6 +46,17 @@ class ActivityFormVm(
         val colorPickerTitle = "Activity Color"
 
         val keepScreenOnTitle = "Keep Screen On"
+
+        val pomodoroTitle = "Pomodoro"
+        val pomodoroNote: String =
+            prepPomodoroTimerString(pomodoroTimer)
+        val pomodoroListItemsData: List<PomodoroListItemData> =
+            pomodoroTimers.map { timer ->
+                PomodoroListItemData(
+                    timer = timer,
+                    isSelected = pomodoroTimer == timer,
+                )
+            }
 
         val checklistsNote: String =
             if (checklistsDb.isEmpty()) "None"
@@ -85,6 +99,7 @@ class ActivityFormVm(
                 emoji = initActivityDb?.emoji,
                 colorRgba = initActivityDb?.colorRgba ?: ActivityDb.nextColorCached(),
                 keepScreenOn = initActivityDb?.keepScreenOn ?: true,
+                pomodoroTimer = initActivityDb?.pomodoro_timer ?: (5 * 60),
                 checklistsDb = tf.checklists,
                 shortcutsDb = tf.shortcuts,
             )
@@ -109,6 +124,10 @@ class ActivityFormVm(
         state.update { it.copy(keepScreenOn = newKeepScreenOn) }
     }
 
+    fun setPomodoroTimer(newPomodoroTimer: Int) {
+        state.update { it.copy(pomodoroTimer = newPomodoroTimer) }
+    }
+
     fun setChecklistsDb(newChecklistsDb: List<ChecklistDb>) {
         state.update { it.copy(checklistsDb = newChecklistsDb) }
     }
@@ -123,4 +142,31 @@ class ActivityFormVm(
     ) {
         TODO()
     }
+
+    ///
+
+    data class PomodoroListItemData(
+        val timer: Int,
+        val isSelected: Boolean,
+    ) {
+        val text: String =
+            prepPomodoroTimerString(timer)
+    }
 }
+
+///
+
+private fun prepPomodoroTimerString(timer: Int): String = when {
+    timer < 0 -> throw UiException("prepPomodoroTimerString(0)")
+    timer < 3_600 -> "${timer / 60} min"
+    else -> {
+        val (h, m, _) = timer.toHms()
+        if (m == 0)
+            "$h ${if (h == 1) "hour" else "hours"}"
+        else
+            "${h}h ${m}m"
+    }
+}
+
+private val pomodoroTimers: List<Int> =
+    listOf(5, 10, 15, 30, 60).map { it * 60 }
