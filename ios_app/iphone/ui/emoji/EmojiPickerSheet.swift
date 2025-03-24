@@ -58,7 +58,7 @@ private struct EmojiPickerSheetInner: View {
             }
             .padding(.horizontal, 8)
         }
-        .contentMargins(.vertical, 10)
+        .contentMargins(.vertical, 4)
         .toolbar {
             
             ToolbarItem(placement: .principal) {
