@@ -14,7 +14,8 @@ struct ActivityFormSheet: View {
             ActivityFormSheetInner(
                 vm: vm,
                 state: state,
-                name: state.name
+                name: state.name,
+                keepScreenOn: state.keepScreenOn
             )
         }
     }
@@ -26,7 +27,8 @@ private struct ActivityFormSheetInner: View {
     let state: ActivityFormVm.State
     
     @State var name: String
-    
+    @State var keepScreenOn: Bool
+
     ///
     
     @Environment(\.dismiss) private var dismiss
@@ -90,6 +92,17 @@ private struct ActivityFormSheetInner: View {
                         )
                     }
                 )
+            }
+            
+            Section {
+                
+                Toggle(
+                    state.keepScreenOnTitle,
+                    isOn: $keepScreenOn
+                )
+                .onChange(of: keepScreenOn) { _, new in
+                    vm.setKeepScreenOn(newKeepScreenOn: new)
+                }
             }
             
             Section {
