@@ -24,7 +24,7 @@ struct SettingsDayStartSheet: View {
             }
             .pickerStyle(.wheel)
         }
-        .presentationDetents([.medium])
+        .presentationDetents([.height(300)])
         .interactiveDismissDisabled()
         .toolbarTitleDisplayMode(.inline)
         .navigationTitle("Day Start")
@@ -41,7 +41,7 @@ struct SettingsDayStartSheet: View {
                     vm.setDayStartOffsetSeconds(seconds: dayStart)
                     dismiss()
                 }
-                .fontWeight(.bold)
+                .fontWeight(.semibold)
             }
         }
     }
