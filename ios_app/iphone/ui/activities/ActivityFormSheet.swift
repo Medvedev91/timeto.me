@@ -56,7 +56,7 @@ private struct ActivityFormSheetInner: View {
                             Spacer()
                             if let emoji = state.emoji {
                                 Text(emoji)
-                                    .font(.system(size: 25))
+                                    .font(.system(size: 27))
                             } else {
                                 Text(state.emojiNotSelected)
                                     .foregroundColor(.red)
@@ -79,7 +79,7 @@ private struct ActivityFormSheetInner: View {
                             Spacer()
                             Circle()
                                 .foregroundColor(state.colorRgba.toColor())
-                                .frame(width: 28, height: 28)
+                                .frame(width: 31, height: 31)
                         }
                     },
                     sheet: {
