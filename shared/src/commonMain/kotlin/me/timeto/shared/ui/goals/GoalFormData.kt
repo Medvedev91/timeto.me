@@ -5,6 +5,7 @@ import me.timeto.shared.textFeatures
 import me.timeto.shared.toTimerHintNote
 
 data class GoalFormData(
+    val goalDb: GoalDb?,
     val seconds: Int,
     val period: GoalDb.Period,
     val note: String,
@@ -14,6 +15,7 @@ data class GoalFormData(
     companion object {
 
         fun fromGoalDb(goalDb: GoalDb) = GoalFormData(
+            goalDb = goalDb,
             seconds = goalDb.seconds,
             period = goalDb.buildPeriod(),
             note = goalDb.note,
