@@ -1,4 +1,4 @@
-package me.timeto.shared.ui.goals
+package me.timeto.shared.ui.goals.form
 
 import me.timeto.shared.db.GoalDb
 import me.timeto.shared.textFeatures
