@@ -8,6 +8,7 @@ import me.timeto.shared.misc.getInt
 import me.timeto.shared.misc.getString
 import me.timeto.shared.misc.toJsonArray
 import me.timeto.shared.models.GoalFormUi
+import me.timeto.shared.ui.UiException
 
 data class GoalDb(
     val id: Int,
@@ -142,11 +143,12 @@ data class GoalDb(
                     days = json["days"]!!.jsonArray.map { it.jsonPrimitive.int }.toSet(),
                 )
 
+                @Throws(UiException::class)
                 fun buildWithValidation(days: Set<Int>): DaysOfWeek {
                     if (days.isEmpty())
-                        throw UIException("Days not selected")
+                        throw UiException("Days not selected")
                     if (days.any { it !in 0..6 })
-                        throw UIException("Invalid days: $days")
+                        throw UiException("Invalid days: $days")
                     return DaysOfWeek(days)
                 }
             }
