@@ -1,4 +1,4 @@
-package me.timeto.shared.ui.checklists
+package me.timeto.shared.ui.checklists.form
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -13,9 +13,9 @@ import me.timeto.shared.ui.moveAndroid
 import me.timeto.shared.ui.moveIos
 import me.timeto.shared.vm.__Vm
 
-class ChecklistItemsFormVm(
+class ChecklistFormItemsVm(
     checklistDb: ChecklistDb,
-) : __Vm<ChecklistItemsFormVm.State>() {
+) : __Vm<ChecklistFormItemsVm.State>() {
 
     data class State(
         val checklistDb: ChecklistDb,

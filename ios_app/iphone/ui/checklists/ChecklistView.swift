@@ -96,7 +96,7 @@ private struct ChecklistViewInner: View {
                             Button(
                                 action: {
                                     navigation.sheet {
-                                        ChecklistItemFormSheet(
+                                        ChecklistFormItemSheet(
                                             checklistDb: state.checklistDb,
                                             checklistItemDb: itemUi.itemDb
                                         )
@@ -127,7 +127,7 @@ private struct ChecklistViewInner: View {
                             Button(
                                 action: {
                                     navigation.sheet {
-                                        ChecklistItemFormSheet(
+                                        ChecklistFormItemSheet(
                                             checklistDb: state.checklistDb,
                                             checklistItemDb: nil
                                         )
@@ -164,7 +164,7 @@ private struct ChecklistViewInner: View {
                 if withAddButton {
                     Button("New Item") {
                         navigation.sheet {
-                            ChecklistItemFormSheet(
+                            ChecklistFormItemSheet(
                                 checklistDb: state.checklistDb,
                                 checklistItemDb: nil
                             )

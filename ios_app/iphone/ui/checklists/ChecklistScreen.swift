@@ -33,7 +33,7 @@ struct ChecklistScreen: View {
                 ToolbarItem(placement: .primaryAction) {
                     Button("Edit") {
                         navigation.sheet {
-                            ChecklistItemsFormSheet(
+                            ChecklistFormItemsSheet(
                                 checklistDb: checklistDb,
                                 onDelete: {
                                     onDelete()

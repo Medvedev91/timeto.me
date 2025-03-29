@@ -1,4 +1,4 @@
-package me.timeto.shared.ui.checklists
+package me.timeto.shared.ui.checklists.form
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -9,10 +9,10 @@ import me.timeto.shared.ui.DialogsManager
 import me.timeto.shared.ui.UiException
 import me.timeto.shared.vm.__Vm
 
-class ChecklistItemFormVm(
+class ChecklistFormItemVm(
     checklistDb: ChecklistDb,
     checklistItemDb: ChecklistItemDb?,
-) : __Vm<ChecklistItemFormVm.State>() {
+) : __Vm<ChecklistFormItemVm.State>() {
 
     data class State(
         val checklistDb: ChecklistDb,

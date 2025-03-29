@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-struct ChecklistItemFormSheet: View {
+struct ChecklistFormItemSheet: View {
     
     let checklistDb: ChecklistDb
     let checklistItemDb: ChecklistItemDb?
@@ -13,7 +13,7 @@ struct ChecklistItemFormSheet: View {
                 checklistItemDb: checklistItemDb
             )
         }) { vm, state in
-            ChecklistItemFormSheetInner(
+            ChecklistFormItemSheetInner(
                 vm: vm,
                 state: state,
                 text: state.text
@@ -24,7 +24,7 @@ struct ChecklistItemFormSheet: View {
 
 ///
 
-private struct ChecklistItemFormSheetInner: View {
+private struct ChecklistFormItemSheetInner: View {
     
     let vm: ChecklistItemFormVm
     let state: ChecklistItemFormVm.State

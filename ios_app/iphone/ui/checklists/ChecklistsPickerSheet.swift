@@ -53,7 +53,7 @@ private struct ChecklistsPickerSheetInner: View {
                             .contextMenu {
                                 Button("Edit") {
                                     navigation.sheet {
-                                        ChecklistItemsFormSheet(
+                                        ChecklistFormItemsSheet(
                                             checklistDb: checklistDb,
                                             onDelete: {
                                                 self.selectedIds.remove(checklistDb.id)
@@ -104,7 +104,7 @@ private struct ChecklistsPickerSheetInner: View {
                                     onSave: { newChecklistDb in
                                         selectedIds.insert(newChecklistDb.id)
                                         navigation.sheet {
-                                            ChecklistItemsFormSheet(
+                                            ChecklistFormItemsSheet(
                                                 checklistDb: newChecklistDb,
                                                 onDelete: {}
                                             )
