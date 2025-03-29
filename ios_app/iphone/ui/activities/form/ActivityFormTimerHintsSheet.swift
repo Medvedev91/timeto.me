@@ -48,6 +48,7 @@ private struct ActivityFormTimerHintsSheetInner: View {
             .listSectionSeparator(.hidden, edges: [.top, .bottom])
         }
         .environment(\.editMode, $editMode)
+        .interactiveDismissDisabled()
         .listStyle(.plain)
         .navigationTitle("Timer Hints")
         .toolbarTitleDisplayMode(.inline)
@@ -81,6 +82,7 @@ private struct ActivityFormTimerHintsSheetInner: View {
                                     vm.add(seconds: newTimer.toInt32())
                                 }
                             )
+                            .interactiveDismissDisabled()
                         }
                     }
                 )
