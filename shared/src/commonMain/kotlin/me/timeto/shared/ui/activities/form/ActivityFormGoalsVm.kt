@@ -22,8 +22,7 @@ class ActivityFormGoalsVm(
         )
     )
 
-    val newGoalStrategy = GoalFormStrategy.FormData(
-        initGoalFormData = null,
+    val newGoalStrategy = GoalFormStrategy.NewFormData(
         onDone = { newGoalFormData ->
             state.update {
                 it.copy(goalFormsData = it.goalFormsData + newGoalFormData)
@@ -35,6 +34,14 @@ class ActivityFormGoalsVm(
         state.update { state ->
             val newList = state.goalFormsData.toMutableList()
             newList[idx] = new
+            state.copy(goalFormsData = newList)
+        }
+    }
+
+    fun deleteGoalFormData(idx: Int) {
+        state.update { state ->
+            val newList = state.goalFormsData.toMutableList()
+            newList.removeAt(idx)
             state.copy(goalFormsData = newList)
         }
     }

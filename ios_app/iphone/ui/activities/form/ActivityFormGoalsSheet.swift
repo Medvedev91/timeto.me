@@ -48,13 +48,16 @@ private struct ActivityFormGoalsSheetInner: View {
                     },
                     sheet: {
                         GoalFormSheet(
-                            strategy: GoalFormStrategy.FormData(
+                            strategy: GoalFormStrategy.EditFormData(
                                 initGoalFormData: goalFormData,
                                 onDone: { newGoalFormData in
                                     vm.updateGoalFormData(
                                         idx: idx.toInt32(),
                                         new: newGoalFormData
                                     )
+                                },
+                                onDelete: {
+                                    vm.deleteGoalFormData(idx: idx.toInt32())
                                 }
                             )
                         )

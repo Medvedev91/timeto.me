@@ -191,12 +191,19 @@ private struct GoalFormSheetInner: View {
             }
             ToolbarItem(placement: .primaryAction) {
                 Button(state.doneText) {
-                    if let formDataStrategy = strategy as? GoalFormStrategy.FormData {
+                    if let strategy = strategy as? GoalFormStrategy.NewFormData {
                         guard let formData: GoalFormData = state.buildFormDataOrNull(
                             dialogsManager: navigation,
-                            goalDb: formDataStrategy.initGoalFormData?.goalDb
+                            goalDb: nil
                         ) else { return }
-                        formDataStrategy.onDone(formData)
+                        strategy.onDone(formData)
+                        dismiss()
+                    } else if let strategy = strategy as? GoalFormStrategy.EditFormData {
+                        guard let formData: GoalFormData = state.buildFormDataOrNull(
+                            dialogsManager: navigation,
+                            goalDb: strategy.initGoalFormData.goalDb
+                        ) else { return }
+                        strategy.onDone(formData)
                         dismiss()
                     } else {
                         fatalError()

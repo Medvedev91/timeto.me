@@ -28,12 +28,13 @@ class GoalFormVm(
     ) {
 
         val title: String = when (strategy) {
-            is GoalFormStrategy.FormData ->
-                if (strategy.initGoalFormData != null) "Edit Goal" else "New Goal"
+            is GoalFormStrategy.NewFormData -> "New Goal"
+            is GoalFormStrategy.EditFormData -> "Edit Goal"
         }
 
         val doneText: String = when (strategy) {
-            is GoalFormStrategy.FormData -> "Done"
+            is GoalFormStrategy.NewFormData,
+            is GoalFormStrategy.EditFormData -> "Done"
         }
 
         val notePlaceholder = "Note (optional)"
@@ -100,12 +101,18 @@ class GoalFormVm(
         val seconds: Int
         val finishedText: String
         when (strategy) {
-            is GoalFormStrategy.FormData -> {
-                val formData: GoalFormData? = strategy.initGoalFormData
-                tf = (formData?.note ?: "").textFeatures()
-                period = formData?.period
-                seconds = formData?.seconds ?: (3 * 3_600)
-                finishedText = formData?.finishText ?: "👍"
+            is GoalFormStrategy.NewFormData -> {
+                tf = "".textFeatures()
+                period = null
+                seconds = 3 * 3_600
+                finishedText = "👍"
+            }
+            is GoalFormStrategy.EditFormData -> {
+                val formData: GoalFormData = strategy.initGoalFormData
+                tf = formData.note.textFeatures()
+                period = formData.period
+                seconds = formData.seconds
+                finishedText = formData.finishText
             }
         }
         state = MutableStateFlow(

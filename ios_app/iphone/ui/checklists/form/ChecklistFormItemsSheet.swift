@@ -8,7 +8,7 @@ struct ChecklistFormItemsSheet: View {
 
     var body: some View {
         VmView({
-            ChecklistItemsFormVm(checklistDb: checklistDb)
+            ChecklistFormItemsVm(checklistDb: checklistDb)
         }) { vm, state in
             ChecklistFormItemsSheetInner(
                 vm: vm,
@@ -21,8 +21,8 @@ struct ChecklistFormItemsSheet: View {
 
 private struct ChecklistFormItemsSheetInner: View {
     
-    let vm: ChecklistItemsFormVm
-    let state: ChecklistItemsFormVm.State
+    let vm: ChecklistFormItemsVm
+    let state: ChecklistFormItemsVm.State
     
     let onDelete: () -> Void
     
