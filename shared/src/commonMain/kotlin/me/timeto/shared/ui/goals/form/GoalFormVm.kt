@@ -19,6 +19,7 @@ class GoalFormVm(
         val period: GoalDb.Period?,
         val seconds: Int,
         val timer: Int,
+        val finishedText: String,
     ) {
 
         val title: String = when (strategy) {
@@ -40,6 +41,8 @@ class GoalFormVm(
 
         val timerTitle = "Timer on Bar Pressed"
         val timerNote: String = timer.toTimerHintNote(isShort = false)
+
+        val finishedTextTitle = "Finished Emoji"
 
         ///
 
@@ -78,6 +81,7 @@ class GoalFormVm(
         val period: GoalDb.Period?
         val seconds: Int
         val timer: Int
+        val finishedText: String
         when (strategy) {
             is GoalFormStrategy.FormData -> {
                 val formData: GoalFormData? = strategy.initGoalFormData
@@ -85,6 +89,7 @@ class GoalFormVm(
                 period = formData?.period
                 seconds = formData?.seconds ?: (3 * 3_600)
                 timer = tf.timer ?: (45 * 60)
+                finishedText = formData?.finishText ?: "👍"
             }
         }
         state = MutableStateFlow(
@@ -94,6 +99,7 @@ class GoalFormVm(
                 period = period,
                 seconds = seconds,
                 timer = timer,
+                finishedText = finishedText,
             )
         )
     }
@@ -114,6 +120,10 @@ class GoalFormVm(
 
     fun setTimer(newTimer: Int) {
         state.update { it.copy(timer = newTimer) }
+    }
+
+    fun setFinishedText(newFinishedText: String) {
+        state.update { it.copy(finishedText = newFinishedText) }
     }
 }
 
