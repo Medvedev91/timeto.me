@@ -18,6 +18,7 @@ class GoalFormVm(
         val note: String,
         val period: GoalDb.Period?,
         val seconds: Int,
+        val timer: Int,
     ) {
 
         val title: String = when (strategy) {
@@ -36,6 +37,9 @@ class GoalFormVm(
 
         val secondsTitle = "Duration"
         val secondsNote: String = seconds.toTimerHintNote(isShort = false)
+
+        val timerTitle = "Timer"
+        val timerNote: String = timer.toTimerHintNote(isShort = false)
 
         ///
 
@@ -73,11 +77,14 @@ class GoalFormVm(
         val tf: TextFeatures
         val period: GoalDb.Period?
         val seconds: Int
+        val timer: Int
         when (strategy) {
             is GoalFormStrategy.FormData -> {
-                tf = (strategy.initGoalFormData?.note ?: "").textFeatures()
-                period = strategy.initGoalFormData?.period
-                seconds = strategy.initGoalFormData?.seconds ?: (3 * 3_600)
+                val formData: GoalFormData? = strategy.initGoalFormData
+                tf = (formData?.note ?: "").textFeatures()
+                period = formData?.period
+                seconds = formData?.seconds ?: (3 * 3_600)
+                timer = tf.timer ?: (45 * 60)
             }
         }
         state = MutableStateFlow(
@@ -86,6 +93,7 @@ class GoalFormVm(
                 note = tf.textNoFeatures,
                 period = period,
                 seconds = seconds,
+                timer = timer,
             )
         )
     }
@@ -102,6 +110,10 @@ class GoalFormVm(
 
     fun setSeconds(newSeconds: Int) {
         state.update { it.copy(seconds = newSeconds) }
+    }
+
+    fun setTimer(newTimer: Int) {
+        state.update { it.copy(timer = newTimer) }
     }
 }
 
