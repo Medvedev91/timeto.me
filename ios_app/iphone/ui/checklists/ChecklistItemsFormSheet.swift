@@ -101,7 +101,8 @@ private struct ChecklistItemsFormSheetInner: View {
             
             ToolbarItemGroup(placement: .bottomBar) {
                 
-                Button(
+                BottomBarAddButton(
+                    text: state.newItemText,
                     action: {
                         navigation.sheet {
                             ChecklistItemFormSheet(
@@ -109,22 +110,8 @@ private struct ChecklistItemsFormSheetInner: View {
                                 checklistItemDb: nil
                             )
                         }
-                    },
-                    label: {
-                        
-                        HStack(spacing: 8) {
-                            
-                            Image(systemName: "plus.circle.fill")
-                                .foregroundStyle(.blue)
-                                .fontWeight(.bold)
-                            
-                            Text(state.newItemText)
-                                .foregroundColor(.blue)
-                                .fontWeight(.semibold)
-                        }
                     }
                 )
-                .buttonStyle(.plain)
                 
                 Spacer()
             }
