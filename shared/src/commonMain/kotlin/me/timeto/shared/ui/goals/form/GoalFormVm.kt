@@ -3,7 +3,9 @@ package me.timeto.shared.ui.goals.form
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.TextFeatures
+import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.GoalDb
+import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toTimerHintNote
 import me.timeto.shared.ui.DialogsManager
@@ -20,6 +22,8 @@ class GoalFormVm(
         val seconds: Int,
         val timer: Int,
         val finishedText: String,
+        val checklistsDb: List<ChecklistDb>,
+        val shortcutsDb: List<ShortcutDb>,
     ) {
 
         val title: String = when (strategy) {
@@ -43,6 +47,14 @@ class GoalFormVm(
         val timerNote: String = timer.toTimerHintNote(isShort = false)
 
         val finishedTextTitle = "Finished Emoji"
+
+        val checklistsNote: String =
+            if (checklistsDb.isEmpty()) "None"
+            else checklistsDb.joinToString(", ") { it.name }
+
+        val shortcutsNote: String =
+            if (shortcutsDb.isEmpty()) "None"
+            else shortcutsDb.joinToString(", ") { it.name }
 
         ///
 
@@ -80,7 +92,6 @@ class GoalFormVm(
         val tf: TextFeatures
         val period: GoalDb.Period?
         val seconds: Int
-        val timer: Int
         val finishedText: String
         when (strategy) {
             is GoalFormStrategy.FormData -> {
@@ -88,7 +99,6 @@ class GoalFormVm(
                 tf = (formData?.note ?: "").textFeatures()
                 period = formData?.period
                 seconds = formData?.seconds ?: (3 * 3_600)
-                timer = tf.timer ?: (45 * 60)
                 finishedText = formData?.finishText ?: "👍"
             }
         }
@@ -98,8 +108,10 @@ class GoalFormVm(
                 note = tf.textNoFeatures,
                 period = period,
                 seconds = seconds,
-                timer = timer,
+                timer = tf.timer ?: (45 * 60),
                 finishedText = finishedText,
+                checklistsDb = tf.checklists,
+                shortcutsDb = tf.shortcuts,
             )
         )
     }
@@ -124,6 +136,14 @@ class GoalFormVm(
 
     fun setFinishedText(newFinishedText: String) {
         state.update { it.copy(finishedText = newFinishedText) }
+    }
+
+    fun setChecklistsDb(newChecklistsDb: List<ChecklistDb>) {
+        state.update { it.copy(checklistsDb = newChecklistsDb) }
+    }
+
+    fun setShortcutsDb(newShortcutsDb: List<ShortcutDb>) {
+        state.update { it.copy(shortcutsDb = newShortcutsDb) }
     }
 }
 
