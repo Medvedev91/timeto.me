@@ -9,6 +9,7 @@ import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toTimerHintNote
 import me.timeto.shared.ui.DialogsManager
+import me.timeto.shared.ui.UiException
 import me.timeto.shared.vm.__Vm
 
 class GoalFormVm(
@@ -61,27 +62,32 @@ class GoalFormVm(
         fun buildFormDataOrNull(
             dialogsManager: DialogsManager,
             goalDb: GoalDb?,
-        ): GoalFormData? {
-            val validatedData: ValidatedData = validateData(
-                dialogsManager = dialogsManager,
-            ) ?: return null
-            TODO()
-//            return GoalFormData(
-//                goalDb = goalDb,
-//                seconds =,
-//                period =,
-//                note =,
-//                finishText =,
-//            )
+        ): GoalFormData? = try {
+            validateData(goalDb = goalDb)
+        } catch (e: UiException) {
+            dialogsManager.alert(e.uiMessage)
+            null
         }
 
+        @Throws(UiException::class)
         private fun validateData(
-            dialogsManager: DialogsManager,
-        ): ValidatedData? {
+            goalDb: GoalDb?,
+        ): GoalFormData {
             val noteValidated: String = note.trim()
-            val tf: TextFeatures = noteValidated.textFeatures()
-            return ValidatedData(
+            val tf: TextFeatures = noteValidated.textFeatures().copy(
+                timer = timer,
+                checklists = checklistsDb,
+                shortcuts = shortcutsDb,
+            )
+            if (period == null)
+                throw UiException("Period not selected")
+
+            return GoalFormData(
+                goalDb = goalDb,
                 note = tf.textWithFeatures(),
+                seconds = seconds,
+                period = period,
+                finishText = finishedText.trim(),
             )
         }
     }
@@ -146,9 +152,3 @@ class GoalFormVm(
         state.update { it.copy(shortcutsDb = newShortcutsDb) }
     }
 }
-
-///
-
-private data class ValidatedData(
-    val note: String,
-)
