@@ -47,6 +47,28 @@ private struct GoalFormSheetInner: View {
                     vm.setNote(newNote: new)
                 }
             }
+            
+            Section {
+                
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
+                            Text(state.periodTitle)
+                            Spacer()
+                            Text(state.periodNote)
+                                .foregroundColor(state.period == nil ? .red : .secondary)
+                        }
+                    },
+                    sheet: {
+                        GoalFormPeriodSheet(
+                            initGoalDbPeriod: state.period,
+                            onDone: { newPeriod in
+                                vm.setPeriod(newPeriod: newPeriod)
+                            }
+                        )
+                    }
+                )
+            }
         }
         .navigationTitle(state.title)
         .toolbarTitleDisplayMode(.inline)
