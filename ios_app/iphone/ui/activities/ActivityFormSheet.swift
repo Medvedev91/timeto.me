@@ -128,6 +128,29 @@ private struct ActivityFormSheetInner: View {
                 NavigationLinkSheet(
                     label: {
                         HStack {
+                            Text(state.goalsTitle)
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text(state.goalsNote)
+                                .foregroundColor(.secondary)
+                        }
+                    },
+                    sheet: {
+                        ActivityFormGoalsSheet(
+                            initGoalFormsData: state.goalFormsData,
+                            onPick: { newGoalFormsData in
+                                vm.setGoalFormsData(newGoalFormsData: newGoalFormsData)
+                            }
+                        )
+                    }
+                )
+            }
+            
+            Section {
+                
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
                             Text("Checklists")
                                 .foregroundColor(.primary)
                             Spacer()
