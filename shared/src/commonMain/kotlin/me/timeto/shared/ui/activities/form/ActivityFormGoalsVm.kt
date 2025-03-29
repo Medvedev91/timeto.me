@@ -30,4 +30,12 @@ class ActivityFormGoalsVm(
             }
         }
     )
+
+    fun updateGoalFormData(idx: Int, new: GoalFormData) {
+        state.update { state ->
+            val newList = state.goalFormsData.toMutableList()
+            newList[idx] = new
+            state.copy(goalFormsData = newList)
+        }
+    }
 }
