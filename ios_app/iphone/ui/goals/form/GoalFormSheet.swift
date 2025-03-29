@@ -91,6 +91,31 @@ private struct GoalFormSheetInner: View {
                     }
                 )
             }
+            
+            Section {
+                
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
+                            Text(state.timerTitle)
+                            Spacer()
+                            Text(state.timerNote)
+                                .foregroundColor(.secondary)
+                        }
+                    },
+                    sheet: {
+                        TimerSheet(
+                            title: state.timerTitle,
+                            doneTitle: "Done",
+                            initSeconds: state.timer.toInt(),
+                            onDone: { newTimer in
+                                vm.setTimer(newTimer: newTimer.toInt32())
+                            }
+                        )
+                        .interactiveDismissDisabled()
+                    }
+                )
+            }
         }
         .navigationTitle(state.title)
         .toolbarTitleDisplayMode(.inline)
