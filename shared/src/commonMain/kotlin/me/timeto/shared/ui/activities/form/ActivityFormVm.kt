@@ -10,6 +10,7 @@ import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toHms
+import me.timeto.shared.toTimerHintNote
 import me.timeto.shared.ui.DialogsManager
 import me.timeto.shared.ui.UiException
 import me.timeto.shared.ui.color.ColorPickerExampleData
@@ -29,6 +30,7 @@ class ActivityFormVm(
         val keepScreenOn: Boolean,
         val pomodoroTimer: Int,
         val goalFormsData: List<GoalFormData>,
+        val timerHints: Set<Int>,
         val checklistsDb: List<ChecklistDb>,
         val shortcutsDb: List<ShortcutDb>,
     ) {
@@ -64,6 +66,13 @@ class ActivityFormVm(
         val goalsNote: String =
             if (goalFormsData.isEmpty()) "None"
             else goalFormsData.size.toString()
+
+        val timerHintsTitle = "Timer Hints"
+        val timerHintsNote: String =
+            if (timerHints.isEmpty()) "None"
+            else timerHints.sorted().joinToString(", ") { seconds ->
+                seconds.toTimerHintNote(isShort = true)
+            }
 
         val checklistsNote: String =
             if (checklistsDb.isEmpty()) "None"
@@ -110,6 +119,7 @@ class ActivityFormVm(
                 goalFormsData = (initActivityDb?.getGoalsDbCached() ?: emptyList()).map {
                     GoalFormData.fromGoalDb(it)
                 },
+                timerHints = initActivityDb?.timerHints?.toSet() ?: emptySet(),
                 checklistsDb = tf.checklists,
                 shortcutsDb = tf.shortcuts,
             )
@@ -140,6 +150,10 @@ class ActivityFormVm(
 
     fun setGoalFormsData(newGoalFormsData: List<GoalFormData>) {
         state.update { it.copy(goalFormsData = newGoalFormsData) }
+    }
+
+    fun setTimerHints(newTimerHints: Set<Int>) {
+        state.update { it.copy(timerHints = newTimerHints) }
     }
 
     fun setChecklistsDb(newChecklistsDb: List<ChecklistDb>) {
