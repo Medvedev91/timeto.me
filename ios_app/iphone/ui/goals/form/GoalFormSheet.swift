@@ -68,6 +68,28 @@ private struct GoalFormSheetInner: View {
                         )
                     }
                 )
+                
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
+                            Text(state.secondsTitle)
+                            Spacer()
+                            Text(state.secondsNote)
+                                .foregroundColor(.secondary)
+                        }
+                    },
+                    sheet: {
+                        TimerSheet(
+                            title: state.secondsTitle,
+                            doneTitle: "Done",
+                            initSeconds: state.seconds.toInt(),
+                            onDone: { newSeconds in
+                                vm.setSeconds(newSeconds: newSeconds.toInt32())
+                            }
+                        )
+                        .interactiveDismissDisabled()
+                    }
+                )
             }
         }
         .navigationTitle(state.title)
