@@ -135,6 +135,49 @@ private struct GoalFormSheetInner: View {
                     }
                 )
             }
+            
+            Section {
+                
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
+                            Text("Checklists")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text(state.checklistsNote)
+                                .foregroundColor(.secondary)
+                        }
+                    },
+                    sheet: {
+                        ChecklistsPickerSheet(
+                            initChecklistsDb: state.checklistsDb,
+                            onPick: { newChecklistsDb in
+                                vm.setChecklistsDb(newChecklistsDb: newChecklistsDb)
+                            }
+                        )
+                    }
+                )
+                
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
+                            Text("Shortcuts")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text(state.shortcutsNote)
+                                .foregroundColor(.secondary)
+                        }
+                    },
+                    sheet: {
+                        ShortcutsPickerSheet(
+                            initShortcutsDb: state.shortcutsDb,
+                            onPick: { newShortcutsDb in
+                                vm.setShortcutsDb(newShortcutsDb: newShortcutsDb)
+                            }
+                        )
+                    }
+                )
+            }
         }
         .navigationTitle(state.title)
         .toolbarTitleDisplayMode(.inline)
