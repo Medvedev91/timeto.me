@@ -38,7 +38,7 @@ class GoalFormVm(
         val secondsTitle = "Duration"
         val secondsNote: String = seconds.toTimerHintNote(isShort = false)
 
-        val timerTitle = "Timer"
+        val timerTitle = "Timer on Bar Pressed"
         val timerNote: String = timer.toTimerHintNote(isShort = false)
 
         ///
