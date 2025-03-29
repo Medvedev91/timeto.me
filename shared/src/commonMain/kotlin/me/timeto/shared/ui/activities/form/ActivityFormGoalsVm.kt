@@ -1,20 +1,33 @@
 package me.timeto.shared.ui.activities.form
 
 import kotlinx.coroutines.flow.MutableStateFlow
-import me.timeto.shared.ui.goals.GoalFormData
+import kotlinx.coroutines.flow.update
+import me.timeto.shared.ui.goals.form.GoalFormData
+import me.timeto.shared.ui.goals.form.GoalFormStrategy
 import me.timeto.shared.vm.__Vm
 
 class ActivityFormGoalsVm(
-    initGoalsFormData: List<GoalFormData>,
+    initGoalFormsData: List<GoalFormData>,
 ) : __Vm<ActivityFormGoalsVm.State>() {
 
     data class State(
-        val goalsFormData: List<GoalFormData>,
-    )
+        val goalFormsData: List<GoalFormData>,
+    ) {
+        val newGoalTitle = "New Goal"
+    }
 
     override val state = MutableStateFlow(
         State(
-            goalsFormData = initGoalsFormData,
+            goalFormsData = initGoalFormsData,
         )
+    )
+
+    val newGoalStrategy = GoalFormStrategy.FormData(
+        initGoalFormData = null,
+        onDone = { newGoalFormData ->
+            state.update {
+                it.copy(goalFormsData = it.goalFormsData + newGoalFormData)
+            }
+        }
     )
 }
