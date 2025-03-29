@@ -13,7 +13,7 @@ import me.timeto.shared.ui.UiException
 import me.timeto.shared.vm.__Vm
 
 class GoalFormVm(
-    private val strategy: GoalFormStrategy,
+    strategy: GoalFormStrategy,
 ) : __Vm<GoalFormVm.State>() {
 
     data class State(
