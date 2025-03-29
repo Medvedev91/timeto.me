@@ -115,6 +115,25 @@ private struct GoalFormSheetInner: View {
                         .interactiveDismissDisabled()
                     }
                 )
+                
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
+                            Text(state.finishedTextTitle)
+                            Spacer()
+                            Text(state.finishedText)
+                                .foregroundColor(.secondary)
+                        }
+                    },
+                    sheet: {
+                        GoalFormFinishedTextSheet(
+                            text: state.finishedText,
+                            onDone: { newFinishedText in
+                                vm.setFinishedText(newFinishedText: newFinishedText)
+                            }
+                        )
+                    }
+                )
             }
         }
         .navigationTitle(state.title)
