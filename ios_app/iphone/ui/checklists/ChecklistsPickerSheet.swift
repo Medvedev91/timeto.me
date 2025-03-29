@@ -90,7 +90,8 @@ private struct ChecklistsPickerSheetInner: View {
                 
                 ToolbarItemGroup(placement: .bottomBar) {
                     
-                    Button(
+                    BottomBarAddButton(
+                        text: state.newChecklistText,
                         action: {
                             if let firstChecklistDb = state.checklistsDbSorted.first {
                                 withAnimation {
@@ -112,19 +113,8 @@ private struct ChecklistsPickerSheetInner: View {
                                     onDelete: {}
                                 )
                             }
-                        },
-                        label: {
-                            HStack(spacing: 8) {
-                                Image(systemName: "plus.circle.fill")
-                                    .foregroundStyle(.blue)
-                                    .fontWeight(.bold)
-                                Text(state.newChecklistText)
-                                    .foregroundColor(.blue)
-                                    .fontWeight(.semibold)
-                            }
                         }
                     )
-                    .buttonStyle(.plain)
                     
                     Spacer()
                 }
