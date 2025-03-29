@@ -15,6 +15,7 @@ class GoalFormVm(
     data class State(
         val strategy: GoalFormStrategy,
         val note: String,
+        val period: GoalDb.Period?,
     ) {
 
         val title: String = when (strategy) {
@@ -28,15 +29,18 @@ class GoalFormVm(
 
         val notePlaceholder = "Note (optional)"
 
+        val periodTitle = "Period"
+        val periodNote: String = period?.note() ?: "None"
+
         ///
 
         fun buildFormDataOrNull(
-            dialogsManager: DialogsManager?,
+            dialogsManager: DialogsManager,
             goalDb: GoalDb?,
         ): GoalFormData? {
             val validatedData: ValidatedData = validateData(
                 dialogsManager = dialogsManager,
-            )
+            ) ?: return null
             TODO()
 //            return GoalFormData(
 //                goalDb = goalDb,
@@ -48,9 +52,10 @@ class GoalFormVm(
         }
 
         private fun validateData(
-            dialogsManager: DialogsManager?,
-        ): ValidatedData {
-            val tf: TextFeatures = note.textFeatures()
+            dialogsManager: DialogsManager,
+        ): ValidatedData? {
+            val noteValidated: String = note.trim()
+            val tf: TextFeatures = noteValidated.textFeatures()
             return ValidatedData(
                 note = tf.textWithFeatures(),
             )
@@ -60,16 +65,19 @@ class GoalFormVm(
     override val state: MutableStateFlow<State>
 
     init {
-        val tf: TextFeatures = when (strategy) {
-            is GoalFormStrategy.FormData ->
-                (strategy.initGoalFormData?.note ?: "").textFeatures()
+        val tf: TextFeatures
+        val period: GoalDb.Period?
+        when (strategy) {
+            is GoalFormStrategy.FormData -> {
+                tf = (strategy.initGoalFormData?.note ?: "").textFeatures()
+                period = strategy.initGoalFormData?.period
+            }
         }
         state = MutableStateFlow(
             State(
                 strategy = strategy,
-                note = when (strategy) {
-                    is GoalFormStrategy.FormData -> tf.textNoFeatures
-                },
+                note = tf.textNoFeatures,
+                period = period,
             )
         )
     }
@@ -78,6 +86,10 @@ class GoalFormVm(
 
     fun setNote(newNote: String) {
         state.update { it.copy(note = newNote) }
+    }
+
+    fun setPeriod(newPeriod: GoalDb.Period) {
+        state.update { it.copy(period = newPeriod) }
     }
 }
 
