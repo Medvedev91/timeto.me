@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.db.GoalDb
 import me.timeto.shared.textFeatures
+import me.timeto.shared.toTimerHintNote
 import me.timeto.shared.ui.DialogsManager
 import me.timeto.shared.vm.__Vm
 
@@ -16,6 +17,7 @@ class GoalFormVm(
         val strategy: GoalFormStrategy,
         val note: String,
         val period: GoalDb.Period?,
+        val seconds: Int,
     ) {
 
         val title: String = when (strategy) {
@@ -31,6 +33,9 @@ class GoalFormVm(
 
         val periodTitle = "Period"
         val periodNote: String = period?.note() ?: "None"
+
+        val secondsTitle = "Duration"
+        val secondsNote: String = seconds.toTimerHintNote(isShort = false)
 
         ///
 
@@ -67,10 +72,12 @@ class GoalFormVm(
     init {
         val tf: TextFeatures
         val period: GoalDb.Period?
+        val seconds: Int
         when (strategy) {
             is GoalFormStrategy.FormData -> {
                 tf = (strategy.initGoalFormData?.note ?: "").textFeatures()
                 period = strategy.initGoalFormData?.period
+                seconds = strategy.initGoalFormData?.seconds ?: (3 * 3_600)
             }
         }
         state = MutableStateFlow(
@@ -78,6 +85,7 @@ class GoalFormVm(
                 strategy = strategy,
                 note = tf.textNoFeatures,
                 period = period,
+                seconds = seconds,
             )
         )
     }
@@ -90,6 +98,10 @@ class GoalFormVm(
 
     fun setPeriod(newPeriod: GoalDb.Period) {
         state.update { it.copy(period = newPeriod) }
+    }
+
+    fun setSeconds(newSeconds: Int) {
+        state.update { it.copy(seconds = newSeconds) }
     }
 }
 
