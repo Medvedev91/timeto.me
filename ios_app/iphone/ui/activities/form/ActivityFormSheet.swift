@@ -144,6 +144,26 @@ private struct ActivityFormSheetInner: View {
                         )
                     }
                 )
+                
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
+                            Text(state.timerHintsTitle)
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text(state.timerHintsNote)
+                                .foregroundColor(.secondary)
+                        }
+                    },
+                    sheet: {
+                        ActivityFormTimerHintsSheet(
+                            timerHints: state.timerHints.toSwift(),
+                            onDone: { newTimerHints in
+                                vm.setTimerHints(newTimerHints: newTimerHints.toKotlin())
+                            }
+                        )
+                    }
+                )
             }
             
             Section {
