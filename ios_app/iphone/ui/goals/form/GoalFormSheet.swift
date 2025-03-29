@@ -178,6 +178,16 @@ private struct GoalFormSheetInner: View {
                     }
                 )
             }
+            
+            if let strategy = strategy as? GoalFormStrategy.EditFormData {
+                Section {
+                    Button("Delete Goal") {
+                        strategy.onDelete()
+                        dismiss()
+                    }
+                    .foregroundColor(.red)
+                }
+            }
         }
         .navigationTitle(state.title)
         .toolbarTitleDisplayMode(.inline)
