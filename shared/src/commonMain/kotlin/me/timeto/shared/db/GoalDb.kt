@@ -7,8 +7,8 @@ import me.timeto.shared.*
 import me.timeto.shared.misc.getInt
 import me.timeto.shared.misc.getString
 import me.timeto.shared.misc.toJsonArray
-import me.timeto.shared.models.GoalFormUi
 import me.timeto.shared.ui.UiException
+import me.timeto.shared.ui.goals.form.GoalFormData
 
 data class GoalDb(
     val id: Int,
@@ -31,16 +31,16 @@ data class GoalDb(
 
         fun insertManySync(
             activityDb: ActivityDb,
-            goalFormsUi: List<GoalFormUi>,
+            goalFormsData: List<GoalFormData>,
         ) {
-            goalFormsUi.forEachIndexed { idx, goalFormUi ->
+            goalFormsData.forEachIndexed { idx, goalFormData ->
                 db.goalQueries.insert(
                     activity_id = activityDb.id,
                     sort = idx,
-                    seconds = goalFormUi.seconds,
-                    period_json = goalFormUi.period.toJson().toString(),
-                    note = goalFormUi.note.trim(),
-                    finish_text = goalFormUi.finishText.trim(),
+                    seconds = goalFormData.seconds,
+                    period_json = goalFormData.period.toJson().toString(),
+                    note = goalFormData.note.trim(),
+                    finish_text = goalFormData.finishText.trim(),
                 )
             }
         }

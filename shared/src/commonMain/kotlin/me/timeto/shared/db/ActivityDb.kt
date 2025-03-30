@@ -9,11 +9,11 @@ import me.timeto.shared.*
 import me.timeto.shared.misc.getInt
 import me.timeto.shared.misc.getString
 import me.timeto.shared.misc.time
-import me.timeto.shared.models.GoalFormUi
 import me.timeto.shared.misc.toBoolean10
 import me.timeto.shared.misc.toInt10
 import me.timeto.shared.misc.toJsonArray
 import me.timeto.shared.ui.UiException
+import me.timeto.shared.ui.goals.form.GoalFormData
 import kotlin.coroutines.cancellation.CancellationException
 import kotlin.math.max
 
@@ -66,7 +66,7 @@ data class ActivityDb(
             type: Type,
             colorRgba: ColorRgba,
             keepScreenOn: Boolean,
-            goalFormsUi: List<GoalFormUi>,
+            goalFormsData: List<GoalFormData>,
             pomodoroTimer: Int,
             timerHints: Set<Int>,
         ): ActivityDb = dbIo {
@@ -92,7 +92,7 @@ data class ActivityDb(
                 )
                 db.activityQueries.insert(activitySQ)
                 val activityDb: ActivityDb = activitySQ.toDb()
-                GoalDb.insertManySync(activityDb, goalFormsUi)
+                GoalDb.insertManySync(activityDb, goalFormsData)
                 activityDb
             }
         }
@@ -198,7 +198,7 @@ data class ActivityDb(
         emoji: String,
         keepScreenOn: Boolean,
         colorRgba: ColorRgba,
-        goalFormsUi: List<GoalFormUi>,
+        goalFormsData: List<GoalFormData>,
         pomodoroTimer: Int,
         timerHints: Set<Int>,
     ): Unit = dbIo {
@@ -221,7 +221,7 @@ data class ActivityDb(
                 timer_hints = timerHints.toTimerHintsDb(),
             )
             GoalDb.deleteByActivityDbSync(activityDb)
-            GoalDb.insertManySync(activityDb, goalFormsUi)
+            GoalDb.insertManySync(activityDb, goalFormsData)
         }
     }
 
