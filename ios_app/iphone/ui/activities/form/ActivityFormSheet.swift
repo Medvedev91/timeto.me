@@ -208,6 +208,21 @@ private struct ActivityFormSheetInner: View {
                     }
                 )
             }
+            
+            if let activityDb = state.activityDb {
+                Section {
+                    Button("Delete Activity") {
+                        vm.delete(
+                            activityDb: activityDb,
+                            dialogsManager: navigation,
+                            onSuccess: {
+                                dismiss()
+                            }
+                        )
+                    }
+                    .foregroundColor(.red)
+                }
+            }
         }
         .myFormContentMargins()
         .interactiveDismissDisabled()
