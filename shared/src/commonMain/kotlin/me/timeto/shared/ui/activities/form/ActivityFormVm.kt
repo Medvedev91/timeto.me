@@ -8,6 +8,7 @@ import me.timeto.shared.TextFeatures
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.ShortcutDb
+import me.timeto.shared.launchExIo
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toHms
 import me.timeto.shared.toTimerHintNote
@@ -164,11 +165,52 @@ class ActivityFormVm(
         state.update { it.copy(shortcutsDb = newShortcutsDb) }
     }
 
+    ///
+
     fun save(
         dialogsManager: DialogsManager,
         onSave: () -> Unit,
-    ) {
-        TODO()
+    ): Unit = launchExIo {
+        try {
+            val state = state.value
+
+            val emoji: String = state.emoji ?: throw UiException("Emoji not selected")
+            val nameWithFeatures: String = state.name.textFeatures().copy(
+                checklists = state.checklistsDb,
+                shortcuts = state.shortcutsDb,
+            ).textWithFeatures()
+
+            if (state.activityDb != null) {
+                state.activityDb.upByIdWithValidation(
+                    name = nameWithFeatures,
+                    emoji = emoji,
+                    keepScreenOn = state.keepScreenOn,
+                    colorRgba = state.colorRgba,
+                    goalFormsData = state.goalFormsData,
+                    pomodoroTimer = state.pomodoroTimer,
+                    timerHints = state.timerHints,
+                )
+            } else {
+                ActivityDb.addWithValidation(
+                    name = nameWithFeatures,
+                    emoji = emoji,
+                    timer = 20 * 60,
+                    sort = 0,
+                    type = ActivityDb.Type.general,
+                    colorRgba = state.colorRgba,
+                    keepScreenOn = state.keepScreenOn,
+                    goalFormsData = state.goalFormsData,
+                    pomodoroTimer = state.pomodoroTimer,
+                    timerHints = state.timerHints,
+                )
+            }
+
+            onUi {
+                onSave()
+            }
+        } catch (e: UiException) {
+            dialogsManager.alert(e.uiMessage)
+        }
     }
 
     ///
