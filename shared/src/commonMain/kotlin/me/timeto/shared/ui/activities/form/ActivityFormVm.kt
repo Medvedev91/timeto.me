@@ -213,6 +213,31 @@ class ActivityFormVm(
         }
     }
 
+    fun delete(
+        activityDb: ActivityDb,
+        dialogsManager: DialogsManager,
+        onSuccess: () -> Unit,
+    ) {
+        val name: String =
+            activityDb.nameWithEmoji().textFeatures().textNoFeatures
+        dialogsManager.confirmation(
+            message = "Are you sure you want to delete \"$name\" activity?",
+            buttonText = "Delete",
+            onConfirm = {
+                launchExIo {
+                    try {
+                        activityDb.delete()
+                        onUi {
+                            onSuccess()
+                        }
+                    } catch (e: UiException) {
+                        dialogsManager.alert(e.uiMessage)
+                    }
+                }
+            },
+        )
+    }
+
     ///
 
     data class PomodoroListItemData(
