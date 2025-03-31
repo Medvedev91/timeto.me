@@ -16,7 +16,6 @@ class ActivitiesFormVm : __Vm<ActivitiesFormVm.State>() {
     ) {
 
         val title = "Activities"
-        val doneTitle = "Done"
 
         val activitiesUi: List<ActivityUi> =
             activitiesDb.map { ActivityUi(it) }
