@@ -38,6 +38,20 @@ private struct ActivitiesFormSheetInner: View {
                             )
                         }
                     }
+                    .contextMenu {
+                        Button(
+                            action: {
+                                navigation.sheet {
+                                    ActivityFormSheet(
+                                        activityDb: activityUi.activityDb
+                                    )
+                                }
+                            },
+                            label: {
+                                Label("Edit", systemImage: "square.and.pencil")
+                            }
+                        )
+                    }
                 }
                 .onMoveVm { fromIdx, toIdx in
                     vm.moveIos(fromIdx: fromIdx, toIdx: toIdx)
