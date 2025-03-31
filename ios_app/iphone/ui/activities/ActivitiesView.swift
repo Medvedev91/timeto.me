@@ -68,6 +68,24 @@ private struct ActivitiesViewInner: View {
                                         .lineLimit(1)
                                     
                                     Spacer()
+                                    
+                                    let timerHintsUi: [ActivitiesVm.TimerHintUi] = activityUi.timerHintsUi
+                                    if !timerHintsUi.isEmpty {
+                                        ForEach(timerHintsUi, id: \.seconds) { timerHintUi in
+                                            Button(
+                                                action: {
+                                                    timerHintUi.onTap()
+                                                },
+                                                label: {
+                                                    Text(timerHintUi.title)
+                                                        .foregroundColor(.blue)
+                                                        .padding(.horizontal, ActivitiesView__timerHintHPadding)
+                                                        .padding(.vertical, 4)
+                                                }
+                                            )
+                                            .buttonStyle(.borderless)
+                                        }
+                                    }
                                 }
                                 .padding(.trailing, ActivitiesView__listEndPadding)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
