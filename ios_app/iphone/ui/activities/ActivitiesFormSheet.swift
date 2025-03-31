@@ -52,7 +52,7 @@ private struct ActivitiesFormSheetInner: View {
         .toolbar {
             
             ToolbarItem(placement: .cancellationAction) {
-                Button("Back") {
+                Button("Close") {
                     dismiss()
                 }
             }
