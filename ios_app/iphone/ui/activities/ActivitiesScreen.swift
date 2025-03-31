@@ -48,7 +48,7 @@ private struct BottomMenu: View {
             Button(
                 action: {
                     navigation.sheet {
-                        EditActivitiesSheet()
+                        ActivitiesFormSheet()
                     }
                 },
                 label: {
