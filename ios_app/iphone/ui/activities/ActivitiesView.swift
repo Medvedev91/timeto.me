@@ -43,18 +43,18 @@ private struct ActivitiesViewInner: View {
                 
                 ForEach(state.activitiesUi, id: \.activityDb.id) { activityUi in
                     
-                    Button(
-                        action: {
-                            nativeSheet.showActivityTimerSheet(
-                                activity: activityUi.activityDb,
-                                timerContext: nil,
-                                hideOnStart: true,
-                                onStart: {}
-                            )
-                        },
-                        label: {
-                            
-                            ZStack(alignment: .bottomLeading) { // divider + isActive
+                    ZStack(alignment: .bottomLeading) { // divider + isActive
+                        
+                        Button(
+                            action: {
+                                nativeSheet.showActivityTimerSheet(
+                                    activity: activityUi.activityDb,
+                                    timerContext: nil,
+                                    hideOnStart: true,
+                                    onStart: {}
+                                )
+                            },
+                            label: {
                                 
                                 HStack {
                                     
@@ -90,34 +90,34 @@ private struct ActivitiesViewInner: View {
                                 }
                                 .padding(.trailing, ActivitiesView__listEndPadding)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                                
-                                if state.activitiesUi.last != activityUi {
-                                    SwiftUI.Divider()
-                                        .padding(.leading, activityItemPaddingStart)
-                                }
-                                
-                                if activityUi.isActive {
-                                    ZStack {}
-                                        .frame(width: 8, height: ActivitiesView__listItemHeight - 2)
-                                        .background(roundedShape.fill(.blue))
-                                        .offset(x: -4, y: -1)
-                                }
-                            }
-                        }
-                    )
-                    .frame(height: ActivitiesView__listItemHeight)
-                    .contextMenu {
-                        Button(
-                            action: {
-                                navigation.sheet {
-                                    ActivityFormSheet(activityDb: activityUi.activityDb)
-                                }
-                            },
-                            label: {
-                                Label("Edit", systemImage: "square.and.pencil")
                             }
                         )
+                        .contextMenu {
+                            Button(
+                                action: {
+                                    navigation.sheet {
+                                        ActivityFormSheet(activityDb: activityUi.activityDb)
+                                    }
+                                },
+                                label: {
+                                    Label("Edit", systemImage: "square.and.pencil")
+                                }
+                            )
+                        }
+
+                        if activityUi.isActive {
+                            ZStack {}
+                                .frame(width: 8, height: ActivitiesView__listItemHeight - 2)
+                                .background(roundedShape.fill(.blue))
+                                .offset(x: -4, y: -1)
+                        }
+                        
+                        if state.activitiesUi.last != activityUi {
+                            SwiftUI.Divider()
+                                .padding(.leading, activityItemPaddingStart)
+                        }
                     }
+                    .frame(height: ActivitiesView__listItemHeight)
                 }
             }
             .fillMaxWidth()
