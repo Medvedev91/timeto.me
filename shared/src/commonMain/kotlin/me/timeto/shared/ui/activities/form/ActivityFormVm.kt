@@ -120,7 +120,7 @@ class ActivityFormVm(
                 goalFormsData = (initActivityDb?.getGoalsDbCached() ?: emptyList()).map {
                     GoalFormData.fromGoalDb(it)
                 },
-                timerHints = initActivityDb?.timerHints?.toSet() ?: emptySet(),
+                timerHints = initActivityDb?.timerHints ?: emptySet(),
                 checklistsDb = tf.checklists,
                 shortcutsDb = tf.shortcuts,
             )
