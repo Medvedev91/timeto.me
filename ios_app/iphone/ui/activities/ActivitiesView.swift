@@ -93,6 +93,7 @@ private struct ActivitiesViewInner: View {
                             }
                         )
                         .contextMenu {
+                            
                             Button(
                                 action: {
                                     navigation.sheet {
@@ -101,6 +102,15 @@ private struct ActivitiesViewInner: View {
                                 },
                                 label: {
                                     Label("Edit", systemImage: "square.and.pencil")
+                                }
+                            )
+                            
+                            Button(
+                                action: {
+                                    openTimerHintsForm(activityDb: activityUi.activityDb)
+                                },
+                                label: {
+                                    Label("Timer Hints", systemImage: "timer")
                                 }
                             )
                         }
@@ -123,5 +133,21 @@ private struct ActivitiesViewInner: View {
             .fillMaxWidth()
         }
         .defaultScrollAnchor(.bottom)
+    }
+    
+    private func openTimerHintsForm(
+        activityDb: ActivityDb
+    ) {
+        navigation.sheet {
+            ActivityFormTimerHintsSheet(
+                timerHints: activityDb.timerHints.toSwift(),
+                onDone: { newTimerHints in
+                    vm.updateTimerHints(
+                        activityDb: activityDb,
+                        newTimerHints: newTimerHints.toKotlin()
+                    )
+                }
+            )
+        }
     }
 }
