@@ -243,12 +243,6 @@ data class ActivityDb(
         }
     }
 
-    suspend fun updateSort(newSort: Int): Unit = dbIo {
-        db.activityQueries.updateSortById(
-            id = id, sort = newSort,
-        )
-    }
-
     @Throws(UiException::class, CancellationException::class)
     suspend fun delete(): Unit = dbIo {
         db.transaction {
