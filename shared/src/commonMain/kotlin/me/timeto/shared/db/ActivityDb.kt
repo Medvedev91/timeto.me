@@ -32,6 +32,9 @@ data class ActivityDb(
 
     companion object : Backupable__Holder {
 
+        //
+        // Select
+
         fun anyChangeFlow(): Flow<Query<Int>> =
             db.activityQueries.anyChange().asFlow()
 
@@ -54,6 +57,21 @@ data class ActivityDb(
         @Throws(UiException::class)
         fun selectOtherCached(): ActivityDb =
             Cache.activitiesDbSorted.findOther()
+
+        ///
+
+        suspend fun updateSortMany(
+            activitiesDb: List<ActivityDb>,
+        ): Unit = dbIo {
+            db.transaction {
+                activitiesDb.forEachIndexed { idx, activityDb ->
+                    db.activityQueries.updateSortById(
+                        id = activityDb.id,
+                        sort = idx,
+                    )
+                }
+            }
+        }
 
         ///
 
