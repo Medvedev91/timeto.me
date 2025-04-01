@@ -32,6 +32,15 @@ class ActivitiesVm : __Vm<ActivitiesVm.State>() {
         }
     }
 
+    fun updateTimerHints(
+        activityDb: ActivityDb,
+        newTimerHints: Set<Int>,
+    ) {
+        launchExIo {
+            activityDb.updateTimerHints(newTimerHints)
+        }
+    }
+
     ///
 
     class ActivityUi(
