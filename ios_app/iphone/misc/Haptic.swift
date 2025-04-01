@@ -6,6 +6,10 @@ struct Haptic {
         shot(.soft)
     }
     
+    static func mediumShot() {
+        shot(.medium)
+    }
+    
     ///
     
     static func success() {
