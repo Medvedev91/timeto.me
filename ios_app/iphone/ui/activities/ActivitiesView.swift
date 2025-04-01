@@ -33,7 +33,8 @@ private struct ActivitiesViewInner: View {
     ///
     
     @EnvironmentObject private var nativeSheet: NativeSheet
-    
+    @Environment(Navigation.self) private var navigation
+
     var body: some View {
         
         ScrollView {
@@ -106,6 +107,18 @@ private struct ActivitiesViewInner: View {
                         }
                     )
                     .frame(height: ActivitiesView__listItemHeight)
+                    .contextMenu {
+                        Button(
+                            action: {
+                                navigation.sheet {
+                                    ActivityFormSheet(activityDb: activityUi.activityDb)
+                                }
+                            },
+                            label: {
+                                Label("Edit", systemImage: "square.and.pencil")
+                            }
+                        )
+                    }
                 }
             }
             .fillMaxWidth()
