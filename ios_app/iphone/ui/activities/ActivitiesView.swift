@@ -86,6 +86,17 @@ private struct ActivitiesViewInner: View {
                                             )
                                             .buttonStyle(.borderless)
                                         }
+                                    } else {
+                                        Button(
+                                            action: {
+                                                openTimerHintsForm(activityDb: activityUi.activityDb)
+                                            },
+                                            label: {
+                                                Image(systemName: "plus")
+                                                    .padding(.horizontal, ActivitiesView__timerHintHPadding)
+                                                    .foregroundColor(.primary)
+                                            }
+                                        )
                                     }
                                 }
                                 .padding(.trailing, ActivitiesView__listEndPadding)
