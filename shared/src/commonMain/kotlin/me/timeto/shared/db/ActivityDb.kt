@@ -247,7 +247,7 @@ data class ActivityDb(
     suspend fun delete(): Unit = dbIo {
         db.transaction {
             if (isOther())
-                throw UiException("It's impossible to delete \"other\" activity")
+                throw UiException("It's impossible to delete \"Other\" activity")
             val other: ActivityDb = selectSortedSync().findOther()
             IntervalDb
                 .selectAscSync(limit = Int.MAX_VALUE)
