@@ -5,6 +5,7 @@ import kotlinx.coroutines.launch
 import me.timeto.shared.Cache
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.UnixTime
+import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.delayToNextMinute
 import me.timeto.shared.misc.BatteryInfo
 import me.timeto.shared.vm.__Vm
@@ -14,6 +15,7 @@ class MainTabsVm : __Vm<MainTabsVm.State>() {
     data class State(
         val batteryLevel: Int?,
         val isBatteryCharging: Boolean,
+        val lastIntervalId: Int,
         val forceUpdate: Int,
     ) {
 
@@ -50,6 +52,7 @@ class MainTabsVm : __Vm<MainTabsVm.State>() {
         State(
             batteryLevel = BatteryInfo.levelFlow.value,
             isBatteryCharging = BatteryInfo.isChargingFlow.value,
+            lastIntervalId = Cache.lastInterval.id,
             forceUpdate = 0,
         )
     )
@@ -61,11 +64,13 @@ class MainTabsVm : __Vm<MainTabsVm.State>() {
         combine(
             BatteryInfo.levelFlow,
             BatteryInfo.isChargingFlow,
-        ) { level, isCharging ->
+            IntervalDb.getLastOneOrNullFlow()
+        ) { level, isCharging, lastIntervalDb ->
             state.update {
                 it.copy(
                     batteryLevel = level,
                     isBatteryCharging = isCharging,
+                    lastIntervalId = lastIntervalDb?.id ?: it.lastIntervalId,
                 )
             }
         }.launchIn(scopeVm)
