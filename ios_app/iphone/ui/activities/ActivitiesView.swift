@@ -92,8 +92,7 @@ private struct ActivitiesViewInner: View {
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                                 
                                 if state.activitiesUi.last != activityUi {
-                                    // todo
-                                    SheetDividerBg()
+                                    SwiftUI.Divider()
                                         .padding(.leading, activityItemPaddingStart)
                                 }
                                 
