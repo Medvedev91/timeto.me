@@ -125,5 +125,9 @@ private struct MainTabsViewInner: View {
             }
         }
         .background(showBackground ? AnyShapeStyle(.bar) : AnyShapeStyle(.clear))
+        .onChange(of: state.lastIntervalId) { _, new in
+            tab = .home
+            Haptic.mediumShot()
+        }
     }
 }
