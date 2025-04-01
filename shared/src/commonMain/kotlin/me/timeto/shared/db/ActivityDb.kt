@@ -163,13 +163,13 @@ data class ActivityDb(
         ColorRgba.fromRgbaString(color_rgba)
     }
 
-    val timerHints: List<Int> by lazy {
+    val timerHints: Set<Int> by lazy {
         if (timer_hints.isEmpty())
-            return@lazy emptyList()
+            return@lazy emptySet()
         timer_hints
             .split(",")
             .map { it.toInt() }
-            .sorted()
+            .toSet()
     }
 
     fun nameWithEmoji(isLeading: Boolean = false): String =
