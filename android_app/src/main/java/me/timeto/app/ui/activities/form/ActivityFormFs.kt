@@ -1,9 +1,18 @@
 package me.timeto.app.ui.activities.form
 
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.unit.dp
 import me.timeto.app.rememberVm
 import me.timeto.app.ui.Screen
+import me.timeto.app.ui.form.FormInput
+import me.timeto.app.ui.form.FormPaddingTop
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
@@ -26,7 +35,10 @@ fun ActivityFormFs(
         )
     }
 
-    Screen {
+    Screen(
+        modifier = Modifier
+            .imePadding(),
+    ) {
 
         val scrollState = rememberLazyListState()
 
@@ -52,5 +64,33 @@ fun ActivityFormFs(
                 },
             )
         )
+
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize(),
+            state = scrollState,
+            contentPadding = PaddingValues(bottom = 25.dp),
+        ) {
+
+            item {
+
+                //
+                // Name
+
+                FormPaddingTop()
+
+                FormInput(
+                    initText = state.name,
+                    placeholder = state.namePlaceholder,
+                    onChange = { newName ->
+                        vm.setName(newName)
+                    },
+                    isFirst = true,
+                    isLast = true,
+                    isAutoFocus = false,
+                    imeAction = ImeAction.Done,
+                )
+            }
+        }
     }
 }
