@@ -4,6 +4,7 @@
 /.gradle/
 /build/
 /local.properties
+/.kotlin
 
 /shared/build/
 
