@@ -4,8 +4,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
 import me.timeto.shared.db.ActivityDb
+import me.timeto.shared.launchExIo
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.textFeatures
+import me.timeto.shared.ui.moveAndroid
 import me.timeto.shared.ui.moveIos
 import me.timeto.shared.vm.__Vm
 
@@ -35,6 +37,18 @@ class ActivitiesFormVm : __Vm<ActivitiesFormVm.State>() {
     }
 
     ///
+
+    fun moveAndroidLocal(fromIdx: Int, toIdx: Int) {
+        state.value.activitiesDb.moveAndroid(fromIdx, toIdx) { newItems ->
+            state.update { it.copy(activitiesDb = newItems) }
+        }
+    }
+
+    fun moveAndroidSync() {
+        launchExIo {
+            ActivityDb.updateSortMany(state.value.activitiesDb)
+        }
+    }
 
     fun moveIos(fromIdx: Int, toIdx: Int) {
         state.value.activitiesDb.moveIos(fromIdx, toIdx) { newActivitiesDb ->
