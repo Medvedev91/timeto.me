@@ -94,7 +94,7 @@ private struct ActivitiesViewInner: View {
                                             label: {
                                                 Image(systemName: "plus")
                                                     .padding(.horizontal, ActivitiesView__timerHintHPadding)
-                                                    .foregroundColor(.primary)
+                                                    .foregroundColor(.secondary)
                                             }
                                         )
                                     }
