@@ -1,10 +1,15 @@
 package me.timeto.app.ui.activities
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import me.timeto.app.H_PADDING_HALF
 import me.timeto.app.rememberVm
 import me.timeto.app.ui.Screen
+import me.timeto.app.ui.SpacerW1
+import me.timeto.app.ui.footer.Footer
+import me.timeto.app.ui.footer.FooterAddButton
 import me.timeto.app.ui.form.FormSortedList
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
@@ -58,5 +63,20 @@ fun ActivitiesFormFs() {
                 vm.moveAndroidSync()
             },
         )
+
+        Footer(
+            scrollState = scrollState,
+            contentModifier = Modifier
+                .padding(horizontal = H_PADDING_HALF),
+        ) {
+            FooterAddButton(
+                text = "New Activity",
+                onClick = {
+                    navigationFs.push {
+                    }
+                },
+            )
+            SpacerW1()
+        }
     }
 }
