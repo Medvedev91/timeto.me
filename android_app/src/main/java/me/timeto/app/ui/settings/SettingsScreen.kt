@@ -22,8 +22,8 @@ import me.timeto.app.*
 import kotlinx.coroutines.launch
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.whats_new.WhatsNewFs
-import me.timeto.app.ui.checklists.ChecklistFormFs
-import me.timeto.app.ui.checklists.ChecklistItemsFormFs
+import me.timeto.app.ui.checklists.form.ChecklistFormFs
+import me.timeto.app.ui.checklists.form.ChecklistFormItemsFs
 import me.timeto.app.ui.checklists.ChecklistScreen
 import me.timeto.app.ui.form.FormButton
 import me.timeto.app.ui.form.FormHeader
@@ -204,7 +204,7 @@ fun SettingsScreen(
                                 checklistDb = null,
                                 onSave = { newChecklistDb ->
                                     navigationFs.push {
-                                        ChecklistItemsFormFs(
+                                        ChecklistFormItemsFs(
                                             checklistDb = newChecklistDb,
                                             onDelete = {},
                                         )
