@@ -16,6 +16,7 @@ import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.ui.activities.ActivitiesFormVm
 
 @Composable
@@ -45,16 +46,23 @@ fun ActivitiesFormFs() {
             cancelButton = null,
         )
 
+        fun openActivityFormFs(activityDb: ActivityDb) {
+            navigationFs.push {
+                ActivityFormFs(
+                    initActivityDb = activityDb,
+                )
+            }
+        }
+
         FormSortedList(
             items = state.activitiesUi,
             itemId = { it.activityDb.id },
             itemTitle = { it.title },
             onItemClick = { activityUi ->
-                navigationFs.push {
-                    ActivityFormFs(
-                        initActivityDb = activityUi.activityDb,
-                    )
-                }
+                openActivityFormFs(activityUi.activityDb)
+            },
+            onItemLongClick = { activityUi ->
+                openActivityFormFs(activityUi.activityDb)
             },
             onItemDelete = null,
             scrollState = scrollState,
