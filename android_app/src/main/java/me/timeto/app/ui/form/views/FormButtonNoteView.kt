@@ -1,0 +1,28 @@
+package me.timeto.app.ui.form.views
+
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import me.timeto.app.c
+
+@Composable
+fun FormButtonNoteView(
+    note: String,
+    color: Color?,
+    withArrow: Boolean,
+) {
+    Text(
+        note,
+        modifier = Modifier
+            .padding(end = if (withArrow) 8.dp else 16.dp)
+            .offset(),
+        color = color ?: c.tertiaryText,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
+    )
+}
