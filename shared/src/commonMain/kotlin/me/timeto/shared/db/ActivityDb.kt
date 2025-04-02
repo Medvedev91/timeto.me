@@ -210,6 +210,15 @@ data class ActivityDb(
         note = null,
     )
 
+    suspend fun updateTimerHints(
+        newTimerHints: Set<Int>,
+    ): Unit = dbIo {
+        db.activityQueries.updateTimerHintsById(
+            timer_hints = newTimerHints.toTimerHintsDb(),
+            id = this@ActivityDb.id,
+        )
+    }
+
     @Throws(UiException::class, CancellationException::class)
     suspend fun upByIdWithValidation(
         name: String,
