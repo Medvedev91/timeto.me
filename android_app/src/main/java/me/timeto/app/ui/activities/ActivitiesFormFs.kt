@@ -8,6 +8,7 @@ import me.timeto.app.H_PADDING_HALF
 import me.timeto.app.rememberVm
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1
+import me.timeto.app.ui.activities.form.ActivityFormFs
 import me.timeto.app.ui.footer.Footer
 import me.timeto.app.ui.footer.FooterAddButton
 import me.timeto.app.ui.form.FormSortedList
@@ -50,6 +51,9 @@ fun ActivitiesFormFs() {
             itemTitle = { it.title },
             onItemClick = { activityUi ->
                 navigationFs.push {
+                    ActivityFormFs(
+                        initActivityDb = activityUi.activityDb,
+                    )
                 }
             },
             onItemDelete = null,
@@ -73,6 +77,9 @@ fun ActivitiesFormFs() {
                 text = "New Activity",
                 onClick = {
                     navigationFs.push {
+                        ActivityFormFs(
+                            initActivityDb = null,
+                        )
                     }
                 },
             )
