@@ -1,4 +1,4 @@
-package me.timeto.app.ui.checklists
+package me.timeto.app.ui.checklists.form
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,34 +8,32 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import me.timeto.app.c
 import me.timeto.app.rememberVm
 import me.timeto.app.ui.Screen
-import me.timeto.app.ui.form.FormButton
 import me.timeto.app.ui.form.FormInput
 import me.timeto.app.ui.form.FormPaddingTop
-import me.timeto.app.ui.form.FormPaddingSectionSection
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.db.ChecklistDb
-import me.timeto.shared.ui.checklists.ChecklistFormVm
+import me.timeto.shared.db.ChecklistItemDb
+import me.timeto.shared.ui.checklists.form.ChecklistFormItemVm
 
 @Composable
-fun ChecklistFormFs(
-    checklistDb: ChecklistDb?,
-    onSave: (ChecklistDb) -> Unit,
-    onDelete: () -> Unit,
+fun ChecklistFormItemFs(
+    checklistDb: ChecklistDb,
+    checklistItemDb: ChecklistItemDb?,
 ) {
 
     val navigationFs = LocalNavigationFs.current
     val navigationLayer = LocalNavigationLayer.current
 
     val (vm, state) = rememberVm {
-        ChecklistFormVm(
+        ChecklistFormItemVm(
             checklistDb = checklistDb,
+            checklistItemDb = checklistItemDb,
         )
     }
 
@@ -47,13 +45,12 @@ fun ChecklistFormFs(
             title = state.title,
             scrollState = scrollState,
             actionButton = HeaderActionButton(
-                text = state.saveText,
+                text = state.saveButtonText,
                 isEnabled = state.isSaveEnabled,
                 onClick = {
                     vm.save(
                         dialogsManager = navigationFs,
-                        onSuccess = { newChecklistDb ->
-                            onSave(newChecklistDb)
+                        onSuccess = {
                             navigationLayer.close()
                         },
                     )
@@ -80,38 +77,16 @@ fun ChecklistFormFs(
 
             item {
                 FormInput(
-                    initText = state.name,
-                    placeholder = state.namePlaceholder,
-                    onChange = { newName ->
-                        vm.setName(newName)
+                    initText = state.text,
+                    placeholder = "",
+                    onChange = { newText ->
+                        vm.setText(newText)
                     },
                     isFirst = true,
                     isLast = true,
                     isAutoFocus = true,
                     imeAction = ImeAction.Done,
                 )
-            }
-
-            if (checklistDb != null) {
-                item {
-                    FormPaddingSectionSection()
-                    FormButton(
-                        title = state.deleteText,
-                        titleColor = c.red,
-                        isFirst = true,
-                        isLast = true,
-                        onClick = {
-                            vm.delete(
-                                checklistDb = checklistDb,
-                                dialogsManager = navigationFs,
-                                onDelete = {
-                                    onDelete()
-                                    navigationLayer.close()
-                                },
-                            )
-                        },
-                    )
-                }
             }
         }
     }

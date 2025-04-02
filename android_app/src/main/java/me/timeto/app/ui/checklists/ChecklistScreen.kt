@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.timeto.app.ui.Screen
+import me.timeto.app.ui.checklists.form.ChecklistFormItemsFs
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.header.HeaderSecondaryButton
@@ -39,7 +40,7 @@ fun ChecklistScreen(
                     text = "Edit",
                     onClick = {
                         navigationFs.push {
-                            ChecklistItemsFormFs(
+                            ChecklistFormItemsFs(
                                 checklistDb = checklistDb,
                                 onDelete = {
                                     navigationLayer.close()

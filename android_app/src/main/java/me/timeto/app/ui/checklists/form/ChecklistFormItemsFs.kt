@@ -1,4 +1,4 @@
-package me.timeto.app.ui.checklists
+package me.timeto.app.ui.checklists.form
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -18,10 +18,10 @@ import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.db.ChecklistDb
-import me.timeto.shared.ui.checklists.ChecklistItemsFormVm
+import me.timeto.shared.ui.checklists.form.ChecklistFormItemsVm
 
 @Composable
-fun ChecklistItemsFormFs(
+fun ChecklistFormItemsFs(
     checklistDb: ChecklistDb,
     onDelete: () -> Unit,
 ) {
@@ -30,7 +30,7 @@ fun ChecklistItemsFormFs(
     val navigationLayer = LocalNavigationLayer.current
 
     val (vm, state) = rememberVm {
-        ChecklistItemsFormVm(checklistDb = checklistDb)
+        ChecklistFormItemsVm(checklistDb = checklistDb)
     }
 
     Screen {
@@ -66,7 +66,7 @@ fun ChecklistItemsFormFs(
             itemTitle = { it.text },
             onItemClick = { checklistItemDb ->
                 navigationFs.push {
-                    ChecklistItemFormFs(
+                    ChecklistFormItemFs(
                         checklistDb = checklistDb,
                         checklistItemDb = checklistItemDb,
                     )
@@ -98,7 +98,7 @@ fun ChecklistItemsFormFs(
                 text = state.newItemText,
                 onClick = {
                     navigationFs.push {
-                        ChecklistItemFormFs(
+                        ChecklistFormItemFs(
                             checklistDb = checklistDb,
                             checklistItemDb = null,
                         )

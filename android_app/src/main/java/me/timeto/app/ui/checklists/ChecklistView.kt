@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import me.timeto.app.*
 import me.timeto.app.R
+import me.timeto.app.ui.checklists.form.ChecklistFormItemFs
 import me.timeto.app.ui.home.HomeScreen__itemHeight
 import me.timeto.app.ui.home.HomeScreen__primaryFontSize
 import me.timeto.app.ui.navigation.LocalNavigationFs
@@ -130,7 +131,7 @@ fun ChecklistView(
                                     .clip(squircleShape)
                                     .clickable {
                                         navigationFs.push {
-                                            ChecklistItemFormFs(
+                                            ChecklistFormItemFs(
                                                 checklistDb = checklistDb,
                                                 checklistItemDb = null,
                                             )
