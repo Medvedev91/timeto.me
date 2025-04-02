@@ -1,12 +1,13 @@
 plugins {
     kotlin("android")
     id("com.android.application")
+    id("org.jetbrains.kotlin.plugin.compose") version "2.1.20"
 }
 
 android {
 
     namespace = "me.timeto.app"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "me.timeto.app"
@@ -55,14 +56,12 @@ android {
 
     buildFeatures.compose = true
     buildFeatures.buildConfig = true
-
-    composeOptions.kotlinCompilerExtensionVersion = "1.5.14"
 }
 
 dependencies {
     implementation(project(":shared"))
-    implementation("androidx.activity:activity-compose:1.9.2")
-    implementation("androidx.compose.material:material:1.7.0")
-    implementation("androidx.compose.material:material-icons-extended:1.7.0")
+    implementation("androidx.activity:activity-compose:1.10.1")
+    implementation("androidx.compose.material:material:1.7.8")
+    implementation("androidx.compose.material:material-icons-extended:1.7.8")
     implementation("com.google.android.material:material:1.12.0")
 }
