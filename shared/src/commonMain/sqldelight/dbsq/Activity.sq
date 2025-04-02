@@ -48,6 +48,11 @@ UPDATE ActivitySQ
 SET sort=?
 WHERE id=?;
 
+updateTimerHintsById:
+UPDATE ActivitySQ
+SET timer_hints=?
+WHERE id=?;
+
 --
 -- Delete
 
