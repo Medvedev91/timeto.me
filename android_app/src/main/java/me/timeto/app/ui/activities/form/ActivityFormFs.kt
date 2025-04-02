@@ -74,9 +74,6 @@ fun ActivityFormFs(
 
             item {
 
-                //
-                // Name
-
                 FormPaddingTop()
 
                 FormInput(
