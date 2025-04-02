@@ -1,8 +1,10 @@
 package me.timeto.app.ui.form.views
 
 import android.view.MotionEvent
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -43,7 +45,7 @@ private val deleteIconLeadingPadding: Dp = H_PADDING - deleteIconTapAreaPadding
 private val deleteIconTrailingPadding: Dp = H_PADDING.goldenRatioDown()
 private val deleteDividerPadding: Dp = deleteIconSize + deleteIconTrailingPadding + 1.dp
 
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun LazyItemScope.FormSortedItemView(
     title: String,
@@ -55,6 +57,7 @@ fun LazyItemScope.FormSortedItemView(
     onMoveFinish: () -> Unit,
     onDelete: (() -> Unit)?,
     onClick: () -> Unit,
+    onLongClick: (() -> Unit)?,
 ) {
 
     DisposableEffect(Unit) {
@@ -72,9 +75,10 @@ fun LazyItemScope.FormSortedItemView(
 
         HStack(
             modifier = Modifier
-                .clickable {
-                    onClick()
-                }
+                .combinedClickable(
+                    onClick = onClick,
+                    onLongClick = onLongClick,
+                )
                 .sizeIn(minHeight = Form__itemMinHeight),
             verticalAlignment = Alignment.CenterVertically,
         ) {

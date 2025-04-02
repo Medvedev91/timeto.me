@@ -18,6 +18,7 @@ fun <Item> FormSortedList(
     itemId: (Item) -> Int,
     itemTitle: (Item) -> String,
     onItemClick: (Item) -> Unit,
+    onItemLongClick: ((Item) -> Unit)?,
     onItemDelete: ((Item) -> Unit)?,
     scrollState: LazyListState,
     modifier: Modifier,
@@ -58,6 +59,9 @@ fun <Item> FormSortedList(
                     },
                     onClick = {
                         onItemClick(item)
+                    },
+                    onLongClick = onItemLongClick?.let {
+                        { onItemLongClick(item) }
                     },
                     onDelete = onItemDelete?.let {
                         { onItemDelete(item) }
