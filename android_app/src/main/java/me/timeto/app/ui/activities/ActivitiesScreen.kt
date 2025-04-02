@@ -23,7 +23,6 @@ import me.timeto.app.VStack
 import me.timeto.app.c
 import me.timeto.app.onePx
 import me.timeto.app.squircleShape
-import me.timeto.app.ui.EditActivitiesSheet
 import me.timeto.app.ui.HistoryDialogView
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1
@@ -101,7 +100,7 @@ private fun BottomMenu() {
                 .clip(squircleShape)
                 .clickable {
                     navigationFs.push {
-                        EditActivitiesSheet()
+                        ActivitiesFormFs()
                     }
                 }
                 .padding(horizontal = ActivitiesView__timerHintHPadding, vertical = 4.dp),
