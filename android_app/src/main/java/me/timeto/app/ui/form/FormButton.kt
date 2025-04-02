@@ -5,7 +5,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import me.timeto.app.HStack
-import me.timeto.app.c
 import me.timeto.app.ui.form.views.FormButtonArrowView
 import me.timeto.app.ui.form.views.FormButtonNoteView
 import me.timeto.app.ui.form.views.FormButtonView
@@ -25,7 +24,7 @@ fun FormButton(
 
     FormButtonView(
         title = title,
-        titleColor = titleColor ?: c.text,
+        titleColor = titleColor,
         isFirst = isFirst,
         isLast = isLast,
         modifier = Modifier,
