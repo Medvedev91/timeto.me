@@ -18,6 +18,7 @@ import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.db.ChecklistDb
+import me.timeto.shared.db.ChecklistItemDb
 import me.timeto.shared.ui.checklists.form.ChecklistFormItemsVm
 
 @Composable
@@ -60,17 +61,24 @@ fun ChecklistFormItemsFs(
             ),
         )
 
+        fun openChecklistFormItemFs(checklistItemDb: ChecklistItemDb) {
+            navigationFs.push {
+                ChecklistFormItemFs(
+                    checklistDb = checklistDb,
+                    checklistItemDb = checklistItemDb,
+                )
+            }
+        }
+
         FormSortedList(
             items = state.checklistItemsDb,
             itemId = { it.id },
             itemTitle = { it.text },
             onItemClick = { checklistItemDb ->
-                navigationFs.push {
-                    ChecklistFormItemFs(
-                        checklistDb = checklistDb,
-                        checklistItemDb = checklistItemDb,
-                    )
-                }
+                openChecklistFormItemFs(checklistItemDb)
+            },
+            onItemLongClick = { checklistItemDb ->
+                openChecklistFormItemFs(checklistItemDb)
             },
             scrollState = scrollState,
             modifier = Modifier
