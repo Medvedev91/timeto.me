@@ -104,7 +104,7 @@ fun ActivityFormFs(
                     title = state.emojiTitle,
                     titleColor = null,
                     isFirst = true,
-                    isLast = true,
+                    isLast = false,
                     modifier = Modifier,
                     rightView = {
                         HStack(
