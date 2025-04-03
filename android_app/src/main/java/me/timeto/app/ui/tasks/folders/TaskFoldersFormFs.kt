@@ -17,6 +17,7 @@ import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
+import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.ui.tasks.TaskFoldersFormVm
 
 @Composable
@@ -48,16 +49,23 @@ fun TaskFoldersFormFs() {
             )
         )
 
+        fun openTaskFolderFormFs(taskFolderDb: TaskFolderDb) {
+            navigationFs.push {
+                TaskFolderFormFs(
+                    initTaskFolderDb = taskFolderDb,
+                )
+            }
+        }
+
         FormSortedList(
             items = state.foldersDb,
             itemId = { it.id },
             itemTitle = { it.name },
             onItemClick = { taskFolderDb ->
-                navigationFs.push {
-                    TaskFolderFormFs(
-                        initTaskFolderDb = taskFolderDb,
-                    )
-                }
+                openTaskFolderFormFs(taskFolderDb)
+            },
+            onItemLongClick = { taskFolderDb ->
+                openTaskFolderFormFs(taskFolderDb)
             },
             onItemDelete = null,
             scrollState = scrollState,
