@@ -17,6 +17,7 @@ import me.timeto.app.HStack
 import me.timeto.app.c
 import me.timeto.app.rememberVm
 import me.timeto.app.ui.Screen
+import me.timeto.app.ui.emoji.EmojiPickerFs
 import me.timeto.app.ui.form.FormInput
 import me.timeto.app.ui.form.FormPaddingSectionSection
 import me.timeto.app.ui.form.FormPaddingTop
@@ -129,6 +130,13 @@ fun ActivityFormFs(
                         }
                     },
                     onClick = {
+                        navigationFs.push {
+                            EmojiPickerFs(
+                                onPick = { newEmoji ->
+                                    vm.setEmoji(newEmoji = newEmoji)
+                                },
+                            )
+                        }
                     },
                     onLongClick = null,
                 )
