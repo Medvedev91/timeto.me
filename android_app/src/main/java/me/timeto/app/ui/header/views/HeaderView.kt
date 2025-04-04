@@ -5,7 +5,9 @@ import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -26,7 +28,7 @@ fun HeaderView(
 
     val mainActivity = LocalContext.current as MainActivity
 
-    val alphaValue = remember {
+    val alphaValue: State<Float> = remember {
 
         derivedStateOf {
 
@@ -35,6 +37,16 @@ fun HeaderView(
                 null -> 0f
 
                 is LazyListState -> {
+                    val offset = scrollState.firstVisibleItemScrollOffset
+                    when {
+                        scrollState.firstVisibleItemIndex > 0 -> 1f
+                        offset == 0 -> 0f
+                        offset > animRatio -> 1f
+                        else -> offset / animRatio
+                    }
+                }
+
+                is LazyGridState -> {
                     val offset = scrollState.firstVisibleItemScrollOffset
                     when {
                         scrollState.firstVisibleItemIndex > 0 -> 1f
