@@ -1,22 +1,29 @@
 package me.timeto.app.ui.activities.form
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.HStack
+import me.timeto.app.ZStack
 import me.timeto.app.c
 import me.timeto.app.rememberVm
+import me.timeto.app.roundedShape
+import me.timeto.app.toColor
 import me.timeto.app.ui.Screen
+import me.timeto.app.ui.color.ColorPickerFs
 import me.timeto.app.ui.emoji.EmojiPickerFs
 import me.timeto.app.ui.form.FormInput
 import me.timeto.app.ui.form.FormPaddingSectionSection
@@ -117,7 +124,7 @@ fun ActivityFormFs(
                                     text = emoji,
                                     fontSize = 20.sp,
                                     modifier = Modifier
-                                        .padding(end = 8.dp)
+                                        .padding(end = 9.dp)
                                 )
                             } else {
                                 FormButtonNoteView(
@@ -134,6 +141,40 @@ fun ActivityFormFs(
                             EmojiPickerFs(
                                 onPick = { newEmoji ->
                                     vm.setEmoji(newEmoji = newEmoji)
+                                },
+                            )
+                        }
+                    },
+                    onLongClick = null,
+                )
+
+                FormButtonView(
+                    title = state.colorTitle,
+                    titleColor = null,
+                    isFirst = false,
+                    isLast = true,
+                    modifier = Modifier,
+                    rightView = {
+                        HStack(
+                            verticalAlignment = CenterVertically,
+                        ) {
+                            ZStack(
+                                modifier = Modifier
+                                    .padding(end = 8.dp)
+                                    .size(28.dp)
+                                    .clip(roundedShape)
+                                    .background(state.colorRgba.toColor()),
+                            )
+                            FormButtonArrowView()
+                        }
+                    },
+                    onClick = {
+                        navigationFs.push {
+                            ColorPickerFs(
+                                title = state.colorTitle,
+                                initExamplesData = state.buildColorPickerExamplesData(),
+                                onPick = { newColorRgba ->
+                                    vm.setColorRgba(newColorRgba = newColorRgba)
                                 },
                             )
                         }
