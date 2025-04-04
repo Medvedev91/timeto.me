@@ -39,6 +39,7 @@ import me.timeto.app.H_PADDING_HALF
 import me.timeto.app.R
 import me.timeto.app.ZStack
 import me.timeto.app.c
+import me.timeto.app.halfDpCeil
 import me.timeto.app.halfDpFloor
 import me.timeto.app.rememberVm
 import me.timeto.app.squircleShape
@@ -72,7 +73,7 @@ fun EmojiPickerFs(
 
             HStack(
                 modifier = Modifier
-                    .padding(bottom = 8.dp),
+                    .padding(top = 8.dp, bottom = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
 
@@ -83,9 +84,10 @@ fun EmojiPickerFs(
                 HStack(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(start = 16.dp)
+                        .padding(start = 12.dp)
                         .clip(squircleShape)
-                        .background(c.fg),
+                        .background(c.fg)
+                        .padding(top = halfDpCeil),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
 
@@ -141,7 +143,7 @@ fun EmojiPickerFs(
                 Text(
                     text = "Cancel",
                     modifier = Modifier
-                        .padding(horizontal = H_PADDING_HALF)
+                        .padding(start = 4.dp, end = 4.dp)
                         .clip(squircleShape)
                         .clickable {
                             navigationLayer.close()
