@@ -171,7 +171,7 @@ fun ActivityFormFs(
                     onClick = {
                         navigationFs.push {
                             ColorPickerFs(
-                                title = state.colorTitle,
+                                title = state.colorPickerTitle,
                                 initExamplesData = state.buildColorPickerExamplesData(),
                                 onPick = { newColorRgba ->
                                     vm.setColorRgba(newColorRgba = newColorRgba)
