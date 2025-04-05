@@ -1,9 +1,11 @@
 package me.timeto.app.ui.activities.form
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import me.timeto.app.H_PADDING_HALF
 import me.timeto.app.rememberVm
 import me.timeto.app.ui.goals.form.GoalFormFs
 import me.timeto.app.ui.Screen
@@ -102,7 +104,8 @@ fun ActivityFormGoalsFs(
 
         Footer(
             scrollState = scrollState,
-            contentModifier = Modifier,
+            contentModifier = Modifier
+                .padding(horizontal = H_PADDING_HALF),
             content = {
                 FooterAddButton(
                     text = state.newGoalTitle,
