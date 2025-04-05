@@ -25,6 +25,7 @@ import me.timeto.app.toColor
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.color.ColorPickerFs
 import me.timeto.app.ui.emoji.EmojiPickerFs
+import me.timeto.app.ui.form.FormButton
 import me.timeto.app.ui.form.FormInput
 import me.timeto.app.ui.form.FormPaddingSectionSection
 import me.timeto.app.ui.form.FormPaddingTop
@@ -192,6 +193,22 @@ fun ActivityFormFs(
                     isLast = false,
                     onChange = { newKeepScreenOn ->
                         vm.setKeepScreenOn(newKeepScreenOn = newKeepScreenOn)
+                    },
+                )
+
+                FormButton(
+                    title = state.pomodoroTitle,
+                    isFirst = false,
+                    isLast = true,
+                    note = state.pomodoroNote,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.push {
+                            ActivityFormPomodoroFs(
+                                vm = vm,
+                                state = state,
+                            )
+                        }
                     },
                 )
             }
