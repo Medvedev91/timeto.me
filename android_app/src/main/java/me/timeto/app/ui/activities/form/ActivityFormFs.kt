@@ -28,6 +28,7 @@ import me.timeto.app.ui.emoji.EmojiPickerFs
 import me.timeto.app.ui.form.FormInput
 import me.timeto.app.ui.form.FormPaddingSectionSection
 import me.timeto.app.ui.form.FormPaddingTop
+import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.form.views.FormButtonArrowView
 import me.timeto.app.ui.form.views.FormButtonNoteView
 import me.timeto.app.ui.form.views.FormButtonView
@@ -180,6 +181,18 @@ fun ActivityFormFs(
                         }
                     },
                     onLongClick = null,
+                )
+
+                FormPaddingSectionSection()
+
+                FormSwitch(
+                    title = state.keepScreenOnTitle,
+                    isEnabled = state.keepScreenOn,
+                    isFirst = true,
+                    isLast = false,
+                    onChange = { newKeepScreenOn ->
+                        vm.setKeepScreenOn(newKeepScreenOn = newKeepScreenOn)
+                    },
                 )
             }
         }
