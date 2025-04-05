@@ -47,6 +47,7 @@ import me.timeto.app.ui.footer.Footer
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
+import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.ui.color.ColorPickerExamplesData
@@ -63,6 +64,7 @@ fun ColorPickerFs(
     onPick: (ColorRgba) -> Unit,
 ) {
 
+    val navigationFs = LocalNavigationFs.current
     val navigationLayer = LocalNavigationLayer.current
 
     val (vm, state) = rememberVm {
@@ -230,6 +232,14 @@ fun ColorPickerFs(
                         .padding(end = H_PADDING_HALF)
                         .clip(squircleShape)
                         .clickable {
+                            navigationFs.push {
+                                ColorPickerCustomSheet(
+                                    initColorRgba = state.colorRgba,
+                                    onDone = { newColorRgba ->
+                                        vm.setColorRgba(colorRgba = newColorRgba)
+                                    },
+                                )
+                            }
                         }
                         .padding(horizontal = H_PADDING_HALF, vertical = 4.dp),
                     color = c.blue,
