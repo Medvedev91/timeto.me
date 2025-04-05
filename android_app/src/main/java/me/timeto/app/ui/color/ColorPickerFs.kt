@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.HStack
 import me.timeto.app.H_PADDING
+import me.timeto.app.H_PADDING_HALF
 import me.timeto.app.VStack
 import me.timeto.app.ZStack
 import me.timeto.app.c
@@ -39,7 +40,10 @@ import me.timeto.app.rememberVm
 import me.timeto.app.roundedShape
 import me.timeto.app.squircleShape
 import me.timeto.app.toColor
+import me.timeto.app.ui.Divider
 import me.timeto.app.ui.Screen
+import me.timeto.app.ui.SpacerW1
+import me.timeto.app.ui.footer.Footer
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
@@ -69,7 +73,7 @@ fun ColorPickerFs(
 
     Screen {
 
-        val circleScrollState = rememberScrollState()
+        val circlesScrollState = rememberScrollState()
         val activitiesScrollState = rememberScrollState()
 
         Header(
@@ -90,6 +94,8 @@ fun ColorPickerFs(
                 },
             )
         )
+
+        // todo show divider on scroll (x2)
 
         HStack(
             modifier = Modifier
@@ -147,7 +153,7 @@ fun ColorPickerFs(
                                     vm.setColorRgba(exampleUi.colorRgba)
                                 }
                                 .background(exampleUi.colorRgba.toColor())
-                                .padding(start = 7.dp, end = 8.dp, top = 4.dp, bottom = 4.5.dp),
+                                .padding(start = 8.dp, end = 8.dp, top = 4.dp, bottom = 4.dp),
                             fontSize = 13.sp,
                             color = c.white,
                             fontWeight = FontWeight.Medium,
@@ -168,7 +174,7 @@ fun ColorPickerFs(
 
             VStack(
                 modifier = Modifier
-                    .verticalScroll(state = circleScrollState)
+                    .verticalScroll(state = circlesScrollState)
                     .padding(
                         start = dividerPadding - circlePadding,
                         end = H_PADDING - circlePadding,
@@ -209,5 +215,26 @@ fun ColorPickerFs(
                 }
             }
         }
+
+        // todo hide on scroll (two scrolls)
+        Divider()
+
+        Footer(
+            scrollState = null,
+            contentModifier = Modifier,
+            content = {
+                SpacerW1()
+                Text(
+                    text = "Custom Color",
+                    modifier = Modifier
+                        .padding(end = H_PADDING_HALF)
+                        .clip(squircleShape)
+                        .clickable {
+                        }
+                        .padding(horizontal = H_PADDING_HALF, vertical = 4.dp),
+                    color = c.blue,
+                )
+            },
+        )
     }
 }
