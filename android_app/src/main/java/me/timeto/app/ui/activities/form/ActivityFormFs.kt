@@ -211,6 +211,26 @@ fun ActivityFormFs(
                         }
                     },
                 )
+
+                FormPaddingSectionSection()
+
+                FormButton(
+                    title = state.goalsTitle,
+                    isFirst = true,
+                    isLast = false,
+                    note = state.goalsNote,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.push {
+                            ActivityFormGoalsFs(
+                                initGoalFormsData = state.goalFormsData,
+                                onDone = { newGoalFormsData ->
+                                    vm.setGoalFormsData(newGoalFormsData = newGoalFormsData)
+                                },
+                            )
+                        }
+                    },
+                )
             }
         }
     }
