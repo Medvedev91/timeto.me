@@ -14,6 +14,7 @@ import me.timeto.app.ui.footer.FooterAddButton
 import me.timeto.app.ui.form.FormSortedList
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
+import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.db.ActivityDb
@@ -43,7 +44,12 @@ fun ActivitiesFormFs() {
                     navigationLayer.close()
                 },
             ),
-            cancelButton = null,
+            cancelButton = HeaderCancelButton(
+                text = "Close",
+                onClick = {
+                    navigationLayer.close()
+                },
+            ),
         )
 
         fun openActivityFormFs(activityDb: ActivityDb) {
