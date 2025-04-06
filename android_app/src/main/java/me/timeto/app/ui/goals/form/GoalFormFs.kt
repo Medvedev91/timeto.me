@@ -1,0 +1,111 @@
+package me.timeto.app.ui.goals.form
+
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
+import me.timeto.app.c
+import me.timeto.app.rememberVm
+import me.timeto.app.ui.Screen
+import me.timeto.app.ui.form.FormButton
+import me.timeto.app.ui.form.FormInput
+import me.timeto.app.ui.form.FormPaddingBottom
+import me.timeto.app.ui.form.FormPaddingSectionSection
+import me.timeto.app.ui.form.FormPaddingTop
+import me.timeto.app.ui.header.Header
+import me.timeto.app.ui.header.HeaderActionButton
+import me.timeto.app.ui.header.HeaderCancelButton
+import me.timeto.app.ui.navigation.LocalNavigationFs
+import me.timeto.app.ui.navigation.LocalNavigationLayer
+import me.timeto.shared.ui.goals.form.GoalFormStrategy
+import me.timeto.shared.ui.goals.form.GoalFormVm
+
+@Composable
+fun GoalFormFs(
+    strategy: GoalFormStrategy,
+) {
+
+    val navigationFs = LocalNavigationFs.current
+    val navigationLayer = LocalNavigationLayer.current
+
+    val (vm, state) = rememberVm {
+        GoalFormVm(
+            strategy = strategy,
+        )
+    }
+
+    Screen(
+        modifier = Modifier
+            .imePadding(),
+    ) {
+
+        val scrollState = rememberLazyListState()
+
+        Header(
+            title = state.title,
+            scrollState = scrollState,
+            actionButton = HeaderActionButton(
+                text = "Done",
+                isEnabled = true,
+                onClick = {
+                    TODO()
+                },
+            ),
+            cancelButton = HeaderCancelButton(
+                text = "Cancel",
+                onClick = {
+                    navigationLayer.close()
+                }
+            ),
+        )
+
+        LazyColumn(
+            modifier = Modifier
+                .weight(1f),
+            state = scrollState,
+        ) {
+
+            item {
+
+                FormPaddingTop()
+
+                FormInput(
+                    initText = state.note,
+                    placeholder = state.notePlaceholder,
+                    onChange = { newNote ->
+                        vm.setNote(newNote)
+                    },
+                    isFirst = true,
+                    isLast = true,
+                    isAutoFocus = false,
+                    imeAction = ImeAction.Done,
+                )
+
+                FormPaddingSectionSection()
+
+                FormButton(
+                    title = state.periodTitle,
+                    isFirst = true,
+                    isLast = false,
+                    note = state.periodNote,
+                    noteColor = if (state.period == null) c.red else null,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.push {
+                            GoalFormPeriodFs(
+                                initGoalDbPeriod = state.period,
+                                onDone = { newPeriod ->
+                                    vm.setPeriod(newPeriod = newPeriod)
+                                },
+                            )
+                        }
+                    },
+                )
+
+                FormPaddingBottom()
+            }
+        }
+    }
+}
