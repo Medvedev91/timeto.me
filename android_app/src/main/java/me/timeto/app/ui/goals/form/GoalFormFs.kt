@@ -9,6 +9,7 @@ import androidx.compose.ui.text.input.ImeAction
 import me.timeto.app.c
 import me.timeto.app.rememberVm
 import me.timeto.app.ui.Screen
+import me.timeto.app.ui.emoji.EmojiPickerFs
 import me.timeto.app.ui.form.FormButton
 import me.timeto.app.ui.form.FormInput
 import me.timeto.app.ui.form.FormPaddingBottom
@@ -141,6 +142,25 @@ fun GoalFormFs(
                                 initSeconds = state.timer,
                                 onDone = { seconds ->
                                     vm.setTimer(newTimer = seconds)
+                                },
+                            )
+                        }
+                    },
+                )
+
+                // todo emoji UI like activity form
+
+                FormButton(
+                    title = state.finishedTextTitle,
+                    isFirst = false,
+                    isLast = true,
+                    note = state.finishedText,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.push {
+                            EmojiPickerFs(
+                                onPick = { emoji ->
+                                    vm.setFinishedText(emoji)
                                 },
                             )
                         }
