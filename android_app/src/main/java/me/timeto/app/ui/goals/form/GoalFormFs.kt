@@ -79,7 +79,7 @@ fun GoalFormFs(
                 text = "Cancel",
                 onClick = {
                     navigationLayer.close()
-                }
+                },
             ),
         )
 
