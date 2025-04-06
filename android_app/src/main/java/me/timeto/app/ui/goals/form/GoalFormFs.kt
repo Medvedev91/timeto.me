@@ -207,6 +207,20 @@ fun GoalFormFs(
                     },
                 )
 
+                if (strategy is GoalFormStrategy.EditFormData) {
+                    FormPaddingSectionSection()
+                    FormButton(
+                        title = "Delete Goal",
+                        titleColor = c.red,
+                        isFirst = true,
+                        isLast = true,
+                        onClick = {
+                            strategy.onDelete()
+                            navigationLayer.close()
+                        },
+                    )
+                }
+
                 FormPaddingBottom()
             }
         }
