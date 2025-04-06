@@ -62,6 +62,10 @@ class ChecklistsPickerVm(
         state.update { it.copy(selectedIds = ids) }
     }
 
+    fun addSelectedId(id: Int) {
+        state.update { it.copy(selectedIds = it.selectedIds + id) }
+    }
+
     fun getSelectedChecklistsDb(): List<ChecklistDb> =
         state.value.checklistsDb.filter { it.id in state.value.selectedIds }
 }
