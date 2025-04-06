@@ -36,6 +36,18 @@ class ShortcutsPickerVm(
         }
     }
 
+    fun toggleShortcut(shortcutDb: ShortcutDb) {
+        val newSelectedIds = state.value.selectedIds.toMutableSet()
+        val shortcutId: Int = shortcutDb.id
+        if (shortcutId in newSelectedIds)
+            newSelectedIds.remove(shortcutId)
+        else
+            newSelectedIds.add(shortcutId)
+        state.update {
+            it.copy(selectedIds = newSelectedIds)
+        }
+    }
+
     fun setSelectedIds(ids: Set<Int>) {
         state.update { it.copy(selectedIds = ids) }
     }
