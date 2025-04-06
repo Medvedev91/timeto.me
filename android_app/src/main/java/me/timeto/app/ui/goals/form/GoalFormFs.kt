@@ -9,6 +9,7 @@ import androidx.compose.ui.text.input.ImeAction
 import me.timeto.app.c
 import me.timeto.app.rememberVm
 import me.timeto.app.ui.Screen
+import me.timeto.app.ui.checklists.ChecklistsPickerFs
 import me.timeto.app.ui.emoji.EmojiPickerFs
 import me.timeto.app.ui.form.FormButton
 import me.timeto.app.ui.form.FormInput
@@ -162,6 +163,26 @@ fun GoalFormFs(
                                 onPick = { emoji ->
                                     vm.setFinishedText(emoji)
                                 },
+                            )
+                        }
+                    },
+                )
+
+                FormPaddingSectionSection()
+
+                FormButton(
+                    title = "Checklists",
+                    isFirst = true,
+                    isLast = false,
+                    note = state.checklistsNote,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.push {
+                            ChecklistsPickerFs(
+                                initChecklistsDb = state.checklistsDb,
+                                onDone = { newChecklistsDb ->
+                                    vm.setChecklistsDb(newChecklistsDb)
+                                }
                             )
                         }
                     },
