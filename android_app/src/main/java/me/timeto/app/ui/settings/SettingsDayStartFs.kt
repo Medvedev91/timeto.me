@@ -58,6 +58,7 @@ fun SettingsDayStartFs(
                         title = item.note,
                         isSelected = item.seconds == state.dayStartSeconds,
                         isFirst = dayStartListItems.first() == item,
+                        modifier = Modifier,
                         onClick = {
                             vm.setDayStartOffsetSeconds(item.seconds)
                             navigationLayer.close()

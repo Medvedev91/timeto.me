@@ -30,11 +30,12 @@ fun FormPlainButtonSelection(
     title: String,
     isSelected: Boolean,
     isFirst: Boolean,
+    modifier: Modifier,
     onClick: () -> Unit,
 ) {
 
     ZStack(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .clickable {
                 onClick()

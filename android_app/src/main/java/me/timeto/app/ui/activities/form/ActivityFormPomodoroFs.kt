@@ -65,6 +65,7 @@ fun ActivityFormPomodoroFs(
                         title = itemUi.text,
                         isSelected = itemUi.isSelected,
                         isFirst = dayStartListItems.first() == itemUi,
+                        modifier = Modifier,
                         onClick = {
                             vm.setPomodoroTimer(itemUi.timer)
                             navigationLayer.close()

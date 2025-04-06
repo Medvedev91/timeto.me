@@ -72,6 +72,7 @@ fun GoalFormPeriodFs(
                         title = dayOfWeek.title,
                         isSelected = dayOfWeek.id in state.selectedDaysOfWeek,
                         isFirst = idx == 0,
+                        modifier = Modifier,
                         onClick = {
                             vm.toggleDayOfWeek(dayOfWeek = dayOfWeek)
                         },

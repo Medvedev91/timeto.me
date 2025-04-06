@@ -78,6 +78,8 @@ fun ChecklistsPickerFs(
                         title = checklistDb.name,
                         isSelected = checklistDb.id in state.selectedIds,
                         isFirst = idx == 0,
+                        modifier = Modifier
+                            .animateItem(),
                         onClick = {
                             vm.toggleChecklist(checklistDb)
                         },
