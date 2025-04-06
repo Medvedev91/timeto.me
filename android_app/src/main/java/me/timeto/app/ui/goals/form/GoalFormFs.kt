@@ -23,6 +23,7 @@ import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.shortcuts.ShortcutsPickerFs
 import me.timeto.app.ui.timer.TimerSheet
+import me.timeto.shared.ui.goals.form.GoalFormData
 import me.timeto.shared.ui.goals.form.GoalFormStrategy
 import me.timeto.shared.ui.goals.form.GoalFormVm
 
@@ -54,7 +55,24 @@ fun GoalFormFs(
                 text = "Done",
                 isEnabled = true,
                 onClick = {
-                    TODO()
+                    when (strategy) {
+                        is GoalFormStrategy.NewFormData -> {
+                            val formData: GoalFormData = state.buildFormDataOrNull(
+                                dialogsManager = navigationFs,
+                                goalDb = null,
+                            ) ?: return@HeaderActionButton
+                            strategy.onDone(formData)
+                            navigationLayer.close()
+                        }
+                        is GoalFormStrategy.EditFormData -> {
+                            val formData: GoalFormData = state.buildFormDataOrNull(
+                                dialogsManager = navigationFs,
+                                goalDb = strategy.initGoalFormData.goalDb,
+                            ) ?: return@HeaderActionButton
+                            strategy.onDone(formData)
+                            navigationLayer.close()
+                        }
+                    }
                 },
             ),
             cancelButton = HeaderCancelButton(
