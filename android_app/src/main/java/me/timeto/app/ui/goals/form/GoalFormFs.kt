@@ -19,6 +19,7 @@ import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
+import me.timeto.app.ui.timer.TimerSheet
 import me.timeto.shared.ui.goals.form.GoalFormStrategy
 import me.timeto.shared.ui.goals.form.GoalFormVm
 
@@ -98,6 +99,26 @@ fun GoalFormFs(
                                 initGoalDbPeriod = state.period,
                                 onDone = { newPeriod ->
                                     vm.setPeriod(newPeriod = newPeriod)
+                                },
+                            )
+                        }
+                    },
+                )
+
+                FormButton(
+                    title = state.secondsTitle,
+                    isFirst = false,
+                    isLast = true,
+                    note = state.secondsNote,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.push {
+                            TimerSheet(
+                                title = state.secondsTitle,
+                                doneTitle = "Done",
+                                initSeconds = state.seconds,
+                                onDone = { newSeconds ->
+                                    vm.setSeconds(newSeconds = newSeconds)
                                 },
                             )
                         }
