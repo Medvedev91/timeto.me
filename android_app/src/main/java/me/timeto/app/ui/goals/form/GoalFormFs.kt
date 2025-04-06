@@ -125,6 +125,28 @@ fun GoalFormFs(
                     },
                 )
 
+                FormPaddingSectionSection()
+
+                FormButton(
+                    title = state.timerTitle,
+                    isFirst = true,
+                    isLast = false,
+                    note = state.timerNote,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.push {
+                            TimerSheet(
+                                title = state.timerTitle,
+                                doneTitle = "Done",
+                                initSeconds = state.timer,
+                                onDone = { seconds ->
+                                    vm.setTimer(newTimer = seconds)
+                                },
+                            )
+                        }
+                    },
+                )
+
                 FormPaddingBottom()
             }
         }
