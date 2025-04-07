@@ -141,9 +141,8 @@ private struct ChecklistViewInner: View {
                             Button(
                                 action: {
                                     navigation.sheet {
-                                        ChecklistFormSheet(
+                                        ChecklistFormItemsSheet(
                                             checklistDb: state.checklistDb,
-                                            onSave: { _ in },
                                             onDelete: {
                                                 onDelete()
                                             }
@@ -151,7 +150,7 @@ private struct ChecklistViewInner: View {
                                     }
                                 },
                                 label: {
-                                    Label("Settings", systemImage: "gear")
+                                    Label("Edit Checklist", systemImage: "gear")
                                 }
                             )
                         }
