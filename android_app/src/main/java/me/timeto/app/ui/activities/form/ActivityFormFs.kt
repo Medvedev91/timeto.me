@@ -231,6 +231,24 @@ fun ActivityFormFs(
                         }
                     },
                 )
+
+                FormButton(
+                    title = state.timerHintsTitle,
+                    isFirst = false,
+                    isLast = true,
+                    note = state.timerHintsNote,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.push {
+                            ActivityFormTimerHintsFs(
+                                initTimerHints = state.timerHints,
+                                onDone = { newTimerHints ->
+                                    vm.setTimerHints(newTimerHints)
+                                },
+                            )
+                        }
+                    },
+                )
             }
         }
     }
