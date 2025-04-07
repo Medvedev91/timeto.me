@@ -23,10 +23,12 @@ import me.timeto.app.rememberVm
 import me.timeto.app.roundedShape
 import me.timeto.app.toColor
 import me.timeto.app.ui.Screen
+import me.timeto.app.ui.checklists.ChecklistsPickerFs
 import me.timeto.app.ui.color.ColorPickerFs
 import me.timeto.app.ui.emoji.EmojiPickerFs
 import me.timeto.app.ui.form.FormButton
 import me.timeto.app.ui.form.FormInput
+import me.timeto.app.ui.form.FormPaddingBottom
 import me.timeto.app.ui.form.FormPaddingSectionSection
 import me.timeto.app.ui.form.FormPaddingTop
 import me.timeto.app.ui.form.FormSwitch
@@ -38,6 +40,7 @@ import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
+import me.timeto.app.ui.shortcuts.ShortcutsPickerFs
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.ui.activities.form.ActivityFormVm
 
@@ -249,6 +252,46 @@ fun ActivityFormFs(
                         }
                     },
                 )
+
+                FormPaddingSectionSection()
+
+                FormButton(
+                    title = "Checklists",
+                    isFirst = true,
+                    isLast = false,
+                    note = state.checklistsNote,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.push {
+                            ChecklistsPickerFs(
+                                initChecklistsDb = state.checklistsDb,
+                                onDone = { newChecklistsDb ->
+                                    vm.setChecklistsDb(newChecklistsDb)
+                                }
+                            )
+                        }
+                    },
+                )
+
+                FormButton(
+                    title = "Shortcuts",
+                    isFirst = false,
+                    isLast = true,
+                    note = state.shortcutsNote,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.push {
+                            ShortcutsPickerFs(
+                                initShortcutsDb = state.shortcutsDb,
+                                onDone = { newShortcutsDb ->
+                                    vm.setShortcutsDb(newShortcutsDb)
+                                }
+                            )
+                        }
+                    },
+                )
+
+                FormPaddingBottom()
             }
         }
     }
