@@ -74,6 +74,9 @@ data class GoalDb(
     fun buildPeriod(): Period =
         Period.fromJson(Json.parseToJsonElement(period_json).jsonObject)
 
+    fun getActivityDbCached(): ActivityDb =
+        Cache.getActivityDbByIdOrNull(activity_id)!!
+
     //
     // Backupable Item
 
