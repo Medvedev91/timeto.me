@@ -27,7 +27,7 @@ class ActivityFormGoalsVm(
             state.update {
                 it.copy(goalFormsData = it.goalFormsData + newGoalFormData)
             }
-        }
+        },
     )
 
     fun updateGoalFormData(idx: Int, new: GoalFormData) {
