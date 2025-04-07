@@ -1,7 +1,6 @@
 package me.timeto.app.ui.activities.form
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
@@ -92,7 +91,6 @@ fun ActivityFormFs(
             modifier = Modifier
                 .fillMaxSize(),
             state = scrollState,
-            contentPadding = PaddingValues(bottom = 25.dp),
         ) {
 
             item {
@@ -291,7 +289,29 @@ fun ActivityFormFs(
                     },
                 )
 
-                FormPaddingBottom()
+                val activityDb: ActivityDb? = state.activityDb
+                if (activityDb != null) {
+                    FormPaddingSectionSection()
+                    FormButton(
+                        title = "Delete Activity",
+                        titleColor = c.red,
+                        isFirst = true,
+                        isLast = true,
+                        onClick = {
+                            vm.delete(
+                                activityDb = activityDb,
+                                dialogsManager = navigationFs,
+                                onSuccess = {
+                                    navigationLayer.close()
+                                },
+                            )
+                        },
+                    )
+                }
+
+                FormPaddingBottom(
+                    withNavigation = true,
+                )
             }
         }
     }
