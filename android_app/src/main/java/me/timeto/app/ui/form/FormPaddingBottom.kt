@@ -1,8 +1,19 @@
 package me.timeto.app.ui.form
 
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import me.timeto.app.VStack
+import me.timeto.app.ZStack
 
 @Composable
-fun FormPaddingBottom() {
-    FormPaddingSectionSection()
+fun FormPaddingBottom(
+    withNavigation: Boolean,
+) {
+    VStack {
+        FormPaddingSectionSection()
+        if (withNavigation) {
+            ZStack(Modifier.navigationBarsPadding())
+        }
+    }
 }

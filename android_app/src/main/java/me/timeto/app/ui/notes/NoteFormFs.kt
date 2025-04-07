@@ -107,7 +107,9 @@ fun NoteFormFs(
                     )
                 }
 
-                FormPaddingBottom()
+                FormPaddingBottom(
+                    withNavigation = true,
+                )
             }
         }
     }

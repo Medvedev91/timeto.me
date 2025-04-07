@@ -239,7 +239,9 @@ fun GoalFormFs(
                     )
                 }
 
-                FormPaddingBottom()
+                FormPaddingBottom(
+                    withNavigation = true,
+                )
             }
         }
     }
