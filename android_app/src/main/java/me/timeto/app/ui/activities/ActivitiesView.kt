@@ -126,7 +126,7 @@ fun ActivitiesView(
                                     Text(
                                         text = timerHintUi.title,
                                         modifier = Modifier
-                                            .clip(squircleShape)
+                                            .clip(roundedShape)
                                             .clickable {
                                                 timerHintUi.onTap()
                                             }
