@@ -113,8 +113,6 @@ fun ActivitiesView(
                             maxLines = 1,
                         )
 
-                        SpacerW1()
-
                         val timerHintsUi: List<ActivitiesVm.TimerHintUi> = activityUi.timerHintsUi
                         if (timerHintsUi.isNotEmpty()) {
                             timerHintsUi.forEach { timerHintUi ->
