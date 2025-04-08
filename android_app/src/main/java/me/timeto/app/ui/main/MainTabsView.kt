@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -31,12 +32,12 @@ import me.timeto.app.VStack
 import me.timeto.app.ZStack
 import me.timeto.app.c
 import me.timeto.app.halfDpFloor
+import me.timeto.app.mics.Haptic
 import me.timeto.app.onePx
 import me.timeto.app.rememberVm
 import me.timeto.app.squircleShape
 import me.timeto.app.timerFont
 import me.timeto.app.toColor
-import me.timeto.app.ui.ActivitiesTimerSheet__show
 import me.timeto.shared.ui.main.MainTabsVm
 
 val MainTabsView__height = 56.dp
@@ -52,6 +53,11 @@ fun MainTabsView(
 
     val (_, state) = rememberVm {
         MainTabsVm()
+    }
+
+    LaunchedEffect(state.lastIntervalId) {
+        onTabChanged(MainTabEnum.home)
+        Haptic.long()
     }
 
     val withBackground: Boolean = tab != MainTabEnum.home
@@ -87,7 +93,10 @@ fun MainTabsView(
                 contentDescription = "Timer",
                 isSelected = tab == MainTabEnum.activities,
                 onTouch = {
-                    ActivitiesTimerSheet__show(timerContext = null, withMenu = true)
+                    onTabChanged(
+                        if (tab == MainTabEnum.activities) MainTabEnum.home
+                        else MainTabEnum.activities,
+                    )
                 },
             )
 
