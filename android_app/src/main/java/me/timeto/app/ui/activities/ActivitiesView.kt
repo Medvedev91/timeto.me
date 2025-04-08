@@ -23,9 +23,9 @@ import me.timeto.app.ZStack
 import me.timeto.app.c
 import me.timeto.app.rememberVm
 import me.timeto.app.roundedShape
-import me.timeto.app.ui.ActivityFormSheet
 import me.timeto.app.ui.ActivityTimerSheet__show
 import me.timeto.app.ui.Divider
+import me.timeto.app.ui.activities.form.ActivityFormFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.shared.ui.activities.ActivitiesVm
 
@@ -77,8 +77,8 @@ fun ActivitiesView(
                                 },
                                 onLongClick = {
                                     navigationFs.push {
-                                        ActivityFormSheet(
-                                            activity = activityUi.activityDb,
+                                        ActivityFormFs(
+                                            initActivityDb = activityUi.activityDb,
                                         )
                                     }
                                 },
