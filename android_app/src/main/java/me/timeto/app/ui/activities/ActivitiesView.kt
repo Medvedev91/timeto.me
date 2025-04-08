@@ -31,9 +31,10 @@ import me.timeto.app.roundedShape
 import me.timeto.app.squircleShape
 import me.timeto.app.ui.ActivityTimerSheet__show
 import me.timeto.app.ui.Divider
-import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.activities.form.ActivityFormFs
+import me.timeto.app.ui.activities.form.ActivityFormTimerHintsFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.ui.activities.ActivitiesVm
 
 val ActivitiesView__listItemHeight = 42.dp
@@ -52,7 +53,7 @@ fun ActivitiesView(
 
     val navigationFs = LocalNavigationFs.current
 
-    val (_, state) = rememberVm {
+    val (vm, state) = rememberVm {
         ActivitiesVm()
     }
 
@@ -64,6 +65,8 @@ fun ActivitiesView(
 
         val activitiesUi = state.activitiesUi.reversed()
         activitiesUi.forEach { activityUi ->
+
+            val activityDb: ActivityDb = activityUi.activityDb
 
             item {
 
@@ -77,7 +80,7 @@ fun ActivitiesView(
                             .combinedClickable(
                                 onClick = {
                                     ActivityTimerSheet__show(
-                                        activity = activityUi.activityDb,
+                                        activity = activityDb,
                                         timerContext = null,
                                         onStarted = {},
                                     )
@@ -85,7 +88,7 @@ fun ActivitiesView(
                                 onLongClick = {
                                     navigationFs.push {
                                         ActivityFormFs(
-                                            initActivityDb = activityUi.activityDb,
+                                            initActivityDb = activityDb,
                                         )
                                     }
                                 },
@@ -95,7 +98,7 @@ fun ActivitiesView(
                     ) {
 
                         Text(
-                            text = activityUi.activityDb.emoji,
+                            text = activityDb.emoji,
                             modifier = Modifier
                                 .padding(horizontal = activityItemEmojiHPadding)
                                 .width(activityItemEmojiWidth),
@@ -113,19 +116,24 @@ fun ActivitiesView(
                             maxLines = 1,
                         )
 
-                        val timerHintsUi: List<ActivitiesVm.TimerHintUi> = activityUi.timerHintsUi
+                        val timerHintsUi = activityUi.timerHintsUi
                         if (timerHintsUi.isNotEmpty()) {
-                            timerHintsUi.forEach { timerHintUi ->
-                                Text(
-                                    text = timerHintUi.title,
-                                    modifier = Modifier
-                                        .clip(squircleShape)
-                                        .clickable {
-                                            timerHintUi.onTap()
-                                        }
-                                        .padding(horizontal = ActivitiesView__timerHintHPadding),
-                                    color = c.blue,
-                                )
+                            HStack(
+                                modifier = Modifier
+                                    .padding(end = 2.dp),
+                            ) {
+                                timerHintsUi.forEach { timerHintUi ->
+                                    Text(
+                                        text = timerHintUi.title,
+                                        modifier = Modifier
+                                            .clip(squircleShape)
+                                            .clickable {
+                                                timerHintUi.onTap()
+                                            }
+                                            .padding(horizontal = ActivitiesView__timerHintHPadding),
+                                        color = c.blue,
+                                    )
+                                }
                             }
                         } else {
                             Icon(
@@ -135,6 +143,17 @@ fun ActivitiesView(
                                 modifier = Modifier
                                     .clip(roundedShape)
                                     .clickable {
+                                        navigationFs.push {
+                                            ActivityFormTimerHintsFs(
+                                                initTimerHints = activityDb.timerHints,
+                                                onDone = { newTimerHints ->
+                                                    vm.updateTimerHints(
+                                                        activityDb = activityDb,
+                                                        newTimerHints = newTimerHints,
+                                                    )
+                                                }
+                                            )
+                                        }
                                     }
                                     .padding(8.dp)
                                     .size(13.dp),
