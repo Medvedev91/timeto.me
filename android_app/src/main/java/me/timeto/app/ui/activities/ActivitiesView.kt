@@ -28,7 +28,6 @@ import me.timeto.app.c
 import me.timeto.app.R
 import me.timeto.app.rememberVm
 import me.timeto.app.roundedShape
-import me.timeto.app.squircleShape
 import me.timeto.app.ui.ActivityTimerSheet__show
 import me.timeto.app.ui.Divider
 import me.timeto.app.ui.activities.form.ActivityFormFs
