@@ -54,7 +54,6 @@ android {
     compileOptions.sourceCompatibility = JavaVersion.VERSION_17
     compileOptions.targetCompatibility = JavaVersion.VERSION_17
 
-    buildFeatures.compose = true
     buildFeatures.buildConfig = true
 }
 
