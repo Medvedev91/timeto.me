@@ -1,4 +1,4 @@
-package me.timeto.app.ui.form
+package me.timeto.app.ui.form.padding
 
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.runtime.Composable
