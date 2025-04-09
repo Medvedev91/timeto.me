@@ -140,6 +140,7 @@ fun SettingsScreen(
                     title = state.readmeTitle,
                     isFirst = true,
                     isLast = false,
+                    withArrow = true,
                     onClick = {
                         navigationFs.push {
                             ReadmeFs()
@@ -343,6 +344,7 @@ fun SettingsScreen(
                     isFirst = false,
                     isLast = false,
                     note = state.dayStartNote,
+                    withArrow = true,
                     onClick = {
                         navigationFs.push {
                             SettingsDayStartFs(
@@ -404,6 +406,7 @@ fun SettingsScreen(
                     isFirst = false,
                     isLast = true,
                     note = state.autoBackupTimeString,
+                    withArrow = true,
                     onClick = {
                         context.startActivity(Intent(DownloadManager.ACTION_VIEW_DOWNLOADS))
                     },
