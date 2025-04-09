@@ -17,10 +17,10 @@ struct NavigationLinkPush<Content: View>: View {
     
     var body: some View {
         //
-        // Doesn't work well. Caches the initial path.
+        // Doesn't work well. Caches the initial path:
         // SwiftUI.NavigationLink(value: path, label: content)
         //
-        // Fix. Source: https://stackoverflow.com/a/72030978
+        // Fix: https://stackoverflow.com/a/72030978
         Button(
             action: {
                 navigation.push(path)
