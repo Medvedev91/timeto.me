@@ -1,4 +1,4 @@
-package me.timeto.app.ui.form
+package me.timeto.app.ui.form.plain
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
