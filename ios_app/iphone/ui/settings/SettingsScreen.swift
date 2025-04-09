@@ -40,12 +40,15 @@ private struct SettingsScreenInner: View {
             
             Section {
                 
-                Button(state.readmeTitle) {
-                    navigation.fullScreen {
+                NavigationLinkFullScreen(
+                    label: {
+                        Text(state.readmeTitle)
+                            .foregroundColor(.primary)
+                    },
+                    fullScreen: {
                         ReadmeFullScreen(defaultItem: .basics)
                     }
-                }
-                .foregroundColor(.primary)
+                )
                 
                 NavigationLinkPush(.whatsNew) {
                     HStack {
@@ -233,7 +236,16 @@ private struct SettingsScreenInner: View {
                 }
                 .foregroundColor(.primary)
                 
-                Button(
+                NavigationLinkAction(
+                    label: {
+                        HStack {
+                            Text("Auto Backup")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text(state.autoBackupTimeString)
+                                .foregroundColor(.secondary)
+                        }
+                    },
                     action: {
                         do {
                             // https://stackoverflow.com/a/64592118/5169420
@@ -244,15 +256,6 @@ private struct SettingsScreenInner: View {
                         } catch {
                             navigation.alert(message: "Error")
                             reportApi("AutoBackupIos.autoBackupsFolder() error:\n\(error)")
-                        }
-                    },
-                    label: {
-                        HStack {
-                            Text("Auto Backup")
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Text(state.autoBackupTimeString)
-                                .foregroundColor(.secondary)
                         }
                     }
                 )
