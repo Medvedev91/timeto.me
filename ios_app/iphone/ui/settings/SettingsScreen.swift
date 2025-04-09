@@ -188,16 +188,7 @@ private struct SettingsScreenInner: View {
                     Text("Folders")
                 }
                 
-                Button(
-                    action: {
-                        navigation.sheet {
-                            SettingsDayStartSheet(
-                                vm: vm,
-                                state: state,
-                                dayStart: state.dayStartSeconds
-                            )
-                        }
-                    },
+                NavigationLinkSheet(
                     label: {
                         HStack {
                             Text("Day Start")
@@ -206,6 +197,13 @@ private struct SettingsScreenInner: View {
                             Text(state.dayStartNote)
                                 .foregroundColor(.secondary)
                         }
+                    },
+                    sheet: {
+                        SettingsDayStartSheet(
+                            vm: vm,
+                            state: state,
+                            dayStart: state.dayStartSeconds
+                        )
                     }
                 )
                 
