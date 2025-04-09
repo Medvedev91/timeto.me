@@ -1,4 +1,4 @@
-package me.timeto.app.ui.form.views
+package me.timeto.app.ui.form.button
 
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding

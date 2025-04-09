@@ -1,4 +1,4 @@
-package me.timeto.app.ui.form.views
+package me.timeto.app.ui.form.button
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
@@ -15,6 +15,7 @@ import me.timeto.app.HStack
 import me.timeto.app.H_PADDING
 import me.timeto.app.c
 import me.timeto.app.ui.form.Form__itemMinHeight
+import me.timeto.app.ui.form.FormItemView
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

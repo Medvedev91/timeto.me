@@ -1,4 +1,4 @@
-package me.timeto.app.ui.form.views
+package me.timeto.app.ui.form
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues

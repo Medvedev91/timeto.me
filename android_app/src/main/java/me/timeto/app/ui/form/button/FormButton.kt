@@ -1,13 +1,10 @@
-package me.timeto.app.ui.form
+package me.timeto.app.ui.form.button
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import me.timeto.app.HStack
-import me.timeto.app.ui.form.views.FormButtonArrowView
-import me.timeto.app.ui.form.views.FormButtonNoteView
-import me.timeto.app.ui.form.views.FormButtonView
 
 @Composable
 fun FormButton(
