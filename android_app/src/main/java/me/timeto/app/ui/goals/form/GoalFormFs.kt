@@ -179,7 +179,7 @@ fun GoalFormFs(
                     onClick = {
                         navigationFs.push {
                             EmojiPickerFs(
-                                onPick = { emoji ->
+                                onDone = { emoji ->
                                     vm.setFinishedText(emoji)
                                 },
                             )

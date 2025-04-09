@@ -61,7 +61,7 @@ private val dividerPadding: Dp = H_PADDING.goldenRatioDown()
 fun ColorPickerFs(
     title: String,
     examplesData: ColorPickerExamplesData,
-    onPick: (ColorRgba) -> Unit,
+    onDone: (ColorRgba) -> Unit,
 ) {
 
     val navigationFs = LocalNavigationFs.current
@@ -85,7 +85,7 @@ fun ColorPickerFs(
                 text = state.saveText,
                 isEnabled = true,
                 onClick = {
-                    onPick(state.colorRgba)
+                    onDone(state.colorRgba)
                     navigationLayer.close()
                 },
             ),

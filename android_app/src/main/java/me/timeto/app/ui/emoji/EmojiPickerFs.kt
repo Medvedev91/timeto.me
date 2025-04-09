@@ -50,7 +50,7 @@ import me.timeto.shared.ui.emoji.EmojiPickerVm
 
 @Composable
 fun EmojiPickerFs(
-    onPick: (String) -> Unit,
+    onDone: (String) -> Unit,
 ) {
 
     val navigationLayer = LocalNavigationLayer.current
@@ -175,7 +175,7 @@ fun EmojiPickerFs(
                         modifier = Modifier
                             .padding(vertical = 4.dp)
                             .clickable {
-                                onPick(emoji.emoji)
+                                onDone(emoji.emoji)
                                 navigationLayer.close()
                             },
                         textAlign = TextAlign.Center,

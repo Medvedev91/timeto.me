@@ -142,7 +142,7 @@ fun ActivityFormFs(
                     onClick = {
                         navigationFs.push {
                             EmojiPickerFs(
-                                onPick = { newEmoji ->
+                                onDone = { newEmoji ->
                                     vm.setEmoji(newEmoji = newEmoji)
                                 },
                             )
@@ -176,7 +176,7 @@ fun ActivityFormFs(
                             ColorPickerFs(
                                 title = state.colorPickerTitle,
                                 examplesData = state.buildColorPickerExamplesData(),
-                                onPick = { newColorRgba ->
+                                onDone = { newColorRgba ->
                                     vm.setColorRgba(newColorRgba = newColorRgba)
                                 },
                             )

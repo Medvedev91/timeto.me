@@ -196,7 +196,7 @@ fun HomeTimerView(
                                 doneText = "Start",
                                 daytimeUi = infoUi.untilDaytimeUi,
                                 withRemove = false,
-                                onPick = { daytimePickerUi ->
+                                onDone = { daytimePickerUi ->
                                     infoUi.setUntilDaytime(daytimePickerUi)
                                     vm.toggleIsPurple()
                                 },
