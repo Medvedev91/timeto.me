@@ -10,6 +10,7 @@ import me.timeto.app.ui.Screen
 import me.timeto.app.ui.form.plain.FormPlainButtonSelection
 import me.timeto.app.ui.form.plain.FormPlainPaddingTop
 import me.timeto.app.ui.header.Header
+import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.ui.settings.SettingsVm
@@ -32,7 +33,13 @@ fun SettingsDayStartFs(
         Header(
             title = "Day Start",
             scrollState = scrollState,
-            actionButton = null,
+            actionButton = HeaderActionButton(
+                text = "Done",
+                isEnabled = true,
+                onClick = {
+                    navigationLayer.close()
+                },
+            ),
             cancelButton = HeaderCancelButton(
                 text = "Cancel",
                 onClick = {
