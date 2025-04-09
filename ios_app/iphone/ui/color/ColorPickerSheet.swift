@@ -5,7 +5,7 @@ struct ColorPickerSheet: View {
     
     let title: String
     let examplesData: ColorPickerExamplesData
-    let onPick: (ColorRgba) -> Void
+    let onDone: (ColorRgba) -> Void
     
     var body: some View {
         VmView({
@@ -17,7 +17,7 @@ struct ColorPickerSheet: View {
                 vm: vm,
                 state: state,
                 title: title,
-                onPick: onPick
+                onDone: onDone
             )
         }
     }
@@ -37,7 +37,7 @@ private struct ColorPickerSheetInner: View {
     let state: ColorPickerVm.State
     
     let title: String
-    let onPick: (ColorRgba) -> Void
+    let onDone: (ColorRgba) -> Void
     
     ///
     
@@ -136,7 +136,7 @@ private struct ColorPickerSheetInner: View {
             }
             ToolbarItem(placement: .primaryAction) {
                 Button(state.saveText) {
-                    onPick(state.colorRgba)
+                    onDone(state.colorRgba)
                     dismiss()
                 }
                 .fontWeight(.semibold)
@@ -147,7 +147,7 @@ private struct ColorPickerSheetInner: View {
                     navigation.sheet {
                         ColorPickerCustomSheet(
                             initColorRgba: state.colorRgba,
-                            onPick: { newColorRgba in
+                            onDone: { newColorRgba in
                                 setColorRgbaLocal(newColorRgba)
                             }
                         )

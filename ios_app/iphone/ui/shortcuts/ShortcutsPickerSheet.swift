@@ -4,7 +4,7 @@ import shared
 struct ShortcutsPickerSheet: View {
     
     let initShortcutsDb: [ShortcutDb]
-    let onPick: ([ShortcutDb]) -> Void
+    let onDone: ([ShortcutDb]) -> Void
     
     var body: some View {
         VmView({
@@ -17,7 +17,7 @@ struct ShortcutsPickerSheet: View {
                 state: state,
                 selectedIds: Set(state.selectedIds.map { $0.int32Value }),
                 animatedShortcutsDb: state.shortcutsDbSorted,
-                onPick: onPick
+                onDone: onDone
             )
         }
     }
@@ -31,7 +31,7 @@ private struct ShortcutsPickerSheetInner: View {
     @State var selectedIds = Set<Int32>()
     @State var animatedShortcutsDb: [ShortcutDb]
     
-    let onPick: ([ShortcutDb]) -> Void
+    let onDone: ([ShortcutDb]) -> Void
     
     ///
     
@@ -79,7 +79,7 @@ private struct ShortcutsPickerSheetInner: View {
             ToolbarItem(placement: .primaryAction) {
                 Button(state.doneText) {
                     dismiss()
-                    onPick(vm.getSelectedShortcutsDb())
+                    onDone(vm.getSelectedShortcutsDb())
                 }
                 .fontWeight(.semibold)
             }

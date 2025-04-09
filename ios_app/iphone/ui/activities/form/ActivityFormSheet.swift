@@ -65,7 +65,7 @@ private struct ActivityFormSheetInner: View {
                     },
                     sheet: {
                         EmojiPickerSheet(
-                            onPick: { emoji in
+                            onDone: { emoji in
                                 vm.setEmoji(newEmoji: emoji)
                             }
                         )
@@ -86,7 +86,7 @@ private struct ActivityFormSheetInner: View {
                         ColorPickerSheet(
                             title: state.colorPickerTitle,
                             examplesData: state.buildColorPickerExamplesData(),
-                            onPick: { colorRgba in
+                            onDone: { colorRgba in
                                 vm.setColorRgba(newColorRgba: colorRgba)
                             }
                         )
@@ -138,7 +138,7 @@ private struct ActivityFormSheetInner: View {
                     sheet: {
                         ActivityFormGoalsSheet(
                             initGoalFormsData: state.goalFormsData,
-                            onPick: { newGoalFormsData in
+                            onDone: { newGoalFormsData in
                                 vm.setGoalFormsData(newGoalFormsData: newGoalFormsData)
                             }
                         )
@@ -181,7 +181,7 @@ private struct ActivityFormSheetInner: View {
                     sheet: {
                         ChecklistsPickerSheet(
                             initChecklistsDb: state.checklistsDb,
-                            onPick: { newChecklistsDb in
+                            onDone: { newChecklistsDb in
                                 vm.setChecklistsDb(newChecklistsDb: newChecklistsDb)
                             }
                         )
@@ -201,7 +201,7 @@ private struct ActivityFormSheetInner: View {
                     sheet: {
                         ShortcutsPickerSheet(
                             initShortcutsDb: state.shortcutsDb,
-                            onPick: { newShortcutsDb in
+                            onDone: { newShortcutsDb in
                                 vm.setShortcutsDb(newShortcutsDb: newShortcutsDb)
                             }
                         )

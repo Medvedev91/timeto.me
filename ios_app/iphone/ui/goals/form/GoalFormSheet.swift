@@ -151,7 +151,7 @@ private struct GoalFormSheetInner: View {
                     sheet: {
                         ChecklistsPickerSheet(
                             initChecklistsDb: state.checklistsDb,
-                            onPick: { newChecklistsDb in
+                            onDone: { newChecklistsDb in
                                 vm.setChecklistsDb(newChecklistsDb: newChecklistsDb)
                             }
                         )
@@ -171,7 +171,7 @@ private struct GoalFormSheetInner: View {
                     sheet: {
                         ShortcutsPickerSheet(
                             initShortcutsDb: state.shortcutsDb,
-                            onPick: { newShortcutsDb in
+                            onDone: { newShortcutsDb in
                                 vm.setShortcutsDb(newShortcutsDb: newShortcutsDb)
                             }
                         )

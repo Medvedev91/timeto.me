@@ -4,7 +4,7 @@ import shared
 struct ActivityFormGoalsSheet: View {
     
     let initGoalFormsData: [GoalFormData]
-    let onPick: ([GoalFormData]) -> Void
+    let onDone: ([GoalFormData]) -> Void
     
     var body: some View {
         VmView({
@@ -15,7 +15,7 @@ struct ActivityFormGoalsSheet: View {
             ActivityFormGoalsSheetInner(
                 vm: vm,
                 state: state,
-                onPick: onPick
+                onDone: onDone
             )
         }
     }
@@ -26,7 +26,7 @@ private struct ActivityFormGoalsSheetInner: View {
     let vm: ActivityFormGoalsVm
     let state: ActivityFormGoalsVm.State
     
-    let onPick: ([GoalFormData]) -> Void
+    let onDone: ([GoalFormData]) -> Void
     
     ///
     
@@ -77,7 +77,7 @@ private struct ActivityFormGoalsSheetInner: View {
             
             ToolbarItem(placement: .primaryAction) {
                 Button("Done") {
-                    onPick(state.goalFormsData)
+                    onDone(state.goalFormsData)
                     dismiss()
                 }
                 .fontWeight(.semibold)

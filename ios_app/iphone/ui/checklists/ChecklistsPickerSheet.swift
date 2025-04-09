@@ -4,7 +4,7 @@ import shared
 struct ChecklistsPickerSheet: View {
     
     let initChecklistsDb: [ChecklistDb]
-    let onPick: ([ChecklistDb]) -> Void
+    let onDone: ([ChecklistDb]) -> Void
     
     var body: some View {
         VmView({
@@ -17,7 +17,7 @@ struct ChecklistsPickerSheet: View {
                 state: state,
                 selectedIds: Set(state.selectedIds.map { $0.int32Value }),
                 animatedChecklistsDb: state.checklistsDbSorted,
-                onPick: onPick
+                onDone: onDone
             )
         }
     }
@@ -31,7 +31,7 @@ private struct ChecklistsPickerSheetInner: View {
     @State var selectedIds = Set<Int32>()
     @State var animatedChecklistsDb: [ChecklistDb]
     
-    let onPick: ([ChecklistDb]) -> Void
+    let onDone: ([ChecklistDb]) -> Void
     
     ///
     
@@ -83,7 +83,7 @@ private struct ChecklistsPickerSheetInner: View {
                 ToolbarItem(placement: .primaryAction) {
                     Button(state.doneText) {
                         dismiss()
-                        onPick(vm.getSelectedChecklistsDb())
+                        onDone(vm.getSelectedChecklistsDb())
                     }
                     .fontWeight(.semibold)
                 }

@@ -5,9 +5,9 @@ struct ColorPickerCustomSheet: View {
     
     init(
         initColorRgba: ColorRgba,
-        onPick: @escaping (ColorRgba) -> Void
+        onDone: @escaping (ColorRgba) -> Void
     ) {
-        self.onPick = onPick
+        self.onDone = onDone
         _colorRgb = State(initialValue: ColorRgbLocal(
             r: initColorRgba.r.toDouble(),
             g: initColorRgba.g.toDouble(),
@@ -18,7 +18,7 @@ struct ColorPickerCustomSheet: View {
     ///
     
     @State private var colorRgb: ColorRgbLocal
-    private let onPick: (ColorRgba) -> Void
+    private let onDone: (ColorRgba) -> Void
     
     @Environment(\.dismiss) private var dismiss
     
@@ -42,7 +42,7 @@ struct ColorPickerCustomSheet: View {
             }
             ToolbarItem(placement: .primaryAction) {
                 Button("Done") {
-                    onPick(colorRgba)
+                    onDone(colorRgba)
                     dismiss()
                 }
                 .fontWeight(.semibold)

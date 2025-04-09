@@ -3,7 +3,7 @@ import shared
 
 struct EmojiPickerSheet: View {
     
-    let onPick: (String) -> Void
+    let onDone: (String) -> Void
     
     var body: some View {
         VmView({
@@ -12,7 +12,7 @@ struct EmojiPickerSheet: View {
             EmojiPickerSheetInner(
                 vm: vm,
                 state: state,
-                onPick: onPick
+                onDone: onDone
             )
         }
     }
@@ -30,7 +30,7 @@ private struct EmojiPickerSheetInner: View {
     let vm: EmojiPickerVm
     let state: EmojiPickerVm.State
     
-    let onPick: (String) -> Void
+    let onDone: (String) -> Void
     
     ///
     
@@ -51,7 +51,7 @@ private struct EmojiPickerSheetInner: View {
                         .font(.system(size: 33))
                         .padding(.bottom, 4)
                         .onTapGesture {
-                            onPick(emoji.emoji)
+                            onDone(emoji.emoji)
                             dismiss()
                         }
                 }

@@ -11,7 +11,7 @@ struct TimerSheet: View {
     var body: some View {
         VmView({
             TimerVm(initSeconds: initSeconds.toInt32())
-        }) { vm, state in
+        }) { vm, _ in
             TimerSheetInner(
                 title: title,
                 doneTitle: doneTitle,
