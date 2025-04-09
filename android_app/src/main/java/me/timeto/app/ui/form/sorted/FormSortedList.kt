@@ -1,4 +1,4 @@
-package me.timeto.app.ui.form
+package me.timeto.app.ui.form.sorted
 
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,8 +9,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.timeto.app.ZStack
-import me.timeto.app.ui.form.views.FormSortedItemView
-import me.timeto.app.ui.form.views.FormSortedState
 
 @Composable
 fun <Item> FormSortedList(

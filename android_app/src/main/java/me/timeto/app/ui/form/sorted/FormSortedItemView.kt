@@ -1,4 +1,4 @@
-package me.timeto.app.ui.form.views
+package me.timeto.app.ui.form.sorted
 
 import android.view.MotionEvent
 import androidx.compose.foundation.ExperimentalFoundationApi
