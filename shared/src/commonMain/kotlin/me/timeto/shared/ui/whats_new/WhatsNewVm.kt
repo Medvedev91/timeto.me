@@ -1,13 +1,16 @@
-package me.timeto.shared.vm
+package me.timeto.shared.ui.whats_new
 
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.KvDb
 import me.timeto.shared.launchExIo
+import me.timeto.shared.vm.__Vm
 
 class WhatsNewVm : __Vm<WhatsNewVm.State>() {
 
-    class State {
+    data class State(
+        val tmp: Int = 1,
+    ) {
         val title = "What's New"
         val historyItemsUi: List<HistoryItemUi> =
             WhatsNewVm.historyItemsUi
