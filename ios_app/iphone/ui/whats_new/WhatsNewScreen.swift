@@ -71,7 +71,7 @@ struct WhatsNewScreen: View {
             }
             .listStyle(.plain)
             .environment(\.defaultMinListRowHeight, 0)
-            .navigationTitle(state.headerTitle)
+            .navigationTitle(state.title)
             .toolbarTitleDisplayMode(.inline)
             .contentMarginsTabBar()
         }

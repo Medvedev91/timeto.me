@@ -38,7 +38,7 @@ fun WhatsNewFs() {
         val scrollState = rememberLazyListState()
 
         Header(
-            title = state.headerTitle,
+            title = state.title,
             scrollState = scrollState,
             actionButton = null,
             cancelButton = HeaderCancelButton(
