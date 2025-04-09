@@ -6,8 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import me.timeto.app.rememberVm
 import me.timeto.app.ui.Screen
-import me.timeto.app.ui.form.FormPlainButtonSelection
-import me.timeto.app.ui.form.FormPlainPaddingTop
+import me.timeto.app.ui.form.plain.FormPlainButtonSelection
+import me.timeto.app.ui.form.plain.FormPlainPaddingTop
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton

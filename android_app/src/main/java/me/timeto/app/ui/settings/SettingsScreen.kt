@@ -25,12 +25,12 @@ import me.timeto.app.ui.whats_new.WhatsNewFs
 import me.timeto.app.ui.checklists.form.ChecklistFormFs
 import me.timeto.app.ui.checklists.form.ChecklistFormItemsFs
 import me.timeto.app.ui.checklists.ChecklistScreen
-import me.timeto.app.ui.form.FormButton
+import me.timeto.app.ui.form.button.FormButton
 import me.timeto.app.ui.form.FormHeader
-import me.timeto.app.ui.form.FormPaddingTop
-import me.timeto.app.ui.form.FormPaddingHeaderSection
-import me.timeto.app.ui.form.FormPaddingSectionHeader
-import me.timeto.app.ui.form.FormPaddingSectionSection
+import me.timeto.app.ui.form.padding.FormPaddingTop
+import me.timeto.app.ui.form.padding.FormPaddingHeaderSection
+import me.timeto.app.ui.form.padding.FormPaddingSectionHeader
+import me.timeto.app.ui.form.padding.FormPaddingSectionSection
 import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.navigation.LocalNavigationFs

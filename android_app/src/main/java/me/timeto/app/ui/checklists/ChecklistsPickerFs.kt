@@ -12,8 +12,8 @@ import me.timeto.app.ui.checklists.form.ChecklistFormFs
 import me.timeto.app.ui.checklists.form.ChecklistFormItemsFs
 import me.timeto.app.ui.footer.Footer
 import me.timeto.app.ui.footer.FooterAddButton
-import me.timeto.app.ui.form.FormPlainButtonSelection
-import me.timeto.app.ui.form.FormPlainPaddingTop
+import me.timeto.app.ui.form.plain.FormPlainButtonSelection
+import me.timeto.app.ui.form.plain.FormPlainPaddingTop
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton

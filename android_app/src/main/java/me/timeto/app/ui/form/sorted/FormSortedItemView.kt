@@ -36,7 +36,7 @@ import me.timeto.app.goldenRatioDown
 import me.timeto.app.mics.Haptic
 import me.timeto.app.roundedShape
 import me.timeto.app.ui.Divider
-import me.timeto.app.ui.form.Form__itemMinHeight
+import me.timeto.app.ui.form.form__itemMinHeight
 import kotlin.math.absoluteValue
 
 private val deleteIconSize: Dp = 20.dp
@@ -79,7 +79,7 @@ fun LazyItemScope.FormSortedItemView(
                     onClick = onClick,
                     onLongClick = onLongClick,
                 )
-                .sizeIn(minHeight = Form__itemMinHeight),
+                .sizeIn(minHeight = form__itemMinHeight),
             verticalAlignment = Alignment.CenterVertically,
         ) {
 
@@ -129,7 +129,7 @@ fun LazyItemScope.FormSortedItemView(
                             sortedState.idxToYMap[itemIdx] = (y + (height / 2))
                         }
                     }
-                    .height(Form__itemMinHeight)
+                    .height(form__itemMinHeight)
                     .motionEventSpy { event ->
                         if (sortedMovingIdx.value == null) {
                             if (event.action == MotionEvent.ACTION_DOWN) {

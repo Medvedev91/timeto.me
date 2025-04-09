@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import me.timeto.app.HStack
 import me.timeto.app.H_PADDING
 import me.timeto.app.c
-import me.timeto.app.ui.form.Form__itemMinHeight
+import me.timeto.app.ui.form.form__itemMinHeight
 import me.timeto.app.ui.form.FormItemView
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -42,7 +42,7 @@ fun FormButtonView(
                         onClick = onClick,
                         onLongClick = onLongClick,
                     )
-                    .sizeIn(minHeight = Form__itemMinHeight),
+                    .sizeIn(minHeight = form__itemMinHeight),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
 

@@ -22,7 +22,7 @@ import me.timeto.app.ZStack
 import me.timeto.app.c
 import me.timeto.app.roundedShape
 import me.timeto.app.ui.Divider
-import me.timeto.app.ui.form.Form__itemMinHeight
+import me.timeto.app.ui.form.form__itemMinHeight
 
 private val deleteIconSize: Dp = 20.dp
 private val deleteIconTapAreaPadding: Dp = 4.dp
@@ -52,7 +52,7 @@ fun FormPlainButtonDeletion(
 
         HStack(
             modifier = Modifier
-                .defaultMinSize(minHeight = Form__itemMinHeight),
+                .defaultMinSize(minHeight = form__itemMinHeight),
             verticalAlignment = Alignment.CenterVertically,
         ) {
 

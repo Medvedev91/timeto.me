@@ -79,7 +79,7 @@ fun FormInput(
                     ZStack(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .sizeIn(minHeight = Form__itemMinHeight)
+                            .sizeIn(minHeight = form__itemMinHeight)
                             .padding(
                                 start = H_PADDING,
                                 end = H_PADDING + 16.dp, // For clear button

@@ -22,7 +22,7 @@ import me.timeto.app.ZStack
 import me.timeto.app.c
 import me.timeto.app.ui.Divider
 import me.timeto.app.ui.Screen
-import me.timeto.app.ui.form.Form__itemMinHeight
+import me.timeto.app.ui.form.form__itemMinHeight
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationLayer
@@ -70,7 +70,7 @@ fun ShortcutAppsFs(
                     ZStack(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .defaultMinSize(minHeight = Form__itemMinHeight)
+                            .defaultMinSize(minHeight = form__itemMinHeight)
                             .clickable {
                                 onAppSelected(app)
                                 navigationLayer.close()

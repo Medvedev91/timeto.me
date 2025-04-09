@@ -11,8 +11,8 @@ import me.timeto.app.ui.goals.form.GoalFormFs
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.footer.Footer
 import me.timeto.app.ui.footer.FooterAddButton
-import me.timeto.app.ui.form.FormButton
-import me.timeto.app.ui.form.FormPaddingTop
+import me.timeto.app.ui.form.button.FormButton
+import me.timeto.app.ui.form.padding.FormPaddingTop
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton

@@ -24,7 +24,7 @@ import me.timeto.app.ZStack
 import me.timeto.app.c
 import me.timeto.app.roundedShape
 import me.timeto.app.ui.Divider
-import me.timeto.app.ui.form.Form__itemMinHeight
+import me.timeto.app.ui.form.form__itemMinHeight
 
 @Composable
 fun FormPlainButtonSelection(
@@ -45,7 +45,7 @@ fun FormPlainButtonSelection(
 
         HStack(
             modifier = Modifier
-                .defaultMinSize(minHeight = Form__itemMinHeight),
+                .defaultMinSize(minHeight = form__itemMinHeight),
             verticalAlignment = Alignment.CenterVertically,
         ) {
 

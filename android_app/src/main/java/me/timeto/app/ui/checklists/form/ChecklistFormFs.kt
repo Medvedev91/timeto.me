@@ -11,10 +11,10 @@ import androidx.compose.ui.unit.dp
 import me.timeto.app.c
 import me.timeto.app.rememberVm
 import me.timeto.app.ui.Screen
-import me.timeto.app.ui.form.FormButton
+import me.timeto.app.ui.form.button.FormButton
 import me.timeto.app.ui.form.FormInput
-import me.timeto.app.ui.form.FormPaddingTop
-import me.timeto.app.ui.form.FormPaddingSectionSection
+import me.timeto.app.ui.form.padding.FormPaddingTop
+import me.timeto.app.ui.form.padding.FormPaddingSectionSection
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
