@@ -58,13 +58,13 @@ fun ActivityFormPomodoroFs(
                 FormPlainPaddingTop()
             }
 
-            val dayStartListItems = state.pomodoroListItemsData
-            dayStartListItems.forEach { itemUi ->
+            val dayStartListItemsUi = state.pomodoroListItemsUi
+            dayStartListItemsUi.forEach { itemUi ->
                 item {
                     FormPlainButtonSelection(
                         title = itemUi.text,
                         isSelected = itemUi.isSelected,
-                        isFirst = dayStartListItems.first() == itemUi,
+                        isFirst = dayStartListItemsUi.first() == itemUi,
                         modifier = Modifier,
                         onClick = {
                             vm.setPomodoroTimer(itemUi.timer)

@@ -17,9 +17,9 @@ struct ActivityFormPomodoroSheet: View {
         VStack {
             
             Picker("", selection: $seconds) {
-                ForEach(state.pomodoroListItemsData, id: \.timer) { item in
-                    Text(item.text)
-                        .tag(item.timer)
+                ForEach(state.pomodoroListItemsUi, id: \.timer) { itemUi in
+                    Text(itemUi.text)
+                        .tag(itemUi.timer)
                 }
             }
             .pickerStyle(.wheel)

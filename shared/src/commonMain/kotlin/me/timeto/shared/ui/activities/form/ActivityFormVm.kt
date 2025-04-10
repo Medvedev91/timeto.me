@@ -55,9 +55,9 @@ class ActivityFormVm(
         val pomodoroTitle = "Pomodoro"
         val pomodoroNote: String =
             prepPomodoroTimerString(pomodoroTimer)
-        val pomodoroListItemsData: List<PomodoroListItemData> =
+        val pomodoroListItemsUi: List<PomodoroListItemUi> =
             pomodoroTimers.map { timer ->
-                PomodoroListItemData(
+                PomodoroListItemUi(
                     timer = timer,
                     isSelected = pomodoroTimer == timer,
                 )
@@ -240,7 +240,7 @@ class ActivityFormVm(
 
     ///
 
-    data class PomodoroListItemData(
+    data class PomodoroListItemUi(
         val timer: Int,
         val isSelected: Boolean,
     ) {
