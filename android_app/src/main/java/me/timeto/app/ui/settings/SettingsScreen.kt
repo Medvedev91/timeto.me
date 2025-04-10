@@ -484,7 +484,7 @@ fun SettingsScreen(
                     withArrow = true,
                     onClick = {
                         navigationFs.push {
-                            PrivacyFs()
+                            PrivacyFs(isFdroid = false)
                         }
                     },
                 )
