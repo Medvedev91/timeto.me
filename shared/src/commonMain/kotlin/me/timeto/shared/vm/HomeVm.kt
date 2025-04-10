@@ -185,14 +185,14 @@ class HomeVm : __Vm<HomeVm.State>() {
                 .selectOrNullFlow()
                 .onEachExIn(scope) { kvDb ->
                     state.update {
-                        it.copy(fdroidMessage = if (kvDb == null) "Message for F-Droid users" else null)
+                        it.copy(fdroidMessage = if (kvDb == null) "Message for F-Droid Users" else null)
                     }
                 }
         KvDb.KEY.HOME_README_OPEN_TIME
             .selectOrNullFlow()
             .onEachExIn(scope) { kvDb ->
                 state.update {
-                    it.copy(readmeMessage = if (kvDb == null) "How to use the app" else null)
+                    it.copy(readmeMessage = if (kvDb == null) "How to Use the App" else null)
                 }
             }
         KvDb.KEY.WHATS_NEW_CHECK_UNIX_DAY
