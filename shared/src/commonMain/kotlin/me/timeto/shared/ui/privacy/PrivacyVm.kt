@@ -46,9 +46,8 @@ class PrivacyVm : __Vm<PrivacyVm.State>() {
     fun setIsSendingReports(isEnabled: Boolean) {
         launchExIo {
             KvDb.upsertIsSendingReports(isEnabled)
-            if (isEnabled) {
+            if (isEnabled)
                 ping(force = true)
-            }
         }
     }
 
