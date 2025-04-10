@@ -1,5 +1,6 @@
 package me.timeto.app.ui.privacy
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -8,9 +9,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import me.timeto.app.HStack
 import me.timeto.app.H_PADDING
 import me.timeto.app.H_PADDING_HALF
 import me.timeto.app.c
@@ -18,20 +21,26 @@ import me.timeto.app.rememberVm
 import me.timeto.app.showOpenSource
 import me.timeto.app.squircleShape
 import me.timeto.app.ui.Screen
+import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.header.Header
+import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.ui.privacy.PrivacyVm
 
 @Composable
-fun PrivacyFs() {
+fun PrivacyFs(
+    isFdroid: Boolean,
+) {
 
     val navigationLayer = LocalNavigationLayer.current
 
     val (vm, state) = rememberVm {
         PrivacyVm()
     }
+
+    BackHandler(enabled = isFdroid) {}
 
     Screen {
 
@@ -40,13 +49,24 @@ fun PrivacyFs() {
         Header(
             title = state.title,
             scrollState = scrollState,
-            actionButton = null,
-            cancelButton = HeaderCancelButton(
-                text = "Close",
-                onClick = {
-                    navigationLayer.close()
-                },
-            ),
+            actionButton =
+                if (isFdroid && !state.isSendingReportsEnabled) null
+                else HeaderActionButton(
+                    text = "Done",
+                    isEnabled = true,
+                    onClick = {
+                        navigationLayer.close()
+                    },
+                )
+            ,
+            cancelButton =
+                if (isFdroid) null
+                else HeaderCancelButton(
+                    text = "Close",
+                    onClick = {
+                        navigationLayer.close()
+                    },
+                ),
         )
 
         LazyColumn(
@@ -84,19 +104,53 @@ fun PrivacyFs() {
             }
 
             item {
-                Text(
-                    text = "Open Source",
-                    modifier = Modifier
-                        .padding(top = 12.dp)
-                        .padding(horizontal = H_PADDING_HALF)
-                        .clip(squircleShape)
-                        .clickable {
+
+                HStack {
+
+                    BottomButton(
+                        text = "Open Source",
+                        color = c.blue,
+                        onClick = {
                             showOpenSource()
-                        }
-                        .padding(horizontal = H_PADDING_HALF, vertical = 4.dp),
-                    color = c.blue,
-                )
+                        },
+                    )
+
+                    SpacerW1()
+
+                    if (isFdroid && !state.isSendingReportsEnabled) {
+                        BottomButton(
+                            text = "Don't Send",
+                            color = c.textSecondary,
+                            onClick = {
+                                vm.setIsSendingReports(isEnabled = false)
+                                navigationLayer.close()
+                            },
+                        )
+                    }
+                }
             }
         }
     }
+}
+
+///
+
+@Composable
+private fun BottomButton(
+    text: String,
+    color: Color,
+    onClick: () -> Unit,
+) {
+    Text(
+        text = text,
+        modifier = Modifier
+            .padding(top = 12.dp)
+            .padding(horizontal = H_PADDING_HALF)
+            .clip(squircleShape)
+            .clickable {
+                onClick()
+            }
+            .padding(horizontal = H_PADDING_HALF, vertical = 4.dp),
+        color = color,
+    )
 }
