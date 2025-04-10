@@ -11,13 +11,13 @@ struct TimerSheet: View {
     var body: some View {
         VmView({
             TimerVm(initSeconds: initSeconds.toInt32())
-        }) { vm, _ in
+        }) { _, state in
             TimerSheetInner(
                 title: title,
                 doneTitle: doneTitle,
                 onDone: onDone,
-                pickerItems: vm.pickerItems,
-                selected: vm.initSelectedSeconds
+                pickerItemsUi: state.pickerItemsUi,
+                selected: initSeconds.toInt32()
             )
         }
     }
@@ -28,7 +28,7 @@ private struct TimerSheetInner: View {
     let title: String
     let doneTitle: String
     let onDone: (Int) -> Void
-    let pickerItems: [TimerVm.PickerItem]
+    let pickerItemsUi: [TimerVm.PickerItemUi]
     
     @State var selected: Int32
 
@@ -43,8 +43,8 @@ private struct TimerSheetInner: View {
             Spacer()
             
             Picker("", selection: $selected) {
-                ForEach(pickerItems, id: \.seconds) { item in
-                    Text(item.title)
+                ForEach(pickerItemsUi, id: \.seconds) { itemUi in
+                    Text(itemUi.title)
                 }
             }
             .pickerStyle(.wheel)

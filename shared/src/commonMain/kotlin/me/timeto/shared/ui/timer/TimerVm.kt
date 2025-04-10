@@ -7,24 +7,19 @@ class TimerVm(
     initSeconds: Int,
 ) : __Vm<TimerVm.State>() {
 
-    val initSelectedSeconds: Int
-    val pickerItems: List<PickerItem>
-
     data class State(
-        val tmp: Boolean = true,
+        val pickerItemsUi: List<PickerItemUi>,
     )
 
-    override val state: MutableStateFlow<State>
-
-    init {
-        initSelectedSeconds = initSeconds
-        pickerItems = buildPickerItems(initSeconds)
-        state = MutableStateFlow(State())
-    }
+    override val state = MutableStateFlow(
+        State(
+            pickerItemsUi = buildPickerItems(initSeconds),
+        )
+    )
 
     ///
 
-    data class PickerItem(
+    data class PickerItemUi(
         val seconds: Int,
         val title: String,
     )
@@ -34,7 +29,7 @@ class TimerVm(
 
 private fun buildPickerItems(
     defSeconds: Int,
-): List<TimerVm.PickerItem> {
+): List<TimerVm.PickerItemUi> {
 
     val a: List<Int> =
         (1..10).map { it * 60 } + // 1 - 10 min by 1 min
@@ -53,9 +48,9 @@ private fun buildPickerItems(
             else -> "$hours : ${minutes.toString().padStart(2, '0')}"
         }
 
-        TimerVm.PickerItem(
+        TimerVm.PickerItemUi(
             seconds = seconds,
-            title = title
+            title = title,
         )
     }
 }

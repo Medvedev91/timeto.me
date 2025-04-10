@@ -33,15 +33,15 @@ fun TimerSheet(
 
     val navigationLayer = LocalNavigationLayer.current
 
-    val (vm, _) = rememberVm {
+    val (_, state) = rememberVm {
         TimerVm(
             initSeconds = initSeconds,
         )
     }
 
-    val pickerItems: List<TimerVm.PickerItem> = vm.pickerItems
+    val pickerItemsUi: List<TimerVm.PickerItemUi> = state.pickerItemsUi
     val formTimeItemIdx: MutableState<Int> = remember {
-        mutableStateOf(pickerItems.indexOfFirst { it.seconds == initSeconds })
+        mutableStateOf(pickerItemsUi.indexOfFirst { it.seconds == initSeconds })
     }
 
     VStack {
@@ -58,7 +58,7 @@ fun TimerSheet(
                 doneButton = HeaderSheetButton(
                     text = doneTitle,
                     onClick = {
-                        onDone(pickerItems[formTimeItemIdx.value].seconds)
+                        onDone(pickerItemsUi[formTimeItemIdx.value].seconds)
                         navigationLayer.close()
                     },
                 ),
@@ -85,12 +85,12 @@ fun TimerSheet(
                             setOnValueChangedListener { _, _, new ->
                                 formTimeItemIdx.value = new
                             }
-                            displayedValues = pickerItems.map { it.title }.toTypedArray()
+                            displayedValues = pickerItemsUi.map { it.title }.toTypedArray()
                             if (isSDKQPlus())
                                 textSize = dpToPx(18f).toFloat()
                             wrapSelectorWheel = false
                             minValue = 0
-                            maxValue = pickerItems.size - 1
+                            maxValue = pickerItemsUi.size - 1
                             value = formTimeItemIdx.value // Set last
                         }
                     }
