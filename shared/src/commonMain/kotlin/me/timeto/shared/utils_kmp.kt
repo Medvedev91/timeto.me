@@ -169,7 +169,7 @@ fun HttpRequestBuilder.appendSystemInfo(
     token: String?,
 ) {
     url {
-        val systemInfo = SystemInfo.systemInfo
+        val systemInfo = SystemInfo.instance
         parameters.append("__token", token ?: "")
         parameters.append("__build", systemInfo.build.toString())
         parameters.append("__os", systemInfo.os.fullVersion)
@@ -484,7 +484,7 @@ lateinit var initKmpDeferred: Deferred<Unit>
 
 internal fun initKmp(
     sqlDriver: SqlDriver,
-    systemInfo_: SystemInfo,
+    systemInfo: SystemInfo,
 ) {
     db = TimetomeDB(
         driver = sqlDriver,
@@ -514,7 +514,7 @@ internal fun initKmp(
         NoteSQAdapter = NoteSQ.Adapter(IntColumnAdapter, IntColumnAdapter),
         GoalSqAdapter = GoalSq.Adapter(IntColumnAdapter, IntColumnAdapter, IntColumnAdapter, IntColumnAdapter),
     )
-    SystemInfo.systemInfo = systemInfo_
+    SystemInfo.instance = systemInfo
     initKmpDeferred = ioScope().async { Cache.init() }
 }
 

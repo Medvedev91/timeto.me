@@ -48,7 +48,7 @@ data class KvDb(
 
         fun KvDb?.isSendingReports(): Boolean {
             val time: Int =
-                this?.value?.toInt() ?: return !SystemInfo.systemInfo.isFdroid
+                this?.value?.toInt() ?: return !SystemInfo.instance.isFdroid
             return time > 0
         }
 

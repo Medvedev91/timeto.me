@@ -10,7 +10,7 @@ internal data class SystemInfo(
 
     companion object {
 
-        lateinit var systemInfo: SystemInfo
+        lateinit var instance: SystemInfo
     }
 
     ///

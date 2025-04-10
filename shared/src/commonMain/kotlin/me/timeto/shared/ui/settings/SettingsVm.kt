@@ -18,7 +18,6 @@ import me.timeto.shared.db.KvDb.Companion.todayOnHomeScreen
 import me.timeto.shared.db.NoteDb
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.launchExIo
-import me.timeto.shared.misc.SystemInfo.Companion.systemInfo
 import me.timeto.shared.prayEmoji
 import me.timeto.shared.reportApi
 import me.timeto.shared.misc.combine
@@ -70,6 +69,7 @@ class SettingsVm : __Vm<SettingsVm.State>() {
         }
 
         val infoText: String = run {
+            val systemInfo = SystemInfo.instance
             val osName: String = when (systemInfo.os) {
                 is SystemInfo.Os.Android -> "Android"
                 is SystemInfo.Os.Ios -> "iOS"
