@@ -1,5 +1,7 @@
 package me.timeto.app.ui.shortcuts.apps
 
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageInfo
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.defaultMinSize
@@ -41,7 +43,6 @@ fun ShortcutAppsFs(
         apps.value = getApps()
     }
 
-
     Screen {
 
         val scrollState = rememberLazyListState()
@@ -58,7 +59,7 @@ fun ShortcutAppsFs(
             )
         )
 
-        val appsValue = apps.value
+        val appsValue: List<ShortcutApp> = apps.value
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize(),
@@ -102,16 +103,20 @@ fun ShortcutAppsFs(
 
 private fun getApps(): List<ShortcutApp> {
     val packageManager = App.instance.packageManager
-    val packagesInfo = packageManager.getInstalledPackages(0)
+    val packagesInfo: List<PackageInfo> =
+        packageManager.getInstalledPackages(0)
     return packagesInfo
         // Ignore system apps
         // .filter { (it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM) == 0 }
         .map { packageInfo ->
+            val applicationInfo: ApplicationInfo = packageInfo.applicationInfo!!
             ShortcutApp(
-                name = packageInfo.applicationInfo.loadLabel(packageManager).toString(),
-                androidPackage = packageInfo.applicationInfo.packageName,
-                icon = packageInfo.applicationInfo.loadIcon(packageManager),
+                name = applicationInfo.loadLabel(packageManager).toString(),
+                androidPackage = applicationInfo.packageName,
+                icon = applicationInfo.loadIcon(packageManager),
             )
         }
-        .sortedBy { it.name.lowercase() }
+        .sortedBy { shortcutApp ->
+            shortcutApp.name.lowercase()
+        }
 }
