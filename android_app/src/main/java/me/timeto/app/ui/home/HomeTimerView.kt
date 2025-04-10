@@ -39,8 +39,9 @@ import me.timeto.app.timerFont
 import me.timeto.app.toColor
 import me.timeto.app.ui.ActivityTimerSheet__show
 import me.timeto.app.ui.DaytimePickerSheet
-import me.timeto.app.ui.ReadmeSheet__show
 import me.timeto.app.ui.Sheet
+import me.timeto.app.ui.navigation.LocalNavigationFs
+import me.timeto.app.ui.readme.ReadmeFs
 import me.timeto.shared.vm.HomeVm
 import me.timeto.shared.vm.ReadmeVm
 
@@ -49,6 +50,8 @@ fun HomeTimerView(
     vm: HomeVm,
     state: HomeVm.State,
 ) {
+
+    val navigationFs = LocalNavigationFs.current
 
     val noteColor = animateColorAsState(state.timerData.noteColor.toColor()).value
     val timerColor = animateColorAsState(state.timerData.timerColor.toColor()).value
@@ -224,7 +227,11 @@ fun HomeTimerView(
                     text = "?",
                     color = timerColor,
                     onClick = {
-                        ReadmeSheet__show(ReadmeVm.DefaultItem.pomodoro)
+                        navigationFs.push {
+                            ReadmeFs(
+                                defaultItem = ReadmeVm.DefaultItem.pomodoro,
+                            )
+                        }
                     },
                 )
             }
