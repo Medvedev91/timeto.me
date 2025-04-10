@@ -29,8 +29,8 @@ import me.timeto.app.ui.MyListView__ItemView__ButtonView
 import me.timeto.app.ui.Padding
 import me.timeto.app.ui.SquircleShape
 import me.timeto.app.ui.navigation.LocalNavigationLayer
-import me.timeto.shared.vm.ReadmeVm
-import me.timeto.shared.vm.ReadmeVm.DefaultItem
+import me.timeto.shared.ui.readme.ReadmeVm
+import me.timeto.shared.ui.readme.ReadmeVm.DefaultItem
 
 private val imagesHBetween = 4.dp
 private val imagesHBlock = H_PADDING - imagesHBetween

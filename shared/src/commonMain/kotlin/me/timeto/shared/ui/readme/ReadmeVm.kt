@@ -1,7 +1,8 @@
-package me.timeto.shared.vm
+package me.timeto.shared.ui.readme
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.db.KvDb
+import me.timeto.shared.vm.__Vm
 
 class ReadmeVm(
     defaultItem: DefaultItem,

@@ -43,7 +43,7 @@ import me.timeto.app.ui.Sheet
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.readme.ReadmeFs
 import me.timeto.shared.vm.HomeVm
-import me.timeto.shared.vm.ReadmeVm
+import me.timeto.shared.ui.readme.ReadmeVm
 
 @Composable
 fun HomeTimerView(

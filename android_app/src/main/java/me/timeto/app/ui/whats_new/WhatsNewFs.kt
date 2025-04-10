@@ -20,7 +20,7 @@ import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.readme.ReadmeFs
-import me.timeto.shared.vm.ReadmeVm
+import me.timeto.shared.ui.readme.ReadmeVm
 import me.timeto.shared.ui.whats_new.WhatsNewVm
 
 @Composable
