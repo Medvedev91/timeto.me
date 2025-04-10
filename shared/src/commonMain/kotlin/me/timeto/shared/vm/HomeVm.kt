@@ -9,6 +9,7 @@ import me.timeto.shared.db.KvDb.Companion.todayOnHomeScreen
 import me.timeto.shared.misc.SystemInfo
 import me.timeto.shared.misc.time
 import me.timeto.shared.models.*
+import me.timeto.shared.ui.whats_new.WhatsNewVm
 
 class HomeVm : __Vm<HomeVm.State>() {
 
@@ -165,7 +166,8 @@ class HomeVm : __Vm<HomeVm.State>() {
             .filterNotNull()
             .onEachExIn(scope) { interval ->
                 state.update {
-                    val isNewInterval = it.interval.id != interval.id
+                    val isNewInterval: Boolean =
+                        it.interval.id != interval.id
                     it.copy(
                         interval = interval,
                         isPurple = if (isNewInterval) false else it.isPurple,
@@ -178,7 +180,7 @@ class HomeVm : __Vm<HomeVm.State>() {
             .onEachExIn(scope) { tasks ->
                 state.update { it.copy(todayTasksUi = tasks.map { it.toUi() }) }
             }
-        if (SystemInfo.systemInfo.isFdroid)
+        if (SystemInfo.instance.isFdroid)
             KvDb.KEY.IS_SENDING_REPORTS
                 .selectOrNullFlow()
                 .onEachExIn(scope) { kvDb ->
@@ -196,7 +198,8 @@ class HomeVm : __Vm<HomeVm.State>() {
         KvDb.KEY.WHATS_NEW_CHECK_UNIX_DAY
             .selectOrNullFlow()
             .onEachExIn(scope) { kvDb ->
-                val lastHistoryUnixDay = WhatsNewVm.prepHistoryItemsUi().first().unixDay
+                val lastHistoryUnixDay: Int =
+                    WhatsNewVm.historyItemsUi.first().unixDay
                 val message: String? =
                     if ((kvDb == null) || (lastHistoryUnixDay > kvDb.value.toInt()))
                         "What's New"
