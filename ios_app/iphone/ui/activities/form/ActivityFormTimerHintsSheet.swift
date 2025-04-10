@@ -21,6 +21,10 @@ struct ActivityFormTimerHintsSheet: View {
     }
 }
 
+///
+
+private let timerSheetHeader = "Timer Hint"
+
 private struct ActivityFormTimerHintsSheetInner: View {
     
     let vm: ActivityFormTimerHintsVm
@@ -39,7 +43,20 @@ private struct ActivityFormTimerHintsSheetInner: View {
         List {
             Section {
                 ForEach(state.timerHintsUi, id: \.self) { timerHintUi in
-                    Text(timerHintUi.text)
+                    Button(timerHintUi.text) {
+                        navigation.sheet {
+                            TimerSheet(
+                                title: timerSheetHeader,
+                                doneTitle: "Save",
+                                initSeconds: timerHintUi.seconds.toInt(),
+                                onDone: { newSeconds in
+                                    vm.delete(seconds: timerHintUi.seconds.toInt32())
+                                    vm.add(seconds: newSeconds.toInt32())
+                                }
+                            )
+                            .interactiveDismissDisabled()
+                        }
+                    }
                 }
                 .onDeleteVm { idx in
                     vm.delete(seconds: state.timerHintsUi[idx].seconds)
@@ -71,7 +88,7 @@ private struct ActivityFormTimerHintsSheetInner: View {
             ToolbarItemGroup(placement: .bottomBar) {
                 
                 BottomBarAddButton(
-                    text: "New Hint",
+                    text: timerSheetHeader,
                     action: {
                         navigation.sheet {
                             TimerSheet(
