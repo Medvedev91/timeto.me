@@ -57,16 +57,8 @@ fun PrivacyFs(
                     onClick = {
                         navigationLayer.close()
                     },
-                )
-            ,
-            cancelButton =
-                if (isFdroid) null
-                else HeaderCancelButton(
-                    text = "Close",
-                    onClick = {
-                        navigationLayer.close()
-                    },
                 ),
+            cancelButton = null,
         )
 
         LazyColumn(
