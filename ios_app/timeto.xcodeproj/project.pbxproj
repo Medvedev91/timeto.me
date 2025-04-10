@@ -64,7 +64,7 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		2C8147512D3DA9F3000948F6 /* common */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = common; sourceTree = "<group>"; };
+		2C8147512D3DA9F3000948F6 /* Common */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Common; sourceTree = "<group>"; };
 		2C81484C2D3DAAAA000948F6 /* iphone */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = iphone; sourceTree = "<group>"; };
 		2C8148B82D3DAB13000948F6 /* watch WatchKit Extension */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (2C8148C22D3DAB13000948F6 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "watch WatchKit Extension"; sourceTree = "<group>"; };
 		2C8148C42D3DAB19000948F6 /* watch */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = watch; sourceTree = "<group>"; };
@@ -102,7 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				2C81484C2D3DAAAA000948F6 /* iphone */,
-				2C8147512D3DA9F3000948F6 /* common */,
+				2C8147512D3DA9F3000948F6 /* Common */,
 				2C95BA83280D74AA0027FC35 /* Products */,
 				2C4044962951FC5400A24521 /* resources */,
 				2C8148C42D3DAB19000948F6 /* watch */,
@@ -140,7 +140,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				2C8147512D3DA9F3000948F6 /* common */,
+				2C8147512D3DA9F3000948F6 /* Common */,
 				2C8148B82D3DAB13000948F6 /* watch WatchKit Extension */,
 				2C8148C42D3DAB19000948F6 /* watch */,
 			);
@@ -165,7 +165,7 @@
 				2C82BF7128726E400041BCA3 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				2C8147512D3DA9F3000948F6 /* common */,
+				2C8147512D3DA9F3000948F6 /* Common */,
 				2C81484C2D3DAAAA000948F6 /* iphone */,
 			);
 			name = "timeto (iOS)";
