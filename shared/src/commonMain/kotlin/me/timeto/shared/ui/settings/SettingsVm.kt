@@ -22,7 +22,7 @@ import me.timeto.shared.misc.SystemInfo.Companion.systemInfo
 import me.timeto.shared.prayEmoji
 import me.timeto.shared.reportApi
 import me.timeto.shared.misc.combine
-import me.timeto.shared.vm.WhatsNewVm
+import me.timeto.shared.ui.whats_new.WhatsNewVm
 import me.timeto.shared.vm.__Vm
 
 class SettingsVm : __Vm<SettingsVm.State>() {
@@ -47,7 +47,7 @@ class SettingsVm : __Vm<SettingsVm.State>() {
         val readmeTitle = "How to Use the App"
         val whatsNewTitle = "What's New"
         val whatsNewNote: String =
-            WhatsNewVm.prepHistoryItemsUi().first().timeAgoText
+            WhatsNewVm.historyItemsUi.first().timeAgoText
 
         val todayOnHomeScreenText = "Today on Home Screen"
 
