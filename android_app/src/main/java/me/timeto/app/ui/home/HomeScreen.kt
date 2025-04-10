@@ -40,6 +40,7 @@ import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.TextFeaturesTriggersView
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.readme.ReadmeFs
+import me.timeto.app.ui.whats_new.WhatsNewFs
 import me.timeto.shared.vm.HomeVm
 
 val HomeScreen__primaryFontSize = 16.sp
@@ -109,8 +110,8 @@ fun HomeScreen() {
             MessageButton(
                 title = whatsNewMessage,
                 onClick = {
-                    Fs.show { layer ->
-                        WhatsNewFs(layer)
+                    navigationFs.push {
+                        WhatsNewFs()
                     }
                 }
             )
