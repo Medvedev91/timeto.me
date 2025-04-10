@@ -14,8 +14,8 @@ import me.timeto.shared.toHms
 import me.timeto.shared.toTimerHintNote
 import me.timeto.shared.ui.DialogsManager
 import me.timeto.shared.ui.UiException
-import me.timeto.shared.ui.color.ColorPickerExampleData
-import me.timeto.shared.ui.color.ColorPickerExamplesData
+import me.timeto.shared.ui.color.ColorPickerExampleUi
+import me.timeto.shared.ui.color.ColorPickerExamplesUi
 import me.timeto.shared.ui.goals.form.GoalFormData
 import me.timeto.shared.vm.__Vm
 
@@ -83,18 +83,18 @@ class ActivityFormVm(
             if (shortcutsDb.isEmpty()) "None"
             else shortcutsDb.joinToString(", ") { it.name }
 
-        fun buildColorPickerExamplesData() = ColorPickerExamplesData(
-            mainExample = ColorPickerExampleData(
+        fun buildColorPickerExamplesUi() = ColorPickerExamplesUi(
+            mainExampleUi = ColorPickerExampleUi(
                 title = activityDb?.name ?: "New Activity",
                 colorRgba = colorRgba,
             ),
             secondaryHeader = "OTHER ACTIVITIES",
-            secondaryExamples = Cache.activitiesDbSorted
+            secondaryExamplesUi = Cache.activitiesDbSorted
                 .filter {
                     it.id != activityDb?.id
                 }
                 .map {
-                    ColorPickerExampleData(
+                    ColorPickerExampleUi(
                         title = it.name,
                         colorRgba = it.colorRgba,
                     )

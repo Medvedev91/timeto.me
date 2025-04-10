@@ -6,7 +6,7 @@ import me.timeto.shared.ColorRgba
 import me.timeto.shared.vm.__Vm
 
 class ColorPickerVm(
-    examplesData: ColorPickerExamplesData,
+    examplesUi: ColorPickerExamplesUi,
 ) : __Vm<ColorPickerVm.State>() {
 
     companion object {
@@ -19,7 +19,6 @@ class ColorPickerVm(
 
     data class State(
         val colorRgba: ColorRgba,
-        val examplesData: ColorPickerExamplesData,
     ) {
 
         val saveText = "Done"
@@ -38,8 +37,7 @@ class ColorPickerVm(
 
     override val state = MutableStateFlow(
         State(
-            colorRgba = examplesData.mainExample.colorRgba,
-            examplesData = examplesData,
+            colorRgba = examplesUi.mainExampleUi.colorRgba,
         )
     )
 

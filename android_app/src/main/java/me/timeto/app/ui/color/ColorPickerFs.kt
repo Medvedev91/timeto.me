@@ -50,7 +50,7 @@ import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.ColorRgba
-import me.timeto.shared.ui.color.ColorPickerExamplesData
+import me.timeto.shared.ui.color.ColorPickerExamplesUi
 import me.timeto.shared.ui.color.ColorPickerVm
 
 private val circleSize = 40.dp
@@ -60,7 +60,7 @@ private val dividerPadding: Dp = H_PADDING.goldenRatioDown()
 @Composable
 fun ColorPickerFs(
     title: String,
-    examplesData: ColorPickerExamplesData,
+    examplesUi: ColorPickerExamplesUi,
     onDone: (ColorRgba) -> Unit,
 ) {
 
@@ -69,7 +69,7 @@ fun ColorPickerFs(
 
     val (vm, state) = rememberVm {
         ColorPickerVm(
-            examplesData = examplesData,
+            examplesUi = examplesUi,
         )
     }
 
@@ -122,7 +122,7 @@ fun ColorPickerFs(
                 ) {
 
                     Text(
-                        text = examplesData.mainExample.title,
+                        text = examplesUi.mainExampleUi.title,
                         modifier = Modifier
                             .padding(top = 1.dp)
                             .height(circleSize - 2.dp)
@@ -137,7 +137,7 @@ fun ColorPickerFs(
                     )
 
                     Text(
-                        text = examplesData.secondaryHeader,
+                        text = examplesUi.secondaryHeader,
                         modifier = Modifier
                             .padding(start = 4.dp, top = 24.dp),
                         fontSize = 11.sp,
@@ -145,7 +145,7 @@ fun ColorPickerFs(
                         color = c.textSecondary,
                     )
 
-                    examplesData.secondaryExamples.forEach { exampleUi ->
+                    examplesUi.secondaryExamplesUi.forEach { exampleUi ->
                         Text(
                             text = exampleUi.title,
                             modifier = Modifier

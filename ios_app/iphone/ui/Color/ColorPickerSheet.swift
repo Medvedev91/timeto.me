@@ -4,19 +4,20 @@ import shared
 struct ColorPickerSheet: View {
     
     let title: String
-    let examplesData: ColorPickerExamplesData
+    let examplesUi: ColorPickerExamplesUi
     let onDone: (ColorRgba) -> Void
     
     var body: some View {
         VmView({
             ColorPickerVm(
-                examplesData: examplesData
+                examplesUi: examplesUi
             )
         }) { vm, state in
             ColorPickerSheetInner(
                 vm: vm,
                 state: state,
                 title: title,
+                examplesUi: examplesUi,
                 onDone: onDone
             )
         }
@@ -37,6 +38,7 @@ private struct ColorPickerSheetInner: View {
     let state: ColorPickerVm.State
     
     let title: String
+    let examplesUi: ColorPickerExamplesUi
     let onDone: (ColorRgba) -> Void
     
     ///
@@ -56,7 +58,7 @@ private struct ColorPickerSheetInner: View {
                         
                         VStack(alignment: .leading) {
                             
-                            Text(state.examplesData.mainExample.title)
+                            Text(examplesUi.mainExampleUi.title)
                                 .font(.system(size: 17, weight: .semibold))
                                 .foregroundColor(.white)
                                 .lineLimit(1)
@@ -65,30 +67,30 @@ private struct ColorPickerSheetInner: View {
                                 .background(exampleShape.fill(state.colorRgba.toColor()))
                                 .padding(.top, circlePadding)
                             
-                            let secondaryExamples = state.examplesData.secondaryExamples
-                            if !secondaryExamples.isEmpty {
+                            let secondaryExamplesUi = examplesUi.secondaryExamplesUi
+                            if !secondaryExamplesUi.isEmpty {
                                 
-                                Text(state.examplesData.secondaryHeader)
+                                Text(examplesUi.secondaryHeader)
                                     .foregroundColor(.secondary)
                                     .fontWeight(.medium)
                                     .font(.system(size: 13))
                                     .padding(.leading, 4)
                                     .padding(.top, 28)
                                 
-                                ForEach(secondaryExamples, id: \.self) { exampleData in
+                                ForEach(secondaryExamplesUi, id: \.self) { exampleUi in
                                     Button(
                                         action: {
-                                            setColorRgbaLocal(exampleData.colorRgba)
+                                            setColorRgbaLocal(exampleUi.colorRgba)
                                         },
                                         label: {
-                                            Text(exampleData.title)
+                                            Text(exampleUi.title)
                                                 .font(.system(size: 15, weight: .semibold))
                                                 .foregroundColor(.white)
                                                 .lineLimit(1)
                                                 .padding(.horizontal, 12)
                                                 .padding(.top, 6)
                                                 .padding(.bottom, 6)
-                                                .background(exampleShape.fill(exampleData.colorRgba.toColor()))
+                                                .background(exampleShape.fill(exampleUi.colorRgba.toColor()))
                                                 .padding(.top, 8)
                                         }
                                     )

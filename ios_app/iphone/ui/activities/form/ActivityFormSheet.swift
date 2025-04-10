@@ -85,7 +85,7 @@ private struct ActivityFormSheetInner: View {
                     sheet: {
                         ColorPickerSheet(
                             title: state.colorPickerTitle,
-                            examplesData: state.buildColorPickerExamplesData(),
+                            examplesUi: state.buildColorPickerExamplesUi(),
                             onDone: { colorRgba in
                                 vm.setColorRgba(newColorRgba: colorRgba)
                             }
