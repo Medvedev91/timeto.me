@@ -95,7 +95,7 @@ data class ActivityDb(
                 if (type == Type.other && activitiesDb.any { it.getType() == Type.other })
                     throw UiException("System error: \"Other\" already exists")
                 val lastId: Int = activitiesDb.maxOfOrNull { it.id } ?: 0
-                val nextId: Int = max(time(), lastId)
+                val nextId: Int = max(time(), lastId + 1)
                 val activitySQ = ActivitySQ(
                     id = nextId,
                     name = validatedName,
