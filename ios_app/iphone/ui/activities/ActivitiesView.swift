@@ -151,7 +151,7 @@ private struct ActivitiesViewInner: View {
     ) {
         navigation.sheet {
             ActivityFormTimerHintsSheet(
-                timerHints: activityDb.timerHints.toSwift(),
+                initTimerHints: activityDb.timerHints.toSwift(),
                 onDone: { newTimerHints in
                     vm.updateTimerHints(
                         activityDb: activityDb,

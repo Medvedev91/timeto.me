@@ -3,13 +3,13 @@ import shared
 
 struct ActivityFormTimerHintsSheet: View {
     
-    let timerHints: Set<Int>
+    let initTimerHints: Set<Int>
     let onDone: (Set<Int>) -> Void
     
     var body: some View {
         VmView({
             ActivityFormTimerHintsVm(
-                initTimerHints: timerHints.toKotlin()
+                initTimerHints: initTimerHints.toKotlin()
             )
         }) { vm, state in
             ActivityFormTimerHintsSheetInner(

@@ -157,7 +157,7 @@ private struct ActivityFormSheetInner: View {
                     },
                     sheet: {
                         ActivityFormTimerHintsSheet(
-                            timerHints: state.timerHints.toSwift(),
+                            initTimerHints: state.timerHints.toSwift(),
                             onDone: { newTimerHints in
                                 vm.setTimerHints(newTimerHints: newTimerHints.toKotlin())
                             }
