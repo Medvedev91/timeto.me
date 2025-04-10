@@ -33,12 +33,11 @@ import me.timeto.app.rememberVm
 import me.timeto.app.roundedShape
 import me.timeto.app.toColor
 import me.timeto.app.ui.checklists.ChecklistView
-import me.timeto.app.ui.FDroidSheet
 import me.timeto.app.ui.Padding
-import me.timeto.app.ui.Sheet
 import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.TextFeaturesTriggersView
 import me.timeto.app.ui.navigation.LocalNavigationFs
+import me.timeto.app.ui.privacy.PrivacyFs
 import me.timeto.app.ui.readme.ReadmeFs
 import me.timeto.app.ui.whats_new.WhatsNewFs
 import me.timeto.shared.vm.HomeVm
@@ -89,7 +88,7 @@ fun HomeScreen() {
                     navigationFs.push {
                         ReadmeFs()
                     }
-                }
+                },
             )
         }
 
@@ -98,10 +97,10 @@ fun HomeScreen() {
             MessageButton(
                 title = fdroidMessage,
                 onClick = {
-                    Sheet.show { layer ->
-                        FDroidSheet(layer)
+                    navigationFs.push {
+                        PrivacyFs(isFdroid = true)
                     }
-                }
+                },
             )
         }
 
@@ -113,7 +112,7 @@ fun HomeScreen() {
                     navigationFs.push {
                         WhatsNewFs()
                     }
-                }
+                },
             )
         }
 
