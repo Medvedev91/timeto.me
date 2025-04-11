@@ -121,8 +121,7 @@ private struct GoalFormSheetInner: View {
                         HStack {
                             Text(state.finishedTextTitle)
                             Spacer()
-                            Text(state.finishedText)
-                                .foregroundColor(.secondary)
+                            FormButtonEmojiView(emoji: state.finishedText)
                         }
                     },
                     sheet: {
