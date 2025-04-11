@@ -20,6 +20,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.HStack
@@ -42,7 +43,8 @@ val ActivitiesView__listEndPadding = 8.dp
 
 private val activityItemEmojiHPadding = 8.dp
 private val activityItemEmojiWidth = 32.dp
-private val activityItemPaddingStart = activityItemEmojiWidth + (activityItemEmojiHPadding * 2)
+private val activityItemPaddingStart: Dp =
+    activityItemEmojiWidth + (activityItemEmojiHPadding * 2)
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
