@@ -281,7 +281,7 @@ private struct SettingsScreenInner: View {
                         Text("Privacy")
                         Spacer()
                         if let privacyEmoji = state.privacyEmoji {
-                            Text(privacyEmoji)
+                            FormButtonEmojiView(emoji: privacyEmoji)
                         }
                     }
                 }
