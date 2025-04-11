@@ -32,7 +32,7 @@ import me.timeto.app.ui.form.padding.FormPaddingSectionSection
 import me.timeto.app.ui.form.padding.FormPaddingTop
 import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.form.button.FormButtonArrowView
-import me.timeto.app.ui.form.button.FormButtonNoteView
+import me.timeto.app.ui.form.button.FormButtonEmoji
 import me.timeto.app.ui.form.button.FormButtonView
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
@@ -111,45 +111,40 @@ fun ActivityFormFs(
 
                 FormPaddingSectionSection()
 
-                FormButtonView(
-                    title = state.emojiTitle,
-                    titleColor = null,
-                    isFirst = true,
-                    isLast = false,
-                    modifier = Modifier,
-                    rightView = {
-                        HStack(
-                            verticalAlignment = CenterVertically,
-                        ) {
-                            val emoji: String? = state.emoji
-                            if (emoji != null) {
-                                Text(
-                                    text = emoji,
-                                    fontSize = 20.sp,
-                                    modifier = Modifier
-                                        .padding(end = 9.dp)
-                                )
-                            } else {
-                                FormButtonNoteView(
-                                    note = state.emojiNotSelected,
-                                    color = c.red,
-                                    withArrow = true,
-                                )
-                            }
-                            FormButtonArrowView()
-                        }
-                    },
-                    onClick = {
-                        navigationFs.push {
-                            EmojiPickerFs(
-                                onDone = { newEmoji ->
-                                    vm.setEmoji(newEmoji = newEmoji)
-                                },
-                            )
-                        }
-                    },
-                    onLongClick = null,
-                )
+                fun openEmojiFs() {
+                    navigationFs.push {
+                        EmojiPickerFs(
+                            onDone = { newEmoji ->
+                                vm.setEmoji(newEmoji = newEmoji)
+                            },
+                        )
+                    }
+                }
+
+                val emoji: String? = state.emoji
+                if (emoji != null) {
+                    FormButtonEmoji(
+                        title = state.emojiTitle,
+                        emoji = emoji,
+                        isFirst = true,
+                        isLast = false,
+                        onClick = {
+                            openEmojiFs()
+                        },
+                    )
+                } else {
+                    FormButton(
+                        title = state.emojiTitle,
+                        isFirst = true,
+                        isLast = false,
+                        note = state.emojiNotSelected,
+                        noteColor = c.red,
+                        withArrow = true,
+                        onClick = {
+                            openEmojiFs()
+                        },
+                    )
+                }
 
                 FormButtonView(
                     title = state.colorTitle,
