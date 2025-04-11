@@ -32,6 +32,7 @@ import me.timeto.app.ui.form.padding.FormPaddingHeaderSection
 import me.timeto.app.ui.form.padding.FormPaddingSectionHeader
 import me.timeto.app.ui.form.padding.FormPaddingSectionSection
 import me.timeto.app.ui.form.FormSwitch
+import me.timeto.app.ui.form.button.FormButtonEmoji
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationScreen
@@ -476,12 +477,11 @@ fun SettingsScreen(
                     },
                 )
 
-                FormButton(
+                FormButtonEmoji(
                     title = "Privacy",
+                    emoji = state.privacyEmoji ?: "",
                     isFirst = false,
                     isLast = true,
-                    note = state.privacyNote,
-                    withArrow = true,
                     onClick = {
                         navigationFs.push {
                             PrivacyFs(isFdroid = false)

@@ -38,7 +38,7 @@ class SettingsVm : __Vm<SettingsVm.State>() {
         val dayStartSeconds: Int,
         val feedbackSubject: String,
         val autoBackupTimeString: String,
-        val privacyNote: String?,
+        val privacyEmoji: String?,
         val todayOnHomeScreen: Boolean,
     ) {
 
@@ -88,7 +88,7 @@ class SettingsVm : __Vm<SettingsVm.State>() {
             dayStartSeconds = dayStartOffsetSeconds(),
             feedbackSubject = DEFAULT_FEEDBACK_SUBJECT,
             autoBackupTimeString = prepAutoBackupTimeString(AutoBackup.lastTimeCache.value),
-            privacyNote = KvDb.KEY.IS_SENDING_REPORTS.selectOrNullCached().privacyNote(),
+            privacyEmoji = KvDb.KEY.IS_SENDING_REPORTS.selectOrNullCached().privacyEmojiOrNull(),
             todayOnHomeScreen = KvDb.KEY.TODAY_ON_HOME_SCREEN.selectOrNullCached().todayOnHomeScreen(),
         )
     )
@@ -119,7 +119,7 @@ class SettingsVm : __Vm<SettingsVm.State>() {
                     shortcutsDb = shortcutsDb,
                     notesDb = notesDb,
                     dayStartSeconds = dayStartOffsetSeconds.asDayStartOffsetSeconds(),
-                    privacyNote = isSendingReports.privacyNote(),
+                    privacyEmoji = isSendingReports.privacyEmojiOrNull(),
                     todayOnHomeScreen = todayOnHomeScreen.todayOnHomeScreen(),
                     autoBackupTimeString = prepAutoBackupTimeString(autoBackupLastTime),
                     feedbackSubject = feedbackSubject ?: DEFAULT_FEEDBACK_SUBJECT,
@@ -161,7 +161,7 @@ class SettingsVm : __Vm<SettingsVm.State>() {
 
 private const val DEFAULT_FEEDBACK_SUBJECT = "Feedback"
 
-private fun KvDb?.privacyNote(): String? =
+private fun KvDb?.privacyEmojiOrNull(): String? =
     if (this.isSendingReports()) null else prayEmoji
 
 private fun dayStartSecondsToString(seconds: Int): String {

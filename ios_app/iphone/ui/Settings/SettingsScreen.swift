@@ -280,8 +280,8 @@ private struct SettingsScreenInner: View {
                     HStack {
                         Text("Privacy")
                         Spacer()
-                        if let privacyNote = state.privacyNote {
-                            Text(privacyNote)
+                        if let privacyEmoji = state.privacyEmoji {
+                            Text(privacyEmoji)
                         }
                     }
                 }
