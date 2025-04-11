@@ -5,9 +5,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.HStack
+
+val FormButtonEmoji__fontSize: TextUnit = 20.sp
 
 @Composable
 fun FormButtonEmoji(
@@ -29,7 +32,7 @@ fun FormButtonEmoji(
             ) {
                 Text(
                     text = emoji,
-                    fontSize = 20.sp,
+                    fontSize = FormButtonEmoji__fontSize,
                     modifier = Modifier
                         .padding(end = 7.dp)
                 )
