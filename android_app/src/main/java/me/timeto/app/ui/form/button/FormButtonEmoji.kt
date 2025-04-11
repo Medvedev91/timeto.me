@@ -31,7 +31,7 @@ fun FormButtonEmoji(
                     text = emoji,
                     fontSize = 20.sp,
                     modifier = Modifier
-                        .padding(end = 9.dp)
+                        .padding(end = 7.dp)
                 )
                 FormButtonArrowView()
             }
