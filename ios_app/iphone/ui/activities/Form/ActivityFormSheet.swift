@@ -55,8 +55,7 @@ private struct ActivityFormSheetInner: View {
                             Text(state.emojiTitle)
                             Spacer()
                             if let emoji = state.emoji {
-                                Text(emoji)
-                                    .font(.system(size: 27))
+                                FormButtonEmojiView(emoji: emoji)
                             } else {
                                 Text(state.emojiNotSelected)
                                     .foregroundColor(.red)
