@@ -13,6 +13,7 @@ import me.timeto.app.ui.checklists.ChecklistsPickerFs
 import me.timeto.app.ui.emoji.EmojiPickerFs
 import me.timeto.app.ui.form.button.FormButton
 import me.timeto.app.ui.form.FormInput
+import me.timeto.app.ui.form.button.FormButtonEmoji
 import me.timeto.app.ui.form.padding.FormPaddingBottom
 import me.timeto.app.ui.form.padding.FormPaddingSectionSection
 import me.timeto.app.ui.form.padding.FormPaddingTop
@@ -168,14 +169,11 @@ fun GoalFormFs(
                     },
                 )
 
-                // todo emoji UI like activity form
-
-                FormButton(
+                FormButtonEmoji(
                     title = state.finishedTextTitle,
+                    emoji = state.finishedText,
                     isFirst = false,
                     isLast = true,
-                    note = state.finishedText,
-                    withArrow = true,
                     onClick = {
                         navigationFs.push {
                             EmojiPickerFs(
