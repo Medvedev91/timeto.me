@@ -125,10 +125,9 @@ private struct GoalFormSheetInner: View {
                         }
                     },
                     sheet: {
-                        GoalFormFinishedTextSheet(
-                            text: state.finishedText,
-                            onDone: { newFinishedText in
-                                vm.setFinishedText(newFinishedText: newFinishedText)
+                        EmojiPickerSheet(
+                            onDone: { newEmoji in
+                                vm.setFinishedText(newFinishedText: newEmoji)
                             }
                         )
                     }
