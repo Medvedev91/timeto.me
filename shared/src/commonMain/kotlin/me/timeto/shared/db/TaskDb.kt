@@ -123,7 +123,7 @@ data class TaskDb(
         intervalId: Int = time(),
     ) = dbIo {
         db.transaction {
-            IntervalDb.addWithValidationNeedTransaction(
+            IntervalDb.insertWithValidationNeedTransaction(
                 timer = timer,
                 activity = activity,
                 note = text,
