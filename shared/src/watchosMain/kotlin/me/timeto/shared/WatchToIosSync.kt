@@ -123,8 +123,8 @@ object WatchToIosSync {
             checklistItems()
 
             // To 100% ensure
-            val ifl = IntervalDb.getFirstAndLastNeedTransaction()
-            Cache.fillLateInit(firstInterval = ifl[0], lastInterval = ifl[1])
+            val ifl = IntervalDb.selectFirstAndLastNeedTransaction()
+            Cache.fillLateInit(firstInterval = ifl.first, lastInterval = ifl.second)
         }
     }
 }
