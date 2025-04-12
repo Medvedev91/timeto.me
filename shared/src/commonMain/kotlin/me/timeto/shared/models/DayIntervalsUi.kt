@@ -24,7 +24,7 @@ class DayIntervalsUi(
         val seconds: Int,
     ) {
         val intervalTf: TextFeatures = (intervalDb?.note ?: "").textFeatures()
-        val activityDb: ActivityDb? = intervalDb?.getActivityDbCached()
+        val activityDb: ActivityDb? = intervalDb?.selectActivityDbCached()
         val ratio: Float = seconds.toFloat() / 86_400
         val timeFinish: Int = timeStart + seconds
     }
@@ -50,12 +50,12 @@ class DayIntervalsUi(
             // Preparing the intervals list
 
             val intervalsAsc: MutableList<IntervalDb> = IntervalDb
-                .getBetweenIdDesc(timeStart, timeFinish)
+                .selectBetweenIdDesc(timeStart, timeFinish)
                 .reversed()
                 .toMutableList()
 
             // Previous interval
-            IntervalDb.getBetweenIdDesc(0, timeStart - 1, 1).firstOrNull()?.let { prevInterval ->
+            IntervalDb.selectBetweenIdDesc(0, timeStart - 1, 1).firstOrNull()?.let { prevInterval ->
                 intervalsAsc.add(0, prevInterval) // 0 idx - to start
             }
 
