@@ -26,7 +26,7 @@ data class ShortcutDb(
             db.shortcutQueries.anyChange().asFlow()
 
         suspend fun getCount(): Int = dbIo {
-            db.shortcutQueries.getCount().executeAsOne().toInt()
+            db.shortcutQueries.selectCount().executeAsOne().toInt()
         }
 
         suspend fun selectAsc(): List<ShortcutDb> = dbIo {
