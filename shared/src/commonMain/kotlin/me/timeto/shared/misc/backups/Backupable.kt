@@ -1,4 +1,4 @@
-package me.timeto.shared
+package me.timeto.shared.misc.backups
 
 import kotlinx.serialization.json.JsonElement
 
@@ -29,3 +29,4 @@ interface Backupable__Holder {
 
     fun backupable__restore(json: JsonElement)
 }
+
