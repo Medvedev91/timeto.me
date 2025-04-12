@@ -27,7 +27,7 @@ class HomeVm : __Vm<HomeVm.State>() {
 
         val timerData = TimerDataUi(interval, todayTasksUi.map { it.taskDb }, isPurple)
 
-        val activeActivityDb: ActivityDb = interval.getActivityDbCached()
+        val activeActivityDb: ActivityDb = interval.selectActivityDbCached()
 
         // todo or use interval.getTriggers()
         val textFeatures = (interval.note ?: activeActivityDb.name).textFeatures()
@@ -162,7 +162,7 @@ class HomeVm : __Vm<HomeVm.State>() {
 
     override fun onAppear() {
         val scope = scopeVm()
-        IntervalDb.getLastOneOrNullFlow()
+        IntervalDb.selectLastOneOrNullFlow()
             .filterNotNull()
             .onEachExIn(scope) { interval ->
                 state.update {
@@ -298,7 +298,7 @@ class HomeVm : __Vm<HomeVm.State>() {
         fun startInterval() {
             val timer: Int = goalTf.timer ?: (45 * 60)
             launchExIo {
-                IntervalDb.addWithValidation(
+                IntervalDb.insertWithValidation(
                     timer = timer,
                     activity = activityDb,
                     note = goalDb.note,
