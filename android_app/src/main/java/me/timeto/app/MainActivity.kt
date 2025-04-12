@@ -33,6 +33,7 @@ import me.timeto.app.ui.navigation.NavigationFs
 import me.timeto.shared.*
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.misc.BatteryInfo
+import me.timeto.shared.misc.backups.AutoBackup
 import me.timeto.shared.vm.AppVm
 
 class MainActivity : ComponentActivity() {
