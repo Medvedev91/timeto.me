@@ -27,11 +27,11 @@ data class ChecklistItemDb(
             db.checklistItemQueries.anyChange().asFlow()
 
         suspend fun selectSorted(): List<ChecklistItemDb> = dbIo {
-            db.checklistItemQueries.getSorted().asList { toDb() }
+            db.checklistItemQueries.selectSorted().asList { toDb() }
         }
 
         fun selectSortedFlow(): Flow<List<ChecklistItemDb>> =
-            db.checklistItemQueries.getSorted().asListFlow { toDb() }
+            db.checklistItemQueries.selectSorted().asListFlow { toDb() }
 
         @Throws(UiException::class, CancellationException::class)
         suspend fun insertWithValidation(
@@ -42,7 +42,7 @@ data class ChecklistItemDb(
             db.transaction {
 
                 val allSorted: List<ChecklistItemDb> =
-                    db.checklistItemQueries.getSorted().asList { toDb() }
+                    db.checklistItemQueries.selectSorted().asList { toDb() }
 
                 val timeId = time()
                 val nextId = if (allSorted.any { it.id == timeId })
@@ -91,7 +91,7 @@ data class ChecklistItemDb(
         // Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.checklistItemQueries.getSorted().asList { toDb() }
+            db.checklistItemQueries.selectSorted().asList { toDb() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
