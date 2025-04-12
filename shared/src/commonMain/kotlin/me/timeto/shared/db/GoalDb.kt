@@ -23,7 +23,7 @@ data class GoalDb(
     companion object : Backupable__Holder {
 
         suspend fun selectAll(): List<GoalDb> = dbIo {
-            db.goalQueries.selectAll().executeAsList().map { it.toDb() }
+            db.goalQueries.selectAll().asList { toDb() }
         }
 
         fun selectAllFlow(): Flow<List<GoalDb>> =
@@ -53,7 +53,7 @@ data class GoalDb(
         // Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.goalQueries.selectAll().executeAsList().map { it.toDb() }
+            db.goalQueries.selectAll().asList { toDb() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
