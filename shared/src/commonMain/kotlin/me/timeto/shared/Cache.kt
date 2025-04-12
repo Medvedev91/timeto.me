@@ -89,12 +89,12 @@ object Cache {
         //
         // Late Init
 
-        IntervalDb.getAsc(limit = 1).firstOrNull()?.let { firstInterval = it }
-        IntervalDb.getAscFlow(limit = 1).filter { it.isNotEmpty() }
+        IntervalDb.selectAsc(limit = 1).firstOrNull()?.let { firstInterval = it }
+        IntervalDb.selectAscFlow(limit = 1).filter { it.isNotEmpty() }
             .onEachExIn(scope) { firstInterval = it.first() }
 
-        IntervalDb.getDesc(limit = 1).firstOrNull()?.let { lastInterval = it }
-        IntervalDb.getDescFlow(limit = 1).filter { it.isNotEmpty() }
+        IntervalDb.selectDesc(limit = 1).firstOrNull()?.let { lastInterval = it }
+        IntervalDb.selectDescFlow(limit = 1).filter { it.isNotEmpty() }
             .onEachExIn(scope) { lastInterval = it.first() }
     }
 }
