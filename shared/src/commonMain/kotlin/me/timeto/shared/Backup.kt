@@ -17,7 +17,7 @@ object Backup {
             "type" to JsonPrimitive(type),
             // Data
             "activities" to ActivityDb.selectSorted().modelsToJsonArray(),
-            "intervals" to IntervalDb.getDesc(intervalsLimit).modelsToJsonArray(),
+            "intervals" to IntervalDb.selectDesc(intervalsLimit).modelsToJsonArray(),
             "goals" to GoalDb.selectAll().modelsToJsonArray(),
             "task_folders" to TaskFolderDb.selectAllSorted().modelsToJsonArray(),
             "tasks" to TaskDb.getAsc().modelsToJsonArray(),
@@ -91,6 +91,8 @@ object Backup {
         return UnixTime(time)
     }
 }
+
+///
 
 private inline fun JsonElement.mapJsonArray(
     key: String,
