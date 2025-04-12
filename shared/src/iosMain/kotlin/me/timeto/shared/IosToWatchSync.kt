@@ -58,9 +58,9 @@ object IosToWatchSync {
 
         if (command == "start_interval") {
             val timer = jData["timer"]!!.jsonPrimitive.int
-            val activity = ActivityDb.getByIdOrNull(jData["activity_id"]!!.jsonPrimitive.int)!!
+            val activity = ActivityDb.selectByIdOrNull(jData["activity_id"]!!.jsonPrimitive.int)!!
             val note = jData["note"]?.jsonPrimitive?.contentOrNull
-            IntervalDb.addWithValidation(
+            IntervalDb.insertWithValidation(
                 timer = timer,
                 activity = activity,
                 note = note,
@@ -71,7 +71,7 @@ object IosToWatchSync {
 
         if (command == "start_task") {
             val timer = jData["timer"]!!.jsonPrimitive.int
-            val activity = ActivityDb.getByIdOrNull(jData["activity_id"]!!.jsonPrimitive.int)!!
+            val activity = ActivityDb.selectByIdOrNull(jData["activity_id"]!!.jsonPrimitive.int)!!
             val task = TaskDb.getByIdOrNull(jData["task_id"]!!.jsonPrimitive.int)!!
             task.startInterval(
                 timer = timer,
@@ -83,7 +83,7 @@ object IosToWatchSync {
 
         if (command == "toggle_pomodoro") {
             TimerDataUi(
-                interval = IntervalDb.getLastOneOrNull()!!,
+                interval = IntervalDb.selectLastOneOrNull()!!,
                 todayTasks = Cache.tasksDb.filter { it.isToday },
                 isPurple = false,
             ).togglePomodoro()
