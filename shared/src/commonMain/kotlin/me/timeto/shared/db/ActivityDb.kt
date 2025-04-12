@@ -203,9 +203,9 @@ data class ActivityDb(
         Cache.goalsDb.filter { it.activity_id == id }
 
     suspend fun startInterval(
-        timer: Int,
+        seconds: Int,
     ): IntervalDb = IntervalDb.addWithValidation(
-        timer = timer,
+        timer = seconds,
         activity = this,
         note = null,
     )
