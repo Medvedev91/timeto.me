@@ -1,11 +1,8 @@
 package me.timeto.shared.db
 
 import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
-import app.cash.sqldelight.coroutines.mapToOneOrNull
 import dbsq.IntervalSQ
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
@@ -26,71 +23,72 @@ data class IntervalDb(
 
         const val HOT_INTERVALS_LIMIT = 200 // todo 200? Remember limit for WatchToIosSync
 
-        fun anyChangeFlow() = db.intervalQueries.anyChange().asFlow()
+        //
+        // Select
 
-        suspend fun getCount(): Int = dbIo {
-            db.intervalQueries.getCount().executeAsOne().toInt()
+        fun anyChangeFlow(): Flow<*> =
+            db.intervalQueries.anyChange().asFlow()
+
+        suspend fun selectCount(): Int = dbIo {
+            db.intervalQueries.selectCount().executeAsOne().toInt()
         }
 
-        ///
-        /// Select many
-
-        suspend fun getAsc(limit: Int = Int.MAX_VALUE) = dbIo {
-            db.intervalQueries.getAsc(limit = limit.toLong()).executeAsList().map { it.toDb() }
+        suspend fun selectAsc(limit: Int = Int.MAX_VALUE) = dbIo {
+            selectAscSync(limit)
         }
 
-        fun getAscFlow(limit: Int = Int.MAX_VALUE) = db.intervalQueries.getAsc(limit = limit.toLong())
-            .asFlow().mapToList(Dispatchers.IO).map { list -> list.map { it.toDb() } }
+        fun selectAscSync(limit: Int): List<IntervalDb> =
+            db.intervalQueries.selectAsc(limit = limit.toLong()).asList { toDb() }
 
-        suspend fun getDesc(limit: Int): List<IntervalDb> = dbIo {
-            db.intervalQueries.getDesc(limit.toLong()).executeAsList().map { it.toDb() }
+        fun selectAscFlow(limit: Int = Int.MAX_VALUE): Flow<List<IntervalDb>> =
+            db.intervalQueries.selectAsc(limit = limit.toLong()).asListFlow { toDb() }
+
+        suspend fun selectDesc(limit: Int): List<IntervalDb> = dbIo {
+            db.intervalQueries.selectDesc(limit.toLong()).asList { toDb() }
         }
 
-        fun getDescFlow(limit: Int = Int.MAX_VALUE) = db.intervalQueries.getDesc(limit.toLong()).asFlow()
-            .mapToList(Dispatchers.IO).map { list -> list.map { it.toDb() } }
+        fun selectDescFlow(limit: Int = Int.MAX_VALUE): Flow<List<IntervalDb>> =
+            db.intervalQueries.selectDesc(limit.toLong()).asListFlow { toDb() }
 
-        suspend fun getBetweenIdDesc(
+        suspend fun selectBetweenIdDesc(
             timeStart: Int,
             timeFinish: Int,
             limit: Int = Int.MAX_VALUE,
-        ) = dbIo {
-            db.intervalQueries.getBetweenIdDesc(
-                timeStart = timeStart, timeFinish = timeFinish, limit = limit.toLong()
-            )
-                .executeAsList()
-                .map { it.toDb() }
+        ): List<IntervalDb> = dbIo {
+            db.intervalQueries.selectBetweenIdDesc(
+                timeStart = timeStart,
+                timeFinish = timeFinish,
+                limit = limit.toLong(),
+            ).asList { toDb() }
         }
 
-        fun getFirstAndLastNeedTransaction() = listOf(
-            db.intervalQueries.getAsc(limit = 1).executeAsOne().toDb(),
-            db.intervalQueries.getDesc(limit = 1).executeAsOne().toDb(),
+        fun selectFirstAndLastNeedTransaction(): Pair<IntervalDb, IntervalDb> = Pair(
+            db.intervalQueries.selectAsc(limit = 1).executeAsOne().toDb(),
+            db.intervalQueries.selectDesc(limit = 1).executeAsOne().toDb(),
         )
 
-        ///
-        /// Select One
-
-        suspend fun getByIdOrNull(id: Int): IntervalDb? = dbIo {
-            db.intervalQueries.getById(id).executeAsOneOrNull()?.toDb()
+        suspend fun selectByIdOrNull(id: Int): IntervalDb? = dbIo {
+            db.intervalQueries.selectById(id).executeAsOneOrNull()?.toDb()
         }
 
-        suspend fun getLastOneOrNull(): IntervalDb? = dbIo {
-            db.intervalQueries.getDesc(limit = 1).executeAsOneOrNull()?.toDb()
+        suspend fun selectLastOneOrNull(): IntervalDb? = dbIo {
+            db.intervalQueries.selectDesc(limit = 1).executeAsOneOrNull()?.toDb()
         }
 
-        fun getLastOneOrNullFlow() = db.intervalQueries.getDesc(limit = 1).asFlow()
-            .mapToOneOrNull(Dispatchers.IO).map { it?.toDb() }
+        fun selectLastOneOrNullFlow(): Flow<IntervalDb?> = db.intervalQueries
+            .selectDesc(limit = 1).asListFlow { toDb() }.map { it.lastOrNull() }
 
-        ///
-        /// Add
+        //
+        // Insert
 
-        suspend fun addWithValidation(
+        suspend fun insertWithValidation(
             timer: Int,
             activity: ActivityDb,
             note: String?,
             id: Int = time(),
         ): IntervalDb = dbIo {
             db.transactionWithResult {
-                addWithValidationNeedTransaction(
+                insertWithValidationNeedTransaction(
                     timer = timer,
                     activity = activity,
                     note = note,
@@ -99,7 +97,7 @@ data class IntervalDb(
             }
         }
 
-        fun addWithValidationNeedTransaction(
+        fun insertWithValidationNeedTransaction(
             timer: Int,
             activity: ActivityDb,
             note: String?,
@@ -116,14 +114,14 @@ data class IntervalDb(
             return intervalSQ.toDb()
         }
 
-        //////
+        ///
 
         suspend fun pauseLastInterval(): Unit = dbIo {
 
             db.transaction {
 
-                val interval = db.intervalQueries.getDesc(limit = 1).executeAsOne().toDb()
-                val activity = interval.getActivityDbCached()
+                val interval = db.intervalQueries.selectDesc(limit = 1).executeAsOne().toDb()
+                val activity = interval.selectActivityDbCached()
                 val paused: TextFeatures.Paused = run {
                     val intervalTf = (interval.note ?: "").textFeatures()
                     intervalTf.paused ?: run {
@@ -150,9 +148,9 @@ data class IntervalDb(
                 val pauseIntervalTf = "Break".textFeatures().copy(
                     pause = TextFeatures.Pause(pausedTaskId = pausedTaskId),
                 )
-                addWithValidationNeedTransaction(
+                insertWithValidationNeedTransaction(
                     activity.pomodoro_timer,
-                    ActivityDb.getOther(),
+                    ActivityDb.selectOtherCached(),
                     pauseIntervalTf.textWithFeatures(),
                 )
             }
@@ -161,8 +159,8 @@ data class IntervalDb(
         suspend fun prolongLastInterval(
             timer: Int,
         ): Unit = dbIo {
-            val interval = getLastOneOrNull()!!
-            val activityDb = interval.getActivity()
+            val interval: IntervalDb = selectLastOneOrNull()!!
+            val activityDb: ActivityDb = interval.selectActivityDb()
             val newTf: TextFeatures = run {
                 val oldTf = (interval.note ?: activityDb.name).textFeatures()
                 val prolonged = oldTf.prolonged ?: TextFeatures.Prolonged(interval.timer)
@@ -179,7 +177,7 @@ data class IntervalDb(
         /// Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.intervalQueries.getAsc(Int.MAX_VALUE.toLong()).executeAsList().map { it.toDb() }
+            db.intervalQueries.selectAsc(Int.MAX_VALUE.toLong()).asList { toDb() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
@@ -196,25 +194,30 @@ data class IntervalDb(
 
     fun unixTime() = UnixTime(id)
 
-    suspend fun getActivity(): ActivityDb = ActivityDb.getByIdOrNull(activity_id)!!
+    suspend fun selectActivityDb(): ActivityDb =
+        ActivityDb.selectByIdOrNull(activity_id)!!
 
-    fun getActivityDbCached(): ActivityDb =
-        Cache.activitiesDbSorted.first { it.id == activity_id }
+    fun selectActivityDbCached(): ActivityDb =
+        Cache.getActivityDbByIdOrNull(activity_id)!!
 
-    suspend fun upActivity(newActivity: ActivityDb): Unit = dbIo {
-        db.intervalQueries.upActivityIdById(
-            id = id, activity_id = newActivity.id
+    suspend fun updateActivity(newActivity: ActivityDb): Unit = dbIo {
+        updateActivitySync(newActivity)
+    }
+
+    fun updateActivitySync(newActivity: ActivityDb) {
+        db.intervalQueries.updateActivityIdById(
+            id = id, activity_id = newActivity.id,
         )
     }
 
     suspend fun upId(newId: Int): Unit = dbIo {
-        db.intervalQueries.upId(
-            oldId = id, newId = newId
+        db.intervalQueries.updateId(
+            oldId = id, newId = newId,
         )
     }
 
     suspend fun upTimer(timer: Int): Unit = dbIo {
-        db.intervalQueries.upTimerById(
+        db.intervalQueries.updateTimerById(
             id = id,
             timer = timer,
         )
@@ -225,7 +228,7 @@ data class IntervalDb(
         note: String?,
         activityDb: ActivityDb,
     ): Unit = dbIo {
-        db.intervalQueries.upById(
+        db.intervalQueries.updateById(
             id = id,
             timer = timer,
             note = note,
@@ -237,18 +240,18 @@ data class IntervalDb(
         db.intervalQueries.deleteById(id)
     }
 
-    ///
-    /// Backupable Item
+    //
+    // Backupable Item
 
     override fun backupable__getId(): String = id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
-        id, timer, note, activity_id
+        id, timer, note, activity_id,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
         val j = json.jsonArray
-        db.intervalQueries.upById(
+        db.intervalQueries.updateById(
             id = j.getInt(0),
             timer = j.getInt(1),
             note = j.getStringOrNull(2),
@@ -260,6 +263,8 @@ data class IntervalDb(
         db.intervalQueries.deleteById(id)
     }
 }
+
+///
 
 private fun IntervalSQ.toDb() = IntervalDb(
     id = id, timer = timer, note = note, activity_id = activity_id,
