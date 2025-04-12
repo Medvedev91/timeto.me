@@ -21,8 +21,6 @@ data class IntervalDb(
 
     companion object : Backupable__Holder {
 
-        const val HOT_INTERVALS_LIMIT = 200 // todo 200? Remember limit for WatchToIosSync
-
         //
         // Select
 
