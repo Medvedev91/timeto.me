@@ -7,60 +7,73 @@ CREATE TABLE IntervalSQ (
     note TEXT -- Nullable!
 );
 
-anyChange: SELECT id FROM IntervalSQ LIMIT 1;
+--
+-- Select
 
-getBetweenIdDesc:
+anyChange:
+SELECT id FROM IntervalSQ LIMIT 1;
+
+selectBetweenIdDesc:
 SELECT *
 FROM IntervalSQ
 WHERE id BETWEEN :timeStart AND :timeFinish
 ORDER BY id DESC
 LIMIT :limit;
 
-getCount:
+selectCount:
 SELECT COUNT(*)
 FROM IntervalSQ;
 
-getById:
+selectById:
 SELECT *
 FROM IntervalSQ
 WHERE id = ?
 LIMIT 1;
 
-getAsc:
+selectAsc:
 SELECT *
 FROM IntervalSQ
 ORDER BY id ASC
 LIMIT :limit;
 
-getDesc:
+selectDesc:
 SELECT *
 FROM IntervalSQ
 ORDER BY id DESC
 LIMIT :limit;
 
+--
+-- Insert
+
 insert:
 INSERT INTO IntervalSQ
 VALUES ?;
 
-upId:
+--
+-- Update
+
+updateId:
 UPDATE IntervalSQ
 SET id = :newId
 WHERE id = :oldId;
 
-upById:
+updateById:
 UPDATE IntervalSQ
 SET timer = ?, note = ?, activity_id = ?
 WHERE id = ?;
 
-upTimerById:
+updateTimerById:
 UPDATE IntervalSQ
 SET timer = ?
 WHERE id = ?;
 
-upActivityIdById:
+updateActivityIdById:
 UPDATE IntervalSQ
 SET activity_id = ?
 WHERE id = ?;
+
+--
+-- Delete
 
 deleteById:
 DELETE FROM IntervalSQ
