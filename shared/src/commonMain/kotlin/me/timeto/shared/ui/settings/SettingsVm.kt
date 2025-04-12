@@ -58,16 +58,6 @@ class SettingsVm : __Vm<SettingsVm.State>() {
             )
         }
 
-        // Not used in iOS, but useful for report at -1
-        val dayStartSelectedIdx = run {
-            val index: Int =
-                dayStartListItems.indexOfFirst { it.seconds == dayStartSeconds }
-            if (index != -1)
-                return@run index
-            reportApi("SettingsSheetVM.dayStartSelectedIdx != -1")
-            return@run dayStartListItems.indexOfFirst { it.seconds == 0 }
-        }
-
         val infoText: String = run {
             val systemInfo = SystemInfo.instance
             val osName: String = when (systemInfo.os) {
