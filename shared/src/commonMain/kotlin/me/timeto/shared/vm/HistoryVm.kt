@@ -23,11 +23,11 @@ class HistoryVm : __Vm<HistoryVm.State>() {
     )
 
     override fun onAppear() {
-        IntervalDb.getAscFlow().onEachExIn(scopeVm()) { intervalsAsc ->
+        IntervalDb.selectAscFlow().onEachExIn(scopeVm()) { intervalsAsc ->
             state.update {
                 it.copy(
                     sections = prepHistorySections(allIntervalsAsc = intervalsAsc),
-                    activitiesFormAddUI = ActivityDb.selectAllSorted().map { ActivityFormAddUI(it) },
+                    activitiesFormAddUI = ActivityDb.selectSorted().map { ActivityFormAddUI(it) },
                 )
             }
         }
@@ -75,10 +75,10 @@ class HistoryVm : __Vm<HistoryVm.State>() {
                         throw UIException("Invalid time")
 
                     // todo ui limit
-                    if (IntervalDb.getByIdOrNull(timestamp) != null)
+                    if (IntervalDb.selectByIdOrNull(timestamp) != null)
                         throw UIException("Time is unavailable")
 
-                    IntervalDb.addWithValidation(
+                    IntervalDb.insertWithValidation(
                         timer = activity.timer,
                         note = null,
                         activity = activity,
@@ -133,7 +133,7 @@ class HistoryVm : __Vm<HistoryVm.State>() {
                     throw UIException("Invalid time")
 
                 // todo ui limit
-                if (IntervalDb.getByIdOrNull(timestamp) != null)
+                if (IntervalDb.selectByIdOrNull(timestamp) != null)
                     throw UIException("Time is unavailable")
 
                 interval.upId(timestamp)
@@ -152,7 +152,7 @@ class HistoryVm : __Vm<HistoryVm.State>() {
                     try {
                         launchExDefault {
                             // todo UI
-                            if (IntervalDb.getAsc(limit = 2).size < 2)
+                            if (IntervalDb.selectAsc(limit = 2).size < 2)
                                 throw UIException("Unable to delete the first item")
                             interval.delete()
                         }
@@ -170,7 +170,7 @@ class HistoryVm : __Vm<HistoryVm.State>() {
                 section: HistorySection,
             ): IntervalUI {
                 val unixTime = interval.unixTime()
-                val activity = interval.getActivityDbCached()
+                val activity = interval.selectActivityDbCached()
 
                 val sectionDayTimeStart = UnixTime.byLocalDay(section.day).time
                 val sectionDayTimeFinish = sectionDayTimeStart + 86400 - 1
