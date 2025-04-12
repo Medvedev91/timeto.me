@@ -35,14 +35,14 @@ object WatchToIosSync {
 
     fun startIntervalWithLocal(
         activity: ActivityDb,
-        timer: Int,
+        seconds: Int,
     ): Unit = launchExIo {
-        val interval = activity.startInterval(timer)
+        val interval = activity.startInterval(seconds)
         launchEx {
             delay(LOCAL_DELAY_MLS)
             val map = mapOf(
                 "activity_id" to JsonPrimitive(activity.id),
-                "timer" to JsonPrimitive(timer),
+                "timer" to JsonPrimitive(seconds),
                 "note" to JsonPrimitive(interval.note),
             )
             requestFromAppleWatch(
