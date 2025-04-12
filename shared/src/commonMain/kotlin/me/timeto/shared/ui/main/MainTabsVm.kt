@@ -64,7 +64,7 @@ class MainTabsVm : __Vm<MainTabsVm.State>() {
         combine(
             BatteryInfo.levelFlow,
             BatteryInfo.isChargingFlow,
-            IntervalDb.getLastOneOrNullFlow(),
+            IntervalDb.selectLastOneOrNullFlow(),
         ) { level, isCharging, lastIntervalDb ->
             state.update {
                 it.copy(
