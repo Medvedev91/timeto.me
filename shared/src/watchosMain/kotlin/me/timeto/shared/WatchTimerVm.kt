@@ -29,7 +29,7 @@ class WatchTimerVm : __Vm<WatchTimerVm.State>() {
 
     override fun onAppear() {
         val scope = scopeVm()
-        IntervalDb.getLastOneOrNullFlow()
+        IntervalDb.selectLastOneOrNullFlow()
             .filterNotNull()
             .onEachExIn(scope) { newInterval ->
                 state.update { it.copy(isPurple = false, lastInterval = newInterval) }

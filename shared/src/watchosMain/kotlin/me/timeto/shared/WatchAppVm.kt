@@ -39,10 +39,10 @@ class WatchAppVm : __Vm<WatchAppVm.State>() {
              */
             sync(doForceOrOnce = false)
 
-            if (IntervalDb.getLastOneOrNull() == null) {
+            if (IntervalDb.selectLastOneOrNull() == null) {
 
                 IntervalDb
-                    .getLastOneOrNullFlow()
+                    .selectLastOneOrNullFlow()
                     .filterNotNull()
                     .onEachExIn(this) {
                         setAppIsReady()
