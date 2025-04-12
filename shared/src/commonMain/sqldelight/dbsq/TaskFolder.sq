@@ -6,6 +6,9 @@ CREATE TABLE TaskFolderSQ (
     sort INTEGER AS Int NOT NULL
 );
 
+--
+-- Select
+
 anyChange:
 SELECT id
 FROM TaskFolderSQ
@@ -16,9 +19,15 @@ SELECT *
 FROM TaskFolderSQ
 ORDER BY sort ASC;
 
+--
+-- Insert
+
 insert:
 INSERT INTO TaskFolderSQ
 (id, name, sort) VALUES (?, ?, ?);
+
+--
+-- Update
 
 updateById:
 UPDATE TaskFolderSQ
@@ -34,6 +43,9 @@ updateNameById:
 UPDATE TaskFolderSQ
 SET name = ?
 WHERE id = ?;
+
+--
+-- Delete
 
 truncate:
 DELETE FROM TaskFolderSQ;

@@ -8,21 +8,27 @@ CREATE TABLE ChecklistItemSQ (
     sort INTEGER AS Int NOT NULL
 );
 
-anyChange: SELECT id FROM ChecklistItemSQ LIMIT 1;
+--
+-- Select
 
-getSorted:
+anyChange:
+SELECT id FROM ChecklistItemSQ LIMIT 1;
+
+selectSorted:
 SELECT *
 FROM ChecklistItemSQ
 ORDER BY sort ASC, id ASC;
+
+--
+-- Insert
 
 insert:
 INSERT INTO ChecklistItemSQ
 ( id,  text,  list_id,  check_time,  sort) VALUES
 (:id, :text, :list_id, :check_time, :sort);
 
-deleteById:
-DELETE FROM ChecklistItemSQ
-WHERE id = ?;
+--
+-- Update
 
 updateById:
 UPDATE ChecklistItemSQ
@@ -48,6 +54,13 @@ updateCheckTimeByList:
 UPDATE ChecklistItemSQ
 SET check_time=?
 WHERE list_id=?;
+
+--
+-- Delete
+
+deleteById:
+DELETE FROM ChecklistItemSQ
+WHERE id = ?;
 
 truncate:
 DELETE FROM ChecklistItemSQ;

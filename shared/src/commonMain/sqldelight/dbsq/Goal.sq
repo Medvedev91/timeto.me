@@ -10,9 +10,15 @@ CREATE TABLE GoalSq (
     finish_text TEXT NOT NULL
 );
 
+--
+-- Select
+
 selectAll:
 SELECT *
 FROM GoalSq;
+
+--
+-- Insert
 
 insert:
 INSERT INTO GoalSq
@@ -24,11 +30,17 @@ insertSq:
 INSERT INTO GoalSq
 VALUES ?;
 
+--
+-- Update
+
 updateById:
 UPDATE GoalSq
 SET activity_id=?, sort=?, seconds=?, period_json=?,
     note=?, finish_text=?
 WHERE id = ?;
+
+--
+-- Delete
 
 deleteById:
 DELETE

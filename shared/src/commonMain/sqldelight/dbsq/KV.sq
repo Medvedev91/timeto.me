@@ -3,6 +3,9 @@ CREATE TABLE KVSQ (
     value TEXT NOT NULL
 );
 
+--
+-- Select
+
 selectAll:
 SELECT *
 FROM KVSQ;
@@ -13,9 +16,15 @@ FROM KVSQ
 WHERE key = ?
 LIMIT 1;
 
+--
+-- Upsert
+
 upsert:
 INSERT OR REPLACE INTO KVSQ
 (key, value) VALUES (?, ?);
+
+--
+-- Delete
 
 deleteByKey:
 DELETE FROM KVSQ

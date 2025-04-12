@@ -6,12 +6,15 @@ CREATE TABLE ShortcutSQ (
     uri TEXT NOT NULL
 );
 
+--
+-- Select
+
 anyChange:
 SELECT id
 FROM ShortcutSQ
 LIMIT 1;
 
-getCount:
+selectCount:
 SELECT COUNT(*)
 FROM ShortcutSQ;
 
@@ -20,14 +23,23 @@ SELECT *
 FROM ShortcutSQ
 ORDER BY id ASC;
 
+--
+-- Insert
+
 insert:
 INSERT INTO ShortcutSQ
 VALUES ?;
+
+--
+-- Update
 
 updateById:
 UPDATE ShortcutSQ
 SET name = ?, uri = ?
 WHERE id = ?;
+
+--
+-- Delete
 
 deleteById:
 DELETE FROM ShortcutSQ

@@ -6,6 +6,9 @@ CREATE TABLE NoteSQ (
     text TEXT NOT NULL
 );
 
+--
+-- Select
+
 anyChange:
 SELECT id
 FROM NoteSQ
@@ -16,14 +19,23 @@ SELECT *
 FROM NoteSQ
 ORDER BY id ASC;
 
+--
+-- Insert
+
 insert:
 INSERT INTO NoteSQ
 VALUES ?;
+
+--
+-- Update
 
 updateById:
 UPDATE NoteSQ
 SET text = ?, sort = ?
 WHERE id = ?;
+
+--
+-- Delete
 
 deleteById:
 DELETE FROM NoteSQ
