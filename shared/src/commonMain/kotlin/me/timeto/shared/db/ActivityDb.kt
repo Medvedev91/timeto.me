@@ -204,7 +204,7 @@ data class ActivityDb(
 
     suspend fun startInterval(
         seconds: Int,
-    ): IntervalDb = IntervalDb.addWithValidation(
+    ): IntervalDb = IntervalDb.insertWithValidation(
         timer = seconds,
         activity = this,
         note = null,
