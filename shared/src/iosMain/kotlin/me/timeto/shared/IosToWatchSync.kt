@@ -36,7 +36,7 @@ object IosToWatchSync {
          */
         val type = "${timeMls()}"
 
-        val jString = Backup.create(type, intervalsLimit = IntervalDb.HOT_INTERVALS_LIMIT)
+        val jString = Backup.create(type, intervalsLimit = 1)
         // todo error?
         session.updateApplicationContext(mapOf("backup" to jString), error = null)
     }
