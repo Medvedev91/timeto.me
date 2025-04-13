@@ -6,6 +6,7 @@ import me.timeto.shared.Cache
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.IntervalDb
+import me.timeto.shared.db.TaskDb
 import me.timeto.shared.delayToNextMinute
 import me.timeto.shared.misc.BatteryInfo
 import me.timeto.shared.vm.__Vm
@@ -16,14 +17,14 @@ class MainTabsVm : __Vm<MainTabsVm.State>() {
         val batteryLevel: Int?,
         val isBatteryCharging: Boolean,
         val lastIntervalId: Int,
+        val todayTasksCount: Int,
         val forceUpdate: Int,
     ) {
 
         val timeText: String =
             UnixTime().getStringByComponents(UnixTime.StringComponent.hhmm24)
 
-        val tasksText: String =
-            "${Cache.tasksDb.count { it.isToday }}"
+        val tasksText: String = "$todayTasksCount"
 
         val batteryUi: BatteryUi = run {
             val level: Int? = batteryLevel
@@ -53,6 +54,7 @@ class MainTabsVm : __Vm<MainTabsVm.State>() {
             batteryLevel = BatteryInfo.levelFlow.value,
             isBatteryCharging = BatteryInfo.isChargingFlow.value,
             lastIntervalId = Cache.lastInterval.id,
+            todayTasksCount = Cache.tasksDb.count { it.isToday },
             forceUpdate = 0,
         )
     )
@@ -64,12 +66,14 @@ class MainTabsVm : __Vm<MainTabsVm.State>() {
         combine(
             BatteryInfo.levelFlow,
             BatteryInfo.isChargingFlow,
+            TaskDb.getAscFlow(),
             IntervalDb.selectLastOneOrNullFlow(),
-        ) { level, isCharging, lastIntervalDb ->
+        ) { level, isCharging, tasksDb, lastIntervalDb ->
             state.update {
                 it.copy(
                     batteryLevel = level,
                     isBatteryCharging = isCharging,
+                    todayTasksCount = tasksDb.count { taskDb -> taskDb.isToday },
                     lastIntervalId = lastIntervalDb?.id ?: it.lastIntervalId,
                 )
             }
