@@ -1,18 +1,25 @@
-package me.timeto.shared.vm
+package me.timeto.shared.ui.summary
 
-import kotlinx.coroutines.flow.*
-import me.timeto.shared.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
+import me.timeto.shared.Cache
+import me.timeto.shared.UnixTime
 import me.timeto.shared.db.ActivityDb
+import me.timeto.shared.incOrSet
+import me.timeto.shared.launchEx
+import me.timeto.shared.localUtcOffset
 import me.timeto.shared.models.DayIntervalsUi
+import me.timeto.shared.textFeatures
+import me.timeto.shared.toHms
+import me.timeto.shared.vm.__Vm
 
-class SummarySheetVm : __Vm<SummarySheetVm.State>() {
+class SummaryVm : __Vm<SummaryVm.State>() {
 
     data class State(
         val pickerTimeStart: UnixTime,
         val pickerTimeFinish: UnixTime,
-        val activitiesUI: List<ActivityUI>,
+        val activitiesUi: List<ActivityUi>,
         val daysIntervalsUi: List<DayIntervalsUi>,
-        val isChartVisible: Boolean,
     ) {
 
         val minPickerTime: UnixTime = Cache.firstInterval.unixTime()
@@ -21,14 +28,14 @@ class SummarySheetVm : __Vm<SummarySheetVm.State>() {
         val timeStartText: String = pickerTimeStart.getStringByComponents(buttonDateStringComponents)
         val timeFinishText: String = pickerTimeFinish.getStringByComponents(buttonDateStringComponents)
 
-        val periodHints: List<PeriodHint> = run {
+        val periodHints: List<PeriodHintUi> = run {
             val now = UnixTime()
             val yesterday = now.inDays(-1)
             listOf(
-                PeriodHint(this, "Today", now, now),
-                PeriodHint(this, "Yesterday", yesterday, yesterday),
-                PeriodHint(this, "7 days", yesterday.inDays(-6), yesterday),
-                PeriodHint(this, "30 days", yesterday.inDays(-29), yesterday),
+                PeriodHintUi(this, "Today", now, now),
+                PeriodHintUi(this, "Yesterday", yesterday, yesterday),
+                PeriodHintUi(this, "7 days", yesterday.inDays(-6), yesterday),
+                PeriodHintUi(this, "30 days", yesterday.inDays(-29), yesterday),
             )
         }
 
@@ -44,20 +51,17 @@ class SummarySheetVm : __Vm<SummarySheetVm.State>() {
             State(
                 pickerTimeStart = now,
                 pickerTimeFinish = now,
-                activitiesUI = listOf(),
-                daysIntervalsUi = listOf(),
-                isChartVisible = false,
+                activitiesUi = emptyList(),
+                daysIntervalsUi = emptyList(),
             )
+        )
+        setPeriod(
+            pickerTimeStart = state.value.pickerTimeStart,
+            pickerTimeFinish = state.value.pickerTimeFinish,
         )
     }
 
-    override fun onAppear() {
-        setPeriod(state.value.pickerTimeStart, state.value.pickerTimeFinish)
-    }
-
-    fun toggleIsChartVisible() = state.update {
-        it.copy(isChartVisible = !it.isChartVisible)
-    }
+    ///
 
     fun setPeriod(
         pickerTimeStart: UnixTime,
@@ -73,34 +77,38 @@ class SummarySheetVm : __Vm<SummarySheetVm.State>() {
                 it.copy(
                     pickerTimeStart = pickerTimeStart,
                     pickerTimeFinish = pickerTimeFinish,
-                    activitiesUI = prepActivitiesUI(daysIntervalsUi),
+                    activitiesUi = prepActivitiesUi(daysIntervalsUi),
                     daysIntervalsUi = daysIntervalsUi.reversed(),
                 )
             }
         }
     }
 
-    fun setPickerTimeStart(unixTime: UnixTime) = setPeriod(
-        pickerTimeStart = unixTime,
-        pickerTimeFinish = state.value.pickerTimeFinish,
-    )
+    fun setPickerTimeStart(unixTime: UnixTime) {
+        setPeriod(
+            pickerTimeStart = unixTime,
+            pickerTimeFinish = state.value.pickerTimeFinish,
+        )
+    }
 
-    fun setPickerTimeFinish(unixTime: UnixTime) = setPeriod(
-        pickerTimeStart = state.value.pickerTimeStart,
-        pickerTimeFinish = unixTime,
-    )
+    fun setPickerTimeFinish(unixTime: UnixTime) {
+        setPeriod(
+            pickerTimeStart = state.value.pickerTimeStart,
+            pickerTimeFinish = unixTime,
+        )
+    }
 
     ///
 
-    class ActivityUI(
+    class ActivityUi(
         val activity: ActivityDb,
         val seconds: Int,
         val ratio: Float,
         secondsPerDay: Int,
     ) {
 
-        val title = activity.name.textFeatures().textUi()
-        val percentageString = "${(ratio * 100).toInt()}%"
+        val title: String = activity.name.textFeatures().textUi()
+        val percentageString: String = "${(ratio * 100).toInt()}%"
         val perDayString: String = prepTimeString(secondsPerDay) + " / day"
         val totalTimeString: String = prepTimeString(seconds)
 
@@ -116,7 +124,7 @@ class SummarySheetVm : __Vm<SummarySheetVm.State>() {
         }
     }
 
-    class PeriodHint(
+    class PeriodHintUi(
         state: State,
         val title: String,
         val pickerTimeStart: UnixTime,
@@ -128,6 +136,8 @@ class SummarySheetVm : __Vm<SummarySheetVm.State>() {
     }
 }
 
+///
+
 private val buttonDateStringComponents = listOf(
     UnixTime.StringComponent.dayOfMonth,
     UnixTime.StringComponent.space,
@@ -137,9 +147,9 @@ private val buttonDateStringComponents = listOf(
     UnixTime.StringComponent.dayOfWeek3,
 )
 
-private fun prepActivitiesUI(
+private fun prepActivitiesUi(
     daysIntervalsUi: List<DayIntervalsUi>
-): List<SummarySheetVm.ActivityUI> {
+): List<SummaryVm.ActivityUi> {
     val daysCount = daysIntervalsUi.size
     val totalSeconds = daysCount * 86_400
     val mapActivitySeconds: MutableMap<Int, Int> = mutableMapOf()
@@ -154,7 +164,7 @@ private fun prepActivitiesUI(
         .map { (activityId, seconds) ->
             val activityDb: ActivityDb =
                 Cache.activitiesDbSorted.first { it.id == activityId }
-            SummarySheetVm.ActivityUI(
+            SummaryVm.ActivityUi(
                 activity = activityDb,
                 seconds = seconds,
                 ratio = seconds.toFloat() / totalSeconds,
