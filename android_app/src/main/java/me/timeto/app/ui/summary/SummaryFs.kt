@@ -26,7 +26,6 @@ import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.app.ui.Dialog
 import me.timeto.app.ui.Divider
-import me.timeto.app.ui.Padding
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.SummaryChartView
@@ -131,8 +130,7 @@ fun SummaryFs() {
                                         ZStack(
                                             modifier = Modifier
                                                 .fillMaxWidth()
-                                                .height(barsHeaderHeight)
-                                                .padding(bottom = 8.dp),
+                                                .height(barsHeaderHeight),
                                         ) {
 
                                             Text(
@@ -176,7 +174,7 @@ fun SummaryFs() {
                 VStack(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(end = hPadding)
+                        .padding(end = hPadding, bottom = 10.dp)
                         .verticalScroll(state = activitiesScrollState),
                 ) {
 
@@ -249,8 +247,6 @@ fun SummaryFs() {
                             }
                         }
                     }
-
-                    Padding(vertical = 10.dp)
                 }
             }
 
