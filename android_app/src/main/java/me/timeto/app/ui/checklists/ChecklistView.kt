@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import me.timeto.app.*
 import me.timeto.app.R
+import me.timeto.app.mics.Haptic
 import me.timeto.app.ui.checklists.form.ChecklistFormItemFs
 import me.timeto.app.ui.home.HomeScreen__itemHeight
 import me.timeto.app.ui.home.HomeScreen__primaryFontSize
@@ -72,7 +73,7 @@ fun ChecklistView(
                 contentPadding = PaddingValues(top = topPadding, bottom = bottomPadding),
             ) {
 
-                state.itemsUi.forEach { itemUI ->
+                state.itemsUi.forEach { itemUi ->
 
                     item {
 
@@ -82,7 +83,8 @@ fun ChecklistView(
                                 .fillMaxWidth()
                                 .clip(squircleShape)
                                 .clickable {
-                                    itemUI.toggle()
+                                    itemUi.toggle()
+                                    Haptic.shot()
                                 }
                                 .padding(start = itemStartPadding),
                             verticalAlignment = Alignment.CenterVertically,
@@ -91,7 +93,7 @@ fun ChecklistView(
 
                             Icon(
                                 painterResource(
-                                    id = if (itemUI.itemDb.isChecked)
+                                    id = if (itemUi.itemDb.isChecked)
                                         R.drawable.sf_checkmark_square_fill_medium_regular
                                     else
                                         R.drawable.sf_square_medium_regular
@@ -103,7 +105,7 @@ fun ChecklistView(
                             )
 
                             Text(
-                                text = itemUI.itemDb.text,
+                                text = itemUi.itemDb.text,
                                 color = c.white,
                                 modifier = Modifier
                                     .padding(vertical = 4.dp)
@@ -153,6 +155,7 @@ fun ChecklistView(
                     .clip(squircleShape)
                     .clickable {
                         completionState.onClick()
+                        Haptic.shot()
                     },
             ) {
 
