@@ -28,7 +28,6 @@ import me.timeto.app.ui.Dialog
 import me.timeto.app.ui.Divider
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1
-import me.timeto.app.ui.SummaryChartView
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.UnixTime
 import me.timeto.shared.ui.summary.SummaryVm

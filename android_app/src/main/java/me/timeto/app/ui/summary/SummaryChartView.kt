@@ -1,4 +1,4 @@
-package me.timeto.app.ui
+package me.timeto.app.ui.summary
 
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
@@ -21,20 +21,25 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
-import me.timeto.shared.vm.SummaryChartVm
-import me.timeto.shared.vm.SummarySheetVm
+import me.timeto.app.ui.Screen
+import me.timeto.app.ui.WyouChart
+import me.timeto.shared.ui.summary.SummaryVm
+import me.timeto.shared.ui.summary.SummaryChartVm
 
 @Composable
 fun SummaryChartView(
-    activitiesUI: List<SummarySheetVm.ActivityUI>,
+    activitiesUI: List<SummaryVm.ActivityUi>,
 ) {
 
-    val (vm, state) = rememberVm(activitiesUI) { SummaryChartVm(activitiesUI) }
+    val (_, state) = rememberVm(activitiesUI) {
+        SummaryChartVm(activitiesUI)
+    }
 
-    VStack(
-        modifier = Modifier
-            .background(c.sheetBg),
-    ) {
+    val selectedId: MutableState<String?> = remember {
+        mutableStateOf(null)
+    }
+
+    Screen {
 
         Box(
             modifier = Modifier
@@ -45,8 +50,8 @@ fun SummaryChartView(
                 .aspectRatio(1f)
         ) {
 
-            WyouChart.ChartUI(state.pieItems, state.selectedId) {
-                vm.selectId(it)
+            WyouChart.ChartUI(state.pieItems, selectedId.value) {
+                selectedId.value = it
             }
         }
 
@@ -57,7 +62,7 @@ fun SummaryChartView(
                 top = 20.dp,
                 bottom = 12.dp,
                 start = 8.dp,
-                end = 8.dp
+                end = 8.dp,
             )
         ) {
             itemsIndexed(state.pieItems) { _, pie ->
@@ -68,12 +73,12 @@ fun SummaryChartView(
                         .padding(start = 2.dp)
                         .clip(squircleShape)
                         .clickable {
-                            vm.selectId(if (state.selectedId == curId) null else curId)
+                            selectedId.value = if (selectedId.value == curId) null else curId
                         }
                         .padding(start = 6.dp, end = 1.dp, top = 5.dp, bottom = 5.dp)
                 ) {
                     val width = animateDpAsState(
-                        if (state.selectedId == curId) 23.dp else 10.dp,
+                        if (selectedId.value == curId) 23.dp else 10.dp,
                         spring(stiffness = Spring.StiffnessLow)
                     )
                     Box(
