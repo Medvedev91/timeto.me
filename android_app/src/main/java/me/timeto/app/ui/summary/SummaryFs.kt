@@ -1,5 +1,6 @@
 package me.timeto.app.ui.summary
 
+import androidx.activity.compose.LocalActivity
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -24,10 +25,11 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.app.ui.Dialog
+import me.timeto.app.ui.Divider
 import me.timeto.app.ui.Padding
-import me.timeto.app.ui.SheetDividerFg
-import me.timeto.app.ui.Sheet__BottomView
+import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1
+import me.timeto.app.ui.SummaryChartView
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.UnixTime
 import me.timeto.shared.ui.summary.SummaryVm
@@ -38,7 +40,9 @@ private val hPadding = 8.dp
 @Composable
 fun SummaryFs() {
 
+    val mainActivity = LocalActivity.current as MainActivity
     val navigationLayer = LocalNavigationLayer.current
+
     val isChartVisible = remember {
         mutableStateOf(false)
     }
@@ -47,14 +51,14 @@ fun SummaryFs() {
         SummaryVm()
     }
 
-    VStack(
+    Screen(
         modifier = Modifier
-            .fillMaxHeight()
-            .background(c.sheetBg),
+            .navigationBarsPadding(),
     ) {
 
         ZStack(
             modifier = Modifier
+                .padding(top = mainActivity.statusBarHeightDp)
                 .fillMaxWidth()
                 .weight(1f),
         ) {
@@ -70,7 +74,7 @@ fun SummaryFs() {
                 ZStack(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(end = 12.dp, bottom = 12.dp),
+                        .padding(end = 12.dp, bottom = 10.dp),
                 ) {
 
                     //
@@ -94,7 +98,7 @@ fun SummaryFs() {
                                     fontSize = 10.sp,
                                     fontWeight = FontWeight.Light,
                                 )
-                                SheetDividerFg()
+                                Divider()
                             }
                         }
                     }
@@ -246,97 +250,94 @@ fun SummaryFs() {
                         }
                     }
 
-                    Padding(vertical = 12.dp)
+                    Padding(vertical = 10.dp)
                 }
             }
 
-            if (state.isChartVisible)
-                SummaryChartView(state.activitiesUI)
+            if (isChartVisible.value)
+                SummaryChartView(state.activitiesUi)
         }
 
-        Sheet__BottomView {
+        VStack {
 
-            VStack {
-
-                HStack(
-                    modifier = Modifier
-                        .padding(top = 8.dp)
-                        .align(Alignment.CenterHorizontally),
-                ) {
-                    state.periodHints.forEach { period ->
-                        Text(
-                            period.title,
-                            modifier = Modifier
-                                .clip(squircleShape)
-                                .clickable {
-                                    vm.setPeriod(period.pickerTimeStart, period.pickerTimeFinish)
-                                }
-                                .padding(horizontal = 8.dp, vertical = 6.dp),
-                            textAlign = TextAlign.Center,
-                            fontSize = 12.sp,
-                            lineHeight = 14.sp,
-                            fontWeight = if (period.isActive) FontWeight.Black else FontWeight.Light,
-                            color = if (period.isActive) c.white else c.text,
-                        )
-                    }
-                }
-
-                HStack(
-                    modifier = Modifier
-                        .padding(horizontal = 12.dp)
-                        .padding(top = 6.dp, bottom = 6.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-
-                    FooterIconButton(
-                        icon = R.drawable.sf_chart_pie_medium_regular,
-                        backgroundColor = if (isChartVisible.value) c.blue else c.transparent,
-                        contentDescription = "Pie Chart",
-                        onClick = {
-                            isChartVisible.value = !isChartVisible.value
-                        },
-                    )
-
-                    SpacerW1()
-
-                    DateButtonView(
-                        text = state.timeStartText,
-                        unixTime = state.pickerTimeStart,
-                        minTime = state.minPickerTime,
-                        maxTime = state.maxPickerTime,
-                    ) {
-                        vm.setPickerTimeStart(it)
-                    }
-
+            HStack(
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .align(Alignment.CenterHorizontally),
+            ) {
+                state.periodHints.forEach { period ->
                     Text(
-                        text = "-",
+                        period.title,
                         modifier = Modifier
-                            .padding(start = 8.dp, end = 8.dp, bottom = 1.dp)
-                            .align(Alignment.CenterVertically),
-                        fontSize = 14.sp,
-                        color = c.text,
-                    )
-
-                    DateButtonView(
-                        text = state.timeFinishText,
-                        unixTime = state.pickerTimeFinish,
-                        minTime = state.minPickerTime,
-                        maxTime = state.maxPickerTime,
-                    ) {
-                        vm.setPickerTimeFinish(it)
-                    }
-
-                    SpacerW1()
-
-                    FooterIconButton(
-                        icon = R.drawable.sf_xmark_circle_medium_regular,
-                        backgroundColor = c.transparent,
-                        contentDescription = "Close",
-                        onClick = {
-                            navigationLayer.close()
-                        },
+                            .clip(squircleShape)
+                            .clickable {
+                                vm.setPeriod(period.pickerTimeStart, period.pickerTimeFinish)
+                            }
+                            .padding(horizontal = 8.dp, vertical = 6.dp),
+                        textAlign = TextAlign.Center,
+                        fontSize = 12.sp,
+                        lineHeight = 14.sp,
+                        fontWeight = if (period.isActive) FontWeight.Black else FontWeight.Light,
+                        color = if (period.isActive) c.white else c.text,
                     )
                 }
+            }
+
+            HStack(
+                modifier = Modifier
+                    .padding(horizontal = 12.dp)
+                    .padding(top = 6.dp, bottom = 6.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+
+                FooterIconButton(
+                    icon = R.drawable.sf_chart_pie_medium_regular,
+                    backgroundColor = if (isChartVisible.value) c.blue else c.transparent,
+                    contentDescription = "Pie Chart",
+                    onClick = {
+                        isChartVisible.value = !isChartVisible.value
+                    },
+                )
+
+                SpacerW1()
+
+                DateButtonView(
+                    text = state.timeStartText,
+                    unixTime = state.pickerTimeStart,
+                    minTime = state.minPickerTime,
+                    maxTime = state.maxPickerTime,
+                ) {
+                    vm.setPickerTimeStart(it)
+                }
+
+                Text(
+                    text = "-",
+                    modifier = Modifier
+                        .padding(start = 8.dp, end = 8.dp, bottom = 1.dp)
+                        .align(Alignment.CenterVertically),
+                    fontSize = 14.sp,
+                    color = c.text,
+                )
+
+                DateButtonView(
+                    text = state.timeFinishText,
+                    unixTime = state.pickerTimeFinish,
+                    minTime = state.minPickerTime,
+                    maxTime = state.maxPickerTime,
+                ) {
+                    vm.setPickerTimeFinish(it)
+                }
+
+                SpacerW1()
+
+                FooterIconButton(
+                    icon = R.drawable.sf_xmark_circle_medium_regular,
+                    backgroundColor = c.transparent,
+                    contentDescription = "Close",
+                    onClick = {
+                        navigationLayer.close()
+                    },
+                )
             }
         }
     }
@@ -399,9 +400,10 @@ private fun FooterIconButton(
     Icon(
         painter = painterResource(id = icon),
         contentDescription = contentDescription,
-        tint = c.tertiaryText,
+        tint = c.textSecondary,
         modifier = Modifier
             .size(30.dp)
+            .alpha(0.7f)
             .clip(roundedShape)
             .background(backgroundColor)
             .clickable {
