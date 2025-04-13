@@ -11,8 +11,7 @@ import me.timeto.shared.ui.moveAndroid
 import me.timeto.shared.ui.moveIos
 import me.timeto.shared.vm.__Vm
 
-class TaskFoldersFormVm(
-) : __Vm<TaskFoldersFormVm.State>() {
+class TaskFoldersFormVm : __Vm<TaskFoldersFormVm.State>() {
 
     data class State(
         val foldersDb: List<TaskFolderDb>,
