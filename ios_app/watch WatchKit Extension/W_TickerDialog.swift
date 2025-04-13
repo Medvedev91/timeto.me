@@ -49,7 +49,7 @@ struct W_TickerDialog: View {
                         } else {
                             WatchToIosSync.shared.startIntervalWithLocal(
                                     activity: activity,
-                                    timer: formSeconds
+                                    seconds: formSeconds
                             )
                         }
                         preAdd()
