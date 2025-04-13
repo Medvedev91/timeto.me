@@ -1,18 +1,20 @@
-package me.timeto.app.ui
+package me.timeto.app.ui.summary
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Close
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -21,18 +23,29 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
+import me.timeto.app.ui.Dialog
+import me.timeto.app.ui.Padding
+import me.timeto.app.ui.SheetDividerFg
+import me.timeto.app.ui.Sheet__BottomView
+import me.timeto.app.ui.SpacerW1
+import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.UnixTime
-import me.timeto.shared.vm.SummarySheetVm
+import me.timeto.shared.ui.summary.SummaryVm
 
 private val barsHeaderHeight = 35.dp
 private val hPadding = 8.dp
 
 @Composable
-fun SummarySheet(
-    layer: WrapperView.Layer,
-) {
+fun SummaryFs() {
 
-    val (vm, state) = rememberVm { SummarySheetVm() }
+    val navigationLayer = LocalNavigationLayer.current
+    val isChartVisible = remember {
+        mutableStateOf(false)
+    }
+
+    val (vm, state) = rememberVm {
+        SummaryVm()
+    }
 
     VStack(
         modifier = Modifier
@@ -163,9 +176,9 @@ fun SummarySheet(
                         .verticalScroll(state = activitiesScrollState),
                 ) {
 
-                    state.activitiesUI.forEach { activityUI ->
+                    state.activitiesUi.forEach { activityUi ->
 
-                        val activityColor = activityUI.activity.colorRgba.toColor()
+                        val activityColor = activityUi.activity.colorRgba.toColor()
 
                         VStack(
                             modifier = Modifier
@@ -174,9 +187,9 @@ fun SummarySheet(
 
                             HStack {
 
-                                ActivitySecondaryText(activityUI.perDayString, Modifier.weight(1f))
+                                ActivitySecondaryText(activityUi.perDayString, Modifier.weight(1f))
 
-                                ActivitySecondaryText(activityUI.totalTimeString)
+                                ActivitySecondaryText(activityUi.totalTimeString)
                             }
 
                             HStack(
@@ -186,7 +199,7 @@ fun SummarySheet(
                             ) {
 
                                 Text(
-                                    text = activityUI.title,
+                                    text = activityUi.title,
                                     modifier = Modifier
                                         .weight(1f)
                                         .padding(end = 4.dp),
@@ -198,7 +211,7 @@ fun SummarySheet(
                                     maxLines = 1,
                                 )
 
-                                ActivitySecondaryText(activityUI.percentageString)
+                                ActivitySecondaryText(activityUi.percentageString)
                             }
 
                             HStack(
@@ -215,7 +228,7 @@ fun SummarySheet(
 
                                     ZStack(
                                         modifier = Modifier
-                                            .fillMaxWidth(activityUI.ratio)
+                                            .fillMaxWidth(activityUi.ratio)
                                             .height(8.dp)
                                             .background(activityColor)
                                             .clip(roundedShape),
@@ -275,19 +288,13 @@ fun SummarySheet(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
 
-                    Icon(
-                        painter = painterResource(R.drawable.sf_chart_pie_small_thin),
+                    FooterIconButton(
+                        icon = R.drawable.sf_chart_pie_medium_regular,
+                        backgroundColor = if (isChartVisible.value) c.blue else c.transparent,
                         contentDescription = "Pie Chart",
-                        tint = if (state.isChartVisible) c.white else c.textSecondary,
-                        modifier = Modifier
-                            .size(30.dp)
-                            .clip(roundedShape)
-                            .background(if (state.isChartVisible) c.blue else c.transparent)
-                            .alpha(0.7f)
-                            .clickable {
-                                vm.toggleIsChartVisible()
-                            }
-                            .padding(5.dp),
+                        onClick = {
+                            isChartVisible.value = !isChartVisible.value
+                        },
                     )
 
                     SpacerW1()
@@ -302,12 +309,12 @@ fun SummarySheet(
                     }
 
                     Text(
-                        "-",
+                        text = "-",
                         modifier = Modifier
                             .padding(start = 8.dp, end = 8.dp, bottom = 1.dp)
                             .align(Alignment.CenterVertically),
                         fontSize = 14.sp,
-                        color = c.text
+                        color = c.text,
                     )
 
                     DateButtonView(
@@ -321,18 +328,13 @@ fun SummarySheet(
 
                     SpacerW1()
 
-                    Icon(
-                        imageVector = Icons.Rounded.Close,
+                    FooterIconButton(
+                        icon = R.drawable.sf_xmark_circle_medium_regular,
+                        backgroundColor = c.transparent,
                         contentDescription = "Close",
-                        tint = c.textSecondary,
-                        modifier = Modifier
-                            .alpha(0.7f)
-                            .size(30.dp)
-                            .clip(roundedShape)
-                            .clickable {
-                                layer.close()
-                            }
-                            .padding(4.dp),
+                        onClick = {
+                            navigationLayer.close()
+                        },
                     )
                 }
             }
@@ -383,5 +385,28 @@ private fun DateButtonView(
         fontSize = 14.sp,
         lineHeight = 18.sp,
         fontWeight = FontWeight.Medium,
+    )
+}
+
+@Composable
+private fun FooterIconButton(
+    @DrawableRes icon: Int,
+    backgroundColor: Color,
+    contentDescription: String,
+    onClick: () -> Unit,
+) {
+
+    Icon(
+        painter = painterResource(id = icon),
+        contentDescription = contentDescription,
+        tint = c.tertiaryText,
+        modifier = Modifier
+            .size(30.dp)
+            .clip(roundedShape)
+            .background(backgroundColor)
+            .clickable {
+                onClick()
+            }
+            .padding(4.dp),
     )
 }
