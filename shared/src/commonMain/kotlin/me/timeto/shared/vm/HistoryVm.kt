@@ -181,9 +181,10 @@ class HistoryVm : __Vm<HistoryVm.State>() {
                 val sectionDayTimeStart = UnixTime.byLocalDay(dayUi.unixDay).time
                 val sectionDayTimeFinish = sectionDayTimeStart + 86400 - 1
 
-                val finishTime = section.intervals.getNextOrNull(interval)?.id ?: section.nextIntervalStart
-                val seconds = finishTime - interval.id
-                val barTimeFinish = sectionDayTimeFinish.limitMax(finishTime)
+                val finishTime: Int =
+                    dayUi.intervalsDb.getNextOrNull(interval)?.id ?: dayUi.nextIntervalTimeStart
+                val seconds: Int = finishTime - interval.id
+                val barTimeFinish: Int = sectionDayTimeFinish.limitMax(finishTime)
 
                 return IntervalUi(
                     interval = interval,
