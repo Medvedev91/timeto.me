@@ -77,11 +77,18 @@ private struct HistoryFullScreenInner: View {
                                                 
                                                 Text(intervalUi.periodString)
                                                     .foregroundColor(.secondary)
+                                                    .font(.system(size: 16, weight: .light))
+                                                    .frame(alignment: .leading)
+
+                                                Spacer()
+                                                
+                                                Text(intervalUi.timeString)
+                                                    .foregroundColor(.primary)
                                                     .font(.system(size: 15, weight: .semibold, design: .monospaced))
                                                     .frame(alignment: .trailing)
                                             }
                                         }
-                                        .frame(width: 120, alignment: .leading)
+                                        .frame(width: 130, alignment: .leading)
 
                                         VStack {
                                             RoundedRectangle(cornerRadius: 20, style: .continuous)
