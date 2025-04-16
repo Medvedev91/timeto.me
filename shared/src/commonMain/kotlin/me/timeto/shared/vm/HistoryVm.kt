@@ -118,6 +118,7 @@ class HistoryVm : __Vm<HistoryVm.State>() {
 
             IntervalUi(
                 intervalDb = intervalDb,
+                activityDb = activityDb,
                 isStartsPrevDay = unixTime.localDay < unixDay,
                 text = (intervalDb.note ?: activityDb.name).textFeatures().textUi(),
                 secondsForBar = barTimeFinish - sectionDayTimeStart.limitMin(intervalDb.id),
@@ -143,6 +144,7 @@ class HistoryVm : __Vm<HistoryVm.State>() {
      */
     data class IntervalUi(
         val intervalDb: IntervalDb,
+        val activityDb: ActivityDb,
         val isStartsPrevDay: Boolean,
         val text: String,
         val secondsForBar: Int,
