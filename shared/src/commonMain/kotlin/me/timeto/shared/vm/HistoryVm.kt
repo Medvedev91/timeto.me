@@ -206,12 +206,14 @@ class HistoryVm : __Vm<HistoryVm.State>() {
 private fun prepPeriodString(
     seconds: Int,
 ): String {
-    val hms = seconds.toHms()
-    return when {
-        hms[0] == 0 && hms[1] == 0 -> "${hms[2]} sec"
-        hms[0] == 0 -> "${hms[1]} min"
-        else -> "${hms[0]}:${if (hms[1] < 10) "0${hms[1]}" else "${hms[1]}"}"
-    }
+    if (seconds < 60)
+        return "$seconds sec"
+    if (seconds < 3_600)
+        return "${seconds / 60} min"
+    val (h, m, _) = seconds.toHms()
+    if (m == 0)
+        return "${h}h"
+    return "${h}h ${m.toString().padStart(2, '0')}m"
 }
 
 private fun prepDaysUi(
