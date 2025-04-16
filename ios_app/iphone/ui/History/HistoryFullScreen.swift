@@ -62,12 +62,7 @@ private struct HistoryFullScreenInner: View {
                             
                             VStack(spacing: 10) {
                                 
-                                ForEach(dayUi.intervalsDb, id: \.id) { intervalDb in
-                                    
-                                    let intervalUi: HistoryVm.IntervalUi = HistoryVm.IntervalUi.companion.build(
-                                        interval: intervalDb,
-                                        dayUi: dayUi
-                                    )
+                                ForEach(dayUi.intervalsUi, id: \.intervalDb.id) { intervalUi in
                                     
                                     HStack(alignment: .top, spacing: 10) {
                                         
@@ -92,7 +87,7 @@ private struct HistoryFullScreenInner: View {
 
                                         VStack {
                                             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                                .fill(intervalDb.selectActivityDbCached().colorRgba.toColor())
+                                                .fill(intervalUi.activityDb.colorRgba.toColor())
                                                 .frame(
                                                     width: 10,
                                                     height: Double(10.limitMin(intervalUi.secondsForBar.toInt() / 50))
