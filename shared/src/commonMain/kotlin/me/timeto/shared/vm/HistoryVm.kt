@@ -104,6 +104,30 @@ class HistoryVm : __Vm<HistoryVm.State>() {
         val nextIntervalTimeStart: Int,
     ) {
 
+        val intervalsUi: List<IntervalUi> = intervalsDb.map { intervalDb ->
+            val unixTime: UnixTime = intervalDb.unixTime()
+            val activityDb: ActivityDb = intervalDb.selectActivityDbCached()
+
+            val sectionDayTimeStart: Int = UnixTime.byLocalDay(unixDay).time
+            val sectionDayTimeFinish: Int = sectionDayTimeStart + 86400 - 1
+
+            val finishTime: Int =
+                intervalsDb.getNextOrNull(intervalDb)?.id ?: nextIntervalTimeStart
+            val seconds: Int = finishTime - intervalDb.id
+            val barTimeFinish: Int = sectionDayTimeFinish.limitMax(finishTime)
+
+            IntervalUi(
+                intervalDb = intervalDb,
+                isStartsPrevDay = unixTime.localDay < unixDay,
+                text = (intervalDb.note ?: activityDb.name).textFeatures().textUi(),
+                secondsForBar = barTimeFinish - sectionDayTimeStart.limitMin(intervalDb.id),
+                barTimeFinish = barTimeFinish,
+                timeString = unixTime.getStringByComponents(UnixTime.StringComponent.hhmm24),
+                periodString = prepPeriodString(seconds),
+                color = activityDb.colorRgba,
+            )
+        }
+
         val dayText: String = UnixTime.byLocalDay(unixDay).getStringByComponents(
             UnixTime.StringComponent.dayOfMonth,
             UnixTime.StringComponent.space,
@@ -118,7 +142,7 @@ class HistoryVm : __Vm<HistoryVm.State>() {
      * A separate class with data to not store in memory all intervals.
      */
     data class IntervalUi(
-        val interval: IntervalDb,
+        val intervalDb: IntervalDb,
         val isStartsPrevDay: Boolean,
         val text: String,
         val secondsForBar: Int,
@@ -131,7 +155,7 @@ class HistoryVm : __Vm<HistoryVm.State>() {
         fun upTime(newTime: UnixTime): Unit = launchExDefault {
             try {
                 val timestamp = newTime.time
-                if (timestamp == interval.id)
+                if (timestamp == intervalDb.id)
                     return@launchExDefault
 
                 // todo ui limit
@@ -142,7 +166,7 @@ class HistoryVm : __Vm<HistoryVm.State>() {
                 if (IntervalDb.selectByIdOrNull(timestamp) != null)
                     throw UIException("Time is unavailable")
 
-                interval.upId(timestamp)
+                intervalDb.upId(timestamp)
             } catch (e: UIException) {
                 showUiAlert(e.uiMessage)
             }
@@ -160,43 +184,13 @@ class HistoryVm : __Vm<HistoryVm.State>() {
                             // todo UI
                             if (IntervalDb.selectAsc(limit = 2).size < 2)
                                 throw UIException("Unable to delete the first item")
-                            interval.delete()
+                            intervalDb.delete()
                         }
                     } catch (e: UIException) {
                         showUiAlert(e.uiMessage)
                     }
                 }
             )
-        }
-
-        companion object {
-
-            fun build(
-                interval: IntervalDb,
-                dayUi: DayUi,
-            ): IntervalUi {
-                val unixTime = interval.unixTime()
-                val activity = interval.selectActivityDbCached()
-
-                val sectionDayTimeStart = UnixTime.byLocalDay(dayUi.unixDay).time
-                val sectionDayTimeFinish = sectionDayTimeStart + 86400 - 1
-
-                val finishTime: Int =
-                    dayUi.intervalsDb.getNextOrNull(interval)?.id ?: dayUi.nextIntervalTimeStart
-                val seconds: Int = finishTime - interval.id
-                val barTimeFinish: Int = sectionDayTimeFinish.limitMax(finishTime)
-
-                return IntervalUi(
-                    interval = interval,
-                    isStartsPrevDay = unixTime.localDay < dayUi.unixDay,
-                    text = (interval.note ?: activity.name).textFeatures().textUi(),
-                    secondsForBar = barTimeFinish - sectionDayTimeStart.limitMin(interval.id),
-                    barTimeFinish = barTimeFinish,
-                    timeString = unixTime.getStringByComponents(UnixTime.StringComponent.hhmm24),
-                    periodString = prepPeriodString(seconds),
-                    color = activity.colorRgba,
-                )
-            }
         }
     }
 }
