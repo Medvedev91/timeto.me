@@ -101,10 +101,16 @@ private struct HistoryFullScreenInner: View {
                                             
                                             if !intervalUi.isStartsPrevDay {
                                                 
-                                                Text(intervalUi.text)
-                                                    .foregroundColor(.primary)
-                                                    .font(.system(size: 16, weight: .medium))
-                                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                                Button(intervalUi.text) {
+                                                    navigation.sheet {
+                                                        HistoryFormSheet(
+                                                            initIntervalDb: intervalUi.intervalDb
+                                                        )
+                                                    }
+                                                }
+                                                .foregroundColor(.primary)
+                                                .font(.system(size: 16, weight: .medium))
+                                                .frame(maxWidth: .infinity, alignment: .leading)
                                             }
                                         }
                                         .frame(maxWidth: .infinity)
@@ -125,7 +131,11 @@ private struct HistoryFullScreenInner: View {
                 BottomBarAddButton(
                     text: "New Entry",
                     action: {
-                        // todo
+                        navigation.sheet {
+                            HistoryFormSheet(
+                                initIntervalDb: nil
+                            )
+                        }
                     }
                 )
                 Spacer()
