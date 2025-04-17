@@ -32,7 +32,7 @@ class HistoryFormVm(
             initActivityDb =
                 initIntervalDb?.selectActivityDbCached() ?: ActivityDb.selectOtherCached(),
             activitiesUi =
-                Cache.activitiesDbSorted.map { ActivityUi(activityDb = it) }
+                Cache.activitiesDbSorted.map { ActivityUi(activityDb = it) },
         )
     )
 
