@@ -1,4 +1,4 @@
-package me.timeto.shared.ui.history
+package me.timeto.shared.ui.history.form
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
