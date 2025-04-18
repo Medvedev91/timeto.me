@@ -46,7 +46,7 @@ private struct HistoryFormSheetInner: View {
                 }
                 .foregroundColor(.primary)
                 .onChange(of: selectedActivityDb) { _, newActivityDb in
-                    vm.setActivityDb(activityDb: newActivityDb)
+                    vm.setActivityDb(newActivityDb: newActivityDb)
                 }
                 
                 NavigationLinkSheet(
@@ -60,7 +60,12 @@ private struct HistoryFormSheetInner: View {
                         }
                     },
                     sheet: {
-                        Text("todo")
+                        HistoryFormTimeSheet(
+                            initTime: state.time.toInt(),
+                            onDone: { newTime in
+                                vm.setTime(newTime: newTime.toInt32())
+                            }
+                        )
                     }
                 )
             }
