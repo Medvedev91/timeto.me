@@ -37,9 +37,8 @@ private struct BottomMenu: View {
                 text: "History",
                 icon: "list.bullet.rectangle"
             ) {
-                navigation.sheet {
-                    HistoryView()
-                        .interactiveDismissDisabled()
+                navigation.fullScreen {
+                    HistoryFullScreen()
                 }
             }
             
