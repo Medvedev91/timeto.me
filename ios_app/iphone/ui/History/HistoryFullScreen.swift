@@ -66,25 +66,11 @@ private struct HistoryFullScreenInner: View {
                                     
                                     HStack(alignment: .top, spacing: 10) {
                                         
-                                        HStack(alignment: .center) {
-                                            
-                                            if !intervalUi.isStartsPrevDay {
-                                                
-                                                Text(intervalUi.periodString)
-                                                    .foregroundColor(.secondary)
-                                                    .font(.system(size: 16, weight: .light))
-                                                    .frame(alignment: .leading)
-
-                                                Spacer()
-                                                
-                                                Text(intervalUi.timeString)
-                                                    .foregroundColor(.primary)
-                                                    .font(.system(size: 15, weight: .semibold, design: .monospaced))
-                                                    .frame(alignment: .trailing)
-                                            }
-                                        }
-                                        .frame(width: 130, alignment: .leading)
-
+                                        Text(intervalUi.timeString)
+                                            .foregroundColor(!intervalUi.isStartsPrevDay ? .primary : .clear)
+                                            .font(.system(size: 15, weight: .semibold, design: .monospaced))
+                                            .frame(alignment: .trailing)
+                                        
                                         VStack {
                                             RoundedRectangle(cornerRadius: 20, style: .continuous)
                                                 .fill(intervalUi.activityDb.colorRgba.toColor())
@@ -97,23 +83,34 @@ private struct HistoryFullScreenInner: View {
                                         }
                                         .frame(maxHeight: .infinity)
                                         
-                                        VStack(spacing: 4) {
+                                        HStack(alignment: .top, spacing: 8) {
                                             
                                             if !intervalUi.isStartsPrevDay {
                                                 
-                                                Button(intervalUi.text) {
-                                                    navigation.sheet {
-                                                        HistoryFormSheet(
-                                                            initIntervalDb: intervalUi.intervalDb
-                                                        )
+                                                Button(
+                                                    action: {
+                                                        navigation.sheet {
+                                                            HistoryFormSheet(
+                                                                initIntervalDb: intervalUi.intervalDb
+                                                            )
+                                                        }
+                                                    },
+                                                    label: {
+                                                        Text(intervalUi.text)
+                                                            .textAlign(.leading)
+                                                            .foregroundColor(.primary)
+                                                            .font(.system(size: 16, weight: .medium))
                                                     }
-                                                }
-                                                .foregroundColor(.primary)
-                                                .font(.system(size: 16, weight: .medium))
-                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                                )
+
+                                                Spacer()
+                                                
+                                                Text(intervalUi.periodString)
+                                                    .foregroundColor(.secondary)
+                                                    .font(.system(size: 16, weight: .light))
                                             }
                                         }
-                                        .frame(maxWidth: .infinity)
+                                        .fillMaxWidth()
                                     }
                                     .padding(.leading, 20)
                                     .padding(.trailing, 20)
