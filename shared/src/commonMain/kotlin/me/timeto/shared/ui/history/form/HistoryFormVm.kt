@@ -3,7 +3,6 @@ package me.timeto.shared.ui.history.form
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
-import me.timeto.shared.UnixTime
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.misc.time
@@ -32,7 +31,7 @@ class HistoryFormVm(
 
         val timeTitle = "Time Start"
         val timeNote: String =
-            prepTimeNote(selectedTime)
+            HistoryFormUtils.prepTimeNote(selectedTime)
     }
 
     override val state = MutableStateFlow(
@@ -59,31 +58,4 @@ class HistoryFormVm(
         val title: String =
             activityDb.name.textFeatures().textNoFeatures
     }
-}
-
-///
-
-private fun prepTimeNote(
-    time: Int,
-): String {
-    val today: Int = UnixTime().localDay
-    val unixTime = UnixTime(time)
-    return if (today == unixTime.localDay)
-        "Today " + unixTime.getStringByComponents(
-            listOf(
-                UnixTime.StringComponent.hhmm24,
-            )
-        )
-    else unixTime.getStringByComponents(
-        listOf(
-            UnixTime.StringComponent.dayOfMonth,
-            UnixTime.StringComponent.space,
-            UnixTime.StringComponent.month3,
-            UnixTime.StringComponent.comma,
-            UnixTime.StringComponent.space,
-            UnixTime.StringComponent.dayOfWeek3,
-            UnixTime.StringComponent.space,
-            UnixTime.StringComponent.hhmm24,
-        )
-    )
 }
