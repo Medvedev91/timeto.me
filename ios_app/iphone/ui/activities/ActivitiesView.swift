@@ -134,7 +134,7 @@ private struct ActivitiesViewInner: View {
                         }
                         
                         if state.activitiesUi.last != activityUi {
-                            SwiftUI.Divider()
+                            Divider()
                                 .padding(.leading, activityItemPaddingStart)
                         }
                     }
