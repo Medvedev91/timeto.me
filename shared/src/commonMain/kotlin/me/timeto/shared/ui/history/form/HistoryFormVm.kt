@@ -16,7 +16,7 @@ class HistoryFormVm(
     data class State(
         val initIntervalDb: IntervalDb?,
         val activityDb: ActivityDb,
-        val selectedTime: Int,
+        val time: Int,
         val activitiesUi: List<ActivityUi>,
     ) {
 
@@ -31,7 +31,7 @@ class HistoryFormVm(
 
         val timeTitle = "Time Start"
         val timeNote: String =
-            HistoryFormUtils.prepTimeNote(selectedTime)
+            HistoryFormUtils.prepTimeNote(time)
     }
 
     override val state = MutableStateFlow(
@@ -39,15 +39,19 @@ class HistoryFormVm(
             initIntervalDb = initIntervalDb,
             activityDb = initIntervalDb?.selectActivityDbCached()
                          ?: ActivityDb.selectOtherCached(),
-            selectedTime = initIntervalDb?.id ?: time(),
+            time = initIntervalDb?.id ?: time(),
             activitiesUi = Cache.activitiesDbSorted.map { ActivityUi(activityDb = it) },
         )
     )
 
     ///
 
-    fun setActivityDb(activityDb: ActivityDb) {
-        state.update { it.copy(activityDb = activityDb) }
+    fun setActivityDb(newActivityDb: ActivityDb) {
+        state.update { it.copy(activityDb = newActivityDb) }
+    }
+
+    fun setTime(newTime: Int) {
+        state.update { it.copy(time = newTime) }
     }
 
     ///
