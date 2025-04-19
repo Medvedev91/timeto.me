@@ -93,6 +93,20 @@ class HistoryFormVm(
         }
     }
 
+    fun moveToTasks(
+        intervalDb: IntervalDb,
+        dialogsManager: DialogsManager,
+        onSuccess: () -> Unit,
+    ) {
+        HistoryFormUtils.moveToTasksUi(
+            intervalDb = intervalDb,
+            dialogsManager = dialogsManager,
+            onSuccess = {
+                onUi { onSuccess() }
+            },
+        )
+    }
+
     fun delete(
         intervalDb: IntervalDb,
         dialogsManager: DialogsManager,
