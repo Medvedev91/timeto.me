@@ -3,10 +3,13 @@ package me.timeto.shared.ui.history.form
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
+import me.timeto.shared.UIException
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
+import me.timeto.shared.launchExIo
 import me.timeto.shared.misc.time
 import me.timeto.shared.textFeatures
+import me.timeto.shared.ui.DialogsManager
 import me.timeto.shared.vm.__Vm
 
 class HistoryFormVm(
@@ -52,6 +55,42 @@ class HistoryFormVm(
 
     fun setTime(newTime: Int) {
         state.update { it.copy(time = newTime) }
+    }
+
+    fun save(
+        dialogsManager: DialogsManager,
+        onSuccess: () -> Unit,
+    ) {
+        val state = state.value
+        val now: Int = time()
+        val time: Int = state.time
+        if (time > now) {
+            dialogsManager.alert("Invalid time")
+            return
+        }
+        launchExIo {
+            try {
+                val intervalDb: IntervalDb? = state.initIntervalDb
+                if (intervalDb != null) {
+                    intervalDb.updateWithValidation(
+                        newId = time,
+                        newTimer = intervalDb.timer,
+                        newActivityDb = state.activityDb,
+                        newNote = intervalDb.note,
+                    )
+                } else {
+                    IntervalDb.insertWithValidation(
+                        timer = 45 * 60,
+                        activityDb = state.activityDb,
+                        note = null,
+                        id = time,
+                    )
+                }
+                onUi { onSuccess() }
+            } catch (e: UIException) {
+                dialogsManager.alert(e.uiMessage)
+            }
+        }
     }
 
     ///
