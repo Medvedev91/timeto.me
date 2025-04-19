@@ -100,15 +100,15 @@ data class IntervalDb(
 
         suspend fun insertWithValidation(
             timer: Int,
-            activity: ActivityDb,
+            activityDb: ActivityDb,
             note: String?,
             id: Int = time(),
         ): IntervalDb = dbIo {
             db.transactionWithResult {
                 insertWithValidationNeedTransaction(
                     timer = timer,
-                    activity = activity,
-                    note = note,
+                    activityDb = activityDb,
+                    note = note?.let { validateNote(it) },
                     id = id,
                 )
             }
@@ -116,7 +116,7 @@ data class IntervalDb(
 
         fun insertWithValidationNeedTransaction(
             timer: Int,
-            activity: ActivityDb,
+            activityDb: ActivityDb,
             note: String?,
             id: Int = time(),
         ): IntervalDb {
@@ -124,7 +124,7 @@ data class IntervalDb(
             val intervalSQ = IntervalSQ(
                 id = id,
                 timer = timer,
-                activity_id = activity.id,
+                activity_id = activityDb.id,
                 note = note?.trim()?.takeIf { it.isNotBlank() },
             )
             db.intervalQueries.insert(intervalSQ)
