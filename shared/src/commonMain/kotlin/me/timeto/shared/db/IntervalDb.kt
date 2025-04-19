@@ -62,6 +62,18 @@ data class IntervalDb(
             ).asList { toDb() }
         }
 
+        fun selectBetweenIdDescFlow(
+            timeStart: Int,
+            timeFinish: Int,
+            limit: Int = Int.MAX_VALUE,
+        ): Flow<List<IntervalDb>> = db.intervalQueries
+            .selectBetweenIdDesc(
+                timeStart = timeStart,
+                timeFinish = timeFinish,
+                limit = limit.toLong(),
+            )
+            .asListFlow { toDb() }
+
         fun selectFirstAndLastNeedTransaction(): Pair<IntervalDb, IntervalDb> = Pair(
             db.intervalQueries.selectAsc(limit = 1).executeAsOne().toDb(),
             db.intervalQueries.selectDesc(limit = 1).executeAsOne().toDb(),
