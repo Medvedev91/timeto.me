@@ -17,11 +17,7 @@ object HistoryFormUtils {
         dialogsManager: DialogsManager,
         onSuccess: suspend () -> Unit,
     ) {
-        val activityDb: ActivityDb = intervalDb.selectActivityDbCached()
-        val intervalNote: String? = intervalDb.note?.takeIf { it.isNotBlank() }
-        val note: String = (intervalNote ?: activityDb.name)
-            .textFeatures()
-            .textNoFeatures
+        val note: String = makeIntervalDbNote(intervalDb)
         dialogsManager.confirmation(
             message = "Are you sure you want to delete \"$note\"",
             buttonText = "Delete",
@@ -66,4 +62,12 @@ object HistoryFormUtils {
             )
         }
     }
+}
+
+private fun makeIntervalDbNote(intervalDb: IntervalDb): String {
+    val activityDb: ActivityDb = intervalDb.selectActivityDbCached()
+    val intervalNote: String? = intervalDb.note?.takeIf { it.isNotBlank() }
+    return (intervalNote ?: activityDb.name)
+        .textFeatures()
+        .textNoFeatures
 }
