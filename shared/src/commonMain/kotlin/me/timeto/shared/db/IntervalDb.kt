@@ -298,8 +298,13 @@ data class IntervalDb(
         }
     }
 
+    @Throws(UiException::class, CancellationException::class)
     suspend fun delete(): Unit = dbIo {
-        db.intervalQueries.deleteById(id)
+        db.transaction {
+            if (db.intervalQueries.selectCount().executeAsOne().toInt() <= 1)
+                throw UiException("The only entry")
+            db.intervalQueries.deleteById(id)
+        }
     }
 
     //
