@@ -244,7 +244,7 @@ data class IntervalDb(
     }
 
     @Throws(UiException::class, CancellationException::class)
-    suspend fun updateWithValidation(
+    suspend fun update(
         newId: Int,
         newTimer: Int,
         newActivityDb: ActivityDb,
