@@ -13,6 +13,8 @@ import me.timeto.shared.misc.getInt
 import me.timeto.shared.misc.getStringOrNull
 import me.timeto.shared.misc.time
 import me.timeto.shared.misc.toJsonArray
+import me.timeto.shared.ui.UiException
+import kotlin.coroutines.cancellation.CancellationException
 
 data class IntervalDb(
     val id: Int,
@@ -249,6 +251,28 @@ data class IntervalDb(
             note = note,
             activity_id = activityDb.id,
         )
+    }
+
+    @Throws(UiException::class, CancellationException::class)
+    suspend fun updateWithValidation(
+        newId: Int,
+        newTimer: Int,
+        newActivityDb: ActivityDb,
+        newNote: String?,
+    ): Unit = dbIo {
+        db.transaction {
+            if ((newId != id) && (selectByIdOrNullSync(newId) != null))
+                throw UiException("Time is unavailable")
+            if (newTimer <= 0)
+                throw UiException("Invalid timer")
+            db.intervalQueries.update(
+                newId = newId,
+                timer = newTimer,
+                activityId = newActivityDb.id,
+                note = newNote?.let { validateNote(it) },
+                oldId = id,
+            )
+        }
     }
 
     suspend fun delete(): Unit = dbIo {
