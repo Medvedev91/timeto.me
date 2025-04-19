@@ -27,7 +27,7 @@ class HistoryVm : __Vm<HistoryVm.State>() {
         ).map { it.reversed() }.onEachExIn(scopeVm) { intervalsDbAsc ->
             state.update {
                 it.copy(
-                    daysUi = prepDaysUi(intervalsDbAsc = intervalsDbAsc),
+                    daysUi = makeDaysUi(intervalsDbAsc = intervalsDbAsc),
                 )
             }
         }
@@ -64,7 +64,7 @@ class HistoryVm : __Vm<HistoryVm.State>() {
                 secondsForBar = barTimeFinish - sectionDayTimeStart.limitMin(intervalDb.id),
                 barTimeFinish = barTimeFinish,
                 timeString = unixTime.getStringByComponents(UnixTime.StringComponent.hhmm24),
-                periodString = prepPeriodString(seconds),
+                periodString = makePeriodString(seconds),
                 color = activityDb.colorRgba,
             )
         }
@@ -94,7 +94,7 @@ class HistoryVm : __Vm<HistoryVm.State>() {
 
 ///
 
-private fun prepPeriodString(
+private fun makePeriodString(
     seconds: Int,
 ): String {
     if (seconds < 60)
@@ -107,7 +107,7 @@ private fun prepPeriodString(
     return "${h}h ${m.toString().padStart(2, '0')}m"
 }
 
-private fun prepDaysUi(
+private fun makeDaysUi(
     intervalsDbAsc: List<IntervalDb>,
 ): List<HistoryVm.DayUi> {
     val daysUi: MutableList<HistoryVm.DayUi> = mutableListOf()
