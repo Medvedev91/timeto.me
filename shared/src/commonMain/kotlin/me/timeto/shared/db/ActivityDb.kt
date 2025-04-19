@@ -50,8 +50,12 @@ data class ActivityDb(
         fun selectSortedFlow(): Flow<List<ActivityDb>> =
             db.activityQueries.selectSorted().asListFlow { toDb() }
 
-        suspend fun selectByIdOrNull(id: Int): ActivityDb? =
-            selectSorted().firstOrNull { it.id == id }
+        fun selectByIdOrNullSync(id: Int): ActivityDb? =
+            selectSortedSync().firstOrNull { it.id == id }
+
+        suspend fun selectByIdOrNull(id: Int): ActivityDb? = dbIo {
+            selectByIdOrNullSync(id)
+        }
 
         fun selectByEmojiOrNullSync(string: String): ActivityDb? =
             selectSortedSync().firstOrNull { it.emoji == string }
