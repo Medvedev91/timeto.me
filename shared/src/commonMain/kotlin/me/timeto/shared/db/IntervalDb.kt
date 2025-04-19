@@ -223,11 +223,11 @@ data class IntervalDb(
         )
     }
 
-    suspend fun upTimer(timer: Int): Unit = dbIo {
-        db.intervalQueries.updateTimerById(
-            id = id,
-            timer = timer,
-        )
+    @Throws(UiException::class, CancellationException::class)
+    suspend fun updateTimer(timer: Int): Unit = dbIo {
+        if (timer <= 0)
+            throw UiException("Invalid timer")
+        db.intervalQueries.updateTimerById(id = id, timer = timer)
     }
 
     suspend fun up(

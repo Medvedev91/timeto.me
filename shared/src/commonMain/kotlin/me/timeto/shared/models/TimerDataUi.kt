@@ -127,8 +127,13 @@ class TimerDataUi(
                 if (finishTimeTmp > intervalDb.id) finishTimeTmp
                 else finishTimeTmp + (3_600 * 24)
             val newTimer = finishTime - intervalDb.id
-            launchExDefault {
-                intervalDb.upTimer(newTimer)
+            launchExIo {
+                try {
+                    intervalDb.updateTimer(newTimer)
+                } catch (e: UIException) {
+                    // todo
+                    throw e
+                }
             }
         }
     }
