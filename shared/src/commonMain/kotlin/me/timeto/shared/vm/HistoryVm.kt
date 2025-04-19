@@ -120,7 +120,10 @@ class HistoryVm : __Vm<HistoryVm.State>() {
                 intervalDb = intervalDb,
                 activityDb = activityDb,
                 isStartsPrevDay = unixTime.localDay < unixDay,
-                text = (intervalDb.note ?: activityDb.name).textFeatures().textUi(),
+                text = (intervalDb.note ?: activityDb.name).textFeatures().textUi(
+                    withActivityEmoji = false,
+                    withTimer = false,
+                ),
                 secondsForBar = barTimeFinish - sectionDayTimeStart.limitMin(intervalDb.id),
                 barTimeFinish = barTimeFinish,
                 timeString = unixTime.getStringByComponents(UnixTime.StringComponent.hhmm24),
