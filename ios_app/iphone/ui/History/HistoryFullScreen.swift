@@ -67,9 +67,9 @@ private struct HistoryFullScreenInner: View {
                                     HStack(alignment: .top, spacing: 10) {
                                         
                                         Text(intervalUi.timeString)
+                                            .monospaced()
+                                            .fontWeight(.semibold)
                                             .foregroundColor(!intervalUi.isStartsPrevDay ? .primary : .clear)
-                                            .font(.system(size: 15, weight: .semibold, design: .monospaced))
-                                            .frame(alignment: .trailing)
                                         
                                         VStack {
                                             RoundedRectangle(cornerRadius: 20, style: .continuous)
@@ -97,17 +97,17 @@ private struct HistoryFullScreenInner: View {
                                                     },
                                                     label: {
                                                         Text(intervalUi.text)
+                                                            .fontWeight(.medium)
                                                             .textAlign(.leading)
                                                             .foregroundColor(.primary)
-                                                            .font(.system(size: 16, weight: .medium))
                                                     }
                                                 )
 
                                                 Spacer()
                                                 
                                                 Text(intervalUi.periodString)
+                                                    .fontWeight(.light)
                                                     .foregroundColor(.secondary)
-                                                    .font(.system(size: 16, weight: .light))
                                             }
                                         }
                                         .fillMaxWidth()
