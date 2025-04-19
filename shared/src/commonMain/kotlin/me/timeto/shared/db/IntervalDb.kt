@@ -308,3 +308,7 @@ data class IntervalDb(
 private fun IntervalSQ.toDb() = IntervalDb(
     id = id, timer = timer, note = note, activity_id = activity_id,
 )
+
+private fun validateNote(note: String): String? {
+    return note.trim().takeIf { it.isNotEmpty() }
+}
