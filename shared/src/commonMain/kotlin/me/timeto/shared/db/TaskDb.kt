@@ -127,7 +127,7 @@ data class TaskDb(
         db.transaction {
             IntervalDb.insertWithValidationNeedTransaction(
                 timer = timer,
-                activity = activity,
+                activityDb = activity,
                 note = text,
                 id = intervalId,
             )

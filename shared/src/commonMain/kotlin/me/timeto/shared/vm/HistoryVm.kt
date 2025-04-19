@@ -87,7 +87,7 @@ class HistoryVm : __Vm<HistoryVm.State>() {
                     IntervalDb.insertWithValidation(
                         timer = activity.timer,
                         note = null,
-                        activity = activity,
+                        activityDb = activity,
                         id = timestamp,
                     )
                     onSuccess()

@@ -62,7 +62,7 @@ object IosToWatchSync {
             val note = jData["note"]?.jsonPrimitive?.contentOrNull
             IntervalDb.insertWithValidation(
                 timer = timer,
-                activity = activity,
+                activityDb = activity,
                 note = note,
             )
             onFinish("{}")

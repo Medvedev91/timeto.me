@@ -208,7 +208,7 @@ data class ActivityDb(
         seconds: Int,
     ): IntervalDb = IntervalDb.insertWithValidation(
         timer = seconds,
-        activity = this,
+        activityDb = this,
         note = null,
     )
 

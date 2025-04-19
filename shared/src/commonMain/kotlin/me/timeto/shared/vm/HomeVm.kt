@@ -300,7 +300,7 @@ class HomeVm : __Vm<HomeVm.State>() {
             launchExIo {
                 IntervalDb.insertWithValidation(
                     timer = timer,
-                    activity = activityDb,
+                    activityDb = activityDb,
                     note = goalDb.note,
                 )
             }
