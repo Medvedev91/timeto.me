@@ -93,6 +93,20 @@ class HistoryFormVm(
         }
     }
 
+    fun delete(
+        intervalDb: IntervalDb,
+        dialogsManager: DialogsManager,
+        onSuccess: () -> Unit,
+    ) {
+        HistoryFormUtils.deleteIntervalUi(
+            intervalDb = intervalDb,
+            dialogsManager = dialogsManager,
+            onSuccess = {
+                onUi { onSuccess() }
+            },
+        )
+    }
+
     ///
 
     data class ActivityUi(
