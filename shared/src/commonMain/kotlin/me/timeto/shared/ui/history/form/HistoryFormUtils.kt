@@ -6,6 +6,7 @@ import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.textFeatures
 import me.timeto.shared.ui.DialogsManager
+import me.timeto.shared.ui.UiException
 
 object HistoryFormUtils {
 
@@ -26,8 +27,12 @@ object HistoryFormUtils {
             buttonText = "Delete",
             onConfirm = {
                 launchExIo {
-                    intervalDb.delete()
-                    onSuccess()
+                    try {
+                        intervalDb.delete()
+                        onSuccess()
+                    } catch (e: UiException) {
+                        dialogsManager.alert(e.uiMessage)
+                    }
                 }
             },
         )
