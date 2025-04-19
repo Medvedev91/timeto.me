@@ -32,7 +32,8 @@ private struct HistoryFormSheetInner: View {
     ///
     
     @Environment(\.dismiss) private var dismiss
-    
+    @Environment(Navigation.self) private var navigation
+
     var body: some View {
         
         List {
@@ -86,8 +87,12 @@ private struct HistoryFormSheetInner: View {
             }
             ToolbarItem(placement: .primaryAction) {
                 Button(state.saveText) {
-                    // todo
-                    dismiss()
+                    vm.save(
+                        dialogsManager: navigation,
+                        onSuccess: {
+                            dismiss()
+                        }
+                    )
                 }
                 .fontWeight(.semibold)
             }
