@@ -31,7 +31,7 @@ object HistoryFormUtils {
         )
     }
 
-    fun prepTimeNote(
+    fun makeTimeNote(
         time: Int,
         withToday: Boolean,
     ): String {

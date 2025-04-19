@@ -26,7 +26,7 @@ class HistoryFormTimeVm(
         val withToday: Boolean,
     ) {
         val title: String =
-            HistoryFormUtils.prepTimeNote(time, withToday = withToday)
+            HistoryFormUtils.makeTimeNote(time, withToday = withToday)
     }
 }
 
