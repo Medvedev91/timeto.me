@@ -73,7 +73,20 @@ private struct HistoryFormSheetInner: View {
             
             // todo back to tasks list button. Color?
             
-            // todo delete button
+            if let intervalDb = state.initIntervalDb {
+                Section {
+                    Button("Delete") {
+                        vm.delete(
+                            intervalDb: intervalDb,
+                            dialogsManager: navigation,
+                            onSuccess: {
+                                dismiss()
+                            }
+                        )
+                    }
+                    .foregroundColor(.red)
+                }
+            }
         }
         .myFormContentMargins()
         .navigationTitle(state.title)
