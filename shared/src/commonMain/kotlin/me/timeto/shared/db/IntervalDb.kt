@@ -217,19 +217,9 @@ data class IntervalDb(
     fun selectActivityDbCached(): ActivityDb =
         Cache.getActivityDbByIdOrNull(activity_id)!!
 
-    suspend fun updateActivity(newActivity: ActivityDb): Unit = dbIo {
-        updateActivitySync(newActivity)
-    }
-
     fun updateActivitySync(newActivity: ActivityDb) {
         db.intervalQueries.updateActivityIdById(
             id = id, activity_id = newActivity.id,
-        )
-    }
-
-    suspend fun upId(newId: Int): Unit = dbIo {
-        db.intervalQueries.updateId(
-            oldId = id, newId = newId,
         )
     }
 

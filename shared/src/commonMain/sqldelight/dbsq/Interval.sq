@@ -58,11 +58,6 @@ SET id=:newId, timer=:timer,
     activity_id=:activityId, note=:note
 WHERE id=:oldId;
 
-updateId:
-UPDATE IntervalSQ
-SET id = :newId
-WHERE id = :oldId;
-
 updateById:
 UPDATE IntervalSQ
 SET timer = ?, note = ?, activity_id = ?
