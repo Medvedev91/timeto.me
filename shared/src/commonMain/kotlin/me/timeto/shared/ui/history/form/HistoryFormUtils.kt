@@ -34,6 +34,28 @@ object HistoryFormUtils {
         )
     }
 
+    fun moveToTasksUi(
+        intervalDb: IntervalDb,
+        dialogsManager: DialogsManager,
+        onSuccess: suspend () -> Unit,
+    ) {
+        val note: String = makeIntervalDbNote(intervalDb)
+        dialogsManager.confirmation(
+            message = "Are you sure you want to move to tasks \"$note\"",
+            buttonText = "Move",
+            onConfirm = {
+                launchExIo {
+                    try {
+                        intervalDb.moveToTasks()
+                        onSuccess()
+                    } catch (e: UiException) {
+                        dialogsManager.alert(e.uiMessage)
+                    }
+                }
+            },
+        )
+    }
+
     fun makeTimeNote(
         time: Int,
         withToday: Boolean,
