@@ -1,10 +1,11 @@
-package me.timeto.shared.vm
+package me.timeto.shared.ui.history
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.misc.time
+import me.timeto.shared.vm.__Vm
 
 class HistoryVm : __Vm<HistoryVm.State>() {
 
