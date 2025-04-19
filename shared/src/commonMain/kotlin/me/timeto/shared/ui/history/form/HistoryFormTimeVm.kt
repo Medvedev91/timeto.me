@@ -38,13 +38,13 @@ private fun makeTimerItemsUi(
     val secondsSet: MutableSet<Int> = mutableSetOf(now)
 
     val timeStart1Min: Int = now - (now % 60)
-    for (i in 1 until 10) {
+    for (i in 1 until 10) { // 10 minutes
         secondsSet.add(timeStart1Min + (i * 60))
         secondsSet.add(timeStart1Min - (i * 60))
     }
 
     val timeStart5Min: Int = now - (now % (60 * 5))
-    for (i in 1 until 12) { // ~ 1h
+    for (i in 1 until 12) { // ~ 1 hour
         secondsSet.add(timeStart5Min + (i * 60 * 5))
         secondsSet.add(timeStart5Min - (i * 60 * 5))
     }
