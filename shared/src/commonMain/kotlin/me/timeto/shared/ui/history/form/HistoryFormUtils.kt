@@ -9,6 +9,8 @@ import me.timeto.shared.ui.DialogsManager
 
 object HistoryFormUtils {
 
+    const val moveToTasksTitle = "Move to Tasks"
+
     fun deleteIntervalUi(
         intervalDb: IntervalDb,
         dialogsManager: DialogsManager,
