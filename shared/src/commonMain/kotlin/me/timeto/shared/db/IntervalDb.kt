@@ -275,6 +275,29 @@ data class IntervalDb(
         }
     }
 
+    @Throws(UiException::class, CancellationException::class)
+    suspend fun moveToTasks(): Unit = dbIo {
+        db.transaction {
+            if (db.intervalQueries.selectCount().executeAsOne().toInt() <= 1)
+                throw UiException("The only entry")
+            val activityDb: ActivityDb =
+                ActivityDb.selectByIdOrNullSync(activity_id)
+                ?: throw UiException("No activity")
+            val tempText: String =
+                note?.takeIf { it.isNotBlank() }
+                ?: activityDb.name.textFeatures().textNoFeatures
+            val textTf: TextFeatures = tempText.textFeatures().copy(
+                timer = timer,
+                activity = activityDb,
+            )
+            TaskDb.addWithValidation_transactionRequired(
+                text = textTf.textWithFeatures(),
+                folder = Cache.getTodayFolderDb(),
+            )
+            db.intervalQueries.deleteById(id)
+        }
+    }
+
     suspend fun delete(): Unit = dbIo {
         db.intervalQueries.deleteById(id)
     }
