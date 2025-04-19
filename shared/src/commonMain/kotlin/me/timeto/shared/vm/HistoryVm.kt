@@ -10,15 +10,11 @@ class HistoryVm : __Vm<HistoryVm.State>() {
 
     data class State(
         val daysUi: List<DayUi>,
-        val activitiesFormAddUI: List<ActivityFormAddUI>,
-    ) {
-        val minPickerDay: Int = Cache.firstInterval.unixTime().localDay
-    }
+    )
 
     override val state = MutableStateFlow(
         State(
             daysUi = emptyList(),
-            activitiesFormAddUI = emptyList(),
         )
     )
 
@@ -27,76 +23,17 @@ class HistoryVm : __Vm<HistoryVm.State>() {
         val scopeVm = scopeVm()
         IntervalDb.selectBetweenIdDescFlow(
             timeStart = now.inDays(-10).time,
-            timeFinish = now.time,
+            timeFinish = Int.MAX_VALUE,
         ).map { it.reversed() }.onEachExIn(scopeVm) { intervalsDbAsc ->
             state.update {
                 it.copy(
                     daysUi = prepDaysUi(intervalsDbAsc = intervalsDbAsc),
-                    activitiesFormAddUI = ActivityDb.selectSorted().map { ActivityFormAddUI(it) },
                 )
             }
         }
     }
 
-    fun calcDayToMove(selectedDay: Int): Int {
-        val availableUnixDays: List<Int> =
-            state.value.daysUi.map { it.unixDay }
-
-        if (availableUnixDays.contains(selectedDay))
-            return selectedDay
-
-        availableUnixDays
-            .filter { it < selectedDay }
-            .maxOrNull()
-            ?.let { maxLower ->
-                return maxLower
-            }
-
-        availableUnixDays
-            .filter { it > selectedDay }
-            .minOrNull()
-            ?.let { minHigher ->
-                return minHigher
-            }
-
-        throw Exception("invalid day to move")
-    }
-
     ///
-
-    class ActivityFormAddUI(
-        val activity: ActivityDb,
-    ) {
-
-        fun addInterval(
-            unixTime: UnixTime,
-            onSuccess: () -> Unit,
-        ) {
-            launchExIo {
-                try {
-                    val timestamp = unixTime.time
-
-                    // todo ui limit
-                    if (timestamp > time())
-                        throw UIException("Invalid time")
-
-                    // todo ui limit
-                    if (IntervalDb.selectByIdOrNull(timestamp) != null)
-                        throw UIException("Time is unavailable")
-
-                    IntervalDb.insertWithValidation(
-                        timer = activity.timer,
-                        note = null,
-                        activityDb = activity,
-                        id = timestamp,
-                    )
-                    onSuccess()
-                } catch (e: UIException) {
-                    showUiAlert(e.uiMessage)
-                }
-            }
-        }
-    }
 
     class DayUi(
         val unixDay: Int,
@@ -142,9 +79,6 @@ class HistoryVm : __Vm<HistoryVm.State>() {
         )
     }
 
-    /**
-     * A separate class with data to not store in memory all intervals.
-     */
     data class IntervalUi(
         val intervalDb: IntervalDb,
         val activityDb: ActivityDb,
@@ -155,49 +89,7 @@ class HistoryVm : __Vm<HistoryVm.State>() {
         val timeString: String,
         val periodString: String,
         val color: ColorRgba,
-    ) {
-
-        fun upTime(newTime: UnixTime): Unit = launchExDefault {
-            try {
-                val timestamp = newTime.time
-                if (timestamp == intervalDb.id)
-                    return@launchExDefault
-
-                // todo ui limit
-                if (timestamp > time())
-                    throw UIException("Invalid time")
-
-                // todo ui limit
-                if (IntervalDb.selectByIdOrNull(timestamp) != null)
-                    throw UIException("Time is unavailable")
-
-                intervalDb.upId(timestamp)
-            } catch (e: UIException) {
-                showUiAlert(e.uiMessage)
-            }
-        }
-
-        fun delete() {
-            showUiConfirmation(
-                UIConfirmationData(
-                    text = "Are you sure you want to delete \"$text\"",
-                    buttonText = "Delete",
-                    isRed = true,
-                ) {
-                    try {
-                        launchExDefault {
-                            // todo UI
-                            if (IntervalDb.selectAsc(limit = 2).size < 2)
-                                throw UIException("Unable to delete the first item")
-                            intervalDb.delete()
-                        }
-                    } catch (e: UIException) {
-                        showUiAlert(e.uiMessage)
-                    }
-                }
-            )
-        }
-    }
+    )
 }
 
 ///
