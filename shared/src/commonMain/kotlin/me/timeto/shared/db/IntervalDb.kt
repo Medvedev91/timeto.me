@@ -80,8 +80,11 @@ data class IntervalDb(
         )
 
         suspend fun selectByIdOrNull(id: Int): IntervalDb? = dbIo {
-            db.intervalQueries.selectById(id).executeAsOneOrNull()?.toDb()
+            selectByIdOrNullSync(id)
         }
+
+        fun selectByIdOrNullSync(id: Int): IntervalDb? =
+            db.intervalQueries.selectById(id).executeAsOneOrNull()?.toDb()
 
         suspend fun selectLastOneOrNull(): IntervalDb? = dbIo {
             db.intervalQueries.selectDesc(limit = 1).executeAsOneOrNull()?.toDb()
