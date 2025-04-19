@@ -31,7 +31,7 @@ class HistoryFormVm(
 
         val timeTitle = "Time Start"
         val timeNote: String =
-            HistoryFormUtils.prepTimeNote(time)
+            HistoryFormUtils.prepTimeNote(time, withToday = true)
     }
 
     override val state = MutableStateFlow(
