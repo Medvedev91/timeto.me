@@ -52,6 +52,12 @@ VALUES ?;
 --
 -- Update
 
+update:
+UPDATE IntervalSQ
+SET id=:newId, timer=:timer,
+    activity_id=:activityId, note=:note
+WHERE id=:oldId;
+
 updateId:
 UPDATE IntervalSQ
 SET id = :newId
