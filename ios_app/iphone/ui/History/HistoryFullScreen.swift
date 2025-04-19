@@ -120,7 +120,7 @@ private struct HistoryFullScreenInner: View {
                     }
                 }
             }
-            .contentMargins(.bottom, 8)
+            .contentMargins(.bottom, 16)
             .defaultScrollAnchor(.bottom)
         }
         .toolbar {
