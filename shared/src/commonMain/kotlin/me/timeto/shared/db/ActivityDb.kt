@@ -40,12 +40,12 @@ data class ActivityDb(
         fun anyChangeFlow(): Flow<Query<Int>> =
             db.activityQueries.anyChange().asFlow()
 
+        private fun selectSortedSync(): List<ActivityDb> =
+            db.activityQueries.selectSorted().asList { toDb() }
+
         suspend fun selectSorted(): List<ActivityDb> = dbIo {
             selectSortedSync()
         }
-
-        private fun selectSortedSync(): List<ActivityDb> =
-            db.activityQueries.selectSorted().asList { toDb() }
 
         fun selectSortedFlow(): Flow<List<ActivityDb>> =
             db.activityQueries.selectSorted().asListFlow { toDb() }
