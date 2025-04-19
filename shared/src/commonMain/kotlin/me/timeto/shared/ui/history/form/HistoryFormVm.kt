@@ -3,13 +3,13 @@ package me.timeto.shared.ui.history.form
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
-import me.timeto.shared.UIException
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.misc.time
 import me.timeto.shared.textFeatures
 import me.timeto.shared.ui.DialogsManager
+import me.timeto.shared.ui.UiException
 import me.timeto.shared.vm.__Vm
 
 class HistoryFormVm(
@@ -87,7 +87,7 @@ class HistoryFormVm(
                     )
                 }
                 onUi { onSuccess() }
-            } catch (e: UIException) {
+            } catch (e: UiException) {
                 dialogsManager.alert(e.uiMessage)
             }
         }
