@@ -183,10 +183,11 @@ data class IntervalDb(
                 val prolonged = oldTf.prolonged ?: TextFeatures.Prolonged(interval.timer)
                 oldTf.copy(prolonged = prolonged)
             }
-            interval.up(
-                timer = interval.timer + timer,
-                note = newTf.textWithFeatures(),
-                activityDb = activityDb,
+            interval.update(
+                newId = interval.id,
+                newTimer = interval.timer + timer,
+                newActivityDb = activityDb,
+                newNote = newTf.textWithFeatures(),
             )
         }
 
@@ -228,19 +229,6 @@ data class IntervalDb(
         if (timer <= 0)
             throw UiException("Invalid timer")
         db.intervalQueries.updateTimerById(id = id, timer = timer)
-    }
-
-    suspend fun up(
-        timer: Int,
-        note: String?,
-        activityDb: ActivityDb,
-    ): Unit = dbIo {
-        db.intervalQueries.updateById(
-            id = id,
-            timer = timer,
-            note = note,
-            activity_id = activityDb.id,
-        )
     }
 
     @Throws(UiException::class, CancellationException::class)
