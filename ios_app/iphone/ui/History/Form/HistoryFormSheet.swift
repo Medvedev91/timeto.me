@@ -60,10 +60,12 @@ private struct HistoryFormSheetInner: View {
                     },
                     sheet: {
                         HistoryFormTimeSheet(
-                            initTime: state.time.toInt(),
-                            onDone: { newTime in
-                                vm.setTime(newTime: newTime.toInt32())
-                            }
+                            strategy: HistoryFormTimeStrategy.Picker(
+                                initTime: state.time.toInt32(),
+                                onDone: { newTime in
+                                    vm.setTime(newTime: newTime.int32Value)
+                                }
+                            )
                         )
                     }
                 )
