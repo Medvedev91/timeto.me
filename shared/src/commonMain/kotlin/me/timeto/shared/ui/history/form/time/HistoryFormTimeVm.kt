@@ -41,7 +41,7 @@ class HistoryFormTimeVm(
     ) {
         launchExIo {
             try {
-                intervalDb.update(
+                intervalDb.updateEx(
                     newId = time,
                     newTimer = intervalDb.timer,
                     newActivityDb = intervalDb.selectActivityDb(),

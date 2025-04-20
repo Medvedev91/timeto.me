@@ -183,7 +183,7 @@ data class IntervalDb(
                 val prolonged = oldTf.prolonged ?: TextFeatures.Prolonged(interval.timer)
                 oldTf.copy(prolonged = prolonged)
             }
-            interval.update(
+            interval.updateEx(
                 newId = interval.id,
                 newTimer = interval.timer + timer,
                 newActivityDb = activityDb,
@@ -232,7 +232,7 @@ data class IntervalDb(
     }
 
     @Throws(UiException::class, CancellationException::class)
-    suspend fun update(
+    suspend fun updateEx(
         newId: Int,
         newTimer: Int,
         newActivityDb: ActivityDb,

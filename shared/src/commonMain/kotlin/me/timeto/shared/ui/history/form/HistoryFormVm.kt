@@ -65,7 +65,7 @@ class HistoryFormVm(
             try {
                 val intervalDb: IntervalDb? = state.initIntervalDb
                 if (intervalDb != null) {
-                    intervalDb.update(
+                    intervalDb.updateEx(
                         newId = time,
                         newTimer = intervalDb.timer,
                         newActivityDb = state.activityDb,
