@@ -20,8 +20,6 @@ struct HistoryFormSheet: View {
     }
 }
 
-///
-
 private struct HistoryFormSheetInner: View {
     
     let vm: HistoryFormVm
