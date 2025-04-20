@@ -191,8 +191,8 @@ data class IntervalDb(
             )
         }
 
-        ///
-        /// Backupable Holder
+        //
+        // Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
             db.intervalQueries.selectAsc(Int.MAX_VALUE.toLong()).asList { toDb() }
