@@ -108,11 +108,7 @@ private struct HistoryFullScreenInner: View {
                                                 
                                                 Button(
                                                     action: {
-                                                        navigation.sheet {
-                                                            HistoryFormSheet(
-                                                                initIntervalDb: intervalUi.intervalDb
-                                                            )
-                                                        }
+                                                        showIntervalForm(intervalDb: intervalUi.intervalDb)
                                                     },
                                                     label: {
                                                         Text(intervalUi.text)
@@ -133,6 +129,17 @@ private struct HistoryFullScreenInner: View {
                                     }
                                     .padding(.leading, 20)
                                     .padding(.trailing, 20)
+                                    .background(.background) // Tap area for context menu
+                                    .contextMenu {
+                                        Button(
+                                            action: {
+                                                showIntervalForm(intervalDb: intervalUi.intervalDb)
+                                            },
+                                            label: {
+                                                Label("Edit", systemImage: "square.and.pencil")
+                                            }
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -159,6 +166,14 @@ private struct HistoryFullScreenInner: View {
                     dismiss()
                 }
             }
+        }
+    }
+    
+    private func showIntervalForm(intervalDb: IntervalDb) {
+        navigation.sheet {
+            HistoryFormSheet(
+                initIntervalDb: intervalDb
+            )
         }
     }
 }
