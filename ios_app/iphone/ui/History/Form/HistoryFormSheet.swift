@@ -71,9 +71,19 @@ private struct HistoryFormSheetInner: View {
                 )
             }
             
-            // todo back to tasks list button. Color?
-            
             if let intervalDb = state.initIntervalDb {
+                Section {
+                    Button(HistoryFormUtils.shared.moveToTasksTitle) {
+                        vm.moveToTasks(
+                            intervalDb: intervalDb,
+                            dialogsManager: navigation,
+                            onSuccess: {
+                                dismiss()
+                            }
+                        )
+                    }
+                    .foregroundColor(.orange)
+                }
                 Section {
                     Button("Delete") {
                         vm.delete(
