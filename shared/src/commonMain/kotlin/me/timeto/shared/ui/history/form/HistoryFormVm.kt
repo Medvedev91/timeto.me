@@ -60,12 +60,7 @@ class HistoryFormVm(
         onSuccess: () -> Unit,
     ) {
         val state = state.value
-        val now: Int = time()
         val time: Int = state.time
-        if (time > now) {
-            dialogsManager.alert("Invalid time")
-            return
-        }
         launchExIo {
             try {
                 val intervalDb: IntervalDb? = state.initIntervalDb
