@@ -1,7 +1,11 @@
 package me.timeto.shared.ui.history.form.time
 
 import kotlinx.coroutines.flow.MutableStateFlow
+import me.timeto.shared.db.IntervalDb
+import me.timeto.shared.launchExIo
 import me.timeto.shared.misc.time
+import me.timeto.shared.ui.DialogsManager
+import me.timeto.shared.ui.UiException
 import me.timeto.shared.ui.history.form.HistoryFormUtils
 import me.timeto.shared.vm.__Vm
 
@@ -27,6 +31,27 @@ class HistoryFormTimeVm(
                 timerItemsUi = makeTimerItemsUi(selectedTime = initTime),
             )
         )
+    }
+
+    fun updateTime(
+        intervalDb: IntervalDb,
+        time: Int,
+        dialogsManager: DialogsManager,
+        onSuccess: () -> Unit,
+    ) {
+        launchExIo {
+            try {
+                intervalDb.update(
+                    newId = time,
+                    newTimer = intervalDb.timer,
+                    newActivityDb = intervalDb.selectActivityDb(),
+                    newNote = intervalDb.note,
+                )
+                onUi { onSuccess() }
+            } catch (e: UiException) {
+                dialogsManager.alert(e.uiMessage)
+            }
+        }
     }
 
     ///
