@@ -6,20 +6,28 @@ import me.timeto.shared.ui.history.form.HistoryFormUtils
 import me.timeto.shared.vm.__Vm
 
 class HistoryFormTimeVm(
-    initTime: Int,
+    strategy: HistoryFormTimeStrategy,
 ) : __Vm<HistoryFormTimeVm.State>() {
 
     data class State(
         val initTime: Int,
-        val timerItemUi: List<TimerItemUi>,
+        val timerItemsUi: List<TimerItemUi>,
     )
 
-    override val state = MutableStateFlow(
-        State(
-            initTime = initTime,
-            timerItemUi = makeTimerItemsUi(selectedTime = initTime),
+    override val state: MutableStateFlow<State>
+
+    init {
+        val initTime: Int = when (strategy) {
+            is HistoryFormTimeStrategy.Picker -> strategy.initTime
+            is HistoryFormTimeStrategy.Update -> strategy.intervalDb.id
+        }
+        state = MutableStateFlow(
+            State(
+                initTime = initTime,
+                timerItemsUi = makeTimerItemsUi(selectedTime = initTime),
+            )
         )
-    )
+    }
 
     ///
 
