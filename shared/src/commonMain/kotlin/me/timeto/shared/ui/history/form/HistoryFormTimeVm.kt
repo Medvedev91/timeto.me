@@ -31,8 +31,6 @@ class HistoryFormTimeVm(
     }
 }
 
-///
-
 private fun makeTimerItemsUi(
     selectedTime: Int,
 ): List<HistoryFormTimeVm.TimerItemUi> {
