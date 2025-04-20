@@ -66,10 +66,23 @@ private struct HistoryFullScreenInner: View {
                                     
                                     HStack(alignment: .top, spacing: 10) {
                                         
-                                        Text(intervalUi.timeString)
-                                            .monospaced()
-                                            .fontWeight(.semibold)
-                                            .foregroundColor(!intervalUi.isStartsPrevDay ? .primary : .clear)
+                                        Button(
+                                            action: {
+                                                navigation.sheet {
+                                                    HistoryFormTimeSheet(
+                                                        strategy: HistoryFormTimeStrategy.Update(
+                                                            intervalDb: intervalUi.intervalDb
+                                                        )
+                                                    )
+                                                }
+                                            },
+                                            label: {
+                                                Text(intervalUi.timeString)
+                                                    .monospaced()
+                                                    .fontWeight(.semibold)
+                                                    .foregroundColor(!intervalUi.isStartsPrevDay ? .primary : .clear)
+                                            }
+                                        )
                                         
                                         VStack {
                                             RoundedRectangle(cornerRadius: 20, style: .continuous)
