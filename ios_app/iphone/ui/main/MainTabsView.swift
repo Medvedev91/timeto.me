@@ -14,6 +14,8 @@ struct MainTabsView: View {
     
     @Binding var tab: MainTabEnum
     
+    static var autoTabChange: Bool = true
+    
     var body: some View {
         VmView({
             MainTabsVm()
@@ -126,7 +128,9 @@ private struct MainTabsViewInner: View {
         }
         .background(showBackground ? AnyShapeStyle(.bar) : AnyShapeStyle(.clear))
         .onChange(of: state.lastIntervalId) { _, new in
-            tab = .home
+            if MainTabsView.autoTabChange {
+                tab = .home
+            }
             Haptic.mediumShot()
         }
     }

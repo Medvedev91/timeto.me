@@ -12,6 +12,12 @@ struct HistoryFullScreen: View {
                 state: state
             )
         }
+        .onAppear {
+            MainTabsView.autoTabChange = false
+        }
+        .onDisappear {
+            MainTabsView.autoTabChange = true
+        }
     }
 }
 
