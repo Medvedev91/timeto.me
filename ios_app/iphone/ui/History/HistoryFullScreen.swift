@@ -169,7 +169,9 @@ private struct HistoryFullScreenInner: View {
         }
     }
     
-    private func showIntervalForm(intervalDb: IntervalDb) {
+    private func showIntervalForm(
+        intervalDb: IntervalDb
+    ) {
         navigation.sheet {
             HistoryFormSheet(
                 initIntervalDb: intervalDb
