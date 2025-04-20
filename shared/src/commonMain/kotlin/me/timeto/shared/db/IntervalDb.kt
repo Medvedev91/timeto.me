@@ -239,6 +239,8 @@ data class IntervalDb(
         newNote: String?,
     ): Unit = dbIo {
         db.transaction {
+            if (newId > time())
+                throw UiException("Invalid time")
             if ((newId != id) && (selectByIdOrNullSync(newId) != null))
                 throw UiException("Time is unavailable")
             if (newTimer <= 0)
