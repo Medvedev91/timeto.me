@@ -24,10 +24,9 @@ class HistoryFormTimeVm(
 
     data class TimerItemUi(
         val time: Int,
-        val withToday: Boolean,
     ) {
         val title: String =
-            HistoryFormUtils.makeTimeNote(time, withToday = withToday)
+            HistoryFormUtils.makeTimeNote(time, withToday = false)
     }
 }
 
@@ -56,6 +55,6 @@ private fun makeTimerItemsUi(
 
     val now: Int = time()
     return secondsSet.filter { it <= now }.sorted().map { time ->
-        HistoryFormTimeVm.TimerItemUi(time, withToday = false)
+        HistoryFormTimeVm.TimerItemUi(time)
     }
 }
