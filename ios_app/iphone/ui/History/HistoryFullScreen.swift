@@ -21,7 +21,16 @@ struct HistoryFullScreen: View {
     }
 }
 
-///
+//
+// Warning! #InitScrollBugFix
+// It is extremely tricky to make scroll to bottom working well.
+// The same bug https://developer.apple.com/forums/thread/741406
+// I had to use many tricks:
+// - #InitScrollBugFix_AfterLoadView
+// - #InitScrollBugFix_SectionSpacing
+// - #InitScrollBugFix_OnChange
+// - #InitScrollBugFix_VStack
+// Please check it out before working with code.
 
 private struct HistoryFullScreenInner: View {
     
@@ -33,12 +42,18 @@ private struct HistoryFullScreenInner: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(Navigation.self) private var navigation
     
+    @State private var initScrollBugFixVar: Bool = false
+    private let initScrollBugFixViewId = "initScrollBugFixViewId"
+    
     var body: some View {
         
         ScrollViewReader { scrollProxy in
             
             ScrollView(.vertical, showsIndicators: false) {
                 
+                // #InitScrollBugFix_SectionSpacing
+                // Warning! WTF?! Without "spacing: 8+" the trick does not work!
+                // It has something to do with Section->header, so without header it works!
                 LazyVStack(spacing: 16, pinnedViews: [.sectionHeaders]) {
                     
                     ForEach(state.daysUi, id: \.unixDay) { dayUi in
@@ -63,9 +78,8 @@ private struct HistoryFullScreenInner: View {
                             .id("day_\(dayUi.unixDay)")
                         ) {
                             
-                            // Warning
-                            // VStack to fix https://developer.apple.com/forums/thread/741406
-                            
+                            // #InitScrollBugFix_VStack
+                            // Warning! WTF?! Without VStack the trick does not work!
                             VStack(spacing: 10) {
                                 
                                 ForEach(dayUi.intervalsUi, id: \.intervalDb.id) { intervalUi in
@@ -117,7 +131,7 @@ private struct HistoryFullScreenInner: View {
                                                             .foregroundColor(.primary)
                                                     }
                                                 )
-
+                                                
                                                 Spacer()
                                                 
                                                 Text(intervalUi.periodString)
@@ -144,10 +158,34 @@ private struct HistoryFullScreenInner: View {
                             }
                         }
                     }
+                    
+                    //
+                    // #InitScrollBugFix_AfterLoadView
+                    //
+                    // The main trick!
+                    // After loading data adding the view and scroll to that view.
+                    // Please look at #InitScrollBugFix_OnChange
+                    //
+                    // Note, because of LazyVStack(spacing: 16) we already have bottom
+                    // content padding Between the last section and this element, in fact
+                    // replacement for .contentMargins(.bottom, 16).
+                    if initScrollBugFixVar {
+                        ZStack {}
+                            .frame(height: onePx)
+                            .id(initScrollBugFixViewId)
+                    }
                 }
             }
-            .contentMargins(.bottom, 16)
             .defaultScrollAnchor(.bottom)
+            // #InitScrollBugFix_OnChange
+            .onChange(of: state.daysUi) {
+                if !initScrollBugFixVar {
+                    initScrollBugFixVar = true
+                    myAsyncAfter(0.001) {
+                        scrollProxy.scrollTo(initScrollBugFixViewId, anchor: .bottom)
+                    }
+                }
+            }
         }
         .toolbar {
             ToolbarItemGroup(placement: .bottomBar) {
