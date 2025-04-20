@@ -34,6 +34,7 @@ private struct HistoryFormTimeSheetInner: View {
     ///
     
     @Environment(\.dismiss) private var dismiss
+    @Environment(Navigation.self) private var navigation
 
     var body: some View {
         VStack {
@@ -58,6 +59,16 @@ private struct HistoryFormTimeSheetInner: View {
                     if let strategy = strategy as? HistoryFormTimeStrategy.Picker {
                         strategy.onDone(selectedTime.toKotlinInt())
                         dismiss()
+                    }
+                    else if let strategy = strategy as? HistoryFormTimeStrategy.Update {
+                        vm.updateTime(
+                            intervalDb: strategy.intervalDb,
+                            time: selectedTime.toInt32(),
+                            dialogsManager: navigation,
+                            onSuccess: {
+                                dismiss()
+                            }
+                        )
                     }
                     else {
                         fatalError()
