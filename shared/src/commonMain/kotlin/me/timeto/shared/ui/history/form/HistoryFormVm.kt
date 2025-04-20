@@ -47,8 +47,6 @@ class HistoryFormVm(
         )
     )
 
-    ///
-
     fun setActivityDb(newActivityDb: ActivityDb) {
         state.update { it.copy(activityDb = newActivityDb) }
     }
