@@ -3,20 +3,19 @@ import shared
 
 struct HistoryFormTimeSheet: View {
     
-    let initTime: Int
-    let onDone: (Int) -> Void
+    let strategy: HistoryFormTimeStrategy
     
     var body: some View {
         VmView({
             HistoryFormTimeVm(
-                initTime: initTime.toInt32()
+                strategy: strategy
             )
         }) { vm, state in
             HistoryFormTimeSheetInner(
                 vm: vm,
                 state: state,
-                selectedTime: state.initTime,
-                onDone: onDone
+                strategy: strategy,
+                selectedTime: state.initTime
             )
         }
     }
@@ -29,9 +28,9 @@ private struct HistoryFormTimeSheetInner: View {
     let vm: HistoryFormTimeVm
     let state: HistoryFormTimeVm.State
     
+    let strategy: HistoryFormTimeStrategy
     @State var selectedTime: Int32
-    let onDone: (Int) -> Void
-    
+
     ///
     
     @Environment(\.dismiss) private var dismiss
@@ -39,7 +38,7 @@ private struct HistoryFormTimeSheetInner: View {
     var body: some View {
         VStack {
             Picker("", selection: $selectedTime) {
-                ForEach(state.timerItemUi, id: \.time) { itemUi in
+                ForEach(state.timerItemsUi, id: \.time) { itemUi in
                     Text(itemUi.title)
                 }
             }
@@ -56,8 +55,13 @@ private struct HistoryFormTimeSheetInner: View {
             }
             ToolbarItem(placement: .primaryAction) {
                 Button("Done") {
-                    onDone(selectedTime.toInt())
-                    dismiss()
+                    if let strategy = strategy as? HistoryFormTimeStrategy.Picker {
+                        strategy.onDone(selectedTime.toKotlinInt())
+                        dismiss()
+                    }
+                    else {
+                        fatalError()
+                    }
                 }
                 .fontWeight(.semibold)
             }
