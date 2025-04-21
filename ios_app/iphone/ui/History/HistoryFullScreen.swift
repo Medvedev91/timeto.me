@@ -181,8 +181,11 @@ private struct HistoryFullScreenInner: View {
             .onChange(of: state.daysUi) {
                 if !initScrollBugFixVar {
                     initScrollBugFixVar = true
-                    myAsyncAfter(0.001) {
-                        scrollProxy.scrollTo(initScrollBugFixViewId, anchor: .bottom)
+                    for i in 0..<10 {
+                        let delay: CGFloat = 0.001 + (CGFloat(i) * 0.05)
+                        myAsyncAfter(delay) {
+                            scrollProxy.scrollTo(initScrollBugFixViewId, anchor: .bottom)
+                        }
                     }
                 }
             }
