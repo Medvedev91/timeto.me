@@ -179,7 +179,7 @@ private struct HistoryFullScreenInner: View {
                     }
                 }
                 // #InitScrollBugFix_ScrollViewId
-                // The most solid solution
+                // The most solid solution. Fixes rare cases.
                 .id(initScrollBugFixScrollViewId)
             }
             .defaultScrollAnchor(.bottom)
@@ -187,11 +187,14 @@ private struct HistoryFullScreenInner: View {
             .onChange(of: state.daysUi) {
                 if !initScrollBugFixVar {
                     initScrollBugFixVar = true
-                    for i in 0...10 {
+                    let iLast: Int = 10
+                    for i in 0...iLast {
                         let delay: CGFloat = 0.001 + (CGFloat(i) * 0.05)
                         myAsyncAfter(delay) {
                             scrollProxy.scrollTo(initScrollBugFixAfterLoadViewId, anchor: .bottom)
-                            initScrollBugFixScrollViewId = UUID().uuidString
+                            if i == iLast {
+                                initScrollBugFixScrollViewId = UUID().uuidString
+                            }
                         }
                     }
                 }
