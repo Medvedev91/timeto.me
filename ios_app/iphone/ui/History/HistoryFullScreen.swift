@@ -30,9 +30,9 @@ struct HistoryFullScreen: View {
 // - #InitScrollBugFix_SectionSpacing
 // - #InitScrollBugFix_OnChange
 // - #InitScrollBugFix_VStack
+// - #InitScrollBugFix_ScrollViewId
 // Please check it out before working with code.
-// At the moment we are still experiencing some bugs. But they are not
-// critical. Hopefully they will be fixed in the next versions of SwiftUI.
+// Hopefully it will be fixed in the next versions of SwiftUI.
 
 private struct HistoryFullScreenInner: View {
     
@@ -45,6 +45,7 @@ private struct HistoryFullScreenInner: View {
     @Environment(Navigation.self) private var navigation
     
     @State private var initScrollBugFixVar: Bool = false
+    @State private var initScrollBugFixScrollViewId = "initScrollBugFixScrollViewId"
     private let initScrollBugFixAfterLoadViewId = "initScrollBugFixViewId"
     
     var body: some View {
@@ -177,6 +178,9 @@ private struct HistoryFullScreenInner: View {
                             .id(initScrollBugFixAfterLoadViewId)
                     }
                 }
+                // #InitScrollBugFix_ScrollViewId
+                // The most solid solution
+                .id(initScrollBugFixScrollViewId)
             }
             .defaultScrollAnchor(.bottom)
             // #InitScrollBugFix_OnChange
@@ -187,6 +191,7 @@ private struct HistoryFullScreenInner: View {
                         let delay: CGFloat = 0.001 + (CGFloat(i) * 0.05)
                         myAsyncAfter(delay) {
                             scrollProxy.scrollTo(initScrollBugFixAfterLoadViewId, anchor: .bottom)
+                            initScrollBugFixScrollViewId = UUID().uuidString
                         }
                     }
                 }
