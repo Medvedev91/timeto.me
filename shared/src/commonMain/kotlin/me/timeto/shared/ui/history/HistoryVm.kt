@@ -23,7 +23,7 @@ class HistoryVm : __Vm<HistoryVm.State>() {
         val now = UnixTime()
         val scopeVm = scopeVm()
         IntervalDb.selectBetweenIdDescFlow(
-            timeStart = now.inDays(-10).time,
+            timeStart = now.inDays(-10).localDayStartTime(),
             timeFinish = Int.MAX_VALUE,
         ).map { it.reversed() }.onEachExIn(scopeVm) { intervalsDbAsc ->
             state.update {
@@ -42,17 +42,22 @@ class HistoryVm : __Vm<HistoryVm.State>() {
         val nextIntervalTimeStart: Int,
     ) {
 
+        private val dayUnixTime: UnixTime = UnixTime.byLocalDay(unixDay)
+        private val dayTimeStart: Int = dayUnixTime.time
+        private val dayTimeFinish: Int = dayTimeStart + 86400 - 1
+
+        // For iOS bugfix. Docs in HistoryFullScreen.swift todo remove
+        val secondsFromDayStartIosFix: Int =
+            (intervalsDb.first().id - dayUnixTime.time).limitMin(0)
+
         val intervalsUi: List<IntervalUi> = intervalsDb.map { intervalDb ->
             val unixTime: UnixTime = intervalDb.unixTime()
             val activityDb: ActivityDb = intervalDb.selectActivityDbCached()
 
-            val sectionDayTimeStart: Int = UnixTime.byLocalDay(unixDay).time
-            val sectionDayTimeFinish: Int = sectionDayTimeStart + 86400 - 1
-
             val finishTime: Int =
                 intervalsDb.getNextOrNull(intervalDb)?.id ?: nextIntervalTimeStart
             val seconds: Int = finishTime - intervalDb.id
-            val barTimeFinish: Int = sectionDayTimeFinish.limitMax(finishTime)
+            val barTimeFinish: Int = dayTimeFinish.limitMax(finishTime)
 
             IntervalUi(
                 intervalDb = intervalDb,
@@ -62,7 +67,7 @@ class HistoryVm : __Vm<HistoryVm.State>() {
                     withActivityEmoji = false,
                     withTimer = false,
                 ),
-                secondsForBar = barTimeFinish - sectionDayTimeStart.limitMin(intervalDb.id),
+                secondsForBar = barTimeFinish - dayTimeStart.limitMin(intervalDb.id),
                 barTimeFinish = barTimeFinish,
                 timeString = unixTime.getStringByComponents(UnixTime.StringComponent.hhmm24),
                 periodString = makePeriodString(seconds),
