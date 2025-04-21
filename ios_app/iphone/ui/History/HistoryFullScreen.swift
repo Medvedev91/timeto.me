@@ -29,10 +29,12 @@ struct HistoryFullScreen: View {
 // - #InitScrollBugFix_AfterLoadView
 // - #InitScrollBugFix_SectionSpacing
 // - #InitScrollBugFix_OnChange
+// - #InitScrollBugFix_FirstDaySize
 // - #InitScrollBugFix_VStack
-// - #InitScrollBugFix_ScrollViewId
 // Please check it out before working with code.
 // Hopefully it will be fixed in the next versions of SwiftUI.
+
+private let barPxSecondsRatio: Int = 50
 
 private struct HistoryFullScreenInner: View {
     
@@ -45,7 +47,6 @@ private struct HistoryFullScreenInner: View {
     @Environment(Navigation.self) private var navigation
     
     @State private var initScrollBugFixVar: Bool = false
-    @State private var initScrollBugFixScrollViewId = "initScrollBugFixScrollViewId"
     private let initScrollBugFixAfterLoadViewId = "initScrollBugFixViewId"
     
     var body: some View {
@@ -112,7 +113,7 @@ private struct HistoryFullScreenInner: View {
                                                 .fill(intervalUi.activityDb.colorRgba.toColor())
                                                 .frame(
                                                     width: 10,
-                                                    height: Double(10.limitMin(intervalUi.secondsForBar.toInt() / 50))
+                                                    height: Double(10.limitMin(intervalUi.secondsForBar.toInt() / barPxSecondsRatio))
                                                 )
                                                 .padding(.leading, 5)
                                                 .padding(.trailing, 5)
@@ -159,6 +160,10 @@ private struct HistoryFullScreenInner: View {
                                     }
                                 }
                             }
+                            // #InitScrollBugFix_FirstDaySize
+                            // As I understand, SwiftUI predicts next elements height by the first one.
+                            // So we have to make first element full day height.
+                            .padding(.top, CGFloat(dayUi.secondsFromDayStartIosFix.toInt() / barPxSecondsRatio))
                         }
                     }
                     
@@ -178,23 +183,16 @@ private struct HistoryFullScreenInner: View {
                             .id(initScrollBugFixAfterLoadViewId)
                     }
                 }
-                // #InitScrollBugFix_ScrollViewId
-                // The most solid solution. Fixes rare cases.
-                .id(initScrollBugFixScrollViewId)
             }
             .defaultScrollAnchor(.bottom)
             // #InitScrollBugFix_OnChange
             .onChange(of: state.daysUi) {
                 if !initScrollBugFixVar {
                     initScrollBugFixVar = true
-                    let iLast: Int = 10
-                    for i in 0...iLast {
+                    for i in 0...10 {
                         let delay: CGFloat = 0.001 + (CGFloat(i) * 0.05)
                         myAsyncAfter(delay) {
                             scrollProxy.scrollTo(initScrollBugFixAfterLoadViewId, anchor: .bottom)
-                            if i == iLast {
-                                initScrollBugFixScrollViewId = UUID().uuidString
-                            }
                         }
                     }
                 }
