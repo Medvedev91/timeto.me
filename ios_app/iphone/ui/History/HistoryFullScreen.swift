@@ -31,6 +31,8 @@ struct HistoryFullScreen: View {
 // - #InitScrollBugFix_OnChange
 // - #InitScrollBugFix_VStack
 // Please check it out before working with code.
+// At the moment we are still experiencing some bugs. But they are not
+// critical. Hopefully they will be fixed in the next versions of SwiftUI.
 
 private struct HistoryFullScreenInner: View {
     
