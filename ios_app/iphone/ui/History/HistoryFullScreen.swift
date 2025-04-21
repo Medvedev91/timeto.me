@@ -45,7 +45,7 @@ private struct HistoryFullScreenInner: View {
     @Environment(Navigation.self) private var navigation
     
     @State private var initScrollBugFixVar: Bool = false
-    private let initScrollBugFixViewId = "initScrollBugFixViewId"
+    private let initScrollBugFixAfterLoadViewId = "initScrollBugFixViewId"
     
     var body: some View {
         
@@ -174,7 +174,7 @@ private struct HistoryFullScreenInner: View {
                     if initScrollBugFixVar {
                         ZStack {}
                             .frame(height: onePx)
-                            .id(initScrollBugFixViewId)
+                            .id(initScrollBugFixAfterLoadViewId)
                     }
                 }
             }
@@ -183,10 +183,10 @@ private struct HistoryFullScreenInner: View {
             .onChange(of: state.daysUi) {
                 if !initScrollBugFixVar {
                     initScrollBugFixVar = true
-                    for i in 0..<10 {
+                    for i in 0...10 {
                         let delay: CGFloat = 0.001 + (CGFloat(i) * 0.05)
                         myAsyncAfter(delay) {
-                            scrollProxy.scrollTo(initScrollBugFixViewId, anchor: .bottom)
+                            scrollProxy.scrollTo(initScrollBugFixAfterLoadViewId, anchor: .bottom)
                         }
                     }
                 }
