@@ -18,7 +18,7 @@ class HistoryFormVm(
 
     data class State(
         val initIntervalDb: IntervalDb?,
-        val activityDb: ActivityDb,
+        val activityDb: ActivityDb?,
         val time: Int,
         val activitiesUi: List<ActivityUi>,
     ) {
@@ -29,8 +29,6 @@ class HistoryFormVm(
             if (initIntervalDb == null) "Create" else "Save"
 
         val activityTitle = "Activity"
-        val activityNote: String =
-            activityDb.name.textFeatures().textNoFeatures
 
         val timeTitle = "Time Start"
         val timeNote: String =
@@ -40,14 +38,13 @@ class HistoryFormVm(
     override val state = MutableStateFlow(
         State(
             initIntervalDb = initIntervalDb,
-            activityDb = initIntervalDb?.selectActivityDbCached()
-                         ?: ActivityDb.selectOtherCached(),
+            activityDb = initIntervalDb?.selectActivityDbCached(),
             time = initIntervalDb?.id ?: time(),
             activitiesUi = Cache.activitiesDbSorted.map { ActivityUi(activityDb = it) },
         )
     )
 
-    fun setActivityDb(newActivityDb: ActivityDb) {
+    fun setActivityDb(newActivityDb: ActivityDb?) {
         state.update { it.copy(activityDb = newActivityDb) }
     }
 
@@ -63,18 +60,23 @@ class HistoryFormVm(
         val time: Int = state.time
         launchExIo {
             try {
+                val activityDb: ActivityDb? = state.activityDb
+                if (activityDb == null) {
+                    dialogsManager.alert("Activity not selected")
+                    return@launchExIo
+                }
                 val intervalDb: IntervalDb? = state.initIntervalDb
                 if (intervalDb != null) {
                     intervalDb.updateEx(
                         newId = time,
                         newTimer = intervalDb.timer,
-                        newActivityDb = state.activityDb,
+                        newActivityDb = activityDb,
                         newNote = intervalDb.note,
                     )
                 } else {
                     IntervalDb.insertWithValidation(
                         timer = 45 * 60,
-                        activityDb = state.activityDb,
+                        activityDb = activityDb,
                         note = null,
                         id = time,
                     )

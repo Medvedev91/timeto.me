@@ -25,7 +25,7 @@ private struct HistoryFormSheetInner: View {
     let vm: HistoryFormVm
     let state: HistoryFormVm.State
     
-    @State var selectedActivityDb: ActivityDb
+    @State var selectedActivityDb: ActivityDb?
     
     ///
     
@@ -39,8 +39,13 @@ private struct HistoryFormSheetInner: View {
             Section {
                 
                 Picker(state.activityTitle, selection: $selectedActivityDb) {
+                    if selectedActivityDb == nil {
+                        Text("None")
+                            .tag(nil as ActivityDb?) // Support optional (nil) selection
+                    }
                     ForEach(state.activitiesUi, id: \.activityDb) { activityUi in
                         Text(activityUi.title)
+                            .tag(activityUi.activityDb as ActivityDb?) // Support optional (nil) selection
                     }
                 }
                 .foregroundColor(.primary)
