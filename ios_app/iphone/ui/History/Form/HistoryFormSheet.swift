@@ -75,44 +75,19 @@ private struct HistoryFormSheetInner: View {
                     }
                 )
             }
-            
-            if let intervalDb = state.initIntervalDb {
-                Section {
-                    Button(HistoryFormUtils.shared.moveToTasksTitle) {
-                        vm.moveToTasks(
-                            intervalDb: intervalDb,
-                            dialogsManager: navigation,
-                            onSuccess: {
-                                dismiss()
-                            }
-                        )
-                    }
-                    .foregroundColor(.orange)
-                }
-                Section {
-                    Button("Delete") {
-                        vm.delete(
-                            intervalDb: intervalDb,
-                            dialogsManager: navigation,
-                            onSuccess: {
-                                dismiss()
-                            }
-                        )
-                    }
-                    .foregroundColor(.red)
-                }
-            }
         }
         .myFormContentMargins()
         .navigationTitle(state.title)
         .toolbarTitleDisplayMode(.inline)
         .interactiveDismissDisabled()
         .toolbar {
+            
             ToolbarItem(placement: .cancellationAction) {
                 Button("Cancel") {
                     dismiss()
                 }
             }
+            
             ToolbarItem(placement: .primaryAction) {
                 Button(state.saveText) {
                     vm.save(
@@ -123,6 +98,39 @@ private struct HistoryFormSheetInner: View {
                     )
                 }
                 .fontWeight(.semibold)
+            }
+            
+            if let intervalDb = state.initIntervalDb {
+                
+                ToolbarItemGroup(placement: .bottomBar) {
+                    
+                    HStack {
+                        
+                        Button("Delete") {
+                            vm.delete(
+                                intervalDb: intervalDb,
+                                dialogsManager: navigation,
+                                onSuccess: {
+                                    dismiss()
+                                }
+                            )
+                        }
+                        .foregroundColor(.red)
+                        
+                        Spacer()
+                        
+                        Button(HistoryFormUtils.shared.moveToTasksTitle) {
+                            vm.moveToTasks(
+                                intervalDb: intervalDb,
+                                dialogsManager: navigation,
+                                onSuccess: {
+                                    dismiss()
+                                }
+                            )
+                        }
+                        .foregroundColor(.orange)
+                    }
+                }
             }
         }
     }
