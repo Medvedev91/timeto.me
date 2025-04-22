@@ -90,23 +90,10 @@ private struct HistoryFullScreenInner: View {
                                     
                                     HStack(alignment: .top, spacing: 10) {
                                         
-                                        Button(
-                                            action: {
-                                                navigation.sheet {
-                                                    HistoryFormTimeSheet(
-                                                        strategy: HistoryFormTimeStrategy.Update(
-                                                            intervalDb: intervalUi.intervalDb
-                                                        )
-                                                    )
-                                                }
-                                            },
-                                            label: {
-                                                Text(intervalUi.timeString)
-                                                    .monospaced()
-                                                    .fontWeight(.semibold)
-                                                    .foregroundColor(!intervalUi.isStartsPrevDay ? .primary : .clear)
-                                            }
-                                        )
+                                        Text(intervalUi.timeString)
+                                            .monospaced()
+                                            .fontWeight(.semibold)
+                                            .foregroundColor(!intervalUi.isStartsPrevDay ? .primary : .clear)
                                         
                                         VStack {
                                             RoundedRectangle(cornerRadius: 20, style: .continuous)
@@ -124,17 +111,10 @@ private struct HistoryFullScreenInner: View {
                                             
                                             if !intervalUi.isStartsPrevDay {
                                                 
-                                                Button(
-                                                    action: {
-                                                        showIntervalForm(intervalDb: intervalUi.intervalDb)
-                                                    },
-                                                    label: {
-                                                        Text(intervalUi.text)
-                                                            .fontWeight(.medium)
-                                                            .textAlign(.leading)
-                                                            .foregroundColor(.primary)
-                                                    }
-                                                )
+                                                Text(intervalUi.text)
+                                                    .fontWeight(.medium)
+                                                    .textAlign(.leading)
+                                                    .foregroundColor(.primary)
                                                 
                                                 Spacer()
                                                 
@@ -157,6 +137,9 @@ private struct HistoryFullScreenInner: View {
                                                 Label("Edit", systemImage: "square.and.pencil")
                                             }
                                         )
+                                    }
+                                    .onTapGesture {
+                                        showIntervalForm(intervalDb: intervalUi.intervalDb)
                                     }
                                 }
                             }
