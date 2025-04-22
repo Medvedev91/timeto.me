@@ -16,11 +16,14 @@ class HistoryFormVm(
     initIntervalDb: IntervalDb?,
 ) : __Vm<HistoryFormVm.State>() {
 
+    private val initTime: Int = initIntervalDb?.id ?: time()
+
     data class State(
         val initIntervalDb: IntervalDb?,
         val activityDb: ActivityDb?,
         val time: Int,
         val activitiesUi: List<ActivityUi>,
+        val timerItemsUi: List<TimerItemUi>,
     ) {
 
         val title: String =
@@ -29,18 +32,15 @@ class HistoryFormVm(
             if (initIntervalDb == null) "Create" else "Save"
 
         val activityTitle = "Activity"
-
-        val timeTitle = "Time Start"
-        val timeNote: String =
-            HistoryFormUtils.makeTimeNote(time, withToday = true)
     }
 
     override val state = MutableStateFlow(
         State(
             initIntervalDb = initIntervalDb,
             activityDb = initIntervalDb?.selectActivityDbCached(),
-            time = initIntervalDb?.id ?: time(),
+            time = initTime,
             activitiesUi = Cache.activitiesDbSorted.map { ActivityUi(activityDb = it) },
+            timerItemsUi = makeTimerItemsUi(selectedTime = initTime),
         )
     )
 
@@ -123,5 +123,41 @@ class HistoryFormVm(
     ) {
         val title: String =
             activityDb.name.textFeatures().textNoFeatures
+    }
+
+    data class TimerItemUi(
+        val time: Int,
+    ) {
+        val title: String =
+            HistoryFormUtils.makeTimeNote(time, withToday = false)
+    }
+}
+
+private fun makeTimerItemsUi(
+    selectedTime: Int,
+): List<HistoryFormVm.TimerItemUi> {
+    val secondsSet: MutableSet<Int> = mutableSetOf(selectedTime)
+
+    val timeStart1Min: Int = selectedTime - (selectedTime % 60)
+    for (i in 1 until 10) { // 10 minutes
+        secondsSet.add(timeStart1Min + (i * 60))
+        secondsSet.add(timeStart1Min - (i * 60))
+    }
+
+    val timeStart5Min: Int = selectedTime - (selectedTime % (60 * 5))
+    for (i in 1 until 12) { // ~ 1 hour
+        secondsSet.add(timeStart5Min + (i * 60 * 5))
+        secondsSet.add(timeStart5Min - (i * 60 * 5))
+    }
+
+    val timeStart10Min: Int = selectedTime - (selectedTime % (60 * 10))
+    for (i in 1 until 144) { // ~ 1 day
+        secondsSet.add(timeStart10Min + (i * 60 * 10))
+        secondsSet.add(timeStart10Min - (i * 60 * 10))
+    }
+
+    val now: Int = time()
+    return secondsSet.filter { it <= now }.sorted().map { time ->
+        HistoryFormVm.TimerItemUi(time)
     }
 }
