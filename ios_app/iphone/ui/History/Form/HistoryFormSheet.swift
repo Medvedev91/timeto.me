@@ -14,7 +14,8 @@ struct HistoryFormSheet: View {
             HistoryFormSheetInner(
                 vm: vm,
                 state: state,
-                selectedActivityDb: state.activityDb
+                selectedActivityDb: state.activityDb,
+                selectedTime: state.time
             )
         }
     }
@@ -26,7 +27,8 @@ private struct HistoryFormSheetInner: View {
     let state: HistoryFormVm.State
     
     @State var selectedActivityDb: ActivityDb?
-    
+    @State var selectedTime: Int32
+
     ///
     
     @Environment(\.dismiss) private var dismiss
@@ -53,27 +55,15 @@ private struct HistoryFormSheetInner: View {
                     vm.setActivityDb(newActivityDb: newActivityDb)
                 }
                 
-                NavigationLinkSheet(
-                    label: {
-                        HStack {
-                            Text(state.timeTitle)
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Text(state.timeNote)
-                                .foregroundColor(.secondary)
-                        }
-                    },
-                    sheet: {
-                        HistoryFormTimeSheet(
-                            strategy: HistoryFormTimeStrategy.Picker(
-                                initTime: state.time.toInt32(),
-                                onDone: { newTime in
-                                    vm.setTime(newTime: newTime.int32Value)
-                                }
-                            )
-                        )
+                Picker("", selection: $selectedTime) {
+                    ForEach(state.timerItemsUi, id: \.time) { itemUi in
+                        Text(itemUi.title)
                     }
-                )
+                }
+                .pickerStyle(.wheel)
+                .onChange(of: selectedTime) { _, newTime in
+                    vm.setTime(newTime: newTime)
+                }
             }
         }
         .myFormContentMargins()
