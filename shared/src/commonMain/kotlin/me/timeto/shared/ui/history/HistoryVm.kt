@@ -5,6 +5,8 @@ import me.timeto.shared.*
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.misc.time
+import me.timeto.shared.ui.DialogsManager
+import me.timeto.shared.ui.history.form.HistoryFormUtils
 import me.timeto.shared.vm.__Vm
 
 class HistoryVm : __Vm<HistoryVm.State>() {
@@ -32,6 +34,28 @@ class HistoryVm : __Vm<HistoryVm.State>() {
                 )
             }
         }
+    }
+
+    fun moveIntervalToTasks(
+        intervalDb: IntervalDb,
+        dialogsManager: DialogsManager,
+    ) {
+        HistoryFormUtils.moveToTasksUi(
+            intervalDb = intervalDb,
+            dialogsManager = dialogsManager,
+            onSuccess = {},
+        )
+    }
+
+    fun deleteInterval(
+        intervalDb: IntervalDb,
+        dialogsManager: DialogsManager,
+    ) {
+        HistoryFormUtils.deleteIntervalUi(
+            intervalDb = intervalDb,
+            dialogsManager = dialogsManager,
+            onSuccess = {},
+        )
     }
 
     ///
