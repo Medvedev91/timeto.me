@@ -129,14 +129,43 @@ private struct HistoryFullScreenInner: View {
                                     .padding(.trailing, 20)
                                     .background(.background) // Tap area for context menu
                                     .contextMenu {
-                                        Button(
-                                            action: {
-                                                showIntervalForm(intervalDb: intervalUi.intervalDb)
-                                            },
-                                            label: {
-                                                Label("Edit", systemImage: "square.and.pencil")
-                                            }
-                                        )
+                                        Section {
+                                            Button(
+                                                action: {
+                                                    showIntervalForm(intervalDb: intervalUi.intervalDb)
+                                                },
+                                                label: {
+                                                    Label("Edit", systemImage: "square.and.pencil")
+                                                }
+                                            )
+                                        }
+                                        Section {
+                                            Button(
+                                                action: {
+                                                    vm.moveIntervalToTasks(
+                                                        intervalDb: intervalUi.intervalDb,
+                                                        dialogsManager: navigation
+                                                    )
+                                                },
+                                                label: {
+                                                    Label(HistoryFormUtils.shared.moveToTasksTitle, systemImage: "arrow.uturn.backward")
+                                                        .foregroundColor(.orange)
+                                                }
+                                            )
+                                            Button(
+                                                role: .destructive,
+                                                action: {
+                                                    vm.deleteInterval(
+                                                        intervalDb: intervalUi.intervalDb,
+                                                        dialogsManager: navigation
+                                                    )
+                                                },
+                                                label: {
+                                                    Label("Delete", systemImage: "trash")
+                                                        .foregroundColor(.red)
+                                                }
+                                            )
+                                        }
                                     }
                                     .onTapGesture {
                                         showIntervalForm(intervalDb: intervalUi.intervalDb)
