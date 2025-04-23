@@ -3,10 +3,16 @@ import shared
 
 struct ActivitiesScreen: View {
     
+    @Binding var tab: MainTabEnum
+
     var body: some View {
         VStack {
             ActivitiesView()
-            BottomMenu()
+            BottomMenu(
+                openHomeTab: {
+                    tab = .home
+                }
+            )
         }
         .padding(.bottom, MainTabsView__HEIGHT)
     }
@@ -15,6 +21,8 @@ struct ActivitiesScreen: View {
 ///
 
 private struct BottomMenu: View {
+    
+    let openHomeTab: () -> Void
     
     @Environment(Navigation.self) private var navigation
     
@@ -28,6 +36,9 @@ private struct BottomMenu: View {
             ) {
                 navigation.sheet {
                     SummarySheet()
+                        .onDisappear {
+                            openHomeTab()
+                        }
                 }
             }
             .padding(.leading, 13)
@@ -39,6 +50,9 @@ private struct BottomMenu: View {
             ) {
                 navigation.fullScreen {
                     HistoryFullScreen()
+                        .onDisappear {
+                            openHomeTab()
+                        }
                 }
             }
             

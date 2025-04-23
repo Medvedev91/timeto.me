@@ -27,7 +27,7 @@ struct MainScreen: View {
                 HomeScreen()
                     .attachNavigation()
             case .activities:
-                ActivitiesScreen()
+                ActivitiesScreen(tab: $tab)
                     .attachNavigation()
             case .tasks:
                 TasksView()
