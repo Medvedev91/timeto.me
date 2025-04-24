@@ -35,10 +35,11 @@ private struct BottomMenu: View {
                 icon: "chart.pie"
             ) {
                 navigation.sheet {
-                    SummarySheet()
-                        .onDisappear {
+                    SummarySheet(
+                        onClose: {
                             openHomeTab()
                         }
+                    )
                 }
             }
             .padding(.leading, 13)
@@ -49,10 +50,11 @@ private struct BottomMenu: View {
                 icon: "list.bullet.rectangle"
             ) {
                 navigation.fullScreen {
-                    HistoryFullScreen()
-                        .onDisappear {
+                    HistoryFullScreen(
+                        onClose: {
                             openHomeTab()
                         }
+                    )
                 }
             }
             

@@ -3,13 +3,16 @@ import shared
 
 struct HistoryFullScreen: View {
     
+    let onClose: () -> Void
+    
     var body: some View {
         VmView({
             HistoryVm()
         }) { vm, state in
             HistoryFullScreenInner(
                 vm: vm,
-                state: state
+                state: state,
+                onClose: onClose
             )
         }
         .onAppear {
@@ -40,6 +43,8 @@ private struct HistoryFullScreenInner: View {
     
     let vm: HistoryVm
     let state: HistoryVm.State
+    
+    let onClose: () -> Void
     
     ///
     
@@ -225,6 +230,7 @@ private struct HistoryFullScreenInner: View {
                 Spacer()
                 Button("Close") {
                     dismiss()
+                    onClose()
                 }
             }
         }

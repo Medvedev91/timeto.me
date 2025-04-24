@@ -11,13 +11,16 @@ private let hPadding = 8.0
 
 struct SummarySheet: View {
     
+    let onClose: () -> Void
+    
     var body: some View {
         VmView({
             SummaryVm()
         }) { vm, state in
             SummarySheetInner(
                 vm: vm,
-                state: state
+                state: state,
+                onClose: onClose
             )
         }
     }
@@ -27,6 +30,8 @@ private struct SummarySheetInner: View {
     
     let vm: SummaryVm
     let state: SummaryVm.State
+    
+    let onClose: () -> Void
     
     ///
     
@@ -273,6 +278,7 @@ private struct SummarySheetInner: View {
                     Button(
                         action: {
                             dismiss()
+                            onClose()
                         },
                         label: {
                             HStack {
