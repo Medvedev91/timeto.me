@@ -27,7 +27,15 @@ class HistoryFormVm(
     ) {
 
         val title: String =
-            if (initIntervalDb == null) "New Entry" else "Edit"
+            if (initIntervalDb == null) "New Entry"
+            else {
+                val note: String? = initIntervalDb.note
+                    ?.trim()
+                    ?.textFeatures()
+                    ?.textNoFeatures
+                    ?.takeIf { it.isNotBlank() }
+                note ?: initIntervalDb.selectActivityDbCached().name.textFeatures().textNoFeatures
+            }
         val saveText: String =
             if (initIntervalDb == null) "Create" else "Save"
 
