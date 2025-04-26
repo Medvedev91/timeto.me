@@ -13,12 +13,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import me.timeto.app.H_PADDING_HALF
 import me.timeto.app.c
 import me.timeto.app.dpToPx
 import me.timeto.app.isSDKQPlus
 import me.timeto.app.rememberVm
 import me.timeto.app.ui.Screen
+import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.activities.ActivityPickerFs
+import me.timeto.app.ui.footer.Footer
+import me.timeto.app.ui.footer.FooterPlainButton
 import me.timeto.app.ui.form.FormItemView
 import me.timeto.app.ui.form.button.FormButton
 import me.timeto.app.ui.form.padding.FormPaddingTop
@@ -28,6 +32,7 @@ import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.db.IntervalDb
+import me.timeto.shared.ui.history.form.HistoryFormUtils
 import me.timeto.shared.ui.history.form.HistoryFormVm
 
 @Composable
@@ -73,6 +78,8 @@ fun HistoryFormFs(
 
         LazyColumn(
             state = scrollState,
+            modifier = Modifier
+                .weight(1f),
         ) {
 
             item {
@@ -133,6 +140,45 @@ fun HistoryFormFs(
                                     value = formTimeItemIdx.value // Set last
                                 }
                             }
+                        )
+                    },
+                )
+            }
+        }
+
+        val intervalDb: IntervalDb? = state.initIntervalDb
+        if (intervalDb != null) {
+
+            Footer(
+                scrollState = scrollState,
+                contentModifier = Modifier
+                    .padding(horizontal = H_PADDING_HALF),
+            ) {
+
+                FooterPlainButton(
+                    text = "Delete",
+                    onClick = {
+                        vm.delete(
+                            intervalDb = intervalDb,
+                            dialogsManager = navigationFs,
+                            onSuccess = {
+                                navigationLayer.close()
+                            },
+                        )
+                    },
+                )
+
+                SpacerW1()
+
+                FooterPlainButton(
+                    text = HistoryFormUtils.moveToTasksTitle,
+                    onClick = {
+                        vm.moveToTasks(
+                            intervalDb = intervalDb,
+                            dialogsManager = navigationFs,
+                            onSuccess = {
+                                navigationLayer.close()
+                            },
                         )
                     },
                 )
