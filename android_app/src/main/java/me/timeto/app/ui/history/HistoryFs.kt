@@ -175,6 +175,7 @@ fun HistoryFs() {
 
             FooterPlainButton(
                 text = "Close",
+                color = c.blue,
                 onClick = {
                     navigationLayer.close()
                 },

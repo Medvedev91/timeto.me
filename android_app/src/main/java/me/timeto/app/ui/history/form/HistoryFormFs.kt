@@ -157,6 +157,7 @@ fun HistoryFormFs(
 
                 FooterPlainButton(
                     text = "Delete",
+                    color = c.red,
                     onClick = {
                         vm.delete(
                             intervalDb = intervalDb,
@@ -172,6 +173,7 @@ fun HistoryFormFs(
 
                 FooterPlainButton(
                     text = HistoryFormUtils.moveToTasksTitle,
+                    color = c.orange,
                     onClick = {
                         vm.moveToTasks(
                             intervalDb = intervalDb,
