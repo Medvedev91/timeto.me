@@ -70,9 +70,9 @@ fun HistoryFs() {
 
             state.daysUi.reversed().forEach { dayUi ->
 
-                item(key = "day_${dayUi.unixDay}") {
+                dayUi.intervalsUi.reversed().forEach { intervalUi ->
 
-                    dayUi.intervalsUi.reversed().forEach { intervalUi ->
+                    item(key = "interval_${dayUi.unixDay}_${intervalUi.intervalDb.id}") {
 
                         val timeHeight = (intervalUi.secondsForBar / barPxSecondsRatio).dp
 
@@ -128,9 +128,12 @@ fun HistoryFs() {
                             )
                         }
                     }
+                }
 
-                    //
-                    // Header
+                //
+                // Header
+
+                item(key = "day_${dayUi.unixDay}") {
 
                     HStack(
                         modifier = Modifier
