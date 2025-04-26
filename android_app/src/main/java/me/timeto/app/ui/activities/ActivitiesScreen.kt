@@ -23,9 +23,9 @@ import me.timeto.app.VStack
 import me.timeto.app.c
 import me.timeto.app.onePx
 import me.timeto.app.squircleShape
-import me.timeto.app.ui.HistoryDialogView
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1
+import me.timeto.app.ui.history.HistoryFs
 import me.timeto.app.ui.summary.SummaryFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 
@@ -86,7 +86,7 @@ private fun BottomMenu() {
             extraIconPadding = onePx,
             onClick = {
                 navigationFs.push {
-                    HistoryDialogView()
+                    HistoryFs()
                 }
             },
         )
