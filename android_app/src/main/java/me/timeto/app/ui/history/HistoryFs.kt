@@ -44,7 +44,7 @@ fun HistoryFs() {
     val mainActivity = LocalContext.current as MainActivity
     val navigationFs = LocalNavigationFs.current
 
-    val (vm, state) = rememberVm {
+    val (_, state) = rememberVm {
         HistoryVm()
     }
 
@@ -81,9 +81,10 @@ fun HistoryFs() {
                         ) {
 
                             Text(
-                                intervalUi.timeString,
+                                text = intervalUi.timeString,
                                 modifier = Modifier
-                                    .padding(horizontal = H_PADDING_HALF, vertical = 2.dp),
+                                    .padding(vertical = 2.dp)
+                                    .padding(start = H_PADDING_HALF, end = H_PADDING),
                                 color = if (intervalUi.isStartsPrevDay) c.transparent else c.text,
                                 fontWeight = FontWeight.Medium,
                             )
