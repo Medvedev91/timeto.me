@@ -35,6 +35,7 @@ import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.footer.Footer
 import me.timeto.app.ui.footer.FooterAddButton
 import me.timeto.app.ui.footer.FooterRightButton
+import me.timeto.app.ui.history.form.HistoryFormFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.ui.history.HistoryVm
@@ -80,7 +81,11 @@ fun HistoryFs() {
                                 .padding(horizontal = H_PADDING_HALF)
                                 .clip(squircleShape)
                                 .clickable {
-                                    // todo
+                                    navigationFs.push {
+                                        HistoryFormFs(
+                                            initIntervalDb = intervalUi.intervalDb,
+                                        )
+                                    }
                                 },
                         ) {
 
@@ -159,7 +164,9 @@ fun HistoryFs() {
                 text = "New Entry",
                 onClick = {
                     navigationFs.push {
-                        // todo
+                        HistoryFormFs(
+                            initIntervalDb = null,
+                        )
                     }
                 },
             )
