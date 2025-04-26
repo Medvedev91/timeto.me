@@ -22,6 +22,7 @@ import me.timeto.app.ui.main.MainTabsView__dividerColor
 @Composable
 fun Footer(
     scrollState: LazyListState?,
+    isScrollReversed: Boolean = false,
     contentModifier: Modifier,
     content: @Composable RowScope.() -> Unit,
 ) {
@@ -30,7 +31,8 @@ fun Footer(
         derivedStateOf {
             when {
                 scrollState == null -> 0f
-                scrollState.canScrollForward -> 1f
+                !isScrollReversed && scrollState.canScrollForward -> 1f
+                isScrollReversed && scrollState.canScrollBackward -> 1f
                 else -> 0f
             }
         }
