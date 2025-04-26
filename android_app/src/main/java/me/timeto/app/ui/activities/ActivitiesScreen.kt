@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -16,6 +17,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import me.timeto.app.HStack
 import me.timeto.app.MainActivity
 import me.timeto.app.R
@@ -49,7 +52,9 @@ fun ActivitiesScreen(
                 modifier = Modifier
                     .weight(1f),
             )
-            BottomMenu()
+            BottomMenu(
+                onClose = onClose,
+            )
         }
     }
 }
@@ -57,8 +62,11 @@ fun ActivitiesScreen(
 ///
 
 @Composable
-private fun BottomMenu() {
+private fun BottomMenu(
+    onClose: () -> Unit,
+) {
 
+    val scope = rememberCoroutineScope()
     val navigationFs = LocalNavigationFs.current
 
     HStack(
@@ -76,6 +84,10 @@ private fun BottomMenu() {
                 navigationFs.push {
                     SummaryFs()
                 }
+                scope.launch {
+                    delay(1_000)
+                    onClose()
+                }
             }
         )
 
@@ -87,6 +99,10 @@ private fun BottomMenu() {
             onClick = {
                 navigationFs.push {
                     HistoryFs()
+                }
+                scope.launch {
+                    delay(1_000)
+                    onClose()
                 }
             },
         )
