@@ -34,7 +34,7 @@ import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.footer.Footer
 import me.timeto.app.ui.footer.FooterAddButton
-import me.timeto.app.ui.footer.FooterRightButton
+import me.timeto.app.ui.footer.FooterPlainButton
 import me.timeto.app.ui.history.form.HistoryFormFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
@@ -173,7 +173,7 @@ fun HistoryFs() {
 
             SpacerW1()
 
-            FooterRightButton(
+            FooterPlainButton(
                 text = "Close",
                 onClick = {
                     navigationLayer.close()

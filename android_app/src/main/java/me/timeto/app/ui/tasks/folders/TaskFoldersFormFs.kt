@@ -11,7 +11,7 @@ import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.footer.Footer
 import me.timeto.app.ui.footer.FooterAddButton
-import me.timeto.app.ui.footer.FooterRightButton
+import me.timeto.app.ui.footer.FooterPlainButton
 import me.timeto.app.ui.form.sorted.FormSortedList
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderCancelButton
@@ -100,7 +100,7 @@ fun TaskFoldersFormFs() {
 
             val tmrwButtonUi = state.tmrwButtonUi
             if (tmrwButtonUi != null) {
-                FooterRightButton(
+                FooterPlainButton(
                     text = tmrwButtonUi.text,
                     onClick = {
                         tmrwButtonUi.add(

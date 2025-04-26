@@ -12,7 +12,7 @@ import me.timeto.app.c
 import me.timeto.app.squircleShape
 
 @Composable
-fun FooterRightButton(
+fun FooterPlainButton(
     text: String,
     onClick: () -> Unit,
 ) {

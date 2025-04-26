@@ -10,7 +10,7 @@ import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.footer.Footer
 import me.timeto.app.ui.footer.FooterAddButton
-import me.timeto.app.ui.footer.FooterRightButton
+import me.timeto.app.ui.footer.FooterPlainButton
 import me.timeto.app.ui.form.sorted.FormSortedList
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
@@ -114,7 +114,7 @@ fun ChecklistFormItemsFs(
                 },
             )
             SpacerW1()
-            FooterRightButton(
+            FooterPlainButton(
                 text = "Settings",
                 onClick = {
                     navigationFs.push {
