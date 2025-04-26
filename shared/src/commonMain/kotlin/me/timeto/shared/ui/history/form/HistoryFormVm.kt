@@ -40,6 +40,8 @@ class HistoryFormVm(
             if (initIntervalDb == null) "Create" else "Save"
 
         val activityTitle = "Activity"
+        val activityNote: String =
+            activityDb?.name?.textFeatures()?.textNoFeatures ?: "None"
     }
 
     override val state = MutableStateFlow(
