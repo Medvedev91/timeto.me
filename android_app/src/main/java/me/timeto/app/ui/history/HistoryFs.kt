@@ -31,9 +31,12 @@ import me.timeto.app.roundedShape
 import me.timeto.app.squircleShape
 import me.timeto.app.toColor
 import me.timeto.app.ui.Screen
+import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.footer.Footer
 import me.timeto.app.ui.footer.FooterAddButton
+import me.timeto.app.ui.footer.FooterRightButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
+import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.ui.history.HistoryVm
 
 private const val barPxSecondsRatio: Int = 60
@@ -43,6 +46,7 @@ fun HistoryFs() {
 
     val mainActivity = LocalContext.current as MainActivity
     val navigationFs = LocalNavigationFs.current
+    val navigationLayer = LocalNavigationLayer.current
 
     val (_, state) = rememberVm {
         HistoryVm()
@@ -150,12 +154,22 @@ fun HistoryFs() {
             contentModifier = Modifier
                 .padding(horizontal = H_PADDING_HALF),
         ) {
+
             FooterAddButton(
                 text = "New Entry",
                 onClick = {
                     navigationFs.push {
                         // todo
                     }
+                },
+            )
+
+            SpacerW1()
+
+            FooterRightButton(
+                text = "Close",
+                onClick = {
+                    navigationLayer.close()
                 },
             )
         }
