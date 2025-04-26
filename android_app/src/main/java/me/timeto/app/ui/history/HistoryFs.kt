@@ -36,7 +36,7 @@ import me.timeto.app.ui.footer.FooterAddButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.shared.ui.history.HistoryVm
 
-private val barPxSecondsRatio: Int = 60
+private const val barPxSecondsRatio: Int = 60
 
 @Composable
 fun HistoryFs() {
