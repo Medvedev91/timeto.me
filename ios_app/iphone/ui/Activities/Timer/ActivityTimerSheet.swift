@@ -77,6 +77,7 @@ private struct ActivityTimerSheet: View {
             ToolbarItem(placement: .primaryAction) {
                 Button("Start") {
                     vm.start(
+                        seconds: selectedSeconds,
                         onSuccess: {
                             onStart()
                             dismiss()
