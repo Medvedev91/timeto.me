@@ -7,13 +7,16 @@ let ActivitiesView__listEndPadding = 8.0
 
 struct ActivitiesView: View {
     
+    let timerStrategy: ActivityTimerStrategy
+    
     var body: some View {
         VmView({
             ActivitiesVm()
         }) { vm, state in
             ActivitiesViewInner(
                 vm: vm,
-                state: state
+                state: state,
+                timerStrategy: timerStrategy
             )
         }
     }
@@ -30,9 +33,10 @@ private struct ActivitiesViewInner: View {
     let vm: ActivitiesVm
     let state: ActivitiesVm.State
     
+    let timerStrategy: ActivityTimerStrategy
+    
     ///
     
-    @EnvironmentObject private var nativeSheet: NativeSheet
     @Environment(Navigation.self) private var navigation
 
     var body: some View {
@@ -47,9 +51,9 @@ private struct ActivitiesViewInner: View {
                         
                         Button(
                             action: {
-                                nativeSheet.showActivityTimerSheet(
-                                    activity: activityUi.activityDb,
-                                    timerContext: nil,
+                                navigation.showActivityTimerSheet(
+                                    activityDb: activityUi.activityDb,
+                                    strategy: timerStrategy,
                                     hideOnStart: true,
                                     onStart: {}
                                 )
