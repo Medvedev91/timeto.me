@@ -7,8 +7,7 @@ extension Navigation {
         activityDb: ActivityDb,
         strategy: ActivityTimerStrategy,
         // false for nested sheet to speed up closing
-        hideOnStart: Bool,
-        onStart: @escaping () -> Void
+        hideOnStart: Bool
     ) {
         self.sheet {
             VmView({
@@ -21,7 +20,7 @@ extension Navigation {
                     vm: vm,
                     state: state,
                     selectedSeconds: state.initSeconds,
-                    onStart: onStart
+                    hideOnStart: hideOnStart
                 )
             }
         }
@@ -34,7 +33,7 @@ private struct ActivityTimerSheet: View {
     let state: ActivityTimerVm.State
     
     @State var selectedSeconds: Int32
-    let onStart: () -> Void
+    let hideOnStart: Bool
     
     ///
     
@@ -76,8 +75,9 @@ private struct ActivityTimerSheet: View {
                     vm.start(
                         seconds: selectedSeconds,
                         onSuccess: {
-                            onStart()
-                            dismiss()
+                            if hideOnStart {
+                                dismiss()
+                            }
                         }
                     )
                 }
