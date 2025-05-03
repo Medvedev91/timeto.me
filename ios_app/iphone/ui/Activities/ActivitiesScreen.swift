@@ -8,7 +8,8 @@ struct ActivitiesScreen: View {
     var body: some View {
         VStack {
             ActivitiesView(
-                timerStrategy: ActivityTimerStrategy.Simple()
+                timerStrategy: ActivityTimerStrategy.Simple(),
+                presentationMode: .view
             )
             BottomMenu(
                 openHomeTab: {
