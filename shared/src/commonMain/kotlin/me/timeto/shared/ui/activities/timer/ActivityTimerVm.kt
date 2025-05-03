@@ -2,6 +2,7 @@ package me.timeto.shared.ui.activities.timer
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import me.timeto.shared.db.ActivityDb
+import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toHms
@@ -21,11 +22,20 @@ class ActivityTimerVm(
         ) {
             when (strategy) {
                 ActivityTimerStrategy.Simple ->
-                    activityDb.startInterval(seconds = seconds)
+                    activityDb.startInterval(
+                        seconds = seconds,
+                    )
                 is ActivityTimerStrategy.Task ->
-                    strategy.taskDb.startInterval(timer = seconds, activity = activityDb)
-//                is TimerContext.Interval ->
-//                    IntervalDb.insertWithValidation(timer, activity, timerContext.interval.note)
+                    strategy.taskDb.startInterval(
+                        timer = seconds,
+                        activity = activityDb,
+                    )
+                is ActivityTimerStrategy.Interval ->
+                    IntervalDb.insertWithValidation(
+                        timer = seconds,
+                        activityDb = activityDb,
+                        note = strategy.intervalDb.note,
+                    )
             }
         }
     }
@@ -47,19 +57,19 @@ class ActivityTimerVm(
                 activityDb.timer
             is ActivityTimerStrategy.Task ->
                 strategy.taskDb.text.textFeatures().timer ?: activityDb.timer
+            is ActivityTimerStrategy.Interval ->
+                strategy.intervalDb.timer
         }
         state = MutableStateFlow(
             State(
-                title = when (strategy) {
-                    ActivityTimerStrategy.Simple,
-                    is ActivityTimerStrategy.Task ->
-                        activityDb.name.textFeatures().textNoFeatures
-                },
+                title = activityDb.name.textFeatures().textNoFeatures,
                 note = when (strategy) {
                     ActivityTimerStrategy.Simple ->
                         null
                     is ActivityTimerStrategy.Task ->
                         strategy.taskDb.text.textFeatures().textNoFeatures
+                    is ActivityTimerStrategy.Interval ->
+                        strategy.intervalDb.note?.textFeatures()?.textNoFeatures?.takeIf { it.isNotBlank() }
                 },
                 initSeconds = initSeconds,
                 timerItemsUi = makeTimerItemsUi(initSeconds),
