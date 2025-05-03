@@ -44,27 +44,24 @@ private struct TaskItemView: View {
     
     let mainTask: HomeVm.MainTask
     
-    @EnvironmentObject private var nativeSheet: NativeSheet
-    
+    @Environment(Navigation.self) private var navigation
+
     var body: some View {
         
         Button(
             action: {
-                mainTask.taskUi.taskDb.startIntervalForUI(
-                    onStarted: {},
-                    activitiesSheet: {
-                        nativeSheet.showActivitiesTimerSheet(
-                            timerContext: mainTask.timerContext,
-                            withMenu: false,
-                            onStart: {}
+                mainTask.taskUi.taskDb.startIntervalForUi(
+                    ifJustStarted: {},
+                    ifActivityNeeded: {
+                        navigation.showActivitiesTimerSheet(
+                            strategy: mainTask.timerStrategy
                         )
                     },
-                    timerSheet: { activity in
-                        nativeSheet.showActivityTimerSheet(
-                            activity: activity,
-                            timerContext: mainTask.timerContext,
-                            hideOnStart: true,
-                            onStart: {}
+                    ifTimerNeeded: { activityDb in
+                        navigation.showActivityTimerSheet(
+                            activityDb: activityDb,
+                            strategy: mainTask.timerStrategy,
+                            hideOnStart: true
                         )
                     }
                 )
