@@ -12,9 +12,15 @@ struct ChecklistView: View {
     let withAddButton: Bool
     let onDelete: () -> Void
     
+    ///
+    
+    @State private var uuid = UUID()
+    
     var body: some View {
         VmView({
-            ChecklistVm(checklistDb: checklistDb)
+            ChecklistVm(
+                checklistDb: checklistDb
+            )
         }) { vm, state in
             ChecklistViewInner(
                 vm: vm,
@@ -24,6 +30,7 @@ struct ChecklistView: View {
                 onDelete: onDelete
             )
         }
+        .id("vm_view_id_\(checklistDb.id)_\(uuid.uuidString)")
     }
 }
 
