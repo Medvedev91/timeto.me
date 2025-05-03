@@ -95,7 +95,6 @@ private struct HomeScreenInner: View {
                             )
                         }
                         .frame(height: CGFloat(state.listsSizes.checklist))
-                        .id("home_checklist_id_\(checklistDb.id)") // Force update on change
                     }
                     
                     if isMainTasksExists {
