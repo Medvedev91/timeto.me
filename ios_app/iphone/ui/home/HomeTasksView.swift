@@ -5,36 +5,15 @@ struct HomeTasksView: View {
     
     let tasks: [HomeVm.MainTask]
     
-    private let LIST_BOTTOM_ITEM_ID = "bottom_id"
-    
     var body: some View {
-        
-        GeometryReader { geometry in
-            
-            ScrollViewReader { scrollProxy in
-                
-                ScrollView(showsIndicators: false) {
-                    
-                    VStack {
-                        
-                        Spacer()
-                        
-                        ForEach(tasks.reversed(), id: \.self.taskUi.taskDb.id) { mainTask in
-                            TaskItemView(mainTask: mainTask)
-                        }
-                        
-                        ZStack {
-                        }
-                        .id(LIST_BOTTOM_ITEM_ID)
-                    }
-                    .frame(minHeight: geometry.size.height)
-                }
-                .frame(maxWidth: .infinity)
-                .onAppear {
-                    scrollProxy.scrollTo(LIST_BOTTOM_ITEM_ID)
+        ScrollView(showsIndicators: false) {
+            VStack {
+                ForEach(tasks.reversed(), id: \.self.taskUi.taskDb.id) { mainTask in
+                    TaskItemView(mainTask: mainTask)
                 }
             }
         }
+        .defaultScrollAnchor(.bottom)
     }
 }
 
