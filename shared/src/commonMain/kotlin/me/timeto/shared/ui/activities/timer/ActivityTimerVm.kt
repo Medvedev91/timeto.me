@@ -22,8 +22,8 @@ class ActivityTimerVm(
             when (strategy) {
                 ActivityTimerStrategy.Simple ->
                     activityDb.startInterval(seconds = seconds)
-//                is TimerContext.Task ->
-//                    timerContext.task.startInterval(timer, activity)
+                is ActivityTimerStrategy.Task ->
+                    strategy.taskDb.startInterval(timer = seconds, activity = activityDb)
 //                is TimerContext.Interval ->
 //                    IntervalDb.insertWithValidation(timer, activity, timerContext.interval.note)
             }
@@ -43,16 +43,23 @@ class ActivityTimerVm(
 
     init {
         val initSeconds: Int = when (strategy) {
-            ActivityTimerStrategy.Simple -> activityDb.timer
+            ActivityTimerStrategy.Simple ->
+                activityDb.timer
+            is ActivityTimerStrategy.Task ->
+                strategy.taskDb.text.textFeatures().timer ?: activityDb.timer
         }
         state = MutableStateFlow(
             State(
                 title = when (strategy) {
-                    ActivityTimerStrategy.Simple ->
+                    ActivityTimerStrategy.Simple,
+                    is ActivityTimerStrategy.Task ->
                         activityDb.name.textFeatures().textNoFeatures
                 },
                 note = when (strategy) {
-                    ActivityTimerStrategy.Simple -> null
+                    ActivityTimerStrategy.Simple ->
+                        null
+                    is ActivityTimerStrategy.Task ->
+                        strategy.taskDb.text.textFeatures().textNoFeatures
                 },
                 initSeconds = initSeconds,
                 timerItemsUi = makeTimerItemsUi(initSeconds),
