@@ -8,6 +8,7 @@ let ActivitiesView__listEndPadding = 8.0
 struct ActivitiesView: View {
     
     let timerStrategy: ActivityTimerStrategy
+    let presentationMode: PresentationMode
     
     var body: some View {
         VmView({
@@ -16,9 +17,17 @@ struct ActivitiesView: View {
             ActivitiesViewInner(
                 vm: vm,
                 state: state,
-                timerStrategy: timerStrategy
+                timerStrategy: timerStrategy,
+                presentationMode: presentationMode
             )
         }
+    }
+    
+    ///
+
+    enum PresentationMode {
+        case view
+        case sheet
     }
 }
 
@@ -34,7 +43,8 @@ private struct ActivitiesViewInner: View {
     let state: ActivitiesVm.State
     
     let timerStrategy: ActivityTimerStrategy
-    
+    let presentationMode: ActivitiesView.PresentationMode
+
     ///
     
     @Environment(Navigation.self) private var navigation
@@ -54,8 +64,7 @@ private struct ActivitiesViewInner: View {
                                 navigation.showActivityTimerSheet(
                                     activityDb: activityUi.activityDb,
                                     strategy: timerStrategy,
-                                    hideOnStart: true,
-                                    onStart: {}
+                                    hideOnStart: presentationMode == .view
                                 )
                             },
                             label: {
