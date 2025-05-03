@@ -12,7 +12,6 @@ struct HomeTimerView: View {
     
     ///
     
-    @EnvironmentObject private var nativeSheet: NativeSheet
     @Environment(Navigation.self) private var navigation
 
     var body: some View {
@@ -156,11 +155,10 @@ struct HomeTimerView: View {
                     text: infoUi.timerText,
                     color: timerColor,
                     onClick: {
-                        nativeSheet.showActivityTimerSheet(
-                            activity: state.activeActivityDb,
-                            timerContext: state.timerData.infoUi.timerContext,
-                            hideOnStart: true,
-                            onStart: {}
+                        navigation.showActivityTimerSheet(
+                            activityDb: state.activeActivityDb,
+                            strategy: state.timerData.infoUi.timerStrategy,
+                            hideOnStart: true
                         )
                     }
                 )
