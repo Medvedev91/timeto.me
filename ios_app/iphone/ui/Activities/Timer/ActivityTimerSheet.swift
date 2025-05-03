@@ -44,13 +44,10 @@ private struct ActivityTimerSheet: View {
         
         VStack {
             
-            // Plus padding from picker
             if let note = state.note {
                 Text(note)
-                    .font(.system(size: 14))
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
-                    .padding(.top, 6)
             }
             
             Spacer()
