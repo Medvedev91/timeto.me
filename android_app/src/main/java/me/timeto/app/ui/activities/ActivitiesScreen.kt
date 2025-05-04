@@ -31,6 +31,7 @@ import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.history.HistoryFs
 import me.timeto.app.ui.summary.SummaryFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
+import me.timeto.shared.ui.activities.timer.ActivityTimerStrategy
 
 @Composable
 fun ActivitiesScreen(
@@ -49,6 +50,7 @@ fun ActivitiesScreen(
                 .padding(top = mainActivity.statusBarHeightDp),
         ) {
             ActivitiesView(
+                timerStrategy = ActivityTimerStrategy.Simple,
                 modifier = Modifier
                     .weight(1f),
             )
