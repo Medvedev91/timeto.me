@@ -111,6 +111,17 @@ fun ActivityTimerFs(
                 )
             }
 
+            val note: String? = state.note
+            if (note != null) {
+                Text(
+                    text = note,
+                    color = c.textSecondary,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                )
+            }
+
             ZStack(
                 modifier = Modifier
                     .padding(top = 30.dp)
