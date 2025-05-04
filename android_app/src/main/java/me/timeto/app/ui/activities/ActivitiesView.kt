@@ -29,13 +29,14 @@ import me.timeto.app.c
 import me.timeto.app.R
 import me.timeto.app.rememberVm
 import me.timeto.app.roundedShape
-import me.timeto.app.ui.ActivityTimerSheet__show
 import me.timeto.app.ui.Divider
 import me.timeto.app.ui.activities.form.ActivityFormFs
 import me.timeto.app.ui.activities.form.ActivityFormTimerHintsFs
+import me.timeto.app.ui.activities.timer.ActivityTimerFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.ui.activities.ActivitiesVm
+import me.timeto.shared.ui.activities.timer.ActivityTimerStrategy
 
 val ActivitiesView__listItemHeight = 42.dp
 val ActivitiesView__timerHintHPadding = 5.dp
@@ -49,6 +50,7 @@ private val activityItemPaddingStart: Dp =
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ActivitiesView(
+    timerStrategy: ActivityTimerStrategy,
     modifier: Modifier,
 ) {
 
@@ -80,11 +82,12 @@ fun ActivitiesView(
                             .height(ActivitiesView__listItemHeight)
                             .combinedClickable(
                                 onClick = {
-                                    ActivityTimerSheet__show(
-                                        activity = activityDb,
-                                        timerContext = null,
-                                        onStarted = {},
-                                    )
+                                    navigationFs.push {
+                                        ActivityTimerFs(
+                                            activityDb = activityDb,
+                                            timerStrategy = timerStrategy,
+                                        )
+                                    }
                                 },
                                 onLongClick = {
                                     navigationFs.push {
