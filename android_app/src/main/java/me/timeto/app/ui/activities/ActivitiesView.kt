@@ -85,7 +85,7 @@ fun ActivitiesView(
                                     navigationFs.push {
                                         ActivityTimerFs(
                                             activityDb = activityDb,
-                                            timerStrategy = timerStrategy,
+                                            strategy = timerStrategy,
                                         )
                                     }
                                 },

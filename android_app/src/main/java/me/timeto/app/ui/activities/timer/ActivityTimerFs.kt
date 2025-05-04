@@ -37,15 +37,15 @@ import me.timeto.shared.ui.activities.timer.ActivityTimerVm
 @Composable
 fun ActivityTimerFs(
     activityDb: ActivityDb,
-    timerStrategy: ActivityTimerStrategy,
+    strategy: ActivityTimerStrategy,
 ) {
 
     val navigationLayer = LocalNavigationLayer.current
 
-    val (vm, state) = rememberVm(activityDb, timerStrategy) {
+    val (vm, state) = rememberVm(activityDb, strategy) {
         ActivityTimerVm(
             activityDb = activityDb,
-            strategy = timerStrategy,
+            strategy = strategy,
         )
     }
 
