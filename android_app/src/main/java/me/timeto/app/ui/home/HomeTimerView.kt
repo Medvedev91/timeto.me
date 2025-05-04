@@ -37,9 +37,9 @@ import me.timeto.app.roundedShape
 import me.timeto.app.squircleShape
 import me.timeto.app.timerFont
 import me.timeto.app.toColor
-import me.timeto.app.ui.ActivityTimerSheet__show
 import me.timeto.app.ui.DaytimePickerSheet
 import me.timeto.app.ui.Sheet
+import me.timeto.app.ui.activities.timer.ActivityTimerFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.readme.ReadmeFs
 import me.timeto.shared.vm.HomeVm
@@ -213,13 +213,12 @@ fun HomeTimerView(
                     text = infoUi.timerText,
                     color = timerColor,
                     onClick = {
-                        ActivityTimerSheet__show(
-                            activity = state.activeActivityDb,
-                            timerContext = state.timerData.infoUi.timerContext,
-                            onStarted = {
-                                vm.toggleIsPurple()
-                            },
-                        )
+                        navigationFs.push {
+                            ActivityTimerFs(
+                                activityDb = state.activeActivityDb,
+                                strategy = state.timerData.infoUi.timerStrategy,
+                            )
+                        }
                     },
                 )
 
