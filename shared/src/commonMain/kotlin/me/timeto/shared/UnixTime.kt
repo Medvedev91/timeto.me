@@ -20,23 +20,27 @@ data class UnixTime(
         const val MAX_DAY = 22571 // 19 October 2031...
         const val MAX_TIME = 1_950_134_400 // ...40 years old
 
-        fun byLocalDay(localDay: Int, utcOffset: Int = localUtcOffset) =
+        fun byLocalDay(localDay: Int, utcOffset: Int = localUtcOffset): UnixTime =
             UnixTime(time = (localDay * 86_400) - utcOffset, utcOffset = utcOffset)
 
-        fun byUtcTime(utcTime: Int, utcOffset: Int = localUtcOffset) =
+        fun byUtcTime(utcTime: Int, utcOffset: Int = localUtcOffset): UnixTime =
             UnixTime(time = utcTime - utcOffset, utcOffset = utcOffset)
     }
 
-    val localDay = (time + utcOffset) / 86_400
+    val localDay: Int =
+        (time + utcOffset) / 86_400
 
-    fun localDayStartTime() = (localDay * 86_400) - utcOffset
+    fun localDayStartTime(): Int =
+        (localDay * 86_400) - utcOffset
 
-    fun isToday() = localDay == UnixTime().localDay
+    fun isToday(): Boolean =
+        localDay == UnixTime().localDay
 
-    fun utcTime() = time + utcOffset
+    fun utcTime(): Int =
+        time + utcOffset
 
     // 0 - Mon. 1 Jan 1970 - Thu.
-    fun dayOfWeek() = when (localDay % 7) {
+    fun dayOfWeek(): Int = when (localDay % 7) {
         0 -> 3
         1 -> 4
         2 -> 5
@@ -47,9 +51,11 @@ data class UnixTime(
         else -> throw Exception()
     }
 
-    fun inDays(days: Int): UnixTime = copy(time = time + (days * 86_400))
+    fun inDays(days: Int): UnixTime =
+        copy(time = time + (days * 86_400))
 
-    fun inSeconds(seconds: Int): UnixTime = copy(time = time + seconds)
+    fun inSeconds(seconds: Int): UnixTime =
+        copy(time = time + seconds)
 
     fun year(): Int =
         Instant.fromEpochSeconds(localDay * 86_400L).toLocalDateTime(TimeZone.UTC).year
