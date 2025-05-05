@@ -28,8 +28,9 @@ import me.timeto.app.c
 import me.timeto.app.onePx
 import me.timeto.app.roundedShape
 import me.timeto.app.toColor
-import me.timeto.app.ui.ActivitiesTimerSheet__show
-import me.timeto.app.ui.ActivityTimerSheet__show
+import me.timeto.app.ui.activities.timer.ActivitiesTimerFs
+import me.timeto.app.ui.activities.timer.ActivityTimerFs
+import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.shared.vm.HomeVm
 
 @Composable
@@ -37,6 +38,8 @@ fun HomeTasksView(
     tasks: List<HomeVm.MainTask>,
     modifier: Modifier,
 ) {
+
+    val navigationFs = LocalNavigationFs.current
 
     val scrollState = rememberLazyListState()
 
@@ -59,16 +62,22 @@ fun HomeTasksView(
                     .padding(horizontal = mainTaskHalfHPadding)
                     .clip(roundedShape)
                     .clickable {
-                        mainTask.taskUi.taskDb.startIntervalForUI(
-                            onStarted = {},
-                            activitiesSheet = {
-                                ActivitiesTimerSheet__show(mainTask.timerContext, withMenu = false)
+                        mainTask.taskUi.taskDb.startIntervalForUi(
+                            ifJustStarted = {},
+                            ifActivityNeeded = {
+                                navigationFs.push {
+                                    ActivitiesTimerFs(
+                                        strategy = mainTask.timerStrategy,
+                                    )
+                                }
                             },
-                            timerSheet = { activity ->
-                                ActivityTimerSheet__show(
-                                    activity = activity,
-                                    timerContext = mainTask.timerContext,
-                                ) {}
+                            ifTimerNeeded = { activityDb ->
+                                navigationFs.push {
+                                    ActivityTimerFs(
+                                        activityDb = activityDb,
+                                        strategy = mainTask.timerStrategy,
+                                    )
+                                }
                             },
                         )
                     }
