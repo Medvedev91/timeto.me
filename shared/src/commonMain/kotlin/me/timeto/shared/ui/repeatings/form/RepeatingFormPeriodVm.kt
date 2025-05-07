@@ -85,6 +85,17 @@ class RepeatingFormPeriodVm(
         state.update { it.copy(selectedNDays = newNDays) }
     }
 
+    fun toggleDayOfWeek(dayOfWeekIdx: Int) {
+        state.update { state ->
+            val newSet = state.selectedDaysOfWeek.toMutableSet()
+            if (newSet.contains(dayOfWeekIdx))
+                newSet.remove(dayOfWeekIdx)
+            else
+                newSet.add(dayOfWeekIdx)
+            state.copy(selectedDaysOfWeek = newSet)
+        }
+    }
+
     ///
 
     data class PeriodPickerItemUi(
