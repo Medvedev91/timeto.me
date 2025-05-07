@@ -12,7 +12,7 @@ class RepeatingFormPeriodVm(
 
     data class State(
         val title: String,
-        val activePeriodIdx: Int?,
+        val activePeriodIdx: Int,
         val selectedNDays: Int,
         val selectedDaysOfWeek: Set<Int>,
         val selectedDaysOfMonth: Set<Int>,
@@ -37,12 +37,12 @@ class RepeatingFormPeriodVm(
 
     init {
 
-        val activePeriodIdx: Int? = when (initPeriod) {
+        val activePeriodIdx: Int = when (initPeriod) {
             is RepeatingDb.Period.EveryNDays -> if (initPeriod.nDays == 1) 0 else 1
             is RepeatingDb.Period.DaysOfWeek -> 2
             is RepeatingDb.Period.DaysOfMonth -> 3
             is RepeatingDb.Period.DaysOfYear -> 4
-            null -> null
+            null -> 0
         }
 
         // For UI "Every Day" and "Every N Days" is a different, but the logic is same EveryNDays.
@@ -77,7 +77,7 @@ class RepeatingFormPeriodVm(
         )
     }
 
-    fun setActivePeriodIdx(newIdx: Int?) {
+    fun setActivePeriodIdx(newIdx: Int) {
         state.update { it.copy(activePeriodIdx = newIdx) }
     }
 

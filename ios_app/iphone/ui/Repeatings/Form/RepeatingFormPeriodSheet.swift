@@ -15,7 +15,7 @@ struct RepeatingFormPeriodSheet: View {
             RepeatingFormPeriodSheetInner(
                 vm: vm,
                 state: state,
-                activePeriodIdx: state.activePeriodIdx?.int32Value,
+                activePeriodIdx: state.activePeriodIdx,
                 selectedNDays: state.selectedNDays,
                 onDone: onDone
             )
@@ -28,8 +28,7 @@ private struct RepeatingFormPeriodSheetInner: View {
     let vm: RepeatingFormPeriodVm
     let state: RepeatingFormPeriodVm.State
     
-    @State var activePeriodIdx: Int32?
-    
+    @State var activePeriodIdx: Int32
     @State var selectedNDays: Int32
     
     let onDone: (RepeatingDbPeriod) -> Void
@@ -44,18 +43,13 @@ private struct RepeatingFormPeriodSheetInner: View {
             Section {
                 
                 Picker("Type", selection: $activePeriodIdx) {
-                    if activePeriodIdx == nil {
-                        Text("None")
-                            .tag(nil as Int32?) // Support optional (nil) selection
-                    }
                     ForEach(state.periodPickerItemsUi, id: \.idx) { itemUi in
                         Text(itemUi.title)
-                            .tag(itemUi.idx as Int32?) // Support optional (nil) selection
                     }
                 }
                 .foregroundColor(.primary)
                 .onChange(of: activePeriodIdx) { _, newActivePeriodIdx in
-                    vm.setActivePeriodIdx(newIdx: newActivePeriodIdx?.toKotlinInt())
+                    vm.setActivePeriodIdx(newIdx: newActivePeriodIdx)
                 }
             }
             
