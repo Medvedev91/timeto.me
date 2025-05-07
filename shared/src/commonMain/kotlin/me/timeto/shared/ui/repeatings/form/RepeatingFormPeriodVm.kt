@@ -2,6 +2,7 @@ package me.timeto.shared.ui.repeatings.form
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import me.timeto.shared.UnixTime
 import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.vm.__Vm
 
@@ -13,7 +14,7 @@ class RepeatingFormPeriodVm(
         val title: String,
         val activePeriodIdx: Int?,
         val selectedNDays: Int,
-        val selectedWeekDays: Set<Int>,
+        val selectedDaysOfWeek: Set<Int>,
         val selectedDaysOfMonth: Set<Int>,
         val selectedDaysOfYear: List<RepeatingDb.Period.DaysOfYear.MonthDayItem>,
     ) {
@@ -25,6 +26,11 @@ class RepeatingFormPeriodVm(
             PeriodPickerItemUi(3, "Days of the Month"),
             PeriodPickerItemUi(4, "Days of the Year"),
         )
+
+        val daysOfWeekUi: List<DayOfWeekUi> =
+            UnixTime.dayOfWeekNames.mapIndexed { idx, name ->
+                DayOfWeekUi(idx = idx, title = name)
+            }
     }
 
     override val state: MutableStateFlow<State>
@@ -47,7 +53,7 @@ class RepeatingFormPeriodVm(
             if (period.nDays == 1) 2 else period.nDays
         }
 
-        val selectedWeekDays: Set<Int> = run {
+        val selectedDaysOfWeek: Set<Int> = run {
             (initPeriod as? RepeatingDb.Period.DaysOfWeek)?.weekDays?.toSet() ?: setOf()
         }
 
@@ -64,7 +70,7 @@ class RepeatingFormPeriodVm(
                 title = "Period",
                 activePeriodIdx = activePeriodIdx,
                 selectedNDays = selectedNDays,
-                selectedWeekDays = selectedWeekDays,
+                selectedDaysOfWeek = selectedDaysOfWeek,
                 selectedDaysOfMonth = selectedDaysOfMonth,
                 selectedDaysOfYear = selectedDaysOfYear,
             )
@@ -82,6 +88,11 @@ class RepeatingFormPeriodVm(
     ///
 
     data class PeriodPickerItemUi(
+        val idx: Int,
+        val title: String,
+    )
+
+    data class DayOfWeekUi(
         val idx: Int,
         val title: String,
     )
