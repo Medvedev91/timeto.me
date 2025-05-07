@@ -96,6 +96,17 @@ class RepeatingFormPeriodVm(
         }
     }
 
+    fun toggleDayOfMonth(dayOfMonth: Int) {
+        state.update { state ->
+            val newSet = state.selectedDaysOfMonth.toMutableSet()
+            if (newSet.contains(dayOfMonth))
+                newSet.remove(dayOfMonth)
+            else
+                newSet.add(dayOfMonth)
+            state.copy(selectedDaysOfMonth = newSet)
+        }
+    }
+
     ///
 
     data class PeriodPickerItemUi(

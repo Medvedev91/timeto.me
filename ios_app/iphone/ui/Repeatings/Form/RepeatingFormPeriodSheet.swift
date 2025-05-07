@@ -88,6 +88,39 @@ private struct RepeatingFormPeriodSheetInner: View {
                     }
                 }
             }
+            else if state.activePeriodIdx == 3 {
+                let dayNumbers: [Int] = Array(1..<(RepeatingDb.companion.MAX_DAY_OF_MONTH.toInt() + 1))
+                VStack(alignment: .leading, spacing: 12) {
+                    ForEach(dayNumbers.chunked(7), id: \.self) { chunk in
+                        HStack(spacing: 12) {
+                            ForEach(chunk, id: \.self) { day in
+                                let isDaySelected: Bool = state.selectedDaysOfMonth.contains(day.toKotlinInt())
+                                DayOfMonthItemView(
+                                    text: "\(day)",
+                                    isSelected: isDaySelected,
+                                    onClick: {
+                                        vm.toggleDayOfMonth(dayOfMonth: day.toInt32())
+                                    }
+                                )
+                            }
+                        }
+                    }
+                    let isDaySelected: Bool = state.selectedDaysOfMonth.contains(RepeatingDb.companion.LAST_DAY_OF_MONTH.toInt().toKotlinInt())
+                    DayOfMonthItemView(
+                        text: "Last Day of the Month",
+                        isSelected: isDaySelected,
+                        hPaddings: 10,
+                        onClick: {
+                            vm.toggleDayOfMonth(dayOfMonth: RepeatingDb.companion.LAST_DAY_OF_MONTH)
+                        }
+                    )
+                }
+                .customListItem()
+                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                .padding(.top, 16)
+                .padding(.bottom, 16)
+                .padding(.leading, H_PADDING - 1)
+            }
         }
         .myFormContentMargins()
         .interactiveDismissDisabled()
