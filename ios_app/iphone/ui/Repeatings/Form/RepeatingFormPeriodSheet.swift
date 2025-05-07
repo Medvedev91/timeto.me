@@ -73,7 +73,26 @@ private struct RepeatingFormPeriodSheetInner: View {
                 }
             }
             else if state.activePeriodIdx == 2 {
-                // todo
+                Section {
+                    ForEach(state.daysOfWeekUi, id: \.idx) { dayOfWeekUi in
+                        Button(
+                            action: {
+                                vm.toggleDayOfWeek(dayOfWeekIdx: dayOfWeekUi.idx)
+                            },
+                            label: {
+                                HStack {
+                                    Text(dayOfWeekUi.title)
+                                        .foregroundColor(.primary)
+                                    Spacer()
+                                    if state.selectedDaysOfWeek.toSwift().contains(dayOfWeekUi.idx.toInt()) {
+                                        Image(systemName: "checkmark")
+                                            .foregroundColor(.blue)
+                                    }
+                                }
+                            }
+                        )
+                    }
+                }
             }
         }
         .myFormContentMargins()
