@@ -90,9 +90,9 @@ private struct RepeatingFormPeriodSheetInner: View {
             }
             else if state.activePeriodIdx == 3 {
                 let dayNumbers: [Int] = Array(1..<(RepeatingDb.companion.MAX_DAY_OF_MONTH.toInt() + 1))
-                VStack(alignment: .leading, spacing: 12) {
+                VStack(alignment: .leading, spacing: 8) {
                     ForEach(dayNumbers.chunked(7), id: \.self) { chunk in
-                        HStack(spacing: 12) {
+                        HStack(spacing: 8) {
                             ForEach(chunk, id: \.self) { day in
                                 let isDaySelected: Bool = state.selectedDaysOfMonth.contains(day.toKotlinInt())
                                 DayOfMonthItemView(
@@ -109,11 +109,12 @@ private struct RepeatingFormPeriodSheetInner: View {
                     DayOfMonthItemView(
                         text: "Last Day of the Month",
                         isSelected: isDaySelected,
-                        hPaddings: 10,
+                        hPaddings: 12,
                         onClick: {
                             vm.toggleDayOfMonth(dayOfMonth: RepeatingDb.companion.LAST_DAY_OF_MONTH)
                         }
                     )
+                    .padding(.top, 2)
                 }
                 .customListItem()
                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
@@ -158,18 +159,10 @@ private struct DayOfMonthItemView: View {
             label: {
                 Text(text)
                     .foregroundColor(isSelected ? .white : .primary)
-                    .frame(minWidth: 30, minHeight: 30)
-                    .font(.system(size: 14))
+                    .frame(minWidth: 36, minHeight: 36)
+                    .font(.system(size: 14, weight: .semibold))
                     .padding(.horizontal, hPaddings)
-                    .background(
-                        ZStack {
-                            if isSelected {
-                                roundedShape.fill(.blue)
-                            } else {
-                                roundedShape.stroke(.primary, lineWidth: 1)
-                            }
-                        }
-                    )
+                    .background(roundedShape.fill(isSelected ? AnyShapeStyle(.blue) : AnyShapeStyle(.quaternary)))
             }
         )
     }
