@@ -142,3 +142,35 @@ private struct RepeatingFormPeriodSheetInner: View {
         }
     }
 }
+
+private struct DayOfMonthItemView: View {
+    
+    let text: String
+    let isSelected: Bool
+    var hPaddings: CGFloat = 0
+    let onClick: () -> Void
+    
+    var body: some View {
+        Button(
+            action: {
+                onClick()
+            },
+            label: {
+                Text(text)
+                    .foregroundColor(isSelected ? .white : .primary)
+                    .frame(minWidth: 30, minHeight: 30)
+                    .font(.system(size: 14))
+                    .padding(.horizontal, hPaddings)
+                    .background(
+                        ZStack {
+                            if isSelected {
+                                roundedShape.fill(.blue)
+                            } else {
+                                roundedShape.stroke(.primary, lineWidth: 1)
+                            }
+                        }
+                    )
+            }
+        )
+    }
+}
