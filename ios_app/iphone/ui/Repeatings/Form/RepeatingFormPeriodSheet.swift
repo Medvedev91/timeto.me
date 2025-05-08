@@ -90,9 +90,9 @@ private struct RepeatingFormPeriodSheetInner: View {
             }
             else if state.activePeriodIdx == 3 {
                 let dayNumbers: [Int] = Array(1..<(RepeatingDb.companion.MAX_DAY_OF_MONTH.toInt() + 1))
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 12) {
                     ForEach(dayNumbers.chunked(7), id: \.self) { chunk in
-                        HStack(spacing: 8) {
+                        HStack {
                             ForEach(chunk, id: \.self) { day in
                                 let isDaySelected: Bool = state.selectedDaysOfMonth.contains(day.toKotlinInt())
                                 DayOfMonthItemView(
@@ -102,6 +102,13 @@ private struct RepeatingFormPeriodSheetInner: View {
                                         vm.toggleDayOfMonth(dayOfMonth: day.toInt32())
                                     }
                                 )
+                                if day % 7 != 0 {
+                                    Spacer()
+                                }
+                            }
+                            ForEach((0..<(7-chunk.count)), id: \.self) { day in
+                                Text("")
+                                    .frame(width: 36)
                             }
                         }
                     }
@@ -120,7 +127,7 @@ private struct RepeatingFormPeriodSheetInner: View {
                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 16)
                 .padding(.bottom, 16)
-                .padding(.leading, H_PADDING - 1)
+                .padding(.horizontal, H_PADDING)
             }
         }
         .myFormContentMargins()
