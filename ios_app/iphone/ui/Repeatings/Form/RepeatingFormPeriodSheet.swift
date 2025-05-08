@@ -23,6 +23,10 @@ struct RepeatingFormPeriodSheet: View {
     }
 }
 
+///
+
+private let dayOfMonthItemViewItemSize = 36.0
+
 private struct RepeatingFormPeriodSheetInner: View {
     
     let vm: RepeatingFormPeriodVm
@@ -108,7 +112,7 @@ private struct RepeatingFormPeriodSheetInner: View {
                             }
                             ForEach((0..<(7-chunk.count)), id: \.self) { day in
                                 Text("")
-                                    .frame(width: 36)
+                                    .frame(width: dayOfMonthItemViewItemSize)
                             }
                         }
                     }
@@ -166,7 +170,7 @@ private struct DayOfMonthItemView: View {
             label: {
                 Text(text)
                     .foregroundColor(isSelected ? .white : .primary)
-                    .frame(minWidth: 36, minHeight: 36)
+                    .frame(minWidth: dayOfMonthItemViewItemSize, minHeight: dayOfMonthItemViewItemSize)
                     .font(.system(size: 14, weight: .semibold))
                     .padding(.horizontal, hPaddings)
                     .background(roundedShape.fill(isSelected ? AnyShapeStyle(.blue) : AnyShapeStyle(.quaternary)))
