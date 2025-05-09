@@ -34,6 +34,7 @@ private struct RepeatingFormSheetInner: View {
     
     var body: some View {
         Form {
+            
             Section {
                 TextField(
                     state.textPlaceholder,
@@ -43,8 +44,32 @@ private struct RepeatingFormSheetInner: View {
                     vm.setText(newText: newText)
                 }
             }
+            
+            Section {
+                
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
+                            Text(state.periodTitle)
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text(state.periodNote)
+                                .foregroundColor(state.period != nil ? .secondary : .red)
+                        }
+                    },
+                    sheet: {
+                        RepeatingFormPeriodSheet(
+                            initPeriod: state.period,
+                            onDone: { newPeriod in
+                                vm.setPeriod(newPeriod: newPeriod)
+                            }
+                        )
+                    }
+                )
+            }
         }
         .myFormContentMargins()
+        .interactiveDismissDisabled()
         .navigationTitle(state.title)
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
