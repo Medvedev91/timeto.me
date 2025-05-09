@@ -4,6 +4,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.RepeatingDb
+import me.timeto.shared.ui.DialogsManager
+import me.timeto.shared.ui.UiException
 import me.timeto.shared.vm.__Vm
 
 class RepeatingFormPeriodVm(
@@ -107,6 +109,48 @@ class RepeatingFormPeriodVm(
         }
     }
 
+    fun addDayOfTheYear(item: RepeatingDb.Period.DaysOfYear.MonthDayItem) {
+        state.update {
+            it.copy(
+                selectedDaysOfYear = it.selectedDaysOfYear
+                    .toMutableList()
+                    .apply { add(item) }
+                    .sortDaysOfTheYear()
+            )
+        }
+    }
+
+    fun deleteDayOfTheYear(idx: Int) {
+        state.update {
+            it.copy(
+                selectedDaysOfYear = it.selectedDaysOfYear
+                    .toMutableList()
+                    .apply { removeAt(idx) }
+                    .sortDaysOfTheYear()
+            )
+        }
+    }
+
+    fun buildSelectedPeriod(
+        dialogsManager: DialogsManager,
+        onSuccess: (RepeatingDb.Period) -> Unit,
+    ) {
+        try {
+            val periodIndex: Int = state.value.activePeriodIdx
+            val period: RepeatingDb.Period = when (periodIndex) {
+                0 -> RepeatingDb.Period.EveryNDays(1)
+                1 -> RepeatingDb.Period.EveryNDays(state.value.selectedNDays)
+                2 -> RepeatingDb.Period.DaysOfWeek(state.value.selectedDaysOfWeek.toList())
+                3 -> RepeatingDb.Period.DaysOfMonth(state.value.selectedDaysOfMonth)
+                4 -> RepeatingDb.Period.DaysOfYear(state.value.selectedDaysOfYear)
+                else -> throw Exception()
+            }
+            onSuccess(period)
+        } catch (e: UiException) {
+            dialogsManager.alert(e.uiMessage)
+        }
+    }
+
     ///
 
     data class PeriodPickerItemUi(
@@ -118,4 +162,9 @@ class RepeatingFormPeriodVm(
         val idx: Int,
         val title: String,
     )
+}
+
+private fun List<RepeatingDb.Period.DaysOfYear.MonthDayItem>.sortDaysOfTheYear(
+): List<RepeatingDb.Period.DaysOfYear.MonthDayItem> {
+    return sortedWith(compareBy({ it.monthId }, { it.dayId }))
 }
