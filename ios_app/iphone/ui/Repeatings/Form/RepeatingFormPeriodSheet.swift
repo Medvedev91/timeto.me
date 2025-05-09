@@ -40,7 +40,10 @@ private struct RepeatingFormPeriodSheetInner: View {
     ///
     
     @Environment(\.dismiss) private var dismiss
+    @Environment(Navigation.self) private var navigation
     
+    @State private var editMode: EditMode = .active
+
     var body: some View {
         List {
             
@@ -133,9 +136,31 @@ private struct RepeatingFormPeriodSheetInner: View {
                 .padding(.bottom, 16)
                 .padding(.horizontal, H_PADDING)
             }
+            else if state.activePeriodIdx == 4 {
+                Section {
+                    ForEach(state.selectedDaysOfYear, id: \.self) { dayOfYear in
+                        Text(dayOfYear.getTitle(isShortOrLong: false))
+                    }
+                    .onDelete { indexSet in
+                        for idx in indexSet {
+                            vm.deleteDayOfTheYear(idx: idx.toInt32())
+                        }
+                    }
+                    Button("New Day") {
+                        navigation.sheet {
+                            DayOfTheYearFormSheet(
+                                onDone: { newDay in
+                                    vm.addDayOfTheYear(item: newDay)
+                                }
+                            )
+                        }
+                    }
+                }
+            }
         }
         .myFormContentMargins()
         .interactiveDismissDisabled()
+        .environment(\.editMode, $editMode)
         .navigationTitle(state.title)
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
@@ -176,5 +201,77 @@ private struct DayOfMonthItemView: View {
                     .background(roundedShape.fill(isSelected ? AnyShapeStyle(.blue) : AnyShapeStyle(.quaternary)))
             }
         )
+    }
+}
+
+private struct DayOfTheYearFormSheet: View {
+    
+    let onDone: (RepeatingDbPeriodDaysOfYear.MonthDayItem) -> Void
+    
+    ///
+    
+    @Environment(\.dismiss) private var dismiss
+
+    @State private var monthId: Int32 = 1
+    @State private var dayId: Int32 = 1
+    @State private var dayIds: [Int32] = Array(1...5)
+    
+    var body: some View {
+        Form {
+            
+            Picker("Month", selection: $monthId) {
+                ForEach(RepeatingDbPeriodDaysOfYear.companion.months, id: \.id) { month in
+                    Text(month.getName())
+                        .tag(month.id)
+                }
+            }
+            .foregroundColor(.primary)
+            .onChange(of: monthId) { _, newMonthId in
+                withAnimation {
+                    dayId = 1
+                }
+                upPickerDays()
+            }
+            
+            Picker("Day", selection: $dayId) {
+                ForEach(dayIds, id: \.self) {
+                    Text("\($0)")
+                }
+            }
+            .foregroundColor(.primary)
+        }
+        .myFormContentMargins()
+        .interactiveDismissDisabled()
+        .navigationTitle("Day of the Year")
+        .toolbarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel") {
+                    dismiss()
+                }
+            }
+            ToolbarItem(placement: .primaryAction) {
+                Button("Add") {
+                    onDone(
+                        RepeatingDbPeriodDaysOfYear.MonthDayItem(
+                            monthId: monthId,
+                            dayId: dayId
+                        )
+                    )
+                    dismiss()
+                }
+                .fontWeight(.semibold)
+            }
+        }
+        .onAppear {
+            upPickerDays()
+        }
+    }
+    
+    private func upPickerDays() {
+        let month = RepeatingDbPeriodDaysOfYear.companion.months.first {
+            $0.id == monthId
+        }!
+        dayIds = Array(month.days.first...month.days.last)
     }
 }
