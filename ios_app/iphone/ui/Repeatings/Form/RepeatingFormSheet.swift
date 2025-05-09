@@ -66,6 +66,29 @@ private struct RepeatingFormSheetInner: View {
                         )
                     }
                 )
+                
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
+                            Text(state.daytimeHeader)
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text(state.daytimeNote)
+                                .foregroundColor(state.daytimeUi == nil ? .red : .secondary)
+                        }
+                    },
+                    sheet: {
+                        DaytimePickerSheet(
+                            title: state.daytimeHeader,
+                            doneText: "Done",
+                            daytimeUi: state.daytimePickerUi,
+                            onDone: { daytimeUi in
+                                vm.setDaytime(newDaytimeUi: daytimeUi)
+                            },
+                            onRemove: nil
+                        )
+                    }
+                )
             }
         }
         .myFormContentMargins()
