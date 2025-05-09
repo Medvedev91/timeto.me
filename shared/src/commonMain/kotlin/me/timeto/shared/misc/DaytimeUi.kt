@@ -1,4 +1,4 @@
-package me.timeto.shared.models
+package me.timeto.shared.misc
 
 import me.timeto.shared.toHms
 
