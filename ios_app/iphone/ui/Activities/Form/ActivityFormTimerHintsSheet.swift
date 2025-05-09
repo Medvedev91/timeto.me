@@ -41,6 +41,7 @@ private struct ActivityFormTimerHintsSheetInner: View {
     
     var body: some View {
         List {
+            
             Section {
                 ForEach(state.timerHintsUi, id: \.self) { timerHintUi in
                     Button(timerHintUi.text) {
