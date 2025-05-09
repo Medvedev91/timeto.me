@@ -138,7 +138,7 @@ struct HomeTimerView: View {
                                 title: infoUi.untilPickerTitle,
                                 doneText: "Start",
                                 daytimeUi: infoUi.untilDaytimeUi,
-                                onPick: { daytimePickerUi in
+                                onDone: { daytimePickerUi in
                                     infoUi.setUntilDaytime(daytimeUi: daytimePickerUi)
                                     vm.toggleIsPurple()
                                     

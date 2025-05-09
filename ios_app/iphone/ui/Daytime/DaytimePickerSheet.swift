@@ -5,14 +5,14 @@ struct DaytimePickerSheet: View {
     
     private let title: String
     private let doneText: String
-    private let onPick: (_ daytimeUi: DaytimeUi) -> Void
-    private let onRemove: () -> Void
+    private let onDone: (DaytimeUi) -> Void
+    private let onRemove: (() -> Void)?
     
     ///
     
-    @State private var dateTrick: Date
-    
     @Environment(\.dismiss) private var dismiss
+    
+    @State private var date: Date
 
     ///
     
@@ -20,20 +20,19 @@ struct DaytimePickerSheet: View {
         title: String,
         doneText: String,
         daytimeUi: DaytimeUi,
-        onPick: @escaping (_ daytimeUi: DaytimeUi) -> Void,
-        onRemove: @escaping () -> Void
+        onDone: @escaping (DaytimeUi) -> Void,
+        onRemove: (() -> Void)?
     ) {
         self.title = title
         self.doneText = doneText
-        self.onPick = onPick
+        self.onDone = onDone
         self.onRemove = onRemove
-        ///
-        _dateTrick = State(initialValue: Date().startOfDay().inSeconds((daytimeUi.seconds).toInt()))
+        _date = State(initialValue: Date().startOfDay().inSeconds(daytimeUi.seconds.toInt()))
     }
     
     var body: some View {
         
-        VStack(spacing: 0) {
+        VStack {
             
             HStack(spacing: 4) {
                 
@@ -55,10 +54,10 @@ struct DaytimePickerSheet: View {
                     action: {
                         let calendar = Calendar.current
                         let newDaytimeUi = DaytimeUi(
-                            hour: calendar.component(.hour, from: dateTrick).toInt32(),
-                            minute: calendar.component(.minute, from: dateTrick).toInt32()
+                            hour: calendar.component(.hour, from: date).toInt32(),
+                            minute: calendar.component(.minute, from: date).toInt32()
                         )
-                        onPick(newDaytimeUi)
+                        onDone(newDaytimeUi)
                         dismiss()
                     },
                     label: {
@@ -74,17 +73,19 @@ struct DaytimePickerSheet: View {
             
             DatePicker(
                 "Start Date",
-                selection: $dateTrick,
+                selection: $date,
                 displayedComponents: [.hourAndMinute]
             )
             .labelsHidden()
             .datePickerStyle(.wheel)
             
-            Button("Remove") {
-                onRemove()
-                dismiss()
+            if let onRemove = onRemove {
+                Button("Remove") {
+                    onRemove()
+                    dismiss()
+                }
+                .foregroundColor(.red)
             }
-            .foregroundColor(.red)
             
             Spacer()
         }
