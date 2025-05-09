@@ -15,9 +15,13 @@ class RepeatingFormVm(
         val title: String,
         val saveText: String,
         val text: String,
+        val period: RepeatingDb.Period?,
     ) {
 
         val textPlaceholder = "Task"
+
+        val periodTitle = "Period"
+        val periodNote: String = period?.title ?: "Not Selected"
     }
 
     override val state = MutableStateFlow(
@@ -25,11 +29,16 @@ class RepeatingFormVm(
             title = if (initRepeatingDb != null) "Edit Repeating" else "New Repeating",
             saveText = if (initRepeatingDb != null) "Save" else "Create",
             text = initRepeatingDb?.text ?: "",
+            period = initRepeatingDb?.getPeriod(),
         )
     )
 
     fun setText(newText: String) {
         state.update { it.copy(text = newText) }
+    }
+
+    fun setPeriod(newPeriod: RepeatingDb.Period) {
+        state.update { it.copy(period = newPeriod) }
     }
 
     fun save(
