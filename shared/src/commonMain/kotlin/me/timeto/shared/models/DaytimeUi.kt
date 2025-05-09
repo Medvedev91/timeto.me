@@ -7,9 +7,12 @@ data class DaytimeUi(
     val minute: Int,
 ) {
 
-    val seconds: Int = (hour * 3_600) + (minute * 60)
-    val text: String = hour.toString().padStart(2, '0') + ":" +
-                       minute.toString().padStart(2, '0')
+    val seconds: Int =
+        (hour * 3_600) + (minute * 60)
+
+    val text: String =
+        hour.toString().padStart(2, '0') + ":" +
+        minute.toString().padStart(2, '0')
 
     companion object {
 
