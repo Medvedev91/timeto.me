@@ -171,8 +171,13 @@ private struct RepeatingFormPeriodSheetInner: View {
             }
             ToolbarItem(placement: .primaryAction) {
                 Button("Done") {
-                    // todo onDone()
-                    dismiss()
+                    vm.buildSelectedPeriod(
+                        dialogsManager: navigation,
+                        onSuccess: { period in
+                            onDone(period)
+                            dismiss()
+                        }
+                    )
                 }
                 .fontWeight(.semibold)
             }
