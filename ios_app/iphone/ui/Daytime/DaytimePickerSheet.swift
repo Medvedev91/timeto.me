@@ -14,8 +14,6 @@ struct DaytimePickerSheet: View {
     
     @State private var date: Date
 
-    ///
-    
     init(
         title: String,
         doneText: String,
@@ -31,43 +29,7 @@ struct DaytimePickerSheet: View {
     }
     
     var body: some View {
-        
         VStack {
-            
-            HStack(spacing: 4) {
-                
-                Button(
-                    action: { dismiss() },
-                    label: { Text("Cancel") }
-                )
-                
-                Spacer()
-                
-                Text(title)
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .multilineTextAlignment(.center)
-                
-                Spacer()
-                
-                Button(
-                    action: {
-                        let calendar = Calendar.current
-                        let newDaytimeUi = DaytimeUi(
-                            hour: calendar.component(.hour, from: date).toInt32(),
-                            minute: calendar.component(.minute, from: date).toInt32()
-                        )
-                        onDone(newDaytimeUi)
-                        dismiss()
-                    },
-                    label: {
-                        Text(doneText)
-                            .fontWeight(.bold)
-                    }
-                )
-            }
-            .padding(.horizontal, 25)
-            .padding(.top, 24)
             
             Spacer()
             
@@ -79,15 +41,39 @@ struct DaytimePickerSheet: View {
             .labelsHidden()
             .datePickerStyle(.wheel)
             
+            Spacer()
+            
             if let onRemove = onRemove {
                 Button("Remove") {
                     onRemove()
                     dismiss()
                 }
                 .foregroundColor(.red)
+                Spacer()
             }
-            
-            Spacer()
+        }
+        .presentationDetents([.medium])
+        .presentationDragIndicator(.visible)
+        .navigationTitle(title)
+        .toolbarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel") {
+                    dismiss()
+                }
+            }
+            ToolbarItem(placement: .primaryAction) {
+                Button(doneText) {
+                    let calendar = Calendar.current
+                    let newDaytimeUi = DaytimeUi(
+                        hour: calendar.component(.hour, from: date).toInt32(),
+                        minute: calendar.component(.minute, from: date).toInt32()
+                    )
+                    onDone(newDaytimeUi)
+                    dismiss()
+                }
+                .fontWeight(.semibold)
+            }
         }
     }
 }
