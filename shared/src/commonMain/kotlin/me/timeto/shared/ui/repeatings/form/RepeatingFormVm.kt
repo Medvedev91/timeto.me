@@ -2,9 +2,13 @@ package me.timeto.shared.ui.repeatings.form
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import me.timeto.shared.Cache
+import me.timeto.shared.TextFeatures
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.misc.DaytimeUi
+import me.timeto.shared.textFeatures
 import me.timeto.shared.ui.DialogsManager
 import me.timeto.shared.vm.__Vm
 
@@ -18,6 +22,7 @@ class RepeatingFormVm(
         val text: String,
         val period: RepeatingDb.Period?,
         val daytimeUi: DaytimeUi?,
+        val activityDb: ActivityDb?,
     ) {
 
         val textPlaceholder = "Task"
@@ -28,17 +33,27 @@ class RepeatingFormVm(
         val daytimeHeader = "Time of the Day"
         val daytimeNote: String = daytimeUi?.text?.let { "at $it" } ?: "Not Selected"
         val daytimePickerUi: DaytimeUi = daytimeUi ?: DaytimeUi(hour = 12, minute = 0)
+
+        val activityTitle = "Activity"
+        val activitiesUi: List<ActivityUi> =
+            Cache.activitiesDbSorted.map { ActivityUi(it) }
     }
 
-    override val state = MutableStateFlow(
-        State(
-            title = if (initRepeatingDb != null) "Edit Repeating" else "New Repeating",
-            saveText = if (initRepeatingDb != null) "Save" else "Create",
-            text = initRepeatingDb?.text ?: "",
-            period = initRepeatingDb?.getPeriod(),
-            daytimeUi = initRepeatingDb?.daytime?.let { DaytimeUi.byDaytime(it) },
+    override val state: MutableStateFlow<State>
+
+    init {
+        val tf: TextFeatures = (initRepeatingDb?.text ?: "").textFeatures()
+        state = MutableStateFlow(
+            State(
+                title = if (initRepeatingDb != null) "Edit Repeating" else "New Repeating",
+                saveText = if (initRepeatingDb != null) "Save" else "Create",
+                text = initRepeatingDb?.text ?: "",
+                period = initRepeatingDb?.getPeriod(),
+                daytimeUi = initRepeatingDb?.daytime?.let { DaytimeUi.byDaytime(it) },
+                activityDb = tf.activity,
+            )
         )
-    )
+    }
 
     fun setText(newText: String) {
         state.update { it.copy(text = newText) }
@@ -52,6 +67,10 @@ class RepeatingFormVm(
         state.update { it.copy(daytimeUi = newDaytimeUi) }
     }
 
+    fun setActivity(newActivityDb: ActivityDb?) {
+        state.update { it.copy(activityDb = newActivityDb) }
+    }
+
     fun save(
         dialogsManager: DialogsManager,
         onSuccess: () -> Unit,
@@ -61,5 +80,14 @@ class RepeatingFormVm(
                 onSuccess()
             }
         }
+    }
+
+    ///
+
+    data class ActivityUi(
+        val activityDb: ActivityDb,
+    ) {
+        val title: String =
+            activityDb.name.textFeatures().textNoFeatures
     }
 }
