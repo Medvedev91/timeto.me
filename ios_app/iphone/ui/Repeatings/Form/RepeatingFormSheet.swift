@@ -14,7 +14,8 @@ struct RepeatingFormSheet: View {
             RepeatingFormSheetInner(
                 vm: vm,
                 state: state,
-                text: state.text
+                text: state.text,
+                activityDb: state.activityDb
             )
         }
     }
@@ -26,6 +27,7 @@ private struct RepeatingFormSheetInner: View {
     let state: RepeatingFormVm.State
     
     @State var text: String
+    @State var activityDb: ActivityDb?
     
     ///
     
@@ -89,6 +91,26 @@ private struct RepeatingFormSheetInner: View {
                         )
                     }
                 )
+            }
+            
+            Section {
+                
+                Picker(state.activityTitle, selection: $activityDb) {
+                    if activityDb == nil {
+                        Text("None")
+                            .tag(nil as ActivityDb?) // Support optional (nil) selection
+                    }
+                    ForEach(state.activitiesUi, id: \.activityDb) { activityUi in
+                        Text(activityUi.title)
+                            .tag(activityUi.activityDb as ActivityDb?) // Support optional (nil) selection
+                    }
+                }
+                .pickerStyle(.menu)
+                .accentColor(activityDb == nil ? .red : .secondary)
+                .foregroundColor(.primary)
+                .onChange(of: activityDb) { _, newActivityDb in
+                    vm.setActivity(newActivityDb: newActivityDb)
+                }
             }
         }
         .myFormContentMargins()
