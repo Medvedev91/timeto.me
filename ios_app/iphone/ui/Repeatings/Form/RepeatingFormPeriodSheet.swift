@@ -139,7 +139,7 @@ private struct RepeatingFormPeriodSheetInner: View {
             else if state.activePeriodIdx == 4 {
                 Section {
                     ForEach(state.selectedDaysOfYear, id: \.self) { dayOfYear in
-                        Text(dayOfYear.getTitle(isShortOrLong: false))
+                        Text(dayOfYear.longTitle)
                     }
                     .onDelete { indexSet in
                         for idx in indexSet {
@@ -226,7 +226,7 @@ private struct DayOfTheYearFormSheet: View {
             
             Picker("Month", selection: $monthId) {
                 ForEach(RepeatingDbPeriodDaysOfYear.companion.months, id: \.id) { month in
-                    Text(month.getName())
+                    Text(month.name)
                         .tag(month.id)
                 }
             }
