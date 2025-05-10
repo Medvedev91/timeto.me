@@ -15,7 +15,8 @@ struct RepeatingFormSheet: View {
                 vm: vm,
                 state: state,
                 text: state.text,
-                activityDb: state.activityDb
+                activityDb: state.activityDb,
+                isImportant: state.isImportant
             )
         }
     }
@@ -28,6 +29,7 @@ private struct RepeatingFormSheetInner: View {
     
     @State var text: String
     @State var activityDb: ActivityDb?
+    @State var isImportant: Bool
     
     ///
     
@@ -177,6 +179,14 @@ private struct RepeatingFormSheetInner: View {
                         )
                     }
                 )
+            }
+            
+            Section {
+                
+                Toggle(state.isImportantTitle, isOn: $isImportant)
+                    .onChange(of: isImportant) { _, newIsImportant in
+                        vm.setIsImportant(newIsImportant: newIsImportant)
+                    }
             }
         }
         .myFormContentMargins()
