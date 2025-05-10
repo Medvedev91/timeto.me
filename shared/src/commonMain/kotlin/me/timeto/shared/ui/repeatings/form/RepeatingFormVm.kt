@@ -9,6 +9,7 @@ import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.misc.DaytimeUi
 import me.timeto.shared.textFeatures
+import me.timeto.shared.toTimerHintNote
 import me.timeto.shared.ui.DialogsManager
 import me.timeto.shared.vm.__Vm
 
@@ -23,6 +24,7 @@ class RepeatingFormVm(
         val period: RepeatingDb.Period?,
         val daytimeUi: DaytimeUi?,
         val activityDb: ActivityDb?,
+        val timerSeconds: Int?,
     ) {
 
         val textPlaceholder = "Task"
@@ -37,6 +39,11 @@ class RepeatingFormVm(
         val activityTitle = "Activity"
         val activitiesUi: List<ActivityUi> =
             Cache.activitiesDbSorted.map { ActivityUi(it) }
+
+        val timerTitle = "Timer"
+        val timerNote: String =
+            timerSeconds?.toTimerHintNote(isShort = false) ?: "Not Selected"
+        val timerPickerSeconds: Int = timerSeconds ?: (45 * 60)
     }
 
     override val state: MutableStateFlow<State>
@@ -51,6 +58,7 @@ class RepeatingFormVm(
                 period = initRepeatingDb?.getPeriod(),
                 daytimeUi = initRepeatingDb?.daytime?.let { DaytimeUi.byDaytime(it) },
                 activityDb = tf.activity,
+                timerSeconds = tf.timer,
             )
         )
     }
@@ -69,6 +77,10 @@ class RepeatingFormVm(
 
     fun setActivity(newActivityDb: ActivityDb?) {
         state.update { it.copy(activityDb = newActivityDb) }
+    }
+
+    fun setTimerSeconds(newTimerSeconds: Int) {
+        state.update { it.copy(timerSeconds = newTimerSeconds) }
     }
 
     fun save(
