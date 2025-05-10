@@ -106,6 +106,9 @@ data class RepeatingDb(
         }
     }
 
+    val isImportant: Boolean =
+        is_important.toBoolean10()
+
     fun daytimeToTimeWithDayStart(today: Int): Int? {
         val daytime: Int = daytime ?: return null
         val dayStartOffset = dayStartOffsetSeconds()
@@ -447,7 +450,7 @@ data class RepeatingDb(
 
                 val shortTitle: String =
                     "$dayId ${UnixTime.monthNames3[monthId - 1]}"
-                
+
                 val longTitle: String =
                     "$dayId ${UnixTime.monthNames[monthId - 1]}"
             }
