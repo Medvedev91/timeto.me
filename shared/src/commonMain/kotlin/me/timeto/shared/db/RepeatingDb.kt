@@ -1,11 +1,7 @@
 package me.timeto.shared.db
 
-import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
 import dbsq.RepeatingSQ
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.*
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
@@ -19,6 +15,8 @@ import me.timeto.shared.misc.time
 import me.timeto.shared.misc.toBoolean10
 import me.timeto.shared.misc.toInt10
 import me.timeto.shared.misc.toJsonArray
+import me.timeto.shared.ui.UiException
+import kotlin.coroutines.cancellation.CancellationException
 import kotlin.math.absoluteValue
 import kotlin.math.max
 
@@ -37,20 +35,18 @@ data class RepeatingDb(
         const val LAST_DAY_OF_MONTH = 0
         const val MAX_DAY_OF_MONTH = 27
 
-        suspend fun getAsc() = dbIo {
-            db.repeatingQueries.getAsc().executeAsList().map { it.toDb() }
+        suspend fun selectAsc(): List<RepeatingDb> = dbIo {
+            db.repeatingQueries.selectAsc().asList { toDb() }
         }
 
-        fun getAscFlow() = db.repeatingQueries.getAsc().asFlow()
-            .mapToList(Dispatchers.IO).map { list -> list.map { it.toDb() } }
+        fun selectAscFlow(): Flow<List<RepeatingDb>> =
+            db.repeatingQueries.selectAsc().asListFlow { toDb() }
 
-        fun todayWithOffset(): Int = UnixTime(time() - dayStartOffsetSeconds()).localDay
+        fun todayWithOffset(): Int =
+            UnixTime(time() - dayStartOffsetSeconds()).localDay
 
-        suspend fun getByIdOrNull(id: Int) = dbIo {
-            db.repeatingQueries.getById(id).executeAsOneOrNull()?.toDb()
-        }
-
-        suspend fun addWithValidation(
+        @Throws(UiException::class, CancellationException::class)
+        suspend fun insertWithValidationEx(
             text: String,
             period: Period,
             lastDay: Int,
@@ -58,9 +54,12 @@ data class RepeatingDb(
             isImportant: Boolean,
         ) = dbIo {
             db.transaction {
+                val lastId: Int? = db.repeatingQueries.selectAsc().asList { toDb() }.lastOrNull()?.id
+                val nextId: Int = max(time(), lastId?.plus(1) ?: 0)
+                val validatedText: String = validateTextEx(text)
                 db.repeatingQueries.insert(
-                    id = max(time(), db.repeatingQueries.getDesc(1).executeAsOneOrNull()?.id?.plus(1) ?: 0),
-                    text = validateText(text),
+                    id = nextId,
+                    text = validatedText,
                     last_day = lastDay,
                     type_id = period.type.id,
                     value_ = period.value,
@@ -73,24 +72,25 @@ data class RepeatingDb(
         suspend fun syncTodaySafe(today: Int): Unit = dbIo {
             // Select within a transaction to avoid duplicate additions
             db.transaction {
-                db.repeatingQueries.getAsc().executeAsList()
-                    .map { it.toDb() }
+                val todayFolderDb: TaskFolderDb = Cache.getTodayFolderDb()
+                db.repeatingQueries.selectAsc()
+                    .asList { toDb() }
                     .filter { it.getNextDay() <= today }
-                    .forEach { repeating ->
+                    .forEach { repeatingDb ->
                         TaskDb.addWithValidation_transactionRequired(
-                            text = repeating.prepTextForTask(today),
-                            folder = Cache.getTodayFolderDb(),
+                            text = repeatingDb.prepTextForTask(today),
+                            folder = todayFolderDb,
                         )
-                        db.repeatingQueries.upLastDayById(last_day = today, id = repeating.id)
+                        db.repeatingQueries.updateLastDayById(last_day = today, id = repeatingDb.id)
                     }
             }
         }
 
-        ///
-        /// Backupable Holder
+        //
+        // Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.repeatingQueries.getAsc().executeAsList().map { it.toDb() }
+            db.repeatingQueries.selectAsc().asList { toDb() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
@@ -101,20 +101,13 @@ data class RepeatingDb(
                 type_id = j.getInt(3),
                 value_ = j.getString(4),
                 daytime = j.getIntOrNull(5),
-                is_important = if (j.size < 7) 0 else j.getInt(6),
+                is_important = j.getInt(6),
             )
-        }
-
-        private fun validateText(text: String): String {
-            val validatedText = text.trim()
-            if (validatedText.isEmpty())
-                throw UIException("Empty text")
-            return validatedText
         }
     }
 
     fun daytimeToTimeWithDayStart(today: Int): Int? {
-        val daytime = daytime ?: return null
+        val daytime: Int = daytime ?: return null
         val dayStartOffset = dayStartOffsetSeconds()
         val dayForDaytime: Int =
             if (dayStartOffset >= 0)
@@ -124,9 +117,8 @@ data class RepeatingDb(
         return UnixTime.byLocalDay(dayForDaytime).localDayStartTime() + daytime
     }
 
-    fun getPeriod() = Period.build(type_id, value)
-
-    fun getType() = TYPE.values().first { it.id == id }
+    fun getPeriod(): Period =
+        Period.build(type_id, value)
 
     /**
      * todo check performance
@@ -145,19 +137,19 @@ data class RepeatingDb(
             is Period.DaysOfWeek -> {
                 val weekDays = period.weekDays
                 if (weekDays.isEmpty())
-                    throw UIException("getNextDay() weekDays.isEmpty()")
+                    throw UiException("getNextDay() weekDays.isEmpty(). Please contact us.")
                 for (i in 1..7) {
                     val testDay = UnixTime.byLocalDay(last_day + i)
                     if (testDay.dayOfWeek() in period.weekDays)
                         return testDay.localDay
                 }
-                throw UIException("getNextDay() DaysOfWeek wtf?")
+                throw UiException("getNextDay() DaysOfWeek wtf?. Please contact us.")
             }
 
             is Period.DaysOfMonth -> {
                 // todo catch
                 if (period.days.isEmpty())
-                    throw UIException("period.days.isEmpty()")
+                    throw UiException("period.days.isEmpty(). Please contact us.")
                 val lastUnixDay = UnixTime.byLocalDay(last_day)
                 fun getNextMonthDay(monthDay: Int): UnixTime {
                     // The last day
@@ -176,14 +168,14 @@ data class RepeatingDb(
                         if (testDay.dayOfMonth() == monthDay)
                             return testDay
                     }
-                    throw UIException("getNextDay() DaysOfMonth wtf?")
+                    throw UiException("getNextDay() DaysOfMonth wtf?. Please contact us.")
                 }
                 period.days.map { getNextMonthDay(it) }.minBy { it.localDay }.localDay
             }
 
             is Period.DaysOfYear -> {
                 if (period.items.isEmpty())
-                    throw UIException("Period.DaysOfYear items.isEmpty()")
+                    throw UiException("Period.DaysOfYear items.isEmpty(). Please contact us.")
 
                 val lastUnixDay = UnixTime.byLocalDay(last_day)
 
@@ -209,7 +201,9 @@ data class RepeatingDb(
         .textFeatures()
         .copy(
             fromRepeating = TextFeatures.FromRepeating(
-                id = id, day = day, time = daytimeToTimeWithDayStart(day)
+                id = id,
+                day = day,
+                time = daytimeToTimeWithDayStart(day),
             ),
             isImportant = is_important.toBoolean10(),
         )
@@ -225,15 +219,16 @@ data class RepeatingDb(
                 UnixTime.StringComponent.month3,
             )
 
-    suspend fun upWithValidation(
+    @Throws(UiException::class, CancellationException::class)
+    suspend fun updateWithValidationEx(
         text: String,
         period: Period,
         daytime: Int?,
         isImportant: Boolean,
     ): Unit = dbIo {
-        db.repeatingQueries.upById(
+        db.repeatingQueries.updateById(
             id = id,
-            text = validateText(text),
+            text = validateTextEx(text),
             last_day = last_day,
             type_id = period.type.id,
             value_ = period.value,
@@ -246,8 +241,8 @@ data class RepeatingDb(
         db.repeatingQueries.deleteById(id)
     }
 
-    ///
-    /// Backupable Item
+    //
+    // Backupable Item
 
     override fun backupable__getId(): String = id.toString()
 
@@ -257,7 +252,7 @@ data class RepeatingDb(
 
     override fun backupable__update(json: JsonElement) {
         val j = json.jsonArray
-        db.repeatingQueries.upById(
+        db.repeatingQueries.updateById(
             id = j.getInt(0),
             text = j.getString(1),
             last_day = j.getInt(2),
@@ -272,7 +267,7 @@ data class RepeatingDb(
         db.repeatingQueries.deleteById(id)
     }
 
-    //////
+    ///
 
     enum class TYPE(val id: Int) {
         EVERY_N_DAYS(1),
@@ -292,9 +287,9 @@ data class RepeatingDb(
             fun build(
                 typeId: Int,
                 value: String,
-            ) = when (TYPE.values().first { it.id == typeId }) {
+            ) = when (TYPE.entries.first { it.id == typeId }) {
                 TYPE.EVERY_N_DAYS -> EveryNDays(value.toInt())
-                TYPE.DAYS_OF_WEEK -> DaysOfWeek(value.split(",").map { it.toInt() })
+                TYPE.DAYS_OF_WEEK -> DaysOfWeek(value.split(",").map { it.toInt() }.toSet())
                 TYPE.DAYS_OF_MONTH -> DaysOfMonth(value.split(",").map { it.toInt() }.toSet())
                 TYPE.DAYS_OF_YEAR -> DaysOfYear(
                     value // Like "1.19,4.15"
@@ -315,16 +310,17 @@ data class RepeatingDb(
 
             override val value = "$nDays"
 
-            override val title = if (nDays == 1) "Every day" else "Every $nDays days"
+            override val title: String =
+                if (nDays == 1) "Every day" else "Every $nDays days"
 
             init {
                 if (nDays < 1)
-                    throw UIException("EveryNDays nDays < 1")
+                    throw UiException("EveryNDays nDays < 1")
             }
         }
 
         class DaysOfWeek(
-            val weekDays: List<Int>,
+            val weekDays: Set<Int>,
         ) : Period {
 
             override val type = TYPE.DAYS_OF_WEEK
@@ -335,13 +331,13 @@ data class RepeatingDb(
 
             init {
                 if (weekDays.isEmpty())
-                    throw UIException("DaysOfWeek no days selected") // todo report
+                    throw UiException("DaysOfWeek no days selected")
 
                 if (weekDays.size != weekDays.distinct().size)
-                    throw UIException("DaysOfWeek not distinct") // todo report
+                    throw UiException("DaysOfWeek not distinct")
 
                 if (weekDays.any { it < 0 || it > 6 })
-                    throw UIException("DaysOfWeek invalid data") // todo report
+                    throw UiException("DaysOfWeek invalid data")
 
                 value = weekDays.joinToString(",")
 
@@ -364,15 +360,15 @@ data class RepeatingDb(
 
             init {
                 if (days.isEmpty())
-                    throw UIException("DaysOfMonth no days selected") // todo report
+                    throw UiException("DaysOfMonth no days selected.")
 
                 if (days.any { it < 0 || it > MAX_DAY_OF_MONTH })
-                    throw UIException("DaysOfMonth invalid data") // todo report
+                    throw UiException("DaysOfMonth invalid data.")
 
                 value = days.joinToString(",")
 
                 title = days
-                    .sortedBy { if (it == LAST_DAY_OF_MONTH) Int.MAX_VALUE else it } // Last day в конец
+                    .sortedBy { if (it == LAST_DAY_OF_MONTH) Int.MAX_VALUE else it } // Last day at the end
                     .joinToString(", ") { day ->
                         if (day == LAST_DAY_OF_MONTH) {
                             if (days.size == 1) "Last day of month" else "Last day"
@@ -399,7 +395,7 @@ data class RepeatingDb(
 
             override val type = TYPE.DAYS_OF_YEAR
 
-            override val value = items
+            override val value: String = items
                 .distinct()
                 .sortedWith(compareBy({ it.monthId }, { it.dayId })) // todo sort on title creation
                 .joinToString(",") { "${it.monthId}.${it.dayId}" } // Like "1.19,4.15"
@@ -407,12 +403,11 @@ data class RepeatingDb(
             override val title: String
 
             init {
-                assertOrUIException(items.isNotEmpty(), "No days selected")
-                assertOrUIException(
-                    items.all { it.dayId in it.getMonthData().days },
-                    "DaysOfYear invalid day"
-                )
-                title = items.joinToString(", ") { it.getTitle(isShortOrLong = true) }
+                if (items.isEmpty())
+                    throw UiException("No days selected")
+                if (items.any { it.dayId !in it.monthData.days })
+                    throw UiException("DaysOfYear invalid day")
+                title = items.joinToString(", ") { it.shortTitle }
             }
 
             companion object {
@@ -437,10 +432,8 @@ data class RepeatingDb(
                 val id: Int,
                 val days: IntRange,
             ) {
-                // Used on UI lists
-                override fun toString() = getName()
-
-                fun getName(): String = UnixTime.monthNames[id - 1]
+                val name: String =
+                    UnixTime.monthNames[id - 1]
             }
 
             // "data" to use in distinct()
@@ -449,14 +442,14 @@ data class RepeatingDb(
                 val dayId: Int,
             ) {
 
-                fun getMonthData() = months.first { it.id == monthId }
+                val monthData: MonthData =
+                    months.first { it.id == monthId }
 
-                fun getTitle(
-                    isShortOrLong: Boolean,
-                ): String {
-                    val mIdx = monthId - 1
-                    return "$dayId ${if (isShortOrLong) UnixTime.monthNames3[mIdx] else UnixTime.monthNames[mIdx]}"
-                }
+                val shortTitle: String =
+                    "$dayId ${UnixTime.monthNames3[monthId - 1]}"
+                
+                val longTitle: String =
+                    "$dayId ${UnixTime.monthNames[monthId - 1]}"
             }
         }
     }
@@ -467,3 +460,11 @@ private fun RepeatingSQ.toDb() = RepeatingDb(
     type_id = type_id, value = value_, daytime = daytime,
     is_important = is_important,
 )
+
+@Throws(UiException::class)
+private fun validateTextEx(text: String): String {
+    val validatedText: String = text.trim()
+    if (validatedText.isEmpty())
+        throw UiException("Empty text")
+    return validatedText
+}
