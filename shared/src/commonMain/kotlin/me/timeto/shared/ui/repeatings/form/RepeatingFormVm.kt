@@ -72,7 +72,7 @@ class RepeatingFormVm(
             State(
                 title = if (initRepeatingDb != null) "Edit Repeating" else "New Repeating",
                 saveText = if (initRepeatingDb != null) "Save" else "Create",
-                text = initRepeatingDb?.text ?: "",
+                text = tf.textNoFeatures,
                 period = initRepeatingDb?.getPeriod(),
                 daytimeUi = initRepeatingDb?.daytime?.let { DaytimeUi.byDaytime(it) },
                 activityDb = tf.activity,
