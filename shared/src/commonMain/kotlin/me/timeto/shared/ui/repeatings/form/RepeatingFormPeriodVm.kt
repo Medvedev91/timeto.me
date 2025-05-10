@@ -33,6 +33,9 @@ class RepeatingFormPeriodVm(
             UnixTime.dayOfWeekNames.mapIndexed { idx, name ->
                 DayOfWeekUi(idx = idx, title = name)
             }
+
+        val periodNote: String =
+            periodPickerItemsUi[activePeriodIdx].title
     }
 
     override val state: MutableStateFlow<State>
