@@ -19,10 +19,11 @@ import me.timeto.shared.ui.UiException
 import me.timeto.shared.vm.__Vm
 
 class RepeatingFormVm(
-    private val initRepeatingDb: RepeatingDb?,
+    initRepeatingDb: RepeatingDb?,
 ) : __Vm<RepeatingFormVm.State>() {
 
     data class State(
+        val initRepeatingDb: RepeatingDb?,
         val title: String,
         val saveText: String,
         val text: String,
@@ -70,6 +71,7 @@ class RepeatingFormVm(
         val tf: TextFeatures = (initRepeatingDb?.text ?: "").textFeatures()
         state = MutableStateFlow(
             State(
+                initRepeatingDb = initRepeatingDb,
                 title = if (initRepeatingDb != null) "Edit Repeating" else "New Repeating",
                 saveText = if (initRepeatingDb != null) "Save" else "Create",
                 text = tf.textNoFeatures,
@@ -151,8 +153,9 @@ class RepeatingFormVm(
             val isImportant: Boolean =
                 state.isImportant
 
-            if (initRepeatingDb != null) {
-                initRepeatingDb.updateWithValidationEx(
+            val repeatingDb: RepeatingDb? = state.initRepeatingDb
+            if (repeatingDb != null) {
+                repeatingDb.updateWithValidationEx(
                     text = textTf,
                     period = period,
                     daytime = daytimeUi.seconds,
@@ -160,7 +163,7 @@ class RepeatingFormVm(
                 )
                 TaskDb.getAsc().forEach { taskDb ->
                     val taskTf = taskDb.text.textFeatures()
-                    if (taskTf.fromRepeating?.id == initRepeatingDb.id) {
+                    if (taskTf.fromRepeating?.id == repeatingDb.id) {
                         val newTf = taskTf.copy(isImportant = isImportant)
                         taskDb.upTextWithValidation(newTf.textWithFeatures())
                     }
@@ -187,6 +190,27 @@ class RepeatingFormVm(
         } catch (e: UiException) {
             dialogsManager.alert(e.uiMessage)
         }
+    }
+
+    fun delete(
+        repeatingDb: RepeatingDb,
+        dialogsManager: DialogsManager,
+        onSuccess: () -> Unit,
+    ) {
+        val name: String =
+            repeatingDb.text.textFeatures().textNoFeatures
+        dialogsManager.confirmation(
+            message = "Are you sure you want to delete \"$name\" repeating task?",
+            buttonText = "Delete",
+            onConfirm = {
+                launchExIo {
+                    repeatingDb.delete()
+                    onUi {
+                        onSuccess()
+                    }
+                }
+            },
+        )
     }
 
     ///
