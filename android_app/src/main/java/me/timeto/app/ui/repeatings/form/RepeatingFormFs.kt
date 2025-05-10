@@ -7,9 +7,11 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
+import me.timeto.app.c
 import me.timeto.app.rememberVm
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.form.FormInput
+import me.timeto.app.ui.form.button.FormButton
 import me.timeto.app.ui.form.padding.FormPaddingSectionSection
 import me.timeto.app.ui.form.padding.FormPaddingTop
 import me.timeto.app.ui.header.Header
@@ -87,6 +89,25 @@ fun RepeatingFormFs(
                 )
 
                 FormPaddingSectionSection()
+
+                FormButton(
+                    title = state.periodTitle,
+                    isFirst = true,
+                    isLast = false,
+                    note = state.periodNote,
+                    noteColor = if (state.period == null) c.red else c.textSecondary,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.push {
+                            RepeatingFormPeriodFs(
+                                initPeriod = state.period,
+                                onDone = { newPeriod ->
+                                    vm.setPeriod(newPeriod)
+                                },
+                            )
+                        }
+                    },
+                )
             }
         }
     }
