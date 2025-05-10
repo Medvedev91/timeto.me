@@ -188,6 +188,21 @@ private struct RepeatingFormSheetInner: View {
                         vm.setIsImportant(newIsImportant: newIsImportant)
                     }
             }
+            
+            if let repeatingDb = state.initRepeatingDb {
+                Section {
+                    Button("Delete Repeating Task") {
+                        vm.delete(
+                            repeatingDb: repeatingDb,
+                            dialogsManager: navigation,
+                            onSuccess: {
+                                dismiss()
+                            }
+                        )
+                    }
+                    .foregroundColor(.red)
+                }
+            }
         }
         .myFormContentMargins()
         .interactiveDismissDisabled()
