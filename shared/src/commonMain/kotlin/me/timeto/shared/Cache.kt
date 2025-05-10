@@ -80,8 +80,8 @@ object Cache {
         eventTemplatesDbSorted = EventTemplateDb.selectAscSorted()
         EventTemplateDb.selectAscSortedFlow().onEachExIn(scope) { eventTemplatesDbSorted = it }
 
-        repeatingsDb = RepeatingDb.getAsc()
-        RepeatingDb.getAscFlow().onEachExIn(scope) { repeatingsDb = it }
+        repeatingsDb = RepeatingDb.selectAsc()
+        RepeatingDb.selectAscFlow().onEachExIn(scope) { repeatingsDb = it }
 
         goalsDb = GoalDb.selectAll()
         GoalDb.selectAllFlow().onEachExIn(scope) { goalsDb = it }
