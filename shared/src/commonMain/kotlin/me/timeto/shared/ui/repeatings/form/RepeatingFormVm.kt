@@ -4,19 +4,22 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
 import me.timeto.shared.TextFeatures
+import me.timeto.shared.UnixTime
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.db.ShortcutDb
+import me.timeto.shared.db.TaskDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.misc.DaytimeUi
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toTimerHintNote
 import me.timeto.shared.ui.DialogsManager
+import me.timeto.shared.ui.UiException
 import me.timeto.shared.vm.__Vm
 
 class RepeatingFormVm(
-    initRepeatingDb: RepeatingDb?,
+    private val initRepeatingDb: RepeatingDb?,
 ) : __Vm<RepeatingFormVm.State>() {
 
     data class State(
@@ -116,11 +119,73 @@ class RepeatingFormVm(
     fun save(
         dialogsManager: DialogsManager,
         onSuccess: () -> Unit,
-    ) {
-        launchExIo {
+    ): Unit = launchExIo {
+        try {
+            val state: State = state.value
+
+            val text: String = state.text.trim()
+            if (text.isBlank())
+                throw UiException("No text")
+
+            val period: RepeatingDb.Period =
+                state.period ?: throw UiException("Period not selected")
+
+            val daytimeUi: DaytimeUi =
+                state.daytimeUi ?: throw UiException("Time of the day is not selected")
+
+            val activityDb: ActivityDb =
+                state.activityDb ?: throw UiException("Activity not selected")
+
+            val timerSeconds: Int =
+                state.timerSeconds ?: throw UiException("Timer not selected")
+
+            val tf: TextFeatures = text.textFeatures().copy(
+                activity = activityDb,
+                timer = timerSeconds,
+                checklists = state.checklistsDb,
+                shortcuts = state.shortcutsDb,
+            )
+
+            val textTf: String = tf.textWithFeatures()
+
+            val isImportant: Boolean =
+                state.isImportant
+
+            if (initRepeatingDb != null) {
+                initRepeatingDb.updateWithValidationEx(
+                    text = textTf,
+                    period = period,
+                    daytime = daytimeUi.seconds,
+                    isImportant = isImportant,
+                )
+                TaskDb.getAsc().forEach { taskDb ->
+                    val taskTf = taskDb.text.textFeatures()
+                    if (taskTf.fromRepeating?.id == initRepeatingDb.id) {
+                        val newTf = taskTf.copy(isImportant = isImportant)
+                        taskDb.upTextWithValidation(newTf.textWithFeatures())
+                    }
+                }
+            } else {
+                val lastDay: Int = if (period is RepeatingDb.Period.EveryNDays && period.nDays == 1)
+                    UnixTime().localDay - 1
+                else
+                    UnixTime().localDay
+
+                RepeatingDb.insertWithValidationEx(
+                    text = textTf,
+                    period = period,
+                    lastDay = lastDay,
+                    daytime = daytimeUi.seconds,
+                    isImportant = isImportant,
+                )
+
+                RepeatingDb.syncTodaySafe(RepeatingDb.todayWithOffset())
+            }
             onUi {
                 onSuccess()
             }
+        } catch (e: UiException) {
+            dialogsManager.alert(e.uiMessage)
         }
     }
 
