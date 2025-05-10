@@ -140,7 +140,7 @@ class RepeatingFormPeriodVm(
             val period: RepeatingDb.Period = when (periodIndex) {
                 0 -> RepeatingDb.Period.EveryNDays(1)
                 1 -> RepeatingDb.Period.EveryNDays(state.value.selectedNDays)
-                2 -> RepeatingDb.Period.DaysOfWeek(state.value.selectedDaysOfWeek.toList())
+                2 -> RepeatingDb.Period.DaysOfWeek(state.value.selectedDaysOfWeek)
                 3 -> RepeatingDb.Period.DaysOfMonth(state.value.selectedDaysOfMonth)
                 4 -> RepeatingDb.Period.DaysOfYear(state.value.selectedDaysOfYear)
                 else -> throw Exception()
