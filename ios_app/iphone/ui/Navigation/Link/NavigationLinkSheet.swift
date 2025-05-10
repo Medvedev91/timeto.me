@@ -16,6 +16,7 @@ struct NavigationLinkSheet<
         // https://stackoverflow.com/a/72030978
         Button(
             action: {
+                hideKeyboard()
                 navigation.sheet {
                     sheet()
                 }
