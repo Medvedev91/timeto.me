@@ -6,6 +6,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -20,6 +21,8 @@ import me.timeto.app.VStack
 import me.timeto.app.ZStack
 import me.timeto.app.c
 import me.timeto.app.ui.SquircleShape
+import me.timeto.app.ui.navigation.picker.NavigationPicker
+import me.timeto.app.ui.navigation.picker.NavigationPickerItem
 import me.timeto.shared.ui.DialogsManager
 
 private val dialogShape = SquircleShape(24.dp)
@@ -43,6 +46,7 @@ class Navigation : DialogsManager {
     }
 
     fun dialog(
+        innerPadding: PaddingValues = PaddingValues(H_PADDING),
         content: @Composable ColumnScope.(layer: NavigationLayer) -> Unit,
     ) {
         push { layer ->
@@ -57,11 +61,25 @@ class Navigation : DialogsManager {
                         .clip(dialogShape)
                         .background(c.fg)
                         .pointerInput(Unit) {}
-                        .padding(H_PADDING)
+                        .padding(innerPadding)
                 ) {
                     content(layer)
                 }
             }
+        }
+    }
+
+    fun <T>picker(
+        items: List<NavigationPickerItem<T>>,
+        onDone: (item: NavigationPickerItem<T>) -> Unit,
+    ) {
+        dialog(
+            innerPadding = PaddingValues(),
+        ) {
+            NavigationPicker(
+                items = items,
+                onDone = onDone,
+            )
         }
     }
 
