@@ -29,6 +29,7 @@ class RepeatingFormVm(
         val timerSeconds: Int?,
         val checklistsDb: List<ChecklistDb>,
         val shortcutsDb: List<ShortcutDb>,
+        val isImportant: Boolean,
     ) {
 
         val textPlaceholder = "Task"
@@ -56,6 +57,8 @@ class RepeatingFormVm(
         val shortcutsTitle = "Shortcuts"
         val shortcutsNote: String =
             shortcutsDb.takeIf { it.isNotEmpty() }?.joinToString(", ") { it.name } ?: "None"
+
+        val isImportantTitle = "Is Important"
     }
 
     override val state: MutableStateFlow<State>
@@ -73,6 +76,7 @@ class RepeatingFormVm(
                 timerSeconds = tf.timer,
                 checklistsDb = tf.checklists,
                 shortcutsDb = tf.shortcuts,
+                isImportant = initRepeatingDb?.isImportant ?: false,
             )
         )
     }
@@ -103,6 +107,10 @@ class RepeatingFormVm(
 
     fun setShortcuts(newShortcutsDb: List<ShortcutDb>) {
         state.update { it.copy(shortcutsDb = newShortcutsDb) }
+    }
+
+    fun setIsImportant(newIsImportant: Boolean) {
+        state.update { it.copy(isImportant = newIsImportant) }
     }
 
     fun save(
