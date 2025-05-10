@@ -12,6 +12,7 @@ import me.timeto.app.rememberVm
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.form.FormInput
 import me.timeto.app.ui.form.button.FormButton
+import me.timeto.app.ui.form.padding.FormPaddingBottom
 import me.timeto.app.ui.form.padding.FormPaddingSectionSection
 import me.timeto.app.ui.form.padding.FormPaddingTop
 import me.timeto.app.ui.header.Header
@@ -108,6 +109,8 @@ fun RepeatingFormFs(
                         }
                     },
                 )
+
+                FormPaddingBottom(withNavigation = true)
             }
         }
     }
