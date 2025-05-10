@@ -10,22 +10,16 @@ CREATE TABLE RepeatingSQ (
     is_important INTEGER AS Int NOT NULL
 );
 
-getAsc:
+--
+-- Select
+
+selectAsc:
 SELECT *
 FROM RepeatingSQ
 ORDER BY id ASC;
 
-getDesc:
-SELECT *
-FROM RepeatingSQ
-ORDER BY id DESC
-LIMIT :limit;
-
-getById:
-SELECT *
-FROM RepeatingSQ
-WHERE id = ?
-LIMIT 1;
+--
+-- Insert
 
 insert:
 INSERT INTO RepeatingSQ
@@ -33,19 +27,25 @@ INSERT INTO RepeatingSQ
 VALUES
 (?, ?, ?, ?, ?, ?, ?);
 
-deleteById:
-DELETE FROM RepeatingSQ
-WHERE id = ?;
+--
+-- Update
 
-upById:
+updateById:
 UPDATE RepeatingSQ
 SET text=?, last_day=?, type_id=?, value=?, daytime=?, is_important=?
 WHERE id=?;
 
-upLastDayById:
+updateLastDayById:
 UPDATE RepeatingSQ
-SET last_day = ?
-WHERE id = ?;
+SET last_day=?
+WHERE id=?;
 
-truncate:
+--
+-- Delete
+
+deleteById:
+DELETE FROM RepeatingSQ
+WHERE id=?;
+
+deleteAll:
 DELETE FROM RepeatingSQ;
