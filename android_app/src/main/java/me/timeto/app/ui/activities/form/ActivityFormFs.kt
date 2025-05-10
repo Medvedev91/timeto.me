@@ -75,7 +75,7 @@ fun ActivityFormFs(
                         dialogsManager = navigationFs,
                         onSave = {
                             navigationLayer.close()
-                        }
+                        },
                     )
                 },
             ),
