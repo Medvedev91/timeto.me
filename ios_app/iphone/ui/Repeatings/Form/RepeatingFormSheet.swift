@@ -135,6 +135,49 @@ private struct RepeatingFormSheetInner: View {
                     }
                 )
             }
+            
+            Section {
+                
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
+                            Text(state.checklistsTitle)
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text(state.checklistsNote)
+                                .foregroundColor(.secondary)
+                        }
+                    },
+                    sheet: {
+                        ChecklistsPickerSheet(
+                            initChecklistsDb: state.checklistsDb,
+                            onDone: { newChecklistsDb in
+                                vm.setChecklists(newChecklistsDb: newChecklistsDb)
+                            }
+                        )
+                    }
+                )
+                
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
+                            Text(state.shortcutsTitle)
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text(state.shortcutsNote)
+                                .foregroundColor(.secondary)
+                        }
+                    },
+                    sheet: {
+                        ShortcutsPickerSheet(
+                            initShortcutsDb: state.shortcutsDb,
+                            onDone: { newShortcutsDb in
+                                vm.setShortcuts(newShortcutsDb: newShortcutsDb)
+                            }
+                        )
+                    }
+                )
+            }
         }
         .myFormContentMargins()
         .interactiveDismissDisabled()
