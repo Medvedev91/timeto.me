@@ -5,7 +5,9 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.db.ActivityDb
+import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.RepeatingDb
+import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.misc.DaytimeUi
 import me.timeto.shared.textFeatures
@@ -25,6 +27,8 @@ class RepeatingFormVm(
         val daytimeUi: DaytimeUi?,
         val activityDb: ActivityDb?,
         val timerSeconds: Int?,
+        val checklistsDb: List<ChecklistDb>,
+        val shortcutsDb: List<ShortcutDb>,
     ) {
 
         val textPlaceholder = "Task"
@@ -44,6 +48,14 @@ class RepeatingFormVm(
         val timerNote: String =
             timerSeconds?.toTimerHintNote(isShort = false) ?: "Not Selected"
         val timerPickerSeconds: Int = timerSeconds ?: (45 * 60)
+
+        val checklistsTitle = "Checklists"
+        val checklistsNote: String =
+            checklistsDb.takeIf { it.isNotEmpty() }?.joinToString(", ") { it.name } ?: "None"
+
+        val shortcutsTitle = "Shortcuts"
+        val shortcutsNote: String =
+            shortcutsDb.takeIf { it.isNotEmpty() }?.joinToString(", ") { it.name } ?: "None"
     }
 
     override val state: MutableStateFlow<State>
@@ -59,6 +71,8 @@ class RepeatingFormVm(
                 daytimeUi = initRepeatingDb?.daytime?.let { DaytimeUi.byDaytime(it) },
                 activityDb = tf.activity,
                 timerSeconds = tf.timer,
+                checklistsDb = tf.checklists,
+                shortcutsDb = tf.shortcuts,
             )
         )
     }
@@ -81,6 +95,14 @@ class RepeatingFormVm(
 
     fun setTimerSeconds(newTimerSeconds: Int) {
         state.update { it.copy(timerSeconds = newTimerSeconds) }
+    }
+
+    fun setChecklists(newChecklistsDb: List<ChecklistDb>) {
+        state.update { it.copy(checklistsDb = newChecklistsDb) }
+    }
+
+    fun setShortcuts(newShortcutsDb: List<ShortcutDb>) {
+        state.update { it.copy(shortcutsDb = newShortcutsDb) }
     }
 
     fun save(
