@@ -1,26 +1,41 @@
 package me.timeto.app.ui.repeatings.form
 
 import android.widget.NumberPicker
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Icon
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import me.timeto.app.HStack
 import me.timeto.app.H_PADDING
 import me.timeto.app.R
 import me.timeto.app.VStack
 import me.timeto.app.c
 import me.timeto.app.dpToPx
 import me.timeto.app.isSDKQPlus
+import me.timeto.app.onePx
 import me.timeto.app.rememberVm
+import me.timeto.app.roundedShape
 import me.timeto.app.ui.Screen
+import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.form.button.FormButton
 import me.timeto.app.ui.form.button.FormButtonView
 import me.timeto.app.ui.form.padding.FormPaddingBottom
@@ -34,6 +49,8 @@ import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.navigation.picker.NavigationPickerItem
 import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.ui.repeatings.form.RepeatingFormPeriodVm
+
+private val daysOfMonthItemViewItemSize = 36.dp
 
 @Composable
 fun RepeatingFormPeriodFs(
@@ -168,10 +185,86 @@ fun RepeatingFormPeriodFs(
                             )
                         }
                     }
+                    3 -> {
+                        VStack(
+                            modifier = Modifier
+                                .padding(horizontal = H_PADDING),
+                        ) {
+
+                            (1..RepeatingDb.MAX_DAY_OF_MONTH).chunked(7).forEach { days ->
+                                HStack {
+                                    days.forEachIndexed { idx, day ->
+                                        if (idx > 0)
+                                            SpacerW1()
+                                        val isDaySelected = day in state.selectedDaysOfMonth
+                                        DaysOfMonthItemView(
+                                            dayName = day.toString(),
+                                            isSelected = isDaySelected,
+                                        ) {
+                                            vm.toggleDayOfMonth(day)
+                                        }
+                                    }
+                                    (0..<(7 - days.size)).forEach { _ ->
+                                        Text(
+                                            text = "",
+                                            modifier = Modifier
+                                                .size(daysOfMonthItemViewItemSize),
+                                        )
+                                        SpacerW1()
+                                    }
+                                }
+                            }
+
+                            val isLastDaySelected: Boolean =
+                                RepeatingDb.LAST_DAY_OF_MONTH in state.selectedDaysOfMonth
+
+                            DaysOfMonthItemView(
+                                dayName = "Last Day of the Month",
+                                isSelected = isLastDaySelected,
+                                paddingValues = PaddingValues(
+                                    start = 10.dp,
+                                    end = 10.dp,
+                                    bottom = onePx,
+                                ),
+                            ) {
+                                vm.toggleDayOfMonth(RepeatingDb.LAST_DAY_OF_MONTH)
+                            }
+                        }
+                    }
                 }
 
                 FormPaddingBottom(withNavigation = true)
             }
         }
     }
+}
+
+@Composable
+private fun DaysOfMonthItemView(
+    dayName: String,
+    isSelected: Boolean,
+    paddingValues: PaddingValues = PaddingValues(),
+    onClick: () -> Unit,
+) {
+    val bgColor = animateColorAsState(if (isSelected) c.blue else c.fg)
+    Text(
+        text = dayName,
+        modifier = Modifier
+            .padding(bottom = 12.dp)
+            .defaultMinSize(
+                minWidth = daysOfMonthItemViewItemSize,
+                minHeight = daysOfMonthItemViewItemSize,
+            )
+            .clip(roundedShape)
+            .background(bgColor.value)
+            .clickable {
+                onClick()
+            }
+            .padding(paddingValues)
+            .wrapContentHeight(), // To center vertical
+        color = if (isSelected) c.white else c.text,
+        textAlign = TextAlign.Center,
+        fontSize = 13.sp,
+        fontWeight = FontWeight.SemiBold,
+    )
 }
