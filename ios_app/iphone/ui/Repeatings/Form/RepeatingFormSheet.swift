@@ -111,6 +111,29 @@ private struct RepeatingFormSheetInner: View {
                 .onChange(of: activityDb) { _, newActivityDb in
                     vm.setActivity(newActivityDb: newActivityDb)
                 }
+                
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
+                            Text(state.timerTitle)
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text(state.timerNote)
+                                .foregroundColor(state.timerSeconds == nil ? .red : .secondary)
+                        }
+                    },
+                    sheet: {
+                        TimerSheet(
+                            title: state.timerTitle,
+                            doneTitle: "Done",
+                            initSeconds: state.timerPickerSeconds.toInt(),
+                            onDone: { newTimerSeconds in
+                                vm.setTimerSeconds(newTimerSeconds: newTimerSeconds.toInt32())
+                            }
+                        )
+                        .interactiveDismissDisabled()
+                    }
+                )
             }
         }
         .myFormContentMargins()
