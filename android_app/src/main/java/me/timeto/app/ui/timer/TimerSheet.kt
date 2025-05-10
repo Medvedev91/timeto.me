@@ -79,7 +79,8 @@ fun TimerSheet(
             ) {
 
                 AndroidView(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth(),
                     factory = { context ->
                         NumberPicker(context).apply {
                             setOnValueChangedListener { _, _, new ->
