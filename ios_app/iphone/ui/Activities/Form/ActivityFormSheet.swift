@@ -3,12 +3,12 @@ import shared
 
 struct ActivityFormSheet: View {
     
-    let activityDb: ActivityDb?
+    let initActivityDb: ActivityDb?
     
     var body: some View {
         VmView({
             ActivityFormVm(
-                initActivityDb: activityDb
+                initActivityDb: initActivityDb
             )
         }) { vm, state in
             ActivityFormSheetInner(
@@ -208,7 +208,7 @@ private struct ActivityFormSheetInner: View {
                 )
             }
             
-            if let activityDb = state.activityDb {
+            if let activityDb = state.initActivityDb {
                 Section {
                     Button("Delete Activity") {
                         vm.delete(

@@ -121,7 +121,9 @@ private struct ActivitiesViewInner: View {
                             Button(
                                 action: {
                                     navigation.sheet {
-                                        ActivityFormSheet(activityDb: activityUi.activityDb)
+                                        ActivityFormSheet(
+                                            initActivityDb: activityUi.activityDb
+                                        )
                                     }
                                 },
                                 label: {

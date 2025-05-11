@@ -24,7 +24,7 @@ class ActivityFormVm(
 ) : __Vm<ActivityFormVm.State>() {
 
     data class State(
-        val activityDb: ActivityDb?,
+        val initActivityDb: ActivityDb?,
         val name: String,
         val emoji: String?,
         val colorRgba: ColorRgba,
@@ -37,10 +37,10 @@ class ActivityFormVm(
     ) {
 
         val title: String =
-            if (activityDb != null) "Edit Activity" else "New Activity"
+            if (initActivityDb != null) "Edit Activity" else "New Activity"
 
         val saveText: String =
-            if (activityDb != null) "Save" else "Create"
+            if (initActivityDb != null) "Save" else "Create"
 
         val namePlaceholder = "Activity Name"
 
@@ -85,13 +85,13 @@ class ActivityFormVm(
 
         fun buildColorPickerExamplesUi() = ColorPickerExamplesUi(
             mainExampleUi = ColorPickerExampleUi(
-                title = activityDb?.name ?: "New Activity",
+                title = initActivityDb?.name ?: "New Activity",
                 colorRgba = colorRgba,
             ),
             secondaryHeader = "OTHER ACTIVITIES",
             secondaryExamplesUi = Cache.activitiesDbSorted
                 .filter {
-                    it.id != activityDb?.id
+                    it.id != initActivityDb?.id
                 }
                 .map {
                     ColorPickerExampleUi(
@@ -111,7 +111,7 @@ class ActivityFormVm(
 
         state = MutableStateFlow(
             State(
-                activityDb = initActivityDb,
+                initActivityDb = initActivityDb,
                 name = tf.textNoFeatures,
                 emoji = initActivityDb?.emoji,
                 colorRgba = initActivityDb?.colorRgba ?: ActivityDb.nextColorCached(),
@@ -180,8 +180,9 @@ class ActivityFormVm(
                 shortcuts = state.shortcutsDb,
             ).textWithFeatures()
 
-            if (state.activityDb != null) {
-                state.activityDb.upByIdWithValidation(
+            val activityDb: ActivityDb? = state.initActivityDb
+            if (activityDb != null) {
+                activityDb.upByIdWithValidation(
                     name = nameWithFeatures,
                     emoji = emoji,
                     keepScreenOn = state.keepScreenOn,

@@ -284,7 +284,7 @@ fun ActivityFormFs(
                     },
                 )
 
-                val activityDb: ActivityDb? = state.activityDb
+                val activityDb: ActivityDb? = state.initActivityDb
                 if (activityDb != null) {
                     FormPaddingSectionSection()
                     FormButton(

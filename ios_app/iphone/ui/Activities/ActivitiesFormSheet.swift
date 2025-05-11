@@ -34,7 +34,7 @@ private struct ActivitiesFormSheetInner: View {
                     Button(activityUi.title) {
                         navigation.sheet {
                             ActivityFormSheet(
-                                activityDb: activityUi.activityDb
+                                initActivityDb: activityUi.activityDb
                             )
                         }
                     }
@@ -43,7 +43,7 @@ private struct ActivitiesFormSheetInner: View {
                             action: {
                                 navigation.sheet {
                                     ActivityFormSheet(
-                                        activityDb: activityUi.activityDb
+                                        initActivityDb: activityUi.activityDb
                                     )
                                 }
                             },
@@ -85,7 +85,7 @@ private struct ActivitiesFormSheetInner: View {
                     action: {
                         navigation.sheet {
                             ActivityFormSheet(
-                                activityDb: nil
+                                initActivityDb: nil
                             )
                         }
                     }
