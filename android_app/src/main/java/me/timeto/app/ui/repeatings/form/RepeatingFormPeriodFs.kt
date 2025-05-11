@@ -16,6 +16,8 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -231,6 +233,49 @@ fun RepeatingFormPeriodFs(
                             }
                         }
                     }
+                    4 -> {
+
+                        state.selectedDaysOfYear.forEachIndexed { idx, day ->
+                            FormButton(
+                                title = day.longTitle,
+                                isFirst = idx == 0,
+                                isLast = false,
+                                withArrow = true,
+                                onClick = {
+                                    navigationFs.push {
+                                        DayOfTheYearFormFs(
+                                            initDay = day,
+                                            onDone = { newDay ->
+                                                vm.addDayOfTheYear(newDay)
+                                            },
+                                            onDelete = {
+                                                vm.deleteDayOfTheYear(idx = idx)
+                                            },
+                                        )
+                                    }
+                                },
+                            )
+                        }
+
+                        FormButton(
+                            title = "New Day",
+                            titleColor = c.blue,
+                            isFirst = state.selectedDaysOfYear.isEmpty(),
+                            isLast = true,
+                            onClick = {
+                                navigationFs.push {
+                                    DayOfTheYearFormFs(
+                                        initDay = null,
+                                        onDone = { newDay ->
+                                            vm.addDayOfTheYear(newDay)
+                                        },
+                                        onDelete = {},
+                                    )
+                                }
+                            },
+                        )
+                    }
+                    else -> throw Exception()
                 }
 
                 FormPaddingBottom(withNavigation = true)
@@ -267,4 +312,127 @@ private fun DaysOfMonthItemView(
         fontSize = 13.sp,
         fontWeight = FontWeight.SemiBold,
     )
+}
+
+@Composable
+private fun DayOfTheYearFormFs(
+    initDay: RepeatingDb.Period.DaysOfYear.MonthDayItem?,
+    onDone: (RepeatingDb.Period.DaysOfYear.MonthDayItem) -> Unit,
+    onDelete: () -> Unit,
+) {
+    val navigationFs = LocalNavigationFs.current
+    val navigationLayer = LocalNavigationLayer.current
+
+    val month = remember {
+        mutableStateOf(initDay?.monthData ?: RepeatingDb.Period.DaysOfYear.months[0])
+    }
+    val dayId = remember {
+        mutableStateOf(initDay?.dayId ?: 1)
+    }
+
+    Screen {
+
+        val scrollState = rememberLazyListState()
+
+        Header(
+            title = "Day of the Year",
+            scrollState = scrollState,
+            actionButton = HeaderActionButton(
+                text = "Done",
+                isEnabled = true,
+                onClick = {
+                    onDone(
+                        RepeatingDb.Period.DaysOfYear.MonthDayItem(
+                            monthId = month.value.id,
+                            dayId = dayId.value,
+                        )
+                    )
+                    navigationLayer.close()
+                },
+            ),
+            cancelButton = HeaderCancelButton(
+                text = "Cancel",
+                onClick = {
+                    navigationLayer.close()
+                },
+            )
+        )
+
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize(),
+            state = scrollState,
+        ) {
+
+            item {
+
+                FormPaddingTop()
+
+                FormButton(
+                    title = "Month",
+                    isFirst = true,
+                    isLast = false,
+                    note = month.value.name,
+                    withArrow = true,
+                    onClick = {
+                        val pickerItems = RepeatingDb.Period.DaysOfYear.months.map { monthData ->
+                            NavigationPickerItem(
+                                title = monthData.name,
+                                isSelected = monthData.id == month.value.id,
+                                item = monthData,
+                            )
+                        }
+                        navigationFs.picker(
+                            items = pickerItems,
+                            onDone = { pickerItem ->
+                                month.value = pickerItem.item
+                                dayId.value = 1
+                            },
+                        )
+                    },
+                )
+
+                FormButton(
+                    title = "Day",
+                    isFirst = false,
+                    isLast = true,
+                    note = dayId.value.toString(),
+                    withArrow = true,
+                    onClick = {
+                        val pickerItems = month.value.days.map { day ->
+                            NavigationPickerItem(
+                                title = day.toString(),
+                                isSelected = dayId.value == day,
+                                item = day,
+                            )
+                        }
+                        navigationFs.picker(
+                            items = pickerItems,
+                            onDone = { pickerItem ->
+                                dayId.value = pickerItem.item
+                            },
+                        )
+                    },
+                )
+
+                if (initDay != null) {
+
+                    FormPaddingSectionSection()
+
+                    FormButton(
+                        title = "Delete",
+                        titleColor = c.red,
+                        isFirst = true,
+                        isLast = true,
+                        onClick = {
+                            navigationFs.confirmation("Are you sure?", "Delete") {
+                                onDelete()
+                                navigationLayer.close()
+                            }
+                        },
+                    )
+                }
+            }
+        }
+    }
 }
