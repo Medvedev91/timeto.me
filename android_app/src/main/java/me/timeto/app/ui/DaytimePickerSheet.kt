@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import me.timeto.app.VStack
 import me.timeto.app.c
 import me.timeto.app.roundedShape
-import me.timeto.shared.models.DaytimeUi
+import me.timeto.shared.misc.DaytimeUi
 
 @Composable
 fun DaytimePickerSheet(
@@ -25,7 +25,7 @@ fun DaytimePickerSheet(
     doneText: String,
     daytimeUi: DaytimeUi,
     withRemove: Boolean,
-    onPick: (DaytimeUi) -> Unit,
+    onDone: (DaytimeUi) -> Unit,
     onRemove: () -> Unit,
 ) {
 
@@ -48,7 +48,7 @@ fun DaytimePickerSheet(
                 hour = selectedHour.intValue,
                 minute = selectedMinute.intValue,
             )
-            onPick(newDaytimeUi)
+            onDone(newDaytimeUi)
             layer.close()
         }
 
