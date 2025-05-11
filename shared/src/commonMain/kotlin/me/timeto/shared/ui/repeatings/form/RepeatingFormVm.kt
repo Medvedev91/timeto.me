@@ -41,7 +41,7 @@ class RepeatingFormVm(
         val periodTitle = "Period"
         val periodNote: String = period?.title ?: "Not Selected"
 
-        val daytimeHeader = "Time of the Day"
+        val daytimeTitle = "Time of the Day"
         val daytimeNote: String = daytimeUi?.text?.let { "at $it" } ?: "Not Selected"
         val daytimePickerUi: DaytimeUi = daytimeUi ?: DaytimeUi(hour = 12, minute = 0)
 

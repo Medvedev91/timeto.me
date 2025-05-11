@@ -74,7 +74,7 @@ private struct RepeatingFormSheetInner: View {
                 NavigationLinkSheet(
                     label: {
                         HStack {
-                            Text(state.daytimeHeader)
+                            Text(state.daytimeTitle)
                                 .foregroundColor(.primary)
                             Spacer()
                             Text(state.daytimeNote)
@@ -83,7 +83,7 @@ private struct RepeatingFormSheetInner: View {
                     },
                     sheet: {
                         DaytimePickerSheet(
-                            title: state.daytimeHeader,
+                            title: state.daytimeTitle,
                             doneText: "Done",
                             daytimeUi: state.daytimePickerUi,
                             onDone: { daytimeUi in
