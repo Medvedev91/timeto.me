@@ -1,6 +1,5 @@
 package me.timeto.app.ui.daytime
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -8,22 +7,23 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import me.timeto.app.VStack
+import me.timeto.app.ZStack
 import me.timeto.app.c
 import me.timeto.app.roundedShape
 import me.timeto.app.ui.DaytimePickerView
-import me.timeto.app.ui.Sheet
-import me.timeto.app.ui.WrapperView
+import me.timeto.app.ui.Screen
+import me.timeto.app.ui.SpacerW1
+import me.timeto.app.ui.header.sheet.HeaderSheet
+import me.timeto.app.ui.header.sheet.HeaderSheetButton
+import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.misc.DaytimeUi
 
 @Composable
 fun DaytimePickerSheet(
-    layer: WrapperView.Layer,
-    modifier: Modifier = Modifier,
     title: String,
     doneText: String,
     daytimeUi: DaytimeUi,
@@ -32,35 +32,43 @@ fun DaytimePickerSheet(
     onRemove: () -> Unit,
 ) {
 
+    val navigationLayer = LocalNavigationLayer.current
+
     val selectedHour = remember { mutableIntStateOf(daytimeUi.hour) }
     val selectedMinute = remember { mutableIntStateOf(daytimeUi.minute) }
 
-    VStack(
-        modifier = modifier
-            .background(c.sheetBg),
-    ) {
+    VStack {
 
-        Sheet.HeaderViewOld(
-            onCancel = { layer.close() },
-            title = title,
-            doneText = doneText,
-            isDoneEnabled = true,
-            scrollState = null,
-        ) {
-            val newDaytimeUi = DaytimeUi(
-                hour = selectedHour.intValue,
-                minute = selectedMinute.intValue,
-            )
-            onDone(newDaytimeUi)
-            layer.close()
-        }
+        ZStack(Modifier.weight(1f))
 
-        VStack(
+        Screen(
             modifier = Modifier
-                .padding(top = 12.dp, bottom = 20.dp)
-                .navigationBarsPadding(),
-            horizontalAlignment = Alignment.CenterHorizontally,
+                .weight(1f),
+            bgColor = c.fg,
         ) {
+
+            HeaderSheet(
+                title = title,
+                doneButton = HeaderSheetButton(
+                    text = doneText,
+                    onClick = {
+                        val newDaytimeUi = DaytimeUi(
+                            hour = selectedHour.intValue,
+                            minute = selectedMinute.intValue,
+                        )
+                        onDone(newDaytimeUi)
+                        navigationLayer.close()
+                    },
+                ),
+                cancelButton = HeaderSheetButton(
+                    text = "Cancel",
+                    onClick = {
+                        navigationLayer.close()
+                    },
+                ),
+            )
+
+            SpacerW1()
 
             DaytimePickerView(
                 hour = selectedHour.intValue,
@@ -77,12 +85,16 @@ fun DaytimePickerSheet(
                         .clip(roundedShape)
                         .clickable {
                             onRemove()
-                            layer.close()
+                            navigationLayer.close()
                         }
                         .padding(horizontal = 12.dp, vertical = 4.dp),
                     color = c.red,
                 )
             }
+
+            ZStack(Modifier.navigationBarsPadding())
+
+            SpacerW1()
         }
     }
 }

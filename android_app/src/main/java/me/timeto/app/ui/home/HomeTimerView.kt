@@ -37,8 +37,7 @@ import me.timeto.app.roundedShape
 import me.timeto.app.squircleShape
 import me.timeto.app.timerFont
 import me.timeto.app.toColor
-import me.timeto.app.ui.DaytimePickerSheet
-import me.timeto.app.ui.Sheet
+import me.timeto.app.ui.daytime.DaytimePickerSheet
 import me.timeto.app.ui.activities.timer.ActivityTimerFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.readme.ReadmeFs
@@ -192,9 +191,8 @@ fun HomeTimerView(
                     text = infoUi.untilDaytimeUi.text,
                     color = timerColor,
                     onClick = {
-                        Sheet.show { layer ->
+                        navigationFs.push {
                             DaytimePickerSheet(
-                                layer = layer,
                                 title = infoUi.untilPickerTitle,
                                 doneText = "Start",
                                 daytimeUi = infoUi.untilDaytimeUi,
