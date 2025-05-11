@@ -46,6 +46,8 @@ class RepeatingFormVm(
         val daytimePickerUi: DaytimeUi = daytimeUi ?: DaytimeUi(hour = 12, minute = 0)
 
         val activityTitle = "Activity"
+        val activityNote: String =
+            activityDb?.name?.textFeatures()?.textNoFeatures ?: "Not Selected"
         val activitiesUi: List<ActivityUi> =
             Cache.activitiesDbSorted.map { ActivityUi(it) }
 
