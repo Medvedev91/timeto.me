@@ -1,4 +1,4 @@
-package me.timeto.shared.ui.tasks
+package me.timeto.shared.ui.tasks.folders
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update

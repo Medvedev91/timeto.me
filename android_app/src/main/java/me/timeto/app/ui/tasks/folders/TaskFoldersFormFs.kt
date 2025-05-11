@@ -19,7 +19,7 @@ import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.db.TaskFolderDb
-import me.timeto.shared.ui.tasks.TaskFoldersFormVm
+import me.timeto.shared.ui.tasks.folders.TaskFoldersFormVm
 
 @Composable
 fun TaskFoldersFormFs() {
