@@ -10,6 +10,7 @@ import androidx.compose.ui.text.input.ImeAction
 import me.timeto.app.c
 import me.timeto.app.rememberVm
 import me.timeto.app.ui.Screen
+import me.timeto.app.ui.daytime.DaytimePickerSheet
 import me.timeto.app.ui.form.FormInput
 import me.timeto.app.ui.form.button.FormButton
 import me.timeto.app.ui.form.padding.FormPaddingBottom
@@ -105,6 +106,29 @@ fun RepeatingFormFs(
                                 onDone = { newPeriod ->
                                     vm.setPeriod(newPeriod)
                                 },
+                            )
+                        }
+                    },
+                )
+
+                FormButton(
+                    title = state.daytimeTitle,
+                    isFirst = false,
+                    isLast = true,
+                    note = state.daytimeNote,
+                    noteColor = if (state.daytimeUi == null) c.red else c.textSecondary,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.push {
+                            DaytimePickerSheet(
+                                title = state.daytimeTitle,
+                                doneText = "Done",
+                                daytimeUi = state.daytimePickerUi,
+                                withRemove = false,
+                                onDone = { newDaytime ->
+                                    vm.setDaytime(newDaytime)
+                                },
+                                onRemove = {},
                             )
                         }
                     },
