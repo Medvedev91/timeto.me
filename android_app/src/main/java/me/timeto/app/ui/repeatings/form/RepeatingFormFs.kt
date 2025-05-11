@@ -184,7 +184,7 @@ fun RepeatingFormFs(
                 FormPaddingSectionSection()
 
                 FormButton(
-                    title = "Checklists",
+                    title = state.checklistsTitle,
                     isFirst = true,
                     isLast = false,
                     note = state.checklistsNote,
@@ -202,7 +202,7 @@ fun RepeatingFormFs(
                 )
 
                 FormButton(
-                    title = "Shortcuts",
+                    title = state.shortcutsTitle,
                     isFirst = false,
                     isLast = true,
                     note = state.shortcutsNote,
