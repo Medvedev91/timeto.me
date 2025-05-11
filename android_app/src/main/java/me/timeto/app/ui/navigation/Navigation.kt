@@ -4,28 +4,15 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.unit.dp
 import me.timeto.app.H_PADDING
-import me.timeto.app.VStack
-import me.timeto.app.ZStack
 import me.timeto.app.c
-import me.timeto.app.ui.SquircleShape
 import me.timeto.app.ui.navigation.picker.NavigationPicker
 import me.timeto.app.ui.navigation.picker.NavigationPickerItem
 import me.timeto.shared.ui.DialogsManager
-
-private val dialogShape = SquircleShape(24.dp)
 
 class Navigation : DialogsManager {
 
@@ -50,26 +37,15 @@ class Navigation : DialogsManager {
         content: @Composable ColumnScope.(layer: NavigationLayer) -> Unit,
     ) {
         push { layer ->
-            ZStack(
-                modifier = Modifier
-                    .fillMaxSize(),
-                contentAlignment = Alignment.Center,
-            ) {
-                VStack(
-                    modifier = Modifier
-                        .padding(horizontal = H_PADDING * 2)
-                        .clip(dialogShape)
-                        .background(c.fg)
-                        .pointerInput(Unit) {}
-                        .padding(innerPadding)
-                ) {
-                    content(layer)
-                }
-            }
+            NavigationDialog(
+                layer = layer,
+                innerPadding = innerPadding,
+                content = content,
+            )
         }
     }
 
-    fun <T>picker(
+    fun <T> picker(
         items: List<NavigationPickerItem<T>>,
         onDone: (item: NavigationPickerItem<T>) -> Unit,
     ) {
