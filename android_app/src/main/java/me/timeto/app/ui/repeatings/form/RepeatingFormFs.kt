@@ -11,6 +11,7 @@ import me.timeto.app.c
 import me.timeto.app.rememberVm
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.activities.ActivityPickerFs
+import me.timeto.app.ui.checklists.ChecklistsPickerFs
 import me.timeto.app.ui.daytime.DaytimePickerSheet
 import me.timeto.app.ui.form.FormInput
 import me.timeto.app.ui.form.button.FormButton
@@ -22,6 +23,7 @@ import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
+import me.timeto.app.ui.shortcuts.ShortcutsPickerFs
 import me.timeto.app.ui.timer.TimerSheet
 import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.ui.repeatings.form.RepeatingFormVm
@@ -173,6 +175,44 @@ fun RepeatingFormFs(
                                 onDone = { newTimerSeconds ->
                                     vm.setTimerSeconds(newTimerSeconds)
                                 },
+                            )
+                        }
+                    },
+                )
+
+                FormPaddingSectionSection()
+
+                FormButton(
+                    title = "Checklists",
+                    isFirst = true,
+                    isLast = false,
+                    note = state.checklistsNote,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.push {
+                            ChecklistsPickerFs(
+                                initChecklistsDb = state.checklistsDb,
+                                onDone = { newChecklistsDb ->
+                                    vm.setChecklists(newChecklistsDb)
+                                }
+                            )
+                        }
+                    },
+                )
+
+                FormButton(
+                    title = "Shortcuts",
+                    isFirst = false,
+                    isLast = true,
+                    note = state.shortcutsNote,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.push {
+                            ShortcutsPickerFs(
+                                initShortcutsDb = state.shortcutsDb,
+                                onDone = { newShortcutsDb ->
+                                    vm.setShortcuts(newShortcutsDb)
+                                }
                             )
                         }
                     },
