@@ -14,6 +14,7 @@ import me.timeto.app.ui.activities.ActivityPickerFs
 import me.timeto.app.ui.checklists.ChecklistsPickerFs
 import me.timeto.app.ui.daytime.DaytimePickerSheet
 import me.timeto.app.ui.form.FormInput
+import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.form.button.FormButton
 import me.timeto.app.ui.form.padding.FormPaddingBottom
 import me.timeto.app.ui.form.padding.FormPaddingSectionSection
@@ -216,6 +217,18 @@ fun RepeatingFormFs(
                             )
                         }
                     },
+                )
+
+                FormPaddingSectionSection()
+
+                FormSwitch(
+                    title = state.isImportantTitle,
+                    isEnabled = state.isImportant,
+                    isFirst = true,
+                    isLast = true,
+                    onChange = { newIsImportant ->
+                        vm.setIsImportant(newIsImportant)
+                    }
                 )
 
                 FormPaddingBottom(withNavigation = true)
