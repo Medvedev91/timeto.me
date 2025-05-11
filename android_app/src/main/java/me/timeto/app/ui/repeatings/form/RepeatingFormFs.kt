@@ -231,7 +231,29 @@ fun RepeatingFormFs(
                     }
                 )
 
-                FormPaddingBottom(withNavigation = true)
+                val repeatingDb: RepeatingDb? = state.initRepeatingDb
+                if (repeatingDb != null) {
+                    FormPaddingSectionSection()
+                    FormButton(
+                        title = "Delete Repeating Task",
+                        titleColor = c.red,
+                        isFirst = true,
+                        isLast = true,
+                        onClick = {
+                            vm.delete(
+                                repeatingDb = repeatingDb,
+                                dialogsManager = navigationFs,
+                                onSuccess = {
+                                    navigationLayer.close()
+                                },
+                            )
+                        },
+                    )
+                }
+
+                FormPaddingBottom(
+                    withNavigation = true,
+                )
             }
         }
     }
