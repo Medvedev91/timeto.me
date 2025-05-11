@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.VStack
 import me.timeto.app.ZStack
+import me.timeto.app.c
 import me.timeto.app.dpToPx
 import me.timeto.app.isSDKQPlus
 import me.timeto.app.rememberVm
@@ -51,6 +52,7 @@ fun TimerSheet(
         Screen(
             modifier = Modifier
                 .weight(1f),
+            bgColor = c.fg,
         ) {
 
             HeaderSheet(
