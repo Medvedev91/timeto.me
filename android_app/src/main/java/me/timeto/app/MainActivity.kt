@@ -34,6 +34,7 @@ import me.timeto.shared.*
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.misc.BatteryInfo
 import me.timeto.shared.misc.backups.AutoBackup
+import me.timeto.shared.ui.shortcuts.ShortcutPerformer
 import me.timeto.shared.vm.AppVm
 
 class MainActivity : ComponentActivity() {
@@ -195,9 +196,9 @@ private fun UiListeners() {
                 ConfirmationDialogView(data) { layer.close() }
             }
         }
-        uiShortcutFlow.onEachExIn(this) { shortcut ->
+        ShortcutPerformer.flow.onEachExIn(this) { shortcutDb ->
             try {
-                val uri: String = shortcut.uri
+                val uri: String = shortcutDb.uri
                 if (uri.startsWith(ShortcutDb.ANDROID_PACKAGE_PREFIX)) {
                     val androidPackage = uri.replaceFirst(ShortcutDb.ANDROID_PACKAGE_PREFIX, "")
                     val intent: Intent? = context.packageManager.getLaunchIntentForPackage(androidPackage)
@@ -206,7 +207,7 @@ private fun UiListeners() {
                     else
                         context.startActivity(intent)
                 } else {
-                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(shortcut.uri)))
+                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(shortcutDb.uri)))
                 }
             } catch (e: ActivityNotFoundException) {
                 showUiAlert("Invalid shortcut link")
