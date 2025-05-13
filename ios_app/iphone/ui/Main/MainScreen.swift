@@ -29,7 +29,7 @@ struct MainScreen: View {
             
             MainTabsView(tab: $tab)
         }
-        .ignoresSafeArea(.keyboard) // To hide tab bar under the keyboard
+        .ignoresSafeArea(.keyboard) // Hide tab bar under the keyboard
         .onReceive(shortcutPublisher) { shortcutDb in
             guard let swiftUrl = URL(string: shortcutDb.uri), UIApplication.shared.canOpenURL(swiftUrl) else {
                 Utils_kmpKt.showUiAlert(message: "Invalid shortcut link", reportApiText: nil)
