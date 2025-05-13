@@ -69,10 +69,6 @@ data class ChecklistDb(
     fun getItemsCached(): List<ChecklistItemDb> =
         Cache.checklistItemsDb.filter { it.list_id == id }
 
-    fun performUI() {
-        launchExDefault { uiChecklistFlow.emit(this@ChecklistDb) }
-    }
-
     @Throws(UiException::class, CancellationException::class)
     suspend fun updateWithValidation(
         name: String,
