@@ -43,6 +43,7 @@ fun ChecklistView(
     withAddButton: Boolean,
     topPadding: Dp,
     bottomPadding: Dp,
+    withNavigationPadding: Boolean,
 ) {
 
     val (_, state) = rememberVm(checklistDb) {
@@ -144,6 +145,12 @@ fun ChecklistView(
                                 fontSize = itemFontSize,
                             )
                         }
+                    }
+                }
+
+                if (withNavigationPadding) {
+                    item {
+                        ZStack(Modifier.navigationBarsPadding())
                     }
                 }
             }

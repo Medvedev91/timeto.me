@@ -16,6 +16,7 @@ import me.timeto.shared.db.ChecklistDb
 @Composable
 fun ChecklistScreen(
     checklistDb: ChecklistDb,
+    withNavigationPadding: Boolean,
 ) {
 
     val navigationFs = LocalNavigationFs.current
@@ -60,6 +61,7 @@ fun ChecklistScreen(
             withAddButton = true,
             topPadding = 5.dp,
             bottomPadding = 16.dp,
+            withNavigationPadding = withNavigationPadding,
         )
     }
 }

@@ -188,6 +188,7 @@ fun SettingsScreen(
                             navigationScreen.push {
                                 ChecklistScreen(
                                     checklistDb = checklistDb,
+                                    withNavigationPadding = false,
                                 )
                             }
                         },
