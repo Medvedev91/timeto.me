@@ -36,12 +36,12 @@ fun TriggersIconsView(
 
     HStack {
         shortcutsDb.forEach { shortcutDb ->
-            IconView(IconType.Shortcut) {
+            IconView(IconType.shortcut) {
                 shortcutDb.performUi()
             }
         }
         checklistsDb.forEach { checklistDb ->
-            IconView(IconType.Checklist) {
+            IconView(IconType.checklist) {
                 navigationFs.push {
                     ChecklistScreen(
                         checklistDb = checklistDb,
@@ -59,12 +59,12 @@ private fun IconView(
     onClick: () -> Unit,
 ) {
     @DrawableRes val icon: Int = when (iconType) {
-        IconType.Checklist -> R.drawable.sf_checkmark_circle_fill_medium_regular
-        IconType.Shortcut -> R.drawable.sf_arrow_up_forward_circle_fill_medium_regular
+        IconType.checklist -> R.drawable.sf_checkmark_circle_fill_medium_regular
+        IconType.shortcut -> R.drawable.sf_arrow_up_forward_circle_fill_medium_regular
     }
     val color: Color = when (iconType) {
-        IconType.Checklist -> c.green
-        IconType.Shortcut -> c.red
+        IconType.checklist -> c.green
+        IconType.shortcut -> c.red
     }
     Icon(
         painter = painterResource(id = icon),
@@ -81,6 +81,6 @@ private fun IconView(
 }
 
 private enum class IconType {
-    Checklist,
-    Shortcut,
+    checklist,
+    shortcut,
 }
