@@ -213,14 +213,6 @@ private fun UiListeners() {
                 showUiAlert("Invalid shortcut link")
             }
         }
-        uiChecklistFlow.onEachExIn(this) { checklist ->
-            Sheet.show { layer ->
-                ChecklistSheet(
-                    layer = layer,
-                    checklist = checklist,
-                )
-            }
-        }
     }
 }
 
