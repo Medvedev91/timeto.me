@@ -3,23 +3,14 @@ import Combine
 import shared
 
 private let shortcutPublisher: AnyPublisher<ShortcutDb, Never> = ShortcutPerformer.shared.flow.toPublisher()
-private let checklistPublisher: AnyPublisher<ChecklistDb, Never> = Utils_kmpKt.uiChecklistFlow.toPublisher()
 
 struct MainScreen: View {
-    
-    // todo remove
-    @State private var triggersChecklist: ChecklistDb?
-    // todo remove
-    @State private var isTriggersChecklistPresented = false
     
     @State private var tab: MainTabEnum = .home
     
     var body: some View {
         
         ZStack(alignment: .bottom) {
-            
-            // todo remove PROVOKE_STATE_UPDATE
-            EmptyView().id("MainView checklist \(triggersChecklist?.id ?? 0)")
             
             switch tab {
             case .home:
@@ -45,17 +36,6 @@ struct MainScreen: View {
                 return
             }
             UIApplication.shared.open(swiftUrl)
-        }
-        // todo remove AI
-        .onReceive(checklistPublisher) { checklist in
-            triggersChecklist = checklist
-            isTriggersChecklistPresented = true
-        }
-        // todo remove AI
-        .sheetEnv(isPresented: $isTriggersChecklistPresented) {
-            if let checklist = triggersChecklist {
-                ChecklistSheet(isPresented: $isTriggersChecklistPresented, checklist: checklist)
-            }
         }
     }
 }
