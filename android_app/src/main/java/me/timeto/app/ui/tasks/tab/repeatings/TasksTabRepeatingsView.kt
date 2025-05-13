@@ -32,6 +32,7 @@ import me.timeto.app.c
 import me.timeto.app.rememberVm
 import me.timeto.app.squircleShape
 import me.timeto.app.ui.Divider
+import me.timeto.app.ui.TriggersIconsView
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.repeatings.form.RepeatingFormFs
 import me.timeto.app.ui.tasks.tab.TasksTabView__LIST_SECTION_PADDING
@@ -144,6 +145,11 @@ fun TasksTabRepeatingsView() {
                                 color = c.text,
                             )
 
+                            TriggersIconsView(
+                                checklistsDb = repeatingUi.textFeatures.checklists,
+                                shortcutsDb = repeatingUi.textFeatures.shortcuts,
+                            )
+
                             if (repeatingUi.repeatingDb.isImportant) {
                                 Icon(
                                     painter = painterResource(R.drawable.sf_flag_fill_medium_regular),
@@ -151,8 +157,7 @@ fun TasksTabRepeatingsView() {
                                     tint = c.red,
                                     modifier = Modifier
                                         .padding(start = 8.dp)
-                                        .offset(y = 1.dp)
-                                        .size(16.dp),
+                                        .size(17.dp),
                                 )
                             }
                         }
