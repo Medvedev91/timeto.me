@@ -2,8 +2,7 @@ import SwiftUI
 import Combine
 import shared
 
-private let shortcutPublisher: AnyPublisher<ShortcutDb, Never> = Utils_kmpKt.uiShortcutFlow.toPublisher()
-// todo remove
+private let shortcutPublisher: AnyPublisher<ShortcutDb, Never> = ShortcutPerformer.shared.flow.toPublisher()
 private let checklistPublisher: AnyPublisher<ChecklistDb, Never> = Utils_kmpKt.uiChecklistFlow.toPublisher()
 
 struct MainScreen: View {
@@ -40,13 +39,12 @@ struct MainScreen: View {
             MainTabsView(tab: $tab)
         }
         .ignoresSafeArea(.keyboard) // To hide tab bar under the keyboard
-        .onReceive(shortcutPublisher) { shortcut in
-            let swiftURL = URL(string: shortcut.uri)!
-            if !UIApplication.shared.canOpenURL(swiftURL) {
+        .onReceive(shortcutPublisher) { shortcutDb in
+            guard let swiftUrl = URL(string: shortcutDb.uri), UIApplication.shared.canOpenURL(swiftUrl) else {
                 Utils_kmpKt.showUiAlert(message: "Invalid shortcut link", reportApiText: nil)
                 return
             }
-            UIApplication.shared.open(swiftURL)
+            UIApplication.shared.open(swiftUrl)
         }
         // todo remove AI
         .onReceive(checklistPublisher) { checklist in
