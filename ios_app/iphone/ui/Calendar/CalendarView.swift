@@ -42,7 +42,7 @@ private struct CalendarViewInner: View {
                         }
                     }
                 }
-                .padding(.top, 4)
+                .padding(.top, 8)
                 
                 Divider()
                     .padding(.top, 2.0)
