@@ -24,6 +24,9 @@ private struct CalendarListViewInner: View {
             
             VStack {
                 
+                ZStack {}
+                    .frame(height: 16)
+                
                 let eventsUi = state.eventsUi.reversed()
                 ForEach(eventsUi, id: \.eventDb.id) { eventUi in
                     CalendarListItemView(
