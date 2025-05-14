@@ -97,7 +97,7 @@ private struct CalendarViewInner: View {
                                         
                                         Button(
                                             action: {
-                                                selectedDay = day.unixDay
+                                                selectedDay = (selectedDay == day.unixDay ? nil : day.unixDay)
                                             },
                                             label: {
                                                 
