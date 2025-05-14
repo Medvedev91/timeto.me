@@ -46,10 +46,12 @@ class Navigation: DialogsManager {
     }
     
     func fullScreen<Content: View>(
+        withAnimation: Bool = true,
         @ViewBuilder content: @escaping () -> Content
     ) {
         fullScreenViews.append(
             NavigationFullScreen(
+                withAnimation: withAnimation,
                 content: {
                     AnyView(content())
                 },

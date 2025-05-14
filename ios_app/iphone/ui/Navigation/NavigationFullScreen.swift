@@ -2,6 +2,7 @@ import SwiftUI
 
 struct NavigationFullScreen<Content>: View, Identifiable where Content: View {
     
+    let withAnimation: Bool
     @ViewBuilder var content: () -> Content
     let onRemove: (_ id: String) -> Void
     
@@ -25,7 +26,15 @@ struct NavigationFullScreen<Content>: View, Identifiable where Content: View {
                     .attachNavigation()
             }
             .onAppear {
-                isPresented = true
+                if withAnimation {
+                    isPresented = true
+                } else {
+                    var transaction = Transaction()
+                    transaction.disablesAnimations = true
+                    withTransaction(transaction) {
+                        isPresented = true
+                    }
+                }
             }
     }
 }
