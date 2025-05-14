@@ -17,7 +17,13 @@ struct CalendarTabsView: View {
             .pickerStyle(.segmented)
             .padding(.horizontal, H_PADDING)
             
-            CalendarView()
+            switch tab {
+            case .calendar:
+                CalendarView()
+            case .list:
+                CalendarListView()
+                    .padding(.horizontal, H_PADDING)
+            }
         }
     }
 }
