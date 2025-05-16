@@ -15,7 +15,7 @@ import me.timeto.shared.ui.UiException
 import me.timeto.shared.vm.__Vm
 
 class EventFormVm(
-    private val initEventDb: EventDb?,
+    val initEventDb: EventDb?,
     initText: String?,
     initTime: Int?,
 ) : __Vm<EventFormVm.State>() {
@@ -122,5 +122,25 @@ class EventFormVm(
         } catch (e: UiException) {
             dialogsManager.alert(e.uiMessage)
         }
+    }
+
+    fun delete(
+        eventDb: EventDb,
+        dialogsManager: DialogsManager,
+        onSuccess: () -> Unit,
+    ) {
+        val text: String = eventDb.text.textFeatures().textNoFeatures
+        dialogsManager.confirmation(
+            message = "Are you sure you want to delete \"$text\" event?",
+            buttonText = "Delete",
+            onConfirm = {
+                launchExIo {
+                    eventDb.delete()
+                    onUi {
+                        onSuccess()
+                    }
+                }
+            },
+        )
     }
 }
