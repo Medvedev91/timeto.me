@@ -8,9 +8,13 @@ import me.timeto.shared.launchExIo
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toTimerHintNote
+import me.timeto.shared.ui.activities.timer.ActivityTimerStrategy
+import me.timeto.shared.ui.activities.timer.ActivityTimerVm
 import me.timeto.shared.vm.__Vm
 
-class ActivitiesVm : __Vm<ActivitiesVm.State>() {
+class ActivitiesVm(
+    private val timerStrategy: ActivityTimerStrategy,
+) : __Vm<ActivitiesVm.State>() {
 
     data class State(
         val activitiesUi: List<ActivityUi>
@@ -19,7 +23,12 @@ class ActivitiesVm : __Vm<ActivitiesVm.State>() {
     override val state = MutableStateFlow(
         State(
             activitiesUi =
-                Cache.activitiesDbSorted.map { ActivityUi(it) },
+                Cache.activitiesDbSorted.map { activityDb ->
+                    ActivityUi(
+                        activityDb = activityDb,
+                        timerStrategy = timerStrategy,
+                    )
+                },
         )
     )
 
@@ -27,7 +36,12 @@ class ActivitiesVm : __Vm<ActivitiesVm.State>() {
         val scopeVm = scopeVm()
         ActivityDb.selectSortedFlow().onEachExIn(scopeVm) { activitiesDb ->
             state.update { state ->
-                state.copy(activitiesUi = activitiesDb.map { ActivityUi(it) })
+                state.copy(activitiesUi = activitiesDb.map { activityDb ->
+                    ActivityUi(
+                        activityDb = activityDb,
+                        timerStrategy = timerStrategy,
+                    )
+                })
             }
         }
     }
@@ -45,6 +59,7 @@ class ActivitiesVm : __Vm<ActivitiesVm.State>() {
 
     class ActivityUi(
         val activityDb: ActivityDb,
+        val timerStrategy: ActivityTimerStrategy,
     ) {
 
         val text: String =
@@ -59,7 +74,11 @@ class ActivitiesVm : __Vm<ActivitiesVm.State>() {
                     seconds = seconds,
                     onTap = {
                         launchExIo {
-                            activityDb.startInterval(seconds)
+                            ActivityTimerVm.startInterval(
+                                seconds = seconds,
+                                activityDb = activityDb,
+                                strategy = timerStrategy,
+                            )
                         }
                     },
                 )
