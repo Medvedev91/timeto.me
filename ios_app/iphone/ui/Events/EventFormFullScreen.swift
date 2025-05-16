@@ -122,6 +122,20 @@ private struct EventFormFullScreenInner: View {
         }
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
+            if let eventDb = vm.initEventDb {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Delete") {
+                        vm.delete(
+                            eventDb: eventDb,
+                            dialogsManager: navigation,
+                            onSuccess: {
+                                dismiss()
+                            }
+                        )
+                    }
+                    .foregroundColor(.red)
+                }
+            }
             ToolbarItem(placement: .primaryAction) {
                 Button("Cancel") {
                     dismiss()
