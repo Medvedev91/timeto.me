@@ -12,7 +12,9 @@ struct ActivitiesView: View {
     
     var body: some View {
         VmView({
-            ActivitiesVm()
+            ActivitiesVm(
+                timerStrategy: timerStrategy
+            )
         }) { vm, state in
             ActivitiesViewInner(
                 vm: vm,
@@ -102,7 +104,9 @@ private struct ActivitiesViewInner: View {
                                     } else {
                                         Button(
                                             action: {
-                                                openTimerHintsForm(activityDb: activityUi.activityDb)
+                                                openTimerHintsForm(
+                                                    activityDb: activityUi.activityDb
+                                                )
                                             },
                                             label: {
                                                 Image(systemName: "plus")
