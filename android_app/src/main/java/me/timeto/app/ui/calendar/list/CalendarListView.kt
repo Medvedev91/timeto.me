@@ -11,9 +11,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import me.timeto.app.H_PADDING
+import me.timeto.app.H_PADDING_HALF
 import me.timeto.app.ZStack
 import me.timeto.app.c
 import me.timeto.app.rememberVm
+import me.timeto.app.squircleShape
 import me.timeto.app.ui.tasks.tab.TasksTabView__LIST_SECTION_PADDING
 import me.timeto.app.ui.tasks.tab.TasksTabView__PADDING_END
 import me.timeto.shared.ui.calendar.CalendarListVm
@@ -31,7 +33,7 @@ fun CalendarListView(
         modifier = modifier,
         reverseLayout = true,
         contentPadding = PaddingValues(
-            end = TasksTabView__PADDING_END,
+            end = TasksTabView__PADDING_END - H_PADDING_HALF,
             top = TasksTabView__LIST_SECTION_PADDING,
         ),
     ) {
@@ -58,6 +60,9 @@ fun CalendarListView(
                 CalendarListItemView(
                     eventUi = eventUi,
                     withTopDivider = (state.eventsUi.size - 1) != idx,
+                    clip = squircleShape,
+                    modifier = Modifier
+                        .padding(start = H_PADDING_HALF),
                 )
             }
         }
