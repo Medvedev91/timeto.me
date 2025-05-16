@@ -140,9 +140,9 @@ private struct CalendarViewInner: View {
                             
                             let isDaySelected: Bool = selectedDayLocal != nil
                             if isDaySelected {
-                                EventsCalendarDayView(unixDay: selectedDayLocal!!.unixDay.toInt())
-                                // Force update on selectedDay changes
-                                    .id("EventsCalendarDayView_\(selectedDayLocal!!.unixDay)")
+                                CalendarDayView(
+                                    unixDay: selectedDayLocal!!.unixDay.toInt()
+                                )
                             }
                         }
                     }
