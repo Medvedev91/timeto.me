@@ -57,7 +57,9 @@ fun ActivitiesView(
     val navigationFs = LocalNavigationFs.current
 
     val (vm, state) = rememberVm {
-        ActivitiesVm()
+        ActivitiesVm(
+            timerStrategy = timerStrategy,
+        )
     }
 
     LazyColumn(
