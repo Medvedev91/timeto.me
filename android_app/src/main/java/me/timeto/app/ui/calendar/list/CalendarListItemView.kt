@@ -19,6 +19,8 @@ import me.timeto.app.VStack
 import me.timeto.app.ZStack
 import me.timeto.app.c
 import me.timeto.app.ui.TriggersIconsView
+import me.timeto.app.ui.events.EventsFormFs
+import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.shared.ui.calendar.CalendarListVm
 
 @Composable
@@ -28,6 +30,8 @@ fun CalendarListItemView(
     clip: Shape,
     modifier: Modifier,
 ) {
+
+    val navigationFs = LocalNavigationFs.current
 
     ZStack(
         modifier = modifier,
@@ -39,6 +43,13 @@ fun CalendarListItemView(
                 .fillMaxWidth()
                 .clip(clip)
                 .clickable {
+                    navigationFs.push {
+                        EventsFormFs(
+                            initEventDb = eventUi.eventDb,
+                            initText = null,
+                            initTime = null,
+                        )
+                    }
                 }
                 .padding(horizontal = H_PADDING_HALF)
                 .padding(vertical = 10.dp),
