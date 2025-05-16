@@ -3,7 +3,7 @@ import shared
 
 struct EventTemplatesView: View {
     
-    let onDone: (EventTemplateUi) -> Void
+    let onDone: (EventTemplateDb) -> Void
     
     var body: some View {
         VmView({
@@ -21,7 +21,7 @@ private struct EventTemplatesViewInner: View {
     
     let state: EventTemplatesVm.State
     
-    let onDone: (EventTemplateUi) -> Void
+    let onDone: (EventTemplateDb) -> Void
 
     ///
 
@@ -40,7 +40,7 @@ private struct EventTemplatesViewInner: View {
                     
                     Button(
                         action: {
-                            onDone(templateUi)
+                            onDone(templateUi.eventTemplateDb)
                         },
                         label: {
                             ListButton(
