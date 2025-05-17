@@ -12,8 +12,8 @@ import me.timeto.app.onePx
 
 @Composable
 fun Divider(
-    color: Color? = null,
     modifier: Modifier = Modifier,
+    color: Color? = null,
 ) {
     ZStack(
         modifier = modifier
