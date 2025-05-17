@@ -162,7 +162,7 @@ fun CalendarView(
                             exit = shrinkVertically(),
                         ) {
                             if (isDaySelected) {
-                                EventsCalendarDayView(
+                                CalendarDayView(
                                     unixDay = selectedDayLocal!!.unixDay,
                                 )
                             }
