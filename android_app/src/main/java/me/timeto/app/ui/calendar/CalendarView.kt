@@ -25,7 +25,6 @@ import me.timeto.app.VStack
 import me.timeto.app.c
 import me.timeto.app.rememberVm
 import me.timeto.app.ui.Divider
-import me.timeto.app.ui.EventsCalendarDayView
 import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.tasks.tab.TasksTabView__PADDING_END
 import me.timeto.shared.ui.calendar.CalendarVm
