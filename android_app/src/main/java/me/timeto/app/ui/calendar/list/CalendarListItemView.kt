@@ -19,7 +19,7 @@ import me.timeto.app.VStack
 import me.timeto.app.ZStack
 import me.timeto.app.c
 import me.timeto.app.ui.TriggersIconsView
-import me.timeto.app.ui.events.EventsFormFs
+import me.timeto.app.ui.events.EventFormFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.shared.ui.calendar.CalendarListVm
 
@@ -44,7 +44,7 @@ fun CalendarListItemView(
                 .clip(clip)
                 .clickable {
                     navigationFs.push {
-                        EventsFormFs(
+                        EventFormFs(
                             initEventDb = eventUi.eventDb,
                             initText = null,
                             initTime = null,

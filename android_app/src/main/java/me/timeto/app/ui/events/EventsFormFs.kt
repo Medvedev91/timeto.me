@@ -58,7 +58,7 @@ import me.timeto.shared.db.EventDb
 import me.timeto.shared.ui.events.EventFormVm
 
 @Composable
-fun EventsFormFs(
+fun EventFormFs(
     initEventDb: EventDb?,
     initText: String?,
     initTime: Int?,
