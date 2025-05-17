@@ -1,5 +1,6 @@
 package me.timeto.app.ui.calendar
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.HStack
 import me.timeto.app.H_PADDING
+import me.timeto.app.MainActivity
 import me.timeto.app.VStack
 import me.timeto.app.c
 import me.timeto.app.goldenRatioUp
@@ -38,8 +40,11 @@ fun CalendarTabsView() {
         mutableStateOf(true)
     }
 
+    val mainActivity = LocalActivity.current as MainActivity
+
     VStack(
         modifier = Modifier
+            .padding(top = mainActivity.statusBarHeightDp)
             .fillMaxSize(),
     ) {
 
