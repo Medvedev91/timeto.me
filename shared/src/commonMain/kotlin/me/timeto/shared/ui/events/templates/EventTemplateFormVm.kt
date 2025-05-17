@@ -40,6 +40,8 @@ class EventTemplateFormVm(
 
         val activityDb: ActivityDb? = textFeatures.activity
         val activityTitle = "Activity"
+        val activityNote: String =
+            activityDb?.name?.textFeatures()?.textNoFeatures ?: "Not Selected"
         val activitiesUi: List<ActivityUi> =
             Cache.activitiesDbSorted.map { ActivityUi(it) }
 
