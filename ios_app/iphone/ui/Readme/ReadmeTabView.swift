@@ -36,7 +36,7 @@ struct ReadmeTabView: View {
                         HStack {
                             Text(paragraph.text)
                                 .foregroundColor(.primary)
-                                .font(.system(size: Fs__TITLE_FONT_SIZE, weight: Fs__TITLE_FONT_WEIGHT))
+                                .font(.system(size: 27, weight: .heavy))
                                 .padding(.top, paddingTop)
                                 .padding(.horizontal, H_PADDING)
                             Spacer()

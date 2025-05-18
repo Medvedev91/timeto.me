@@ -143,7 +143,6 @@ extension View {
             onDismiss: onDismiss,
             content: {
                 content()
-                    .attachFs()
                     .attachTimetoAlert()
                     .attachNativeSheet()
                     .attachNavigation()
