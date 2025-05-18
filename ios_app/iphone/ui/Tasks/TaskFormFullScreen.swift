@@ -182,10 +182,19 @@ private struct TaskFormFullScreenInner: View {
         }
         .toolbar {
             
-            ToolbarItem(placement: .cancellationAction) {
-                Button("Delete") {
+            if let strategy = vm.strategy as? TaskFormStrategy.EditTask {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Delete") {
+                        vm.delete(
+                            taskDb: strategy.taskDb,
+                            dialogsManager: navigation,
+                            onSuccess: {
+                                dismiss()
+                            }
+                        )
+                    }
+                    .foregroundColor(.red)
                 }
-                .foregroundColor(.red)
             }
             
             ToolbarItem(placement: .primaryAction) {
