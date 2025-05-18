@@ -5,6 +5,8 @@ struct NavigationLinkSheet<
     SheetContent: View
 >: View {
     
+    var withHideKeyboard: Bool = true
+    
     let label: () -> LabelContent
     let sheet: () -> SheetContent
     
@@ -16,7 +18,9 @@ struct NavigationLinkSheet<
         // https://stackoverflow.com/a/72030978
         Button(
             action: {
-                hideKeyboard()
+                if withHideKeyboard {
+                    hideKeyboard()
+                }
                 navigation.sheet {
                     sheet()
                 }
