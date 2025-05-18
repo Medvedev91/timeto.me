@@ -41,11 +41,18 @@ import me.timeto.app.halfDpCeil
 import me.timeto.app.rememberVm
 import me.timeto.app.roundedShape
 import me.timeto.app.ui.Screen
+import me.timeto.app.ui.activities.ActivityPickerFs
+import me.timeto.app.ui.checklists.ChecklistsPickerFs
+import me.timeto.app.ui.form.button.FormButton
+import me.timeto.app.ui.form.padding.FormPaddingSectionSection
+import me.timeto.app.ui.form.padding.FormPaddingTop
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.header.HeaderSecondaryButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
+import me.timeto.app.ui.shortcuts.ShortcutsPickerFs
+import me.timeto.app.ui.timer.TimerSheet
 import me.timeto.shared.ui.tasks.form.TaskFormStrategy
 import me.timeto.shared.ui.tasks.form.TaskFormVm
 
@@ -110,16 +117,95 @@ fun TaskFormFs(
                 .verticalScroll(
                     state = scrollState,
                     reverseScrolling = true,
-                )
+                ),
         ) {
+
+            FormPaddingTop()
+
+            FormButton(
+                title = state.activityTitle,
+                isFirst = true,
+                isLast = false,
+                note = state.activityNote,
+                noteColor = c.textSecondary,
+                withArrow = true,
+                onClick = {
+                    navigationFs.push {
+                        ActivityPickerFs(
+                            initActivityDb = state.activityDb,
+                            onDone = { newActivityDb ->
+                                vm.setActivity(newActivityDb)
+                            },
+                        )
+                    }
+                },
+            )
+
+            FormButton(
+                title = state.timerTitle,
+                isFirst = false,
+                isLast = true,
+                note = state.timerNote,
+                noteColor = c.textSecondary,
+                withArrow = true,
+                onClick = {
+                    navigationFs.push {
+                        TimerSheet(
+                            title = state.timerTitle,
+                            doneTitle = "Done",
+                            initSeconds = state.timerSecondsPicker,
+                            onDone = { newTimerSeconds ->
+                                vm.setTimer(newTimerSeconds)
+                            },
+                        )
+                    }
+                },
+            )
+
+            FormPaddingSectionSection()
+
+            FormButton(
+                title = state.checklistsTitle,
+                isFirst = true,
+                isLast = false,
+                note = state.checklistsNote,
+                withArrow = true,
+                onClick = {
+                    navigationFs.push {
+                        ChecklistsPickerFs(
+                            initChecklistsDb = state.checklistsDb,
+                            onDone = { newChecklistsDb ->
+                                vm.setChecklists(newChecklistsDb)
+                            }
+                        )
+                    }
+                },
+            )
+
+            FormButton(
+                title = state.shortcutsTitle,
+                isFirst = false,
+                isLast = true,
+                note = state.shortcutsNote,
+                withArrow = true,
+                onClick = {
+                    navigationFs.push {
+                        ShortcutsPickerFs(
+                            initShortcutsDb = state.shortcutsDb,
+                            onDone = { newShortcutsDb ->
+                                vm.setShortcuts(newShortcutsDb)
+                            }
+                        )
+                    }
+                },
+            )
         }
 
         HStack(
             modifier = Modifier
                 .background(c.fg)
                 .padding(vertical = 4.dp)
-                .navigationBarsPadding()
-                .imePadding(),
+                .navigationBarsPadding(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
 
