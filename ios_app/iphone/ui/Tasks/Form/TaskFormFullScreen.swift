@@ -68,7 +68,7 @@ private struct TaskFormFullScreenInner: View {
                         }
                     }
                     .pickerStyle(.menu)
-                    .accentColor(activityDb == nil ? .red : .secondary)
+                    .accentColor(.secondary)
                     .foregroundColor(.primary)
                     .onChange(of: activityDb) { _, newActivityDb in
                         vm.setActivity(activityDb: newActivityDb)
@@ -80,7 +80,7 @@ private struct TaskFormFullScreenInner: View {
                                 Text(state.timerTitle)
                                 Spacer()
                                 Text(state.timerNote)
-                                    .foregroundColor(state.timerSeconds == nil ? .red : .secondary)
+                                    .foregroundColor(.secondary)
                             }
                         },
                         sheet: {
