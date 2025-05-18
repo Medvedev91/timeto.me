@@ -144,7 +144,6 @@ extension View {
             content: {
                 content()
                     .attachTimetoAlert()
-                    .attachNativeSheet()
                     .attachNavigation()
             }
         )

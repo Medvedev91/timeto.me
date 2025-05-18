@@ -31,7 +31,6 @@ struct IosApp: App {
                     MainScreen()
                         .attachTimetoAlert()
                         .attachAutoBackupIos()
-                        .attachNativeSheet()
                         .statusBar(hidden: true)
                         .onReceive(scheduledNotificationsDataPublisher) {
                             let center = UNUserNotificationCenter.current()
