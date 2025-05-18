@@ -203,100 +203,100 @@ private struct SummarySheetInner: View {
         
         Spacer()
         
-        Sheet__BottomView {
+        VStack {
             
-            VStack {
+            Divider()
+            
+            HStack {
                 
-                HStack {
-                    
-                    ForEachIndexed(state.periodHints) { _, period in
-                        
-                        Button(
-                            action: {
-                                vm.setPeriod(
-                                    pickerTimeStart: period.pickerTimeStart,
-                                    pickerTimeFinish: period.pickerTimeFinish
-                                )
-                            },
-                            label: {
-                                Text(period.title)
-                                    .font(.system(size: 14, weight: period.isActive ? .bold : .light))
-                                    .foregroundColor(period.isActive ? c.white : c.text)
-                                    .padding(.horizontal, 8)
-                                    .padding(.vertical, 6)
-                            }
-                        )
-                    }
-                }
-                .padding(.top, 12)
-                
-                HStack {
+                ForEachIndexed(state.periodHints) { _, period in
                     
                     Button(
                         action: {
-                            isChartVisible.toggle()
+                            vm.setPeriod(
+                                pickerTimeStart: period.pickerTimeStart,
+                                pickerTimeFinish: period.pickerTimeFinish
+                            )
                         },
                         label: {
-                            HStack {
-                                Image(systemName: "chart.pie")
-                                    .font(.system(
-                                        size: isChartVisible ? 20 : bottomBarButtonFontSize,
-                                        weight: bottomBarButtonFontWeight
-                                    ))
-                                    .foregroundColor(isChartVisible ? c.white : bottomBarButtonFontColor)
-                            }
-                            .frame(width: bottomBarButtonFrameSize, height: bottomBarButtonFrameSize)
-                            .background(roundedShape.fill(isChartVisible ? c.blue : c.transparent))
-                        }
-                    )
-                    
-                    Spacer()
-                    
-                    DatePickerStateView(
-                        unixTime: state.pickerTimeStart,
-                        minTime: state.minPickerTime,
-                        maxTime: state.maxPickerTime
-                    ) { newTime in
-                        vm.setPickerTimeStart(unixTime: newTime)
-                    }
-                    .labelsHidden()
-                    
-                    Text("-")
-                        .padding(.horizontal, 6)
-                    
-                    DatePickerStateView(
-                        unixTime: state.pickerTimeFinish,
-                        minTime: state.minPickerTime,
-                        maxTime: state.maxPickerTime
-                    ) { newTime in
-                        vm.setPickerTimeFinish(unixTime: newTime)
-                    }
-                    .labelsHidden()
-                    
-                    Spacer()
-                    
-                    Button(
-                        action: {
-                            dismiss()
-                            onClose()
-                        },
-                        label: {
-                            HStack {
-                                Image(systemName: "xmark.circle")
-                                    .font(.system(
-                                        size: bottomBarButtonFontSize,
-                                        weight: bottomBarButtonFontWeight
-                                    ))
-                                    .foregroundColor(bottomBarButtonFontColor)
-                            }
-                            .frame(width: bottomBarButtonFrameSize, height: bottomBarButtonFrameSize)
+                            Text(period.title)
+                                .font(.system(size: 14, weight: period.isActive ? .bold : .light))
+                                .foregroundColor(period.isActive ? c.white : c.text)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 6)
                         }
                     )
                 }
-                .padding(.top, 10)
-                .padding(.horizontal, 16)
             }
+            .padding(.top, 12)
+            
+            HStack {
+                
+                Button(
+                    action: {
+                        isChartVisible.toggle()
+                    },
+                    label: {
+                        HStack {
+                            Image(systemName: "chart.pie")
+                                .font(.system(
+                                    size: isChartVisible ? 20 : bottomBarButtonFontSize,
+                                    weight: bottomBarButtonFontWeight
+                                ))
+                                .foregroundColor(isChartVisible ? c.white : bottomBarButtonFontColor)
+                        }
+                        .frame(width: bottomBarButtonFrameSize, height: bottomBarButtonFrameSize)
+                        .background(roundedShape.fill(isChartVisible ? c.blue : c.transparent))
+                    }
+                )
+                
+                Spacer()
+                
+                DatePickerStateView(
+                    unixTime: state.pickerTimeStart,
+                    minTime: state.minPickerTime,
+                    maxTime: state.maxPickerTime
+                ) { newTime in
+                    vm.setPickerTimeStart(unixTime: newTime)
+                }
+                .labelsHidden()
+                
+                Text("-")
+                    .padding(.horizontal, 6)
+                
+                DatePickerStateView(
+                    unixTime: state.pickerTimeFinish,
+                    minTime: state.minPickerTime,
+                    maxTime: state.maxPickerTime
+                ) { newTime in
+                    vm.setPickerTimeFinish(unixTime: newTime)
+                }
+                .labelsHidden()
+                
+                Spacer()
+                
+                Button(
+                    action: {
+                        dismiss()
+                        onClose()
+                    },
+                    label: {
+                        HStack {
+                            Image(systemName: "xmark.circle")
+                                .font(.system(
+                                    size: bottomBarButtonFontSize,
+                                    weight: bottomBarButtonFontWeight
+                                ))
+                                .foregroundColor(bottomBarButtonFontColor)
+                        }
+                        .frame(width: bottomBarButtonFrameSize, height: bottomBarButtonFrameSize)
+                    }
+                )
+            }
+            .padding(.top, 10)
+            .padding(.horizontal, 16)
         }
+        .background(.black)
     }
 }
 
