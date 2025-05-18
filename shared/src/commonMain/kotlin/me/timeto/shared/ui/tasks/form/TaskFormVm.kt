@@ -27,6 +27,7 @@ class TaskFormVm(
 
         val text: String =
             textFeatures.textNoFeatures
+        val textPlaceholder = "Text"
 
         val activityDb: ActivityDb? = textFeatures.activity
         val activityTitle = "Activity"
@@ -60,10 +61,7 @@ class TaskFormVm(
                 is TaskFormStrategy.NewTask -> "New Task"
                 is TaskFormStrategy.EditTask -> "Edit Task"
             },
-            doneText = when (strategy) {
-                is TaskFormStrategy.NewTask -> "Create"
-                is TaskFormStrategy.EditTask -> "Done"
-            },
+            doneText = "Save",
             textFeatures = when (strategy) {
                 is TaskFormStrategy.NewTask -> "".textFeatures()
                 is TaskFormStrategy.EditTask -> strategy.taskDb.text.textFeatures()
