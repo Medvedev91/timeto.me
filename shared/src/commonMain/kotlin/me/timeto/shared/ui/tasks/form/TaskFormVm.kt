@@ -16,7 +16,7 @@ import me.timeto.shared.ui.UiException
 import me.timeto.shared.vm.__Vm
 
 class TaskFormVm(
-    private val strategy: TaskFormStrategy,
+    val strategy: TaskFormStrategy,
 ) : __Vm<TaskFormVm.State>() {
 
     data class State(
