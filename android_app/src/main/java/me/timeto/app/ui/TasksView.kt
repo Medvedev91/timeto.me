@@ -55,7 +55,9 @@ fun TasksView(
 
     val (_, state) = rememberVm { TabTasksVm() }
 
-    var activeTab by remember { mutableStateOf<Tab>(Tab.Folder(state.initFolder)) }
+    var activeTab by remember {
+        mutableStateOf<Tab>(Tab.Folder(state.initFolder))
+    }
 
     BackHandler {
         if ((activeTab as? Tab.Folder)?.taskFolderDb?.isToday != true)
@@ -162,7 +164,7 @@ fun TasksView(
                 }
 
                 //
-                // Repetitive
+                // Repeatings
 
                 item {
                     val isActive = activeTab is Tab.Repeating
@@ -189,8 +191,6 @@ fun TasksView(
                         )
                     }
                 }
-
-                ////
             }
         }
     }
