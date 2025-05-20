@@ -29,6 +29,8 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
 import kotlinx.coroutines.delay
+import me.timeto.app.ui.calendar.CalendarTabsView
+import me.timeto.app.ui.tasks.tab.repeatings.TasksTabRepeatingsView
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.vm.TabTasksVm
 import kotlin.random.Random
@@ -48,7 +50,6 @@ private val tabInactiveTextColor = c.homeFontSecondary
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TasksView(
-    modifier: Modifier,
     onClose: () -> Unit,
 ) {
 
@@ -70,7 +71,7 @@ fun TasksView(
     }
 
     ZStack(
-        modifier = modifier
+        modifier = Modifier
             .motionEventSpy { event ->
                 val dragItemValue = dragItem.value ?: return@motionEventSpy
 
@@ -109,8 +110,8 @@ fun TasksView(
 
         when (val curTab = activeTab) {
             is Tab.Folder -> TasksListView(curTab.folder, dragItem)
-            is Tab.Calendar -> EventsView()
-            is Tab.Repeating -> RepeatingsListView()
+            is Tab.Calendar -> CalendarTabsView()
+            is Tab.Repeating -> TasksTabRepeatingsView()
         }
 
         Column(
@@ -130,7 +131,7 @@ fun TasksView(
                     }
                     val isActive = activeTab is Tab.Calendar
 
-                    TasksCalendarButtonView(
+                    CalendarButtonView(
                         isActive = isActive,
                         dragItem = dragItem,
                         dropItem = dropItem,
@@ -332,7 +333,7 @@ private val calendarDots: List<List<Boolean>> = listOf(
 )
 
 @Composable
-private fun TasksCalendarButtonView(
+private fun CalendarButtonView(
     isActive: Boolean,
     dragItem: State<DragItem?>,
     dropItem: DropItem,
