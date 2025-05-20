@@ -43,8 +43,10 @@ struct TasksTabViewInner: View {
                 
                 switch section {
                 case .taskFolder(let taskFolderDb):
-                    TasksListView(activeFolder: taskFolderDb, tabTasksView: self)
-                        .id("TasksListView \(taskFolderDb.id)") // todo refactoring by vm
+                    TasksTabTasksView(
+                        taskFolderDb: taskFolderDb,
+                        tasksTabView: self
+                    )
                 case .repeatings:
                     TasksTabRepeatingsView()
                 case .calendar:
