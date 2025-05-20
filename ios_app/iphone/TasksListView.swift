@@ -5,7 +5,7 @@ struct TasksTabTasksView: View {
     
     let taskFolderDb: TaskFolderDb
     let tasksTabView: TasksTabViewInner
-
+    
     var body: some View {
         VmView({
             TasksTabTasksVm(
@@ -23,16 +23,16 @@ struct TasksTabTasksView: View {
 }
 
 private struct TasksTabTasksViewInner: View {
-
+    
     let vm: TasksTabTasksVm
     let state: TasksTabTasksVm.State
-
+    
     let tasksTabView: TasksTabViewInner
-
+    
     ///
     
     @Environment(Navigation.self) private var navigation
-
+    
     var body: some View {
         
         ScrollView(.vertical, showsIndicators: false) {
@@ -129,21 +129,21 @@ private struct TasksTabTasksViewInner: View {
 private let taskRowButtonStyle = MyButtonStyle()
 
 private struct TaskRowView: View {
-
+    
     @Environment(Navigation.self) private var navigation
-
+    
     private let taskVmUi: TasksTabTasksVm.TaskVmUi
-
+    
     let tasksTabView: TasksTabViewInner
     @State private var dragItem: TasksTabDragItem
-
+    
     @State private var xSwipeOffset: CGFloat = 0
     @State private var width: CGFloat? = nil
-
+    
     @State private var itemHeight: CGFloat = 0
-
+    
     private let withDivider: Bool
-
+    
     init(
         taskVmUi: TasksTabTasksVm.TaskVmUi,
         tasksTabView: TasksTabViewInner,
@@ -152,7 +152,7 @@ private struct TaskRowView: View {
         self.taskVmUi = taskVmUi
         self.tasksTabView = tasksTabView
         self.withDivider = withDivider
-
+        
         _dragItem = State(initialValue: TasksTabDragItem(
             isDropAllowed: { drop in
                 if drop is TasksTabDropItemCalendar {
@@ -165,11 +165,11 @@ private struct TaskRowView: View {
             }
         ))
     }
-
+    
     var body: some View {
-
+        
         ZStack(alignment: .bottom) {
-
+            
             GeometryReader { proxy in
                 ZStack {
                 }
@@ -182,7 +182,7 @@ private struct TaskRowView: View {
                 }
             }
             .frame(height: 1) // height: 1, or full height items if short
-
+            
             if (xSwipeOffset > 0) {
                 let editOrMoveTitle = tasksTabView.focusedDrop != nil ? "Move to \(tasksTabView.focusedDrop!.name)" : "Edit"
                 HStack {
@@ -195,26 +195,26 @@ private struct TaskRowView: View {
                 .background(tasksTabView.focusedDrop == nil ? .blue : .green)
                 .offset(x: xSwipeOffset > 0 ? 0 : xSwipeOffset)
             }
-
+            
             if (xSwipeOffset < 0) {
-
+                
                 HStack {
-
+                    
                     Text(taskVmUi.text)
                         .padding(.leading, 12)
                         .padding(.trailing, 4)
                         .foregroundColor(.white)
                         .lineLimit(1)
                         .font(.system(size: 13, weight: .light))
-
+                    
                     Spacer()
-
+                    
                     Button("Cancel") {
                         xSwipeOffset = 0
                     }
                     .foregroundColor(.white)
                     .padding(.trailing, 12)
-
+                    
                     Button(
                         action: {
                             taskVmUi.delete()
@@ -237,11 +237,11 @@ private struct TaskRowView: View {
                 .background(.red)
                 .offset(x: xSwipeOffset < 0 ? 0 : xSwipeOffset)
             }
-
+            
             ///
-
+            
             ZStack {
-
+                
                 Button(
                     action: {
                         hideKeyboard()
@@ -262,15 +262,15 @@ private struct TaskRowView: View {
                         )
                     },
                     label: {
-
+                        
                         VStack {
-
+                            
                             if let timeUI = taskVmUi.timeUi as? TasksTabTasksVm.TaskVmUiTimeUiHighlightUi {
-
+                                
                                 HStack {
-
+                                    
                                     HStack {
-
+                                        
                                         switch timeUI.timeData.type {
                                         case .event:
                                             Image(systemName: "calendar")
@@ -285,7 +285,7 @@ private struct TaskRowView: View {
                                         default:
                                             fatalError()
                                         }
-
+                                        
                                         Text(timeUI.title)
                                             .foregroundColor(.white)
                                             .font(.system(size: 13))
@@ -298,19 +298,19 @@ private struct TaskRowView: View {
                                         RoundedRectangle(cornerRadius: 8, style: .continuous)
                                             .fill(timeUI.backgroundColor.toColor())
                                     )
-
+                                    
                                     Text(timeUI.timeLeftText)
                                         .foregroundColor(timeUI.timeLeftColor.toColor())
                                         .font(.system(size: 14, weight: .light))
                                         .padding(.leading, 8)
                                         .lineLimit(1)
-
+                                    
                                     Spacer()
                                 }
                                 .padding(.top, 2)
                                 .padding(.bottom, 6)
                                 .padding(.leading, H_PADDING - 1)
-
+                                
                             } else if let timeUI = taskVmUi.timeUi as? TasksTabTasksVm.TaskVmUiTimeUiRegularUi {
                                 HStack {
                                     Text(timeUI.text)
@@ -323,21 +323,21 @@ private struct TaskRowView: View {
                                     Spacer()
                                 }
                             }
-
+                            
                             HStack {
-
+                                
                                 Text(taskVmUi.text)
                                     .lineSpacing(4)
                                     .multilineTextAlignment(.leading)
                                     .myMultilineText()
-
+                                
                                 Spacer()
-
+                                
                                 TriggersIconsView(
                                     checklistsDb: taskVmUi.taskUi.tf.checklists,
                                     shortcutsDb: taskVmUi.taskUi.tf.shortcuts
                                 )
-
+                                
                                 if (taskVmUi.taskUi.tf.isImportant) {
                                     Image(systemName: "flag.fill")
                                         .font(.system(size: 18))
@@ -354,7 +354,7 @@ private struct TaskRowView: View {
                 .offset(x: xSwipeOffset)
                 // .background(Color.white.opacity(0.001)) // Without background DnD does not work. WTF?! Work after highPriorityGesture
                 .highPriorityGesture(gesture)
-//                .gesture(gesture)
+                //                .gesture(gesture)
                 .buttonStyle(taskRowButtonStyle)
                 .foregroundColor(.primary)
                 .background(GeometryReader { geometry -> Color in
@@ -365,65 +365,65 @@ private struct TaskRowView: View {
                     return Color.clear
                 })
             }
-
+            
             if (withDivider) {
                 Divider()
                     .padding(.leading, H_PADDING)
             }
         }
     }
-
+    
     // https://stackoverflow.com/a/79037514
     var gesture: some Gesture {
         DragGesture(minimumDistance: 25, coordinateSpace: .global)
-        .onChanged { value in
-            xSwipeOffset = value.translation.width
-            if xSwipeOffset > 1 {
-                tasksTabView.onDragMove(curDragItem: dragItem, value: value)
-            }
-        }
-        .onEnded { value in
-            let drop = tasksTabView.onDragStop()
-            if let drop = drop {
-                xSwipeOffset = 0
-                if drop is TasksTabDropItemCalendar {
-                    navigation.fullScreen(withAnimation: false) {
-                        EventFormFullScreen(
-                            initEventDb: nil,
-                            initText: taskVmUi.taskUi.taskDb.text,
-                            initTime: nil,
-                            onDone: {
-                                taskVmUi.delete()
-                            }
-                        )
-                    }
-                } else if let dropFolder = drop as? TasksTabDropItemTaskFolder {
-                    taskVmUi.upFolder(newFolder: dropFolder.taskFolderDb)
+            .onChanged { value in
+                xSwipeOffset = value.translation.width
+                if xSwipeOffset > 1 {
+                    tasksTabView.onDragMove(curDragItem: dragItem, value: value)
                 }
-            } else if value.translation.width < -80 {
-                xSwipeOffset = (width ?? 999) * -1
-            } else if value.translation.width > 60 {
-                xSwipeOffset = 0
-                navigation.showTaskForm(
-                    strategy: TaskFormStrategy.EditTask(taskDb: taskVmUi.taskUi.taskDb)
-                )
-            } else {
-                xSwipeOffset = 0
             }
-        }
+            .onEnded { value in
+                let drop = tasksTabView.onDragStop()
+                if let drop = drop {
+                    xSwipeOffset = 0
+                    if drop is TasksTabDropItemCalendar {
+                        navigation.fullScreen(withAnimation: false) {
+                            EventFormFullScreen(
+                                initEventDb: nil,
+                                initText: taskVmUi.taskUi.taskDb.text,
+                                initTime: nil,
+                                onDone: {
+                                    taskVmUi.delete()
+                                }
+                            )
+                        }
+                    } else if let dropFolder = drop as? TasksTabDropItemTaskFolder {
+                        taskVmUi.upFolder(newFolder: dropFolder.taskFolderDb)
+                    }
+                } else if value.translation.width < -80 {
+                    xSwipeOffset = (width ?? 999) * -1
+                } else if value.translation.width > 60 {
+                    xSwipeOffset = 0
+                    navigation.showTaskForm(
+                        strategy: TaskFormStrategy.EditTask(taskDb: taskVmUi.taskUi.taskDb)
+                    )
+                } else {
+                    xSwipeOffset = 0
+                }
+            }
     }
 }
 
 private struct TmrwTaskView: View {
-
+    
     let taskUi: TasksTabTasksVm.TmrwTaskUi
-
+    
     var body: some View {
-
+        
         VStack {
-
+            
             let vPadding = 8.0
-
+            
             if let timeUI = taskUi.timeUi {
                 HStack {
                     Text(timeUI.text)
@@ -435,21 +435,21 @@ private struct TmrwTaskView: View {
                     Spacer()
                 }
             }
-
+            
             HStack {
-
+                
                 Text(taskUi.text)
                     .lineSpacing(4)
                     .multilineTextAlignment(.leading)
                     .myMultilineText()
-
+                
                 Spacer()
-
+                
                 TriggersIconsView(
                     checklistsDb: taskUi.textFeatures.checklists,
                     shortcutsDb: taskUi.textFeatures.shortcuts
                 )
-
+                
             }
         }
         .padding(.leading, H_PADDING)
