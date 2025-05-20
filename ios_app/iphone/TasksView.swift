@@ -3,84 +3,66 @@ import shared
 
 private let tabWidth: CGFloat = 34
 private let tabShape = RoundedRectangle(cornerRadius: 8, style: .continuous)
+private let tabPadding: CGFloat = 15
 
-struct TasksView: View {
+struct TasksTabView: View {
+    
+    var body: some View {
+        VmView({
+            TasksTabVm()
+        }) { _, state in
+            TasksTabViewInner(
+                state: state
+            )
+        }
+    }
+}
 
-    //////
-
-    @State private var vm = TabTasksVm()
-
-    @State var activeSection: TabTasksView_Section? =
-        TabTasksView_Section_Folder(folder: Cache.getTodayFolderDb())
-
-    /// No more fits when the keyboard is open on the SE
-    private let tabPadding: CGFloat = 15
-
-    /// Docs in use places
-    @State var withListAnimation = true
-
+struct TasksTabViewInner: View {
+    
+    let state: TasksTabVm.State
+    
+    ///
+    
+    @State var section: TasksTabSectionEnum =
+        .taskFolder(taskFolderDb: Cache.getTodayFolderDb())
+    
+    // todo
+    
     @State var dropItems: [DropItem] = []
     @State var focusedDrop: DropItem? = nil
     @State var activeDrag: DragItem? = nil
-
+    
     @State private var dropCalendar = DropItem__Calendar()
-
-    func onDragMove(curDragItem: DragItem, value: DragGesture.Value) {
-        let x = value.location.x
-        let y = value.location.y
-
-        focusedDrop = dropItems.first { drop in
-            if !curDragItem.isDropAllowed(drop) {
-                return false
-            }
-            let s = drop.square
-            return x > s.x1 && y > s.y1 && x < s.x2 && y < s.y2
-        }
-        activeDrag = curDragItem
-    }
-
-    func onDragStop() -> DropItem? {
-        let curFocusedDrop = focusedDrop
-        focusedDrop = nil
-        activeDrag = nil
-        return curFocusedDrop
-    }
-
+    
     var body: some View {
-
-        VMView(vm: vm, stack: .ZStack()) { state in
-
-            c.bg.ignoresSafeArea()
-
+        
+        ZStack {
+            
+            Color.black.ignoresSafeArea()
+            
             HStack {
-
-                /// Because of upActiveSectionWithAnimation() without Spacer can be twitching
-                Spacer()
-
-                if let section = activeSection as? TabTasksView_Section_Folder {
-                    /// OMG! Dirty trick!
-                    /// Just TabTaskView_TasksListView(...) doesn't call onAppear() to scroll to the bottom.
-                    ForEach(state.taskFoldersUI, id: \.folder.id) { folderUI in
-                        if section.folder.id == folderUI.folder.id {
-                            TasksListView(activeFolder: section.folder, tabTasksView: self)
-                        }
-                    }
-                } else if activeSection is TabTasksView_Section_Repeating {
-                    RepeatingsListView()
-                } else if activeSection is TabTasksView_Section_Calendar {
-                    EventsView()
+                
+                switch section {
+                case .taskFolder(let taskFolderDb):
+                    TasksListView(activeFolder: taskFolderDb, tabTasksView: self)
+                        .id("TasksListView \(taskFolderDb.id)") // todo refactoring by vm
+                case .repeatings:
+                    TasksTabRepeatingsView()
+                case .calendar:
+                    CalendarTabsView()
                 }
-
+                
                 VStack {
-
+                    
                     //
                     // Repeating
-
-                    let isActiveRepeating = activeSection is TabTasksView_Section_Repeating
-
+                    
+                    let isActiveRepeating: Bool = if case .repeatings = section { true } else { false }
+                    
                     Button(
                         action: {
-                            upActiveSectionWithAnimation(TabTasksView_Section_Repeating())
+                            section = .repeatings
                         },
                         label: {
                             Image(systemName: "repeat")
@@ -92,35 +74,33 @@ struct TasksView: View {
                     )
                     .background(
                         RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .fill(isActiveRepeating ? .blue : c.bg)
+                            .fill(isActiveRepeating ? .blue : .black)
                             .frame(width: tabWidth)
                     )
-
+                    
                     //
                     // Folders
-
-                    ForEach(state.taskFoldersUI.reversed(), id: \.folder.id) { folderUI in
-
-                        let isActive = folderUI.folder.id == (activeSection as? TabTasksView_Section_Folder)?.folder.id
-
-                        Spacer()
-                            .frame(height: tabPadding)
-
+                    
+                    ForEach(state.taskFoldersUi.reversed(), id: \.taskFolderDb.id) { folderUi in
+                        
+                        let isActive: Bool = if case .taskFolder(let taskFolderDb) = section {
+                            taskFolderDb.id == folderUi.taskFolderDb.id
+                        } else { false }
+                        
                         TabTasksView__FolderView(
                             isActive: isActive,
-                            folderUI: folderUI,
-                            tabTasksView: self
+                            folderUi: folderUi,
+                            tasksTabView: self,
+                            drop: DropItem__Folder(folderUi.taskFolderDb)
                         )
+                        .padding(.top, tabPadding)
                     }
-
+                    
                     //
                     // Calendar
-
-                    Spacer()
-                        .frame(height: tabPadding)
-
-                    let isActiveCalendar = activeSection is TabTasksView_Section_Calendar
-
+                    
+                    let isActiveCalendar: Bool = if case .calendar = section { true } else { false }
+                    
                     TasksCalendarButtonView(
                         isActive: isActiveCalendar,
                         focusedDrop: $focusedDrop,
@@ -128,90 +108,76 @@ struct TasksView: View {
                         dropItem: dropCalendar,
                         dropItems: $dropItems,
                         onClick: {
-                            upActiveSectionWithAnimation(TabTasksView_Section_Calendar())
+                            section = .calendar
                         }
                     )
+                    .padding(.top, tabPadding)
                 }
                 .padding(.trailing, 4)
             }
-            .onAppear {
-                UITableView.appearance().sectionFooterHeight = 0
-                UIScrollView.appearance().keyboardDismissMode = .interactive
-            }
-            .onDisappear {
-                /// On onDisappear(), otherwise on onAppear() twitching (hide old and open new).
-                activeSection = TabTasksView_Section_Folder(folder: Cache.getTodayFolderDb())
-            }
         }
+        .padding(.bottom, MainTabsView__HEIGHT)
+        .ignoresSafeArea(.keyboard)
     }
-
-    func upActiveSectionWithAnimation(
-        _ newSection: TabTasksView_Section
+    
+    func onDragMove(
+        curDragItem: DragItem,
+        value: DragGesture.Value
     ) {
-        /// Fix issue: on tab changes scroll animation.
-        withListAnimation = false
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { /// 0.1 на глаз
-            withListAnimation = true
-        }
-        if activeSection is TabTasksView_Section_Folder && newSection is TabTasksView_Section_Folder {
-            /// It's better without animation, faster.
-            activeSection = newSection
-        } else {
-            withAnimation(Animation.linear(duration: 0.04)) {
-                activeSection = nil
+        let x = value.location.x
+        let y = value.location.y
+        focusedDrop = dropItems.first { drop in
+            if !curDragItem.isDropAllowed(drop) {
+                return false
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.03) {
-                activeSection = newSection
-            }
+            let s = drop.square
+            return x > s.x1 && y > s.y1 && x < s.x2 && y < s.y2
         }
+        activeDrag = curDragItem
+    }
+    
+    func onDragStop() -> DropItem? {
+        let dropSave: DropItem? = focusedDrop
+        focusedDrop = nil
+        activeDrag = nil
+        return dropSave
     }
 }
 
 private struct TabTasksView__FolderView: View {
 
-    private let isActive: Bool
-    private let folderUI: TabTasksVm.TaskFolderUI
-    private let tabTasksView: TasksView
+    let isActive: Bool
+    let folderUi: TasksTabVm.TaskFolderUi
+    let tasksTabView: TasksTabViewInner
+    @State var drop: DropItem__Folder
+    
+    ///
 
-    @State private var drop: DropItem__Folder
-
-    init(
-        isActive: Bool,
-        folderUI: TabTasksVm.TaskFolderUI,
-        tabTasksView: TasksView
-    ) {
-        self.isActive = isActive
-        self.folderUI = folderUI
-        self.tabTasksView = tabTasksView
-        _drop = State(initialValue: DropItem__Folder(folderUI.folder))
+    private var isAllowedForDrop: Bool {
+        tasksTabView.activeDrag?.isDropAllowed(drop) == true
     }
-
+    
+    private var bgColor: Color {
+        if (tasksTabView.focusedDrop as? DropItem__Folder)?.folder.id == folderUi.taskFolderDb.id { .green }
+        else if isAllowedForDrop { .purple }
+        else { isActive ? .blue : .black }
+    }
+    
     var body: some View {
         Button(
             action: {
-                tabTasksView.upActiveSectionWithAnimation(TabTasksView_Section_Folder(folder: folderUI.folder))
+                tasksTabView.section = .taskFolder(taskFolderDb: folderUi.taskFolderDb)
             },
             label: {
-                let isAllowedForDrop = tabTasksView.activeDrag?.isDropAllowed(drop) == true
-                let bgColor: Color = {
-                    if (tabTasksView.focusedDrop as? DropItem__Folder)?.folder.id == folderUI.folder.id {
-                        return .green
-                    }
-                    if isAllowedForDrop {
-                        return .purple
-                    }
-                    return isActive ? .blue : c.bg
-                }()
-
+                
                 VStack {
-
-                    Text(folderUI.tabText)
+                    
+                    Text(folderUi.tabText)
                         .textCase(.uppercase)
                         .lineSpacing(0)
                         .font(.system(size: 14, weight: isActive ? .semibold : .regular, design: .monospaced))
                         .frame(width: tabWidth)
                         .foregroundColor(isActive || isAllowedForDrop ? .white : .primary)
-                        ///
                         .padding(.top, 8)
                         .padding(.bottom, 8)
                 }
@@ -222,15 +188,13 @@ private struct TabTasksView__FolderView: View {
                 })
                 ///
                 .onAppear {
-                    tabTasksView.dropItems.append(drop)
+                    tasksTabView.dropItems.append(drop)
                 }
                 .onDisappear {
-                    tabTasksView.dropItems.removeAll {
+                    tasksTabView.dropItems.removeAll {
                         $0 === drop
                     }
                 }
-                ///
-                .animation(.spring())
             }
         )
     }
@@ -294,25 +258,6 @@ class DropItem__Folder: DropItem {
     }
 }
 
-//////
-
-
-//
-// TabTasksView_Section
-
-protocol TabTasksView_Section {
-}
-
-struct TabTasksView_Section_Folder: TabTasksView_Section {
-    let folder: TaskFolderDb
-}
-
-struct TabTasksView_Section_Repeating: TabTasksView_Section {
-}
-
-struct TabTasksView_Section_Calendar: TabTasksView_Section {
-}
-
 //
 // Calendar Button
 
@@ -330,38 +275,33 @@ private struct TasksCalendarButtonView: View {
     let dropItem: DropItem
     @Binding var dropItems: [DropItem]
     let onClick: () -> Void
-
+    
+    ///
+    
+    private var isAllowedToDrop: Bool {
+        dragItem?.isDropAllowed(dropItem) == true
+    }
+    
+    private var isFocusedToDrop: Bool {
+        focusedDrop is DropItem__Calendar
+    }
+    
+    private var bgColor: Color {
+        if isFocusedToDrop { .green }
+        else if isAllowedToDrop { .purple }
+        else if isActive { .blue }
+        else { .clear }
+    }
+    
+    private var fgColor: Color {
+        if isFocusedToDrop { .white }
+        else if isAllowedToDrop { .white }
+        else if isActive { .white }
+        else { .primary }
+    }
+    
     var body: some View {
-
-        let isAllowedToDrop = dragItem?.isDropAllowed(dropItem) == true
-        let isFocusedToDrop = focusedDrop is DropItem__Calendar
-
-        let bgColor: Color = {
-            if isFocusedToDrop {
-                return .green
-            }
-            if isAllowedToDrop {
-                return .purple
-            }
-            if isActive {
-                return .blue
-            }
-            return c.transparent
-        }()
-
-        let fgColor: Color = {
-            if isFocusedToDrop {
-                return c.white
-            }
-            if isAllowedToDrop {
-                return c.white
-            }
-            if isActive {
-                return c.white
-            }
-            return .primary
-        }()
-
+        
         Button(
             action: {
                 onClick()
@@ -385,7 +325,7 @@ private struct TasksCalendarButtonView: View {
                                     ZStack {
                                     }
                                     .frame(width: 2 + onePx, height: 2 + onePx)
-                                    .background(roundedShape.fill(dot ? fgColor : c.transparent))
+                                    .background(roundedShape.fill(dot ? fgColor : .clear))
                                 }
 
                                 Spacer()
