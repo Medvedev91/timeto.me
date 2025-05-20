@@ -58,7 +58,7 @@ fun TasksView(
     var activeTab by remember { mutableStateOf<Tab>(Tab.Folder(state.initFolder)) }
 
     BackHandler {
-        if ((activeTab as? Tab.Folder)?.folder?.isToday != true)
+        if ((activeTab as? Tab.Folder)?.taskFolderDb?.isToday != true)
             activeTab = Tab.Folder(state.initFolder)
         else
             onClose()
@@ -109,7 +109,7 @@ fun TasksView(
     ) {
 
         when (val curTab = activeTab) {
-            is Tab.Folder -> TasksListView(curTab.folder, dragItem)
+            is Tab.Folder -> TasksListView(curTab.taskFolderDb, dragItem)
             is Tab.Calendar -> CalendarTabsView()
             is Tab.Repeating -> TasksTabRepeatingsView()
         }
@@ -138,7 +138,7 @@ fun TasksView(
                         dropItems = dropItems,
                         onClick = {
                             if (isActive) onClose()
-                            else activeTab = Tab.Calendar()
+                            else activeTab = Tab.Calendar
                         },
                     )
                 }
@@ -147,7 +147,7 @@ fun TasksView(
                     val dropItem = remember {
                         DropItem.Type__Folder(folderUI.folder, DropItem.Square(0, 0, 0, 0))
                     }
-                    val isActive = (activeTab as? Tab.Folder)?.folder?.id == folderUI.folder.id
+                    val isActive = (activeTab as? Tab.Folder)?.taskFolderDb?.id == folderUI.folder.id
                     TabTextButton(
                         text = folderUI.tabText,
                         isActive = isActive,
@@ -177,7 +177,7 @@ fun TasksView(
                             .background(backgroundColor.value)
                             .clickable {
                                 if (isActive) onClose()
-                                else activeTab = Tab.Repeating()
+                                else activeTab = Tab.Repeating
                             },
                         contentAlignment = Alignment.Center
                     ) {
@@ -197,9 +197,9 @@ fun TasksView(
 }
 
 private sealed class Tab {
-    class Folder(val folder: TaskFolderDb) : Tab()
-    class Calendar : Tab()
-    class Repeating : Tab()
+    class Folder(val taskFolderDb: TaskFolderDb) : Tab()
+    data object Calendar : Tab()
+    data object Repeating : Tab()
 }
 
 
