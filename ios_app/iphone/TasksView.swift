@@ -27,13 +27,11 @@ struct TasksTabViewInner: View {
     @State var section: TasksTabSectionEnum =
         .taskFolder(taskFolderDb: Cache.getTodayFolderDb())
     
-    // todo
+    @State var dropItems: [TasksTabDropItem] = []
+    @State var focusedDrop: TasksTabDropItem? = nil
+    @State var activeDrag: TasksTabDragItem? = nil
     
-    @State var dropItems: [DropItem] = []
-    @State var focusedDrop: DropItem? = nil
-    @State var activeDrag: DragItem? = nil
-    
-    @State private var dropCalendar = DropItem__Calendar()
+    @State private var dropCalendar = TasksTabDropItemCalendar()
     
     var body: some View {
         
@@ -91,7 +89,7 @@ struct TasksTabViewInner: View {
                             isActive: isActive,
                             folderUi: folderUi,
                             tasksTabView: self,
-                            drop: DropItem__Folder(folderUi.taskFolderDb)
+                            drop: TasksTabDropItemTaskFolder(folderUi.taskFolderDb)
                         )
                         .padding(.top, tabPadding)
                     }
@@ -121,7 +119,7 @@ struct TasksTabViewInner: View {
     }
     
     func onDragMove(
-        curDragItem: DragItem,
+        curDragItem: TasksTabDragItem,
         value: DragGesture.Value
     ) {
         let x = value.location.x
@@ -136,8 +134,8 @@ struct TasksTabViewInner: View {
         activeDrag = curDragItem
     }
     
-    func onDragStop() -> DropItem? {
-        let dropSave: DropItem? = focusedDrop
+    func onDragStop() -> TasksTabDropItem? {
+        let dropSave: TasksTabDropItem? = focusedDrop
         focusedDrop = nil
         activeDrag = nil
         return dropSave
@@ -149,7 +147,7 @@ private struct TabTasksView__FolderView: View {
     let isActive: Bool
     let folderUi: TasksTabVm.TaskFolderUi
     let tasksTabView: TasksTabViewInner
-    @State var drop: DropItem__Folder
+    @State var drop: TasksTabDropItemTaskFolder
     
     ///
 
@@ -158,7 +156,7 @@ private struct TabTasksView__FolderView: View {
     }
     
     private var bgColor: Color {
-        if (tasksTabView.focusedDrop as? DropItem__Folder)?.folder.id == folderUi.taskFolderDb.id { .green }
+        if (tasksTabView.focusedDrop as? TasksTabDropItemTaskFolder)?.taskFolderDb.id == folderUi.taskFolderDb.id { .green }
         else if isAllowedForDrop { .purple }
         else { isActive ? .blue : .black }
     }
@@ -200,64 +198,6 @@ private struct TabTasksView__FolderView: View {
     }
 }
 
-///
-/// Drag and Drop
-
-struct DragItem {
-
-    let isDropAllowed: (_ drop: DropItem) -> Bool
-}
-
-class DropItem: ObservableObject {
-
-    let name: String
-    let square: Square
-
-    init(name: String, square: Square) {
-        self.name = name
-        self.square = square
-    }
-
-    class Square {
-
-        var x1: CGFloat
-        var y1: CGFloat
-        var x2: CGFloat
-        var y2: CGFloat
-
-        init(x1: CGFloat = 0, y1: CGFloat = 0, x2: CGFloat = 0, y2: CGFloat = 0) {
-            self.x1 = x1
-            self.y1 = y1
-            self.x2 = x2
-            self.y2 = y2
-        }
-
-        func upByRect(rect: CGRect) {
-            x1 = rect.origin.x
-            y1 = rect.origin.y
-            x2 = rect.origin.x + rect.width
-            y2 = rect.origin.y + rect.height
-        }
-    }
-}
-
-class DropItem__Calendar: DropItem {
-
-    init() {
-        super.init(name: "Calendar", square: DropItem.Square())
-    }
-}
-
-class DropItem__Folder: DropItem {
-
-    let folder: TaskFolderDb
-
-    init(_ folder: TaskFolderDb) {
-        self.folder = folder
-        super.init(name: folder.name, square: DropItem.Square())
-    }
-}
-
 //
 // Calendar Button
 
@@ -270,10 +210,10 @@ private let calendarDots: [[Bool]] = [
 private struct TasksCalendarButtonView: View {
 
     let isActive: Bool
-    @Binding var focusedDrop: DropItem?
-    @Binding var dragItem: DragItem?
-    let dropItem: DropItem
-    @Binding var dropItems: [DropItem]
+    @Binding var focusedDrop: TasksTabDropItem?
+    @Binding var dragItem: TasksTabDragItem?
+    let dropItem: TasksTabDropItem
+    @Binding var dropItems: [TasksTabDropItem]
     let onClick: () -> Void
     
     ///
@@ -283,7 +223,7 @@ private struct TasksCalendarButtonView: View {
     }
     
     private var isFocusedToDrop: Bool {
-        focusedDrop is DropItem__Calendar
+        focusedDrop is TasksTabDropItemCalendar
     }
     
     private var bgColor: Color {
