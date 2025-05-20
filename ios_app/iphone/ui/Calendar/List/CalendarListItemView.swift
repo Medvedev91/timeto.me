@@ -20,7 +20,8 @@ struct CalendarListItemView: View {
                         EventFormFullScreen(
                             initEventDb: eventUi.eventDb,
                             initText: nil,
-                            initTime: nil
+                            initTime: nil,
+                            onDone: {}
                         )
                     }
                 },

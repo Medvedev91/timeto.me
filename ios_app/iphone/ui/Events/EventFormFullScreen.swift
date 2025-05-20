@@ -6,6 +6,7 @@ struct EventFormFullScreen: View {
     let initEventDb: EventDb?
     let initText: String?
     let initTime: Int?
+    let onDone: () -> Void
     
     var body: some View {
         VmView({
@@ -18,6 +19,7 @@ struct EventFormFullScreen: View {
             EventFormFullScreenInner(
                 vm: vm,
                 state: state,
+                onDone: onDone,
                 date: Date(timeIntervalSince1970: Double(state.selectedUnixTime.time)),
                 text: state.text
             )
@@ -29,6 +31,8 @@ private struct EventFormFullScreenInner: View {
     
     let vm: EventFormVm
     let state: EventFormVm.State
+    
+    let onDone: () -> Void
     
     @State var date: Date
     @State var text: String
@@ -101,6 +105,7 @@ private struct EventFormFullScreenInner: View {
                         vm.save(
                             dialogsManager: navigation,
                             onSuccess: {
+                                onDone()
                                 dismiss()
                             }
                         )

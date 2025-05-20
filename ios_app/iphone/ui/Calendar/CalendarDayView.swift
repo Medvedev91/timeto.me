@@ -48,7 +48,8 @@ private struct CalendarDayViewInner: View {
                             EventFormFullScreen(
                                 initEventDb: nil,
                                 initText: nil,
-                                initTime: state.initTime.toInt()
+                                initTime: state.initTime.toInt(),
+                                onDone: {}
                             )
                         }
                     },
