@@ -32,7 +32,7 @@ import kotlinx.coroutines.delay
 import me.timeto.app.ui.calendar.CalendarTabsView
 import me.timeto.app.ui.tasks.tab.repeatings.TasksTabRepeatingsView
 import me.timeto.shared.db.TaskFolderDb
-import me.timeto.shared.vm.TabTasksVm
+import me.timeto.shared.ui.tasks.tab.TasksTabVm
 import kotlin.random.Random
 
 val TasksView__TAB_BUTTON_WIDTH = 32.dp
@@ -53,7 +53,9 @@ fun TasksView(
     onClose: () -> Unit,
 ) {
 
-    val (_, state) = rememberVm { TabTasksVm() }
+    val (_, state) = rememberVm {
+        TasksTabVm()
+    }
 
     var activeTab by remember {
         mutableStateOf<Tab>(Tab.Folder(state.initFolder))
@@ -145,20 +147,20 @@ fun TasksView(
                     )
                 }
 
-                items(state.taskFoldersUI) { folderUI ->
+                items(state.taskFoldersUi) { folderUi ->
                     val dropItem = remember {
-                        DropItem.Type__Folder(folderUI.folder, DropItem.Square(0, 0, 0, 0))
+                        DropItem.Type__Folder(folderUi.taskFolderDb, DropItem.Square(0, 0, 0, 0))
                     }
-                    val isActive = (activeTab as? Tab.Folder)?.taskFolderDb?.id == folderUI.folder.id
+                    val isActive = (activeTab as? Tab.Folder)?.taskFolderDb?.id == folderUi.taskFolderDb.id
                     TabTextButton(
-                        text = folderUI.tabText,
+                        text = folderUi.tabText,
                         isActive = isActive,
                         dragItem = dragItem,
                         dropItem = dropItem,
                         dropItems = dropItems,
                         onClick = {
                             if (isActive) onClose()
-                            else activeTab = Tab.Folder(folderUI.folder)
+                            else activeTab = Tab.Folder(folderUi.taskFolderDb)
                         },
                     )
                 }
