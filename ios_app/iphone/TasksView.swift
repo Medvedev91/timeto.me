@@ -85,7 +85,7 @@ struct TasksTabViewInner: View {
                             taskFolderDb.id == folderUi.taskFolderDb.id
                         } else { false }
                         
-                        TabTasksView__FolderView(
+                        FolderButtonView(
                             isActive: isActive,
                             folderUi: folderUi,
                             tasksTabView: self,
@@ -99,7 +99,7 @@ struct TasksTabViewInner: View {
                     
                     let isActiveCalendar: Bool = if case .calendar = section { true } else { false }
                     
-                    TasksCalendarButtonView(
+                    CalendarButtonView(
                         isActive: isActiveCalendar,
                         focusedDrop: $focusedDrop,
                         dragItem: $activeDrag,
@@ -142,7 +142,7 @@ struct TasksTabViewInner: View {
     }
 }
 
-private struct TabTasksView__FolderView: View {
+private struct FolderButtonView: View {
 
     let isActive: Bool
     let folderUi: TasksTabVm.TaskFolderUi
@@ -207,7 +207,7 @@ private let calendarDots: [[Bool]] = [
     [true, true, true, false],
 ]
 
-private struct TasksCalendarButtonView: View {
+private struct CalendarButtonView: View {
 
     let isActive: Bool
     @Binding var focusedDrop: TasksTabDropItem?
@@ -286,7 +286,6 @@ private struct TasksCalendarButtonView: View {
                             $0 === dropItem
                         }
                     }
-                    ///
                 }
                 .frame(width: tabWidth, height: tabWidth)
                 .padding(.top, 2)
