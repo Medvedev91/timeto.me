@@ -17,9 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.input.pointer.*
-import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -30,15 +28,17 @@ import me.timeto.app.*
 import me.timeto.app.R
 import kotlinx.coroutines.delay
 import me.timeto.app.ui.calendar.CalendarTabsView
+import me.timeto.app.ui.tasks.tab.TasksTabDragItem
+import me.timeto.app.ui.tasks.tab.TasksTabDropItem
 import me.timeto.app.ui.tasks.tab.repeatings.TasksTabRepeatingsView
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.ui.tasks.tab.TasksTabVm
 import kotlin.random.Random
 
-val TasksView__TAB_BUTTON_WIDTH = 32.dp
-val TasksView__PADDING_END = TasksView__TAB_BUTTON_WIDTH + H_PADDING
+val TasksTabView__TAB_BUTTON_WIDTH = 32.dp
+val TasksTabView__PADDING_END = TasksTabView__TAB_BUTTON_WIDTH + H_PADDING
 
-val TasksView__LIST_SECTION_PADDING = 20.dp
+val TasksTabView__LIST_SECTION_PADDING = 20.dp
 
 //
 
@@ -68,9 +68,9 @@ fun TasksView(
             onClose()
     }
 
-    val dragItem = remember { mutableStateOf<DragItem?>(null) }
-    val dropItems = remember { mutableListOf<DropItem>() }
-    fun setFocusedDrop(drop: DropItem?) {
+    val dragItem = remember { mutableStateOf<TasksTabDragItem?>(null) }
+    val dropItems = remember { mutableListOf<TasksTabDropItem>() }
+    fun setFocusedDrop(drop: TasksTabDropItem?) {
         dragItem.value?.focusedDrop?.value = drop
     }
 
@@ -120,7 +120,7 @@ fun TasksView(
 
         Column(
             modifier = Modifier
-                .width(TasksView__TAB_BUTTON_WIDTH)
+                .width(TasksTabView__TAB_BUTTON_WIDTH)
                 .fillMaxHeight(),
             verticalArrangement = Arrangement.Center
         ) {
@@ -131,7 +131,7 @@ fun TasksView(
 
                 item {
                     val dropItem = remember {
-                        DropItem.Type__Calendar(DropItem.Square(0, 0, 0, 0))
+                        TasksTabDropItem.Calendar(TasksTabDropItem.Square(0, 0, 0, 0))
                     }
                     val isActive = activeTab is Tab.Calendar
 
@@ -149,9 +149,10 @@ fun TasksView(
 
                 items(state.taskFoldersUi) { folderUi ->
                     val dropItem = remember {
-                        DropItem.Type__Folder(folderUi.taskFolderDb, DropItem.Square(0, 0, 0, 0))
+                        TasksTabDropItem.Folder(folderUi.taskFolderDb, TasksTabDropItem.Square(0, 0, 0, 0))
                     }
-                    val isActive = (activeTab as? Tab.Folder)?.taskFolderDb?.id == folderUi.taskFolderDb.id
+                    val isActive: Boolean =
+                        (activeTab as? Tab.Folder)?.taskFolderDb?.id == folderUi.taskFolderDb.id
                     TabTextButton(
                         text = folderUi.tabText,
                         isActive = isActive,
@@ -175,8 +176,8 @@ fun TasksView(
 
                     Box(
                         modifier = Modifier
-                            .width(TasksView__TAB_BUTTON_WIDTH)
-                            .height(TasksView__TAB_BUTTON_WIDTH)
+                            .width(TasksTabView__TAB_BUTTON_WIDTH)
+                            .height(TasksTabView__TAB_BUTTON_WIDTH)
                             .clip(tabShape)
                             .background(backgroundColor.value)
                             .clickable {
@@ -204,51 +205,13 @@ private sealed class Tab {
     data object Repeating : Tab()
 }
 
-
-//
-// Drag and Drop
-
-class DragItem(
-    val focusedDrop: MutableState<DropItem?>,
-    val isDropAllowed: (drop: DropItem) -> Boolean,
-    val onDrop: (drop: DropItem) -> Unit,
-)
-
-sealed class DropItem(
-    val name: String,
-    val square: Square,
-) {
-
-    fun upSquareByCoordinates(c: LayoutCoordinates) {
-        val p = c.positionInWindow()
-        square.x1 = p.x.toInt()
-        square.y1 = p.y.toInt()
-        square.x2 = p.x.toInt() + c.size.width
-        square.y2 = p.y.toInt() + c.size.height
-    }
-
-    class Square(var x1: Int, var y1: Int, var x2: Int, var y2: Int)
-
-    //
-    // Types
-
-    class Type__Folder(
-        val folder: TaskFolderDb,
-        square: Square,
-    ) : DropItem(folder.name, square)
-
-    class Type__Calendar(
-        square: Square,
-    ) : DropItem("Calendar", square)
-}
-
 @Composable
 private fun TabTextButton(
     text: String,
     isActive: Boolean,
-    dragItem: State<DragItem?>,
-    dropItem: DropItem,
-    dropItems: MutableList<DropItem>,
+    dragItem: State<TasksTabDragItem?>,
+    dropItem: TasksTabDropItem,
+    dropItems: MutableList<TasksTabDropItem>,
     onClick: () -> Unit,
 ) {
     DisposableEffect(Unit) {
@@ -337,9 +300,9 @@ private val calendarDots: List<List<Boolean>> = listOf(
 @Composable
 private fun CalendarButtonView(
     isActive: Boolean,
-    dragItem: State<DragItem?>,
-    dropItem: DropItem,
-    dropItems: MutableList<DropItem>,
+    dragItem: State<TasksTabDragItem?>,
+    dropItem: TasksTabDropItem,
+    dropItems: MutableList<TasksTabDropItem>,
     onClick: () -> Unit,
 ) {
 
@@ -396,7 +359,7 @@ private fun CalendarButtonView(
             .onGloballyPositioned { c ->
                 dropItem.upSquareByCoordinates(c)
             }
-            .size(TasksView__TAB_BUTTON_WIDTH)
+            .size(TasksTabView__TAB_BUTTON_WIDTH)
             .clip(tabShape)
             .clickable {
                 onClick()
