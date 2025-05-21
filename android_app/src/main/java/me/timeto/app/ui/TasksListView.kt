@@ -19,6 +19,7 @@ import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.app.ui.activities.timer.ActivitiesTimerFs
 import me.timeto.app.ui.activities.timer.ActivityTimerFs
+import me.timeto.app.ui.events.EventFormFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.tasks.form.TaskFormFs
 import me.timeto.app.ui.tasks.tab.TasksTabDragItem
@@ -147,8 +148,8 @@ fun TasksListView(
         items(
             tasksVmUi,
             key = { it.taskUi.taskDb.id }
-        ) { vmTaskUi ->
-            val isFirst = vmTaskUi == tasksVmUi.firstOrNull()
+        ) { taskVmUi ->
+            val isFirst = taskVmUi == tasksVmUi.firstOrNull()
 
             Box(
                 modifier = Modifier
@@ -166,7 +167,7 @@ fun TasksListView(
                         { drop ->
                             when (drop) {
                                 is TasksTabDropItem.Calendar -> true
-                                is TasksTabDropItem.Folder -> drop.taskFolderDb.id != vmTaskUi.taskUi.taskDb.folder_id
+                                is TasksTabDropItem.Folder -> drop.taskFolderDb.id != taskVmUi.taskUi.taskDb.folder_id
                             }
                         }
                     ) { drop ->
@@ -177,16 +178,20 @@ fun TasksListView(
                             when (drop) {
                                 is TasksTabDropItem.Calendar -> {
                                     vibrateShort()
-                                    EventFormSheet__show(
-                                        editedEvent = null,
-                                        defText = vmTaskUi.taskUi.taskDb.text,
-                                    ) {
-                                        vmTaskUi.delete()
+                                    navigationFs.push {
+                                        EventFormFs(
+                                            initEventDb = null,
+                                            initText = taskVmUi.taskUi.taskDb.text,
+                                            initTime = null,
+                                            onDone = {
+                                                taskVmUi.delete()
+                                            },
+                                        )
                                     }
                                 }
                                 is TasksTabDropItem.Folder -> {
                                     vibrateLong()
-                                    vmTaskUi.upFolder(drop.taskFolderDb)
+                                    taskVmUi.upFolder(drop.taskFolderDb)
                                 }
                             }
                         }
@@ -215,16 +220,16 @@ fun TasksListView(
                         )
                     },
                     endView = { state ->
-                        SwipeToAction__DeleteView(state, vmTaskUi.taskUi.taskDb.text) {
+                        SwipeToAction__DeleteView(state, taskVmUi.taskUi.taskDb.text) {
                             vibrateLong()
-                            vmTaskUi.delete()
+                            taskVmUi.delete()
                         }
                     },
                     onStart = {
                         navigationFs.push {
                             TaskFormFs(
                                 strategy = TaskFormStrategy.EditTask(
-                                    taskDb = vmTaskUi.taskUi.taskDb,
+                                    taskDb = taskVmUi.taskUi.taskDb,
                                 ),
                             )
                         }
@@ -241,12 +246,12 @@ fun TasksListView(
                         modifier = Modifier
                             .background(c.bg)
                             .clickable {
-                                vmTaskUi.taskUi.taskDb.startIntervalForUi(
+                                taskVmUi.taskUi.taskDb.startIntervalForUi(
                                     ifJustStarted = {},
                                     ifActivityNeeded = {
                                         navigationFs.push {
                                             ActivitiesTimerFs(
-                                                strategy = vmTaskUi.timerStrategy,
+                                                strategy = taskVmUi.timerStrategy,
                                             )
                                         }
                                     },
@@ -254,7 +259,7 @@ fun TasksListView(
                                         navigationFs.push {
                                             ActivityTimerFs(
                                                 activityDb = activityDb,
-                                                strategy = vmTaskUi.timerStrategy,
+                                                strategy = taskVmUi.timerStrategy,
                                             )
                                         }
                                     },
@@ -272,7 +277,7 @@ fun TasksListView(
 
                             val vPadding = 3.dp
 
-                            val timeUi = vmTaskUi.timeUi
+                            val timeUi = taskVmUi.timeUi
                             if (timeUi != null) {
                                 Row(
                                     modifier = Modifier
@@ -357,15 +362,15 @@ fun TasksListView(
                             ) {
 
                                 Text(
-                                    vmTaskUi.text,
+                                    text = taskVmUi.text,
                                     color = c.text,
                                     modifier = Modifier
                                         .weight(1f),
                                 )
 
-                                TriggersListIconsView(vmTaskUi.taskUi.tf.triggers, 14.sp)
+                                TriggersListIconsView(taskVmUi.taskUi.tf.triggers, 14.sp)
 
-                                if (vmTaskUi.taskUi.tf.isImportant) {
+                                if (taskVmUi.taskUi.tf.isImportant) {
                                     Icon(
                                         painterResource(R.drawable.sf_flag_fill_medium_regular),
                                         contentDescription = "Important",
