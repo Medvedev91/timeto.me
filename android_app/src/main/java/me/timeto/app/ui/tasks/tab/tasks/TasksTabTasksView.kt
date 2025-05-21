@@ -1,4 +1,4 @@
-package me.timeto.app.ui
+package me.timeto.app.ui.tasks.tab.tasks
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -17,6 +17,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.*
 import me.timeto.app.*
 import me.timeto.app.R
+import me.timeto.app.ui.DividerBg
+import me.timeto.app.ui.SquircleShape
+import me.timeto.app.ui.SwipeToAction
+import me.timeto.app.ui.SwipeToAction__DeleteView
+import me.timeto.app.ui.SwipeToAction__StartView
+import me.timeto.app.ui.TriggersIconsView
 import me.timeto.app.ui.activities.timer.ActivitiesTimerFs
 import me.timeto.app.ui.activities.timer.ActivityTimerFs
 import me.timeto.app.ui.events.EventFormFs
@@ -37,7 +43,7 @@ private val highlightTimeShape = SquircleShape(8.dp)
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun TasksListView(
+fun TasksTabTasksView(
     taskFolderDb: TaskFolderDb,
     dragItem: MutableState<TasksTabDragItem?>,
 ) {

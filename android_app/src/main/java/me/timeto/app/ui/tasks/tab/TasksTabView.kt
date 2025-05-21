@@ -30,7 +30,7 @@ import me.timeto.app.R
 import kotlinx.coroutines.delay
 import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.SquircleShape
-import me.timeto.app.ui.TasksListView
+import me.timeto.app.ui.tasks.tab.tasks.TasksTabTasksView
 import me.timeto.app.ui.calendar.CalendarTabsView
 import me.timeto.app.ui.tasks.tab.repeatings.TasksTabRepeatingsView
 import me.timeto.shared.db.TaskFolderDb
@@ -114,7 +114,7 @@ fun TasksTabView(
     ) {
 
         when (val curTab = activeTab) {
-            is Tab.Folder -> TasksListView(curTab.taskFolderDb, dragItem)
+            is Tab.Folder -> TasksTabTasksView(curTab.taskFolderDb, dragItem)
             is Tab.Calendar -> CalendarTabsView()
             is Tab.Repeating -> TasksTabRepeatingsView()
         }
