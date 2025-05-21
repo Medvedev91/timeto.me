@@ -76,6 +76,7 @@ fun CalendarDayView(
                                 initEventDb = null,
                                 initText = null,
                                 initTime = state.initTime,
+                                onDone = {},
                             )
                         }
                     }

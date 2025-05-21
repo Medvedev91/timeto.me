@@ -48,6 +48,7 @@ fun CalendarListItemView(
                             initEventDb = eventUi.eventDb,
                             initText = null,
                             initTime = null,
+                            onDone = {},
                         )
                     }
                 }

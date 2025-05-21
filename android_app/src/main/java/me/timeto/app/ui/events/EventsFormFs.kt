@@ -62,6 +62,7 @@ fun EventFormFs(
     initEventDb: EventDb?,
     initText: String?,
     initTime: Int?,
+    onDone: () -> Unit,
 ) {
 
     val navigationFs = LocalNavigationFs.current
@@ -236,6 +237,7 @@ fun EventFormFs(
                         vm.save(
                             dialogsManager = navigationFs,
                             onSuccess = {
+                                onDone()
                                 navigationLayer.close()
                             },
                         )
