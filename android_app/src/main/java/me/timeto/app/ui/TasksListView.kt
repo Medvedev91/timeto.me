@@ -368,7 +368,10 @@ fun TasksListView(
                                         .weight(1f),
                                 )
 
-                                TriggersListIconsView(taskVmUi.taskUi.tf.triggers, 14.sp)
+                                TriggersIconsView(
+                                    checklistsDb = taskVmUi.taskUi.tf.checklists,
+                                    shortcutsDb = taskVmUi.taskUi.tf.shortcuts,
+                                )
 
                                 if (taskVmUi.taskUi.tf.isImportant) {
                                     Icon(
@@ -457,7 +460,10 @@ private fun TmrwTaskView(
                 modifier = Modifier
                     .weight(1f),
             )
-            TriggersListIconsView(taskUi.textFeatures.triggers, 14.sp)
+            TriggersIconsView(
+                checklistsDb = taskUi.textFeatures.checklists,
+                shortcutsDb = taskUi.textFeatures.shortcuts,
+            )
         }
 
         Box(Modifier.height(8.dp))
