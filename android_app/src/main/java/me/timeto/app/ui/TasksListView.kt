@@ -409,7 +409,7 @@ fun TasksListView(
 
                 val isFirst = taskUi == tmrwTasksUi.lastOrNull()
 
-                TasksListView__TmrwTaskView(
+                TmrwTaskView(
                     taskUi = taskUi,
                     isFirst = isFirst,
                 )
@@ -419,7 +419,7 @@ fun TasksListView(
 }
 
 @Composable
-private fun TasksListView__TmrwTaskView(
+private fun TmrwTaskView(
     taskUi: TasksTabTasksVm.TmrwTaskUi,
     isFirst: Boolean,
 ) {
