@@ -44,7 +44,7 @@ fun TasksListView(
 
     val navigationFs = LocalNavigationFs.current
 
-    val (vm, state) = rememberVm(taskFolderDb) {
+    val (_, state) = rememberVm(taskFolderDb) {
         TasksTabTasksVm(taskFolderDb)
     }
     val tmrwUi = state.tmrwUi
