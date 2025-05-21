@@ -5,43 +5,48 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.*
 import me.timeto.app.*
 import me.timeto.app.R
-import kotlinx.coroutines.delay
-import me.timeto.app.ui.main.MainTabsView__height
+import me.timeto.app.ui.activities.timer.ActivitiesTimerFs
+import me.timeto.app.ui.activities.timer.ActivityTimerFs
+import me.timeto.app.ui.navigation.LocalNavigationFs
+import me.timeto.app.ui.tasks.form.TaskFormFs
+import me.timeto.app.ui.tasks.tab.TasksTabDragItem
+import me.timeto.app.ui.tasks.tab.TasksTabDropItem
+import me.timeto.app.ui.tasks.tab.TasksTabView__LIST_SECTION_PADDING
+import me.timeto.app.ui.tasks.tab.TasksTabView__PADDING_END
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.launchEx
-import me.timeto.shared.vm.TasksListVm
+import me.timeto.shared.ui.tasks.form.TaskFormStrategy
+import me.timeto.shared.ui.tasks.tab.tasks.TasksTabTasksVm
 
 private val inputShape = SquircleShape(16.dp)
 private val highlightTimeShape = SquircleShape(8.dp)
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TasksListView(
-    activeFolder: TaskFolderDb,
-    dragItem: MutableState<DragItem?>,
+    taskFolderDb: TaskFolderDb,
+    dragItem: MutableState<TasksTabDragItem?>,
 ) {
-    val (vm, state) = rememberVm(activeFolder) { TasksListVm(activeFolder) }
-    val tmrwData = state.tmrwData
+
+    val navigationFs = LocalNavigationFs.current
+
+    val (vm, state) = rememberVm(taskFolderDb) {
+        TasksTabTasksVm(taskFolderDb)
+    }
+    val tmrwUi = state.tmrwUi
 
     val scope = rememberCoroutineScope()
 
@@ -51,22 +56,21 @@ fun TasksListView(
         modifier = Modifier
             .fillMaxHeight(),
         reverseLayout = true,
-        contentPadding = PaddingValues(top = TasksView__LIST_SECTION_PADDING, end = TasksView__PADDING_END),
+        contentPadding = PaddingValues(
+            top = TasksTabView__LIST_SECTION_PADDING,
+            end = TasksTabView__PADDING_END
+        ),
         state = listState,
     ) {
 
         item {
 
-            var isFocused by remember { mutableStateOf(false) }
-            val focusManager = LocalFocusManager.current
-            val focusRequester = remember { FocusRequester() }
-
             Column(
                 modifier = Modifier
                     .pointerInput(Unit) { } // Ignore clicks through
                     .padding(
-                        top = TasksView__LIST_SECTION_PADDING,
-                        bottom = TasksView__LIST_SECTION_PADDING,
+                        top = TasksTabView__LIST_SECTION_PADDING,
+                        bottom = TasksTabView__LIST_SECTION_PADDING,
                     )
             ) {
 
@@ -74,44 +78,32 @@ fun TasksListView(
                     modifier = Modifier
                         .padding(start = H_PADDING - 2.dp)
                         .border(width = onePx, color = c.dividerBg, shape = inputShape)
-                        .height(IntrinsicSize.Min), // To use fillMaxHeight() inside
+                        .height(IntrinsicSize.Min) // To use fillMaxHeight() inside
+                        .clickable {
+                            navigationFs.push {
+                                TaskFormFs(
+                                    strategy = TaskFormStrategy.NewTask(
+                                        taskFolderDb = taskFolderDb,
+                                    )
+                                )
+                            }
+                        },
                     verticalAlignment = Alignment.CenterVertically
                 ) {
 
-                    BasicTextField__VMState(
-                        text = state.addFormInputTextValue,
-                        onValueChange = {
-                            vm.setAddFormInputTextValue(it)
-                        },
-                        keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
-                        singleLine = false,
-                        cursorBrush = SolidColor(MaterialTheme.colors.primary),
-                        textStyle = LocalTextStyle.current.copy(
-                            color = MaterialTheme.colors.onSurface,
-                            fontSize = 16.sp
-                        ),
-                        decorationBox = { innerTextField ->
-                            Box(
-                                modifier = Modifier
-                                    .defaultMinSize(minHeight = 42.dp)
-                                    .padding(start = 14.dp, end = 4.dp),
-                                contentAlignment = Alignment.CenterStart
-                            ) {
-                                if (state.addFormInputTextValue.isEmpty())
-                                    Text(
-                                        text = "Task",
-                                        color = c.text.copy(alpha = 0.5f)
-                                    )
-                                innerTextField()
-                            }
-                        },
+                    ZStack(
                         modifier = Modifier
-                            .focusRequester(focusRequester)
                             .weight(1f)
-                            .onFocusChanged {
-                                isFocused = it.isFocused
-                            }
-                    )
+                            .defaultMinSize(minHeight = 42.dp),
+                        contentAlignment = Alignment.CenterStart,
+                    ) {
+                        Text(
+                            text = "Task",
+                            modifier = Modifier
+                                .padding(start = 14.dp),
+                            color = c.text.copy(alpha = 0.5f)
+                        )
+                    }
 
                     Box(
                         modifier = Modifier
@@ -119,27 +111,6 @@ fun TasksListView(
                             .fillMaxHeight()
                             .clip(squircleShape)
                             .background(c.blue)
-                            .clickable {
-                                if (vm.isAddFormInputEmpty()) {
-                                    if (isFocused) focusManager.clearFocus()
-                                    else focusRequester.requestFocus()
-                                    return@clickable
-                                }
-
-                                vm.addTask {
-                                    scope.launchEx {
-                                        listState.animateScrollToItem(0)
-                                    }
-                                    scope.launchEx {
-                                        // WTF Without delay() does not clear before close.
-                                        // clearFocus() to change isFocused as fast as possible.
-                                        // During delay() adding animation.
-                                        delay(250)
-                                        focusManager.clearFocus()
-                                        ////
-                                    }
-                                }
-                            }
                             .padding(horizontal = 12.dp),
                         contentAlignment = Alignment.CenterStart
                     ) {
@@ -151,26 +122,19 @@ fun TasksListView(
                         )
                     }
                 }
-
-                if (isFocused && WindowInsets.isImeVisible)
-                    Box(
-                        modifier = Modifier
-                            .consumeWindowInsets(PaddingValues(bottom = MainTabsView__height))
-                            .imePadding()
-                    )
             }
         }
 
-        if (tmrwData != null) {
+        if (tmrwUi != null) {
             item {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = TasksView__LIST_SECTION_PADDING),
+                        .padding(top = TasksTabView__LIST_SECTION_PADDING),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        tmrwData.curTimeString,
+                        tmrwUi.curTimeString,
                         fontSize = 14.sp,
                         fontWeight = FontWeight.W300,
                         color = c.textSecondary,
@@ -179,12 +143,12 @@ fun TasksListView(
             }
         }
 
-        val vmTasksUi = state.vmTasksUi
+        val tasksVmUi = state.tasksVmUi
         items(
-            vmTasksUi,
+            tasksVmUi,
             key = { it.taskUi.taskDb.id }
         ) { vmTaskUi ->
-            val isFirst = vmTaskUi == vmTasksUi.firstOrNull()
+            val isFirst = vmTaskUi == tasksVmUi.firstOrNull()
 
             Box(
                 modifier = Modifier
@@ -196,13 +160,13 @@ fun TasksListView(
                 val isEditOrDelete = remember { mutableStateOf<Boolean?>(null) }
                 val stateOffsetAbsDp = remember { mutableStateOf(0.dp) }
 
-                val localDragItem = remember(vmTasksUi) {
-                    DragItem(
+                val localDragItem = remember(tasksVmUi) {
+                    TasksTabDragItem(
                         mutableStateOf(null),
                         { drop ->
                             when (drop) {
-                                is DropItem.Type__Calendar -> true
-                                is DropItem.Type__Folder -> drop.folder.id != vmTaskUi.taskUi.taskDb.folder_id
+                                is TasksTabDropItem.Calendar -> true
+                                is TasksTabDropItem.Folder -> drop.taskFolderDb.id != vmTaskUi.taskUi.taskDb.folder_id
                             }
                         }
                     ) { drop ->
@@ -211,7 +175,7 @@ fun TasksListView(
                         ignoreOneSwipeToAction.value = true
                         scope.launchEx {
                             when (drop) {
-                                is DropItem.Type__Calendar -> {
+                                is TasksTabDropItem.Calendar -> {
                                     vibrateShort()
                                     EventFormSheet__show(
                                         editedEvent = null,
@@ -220,9 +184,9 @@ fun TasksListView(
                                         vmTaskUi.delete()
                                     }
                                 }
-                                is DropItem.Type__Folder -> {
+                                is TasksTabDropItem.Folder -> {
                                     vibrateLong()
-                                    vmTaskUi.upFolder(drop.folder)
+                                    vmTaskUi.upFolder(drop.taskFolderDb)
                                 }
                             }
                         }
@@ -257,10 +221,11 @@ fun TasksListView(
                         }
                     },
                     onStart = {
-                        Sheet.show { layer ->
-                            TaskFormSheet(
-                                task = vmTaskUi.taskUi.taskDb,
-                                layer = layer,
+                        navigationFs.push {
+                            TaskFormFs(
+                                strategy = TaskFormStrategy.EditTask(
+                                    taskDb = vmTaskUi.taskUi.taskDb,
+                                ),
                             )
                         }
                         false
@@ -276,16 +241,22 @@ fun TasksListView(
                         modifier = Modifier
                             .background(c.bg)
                             .clickable {
-                                vmTaskUi.taskUi.taskDb.startIntervalForUI(
-                                    onStarted = {},
-                                    activitiesSheet = {
-                                        ActivitiesTimerSheet__show(vmTaskUi.timerContext, withMenu = false)
+                                vmTaskUi.taskUi.taskDb.startIntervalForUi(
+                                    ifJustStarted = {},
+                                    ifActivityNeeded = {
+                                        navigationFs.push {
+                                            ActivitiesTimerFs(
+                                                strategy = vmTaskUi.timerStrategy,
+                                            )
+                                        }
                                     },
-                                    timerSheet = { activity ->
-                                        ActivityTimerSheet__show(
-                                            activity = activity,
-                                            timerContext = vmTaskUi.timerContext,
-                                        ) {}
+                                    ifTimerNeeded = { activityDb ->
+                                        navigationFs.push {
+                                            ActivityTimerFs(
+                                                activityDb = activityDb,
+                                                strategy = vmTaskUi.timerStrategy,
+                                            )
+                                        }
                                     },
                                 )
                             }
@@ -301,27 +272,27 @@ fun TasksListView(
 
                             val vPadding = 3.dp
 
-                            val timeUI = vmTaskUi.timeUI
-                            if (timeUI != null) {
+                            val timeUi = vmTaskUi.timeUi
+                            if (timeUi != null) {
                                 Row(
                                     modifier = Modifier
                                         .padding(bottom = vPadding),
                                     verticalAlignment = Alignment.CenterVertically,
                                 ) {
 
-                                    when (timeUI) {
+                                    when (timeUi) {
 
-                                        is TasksListVm.VmTaskUi.TimeUI.HighlightUI -> {
+                                        is TasksTabTasksVm.TaskVmUi.TimeUi.HighlightUi -> {
                                             Row(
                                                 modifier = Modifier
                                                     .offset(x = (-1).dp)
                                                     .clip(highlightTimeShape)
-                                                    .background(timeUI.backgroundColor.toColor())
+                                                    .background(timeUi.backgroundColor.toColor())
                                                     .padding(start = 5.dp, end = 4.dp, top = 3.dp, bottom = 3.dp),
                                                 verticalAlignment = Alignment.CenterVertically,
                                             ) {
 
-                                                when (timeUI._timeData.type) {
+                                                when (timeUi.timeData.type) {
 
                                                     TextFeatures.TimeData.TYPE.EVENT -> {
                                                         Icon(
@@ -347,7 +318,7 @@ fun TasksListView(
                                                 }
 
                                                 Text(
-                                                    timeUI.title,
+                                                    timeUi.title,
                                                     modifier = Modifier
                                                         .padding(top = 1.dp),
                                                     fontSize = 12.sp,
@@ -357,24 +328,24 @@ fun TasksListView(
                                             }
 
                                             Text(
-                                                timeUI.timeLeftText,
+                                                timeUi.timeLeftText,
                                                 modifier = Modifier
                                                     .padding(start = 6.dp),
                                                 fontSize = 13.sp,
                                                 fontWeight = FontWeight.W300,
-                                                color = timeUI.timeLeftColor.toColor(),
+                                                color = timeUi.timeLeftColor.toColor(),
                                                 maxLines = 1,
                                                 overflow = TextOverflow.Ellipsis,
                                             )
                                         }
 
-                                        is TasksListVm.VmTaskUi.TimeUI.RegularUI -> {
+                                        is TasksTabTasksVm.TaskVmUi.TimeUi.RegularUi -> {
                                             Text(
-                                                timeUI.text,
+                                                timeUi.text,
                                                 fontSize = 13.sp,
                                                 lineHeight = 18.sp,
                                                 fontWeight = FontWeight.W300,
-                                                color = timeUI.textColor.toColor(),
+                                                color = timeUi.textColor.toColor(),
                                             )
                                         }
                                     }
@@ -415,26 +386,26 @@ fun TasksListView(
             }
         }
 
-        if (tmrwData != null) {
+        if (tmrwUi != null) {
 
             item {
                 Divider(
                     Modifier
                         .padding(horizontal = 80.dp)
-                        .padding(top = 22.dp, bottom = if (vmTasksUi.isEmpty()) 0.dp else 18.dp)
+                        .padding(top = 22.dp, bottom = if (tasksVmUi.isEmpty()) 0.dp else 18.dp)
                 )
             }
 
-            val tmrwTasksUI = tmrwData.tasksUI
+            val tmrwTasksUi = tmrwUi.tasksUi
             items(
-                tmrwTasksUI,
-                key = { taskUI -> "tmrw_${taskUI.task.id}" }
-            ) { taskUI ->
+                tmrwTasksUi,
+                key = { taskUI -> "tmrw_${taskUI.taskDb.id}" }
+            ) { taskUi ->
 
-                val isFirst = taskUI == tmrwTasksUI.lastOrNull()
+                val isFirst = taskUi == tmrwTasksUi.lastOrNull()
 
                 TasksListView__TmrwTaskView(
-                    taskUI = taskUI,
+                    taskUi = taskUi,
                     isFirst = isFirst,
                 )
             }
@@ -444,7 +415,7 @@ fun TasksListView(
 
 @Composable
 private fun TasksListView__TmrwTaskView(
-    taskUI: TasksListVm.TmrwTaskUI,
+    taskUi: TasksTabTasksVm.TmrwTaskUi,
     isFirst: Boolean,
 ) {
     Column(
@@ -460,15 +431,15 @@ private fun TasksListView__TmrwTaskView(
 
         val vPadding = 3.dp
 
-        val timeUI = taskUI.timeUI
-        if (timeUI != null) {
+        val timeUi = taskUi.timeUi
+        if (timeUi != null) {
             Text(
-                text = timeUI.text,
+                text = timeUi.text,
                 modifier = Modifier
                     .padding(bottom = vPadding),
                 fontSize = 13.sp,
                 fontWeight = FontWeight.W300,
-                color = timeUI.textColor.toColor(),
+                color = timeUi.textColor.toColor(),
             )
         }
 
@@ -476,12 +447,12 @@ private fun TasksListView__TmrwTaskView(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                taskUI.text,
+                taskUi.text,
                 color = c.text,
                 modifier = Modifier
                     .weight(1f),
             )
-            TriggersListIconsView(taskUI.textFeatures.triggers, 14.sp)
+            TriggersListIconsView(taskUi.textFeatures.triggers, 14.sp)
         }
 
         Box(Modifier.height(8.dp))
