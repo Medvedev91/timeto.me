@@ -122,7 +122,7 @@ fun TasksTabTasksView(
                         contentAlignment = Alignment.CenterStart
                     ) {
                         Text(
-                            "SAVE",
+                            text = "SAVE",
                             color = c.white,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.W600,
@@ -141,7 +141,7 @@ fun TasksTabTasksView(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        tmrwUi.curTimeString,
+                        text = tmrwUi.curTimeString,
                         fontSize = 14.sp,
                         fontWeight = FontWeight.W300,
                         color = c.textSecondary,
@@ -152,15 +152,14 @@ fun TasksTabTasksView(
 
         val tasksVmUi = state.tasksVmUi
         items(
-            tasksVmUi,
+            items = tasksVmUi,
             key = { it.taskUi.taskDb.id }
         ) { taskVmUi ->
             val isFirst = taskVmUi == tasksVmUi.firstOrNull()
 
-            Box(
+            ZStack(
                 modifier = Modifier
-                    .background(c.bg)
-                // .animateItemPlacement() // Slow rendering on IME open
+                    .background(c.bg),
             ) {
 
                 val ignoreOneSwipeToAction = remember { mutableStateOf(false) }
@@ -329,7 +328,7 @@ fun TasksTabTasksView(
                                                 }
 
                                                 Text(
-                                                    timeUi.title,
+                                                    text = timeUi.title,
                                                     modifier = Modifier
                                                         .padding(top = 1.dp),
                                                     fontSize = 12.sp,
@@ -339,7 +338,7 @@ fun TasksTabTasksView(
                                             }
 
                                             Text(
-                                                timeUi.timeLeftText,
+                                                text = timeUi.timeLeftText,
                                                 modifier = Modifier
                                                     .padding(start = 6.dp),
                                                 fontSize = 13.sp,
@@ -352,7 +351,7 @@ fun TasksTabTasksView(
 
                                         is TasksTabTasksVm.TaskVmUi.TimeUi.RegularUi -> {
                                             Text(
-                                                timeUi.text,
+                                                text = timeUi.text,
                                                 fontSize = 13.sp,
                                                 lineHeight = 18.sp,
                                                 fontWeight = FontWeight.W300,
@@ -412,7 +411,7 @@ fun TasksTabTasksView(
 
             val tmrwTasksUi = tmrwUi.tasksUi
             items(
-                tmrwTasksUi,
+                items = tmrwTasksUi,
                 key = { taskUI -> "tmrw_${taskUI.taskDb.id}" }
             ) { taskUi ->
 
@@ -461,7 +460,7 @@ private fun TmrwTaskView(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                taskUi.text,
+                text = taskUi.text,
                 color = c.text,
                 modifier = Modifier
                     .weight(1f),
