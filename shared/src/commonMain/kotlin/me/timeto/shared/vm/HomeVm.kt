@@ -139,7 +139,7 @@ class HomeVm : __Vm<HomeVm.State>() {
                     mainTasks = tasksFullHeight,
                 )
             // Tasks bigger the half
-            val checklistCount: Int = checklistDb.getItemsCached().size.limitMin(2)
+            val checklistCount: Int = checklistDb.getItemsCached().size.limitMin(1)
             val checklistFullHeight: Float = checklistCount * lc.itemHeight
             if (checklistFullHeight < halfHeight)
                 return@run ListsSizes(
@@ -164,11 +164,12 @@ class HomeVm : __Vm<HomeVm.State>() {
         )
     )
 
-    override fun onAppear() {
-        val scope = scopeVm()
+    init {
+        val scopeVm = scopeVm()
+
         IntervalDb.selectLastOneOrNullFlow()
             .filterNotNull()
-            .onEachExIn(scope) { interval ->
+            .onEachExIn(scopeVm) { interval ->
                 state.update {
                     val isNewInterval: Boolean =
                         it.interval.id != interval.id
@@ -178,30 +179,34 @@ class HomeVm : __Vm<HomeVm.State>() {
                     )
                 }
             }
+
         TaskDb
             .getAscFlow()
             .map { it.filter { task -> task.isToday } }
-            .onEachExIn(scope) { tasks ->
+            .onEachExIn(scopeVm) { tasks ->
                 state.update { it.copy(todayTasksUi = tasks.map { it.toUi() }) }
             }
+
         if (SystemInfo.instance.isFdroid)
             KvDb.KEY.IS_SENDING_REPORTS
                 .selectOrNullFlow()
-                .onEachExIn(scope) { kvDb ->
+                .onEachExIn(scopeVm) { kvDb ->
                     state.update {
                         it.copy(fdroidMessage = if (kvDb == null) "Message for F-Droid Users" else null)
                     }
                 }
+
         KvDb.KEY.HOME_README_OPEN_TIME
             .selectOrNullFlow()
-            .onEachExIn(scope) { kvDb ->
+            .onEachExIn(scopeVm) { kvDb ->
                 state.update {
                     it.copy(readmeMessage = if (kvDb == null) "How to Use the App" else null)
                 }
             }
+
         KvDb.KEY.WHATS_NEW_CHECK_UNIX_DAY
             .selectOrNullFlow()
-            .onEachExIn(scope) { kvDb ->
+            .onEachExIn(scopeVm) { kvDb ->
                 val lastHistoryUnixDay: Int =
                     WhatsNewVm.historyItemsUi.first().unixDay
                 val message: String? =
@@ -213,22 +218,22 @@ class HomeVm : __Vm<HomeVm.State>() {
                 }
             }
 
-        ////
+        ///
 
         IntervalDb.anyChangeFlow()
-            .onEachExIn(scope) {
-                upTodayIntervalsUI()
+            .onEachExIn(scopeVm) {
+                upTodayIntervalsUi()
             }
-        scope.launch {
+        scopeVm.launch {
             while (true) {
                 delayToNextMinute()
-                upTodayIntervalsUI()
+                upTodayIntervalsUi()
             }
         }
 
-        ////
+        ///
 
-        scope.launch {
+        scopeVm.launch {
             while (true) {
                 state.update {
                     it.copy(
@@ -261,7 +266,7 @@ class HomeVm : __Vm<HomeVm.State>() {
         state.update { it.copy(isPurple = !it.isPurple) }
     }
 
-    private suspend fun upTodayIntervalsUI() {
+    private suspend fun upTodayIntervalsUi() {
         val utcOffset = localUtcOffsetWithDayStart
         val todayDS = UnixTime(utcOffset = utcOffset).localDay
         val todayIntervalsUI = DayIntervalsUi
