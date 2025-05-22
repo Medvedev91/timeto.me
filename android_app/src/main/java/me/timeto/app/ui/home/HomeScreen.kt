@@ -40,7 +40,7 @@ import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.privacy.PrivacyFs
 import me.timeto.app.ui.readme.ReadmeFs
 import me.timeto.app.ui.whats_new.WhatsNewFs
-import me.timeto.shared.vm.HomeVm
+import me.timeto.shared.ui.home.HomeVm
 
 val HomeScreen__primaryFontSize = 16.sp
 

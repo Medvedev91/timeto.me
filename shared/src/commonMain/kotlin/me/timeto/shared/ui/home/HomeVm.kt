@@ -1,4 +1,4 @@
-package me.timeto.shared.vm
+package me.timeto.shared.ui.home
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
@@ -11,6 +11,7 @@ import me.timeto.shared.misc.time
 import me.timeto.shared.models.*
 import me.timeto.shared.ui.activities.timer.ActivityTimerStrategy
 import me.timeto.shared.ui.whats_new.WhatsNewVm
+import me.timeto.shared.vm.__Vm
 
 class HomeVm : __Vm<HomeVm.State>() {
 
