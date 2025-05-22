@@ -24,11 +24,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
-import me.timeto.app.ui.Dialog
 import me.timeto.app.ui.Divider
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1
+import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
+import me.timeto.app.ui.showDatePicker
 import me.timeto.shared.UnixTime
 import me.timeto.shared.ui.summary.SummaryVm
 
@@ -362,17 +363,18 @@ private fun DateButtonView(
     maxTime: UnixTime,
     onSelect: (UnixTime) -> Unit,
 ) {
+    val navigationFs = LocalNavigationFs.current
     Text(
         text = text,
         modifier = Modifier
             .clip(squircleShape)
             .background(c.summaryDatePicker)
             .clickable {
-                Dialog.showDatePicker(
+                navigationFs.showDatePicker(
                     unixTime = unixTime,
                     minTime = minTime,
                     maxTime = maxTime,
-                    onSelect = onSelect,
+                    onDone = onSelect,
                 )
             }
             .padding(horizontal = 8.dp, vertical = 4.dp)
