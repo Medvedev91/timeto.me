@@ -9,6 +9,7 @@ import me.timeto.shared.db.KvDb.Companion.todayOnHomeScreen
 import me.timeto.shared.misc.SystemInfo
 import me.timeto.shared.misc.time
 import me.timeto.shared.models.*
+import me.timeto.shared.ui.activities.timer.ActivityTimerStrategy
 import me.timeto.shared.ui.whats_new.WhatsNewVm
 
 class HomeVm : __Vm<HomeVm.State>() {
@@ -25,14 +26,17 @@ class HomeVm : __Vm<HomeVm.State>() {
         val idToUpdate: Long,
     ) {
 
-        val timerData = TimerDataUi(interval, todayTasksUi.map { it.taskDb }, isPurple)
+        val timerData =
+            TimerDataUi(interval, todayTasksUi.map { it.taskDb }, isPurple)
 
-        val activeActivityDb: ActivityDb = interval.selectActivityDbCached()
+        val activeActivityDb: ActivityDb =
+            interval.selectActivityDbCached()
 
         // todo or use interval.getTriggers()
         val textFeatures = (interval.note ?: activeActivityDb.name).textFeatures()
 
-        val checklistDb: ChecklistDb? = textFeatures.checklists.firstOrNull()
+        val checklistDb: ChecklistDb? =
+            textFeatures.checklists.firstOrNull()
 
         val triggers = textFeatures.triggers.filter {
             val clt = (it as? TextFeatures.Trigger.Checklist) ?: return@filter true
@@ -312,7 +316,10 @@ class HomeVm : __Vm<HomeVm.State>() {
     ) {
 
         val text = taskUi.tf.textUi()
-        val timerContext = ActivityTimerSheetVm.TimerContext.Task(taskUi.taskDb)
+
+        val timerStrategy: ActivityTimerStrategy =
+            ActivityTimerStrategy.Task(taskDb = taskUi.taskDb)
+
         val timeUI: TimeUI? = taskUi.tf.calcTimeData()?.let { timeData ->
             val bgColor = when (timeData.status) {
                 TextFeatures.TimeData.STATUS.IN -> ColorRgba.homeFg
