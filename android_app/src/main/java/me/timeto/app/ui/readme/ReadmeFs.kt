@@ -20,7 +20,6 @@ import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.app.ui.DividerBg
 import me.timeto.app.ui.DividerBgScroll
-import me.timeto.app.ui.Fs
 import me.timeto.app.ui.Fs__HeaderTitle
 import me.timeto.app.ui.Fs__TITLE_FONT_SIZE
 import me.timeto.app.ui.Fs__TITLE_FONT_WEIGHT
@@ -28,7 +27,9 @@ import me.timeto.app.ui.MyListView__ItemView
 import me.timeto.app.ui.MyListView__ItemView__ButtonView
 import me.timeto.app.ui.Padding
 import me.timeto.app.ui.SquircleShape
+import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
+import me.timeto.app.ui.navigation.Navigation
 import me.timeto.shared.ui.readme.ReadmeVm
 import me.timeto.shared.ui.readme.ReadmeVm.DefaultItem
 
@@ -368,6 +369,7 @@ private fun ImagePreviewsView(
     vararg resIds: Int,
 ) {
 
+    val navigationFs = LocalNavigationFs.current
     val scrollState = rememberScrollState()
 
     HStack(
@@ -388,7 +390,10 @@ private fun ImagePreviewsView(
                     .clip(imagesShape)
                     .border(1.dp, imageBorderColor, shape = imagesShape)
                     .clickable {
-                        showImagesSlider(*resIds)
+                        showImagesSlider(
+                            navigationFs = navigationFs,
+                            resIds = resIds,
+                        )
                     },
                 contentDescription = "Screenshot",
                 contentScale = ContentScale.Fit,
@@ -400,10 +405,11 @@ private fun ImagePreviewsView(
 }
 
 private fun showImagesSlider(
+    navigationFs: Navigation,
     vararg resIds: Int,
 ) {
-
-    Fs.show { layer ->
+    navigationFs.push {
+        val navigationLayer = LocalNavigationLayer.current
 
         VStack(
             modifier = Modifier
@@ -447,7 +453,7 @@ private fun showImagesSlider(
                     .navigationBarsPadding()
                     .clip(roundedShape)
                     .clickable {
-                        layer.close()
+                        navigationLayer.close()
                     }
                     .padding(horizontal = 14.dp)
                     .padding(top = 6.dp, bottom = 7.dp),
