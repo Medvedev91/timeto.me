@@ -1,4 +1,4 @@
-package me.timeto.shared.vm
+package me.timeto.shared.ui.app
 
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
@@ -9,6 +9,7 @@ import me.timeto.shared.misc.time
 import me.timeto.shared.ui.goals.form.GoalFormData
 import me.timeto.shared.ui.shortcuts.ShortcutPerformer
 import me.timeto.shared.ui.whats_new.WhatsNewVm
+import me.timeto.shared.vm.__Vm
 
 class AppVm : __Vm<AppVm.State>() {
 
