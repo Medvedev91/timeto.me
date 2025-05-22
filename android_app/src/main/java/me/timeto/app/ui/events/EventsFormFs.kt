@@ -44,7 +44,6 @@ import me.timeto.app.rememberVm
 import me.timeto.app.roundedShape
 import me.timeto.app.squircleShape
 import me.timeto.app.ui.DaytimePickerSliderView
-import me.timeto.app.ui.Dialog
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.events.templates.EventTemplatesView
@@ -53,6 +52,7 @@ import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.header.HeaderSecondaryButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
+import me.timeto.app.ui.showDatePicker
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.EventDb
 import me.timeto.shared.ui.events.EventFormVm
@@ -132,12 +132,12 @@ fun EventFormFs(
                 text = state.selectedDateText,
                 paddingStart = H_PADDING,
                 onClick = {
-                    Dialog.showDatePicker(
+                    navigationFs.showDatePicker(
                         unixTime = state.selectedUnixTime,
                         minTime = UnixTime(state.minTime),
                         maxTime = UnixTime(UnixTime.MAX_TIME),
-                        onSelect = {
-                            vm.setUnixDay(it.localDay)
+                        onDone = { newUnixTime ->
+                            vm.setUnixDay(newUnixTime.localDay)
                         },
                     )
                 },
