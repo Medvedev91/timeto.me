@@ -24,7 +24,7 @@ class AppVm : __Vm<AppVm.State>() {
         )
     )
 
-    override fun onAppear() {
+    init {
         scopeVm().launchEx {
 
             initKmpDeferred.await()
