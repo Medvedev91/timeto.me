@@ -6,7 +6,9 @@ import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.*
 import me.timeto.shared.misc.time
-import me.timeto.shared.models.GoalFormUi
+import me.timeto.shared.ui.goals.form.GoalFormData
+import me.timeto.shared.ui.shortcuts.ShortcutPerformer
+import me.timeto.shared.ui.whats_new.WhatsNewVm
 
 class AppVm : __Vm<AppVm.State>() {
 
@@ -41,13 +43,12 @@ class AppVm : __Vm<AppVm.State>() {
                 }
 
             IntervalDb
-                .getLastOneOrNullFlow()
+                .selectLastOneOrNullFlow()
                 .filterNotNull()
                 .onEachExIn(this) { lastInterval ->
-                    ActivityDb.syncTimeHints()
                     rescheduleNotifications()
-                    performShortcut(lastInterval, secondsLimit = 3)
-                    keepScreenOnStateFlow.emit(lastInterval.getActivityDbCached().keepScreenOn)
+                    performShortcutForInterval(lastInterval, secondsLimit = 3)
+                    keepScreenOnStateFlow.emit(lastInterval.selectActivityDbCached().keepScreenOn)
                 }
 
             ActivityDb
@@ -105,22 +106,23 @@ class AppVm : __Vm<AppVm.State>() {
     }
 }
 
-private fun performShortcut(
-    interval: IntervalDb,
+private fun performShortcutForInterval(
+    intervalDb: IntervalDb,
     secondsLimit: Int,
 ) {
-    if ((interval.id + secondsLimit) < time())
+    if ((intervalDb.id + secondsLimit) < time())
         return
 
-    val shortcut: ShortcutDb? =
-        interval.note?.textFeatures()?.shortcuts?.firstOrNull()
-        ?: interval.getActivityDbCached().name.textFeatures().shortcuts.firstOrNull()
+    val shortcutDb: ShortcutDb =
+        intervalDb.note?.textFeatures()?.shortcuts?.firstOrNull()
+        ?: intervalDb.selectActivityDbCached().name.textFeatures().shortcuts.firstOrNull()
+        ?: return
 
-    shortcut?.performUi()
+    ShortcutPerformer.perform(shortcutDb)
 }
 
-///
-/// Sync today
+//
+// Sync today
 
 private var syncTodayRepeatingLastDay: Int? = null
 private suspend fun syncTodayRepeating() {
@@ -162,7 +164,7 @@ private fun syncTmrw() {
         }
 }
 
-//////
+///
 
 private suspend fun fillInitData() {
 
@@ -175,7 +177,7 @@ private suspend fun fillInitData() {
     TaskFolderDb.insertTmrw()
     TaskFolderDb.insertNoValidation(time(), "SMDAY", 3)
 
-    KvDb.KEY.WHATS_NEW_CHECK_UNIX_DAY.upsertInt(WhatsNewVm.prepHistoryItemsUi().first().unixDay)
+    KvDb.KEY.WHATS_NEW_CHECK_UNIX_DAY.upsertInt(WhatsNewVm.historyItemsUi.first().unixDay)
 
     val colorsWheel = Wheel(ActivityDb.colors)
     val cGreen = colorsWheel.next()
@@ -185,30 +187,29 @@ private suspend fun fillInitData() {
     val cPurple = colorsWheel.next()
 
     // @formatter:off
-    val goals = listOf<GoalFormUi>()
-    val defData = ActivityDb__Data.buildDefault()
-    val aNormal = ActivityDb.TYPE.NORMAL
+    val goals = listOf<GoalFormData>()
+    val aNormal = ActivityDb.Type.general
     val min5 = 5 * 60
-    val actMed = ActivityDb.addWithValidation("Meditation", "🧘‍♀️", 20 * 60, 1, aNormal, cYellow, defData, true, goals, min5)
-    val actWork = ActivityDb.addWithValidation("Work", "📁", 40 * 60, 2, aNormal, cBlue, defData, true, goals, min5)
-    ActivityDb.addWithValidation("Hobby", "🎸", 3600, 3, aNormal, cRed, defData, true, goals, min5)
-    val actPd = ActivityDb.addWithValidation("Personal development", "📖", 30 * 60, 4, aNormal, cPurple, defData, true, goals, min5)
-    val actEx = ActivityDb.addWithValidation("Exercises / Health", "💪", 20 * 60, 5, aNormal, colorsWheel.next(), defData, false, goals, min5)
-    ActivityDb.addWithValidation("Walk", "👟", 30 * 60, 6, aNormal, colorsWheel.next(), defData, false, goals, min5)
-    val actGr = ActivityDb.addWithValidation("Getting ready", "🚀", 30 * 60, 7, aNormal, colorsWheel.next(), defData, true, goals, min5)
-    ActivityDb.addWithValidation("Sleep / Rest", "😴", 8 * 3600, 8, aNormal, cGreen, defData, false, goals, min5)
-    val actOther = ActivityDb.addWithValidation("Other", "💡", 3600, 9, ActivityDb.TYPE.OTHER, colorsWheel.next(), defData, true, goals, min5)
+    val actMed = ActivityDb.addWithValidation("Meditation", "🧘‍♀️", 20 * 60, 1, aNormal, cYellow, true, goals, min5, emptySet())
+    val actWork = ActivityDb.addWithValidation("Work", "📁", 40 * 60, 2, aNormal, cBlue, true, goals, min5, emptySet())
+    ActivityDb.addWithValidation("Hobby", "🎸", 3600, 3, aNormal, cRed, true, goals, min5, emptySet())
+    val actPd = ActivityDb.addWithValidation("Personal development", "📖", 30 * 60, 4, aNormal, cPurple, true, goals, min5, emptySet())
+    val actEx = ActivityDb.addWithValidation("Exercises / Health", "💪", 20 * 60, 5, aNormal, colorsWheel.next(), false, goals, min5, emptySet())
+    ActivityDb.addWithValidation("Walk", "👟", 30 * 60, 6, aNormal, colorsWheel.next(), false, goals, min5, emptySet())
+    val actGr = ActivityDb.addWithValidation("Getting ready", "🚀", 30 * 60, 7, aNormal, colorsWheel.next(), true, goals, min5, emptySet())
+    ActivityDb.addWithValidation("Sleep / Rest", "😴", 8 * 3600, 8, aNormal, cGreen, false, goals, min5, emptySet())
+    val actOther = ActivityDb.addWithValidation("Other", "💡", 3600, 9, ActivityDb.Type.other, colorsWheel.next(), true, goals, min5, emptySet())
 
-    val interval = IntervalDb.addWithValidation(30 * 60, actPd, null)
+    val interval = IntervalDb.insertWithValidation(30 * 60, actPd, null)
     Cache.fillLateInit(interval, interval) // To 100% ensure
 
     val todayDay = UnixTime().localDay
     fun prepRep(title: String, activity: ActivityDb, timerMin: Int): String =
         title.textFeatures().copy(activity = activity, timer = timerMin * 60).textWithFeatures()
-    RepeatingDb.addWithValidation(prepRep("Exercises", actEx, 30), RepeatingDb.Period.EveryNDays(1), todayDay, null, false)
-    RepeatingDb.addWithValidation(prepRep("Meditation", actMed, 20), RepeatingDb.Period.EveryNDays(1), todayDay, null, false)
-    RepeatingDb.addWithValidation(prepRep("Small tasks", actOther, 30), RepeatingDb.Period.EveryNDays(1), todayDay, null, false)
-    RepeatingDb.addWithValidation(prepRep("Getting ready", actGr, 20), RepeatingDb.Period.EveryNDays(1), todayDay, null, false)
-    RepeatingDb.addWithValidation(prepRep("Weekly plan", actWork, 20), RepeatingDb.Period.DaysOfWeek(listOf(0)), todayDay, null, false)
+    RepeatingDb.insertWithValidationEx(prepRep("Exercises", actEx, 30), RepeatingDb.Period.EveryNDays(1), todayDay, null, false)
+    RepeatingDb.insertWithValidationEx(prepRep("Meditation", actMed, 20), RepeatingDb.Period.EveryNDays(1), todayDay, null, false)
+    RepeatingDb.insertWithValidationEx(prepRep("Small tasks", actOther, 30), RepeatingDb.Period.EveryNDays(1), todayDay, null, false)
+    RepeatingDb.insertWithValidationEx(prepRep("Getting ready", actGr, 20), RepeatingDb.Period.EveryNDays(1), todayDay, null, false)
+    RepeatingDb.insertWithValidationEx(prepRep("Weekly plan", actWork, 20), RepeatingDb.Period.DaysOfWeek(setOf(0)), todayDay, null, false)
     // @formatter:on
 }
