@@ -41,7 +41,7 @@ import me.timeto.app.ui.daytime.DaytimePickerSheet
 import me.timeto.app.ui.activities.timer.ActivityTimerFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.readme.ReadmeFs
-import me.timeto.shared.vm.HomeVm
+import me.timeto.shared.ui.home.HomeVm
 import me.timeto.shared.ui.readme.ReadmeVm
 
 @Composable
