@@ -2,25 +2,28 @@ import SwiftUI
 import shared
 
 @main
-struct W_App: App {
-
-    @State private var vm = WatchAppVm()
-
+struct WatchApp: App {
+    
     @Environment(\.scenePhase) private var scenePhase
     @WKApplicationDelegateAdaptor(W_Delegate.self) var delegate
-
+    
     init() {
         Utils_kmp_watchosKt.doInitKmpWatchOS()
     }
-
+    
     var body: some Scene {
-
+        
         WindowGroup {
-
-            VMView(vm: vm) { state in
-
+            VmView({
+                WatchAppVm()
+            }) { vm, state in
                 if state.isAppReady {
                     W_TabsView()
+                        .onChange(of: scenePhase) { _, newScenePhase in
+                            if newScenePhase == .active {
+                                vm.sync(doForceOrOnce: true)
+                            }
+                        }
                 } else if let syncBtnText = state.syncBtnTextOrNull {
                     Button(syncBtnText) {
                         vm.sync(doForceOrOnce: true)
@@ -28,10 +31,5 @@ struct W_App: App {
                 }
             }
         }
-                .onChange(of: scenePhase) { newScenePhase in
-                    if newScenePhase == .active {
-                        vm.sync(doForceOrOnce: true)
-                    }
-                }
     }
 }
