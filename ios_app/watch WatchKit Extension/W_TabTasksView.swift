@@ -167,7 +167,7 @@ struct W_TabTasksView: View {
                                     ///   the dialogs. But then there is an additional insurance. A small delay
                                     ///   so as not to see twitching of the timer window refresh and an additional
                                     ///   insurance against simultaneous closing of several dialogs.
-                                    W_TickerDialog(
+                                    WatchTickerDialog(
                                             activity: activityUI.activity,
                                             task: task,
                                             preAdd: {

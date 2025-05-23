@@ -114,7 +114,7 @@ struct W_TabTimerView: View {
             .buttonStyle(.plain)
             .background(squircleShape.fill(defBgColor))
             .sheet(isPresented: $isTickerPresented) {
-                W_TickerDialog(
+                WatchTickerDialog(
                     activity: activityUI.activity,
                     task: nil
                 ) {
