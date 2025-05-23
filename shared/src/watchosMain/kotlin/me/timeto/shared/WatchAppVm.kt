@@ -21,12 +21,14 @@ class WatchAppVm : __Vm<WatchAppVm.State>() {
         )
     )
 
-    override fun onAppear() {
+    init {
         scopeVm().launchEx {
 
             initKmpDeferred.join()
 
             /**
+             * todo still relevant?
+             *
              * DO NOT sync data on each onAppear(). Example:
              * - Open the ticker's sheet to start the activity and start the activity;
              * - On sheet's closing the onAppear() would be triggered;
