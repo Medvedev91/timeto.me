@@ -21,8 +21,6 @@ abstract class __Vm<T> {
         withContext(Dispatchers.Main) { block() }
     }
 
-    open fun onAppear() {}
-
     fun onDisappear() {
         scopes.forEach { it.cancel() }
         scopes.clear()

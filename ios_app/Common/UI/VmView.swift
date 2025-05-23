@@ -21,9 +21,6 @@ struct VmView<
     
     var body: some View {
         content(swiftVm.vm, swiftVm.vm.state.value as! VmState)
-            .onAppear {
-                swiftVm.vm.onAppear()
-            }
             .onReceive(swiftVm.publisher) { newState in
                 swiftVm.state = newState
             }

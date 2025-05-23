@@ -148,7 +148,6 @@ fun <State, VM : __Vm<State>> rememberVm(
         block()
     }
     DisposableEffect(key1, key2, key3) {
-        vm.onAppear()
         onDispose {
             vm.onDisappear()
         }
