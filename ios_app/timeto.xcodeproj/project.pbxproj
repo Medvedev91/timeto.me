@@ -13,8 +13,6 @@
 		2C82BF7228726E400041BCA3 /* timeto.me.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 2C82BF5728726E3F0041BCA3 /* timeto.me.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		318216E60DD4CA4153065416 /* utils_apple_todo_remove.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E58DC92CD5673A6B49E /* utils_apple_todo_remove.swift */; };
 		318219E4F8AFEB280A077F74 /* utils_apple_todo_remove.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821E58DC92CD5673A6B49E /* utils_apple_todo_remove.swift */; };
-		318219F8C525548F4D40DF35 /* atm_apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821346E2128825E6DBB9F8 /* atm_apple.swift */; };
-		31821C095E0F97CA52AE37ED /* atm_apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31821346E2128825E6DBB9F8 /* atm_apple.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,7 +47,6 @@
 		2C4F676E2A5C743D00F6013B /* timer_font.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = timer_font.otf; path = ../android_app/src/main/res/font/timer_font.otf; sourceTree = "<group>"; };
 		2C82BF5728726E3F0041BCA3 /* timeto.me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = timeto.me.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C95BA82280D74AA0027FC35 /* TimeTo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeTo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		31821346E2128825E6DBB9F8 /* atm_apple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = atm_apple.swift; sourceTree = "<group>"; };
 		31821E58DC92CD5673A6B49E /* utils_apple_todo_remove.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = utils_apple_todo_remove.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -109,7 +106,6 @@
 				2C8148B82D3DAB13000948F6 /* watch WatchKit Extension */,
 				2C2C419628C4CF2A00923267 /* timeto (iOS).entitlements */,
 				2C2C419728C4D83400923267 /* timeto--iOS--Info.plist */,
-				31821346E2128825E6DBB9F8 /* atm_apple.swift */,
 				31821E58DC92CD5673A6B49E /* utils_apple_todo_remove.swift */,
 			);
 			sourceTree = "<group>";
@@ -273,7 +269,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				318216E60DD4CA4153065416 /* utils_apple_todo_remove.swift in Sources */,
-				318219F8C525548F4D40DF35 /* atm_apple.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,7 +277,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				318219E4F8AFEB280A077F74 /* utils_apple_todo_remove.swift in Sources */,
-				31821C095E0F97CA52AE37ED /* atm_apple.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
