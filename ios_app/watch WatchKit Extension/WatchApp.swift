@@ -5,7 +5,7 @@ import shared
 struct WatchApp: App {
     
     @Environment(\.scenePhase) private var scenePhase
-    @WKApplicationDelegateAdaptor(W_Delegate.self) var delegate
+    @WKApplicationDelegateAdaptor(WatchDelegate.self) var delegate
     
     init() {
         Utils_kmp_watchosKt.doInitKmpWatchOS()
