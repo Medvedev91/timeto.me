@@ -24,7 +24,7 @@ struct WatchTabsView: View {
             WatchTabTimerView()
                 .tag(WatchTabsView.TAB_ID_TIMER)
             
-            W_TabTasksView()
+            WatchTabTasksView()
                 .tag(WatchTabsView.TAB_ID_TASKS)
         }
         /// TRICK. Otherwise the text does not updates

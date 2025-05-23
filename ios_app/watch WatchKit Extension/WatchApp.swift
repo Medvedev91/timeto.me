@@ -18,7 +18,7 @@ struct WatchApp: App {
                 WatchAppVm()
             }) { vm, state in
                 if state.isAppReady {
-                    W_TabsView()
+                    WatchTabsView()
                         .onChange(of: scenePhase) { _, newScenePhase in
                             if newScenePhase == .active {
                                 vm.sync(doForceOrOnce: true)
