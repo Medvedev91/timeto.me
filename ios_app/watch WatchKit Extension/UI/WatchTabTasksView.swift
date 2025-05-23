@@ -71,19 +71,13 @@ struct WatchTabTasksView: View {
             
             private struct TaskSheetDialog: View {
                 
-                @State private var vm: WatchTaskSheetVm
-                
                 let task: TaskDb
                 @Binding var isPresented: Bool
                 
-                init(task: TaskDb, isPresented: Binding<Bool>) {
-                    self.task = task
-                    _isPresented = isPresented
-                    _vm = State(initialValue: WatchTaskSheetVm(task: task))
-                }
-                
                 var body: some View {
-                    VMView(vm: vm) { state in
+                    VmView({
+                        WatchTaskSheetVm(task: task)
+                    }) { _, state in
                         List {
                             ForEach(state.activitiesUI, id: \.activity.id) { activityUI in
                                 ActivityView(
