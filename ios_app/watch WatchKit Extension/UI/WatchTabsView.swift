@@ -2,9 +2,9 @@ import SwiftUI
 import Combine
 import shared
 
-struct W_TabsView: View {
+struct WatchTabsView: View {
     
-    static var lastInstance: W_TabsView? = nil
+    static var lastInstance: WatchTabsView? = nil
     
     static let TAB_ID_TIMER = 1
     static let TAB_ID_TASKS = 2
@@ -17,15 +17,15 @@ struct W_TabsView: View {
     
     var body: some View {
         
-        let _ = W_TabsView.lastInstance = self
+        let _ = WatchTabsView.lastInstance = self
         
         TabView(selection: $tabSelection) {
             
             WatchTabTimerView()
-                .tag(W_TabsView.TAB_ID_TIMER)
+                .tag(WatchTabsView.TAB_ID_TIMER)
             
             W_TabTasksView()
-                .tag(W_TabsView.TAB_ID_TASKS)
+                .tag(WatchTabsView.TAB_ID_TASKS)
         }
         /// TRICK. Otherwise the text does not updates
         .onReceive(alertPublisher) { data in
