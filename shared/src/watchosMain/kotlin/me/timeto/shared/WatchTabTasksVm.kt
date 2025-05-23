@@ -69,7 +69,7 @@ class WatchTabTasksVm : __Vm<WatchTabTasksVm.State>() {
         )
     )
 
-    override fun onAppear() {
+    init {
         val scope = scopeVm()
         TaskDb.getAscFlow().onEachExIn(scope) { tasks ->
             upFolders(tasks)

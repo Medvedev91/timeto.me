@@ -15,14 +15,16 @@ class WatchTaskSheetVm(
 
         val listTitle = activity.nameWithEmoji().textFeatures().textUi()
 
-        val timerHints = activity.data.timer_hints.getTimerHintsUI(
-            historyLimit = 4,
-            customLimit = 4,
-        ) { hintUI ->
-            WatchToIosSync.startTaskWithLocal(
-                activity = activity,
-                timer = hintUI.seconds,
-                task = task
+        val timerHints = activity.timerHints.map { seconds ->
+            TimerHintData(
+                seconds = seconds,
+                onStart = {
+                    WatchToIosSync.startTaskWithLocal(
+                        activity = activity,
+                        timer = seconds,
+                        task = task
+                    )
+                }
             )
         }
     }
