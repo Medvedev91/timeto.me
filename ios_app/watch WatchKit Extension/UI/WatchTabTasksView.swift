@@ -3,10 +3,10 @@ import shared
 
 struct WatchTabTasksView: View {
     
-    @State private var vm = WatchTabTasksVm()
-    
     var body: some View {
-        VMView(vm: vm) { state in
+        VmView({
+            WatchTabTasksVm()
+        }) { _, state in
             List {
                 ForEach(state.foldersUI, id: \.title) { folderUI in
                     FolderView(title: folderUI.title, tasksUI: folderUI.tasks)
