@@ -191,11 +191,6 @@ private fun UiListeners() {
                 AlertDialogView(data) { layer.close() }
             }
         }
-        uiConfirmationFlow.onEachExIn(this) { data ->
-            Dialog.show { layer ->
-                ConfirmationDialogView(data) { layer.close() }
-            }
-        }
         ShortcutPerformer.flow.onEachExIn(this) { shortcutDb ->
             try {
                 val uri: String = shortcutDb.uri
