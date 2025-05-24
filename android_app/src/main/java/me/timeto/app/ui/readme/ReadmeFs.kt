@@ -20,13 +20,14 @@ import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.app.ui.DividerBg
 import me.timeto.app.ui.DividerBgScroll
-import me.timeto.app.ui.Fs__HeaderTitle
 import me.timeto.app.ui.Fs__TITLE_FONT_SIZE
 import me.timeto.app.ui.Fs__TITLE_FONT_WEIGHT
 import me.timeto.app.ui.MyListView__ItemView
 import me.timeto.app.ui.MyListView__ItemView__ButtonView
 import me.timeto.app.ui.Padding
 import me.timeto.app.ui.SquircleShape
+import me.timeto.app.ui.header.Header
+import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.navigation.Navigation
@@ -43,7 +44,6 @@ private val pTextLineHeight = 23.sp
 fun ReadmeFs(
     defaultItem: DefaultItem = DefaultItem.basics,
 ) {
-
     val navigationLayer = LocalNavigationLayer.current
 
     val (vm, state) = rememberVm {
@@ -55,15 +55,19 @@ fun ReadmeFs(
             .background(c.bg),
     ) {
 
-        Fs__HeaderTitle(
-            title = state.title,
-            scrollState = null,
-            onClose = {
-                navigationLayer.close()
-            },
-        )
-
         val scrollState = rememberScrollState()
+
+        Header(
+            title = state.title,
+            scrollState = scrollState,
+            actionButton = null,
+            cancelButton = HeaderCancelButton(
+                text = "Close",
+                onClick = {
+                    navigationLayer.close()
+                },
+            ),
+        )
 
         LaunchedEffect(state.tabUi.id) {
             scrollState.scrollTo(0)
