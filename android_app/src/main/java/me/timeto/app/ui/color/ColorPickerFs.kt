@@ -17,12 +17,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Done
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
@@ -31,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.HStack
 import me.timeto.app.H_PADDING
 import me.timeto.app.H_PADDING_HALF
+import me.timeto.app.R
 import me.timeto.app.VStack
 import me.timeto.app.ZStack
 import me.timeto.app.c
@@ -204,10 +204,10 @@ fun ColorPickerFs(
                                     exit = fadeOut(),
                                 ) {
                                     Icon(
-                                        imageVector = Icons.Rounded.Done,
+                                        painter = painterResource(id = R.drawable.sf_checkmark_medium_medium),
                                         contentDescription = "Selected",
                                         modifier = Modifier
-                                            .size(24.dp),
+                                            .size(16.dp),
                                         tint = c.white,
                                     )
                                 }
