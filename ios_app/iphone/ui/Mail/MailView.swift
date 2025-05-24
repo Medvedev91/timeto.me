@@ -1,17 +1,17 @@
 import SwiftUI
 import MessageUI
 
-///
-/// https://stackoverflow.com/a/58693164
-///
+//
+// https://stackoverflow.com/a/58693164
+ 
 struct MailView: UIViewControllerRepresentable {
-    
-    @Environment(\.presentationMode) private var presentation
     
     let toEmail: String
     let subject: String
     let body: String?
     @Binding var result: Result<MFMailComposeResult, Error>?
+    
+    @Environment(\.presentationMode) private var presentation
     
     class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
         
