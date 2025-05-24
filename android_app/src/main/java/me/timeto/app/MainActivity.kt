@@ -26,7 +26,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import me.timeto.app.ui.*
 import kotlinx.coroutines.delay
 import me.timeto.app.ui.main.MainScreen
 import me.timeto.app.ui.navigation.LocalNavigationFs
@@ -76,10 +75,8 @@ class MainActivity : ComponentActivity() {
                 else if (state.isAppReady) {
 
                     NavigationFs {
-                        WrapperView.LayoutView {
-                            MainScreen()
-                            ShortcutsListener()
-                        }
+                        MainScreen()
+                        ShortcutsListener()
                     }
 
                     LaunchedEffect(Unit) {
