@@ -65,7 +65,7 @@ private struct EmojiPickerSheetInner: View {
                 
                 HStack {
                     
-                    SearchBar(
+                    SearchBarView(
                         text: $searchText,
                         placeholder: "Search",
                         returnKeyType: .done,
