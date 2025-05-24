@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
-import me.timeto.app.ui.DividerBg
+import me.timeto.app.ui.Divider
 import me.timeto.app.ui.Padding
 import me.timeto.app.ui.SquircleShape
 import me.timeto.app.ui.form.button.FormButton
@@ -226,7 +226,7 @@ fun ReadmeFs(
             Padding(vertical = 26.dp)
         }
 
-        DividerBg(Modifier.padding(horizontal = H_PADDING))
+        Divider(Modifier.padding(horizontal = H_PADDING))
 
         HStack(
             modifier = Modifier
