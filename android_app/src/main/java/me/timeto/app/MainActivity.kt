@@ -29,6 +29,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import me.timeto.app.ui.*
 import kotlinx.coroutines.delay
 import me.timeto.app.ui.main.MainScreen
+import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.NavigationFs
 import me.timeto.shared.*
 import me.timeto.shared.db.ShortcutDb
@@ -185,6 +186,7 @@ private fun BackupMessageView(
 @Composable
 private fun UiListeners() {
     val context = LocalContext.current
+    val navigationFs = LocalNavigationFs.current
     LaunchedEffect(Unit) {
         uiAlertFlow.onEachExIn(this) { data ->
             Dialog.show { layer ->
@@ -198,14 +200,14 @@ private fun UiListeners() {
                     val androidPackage = uri.replaceFirst(ShortcutDb.ANDROID_PACKAGE_PREFIX, "")
                     val intent: Intent? = context.packageManager.getLaunchIntentForPackage(androidPackage)
                     if (intent == null)
-                        showUiAlert("App package not found")
+                        navigationFs.alert("App package not found")
                     else
                         context.startActivity(intent)
                 } else {
                     context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(shortcutDb.uri)))
                 }
             } catch (e: ActivityNotFoundException) {
-                showUiAlert("Invalid shortcut link")
+                navigationFs.alert("Invalid shortcut link")
             }
         }
     }
