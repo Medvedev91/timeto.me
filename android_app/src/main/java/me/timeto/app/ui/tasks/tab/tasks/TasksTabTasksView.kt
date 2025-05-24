@@ -17,7 +17,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.*
 import me.timeto.app.*
 import me.timeto.app.R
-import me.timeto.app.ui.DividerBg
 import me.timeto.app.ui.SquircleShape
 import me.timeto.app.ui.SwipeToAction
 import me.timeto.app.ui.SwipeToAction__DeleteView
@@ -393,7 +392,7 @@ fun TasksTabTasksView(
                         }
 
                         if (!isFirst)
-                            DividerBg()
+                            Divider()
                     }
                 }
             }
@@ -438,7 +437,7 @@ private fun TmrwTaskView(
     ) {
 
         if (!isFirst)
-            DividerBg()
+            Divider()
 
         Box(Modifier.height(8.dp))
 
