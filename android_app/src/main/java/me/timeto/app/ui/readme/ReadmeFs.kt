@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.app.ui.DividerBg
-import me.timeto.app.ui.DividerBgScroll
 import me.timeto.app.ui.Padding
 import me.timeto.app.ui.SquircleShape
 import me.timeto.app.ui.form.button.FormButton
@@ -71,12 +70,6 @@ fun ReadmeFs(
         LaunchedEffect(state.tabUi.id) {
             scrollState.scrollTo(0)
         }
-
-        DividerBgScroll(
-            scrollState = scrollState,
-            modifier = Modifier
-                .padding(horizontal = H_PADDING),
-        )
 
         VStack(
             modifier = Modifier
