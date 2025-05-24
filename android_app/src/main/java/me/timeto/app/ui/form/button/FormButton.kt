@@ -15,6 +15,7 @@ fun FormButton(
     note: String? = null,
     noteColor: Color? = null,
     withArrow: Boolean = false,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit,
     onLongClick: (() -> Unit)? = null,
 ) {
@@ -24,7 +25,7 @@ fun FormButton(
         titleColor = titleColor,
         isFirst = isFirst,
         isLast = isLast,
-        modifier = Modifier,
+        modifier = modifier,
         rightView = {
 
             HStack(
