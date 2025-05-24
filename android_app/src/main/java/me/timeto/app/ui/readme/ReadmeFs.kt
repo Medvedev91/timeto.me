@@ -20,14 +20,14 @@ import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.app.ui.DividerBg
 import me.timeto.app.ui.DividerBgScroll
-import me.timeto.app.ui.Fs__TITLE_FONT_SIZE
-import me.timeto.app.ui.Fs__TITLE_FONT_WEIGHT
 import me.timeto.app.ui.MyListView__ItemView
 import me.timeto.app.ui.MyListView__ItemView__ButtonView
 import me.timeto.app.ui.Padding
 import me.timeto.app.ui.SquircleShape
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderCancelButton
+import me.timeto.app.ui.header.Header__titleFontSize
+import me.timeto.app.ui.header.Header__titleFontWeight
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.navigation.Navigation
@@ -308,8 +308,8 @@ private fun PTitleView(
             .padding(horizontal = H_PADDING)
             .padding(top = paddingTop),
         color = c.text,
-        fontWeight = Fs__TITLE_FONT_WEIGHT,
-        fontSize = Fs__TITLE_FONT_SIZE,
+        fontWeight = Header__titleFontWeight,
+        fontSize = Header__titleFontSize,
     )
 }
 
