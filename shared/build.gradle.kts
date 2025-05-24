@@ -1,7 +1,7 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    id("app.cash.sqldelight").version("2.0.2")
+    id("app.cash.sqldelight").version("2.1.0")
 }
 
 kotlin {
@@ -26,7 +26,7 @@ kotlin {
     sourceSets {
 
         val ktor_version = "2.3.11"
-        val sqldelight_version = "2.0.2"
+        val sqldelight_version = "2.1.0"
 
         val commonMain by getting {
             dependencies {
