@@ -12,7 +12,7 @@ kotlin {
         // iOS
         iosArm64(),
         iosSimulatorArm64(),
-        // WatchOS
+        // watchOS
         watchosX64(),
         watchosArm32(),
         watchosArm64(),
