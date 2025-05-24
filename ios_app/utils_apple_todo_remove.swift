@@ -158,7 +158,7 @@ extension Double {
         limitMin(min).limitMax(max)
     }
 
-    //////
+    ///
 
     func goldenRatioUp() -> Double {
         self * Double(Utils_kmpKt.GOLDEN_RATIO)
@@ -191,7 +191,7 @@ class MyError: Error {
     }
 }
 
-//////
+///
 
 extension Array {
 
@@ -278,34 +278,5 @@ extension View {
                             .cornerRadius(radius)
                             .padding(.top, -radius)
                 }
-    }
-}
-
-///
-/// https://medium.com/@michael.forrest.music/how-to-make-a-scrollview-or-list-in-swiftui-that-starts-from-the-bottom-b0c4a69beb0d
-
-struct FlippedUpsideDown: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-                .rotationEffect(.radians(.pi))
-                .scaleEffect(x: -1, y: 1, anchor: .center)
-    }
-}
-
-extension View {
-    func flippedUpsideDown() -> some View {
-        self.modifier(FlippedUpsideDown())
-    }
-}
-
-/// https://stackoverflow.com/a/62588295/5169420
-/// Made for scroll calculation for RepeatingFormSheet
-struct ViewOffsetKey: PreferenceKey {
-
-    typealias Value = CGFloat
-    static var defaultValue = CGFloat.zero
-
-    static func reduce(value: inout Value, nextValue: () -> Value) {
-        value += nextValue()
     }
 }

@@ -433,26 +433,6 @@ suspend fun rescheduleNotifications() {
     */
 }
 
-///
-/// UI Alert / Confirmation / Triggers
-
-val uiAlertFlow = MutableSharedFlow<UIAlertData>()
-
-data class UIAlertData(
-    val message: String,
-)
-
-fun showUiAlert(
-    message: String,
-    reportApiText: String? = null,
-) {
-    launchExDefault { uiAlertFlow.emit(UIAlertData(message)) }
-    if (reportApiText != null)
-        reportApi(reportApiText)
-}
-
-//
-
 val keepScreenOnStateFlow = MutableStateFlow(false)
 
 val backupStateFlow = MutableStateFlow<String?>(null)

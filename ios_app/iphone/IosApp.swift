@@ -29,7 +29,6 @@ struct IosApp: App {
                     BackupMessageView(message: backupMessage)
                 } else if state.isAppReady {
                     MainScreen()
-                        .attachTimetoAlert()
                         .attachAutoBackupIos()
                         .statusBar(hidden: true)
                         .onReceive(scheduledNotificationsDataPublisher) {

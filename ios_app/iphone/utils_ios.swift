@@ -3,22 +3,6 @@ import Combine
 import WatchConnectivity
 import shared
 
-let H_PADDING = 16.0
-let H_PADDING_HALF = H_PADDING / 2
-
-private let scale: CGFloat = UIScreen.main.scale
-let onePx: CGFloat = 1 / scale
-let halfDpFloor: CGFloat = CGFloat(Int(scale / 2)) / scale // -=
-let halfDpCeil: CGFloat = 1 - halfDpFloor // +=
-
-func hideKeyboard() {
-    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-}
-
-func showOpenSource() {
-    UIApplication.shared.open(URL(string: Utils_kmpKt.OPEN_SOURCE_URL)!)
-}
-
 func schedulePush(data: ScheduledNotificationData) {
     let content = UNMutableNotificationContent()
     content.title = data.title
@@ -82,81 +66,4 @@ struct c {
     static let homeFg = ColorRgba.companion.homeFg.toColor()
 
     static let tasksDropFocused = ColorRgba.companion.tasksDropFocused.toColor()
-}
-
-extension View {
-
-    //
-    // https://stackoverflow.com/a/56558187
-    //
-    // Different behavior of text blocks. On emulator often
-    // only one line is displayed, on the device it is ok.
-    //
-    func myMultilineText() -> some View {
-        fixedSize(horizontal: false, vertical: true)
-    }
-}
-
-///
-/// https://stackoverflow.com/a/66880368/5169420
-
-private struct SafeAreaInsetsKey: EnvironmentKey {
-    static var defaultValue: EdgeInsets {
-        (UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.safeAreaInsets ?? .zero).insets
-    }
-}
-
-extension EnvironmentValues {
-    var safeAreaInsets: EdgeInsets {
-        self[SafeAreaInsetsKey.self]
-    }
-}
-
-private extension UIEdgeInsets {
-    var insets: EdgeInsets {
-        EdgeInsets(top: top, leading: left, bottom: bottom, trailing: right)
-    }
-}
-
-//////
-
-func vibrate(_ type: UINotificationFeedbackGenerator.FeedbackType) {
-    UINotificationFeedbackGenerator().notificationOccurred(type)
-}
-
-///
-/// Rounded corners https://stackoverflow.com/a/58606176/5169420
-
-private struct RoundedCorner: Shape {
-
-    var radius: CGFloat = .infinity
-    var corners: UIRectCorner = .allCorners
-
-    func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        return Path(path.cgPath)
-    }
-}
-
-///
-///
-
-private struct SafeAreaPaddingsModifier: ViewModifier {
-
-    @Environment(\.safeAreaInsets) private var safeAreaInsets
-
-    let edges: Edge.Set
-
-    func body(content: Content) -> some View {
-        content
-            .padding(.top, edges.contains(.top) ? safeAreaInsets.top : 0)
-            .padding(.bottom, edges.contains(.bottom) ? safeAreaInsets.bottom : 0)
-    }
-}
-
-extension View {
-
-    func safeAreaPadding(_ edges: Edge.Set) -> some View {
-        modifier(SafeAreaPaddingsModifier(edges: edges))
-    }
 }
