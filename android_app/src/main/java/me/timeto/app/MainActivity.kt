@@ -188,11 +188,6 @@ private fun UiListeners() {
     val context = LocalContext.current
     val navigationFs = LocalNavigationFs.current
     LaunchedEffect(Unit) {
-        uiAlertFlow.onEachExIn(this) { data ->
-            Dialog.show { layer ->
-                AlertDialogView(data) { layer.close() }
-            }
-        }
         ShortcutPerformer.flow.onEachExIn(this) { shortcutDb ->
             try {
                 val uri: String = shortcutDb.uri
