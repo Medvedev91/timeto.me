@@ -328,8 +328,7 @@ private struct TaskRowView: View {
                                 
                                 Text(taskVmUi.text)
                                     .lineSpacing(4)
-                                    .multilineTextAlignment(.leading)
-                                    .myMultilineText()
+                                    .textAlign(.leading)
                                 
                                 Spacer()
                                 
@@ -440,8 +439,7 @@ private struct TmrwTaskView: View {
                 
                 Text(taskUi.text)
                     .lineSpacing(4)
-                    .multilineTextAlignment(.leading)
-                    .myMultilineText()
+                    .textAlign(.leading)
                 
                 Spacer()
                 
