@@ -72,7 +72,7 @@ fun SettingsScreen(
     ) { destinationUri ->
 
         if (destinationUri == null) {
-            showUiAlert("File not selected")
+            navigationFs.alert("File not selected")
             return@rememberLauncherForActivityResult
         }
 
@@ -83,7 +83,8 @@ fun SettingsScreen(
                 stream.write(jsonBytes)
                 stream.close()
             } catch (e: Exception) {
-                showUiAlert("Error", "launcherBackup exception:\n$e")
+                navigationFs.alert("Error")
+                reportApi("launcherBackup exception:\n$e")
             }
         }
     }
@@ -93,7 +94,7 @@ fun SettingsScreen(
     ) { destinationUri ->
 
         if (destinationUri == null) {
-            showUiAlert("File not selected")
+            navigationFs.alert("File not selected")
             return@rememberLauncherForActivityResult
         }
 
@@ -111,7 +112,8 @@ fun SettingsScreen(
                 val jString = stringBuilder.toString()
                 vm.procRestore(jString)
             } catch (e: Exception) {
-                showUiAlert("Error", "launcherRestore exception:\n$e")
+                navigationFs.alert("Error")
+                reportApi("launcherRestore exception:\n$e")
             }
         }
     }
