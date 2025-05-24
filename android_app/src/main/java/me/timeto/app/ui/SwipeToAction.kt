@@ -190,7 +190,7 @@ fun SwipeToAction__DeleteView(
         )
 
         Text(
-            "Delete",
+            text = "Delete",
             color = c.red,
             modifier = Modifier
                 .padding(end = 10.dp)
