@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-struct PieView: View {
+struct SummaryPieView: View {
     
     let separatorDegrees = 8.0
     let ringRatio = 2.1

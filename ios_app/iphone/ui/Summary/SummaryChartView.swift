@@ -33,7 +33,7 @@ private struct SummaryChartViewInner: View {
             VStack {
                 
                 let pieWidth: Double = min(geometry.size.width - 30, geometry.size.height / 1.85)
-                PieView(
+                SummaryPieView(
                     selectedId: selectedId,
                     onIdSelected: { selectedId = $0 },
                     itemsData: state.pieItems
