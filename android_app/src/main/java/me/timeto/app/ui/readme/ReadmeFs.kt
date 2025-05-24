@@ -20,10 +20,9 @@ import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.app.ui.DividerBg
 import me.timeto.app.ui.DividerBgScroll
-import me.timeto.app.ui.MyListView__ItemView
-import me.timeto.app.ui.MyListView__ItemView__ButtonView
 import me.timeto.app.ui.Padding
 import me.timeto.app.ui.SquircleShape
+import me.timeto.app.ui.form.button.FormButton
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.header.Header__titleFontSize
@@ -102,19 +101,16 @@ fun ReadmeFs(
 
                     is ReadmeVm.Paragraph.AskAQuestion -> {
 
-                        MyListView__ItemView(
+                        FormButton(
+                            title = paragraph.title,
                             isFirst = true,
                             isLast = true,
                             modifier = Modifier
                                 .padding(top = 20.dp),
-                        ) {
-                            MyListView__ItemView__ButtonView(
-                                text = paragraph.title,
-                                bgColor = c.fg,
-                            ) {
+                            onClick = {
                                 askAQuestion(subject = paragraph.subject)
-                            }
-                        }
+                            },
+                        )
                     }
 
                     is ReadmeVm.Paragraph.TimerTypical -> {
