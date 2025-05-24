@@ -20,8 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import kotlinx.coroutines.launch
-import me.timeto.shared.UIConfirmationData
-import me.timeto.shared.showUiConfirmation
+import me.timeto.app.ui.navigation.LocalNavigationFs
 import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -152,6 +151,8 @@ fun SwipeToAction__DeleteView(
 ) {
     val scope = rememberCoroutineScope()
 
+    val navigationFs = LocalNavigationFs.current
+
     Row(
         modifier = Modifier
             .fillMaxHeight()
@@ -197,18 +198,16 @@ fun SwipeToAction__DeleteView(
                 .background(c.white)
                 .clickable {
                     if (deletionConfirmationNote != null) {
-                        showUiConfirmation(
-                            UIConfirmationData(
-                                text = deletionConfirmationNote,
-                                buttonText = "Delete",
-                                isRed = true,
-                                onConfirm = {
-                                    onDelete()
-                                }
-                            )
+                        navigationFs.confirmation(
+                            message = deletionConfirmationNote,
+                            buttonText = "Delete",
+                            onConfirm = {
+                                onDelete()
+                            },
                         )
-                    } else
+                    } else {
                         onDelete()
+                    }
                 }
                 .padding(start = 10.dp, end = 10.dp, top = 4.dp, bottom = 5.dp),
             fontWeight = FontWeight.Bold,
