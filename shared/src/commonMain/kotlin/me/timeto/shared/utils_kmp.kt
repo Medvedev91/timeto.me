@@ -453,21 +453,6 @@ fun showUiAlert(
 
 //
 
-val uiConfirmationFlow = MutableSharedFlow<UIConfirmationData>()
-
-data class UIConfirmationData(
-    val text: String,
-    val buttonText: String,
-    val isRed: Boolean,
-    val onConfirm: () -> Unit,
-)
-
-fun showUiConfirmation(data: UIConfirmationData) {
-    launchExDefault { uiConfirmationFlow.emit(data) }
-}
-
-//
-
 val keepScreenOnStateFlow = MutableStateFlow(false)
 
 val backupStateFlow = MutableStateFlow<String?>(null)

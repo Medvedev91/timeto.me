@@ -18,7 +18,6 @@ private struct TimetoAlert__Modifier: ViewModifier {
     @State private var isPresented = false
 
     private let alertPublisher: AnyPublisher<UIAlertData, Never> = Utils_kmpKt.uiAlertFlow.toPublisher()
-    private let confirmationPublisher: AnyPublisher<UIConfirmationData, Never> = Utils_kmpKt.uiConfirmationFlow.toPublisher()
 
     @State private var uuid = UUID()
 
@@ -55,17 +54,6 @@ private struct TimetoAlert__Modifier: ViewModifier {
             }
             timetoAlert.alert(data.message)
         }
-        .onReceive(confirmationPublisher) { data in
-            if modifiersStacks.last != uuid {
-                return
-            }
-            timetoAlert.confirm(
-                data.text,
-                confirmationText: data.buttonText,
-                onConfirm: data.onConfirm,
-                isDestructive: data.isRed
-            )
-        }
         .onAppear {
             modifiersStacks.append(uuid)
         }
@@ -93,30 +81,6 @@ class TimetoAlert: ObservableObject {
                 Button(btnText, role: .cancel) {
                     if let onClick = onClick {
                         onClick()
-                    }
-                }
-            ]
-        )
-    }
-
-    func confirm(
-        _ title: String,
-        confirmationText: String,
-        onConfirm: @escaping () -> Void,
-        isDestructive: Bool = false,
-        cancelText: String = "Cancel",
-        onCancel: (() -> Void)? = nil
-    ) {
-        data = TimetoAlert__Data(
-            id: UUID(),
-            title: title,
-            buttons: [
-                Button(confirmationText, role: isDestructive ? .destructive : .none) {
-                    onConfirm()
-                },
-                Button(cancelText, role: .cancel) {
-                    if let onCancel = onCancel {
-                        onCancel()
                     }
                 }
             ]
