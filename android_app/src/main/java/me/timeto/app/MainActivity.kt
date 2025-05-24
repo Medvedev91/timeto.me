@@ -78,7 +78,7 @@ class MainActivity : ComponentActivity() {
                     NavigationFs {
                         WrapperView.LayoutView {
                             MainScreen()
-                            UiListeners()
+                            ShortcutsListener()
                         }
                     }
 
@@ -184,7 +184,7 @@ private fun BackupMessageView(
 }
 
 @Composable
-private fun UiListeners() {
+private fun ShortcutsListener() {
     val context = LocalContext.current
     val navigationFs = LocalNavigationFs.current
     LaunchedEffect(Unit) {
