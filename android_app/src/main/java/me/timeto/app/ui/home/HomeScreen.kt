@@ -35,7 +35,6 @@ import me.timeto.app.toColor
 import me.timeto.app.ui.checklists.ChecklistView
 import me.timeto.app.ui.Padding
 import me.timeto.app.ui.SpacerW1
-import me.timeto.app.ui.TextFeaturesTriggersView
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.privacy.PrivacyFs
 import me.timeto.app.ui.readme.ReadmeFs
@@ -74,8 +73,8 @@ fun HomeScreen() {
             state = state,
         )
 
-        TextFeaturesTriggersView(
-            triggers = state.triggers,
+        HomeExtraTriggersView(
+            extraTriggers = state.extraTriggers,
             modifier = Modifier.padding(top = 10.dp),
             contentPadding = PaddingValues(horizontal = 50.dp),
         )

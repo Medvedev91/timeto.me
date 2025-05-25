@@ -39,11 +39,12 @@ class HomeVm : __Vm<HomeVm.State>() {
         val checklistDb: ChecklistDb? =
             textFeatures.checklists.firstOrNull()
 
-        val triggers = textFeatures.triggers.filter {
-            val clt = (it as? TextFeatures.Trigger.Checklist) ?: return@filter true
-            val clDb = checklistDb ?: return@filter true
-            return@filter clt.checklist.id != clDb.id
-        }
+        val extraTriggers = ExtraTriggers(
+            checklistsDb = textFeatures.checklists.filter {
+                it.id != checklistDb?.id
+            },
+            shortcutsDb = textFeatures.shortcuts,
+        )
 
         // todo performance?
         val goalBarsUi: List<GoalBarUi> = if (todayIntervalsUi == null)
@@ -354,6 +355,11 @@ class HomeVm : __Vm<HomeVm.State>() {
             val noteColor: ColorRgba,
         )
     }
+
+    data class ExtraTriggers(
+        val checklistsDb: List<ChecklistDb>,
+        val shortcutsDb: List<ShortcutDb>,
+    )
 }
 
 private fun prepGoalTextLeft(
