@@ -1,5 +1,4 @@
 import SwiftUI
-import Combine
 import shared
 
 @main
@@ -8,12 +7,6 @@ struct IosApp: App {
     @Environment(\.scenePhase) private var scenePhase
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @StateObject private var inAppNotificationDelegate = InAppNotificationDelegate()
-    
-    private let scheduledNotificationsDataPublisher: AnyPublisher<NSArray, Never> =
-    Utils_kmpKt.scheduledNotificationsDataFlow.toPublisher()
-    
-    private let keepScreenOnDataPublisher: AnyPublisher<KotlinBoolean, Never> =
-    Utils_kmpKt.keepScreenOnStateFlow.toPublisher()
     
     private let batteryManager = BatteryManager() // Keep the object
     
@@ -31,17 +24,6 @@ struct IosApp: App {
                     MainScreen()
                         .attachAutoBackupIos()
                         .statusBar(hidden: true)
-                        .onReceive(scheduledNotificationsDataPublisher) {
-                            let center = UNUserNotificationCenter.current()
-                            center.removeAllPendingNotificationRequests()
-                            let dataItems = $0 as! [ScheduledNotificationData]
-                            dataItems.forEach { data in
-                                schedulePush(data: data)
-                            }
-                        }
-                        .onReceive(keepScreenOnDataPublisher) { keepScreenOn in
-                            UIApplication.shared.isIdleTimerDisabled = (keepScreenOn == true)
-                        }
                         .onAppear {
                             // Use together
                             UNUserNotificationCenter
@@ -80,27 +62,4 @@ private struct BackupMessageView: View {
         .fillMaxSize()
         .background(.background)
     }
-}
-
-private func schedulePush(
-    data: ScheduledNotificationData
-) {
-    let content = UNMutableNotificationContent()
-    content.title = data.title
-    content.body = data.text
-
-    if data.type == .break_ {
-        let soundFile = Utils_kmpKt.getSoundTimerExpiredFileName(withExtension: true)
-        content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: soundFile))
-    } else {
-        content.sound = .default
-    }
-    content.badge = 1
-
-    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(data.inSeconds.toInt()), repeats: false)
-
-    let req = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-
-    let center = UNUserNotificationCenter.current()
-    center.add(req, withCompletionHandler: nil)
 }
