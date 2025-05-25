@@ -1,4 +1,4 @@
-package me.timeto.app.ui.daytime
+package me.timeto.app.ui.daytime_picker
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.navigationBarsPadding

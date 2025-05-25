@@ -37,7 +37,7 @@ import me.timeto.app.roundedShape
 import me.timeto.app.squircleShape
 import me.timeto.app.timerFont
 import me.timeto.app.toColor
-import me.timeto.app.ui.daytime.DaytimePickerSheet
+import me.timeto.app.ui.daytime_picker.DaytimePickerSheet
 import me.timeto.app.ui.activities.timer.ActivityTimerFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.readme.ReadmeFs
