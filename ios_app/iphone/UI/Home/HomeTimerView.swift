@@ -198,7 +198,6 @@ private struct TimerInfoButton: View {
                     .foregroundColor(color)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 4)
-                    .cornerRadius(99)
             }
         )
         .buttonStyle(.borderless)
