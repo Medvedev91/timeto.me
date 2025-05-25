@@ -26,7 +26,6 @@ import me.timeto.app.R
 import me.timeto.app.c
 import me.timeto.app.rememberVm
 import me.timeto.app.roundedShape
-import me.timeto.app.toggle
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.form.button.FormButton
 import me.timeto.app.ui.form.FormHeader
@@ -105,7 +104,7 @@ fun ShortcutFormFs(
                 ) {
                     vm.setName(name)
                     vm.setUri(uri)
-                    triggerReinit.toggle()
+                    triggerReinit.value = !triggerReinit.value
                     keyboardController?.hide()
                 }
 
