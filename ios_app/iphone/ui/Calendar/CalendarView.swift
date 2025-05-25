@@ -64,7 +64,7 @@ private struct CalendarViewInner: View {
                             
                             Text(month.title)
                                 .frame(minWidth: 0, maxWidth: .infinity)
-                                .foregroundColor(c.white)
+                                .foregroundColor(.white)
                                 .padding(.top, 24)
                                 .padding(.bottom, 8)
                                 .font(.system(size: 17, weight: .bold))

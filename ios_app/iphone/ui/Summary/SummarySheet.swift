@@ -221,7 +221,7 @@ private struct SummarySheetInner: View {
                         label: {
                             Text(period.title)
                                 .font(.system(size: 14, weight: period.isActive ? .bold : .light))
-                                .foregroundColor(period.isActive ? c.white : c.text)
+                                .foregroundColor(period.isActive ? .white : c.text)
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 6)
                         }
@@ -243,7 +243,7 @@ private struct SummarySheetInner: View {
                                     size: isChartVisible ? 20 : bottomBarButtonFontSize,
                                     weight: bottomBarButtonFontWeight
                                 ))
-                                .foregroundColor(isChartVisible ? c.white : bottomBarButtonFontColor)
+                                .foregroundColor(isChartVisible ? .white : bottomBarButtonFontColor)
                         }
                         .frame(width: bottomBarButtonFrameSize, height: bottomBarButtonFrameSize)
                         .background(roundedShape.fill(isChartVisible ? c.blue : c.transparent))

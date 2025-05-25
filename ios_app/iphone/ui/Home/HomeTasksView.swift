@@ -62,7 +62,7 @@ private struct TaskItemView: View {
                     if mainTask.taskUi.tf.paused != nil {
                         ZStack {
                             Image(systemName: "pause")
-                                .foregroundColor(c.white)
+                                .foregroundColor(.white)
                                 .font(.system(size: 12, weight: .black))
                         }
                         .frame(width: HomeScreen__itemCircleHeight, height: HomeScreen__itemCircleHeight)

@@ -52,7 +52,7 @@ private struct HomeScreenInner: View {
                     },
                     label: {
                         Text(readmeMessage)
-                            .foregroundColor(c.white)
+                            .foregroundColor(.white)
                             .padding(.horizontal, 12)
                             .padding(.vertical, 8)
                             .font(.system(size: 17, weight: .medium))
@@ -139,14 +139,14 @@ private struct HomeScreenInner: View {
                                         
                                         Text(goalBarUi.textLeft)
                                             .padding(.leading, HomeScreen__itemCircleHPadding)
-                                            .foregroundColor(c.white)
+                                            .foregroundColor(.white)
                                             .font(.system(size: HomeScreen__itemCircleFontSize, weight: HomeScreen__itemCircleFontWeight))
                                         
                                         Spacer()
                                         
                                         Text(goalBarUi.textRight)
                                             .padding(.trailing, HomeScreen__itemCircleHPadding)
-                                            .foregroundColor(c.white)
+                                            .foregroundColor(.white)
                                             .font(.system(size: HomeScreen__itemCircleFontSize, weight: HomeScreen__itemCircleFontWeight))
                                     }
                                 }

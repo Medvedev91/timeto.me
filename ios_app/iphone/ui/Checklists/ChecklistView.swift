@@ -79,7 +79,7 @@ private struct ChecklistViewInner: View {
                             HStack {
                                 
                                 Image(systemName: itemUi.itemDb.isChecked ? "checkmark.square.fill" : "square")
-                                    .foregroundColor(c.white)
+                                    .foregroundColor(.white)
                                     .font(.system(size: checkboxSize, weight: .regular))
                                     .padding(.trailing, 10)
                                 
