@@ -3,6 +3,9 @@ import shared
 
 let MainTabsView__HEIGHT = 56.0
 
+private let menuPrimaryColor: Color = MainTabsVm.companion.menuPrimaryColor.toColor()
+private let menuSecondaryColor: Color = MainTabsVm.companion.menuSecondaryColor.toColor()
+
 extension View {
     
     func contentMarginsTabBar(extra: CGFloat = 0) -> some View {
@@ -57,7 +60,7 @@ private struct MainTabsViewInner: View {
                     label: {
                         Image(systemName: "timer")
                             .fillMaxSize()
-                            .foregroundColor(tab == .activities ? .blue : c.homeFontSecondary)
+                            .foregroundColor(tab == .activities ? .blue : menuSecondaryColor)
                             .font(.system(size: 30, weight: .thin))
                     }
                 )
@@ -71,7 +74,7 @@ private struct MainTabsViewInner: View {
                         VStack(alignment: .center) {
                             
                             Text(state.timeText)
-                                .foregroundColor(c.homeMenuTime)
+                                .foregroundColor(menuPrimaryColor)
                                 .font(menuTimeFont)
                                 .padding(.top, 3)
                                 .padding(.bottom, 7)
@@ -90,13 +93,13 @@ private struct MainTabsViewInner: View {
                                     .font(.system(size: 13, weight: batteryUi.isHighlighted ? .bold : .regular))
                                 
                                 Image(systemName: "smallcircle.filled.circle")
-                                    .foregroundColor(c.homeFontSecondary)
+                                    .foregroundColor(menuSecondaryColor)
                                     .font(.system(size: 11 + halfDpCeil, weight: .regular))
                                     .padding(.leading, 6)
                                     .padding(.trailing, 1 + halfDpFloor)
                                 
                                 Text(state.tasksText)
-                                    .foregroundColor(c.homeFontSecondary)
+                                    .foregroundColor(menuSecondaryColor)
                                     .font(.system(size: 13, weight: .regular))
                             }
                             .padding(.trailing, 2)
@@ -114,7 +117,7 @@ private struct MainTabsViewInner: View {
                     label: {
                         Image(systemName: "ellipsis.circle")
                             .fillMaxSize()
-                            .foregroundColor(tab == .settings ? .blue : c.homeFontSecondary)
+                            .foregroundColor(tab == .settings ? .blue : menuSecondaryColor)
                             .font(.system(size: 30, weight: .thin))
                     }
                 )
