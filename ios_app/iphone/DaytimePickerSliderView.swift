@@ -151,7 +151,7 @@ private struct SliderView: View {
                         if let sliderStickText = tick.sliderStickText {
                             Text(sliderStickText)
                                 .padding(.top, 8)
-                                .foregroundColor(c.textSecondary)
+                                .foregroundColor(.secondary)
                                 .font(.system(size: 13, weight: .light))
                         }
                     }

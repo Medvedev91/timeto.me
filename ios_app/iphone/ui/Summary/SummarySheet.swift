@@ -3,7 +3,7 @@ import shared
 
 private let bottomBarButtonFontSize = 22.0
 private let bottomBarButtonFontWeight = Font.Weight.light
-private let bottomBarButtonFontColor = c.textSecondary
+private let bottomBarButtonFontColor: Color = .secondary
 private let bottomBarButtonFrameSize = 32.0
 
 private let barsHeaderHeight = 36.0
@@ -58,7 +58,7 @@ private struct SummarySheetInner: View {
                             VStack(alignment: .leading) {
                                 Spacer()
                                 Text(barString)
-                                    .foregroundColor(c.textSecondary)
+                                    .foregroundColor(.secondary)
                                     .font(.system(size: 10, weight: .light))
                                     .padding(.bottom, 4)
                                 Divider()
@@ -91,7 +91,7 @@ private struct SummarySheetInner: View {
                                             
                                             Text(dayIntervalsUi.dayString)
                                                 .lineLimit(1)
-                                                .foregroundColor(c.textSecondary)
+                                                .foregroundColor(.secondary)
                                                 .font(.system(size: 10, weight: .light))
                                         }
                                         .padding(.bottom, 8)
@@ -308,6 +308,6 @@ private struct ActivitySecondaryText: View {
         Text(text)
             .font(.system(size: 12, weight: .light))
             .lineLimit(1)
-            .foregroundColor(c.textSecondary)
+            .foregroundColor(.secondary)
     }
 }
