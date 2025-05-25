@@ -16,4 +16,3 @@ func myAsyncAfter(
         work()
     }
 }
-

@@ -135,30 +135,6 @@ extension Double {
     }
 }
 
-///
-/// Exceptions
-
-extension Error {
-
-    func myMessage() -> String {
-        if let error = self as? MyError {
-            return error.message
-        }
-        return localizedDescription
-    }
-}
-
-class MyError: Error {
-
-    let message: String
-
-    init(_ message: String) {
-        self.message = message
-    }
-}
-
-///
-
 extension Array {
 
     /// https://stackoverflow.com/a/25330930

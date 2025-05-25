@@ -313,7 +313,7 @@ private struct SettingsScreenInner: View {
                 print("Saved to \(url.absoluteString.removingPercentEncoding!)")
             case .failure(let error):
                 // todo
-                print(error.myMessage())
+                print(error.messageApp())
             }
         }
         .fileImporter(
@@ -328,11 +328,11 @@ private struct SettingsScreenInner: View {
                 let fileUrl = try res.get()
                 
                 if !fileUrl.startAccessingSecurityScopedResource() {
-                    throw MyError("iOS restore !fileUrl.startAccessingSecurityScopedResource()")
+                    throw ErrorApp("iOS restore !fileUrl.startAccessingSecurityScopedResource()")
                 }
                 
                 guard let jString = String(data: try Data(contentsOf: fileUrl), encoding: .utf8) else {
-                    throw MyError("iOS restore jString null")
+                    throw ErrorApp("iOS restore jString null")
                 }
                 
                 fileUrl.stopAccessingSecurityScopedResource()
@@ -342,7 +342,7 @@ private struct SettingsScreenInner: View {
                 vm.procRestore(jString: jString)
             } catch {
                 navigation.alert(message: "Error")
-                reportApi("iOS restore exception\n" + error.myMessage())
+                reportApi("iOS restore exception\n" + error.messageApp())
             }
         }
     }
