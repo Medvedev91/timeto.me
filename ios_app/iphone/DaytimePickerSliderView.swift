@@ -12,19 +12,19 @@ private let circleDefaultOffset = hPadding - (circleSize / 2) + sliderInternalPa
 private let tickNoteWidthDp = 20.0
 
 struct DaytimePickerSliderView: View {
-
+    
     let daytimeUi: DaytimeUi
     let onChange: (DaytimeUi) -> Void
-
+    
     var body: some View {
-
+        
         let sliderUi = DaytimePickerSliderUi(
             hour: daytimeUi.hour,
             minute: daytimeUi.minute
         )
-
+        
         VStack {
-
+            
             SliderView(
                 tickIdx: sliderUi.hour.toInt(),
                 ticks: sliderUi.hourTicks,
@@ -38,7 +38,7 @@ struct DaytimePickerSliderView: View {
                 }
             )
             .padding(.top, 4)
-
+            
             SliderView(
                 tickIdx: sliderUi.minute.toInt(),
                 ticks: sliderUi.minuteTicks,
@@ -58,25 +58,25 @@ struct DaytimePickerSliderView: View {
 }
 
 private struct SliderView: View {
-
+    
     let tickIdx: Int
     let ticks: [DaytimePickerSliderUi.Tick]
     let stepTicks: Int
     let onChange: (Int) -> Void
-
+    
     // 0 also used as "no value"
     @State private var sliderXPx = 0.0
     // Not exact but approximate `slide width` / `ticks size`
     @State private var tickAxmPx = 0.0
-
+    
     @State private var circleOffsetAnimation = 0.0
-
+    
     var body: some View {
-
+        
         ZStack(alignment: .topLeading) {
-
+            
             ZStack {
-
+                
                 ZStack {
                 }
                 .frame(minWidth: 0, maxWidth: .infinity)
@@ -97,19 +97,19 @@ private struct SliderView: View {
                 .padding(.horizontal, sliderInternalPadding)
                 .background(roundedShape.fill(c.dividerBg))
                 .padding(.horizontal, hPadding)
-
+                
                 //
                 // Circle
                 // Ignore init animation
-
+                
                 if sliderXPx > 0 {
-
+                    
                     let circleOffset = circleDefaultOffset + (tickAxmPx * tickIdx.toDouble())
-
+                    
                     HStack {
-
+                        
                         HStack {
-
+                            
                             Text(ticks[tickIdx].text)
                                 .foregroundColor(.primary)
                                 .font(.system(size: 12, weight: .medium))
@@ -117,7 +117,7 @@ private struct SliderView: View {
                         .frame(width: circleSize, height: circleSize, alignment: .center)
                         .background(roundedShape.fill(.blue))
                         .offset(x: circleOffsetAnimation)
-
+                        
                         Spacer()
                     }
                     .animateVmValue(
@@ -126,28 +126,28 @@ private struct SliderView: View {
                         animation: .spring(response: 0.15)
                     )
                 }
-
+                
                 ////
             }
             .frame(height: circleSize)
             .zIndex(1.0)
-
+            
             ZStack(alignment: .top) {
-
+                
                 ForEachIndexed(ticks) { tickIdx, tick in
-
+                    
                     let tickNoteHalfPx = tickNoteWidthDp / 2
                     let offsetX = (tickAxmPx * tickIdx.toDouble()) - tickNoteHalfPx
-
+                    
                     ZStack(alignment: .top) {
-
+                        
                         if tick.withSliderStick {
                             ZStack {
                             }
                             .frame(width: 1, height: 5)
                             .background(c.dividerFg)
                         }
-
+                        
                         if let sliderStickText = tick.sliderStickText {
                             Text(sliderStickText)
                                 .padding(.top, 8)
@@ -165,21 +165,21 @@ private struct SliderView: View {
         }
         .highPriorityGesture(gesture)
     }
-
+    
     var gesture: some Gesture {
-
+        
         DragGesture(minimumDistance: 0, coordinateSpace: .global)
             .onChanged { value in
                 let slideXPosition = value.location.x - sliderXPx
                 let stepPx = tickAxmPx * stepTicks.toDouble()
-
+                
                 let newIdx = DaytimePickerSliderUi.companion.calcSliderTickIdx(
                     ticksSize: ticks.count.toInt32(),
                     stepTicks: stepTicks.toInt32(),
                     slideXPosition: Float(slideXPosition),
                     stepPx: Float(stepPx)
                 )
-
+                
                 if tickIdx != newIdx {
                     onChange(newIdx.toInt())
                 }
