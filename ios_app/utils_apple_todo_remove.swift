@@ -15,23 +15,6 @@ func setupWCSession(_ delegate: WCSessionDelegate) {
 
 //
 
-func myAsync(_ function: @escaping () -> Void) {
-    DispatchQueue.main.async {
-        function()
-    }
-}
-
-func myAsyncAfter(
-    _ seconds: CGFloat,
-    work: @escaping () -> Void
-) {
-    DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
-        work()
-    }
-}
-
-//
-
 // todo move to KMM
 
 func is12HoursFormat() -> Bool {
