@@ -123,7 +123,8 @@ private struct MainTabsViewInner: View {
             .frame(height: MainTabsView__HEIGHT)
             
             if showBackground {
-                DividerBg()
+                Divider()
+                    .opacity(0.3)
             }
         }
         .background(showBackground ? AnyShapeStyle(.bar) : AnyShapeStyle(.clear))
