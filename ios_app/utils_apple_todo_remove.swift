@@ -15,14 +15,6 @@ func setupWCSession(_ delegate: WCSessionDelegate) {
 
 //
 
-// todo move to KMM
-
-func is12HoursFormat() -> Bool {
-    DateFormatter.dateFormat(fromTemplate: "j", options: 0, locale: Locale.current)?.range(of: "a") != nil
-}
-
-//
-
 extension Date {
 
     /// For device time zone
@@ -178,18 +170,6 @@ extension Array {
     }
 }
 
-extension UIColor {
-
-    convenience init(argb: UInt) {
-        self.init(
-            red: Double((argb >> 16) & 0xff) / 255,
-            green: Double((argb >> 8) & 0xff) / 255,
-            blue: Double((argb >> 0) & 0xff) / 255,
-            alpha: Double((argb >> 24) & 0xff) / 255
-        )
-    }
-}
-
 extension Color {
 
     init(rgba: [Int]) {
@@ -200,12 +180,6 @@ extension Color {
             blue: Double(rgba[2]) / 255,
             opacity: Double(rgba.getOrNull(index: 3) ?? 255) / 255
         )
-    }
-
-    init(rgbaString: String) {
-        self.init(rgba: rgbaString.split(separator: ",").map {
-            Int($0)!
-        })
     }
 }
 
