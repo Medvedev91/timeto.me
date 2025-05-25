@@ -3,6 +3,8 @@ import shared
 
 let MainTabsView__HEIGHT = 56.0
 
+private let menuTimeFont: Font = buildTimerFont(size: 10)
+
 private let menuPrimaryColor: Color = MainTabsVm.companion.menuPrimaryColor.toColor()
 private let menuSecondaryColor: Color = MainTabsVm.companion.menuSecondaryColor.toColor()
 
@@ -32,8 +34,6 @@ struct MainTabsView: View {
 }
 
 ///
-
-private let menuTimeFont: Font = buildTimerFont(size: 10)
 
 private struct MainTabsViewInner: View {
     
