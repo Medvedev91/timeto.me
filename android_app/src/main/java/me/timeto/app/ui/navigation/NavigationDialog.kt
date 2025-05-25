@@ -15,8 +15,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import me.timeto.app.H_PADDING
 import me.timeto.app.MainActivity
-import me.timeto.app.VStack
-import me.timeto.app.ZStack
+import me.timeto.app.ui.VStack
+import me.timeto.app.ui.ZStack
 import me.timeto.app.c
 import me.timeto.app.ui.SquircleShape
 

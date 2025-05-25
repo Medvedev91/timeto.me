@@ -26,10 +26,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
-import me.timeto.app.HStack
+import me.timeto.app.ui.HStack
 import me.timeto.app.H_PADDING
 import me.timeto.app.R
-import me.timeto.app.VStack
+import me.timeto.app.ui.VStack
 import me.timeto.app.c
 import me.timeto.app.dpToPx
 import me.timeto.app.isSDKQPlus

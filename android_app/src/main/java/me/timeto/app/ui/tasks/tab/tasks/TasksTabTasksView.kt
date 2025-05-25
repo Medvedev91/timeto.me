@@ -17,11 +17,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.*
 import me.timeto.app.*
 import me.timeto.app.R
+import me.timeto.app.ui.HStack
 import me.timeto.app.ui.SquircleShape
 import me.timeto.app.ui.SwipeToAction
 import me.timeto.app.ui.SwipeToAction__DeleteView
 import me.timeto.app.ui.SwipeToAction__StartView
 import me.timeto.app.ui.TriggersIconsView
+import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.activities.timer.ActivitiesTimerFs
 import me.timeto.app.ui.activities.timer.ActivityTimerFs
 import me.timeto.app.ui.events.EventFormFs

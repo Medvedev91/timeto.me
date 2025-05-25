@@ -14,7 +14,7 @@ import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import me.timeto.app.ZStack
+import me.timeto.app.ui.ZStack
 import me.timeto.app.setTrue
 
 @Composable

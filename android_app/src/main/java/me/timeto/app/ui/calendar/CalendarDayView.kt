@@ -14,9 +14,9 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import me.timeto.app.HStack
+import me.timeto.app.ui.HStack
 import me.timeto.app.H_PADDING_HALF
-import me.timeto.app.VStack
+import me.timeto.app.ui.VStack
 import me.timeto.app.c
 import me.timeto.app.onePx
 import me.timeto.app.rememberVm

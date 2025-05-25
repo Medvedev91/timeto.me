@@ -14,7 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import me.timeto.app.HStack
+import me.timeto.app.ui.HStack
 import me.timeto.app.c
 import me.timeto.app.squircleShape
 import me.timeto.app.ui.checklists.ChecklistScreen

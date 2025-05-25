@@ -10,11 +10,8 @@ import android.net.Uri
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
-import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -137,7 +134,6 @@ fun cancelAllAlarms() {
 
 ////
 
-
 @Composable
 fun <State, VM : __Vm<State>> rememberVm(
     key1: Any? = null,
@@ -171,61 +167,6 @@ fun vibrateOneShot(duration: Long) {
     val vibrator = App.instance.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     vibrator.vibrate(VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE))
     vibrateOneShotLastMillis = timeMls()
-}
-
-///
-///
-
-@Composable
-fun VStack(
-    modifier: Modifier = Modifier,
-    verticalArrangement: Arrangement.Vertical = Arrangement.Top,
-    horizontalAlignment: Alignment.Horizontal = Alignment.Start,
-    content: @Composable ColumnScope.() -> Unit,
-) {
-    Column(
-        modifier = modifier,
-        verticalArrangement = verticalArrangement,
-        horizontalAlignment = horizontalAlignment,
-        content = content,
-    )
-}
-
-@Composable
-fun HStack(
-    modifier: Modifier = Modifier,
-    verticalAlignment: Alignment.Vertical = Alignment.Top,
-    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
-    content: @Composable RowScope.() -> Unit,
-) {
-    Row(
-        modifier = modifier,
-        verticalAlignment = verticalAlignment,
-        horizontalArrangement = horizontalArrangement,
-        content = content,
-    )
-}
-
-@Composable
-fun ZStack(
-    modifier: Modifier,
-) {
-    Box(modifier = modifier)
-}
-
-@Composable
-fun ZStack(
-    modifier: Modifier = Modifier,
-    contentAlignment: Alignment = Alignment.TopStart,
-    propagateMinConstraints: Boolean = false,
-    content: @Composable BoxScope.() -> Unit,
-) {
-    Box(
-        modifier = modifier,
-        contentAlignment = contentAlignment,
-        propagateMinConstraints = propagateMinConstraints,
-        content = content,
-    )
 }
 
 ///

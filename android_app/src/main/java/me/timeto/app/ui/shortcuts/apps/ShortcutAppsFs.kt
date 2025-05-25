@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.timeto.app.App
 import me.timeto.app.H_PADDING
-import me.timeto.app.ZStack
+import me.timeto.app.ui.ZStack
 import me.timeto.app.c
 import me.timeto.app.ui.Divider
 import me.timeto.app.ui.Screen

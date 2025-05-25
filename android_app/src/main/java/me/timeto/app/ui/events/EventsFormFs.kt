@@ -33,10 +33,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
-import me.timeto.app.HStack
+import me.timeto.app.ui.HStack
 import me.timeto.app.H_PADDING
-import me.timeto.app.VStack
-import me.timeto.app.ZStack
+import me.timeto.app.ui.VStack
+import me.timeto.app.ui.ZStack
 import me.timeto.app.c
 import me.timeto.app.halfDpCeil
 import me.timeto.app.onePx

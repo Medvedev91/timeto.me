@@ -15,7 +15,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import me.timeto.app.MainActivity
-import me.timeto.app.ZStack
+import me.timeto.app.ui.ZStack
 
 private const val animRatio = 50f
 private val backgroundColor: Color = Color(44, 44, 44)

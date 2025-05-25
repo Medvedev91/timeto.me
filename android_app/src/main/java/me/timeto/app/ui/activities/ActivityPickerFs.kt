@@ -5,7 +5,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import me.timeto.app.ZStack
+import me.timeto.app.ui.ZStack
 import me.timeto.app.rememberVm
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.form.plain.FormPlainButtonSelection

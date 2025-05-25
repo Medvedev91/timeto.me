@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import me.timeto.app.HStack
+import me.timeto.app.ui.HStack
 
 val FormButtonEmoji__fontSize: TextUnit = 20.sp
 

@@ -12,7 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import me.timeto.app.HStack
+import me.timeto.app.ui.HStack
 import me.timeto.app.H_PADDING_HALF
 import me.timeto.app.R
 import me.timeto.app.c

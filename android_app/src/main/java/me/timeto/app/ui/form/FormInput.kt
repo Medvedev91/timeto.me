@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import me.timeto.app.H_PADDING
-import me.timeto.app.ZStack
+import me.timeto.app.ui.ZStack
 import me.timeto.app.c
 import me.timeto.app.halfDpCeil
 

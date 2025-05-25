@@ -19,8 +19,10 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.app.ui.Divider
+import me.timeto.app.ui.HStack
 import me.timeto.app.ui.Padding
 import me.timeto.app.ui.SquircleShape
+import me.timeto.app.ui.VStack
 import me.timeto.app.ui.form.button.FormButton
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderCancelButton
