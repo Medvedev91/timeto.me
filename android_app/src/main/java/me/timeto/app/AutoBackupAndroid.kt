@@ -30,8 +30,8 @@ object AutoBackupAndroid {
     suspend fun newBackup() {
         val autoBackupData = AutoBackup.buildAutoBackup()
 
-        ///
-        /// IOException
+        //
+        // IOException
 
         val values = ContentValues()
         values.put(MediaStore.MediaColumns.DISPLAY_NAME, autoBackupData.fileName)
@@ -43,7 +43,7 @@ object AutoBackupAndroid {
         outputStream.write(autoBackupData.jsonString.toByteArray())
         outputStream.close()
 
-        //////
+        ///
 
         AutoBackup.upLastTimeCache(autoBackupData.unixTime)
     }
