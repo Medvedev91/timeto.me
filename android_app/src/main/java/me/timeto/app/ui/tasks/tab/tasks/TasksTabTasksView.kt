@@ -17,6 +17,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.*
 import me.timeto.app.*
 import me.timeto.app.R
+import me.timeto.app.misc.Haptic
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.SquircleShape
 import me.timeto.app.ui.SwipeToAction
@@ -184,7 +185,7 @@ fun TasksTabTasksView(
                         scope.launchEx {
                             when (drop) {
                                 is TasksTabDropItem.Calendar -> {
-                                    vibrateShort()
+                                    Haptic.shot()
                                     navigationFs.push {
                                         EventFormFs(
                                             initEventDb = null,
@@ -197,7 +198,7 @@ fun TasksTabTasksView(
                                     }
                                 }
                                 is TasksTabDropItem.Folder -> {
-                                    vibrateLong()
+                                    Haptic.long()
                                     taskVmUi.upFolder(drop.taskFolderDb)
                                 }
                             }
@@ -228,7 +229,7 @@ fun TasksTabTasksView(
                     },
                     endView = { state ->
                         SwipeToAction__DeleteView(state, taskVmUi.taskUi.taskDb.text) {
-                            vibrateLong()
+                            Haptic.long()
                             taskVmUi.delete()
                         }
                     },

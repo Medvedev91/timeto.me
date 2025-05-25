@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import kotlinx.coroutines.launch
+import me.timeto.app.misc.Haptic
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import kotlin.math.absoluteValue
 
@@ -79,7 +80,7 @@ fun SwipeToAction(
         val threshold = thresholdsDp[if (isStartOrEnd.value == true) 0 else 1]
         val toVibrate = (isStartOrEnd.value == true && toVibrateStartEnd[0]) || (isStartOrEnd.value == false && toVibrateStartEnd[1])
         if (toVibrate && lastStateOffsetAbsDp < threshold && stateOffsetAbsDp.value >= threshold)
-            vibrateShort()
+            Haptic.shot()
         lastStateOffsetAbsDp = stateOffsetAbsDp.value
     }
 

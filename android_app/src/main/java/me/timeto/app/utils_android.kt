@@ -8,8 +8,6 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.res.Resources
 import android.net.Uri
 import android.os.Build
-import android.os.VibrationEffect
-import android.os.Vibrator
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
@@ -119,25 +117,6 @@ fun cancelAllAlarms() {
         )
         alarm.cancel(pIntent)
     }
-}
-
-////
-
-/// todo use Haptic
-/// Vibration
-
-private var vibrateOneShotLastMillis: Long = 0
-
-fun vibrateShort() = vibrateOneShot(40)
-
-fun vibrateLong() = vibrateOneShot(70)
-
-fun vibrateOneShot(duration: Long) {
-    if ((timeMls() - vibrateOneShotLastMillis) < (duration * 1.5))
-        return
-    val vibrator = App.instance.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-    vibrator.vibrate(VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE))
-    vibrateOneShotLastMillis = timeMls()
 }
 
 ///

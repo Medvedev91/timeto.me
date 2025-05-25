@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
 import kotlinx.coroutines.delay
+import me.timeto.app.misc.Haptic
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.SquircleShape
@@ -105,7 +106,7 @@ fun TasksTabView(
                     }
                     MotionEvent.ACTION_MOVE -> {
                         if (dragItemValue.focusedDrop.value == null)
-                            vibrateShort()
+                            Haptic.shot()
                         setFocusedDrop(focusedDrop)
                     }
                     else -> {
