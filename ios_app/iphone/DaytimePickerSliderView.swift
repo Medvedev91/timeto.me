@@ -145,7 +145,7 @@ private struct SliderView: View {
                             ZStack {
                             }
                             .frame(width: 1, height: 5)
-                            .background(c.dividerFg)
+                            .background(Color(.systemGray4))
                         }
                         
                         if let sliderStickText = tick.sliderStickText {
