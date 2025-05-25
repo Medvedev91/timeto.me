@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.mutableStateOf
 import kotlinx.coroutines.delay
-import me.timeto.app.setFalse
 import me.timeto.shared.launchExIo
 
 val LocalNavigationLayer = compositionLocalOf<NavigationLayer> {
@@ -23,7 +22,7 @@ class NavigationLayer(
     val isPresented = mutableStateOf(false)
 
     fun close() {
-        isPresented.setFalse()
+        isPresented.value = false
         launchExIo {
             delay(500) // Waiting for animation
             onClose(this@NavigationLayer)

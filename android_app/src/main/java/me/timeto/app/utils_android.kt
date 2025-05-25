@@ -11,7 +11,6 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -45,14 +44,6 @@ fun Dp.goldenRatioDown() = this / GOLDEN_RATIO
 
 val squircleShape = SquircleShape(12.dp)
 val roundedShape = RoundedCornerShape(99.dp)
-
-fun MutableState<Boolean>.setTrue() {
-    value = true
-}
-
-fun MutableState<Boolean>.setFalse() {
-    value = false
-}
 
 val timerFont = FontFamily(Font(R.font.timer_font))
 
@@ -114,7 +105,6 @@ fun scheduleNotification(data: ScheduledNotificationData) {
 }
 
 fun cancelAllAlarms() {
-
     val context = App.instance
     val intent = Intent(context, TimerNotificationReceiver::class.java)
     val alarm = getAlarmManager()

@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import me.timeto.app.ui.ZStack
-import me.timeto.app.setTrue
 
 @Composable
 fun NavigationView(
@@ -71,7 +70,7 @@ fun NavigationView(
 
                 LaunchedEffect(Unit) {
                     keyboardController?.hide()
-                    layer.isPresented.setTrue()
+                    layer.isPresented.value = true
                 }
             }
         }
