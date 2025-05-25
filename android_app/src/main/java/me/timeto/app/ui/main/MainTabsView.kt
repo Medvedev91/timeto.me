@@ -32,7 +32,7 @@ import me.timeto.app.VStack
 import me.timeto.app.ZStack
 import me.timeto.app.c
 import me.timeto.app.halfDpFloor
-import me.timeto.app.mics.Haptic
+import me.timeto.app.misc.Haptic
 import me.timeto.app.onePx
 import me.timeto.app.rememberVm
 import me.timeto.app.squircleShape

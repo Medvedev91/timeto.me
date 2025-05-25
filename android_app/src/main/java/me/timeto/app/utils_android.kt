@@ -20,7 +20,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import me.timeto.app.mics.TimerNotificationReceiver
+import me.timeto.app.misc.TimerNotificationReceiver
 import me.timeto.app.ui.SquircleShape
 import me.timeto.shared.*
 import me.timeto.shared.misc.timeMls

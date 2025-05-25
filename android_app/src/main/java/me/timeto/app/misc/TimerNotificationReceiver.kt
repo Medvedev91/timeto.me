@@ -1,4 +1,4 @@
-package me.timeto.app.mics
+package me.timeto.app.misc
 
 import android.app.PendingIntent
 import android.content.BroadcastReceiver

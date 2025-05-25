@@ -32,7 +32,7 @@
         </activity>
 
         <receiver
-                android:name=".mics.TimerNotificationReceiver"
+                android:name=".misc.TimerNotificationReceiver"
                 android:enabled="true"/>
 
     </application>
