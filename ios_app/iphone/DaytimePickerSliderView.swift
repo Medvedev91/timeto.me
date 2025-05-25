@@ -111,7 +111,7 @@ private struct SliderView: View {
                         HStack {
 
                             Text(ticks[tickIdx].text)
-                                .foregroundColor(c.text)
+                                .foregroundColor(.primary)
                                 .font(.system(size: 12, weight: .medium))
                         }
                         .frame(width: circleSize, height: circleSize, alignment: .center)

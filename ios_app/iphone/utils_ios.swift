@@ -36,8 +36,6 @@ func cosDegrees(_ degrees: Double) -> Double {
 
 struct c {
 
-    static let text = ColorRgba.companion.text.toColor()
-
     static let bg = ColorRgba.companion.bg.toColor()
     static let fg = ColorRgba.companion.fg.toColor()
 

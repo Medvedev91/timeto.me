@@ -148,7 +148,7 @@ private struct SummarySheetInner: View {
                                     
                                     Text(activityUi.title)
                                         .padding(.trailing, 4)
-                                        .foregroundColor(c.text)
+                                        .foregroundColor(.primary)
                                         .font(.system(size: 14, weight: .medium))
                                         .lineLimit(1)
                                     
@@ -221,7 +221,7 @@ private struct SummarySheetInner: View {
                         label: {
                             Text(period.title)
                                 .font(.system(size: 14, weight: period.isActive ? .bold : .light))
-                                .foregroundColor(period.isActive ? .white : c.text)
+                                .foregroundColor(period.isActive ? .white : .primary)
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 6)
                         }
