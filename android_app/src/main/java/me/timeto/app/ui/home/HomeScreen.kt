@@ -1,5 +1,6 @@
 package me.timeto.app.ui.home
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -54,6 +54,7 @@ val HomeScreen__itemCircleFontWeight = FontWeight.SemiBold
 fun HomeScreen() {
 
     val navigationFs = LocalNavigationFs.current
+    val mainActivity = LocalActivity.current as MainActivity
 
     val (vm, state) = rememberVm {
         HomeVm()
@@ -64,7 +65,7 @@ fun HomeScreen() {
         modifier = Modifier
             .fillMaxSize()
             .background(c.black)
-            .padding(top = (LocalContext.current as MainActivity).statusBarHeightDp),
+            .padding(top = mainActivity.statusBarHeightDp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
