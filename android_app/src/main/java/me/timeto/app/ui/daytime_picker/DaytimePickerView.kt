@@ -7,6 +7,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import me.timeto.app.HStack
+import me.timeto.app.ZStack
 import me.timeto.app.dpToPx
 import me.timeto.app.isSDKQPlus
 
@@ -18,16 +20,16 @@ fun DaytimePickerView(
     onMinuteChanged: (Int) -> Unit,
 ) {
 
-    Row(
+    HStack(
         modifier = Modifier
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
+        horizontalArrangement = Arrangement.Center,
     ) {
 
-        Box(
+        ZStack(
             modifier = Modifier.width(100.dp),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             AndroidView(
                 modifier = Modifier.fillMaxWidth(),
@@ -45,13 +47,13 @@ fun DaytimePickerView(
                         maxValue = hourIndexes.last
                         value = hour // Set last
                     }
-                }
+                },
             )
         }
 
-        Box(
+        ZStack(
             modifier = Modifier.width(100.dp),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             AndroidView(
                 modifier = Modifier.fillMaxWidth(),
@@ -69,7 +71,7 @@ fun DaytimePickerView(
                         maxValue = minuteIndexes.last
                         value = minute // Set last
                     }
-                }
+                },
             )
         }
     }
