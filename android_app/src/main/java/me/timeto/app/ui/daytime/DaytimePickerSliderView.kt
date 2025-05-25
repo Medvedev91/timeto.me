@@ -1,4 +1,4 @@
-package me.timeto.app.ui
+package me.timeto.app.ui.daytime
 
 import android.view.MotionEvent
 import androidx.compose.animation.core.Spring
@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import me.timeto.app.*
 import me.timeto.app.misc.Haptic
+import me.timeto.app.ui.Padding
 import me.timeto.shared.misc.DaytimeUi
 import me.timeto.shared.models.DaytimePickerSliderUi
 

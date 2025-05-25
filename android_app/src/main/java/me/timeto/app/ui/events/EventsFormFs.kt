@@ -43,7 +43,7 @@ import me.timeto.app.onePx
 import me.timeto.app.rememberVm
 import me.timeto.app.roundedShape
 import me.timeto.app.squircleShape
-import me.timeto.app.ui.DaytimePickerSliderView
+import me.timeto.app.ui.daytime.DaytimePickerSliderView
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.events.templates.EventTemplatesView
