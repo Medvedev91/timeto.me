@@ -28,7 +28,7 @@ import me.timeto.app.R
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.ZStack
 import me.timeto.app.c
-import me.timeto.app.rememberVm
+import me.timeto.app.ui.rememberVm
 import me.timeto.app.squircleShape
 import me.timeto.app.ui.Divider
 import me.timeto.app.ui.TriggersIconsView

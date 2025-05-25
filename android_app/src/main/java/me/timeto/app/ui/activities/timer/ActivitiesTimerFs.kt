@@ -7,7 +7,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import me.timeto.app.rememberVm
+import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.activities.ActivitiesView
 import me.timeto.app.ui.navigation.LocalNavigationLayer

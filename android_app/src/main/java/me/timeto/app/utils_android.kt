@@ -21,7 +21,6 @@ import me.timeto.app.misc.TimerNotificationReceiver
 import me.timeto.app.ui.SquircleShape
 import me.timeto.shared.*
 import me.timeto.shared.misc.timeMls
-import me.timeto.shared.vm.__Vm
 import java.util.*
 
 fun isSDKQPlus() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
@@ -134,25 +133,7 @@ fun cancelAllAlarms() {
 
 ////
 
-@Composable
-fun <State, VM : __Vm<State>> rememberVm(
-    key1: Any? = null,
-    key2: Any? = null,
-    key3: Any? = null,
-    block: () -> VM,
-): Pair<VM, State> {
-    val vm = remember(key1, key2, key3) {
-        block()
-    }
-    DisposableEffect(key1, key2, key3) {
-        onDispose {
-            vm.onDisappear()
-        }
-    }
-    return vm to vm.state.collectAsState().value
-}
-
-///
+/// todo use Haptic
 /// Vibration
 
 private var vibrateOneShotLastMillis: Long = 0

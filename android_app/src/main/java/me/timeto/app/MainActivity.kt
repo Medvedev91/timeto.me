@@ -33,6 +33,7 @@ import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.main.MainScreen
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.NavigationFs
+import me.timeto.app.ui.rememberVm
 import me.timeto.shared.*
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.misc.BatteryInfo

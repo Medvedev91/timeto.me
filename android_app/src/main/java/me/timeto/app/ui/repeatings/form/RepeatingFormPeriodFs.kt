@@ -34,7 +34,7 @@ import me.timeto.app.c
 import me.timeto.app.dpToPx
 import me.timeto.app.isSDKQPlus
 import me.timeto.app.onePx
-import me.timeto.app.rememberVm
+import me.timeto.app.ui.rememberVm
 import me.timeto.app.roundedShape
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1

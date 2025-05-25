@@ -17,7 +17,7 @@ import me.timeto.app.H_PADDING_HALF
 import me.timeto.app.c
 import me.timeto.app.dpToPx
 import me.timeto.app.isSDKQPlus
-import me.timeto.app.rememberVm
+import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.activities.ActivityPickerFs

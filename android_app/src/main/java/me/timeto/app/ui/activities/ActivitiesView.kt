@@ -27,7 +27,7 @@ import me.timeto.app.ui.HStack
 import me.timeto.app.ui.ZStack
 import me.timeto.app.c
 import me.timeto.app.R
-import me.timeto.app.rememberVm
+import me.timeto.app.ui.rememberVm
 import me.timeto.app.roundedShape
 import me.timeto.app.ui.Divider
 import me.timeto.app.ui.activities.form.ActivityFormFs

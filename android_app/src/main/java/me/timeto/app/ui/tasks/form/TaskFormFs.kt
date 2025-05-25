@@ -38,7 +38,7 @@ import me.timeto.app.ui.VStack
 import me.timeto.app.ui.ZStack
 import me.timeto.app.c
 import me.timeto.app.halfDpCeil
-import me.timeto.app.rememberVm
+import me.timeto.app.ui.rememberVm
 import me.timeto.app.roundedShape
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.activities.ActivityPickerFs
