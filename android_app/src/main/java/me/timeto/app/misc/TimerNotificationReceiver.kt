@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import me.timeto.app.MainActivity
-import me.timeto.app.NotificationCenter
 import me.timeto.shared.reportApi
 import me.timeto.app.R
 

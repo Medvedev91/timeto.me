@@ -28,6 +28,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import kotlinx.coroutines.delay
 import me.timeto.app.misc.AutoBackupAndroid
+import me.timeto.app.misc.NotificationCenter
 import me.timeto.app.ui.main.MainScreen
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.NavigationFs

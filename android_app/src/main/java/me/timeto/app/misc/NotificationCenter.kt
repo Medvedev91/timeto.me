@@ -1,4 +1,4 @@
-package me.timeto.app
+package me.timeto.app.misc
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.media.AudioAttributes
 import android.net.Uri
+import me.timeto.app.App
 import me.timeto.shared.getSoundTimerExpiredFileName
 
 /**
@@ -21,7 +22,7 @@ object NotificationCenter {
     fun channelTimerOverdue() = upsertChannel("timer_overdue", "Timer Overdue", null)
 
     fun getManager(): NotificationManager =
-        App.instance.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        App.Companion.instance.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     /**
      * According to documentation only first call affects. Second do nothing.
@@ -41,7 +42,7 @@ object NotificationCenter {
         channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
         if (soundName != null)
             channel.setSound(
-                Uri.parse("android.resource://${App.instance.packageName}/raw/$soundName"),
+                Uri.parse("android.resource://${App.Companion.instance.packageName}/raw/$soundName"),
                 AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_NOTIFICATION).build()
             )
         getManager().createNotificationChannel(channel)
