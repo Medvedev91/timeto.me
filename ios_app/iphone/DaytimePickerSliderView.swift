@@ -127,7 +127,7 @@ private struct SliderView: View {
                     )
                 }
                 
-                ////
+                ///
             }
             .frame(height: circleSize)
             .zIndex(1.0)
@@ -182,6 +182,7 @@ private struct SliderView: View {
                 
                 if tickIdx != newIdx {
                     onChange(newIdx.toInt())
+                    Haptic.softShot()
                 }
             }
     }
