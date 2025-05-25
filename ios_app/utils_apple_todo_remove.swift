@@ -1,13 +1,6 @@
 import SwiftUI
 import shared
 
-extension UnixTime {
-
-    func toDate() -> Date {
-        Date(timeIntervalSince1970: Double(time))
-    }
-}
-
 extension Array {
 
     // todo remove
