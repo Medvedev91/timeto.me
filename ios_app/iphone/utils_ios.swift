@@ -10,5 +10,4 @@ struct c {
 
     static let homeFontSecondary = ColorRgba.companion.homeFontSecondary.toColor()
     static let homeMenuTime = ColorRgba.companion.homeMenuTime.toColor()
-    static let homeFg = ColorRgba.companion.homeFg.toColor()
 }

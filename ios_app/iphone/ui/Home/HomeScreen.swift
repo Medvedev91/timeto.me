@@ -151,7 +151,7 @@ private struct HomeScreenInner: View {
                                     }
                                 }
                                 .frame(height: HomeScreen__itemCircleHeight, alignment: .center)
-                                .background(roundedShape.fill(c.homeFg))
+                                .background(roundedShape.fill(Color(.systemGray5)))
                                 .padding(.horizontal, H_PADDING)
                             }
                             .frame(height: HomeScreen__itemHeight, alignment: .center)
