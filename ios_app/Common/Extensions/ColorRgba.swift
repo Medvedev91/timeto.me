@@ -4,6 +4,6 @@ import shared
 extension ColorRgba {
     
     func toColor() -> Color {
-        Color(rgba: [r.toInt(), g.toInt(), b.toInt(), a.toInt()])
+        Color(r: r.toInt(), g: g.toInt(), b: b.toInt(), a: a.toInt())
     }
 }

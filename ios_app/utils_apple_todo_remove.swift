@@ -93,26 +93,15 @@ extension Double {
     }
 }
 
-extension Array {
-
-    /// https://stackoverflow.com/a/25330930
-    func getOrNull(index: Int) -> Element? {
-        if index < 0 {
-            fatalError()
-        }
-        return index < count ? self[index] : nil
-    }
-}
-
 extension Color {
 
-    init(rgba: [Int]) {
+    init(r: Int, g: Int, b: Int, a: Int) {
         self.init(
             .sRGB,
-            red: Double(rgba[0]) / 255,
-            green: Double(rgba[1]) / 255,
-            blue: Double(rgba[2]) / 255,
-            opacity: Double(rgba.getOrNull(index: 3) ?? 255) / 255
+            red: Double(r) / 255,
+            green: Double(g) / 255,
+            blue: Double(b) / 255,
+            opacity: Double(a) / 255
         )
     }
 }

@@ -67,7 +67,7 @@ struct WatchTabTimerView: View {
         var activityUI: WatchTabTimerVm.ActivityUI
         @State private var isTickerPresented = false
         
-        let defBgColor = Color(rgba: [34, 34, 35])
+        let defBgColor = Color(r: 34, g: 34, b: 35, a: 255)
         
         var body: some View {
             
