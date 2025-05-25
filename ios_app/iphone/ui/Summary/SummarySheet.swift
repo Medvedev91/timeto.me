@@ -103,7 +103,7 @@ private struct SummarySheetInner: View {
                                                     ZStack {}
                                                         .frame(minWidth: 0, maxWidth: .infinity)
                                                         .frame(height: CGFloat(intervalUi.ratio) * geometry.size.height)
-                                                        .background(intervalUi.activityDb?.colorRgba.toColor() ?? c.sheetFg)
+                                                        .background(intervalUi.activityDb?.colorRgba.toColor() ?? Color(.systemGray5))
                                                 }
                                             }
                                             .clipShape(roundedShape)
@@ -170,11 +170,11 @@ private struct SummarySheetInner: View {
                                                 .frame(width: geometry.size.width * Double(activityUi.ratio))
                                                 .background(activityColor)
                                         }
-                                        .frame(width: .infinity)
+                                        .fillMaxWidth()
                                     }
                                     .frame(height: 8)
                                     .frame(minWidth: 0, maxWidth: .infinity)
-                                    .background(c.sheetFg)
+                                    .background(Color(.systemGray5))
                                     .clipShape(roundedShape)
                                     
                                     Padding(horizontal: 4)
