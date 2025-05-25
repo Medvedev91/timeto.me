@@ -25,7 +25,7 @@ struct TasksTabViewInner: View {
     ///
     
     @State var section: TasksTabSectionEnum =
-        .taskFolder(taskFolderDb: Cache.getTodayFolderDb())
+        .taskFolder(taskFolderDb: Cache.shared.getTodayFolderDb())
     
     @State var dropItems: [TasksTabDropItem] = []
     @State var focusedDrop: TasksTabDropItem? = nil

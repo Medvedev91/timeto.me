@@ -29,7 +29,7 @@ private struct ActivitiesTimerSheetInner: View {
     @Environment(\.dismiss) private var dismiss
 
     private let sheetHeight: CGFloat =
-    Cache.activitiesDbSorted.count.toDouble() * ActivitiesView__listItemHeight
+    Cache.shared.activitiesDbSorted.count.toDouble() * ActivitiesView__listItemHeight
     
     var body: some View {
         ActivitiesView(
