@@ -246,7 +246,7 @@ private struct SummarySheetInner: View {
                                 .foregroundColor(isChartVisible ? .white : bottomBarButtonFontColor)
                         }
                         .frame(width: bottomBarButtonFrameSize, height: bottomBarButtonFrameSize)
-                        .background(roundedShape.fill(isChartVisible ? c.blue : c.transparent))
+                        .background(roundedShape.fill(isChartVisible ? .blue : .clear))
                     }
                 )
                 

@@ -43,7 +43,7 @@ struct HomeTimerView: View {
                 
                 VStack {
                     
-                    TimerDataNoteText(text: " ", color: c.transparent)
+                    TimerDataNoteText(text: " ", color: .clear)
                     
                     Button(
                         action: {
@@ -56,7 +56,7 @@ struct HomeTimerView: View {
                                 TimerDataTimerText(
                                     text: " ",
                                     font: timerFont,
-                                    color: c.transparent
+                                    color: .clear
                                 )
                                 
                                 Image(systemName: "info")
@@ -76,7 +76,7 @@ struct HomeTimerView: View {
                         
                         VStack {
                             
-                            TimerDataNoteText(text: " ", color: c.transparent)
+                            TimerDataNoteText(text: " ", color: .clear)
                             
                             TimerDataTimerText(
                                 text: timerData.timerText,
@@ -89,7 +89,7 @@ struct HomeTimerView: View {
                 
                 VStack {
                     
-                    TimerDataNoteText(text: " ", color: c.transparent)
+                    TimerDataNoteText(text: " ", color: .clear)
                     
                     Button(
                         action: {
@@ -102,7 +102,7 @@ struct HomeTimerView: View {
                                 TimerDataTimerText(
                                     text: " ",
                                     font: timerFont,
-                                    color: c.transparent
+                                    color: .clear
                                 )
                                 
                                 if let prolongText = timerData.prolongText {
