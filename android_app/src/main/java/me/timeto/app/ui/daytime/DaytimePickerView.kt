@@ -1,4 +1,4 @@
-package me.timeto.app.ui
+package me.timeto.app.ui.daytime
 
 import android.widget.NumberPicker
 import androidx.compose.foundation.layout.*
