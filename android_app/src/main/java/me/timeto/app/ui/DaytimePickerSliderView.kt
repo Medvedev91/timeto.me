@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import me.timeto.app.*
+import me.timeto.app.misc.Haptic
 import me.timeto.shared.misc.DaytimeUi
 import me.timeto.shared.models.DaytimePickerSliderUi
 
@@ -114,8 +115,10 @@ private fun SliderView(
                     stepPx = stepPx,
                 )
 
-                if (tickIdx != newIdx)
+                if (tickIdx != newIdx) {
                     onChange(newIdx)
+                    Haptic.shot()
+                }
             }
     ) {
 
