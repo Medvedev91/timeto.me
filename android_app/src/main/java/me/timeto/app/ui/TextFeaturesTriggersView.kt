@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import me.timeto.app.HStack
 import me.timeto.app.c
 import me.timeto.app.squircleShape
 import me.timeto.app.toColor
@@ -32,14 +33,14 @@ fun TextFeaturesTriggersView(
     val itemHeight = 26.dp
     LazyRow(
         modifier = modifier,
-        contentPadding = contentPadding
+        contentPadding = contentPadding,
     ) {
         itemsIndexed(
-            triggers,
-            key = { _, checklist -> checklist.id }
+            items = triggers,
+            key = { _, checklist -> checklist.id },
         ) { _, trigger ->
             val isLast = triggers.last() == trigger
-            Row(
+            HStack(
                 modifier = Modifier
                     .padding(end = if (isLast) 0.dp else 8.dp)
                     .height(itemHeight)
@@ -52,11 +53,11 @@ fun TextFeaturesTriggersView(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    trigger.title,
+                    text = trigger.title,
                     textAlign = TextAlign.Center,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.W400,
-                    color = c.white
+                    color = c.white,
                 )
             }
         }
