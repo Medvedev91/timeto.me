@@ -106,8 +106,8 @@ private struct TasksTabTasksViewInner: View {
                         .padding(.trailing, 6)
                 }
                 // trick x2 overlay looks better
-                .overlay(squircleShape.stroke(c.dividerBg, lineWidth: onePx))
-                .overlay(squircleShape.stroke(c.dividerBg, lineWidth: onePx))
+                .overlay(squircleShape.stroke(Color(.systemGray4), lineWidth: onePx))
+                .overlay(squircleShape.stroke(Color(.systemGray4), lineWidth: onePx))
                 .padding(.leading, H_PADDING - 2)
                 .padding(.top, 20)
                 .padding(.bottom, 20)
