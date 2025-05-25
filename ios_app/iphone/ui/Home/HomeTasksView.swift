@@ -66,7 +66,7 @@ private struct TaskItemView: View {
                                 .font(.system(size: 12, weight: .black))
                         }
                         .frame(width: HomeScreen__itemCircleHeight, height: HomeScreen__itemCircleHeight)
-                        .background(roundedShape.fill(c.green))
+                        .background(roundedShape.fill(.green))
                         .padding(.trailing, 8)
                     }
                     

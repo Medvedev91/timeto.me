@@ -340,7 +340,7 @@ private struct TaskRowView: View {
                                 if (taskVmUi.taskUi.tf.isImportant) {
                                     Image(systemName: "flag.fill")
                                         .font(.system(size: 18))
-                                        .foregroundColor(c.red)
+                                        .foregroundColor(.red)
                                         .padding(.leading, 8)
                                 }
                             }

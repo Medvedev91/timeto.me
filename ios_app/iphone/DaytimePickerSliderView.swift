@@ -115,7 +115,7 @@ private struct SliderView: View {
                                 .font(.system(size: 12, weight: .medium))
                         }
                         .frame(width: circleSize, height: circleSize, alignment: .center)
-                        .background(roundedShape.fill(c.blue))
+                        .background(roundedShape.fill(.blue))
                         .offset(x: circleOffsetAnimation)
 
                         Spacer()
