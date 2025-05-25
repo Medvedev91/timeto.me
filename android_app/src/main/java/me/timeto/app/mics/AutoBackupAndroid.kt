@@ -1,12 +1,14 @@
-package me.timeto.app
+package me.timeto.app.mics
 
 import android.content.ContentValues
 import android.os.Build
 import android.provider.MediaStore
 import androidx.annotation.RequiresApi
-import me.timeto.shared.*
+import me.timeto.app.App
+import me.timeto.shared.Backup
+import me.timeto.shared.UnixTime
 import me.timeto.shared.misc.backups.AutoBackup
-import kotlin.jvm.Throws
+import me.timeto.shared.reportApi
 
 @RequiresApi(Build.VERSION_CODES.Q) // MediaStore.MediaColumns.RELATIVE_PATH
 object AutoBackupAndroid {
@@ -36,9 +38,9 @@ object AutoBackupAndroid {
         val values = ContentValues()
         values.put(MediaStore.MediaColumns.DISPLAY_NAME, autoBackupData.fileName)
         values.put(MediaStore.MediaColumns.RELATIVE_PATH, AUTOBACKUPS_PATH) // RELATIVE_PATH require Build.VERSION_CODES.Q+
-        val fileUri = App.instance.contentResolver.insert(getVolume(), values)
+        val fileUri = App.Companion.instance.contentResolver.insert(getVolume(), values)
                       ?: throw Exception("AutoBackupAndroid.newBackup() contentResolver.insert() nullable")
-        val outputStream = App.instance.contentResolver.openOutputStream(fileUri)
+        val outputStream = App.Companion.instance.contentResolver.openOutputStream(fileUri)
                            ?: throw Exception("AutoBackupAndroid.newBackup() contentResolver.openOutputStream() nullable")
         outputStream.write(autoBackupData.jsonString.toByteArray())
         outputStream.close()
@@ -54,7 +56,7 @@ object AutoBackupAndroid {
             .drop(10)
             .forEach { fileData ->
                 // todo log if resCode != 1
-                val resCode = App.instance.contentResolver.delete(
+                val resCode = App.Companion.instance.contentResolver.delete(
                     MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL),
                     MediaStore.Files.FileColumns._ID + "=?",
                     listOf(fileData.id).toTypedArray(),
@@ -66,7 +68,7 @@ object AutoBackupAndroid {
 
     @Throws
     private fun getAutoBackupsSortedDesc(): List<MyFileData> {
-        val cursor = App.instance.contentResolver.query(getVolume(), null, null, null, null)
+        val cursor = App.Companion.instance.contentResolver.query(getVolume(), null, null, null, null)
                      ?: throw Exception("AutoBackupAndroid.getAutoBackupsSortedDesc() cursor nullable")
         val files = mutableListOf<MyFileData>()
         cursor.use { cursor ->
