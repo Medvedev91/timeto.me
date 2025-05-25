@@ -95,7 +95,7 @@ private struct SliderView: View {
                     return Color.clear
                 })
                 .padding(.horizontal, sliderInternalPadding)
-                .background(roundedShape.fill(c.dividerBg))
+                .background(roundedShape.fill(Color(.systemGray5)))
                 .padding(.horizontal, hPadding)
                 
                 //
