@@ -236,3 +236,11 @@ struct SummaryPieView: View {
         }
     }
 }
+
+private func sinDegrees(_ degrees: Double) -> Double {
+    sin(degrees * Double.pi / 180.0)
+}
+
+private func cosDegrees(_ degrees: Double) -> Double {
+    cos(degrees * Double.pi / 180.0)
+}

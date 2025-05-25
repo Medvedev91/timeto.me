@@ -1,6 +1,4 @@
 import SwiftUI
-import Combine
-import WatchConnectivity
 import shared
 
 func schedulePush(data: ScheduledNotificationData) {
@@ -22,16 +20,6 @@ func schedulePush(data: ScheduledNotificationData) {
 
     let center = UNUserNotificationCenter.current()
     center.add(req, withCompletionHandler: nil)
-}
-
-// todo remove
-func sinDegrees(_ degrees: Double) -> Double {
-    sin(degrees * Double.pi / 180.0)
-}
-
-// todo remove
-func cosDegrees(_ degrees: Double) -> Double {
-    cos(degrees * Double.pi / 180.0)
 }
 
 struct c {
