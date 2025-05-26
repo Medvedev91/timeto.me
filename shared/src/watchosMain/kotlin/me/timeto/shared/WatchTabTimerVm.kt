@@ -3,7 +3,6 @@ package me.timeto.shared
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
-import me.timeto.shared.ui.TimerHintData
 import me.timeto.shared.vm.__Vm
 
 class WatchTabTimerVm : __Vm<WatchTabTimerVm.State>() {
@@ -12,17 +11,18 @@ class WatchTabTimerVm : __Vm<WatchTabTimerVm.State>() {
         val activity: ActivityDb,
     ) {
 
-        val text: String = activity.name.textFeatures().textUi()
+        val text: String =
+            activity.name.textFeatures().textUi()
 
-        val timerHints: List<TimerHintData> = activity.timerHints.map { seconds ->
-            TimerHintData(
+        val timerHintsUi: List<TimerHintUi> = activity.timerHints.map { seconds ->
+            TimerHintUi(
                 seconds = seconds,
                 onStart = {
                     WatchToIosSync.startIntervalWithLocal(
                         activity = activity,
                         seconds = seconds,
                     )
-                }
+                },
             )
         }
     }
@@ -54,6 +54,23 @@ class WatchTabTimerVm : __Vm<WatchTabTimerVm.State>() {
             .onEachExIn(scope) { interval ->
                 state.update { it.copy(lastInterval = interval, isPurple = false) }
             }
+    }
+
+    ///
+
+    class TimerHintUi(
+        val seconds: Int,
+        val onStart: suspend () -> Unit,
+    ) {
+
+        val text: String =
+            seconds.toTimerHintNote(isShort = true)
+
+        fun startInterval() {
+            launchExIo {
+                onStart()
+            }
+        }
     }
 }
 

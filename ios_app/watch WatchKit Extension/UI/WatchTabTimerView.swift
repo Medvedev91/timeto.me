@@ -87,16 +87,15 @@ struct WatchTabTimerView: View {
                                 .truncationMode(.middle)
                         }
                         
-                        if !activityUI.timerHints.isEmpty {
+                        if !activityUI.timerHintsUi.isEmpty {
                             HStack(spacing: 6) {
-                                ForEach(activityUI.timerHints, id: \.seconds) { hintUI in
+                                ForEach(activityUI.timerHintsUi, id: \.seconds) { hintUi in
                                     Button(
                                         action: {
-                                            hintUI.startInterval {
-                                            }
+                                            hintUi.startInterval()
                                         },
                                         label: {
-                                            Text(hintUI.text)
+                                            Text(hintUi.text)
                                                 .font(.system(size: 13, weight: .medium))
                                                 .foregroundColor(.white)
                                         }
