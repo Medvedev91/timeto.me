@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.c
-import me.timeto.app.toUnixTime
+import me.timeto.app.misc.extensions.toUnixTime
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.navigation.Navigation
 import me.timeto.shared.UnixTime

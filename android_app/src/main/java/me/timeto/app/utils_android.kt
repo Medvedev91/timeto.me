@@ -9,9 +9,6 @@ import androidx.compose.ui.unit.Dp
 import me.timeto.app.misc.TimerNotificationReceiver
 import me.timeto.shared.*
 import me.timeto.shared.misc.timeMls
-import java.util.*
-
-fun Date.toUnixTime() = UnixTime((this.time / 1_000L).toInt())
 
 fun Dp.limitMin(dp: Dp) = if (this < dp) dp else this
 fun Dp.limitMax(dp: Dp) = if (this > dp) dp else this
