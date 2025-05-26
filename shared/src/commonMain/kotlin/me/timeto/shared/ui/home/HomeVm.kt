@@ -22,7 +22,7 @@ class HomeVm : __Vm<HomeVm.State>() {
         val interval: IntervalDb,
         val isPurple: Boolean,
         val todayTasksUi: List<TaskUi>,
-        val todayIntervalsUi: DayBarsUi?,
+        val todayBarsUi: DayBarsUi?,
         val fdroidMessage: String?,
         val readmeMessage: String?,
         val whatsNewMessage: String?,
@@ -50,7 +50,7 @@ class HomeVm : __Vm<HomeVm.State>() {
         )
 
         // todo performance?
-        val goalBarsUi: List<GoalBarUi> = if (todayIntervalsUi == null)
+        val goalBarsUi: List<GoalBarUi> = if (todayBarsUi == null)
             listOf()
         else Cache.activitiesDbSorted
             .map { activityDb ->
@@ -61,19 +61,19 @@ class HomeVm : __Vm<HomeVm.State>() {
 
                         val goalTf: TextFeatures = goalDb.note.textFeatures()
 
-                        val dayIntervalsUiForGoal = todayIntervalsUi.barsUi
+                        val dayBarsUiForGoal = todayBarsUi.barsUi
                             .filter { it.activityDb?.id == activityDb.id }
                             .filter {
                                 // Goal without note is common for activity
                                 if (goalTf.textNoFeatures.isBlank()) true
                                 else goalTf.textNoFeatures == it.intervalTf.textNoFeatures
                             }
-                        var totalSeconds: Int = dayIntervalsUiForGoal.sumOf { it.seconds }
-                        val lastWithActivity = todayIntervalsUi.barsUi
+                        var totalSeconds: Int = dayBarsUiForGoal.sumOf { it.seconds }
+                        val lastWithActivity = todayBarsUi.barsUi
                             .lastOrNull { it.activityDb != null }
                         if (
                             lastWithActivity != null &&
-                            lastWithActivity == dayIntervalsUiForGoal.lastOrNull()
+                            lastWithActivity == dayBarsUiForGoal.lastOrNull()
                         ) {
                             val timeFinish = lastWithActivity.timeFinish
                             val now = time()
@@ -160,7 +160,7 @@ class HomeVm : __Vm<HomeVm.State>() {
             interval = Cache.lastInterval,
             isPurple = false,
             todayTasksUi = listOf(),
-            todayIntervalsUi = null, // todo init data
+            todayBarsUi = null, // todo init data
             fdroidMessage = null, // todo init data
             readmeMessage = null, // todo init data
             whatsNewMessage = null, // todo init data
@@ -227,12 +227,12 @@ class HomeVm : __Vm<HomeVm.State>() {
 
         IntervalDb.anyChangeFlow()
             .onEachExIn(scopeVm) {
-                upTodayIntervalsUi()
+                upTodayBarsUi()
             }
         scopeVm.launch {
             while (true) {
                 delayToNextMinute()
-                upTodayIntervalsUi()
+                upTodayBarsUi()
             }
         }
 
@@ -271,17 +271,17 @@ class HomeVm : __Vm<HomeVm.State>() {
         state.update { it.copy(isPurple = !it.isPurple) }
     }
 
-    private suspend fun upTodayIntervalsUi() {
+    private suspend fun upTodayBarsUi() {
         val utcOffset = localUtcOffsetWithDayStart
         val todayDS = UnixTime(utcOffset = utcOffset).localDay
-        val todayIntervalsUI = DayBarsUi
+        val todayBarsUi = DayBarsUi
             .buildList(
                 dayStart = todayDS,
                 dayFinish = todayDS,
                 utcOffset = utcOffset,
             )
             .first()
-        state.update { it.copy(todayIntervalsUi = todayIntervalsUI) }
+        state.update { it.copy(todayBarsUi = todayBarsUi) }
     }
 
     ///
