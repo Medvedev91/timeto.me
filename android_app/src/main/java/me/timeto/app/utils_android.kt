@@ -4,16 +4,10 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import androidx.compose.ui.unit.Dp
 import me.timeto.app.misc.TimerNotificationReceiver
 import me.timeto.app.misc.extensions.toColor
 import me.timeto.shared.*
 import me.timeto.shared.misc.timeMls
-
-fun Dp.limitMin(dp: Dp) = if (this < dp) dp else this
-fun Dp.limitMax(dp: Dp) = if (this > dp) dp else this
-fun Dp.goldenRatioUp() = this * GOLDEN_RATIO
-fun Dp.goldenRatioDown() = this / GOLDEN_RATIO
 
 //
 // Notification / Alarms
