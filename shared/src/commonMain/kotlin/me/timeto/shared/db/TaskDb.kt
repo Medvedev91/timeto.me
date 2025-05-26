@@ -15,7 +15,7 @@ import me.timeto.shared.misc.getInt
 import me.timeto.shared.misc.getString
 import me.timeto.shared.misc.time
 import me.timeto.shared.misc.toJsonArray
-import me.timeto.shared.models.TaskUi
+import me.timeto.shared.ui.TaskUi
 import kotlin.math.max
 
 data class TaskDb(
@@ -144,7 +144,7 @@ data class TaskDb(
         val (activity, timer) = tf.activity to tf.timer
 
         if (activity != null && timer != null) {
-            launchExDefault {
+            launchExIo {
                 startInterval(
                     timer = timer,
                     activity = activity,

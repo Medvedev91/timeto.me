@@ -38,7 +38,7 @@ class WatchTabTasksVm : __Vm<WatchTabTasksVm.State>() {
             needSheet: () -> Unit, // todo data for sheet
         ) {
             val autostartData = taskAutostartData(task) ?: return needSheet()
-            launchExDefault {
+            launchExIo {
                 WatchToIosSync.startTaskWithLocal(
                     activity = autostartData.first,
                     timer = autostartData.second,

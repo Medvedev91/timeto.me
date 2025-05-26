@@ -75,7 +75,7 @@ object WatchToIosSync {
     }
 
     fun togglePomodoro() {
-        launchExDefault {
+        launchExIo {
             val map = mapOf<String, JsonPrimitive>()
             requestFromAppleWatch(
                 command = "toggle_pomodoro",

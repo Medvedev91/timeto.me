@@ -138,9 +138,6 @@ fun CoroutineScope.launchEx(
     }
 }
 
-fun launchExDefault(block: suspend CoroutineScope.() -> Unit) =
-    CoroutineScope(SupervisorJob() + Dispatchers.Default).launchEx(block)
-
 fun launchExIo(block: suspend CoroutineScope.() -> Unit) =
     ioScope().launchEx(block)
 

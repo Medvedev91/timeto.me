@@ -35,7 +35,7 @@ actual fun getResourceContent(file: String, type: String): String {
 
 //////
 
-private fun listenForSyncWatch() = launchExDefault {
+private fun listenForSyncWatch() = launchExIo {
     initKmpDeferred.join()
     // todo refactor by combine()
     listOf<Flow<*>>(

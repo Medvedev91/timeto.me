@@ -262,7 +262,7 @@ class HomeVm : __Vm<HomeVm.State>() {
     }
 
     fun onReadmeOpen() {
-        launchExDefault {
+        launchExIo {
             KvDb.KEY.HOME_README_OPEN_TIME.upsertInt(time())
         }
     }

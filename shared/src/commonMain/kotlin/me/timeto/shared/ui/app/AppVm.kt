@@ -156,7 +156,7 @@ private fun syncTmrw() {
     Cache.tasksDb
         .filter { it.isTmrw && (it.unixTime(utcOffset = utcOffsetDS).localDay < todayDay) }
         .forEach { task ->
-            launchExDefault {
+            launchExIo {
                 task.upFolder(
                     newFolder = todayFolder,
                     replaceIfTmrw = false // No matter

@@ -19,15 +19,15 @@ object IosToWatchSync {
      * this requires a backup of the same format. But this is NOT used,
      * because each request sends a unique type. Documentation below.
      */
-    fun syncWatch(): Unit = launchExDefault {
+    fun syncWatch(): Unit = launchExIo {
 
         if (!WCSession.isSupported())
-            return@launchExDefault
+            return@launchExIo
         val session = WCSession.defaultSession
         if (!session.isPaired())
-            return@launchExDefault
+            return@launchExIo
         if (!session.isWatchAppInstalled())
-            return@launchExDefault
+            return@launchExIo
 
         /**
          * If data is sent to the watch several times in a short time, it may be received
@@ -51,7 +51,7 @@ object IosToWatchSync {
     fun didReceiveMessageData(
         jString: String,
         onFinish: (String) -> Unit,
-    ): Unit = launchExDefault {
+    ): Unit = launchExIo {
 
         val jRequest = Json.parseToJsonElement(jString).jsonObject
         val command = jRequest["command"]!!.jsonPrimitive.content
@@ -67,7 +67,7 @@ object IosToWatchSync {
                 note = note,
             )
             onFinish("{}")
-            return@launchExDefault
+            return@launchExIo
         }
 
         if (command == "start_task") {
@@ -79,7 +79,7 @@ object IosToWatchSync {
                 activity = activity,
             )
             onFinish("{}")
-            return@launchExDefault
+            return@launchExIo
         }
 
         if (command == "toggle_pomodoro") {
@@ -89,13 +89,13 @@ object IosToWatchSync {
                 isPurple = false,
             ).togglePomodoro()
             onFinish("{}")
-            return@launchExDefault
+            return@launchExIo
         }
 
         if (command == "sync") {
             syncWatch()
             onFinish("{}")
-            return@launchExDefault
+            return@launchExIo
         }
 
         reportApi("No command for IosToWatchSync.didReceiveMessageData()\n$jString")
