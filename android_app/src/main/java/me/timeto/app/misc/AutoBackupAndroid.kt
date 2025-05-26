@@ -5,7 +5,7 @@ import android.os.Build
 import android.provider.MediaStore
 import androidx.annotation.RequiresApi
 import me.timeto.app.App
-import me.timeto.shared.Backup
+import me.timeto.shared.misc.backups.Backup
 import me.timeto.shared.UnixTime
 import me.timeto.shared.misc.backups.AutoBackup
 import me.timeto.shared.reportApi
