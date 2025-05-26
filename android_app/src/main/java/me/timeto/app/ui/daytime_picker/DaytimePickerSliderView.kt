@@ -27,7 +27,7 @@ import me.timeto.app.misc.Haptic
 import me.timeto.app.ui.Padding
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.ZStack
-import me.timeto.shared.misc.DaytimeUi
+import me.timeto.shared.ui.DaytimeUi
 import me.timeto.shared.models.DaytimePickerSliderUi
 
 private val hPadding = H_PADDING + 1.dp

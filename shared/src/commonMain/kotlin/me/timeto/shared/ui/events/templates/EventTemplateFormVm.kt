@@ -9,7 +9,7 @@ import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.EventTemplateDb
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.launchExIo
-import me.timeto.shared.misc.DaytimeUi
+import me.timeto.shared.ui.DaytimeUi
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toTimerHintNote
 import me.timeto.shared.ui.DialogsManager
