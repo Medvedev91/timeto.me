@@ -20,6 +20,7 @@ object Backup {
             // Meta
             "version" to JsonPrimitive(1),
             "type" to JsonPrimitive(type),
+            "time" to JsonPrimitive(UnixTime().time),
             "system" to JsonObject(
                 mapOf(
                     "build" to JsonPrimitive(systemInfo.build),
