@@ -4,11 +4,9 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
 import android.os.Build
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import me.timeto.app.misc.TimerNotificationReceiver
 import me.timeto.shared.*
 import me.timeto.shared.misc.timeMls
@@ -17,17 +15,6 @@ import java.util.*
 fun isSDKQPlus() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
 
 fun Date.toUnixTime() = UnixTime((this.time / 1_000L).toInt())
-
-private val density: Float = Resources.getSystem().displayMetrics.density
-fun dpToPx(dp: Float): Int = (dp * density).toInt()
-fun pxToDp(px: Int): Float = (px / density)
-
-val H_PADDING = 16.dp
-val H_PADDING_HALF = H_PADDING / 2
-val onePx = pxToDp(1).dp
-
-val halfDpFloor = pxToDp(dpToPx(1f) / 2).dp // -=
-val halfDpCeil = 1.dp - halfDpFloor // +=
 
 fun Dp.limitMin(dp: Dp) = if (this < dp) dp else this
 fun Dp.limitMax(dp: Dp) = if (this > dp) dp else this

@@ -13,7 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import me.timeto.app.ui.HStack
-import me.timeto.app.H_PADDING
+import me.timeto.app.ui.H_PADDING
 import me.timeto.app.c
 import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.header.Header__buttonFontSize

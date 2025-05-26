@@ -27,13 +27,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.ui.HStack
-import me.timeto.app.H_PADDING
+import me.timeto.app.ui.H_PADDING
 import me.timeto.app.R
 import me.timeto.app.ui.VStack
 import me.timeto.app.c
-import me.timeto.app.dpToPx
+import me.timeto.app.ui.dpToPx
 import me.timeto.app.isSDKQPlus
-import me.timeto.app.onePx
+import me.timeto.app.ui.onePx
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.Screen

@@ -13,7 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import me.timeto.app.H_PADDING
+import me.timeto.app.ui.H_PADDING
 import me.timeto.app.MainActivity
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.ZStack

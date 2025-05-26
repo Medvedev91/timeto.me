@@ -31,9 +31,9 @@ import me.timeto.app.R
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.ZStack
 import me.timeto.app.c
-import me.timeto.app.halfDpFloor
+import me.timeto.app.ui.halfDpFloor
 import me.timeto.app.misc.Haptic
-import me.timeto.app.onePx
+import me.timeto.app.ui.onePx
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.squircleShape
 import me.timeto.app.ui.timerFont

@@ -19,6 +19,7 @@ import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.app.misc.Haptic
 import me.timeto.app.ui.HStack
+import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.SquircleShape
 import me.timeto.app.ui.SwipeToAction
 import me.timeto.app.ui.SwipeToAction__DeleteView
@@ -29,6 +30,7 @@ import me.timeto.app.ui.activities.timer.ActivitiesTimerFs
 import me.timeto.app.ui.activities.timer.ActivityTimerFs
 import me.timeto.app.ui.events.EventFormFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
+import me.timeto.app.ui.onePx
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.squircleShape
 import me.timeto.app.ui.tasks.form.TaskFormFs

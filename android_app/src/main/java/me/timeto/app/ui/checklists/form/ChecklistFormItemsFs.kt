@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import me.timeto.app.H_PADDING_HALF
+import me.timeto.app.ui.H_PADDING_HALF
 import me.timeto.app.c
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.Screen

@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import me.timeto.app.H_PADDING
+import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.ZStack
 import me.timeto.app.c
 import me.timeto.app.ui.Divider

@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import me.timeto.app.H_PADDING_HALF
+import me.timeto.app.ui.H_PADDING_HALF
 import me.timeto.app.c
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.squircleShape

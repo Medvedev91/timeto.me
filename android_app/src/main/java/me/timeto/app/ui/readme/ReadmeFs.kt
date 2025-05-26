@@ -21,10 +21,12 @@ import me.timeto.app.R
 import me.timeto.app.misc.askAQuestion
 import me.timeto.app.ui.Divider
 import me.timeto.app.ui.HStack
+import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.Padding
 import me.timeto.app.ui.SquircleShape
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.form.button.FormButton
+import me.timeto.app.ui.halfDpCeil
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.header.Header__titleFontSize

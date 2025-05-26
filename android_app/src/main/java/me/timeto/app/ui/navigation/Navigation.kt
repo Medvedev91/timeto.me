@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
-import me.timeto.app.H_PADDING
+import me.timeto.app.ui.H_PADDING
 import me.timeto.app.c
 import me.timeto.app.ui.navigation.picker.NavigationPicker
 import me.timeto.app.ui.navigation.picker.NavigationPickerItem

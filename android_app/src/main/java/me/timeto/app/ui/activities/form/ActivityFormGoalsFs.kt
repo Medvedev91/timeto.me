@@ -5,7 +5,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import me.timeto.app.H_PADDING_HALF
+import me.timeto.app.ui.H_PADDING_HALF
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.goals.form.GoalFormFs
 import me.timeto.app.ui.Screen

@@ -30,12 +30,14 @@ import me.timeto.app.R
 import kotlinx.coroutines.delay
 import me.timeto.app.misc.Haptic
 import me.timeto.app.ui.HStack
+import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.SquircleShape
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.tasks.tab.tasks.TasksTabTasksView
 import me.timeto.app.ui.calendar.CalendarTabsView
+import me.timeto.app.ui.onePx
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.tasks.tab.repeatings.TasksTabRepeatingsView

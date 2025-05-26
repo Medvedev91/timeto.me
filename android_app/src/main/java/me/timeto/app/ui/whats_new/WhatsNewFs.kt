@@ -15,8 +15,11 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.ui.Divider
 import me.timeto.app.ui.HStack
+import me.timeto.app.ui.H_PADDING
+import me.timeto.app.ui.H_PADDING_HALF
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.VStack
+import me.timeto.app.ui.halfDpFloor
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs

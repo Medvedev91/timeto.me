@@ -34,13 +34,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.ui.HStack
-import me.timeto.app.H_PADDING
-import me.timeto.app.H_PADDING_HALF
+import me.timeto.app.ui.H_PADDING
+import me.timeto.app.ui.H_PADDING_HALF
 import me.timeto.app.R
 import me.timeto.app.ui.ZStack
 import me.timeto.app.c
-import me.timeto.app.halfDpCeil
-import me.timeto.app.halfDpFloor
+import me.timeto.app.ui.halfDpCeil
+import me.timeto.app.ui.halfDpFloor
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.squircleShape
 import me.timeto.app.ui.Screen

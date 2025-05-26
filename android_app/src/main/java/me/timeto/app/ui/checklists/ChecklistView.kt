@@ -20,6 +20,7 @@ import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.app.misc.Haptic
 import me.timeto.app.ui.HStack
+import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.checklists.form.ChecklistFormItemFs

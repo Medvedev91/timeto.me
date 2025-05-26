@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.ui.HStack
-import me.timeto.app.H_PADDING
+import me.timeto.app.ui.H_PADDING
 import me.timeto.app.R
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.ZStack

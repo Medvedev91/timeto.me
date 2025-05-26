@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.ZStack
-import me.timeto.app.onePx
+import me.timeto.app.ui.onePx
 import me.timeto.app.ui.main.MainTabsView__height
 import me.timeto.app.ui.main.MainTabsView__backgroundColor
 import me.timeto.app.ui.main.MainTabsView__dividerColor
