@@ -45,15 +45,6 @@ val roundedShape = RoundedCornerShape(99.dp)
 
 val timerFont = FontFamily(Font(R.font.timer_font))
 
-fun showOpenSource() {
-    App.instance.startActivity(
-        Intent(Intent.ACTION_VIEW).apply {
-            flags = FLAG_ACTIVITY_NEW_TASK
-            data = Uri.parse(OPEN_SOURCE_URL)
-        }
-    )
-}
-
 fun askAQuestion(
     subject: String,
 ) {
