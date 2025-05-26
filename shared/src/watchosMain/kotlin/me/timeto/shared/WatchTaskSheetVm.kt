@@ -14,10 +14,11 @@ class WatchTaskSheetVm(
         val activity: ActivityDb,
     ) {
 
-        val listTitle = activity.nameWithEmoji().textFeatures().textUi()
+        val listTitle: String =
+            activity.nameWithEmoji().textFeatures().textUi()
 
-        val timerHints = activity.timerHints.map { seconds ->
-            TimerHintData(
+        val timerHintsUi: List<TimerHintUi> = activity.timerHints.map { seconds ->
+            TimerHintUi(
                 seconds = seconds,
                 onStart = {
                     WatchToIosSync.startTaskWithLocal(
@@ -25,7 +26,7 @@ class WatchTaskSheetVm(
                         timer = seconds,
                         task = task
                     )
-                }
+                },
             )
         }
     }
@@ -43,4 +44,21 @@ class WatchTaskSheetVm(
             },
         )
     )
+
+    ///
+
+    class TimerHintUi(
+        val seconds: Int,
+        val onStart: suspend () -> Unit,
+    ) {
+
+        val text: String =
+            seconds.toTimerHintNote(isShort = true)
+
+        fun startInterval() {
+            launchExIo {
+                onStart()
+            }
+        }
+    }
 }

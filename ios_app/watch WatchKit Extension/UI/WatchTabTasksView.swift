@@ -110,19 +110,19 @@ struct WatchTabTasksView: View {
                                         .lineLimit(1)
                                         .truncationMode(.middle)
                                     
-                                    if !activityUI.timerHints.isEmpty {
+                                    if !activityUI.timerHintsUi.isEmpty {
                                         HStack(spacing: 6) {
-                                            ForEach(activityUI.timerHints, id: \.seconds) { hintUI in
+                                            ForEach(activityUI.timerHintsUi, id: \.seconds) { hintUi in
                                                 Button(
                                                     action: {
-                                                        hintUI.startInterval {}
+                                                        hintUi.startInterval()
                                                         taskSheetDialog.isPresented = false
                                                         myAsyncAfter(0.05) { // Меньше 0.2 на железе не работает
                                                             WatchTabsView.lastInstance?.tabSelection = WatchTabsView.TAB_ID_TIMER
                                                         }
                                                     },
                                                     label: {
-                                                        Text(hintUI.text)
+                                                        Text(hintUi.text)
                                                             .font(.system(size: 13, weight: .medium))
                                                             .foregroundColor(.white)
                                                             .cornerRadius(99)
