@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import kotlinx.coroutines.launch
 import me.timeto.app.misc.NotificationCenter
+import me.timeto.app.misc.askAQuestion
 import me.timeto.app.misc.showOpenSource
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.whats_new.WhatsNewFs

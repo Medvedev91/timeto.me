@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
 import me.timeto.app.R
+import me.timeto.app.misc.askAQuestion
 import me.timeto.app.ui.Divider
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.Padding
