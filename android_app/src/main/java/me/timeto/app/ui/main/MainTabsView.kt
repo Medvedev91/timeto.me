@@ -37,7 +37,7 @@ import me.timeto.app.ui.onePx
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.squircleShape
 import me.timeto.app.ui.timerFont
-import me.timeto.app.toColor
+import me.timeto.app.misc.extensions.toColor
 import me.timeto.shared.ui.main.MainTabsVm
 
 val MainTabsView__height = 56.dp

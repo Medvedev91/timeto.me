@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
+import me.timeto.app.misc.extensions.toColor
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.WyouChart
 import me.timeto.app.ui.rememberVm

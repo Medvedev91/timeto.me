@@ -4,9 +4,9 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import me.timeto.app.misc.TimerNotificationReceiver
+import me.timeto.app.misc.extensions.toColor
 import me.timeto.shared.*
 import me.timeto.shared.misc.timeMls
 
@@ -69,10 +69,8 @@ fun cancelAllAlarms() {
     }
 }
 
-///
-/// Color
-
-fun ColorRgba.toColor() = Color(r, g, b, a)
+//
+// Color
 
 object c {
 

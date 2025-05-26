@@ -31,7 +31,7 @@ import me.timeto.app.ui.onePx
 import me.timeto.app.ui.pxToDp
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
-import me.timeto.app.toColor
+import me.timeto.app.misc.extensions.toColor
 import me.timeto.app.ui.checklists.ChecklistView
 import me.timeto.app.ui.Padding
 import me.timeto.app.ui.SpacerW1

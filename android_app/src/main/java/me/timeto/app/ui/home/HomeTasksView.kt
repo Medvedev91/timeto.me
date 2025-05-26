@@ -27,7 +27,7 @@ import me.timeto.app.ui.ZStack
 import me.timeto.app.c
 import me.timeto.app.ui.onePx
 import me.timeto.app.ui.roundedShape
-import me.timeto.app.toColor
+import me.timeto.app.misc.extensions.toColor
 import me.timeto.app.ui.activities.timer.ActivitiesTimerFs
 import me.timeto.app.ui.activities.timer.ActivityTimerFs
 import me.timeto.app.ui.navigation.LocalNavigationFs

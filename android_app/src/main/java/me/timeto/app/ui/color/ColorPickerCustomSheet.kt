@@ -26,7 +26,7 @@ import me.timeto.app.ui.VStack
 import me.timeto.app.ui.ZStack
 import me.timeto.app.c
 import me.timeto.app.ui.squircleShape
-import me.timeto.app.toColor
+import me.timeto.app.misc.extensions.toColor
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.ColorRgba
