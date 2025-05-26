@@ -7,8 +7,6 @@ import android.content.Intent
 import android.content.res.Resources
 import android.os.Build
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import me.timeto.app.misc.TimerNotificationReceiver
@@ -35,8 +33,6 @@ fun Dp.limitMin(dp: Dp) = if (this < dp) dp else this
 fun Dp.limitMax(dp: Dp) = if (this > dp) dp else this
 fun Dp.goldenRatioUp() = this * GOLDEN_RATIO
 fun Dp.goldenRatioDown() = this / GOLDEN_RATIO
-
-val timerFont = FontFamily(Font(R.font.timer_font))
 
 //
 // Notification / Alarms
