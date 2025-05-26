@@ -5,6 +5,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.serialization.json.*
 import me.timeto.shared.db.*
+import me.timeto.shared.misc.SystemInfo
 import me.timeto.shared.misc.backups.Backupable__Item
 
 object Backup {
@@ -13,9 +14,20 @@ object Backup {
         type: String,
         intervalsLimit: Int = Int.MAX_VALUE,
     ): String {
+        val systemInfo = SystemInfo.instance
         val map: Map<String, JsonElement> = mapOf(
+            // Meta
             "version" to JsonPrimitive(1),
             "type" to JsonPrimitive(type),
+            "system" to JsonObject(
+                mapOf(
+                    "build" to JsonPrimitive(systemInfo.build),
+                    "version" to JsonPrimitive(systemInfo.version),
+                    "os" to JsonPrimitive(systemInfo.os.fullVersion),
+                    "device" to JsonPrimitive(systemInfo.device),
+                    "flavor" to JsonPrimitive(systemInfo.flavor),
+                )
+            ),
             // Data
             "activities" to ActivityDb.selectSorted().modelsToJsonArray(),
             "intervals" to IntervalDb.selectDesc(intervalsLimit).modelsToJsonArray(),
