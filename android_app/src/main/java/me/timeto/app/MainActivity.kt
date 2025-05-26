@@ -27,6 +27,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import kotlinx.coroutines.delay
+import me.timeto.app.misc.AlarmCenter
 import me.timeto.app.misc.AutoBackupAndroid
 import me.timeto.app.misc.NotificationCenter
 import me.timeto.app.misc.isSdkQPlus
@@ -71,7 +72,9 @@ class MainActivity : ComponentActivity() {
 
         setContent {
 
-            val (vm, state) = rememberVm { AppVm() }
+            val (vm, state) = rememberVm {
+                AppVm()
+            }
 
             MaterialTheme(colors = darkColors()) {
 
@@ -102,9 +105,11 @@ class MainActivity : ComponentActivity() {
                     LaunchedEffect(Unit) {
                         scheduledNotificationsDataFlow
                             .onEachExIn(this) { notificationsData ->
-                                cancelAllAlarms()
+                                AlarmCenter.cancelAllAlarms()
                                 NotificationCenter.cleanAllPushes()
-                                notificationsData.forEach { scheduleNotification(it) }
+                                notificationsData.forEach {
+                                    AlarmCenter.scheduleNotification(it)
+                                }
                             }
                         // TRICK Run strictly after scheduledNotificationsDataFlow launch.
                         // TRICK Without delay the first event does not handled. 1L enough.
