@@ -37,8 +37,8 @@ import me.timeto.app.c
 import me.timeto.app.goldenRatioDown
 import me.timeto.app.onePx
 import me.timeto.app.ui.rememberVm
-import me.timeto.app.roundedShape
-import me.timeto.app.squircleShape
+import me.timeto.app.ui.roundedShape
+import me.timeto.app.ui.squircleShape
 import me.timeto.app.toColor
 import me.timeto.app.ui.Divider
 import me.timeto.app.ui.Screen

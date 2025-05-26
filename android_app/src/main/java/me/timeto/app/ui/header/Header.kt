@@ -19,7 +19,7 @@ import me.timeto.app.H_PADDING
 import me.timeto.app.H_PADDING_HALF
 import me.timeto.app.ui.VStack
 import me.timeto.app.c
-import me.timeto.app.roundedShape
+import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.header.views.HeaderView
 

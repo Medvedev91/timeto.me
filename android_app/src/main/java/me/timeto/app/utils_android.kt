@@ -6,14 +6,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Build
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import me.timeto.app.misc.TimerNotificationReceiver
-import me.timeto.app.ui.SquircleShape
 import me.timeto.shared.*
 import me.timeto.shared.misc.timeMls
 import java.util.*
@@ -37,9 +35,6 @@ fun Dp.limitMin(dp: Dp) = if (this < dp) dp else this
 fun Dp.limitMax(dp: Dp) = if (this > dp) dp else this
 fun Dp.goldenRatioUp() = this * GOLDEN_RATIO
 fun Dp.goldenRatioDown() = this / GOLDEN_RATIO
-
-val squircleShape = SquircleShape(12.dp)
-val roundedShape = RoundedCornerShape(99.dp)
 
 val timerFont = FontFamily(Font(R.font.timer_font))
 

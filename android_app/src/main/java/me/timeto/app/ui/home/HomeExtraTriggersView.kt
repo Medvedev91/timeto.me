@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.ui.HStack
 import me.timeto.app.c
-import me.timeto.app.squircleShape
+import me.timeto.app.ui.squircleShape
 import me.timeto.app.ui.checklists.ChecklistScreen
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.shared.ui.home.HomeVm

@@ -30,7 +30,7 @@ import me.timeto.app.c
 import me.timeto.app.onePx
 import me.timeto.app.pxToDp
 import me.timeto.app.ui.rememberVm
-import me.timeto.app.roundedShape
+import me.timeto.app.ui.roundedShape
 import me.timeto.app.toColor
 import me.timeto.app.ui.checklists.ChecklistView
 import me.timeto.app.ui.Padding

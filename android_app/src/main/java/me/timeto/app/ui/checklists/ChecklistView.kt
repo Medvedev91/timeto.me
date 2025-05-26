@@ -27,6 +27,7 @@ import me.timeto.app.ui.home.HomeScreen__itemHeight
 import me.timeto.app.ui.home.HomeScreen__primaryFontSize
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.rememberVm
+import me.timeto.app.ui.squircleShape
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.ui.checklists.ChecklistVm
 import me.timeto.shared.ui.checklists.ChecklistStateUi

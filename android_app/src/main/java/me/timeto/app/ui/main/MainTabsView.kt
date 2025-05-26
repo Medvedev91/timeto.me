@@ -35,7 +35,7 @@ import me.timeto.app.halfDpFloor
 import me.timeto.app.misc.Haptic
 import me.timeto.app.onePx
 import me.timeto.app.ui.rememberVm
-import me.timeto.app.squircleShape
+import me.timeto.app.ui.squircleShape
 import me.timeto.app.timerFont
 import me.timeto.app.toColor
 import me.timeto.shared.ui.main.MainTabsVm

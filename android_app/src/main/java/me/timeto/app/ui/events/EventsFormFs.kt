@@ -41,8 +41,8 @@ import me.timeto.app.c
 import me.timeto.app.halfDpCeil
 import me.timeto.app.onePx
 import me.timeto.app.ui.rememberVm
-import me.timeto.app.roundedShape
-import me.timeto.app.squircleShape
+import me.timeto.app.ui.roundedShape
+import me.timeto.app.ui.squircleShape
 import me.timeto.app.ui.daytime_picker.DaytimePickerSliderView
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1

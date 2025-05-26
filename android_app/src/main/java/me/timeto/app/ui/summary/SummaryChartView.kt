@@ -24,6 +24,7 @@ import me.timeto.app.*
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.WyouChart
 import me.timeto.app.ui.rememberVm
+import me.timeto.app.ui.squircleShape
 import me.timeto.shared.ui.summary.SummaryVm
 import me.timeto.shared.ui.summary.SummaryChartVm
 

@@ -23,6 +23,7 @@ import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.readme.ReadmeFs
 import me.timeto.app.ui.rememberVm
+import me.timeto.app.ui.squircleShape
 import me.timeto.shared.ui.readme.ReadmeVm
 import me.timeto.shared.ui.whats_new.WhatsNewVm
 

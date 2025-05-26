@@ -34,7 +34,7 @@ import me.timeto.app.ui.ZStack
 import me.timeto.app.c
 import me.timeto.app.goldenRatioDown
 import me.timeto.app.misc.Haptic
-import me.timeto.app.roundedShape
+import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.Divider
 import me.timeto.app.ui.form.form__itemMinHeight
 import kotlin.math.absoluteValue

@@ -16,7 +16,7 @@ import me.timeto.app.ui.HStack
 import me.timeto.app.H_PADDING_HALF
 import me.timeto.app.R
 import me.timeto.app.c
-import me.timeto.app.squircleShape
+import me.timeto.app.ui.squircleShape
 
 @Composable
 fun FooterAddButton(

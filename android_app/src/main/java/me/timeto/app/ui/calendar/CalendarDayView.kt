@@ -20,7 +20,7 @@ import me.timeto.app.ui.VStack
 import me.timeto.app.c
 import me.timeto.app.onePx
 import me.timeto.app.ui.rememberVm
-import me.timeto.app.roundedShape
+import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.Divider
 import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.calendar.list.CalendarListItemView
