@@ -9,7 +9,7 @@ import me.timeto.shared.db.TaskDb
 import platform.WatchConnectivity.WCSession
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.misc.timeMls
-import me.timeto.shared.models.TimerDataUi
+import me.timeto.shared.ui.TimerDataUi
 
 object IosToWatchSync {
 
