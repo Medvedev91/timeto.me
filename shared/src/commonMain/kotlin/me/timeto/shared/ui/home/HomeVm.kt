@@ -10,7 +10,7 @@ import me.timeto.shared.misc.SystemInfo
 import me.timeto.shared.ui.TaskUi
 import me.timeto.shared.ui.sortedUi
 import me.timeto.shared.misc.time
-import me.timeto.shared.models.*
+import me.timeto.shared.ui.DayBarsUi
 import me.timeto.shared.ui.TimerDataUi
 import me.timeto.shared.ui.activities.timer.ActivityTimerStrategy
 import me.timeto.shared.ui.whats_new.WhatsNewVm

@@ -8,7 +8,7 @@ import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.incOrSet
 import me.timeto.shared.launchEx
 import me.timeto.shared.localUtcOffset
-import me.timeto.shared.models.DayBarsUi
+import me.timeto.shared.ui.DayBarsUi
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toHms
 import me.timeto.shared.vm.__Vm
