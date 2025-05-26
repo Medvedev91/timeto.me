@@ -5,10 +5,9 @@ import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.misc.time
 
-// todo rename smth with "day sections" or related
-class DayIntervalsUi(
+class DayBarsUi(
     val unixDay: Int,
-    val intervalsUi: List<IntervalUi>,
+    val barsUi: List<BarUi>,
     dayStringFormat: DAY_STRING_FORMAT,
 ) {
 
@@ -17,8 +16,7 @@ class DayIntervalsUi(
             "${UnixTime.byLocalDay(unixDay).dayOfMonth()}"
         else ""
 
-    // todo rename smth like "SectionUi"
-    class IntervalUi(
+    class BarUi(
         val intervalDb: IntervalDb?,
         val timeStart: Int,
         val seconds: Int,
@@ -41,7 +39,7 @@ class DayIntervalsUi(
             dayStart: Int,
             dayFinish: Int,
             utcOffset: Int,
-        ): List<DayIntervalsUi> {
+        ): List<DayBarsUi> {
 
             val timeStart: Int = UnixTime.byLocalDay(dayStart, utcOffset).time
             val timeFinish: Int = UnixTime.byLocalDay(dayFinish + 1, utcOffset).time - 1
@@ -55,16 +53,17 @@ class DayIntervalsUi(
                 .toMutableList()
 
             // Previous interval
-            IntervalDb.selectBetweenIdDesc(0, timeStart - 1, 1).firstOrNull()?.let { prevInterval ->
-                intervalsAsc.add(0, prevInterval) // 0 idx - to start
+            IntervalDb.selectBetweenIdDesc(0, timeStart - 1, 1).firstOrNull()?.let { prevIntervalDb ->
+                intervalsAsc.add(0, prevIntervalDb) // 0 idx - to start
             }
 
-            ////
+            ///
 
             val now = time()
-            val barDayFormat = if (dayStart == dayFinish) DAY_STRING_FORMAT.ALL else DAY_STRING_FORMAT.EVEN
-            val daysIntervalsUI: List<DayIntervalsUi> = (dayStart..dayFinish).map { day ->
-                val dayTimeStart: Int = UnixTime.byLocalDay(day, utcOffset).time
+            val barDayFormat: DAY_STRING_FORMAT =
+                if (dayStart == dayFinish) DAY_STRING_FORMAT.ALL else DAY_STRING_FORMAT.EVEN
+            val daysBarsUi: List<DayBarsUi> = (dayStart..dayFinish).map { dayBarUi ->
+                val dayTimeStart: Int = UnixTime.byLocalDay(dayBarUi, utcOffset).time
                 val dayTimeFinish: Int = dayTimeStart + 86_400
                 val dayMaxTimeFinish: Int = dayTimeFinish.limitMax(now)
 
@@ -72,48 +71,49 @@ class DayIntervalsUi(
                     intervalsAsc.isEmpty() ||
                     (dayTimeFinish <= intervalsAsc.first().id)
                 ) {
-                    return@map DayIntervalsUi(
-                        unixDay = day,
-                        intervalsUi = listOf(IntervalUi(null, dayTimeStart, 86_400)),
+                    return@map DayBarsUi(
+                        unixDay = dayBarUi,
+                        barsUi = listOf(BarUi(null, dayTimeStart, 86_400)),
                         dayStringFormat = barDayFormat,
                     )
                 }
 
                 val firstInterval: IntervalDb = intervalsAsc.first()
 
-                val daySections = mutableListOf<IntervalUi>()
-                val dayIntervals = intervalsAsc.filter { it.id >= dayTimeStart && it.id < dayTimeFinish }
+                val dayBarsUi = mutableListOf<BarUi>()
+                val dayIntervalsDb: List<IntervalDb> =
+                    intervalsAsc.filter { it.id >= dayTimeStart && it.id < dayTimeFinish }
 
                 // Adding leading section. Relevant for the beginning of history.
                 if (firstInterval.id > dayTimeStart)
-                    daySections.add(IntervalUi(null, dayTimeStart, firstInterval.id - dayTimeStart))
+                    dayBarsUi.add(BarUi(null, dayTimeStart, firstInterval.id - dayTimeStart))
                 else {
-                    val todayFirstIntervalOrNull: IntervalDb? = dayIntervals.firstOrNull()
+                    val todayFirstIntervalOrNull: IntervalDb? = dayIntervalsDb.firstOrNull()
                     if ((todayFirstIntervalOrNull == null) || (todayFirstIntervalOrNull.id > dayTimeStart)) {
                         val prevInterval = intervalsAsc.last { it.id < dayTimeStart }
                         val seconds = (todayFirstIntervalOrNull?.id ?: dayMaxTimeFinish) - dayTimeStart
-                        daySections.add(IntervalUi(prevInterval, dayTimeStart, seconds))
+                        dayBarsUi.add(BarUi(prevInterval, dayTimeStart, seconds))
                     }
                 }
 
                 // Adding other sections
-                dayIntervals.forEachIndexed { idx, interval ->
+                dayIntervalsDb.forEachIndexed { idx, intervalDb ->
                     val nextIntervalTime =
-                        if ((idx + 1) == dayIntervals.size) dayMaxTimeFinish
-                        else dayIntervals[idx + 1].id
-                    val seconds = nextIntervalTime - interval.id
-                    daySections.add(IntervalUi(interval, interval.id, seconds))
+                        if ((idx + 1) == dayIntervalsDb.size) dayMaxTimeFinish
+                        else dayIntervalsDb[idx + 1].id
+                    val seconds = nextIntervalTime - intervalDb.id
+                    dayBarsUi.add(BarUi(intervalDb, intervalDb.id, seconds))
                 }
 
                 // For today
-                val trailingPadding = dayTimeFinish - dayMaxTimeFinish
+                val trailingPadding: Int = dayTimeFinish - dayMaxTimeFinish
                 if (trailingPadding > 0)
-                    daySections.add(IntervalUi(null, dayMaxTimeFinish, trailingPadding))
+                    dayBarsUi.add(BarUi(null, dayMaxTimeFinish, trailingPadding))
 
-                DayIntervalsUi(day, daySections, barDayFormat)
+                DayBarsUi(dayBarUi, dayBarsUi, barDayFormat)
             }
 
-            return daysIntervalsUI
+            return daysBarsUi
         }
     }
 }

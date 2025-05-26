@@ -8,7 +8,7 @@ import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.incOrSet
 import me.timeto.shared.launchEx
 import me.timeto.shared.localUtcOffset
-import me.timeto.shared.models.DayIntervalsUi
+import me.timeto.shared.models.DayBarsUi
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toHms
 import me.timeto.shared.vm.__Vm
@@ -19,7 +19,7 @@ class SummaryVm : __Vm<SummaryVm.State>() {
         val pickerTimeStart: UnixTime,
         val pickerTimeFinish: UnixTime,
         val activitiesUi: List<ActivityUi>,
-        val daysIntervalsUi: List<DayIntervalsUi>,
+        val daysBarsUi: List<DayBarsUi>,
     ) {
 
         val minPickerTime: UnixTime = Cache.firstInterval.unixTime()
@@ -52,7 +52,7 @@ class SummaryVm : __Vm<SummaryVm.State>() {
                 pickerTimeStart = now,
                 pickerTimeFinish = now,
                 activitiesUi = emptyList(),
-                daysIntervalsUi = emptyList(),
+                daysBarsUi = emptyList(),
             )
         )
         setPeriod(
@@ -68,7 +68,7 @@ class SummaryVm : __Vm<SummaryVm.State>() {
         pickerTimeFinish: UnixTime,
     ) {
         scopeVm().launchEx {
-            val daysIntervalsUi = DayIntervalsUi.buildList(
+            val daysBarsUi = DayBarsUi.buildList(
                 dayStart = pickerTimeStart.localDay,
                 dayFinish = pickerTimeFinish.localDay,
                 utcOffset = localUtcOffset,
@@ -77,8 +77,8 @@ class SummaryVm : __Vm<SummaryVm.State>() {
                 it.copy(
                     pickerTimeStart = pickerTimeStart,
                     pickerTimeFinish = pickerTimeFinish,
-                    activitiesUi = prepActivitiesUi(daysIntervalsUi),
-                    daysIntervalsUi = daysIntervalsUi.reversed(),
+                    activitiesUi = prepActivitiesUi(daysBarsUi),
+                    daysBarsUi = daysBarsUi.reversed(),
                 )
             }
         }
@@ -148,13 +148,13 @@ private val buttonDateStringComponents = listOf(
 )
 
 private fun prepActivitiesUi(
-    daysIntervalsUi: List<DayIntervalsUi>
+    daysBarsUi: List<DayBarsUi>
 ): List<SummaryVm.ActivityUi> {
-    val daysCount = daysIntervalsUi.size
+    val daysCount = daysBarsUi.size
     val totalSeconds = daysCount * 86_400
     val mapActivitySeconds: MutableMap<Int, Int> = mutableMapOf()
-    daysIntervalsUi.forEach { dayIntervalsUi ->
-        dayIntervalsUi.intervalsUi.forEach { sectionItem ->
+    daysBarsUi.forEach { dayBarsUi ->
+        dayBarsUi.barsUi.forEach { sectionItem ->
             val activity = sectionItem.activityDb
             if (activity != null)
                 mapActivitySeconds.incOrSet(activity.id, sectionItem.seconds)

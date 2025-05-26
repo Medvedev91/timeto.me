@@ -22,7 +22,7 @@ class HomeVm : __Vm<HomeVm.State>() {
         val interval: IntervalDb,
         val isPurple: Boolean,
         val todayTasksUi: List<TaskUi>,
-        val todayIntervalsUi: DayIntervalsUi?,
+        val todayIntervalsUi: DayBarsUi?,
         val fdroidMessage: String?,
         val readmeMessage: String?,
         val whatsNewMessage: String?,
@@ -61,7 +61,7 @@ class HomeVm : __Vm<HomeVm.State>() {
 
                         val goalTf: TextFeatures = goalDb.note.textFeatures()
 
-                        val dayIntervalsUiForGoal = todayIntervalsUi.intervalsUi
+                        val dayIntervalsUiForGoal = todayIntervalsUi.barsUi
                             .filter { it.activityDb?.id == activityDb.id }
                             .filter {
                                 // Goal without note is common for activity
@@ -69,7 +69,7 @@ class HomeVm : __Vm<HomeVm.State>() {
                                 else goalTf.textNoFeatures == it.intervalTf.textNoFeatures
                             }
                         var totalSeconds: Int = dayIntervalsUiForGoal.sumOf { it.seconds }
-                        val lastWithActivity = todayIntervalsUi.intervalsUi
+                        val lastWithActivity = todayIntervalsUi.barsUi
                             .lastOrNull { it.activityDb != null }
                         if (
                             lastWithActivity != null &&
@@ -274,7 +274,7 @@ class HomeVm : __Vm<HomeVm.State>() {
     private suspend fun upTodayIntervalsUi() {
         val utcOffset = localUtcOffsetWithDayStart
         val todayDS = UnixTime(utcOffset = utcOffset).localDay
-        val todayIntervalsUI = DayIntervalsUi
+        val todayIntervalsUI = DayBarsUi
             .buildList(
                 dayStart = todayDS,
                 dayFinish = todayDS,

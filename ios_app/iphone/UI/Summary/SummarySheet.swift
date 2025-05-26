@@ -81,7 +81,7 @@ private struct SummarySheetInner: View {
                                 
                                 Spacer()
                                 
-                                ForEachIndexed(state.daysIntervalsUi.reversed()) { _, dayIntervalsUi in
+                                ForEachIndexed(state.daysBarsUi.reversed()) { _, dayBarsUi in
                                     
                                     VStack {
                                         
@@ -89,7 +89,7 @@ private struct SummarySheetInner: View {
                                             
                                             Spacer()
                                             
-                                            Text(dayIntervalsUi.dayString)
+                                            Text(dayBarsUi.dayString)
                                                 .lineLimit(1)
                                                 .foregroundColor(.secondary)
                                                 .font(.system(size: 10, weight: .light))
@@ -99,11 +99,11 @@ private struct SummarySheetInner: View {
                                         
                                         GeometryReader { geometry in
                                             VStack {
-                                                ForEachIndexed(dayIntervalsUi.intervalsUi) { _, intervalUi in
+                                                ForEachIndexed(dayBarsUi.barsUi) { _, barUi in
                                                     ZStack {}
                                                         .frame(minWidth: 0, maxWidth: .infinity)
-                                                        .frame(height: CGFloat(intervalUi.ratio) * geometry.size.height)
-                                                        .background(intervalUi.activityDb?.colorRgba.toColor() ?? Color(.systemGray5))
+                                                        .frame(height: CGFloat(barUi.ratio) * geometry.size.height)
+                                                        .background(barUi.activityDb?.colorRgba.toColor() ?? Color(.systemGray5))
                                                 }
                                             }
                                             .clipShape(roundedShape)
