@@ -4,13 +4,14 @@ import me.timeto.shared.*
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.TaskDb
+import me.timeto.shared.ui.DaytimeUi
 import me.timeto.shared.misc.time
-import me.timeto.shared.vm.ActivityTimerSheetVm
+import me.timeto.shared.ui.activities.timer.ActivityTimerStrategy
 import kotlin.math.absoluteValue
 
 class TimerDataUi(
-    interval: IntervalDb,
-    todayTasks: List<TaskDb>,
+    intervalDb: IntervalDb,
+    todayTasksDb: List<TaskDb>,
     isPurple: Boolean,
 ) {
 
@@ -22,20 +23,23 @@ class TimerDataUi(
     val timerText: String
     val timerColor: ColorRgba
 
-    val infoUi = InfoUi(interval)
+    val infoUi = InfoUi(intervalDb)
     val prolongText: String?
 
     ///
 
-    private val intervalNoteTf: TextFeatures? = interval.note?.textFeatures()
+    private val intervalNoteTf: TextFeatures? =
+        intervalDb.note?.textFeatures()
 
-    private val activity: ActivityDb = interval.selectActivityDbCached()
+    private val activityDb: ActivityDb =
+        intervalDb.selectActivityDbCached()
+
     private val pausedTaskData: PausedTaskData? = run {
-        if (!activity.isOther())
+        if (!activityDb.isOther())
             return@run null
         val pausedTaskId: Int = intervalNoteTf?.pause?.pausedTaskId
                                 ?: return@run null
-        val pausedTask: TaskDb = todayTasks.firstOrNull { it.id == pausedTaskId }
+        val pausedTask: TaskDb = todayTasksDb.firstOrNull { it.id == pausedTaskId }
                                  ?: return@run null
         val pausedTaskTf: TextFeatures = pausedTask.text.textFeatures()
         val pausedTaskTimer: Int = pausedTaskTf.paused?.originalTimer
@@ -52,10 +56,10 @@ class TimerDataUi(
 
     init {
 
-        val now = time()
-        val secondsToEnd = interval.id + interval.timer - now
+        val now: Int = time()
+        val secondsToEnd: Int = intervalDb.id + intervalDb.timer - now
 
-        timerText = secondsToString(if (isPurple) (now - interval.id) else secondsToEnd)
+        timerText = secondsToString(if (isPurple) (now - intervalDb.id) else secondsToEnd)
         timerColor = when {
             isPurple -> ColorRgba.purple
             secondsToEnd < 0 -> ColorRgba.red
@@ -66,10 +70,10 @@ class TimerDataUi(
         prolongText = run {
             val prolonged: TextFeatures.Prolonged = intervalNoteTf?.prolonged
                                                     ?: return@run null
-            (interval.timer - prolonged.originalTimer).toTimerHintNote(true)
+            (intervalDb.timer - prolonged.originalTimer).toTimerHintNote(true)
         }
 
-        note = (intervalNoteTf ?: activity.name.textFeatures()).textUi(
+        note = (intervalNoteTf ?: activityDb.name.textFeatures()).textUi(
             withActivityEmoji = false,
             withTimer = false,
         )
@@ -84,7 +88,7 @@ class TimerDataUi(
     }
 
     fun togglePomodoro() {
-        launchExDefault {
+        launchExIo {
             if (pausedTaskData != null) {
                 pausedTaskData.taskDb.startInterval(
                     pausedTaskData.timer,
@@ -97,7 +101,7 @@ class TimerDataUi(
     }
 
     fun prolong() {
-        launchExDefault {
+        launchExIo {
             IntervalDb.prolongLastInterval(5 * 60)
         }
     }
@@ -116,7 +120,9 @@ class TimerDataUi(
         }
 
         val timerText = "Timer"
-        val timerContext = ActivityTimerSheetVm.TimerContext.Interval(intervalDb)
+
+        val timerStrategy: ActivityTimerStrategy =
+            ActivityTimerStrategy.Interval(intervalDb)
 
         fun setUntilDaytime(daytimeUi: DaytimeUi) {
             val unixTimeNow = UnixTime()
