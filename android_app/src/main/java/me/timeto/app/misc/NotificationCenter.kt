@@ -18,8 +18,11 @@ import me.timeto.shared.getSoundTimerExpiredFileName
  */
 object NotificationCenter {
 
-    fun channelTimerExpired() = upsertChannel("timer_expired", "Timer Expired", getSoundTimerExpiredFileName(false))
-    fun channelTimerOverdue() = upsertChannel("timer_overdue", "Timer Overdue", null)
+    fun channelTimerExpired(): NotificationChannel =
+        upsertChannel("timer_expired", "Timer Expired", getSoundTimerExpiredFileName(false))
+
+    fun channelTimerOverdue(): NotificationChannel =
+        upsertChannel("timer_overdue", "Timer Overdue", null)
 
     fun getManager(): NotificationManager =
         App.Companion.instance.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -55,7 +58,5 @@ object NotificationCenter {
      */
     fun cleanAllPushes() {
         getManager().cancelAll()
-        // todo Remove after v2023.10.10
-        getManager().deleteNotificationChannel("time_to_break")
     }
 }
