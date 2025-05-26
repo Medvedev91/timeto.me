@@ -29,6 +29,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import kotlinx.coroutines.delay
 import me.timeto.app.misc.AutoBackupAndroid
 import me.timeto.app.misc.NotificationCenter
+import me.timeto.app.misc.isSdkQPlus
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.main.MainScreen
 import me.timeto.app.ui.navigation.LocalNavigationFs
@@ -85,7 +86,7 @@ class MainActivity : ComponentActivity() {
                     }
 
                     LaunchedEffect(Unit) {
-                        if (isSDKQPlus()) {
+                        if (isSdkQPlus()) {
                             try {
                                 AutoBackup.upLastTimeCache(AutoBackupAndroid.getLastTimeOrNull())
                             } catch (e: Throwable) {

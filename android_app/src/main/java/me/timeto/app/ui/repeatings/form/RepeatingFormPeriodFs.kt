@@ -32,7 +32,7 @@ import me.timeto.app.R
 import me.timeto.app.ui.VStack
 import me.timeto.app.c
 import me.timeto.app.ui.dpToPx
-import me.timeto.app.isSDKQPlus
+import me.timeto.app.misc.isSdkQPlus
 import me.timeto.app.ui.onePx
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
@@ -148,7 +148,7 @@ fun RepeatingFormPeriodFs(
                                             vm.setSelectedNDays(new)
                                         }
                                         displayedValues = days.map { "$it" }.toTypedArray()
-                                        if (isSDKQPlus())
+                                        if (isSdkQPlus())
                                             textSize = dpToPx(18f).toFloat()
                                         wrapSelectorWheel = false
                                         minValue = 0

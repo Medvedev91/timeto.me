@@ -4,15 +4,12 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import me.timeto.app.misc.TimerNotificationReceiver
 import me.timeto.shared.*
 import me.timeto.shared.misc.timeMls
 import java.util.*
-
-fun isSDKQPlus() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
 
 fun Date.toUnixTime() = UnixTime((this.time / 1_000L).toInt())
 

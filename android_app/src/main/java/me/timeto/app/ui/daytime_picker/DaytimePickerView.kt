@@ -10,7 +10,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.dpToPx
-import me.timeto.app.isSDKQPlus
+import me.timeto.app.misc.isSdkQPlus
 
 @Composable
 fun DaytimePickerView(
@@ -40,7 +40,7 @@ fun DaytimePickerView(
                             onHourChanged(new)
                         }
                         displayedValues = hourIndexes.map { "$it".padStart(2, '0') }.toTypedArray()
-                        if (isSDKQPlus())
+                        if (isSdkQPlus())
                             textSize = dpToPx(18f).toFloat()
                         wrapSelectorWheel = false
                         minValue = 0
@@ -64,7 +64,7 @@ fun DaytimePickerView(
                             onMinuteChanged(new)
                         }
                         displayedValues = minuteIndexes.map { "$it".padStart(2, '0') }.toTypedArray()
-                        if (isSDKQPlus())
+                        if (isSdkQPlus())
                             textSize = dpToPx(18f).toFloat()
                         wrapSelectorWheel = false
                         minValue = 0

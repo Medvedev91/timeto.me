@@ -16,7 +16,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.ui.H_PADDING_HALF
 import me.timeto.app.c
 import me.timeto.app.ui.dpToPx
-import me.timeto.app.isSDKQPlus
+import me.timeto.app.misc.isSdkQPlus
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1
@@ -132,7 +132,7 @@ fun HistoryFormFs(
                                         formTimeItemIdx.value = new
                                     }
                                     displayedValues = timerItemsUi.map { it.title }.toTypedArray()
-                                    if (isSDKQPlus())
+                                    if (isSdkQPlus())
                                         textSize = dpToPx(18f).toFloat()
                                     wrapSelectorWheel = false
                                     minValue = 0
