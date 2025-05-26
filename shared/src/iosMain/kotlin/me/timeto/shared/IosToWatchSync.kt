@@ -8,6 +8,7 @@ import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.TaskDb
 import platform.WatchConnectivity.WCSession
 import me.timeto.shared.db.ActivityDb
+import me.timeto.shared.misc.backups.Backup
 import me.timeto.shared.misc.timeMls
 import me.timeto.shared.ui.TimerDataUi
 
