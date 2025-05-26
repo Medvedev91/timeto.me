@@ -1,4 +1,4 @@
-package me.timeto.shared.models
+package me.timeto.shared.ui
 
 import me.timeto.shared.limitMax
 import me.timeto.shared.limitMinMax
