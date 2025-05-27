@@ -5,9 +5,9 @@ import me.timeto.app.misc.extensions.toColor
 import me.timeto.shared.*
 import me.timeto.shared.misc.Palette
 
-//
-// Color
-
+/**
+ * https://sarunw.com/posts/dark-color-cheat-sheet
+ */
 object c {
 
     val white = Color.White
