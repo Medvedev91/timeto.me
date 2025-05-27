@@ -262,7 +262,6 @@ data class ColorRgba(
         val textSecondary = ColorRgba(255, 255, 255, 170)
 
         val homeFontSecondary = ColorRgba(255, 255, 255, 128)
-        val homeMenuTime = ColorRgba(255, 255, 255, 200)
 
         fun fromRgbaString(rgbaString: String): ColorRgba =
             rgbaString.split(',').map { it.toInt() }.let {

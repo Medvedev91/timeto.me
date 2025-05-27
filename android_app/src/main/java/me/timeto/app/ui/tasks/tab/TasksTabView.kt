@@ -54,7 +54,7 @@ val TasksTabView__LIST_SECTION_PADDING: Dp = 20.dp
 private val tabShape = SquircleShape(12.dp)
 private val tabVPadding = 8.dp
 private val tabActiveTextColor = c.white
-private val tabInactiveTextColor = c.homeFontSecondary
+private val tabInactiveTextColor = c.mainTabsMenuSecondaryColor
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

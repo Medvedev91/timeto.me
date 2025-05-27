@@ -2,8 +2,8 @@ package me.timeto.app
 
 import androidx.compose.ui.graphics.Color
 import me.timeto.app.misc.extensions.toColor
-import me.timeto.shared.*
 import me.timeto.shared.misc.Palette
+import me.timeto.shared.ui.main.MainTabsVm
 
 /**
  * https://sarunw.com/posts/dark-color-cheat-sheet
@@ -40,8 +40,9 @@ object c {
     // App Colors
 
     val homeFg = gray5
-    val homeFontSecondary = ColorRgba.homeFontSecondary.toColor()
-    val homeMenuTime = ColorRgba.homeMenuTime.toColor()
+
+    val mainTabsMenuPrimaryColor = MainTabsVm.menuPrimaryColorDark.toColor()
+    val mainTabsMenuSecondaryColor = MainTabsVm.menuSecondaryColorDark.toColor()
 
     val tasksDropFocused = Palette.green.dark.toColor()
 }

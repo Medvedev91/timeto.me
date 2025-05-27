@@ -14,8 +14,8 @@ import me.timeto.shared.vm.__Vm
 class MainTabsVm : __Vm<MainTabsVm.State>() {
 
     companion object {
-        val menuPrimaryColor = ColorRgba(255, 255, 255, 200)
-        val menuSecondaryColor = ColorRgba(255, 255, 255, 128)
+        val menuPrimaryColorDark = ColorRgba(255, 255, 255, 200)
+        val menuSecondaryColorDark = ColorRgba(255, 255, 255, 128)
     }
 
     data class State(

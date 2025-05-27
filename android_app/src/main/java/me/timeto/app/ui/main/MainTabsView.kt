@@ -118,7 +118,7 @@ fun MainTabsView(
 
                 Text(
                     text = state.timeText,
-                    color = c.homeMenuTime,
+                    color = c.mainTabsMenuPrimaryColor,
                     fontSize = 9.sp,
                     lineHeight = 14.sp,
                     fontWeight = FontWeight.Bold,
@@ -161,7 +161,7 @@ fun MainTabsView(
                     Icon(
                         painterResource(id = R.drawable.sf_smallcircle_filled_circle_small_light),
                         contentDescription = "Tasks",
-                        tint = c.homeFontSecondary,
+                        tint = c.mainTabsMenuSecondaryColor,
                         modifier = Modifier
                             .padding(start = 8.dp)
                             .size(10.dp + halfDpFloor)
@@ -172,7 +172,7 @@ fun MainTabsView(
                         text = state.tasksText,
                         modifier = Modifier
                             .padding(start = 2.dp + halfDpFloor),
-                        color = c.homeFontSecondary,
+                        color = c.mainTabsMenuSecondaryColor,
                         fontSize = 12.sp,
                         lineHeight = 14.sp,
                         fontWeight = FontWeight.Light,
@@ -226,7 +226,7 @@ private fun RowScope.TabButton(
         Icon(
             painter = painterResource(id = icon),
             contentDescription = contentDescription,
-            tint = if (isSelected) c.blue else c.homeFontSecondary,
+            tint = if (isSelected) c.blue else c.mainTabsMenuSecondaryColor,
             modifier = tabButtonModifier,
         )
     }
