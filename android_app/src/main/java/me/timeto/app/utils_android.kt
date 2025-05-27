@@ -34,15 +34,13 @@ object c {
     val bg = black
     val fg = Color(0x1C, 0x1C, 0x1E) // secondarySystemBackground
 
-    val divider = ColorRgba.divider.toColor()
+    val divider = Color(0x54, 0x54, 0x58, 0x99) // separator
 
     val dividerBg = ColorRgba.dividerBg.toColor()
     val dividerFg = ColorRgba.dividerFg.toColor()
 
     val sheetBg = ColorRgba.sheetBg.toColor()
     val sheetFg = ColorRgba.sheetFg.toColor()
-    val sheetDividerBg = ColorRgba.sheetDividerBg.toColor()
-    val sheetDividerFg = ColorRgba.sheetDividerFg.toColor()
 
     val homeFontSecondary = ColorRgba.homeFontSecondary.toColor()
     val homeMenuTime = ColorRgba.homeMenuTime.toColor()
