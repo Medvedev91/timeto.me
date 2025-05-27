@@ -1,24 +1,31 @@
 package me.timeto.app
 
+import androidx.compose.ui.graphics.Color
 import me.timeto.app.misc.extensions.toColor
 import me.timeto.shared.*
+import me.timeto.shared.misc.Palette
 
 //
 // Color
 
 object c {
 
-    val white = ColorRgba.white.toColor()
-    val black = ColorRgba.black.toColor()
-    val transparent = ColorRgba.transparent.toColor()
+    val white = Color.White
+    val black = Color.Black
+    val transparent = Color.Transparent
 
-    val red = ColorRgba.red.toColor()
-    val green = ColorRgba.green.toColor()
-    val blue = ColorRgba.blue.toColor()
-    val orange = ColorRgba.orange.toColor()
-    val purple = ColorRgba.purple.toColor()
+    val red = Palette.red.dark.toColor()
+    val green = Palette.green.dark.toColor()
+    val blue = Palette.blue.dark.toColor()
+    val orange = Palette.orange.dark.toColor()
+    val purple = Palette.purple.dark.toColor()
 
-    val gray3 = AppleColors.gray3Dark.toColor()
+    val gray = Palette.gray.dark.toColor()
+    val gray2 = Palette.gray2.dark.toColor()
+    val gray3 = Palette.gray3.dark.toColor()
+    val gray4 = Palette.gray4.dark.toColor()
+    val gray5 = Palette.gray5.dark.toColor()
+    val gray6 = Palette.gray6.dark.toColor()
 
     val text = ColorRgba.text.toColor()
     val textSecondary = ColorRgba.textSecondary.toColor()
