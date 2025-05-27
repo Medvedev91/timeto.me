@@ -1,4 +1,4 @@
-package me.timeto.app
+package me.timeto.app.ui
 
 import androidx.compose.ui.graphics.Color
 import me.timeto.app.misc.extensions.toColor

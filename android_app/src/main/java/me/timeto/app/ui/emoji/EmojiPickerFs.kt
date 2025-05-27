@@ -38,7 +38,7 @@ import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.H_PADDING_HALF
 import me.timeto.app.R
 import me.timeto.app.ui.ZStack
-import me.timeto.app.c
+import me.timeto.app.ui.c
 import me.timeto.app.ui.halfDpCeil
 import me.timeto.app.ui.halfDpFloor
 import me.timeto.app.ui.rememberVm

@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.ui.H_PADDING_HALF
-import me.timeto.app.c
+import me.timeto.app.ui.c
 import me.timeto.app.ui.dpToPx
 import me.timeto.app.misc.isSdkQPlus
 import me.timeto.app.ui.rememberVm

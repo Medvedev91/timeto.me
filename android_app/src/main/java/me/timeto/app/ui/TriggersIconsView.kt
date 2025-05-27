@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import me.timeto.app.R
-import me.timeto.app.c
 import me.timeto.app.ui.checklists.ChecklistScreen
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.shared.db.ChecklistDb

@@ -22,12 +22,12 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
-import me.timeto.app.*
 import me.timeto.app.misc.Haptic
 import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.Padding
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.ZStack
+import me.timeto.app.ui.c
 import me.timeto.app.ui.onePx
 import me.timeto.app.ui.pxToDp
 import me.timeto.app.ui.roundedShape

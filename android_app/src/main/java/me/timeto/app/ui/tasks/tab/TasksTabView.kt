@@ -25,7 +25,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import me.timeto.app.*
 import me.timeto.app.R
 import kotlinx.coroutines.delay
 import me.timeto.app.misc.Haptic
@@ -35,6 +34,7 @@ import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.SquircleShape
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.ZStack
+import me.timeto.app.ui.c
 import me.timeto.app.ui.tasks.tab.tasks.TasksTabTasksView
 import me.timeto.app.ui.calendar.CalendarTabsView
 import me.timeto.app.ui.onePx

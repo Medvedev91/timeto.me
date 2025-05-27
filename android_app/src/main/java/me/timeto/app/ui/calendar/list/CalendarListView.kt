@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.H_PADDING_HALF
 import me.timeto.app.ui.ZStack
-import me.timeto.app.c
+import me.timeto.app.ui.c
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.squircleShape
 import me.timeto.app.ui.tasks.tab.TasksTabView__LIST_SECTION_PADDING

@@ -15,7 +15,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.*
-import me.timeto.app.*
 import me.timeto.app.R
 import me.timeto.app.misc.Haptic
 import me.timeto.app.misc.extensions.toColor
@@ -29,6 +28,7 @@ import me.timeto.app.ui.TriggersIconsView
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.activities.timer.ActivitiesTimerFs
 import me.timeto.app.ui.activities.timer.ActivityTimerFs
+import me.timeto.app.ui.c
 import me.timeto.app.ui.events.EventFormFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.onePx

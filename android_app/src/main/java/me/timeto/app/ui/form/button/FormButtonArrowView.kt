@@ -10,7 +10,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import me.timeto.app.ui.H_PADDING
 import me.timeto.app.R
-import me.timeto.app.c
+import me.timeto.app.ui.c
 import me.timeto.app.ui.halfDpFloor
 
 @Composable

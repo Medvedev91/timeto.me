@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.ZStack
-import me.timeto.app.c
+import me.timeto.app.ui.c
 import me.timeto.app.ui.dpToPx
 import me.timeto.app.misc.isSdkQPlus
 import me.timeto.app.ui.rememberVm

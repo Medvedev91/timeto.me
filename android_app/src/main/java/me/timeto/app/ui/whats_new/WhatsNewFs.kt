@@ -12,13 +12,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import me.timeto.app.*
 import me.timeto.app.ui.Divider
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.H_PADDING_HALF
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.VStack
+import me.timeto.app.ui.c
 import me.timeto.app.ui.halfDpFloor
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderCancelButton

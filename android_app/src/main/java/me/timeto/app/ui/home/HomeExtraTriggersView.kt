@@ -15,7 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.ui.HStack
-import me.timeto.app.c
+import me.timeto.app.ui.c
 import me.timeto.app.ui.squircleShape
 import me.timeto.app.ui.checklists.ChecklistScreen
 import me.timeto.app.ui.navigation.LocalNavigationFs

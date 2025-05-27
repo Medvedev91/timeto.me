@@ -26,7 +26,7 @@ import me.timeto.app.ui.H_PADDING
 import me.timeto.app.MainActivity
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.ZStack
-import me.timeto.app.c
+import me.timeto.app.ui.c
 import me.timeto.app.ui.onePx
 import me.timeto.app.ui.pxToDp
 import me.timeto.app.ui.rememberVm

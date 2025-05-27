@@ -12,7 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import me.timeto.app.ui.H_PADDING_HALF
 import me.timeto.app.ui.ZStack
-import me.timeto.app.c
+import me.timeto.app.ui.c
 import me.timeto.app.ui.squircleShape
 
 @Composable

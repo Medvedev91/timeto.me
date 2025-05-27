@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.sp
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.VStack
-import me.timeto.app.c
+import me.timeto.app.ui.c
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.Divider
 import me.timeto.app.ui.SpacerW1

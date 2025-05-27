@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.sp
 import me.timeto.app.ui.H_PADDING
-import me.timeto.app.c
+import me.timeto.app.ui.c
 
 @Composable
 fun FormHeader(

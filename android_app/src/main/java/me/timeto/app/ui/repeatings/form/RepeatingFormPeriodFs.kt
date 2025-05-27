@@ -30,7 +30,7 @@ import me.timeto.app.ui.HStack
 import me.timeto.app.ui.H_PADDING
 import me.timeto.app.R
 import me.timeto.app.ui.VStack
-import me.timeto.app.c
+import me.timeto.app.ui.c
 import me.timeto.app.ui.dpToPx
 import me.timeto.app.misc.isSdkQPlus
 import me.timeto.app.ui.onePx

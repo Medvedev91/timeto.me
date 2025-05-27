@@ -36,7 +36,7 @@ import me.timeto.app.ui.HStack
 import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.ZStack
-import me.timeto.app.c
+import me.timeto.app.ui.c
 import me.timeto.app.ui.halfDpCeil
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape

@@ -21,7 +21,7 @@ import me.timeto.app.ui.HStack
 import me.timeto.app.ui.H_PADDING
 import me.timeto.app.R
 import me.timeto.app.ui.ZStack
-import me.timeto.app.c
+import me.timeto.app.ui.c
 import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.Divider
 import me.timeto.app.ui.form.form__itemMinHeight
