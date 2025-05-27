@@ -13,11 +13,9 @@ struct IosApp: App {
     var body: some Scene {
         
         WindowGroup {
-            
             VmView({
                 AppVm()
             }) { vm, state in
-                
                 if let backupMessage = state.backupMessage {
                     BackupMessageView(message: backupMessage)
                 } else if state.isAppReady {
