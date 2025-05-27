@@ -191,7 +191,7 @@ private fun SliderView(
                 }
             }
 
-            ////
+            ///
         }
 
         ZStack(
