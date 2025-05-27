@@ -21,7 +21,7 @@ import me.timeto.app.ui.roundedShape
 import me.timeto.app.misc.extensions.toColor
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.checklists.ChecklistsPickerFs
-import me.timeto.app.ui.color.ColorPickerFs
+import me.timeto.app.ui.color_picker.ColorPickerFs
 import me.timeto.app.ui.emoji.EmojiPickerFs
 import me.timeto.app.ui.form.button.FormButton
 import me.timeto.app.ui.form.FormInput

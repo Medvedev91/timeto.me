@@ -1,4 +1,4 @@
-package me.timeto.app.ui.color
+package me.timeto.app.ui.color_picker
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn

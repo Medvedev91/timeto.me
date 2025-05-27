@@ -1,4 +1,4 @@
-package me.timeto.app.ui.color
+package me.timeto.app.ui.color_picker
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
