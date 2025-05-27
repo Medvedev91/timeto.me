@@ -26,10 +26,6 @@ data class TextFeatures(
         else -> null
     }
 
-    val triggers: List<Trigger> by lazy {
-        checklists.map { Trigger.Checklist(it) } + shortcuts.map { Trigger.Shortcut(it) }
-    }
-
     fun textUi(
         withActivityEmoji: Boolean = true,
         withPausedEmoji: Boolean = false,
@@ -82,29 +78,6 @@ data class TextFeatures(
     class Paused(val intervalId: Int, val originalTimer: Int)
 
     class Prolonged(val originalTimer: Int)
-
-    sealed class Trigger(
-        val id: String,
-        val title: String,
-        val emoji: String,
-        val color: ColorRgba,
-    ) {
-
-        fun performUI() {
-            val _when = when (this) {
-                is Checklist -> launchExDefault { checklist.performUI() }
-                is Shortcut -> launchExDefault { shortcut.performUI() }
-            }
-        }
-
-        class Checklist(
-            val checklist: ChecklistDb
-        ) : Trigger("#c${checklist.id}", checklist.name, "✅", ColorRgba.green)
-
-        class Shortcut(
-            val shortcut: ShortcutDb
-        ) : Trigger("#s${shortcut.id}", shortcut.name, "↗️", ColorRgba.red)
-    }
 
     class TimeData(
         val unixTime: UnixTime,
