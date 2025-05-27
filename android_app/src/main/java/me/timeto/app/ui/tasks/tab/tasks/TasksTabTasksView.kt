@@ -91,7 +91,7 @@ fun TasksTabTasksView(
                 Row(
                     modifier = Modifier
                         .padding(start = H_PADDING - 2.dp)
-                        .border(width = onePx, color = c.dividerBg, shape = inputShape)
+                        .border(width = onePx, color = c.gray5, shape = inputShape)
                         .height(IntrinsicSize.Min) // To use fillMaxHeight() inside
                         .clickable {
                             navigationFs.push {

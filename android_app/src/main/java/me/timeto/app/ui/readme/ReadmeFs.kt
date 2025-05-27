@@ -362,7 +362,7 @@ private fun PTextHighlightView(
     )
 }
 
-private val imageBorderColor = c.dividerBg
+private val imageBorderColor = c.gray5
 private val imageSliderShape = SquircleShape(24.dp)
 
 @Composable

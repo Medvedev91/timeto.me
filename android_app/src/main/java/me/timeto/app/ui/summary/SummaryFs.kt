@@ -375,7 +375,7 @@ private fun DateButtonView(
         text = text,
         modifier = Modifier
             .clip(squircleShape)
-            .background(c.summaryDatePicker)
+            .background(c.gray5)
             .clickable {
                 navigationFs.showDatePicker(
                     unixTime = unixTime,
