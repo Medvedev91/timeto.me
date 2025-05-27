@@ -31,8 +31,8 @@ object c {
     val textSecondary = ColorRgba.textSecondary.toColor()
     val tertiaryText = ColorRgba.tertiaryText.toColor()
 
-    val bg = ColorRgba.bg.toColor()
-    val fg = ColorRgba.fg.toColor()
+    val bg = black
+    val fg = Color(0x1C, 0x1C, 0x1E) // secondarySystemBackground
 
     val divider = ColorRgba.divider.toColor()
 
@@ -50,5 +50,5 @@ object c {
 
     val summaryDatePicker = ColorRgba.summaryDatePicker.toColor()
 
-    val tasksDropFocused = ColorRgba.tasksDropFocused.toColor()
+    val tasksDropFocused = Palette.green.dark.toColor()
 }
