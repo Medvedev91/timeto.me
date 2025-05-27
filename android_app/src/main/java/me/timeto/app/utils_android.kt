@@ -38,8 +38,6 @@ object c {
 
     val dividerBg = ColorRgba.dividerBg.toColor()
 
-    val sheetFg = ColorRgba.sheetFg.toColor()
-
     val homeFontSecondary = ColorRgba.homeFontSecondary.toColor()
     val homeMenuTime = ColorRgba.homeMenuTime.toColor()
     val homeFg = ColorRgba.homeFg.toColor()

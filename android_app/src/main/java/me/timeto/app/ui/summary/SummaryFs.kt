@@ -162,7 +162,7 @@ fun SummaryFs() {
                                                     modifier = Modifier
                                                         .fillMaxWidth()
                                                         .weight(barUi.ratio)
-                                                        .background(barUi.activityDb?.colorRgba?.toColor() ?: c.sheetFg),
+                                                        .background(barUi.activityDb?.colorRgba?.toColor() ?: c.gray5),
                                                 )
                                             }
                                         }
@@ -232,7 +232,7 @@ fun SummaryFs() {
                                     modifier = Modifier
                                         .weight(1f)
                                         .clip(roundedShape)
-                                        .background(c.sheetFg),
+                                        .background(c.gray5),
                                 ) {
 
                                     ZStack(
