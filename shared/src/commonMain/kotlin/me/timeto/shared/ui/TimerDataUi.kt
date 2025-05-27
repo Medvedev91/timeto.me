@@ -67,8 +67,8 @@ class TimerDataUi(
         }
 
         prolongText = run {
-            val prolonged: TextFeatures.Prolonged = intervalNoteTf?.prolonged
-                                                    ?: return@run null
+            val prolonged: TextFeatures.Prolonged =
+                intervalNoteTf?.prolonged ?: return@run null
             (intervalDb.timer - prolonged.originalTimer).toTimerHintNote(true)
         }
 
