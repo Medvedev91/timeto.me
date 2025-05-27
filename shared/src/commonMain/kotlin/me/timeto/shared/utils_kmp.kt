@@ -245,9 +245,6 @@ fun Int.toTimerHintNote(
     }
 }
 
-/**
- * https://sarunw.com/posts/dark-color-cheat-sheet
- */
 data class ColorRgba(
     val r: Int, val g: Int,
     val b: Int, val a: Int = 255,
@@ -256,37 +253,24 @@ data class ColorRgba(
     companion object {
 
         val white = ColorRgba(255, 255, 255)
-        val black = ColorRgba(0, 0, 0)
-        val transparent = ColorRgba(0, 0, 0, 0)
 
         val red = AppleColors.Palettes.red.dark
         val green = AppleColors.Palettes.green.dark
         val blue = AppleColors.Palettes.blue.dark
-        val orange = AppleColors.Palettes.orange.dark
         val purple = AppleColors.Palettes.purple.dark
 
-        val text = ColorRgba(255, 255, 255, 238)
         val textSecondary = ColorRgba(255, 255, 255, 170)
-        val tertiaryText = ColorRgba(255, 255, 255, 136)
-
-        val bg = black
-        val fg = ColorRgba(0x1C, 0x1C, 0x1E) // secondarySystemBackground
 
         val dividerBg = ColorRgba(50, 50, 53)
-        val dividerFg = ColorRgba(61, 61, 65)
+        val dividerFg = ColorRgba(59, 59, 61)
 
-        val sheetBg = fg
         val sheetFg = ColorRgba(44, 44, 46)
-        val sheetDividerBg = dividerFg
-        val sheetDividerFg = ColorRgba(68, 68, 71)
 
         val homeFontSecondary = ColorRgba(255, 255, 255, 128)
         val homeMenuTime = ColorRgba(255, 255, 255, 200)
         val homeFg = sheetFg
 
         val summaryDatePicker = sheetFg
-
-        val tasksDropFocused = green
 
         fun fromRgbaString(rgbaString: String): ColorRgba =
             rgbaString.split(',').map { it.toInt() }.let {
@@ -301,10 +285,8 @@ data class ColorRgba(
             }
     }
 
-    fun toRgbaString() = "$r,$g,$b,$a"
-
-    fun isEquals(r_: Int, g_: Int, b_: Int, a_: Int) =
-        r == r_ && g == g_ && b == b_ && a == a_
+    fun toRgbaString(): String =
+        "$r,$g,$b,$a"
 }
 
 /**
