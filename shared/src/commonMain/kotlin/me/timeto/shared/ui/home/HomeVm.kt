@@ -330,7 +330,7 @@ class HomeVm : __Vm<HomeVm.State>() {
         val timerStrategy: ActivityTimerStrategy =
             ActivityTimerStrategy.Task(taskDb = taskUi.taskDb)
 
-        val timeUI: TimeUI? = taskUi.tf.calcTimeData()?.let { timeData ->
+        val timeUi: TimeUi? = taskUi.tf.calcTimeData()?.let { timeData ->
             val bgColor = when (timeData.status) {
                 TextFeatures.TimeData.STATUS.IN -> ColorRgba.homeFg
                 TextFeatures.TimeData.STATUS.SOON -> ColorRgba.blue
@@ -343,7 +343,7 @@ class HomeVm : __Vm<HomeVm.State>() {
                 TextFeatures.TimeData.STATUS.OVERDUE -> ColorRgba.red
             }
 
-            TimeUI(
+            TimeUi(
                 text = timeData.timeText(),
                 textBgColor = bgColor,
                 note = timeData.timeLeftText(),
@@ -351,7 +351,7 @@ class HomeVm : __Vm<HomeVm.State>() {
             )
         }
 
-        class TimeUI(
+        class TimeUi(
             val text: String,
             val textBgColor: ColorRgba,
             val note: String,

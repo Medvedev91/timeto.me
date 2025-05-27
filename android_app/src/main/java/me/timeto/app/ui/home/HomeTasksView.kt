@@ -85,19 +85,19 @@ fun HomeTasksView(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
 
-                val timeUI = mainTask.timeUI
-                if (timeUI != null) {
+                val timeUi = mainTask.timeUi
+                if (timeUi != null) {
                     HStack(
                         modifier = Modifier
                             .padding(end = if (mainTask.taskUi.tf.paused != null) 9.dp else 8.dp)
                             .height(HomeScreen__itemCircleHeight)
                             .clip(roundedShape)
-                            .background(timeUI.textBgColor.toColor())
+                            .background(timeUi.textBgColor.toColor())
                             .padding(horizontal = HomeScreen__itemCircleHPadding),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
-                            timeUI.text,
+                            text = timeUi.text,
                             modifier = Modifier
                                 .padding(top = onePx),
                             fontWeight = HomeScreen__itemCircleFontWeight,
@@ -118,7 +118,7 @@ fun HomeTasksView(
                         contentAlignment = Alignment.Center,
                     ) {
                         Icon(
-                            painterResource(id = R.drawable.sf_pause_medium_black),
+                            painter = painterResource(id = R.drawable.sf_pause_medium_black),
                             contentDescription = "Paused Task",
                             tint = c.white,
                             modifier = Modifier
@@ -138,11 +138,11 @@ fun HomeTasksView(
                     overflow = TextOverflow.Ellipsis,
                 )
 
-                if (timeUI != null) {
+                if (timeUi != null) {
                     Text(
-                        timeUI.note,
+                        text = timeUi.note,
                         fontSize = HomeScreen__primaryFontSize,
-                        color = timeUI.noteColor.toColor(),
+                        color = timeUi.noteColor.toColor(),
                     )
                 }
             }

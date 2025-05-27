@@ -49,13 +49,13 @@ private struct TaskItemView: View {
                 
                 HStack {
                     
-                    if let timeUI = mainTask.timeUI {
-                        Text(timeUI.text)
+                    if let timeUi = mainTask.timeUi {
+                        Text(timeUi.text)
                             .foregroundColor(.white)
                             .font(.system(size: HomeScreen__itemCircleFontSize, weight: HomeScreen__itemCircleFontWeight))
                             .padding(.horizontal, HomeScreen__itemCircleHPadding)
                             .frame(height: HomeScreen__itemCircleHeight)
-                            .background(roundedShape.fill(timeUI.textBgColor.toColor()))
+                            .background(roundedShape.fill(timeUi.textBgColor.toColor()))
                             .padding(.trailing, mainTask.taskUi.tf.paused != nil ? 9 : 8)
                     }
                     
@@ -77,9 +77,9 @@ private struct TaskItemView: View {
                     
                     Spacer()
                     
-                    if let timeUI = mainTask.timeUI {
-                        Text(timeUI.note)
-                            .foregroundColor(timeUI.noteColor.toColor())
+                    if let timeUi = mainTask.timeUi {
+                        Text(timeUi.note)
+                            .foregroundColor(timeUi.noteColor.toColor())
                             .font(.system(size: HomeScreen__primaryFontSize))
                     }
                 }
