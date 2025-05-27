@@ -229,7 +229,7 @@ private fun SliderView(
                             text = sliderStickText,
                             modifier = Modifier
                                 .padding(top = 4.dp),
-                            color = c.textSecondary,
+                            color = c.secondaryText,
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Light,
                         )

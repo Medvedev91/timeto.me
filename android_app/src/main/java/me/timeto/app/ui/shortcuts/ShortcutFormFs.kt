@@ -169,7 +169,7 @@ fun ShortcutFormFs(
                             ) {
                                 Text(
                                     text = example.hint,
-                                    color = c.textSecondary,
+                                    color = c.secondaryText,
                                 )
                                 AnimatedVisibility(
                                     visible = state.uri == example.uri,

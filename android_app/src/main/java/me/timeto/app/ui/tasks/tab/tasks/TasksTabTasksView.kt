@@ -151,7 +151,7 @@ fun TasksTabTasksView(
                         text = tmrwUi.curTimeString,
                         fontSize = 14.sp,
                         fontWeight = FontWeight.W300,
-                        color = c.textSecondary,
+                        color = c.secondaryText,
                     )
                 }
             }

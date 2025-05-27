@@ -115,7 +115,7 @@ fun ActivityTimerFs(
             if (note != null) {
                 Text(
                     text = note,
-                    color = c.textSecondary,
+                    color = c.secondaryText,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxWidth(),

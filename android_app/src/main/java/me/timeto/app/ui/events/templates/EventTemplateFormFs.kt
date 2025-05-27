@@ -101,7 +101,7 @@ fun EventTemplateFormFs(
                     isFirst = true,
                     isLast = true,
                     note = state.daytimeNote,
-                    noteColor = if (state.daytimeUi == null) c.red else c.textSecondary,
+                    noteColor = if (state.daytimeUi == null) c.red else c.secondaryText,
                     onClick = {
                         navigationFs.push {
                             DaytimePickerSheet(
@@ -125,7 +125,7 @@ fun EventTemplateFormFs(
                     isFirst = true,
                     isLast = false,
                     note = state.activityNote,
-                    noteColor = if (state.activityDb == null) c.red else c.textSecondary,
+                    noteColor = if (state.activityDb == null) c.red else c.secondaryText,
                     withArrow = true,
                     onClick = {
                         navigationFs.push {
@@ -144,7 +144,7 @@ fun EventTemplateFormFs(
                     isFirst = false,
                     isLast = true,
                     note = state.timerNote,
-                    noteColor = if (state.timerSeconds == null) c.red else c.textSecondary,
+                    noteColor = if (state.timerSeconds == null) c.red else c.secondaryText,
                     withArrow = true,
                     onClick = {
                         navigationFs.push {

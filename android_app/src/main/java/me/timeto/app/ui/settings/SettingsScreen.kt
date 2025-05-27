@@ -506,7 +506,7 @@ fun SettingsScreen(
                         modifier = Modifier
                             .padding(top = 24.dp)
                             .weight(1f),
-                        color = c.textSecondary,
+                        color = c.secondaryText,
                         fontSize = 15.sp,
                         textAlign = TextAlign.Center,
                         lineHeight = 20.sp,

@@ -118,7 +118,7 @@ fun TasksTabRepeatingsView() {
                                     .weight(1f),
                                 fontSize = 13.sp,
                                 fontWeight = FontWeight.W300,
-                                color = c.textSecondary,
+                                color = c.secondaryText,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
                             )
@@ -127,7 +127,7 @@ fun TasksTabRepeatingsView() {
                                 text = repeatingUi.dayRightString,
                                 fontSize = 13.sp,
                                 fontWeight = FontWeight.W300,
-                                color = c.textSecondary,
+                                color = c.secondaryText,
                                 maxLines = 1,
                             )
                         }

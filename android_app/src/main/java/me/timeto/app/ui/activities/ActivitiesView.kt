@@ -145,7 +145,7 @@ fun ActivitiesView(
                             Icon(
                                 painter = painterResource(id = R.drawable.sf_plus_medium_regular),
                                 contentDescription = "New Timer Hint",
-                                tint = c.textSecondary,
+                                tint = c.secondaryText,
                                 modifier = Modifier
                                     .clip(roundedShape)
                                     .clickable {

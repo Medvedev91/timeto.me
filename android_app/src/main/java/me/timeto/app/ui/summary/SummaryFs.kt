@@ -100,7 +100,7 @@ fun SummaryFs() {
                             ) {
                                 Text(
                                     text = barString,
-                                    color = c.textSecondary,
+                                    color = c.secondaryText,
                                     fontSize = 10.sp,
                                     fontWeight = FontWeight.Light,
                                 )
@@ -144,7 +144,7 @@ fun SummaryFs() {
                                                 text = dayBarsUi.dayString,
                                                 modifier = Modifier
                                                     .align(Alignment.BottomCenter),
-                                                color = c.textSecondary,
+                                                color = c.secondaryText,
                                                 fontSize = 10.sp,
                                                 fontWeight = FontWeight.Light,
                                                 overflow = TextOverflow.Clip,
@@ -354,7 +354,7 @@ private fun ActivitySecondaryText(
     Text(
         text = text,
         modifier = modifier,
-        color = c.textSecondary,
+        color = c.secondaryText,
         fontSize = 12.sp,
         lineHeight = 14.sp,
         fontWeight = FontWeight.Light,
@@ -404,7 +404,7 @@ private fun FooterIconButton(
     Icon(
         painter = painterResource(id = icon),
         contentDescription = contentDescription,
-        tint = c.textSecondary,
+        tint = c.secondaryText,
         modifier = Modifier
             .size(30.dp)
             .alpha(0.7f)

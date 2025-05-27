@@ -127,7 +127,7 @@ fun TaskFormFs(
                 isFirst = true,
                 isLast = false,
                 note = state.activityNote,
-                noteColor = c.textSecondary,
+                noteColor = c.secondaryText,
                 withArrow = true,
                 onClick = {
                     navigationFs.push {
@@ -146,7 +146,7 @@ fun TaskFormFs(
                 isFirst = false,
                 isLast = true,
                 note = state.timerNote,
-                noteColor = c.textSecondary,
+                noteColor = c.secondaryText,
                 withArrow = true,
                 onClick = {
                     navigationFs.push {

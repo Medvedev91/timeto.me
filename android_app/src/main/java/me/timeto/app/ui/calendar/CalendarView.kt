@@ -56,7 +56,7 @@ fun CalendarView(
                         text = weekTitle.title,
                         modifier = Modifier
                             .weight(1f),
-                        color = if (weekTitle.isBusiness) c.text else c.textSecondary,
+                        color = if (weekTitle.isBusiness) c.text else c.secondaryText,
                         fontSize = 10.sp,
                         textAlign = TextAlign.Center,
                     )
@@ -129,7 +129,7 @@ fun CalendarView(
                                         Text(
                                             text = day.title,
                                             modifier = Modifier.padding(top = 6.dp),
-                                            color = if (day.isBusiness) c.white else c.textSecondary,
+                                            color = if (day.isBusiness) c.white else c.secondaryText,
                                         )
 
                                         day.previews.forEach { preview ->
@@ -137,7 +137,7 @@ fun CalendarView(
                                                 text = preview,
                                                 modifier = Modifier
                                                     .padding(horizontal = 2.dp),
-                                                color = c.textSecondary,
+                                                color = c.secondaryText,
                                                 fontSize = 10.sp,
                                                 lineHeight = 12.sp,
                                                 fontWeight = FontWeight.Light,

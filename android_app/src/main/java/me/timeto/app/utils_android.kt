@@ -27,9 +27,9 @@ object c {
     val gray5 = Palette.gray5.dark.toColor()
     val gray6 = Palette.gray6.dark.toColor()
 
-    val text = ColorRgba.text.toColor()
-    val textSecondary = ColorRgba.textSecondary.toColor()
-    val tertiaryText = ColorRgba.tertiaryText.toColor()
+    val text = white
+    val secondaryText = Color(0xEB, 0xEB, 0xF5, 0x99) // secondaryLabel
+    val tertiaryText = Color(0xEB, 0xEB, 0xF5, 0x4D) // tertiaryLabel
 
     val bg = black
     val fg = Color(0x1C, 0x1C, 0x1E) // secondarySystemBackground

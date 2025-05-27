@@ -123,7 +123,7 @@ fun HistoryFs() {
                                 modifier = Modifier
                                     .padding(horizontal = H_PADDING)
                                     .padding(vertical = 2.dp),
-                                color = c.textSecondary,
+                                color = c.secondaryText,
                                 fontWeight = FontWeight.Light,
                             )
                         }

@@ -93,7 +93,7 @@ fun HistoryFormFs(
                     note = state.activityNote,
                     noteColor =
                         if (state.activityDb == null) c.red
-                        else c.textSecondary,
+                        else c.secondaryText,
                     withArrow = true,
                     onClick = {
                         navigationFs.push {

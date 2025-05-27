@@ -18,7 +18,7 @@ fun FormHeader(
         modifier = Modifier
             .padding(horizontal = H_PADDING + H_PADDING)
             .alpha(0.8f),
-        color = c.textSecondary,
+        color = c.secondaryText,
         fontSize = 12.sp,
     )
 }

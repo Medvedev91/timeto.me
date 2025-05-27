@@ -161,7 +161,7 @@ fun LazyItemScope.FormSortedItemView(
                 Icon(
                     painter = painterResource(R.drawable.sf_line_3_horizontal_medium_light),
                     contentDescription = "Sort",
-                    tint = c.textSecondary,
+                    tint = c.secondaryText,
                     modifier = Modifier
                         .padding(end = H_PADDING)
                         .padding(start = H_PADDING) // To tap area

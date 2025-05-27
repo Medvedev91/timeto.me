@@ -62,7 +62,7 @@ fun CalendarListItemView(
                     text = eventUi.dateString,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.W300,
-                    color = c.textSecondary,
+                    color = c.secondaryText,
                     modifier = Modifier.weight(1f),
                 )
 
@@ -70,7 +70,7 @@ fun CalendarListItemView(
                     text = eventUi.dayLeftString,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.W300,
-                    color = c.textSecondary,
+                    color = c.secondaryText,
                 )
             }
 

@@ -53,7 +53,7 @@ fun Header(
                     if (cancelButton != null) {
                         TopButtonView(
                             text = cancelButton.text,
-                            color = c.textSecondary,
+                            color = c.secondaryText,
                             onClick = cancelButton.onClick,
                         )
                     }
@@ -104,7 +104,7 @@ fun Header(
                                 horizontal = 10.dp,
                                 vertical = 3.dp,
                             ),
-                        color = if (isEnabled) c.text else c.textSecondary,
+                        color = if (isEnabled) c.text else c.secondaryText,
                         fontSize = Header__buttonFontSize,
                         fontWeight = Header__titleFontWeight,
                     )

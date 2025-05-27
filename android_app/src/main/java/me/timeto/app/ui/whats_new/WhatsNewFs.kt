@@ -79,14 +79,14 @@ fun WhatsNewFs() {
                                 text = historyItemUi.dateText,
                                 modifier = Modifier
                                     .weight(1f),
-                                color = c.textSecondary,
+                                color = c.secondaryText,
                                 fontSize = 15.sp,
                                 fontWeight = FontWeight.Light,
                             )
 
                             Text(
                                 text = historyItemUi.timeAgoText,
-                                color = c.textSecondary,
+                                color = c.secondaryText,
                                 fontSize = 15.sp,
                                 fontWeight = FontWeight.Light,
                             )
@@ -110,7 +110,7 @@ fun WhatsNewFs() {
                                     .padding(horizontal = H_PADDING),
                                 fontSize = 15.sp,
                                 fontWeight = FontWeight.Light,
-                                color = c.textSecondary,
+                                color = c.secondaryText,
                             )
                         }
 

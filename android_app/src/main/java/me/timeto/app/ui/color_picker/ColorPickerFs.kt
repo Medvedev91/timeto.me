@@ -142,7 +142,7 @@ fun ColorPickerFs(
                             .padding(start = 4.dp, top = 24.dp),
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Medium,
-                        color = c.textSecondary,
+                        color = c.secondaryText,
                     )
 
                     examplesUi.secondaryExamplesUi.forEach { exampleUi ->

@@ -111,7 +111,7 @@ fun PrivacyFs(
                     if (isFdroid && !state.isSendingReportsEnabled) {
                         BottomButton(
                             text = "Don't Send",
-                            color = c.textSecondary,
+                            color = c.secondaryText,
                             onClick = {
                                 vm.setIsSendingReports(isEnabled = false)
                                 navigationLayer.close()

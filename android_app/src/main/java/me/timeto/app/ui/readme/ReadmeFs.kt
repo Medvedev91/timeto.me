@@ -458,7 +458,7 @@ private fun showImagesSlider(
                     }
                     .padding(horizontal = 14.dp)
                     .padding(top = 6.dp, bottom = 7.dp),
-                color = c.textSecondary,
+                color = c.secondaryText,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Light,
             )
