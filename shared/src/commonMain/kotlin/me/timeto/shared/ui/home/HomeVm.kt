@@ -331,31 +331,17 @@ class HomeVm : __Vm<HomeVm.State>() {
             ActivityTimerStrategy.Task(taskDb = taskUi.taskDb)
 
         val timeUi: TimeUi? = taskUi.tf.calcTimeData()?.let { timeData ->
-            val bgColor = when (timeData.status) {
-                TextFeatures.TimeData.STATUS.IN -> ColorRgba.homeFg
-                TextFeatures.TimeData.STATUS.SOON -> ColorRgba.blue
-                TextFeatures.TimeData.STATUS.OVERDUE -> ColorRgba.red
-            }
-
-            val noteColor = when (timeData.status) {
-                TextFeatures.TimeData.STATUS.IN -> ColorRgba.textSecondary
-                TextFeatures.TimeData.STATUS.SOON -> ColorRgba.blue
-                TextFeatures.TimeData.STATUS.OVERDUE -> ColorRgba.red
-            }
-
             TimeUi(
                 text = timeData.timeText(),
-                textBgColor = bgColor,
                 note = timeData.timeLeftText(),
-                noteColor = noteColor,
+                status = timeData.status,
             )
         }
 
         class TimeUi(
             val text: String,
-            val textBgColor: ColorRgba,
             val note: String,
-            val noteColor: ColorRgba,
+            val status: TextFeatures.TimeData.STATUS,
         )
     }
 

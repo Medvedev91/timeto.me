@@ -50,12 +50,18 @@ private struct TaskItemView: View {
                 HStack {
                     
                     if let timeUi = mainTask.timeUi {
+                        let bgColor: Color = switch timeUi.status {
+                        case .in: homeFgColor
+                        case .soon: .blue
+                        case .overdue: .red
+                        default: fatalError("timeUi.status bgColor not handled")
+                        }
                         Text(timeUi.text)
                             .foregroundColor(.white)
                             .font(.system(size: HomeScreen__itemCircleFontSize, weight: HomeScreen__itemCircleFontWeight))
                             .padding(.horizontal, HomeScreen__itemCircleHPadding)
                             .frame(height: HomeScreen__itemCircleHeight)
-                            .background(roundedShape.fill(timeUi.textBgColor.toColor()))
+                            .background(roundedShape.fill(bgColor))
                             .padding(.trailing, mainTask.taskUi.tf.paused != nil ? 9 : 8)
                     }
                     
@@ -72,14 +78,20 @@ private struct TaskItemView: View {
                     
                     Text(mainTask.text)
                         .font(.system(size: HomeScreen__primaryFontSize))
-                        .foregroundColor(Color.white)
+                        .foregroundColor(.white)
                         .padding(.trailing, 4)
                     
                     Spacer()
                     
                     if let timeUi = mainTask.timeUi {
+                        let noteColor: Color = switch timeUi.status {
+                        case .in: .secondary
+                        case .soon: .blue
+                        case .overdue: .red
+                        default: fatalError("timeUi.status noteColor not handled")
+                        }
                         Text(timeUi.note)
-                            .foregroundColor(timeUi.noteColor.toColor())
+                            .foregroundColor(noteColor)
                             .font(.system(size: HomeScreen__primaryFontSize))
                     }
                 }
