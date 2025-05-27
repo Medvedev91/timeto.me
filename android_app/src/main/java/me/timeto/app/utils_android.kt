@@ -37,9 +37,7 @@ object c {
     val divider = Color(0x54, 0x54, 0x58, 0x99) // separator
 
     val dividerBg = ColorRgba.dividerBg.toColor()
-    val dividerFg = ColorRgba.dividerFg.toColor()
 
-    val sheetBg = ColorRgba.sheetBg.toColor()
     val sheetFg = ColorRgba.sheetFg.toColor()
 
     val homeFontSecondary = ColorRgba.homeFontSecondary.toColor()

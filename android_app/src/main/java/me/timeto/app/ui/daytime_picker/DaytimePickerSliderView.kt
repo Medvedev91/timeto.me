@@ -219,7 +219,7 @@ private fun SliderView(
                             modifier = Modifier
                                 .width(1.dp)
                                 .height(5.dp)
-                                .background(c.dividerFg),
+                                .background(c.gray4),
                         )
                     }
 

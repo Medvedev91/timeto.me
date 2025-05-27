@@ -262,7 +262,6 @@ data class ColorRgba(
         val textSecondary = ColorRgba(255, 255, 255, 170)
 
         val dividerBg = ColorRgba(50, 50, 53)
-        val dividerFg = ColorRgba(59, 59, 61)
 
         val sheetFg = ColorRgba(44, 44, 46)
 
