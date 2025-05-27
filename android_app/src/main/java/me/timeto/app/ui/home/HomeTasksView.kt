@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
@@ -27,10 +28,10 @@ import me.timeto.app.ui.ZStack
 import me.timeto.app.c
 import me.timeto.app.ui.onePx
 import me.timeto.app.ui.roundedShape
-import me.timeto.app.misc.extensions.toColor
 import me.timeto.app.ui.activities.timer.ActivitiesTimerFs
 import me.timeto.app.ui.activities.timer.ActivityTimerFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
+import me.timeto.shared.TextFeatures
 import me.timeto.shared.ui.home.HomeVm
 
 @Composable
@@ -87,12 +88,17 @@ fun HomeTasksView(
 
                 val timeUi = mainTask.timeUi
                 if (timeUi != null) {
+                    val bgColor: Color = when (timeUi.status) {
+                        TextFeatures.TimeData.STATUS.IN -> c.homeFg
+                        TextFeatures.TimeData.STATUS.SOON -> c.blue
+                        TextFeatures.TimeData.STATUS.OVERDUE -> c.red
+                    }
                     HStack(
                         modifier = Modifier
                             .padding(end = if (mainTask.taskUi.tf.paused != null) 9.dp else 8.dp)
                             .height(HomeScreen__itemCircleHeight)
                             .clip(roundedShape)
-                            .background(timeUi.textBgColor.toColor())
+                            .background(bgColor)
                             .padding(horizontal = HomeScreen__itemCircleHPadding),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
@@ -139,10 +145,15 @@ fun HomeTasksView(
                 )
 
                 if (timeUi != null) {
+                    val noteColor: Color = when (timeUi.status) {
+                        TextFeatures.TimeData.STATUS.IN -> c.secondaryText
+                        TextFeatures.TimeData.STATUS.SOON -> c.blue
+                        TextFeatures.TimeData.STATUS.OVERDUE -> c.red
+                    }
                     Text(
                         text = timeUi.note,
                         fontSize = HomeScreen__primaryFontSize,
-                        color = timeUi.noteColor.toColor(),
+                        color = noteColor,
                     )
                 }
             }

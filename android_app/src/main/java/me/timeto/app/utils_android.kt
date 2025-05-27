@@ -36,9 +36,12 @@ object c {
 
     val divider = Color(0x54, 0x54, 0x58, 0x99) // separator
 
+    //
+    // App Colors
+
+    val homeFg = gray5
     val homeFontSecondary = ColorRgba.homeFontSecondary.toColor()
     val homeMenuTime = ColorRgba.homeMenuTime.toColor()
-    val homeFg = ColorRgba.homeFg.toColor()
 
     val tasksDropFocused = Palette.green.dark.toColor()
 }
