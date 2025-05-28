@@ -304,7 +304,7 @@ fun TasksTabTasksView(
                                                 modifier = Modifier
                                                     .offset(x = (-1).dp)
                                                     .clip(highlightTimeShape)
-                                                    .background(timeUi.backgroundColor.toColor())
+                                                    .background(timeUi.backgroundColorEnum.toColor())
                                                     .padding(start = 5.dp, end = 4.dp, top = 3.dp, bottom = 3.dp),
                                                 verticalAlignment = Alignment.CenterVertically,
                                             ) {
@@ -350,7 +350,7 @@ fun TasksTabTasksView(
                                                     .padding(start = 6.dp),
                                                 fontSize = 13.sp,
                                                 fontWeight = FontWeight.W300,
-                                                color = timeUi.timeLeftColor.toColor(),
+                                                color = timeUi.timeLeftColorEnum.toColor(),
                                                 maxLines = 1,
                                                 overflow = TextOverflow.Ellipsis,
                                             )
@@ -362,7 +362,7 @@ fun TasksTabTasksView(
                                                 fontSize = 13.sp,
                                                 lineHeight = 18.sp,
                                                 fontWeight = FontWeight.W300,
-                                                color = timeUi.textColor.toColor(),
+                                                color = timeUi.textColorEnum.toColor(),
                                             )
                                         }
                                     }

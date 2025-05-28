@@ -265,13 +265,13 @@ private struct TaskRowView: View {
                         
                         VStack {
                             
-                            if let timeUI = taskVmUi.timeUi as? TasksTabTasksVm.TaskVmUiTimeUiHighlightUi {
+                            if let timeUi = taskVmUi.timeUi as? TasksTabTasksVm.TaskVmUiTimeUiHighlightUi {
                                 
                                 HStack {
                                     
                                     HStack {
                                         
-                                        switch timeUI.timeData.type {
+                                        switch timeUi.timeData.type {
                                         case .event:
                                             Image(systemName: "calendar")
                                                 .foregroundColor(.white)
@@ -286,7 +286,7 @@ private struct TaskRowView: View {
                                             fatalError()
                                         }
                                         
-                                        Text(timeUI.title)
+                                        Text(timeUi.title)
                                             .foregroundColor(.white)
                                             .font(.system(size: 13))
                                     }
@@ -296,11 +296,11 @@ private struct TaskRowView: View {
                                     .padding(.bottom, 4)
                                     .background(
                                         RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                            .fill(timeUI.backgroundColor.toColor())
+                                            .fill(timeUi.backgroundColorEnum.toColor())
                                     )
                                     
-                                    Text(timeUI.timeLeftText)
-                                        .foregroundColor(timeUI.timeLeftColor.toColor())
+                                    Text(timeUi.timeLeftText)
+                                        .foregroundColor(timeUi.timeLeftColorEnum.toColor())
                                         .font(.system(size: 14, weight: .light))
                                         .padding(.leading, 8)
                                         .lineLimit(1)
@@ -311,14 +311,14 @@ private struct TaskRowView: View {
                                 .padding(.bottom, 6)
                                 .padding(.leading, H_PADDING - 1)
                                 
-                            } else if let timeUI = taskVmUi.timeUi as? TasksTabTasksVm.TaskVmUiTimeUiRegularUi {
+                            } else if let timeUi = taskVmUi.timeUi as? TasksTabTasksVm.TaskVmUiTimeUiRegularUi {
                                 HStack {
-                                    Text(timeUI.text)
+                                    Text(timeUi.text)
                                         .padding(.leading, H_PADDING)
                                         .padding(.top, 1)
                                         .padding(.bottom, 6)
                                         .font(.system(size: 14, weight: .light))
-                                        .foregroundColor(timeUI.textColor.toColor())
+                                        .foregroundColor(timeUi.textColorEnum.toColor())
                                         .lineLimit(1)
                                     Spacer()
                                 }

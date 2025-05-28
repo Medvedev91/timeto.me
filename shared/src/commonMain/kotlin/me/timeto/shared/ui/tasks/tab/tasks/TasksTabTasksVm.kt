@@ -15,6 +15,7 @@ import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.delayToNextMinute
 import me.timeto.shared.launchExIo
 import me.timeto.shared.localUtcOffsetWithDayStart
+import me.timeto.shared.misc.ColorEnum
 import me.timeto.shared.ui.tasks.TaskUi
 import me.timeto.shared.ui.tasks.sortedUi
 import me.timeto.shared.onEachExIn
@@ -103,21 +104,21 @@ class TasksTabTasksVm(
             val isHighlight = timeData.type.isEvent() || timeData._textFeatures.isImportant
 
             val timeLeftText = timeData.timeLeftText()
-            val textColor = when (timeData.status) {
-                TextFeatures.TimeData.STATUS.IN -> ColorRgba.textSecondary
-                TextFeatures.TimeData.STATUS.SOON -> ColorRgba.blue
-                TextFeatures.TimeData.STATUS.OVERDUE -> ColorRgba.red
+            val textColorEnum: ColorEnum = when (timeData.status) {
+                TextFeatures.TimeData.STATUS.IN -> ColorEnum.secondaryText
+                TextFeatures.TimeData.STATUS.SOON -> ColorEnum.blue
+                TextFeatures.TimeData.STATUS.OVERDUE -> ColorEnum.red
             }
 
             if (isHighlight) {
-                val backgroundColor = if (timeData.status.isOverdue())
-                    ColorRgba.red else ColorRgba.blue
+                val backgroundColorEnum: ColorEnum =
+                    if (timeData.status.isOverdue()) ColorEnum.red else ColorEnum.blue
                 return@let TimeUi.HighlightUi(
                     timeData = timeData,
                     title = timeData.timeText(),
-                    backgroundColor = backgroundColor,
+                    backgroundColorEnum = backgroundColorEnum,
                     timeLeftText = timeLeftText,
-                    timeLeftColor = textColor,
+                    timeLeftColorEnum = textColorEnum,
                 )
             }
 
@@ -125,7 +126,7 @@ class TasksTabTasksVm(
             TimeUi.RegularUi(
                 timeData = timeData,
                 text = "$daytimeText  $timeLeftText",
-                textColor = textColor,
+                textColorEnum = textColorEnum,
             )
         }
 
@@ -154,15 +155,15 @@ class TasksTabTasksVm(
             class HighlightUi(
                 timeData: TextFeatures.TimeData,
                 val title: String,
-                val backgroundColor: ColorRgba,
+                val backgroundColorEnum: ColorEnum,
                 val timeLeftText: String,
-                val timeLeftColor: ColorRgba,
+                val timeLeftColorEnum: ColorEnum,
             ) : TimeUi(timeData)
 
             class RegularUi(
                 timeData: TextFeatures.TimeData,
                 val text: String,
-                val textColor: ColorRgba,
+                val textColorEnum: ColorEnum,
             ) : TimeUi(timeData)
         }
     }
