@@ -5,8 +5,8 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.TextFeatures.TimeData
-import me.timeto.shared.ui.TaskUi
-import me.timeto.shared.ui.sortedUi
+import me.timeto.shared.ui.tasks.TaskUi
+import me.timeto.shared.ui.tasks.sortedUi
 import me.timeto.shared.vm.__Vm
 
 class WatchTabTasksVm : __Vm<WatchTabTasksVm.State>() {

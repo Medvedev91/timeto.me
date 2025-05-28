@@ -1,4 +1,4 @@
-package me.timeto.shared.ui
+package me.timeto.shared.ui.tasks
 
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.db.TaskDb

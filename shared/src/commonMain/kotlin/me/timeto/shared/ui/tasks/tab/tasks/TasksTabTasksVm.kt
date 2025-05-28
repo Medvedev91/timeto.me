@@ -15,8 +15,8 @@ import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.delayToNextMinute
 import me.timeto.shared.launchExIo
 import me.timeto.shared.localUtcOffsetWithDayStart
-import me.timeto.shared.ui.TaskUi
-import me.timeto.shared.ui.sortedUi
+import me.timeto.shared.ui.tasks.TaskUi
+import me.timeto.shared.ui.tasks.sortedUi
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.textFeatures
 import me.timeto.shared.ui.activities.timer.ActivityTimerStrategy
