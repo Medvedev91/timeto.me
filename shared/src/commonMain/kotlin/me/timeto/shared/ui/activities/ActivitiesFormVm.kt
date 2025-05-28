@@ -7,8 +7,8 @@ import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.textFeatures
-import me.timeto.shared.ui.misc.moveAndroid
-import me.timeto.shared.ui.misc.moveIos
+import me.timeto.shared.ui.moveAndroid
+import me.timeto.shared.ui.moveIos
 import me.timeto.shared.vm.__Vm
 
 class ActivitiesFormVm : __Vm<ActivitiesFormVm.State>() {

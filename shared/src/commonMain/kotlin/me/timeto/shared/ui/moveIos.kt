@@ -1,4 +1,4 @@
-package me.timeto.shared.ui.misc
+package me.timeto.shared.ui
 
 import me.timeto.shared.launchExIo
 
