@@ -14,8 +14,8 @@ import me.timeto.shared.toHms
 import me.timeto.shared.toTimerHintNote
 import me.timeto.shared.ui.DialogsManager
 import me.timeto.shared.ui.UiException
-import me.timeto.shared.ui.color.ColorPickerExampleUi
-import me.timeto.shared.ui.color.ColorPickerExamplesUi
+import me.timeto.shared.ui.color_picker.ColorPickerExampleUi
+import me.timeto.shared.ui.color_picker.ColorPickerExamplesUi
 import me.timeto.shared.ui.goals.form.GoalFormData
 import me.timeto.shared.vm.__Vm
 

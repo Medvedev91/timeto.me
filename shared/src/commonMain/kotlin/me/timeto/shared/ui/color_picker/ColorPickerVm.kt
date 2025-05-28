@@ -1,4 +1,4 @@
-package me.timeto.shared.ui.color
+package me.timeto.shared.ui.color_picker
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.AppleColors
