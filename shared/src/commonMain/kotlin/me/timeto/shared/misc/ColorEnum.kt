@@ -2,6 +2,9 @@ package me.timeto.shared.misc
 
 enum class ColorEnum {
 
+    white,
+    black,
+
     red,
     orange,
     yellow,
