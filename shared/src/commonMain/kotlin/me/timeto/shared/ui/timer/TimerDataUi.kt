@@ -4,6 +4,7 @@ import me.timeto.shared.*
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.TaskDb
+import me.timeto.shared.misc.ColorEnum
 import me.timeto.shared.misc.time
 import me.timeto.shared.ui.daytime.DaytimeUi
 import me.timeto.shared.ui.activities.timer.ActivityTimerStrategy
@@ -18,10 +19,10 @@ class TimerDataUi(
     val controlsColor: ColorRgba
 
     val note: String
-    val noteColor: ColorRgba
+    val noteColor: ColorEnum
 
     val timerText: String
-    val timerColor: ColorRgba
+    val timerColor: ColorEnum
 
     val infoUi = InfoUi(intervalDb)
     val prolongText: String?
@@ -62,10 +63,10 @@ class TimerDataUi(
 
         timerText = secondsToString(if (isPurple) (now - intervalDb.id) else secondsToEnd)
         timerColor = when {
-            isPurple -> ColorRgba.purple
-            secondsToEnd < 0 -> ColorRgba.red
-            pausedTaskData != null -> ColorRgba.green
-            else -> ColorRgba.white
+            isPurple -> ColorEnum.purple
+            secondsToEnd < 0 -> ColorEnum.red
+            pausedTaskData != null -> ColorEnum.green
+            else -> ColorEnum.white
         }
 
         prolongText = run {
@@ -78,7 +79,7 @@ class TimerDataUi(
             withActivityEmoji = false,
             withTimer = false,
         )
-        noteColor = if (pausedTaskData != null) ColorRgba.green else timerColor
+        noteColor = if (pausedTaskData != null) ColorEnum.green else timerColor
 
         controlsColor = when {
             isPurple -> ColorRgba.purple
