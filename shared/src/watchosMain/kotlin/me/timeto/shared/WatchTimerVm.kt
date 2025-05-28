@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.vm.__Vm
-import me.timeto.shared.ui.TimerDataUi
+import me.timeto.shared.ui.timer.TimerDataUi
 
 class WatchTimerVm : __Vm<WatchTimerVm.State>() {
 
