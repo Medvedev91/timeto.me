@@ -254,10 +254,7 @@ data class ColorRgba(
 
         val red = AppleColors.Palettes.red.dark
         val green = AppleColors.Palettes.green.dark
-        val blue = AppleColors.Palettes.blue.dark
         val purple = AppleColors.Palettes.purple.dark
-
-        val textSecondary = ColorRgba(255, 255, 255, 170)
 
         fun fromRgbaString(rgbaString: String): ColorRgba =
             rgbaString.split(',').map { it.toInt() }.let {
