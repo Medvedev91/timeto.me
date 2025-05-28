@@ -19,4 +19,7 @@ enum class ColorEnum {
     brown,
 
     gray,
+
+    text,
+    secondaryText,
 }

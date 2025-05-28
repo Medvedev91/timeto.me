@@ -23,4 +23,7 @@ fun ColorEnum.toColor(): Color = when (this) {
     ColorEnum.brown -> c.brown
 
     ColorEnum.gray -> c.gray
+
+    ColorEnum.text -> c.teal
+    ColorEnum.secondaryText -> c.secondaryText
 }

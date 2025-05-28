@@ -15,7 +15,7 @@ import me.timeto.shared.misc.getInt
 import me.timeto.shared.misc.getString
 import me.timeto.shared.misc.time
 import me.timeto.shared.misc.toJsonArray
-import me.timeto.shared.ui.TaskUi
+import me.timeto.shared.ui.tasks.TaskUi
 import kotlin.math.max
 
 data class TaskDb(

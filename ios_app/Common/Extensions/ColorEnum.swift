@@ -23,6 +23,9 @@ extension ColorEnum {
             
         case .gray: .gray
             
+        case .text: .primary
+        case .secondarytext: .secondary
+            
         default: fatalError("ColorEnum.toColor() no \(self)")
         }
     }
