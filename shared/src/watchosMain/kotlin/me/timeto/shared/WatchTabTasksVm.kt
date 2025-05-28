@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.TextFeatures.TimeData
+import me.timeto.shared.misc.ColorEnum
 import me.timeto.shared.ui.tasks.TaskUi
 import me.timeto.shared.ui.tasks.sortedUi
 import me.timeto.shared.vm.__Vm
@@ -22,14 +23,14 @@ class WatchTabTasksVm : __Vm<WatchTabTasksVm.State>() {
             val unixTime = timeData.unixTime
             val timeLeftText = timeData.timeLeftText()
             val daytimeText = daytimeToString(unixTime.time - unixTime.localDayStartTime())
-            val textColor = when (timeData.status) {
-                TimeData.STATUS.IN -> ColorRgba.textSecondary
-                TimeData.STATUS.SOON -> ColorRgba.blue
-                TimeData.STATUS.OVERDUE -> ColorRgba.red
+            val textColorEnum: ColorEnum = when (timeData.status) {
+                TimeData.STATUS.IN -> ColorEnum.secondaryText
+                TimeData.STATUS.SOON -> ColorEnum.blue
+                TimeData.STATUS.OVERDUE -> ColorEnum.red
             }
             TimeUI(
                 text = "$daytimeText  $timeLeftText",
-                textColor = textColor,
+                textColorEnum = textColorEnum,
             )
         }
 
@@ -50,7 +51,7 @@ class WatchTabTasksVm : __Vm<WatchTabTasksVm.State>() {
 
         class TimeUI(
             val text: String,
-            val textColor: ColorRgba,
+            val textColorEnum: ColorEnum,
         )
     }
 

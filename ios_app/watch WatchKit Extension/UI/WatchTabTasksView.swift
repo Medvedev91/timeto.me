@@ -56,7 +56,7 @@ struct WatchTabTasksView: View {
                                     .padding(.top, 1)
                                     .padding(.bottom, 2)
                                     .font(.system(size: 14, weight: .light))
-                                    .foregroundColor(timeUI.textColor.toColor())
+                                    .foregroundColor(timeUI.textColorEnum.toColor())
                                     .lineLimit(1)
                             }
                             
