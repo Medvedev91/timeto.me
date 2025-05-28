@@ -36,15 +36,16 @@ class TimerDataUi(
     private val pausedTaskData: PausedTaskData? = run {
         if (!activityDb.isOther())
             return@run null
-        val pausedTaskId: Int = intervalNoteTf?.pause?.pausedTaskId
-                                ?: return@run null
-        val pausedTask: TaskDb = todayTasksDb.firstOrNull { it.id == pausedTaskId }
-                                 ?: return@run null
-        val pausedTaskTf: TextFeatures = pausedTask.text.textFeatures()
-        val pausedTaskTimer: Int = pausedTaskTf.paused?.originalTimer
-                                   ?: return@run null
-        val pausedActivityDb: ActivityDb = pausedTaskTf.activity
-                                           ?: return@run null
+        val pausedTaskId: Int =
+            intervalNoteTf?.pause?.pausedTaskId ?: return@run null
+        val pausedTask: TaskDb =
+            todayTasksDb.firstOrNull { it.id == pausedTaskId } ?: return@run null
+        val pausedTaskTf: TextFeatures =
+            pausedTask.text.textFeatures()
+        val pausedTaskTimer: Int =
+            pausedTaskTf.paused?.originalTimer ?: return@run null
+        val pausedActivityDb: ActivityDb =
+            pausedTaskTf.activity ?: return@run null
         PausedTaskData(
             taskDb = pausedTask,
             taskTextTf = pausedTaskTf,
