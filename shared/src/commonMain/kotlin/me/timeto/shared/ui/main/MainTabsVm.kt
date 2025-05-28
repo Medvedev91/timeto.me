@@ -37,17 +37,19 @@ class MainTabsVm : __Vm<MainTabsVm.State>() {
             when {
                 isBatteryCharging -> BatteryUi(
                     text = text,
-                    colorRgba = if (level == 100) ColorRgba.green else ColorRgba.blue,
+                    colorEnum =
+                        if (level == 100) BatteryUi.ColorEnum.green
+                        else BatteryUi.ColorEnum.blue,
                     isHighlighted = true,
                 )
                 level in 0..20 -> BatteryUi(
                     text = text,
-                    colorRgba = ColorRgba.red,
+                    colorEnum = BatteryUi.ColorEnum.red,
                     isHighlighted = true,
                 )
                 else -> BatteryUi(
                     text = text,
-                    colorRgba = ColorRgba.homeFontSecondary,
+                    colorEnum = BatteryUi.ColorEnum.default,
                     isHighlighted = false,
                 )
             }
@@ -98,7 +100,12 @@ class MainTabsVm : __Vm<MainTabsVm.State>() {
 
     data class BatteryUi(
         val text: String,
-        val colorRgba: ColorRgba,
+        val colorEnum: ColorEnum,
         val isHighlighted: Boolean,
-    )
+    ) {
+
+        enum class ColorEnum {
+            red, green, blue, default,
+        }
+    }
 }

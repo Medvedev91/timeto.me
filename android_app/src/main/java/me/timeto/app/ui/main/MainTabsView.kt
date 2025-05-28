@@ -37,7 +37,6 @@ import me.timeto.app.ui.onePx
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.squircleShape
 import me.timeto.app.ui.timerFont
-import me.timeto.app.misc.extensions.toColor
 import me.timeto.shared.ui.main.MainTabsVm
 
 val MainTabsView__height = 56.dp
@@ -134,10 +133,17 @@ fun MainTabsView(
                 ) {
 
                     val batteryUi = state.batteryUi
-                    val batteryTextColor = animateColorAsState(batteryUi.colorRgba.toColor())
+                    val batteryTextColor = animateColorAsState(
+                        when (batteryUi.colorEnum) {
+                            MainTabsVm.BatteryUi.ColorEnum.red -> c.red
+                            MainTabsVm.BatteryUi.ColorEnum.green -> c.green
+                            MainTabsVm.BatteryUi.ColorEnum.blue -> c.blue
+                            MainTabsVm.BatteryUi.ColorEnum.default -> c.mainTabsMenuSecondaryColor
+                        }
+                    )
 
                     Icon(
-                        painterResource(
+                        painter = painterResource(
                             id = if (batteryUi.isHighlighted)
                                 R.drawable.sf_bolt_fill_medium_bold
                             else
@@ -147,7 +153,7 @@ fun MainTabsView(
                         tint = batteryTextColor.value,
                         modifier = Modifier
                             .offset(y = -halfDpFloor)
-                            .size(10.dp)
+                            .size(10.dp),
                     )
 
                     Text(
@@ -159,7 +165,7 @@ fun MainTabsView(
                     )
 
                     Icon(
-                        painterResource(id = R.drawable.sf_smallcircle_filled_circle_small_light),
+                        painter = painterResource(id = R.drawable.sf_smallcircle_filled_circle_small_light),
                         contentDescription = "Tasks",
                         tint = c.mainTabsMenuSecondaryColor,
                         modifier = Modifier
