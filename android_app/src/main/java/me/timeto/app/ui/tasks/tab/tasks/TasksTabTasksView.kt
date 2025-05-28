@@ -459,7 +459,7 @@ private fun TmrwTaskView(
                     .padding(bottom = vPadding),
                 fontSize = 13.sp,
                 fontWeight = FontWeight.W300,
-                color = timeUi.textColor.toColor(),
+                color = timeUi.textColorEnum.toColor(),
             )
         }
 

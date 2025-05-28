@@ -429,7 +429,7 @@ private struct TmrwTaskView: View {
                         .padding(.top, 1)
                         .padding(.bottom, vPadding)
                         .font(.system(size: 14, weight: .light))
-                        .foregroundColor(timeUI.textColor.toColor())
+                        .foregroundColor(timeUI.textColorEnum.toColor())
                         .lineLimit(1)
                     Spacer()
                 }

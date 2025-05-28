@@ -80,17 +80,17 @@ class TasksTabTasksVm(
                 UnixTime.StringComponent.space,
                 UnixTime.StringComponent.hhmm24,
             )
-            val textColor = if (timeData.type.isEvent())
-                ColorRgba.blue else ColorRgba.textSecondary
+            val textColorEnum: ColorEnum = if (timeData.type.isEvent())
+                ColorEnum.blue else ColorEnum.secondaryText
             TmrwTimeUi(
                 text = text,
-                textColor = textColor,
+                textColorEnum = textColorEnum,
             )
         }
 
         class TmrwTimeUi(
             val text: String,
-            val textColor: ColorRgba,
+            val textColorEnum: ColorEnum,
         )
     }
 
