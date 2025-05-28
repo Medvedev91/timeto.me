@@ -9,8 +9,8 @@ import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.ChecklistItemDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.ui.DialogsManager
-import me.timeto.shared.ui.moveAndroid
-import me.timeto.shared.ui.moveIos
+import me.timeto.shared.ui.misc.moveAndroid
+import me.timeto.shared.ui.misc.moveIos
 import me.timeto.shared.vm.__Vm
 
 class ChecklistFormItemsVm(
