@@ -11,7 +11,7 @@ import me.timeto.shared.ui.tasks.TaskUi
 import me.timeto.shared.ui.tasks.sortedUi
 import me.timeto.shared.misc.time
 import me.timeto.shared.ui.DayBarsUi
-import me.timeto.shared.ui.TimerDataUi
+import me.timeto.shared.ui.timer.TimerDataUi
 import me.timeto.shared.ui.activities.timer.ActivityTimerStrategy
 import me.timeto.shared.ui.whats_new.WhatsNewVm
 import me.timeto.shared.vm.__Vm

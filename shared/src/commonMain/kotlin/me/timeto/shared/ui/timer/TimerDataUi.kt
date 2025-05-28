@@ -1,10 +1,11 @@
-package me.timeto.shared.ui
+package me.timeto.shared.ui.timer
 
 import me.timeto.shared.*
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.misc.time
+import me.timeto.shared.ui.DaytimeUi
 import me.timeto.shared.ui.activities.timer.ActivityTimerStrategy
 import kotlin.math.absoluteValue
 
