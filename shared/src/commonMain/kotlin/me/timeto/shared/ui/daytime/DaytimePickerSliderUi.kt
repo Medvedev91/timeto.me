@@ -1,4 +1,4 @@
-package me.timeto.shared.ui
+package me.timeto.shared.ui.daytime
 
 import me.timeto.shared.limitMax
 import me.timeto.shared.limitMinMax
