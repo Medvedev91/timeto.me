@@ -82,13 +82,7 @@ private struct MainTabsViewInner: View {
                             HStack {
                                 
                                 let batteryUi = state.batteryUi
-                                let batteryTextColor: Color = switch batteryUi.colorEnum {
-                                case .red: .red
-                                case .green: .green
-                                case .blue: .blue
-                                case .default_: menuSecondaryColor
-                                default: fatalError("batteryTextColor default case not handled")
-                                }
+                                let batteryTextColor: Color = batteryUi.colorEnum?.toColor() ?? menuSecondaryColor
                                 
                                 Image(systemName: "bolt.fill")
                                     .foregroundColor(batteryTextColor)

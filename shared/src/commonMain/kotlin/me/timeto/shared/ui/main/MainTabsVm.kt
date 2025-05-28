@@ -9,6 +9,7 @@ import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.delayToNextMinute
 import me.timeto.shared.misc.BatteryInfo
+import me.timeto.shared.misc.ColorEnum
 import me.timeto.shared.vm.__Vm
 
 class MainTabsVm : __Vm<MainTabsVm.State>() {
@@ -37,19 +38,17 @@ class MainTabsVm : __Vm<MainTabsVm.State>() {
             when {
                 isBatteryCharging -> BatteryUi(
                     text = text,
-                    colorEnum =
-                        if (level == 100) BatteryUi.ColorEnum.green
-                        else BatteryUi.ColorEnum.blue,
+                    colorEnum = if (level == 100) ColorEnum.green else ColorEnum.blue,
                     isHighlighted = true,
                 )
                 level in 0..20 -> BatteryUi(
                     text = text,
-                    colorEnum = BatteryUi.ColorEnum.red,
+                    colorEnum = ColorEnum.red,
                     isHighlighted = true,
                 )
                 else -> BatteryUi(
                     text = text,
-                    colorEnum = BatteryUi.ColorEnum.default,
+                    colorEnum = null,
                     isHighlighted = false,
                 )
             }
@@ -100,12 +99,7 @@ class MainTabsVm : __Vm<MainTabsVm.State>() {
 
     data class BatteryUi(
         val text: String,
-        val colorEnum: ColorEnum,
+        val colorEnum: ColorEnum?,
         val isHighlighted: Boolean,
-    ) {
-
-        enum class ColorEnum {
-            red, green, blue, default,
-        }
-    }
+    )
 }
