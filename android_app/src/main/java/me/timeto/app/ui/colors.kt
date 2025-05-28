@@ -18,6 +18,13 @@ object c {
     val green = Palette.green.dark.toColor()
     val blue = Palette.blue.dark.toColor()
     val orange = Palette.orange.dark.toColor()
+    val yellow = Palette.yellow.dark.toColor()
+    val mint = Palette.mint.dark.toColor()
+    val teal = Palette.teal.dark.toColor()
+    val cyan = Palette.cyan.dark.toColor()
+    val indigo = Palette.indigo.dark.toColor()
+    val pink = Palette.pink.dark.toColor()
+    val brown = Palette.brown.dark.toColor()
     val purple = Palette.purple.dark.toColor()
 
     val gray = Palette.gray.dark.toColor()
