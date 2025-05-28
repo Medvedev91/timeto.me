@@ -23,9 +23,4 @@ fun ColorEnum.toColor(): Color = when (this) {
     ColorEnum.brown -> c.brown
 
     ColorEnum.gray -> c.gray
-    ColorEnum.gray2 -> c.gray2
-    ColorEnum.gray3 -> c.gray3
-    ColorEnum.gray4 -> c.gray4
-    ColorEnum.gray5 -> c.gray5
-    ColorEnum.gray6 -> c.gray6
 }

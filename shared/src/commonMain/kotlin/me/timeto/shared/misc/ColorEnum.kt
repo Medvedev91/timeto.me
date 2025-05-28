@@ -19,9 +19,4 @@ enum class ColorEnum {
     brown,
 
     gray,
-    gray2,
-    gray3,
-    gray4,
-    gray5,
-    gray6,
 }
