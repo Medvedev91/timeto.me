@@ -58,18 +58,18 @@ object Backup {
             val json = Json.parseToJsonElement(jString)
 
             db.taskQueries.deleteAll()
-            db.taskFolderQueries.truncate()
-            db.goalQueries.truncate()
-            db.intervalQueries.truncate()
-            db.activityQueries.truncate()
+            db.taskFolderQueries.deleteAll()
+            db.goalQueries.deleteAll()
+            db.intervalQueries.deleteAll()
+            db.activityQueries.deleteAll()
             db.eventQueries.deleteAll()
             db.eventTemplateQueries.deleteAll()
             db.repeatingQueries.deleteAll()
-            db.checklistItemQueries.truncate()
-            db.checklistQueries.truncate()
-            db.shortcutQueries.truncate()
-            db.noteQueries.truncate()
-            db.kVQueries.truncate()
+            db.checklistItemQueries.deleteAll()
+            db.checklistQueries.deleteAll()
+            db.shortcutQueries.deleteAll()
+            db.noteQueries.deleteAll()
+            db.kVQueries.deleteAll()
 
             json.mapJsonArray("activities") { ActivityDb.backupable__restore(it) }
             json.mapJsonArray("intervals") { IntervalDb.backupable__restore(it) }

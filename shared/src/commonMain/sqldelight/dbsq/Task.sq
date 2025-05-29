@@ -65,8 +65,10 @@ WHERE id = ?;
 -- Delete
 
 deleteById:
-DELETE FROM TaskSQ
+DELETE
+FROM TaskSQ
 WHERE id = ?;
 
 deleteAll:
-DELETE FROM TaskSQ;
+DELETE
+FROM TaskSQ;

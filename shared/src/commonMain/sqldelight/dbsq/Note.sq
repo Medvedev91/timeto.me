@@ -38,8 +38,10 @@ WHERE id = ?;
 -- Delete
 
 deleteById:
-DELETE FROM NoteSQ
+DELETE
+FROM NoteSQ
 WHERE id = ?;
 
-truncate:
-DELETE FROM NoteSQ;
+deleteAll:
+DELETE
+FROM NoteSQ;

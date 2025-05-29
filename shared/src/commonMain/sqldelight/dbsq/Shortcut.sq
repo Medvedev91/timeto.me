@@ -42,8 +42,10 @@ WHERE id = ?;
 -- Delete
 
 deleteById:
-DELETE FROM ShortcutSQ
+DELETE
+FROM ShortcutSQ
 WHERE id = ?;
 
-truncate:
-DELETE FROM ShortcutSQ;
+deleteAll:
+DELETE
+FROM ShortcutSQ;

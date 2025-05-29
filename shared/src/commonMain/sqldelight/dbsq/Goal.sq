@@ -52,6 +52,6 @@ DELETE
 FROM GoalSq
 WHERE activity_id=?;
 
-truncate:
+deleteAll:
 DELETE
 FROM GoalSq;

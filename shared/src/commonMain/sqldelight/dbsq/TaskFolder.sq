@@ -47,9 +47,11 @@ WHERE id = ?;
 --
 -- Delete
 
-truncate:
-DELETE FROM TaskFolderSQ;
-
 deleteById:
-DELETE FROM TaskFolderSQ
+DELETE
+FROM TaskFolderSQ
 WHERE id = ?;
+
+deleteAll:
+DELETE
+FROM TaskFolderSQ;

@@ -35,8 +35,10 @@ WHERE id = ?;
 -- Delete
 
 deleteById:
-DELETE FROM ChecklistSQ
+DELETE
+FROM ChecklistSQ
 WHERE id = ?;
 
-truncate:
-DELETE FROM ChecklistSQ;
+deleteAll:
+DELETE
+FROM ChecklistSQ;

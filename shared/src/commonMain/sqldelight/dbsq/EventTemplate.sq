@@ -34,8 +34,10 @@ WHERE id = ?;
 -- Delete
 
 deleteById:
-DELETE FROM EventTemplateSQ
+DELETE
+FROM EventTemplateSQ
 WHERE id = ?;
 
 deleteAll:
-DELETE FROM EventTemplateSQ;
+DELETE
+FROM EventTemplateSQ;

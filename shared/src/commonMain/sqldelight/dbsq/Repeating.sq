@@ -44,8 +44,10 @@ WHERE id=?;
 -- Delete
 
 deleteById:
-DELETE FROM RepeatingSQ
+DELETE
+FROM RepeatingSQ
 WHERE id=?;
 
 deleteAll:
-DELETE FROM RepeatingSQ;
+DELETE
+FROM RepeatingSQ;

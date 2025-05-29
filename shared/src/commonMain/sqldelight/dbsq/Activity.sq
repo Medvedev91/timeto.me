@@ -57,8 +57,10 @@ WHERE id=?;
 -- Delete
 
 deleteById:
-DELETE FROM ActivitySQ
+DELETE
+FROM ActivitySQ
 WHERE id=?;
 
-truncate:
-DELETE FROM ActivitySQ;
+deleteAll:
+DELETE
+FROM ActivitySQ;

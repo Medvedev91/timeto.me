@@ -77,8 +77,10 @@ WHERE id = ?;
 -- Delete
 
 deleteById:
-DELETE FROM IntervalSQ
+DELETE
+FROM IntervalSQ
 WHERE id = ?;
 
-truncate:
-DELETE FROM IntervalSQ;
+deleteAll:
+DELETE
+FROM IntervalSQ;
