@@ -16,7 +16,7 @@ class TimerDataUi(
     isPurple: Boolean,
 ) {
 
-    val controlsColor: ColorRgba
+    val controlsColorEnum: ColorEnum?
 
     val note: String
     val noteColor: ColorEnum
@@ -81,11 +81,11 @@ class TimerDataUi(
         )
         noteColor = if (pausedTaskData != null) ColorEnum.green else timerColor
 
-        controlsColor = when {
-            isPurple -> ColorRgba.purple
-            secondsToEnd < 0 -> ColorRgba.red
-            pausedTaskData != null -> ColorRgba.green
-            else -> defControlsColor
+        controlsColorEnum = when {
+            isPurple -> ColorEnum.purple
+            secondsToEnd < 0 -> ColorEnum.red
+            pausedTaskData != null -> ColorEnum.green
+            else -> null
         }
     }
 
@@ -146,8 +146,6 @@ class TimerDataUi(
         }
     }
 }
-
-private val defControlsColor = ColorRgba(255, 255, 255, 180)
 
 private fun secondsToString(seconds: Int): String {
     val hms = seconds.absoluteValue.toHms()

@@ -14,12 +14,16 @@ struct HomeTimerView: View {
     
     @Environment(Navigation.self) private var navigation
 
+    private var controlsColor: Color {
+        state.timerData.controlsColorEnum?.toColor() ?? homeTimerControlsColor
+    }
+    
+    private var noteColor: Color { state.timerData.noteColor.toColor() }
+    private var timerColor: Color { state.timerData.timerColor.toColor() }
+    
     var body: some View {
         
         let timerData = state.timerData
-        let noteColor = timerData.noteColor.toColor()
-        let timerColor = timerData.timerColor.toColor()
-        let timerControlsColor = state.timerData.controlsColor.toColor()
         
         let timerFont: Font = {
             let len = timerData.timerText.count
@@ -60,7 +64,7 @@ struct HomeTimerView: View {
                                 )
                                 
                                 Image(systemName: "info")
-                                    .foregroundColor(timerControlsColor)
+                                    .foregroundColor(controlsColor)
                                     .font(.system(size: 23, weight: .thin))
                                     .frame(maxWidth: .infinity)
                             }
@@ -108,10 +112,10 @@ struct HomeTimerView: View {
                                 if let prolongText = timerData.prolongText {
                                     Text(prolongText)
                                         .font(.system(size: 22, weight: .thin))
-                                        .foregroundColor(timerControlsColor)
+                                        .foregroundColor(controlsColor)
                                 } else {
                                     Image(systemName: "plus")
-                                        .foregroundColor(timerControlsColor)
+                                        .foregroundColor(controlsColor)
                                         .font(.system(size: 22, weight: .thin))
                                 }
                             }

@@ -54,7 +54,9 @@ fun HomeTimerView(
 
     val noteColor = animateColorAsState(state.timerData.noteColor.toColor()).value
     val timerColor = animateColorAsState(state.timerData.timerColor.toColor()).value
-    val timerControlsColor = animateColorAsState(state.timerData.controlsColor.toColor()).value
+    val timerControlsColor = animateColorAsState(
+        state.timerData.controlsColorEnum?.toColor() ?: c.homeTimerControls
+    ).value
 
     VStack(
         horizontalAlignment = Alignment.CenterHorizontally,
