@@ -23,6 +23,7 @@ import me.timeto.shared.misc.SystemInfo
 import me.timeto.shared.misc.ioScope
 import me.timeto.shared.misc.time
 import me.timeto.shared.misc.zlog
+import me.timeto.shared.ui.UiException
 
 const val GOLDEN_RATIO = 1.618f
 
@@ -252,14 +253,14 @@ data class ColorRgba(
 
     companion object {
 
-        fun fromRgbaString(rgbaString: String): ColorRgba =
+        fun fromRgbaStringEx(rgbaString: String): ColorRgba =
             rgbaString.split(',').map { it.toInt() }.let {
                 when (it.size) {
                     3 -> ColorRgba(it[0], it[1], it[2])
                     4 -> ColorRgba(it[0], it[1], it[2], it[3])
                     else -> {
                         reportApi("ColorRgba.fromRgbaString($rgbaString) invalid")
-                        throw UIException("Invalid color")
+                        throw UiException("Invalid color")
                     }
                 }
             }

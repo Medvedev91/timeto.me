@@ -183,8 +183,9 @@ data class ActivityDb(
     val keepScreenOn: Boolean =
         keep_screen_on.toBoolean10()
 
+    // todo catch exception
     val colorRgba: ColorRgba by lazy {
-        ColorRgba.fromRgbaString(color_rgba)
+        ColorRgba.fromRgbaStringEx(color_rgba)
     }
 
     val timerHints: Set<Int> by lazy {
