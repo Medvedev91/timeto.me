@@ -73,10 +73,10 @@ object IosToWatchSync {
         if (command == "start_task") {
             val timer = jData["timer"]!!.jsonPrimitive.int
             val activity = ActivityDb.selectByIdOrNull(jData["activity_id"]!!.jsonPrimitive.int)!!
-            val task = TaskDb.getByIdOrNull(jData["task_id"]!!.jsonPrimitive.int)!!
+            val task = TaskDb.selectByIdOrNull(jData["task_id"]!!.jsonPrimitive.int)!!
             task.startInterval(
                 timer = timer,
-                activity = activity,
+                activityDb = activity,
             )
             onFinish("{}")
             return@launchExIo

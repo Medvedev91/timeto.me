@@ -72,11 +72,11 @@ class WatchTabTasksVm : __Vm<WatchTabTasksVm.State>() {
 
     init {
         val scope = scopeVm()
-        TaskDb.getAscFlow().onEachExIn(scope) { tasks ->
+        TaskDb.selectAscFlow().onEachExIn(scope) { tasks ->
             upFolders(tasks)
         }
         TaskFolderDb.anyChangeFlow().onEachExIn(scope) {
-            upFolders(TaskDb.getAsc())
+            upFolders(TaskDb.selectAsc())
         }
     }
 
