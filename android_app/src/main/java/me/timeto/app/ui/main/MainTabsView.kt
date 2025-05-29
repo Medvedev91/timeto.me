@@ -118,7 +118,7 @@ fun MainTabsView(
 
                 Text(
                     text = state.timeText,
-                    color = c.mainTabsMenuPrimaryColor,
+                    color = c.mainTabsMenuPrimary,
                     fontSize = 9.sp,
                     lineHeight = 14.sp,
                     fontWeight = FontWeight.Bold,
@@ -135,7 +135,7 @@ fun MainTabsView(
 
                     val batteryUi = state.batteryUi
                     val batteryTextColor = animateColorAsState(
-                        batteryUi.colorEnum?.toColor() ?: c.mainTabsMenuSecondaryColor
+                        batteryUi.colorEnum?.toColor() ?: c.mainTabsMenuSecondary
                     )
 
                     Icon(
@@ -163,7 +163,7 @@ fun MainTabsView(
                     Icon(
                         painter = painterResource(id = R.drawable.sf_smallcircle_filled_circle_small_light),
                         contentDescription = "Tasks",
-                        tint = c.mainTabsMenuSecondaryColor,
+                        tint = c.mainTabsMenuSecondary,
                         modifier = Modifier
                             .padding(start = 8.dp)
                             .size(10.dp + halfDpFloor)
@@ -174,7 +174,7 @@ fun MainTabsView(
                         text = state.tasksText,
                         modifier = Modifier
                             .padding(start = 2.dp + halfDpFloor),
-                        color = c.mainTabsMenuSecondaryColor,
+                        color = c.mainTabsMenuSecondary,
                         fontSize = 12.sp,
                         lineHeight = 14.sp,
                         fontWeight = FontWeight.Light,
@@ -228,7 +228,7 @@ private fun RowScope.TabButton(
         Icon(
             painter = painterResource(id = icon),
             contentDescription = contentDescription,
-            tint = if (isSelected) c.blue else c.mainTabsMenuSecondaryColor,
+            tint = if (isSelected) c.blue else c.mainTabsMenuSecondary,
             modifier = tabButtonModifier,
         )
     }

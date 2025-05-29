@@ -49,12 +49,12 @@ val TasksTabView__TAB_BUTTON_WIDTH: Dp = 32.dp
 val TasksTabView__PADDING_END: Dp = TasksTabView__TAB_BUTTON_WIDTH + H_PADDING
 val TasksTabView__LIST_SECTION_PADDING: Dp = 20.dp
 
-//
+///
 
 private val tabShape = SquircleShape(12.dp)
 private val tabVPadding = 8.dp
 private val tabActiveTextColor = c.white
-private val tabInactiveTextColor = c.mainTabsMenuSecondaryColor
+private val tabInactiveTextColor = c.mainTabsMenuSecondary
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
