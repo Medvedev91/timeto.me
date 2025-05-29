@@ -7,23 +7,35 @@ CREATE TABLE EventTemplateSQ (
     text TEXT NOT NULL
 );
 
+--
+-- Select
+
 selectAscSorted:
 SELECT *
 FROM EventTemplateSQ
 ORDER BY sort ASC, id ASC;
 
+--
+-- Insert
+
 insertObject:
 INSERT INTO EventTemplateSQ
 VALUES ?;
+
+--
+-- Update
 
 updateById:
 UPDATE EventTemplateSQ
 SET sort = ?, daytime = ?, text = ?
 WHERE id = ?;
 
+--
+-- Delete
+
 deleteById:
 DELETE FROM EventTemplateSQ
 WHERE id = ?;
 
-truncate:
+deleteAll:
 DELETE FROM EventTemplateSQ;

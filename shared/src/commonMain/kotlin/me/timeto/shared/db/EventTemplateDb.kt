@@ -93,7 +93,8 @@ data class EventTemplateDb(
     //
     // Backupable Item
 
-    override fun backupable__getId(): String = id.toString()
+    override fun backupable__getId(): String =
+        id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
         id, sort, daytime, text,

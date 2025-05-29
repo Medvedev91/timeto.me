@@ -63,7 +63,7 @@ object Backup {
             db.intervalQueries.truncate()
             db.activityQueries.truncate()
             db.eventQueries.deleteAll()
-            db.eventTemplateQueries.truncate()
+            db.eventTemplateQueries.deleteAll()
             db.repeatingQueries.deleteAll()
             db.checklistItemQueries.truncate()
             db.checklistQueries.truncate()
