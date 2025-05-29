@@ -116,10 +116,6 @@ fun Int.toTimerHintNote(
     }
 }
 
-//////
-
-class UIException(val uiMessage: String) : Exception(uiMessage)
-
 ///
 /// Notifications Flow
 
