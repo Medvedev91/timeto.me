@@ -1,6 +1,5 @@
 package me.timeto.shared.misc
 
-import me.timeto.shared.AppleColors.Palette
 import me.timeto.shared.ColorRgba
 
 /**
