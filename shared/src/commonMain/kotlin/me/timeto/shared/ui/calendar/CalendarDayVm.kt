@@ -43,7 +43,7 @@ class CalendarDayVm(
 
     init {
         val scopeVm = scopeVm()
-        EventDb.getAscByTimeFlow().onEachExIn(scopeVm) { list ->
+        EventDb.selectAscByTimeFlow().onEachExIn(scopeVm) { list ->
             state.update {
                 it.copy(eventsUi = list.toFilterListUi(unixDay))
             }

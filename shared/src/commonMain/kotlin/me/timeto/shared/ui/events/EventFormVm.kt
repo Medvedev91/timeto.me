@@ -105,12 +105,12 @@ class EventFormVm(
 
             val eventDb: EventDb? = initEventDb
             if (eventDb != null) {
-                eventDb.upWithValidation(
+                eventDb.updateWithValidation(
                     text = textWithFeatures,
                     localTime = time,
                 )
             } else {
-                EventDb.addWithValidation(
+                EventDb.insertWithValidation(
                     text = textWithFeatures,
                     localTime = time,
                 )

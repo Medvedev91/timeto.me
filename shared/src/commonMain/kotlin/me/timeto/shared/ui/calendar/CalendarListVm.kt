@@ -34,7 +34,7 @@ class CalendarListVm : __Vm<CalendarListVm.State>() {
                 state.update { it.copy(curTimeString = getCurTimeString()) }
             }
         }
-        EventDb.getAscByTimeFlow()
+        EventDb.selectAscByTimeFlow()
             .onEachExIn(scopeVm) { eventsDb ->
                 state.update { it.copy(eventsUi = eventsDb.toUiList()) }
             }

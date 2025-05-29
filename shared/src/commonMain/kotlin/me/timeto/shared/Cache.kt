@@ -74,8 +74,8 @@ object Cache {
         activitiesDbSorted = ActivityDb.selectSorted()
         ActivityDb.selectSortedFlow().onEachExIn(scope) { activitiesDbSorted = it }
 
-        eventsDb = EventDb.getAscByTime()
-        EventDb.getAscByTimeFlow().onEachExIn(scope) { eventsDb = it }
+        eventsDb = EventDb.selectAscByTime()
+        EventDb.selectAscByTimeFlow().onEachExIn(scope) { eventsDb = it }
 
         eventTemplatesDbSorted = EventTemplateDb.selectAscSorted()
         EventTemplateDb.selectAscSortedFlow().onEachExIn(scope) { eventTemplatesDbSorted = it }

@@ -40,7 +40,7 @@ object Backup {
             "checklist_items" to ChecklistItemDb.selectSorted().modelsToJsonArray(),
             "shortcuts" to ShortcutDb.selectAsc().modelsToJsonArray(),
             "repeatings" to RepeatingDb.selectAsc().modelsToJsonArray(),
-            "events" to EventDb.getAscByTime().modelsToJsonArray(),
+            "events" to EventDb.selectAscByTime().modelsToJsonArray(),
             "event_templates" to EventTemplateDb.selectAscSorted().modelsToJsonArray(),
             "notes" to NoteDb.selectAsc().modelsToJsonArray(),
             "kv" to KvDb.selectAll().modelsToJsonArray(),
@@ -62,7 +62,7 @@ object Backup {
             db.goalQueries.truncate()
             db.intervalQueries.truncate()
             db.activityQueries.truncate()
-            db.eventQueries.truncate()
+            db.eventQueries.deleteAll()
             db.eventTemplateQueries.truncate()
             db.repeatingQueries.deleteAll()
             db.checklistItemQueries.truncate()

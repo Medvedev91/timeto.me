@@ -40,7 +40,7 @@ class CalendarVm : __Vm<CalendarVm.State>() {
 
         val scope = scopeVm()
 
-        EventDb.getAscByTimeFlow().onEachExIn(scope) { newEvents ->
+        EventDb.selectAscByTimeFlow().onEachExIn(scope) { newEvents ->
 
             val newEventsMapByDays = newEvents.groupBy { it.getLocalTime().localDay }
 

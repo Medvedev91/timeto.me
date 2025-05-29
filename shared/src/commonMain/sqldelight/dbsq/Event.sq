@@ -6,23 +6,35 @@ CREATE TABLE EventSQ (
     utc_time INTEGER AS Int NOT NULL
 );
 
-getAscByTime:
+--
+-- Select
+
+selectAscByTime:
 SELECT *
 FROM EventSQ
 ORDER BY utc_time ASC;
+
+--
+-- Insert
 
 insertObject:
 INSERT INTO EventSQ
 VALUES ?;
 
-deleteById:
-DELETE FROM EventSQ
-WHERE id = ?;
+--
+-- Update
 
 updateById:
 UPDATE EventSQ
 SET text = ?, utc_time = ?
 WHERE id = ?;
 
-truncate:
+--
+-- Delete
+
+deleteById:
+DELETE FROM EventSQ
+WHERE id = ?;
+
+deleteAll:
 DELETE FROM EventSQ;

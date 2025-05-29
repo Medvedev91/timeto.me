@@ -1,11 +1,7 @@
 package me.timeto.shared.db
 
-import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
 import dbsq.EventSQ
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
@@ -15,6 +11,7 @@ import me.timeto.shared.misc.getInt
 import me.timeto.shared.misc.getString
 import me.timeto.shared.misc.time
 import me.timeto.shared.misc.toJsonArray
+import me.timeto.shared.ui.UiException
 
 data class EventDb(
     val id: Int,
@@ -24,14 +21,14 @@ data class EventDb(
 
     companion object : Backupable__Holder {
 
-        suspend fun getAscByTime() = dbIo {
-            db.eventQueries.getAscByTime().executeAsList().map { it.toDb() }
+        suspend fun selectAscByTime(): List<EventDb> = dbIo {
+            db.eventQueries.selectAscByTime().asList { toDb() }
         }
 
-        fun getAscByTimeFlow() = db.eventQueries.getAscByTime().asFlow()
-            .mapToList(Dispatchers.IO).map { list -> list.map { it.toDb() } }
+        fun selectAscByTimeFlow(): Flow<List<EventDb>> =
+            db.eventQueries.selectAscByTime().asListFlow { toDb() }
 
-        suspend fun addWithValidation(
+        suspend fun insertWithValidation(
             text: String,
             localTime: Int,
         ): Unit = dbIo {
@@ -47,7 +44,7 @@ data class EventDb(
         suspend fun syncTodaySafe(today: Int): Unit = dbIo {
             // Select within a transaction to avoid duplicate additions
             db.transaction {
-                db.eventQueries.getAscByTime().executeAsList()
+                db.eventQueries.selectAscByTime().executeAsList()
                     .map { it.toDb() }
                     .filter { it.getLocalTime().localDay <= today }
                     .sortedBy { event ->
@@ -70,7 +67,7 @@ data class EventDb(
         // Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.eventQueries.getAscByTime().executeAsList().map { it.toDb() }
+            db.eventQueries.selectAscByTime().asList { toDb() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
@@ -89,24 +86,27 @@ data class EventDb(
         .copy(fromEvent = TextFeatures.FromEvent(getLocalTime()))
         .textWithFeatures()
 
-    fun getLocalTime() = UnixTime(utc_time - localUtcOffset)
+    fun getLocalTime() =
+        UnixTime(utc_time - localUtcOffset)
 
-    suspend fun upWithValidation(
+    suspend fun updateWithValidation(
         text: String,
         localTime: Int,
-    ) = dbIo {
+    ): Unit = dbIo {
         val utcTime = localTime + localUtcOffset
         db.eventQueries.updateById(
             id = id, text = validateText(text), utc_time = utcTime
         )
     }
 
-    suspend fun delete() = dbIo { db.eventQueries.deleteById(id) }
+    suspend fun delete(): Unit =
+        dbIo { db.eventQueries.deleteById(id) }
 
     //
     // Backupable Item
 
-    override fun backupable__getId(): String = id.toString()
+    override fun backupable__getId(): String =
+        id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
         id, utc_time, text,
@@ -126,10 +126,11 @@ data class EventDb(
     }
 }
 
+@Throws(UiException::class)
 private fun validateText(text: String): String {
     val validatedText = text.trim()
     if (validatedText.isEmpty())
-        throw UIException("Empty text")
+        throw UiException("Empty text")
     return validatedText
 }
 
