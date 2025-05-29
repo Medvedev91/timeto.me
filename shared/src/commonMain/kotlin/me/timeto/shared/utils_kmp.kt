@@ -273,14 +273,6 @@ data class ColorRgba(
 
 class UIException(val uiMessage: String) : Exception(uiMessage)
 
-fun assertOrUIException(
-    condition: Boolean,
-    exText: String,
-) {
-    if (!condition)
-        throw UIException(exText)
-}
-
 ///
 /// Notifications Flow
 
