@@ -2,10 +2,8 @@ package me.timeto.shared
 
 import io.ktor.client.HttpClient
 import io.ktor.client.request.HttpRequestBuilder
-import io.ktor.client.request.forms.submitForm
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
-import io.ktor.http.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.*
@@ -18,7 +16,6 @@ import me.timeto.shared.misc.getString
 import me.timeto.shared.misc.SystemInfo
 import me.timeto.shared.misc.ioScope
 import me.timeto.shared.misc.time
-import me.timeto.shared.misc.zlog
 
 const val GOLDEN_RATIO = 1.618f
 
@@ -26,47 +23,6 @@ const val OPEN_SOURCE_URL = "https://github.com/Medvedev91/timeto.me"
 const val HI_EMAIL = "hi@timeto.me"
 
 const val prayEmoji = "🙏"
-
-fun reportApi(
-    message: String,
-) {
-
-    // Not launchEx because of recursion
-    ioScope().launch {
-
-        if (!KvDb.KEY.IS_SENDING_REPORTS.selectOrNull().isSendingReports())
-            return@launch
-
-        val title: String = when (SystemInfo.instance.os) {
-            is SystemInfo.Os.Android -> "🤖 Android"
-            is SystemInfo.Os.Ios -> " iOS"
-            is SystemInfo.Os.Watchos -> "⌚ Watch OS"
-        }
-
-        zlog("reportApi $message")
-        try {
-            HttpClient().use {
-                val token = KvDb.selectTokenOrNullSafe()
-                it.submitForm(
-                    url = "https://api.timeto.me/report",
-                    formParameters = Parameters.build {
-                        append("title", title)
-                        append("message", message)
-                    }
-                ) {
-                    appendSystemInfo(token)
-                }
-            }
-        } catch (e: Throwable) {
-            // todo report by fallback way
-            // Cases:
-            // - no internet connection
-            // - todo check if domain unavailable
-            // - todo check if not "ok" returned
-            zlog("reportApi exception:\n$e")
-        }
-    }
-}
 
 //
 // Ping
