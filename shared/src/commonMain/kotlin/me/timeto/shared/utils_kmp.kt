@@ -50,15 +50,6 @@ fun <T> Flow<T>.onEachExIn(
     }
 }.launchIn(scope)
 
-fun taskAutostartData(
-    task: TaskDb,
-): Pair<ActivityDb, Int>? {
-    val textFeatures = task.text.textFeatures()
-    val activity = textFeatures.activity ?: return null
-    val timerTime = textFeatures.timer ?: return null
-    return activity to timerTime
-}
-
 fun HttpRequestBuilder.appendSystemInfo(
     token: String?,
 ) {
