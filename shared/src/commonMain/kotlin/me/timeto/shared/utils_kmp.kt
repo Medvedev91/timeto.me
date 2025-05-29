@@ -23,7 +23,6 @@ import me.timeto.shared.misc.SystemInfo
 import me.timeto.shared.misc.ioScope
 import me.timeto.shared.misc.time
 import me.timeto.shared.misc.zlog
-import me.timeto.shared.ui.UiException
 
 const val GOLDEN_RATIO = 1.618f
 
@@ -244,30 +243,6 @@ fun Int.toTimerHintNote(
         m == 0 -> "${h}h"
         else -> "${h}:${m.toString().padStart(2, '0')}"
     }
-}
-
-data class ColorRgba(
-    val r: Int, val g: Int,
-    val b: Int, val a: Int = 255,
-) {
-
-    companion object {
-
-        fun fromRgbaStringEx(rgbaString: String): ColorRgba =
-            rgbaString.split(',').map { it.toInt() }.let {
-                when (it.size) {
-                    3 -> ColorRgba(it[0], it[1], it[2])
-                    4 -> ColorRgba(it[0], it[1], it[2], it[3])
-                    else -> {
-                        reportApi("ColorRgba.fromRgbaString($rgbaString) invalid")
-                        throw UiException("Invalid color")
-                    }
-                }
-            }
-    }
-
-    fun toRgbaString(): String =
-        "$r,$g,$b,$a"
 }
 
 //////
