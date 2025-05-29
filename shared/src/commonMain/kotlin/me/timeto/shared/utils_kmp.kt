@@ -29,13 +29,12 @@ const val prayEmoji = "🙏"
 
 fun reportApi(
     message: String,
-    force: Boolean = false,
 ) {
 
     // Not launchEx because of recursion
     ioScope().launch {
 
-        if (!force && !KvDb.KEY.IS_SENDING_REPORTS.selectOrNull().isSendingReports())
+        if (!KvDb.KEY.IS_SENDING_REPORTS.selectOrNull().isSendingReports())
             return@launch
 
         val title: String = when (SystemInfo.instance.os) {
