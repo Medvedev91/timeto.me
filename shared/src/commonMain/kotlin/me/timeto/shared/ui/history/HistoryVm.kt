@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
+import me.timeto.shared.extensions.getNextOrNull
 import me.timeto.shared.extensions.limitMax
 import me.timeto.shared.extensions.limitMin
 import me.timeto.shared.misc.time
