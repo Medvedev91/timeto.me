@@ -252,10 +252,6 @@ data class ColorRgba(
 
     companion object {
 
-        val red = AppleColors.Palettes.red.dark
-        val green = AppleColors.Palettes.green.dark
-        val purple = AppleColors.Palettes.purple.dark
-
         fun fromRgbaString(rgbaString: String): ColorRgba =
             rgbaString.split(',').map { it.toInt() }.let {
                 when (it.size) {
