@@ -1,8 +1,5 @@
 package me.timeto.shared
 
-import app.cash.sqldelight.adapter.primitive.IntColumnAdapter
-import app.cash.sqldelight.db.SqlDriver
-import dbsq.*
 import io.ktor.client.HttpClient
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.forms.submitForm
@@ -14,7 +11,6 @@ import kotlinx.coroutines.flow.*
 import kotlinx.datetime.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
-import me.timeto.appdbsq.TimetomeDB
 import me.timeto.shared.db.*
 import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
 import me.timeto.shared.db.KvDb.Companion.isSendingReports
@@ -320,47 +316,6 @@ suspend fun rescheduleNotifications() {
 val keepScreenOnStateFlow = MutableStateFlow(false)
 
 val backupStateFlow = MutableStateFlow<String?>(null)
-
-///
-/// KMP init/await
-
-lateinit var initKmpDeferred: Deferred<Unit>
-
-internal fun initKmp(
-    sqlDriver: SqlDriver,
-    systemInfo: SystemInfo,
-) {
-    db = TimetomeDB(
-        driver = sqlDriver,
-        ActivitySQAdapter = ActivitySQ.Adapter(
-            IntColumnAdapter,
-            IntColumnAdapter,
-            IntColumnAdapter,
-            IntColumnAdapter,
-            IntColumnAdapter,
-            IntColumnAdapter,
-        ),
-        ChecklistItemSQAdapter = ChecklistItemSQ.Adapter(IntColumnAdapter, IntColumnAdapter, IntColumnAdapter, IntColumnAdapter),
-        ChecklistSQAdapter = ChecklistSQ.Adapter(IntColumnAdapter),
-        EventSQAdapter = EventSQ.Adapter(IntColumnAdapter, IntColumnAdapter),
-        EventTemplateSQAdapter = EventTemplateSQ.Adapter(IntColumnAdapter, IntColumnAdapter, IntColumnAdapter),
-        IntervalSQAdapter = IntervalSQ.Adapter(IntColumnAdapter, IntColumnAdapter, IntColumnAdapter),
-        RepeatingSQAdapter = RepeatingSQ.Adapter(
-            IntColumnAdapter,
-            IntColumnAdapter,
-            IntColumnAdapter,
-            IntColumnAdapter,
-            IntColumnAdapter,
-        ),
-        ShortcutSQAdapter = ShortcutSQ.Adapter(IntColumnAdapter),
-        TaskFolderSQAdapter = TaskFolderSQ.Adapter(IntColumnAdapter, IntColumnAdapter),
-        TaskSQAdapter = TaskSQ.Adapter(IntColumnAdapter, IntColumnAdapter),
-        NoteSQAdapter = NoteSQ.Adapter(IntColumnAdapter, IntColumnAdapter),
-        GoalSqAdapter = GoalSq.Adapter(IntColumnAdapter, IntColumnAdapter, IntColumnAdapter, IntColumnAdapter),
-    )
-    SystemInfo.instance = systemInfo
-    initKmpDeferred = ioScope().async { Cache.init() }
-}
 
 ///
 /// Time
