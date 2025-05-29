@@ -9,13 +9,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
-import me.timeto.shared.*
 import me.timeto.shared.misc.backups.Backupable__Holder
 import me.timeto.shared.misc.backups.Backupable__Item
 import me.timeto.shared.misc.getInt
 import me.timeto.shared.misc.getString
 import me.timeto.shared.misc.time
 import me.timeto.shared.misc.toJsonArray
+import me.timeto.shared.ui.UiException
 
 data class EventTemplateDb(
     val id: Int,
@@ -124,7 +124,7 @@ private fun List<EventTemplateSQ>.toDbList(): List<EventTemplateDb> =
 
 private fun dayTimeValidation(daytime: Int): Int {
     if (daytime < 0)
-        throw UIException("Invalid daytime")
+        throw UiException("Invalid daytime")
     return daytime
 }
 
@@ -134,6 +134,6 @@ private fun textValidation(
 ): String {
     val textValidated = text.trim()
     if (otherTemplates.any { it.text == textValidated })
-        throw UIException("Template \"$textValidated\" already exists")
+        throw UiException("Template \"$textValidated\" already exists")
     return textValidated
 }
