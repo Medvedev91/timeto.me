@@ -11,7 +11,7 @@ class ColorPickerVm(
 
     companion object {
 
-        fun prepCustomColorRgbaText(colorRgba: ColorRgba):String {
+        fun prepCustomColorRgbaText(colorRgba: ColorRgba): String {
             val (r, g, b) = listOf(colorRgba.r, colorRgba.g, colorRgba.b)
             return "RGB: $r,$g,$b / #${r.toHex()}${g.toHex()}${b.toHex()}".uppercase()
         }
