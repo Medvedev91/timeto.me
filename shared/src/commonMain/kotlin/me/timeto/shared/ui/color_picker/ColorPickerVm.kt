@@ -1,8 +1,8 @@
 package me.timeto.shared.ui.color_picker
 
 import kotlinx.coroutines.flow.*
-import me.timeto.shared.AppleColors
 import me.timeto.shared.ColorRgba
+import me.timeto.shared.misc.Palette
 import me.timeto.shared.vm.__Vm
 
 class ColorPickerVm(
@@ -23,7 +23,7 @@ class ColorPickerVm(
 
         val saveText = "Done"
 
-        val colorGroups: List<List<ColorItem>> = AppleColors.Palettes.all
+        val colorGroups: List<List<ColorItem>> = palettes
             .map { listOf(it.aLight, it.light, it.aDark) }
             .flatten()
             .map {
@@ -57,3 +57,26 @@ class ColorPickerVm(
 
 private fun Int.toHex(): String =
     toString(16).padStart(2, '0')
+
+private val palettes: List<Palette> = listOf(
+    Palette.red,
+    Palette.orange,
+    Palette.yellow,
+    Palette.green,
+    Palette.mint,
+    Palette.teal,
+    Palette.cyan,
+    Palette.blue,
+    Palette.indigo,
+    Palette.purple,
+    Palette.pink,
+    Palette.brown,
+    // Custom gray
+    Palette(
+        "Gray",
+        ColorRgba(142, 142, 147),
+        ColorRgba(142, 142, 147),
+        ColorRgba(174, 174, 178),
+        ColorRgba(72, 72, 74),
+    ),
+)
