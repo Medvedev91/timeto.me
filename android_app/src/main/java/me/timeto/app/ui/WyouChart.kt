@@ -22,8 +22,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.misc.extensions.toColor
+import me.timeto.shared.extensions.limitMax
 import me.timeto.shared.misc.PieChart
-import me.timeto.shared.limitMax
 import java.lang.Math.PI
 
 object WyouChart {

@@ -4,7 +4,7 @@ import me.timeto.shared.TextFeatures
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
-import me.timeto.shared.limitMax
+import me.timeto.shared.extensions.limitMax
 import me.timeto.shared.misc.time
 import me.timeto.shared.textFeatures
 
