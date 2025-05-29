@@ -151,10 +151,6 @@ fun getSoundTimerExpiredFileName(withExtension: Boolean): String =
  */
 expect fun getResourceContent(file: String, type: String): String
 
-fun Int.limitMin(value: Int) = if (this < value) value else this
-fun Int.limitMax(value: Int) = if (this > value) value else this
-fun Int.limitMinMax(min: Int, max: Int) = this.limitMin(min).limitMax(max)
-
 fun Float.limitMin(value: Float) = if (this < value) value else this
 fun Float.limitMax(value: Float) = if (this > value) value else this
 fun Float.limitMinMax(min: Float, max: Float) = this.limitMin(min).limitMax(max)
