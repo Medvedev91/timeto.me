@@ -27,7 +27,6 @@ const val HI_EMAIL = "hi@timeto.me"
 
 const val prayEmoji = "🙏"
 
-internal expect val REPORT_API_TITLE: String
 fun reportApi(
     message: String,
     force: Boolean = false,
@@ -39,6 +38,12 @@ fun reportApi(
         if (!force && !KvDb.KEY.IS_SENDING_REPORTS.selectOrNull().isSendingReports())
             return@launch
 
+        val title: String = when (SystemInfo.instance.os) {
+            is SystemInfo.Os.Android -> "🤖 Android"
+            is SystemInfo.Os.Ios -> " iOS"
+            is SystemInfo.Os.Watchos -> "⌚ Watch OS"
+        }
+
         zlog("reportApi $message")
         try {
             HttpClient().use {
@@ -46,7 +51,7 @@ fun reportApi(
                 it.submitForm(
                     url = "https://api.timeto.me/report",
                     formParameters = Parameters.build {
-                        append("title", REPORT_API_TITLE)
+                        append("title", title)
                         append("message", message)
                     }
                 ) {

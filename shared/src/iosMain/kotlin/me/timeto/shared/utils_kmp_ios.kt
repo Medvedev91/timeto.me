@@ -10,8 +10,6 @@ import platform.UIKit.UIDevice
 import me.timeto.shared.db.*
 import me.timeto.shared.misc.SystemInfo
 
-internal actual val REPORT_API_TITLE = " iOS"
-
 fun initKmpIos() {
     val systemInfo = SystemInfo(
         build = (NSBundle.mainBundle.infoDictionary!!["CFBundleVersion"] as String).toInt(),

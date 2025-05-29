@@ -6,8 +6,6 @@ import me.timeto.shared.misc.SystemInfo
 import platform.Foundation.NSBundle
 import platform.WatchKit.WKInterfaceDevice
 
-internal actual val REPORT_API_TITLE = "⌚ Watch OS"
-
 fun initKmpWatchOS() {
     val deviceData = DeviceData(
         build = (NSBundle.mainBundle.infoDictionary!!["CFBundleVersion"] as String).toInt(),

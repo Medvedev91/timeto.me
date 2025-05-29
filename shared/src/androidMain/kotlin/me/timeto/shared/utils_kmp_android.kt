@@ -10,8 +10,6 @@ import java.io.InputStreamReader
 
 private lateinit var androidApplication: Application
 
-internal actual val REPORT_API_TITLE = "🤖 Android"
-
 fun initKmpAndroid(
     application: Application,
     build: Int,
