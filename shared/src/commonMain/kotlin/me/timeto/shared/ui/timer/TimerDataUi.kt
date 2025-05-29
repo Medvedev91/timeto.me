@@ -6,6 +6,7 @@ import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.misc.ColorEnum
 import me.timeto.shared.misc.time
+import me.timeto.shared.ui.UiException
 import me.timeto.shared.ui.daytime.DaytimeUi
 import me.timeto.shared.ui.activities.timer.ActivityTimerStrategy
 import kotlin.math.absoluteValue
@@ -138,7 +139,7 @@ class TimerDataUi(
             launchExIo {
                 try {
                     intervalDb.updateTimer(newTimer)
-                } catch (e: UIException) {
+                } catch (e: UiException) {
                     // todo
                     throw e
                 }
