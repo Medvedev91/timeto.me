@@ -1,20 +1,24 @@
 package me.timeto.shared.db
 
 import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
 import dbsq.TaskSQ
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
-import me.timeto.shared.*
+import me.timeto.shared.Cache
+import me.timeto.shared.TextFeatures
+import me.timeto.shared.TimerTimeParser
+import me.timeto.shared.UnixTime
+import me.timeto.shared.launchExIo
+import me.timeto.shared.localUtcOffset
 import me.timeto.shared.misc.backups.Backupable__Holder
 import me.timeto.shared.misc.backups.Backupable__Item
 import me.timeto.shared.misc.getInt
 import me.timeto.shared.misc.getString
 import me.timeto.shared.misc.time
 import me.timeto.shared.misc.toJsonArray
+import me.timeto.shared.textFeatures
+import me.timeto.shared.ui.UiException
 import me.timeto.shared.ui.tasks.TaskUi
 import kotlin.math.max
 
@@ -26,32 +30,36 @@ data class TaskDb(
 
     companion object : Backupable__Holder {
 
-        fun anyChangeFlow() = db.taskQueries.anyChange().asFlow()
+        fun anyChangeFlow(): Flow<*> =
+            db.taskQueries.anyChange().asFlow()
 
-        suspend fun getAsc() = dbIo {
-            db.taskQueries.getAsc().executeAsList().map { it.toDb() }
+        suspend fun selectAsc(): List<TaskDb> = dbIo {
+            db.taskQueries.selectAsc().asList { toDb() }
         }
 
-        fun getAscFlow() = db.taskQueries.getAsc().asFlow()
-            .mapToList(Dispatchers.IO).map { list -> list.map { it.toDb() } }
+        fun selectAscFlow(): Flow<List<TaskDb>> =
+            db.taskQueries.selectAsc().asListFlow { toDb() }
 
-        suspend fun getByIdOrNull(id: Int): TaskDb? = dbIo {
-            db.taskQueries.getById(id).executeAsOneOrNull()?.toDb()
+        suspend fun selectByIdOrNull(id: Int): TaskDb? = dbIo {
+            db.taskQueries.selectById(id).executeAsOneOrNull()?.toDb()
         }
 
-        ///
-        /// Add
+        //
+        // Insert
 
-        suspend fun addWithValidation(
+        suspend fun insertWithValidation(
             text: String,
             folder: TaskFolderDb,
         ): Unit = dbIo {
             db.transaction {
-                addWithValidation_transactionRequired(text = text, folder = folder)
+                insertWithValidation_transactionRequired(
+                    text = text,
+                    folder = folder,
+                )
             }
         }
 
-        fun addWithValidation_transactionRequired(
+        fun insertWithValidation_transactionRequired(
             text: String,
             folder: TaskFolderDb,
         ): Int {
@@ -66,7 +74,7 @@ data class TaskDb(
 
         private fun getNextId_ioRequired(): Int = max(
             time(),
-            db.taskQueries.getDesc(limit = 1).executeAsOneOrNull()?.id?.plus(1) ?: 0
+            db.taskQueries.selectDesc(limit = 1).executeAsOneOrNull()?.id?.plus(1) ?: 0
         )
 
         //////
@@ -92,15 +100,15 @@ data class TaskDb(
 
             val validatedText = textFeatures.textWithFeatures()
             if (validatedText.isEmpty())
-                throw UIException("Empty text")
+                throw UiException("Empty text")
             return validatedText
         }
 
-        ///
-        /// Backupable Holder
+        //
+        // Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.taskQueries.getAsc().executeAsList().map { it.toDb() }
+            db.taskQueries.selectAsc().asList { toDb() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
@@ -112,22 +120,23 @@ data class TaskDb(
         }
     }
 
-    val isToday = folder_id == TaskFolderDb.ID_TODAY
-    val isTmrw = folder_id == TaskFolderDb.ID_TMRW
+    val isToday: Boolean = folder_id == TaskFolderDb.ID_TODAY
+    val isTmrw: Boolean = folder_id == TaskFolderDb.ID_TMRW
 
     fun toUi() = TaskUi(this)
 
-    fun unixTime(utcOffset: Int = localUtcOffset) = UnixTime(id, utcOffset = utcOffset)
+    fun unixTime(utcOffset: Int = localUtcOffset) =
+        UnixTime(id, utcOffset = utcOffset)
 
     suspend fun startInterval(
         timer: Int,
-        activity: ActivityDb,
+        activityDb: ActivityDb,
         intervalId: Int = time(),
-    ) = dbIo {
+    ): Unit = dbIo {
         db.transaction {
             IntervalDb.insertWithValidationNeedTransaction(
                 timer = timer,
-                activityDb = activity,
+                activityDb = activityDb,
                 note = text,
                 id = intervalId,
             )
@@ -135,50 +144,51 @@ data class TaskDb(
         }
     }
 
-    fun startIntervalForUI(
-        onStarted: () -> Unit,
-        activitiesSheet: () -> Unit, // todo data for sheet
-        timerSheet: (activity: ActivityDb) -> Unit,
+    fun startIntervalForUi(
+        ifJustStarted: () -> Unit,
+        ifActivityNeeded: () -> Unit,
+        ifTimerNeeded: (ActivityDb) -> Unit,
     ) {
-        val tf = this.text.textFeatures()
-        val (activity, timer) = tf.activity to tf.timer
+        val tf: TextFeatures = this.text.textFeatures()
+        val activityDb: ActivityDb? = tf.activity
+        val seconds: Int? = tf.timer
 
-        if (activity != null && timer != null) {
+        if (activityDb != null && seconds != null) {
             launchExIo {
                 startInterval(
-                    timer = timer,
-                    activity = activity,
+                    timer = seconds,
+                    activityDb = activityDb,
                 )
-                onStarted()
+                ifJustStarted()
             }
             return
         }
 
-        if (activity != null) {
-            timerSheet(activity)
+        if (activityDb != null) {
+            ifTimerNeeded(activityDb)
             return
         }
 
-        activitiesSheet()
+        ifActivityNeeded()
     }
 
-    suspend fun upTextWithValidation(newText: String): Unit = dbIo {
-        db.taskQueries.upTextById(
+    suspend fun updateTextWithValidation(newText: String): Unit = dbIo {
+        db.taskQueries.updateTextById(
             id = id, text = validateText(newText)
         )
     }
 
-    suspend fun upFolder(
+    suspend fun updateFolder(
         newFolder: TaskFolderDb,
         replaceIfTmrw: Boolean,
     ): Unit = dbIo {
-        db.taskQueries.upFolderIdById(
+        db.taskQueries.updateFolderIdById(
             id = id,
             folder_id = newFolder.id,
         )
         // To know which day the task moved to "Tomorrow"
         if (replaceIfTmrw && newFolder.isTmrw) {
-            db.taskQueries.upId(
+            db.taskQueries.updateId(
                 oldId = id,
                 newId = getNextId_ioRequired(),
             )
@@ -189,10 +199,11 @@ data class TaskDb(
         db.taskQueries.deleteById(id)
     }
 
-    ///
-    /// Backupable Item
+    //
+    // Backupable Item
 
-    override fun backupable__getId(): String = id.toString()
+    override fun backupable__getId(): String =
+        id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
         id, text, folder_id
@@ -200,7 +211,7 @@ data class TaskDb(
 
     override fun backupable__update(json: JsonElement) {
         val j = json.jsonArray
-        db.taskQueries.upById(
+        db.taskQueries.updateById(
             id = j.getInt(0),
             text = j.getString(1),
             folder_id = j.getInt(2),

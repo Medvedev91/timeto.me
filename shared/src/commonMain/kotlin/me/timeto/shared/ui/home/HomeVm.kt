@@ -188,7 +188,7 @@ class HomeVm : __Vm<HomeVm.State>() {
             }
 
         TaskDb
-            .getAscFlow()
+            .selectAscFlow()
             .map { it.filter { task -> task.isToday } }
             .onEachExIn(scopeVm) { tasks ->
                 state.update { it.copy(todayTasksUi = tasks.map { it.toUi() }) }

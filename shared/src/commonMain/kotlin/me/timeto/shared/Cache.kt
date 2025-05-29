@@ -65,8 +65,8 @@ object Cache {
         kvDb = KvDb.selectAll()
         KvDb.selectAllFlow().onEachExIn(scope) { kvDb = it }
 
-        tasksDb = TaskDb.getAsc()
-        TaskDb.getAscFlow().onEachExIn(scope) { tasksDb = it }
+        tasksDb = TaskDb.selectAsc()
+        TaskDb.selectAscFlow().onEachExIn(scope) { tasksDb = it }
 
         taskFoldersDbSorted = TaskFolderDb.selectAllSorted()
         TaskFolderDb.selectAllSortedFlow().onEachExIn(scope) { taskFoldersDbSorted = it }

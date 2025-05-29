@@ -45,14 +45,14 @@ class TasksTabTasksVm(
 
     init {
         val scopeVm = scopeVm()
-        TaskDb.getAscFlow().onEachExIn(scopeVm) { list ->
+        TaskDb.selectAscFlow().onEachExIn(scopeVm) { list ->
             state.update { it.copy(tasksVmUi = list.toUiList(taskFolderDb)) }
         }
         // Update daytime badges
         scopeVm.launch {
             while (true) {
                 delayToNextMinute()
-                state.update { it.copy(tasksVmUi = TaskDb.getAsc().toUiList(taskFolderDb)) }
+                state.update { it.copy(tasksVmUi = TaskDb.selectAsc().toUiList(taskFolderDb)) }
             }
         }
     }
@@ -135,7 +135,7 @@ class TasksTabTasksVm(
 
         fun upFolder(newFolder: TaskFolderDb) {
             launchExIo {
-                taskUi.taskDb.upFolder(newFolder, replaceIfTmrw = true)
+                taskUi.taskDb.updateFolder(newFolder, replaceIfTmrw = true)
             }
         }
 

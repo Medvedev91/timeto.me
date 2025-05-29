@@ -28,7 +28,7 @@ class ActivityTimerVm(
                 is ActivityTimerStrategy.Task ->
                     strategy.taskDb.startInterval(
                         timer = seconds,
-                        activity = activityDb,
+                        activityDb = activityDb,
                     )
                 is ActivityTimerStrategy.Interval ->
                     IntervalDb.insertWithValidation(

@@ -6,52 +6,67 @@ CREATE TABLE TaskSQ (
     text TEXT NOT NULL
 );
 
-anyChange: SELECT id FROM TaskSQ LIMIT 1;
+--
+-- Select
 
-getAsc:
+anyChange:
+SELECT id
+FROM TaskSQ
+LIMIT 1;
+
+selectAsc:
 SELECT *
 FROM TaskSQ
 ORDER BY id ASC;
 
-getDesc:
+selectDesc:
 SELECT *
 FROM TaskSQ
 ORDER BY id DESC
 LIMIT :limit;
 
-getById:
+selectById:
 SELECT *
 FROM TaskSQ
 WHERE id = ?
 LIMIT 1;
 
+--
+-- Insert
+
 insert:
 INSERT INTO TaskSQ
 (id, text, folder_id) VALUES (?, ?, ?);
 
-upId:
+--
+-- Update
+
+updateId:
 UPDATE TaskSQ
 SET id = :newId
 WHERE id = :oldId;
 
-upById:
+updateById:
 UPDATE TaskSQ
 SET text = ?, folder_id = ?
 WHERE id = ?;
 
-upTextById:
+updateTextById:
 UPDATE TaskSQ
 SET text = ?
 WHERE id = ?;
 
-upFolderIdById:
+updateFolderIdById:
 UPDATE TaskSQ
 SET folder_id = ?
 WHERE id = ?;
+
+--
+-- Delete
 
 deleteById:
 DELETE FROM TaskSQ
 WHERE id = ?;
 
-truncate:
+deleteAll:
 DELETE FROM TaskSQ;

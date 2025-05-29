@@ -111,13 +111,13 @@ class TaskFormVm(
                 tf.textWithFeatures()
             when (strategy) {
                 is TaskFormStrategy.NewTask -> {
-                    TaskDb.addWithValidation(
+                    TaskDb.insertWithValidation(
                         text = textWithFeatures,
                         folder = strategy.taskFolderDb,
                     )
                 }
                 is TaskFormStrategy.EditTask -> {
-                    strategy.taskDb.upTextWithValidation(
+                    strategy.taskDb.updateTextWithValidation(
                         newText = textWithFeatures,
                     )
                 }

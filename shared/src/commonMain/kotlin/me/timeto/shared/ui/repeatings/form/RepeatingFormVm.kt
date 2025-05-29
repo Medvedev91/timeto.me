@@ -163,11 +163,11 @@ class RepeatingFormVm(
                     daytime = daytimeUi.seconds,
                     isImportant = isImportant,
                 )
-                TaskDb.getAsc().forEach { taskDb ->
+                TaskDb.selectAsc().forEach { taskDb ->
                     val taskTf = taskDb.text.textFeatures()
                     if (taskTf.fromRepeating?.id == repeatingDb.id) {
                         val newTf = taskTf.copy(isImportant = isImportant)
-                        taskDb.upTextWithValidation(newTf.textWithFeatures())
+                        taskDb.updateTextWithValidation(newTf.textWithFeatures())
                     }
                 }
             } else {

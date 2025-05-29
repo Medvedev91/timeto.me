@@ -157,7 +157,7 @@ private fun syncTmrw() {
         .filter { it.isTmrw && (it.unixTime(utcOffset = utcOffsetDS).localDay < todayDay) }
         .forEach { task ->
             launchExIo {
-                task.upFolder(
+                task.updateFolder(
                     newFolder = todayFolder,
                     replaceIfTmrw = false // No matter
                 )

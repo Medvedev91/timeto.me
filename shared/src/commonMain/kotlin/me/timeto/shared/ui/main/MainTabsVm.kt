@@ -72,7 +72,7 @@ class MainTabsVm : __Vm<MainTabsVm.State>() {
         combine(
             BatteryInfo.levelFlow,
             BatteryInfo.isChargingFlow,
-            TaskDb.getAscFlow(),
+            TaskDb.selectAscFlow(),
             IntervalDb.selectLastOneOrNullFlow(),
         ) { level, isCharging, tasksDb, lastIntervalDb ->
             state.update {

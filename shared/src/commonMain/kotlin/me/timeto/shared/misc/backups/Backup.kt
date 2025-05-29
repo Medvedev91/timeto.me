@@ -35,7 +35,7 @@ object Backup {
             "intervals" to IntervalDb.selectDesc(intervalsLimit).modelsToJsonArray(),
             "goals" to GoalDb.selectAll().modelsToJsonArray(),
             "task_folders" to TaskFolderDb.selectAllSorted().modelsToJsonArray(),
-            "tasks" to TaskDb.getAsc().modelsToJsonArray(),
+            "tasks" to TaskDb.selectAsc().modelsToJsonArray(),
             "checklists" to ChecklistDb.selectAsc().modelsToJsonArray(),
             "checklist_items" to ChecklistItemDb.selectSorted().modelsToJsonArray(),
             "shortcuts" to ShortcutDb.selectAsc().modelsToJsonArray(),
@@ -57,7 +57,7 @@ object Backup {
 
             val json = Json.parseToJsonElement(jString)
 
-            db.taskQueries.truncate()
+            db.taskQueries.deleteAll()
             db.taskFolderQueries.truncate()
             db.goalQueries.truncate()
             db.intervalQueries.truncate()

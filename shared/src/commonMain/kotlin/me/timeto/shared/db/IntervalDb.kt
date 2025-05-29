@@ -158,7 +158,7 @@ data class IntervalDb(
                     prolonged = null,
                 )
 
-                val pausedTaskId: Int = TaskDb.addWithValidation_transactionRequired(
+                val pausedTaskId: Int = TaskDb.insertWithValidation_transactionRequired(
                     text = pausedTf.textWithFeatures(),
                     folder = Cache.getTodayFolderDb(),
                 )
@@ -270,7 +270,7 @@ data class IntervalDb(
                 timer = timer,
                 activity = activityDb,
             )
-            TaskDb.addWithValidation_transactionRequired(
+            TaskDb.insertWithValidation_transactionRequired(
                 text = textTf.textWithFeatures(),
                 folder = Cache.getTodayFolderDb(),
             )

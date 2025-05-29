@@ -68,7 +68,7 @@ class TaskFolderFormVm(
             return@launchExIo
         }
 
-        if (TaskDb.getAsc().any { it.folder_id == folderDb.id }) {
+        if (TaskDb.selectAsc().any { it.folder_id == folderDb.id }) {
             dialogsManager.alert("The folder must be empty before deletion")
             return@launchExIo
         }
