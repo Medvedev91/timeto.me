@@ -20,9 +20,6 @@ fun HttpRequestBuilder.appendSystemInfo(
     }
 }
 
-fun getSoundTimerExpiredFileName(withExtension: Boolean): String =
-    "sound_timer_expired${if (withExtension) ".mp3" else ""}"
-
 fun <T> MutableMap<T, Int>.incOrSet(key: T, value: Int) {
     set(key, (get(key) ?: 0) + value)
 }
