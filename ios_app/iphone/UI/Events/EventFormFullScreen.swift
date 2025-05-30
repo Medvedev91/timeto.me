@@ -111,7 +111,7 @@ private struct EventFormFullScreenInner: View {
                         )
                     },
                     label: {
-                        Text(state.saveText)
+                        Text(state.doneText)
                             .font(.system(size: 16, weight: .semibold))
                             .padding(.horizontal, 12)
                             .padding(.vertical, 6)

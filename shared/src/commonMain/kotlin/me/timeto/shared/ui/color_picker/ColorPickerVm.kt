@@ -21,7 +21,7 @@ class ColorPickerVm(
         val colorRgba: ColorRgba,
     ) {
 
-        val saveText = "Done"
+        val doneText = "Done"
 
         val colorGroups: List<List<ColorItem>> = palettes
             .map { listOf(it.aLight, it.light, it.aDark) }

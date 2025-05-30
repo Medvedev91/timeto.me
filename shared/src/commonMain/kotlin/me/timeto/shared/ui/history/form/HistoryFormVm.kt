@@ -36,7 +36,7 @@ class HistoryFormVm(
                     ?.takeIf { it.isNotBlank() }
                 note ?: initIntervalDb.selectActivityDbCached().name.textFeatures().textNoFeatures
             }
-        val saveText: String =
+        val doneText: String =
             if (initIntervalDb == null) "Create" else "Save"
 
         val activityTitle = "Activity"

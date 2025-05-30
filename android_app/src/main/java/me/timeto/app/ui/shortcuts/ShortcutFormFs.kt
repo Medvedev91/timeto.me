@@ -68,7 +68,7 @@ fun ShortcutFormFs(
             title = state.title,
             scrollState = scrollState,
             actionButton = HeaderActionButton(
-                text = state.saveText,
+                text = state.doneText,
                 isEnabled = state.isSaveEnabled,
                 onClick = {
                     vm.save(

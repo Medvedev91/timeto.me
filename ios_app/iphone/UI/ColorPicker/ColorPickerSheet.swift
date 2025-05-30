@@ -137,7 +137,7 @@ private struct ColorPickerSheetInner: View {
                 }
             }
             ToolbarItem(placement: .primaryAction) {
-                Button(state.saveText) {
+                Button(state.doneText) {
                     onDone(state.colorRgba)
                     dismiss()
                 }

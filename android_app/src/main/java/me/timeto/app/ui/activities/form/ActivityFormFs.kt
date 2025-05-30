@@ -66,7 +66,7 @@ fun ActivityFormFs(
             title = state.title,
             scrollState = scrollState,
             actionButton = HeaderActionButton(
-                text = state.saveText,
+                text = state.doneText,
                 isEnabled = true,
                 onClick = {
                     vm.save(

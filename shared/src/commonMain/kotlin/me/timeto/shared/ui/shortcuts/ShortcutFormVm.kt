@@ -21,7 +21,7 @@ class ShortcutFormVm(
         val title: String =
             if (shortcutDb != null) "Edit Shortcut" else "New Shortcut"
 
-        val saveText: String =
+        val doneText: String =
             if (shortcutDb != null) "Save" else "Create"
 
         val isSaveEnabled: Boolean =

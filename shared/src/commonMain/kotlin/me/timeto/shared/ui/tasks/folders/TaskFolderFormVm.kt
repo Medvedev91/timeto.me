@@ -21,7 +21,7 @@ class TaskFolderFormVm(
         val title: String =
             if (folderDb != null) "Edit Folder" else "New Folder"
 
-        val saveText: String =
+        val doneText: String =
             if (folderDb != null) "Done" else "Create"
 
         val namePlaceholder = "Folder Name"

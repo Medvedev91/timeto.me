@@ -20,7 +20,7 @@ class NoteFormVm(
         val title: String =
             if (noteDb == null) "New Note" else "Edit Note"
 
-        val saveText = "Save"
+        val doneText = "Save"
         val isSaveEnabled: Boolean = text.isNotBlank()
 
         val textPlaceholder = "Text"

@@ -82,7 +82,7 @@ fun ColorPickerFs(
             title = title,
             scrollState = null,
             actionButton = HeaderActionButton(
-                text = state.saveText,
+                text = state.doneText,
                 isEnabled = true,
                 onClick = {
                     onDone(state.colorRgba)

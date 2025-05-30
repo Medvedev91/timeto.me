@@ -21,7 +21,7 @@ class EventFormVm(
 ) : __Vm<EventFormVm.State>() {
 
     data class State(
-        val saveText: String,
+        val doneText: String,
         val textFeatures: TextFeatures,
         val unixDay: Int,
         val daytimeUi: DaytimeUi,
@@ -58,7 +58,7 @@ class EventFormVm(
             (unixTime.time - unixTime.localDayStartTime()).toHms()
         state = MutableStateFlow(
             State(
-                saveText = if (initEventDb != null) "Save" else "Create",
+                doneText = if (initEventDb != null) "Save" else "Create",
                 textFeatures = textFeatures,
                 unixDay = unixTime.localDay,
                 daytimeUi = DaytimeUi(hour = h, minute = m),

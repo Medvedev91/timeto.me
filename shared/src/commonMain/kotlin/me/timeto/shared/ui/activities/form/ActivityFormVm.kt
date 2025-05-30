@@ -39,7 +39,7 @@ class ActivityFormVm(
         val title: String =
             if (initActivityDb != null) "Edit Activity" else "New Activity"
 
-        val saveText: String =
+        val doneText: String =
             if (initActivityDb != null) "Save" else "Create"
 
         val namePlaceholder = "Activity Name"

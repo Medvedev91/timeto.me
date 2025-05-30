@@ -228,7 +228,7 @@ fun EventFormFs(
             }
 
             Text(
-                text = state.saveText,
+                text = state.doneText,
                 modifier = Modifier
                     .padding(start = 10.dp, end = H_PADDING)
                     .clip(roundedShape)

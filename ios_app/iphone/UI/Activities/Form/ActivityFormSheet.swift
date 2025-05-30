@@ -234,7 +234,7 @@ private struct ActivityFormSheetInner: View {
                 }
             }
             ToolbarItem(placement: .primaryAction) {
-                Button(state.saveText) {
+                Button(state.doneText) {
                     vm.save(
                         dialogsManager: navigation,
                         onSave: {

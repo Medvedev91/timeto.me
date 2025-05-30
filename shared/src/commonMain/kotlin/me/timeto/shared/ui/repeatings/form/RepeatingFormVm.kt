@@ -25,7 +25,7 @@ class RepeatingFormVm(
     data class State(
         val initRepeatingDb: RepeatingDb?,
         val title: String,
-        val saveText: String,
+        val doneText: String,
         val text: String,
         val period: RepeatingDb.Period?,
         val daytimeUi: DaytimeUi?,
@@ -75,7 +75,7 @@ class RepeatingFormVm(
             State(
                 initRepeatingDb = initRepeatingDb,
                 title = if (initRepeatingDb != null) "Edit Repeating" else "New Repeating",
-                saveText = if (initRepeatingDb != null) "Save" else "Create",
+                doneText = if (initRepeatingDb != null) "Save" else "Create",
                 text = tf.textNoFeatures,
                 period = initRepeatingDb?.getPeriod(),
                 daytimeUi = initRepeatingDb?.daytime?.let { DaytimeUi.byDaytime(it) },
