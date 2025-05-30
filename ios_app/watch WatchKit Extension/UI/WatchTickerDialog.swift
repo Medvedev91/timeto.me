@@ -12,7 +12,7 @@ struct WatchTickerDialog: View {
     
     // Int32 для соответствия типа с TimerPickerItem.seconds
     @State private var formSeconds: Int32
-    private let timeItems: [TimerPickerItem]
+    private let timeItems: [WatchTimerPickerItemTodoRemove]
     
     init(
         activity: ActivityDb,
@@ -21,9 +21,9 @@ struct WatchTickerDialog: View {
     ) {
         self.activity = activity
         
-        let defSeconds = TimerPickerItem.companion.calcDefSeconds(activity: activity, note: task?.text)
+        let defSeconds = WatchTimerPickerItemTodoRemove.companion.calcDefSeconds(activity: activity, note: task?.text)
         _formSeconds = State(initialValue: defSeconds)
-        timeItems = TimerPickerItem.companion.buildList(defSeconds: defSeconds)
+        timeItems = WatchTimerPickerItemTodoRemove.companion.buildList(defSeconds: defSeconds)
         
         self.preAdd = preAdd
         self.task = task
