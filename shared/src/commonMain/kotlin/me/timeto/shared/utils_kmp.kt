@@ -8,7 +8,6 @@ import me.timeto.shared.db.*
 import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
 import me.timeto.shared.misc.SystemInfo
 import me.timeto.shared.misc.ioScope
-import me.timeto.shared.misc.time
 
 const val GOLDEN_RATIO = 1.618f
 
@@ -16,11 +15,6 @@ const val OPEN_SOURCE_URL = "https://github.com/Medvedev91/timeto.me"
 const val HI_EMAIL = "hi@timeto.me"
 
 //
-
-internal suspend fun delayToNextMinute(extraMls: Long = 1_000L) {
-    val secondsToNewMinute = 60 - (time() % 60)
-    delay((secondsToNewMinute * 1_000L) + extraMls)
-}
 
 fun CoroutineScope.launchEx(
     block: suspend CoroutineScope.() -> Unit,
