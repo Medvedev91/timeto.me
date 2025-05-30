@@ -3,31 +3,31 @@ import SwiftUI
 import shared
 
 extension View {
-
+    
     func attachAutoBackupIos() -> some View {
         modifier(AutoBackupIos__Modifier())
     }
 }
 
 private struct AutoBackupIos__Modifier: ViewModifier {
-
+    
     @State private var autoBackupTimer = Timer.publish(every: 30, on: .main, in: .common).autoconnect()
-
+    
     func body(content: Content) -> some View {
         content
-                .onReceive(autoBackupTimer) { _ in
-                    AutoBackupIos.dailyBackupIfNeeded()
-                }
-                .onAppear {
-                    myAsync {
-                        do {
-                            AutoBackup.shared.upLastTimeCache(unixTime: try AutoBackupIos.getLastTimeOrNull())
-                        } catch {
-                            reportApi("AutoBackupIos__Modifier\n\(error)")
-                        }
+            .onReceive(autoBackupTimer) { _ in
+                AutoBackupIos.dailyBackupIfNeeded()
+            }
+            .onAppear {
+                myAsync {
+                    do {
+                        AutoBackup.shared.upLastTimeCache(unixTime: try AutoBackupIos.getLastTimeOrNull())
+                    } catch {
+                        reportApi("AutoBackupIos__Modifier\n\(error)")
                     }
-                    AutoBackupIos.dailyBackupIfNeeded()
                 }
+                AutoBackupIos.dailyBackupIfNeeded()
+            }
     }
 }
 
@@ -37,7 +37,7 @@ private struct AutoBackupIos__Modifier: ViewModifier {
 /// You must always update lastDate on changes.
 ///
 class AutoBackupIos {
-
+    
     static func dailyBackupIfNeeded() {
         Task {
             do {
@@ -51,47 +51,47 @@ class AutoBackupIos {
             }
         }
     }
-
+    
     static func newBackup() async throws {
         let autoBackupData = try await AutoBackup.shared.buildAutoBackup()
         FileManager.default.createFile(
-                atPath: try AutoBackupIos.autoBackupsFolder().appendingPathComponent(autoBackupData.fileName).path,
-                contents: autoBackupData.jsonString.data(using: .utf8)
+            atPath: try AutoBackupIos.autoBackupsFolder().appendingPathComponent(autoBackupData.fileName).path,
+            contents: autoBackupData.jsonString.data(using: .utf8)
         )
         AutoBackup.shared.upLastTimeCache(unixTime: autoBackupData.unixTime)
     }
-
+    
     static func getLastTimeOrNull() throws -> UnixTime? {
         guard let lastBackup = try getAutoBackupsSortedDesc().first?.lastPathComponent else {
             return nil
         }
         return try Backup.shared.fileNameToUnixTime(fileName: lastBackup)
     }
-
+    
     static func cleanOld() throws {
         try getAutoBackupsSortedDesc()
-                .dropFirst(10)
-                .forEach { url in
-                    try FileManager.default.removeItem(at: url)
-                }
+            .dropFirst(10)
+            .forEach { url in
+                try FileManager.default.removeItem(at: url)
+            }
     }
-
+    
     static private func getAutoBackupsSortedDesc() throws -> [URL] {
         try FileManager.default.contentsOfDirectory(at: autoBackupsFolder(), includingPropertiesForKeys: nil)
-                .filter { $0.path.contains(".json") }
-                .sorted { url1, url2 in url1.path > url2.path }
+            .filter { $0.path.contains(".json") }
+            .sorted { url1, url2 in url1.path > url2.path }
     }
-
+    
     ///
     /// Folders
-
+    
     static func autoBackupsFolder() throws -> URL {
         let containerUrl = iCloudContainerUrl() ?? localContainerUrl()
         let autobackupsUrl = containerUrl.appendingPathComponent("autobackups")
         try FileManager.default.createDirectory(at: autobackupsUrl, withIntermediateDirectories: true)
         return autobackupsUrl
     }
-
+    
     ///
     /// iCloud folder for sync
     ///
@@ -112,7 +112,7 @@ class AutoBackupIos {
         }
         return iCloudContainerUrl.appendingPathComponent("Documents")
     }
-
+    
     ///
     /// The folder for "Files" -> "On My iPhone".
     /// It is needed to add to plist https://stackoverflow.com/a/49214026/5169420.
