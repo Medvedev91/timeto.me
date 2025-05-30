@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.ActivityDb
-import me.timeto.shared.incOrSet
 import me.timeto.shared.launchEx
 import me.timeto.shared.localUtcOffset
 import me.timeto.shared.ui.DayBarsUi
@@ -172,4 +171,8 @@ private fun prepActivitiesUi(
             )
         }
         .sortedByDescending { it.seconds }
+}
+
+private fun <T> MutableMap<T, Int>.incOrSet(key: T, value: Int) {
+    set(key, (get(key) ?: 0) + value)
 }

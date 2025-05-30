@@ -20,10 +20,6 @@ fun HttpRequestBuilder.appendSystemInfo(
     }
 }
 
-fun <T> MutableMap<T, Int>.incOrSet(key: T, value: Int) {
-    set(key, (get(key) ?: 0) + value)
-}
-
 ///
 /// Notifications Flow
 
