@@ -7,13 +7,14 @@ import platform.Foundation.NSBundle
 import platform.WatchKit.WKInterfaceDevice
 
 fun initKmpWatchOS() {
-    val deviceData = DeviceData(
+    val systemInfo = SystemInfo(
         build = (NSBundle.mainBundle.infoDictionary!!["CFBundleVersion"] as String).toInt(),
-        os = "watchos-${WKInterfaceDevice.currentDevice().systemVersion}",
+        version = NSBundle.mainBundle.infoDictionary!!["CFBundleShortVersionString"] as String,
+        os = SystemInfo.Os.Watchos(WKInterfaceDevice.currentDevice().systemVersion),
         device = machineIdentifier(),
         flavor = null,
     )
-    initKmp(createNativeDriver(DB_NAME, TimetomeDB.Schema), deviceData)
+    initKmp(createNativeDriver(DB_NAME, TimetomeDB.Schema), systemInfo)
 }
 
 actual fun getResourceContent(file: String, type: String): String {
