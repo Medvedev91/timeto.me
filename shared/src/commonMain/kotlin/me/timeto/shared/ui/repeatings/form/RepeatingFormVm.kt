@@ -79,10 +79,10 @@ class RepeatingFormVm(
                 text = tf.textNoFeatures,
                 period = initRepeatingDb?.getPeriod(),
                 daytimeUi = initRepeatingDb?.daytime?.let { DaytimeUi.byDaytime(it) },
-                activityDb = tf.activity,
+                activityDb = tf.activityDb,
                 timerSeconds = tf.timer,
-                checklistsDb = tf.checklists,
-                shortcutsDb = tf.shortcuts,
+                checklistsDb = tf.checklistsDb,
+                shortcutsDb = tf.shortcutsDb,
                 isImportant = initRepeatingDb?.isImportant ?: false,
             )
         )
@@ -144,10 +144,10 @@ class RepeatingFormVm(
                 state.timerSeconds ?: throw UiException("Timer not selected")
 
             val tf: TextFeatures = text.textFeatures().copy(
-                activity = activityDb,
+                activityDb = activityDb,
                 timer = timerSeconds,
-                checklists = state.checklistsDb,
-                shortcuts = state.shortcutsDb,
+                checklistsDb = state.checklistsDb,
+                shortcutsDb = state.shortcutsDb,
             )
 
             val textTf: String = tf.textWithFeatures()

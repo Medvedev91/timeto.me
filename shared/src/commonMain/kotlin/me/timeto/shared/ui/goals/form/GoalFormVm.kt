@@ -77,8 +77,8 @@ class GoalFormVm(
             val noteValidated: String = note.trim()
             val tf: TextFeatures = noteValidated.textFeatures().copy(
                 timer = timer,
-                checklists = checklistsDb,
-                shortcuts = shortcutsDb,
+                checklistsDb = checklistsDb,
+                shortcutsDb = shortcutsDb,
             )
             if (period == null)
                 throw UiException("Period not selected")
@@ -123,8 +123,8 @@ class GoalFormVm(
                 seconds = seconds,
                 timer = tf.timer ?: (45 * 60),
                 finishedText = finishedText,
-                checklistsDb = tf.checklists,
-                shortcutsDb = tf.shortcuts,
+                checklistsDb = tf.checklistsDb,
+                shortcutsDb = tf.shortcutsDb,
             )
         )
     }

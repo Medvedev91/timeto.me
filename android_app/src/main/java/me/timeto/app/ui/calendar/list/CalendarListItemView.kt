@@ -86,8 +86,8 @@ fun CalendarListItemView(
                 )
 
                 TriggersIconsView(
-                    checklistsDb = eventUi.textFeatures.checklists,
-                    shortcutsDb = eventUi.textFeatures.shortcuts,
+                    checklistsDb = eventUi.textFeatures.checklistsDb,
+                    shortcutsDb = eventUi.textFeatures.shortcutsDb,
                 )
             }
         }

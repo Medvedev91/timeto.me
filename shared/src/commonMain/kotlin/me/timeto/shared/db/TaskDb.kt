@@ -93,7 +93,7 @@ data class TaskDb(
             val activity = Cache.activitiesDbSorted.firstOrNull { it.emoji in textFeatures.textNoFeatures }
             if (activity != null) {
                 textFeatures = textFeatures.copy(
-                    activity = activity,
+                    activityDb = activity,
                     textNoFeatures = textFeatures.textNoFeatures.replace(activity.emoji, "")
                 )
             }
@@ -150,7 +150,7 @@ data class TaskDb(
         ifTimerNeeded: (ActivityDb) -> Unit,
     ) {
         val tf: TextFeatures = this.text.textFeatures()
-        val activityDb: ActivityDb? = tf.activity
+        val activityDb: ActivityDb? = tf.activityDb
         val seconds: Int? = tf.timer
 
         if (activityDb != null && seconds != null) {

@@ -381,8 +381,8 @@ fun TasksTabTasksView(
                                 )
 
                                 TriggersIconsView(
-                                    checklistsDb = taskVmUi.taskUi.tf.checklists,
-                                    shortcutsDb = taskVmUi.taskUi.tf.shortcuts,
+                                    checklistsDb = taskVmUi.taskUi.tf.checklistsDb,
+                                    shortcutsDb = taskVmUi.taskUi.tf.shortcutsDb,
                                 )
 
                                 if (taskVmUi.taskUi.tf.isImportant) {
@@ -473,8 +473,8 @@ private fun TmrwTaskView(
                     .weight(1f),
             )
             TriggersIconsView(
-                checklistsDb = taskUi.textFeatures.checklists,
-                shortcutsDb = taskUi.textFeatures.shortcuts,
+                checklistsDb = taskUi.textFeatures.checklistsDb,
+                shortcutsDb = taskUi.textFeatures.shortcutsDb,
             )
         }
 

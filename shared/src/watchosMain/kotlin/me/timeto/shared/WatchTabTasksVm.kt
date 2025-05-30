@@ -102,7 +102,7 @@ fun taskAutostartData(
     task: TaskDb,
 ): Pair<ActivityDb, Int>? {
     val textFeatures = task.text.textFeatures()
-    val activity = textFeatures.activity ?: return null
+    val activity = textFeatures.activityDb ?: return null
     val timerTime = textFeatures.timer ?: return null
     return activity to timerTime
 }

@@ -38,7 +38,7 @@ class EventTemplateFormVm(
 
         val deleteText = "Delete Template"
 
-        val activityDb: ActivityDb? = textFeatures.activity
+        val activityDb: ActivityDb? = textFeatures.activityDb
         val activityTitle = "Activity"
         val activityNote: String =
             activityDb?.name?.textFeatures()?.textNoFeatures ?: "Not Selected"
@@ -51,13 +51,13 @@ class EventTemplateFormVm(
         val timerNote: String =
             timerSeconds?.toTimerHintNote(isShort = false) ?: "Not Selected"
 
-        val checklistsDb: List<ChecklistDb> = textFeatures.checklists
+        val checklistsDb: List<ChecklistDb> = textFeatures.checklistsDb
         val checklistsTitle = "Checklists"
         val checklistsNote: String =
             if (checklistsDb.isEmpty()) "None"
             else checklistsDb.joinToString(", ") { it.name }
 
-        val shortcutsDb: List<ShortcutDb> = textFeatures.shortcuts
+        val shortcutsDb: List<ShortcutDb> = textFeatures.shortcutsDb
         val shortcutsTitle = "Shortcuts"
         val shortcutsNote: String =
             if (shortcutsDb.isEmpty()) "None"
@@ -85,7 +85,7 @@ class EventTemplateFormVm(
 
     fun setActivity(activityDb: ActivityDb?) {
         state.update {
-            it.copy(textFeatures = it.textFeatures.copy(activity = activityDb))
+            it.copy(textFeatures = it.textFeatures.copy(activityDb = activityDb))
         }
     }
 
@@ -97,13 +97,13 @@ class EventTemplateFormVm(
 
     fun setChecklists(checklistsDb: List<ChecklistDb>) {
         state.update {
-            it.copy(textFeatures = it.textFeatures.copy(checklists = checklistsDb))
+            it.copy(textFeatures = it.textFeatures.copy(checklistsDb = checklistsDb))
         }
     }
 
     fun setShortcuts(shortcutsDb: List<ShortcutDb>) {
         state.update {
-            it.copy(textFeatures = it.textFeatures.copy(shortcuts = shortcutsDb))
+            it.copy(textFeatures = it.textFeatures.copy(shortcutsDb = shortcutsDb))
         }
     }
 
@@ -121,7 +121,7 @@ class EventTemplateFormVm(
                 textFeatures.textWithFeatures()
             if (textFeatures.textNoFeatures.isBlank())
                 throw UiException("Text is empty")
-            if (textFeatures.activity == null)
+            if (textFeatures.activityDb == null)
                 throw UiException("Activity not selected")
             if (textFeatures.timer == null)
                 throw UiException("Timer not selected")

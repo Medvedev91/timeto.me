@@ -29,7 +29,7 @@ class TaskFormVm(
             textFeatures.textNoFeatures
         val textPlaceholder = "Text"
 
-        val activityDb: ActivityDb? = textFeatures.activity
+        val activityDb: ActivityDb? = textFeatures.activityDb
         val activityTitle = "Activity"
         val activityNote: String =
             activityDb?.name?.textFeatures()?.textNoFeatures ?: "Not Selected"
@@ -42,13 +42,13 @@ class TaskFormVm(
         val timerNote: String =
             timerSeconds?.toTimerHintNote(isShort = false) ?: "Not Selected"
 
-        val checklistsDb: List<ChecklistDb> = textFeatures.checklists
+        val checklistsDb: List<ChecklistDb> = textFeatures.checklistsDb
         val checklistsTitle = "Checklists"
         val checklistsNote: String =
             if (checklistsDb.isEmpty()) "None"
             else checklistsDb.joinToString(", ") { it.name }
 
-        val shortcutsDb: List<ShortcutDb> = textFeatures.shortcuts
+        val shortcutsDb: List<ShortcutDb> = textFeatures.shortcutsDb
         val shortcutsTitle = "Shortcuts"
         val shortcutsNote: String =
             if (shortcutsDb.isEmpty()) "None"
@@ -77,7 +77,7 @@ class TaskFormVm(
 
     fun setActivity(activityDb: ActivityDb?) {
         state.update {
-            it.copy(textFeatures = it.textFeatures.copy(activity = activityDb))
+            it.copy(textFeatures = it.textFeatures.copy(activityDb = activityDb))
         }
     }
 
@@ -89,13 +89,13 @@ class TaskFormVm(
 
     fun setChecklists(checklistsDb: List<ChecklistDb>) {
         state.update {
-            it.copy(textFeatures = it.textFeatures.copy(checklists = checklistsDb))
+            it.copy(textFeatures = it.textFeatures.copy(checklistsDb = checklistsDb))
         }
     }
 
     fun setShortcuts(shortcutsDb: List<ShortcutDb>) {
         state.update {
-            it.copy(textFeatures = it.textFeatures.copy(shortcuts = shortcutsDb))
+            it.copy(textFeatures = it.textFeatures.copy(shortcutsDb = shortcutsDb))
         }
     }
 

@@ -42,13 +42,13 @@ class HomeVm : __Vm<HomeVm.State>() {
         val textFeatures = (interval.note ?: activeActivityDb.name).textFeatures()
 
         val checklistDb: ChecklistDb? =
-            textFeatures.checklists.firstOrNull()
+            textFeatures.checklistsDb.firstOrNull()
 
         val extraTriggers = ExtraTriggers(
-            checklistsDb = textFeatures.checklists.filter {
+            checklistsDb = textFeatures.checklistsDb.filter {
                 it.id != checklistDb?.id
             },
-            shortcutsDb = textFeatures.shortcuts,
+            shortcutsDb = textFeatures.shortcutsDb,
         )
 
         // todo performance?

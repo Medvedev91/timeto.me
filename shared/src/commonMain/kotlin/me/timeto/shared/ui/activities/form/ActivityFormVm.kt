@@ -121,8 +121,8 @@ class ActivityFormVm(
                     GoalFormData.fromGoalDb(it)
                 },
                 timerHints = initActivityDb?.timerHints ?: emptySet(),
-                checklistsDb = tf.checklists,
-                shortcutsDb = tf.shortcuts,
+                checklistsDb = tf.checklistsDb,
+                shortcutsDb = tf.shortcutsDb,
             )
         )
     }
@@ -176,8 +176,8 @@ class ActivityFormVm(
 
             val emoji: String = state.emoji ?: throw UiException("Emoji not selected")
             val nameWithFeatures: String = state.name.textFeatures().copy(
-                checklists = state.checklistsDb,
-                shortcuts = state.shortcutsDb,
+                checklistsDb = state.checklistsDb,
+                shortcutsDb = state.shortcutsDb,
             ).textWithFeatures()
 
             val activityDb: ActivityDb? = state.initActivityDb

@@ -120,8 +120,8 @@ private fun performShortcutForInterval(
         return
 
     val shortcutDb: ShortcutDb =
-        intervalDb.note?.textFeatures()?.shortcuts?.firstOrNull()
-        ?: intervalDb.selectActivityDbCached().name.textFeatures().shortcuts.firstOrNull()
+        intervalDb.note?.textFeatures()?.shortcutsDb?.firstOrNull()
+        ?: intervalDb.selectActivityDbCached().name.textFeatures().shortcutsDb.firstOrNull()
         ?: return
 
     ShortcutPerformer.perform(shortcutDb)
@@ -211,7 +211,7 @@ private suspend fun fillInitData() {
 
     val todayDay = UnixTime().localDay
     fun prepRep(title: String, activity: ActivityDb, timerMin: Int): String =
-        title.textFeatures().copy(activity = activity, timer = timerMin * 60).textWithFeatures()
+        title.textFeatures().copy(activityDb = activity, timer = timerMin * 60).textWithFeatures()
     RepeatingDb.insertWithValidationEx(prepRep("Exercises", actEx, 30), RepeatingDb.Period.EveryNDays(1), todayDay, null, false)
     RepeatingDb.insertWithValidationEx(prepRep("Meditation", actMed, 20), RepeatingDb.Period.EveryNDays(1), todayDay, null, false)
     RepeatingDb.insertWithValidationEx(prepRep("Small tasks", actOther, 30), RepeatingDb.Period.EveryNDays(1), todayDay, null, false)

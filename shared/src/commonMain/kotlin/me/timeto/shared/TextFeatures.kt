@@ -7,11 +7,11 @@ import kotlin.math.absoluteValue
 
 data class TextFeatures(
     val textNoFeatures: String,
-    val checklists: List<ChecklistDb>,
-    val shortcuts: List<ShortcutDb>,
+    val checklistsDb: List<ChecklistDb>,
+    val shortcutsDb: List<ShortcutDb>,
     val fromRepeating: FromRepeating?,
     val fromEvent: FromEvent?,
-    val activity: ActivityDb?,
+    val activityDb: ActivityDb?,
     val timer: Int?,
     val pause: Pause?,
     val paused: Paused?,
@@ -34,8 +34,8 @@ data class TextFeatures(
         val a = mutableListOf(textNoFeatures)
         if (paused != null && withPausedEmoji)
             a.add(0, "⏸️")
-        if (activity != null && withActivityEmoji)
-            a.add(activity.emoji)
+        if (activityDb != null && withActivityEmoji)
+            a.add(activityDb.emoji)
         if (timer != null && withTimer)
             a.add(timerPrefix + timer.toTimerHintNote(isShort = false))
         return a.joinToString(" ")
@@ -43,16 +43,16 @@ data class TextFeatures(
 
     fun textWithFeatures(): String {
         val strings = mutableListOf(textNoFeatures.trim())
-        if (checklists.isNotEmpty())
-            strings.add(checklists.joinToString(" ") { "#c${it.id}" })
-        if (shortcuts.isNotEmpty())
-            strings.add(shortcuts.joinToString(" ") { "#s${it.id}" })
+        if (checklistsDb.isNotEmpty())
+            strings.add(checklistsDb.joinToString(" ") { "#c${it.id}" })
+        if (shortcutsDb.isNotEmpty())
+            strings.add(shortcutsDb.joinToString(" ") { "#s${it.id}" })
         if (fromRepeating != null)
             strings.add("#r${fromRepeating.id}_${fromRepeating.day}_${fromRepeating.time ?: ""}")
         if (fromEvent != null)
             strings.add("#e${fromEvent.unixTime.time}")
-        if (activity != null)
-            strings.add("#a${activity.id}")
+        if (activityDb != null)
+            strings.add("#a${activityDb.id}")
         if (timer != null)
             strings.add("#t$timer")
         if (pause != null)
@@ -84,7 +84,8 @@ data class TextFeatures(
         val _textFeatures: TextFeatures,
     ) {
 
-        val secondsLeft: Int = unixTime.time - time()
+        val secondsLeft: Int =
+            unixTime.time - time()
 
         val status: STATUS = when {
             secondsLeft > 3_600 -> STATUS.IN
@@ -92,7 +93,7 @@ data class TextFeatures(
             else -> STATUS.OVERDUE
         }
 
-        //////
+        ///
 
         fun timeText(): String {
             val components =
@@ -249,11 +250,11 @@ private fun parseLocal(initText: String): TextFeatures {
 
     return TextFeatures(
         textNoFeatures = textNoFeatures.removeDuplicateSpaces().trim(),
-        checklists = checklists,
-        shortcuts = shortcuts,
+        checklistsDb = checklists,
+        shortcutsDb = shortcuts,
         fromRepeating = fromRepeating,
         fromEvent = fromEvent,
-        activity = activity,
+        activityDb = activity,
         timer = timer,
         pause = pause,
         paused = paused,

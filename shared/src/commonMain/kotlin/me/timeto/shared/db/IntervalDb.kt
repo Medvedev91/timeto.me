@@ -152,7 +152,7 @@ data class IntervalDb(
                 }
                 val pausedText = interval.note ?: activity.name
                 val pausedTf = pausedText.textFeatures().copy(
-                    activity = activity,
+                    activityDb = activity,
                     timer = pausedTimer,
                     paused = paused,
                     prolonged = null,
@@ -268,7 +268,7 @@ data class IntervalDb(
                 ?: activityDb.name.textFeatures().textNoFeatures
             val textTf: TextFeatures = tempText.textFeatures().copy(
                 timer = timer,
-                activity = activityDb,
+                activityDb = activityDb,
             )
             TaskDb.insertWithValidation_transactionRequired(
                 text = textTf.textWithFeatures(),
