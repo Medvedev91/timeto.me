@@ -96,11 +96,12 @@ class TasksTabTasksVm(
     class TaskVmUi(
         val taskUi: TaskUi,
     ) {
+        val tf: TextFeatures = taskUi.tf
 
-        val text: String = taskUi.tf.textUi(withPausedEmoji = true)
-        val timeUi: TimeUi? = taskUi.tf.calcTimeData()?.let { timeData ->
+        val text: String = tf.textUi(withPausedEmoji = true)
+        val timeUi: TimeUi? = tf.calcTimeData()?.let { timeData ->
             val unixTime = timeData.unixTime
-            val isHighlight = timeData.type.isEvent() || timeData._textFeatures.isImportant
+            val isHighlight = timeData.type.isEvent() || tf.isImportant
 
             val timeLeftText = timeData.timeLeftText()
             val textColorEnum: ColorEnum = when (timeData.status) {

@@ -20,8 +20,8 @@ data class TextFeatures(
 ) {
 
     fun calcTimeData(): TimeData? = when {
-        fromRepeating?.time != null -> TimeData(UnixTime(fromRepeating.time), TimeData.TYPE.REPEATING, this)
-        fromEvent != null -> TimeData(fromEvent.unixTime, TimeData.TYPE.EVENT, this)
+        fromRepeating?.time != null -> TimeData(UnixTime(fromRepeating.time), TimeData.TYPE.REPEATING)
+        fromEvent != null -> TimeData(fromEvent.unixTime, TimeData.TYPE.EVENT)
         else -> null
     }
 
@@ -81,7 +81,6 @@ data class TextFeatures(
     class TimeData(
         val unixTime: UnixTime,
         val type: TYPE,
-        val _textFeatures: TextFeatures,
     ) {
 
         val secondsLeft: Int =
