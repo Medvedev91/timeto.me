@@ -8,7 +8,7 @@ struct WatchApp: App {
     @WKApplicationDelegateAdaptor(WatchDelegate.self) var delegate
     
     init() {
-        Utils_kmp_watchosKt.doInitKmpWatchOS()
+        InitKmpWatchOsKt.doInitKmpWatchOs()
     }
     
     var body: some Scene {

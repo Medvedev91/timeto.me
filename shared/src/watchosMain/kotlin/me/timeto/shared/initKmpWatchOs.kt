@@ -6,7 +6,7 @@ import me.timeto.shared.misc.SystemInfo
 import platform.Foundation.NSBundle
 import platform.WatchKit.WKInterfaceDevice
 
-fun initKmpWatchOS() {
+fun initKmpWatchOs() {
     val systemInfo = SystemInfo(
         build = (NSBundle.mainBundle.infoDictionary!!["CFBundleVersion"] as String).toInt(),
         version = NSBundle.mainBundle.infoDictionary!!["CFBundleShortVersionString"] as String,
