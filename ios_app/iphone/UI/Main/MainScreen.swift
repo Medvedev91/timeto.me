@@ -9,7 +9,7 @@ private let scheduledNotificationsDataPublisher: AnyPublisher<NSArray, Never> =
 Utils_kmpKt.scheduledNotificationsDataFlow.toPublisher()
 
 private let keepScreenOnDataPublisher: AnyPublisher<KotlinBoolean, Never> =
-Utils_kmpKt.keepScreenOnStateFlow.toPublisher()
+KeepScreenOnKt.keepScreenOnStateFlow.toPublisher()
 
 struct MainScreen: View {
     
