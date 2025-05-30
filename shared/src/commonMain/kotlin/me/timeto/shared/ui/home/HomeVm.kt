@@ -11,7 +11,7 @@ import me.timeto.shared.extensions.limitMin
 import me.timeto.shared.misc.SystemInfo
 import me.timeto.shared.ui.tasks.TaskUi
 import me.timeto.shared.ui.tasks.sortedUi
-import me.timeto.shared.misc.time
+import me.timeto.shared.time
 import me.timeto.shared.ui.DayBarsUi
 import me.timeto.shared.ui.timer.TimerDataUi
 import me.timeto.shared.ui.activities.timer.ActivityTimerStrategy

@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.Intent
 import me.timeto.app.App
 import me.timeto.shared.ScheduledNotificationData
-import me.timeto.shared.misc.timeMls
+import me.timeto.shared.timeMls
 
 object AlarmCenter {
 

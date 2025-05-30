@@ -7,7 +7,7 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
 import me.timeto.app.App
-import me.timeto.shared.misc.timeMls
+import me.timeto.shared.timeMls
 
 object Haptic {
 

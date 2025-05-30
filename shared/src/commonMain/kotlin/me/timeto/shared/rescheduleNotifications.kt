@@ -1,7 +1,6 @@
 package me.timeto.shared
 
 import me.timeto.shared.db.IntervalDb
-import me.timeto.shared.misc.time
 
 suspend fun rescheduleNotifications() {
     val lastInterval = IntervalDb.selectLastOneOrNull()!!
