@@ -17,6 +17,6 @@ extension Date {
     }
 
     func toUnixTime() -> UnixTime {
-        UnixTime(time: Int32(timeIntervalSince1970), utcOffset: Utils_kmpKt.localUtcOffset)
+        UnixTime(time: Int32(timeIntervalSince1970), utcOffset: TimeKt.localUtcOffset)
     }
 }
