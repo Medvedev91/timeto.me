@@ -6,9 +6,6 @@ import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import me.timeto.appdbsq.TimetomeDB
 import me.timeto.shared.db.DB_NAME
 import me.timeto.shared.misc.SystemInfo
-import java.io.InputStreamReader
-
-private lateinit var androidApplication: Application
 
 fun initKmpAndroid(
     application: Application,
@@ -32,15 +29,3 @@ fun initKmpAndroid(
     )
     initKmp(AndroidSqliteDriver(TimetomeDB.Schema, application, DB_NAME), systemInfo)
 }
-
-actual fun getResourceContent(file: String, type: String) = androidApplication
-    .resources
-    .openRawResource(
-        // No type, only file name without extension.
-        androidApplication.resources.getIdentifier(file, "raw", androidApplication.packageName)
-    )
-    .use { stream ->
-        InputStreamReader(stream).use { reader ->
-            reader.readText()
-        }
-    }

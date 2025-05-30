@@ -16,7 +16,3 @@ fun initKmpWatchOS() {
     )
     initKmp(createNativeDriver(DB_NAME, TimetomeDB.Schema), systemInfo)
 }
-
-actual fun getResourceContent(file: String, type: String): String {
-    TODO("WatchOS getResourceContent() not implemented")
-}

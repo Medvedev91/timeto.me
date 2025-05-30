@@ -23,16 +23,7 @@ fun initKmpIos() {
     listenForSyncWatch()
 }
 
-actual fun getResourceContent(file: String, type: String): String {
-    // Based on https://github.dev/touchlab/DroidconKotlin
-    val path = NSBundle.mainBundle.pathForResource(name = file, ofType = type)!!
-    return memScoped {
-        val errorPtr = alloc<ObjCObjectVar<NSError?>>()
-        NSString.stringWithContentsOfFile(path, encoding = NSUTF8StringEncoding, error = errorPtr.ptr)!!
-    }
-}
-
-//////
+///
 
 private fun listenForSyncWatch() = launchExIo {
     initKmpDeferred.join()
