@@ -20,9 +20,12 @@ data class TextFeatures(
 ) {
 
     fun calcTimeData(): TimeData? = when {
-        fromRepeating?.time != null -> TimeData(UnixTime(fromRepeating.time), TimeData.TYPE.REPEATING)
-        fromEvent != null -> TimeData(fromEvent.unixTime, TimeData.TYPE.EVENT)
-        else -> null
+        fromRepeating?.time != null ->
+            TimeData(UnixTime(fromRepeating.time), TimeData.TYPE.REPEATING)
+        fromEvent != null ->
+            TimeData(fromEvent.unixTime, TimeData.TYPE.EVENT)
+        else ->
+            null
     }
 
     fun textUi(
