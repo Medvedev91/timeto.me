@@ -7,8 +7,8 @@ import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.textFeatures
-import me.timeto.shared.ui.moveAndroid
-import me.timeto.shared.ui.moveIos
+import me.timeto.shared.moveUiListAndroid
+import me.timeto.shared.moveUiListIos
 import me.timeto.shared.vm.__Vm
 
 class ActivitiesFormVm : __Vm<ActivitiesFormVm.State>() {
@@ -39,7 +39,7 @@ class ActivitiesFormVm : __Vm<ActivitiesFormVm.State>() {
     ///
 
     fun moveAndroidLocal(fromIdx: Int, toIdx: Int) {
-        state.value.activitiesDb.moveAndroid(fromIdx, toIdx) { newItems ->
+        state.value.activitiesDb.moveUiListAndroid(fromIdx, toIdx) { newItems ->
             state.update { it.copy(activitiesDb = newItems) }
         }
     }
@@ -51,7 +51,7 @@ class ActivitiesFormVm : __Vm<ActivitiesFormVm.State>() {
     }
 
     fun moveIos(fromIdx: Int, toIdx: Int) {
-        state.value.activitiesDb.moveIos(fromIdx, toIdx) { newActivitiesDb ->
+        state.value.activitiesDb.moveUiListIos(fromIdx, toIdx) { newActivitiesDb ->
             ActivityDb.updateSortMany(newActivitiesDb)
         }
     }

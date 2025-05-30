@@ -9,8 +9,8 @@ import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.ChecklistItemDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.ui.DialogsManager
-import me.timeto.shared.ui.moveAndroid
-import me.timeto.shared.ui.moveIos
+import me.timeto.shared.moveUiListAndroid
+import me.timeto.shared.moveUiListIos
 import me.timeto.shared.vm.__Vm
 
 class ChecklistFormItemsVm(
@@ -89,7 +89,7 @@ class ChecklistFormItemsVm(
     // Move Android
 
     fun moveAndroidLocal(fromIdx: Int, toIdx: Int) {
-        state.value.checklistItemsDb.moveAndroid(fromIdx, toIdx) { newItems ->
+        state.value.checklistItemsDb.moveUiListAndroid(fromIdx, toIdx) { newItems ->
             state.update { it.copy(checklistItemsDb = newItems) }
         }
     }
@@ -103,7 +103,7 @@ class ChecklistFormItemsVm(
     ///
 
     fun moveIos(fromIdx: Int, toIdx: Int) {
-        state.value.checklistItemsDb.moveIos(fromIdx, toIdx) {
+        state.value.checklistItemsDb.moveUiListIos(fromIdx, toIdx) {
             ChecklistItemDb.updateSortMany(itemsDb = it)
         }
     }

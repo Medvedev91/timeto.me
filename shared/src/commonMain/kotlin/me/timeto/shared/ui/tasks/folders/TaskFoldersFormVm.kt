@@ -7,8 +7,8 @@ import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.ui.DialogsManager
-import me.timeto.shared.ui.moveAndroid
-import me.timeto.shared.ui.moveIos
+import me.timeto.shared.moveUiListAndroid
+import me.timeto.shared.moveUiListIos
 import me.timeto.shared.vm.__Vm
 
 class TaskFoldersFormVm : __Vm<TaskFoldersFormVm.State>() {
@@ -40,13 +40,13 @@ class TaskFoldersFormVm : __Vm<TaskFoldersFormVm.State>() {
     // Move
 
     fun moveIos(fromIdx: Int, toIdx: Int) {
-        state.value.foldersDb.moveIos(fromIdx, toIdx) {
+        state.value.foldersDb.moveUiListIos(fromIdx, toIdx) {
             TaskFolderDb.updateSortMany(it.reversed())
         }
     }
 
     fun moveAndroidLocal(fromIdx: Int, toIdx: Int) {
-        state.value.foldersDb.moveAndroid(fromIdx, toIdx) { newItems ->
+        state.value.foldersDb.moveUiListAndroid(fromIdx, toIdx) { newItems ->
             state.update { it.copy(foldersDb = newItems) }
         }
     }
