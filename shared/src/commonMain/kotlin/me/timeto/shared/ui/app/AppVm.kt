@@ -13,6 +13,11 @@ import me.timeto.shared.vm.__Vm
 
 class AppVm : __Vm<AppVm.State>() {
 
+    companion object {
+
+        val backupStateFlow = MutableStateFlow<String?>(null)
+    }
+
     data class State(
         val isAppReady: Boolean,
         val backupMessage: String?,

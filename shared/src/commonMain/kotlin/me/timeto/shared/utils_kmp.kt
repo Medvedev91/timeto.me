@@ -36,8 +36,6 @@ data class ScheduledNotificationData(
     }
 }
 
-val backupStateFlow = MutableStateFlow<String?>(null)
-
 ///
 /// Time
 
