@@ -20,10 +20,10 @@ extension Double {
     ///
 
     func goldenRatioUp() -> Double {
-        self * Double(Utils_kmpKt.GOLDEN_RATIO)
+        self * Double(GoldenRatioKt.goldenRatio)
     }
 
     func goldenRatioDown() -> Double {
-        self / Double(Utils_kmpKt.GOLDEN_RATIO)
+        self / Double(GoldenRatioKt.goldenRatio)
     }
 }
