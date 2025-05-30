@@ -76,7 +76,7 @@ private func schedulePush(
     content.body = data.text
 
     if data.type == .break_ {
-        let soundFile = Utils_kmpKt.getSoundTimerExpiredFileName(withExtension: true)
+        let soundFile = GetSoundTimerExpiredFileNameKt.getSoundTimerExpiredFileName(withExtension: true)
         content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: soundFile))
     } else {
         content.sound = .default
