@@ -1,23 +1,11 @@
 package me.timeto.shared
 
 import io.ktor.client.request.HttpRequestBuilder
-import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.*
 import me.timeto.shared.db.*
 import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
 import me.timeto.shared.misc.SystemInfo
-
-fun <T> Flow<T>.onEachExIn(
-    scope: CoroutineScope,
-    action: suspend (T) -> Unit,
-) = onEach {
-    try {
-        action(it)
-    } catch (e: Throwable) {
-        reportApi("onEachEx $e")
-    }
-}.launchIn(scope)
 
 fun HttpRequestBuilder.appendSystemInfo(
     token: String?,
