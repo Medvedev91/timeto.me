@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,7 +42,7 @@ fun TimerSheet(
 
     val pickerItemsUi: List<TimerVm.PickerItemUi> = state.pickerItemsUi
     val formTimeItemIdx: MutableState<Int> = remember {
-        mutableStateOf(pickerItemsUi.indexOfFirst { it.seconds == initSeconds })
+        mutableIntStateOf(pickerItemsUi.indexOfFirst { it.seconds == initSeconds })
     }
 
     VStack {
