@@ -12,7 +12,7 @@ import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.c
 import me.timeto.app.ui.navigation.picker.NavigationPicker
 import me.timeto.app.ui.navigation.picker.NavigationPickerItem
-import me.timeto.shared.ui.DialogsManager
+import me.timeto.shared.DialogsManager
 
 class Navigation : DialogsManager {
 

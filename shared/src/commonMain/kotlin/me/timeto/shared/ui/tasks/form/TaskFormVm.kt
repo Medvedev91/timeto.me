@@ -11,7 +11,7 @@ import me.timeto.shared.db.TaskDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toTimerHintNote
-import me.timeto.shared.ui.DialogsManager
+import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
 import me.timeto.shared.vm.__Vm
 

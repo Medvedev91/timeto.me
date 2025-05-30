@@ -8,7 +8,7 @@ import me.timeto.shared.extensions.getNextOrNull
 import me.timeto.shared.extensions.limitMax
 import me.timeto.shared.extensions.limitMin
 import me.timeto.shared.time
-import me.timeto.shared.ui.DialogsManager
+import me.timeto.shared.DialogsManager
 import me.timeto.shared.ui.history.form.HistoryFormUtils
 import me.timeto.shared.vm.__Vm
 

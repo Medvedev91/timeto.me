@@ -12,7 +12,7 @@ import me.timeto.shared.launchExIo
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toHms
 import me.timeto.shared.toTimerHintNote
-import me.timeto.shared.ui.DialogsManager
+import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
 import me.timeto.shared.ui.color_picker.ColorPickerExampleUi
 import me.timeto.shared.ui.color_picker.ColorPickerExamplesUi

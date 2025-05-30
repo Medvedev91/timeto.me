@@ -8,7 +8,7 @@ import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.time
 import me.timeto.shared.textFeatures
-import me.timeto.shared.ui.DialogsManager
+import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
 import me.timeto.shared.vm.__Vm
 
