@@ -5,4 +5,3 @@ private val duplicateSpacesRegex = " +".toRegex()
 
 fun String.removeDuplicateSpaces(): String =
     this.replace(duplicateSpacesRegex, " ")
-
