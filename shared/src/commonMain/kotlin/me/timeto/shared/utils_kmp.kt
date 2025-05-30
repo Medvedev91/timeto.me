@@ -110,8 +110,6 @@ data class ScheduledNotificationData(
     }
 }
 
-val keepScreenOnStateFlow = MutableStateFlow(false)
-
 val backupStateFlow = MutableStateFlow<String?>(null)
 
 ///
