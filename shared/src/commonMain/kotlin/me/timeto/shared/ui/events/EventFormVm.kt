@@ -7,7 +7,7 @@ import me.timeto.shared.UnixTime
 import me.timeto.shared.db.EventDb
 import me.timeto.shared.db.EventTemplateDb
 import me.timeto.shared.launchExIo
-import me.timeto.shared.ui.daytime.DaytimeUi
+import me.timeto.shared.DaytimeUi
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toHms
 import me.timeto.shared.DialogsManager

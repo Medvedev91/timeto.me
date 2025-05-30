@@ -11,7 +11,7 @@ import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.launchExIo
-import me.timeto.shared.ui.daytime.DaytimeUi
+import me.timeto.shared.DaytimeUi
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toTimerHintNote
 import me.timeto.shared.DialogsManager

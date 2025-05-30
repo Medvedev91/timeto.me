@@ -1,6 +1,4 @@
-package me.timeto.shared.ui.daytime
-
-import me.timeto.shared.toHms
+package me.timeto.shared
 
 data class DaytimeUi(
     val hour: Int,
