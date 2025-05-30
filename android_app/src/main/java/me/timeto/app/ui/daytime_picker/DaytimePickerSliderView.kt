@@ -32,7 +32,7 @@ import me.timeto.app.ui.onePx
 import me.timeto.app.ui.pxToDp
 import me.timeto.app.ui.roundedShape
 import me.timeto.shared.DaytimeUi
-import me.timeto.shared.ui.daytime.DaytimePickerSliderUi
+import me.timeto.shared.DaytimePickerSliderUi
 
 private val hPadding = H_PADDING + 1.dp
 
