@@ -15,18 +15,6 @@ const val HI_EMAIL = "hi@timeto.me"
 
 //
 
-fun CoroutineScope.launchEx(
-    block: suspend CoroutineScope.() -> Unit,
-) {
-    launch {
-        try {
-            block()
-        } catch (e: Throwable) {
-            reportApi("launchEx $e\n${e.stackTraceToString()}")
-        }
-    }
-}
-
 fun <T> Flow<T>.onEachExIn(
     scope: CoroutineScope,
     action: suspend (T) -> Unit,
