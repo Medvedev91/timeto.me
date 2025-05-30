@@ -3,9 +3,9 @@ package me.timeto.shared.ui.tasks.tab.repeatings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
+import me.timeto.shared.DaytimeUi
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.UnixTime
-import me.timeto.shared.daytimeToString
 import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.textFeatures
@@ -38,7 +38,7 @@ class TasksTabRepeatingsVm : __Vm<TasksTabRepeatingsVm.State>() {
 
         val dayLeftString: String =
             repeatingDb.getPeriod().title +
-            (repeatingDb.daytime?.let { " at ${daytimeToString(it)}" } ?: "")
+            (repeatingDb.daytime?.let { " at ${DaytimeUi.byDaytime(it).text}" } ?: "")
 
         val dayRightString: String =
             "${repeatingDb.getNextDayString()}, " +

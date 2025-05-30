@@ -23,7 +23,8 @@ class WatchTabTasksVm : __Vm<WatchTabTasksVm.State>() {
         val timeUI: TimeUI? = textFeatures.calcTimeData()?.let { timeData ->
             val unixTime = timeData.unixTime
             val timeLeftText = timeData.timeLeftText()
-            val daytimeText = daytimeToString(unixTime.time - unixTime.localDayStartTime())
+            val daytimeText: String =
+                DaytimeUi.byDaytime(unixTime.time - unixTime.localDayStartTime()).text
             val textColorEnum: ColorEnum = when (timeData.status) {
                 TimeData.STATUS.IN -> ColorEnum.secondaryText
                 TimeData.STATUS.SOON -> ColorEnum.blue

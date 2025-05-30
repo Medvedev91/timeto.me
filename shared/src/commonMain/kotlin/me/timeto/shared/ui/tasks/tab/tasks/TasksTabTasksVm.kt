@@ -4,10 +4,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.timeto.shared.Cache
-import me.timeto.shared.ColorRgba
+import me.timeto.shared.DaytimeUi
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.UnixTime
-import me.timeto.shared.daytimeToString
 import me.timeto.shared.db.EventDb
 import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.db.TaskDb
@@ -122,7 +121,8 @@ class TasksTabTasksVm(
                 )
             }
 
-            val daytimeText = daytimeToString(unixTime.time - unixTime.localDayStartTime())
+            val daytimeText: String =
+                DaytimeUi.byDaytime(unixTime.time - unixTime.localDayStartTime()).text
             TimeUi.RegularUi(
                 timeData = timeData,
                 text = "$daytimeText  $timeLeftText",
