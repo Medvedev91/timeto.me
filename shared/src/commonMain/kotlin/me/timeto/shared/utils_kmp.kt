@@ -8,10 +8,6 @@ import me.timeto.shared.db.*
 import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
 import me.timeto.shared.misc.SystemInfo
 
-const val OPEN_SOURCE_URL = "https://github.com/Medvedev91/timeto.me"
-
-//
-
 fun <T> Flow<T>.onEachExIn(
     scope: CoroutineScope,
     action: suspend (T) -> Unit,
