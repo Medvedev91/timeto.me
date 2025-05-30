@@ -1,4 +1,4 @@
-package me.timeto.shared.misc.backups
+package me.timeto.shared.backups
 
 import kotlinx.serialization.json.JsonElement
 

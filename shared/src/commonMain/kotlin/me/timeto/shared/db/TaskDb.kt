@@ -11,8 +11,8 @@ import me.timeto.shared.TimerTimeParser
 import me.timeto.shared.UnixTime
 import me.timeto.shared.launchExIo
 import me.timeto.shared.localUtcOffset
-import me.timeto.shared.misc.backups.Backupable__Holder
-import me.timeto.shared.misc.backups.Backupable__Item
+import me.timeto.shared.backups.Backupable__Holder
+import me.timeto.shared.backups.Backupable__Item
 import me.timeto.shared.misc.getInt
 import me.timeto.shared.misc.getString
 import me.timeto.shared.misc.time

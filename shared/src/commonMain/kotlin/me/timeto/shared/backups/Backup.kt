@@ -1,4 +1,4 @@
-package me.timeto.shared.misc.backups
+package me.timeto.shared.backups
 
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone

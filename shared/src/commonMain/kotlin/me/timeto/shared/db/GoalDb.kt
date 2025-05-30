@@ -4,8 +4,8 @@ import dbsq.GoalSq
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.*
 import me.timeto.shared.*
-import me.timeto.shared.misc.backups.Backupable__Holder
-import me.timeto.shared.misc.backups.Backupable__Item
+import me.timeto.shared.backups.Backupable__Holder
+import me.timeto.shared.backups.Backupable__Item
 import me.timeto.shared.misc.getInt
 import me.timeto.shared.misc.getString
 import me.timeto.shared.misc.toJsonArray

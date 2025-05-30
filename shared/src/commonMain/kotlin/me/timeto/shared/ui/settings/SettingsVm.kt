@@ -3,8 +3,8 @@ package me.timeto.shared.ui.settings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.update
-import me.timeto.shared.misc.backups.AutoBackup
-import me.timeto.shared.misc.backups.Backup
+import me.timeto.shared.backups.AutoBackup
+import me.timeto.shared.backups.Backup
 import me.timeto.shared.Cache
 import me.timeto.shared.misc.SystemInfo
 import me.timeto.shared.UnixTime

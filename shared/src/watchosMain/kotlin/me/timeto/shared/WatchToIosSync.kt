@@ -9,8 +9,8 @@ import platform.Foundation.create
 import platform.Foundation.dataUsingEncoding
 import platform.WatchConnectivity.WCSession
 import me.timeto.shared.db.*
-import me.timeto.shared.misc.backups.Backupable__Holder
-import me.timeto.shared.misc.backups.Backupable__Item
+import me.timeto.shared.backups.Backupable__Holder
+import me.timeto.shared.backups.Backupable__Item
 import me.timeto.shared.misc.zlog
 
 /**

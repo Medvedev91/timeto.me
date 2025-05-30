@@ -11,8 +11,8 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
 import me.timeto.shared.misc.SystemInfo
-import me.timeto.shared.misc.backups.Backupable__Holder
-import me.timeto.shared.misc.backups.Backupable__Item
+import me.timeto.shared.backups.Backupable__Holder
+import me.timeto.shared.backups.Backupable__Item
 import me.timeto.shared.misc.getString
 import me.timeto.shared.misc.time
 import me.timeto.shared.misc.toBoolean10
