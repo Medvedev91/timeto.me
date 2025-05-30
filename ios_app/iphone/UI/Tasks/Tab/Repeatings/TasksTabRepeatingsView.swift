@@ -69,8 +69,8 @@ private struct TasksTabRepeatingsViewInner: View {
                                         Spacer()
                                         
                                         TriggersIconsView(
-                                            checklistsDb: repeatingUi.textFeatures.checklists,
-                                            shortcutsDb: repeatingUi.textFeatures.shortcuts
+                                            checklistsDb: repeatingUi.textFeatures.checklistsDb,
+                                            shortcutsDb: repeatingUi.textFeatures.shortcutsDb
                                         )
                                         
                                         if (repeatingUi.repeatingDb.isImportant) {

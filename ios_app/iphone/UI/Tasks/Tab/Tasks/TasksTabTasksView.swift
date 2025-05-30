@@ -333,8 +333,8 @@ private struct TaskRowView: View {
                                 Spacer()
                                 
                                 TriggersIconsView(
-                                    checklistsDb: taskVmUi.taskUi.tf.checklists,
-                                    shortcutsDb: taskVmUi.taskUi.tf.shortcuts
+                                    checklistsDb: taskVmUi.taskUi.tf.checklistsDb,
+                                    shortcutsDb: taskVmUi.taskUi.tf.shortcutsDb
                                 )
                                 
                                 if (taskVmUi.taskUi.tf.isImportant) {
@@ -444,8 +444,8 @@ private struct TmrwTaskView: View {
                 Spacer()
                 
                 TriggersIconsView(
-                    checklistsDb: taskUi.textFeatures.checklists,
-                    shortcutsDb: taskUi.textFeatures.shortcuts
+                    checklistsDb: taskUi.textFeatures.checklistsDb,
+                    shortcutsDb: taskUi.textFeatures.shortcutsDb
                 )
                 
             }
