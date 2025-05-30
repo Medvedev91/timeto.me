@@ -7,7 +7,6 @@ import kotlinx.datetime.*
 import me.timeto.shared.db.*
 import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
 import me.timeto.shared.misc.SystemInfo
-import me.timeto.shared.misc.ioScope
 
 const val GOLDEN_RATIO = 1.618f
 
@@ -27,9 +26,6 @@ fun CoroutineScope.launchEx(
         }
     }
 }
-
-fun launchExIo(block: suspend CoroutineScope.() -> Unit) =
-    ioScope().launchEx(block)
 
 fun <T> Flow<T>.onEachExIn(
     scope: CoroutineScope,
