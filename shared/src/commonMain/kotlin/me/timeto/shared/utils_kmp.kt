@@ -20,10 +20,6 @@ fun HttpRequestBuilder.appendSystemInfo(
     }
 }
 
-// Do not use "\\s+" because it removes line breaks.
-private val duplicateSpacesRegex = " +".toRegex()
-fun String.removeDuplicateSpaces() = this.replace(duplicateSpacesRegex, " ")
-
 fun getSoundTimerExpiredFileName(withExtension: Boolean): String =
     "sound_timer_expired${if (withExtension) ".mp3" else ""}"
 
