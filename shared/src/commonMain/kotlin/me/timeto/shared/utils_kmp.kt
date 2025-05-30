@@ -15,8 +15,6 @@ const val GOLDEN_RATIO = 1.618f
 const val OPEN_SOURCE_URL = "https://github.com/Medvedev91/timeto.me"
 const val HI_EMAIL = "hi@timeto.me"
 
-const val prayEmoji = "🙏"
-
 //
 
 internal suspend fun delayToNextMinute(extraMls: Long = 1_000L) {
