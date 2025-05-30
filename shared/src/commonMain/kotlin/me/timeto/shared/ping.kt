@@ -31,7 +31,7 @@ suspend fun ping(
                 val password = getsertTokenPassword()
                 url {
                     parameters.append("password", password)
-                    appendSystemInfo(token)
+                    urlAppendSystemInfo(token)
                 }
             }
             val plainJson = httpResponse.bodyAsText()

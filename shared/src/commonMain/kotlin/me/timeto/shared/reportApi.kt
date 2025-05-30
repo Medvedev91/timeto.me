@@ -37,7 +37,7 @@ fun reportApi(
                         append("message", message)
                     }
                 ) {
-                    appendSystemInfo(token)
+                    urlAppendSystemInfo(token)
                 }
             }
         } catch (e: Throwable) {

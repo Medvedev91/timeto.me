@@ -4,7 +4,7 @@ import io.ktor.client.request.HttpRequestBuilder
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.misc.SystemInfo
 
-fun HttpRequestBuilder.appendSystemInfo(
+fun HttpRequestBuilder.urlAppendSystemInfo(
     token: String?,
 ) {
     url {
