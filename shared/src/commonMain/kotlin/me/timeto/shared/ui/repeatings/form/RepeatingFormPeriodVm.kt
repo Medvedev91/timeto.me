@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.ui.DialogsManager
-import me.timeto.shared.ui.UiException
+import me.timeto.shared.UiException
 import me.timeto.shared.vm.__Vm
 
 class RepeatingFormPeriodVm(

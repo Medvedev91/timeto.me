@@ -1,4 +1,4 @@
-package me.timeto.shared.ui
+package me.timeto.shared
 
 class UiException(
     val uiMessage: String,

@@ -6,7 +6,7 @@ import me.timeto.shared.db.TaskDb
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.ui.DialogsManager
-import me.timeto.shared.ui.UiException
+import me.timeto.shared.UiException
 import me.timeto.shared.vm.__Vm
 
 class TaskFolderFormVm(

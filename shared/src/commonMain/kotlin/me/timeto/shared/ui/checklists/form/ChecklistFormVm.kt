@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.ui.DialogsManager
-import me.timeto.shared.ui.UiException
+import me.timeto.shared.UiException
 import me.timeto.shared.vm.__Vm
 
 class ChecklistFormVm(

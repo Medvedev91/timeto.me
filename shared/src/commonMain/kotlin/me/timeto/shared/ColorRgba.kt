@@ -1,7 +1,5 @@
 package me.timeto.shared
 
-import me.timeto.shared.ui.UiException
-
 data class ColorRgba(
     val r: Int, val g: Int,
     val b: Int, val a: Int = 255,

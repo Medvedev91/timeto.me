@@ -10,7 +10,7 @@ import me.timeto.shared.backups.Backupable__Item
 import me.timeto.shared.misc.getInt
 import me.timeto.shared.misc.getString
 import me.timeto.shared.misc.toJsonArray
-import me.timeto.shared.ui.UiException
+import me.timeto.shared.UiException
 import kotlin.coroutines.cancellation.CancellationException
 
 data class ShortcutDb(

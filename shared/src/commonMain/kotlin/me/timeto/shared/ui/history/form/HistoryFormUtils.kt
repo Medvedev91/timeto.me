@@ -6,7 +6,7 @@ import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.textFeatures
 import me.timeto.shared.ui.DialogsManager
-import me.timeto.shared.ui.UiException
+import me.timeto.shared.UiException
 
 object HistoryFormUtils {
 

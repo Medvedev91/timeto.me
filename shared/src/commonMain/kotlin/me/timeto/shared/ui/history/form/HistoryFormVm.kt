@@ -9,7 +9,7 @@ import me.timeto.shared.launchExIo
 import me.timeto.shared.time
 import me.timeto.shared.textFeatures
 import me.timeto.shared.ui.DialogsManager
-import me.timeto.shared.ui.UiException
+import me.timeto.shared.UiException
 import me.timeto.shared.vm.__Vm
 
 class HistoryFormVm(

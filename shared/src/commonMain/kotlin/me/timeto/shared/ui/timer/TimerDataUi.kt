@@ -6,7 +6,7 @@ import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.misc.ColorEnum
 import me.timeto.shared.time
-import me.timeto.shared.ui.UiException
+import me.timeto.shared.UiException
 import me.timeto.shared.ui.daytime.DaytimeUi
 import me.timeto.shared.ui.activities.timer.ActivityTimerStrategy
 import kotlin.math.absoluteValue

@@ -18,7 +18,7 @@ import me.timeto.shared.misc.getString
 import me.timeto.shared.time
 import me.timeto.shared.misc.toJsonArray
 import me.timeto.shared.textFeatures
-import me.timeto.shared.ui.UiException
+import me.timeto.shared.UiException
 import me.timeto.shared.ui.tasks.TaskUi
 import kotlin.math.max
 
