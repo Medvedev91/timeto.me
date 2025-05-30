@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.TextFeatures.TimeData
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.misc.ColorEnum
 import me.timeto.shared.ui.tasks.TaskUi
 import me.timeto.shared.ui.tasks.sortedUi
@@ -93,4 +94,14 @@ class WatchTabTasksVm : __Vm<WatchTabTasksVm.State>() {
         }
         state.update { it.copy(foldersUI = foldersUI) }
     }
+}
+
+// todo works different with mobile
+fun taskAutostartData(
+    task: TaskDb,
+): Pair<ActivityDb, Int>? {
+    val textFeatures = task.text.textFeatures()
+    val activity = textFeatures.activity ?: return null
+    val timerTime = textFeatures.timer ?: return null
+    return activity to timerTime
 }
