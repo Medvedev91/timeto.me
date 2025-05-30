@@ -173,7 +173,7 @@ data class IntervalDb(
             }
         }
 
-        suspend fun prolongLastInterval(
+        suspend fun prolongLastIntervalEx(
             timer: Int,
         ): Unit = dbIo {
             val interval: IntervalDb = selectLastOneOrNull()!!

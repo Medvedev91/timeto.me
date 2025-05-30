@@ -105,7 +105,8 @@ class TimerDataUi(
 
     fun prolong() {
         launchExIo {
-            IntervalDb.prolongLastInterval(5 * 60)
+            // todo catch exceptions + report
+            IntervalDb.prolongLastIntervalEx(5 * 60)
         }
     }
 
