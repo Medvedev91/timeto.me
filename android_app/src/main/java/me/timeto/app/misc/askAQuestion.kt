@@ -4,7 +4,7 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.net.Uri
 import me.timeto.app.App
-import me.timeto.shared.HI_EMAIL
+import me.timeto.shared.hiEmail
 
 fun askAQuestion(
     subject: String,
@@ -12,7 +12,7 @@ fun askAQuestion(
     App.instance.startActivity(
         Intent(Intent.ACTION_VIEW).apply {
             flags = FLAG_ACTIVITY_NEW_TASK
-            data = Uri.parse("mailto:${HI_EMAIL}?subject=$subject")
+            data = Uri.parse("mailto:${hiEmail}?subject=$subject")
         }
     )
 }

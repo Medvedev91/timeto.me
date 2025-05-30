@@ -2,6 +2,8 @@ import SwiftUI
 import MessageUI
 import shared
 
+private let hiEmail: String = HiEmailKt.hiEmail
+
 struct AskQuestionView<Content: View>: View {
     
     let subject: String
@@ -19,7 +21,7 @@ struct AskQuestionView<Content: View>: View {
                 if MFMailComposeViewController.canSendMail() {
                     navigation.sheet {
                         MailView(
-                            toEmail: Utils_kmpKt.HI_EMAIL,
+                            toEmail: hiEmail,
                             subject: subject,
                             body: nil,
                             result: $mailViewResult
@@ -27,7 +29,7 @@ struct AskQuestionView<Content: View>: View {
                     }
                 } else {
                     let subjectEncoded = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-                    let url = URL(string: "mailto:\(Utils_kmpKt.HI_EMAIL)?subject=\(subjectEncoded)")!
+                    let url = URL(string: "mailto:\(hiEmail)?subject=\(subjectEncoded)")!
                     UIApplication.shared.open(url)
                 }
             },
