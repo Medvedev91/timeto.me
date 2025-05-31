@@ -13,7 +13,7 @@ import me.timeto.shared.TaskUi
 import me.timeto.shared.sortedUi
 import me.timeto.shared.time
 import me.timeto.shared.DayBarsUi
-import me.timeto.shared.ui.timer.TimerStateUi
+import me.timeto.shared.TimerStateUi
 import me.timeto.shared.ui.activities.timer.ActivityTimerStrategy
 import me.timeto.shared.ui.whats_new.WhatsNewVm
 import me.timeto.shared.ui.__Vm
