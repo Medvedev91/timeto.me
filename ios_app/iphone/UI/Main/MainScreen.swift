@@ -6,7 +6,7 @@ private let shortcutPublisher: AnyPublisher<ShortcutDb, Never> =
 ShortcutPerformer.shared.flow.toPublisher()
 
 private let scheduledNotificationsDataPublisher: AnyPublisher<NSArray, Never> =
-Utils_kmpKt.scheduledNotificationsDataFlow.toPublisher()
+NotificationAlarm.companion.flow.toPublisher()
 
 private let keepScreenOnDataPublisher: AnyPublisher<KotlinBoolean, Never> =
 KeepScreenOnKt.keepScreenOnStateFlow.toPublisher()
@@ -49,9 +49,9 @@ struct MainScreen: View {
         .onReceive(scheduledNotificationsDataPublisher) {
             let center = UNUserNotificationCenter.current()
             center.removeAllPendingNotificationRequests()
-            let dataItems = $0 as! [ScheduledNotificationData]
-            dataItems.forEach { data in
-                schedulePush(data: data)
+            let alarms = $0 as! [NotificationAlarm]
+            alarms.forEach { alarm in
+                schedulePush(notificationAlarm: alarm)
             }
         }
         .onReceive(keepScreenOnDataPublisher) { keepScreenOn in
@@ -69,13 +69,13 @@ struct MainScreen: View {
 }
 
 private func schedulePush(
-    data: ScheduledNotificationData
+    notificationAlarm: NotificationAlarm
 ) {
     let content = UNMutableNotificationContent()
-    content.title = data.title
-    content.body = data.text
+    content.title = notificationAlarm.title
+    content.body = notificationAlarm.text
 
-    if data.type == .break_ {
+    if notificationAlarm.type == .timetobreak {
         let soundFile = GetSoundTimerExpiredFileNameKt.getSoundTimerExpiredFileName(withExtension: true)
         content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: soundFile))
     } else {
@@ -83,7 +83,10 @@ private func schedulePush(
     }
     content.badge = 1
 
-    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(data.inSeconds.toInt()), repeats: false)
+    let trigger = UNTimeIntervalNotificationTrigger(
+        timeInterval: TimeInterval(notificationAlarm.inSeconds.toInt()),
+        repeats: false
+    )
 
     let req = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
 

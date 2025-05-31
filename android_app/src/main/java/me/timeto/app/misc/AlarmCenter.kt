@@ -5,16 +5,16 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import me.timeto.app.App
-import me.timeto.shared.ScheduledNotificationData
+import me.timeto.shared.NotificationAlarm
 import me.timeto.shared.timeMls
 
 object AlarmCenter {
 
-    fun scheduleNotification(data: ScheduledNotificationData) {
+    fun scheduleNotification(data: NotificationAlarm) {
         val requestCode: Int = when (data.type) {
-            ScheduledNotificationData.TYPE.BREAK ->
+            NotificationAlarm.Type.timeToBreak ->
                 TimerNotificationReceiver.NOTIFICATION_ID.BREAK.id
-            ScheduledNotificationData.TYPE.OVERDUE ->
+            NotificationAlarm.Type.overdue ->
                 TimerNotificationReceiver.NOTIFICATION_ID.OVERDUE.id
         }
 

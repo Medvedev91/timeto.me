@@ -104,11 +104,11 @@ class MainActivity : ComponentActivity() {
                     }
 
                     LaunchedEffect(Unit) {
-                        scheduledNotificationsDataFlow
-                            .onEachExIn(this) { notificationsData ->
+                        NotificationAlarm.flow
+                            .onEachExIn(this) { notifications ->
                                 AlarmCenter.cancelAllAlarms()
                                 NotificationCenter.cleanAllPushes()
-                                notificationsData.forEach {
+                                notifications.forEach {
                                     AlarmCenter.scheduleNotification(it)
                                 }
                             }

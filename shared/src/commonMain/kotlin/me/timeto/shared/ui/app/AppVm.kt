@@ -52,7 +52,7 @@ class AppVm : __Vm<AppVm.State>() {
                 .selectLastOneOrNullFlow()
                 .filterNotNull()
                 .onEachExIn(this) { lastInterval ->
-                    rescheduleNotifications()
+                    NotificationAlarm.rescheduleAll()
                     performShortcutForInterval(lastInterval, secondsLimit = 3)
                     keepScreenOnStateFlow.emit(lastInterval.selectActivityDbCached().keepScreenOn)
                 }
@@ -62,7 +62,7 @@ class AppVm : __Vm<AppVm.State>() {
                 .drop(1)
                 .onEachExIn(this) {
                     // In case the pomodoro changes
-                    rescheduleNotifications()
+                    NotificationAlarm.rescheduleAll()
                 }
 
             launchEx {
@@ -107,7 +107,7 @@ class AppVm : __Vm<AppVm.State>() {
     fun onNotificationsPermissionReady(delayMls: Long) {
         scopeVm().launchEx {
             delay(delayMls)
-            rescheduleNotifications()
+            NotificationAlarm.rescheduleAll()
         }
     }
 }
