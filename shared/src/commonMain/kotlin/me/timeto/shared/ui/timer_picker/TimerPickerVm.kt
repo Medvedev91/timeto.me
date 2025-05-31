@@ -1,4 +1,4 @@
-package me.timeto.shared.ui.timer
+package me.timeto.shared.ui.timer_picker
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import me.timeto.shared.ui.__Vm

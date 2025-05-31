@@ -22,7 +22,7 @@ import me.timeto.app.ui.Screen
 import me.timeto.app.ui.header.sheet.HeaderSheet
 import me.timeto.app.ui.header.sheet.HeaderSheetButton
 import me.timeto.app.ui.navigation.LocalNavigationLayer
-import me.timeto.shared.ui.timer.TimerPickerVm
+import me.timeto.shared.ui.timer_picker.TimerPickerVm
 
 @Composable
 fun TimerSheet(
