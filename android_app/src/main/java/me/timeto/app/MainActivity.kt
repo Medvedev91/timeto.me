@@ -42,7 +42,7 @@ import me.timeto.shared.*
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.misc.BatteryInfo
 import me.timeto.shared.backups.AutoBackup
-import me.timeto.shared.ui.shortcuts.ShortcutPerformer
+import me.timeto.shared.ShortcutPerformer
 import me.timeto.shared.ui.app.AppVm
 
 class MainActivity : ComponentActivity() {

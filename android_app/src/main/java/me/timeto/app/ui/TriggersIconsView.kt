@@ -17,7 +17,7 @@ import me.timeto.app.ui.checklists.ChecklistScreen
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.ShortcutDb
-import me.timeto.shared.ui.shortcuts.performUi
+import me.timeto.shared.performUi
 
 private val iconShape = RoundedCornerShape(6.dp)
 

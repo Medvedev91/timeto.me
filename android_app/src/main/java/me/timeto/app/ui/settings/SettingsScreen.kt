@@ -49,7 +49,7 @@ import me.timeto.app.ui.tasks.folders.TaskFoldersFormFs
 import me.timeto.shared.*
 import me.timeto.shared.backups.Backup
 import me.timeto.shared.ui.settings.SettingsVm
-import me.timeto.shared.ui.shortcuts.performUi
+import me.timeto.shared.performUi
 import java.io.BufferedReader
 import java.io.InputStreamReader
 

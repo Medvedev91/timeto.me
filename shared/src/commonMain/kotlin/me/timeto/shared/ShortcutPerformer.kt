@@ -1,8 +1,7 @@
-package me.timeto.shared.ui.shortcuts
+package me.timeto.shared
 
 import kotlinx.coroutines.flow.MutableSharedFlow
 import me.timeto.shared.db.ShortcutDb
-import me.timeto.shared.launchExIo
 
 object ShortcutPerformer {
 

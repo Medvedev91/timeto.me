@@ -7,7 +7,7 @@ import me.timeto.shared.*
 import me.timeto.shared.db.*
 import me.timeto.shared.time
 import me.timeto.shared.ui.goals.form.GoalFormData
-import me.timeto.shared.ui.shortcuts.ShortcutPerformer
+import me.timeto.shared.ShortcutPerformer
 import me.timeto.shared.ui.whats_new.WhatsNewVm
 import me.timeto.shared.ui.__Vm
 
