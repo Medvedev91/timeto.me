@@ -46,6 +46,6 @@ private class SwiftVm<
     }
     
     deinit {
-        vm.onDisappear()
+        vm.onDestroy()
     }
 }

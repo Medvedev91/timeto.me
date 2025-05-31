@@ -18,7 +18,7 @@ fun <State, VM : __Vm<State>> rememberVm(
     }
     DisposableEffect(key1, key2, key3) {
         onDispose {
-            vm.onDisappear()
+            vm.onDestroy()
         }
     }
     return vm to vm.state.collectAsState().value

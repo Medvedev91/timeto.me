@@ -21,7 +21,7 @@ abstract class __Vm<T> {
         withContext(Dispatchers.Main) { block() }
     }
 
-    fun onDisappear() {
+    fun onDestroy() {
         scopes.forEach { it.cancel() }
         scopes.clear()
     }
