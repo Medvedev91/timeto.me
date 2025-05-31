@@ -19,7 +19,7 @@ import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.ChecklistItemDb
-import me.timeto.shared.ui.checklists.form.ChecklistFormItemVm
+import me.timeto.shared.vm.checklists.form.ChecklistFormItemVm
 
 @Composable
 fun ChecklistFormItemFs(

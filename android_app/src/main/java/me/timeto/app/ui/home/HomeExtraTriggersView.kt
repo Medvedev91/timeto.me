@@ -19,7 +19,7 @@ import me.timeto.app.ui.c
 import me.timeto.app.ui.squircleShape
 import me.timeto.app.ui.checklists.ChecklistScreen
 import me.timeto.app.ui.navigation.LocalNavigationFs
-import me.timeto.shared.ui.home.HomeVm
+import me.timeto.shared.vm.home.HomeVm
 import me.timeto.shared.performUi
 
 @Composable

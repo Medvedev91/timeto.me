@@ -32,7 +32,7 @@ import me.timeto.app.ui.activities.timer.ActivitiesTimerFs
 import me.timeto.app.ui.activities.timer.ActivityTimerFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.shared.TextFeatures
-import me.timeto.shared.ui.home.HomeVm
+import me.timeto.shared.vm.home.HomeVm
 
 @Composable
 fun HomeTasksView(

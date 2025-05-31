@@ -30,8 +30,8 @@ import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.squircleShape
 import me.timeto.shared.db.ChecklistDb
-import me.timeto.shared.ui.checklists.ChecklistVm
-import me.timeto.shared.ui.checklists.ChecklistStateUi
+import me.timeto.shared.vm.checklists.ChecklistVm
+import me.timeto.shared.vm.checklists.ChecklistStateUi
 
 private val checklistItemMinHeight = HomeScreen__itemHeight
 

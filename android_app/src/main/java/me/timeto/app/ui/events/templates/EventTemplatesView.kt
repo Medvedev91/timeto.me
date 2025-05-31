@@ -19,8 +19,8 @@ import me.timeto.app.ui.c
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.squircleShape
 import me.timeto.app.ui.navigation.LocalNavigationFs
-import me.timeto.shared.ui.events.templates.EventTemplateUi
-import me.timeto.shared.ui.events.templates.EventTemplatesVm
+import me.timeto.shared.vm.events.templates.EventTemplateUi
+import me.timeto.shared.vm.events.templates.EventTemplatesVm
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

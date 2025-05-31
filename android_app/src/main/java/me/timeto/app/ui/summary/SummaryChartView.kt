@@ -26,8 +26,8 @@ import me.timeto.app.ui.WyouChart
 import me.timeto.app.ui.c
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.squircleShape
-import me.timeto.shared.ui.summary.SummaryVm
-import me.timeto.shared.ui.summary.SummaryChartVm
+import me.timeto.shared.vm.summary.SummaryVm
+import me.timeto.shared.vm.summary.SummaryChartVm
 
 @Composable
 fun SummaryChartView(

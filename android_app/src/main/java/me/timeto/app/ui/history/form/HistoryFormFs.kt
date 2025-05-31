@@ -32,8 +32,8 @@ import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.db.IntervalDb
-import me.timeto.shared.ui.history.form.HistoryFormUtils
-import me.timeto.shared.ui.history.form.HistoryFormVm
+import me.timeto.shared.vm.history.form.HistoryFormUtils
+import me.timeto.shared.vm.history.form.HistoryFormVm
 
 @Composable
 fun HistoryFormFs(

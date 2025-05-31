@@ -27,7 +27,7 @@ import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.Divider
 import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.tasks.tab.TasksTabView__PADDING_END
-import me.timeto.shared.ui.calendar.CalendarVm
+import me.timeto.shared.vm.calendar.CalendarVm
 
 @Composable
 fun CalendarView(

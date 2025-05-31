@@ -15,7 +15,7 @@ import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.db.ActivityDb
-import me.timeto.shared.ui.activities.ActivityPickerVm
+import me.timeto.shared.vm.activities.ActivityPickerVm
 
 @Composable
 fun ActivityPickerFs(

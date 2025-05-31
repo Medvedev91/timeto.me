@@ -18,7 +18,7 @@ import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.squircleShape
 import me.timeto.app.ui.tasks.tab.TasksTabView__LIST_SECTION_PADDING
 import me.timeto.app.ui.tasks.tab.TasksTabView__PADDING_END
-import me.timeto.shared.ui.calendar.CalendarListVm
+import me.timeto.shared.vm.calendar.CalendarListVm
 
 @Composable
 fun CalendarListView(

@@ -20,7 +20,7 @@ import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.db.NoteDb
-import me.timeto.shared.ui.notes.NoteFormVm
+import me.timeto.shared.vm.notes.NoteFormVm
 
 @Composable
 fun NoteFormFs(

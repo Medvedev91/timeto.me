@@ -26,7 +26,7 @@ import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.navigation.LocalNavigationLayer
-import me.timeto.shared.ui.privacy.PrivacyVm
+import me.timeto.shared.vm.privacy.PrivacyVm
 
 @Composable
 fun PrivacyFs(

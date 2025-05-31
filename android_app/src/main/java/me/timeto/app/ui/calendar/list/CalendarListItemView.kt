@@ -21,7 +21,7 @@ import me.timeto.app.ui.c
 import me.timeto.app.ui.TriggersIconsView
 import me.timeto.app.ui.events.EventFormFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
-import me.timeto.shared.ui.calendar.CalendarListVm
+import me.timeto.shared.vm.calendar.CalendarListVm
 
 @Composable
 fun CalendarListItemView(

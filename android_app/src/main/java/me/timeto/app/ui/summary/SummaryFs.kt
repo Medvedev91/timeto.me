@@ -39,7 +39,7 @@ import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.showDatePicker
 import me.timeto.app.ui.squircleShape
 import me.timeto.shared.UnixTime
-import me.timeto.shared.ui.summary.SummaryVm
+import me.timeto.shared.vm.summary.SummaryVm
 
 private val barsHeaderHeight = 35.dp
 private val hPadding = 8.dp

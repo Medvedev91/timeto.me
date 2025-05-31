@@ -31,8 +31,8 @@ import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.db.ActivityDb
-import me.timeto.shared.ui.activities.timer.ActivityTimerStrategy
-import me.timeto.shared.ui.activities.timer.ActivityTimerVm
+import me.timeto.shared.vm.activities.timer.ActivityTimerStrategy
+import me.timeto.shared.vm.activities.timer.ActivityTimerVm
 
 @Composable
 fun ActivityTimerFs(

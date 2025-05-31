@@ -38,8 +38,8 @@ import me.timeto.app.ui.navigation.Navigation
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.squircleShape
-import me.timeto.shared.ui.readme.ReadmeVm
-import me.timeto.shared.ui.readme.ReadmeVm.DefaultItem
+import me.timeto.shared.vm.readme.ReadmeVm
+import me.timeto.shared.vm.readme.ReadmeVm.DefaultItem
 
 private val imagesHBetween = 4.dp
 private val imagesHBlock = H_PADDING - imagesHBetween

@@ -3,7 +3,7 @@ package me.timeto.shared
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
-import me.timeto.shared.ui.__Vm
+import me.timeto.shared.vm.__Vm
 
 class WatchTabTimerVm : __Vm<WatchTabTimerVm.State>() {
 

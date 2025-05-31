@@ -21,7 +21,7 @@ import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.db.ChecklistDb
-import me.timeto.shared.ui.checklists.form.ChecklistFormVm
+import me.timeto.shared.vm.checklists.form.ChecklistFormVm
 
 @Composable
 fun ChecklistFormFs(

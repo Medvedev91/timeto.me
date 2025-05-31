@@ -24,9 +24,9 @@ import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.shortcuts.ShortcutsPickerFs
 import me.timeto.app.ui.timer.TimerSheet
-import me.timeto.shared.ui.goals.form.GoalFormData
-import me.timeto.shared.ui.goals.form.GoalFormStrategy
-import me.timeto.shared.ui.goals.form.GoalFormVm
+import me.timeto.shared.vm.goals.form.GoalFormData
+import me.timeto.shared.vm.goals.form.GoalFormStrategy
+import me.timeto.shared.vm.goals.form.GoalFormVm
 
 @Composable
 fun GoalFormFs(

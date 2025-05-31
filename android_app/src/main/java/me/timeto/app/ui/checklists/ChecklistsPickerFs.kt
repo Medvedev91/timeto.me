@@ -20,7 +20,7 @@ import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.db.ChecklistDb
-import me.timeto.shared.ui.checklists.ChecklistsPickerVm
+import me.timeto.shared.vm.checklists.ChecklistsPickerVm
 
 // todo context menu
 

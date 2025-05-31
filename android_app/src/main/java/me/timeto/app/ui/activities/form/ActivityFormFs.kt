@@ -39,7 +39,7 @@ import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.shortcuts.ShortcutsPickerFs
 import me.timeto.shared.db.ActivityDb
-import me.timeto.shared.ui.activities.form.ActivityFormVm
+import me.timeto.shared.vm.activities.form.ActivityFormVm
 
 @Composable
 fun ActivityFormFs(

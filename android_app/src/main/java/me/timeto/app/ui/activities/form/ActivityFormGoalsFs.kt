@@ -18,9 +18,9 @@ import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
-import me.timeto.shared.ui.activities.form.ActivityFormGoalsVm
-import me.timeto.shared.ui.goals.form.GoalFormData
-import me.timeto.shared.ui.goals.form.GoalFormStrategy
+import me.timeto.shared.vm.activities.form.ActivityFormGoalsVm
+import me.timeto.shared.vm.goals.form.GoalFormData
+import me.timeto.shared.vm.goals.form.GoalFormStrategy
 
 @Composable
 fun ActivityFormGoalsFs(

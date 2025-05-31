@@ -27,8 +27,8 @@ import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.readme.ReadmeFs
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.squircleShape
-import me.timeto.shared.ui.readme.ReadmeVm
-import me.timeto.shared.ui.whats_new.WhatsNewVm
+import me.timeto.shared.vm.readme.ReadmeVm
+import me.timeto.shared.vm.whats_new.WhatsNewVm
 
 @Composable
 fun WhatsNewFs() {

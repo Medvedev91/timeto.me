@@ -26,7 +26,7 @@ import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.calendar.list.CalendarListItemView
 import me.timeto.app.ui.events.EventFormFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
-import me.timeto.shared.ui.calendar.CalendarDayVm
+import me.timeto.shared.vm.calendar.CalendarDayVm
 
 @Composable
 fun CalendarDayView(

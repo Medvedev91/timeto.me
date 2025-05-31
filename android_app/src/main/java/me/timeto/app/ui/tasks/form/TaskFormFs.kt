@@ -53,8 +53,8 @@ import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.shortcuts.ShortcutsPickerFs
 import me.timeto.app.ui.timer.TimerSheet
-import me.timeto.shared.ui.tasks.form.TaskFormStrategy
-import me.timeto.shared.ui.tasks.form.TaskFormVm
+import me.timeto.shared.vm.tasks.form.TaskFormStrategy
+import me.timeto.shared.vm.tasks.form.TaskFormVm
 
 @Composable
 fun TaskFormFs(

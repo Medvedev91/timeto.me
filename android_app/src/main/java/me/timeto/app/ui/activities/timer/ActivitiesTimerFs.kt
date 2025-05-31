@@ -11,8 +11,8 @@ import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.activities.ActivitiesView
 import me.timeto.app.ui.navigation.LocalNavigationLayer
-import me.timeto.shared.ui.activities.timer.ActivitiesTimerVm
-import me.timeto.shared.ui.activities.timer.ActivityTimerStrategy
+import me.timeto.shared.vm.activities.timer.ActivitiesTimerVm
+import me.timeto.shared.vm.activities.timer.ActivityTimerStrategy
 
 @Composable
 fun ActivitiesTimerFs(

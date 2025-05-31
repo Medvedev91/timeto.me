@@ -4,7 +4,7 @@ import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.misc.ColorEnum
-import me.timeto.shared.ui.activities.timer.ActivityTimerStrategy
+import me.timeto.shared.vm.activities.timer.ActivityTimerStrategy
 import kotlin.math.absoluteValue
 
 class TimerStateUi(

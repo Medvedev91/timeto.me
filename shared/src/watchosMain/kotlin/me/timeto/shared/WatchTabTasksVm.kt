@@ -7,7 +7,7 @@ import me.timeto.shared.db.TaskDb
 import me.timeto.shared.TextFeatures.TimeData
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.misc.ColorEnum
-import me.timeto.shared.ui.__Vm
+import me.timeto.shared.vm.__Vm
 
 class WatchTabTasksVm : __Vm<WatchTabTasksVm.State>() {
 

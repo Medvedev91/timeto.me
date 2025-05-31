@@ -42,7 +42,7 @@ import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.tasks.tab.repeatings.TasksTabRepeatingsView
 import me.timeto.shared.db.TaskFolderDb
-import me.timeto.shared.ui.tasks.tab.TasksTabVm
+import me.timeto.shared.vm.tasks.tab.TasksTabVm
 import kotlin.random.Random
 
 val TasksTabView__TAB_BUTTON_WIDTH: Dp = 32.dp

@@ -18,7 +18,7 @@ import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.db.ActivityDb
-import me.timeto.shared.ui.activities.ActivitiesFormVm
+import me.timeto.shared.vm.activities.ActivitiesFormVm
 
 @Composable
 fun ActivitiesFormFs() {

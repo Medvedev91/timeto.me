@@ -40,7 +40,7 @@ import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.shortcuts.apps.ShortcutAppsFs
 import me.timeto.shared.db.ShortcutDb
-import me.timeto.shared.ui.shortcuts.ShortcutFormVm
+import me.timeto.shared.vm.shortcuts.ShortcutFormVm
 
 @Composable
 fun ShortcutFormFs(

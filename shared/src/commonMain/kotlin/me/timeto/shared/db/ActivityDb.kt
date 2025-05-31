@@ -15,7 +15,7 @@ import me.timeto.shared.misc.toBoolean10
 import me.timeto.shared.misc.toInt10
 import me.timeto.shared.misc.toJsonArray
 import me.timeto.shared.UiException
-import me.timeto.shared.ui.goals.form.GoalFormData
+import me.timeto.shared.vm.goals.form.GoalFormData
 import kotlin.coroutines.cancellation.CancellationException
 import kotlin.math.max
 

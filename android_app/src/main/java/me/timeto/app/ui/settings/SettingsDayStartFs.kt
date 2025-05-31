@@ -13,7 +13,7 @@ import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationLayer
-import me.timeto.shared.ui.settings.SettingsVm
+import me.timeto.shared.vm.settings.SettingsVm
 
 @Composable
 fun SettingsDayStartFs(

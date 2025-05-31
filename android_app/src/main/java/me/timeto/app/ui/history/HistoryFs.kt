@@ -38,7 +38,7 @@ import me.timeto.app.ui.footer.FooterPlainButton
 import me.timeto.app.ui.history.form.HistoryFormFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
-import me.timeto.shared.ui.history.HistoryVm
+import me.timeto.shared.vm.history.HistoryVm
 
 private const val barPxSecondsRatio: Int = 60
 

@@ -50,8 +50,8 @@ import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.ColorRgba
-import me.timeto.shared.ui.color_picker.ColorPickerExamplesUi
-import me.timeto.shared.ui.color_picker.ColorPickerVm
+import me.timeto.shared.vm.color_picker.ColorPickerExamplesUi
+import me.timeto.shared.vm.color_picker.ColorPickerVm
 
 private val circleSize = 40.dp
 private val circlePadding = 4.dp

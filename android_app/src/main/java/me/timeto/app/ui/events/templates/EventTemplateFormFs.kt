@@ -26,7 +26,7 @@ import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.shortcuts.ShortcutsPickerFs
 import me.timeto.app.ui.timer.TimerSheet
 import me.timeto.shared.db.EventTemplateDb
-import me.timeto.shared.ui.events.templates.EventTemplateFormVm
+import me.timeto.shared.vm.events.templates.EventTemplateFormVm
 
 @Composable
 fun EventTemplateFormFs(

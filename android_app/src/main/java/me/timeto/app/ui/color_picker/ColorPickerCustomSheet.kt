@@ -30,7 +30,7 @@ import me.timeto.app.misc.extensions.toColor
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.ColorRgba
-import me.timeto.shared.ui.color_picker.ColorPickerVm
+import me.timeto.shared.vm.color_picker.ColorPickerVm
 
 // todo prevent navigation back
 

@@ -14,7 +14,7 @@ import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.db.GoalDb
-import me.timeto.shared.ui.goals.form.GoalFormPeriodVm
+import me.timeto.shared.vm.goals.form.GoalFormPeriodVm
 
 @Composable
 fun GoalFormPeriodFs(

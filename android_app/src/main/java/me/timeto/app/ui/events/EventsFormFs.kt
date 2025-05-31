@@ -55,7 +55,7 @@ import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.showDatePicker
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.EventDb
-import me.timeto.shared.ui.events.EventFormVm
+import me.timeto.shared.vm.events.EventFormVm
 
 @Composable
 fun EventFormFs(

@@ -14,7 +14,7 @@ import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.db.ShortcutDb
-import me.timeto.shared.ui.shortcuts.ShortcutsPickerVm
+import me.timeto.shared.vm.shortcuts.ShortcutsPickerVm
 
 // todo context menu
 // todo new shortcut button

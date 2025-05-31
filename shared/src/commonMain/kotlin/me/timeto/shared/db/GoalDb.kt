@@ -10,7 +10,7 @@ import me.timeto.shared.misc.getInt
 import me.timeto.shared.misc.getString
 import me.timeto.shared.misc.toJsonArray
 import me.timeto.shared.UiException
-import me.timeto.shared.ui.goals.form.GoalFormData
+import me.timeto.shared.vm.goals.form.GoalFormData
 
 data class GoalDb(
     val id: Int,

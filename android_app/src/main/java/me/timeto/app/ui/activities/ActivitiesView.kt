@@ -35,8 +35,8 @@ import me.timeto.app.ui.activities.form.ActivityFormTimerHintsFs
 import me.timeto.app.ui.activities.timer.ActivityTimerFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.shared.db.ActivityDb
-import me.timeto.shared.ui.activities.ActivitiesVm
-import me.timeto.shared.ui.activities.timer.ActivityTimerStrategy
+import me.timeto.shared.vm.activities.ActivitiesVm
+import me.timeto.shared.vm.activities.timer.ActivityTimerStrategy
 
 val ActivitiesView__listItemHeight = 42.dp
 val ActivitiesView__timerHintHPadding = 5.dp

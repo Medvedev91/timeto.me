@@ -18,7 +18,7 @@ import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.timer.TimerSheet
-import me.timeto.shared.ui.activities.form.ActivityFormTimerHintsVm
+import me.timeto.shared.vm.activities.form.ActivityFormTimerHintsVm
 
 private const val timerSheetHeader = "Timer Hint"
 

@@ -3,7 +3,7 @@ package me.timeto.app.ui
 import androidx.compose.ui.graphics.Color
 import me.timeto.app.misc.extensions.toColor
 import me.timeto.shared.misc.Palette
-import me.timeto.shared.ui.main.MainTabsVm
+import me.timeto.shared.vm.main.MainTabsVm
 
 /**
  * https://sarunw.com/posts/dark-color-cheat-sheet

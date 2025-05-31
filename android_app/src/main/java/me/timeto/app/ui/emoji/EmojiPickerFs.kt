@@ -46,7 +46,7 @@ import me.timeto.app.ui.squircleShape
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.header.views.HeaderView
 import me.timeto.app.ui.navigation.LocalNavigationLayer
-import me.timeto.shared.ui.emoji.EmojiPickerVm
+import me.timeto.shared.vm.emoji.EmojiPickerVm
 
 @Composable
 fun EmojiPickerFs(

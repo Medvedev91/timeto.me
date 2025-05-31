@@ -50,7 +50,7 @@ import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.navigation.picker.NavigationPickerItem
 import me.timeto.shared.db.RepeatingDb
-import me.timeto.shared.ui.repeatings.form.RepeatingFormPeriodVm
+import me.timeto.shared.vm.repeatings.form.RepeatingFormPeriodVm
 
 private val daysOfMonthItemViewItemSize = 36.dp
 

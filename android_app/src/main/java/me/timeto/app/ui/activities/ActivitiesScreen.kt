@@ -31,7 +31,7 @@ import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.history.HistoryFs
 import me.timeto.app.ui.summary.SummaryFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
-import me.timeto.shared.ui.activities.timer.ActivityTimerStrategy
+import me.timeto.shared.vm.activities.timer.ActivityTimerStrategy
 
 @Composable
 fun ActivitiesScreen(
