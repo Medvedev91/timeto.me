@@ -15,8 +15,8 @@ import me.timeto.shared.delayToNextMinute
 import me.timeto.shared.launchExIo
 import me.timeto.shared.localUtcOffsetWithDayStart
 import me.timeto.shared.misc.ColorEnum
-import me.timeto.shared.ui.tasks.TaskUi
-import me.timeto.shared.ui.tasks.sortedUi
+import me.timeto.shared.TaskUi
+import me.timeto.shared.sortedUi
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.textFeatures
 import me.timeto.shared.ui.activities.timer.ActivityTimerStrategy

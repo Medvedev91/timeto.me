@@ -9,8 +9,8 @@ import me.timeto.shared.db.KvDb.Companion.todayOnHomeScreen
 import me.timeto.shared.extensions.limitMax
 import me.timeto.shared.extensions.limitMin
 import me.timeto.shared.misc.SystemInfo
-import me.timeto.shared.ui.tasks.TaskUi
-import me.timeto.shared.ui.tasks.sortedUi
+import me.timeto.shared.TaskUi
+import me.timeto.shared.sortedUi
 import me.timeto.shared.time
 import me.timeto.shared.DayBarsUi
 import me.timeto.shared.ui.timer.TimerDataUi

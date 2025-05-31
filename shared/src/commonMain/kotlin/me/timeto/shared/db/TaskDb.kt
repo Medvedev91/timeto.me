@@ -19,7 +19,7 @@ import me.timeto.shared.time
 import me.timeto.shared.misc.toJsonArray
 import me.timeto.shared.textFeatures
 import me.timeto.shared.UiException
-import me.timeto.shared.ui.tasks.TaskUi
+import me.timeto.shared.TaskUi
 import kotlin.math.max
 
 data class TaskDb(
