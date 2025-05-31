@@ -1,10 +1,9 @@
-package me.timeto.app.misc
+package me.timeto.app
 
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import me.timeto.app.App
 import me.timeto.shared.NotificationAlarm
 import me.timeto.shared.timeMls
 

@@ -25,7 +25,7 @@ import me.timeto.app.ui.VStack
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.dpToPx
-import me.timeto.app.misc.isSdkQPlus
+import me.timeto.app.isSdkQPlus
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.SpacerW1

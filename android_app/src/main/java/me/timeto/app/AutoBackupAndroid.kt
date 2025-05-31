@@ -1,13 +1,12 @@
-package me.timeto.app.misc
+package me.timeto.app
 
 import android.content.ContentValues
 import android.os.Build
 import android.provider.MediaStore
 import androidx.annotation.RequiresApi
-import me.timeto.app.App
-import me.timeto.shared.backups.Backup
 import me.timeto.shared.UnixTime
 import me.timeto.shared.backups.AutoBackup
+import me.timeto.shared.backups.Backup
 import me.timeto.shared.reportApi
 
 @RequiresApi(Build.VERSION_CODES.Q) // MediaStore.MediaColumns.RELATIVE_PATH

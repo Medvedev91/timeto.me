@@ -27,10 +27,6 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import kotlinx.coroutines.delay
-import me.timeto.app.misc.AlarmCenter
-import me.timeto.app.misc.AutoBackupAndroid
-import me.timeto.app.misc.NotificationCenter
-import me.timeto.app.misc.isSdkQPlus
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.main.MainScreen

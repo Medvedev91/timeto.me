@@ -18,7 +18,7 @@ import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.H_PADDING_HALF
 import me.timeto.app.ui.c
 import me.timeto.app.ui.rememberVm
-import me.timeto.app.misc.showOpenSource
+import me.timeto.app.showOpenSource
 import me.timeto.app.ui.squircleShape
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1

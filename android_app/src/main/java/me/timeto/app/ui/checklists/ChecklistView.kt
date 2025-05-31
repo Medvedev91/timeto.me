@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import me.timeto.app.R
-import me.timeto.app.misc.Haptic
+import me.timeto.app.Haptic
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.VStack

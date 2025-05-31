@@ -1,4 +1,4 @@
-package me.timeto.app.misc
+package me.timeto.app
 
 import android.os.Build
 

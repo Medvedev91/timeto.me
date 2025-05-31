@@ -1,4 +1,4 @@
-package me.timeto.app.misc
+package me.timeto.app
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -6,7 +6,6 @@ import android.app.NotificationManager
 import android.content.Context
 import android.media.AudioAttributes
 import android.net.Uri
-import me.timeto.app.App
 import me.timeto.shared.getSoundTimerExpiredFileName
 
 /**

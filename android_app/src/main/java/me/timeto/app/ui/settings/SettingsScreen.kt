@@ -19,9 +19,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
-import me.timeto.app.misc.NotificationCenter
-import me.timeto.app.misc.askAQuestion
-import me.timeto.app.misc.showOpenSource
+import me.timeto.app.NotificationCenter
+import me.timeto.app.askAQuestion
+import me.timeto.app.showOpenSource
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.c
 import me.timeto.app.ui.whats_new.WhatsNewFs

@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.R
 import kotlinx.coroutines.delay
-import me.timeto.app.misc.Haptic
+import me.timeto.app.Haptic
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.SpacerW1

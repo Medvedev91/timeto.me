@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
-import me.timeto.app.misc.Haptic
+import me.timeto.app.Haptic
 import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.Padding
 import me.timeto.app.ui.VStack

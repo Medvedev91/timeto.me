@@ -1,4 +1,4 @@
-package me.timeto.app.misc
+package me.timeto.app
 
 import android.content.Context
 import android.content.Context.VIBRATOR_SERVICE
@@ -6,7 +6,6 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
-import me.timeto.app.App
 import me.timeto.shared.timeMls
 
 object Haptic {

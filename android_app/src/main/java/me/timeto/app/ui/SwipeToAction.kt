@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
-import me.timeto.app.misc.Haptic
+import me.timeto.app.Haptic
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import kotlin.math.absoluteValue
 
