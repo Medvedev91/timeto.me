@@ -66,7 +66,7 @@ class ActivitiesVm(
             activityDb.name.textFeatures().textUi()
 
         val isActive: Boolean =
-            Cache.lastInterval.activity_id == activityDb.id
+            Cache.lastIntervalDb.activity_id == activityDb.id
 
         val timerHintsUi: List<TimerHintUi> =
             activityDb.timerHints.sorted().map { seconds ->

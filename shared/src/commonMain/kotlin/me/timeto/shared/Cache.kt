@@ -19,18 +19,18 @@ object Cache {
     var repeatingsDb = listOf<RepeatingDb>()
     var goalsDb = listOf<GoalDb>()
 
-    lateinit var firstInterval: IntervalDb
-    lateinit var lastInterval: IntervalDb
+    lateinit var firstIntervalDb: IntervalDb
+    lateinit var lastIntervalDb: IntervalDb
 
     //
     // Late Init
 
     fun isLateInitInitialized(): Boolean =
-        ::firstInterval.isInitialized && ::lastInterval.isInitialized
+        ::firstIntervalDb.isInitialized && ::lastIntervalDb.isInitialized
 
     fun fillLateInit(firstInterval: IntervalDb, lastInterval: IntervalDb) {
-        this.firstInterval = firstInterval
-        this.lastInterval = lastInterval
+        this.firstIntervalDb = firstInterval
+        this.lastIntervalDb = lastInterval
     }
 
     ///
@@ -89,12 +89,12 @@ object Cache {
         //
         // Late Init
 
-        IntervalDb.selectAsc(limit = 1).firstOrNull()?.let { firstInterval = it }
+        IntervalDb.selectAsc(limit = 1).firstOrNull()?.let { firstIntervalDb = it }
         IntervalDb.selectAscFlow(limit = 1).filter { it.isNotEmpty() }
-            .onEachExIn(scope) { firstInterval = it.first() }
+            .onEachExIn(scope) { firstIntervalDb = it.first() }
 
-        IntervalDb.selectDesc(limit = 1).firstOrNull()?.let { lastInterval = it }
+        IntervalDb.selectDesc(limit = 1).firstOrNull()?.let { lastIntervalDb = it }
         IntervalDb.selectDescFlow(limit = 1).filter { it.isNotEmpty() }
-            .onEachExIn(scope) { lastInterval = it.first() }
+            .onEachExIn(scope) { lastIntervalDb = it.first() }
     }
 }

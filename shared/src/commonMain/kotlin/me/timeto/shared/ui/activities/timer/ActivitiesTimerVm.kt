@@ -16,7 +16,7 @@ class ActivitiesTimerVm : __Vm<ActivitiesTimerVm.State>() {
 
     override val state = MutableStateFlow(
         State(
-            lastIntervalId = Cache.lastInterval.id,
+            lastIntervalId = Cache.lastIntervalDb.id,
         )
     )
 

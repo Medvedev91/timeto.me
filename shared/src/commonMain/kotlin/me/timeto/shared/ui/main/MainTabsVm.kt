@@ -59,7 +59,7 @@ class MainTabsVm : __Vm<MainTabsVm.State>() {
         State(
             batteryLevel = BatteryInfo.levelFlow.value,
             isBatteryCharging = BatteryInfo.isChargingFlow.value,
-            lastIntervalId = Cache.lastInterval.id,
+            lastIntervalId = Cache.lastIntervalDb.id,
             todayTasksCount = Cache.tasksDb.count { it.isToday },
             forceUpdate = 0,
         )

@@ -21,7 +21,7 @@ class SummaryVm : __Vm<SummaryVm.State>() {
         val daysBarsUi: List<DayBarsUi>,
     ) {
 
-        val minPickerTime: UnixTime = Cache.firstInterval.unixTime()
+        val minPickerTime: UnixTime = Cache.firstIntervalDb.unixTime()
         val maxPickerTime: UnixTime = UnixTime()
 
         val timeStartText: String = pickerTimeStart.getStringByComponents(buttonDateStringComponents)

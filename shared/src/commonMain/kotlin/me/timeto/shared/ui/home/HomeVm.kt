@@ -163,7 +163,7 @@ class HomeVm : __Vm<HomeVm.State>() {
 
     override val state = MutableStateFlow(
         State(
-            intervalDb = Cache.lastInterval,
+            intervalDb = Cache.lastIntervalDb,
             isPurple = false,
             todayTasksUi = listOf(),
             todayBarsUi = null, // todo init data
@@ -248,7 +248,7 @@ class HomeVm : __Vm<HomeVm.State>() {
             while (true) {
                 state.update {
                     it.copy(
-                        intervalDb = Cache.lastInterval,
+                        intervalDb = Cache.lastIntervalDb,
                         idToUpdate = it.idToUpdate + 1, // Force update
                     )
                 }
