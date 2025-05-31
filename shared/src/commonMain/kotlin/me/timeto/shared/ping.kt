@@ -7,7 +7,6 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
 import me.timeto.shared.db.KvDb
 import me.timeto.shared.db.KvDb.Companion.isSendingReports
-import me.timeto.shared.misc.getString
 
 var pingLastDay: Int? = null
 

@@ -11,10 +11,10 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.backups.Backupable__Holder
 import me.timeto.shared.backups.Backupable__Item
-import me.timeto.shared.misc.getInt
-import me.timeto.shared.misc.getString
+import me.timeto.shared.getInt
+import me.timeto.shared.getString
 import me.timeto.shared.time
-import me.timeto.shared.misc.toJsonArray
+import me.timeto.shared.toJsonArray
 import me.timeto.shared.UiException
 
 data class EventTemplateDb(

@@ -2,7 +2,7 @@ package me.timeto.app.misc.extensions
 
 import androidx.compose.ui.graphics.Color
 import me.timeto.app.ui.c
-import me.timeto.shared.misc.ColorEnum
+import me.timeto.shared.ColorEnum
 
 fun ColorEnum.toColor(): Color = when (this) {
 

@@ -8,8 +8,8 @@ import me.timeto.shared.UnixTime
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.delayToNextMinute
-import me.timeto.shared.misc.BatteryInfo
-import me.timeto.shared.misc.ColorEnum
+import me.timeto.shared.BatteryInfo
+import me.timeto.shared.ColorEnum
 import me.timeto.shared.vm.__Vm
 
 class MainTabsVm : __Vm<MainTabsVm.State>() {

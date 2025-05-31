@@ -2,7 +2,7 @@ package me.timeto.shared.vm.color_picker
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.ColorRgba
-import me.timeto.shared.misc.Palette
+import me.timeto.shared.Palette
 import me.timeto.shared.vm.__Vm
 
 class ColorPickerVm(

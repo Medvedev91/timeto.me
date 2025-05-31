@@ -1,6 +1,4 @@
-package me.timeto.shared.misc
-
-import me.timeto.shared.ColorRgba
+package me.timeto.shared
 
 object PieChart {
 

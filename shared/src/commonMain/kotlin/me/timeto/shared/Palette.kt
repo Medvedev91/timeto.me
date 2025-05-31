@@ -1,6 +1,4 @@
-package me.timeto.shared.misc
-
-import me.timeto.shared.ColorRgba
+package me.timeto.shared
 
 /**
  * Based on https://developer.apple.com/design/human-interface-guidelines/color

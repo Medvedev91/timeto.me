@@ -11,7 +11,6 @@ import platform.WatchConnectivity.WCSession
 import me.timeto.shared.db.*
 import me.timeto.shared.backups.Backupable__Holder
 import me.timeto.shared.backups.Backupable__Item
-import me.timeto.shared.misc.zlog
 
 /**
  * I use application context for backup because of limits:

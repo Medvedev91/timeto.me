@@ -6,9 +6,6 @@ import io.ktor.http.Parameters
 import kotlinx.coroutines.launch
 import me.timeto.shared.db.KvDb
 import me.timeto.shared.db.KvDb.Companion.isSendingReports
-import me.timeto.shared.misc.SystemInfo
-import me.timeto.shared.misc.ioScope
-import me.timeto.shared.misc.zlog
 
 fun reportApi(
     message: String,

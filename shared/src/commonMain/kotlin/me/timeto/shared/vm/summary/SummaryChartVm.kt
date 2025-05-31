@@ -2,7 +2,7 @@ package me.timeto.shared.vm.summary
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
-import me.timeto.shared.misc.PieChart
+import me.timeto.shared.PieChart
 import me.timeto.shared.launchEx
 import me.timeto.shared.vm.__Vm
 

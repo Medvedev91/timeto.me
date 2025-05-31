@@ -6,7 +6,7 @@ import kotlinx.datetime.toInstant
 import kotlinx.serialization.json.*
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.*
-import me.timeto.shared.misc.SystemInfo
+import me.timeto.shared.SystemInfo
 import me.timeto.shared.toHms
 
 object Backup {

@@ -3,7 +3,6 @@ package me.timeto.shared
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.TaskDb
-import me.timeto.shared.misc.ColorEnum
 import me.timeto.shared.vm.activities.timer.ActivityTimerStrategy
 import kotlin.math.absoluteValue
 

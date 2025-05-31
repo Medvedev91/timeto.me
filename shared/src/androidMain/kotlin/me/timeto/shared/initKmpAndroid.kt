@@ -5,7 +5,6 @@ import android.os.Build
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import me.timeto.appdbsq.TimetomeDB
 import me.timeto.shared.db.DB_NAME
-import me.timeto.shared.misc.SystemInfo
 
 fun initKmpAndroid(
     application: Application,

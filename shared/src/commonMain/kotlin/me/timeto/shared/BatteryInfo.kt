@@ -1,7 +1,6 @@
-package me.timeto.shared.misc
+package me.timeto.shared
 
 import kotlinx.coroutines.flow.MutableStateFlow
-import me.timeto.shared.launchExIo
 
 object BatteryInfo {
 

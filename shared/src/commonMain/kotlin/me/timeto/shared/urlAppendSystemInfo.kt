@@ -1,7 +1,6 @@
 package me.timeto.shared
 
 import io.ktor.client.request.HttpRequestBuilder
-import me.timeto.shared.misc.SystemInfo
 
 fun HttpRequestBuilder.urlAppendSystemInfo(
     token: String?,

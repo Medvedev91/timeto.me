@@ -14,7 +14,7 @@ import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.delayToNextMinute
 import me.timeto.shared.launchExIo
 import me.timeto.shared.localUtcOffsetWithDayStart
-import me.timeto.shared.misc.ColorEnum
+import me.timeto.shared.ColorEnum
 import me.timeto.shared.TaskUi
 import me.timeto.shared.sortedUi
 import me.timeto.shared.onEachExIn

@@ -1,4 +1,4 @@
-package me.timeto.shared.misc
+package me.timeto.shared
 
 import kotlinx.serialization.json.*
 

@@ -18,8 +18,6 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import me.timeto.appdbsq.TimetomeDB
 import me.timeto.shared.db.db
-import me.timeto.shared.misc.SystemInfo
-import me.timeto.shared.misc.ioScope
 
 lateinit var initKmpDeferred: Deferred<Unit>
 

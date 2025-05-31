@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.backups.AutoBackup
 import me.timeto.shared.backups.Backup
 import me.timeto.shared.Cache
-import me.timeto.shared.misc.SystemInfo
+import me.timeto.shared.SystemInfo
 import me.timeto.shared.UnixTime
 import me.timeto.shared.dayStartOffsetSeconds
 import me.timeto.shared.db.ChecklistDb
@@ -19,7 +19,7 @@ import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.prayEmoji
 import me.timeto.shared.reportApi
-import me.timeto.shared.misc.combine
+import me.timeto.shared.combine
 import me.timeto.shared.vm.app.AppVm.Companion.backupStateFlow
 import me.timeto.shared.vm.whats_new.WhatsNewVm
 import me.timeto.shared.vm.__Vm

@@ -2,7 +2,7 @@ package me.timeto.app.ui
 
 import androidx.compose.ui.graphics.Color
 import me.timeto.app.misc.extensions.toColor
-import me.timeto.shared.misc.Palette
+import me.timeto.shared.Palette
 import me.timeto.shared.vm.main.MainTabsVm
 
 /**

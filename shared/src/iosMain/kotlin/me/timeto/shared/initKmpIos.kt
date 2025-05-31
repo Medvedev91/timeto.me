@@ -8,8 +8,6 @@ import me.timeto.appdbsq.TimetomeDB
 import platform.Foundation.*
 import platform.UIKit.UIDevice
 import me.timeto.shared.db.*
-import me.timeto.shared.misc.SystemInfo
-import me.timeto.shared.misc.combine
 
 fun initKmpIos() {
     val systemInfo = SystemInfo(

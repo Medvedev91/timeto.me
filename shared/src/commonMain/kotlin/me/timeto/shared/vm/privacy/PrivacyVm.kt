@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.db.KvDb
 import me.timeto.shared.db.KvDb.Companion.isSendingReports
 import me.timeto.shared.launchExIo
-import me.timeto.shared.misc.SystemInfo
+import me.timeto.shared.SystemInfo
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.ping
 import me.timeto.shared.prayEmoji
