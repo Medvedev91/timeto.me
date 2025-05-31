@@ -52,10 +52,10 @@ fun HomeTimerView(
 
     val navigationFs = LocalNavigationFs.current
 
-    val noteColor = animateColorAsState(state.timerData.noteColor.toColor()).value
-    val timerColor = animateColorAsState(state.timerData.timerColor.toColor()).value
+    val noteColor = animateColorAsState(state.timerStateUi.noteColor.toColor()).value
+    val timerColor = animateColorAsState(state.timerStateUi.timerColor.toColor()).value
     val timerControlsColor = animateColorAsState(
-        state.timerData.controlsColorEnum?.toColor() ?: c.homeTimerControls
+        state.timerStateUi.controlsColorEnum?.toColor() ?: c.homeTimerControls
     ).value
 
     VStack(
@@ -70,13 +70,13 @@ fun HomeTimerView(
         ) {
 
             TimerDataNoteText(
-                text = state.timerData.note,
+                text = state.timerStateUi.note,
                 color = noteColor,
             )
 
             HStack {
 
-                val timerText = state.timerData.timerText
+                val timerText = state.timerStateUi.timerText
                 val timerFontSize: TextUnit = run {
                     val len = timerText.count()
                     when {
@@ -120,7 +120,7 @@ fun HomeTimerView(
                     modifier = Modifier
                         .clip(squircleShape)
                         .clickable {
-                            state.timerData.togglePomodoro()
+                            state.timerStateUi.togglePomodoro()
                         },
                 ) {
 
@@ -146,14 +146,14 @@ fun HomeTimerView(
                             .fillMaxWidth()
                             .clip(squircleShape)
                             .clickable {
-                                state.timerData.prolong()
+                                state.timerStateUi.prolong()
                             },
                         contentAlignment = Alignment.Center,
                     ) {
 
                         TimerDataTimerText(" ", timerFontSize, c.transparent)
 
-                        val prolongedText = state.timerData.prolongText
+                        val prolongedText = state.timerStateUi.prolongText
                         if (prolongedText != null) {
                             Text(
                                 text = prolongedText,
@@ -181,7 +181,7 @@ fun HomeTimerView(
             exit = purpleAnimExit,
         ) {
 
-            val infoUi = state.timerData.infoUi
+            val infoUi = state.timerStateUi.infoUi
 
             HStack(
                 modifier = Modifier
@@ -216,7 +216,7 @@ fun HomeTimerView(
                         navigationFs.push {
                             ActivityTimerFs(
                                 activityDb = state.activeActivityDb,
-                                strategy = state.timerData.infoUi.timerStrategy,
+                                strategy = state.timerStateUi.infoUi.timerStrategy,
                             )
                         }
                     },

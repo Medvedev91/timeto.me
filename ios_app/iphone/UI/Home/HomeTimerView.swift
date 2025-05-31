@@ -15,18 +15,18 @@ struct HomeTimerView: View {
     @Environment(Navigation.self) private var navigation
 
     private var controlsColor: Color {
-        state.timerData.controlsColorEnum?.toColor() ?? homeTimerControlsColor
+        state.timerStateUi.controlsColorEnum?.toColor() ?? homeTimerControlsColor
     }
     
-    private var noteColor: Color { state.timerData.noteColor.toColor() }
-    private var timerColor: Color { state.timerData.timerColor.toColor() }
+    private var noteColor: Color { state.timerStateUi.noteColor.toColor() }
+    private var timerColor: Color { state.timerStateUi.timerColor.toColor() }
     
     var body: some View {
         
-        let timerData = state.timerData
+        let timerStateUi = state.timerStateUi
         
         let timerFont: Font = {
-            let len = timerData.timerText.count
+            let len = timerStateUi.timerText.count
             if len <= 5 {
                 return timerFont1
             }
@@ -39,7 +39,7 @@ struct HomeTimerView: View {
         ZStack(alignment: .top) {
             
             TimerDataNoteText(
-                text: state.timerData.note,
+                text: state.timerStateUi.note,
                 color: noteColor
             )
             
@@ -74,7 +74,7 @@ struct HomeTimerView: View {
                 
                 Button(
                     action: {
-                        state.timerData.togglePomodoro()
+                        timerStateUi.togglePomodoro()
                     },
                     label: {
                         
@@ -83,7 +83,7 @@ struct HomeTimerView: View {
                             TimerDataNoteText(text: " ", color: .clear)
                             
                             TimerDataTimerText(
-                                text: timerData.timerText,
+                                text: timerStateUi.timerText,
                                 font: timerFont,
                                 color: timerColor
                             )
@@ -97,7 +97,7 @@ struct HomeTimerView: View {
                     
                     Button(
                         action: {
-                            state.timerData.prolong()
+                            timerStateUi.prolong()
                         },
                         label: {
                             
@@ -109,7 +109,7 @@ struct HomeTimerView: View {
                                     color: .clear
                                 )
                                 
-                                if let prolongText = timerData.prolongText {
+                                if let prolongText = timerStateUi.prolongText {
                                     Text(prolongText)
                                         .font(.system(size: 22, weight: .thin))
                                         .foregroundColor(controlsColor)
@@ -129,7 +129,7 @@ struct HomeTimerView: View {
         
         if state.isPurple {
             
-            let infoUi = state.timerData.infoUi
+            let infoUi = timerStateUi.infoUi
             
             HStack {
                 
@@ -161,7 +161,7 @@ struct HomeTimerView: View {
                     onClick: {
                         navigation.showActivityTimerSheet(
                             activityDb: state.activeActivityDb,
-                            strategy: state.timerData.infoUi.timerStrategy,
+                            strategy: timerStateUi.infoUi.timerStrategy,
                             hideOnStart: true
                         )
                     }

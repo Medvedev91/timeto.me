@@ -11,7 +11,7 @@ import me.timeto.shared.DaytimeUi
 import me.timeto.shared.ui.activities.timer.ActivityTimerStrategy
 import kotlin.math.absoluteValue
 
-class TimerDataUi(
+class TimerStateUi(
     intervalDb: IntervalDb,
     todayTasksDb: List<TaskDb>,
     isPurple: Boolean,

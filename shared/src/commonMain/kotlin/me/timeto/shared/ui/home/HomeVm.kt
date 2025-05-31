@@ -13,7 +13,7 @@ import me.timeto.shared.TaskUi
 import me.timeto.shared.sortedUi
 import me.timeto.shared.time
 import me.timeto.shared.DayBarsUi
-import me.timeto.shared.ui.timer.TimerDataUi
+import me.timeto.shared.ui.timer.TimerStateUi
 import me.timeto.shared.ui.activities.timer.ActivityTimerStrategy
 import me.timeto.shared.ui.whats_new.WhatsNewVm
 import me.timeto.shared.ui.__Vm
@@ -21,7 +21,7 @@ import me.timeto.shared.ui.__Vm
 class HomeVm : __Vm<HomeVm.State>() {
 
     data class State(
-        val interval: IntervalDb,
+        val intervalDb: IntervalDb,
         val isPurple: Boolean,
         val todayTasksUi: List<TaskUi>,
         val todayBarsUi: DayBarsUi?,
@@ -32,14 +32,18 @@ class HomeVm : __Vm<HomeVm.State>() {
         val idToUpdate: Long,
     ) {
 
-        val timerData =
-            TimerDataUi(interval, todayTasksUi.map { it.taskDb }, isPurple)
+        val timerStateUi = TimerStateUi(
+            intervalDb = intervalDb,
+            todayTasksDb = todayTasksUi.map { it.taskDb },
+            isPurple = isPurple,
+        )
 
         val activeActivityDb: ActivityDb =
-            interval.selectActivityDbCached()
+            intervalDb.selectActivityDbCached()
 
         // todo or use interval.getTriggers()
-        val textFeatures = (interval.note ?: activeActivityDb.name).textFeatures()
+        val textFeatures: TextFeatures =
+            (intervalDb.note ?: activeActivityDb.name).textFeatures()
 
         val checklistDb: ChecklistDb? =
             textFeatures.checklistsDb.firstOrNull()
@@ -159,7 +163,7 @@ class HomeVm : __Vm<HomeVm.State>() {
 
     override val state = MutableStateFlow(
         State(
-            interval = Cache.lastInterval,
+            intervalDb = Cache.lastInterval,
             isPurple = false,
             todayTasksUi = listOf(),
             todayBarsUi = null, // todo init data
@@ -176,12 +180,12 @@ class HomeVm : __Vm<HomeVm.State>() {
 
         IntervalDb.selectLastOneOrNullFlow()
             .filterNotNull()
-            .onEachExIn(scopeVm) { interval ->
+            .onEachExIn(scopeVm) { intervalDb ->
                 state.update {
                     val isNewInterval: Boolean =
-                        it.interval.id != interval.id
+                        it.intervalDb.id != intervalDb.id
                     it.copy(
-                        interval = interval,
+                        intervalDb = intervalDb,
                         isPurple = if (isNewInterval) false else it.isPurple,
                     )
                 }
@@ -244,7 +248,7 @@ class HomeVm : __Vm<HomeVm.State>() {
             while (true) {
                 state.update {
                     it.copy(
-                        interval = Cache.lastInterval,
+                        intervalDb = Cache.lastInterval,
                         idToUpdate = it.idToUpdate + 1, // Force update
                     )
                 }
