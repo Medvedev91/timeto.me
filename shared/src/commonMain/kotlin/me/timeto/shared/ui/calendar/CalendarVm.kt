@@ -12,7 +12,7 @@ import me.timeto.shared.UnixTime
 import me.timeto.shared.db.EventDb
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.textFeatures
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.ui.__Vm
 
 class CalendarVm : __Vm<CalendarVm.State>() {
 

@@ -6,7 +6,7 @@ import me.timeto.shared.UnixTime
 import me.timeto.shared.db.GoalDb
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.ui.__Vm
 
 class GoalFormPeriodVm(
     initGoalDbPeriod: GoalDb.Period?,

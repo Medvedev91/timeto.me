@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.onEachExIn
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.ui.__Vm
 
 class ChecklistsPickerVm(
     initChecklistsDb: List<ChecklistDb>,

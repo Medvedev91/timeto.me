@@ -10,7 +10,7 @@ import me.timeto.shared.localUtcOffset
 import me.timeto.shared.DayBarsUi
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toHms
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.ui.__Vm
 
 class SummaryVm : __Vm<SummaryVm.State>() {
 

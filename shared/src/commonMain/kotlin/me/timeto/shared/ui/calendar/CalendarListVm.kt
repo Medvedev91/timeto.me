@@ -10,7 +10,7 @@ import me.timeto.shared.db.EventDb
 import me.timeto.shared.delayToNextMinute
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.textFeatures
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.ui.__Vm
 
 class CalendarListVm : __Vm<CalendarListVm.State>() {
 

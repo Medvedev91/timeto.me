@@ -12,7 +12,7 @@ import me.timeto.shared.textFeatures
 import me.timeto.shared.toHms
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.ui.__Vm
 
 class EventFormVm(
     val initEventDb: EventDb?,

@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import me.timeto.shared.Cache
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.textFeatures
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.ui.__Vm
 
 class ActivityPickerVm : __Vm<ActivityPickerVm.State>() {
 

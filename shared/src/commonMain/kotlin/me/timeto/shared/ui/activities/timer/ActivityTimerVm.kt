@@ -6,7 +6,7 @@ import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toHms
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.ui.__Vm
 
 class ActivityTimerVm(
     private val activityDb: ActivityDb,

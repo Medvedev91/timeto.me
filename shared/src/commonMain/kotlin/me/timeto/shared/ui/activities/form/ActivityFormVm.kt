@@ -17,7 +17,7 @@ import me.timeto.shared.UiException
 import me.timeto.shared.ui.color_picker.ColorPickerExampleUi
 import me.timeto.shared.ui.color_picker.ColorPickerExamplesUi
 import me.timeto.shared.ui.goals.form.GoalFormData
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.ui.__Vm
 
 class ActivityFormVm(
     initActivityDb: ActivityDb?,

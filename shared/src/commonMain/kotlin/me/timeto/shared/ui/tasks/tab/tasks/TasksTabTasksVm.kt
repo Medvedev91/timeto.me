@@ -20,7 +20,7 @@ import me.timeto.shared.ui.tasks.sortedUi
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.textFeatures
 import me.timeto.shared.ui.activities.timer.ActivityTimerStrategy
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.ui.__Vm
 
 class TasksTabTasksVm(
     val taskFolderDb: TaskFolderDb,

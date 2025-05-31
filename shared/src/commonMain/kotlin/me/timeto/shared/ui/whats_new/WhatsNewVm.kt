@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.KvDb
 import me.timeto.shared.launchExIo
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.ui.__Vm
 
 class WhatsNewVm : __Vm<WhatsNewVm.State>() {
 

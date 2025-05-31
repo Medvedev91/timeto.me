@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.ui.goals.form.GoalFormData
 import me.timeto.shared.ui.goals.form.GoalFormStrategy
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.ui.__Vm
 
 class ActivityFormGoalsVm(
     initGoalFormsData: List<GoalFormData>,

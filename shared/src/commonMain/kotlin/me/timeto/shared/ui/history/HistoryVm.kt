@@ -10,7 +10,7 @@ import me.timeto.shared.extensions.limitMin
 import me.timeto.shared.time
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.ui.history.form.HistoryFormUtils
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.ui.__Vm
 
 class HistoryVm : __Vm<HistoryVm.State>() {
 

@@ -1,4 +1,4 @@
-package me.timeto.shared.vm
+package me.timeto.shared.ui
 
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.StateFlow

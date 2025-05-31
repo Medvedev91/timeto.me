@@ -16,7 +16,7 @@ import me.timeto.shared.DayBarsUi
 import me.timeto.shared.ui.timer.TimerDataUi
 import me.timeto.shared.ui.activities.timer.ActivityTimerStrategy
 import me.timeto.shared.ui.whats_new.WhatsNewVm
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.ui.__Vm
 
 class HomeVm : __Vm<HomeVm.State>() {
 

@@ -8,7 +8,7 @@ import me.timeto.shared.launchExIo
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.moveUiListIos
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.ui.__Vm
 
 class ChecklistVm(
     checklistDb: ChecklistDb,

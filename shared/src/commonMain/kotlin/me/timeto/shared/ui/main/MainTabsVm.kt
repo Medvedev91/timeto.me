@@ -10,7 +10,7 @@ import me.timeto.shared.db.TaskDb
 import me.timeto.shared.delayToNextMinute
 import me.timeto.shared.misc.BatteryInfo
 import me.timeto.shared.misc.ColorEnum
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.ui.__Vm
 
 class MainTabsVm : __Vm<MainTabsVm.State>() {
 

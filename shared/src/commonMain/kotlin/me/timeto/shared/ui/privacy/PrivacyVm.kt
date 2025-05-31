@@ -9,7 +9,7 @@ import me.timeto.shared.misc.SystemInfo
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.ping
 import me.timeto.shared.prayEmoji
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.ui.__Vm
 
 class PrivacyVm : __Vm<PrivacyVm.State>() {
 

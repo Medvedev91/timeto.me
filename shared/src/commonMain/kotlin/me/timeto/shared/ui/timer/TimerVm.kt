@@ -1,7 +1,7 @@
 package me.timeto.shared.ui.timer
 
 import kotlinx.coroutines.flow.MutableStateFlow
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.ui.__Vm
 
 class TimerVm(
     initSeconds: Int,

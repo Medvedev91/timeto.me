@@ -9,7 +9,7 @@ import me.timeto.shared.time
 import me.timeto.shared.ui.goals.form.GoalFormData
 import me.timeto.shared.ui.shortcuts.ShortcutPerformer
 import me.timeto.shared.ui.whats_new.WhatsNewVm
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.ui.__Vm
 
 class AppVm : __Vm<AppVm.State>() {
 

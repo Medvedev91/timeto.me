@@ -22,7 +22,7 @@ import me.timeto.shared.reportApi
 import me.timeto.shared.misc.combine
 import me.timeto.shared.ui.app.AppVm.Companion.backupStateFlow
 import me.timeto.shared.ui.whats_new.WhatsNewVm
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.ui.__Vm
 
 class SettingsVm : __Vm<SettingsVm.State>() {
 

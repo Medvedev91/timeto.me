@@ -6,7 +6,7 @@ import me.timeto.shared.UnixTime
 import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.ui.__Vm
 
 class RepeatingFormPeriodVm(
     initPeriod: RepeatingDb.Period?,

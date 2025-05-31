@@ -7,7 +7,7 @@ import me.timeto.shared.db.ChecklistItemDb
 import me.timeto.shared.launchEx
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.ui.__Vm
 
 class ChecklistFormItemVm(
     checklistDb: ChecklistDb,
