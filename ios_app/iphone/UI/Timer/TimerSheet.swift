@@ -10,7 +10,9 @@ struct TimerSheet: View {
 
     var body: some View {
         VmView({
-            TimerVm(initSeconds: initSeconds.toInt32())
+            TimerPickerVm(
+                initSeconds: initSeconds.toInt32()
+            )
         }) { _, state in
             TimerSheetInner(
                 title: title,
@@ -28,7 +30,7 @@ private struct TimerSheetInner: View {
     let title: String
     let doneTitle: String
     let onDone: (Int) -> Void
-    let pickerItemsUi: [TimerVm.PickerItemUi]
+    let pickerItemsUi: [TimerPickerVm.PickerItemUi]
     
     @State var selected: Int32
 

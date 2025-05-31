@@ -22,7 +22,7 @@ import me.timeto.app.ui.Screen
 import me.timeto.app.ui.header.sheet.HeaderSheet
 import me.timeto.app.ui.header.sheet.HeaderSheetButton
 import me.timeto.app.ui.navigation.LocalNavigationLayer
-import me.timeto.shared.ui.timer.TimerVm
+import me.timeto.shared.ui.timer.TimerPickerVm
 
 @Composable
 fun TimerSheet(
@@ -35,12 +35,12 @@ fun TimerSheet(
     val navigationLayer = LocalNavigationLayer.current
 
     val (_, state) = rememberVm {
-        TimerVm(
+        TimerPickerVm(
             initSeconds = initSeconds,
         )
     }
 
-    val pickerItemsUi: List<TimerVm.PickerItemUi> = state.pickerItemsUi
+    val pickerItemsUi: List<TimerPickerVm.PickerItemUi> = state.pickerItemsUi
     val formTimeItemIdx: MutableState<Int> = remember {
         mutableIntStateOf(pickerItemsUi.indexOfFirst { it.seconds == initSeconds })
     }

@@ -3,9 +3,9 @@ package me.timeto.shared.ui.timer
 import kotlinx.coroutines.flow.MutableStateFlow
 import me.timeto.shared.ui.__Vm
 
-class TimerVm(
+class TimerPickerVm(
     initSeconds: Int,
-) : __Vm<TimerVm.State>() {
+) : __Vm<TimerPickerVm.State>() {
 
     data class State(
         val pickerItemsUi: List<PickerItemUi>,
@@ -29,7 +29,7 @@ class TimerVm(
 
 private fun buildPickerItems(
     defSeconds: Int,
-): List<TimerVm.PickerItemUi> {
+): List<TimerPickerVm.PickerItemUi> {
 
     val a: List<Int> =
         (1..10).map { it * 60 } + // 1 - 10 min by 1 min
@@ -48,7 +48,7 @@ private fun buildPickerItems(
             else -> "$hours : ${minutes.toString().padStart(2, '0')}"
         }
 
-        TimerVm.PickerItemUi(
+        TimerPickerVm.PickerItemUi(
             seconds = seconds,
             title = title,
         )
