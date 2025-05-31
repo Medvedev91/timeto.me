@@ -1,4 +1,4 @@
-package me.timeto.shared.extensions
+package me.timeto.shared
 
 /**
  * Do use only elements from the array, otherwise Exception

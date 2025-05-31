@@ -1,8 +1,5 @@
 package me.timeto.shared
 
-import me.timeto.shared.extensions.limitMax
-import me.timeto.shared.extensions.limitMinMax
-
 data class DaytimePickerSliderUi(
     val hour: Int,
     val minute: Int,

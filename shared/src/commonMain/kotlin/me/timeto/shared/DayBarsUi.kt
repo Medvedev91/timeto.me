@@ -2,7 +2,6 @@ package me.timeto.shared
 
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
-import me.timeto.shared.extensions.limitMax
 
 class DayBarsUi(
     val unixDay: Int,

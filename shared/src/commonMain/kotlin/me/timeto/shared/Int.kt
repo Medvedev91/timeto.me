@@ -1,4 +1,4 @@
-package me.timeto.shared.extensions
+package me.timeto.shared
 
 fun Int.limitMin(value: Int): Int =
     if (this < value) value else this

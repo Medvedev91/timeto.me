@@ -6,8 +6,8 @@ import kotlinx.coroutines.launch
 import me.timeto.shared.*
 import me.timeto.shared.db.*
 import me.timeto.shared.db.KvDb.Companion.todayOnHomeScreen
-import me.timeto.shared.extensions.limitMax
-import me.timeto.shared.extensions.limitMin
+import me.timeto.shared.limitMax
+import me.timeto.shared.limitMin
 import me.timeto.shared.SystemInfo
 import me.timeto.shared.TaskUi
 import me.timeto.shared.sortedUi
