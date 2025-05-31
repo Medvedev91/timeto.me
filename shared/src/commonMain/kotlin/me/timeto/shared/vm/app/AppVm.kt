@@ -9,9 +9,9 @@ import me.timeto.shared.time
 import me.timeto.shared.vm.goals.form.GoalFormData
 import me.timeto.shared.ShortcutPerformer
 import me.timeto.shared.vm.whats_new.WhatsNewVm
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
-class AppVm : __Vm<AppVm.State>() {
+class AppVm : Vm<AppVm.State>() {
 
     companion object {
 

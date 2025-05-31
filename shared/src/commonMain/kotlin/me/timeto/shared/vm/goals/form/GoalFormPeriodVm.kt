@@ -6,11 +6,11 @@ import me.timeto.shared.UnixTime
 import me.timeto.shared.db.GoalDb
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
 class GoalFormPeriodVm(
     initGoalDbPeriod: GoalDb.Period?,
-) : __Vm<GoalFormPeriodVm.State>() {
+) : Vm<GoalFormPeriodVm.State>() {
 
     data class State(
         val selectedDaysOfWeek: Set<Int>,

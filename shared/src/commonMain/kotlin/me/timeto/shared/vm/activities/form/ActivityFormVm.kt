@@ -17,11 +17,11 @@ import me.timeto.shared.UiException
 import me.timeto.shared.vm.color_picker.ColorPickerExampleUi
 import me.timeto.shared.vm.color_picker.ColorPickerExamplesUi
 import me.timeto.shared.vm.goals.form.GoalFormData
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
 class ActivityFormVm(
     initActivityDb: ActivityDb?,
-) : __Vm<ActivityFormVm.State>() {
+) : Vm<ActivityFormVm.State>() {
 
     data class State(
         val initActivityDb: ActivityDb?,

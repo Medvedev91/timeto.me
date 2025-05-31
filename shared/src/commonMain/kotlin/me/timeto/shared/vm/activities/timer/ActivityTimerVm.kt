@@ -6,12 +6,12 @@ import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toHms
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
 class ActivityTimerVm(
     private val activityDb: ActivityDb,
     private val strategy: ActivityTimerStrategy,
-) : __Vm<ActivityTimerVm.State>() {
+) : Vm<ActivityTimerVm.State>() {
 
     companion object {
 

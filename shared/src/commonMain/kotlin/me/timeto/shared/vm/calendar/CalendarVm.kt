@@ -12,9 +12,9 @@ import me.timeto.shared.UnixTime
 import me.timeto.shared.db.EventDb
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.textFeatures
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
-class CalendarVm : __Vm<CalendarVm.State>() {
+class CalendarVm : Vm<CalendarVm.State>() {
 
     data class State(
         val months: List<Month>,

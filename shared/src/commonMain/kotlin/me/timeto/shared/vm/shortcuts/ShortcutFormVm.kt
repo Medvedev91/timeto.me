@@ -6,11 +6,11 @@ import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
 class ShortcutFormVm(
     shortcutDb: ShortcutDb?,
-) : __Vm<ShortcutFormVm.State>() {
+) : Vm<ShortcutFormVm.State>() {
 
     data class State(
         val shortcutDb: ShortcutDb?,

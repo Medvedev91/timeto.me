@@ -9,9 +9,9 @@ import me.timeto.shared.onEachExIn
 import me.timeto.shared.textFeatures
 import me.timeto.shared.moveUiListAndroid
 import me.timeto.shared.moveUiListIos
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
-class ActivitiesFormVm : __Vm<ActivitiesFormVm.State>() {
+class ActivitiesFormVm : Vm<ActivitiesFormVm.State>() {
 
     data class State(
         val activitiesDb: List<ActivityDb>,

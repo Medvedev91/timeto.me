@@ -9,9 +9,9 @@ import me.timeto.shared.onEachExIn
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.moveUiListAndroid
 import me.timeto.shared.moveUiListIos
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
-class TaskFoldersFormVm : __Vm<TaskFoldersFormVm.State>() {
+class TaskFoldersFormVm : Vm<TaskFoldersFormVm.State>() {
 
     data class State(
         val foldersDb: List<TaskFolderDb>,

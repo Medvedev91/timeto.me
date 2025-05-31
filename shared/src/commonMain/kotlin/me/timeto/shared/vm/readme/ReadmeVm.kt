@@ -2,11 +2,11 @@ package me.timeto.shared.vm.readme
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.db.KvDb
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
 class ReadmeVm(
     defaultItem: DefaultItem,
-) : __Vm<ReadmeVm.State>() {
+) : Vm<ReadmeVm.State>() {
 
     enum class DefaultItem {
         basics, pomodoro,

@@ -14,11 +14,11 @@ import me.timeto.shared.textFeatures
 import me.timeto.shared.toTimerHintNote
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
 class EventTemplateFormVm(
     val initEventTemplateDb: EventTemplateDb?,
-) : __Vm<EventTemplateFormVm.State>() {
+) : Vm<EventTemplateFormVm.State>() {
 
     data class State(
         val title: String,

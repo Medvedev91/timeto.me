@@ -6,11 +6,11 @@ import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
 class ChecklistFormVm(
     checklistDb: ChecklistDb?,
-) : __Vm<ChecklistFormVm.State>() {
+) : Vm<ChecklistFormVm.State>() {
 
     data class State(
         val checklistDb: ChecklistDb?,

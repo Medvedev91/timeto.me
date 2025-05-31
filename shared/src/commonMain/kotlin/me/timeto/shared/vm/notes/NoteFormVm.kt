@@ -6,11 +6,11 @@ import me.timeto.shared.db.NoteDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
 class NoteFormVm(
     noteDb: NoteDb?,
-) : __Vm<NoteFormVm.State>() {
+) : Vm<NoteFormVm.State>() {
 
     data class State(
         val noteDb: NoteDb?,

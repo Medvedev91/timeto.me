@@ -10,9 +10,9 @@ import me.timeto.shared.db.TaskDb
 import me.timeto.shared.delayToNextMinute
 import me.timeto.shared.BatteryInfo
 import me.timeto.shared.ColorEnum
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
-class MainTabsVm : __Vm<MainTabsVm.State>() {
+class MainTabsVm : Vm<MainTabsVm.State>() {
 
     companion object {
         val menuPrimaryColorDark = ColorRgba(255, 255, 255, 200)

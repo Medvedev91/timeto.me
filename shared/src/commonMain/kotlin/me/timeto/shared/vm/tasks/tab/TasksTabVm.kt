@@ -5,9 +5,9 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.onEachExIn
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
-class TasksTabVm : __Vm<TasksTabVm.State>() {
+class TasksTabVm : Vm<TasksTabVm.State>() {
 
     data class State(
         val taskFoldersUi: List<TaskFolderUi>,

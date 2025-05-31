@@ -4,10 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
 @Composable
-fun <State, VM : __Vm<State>> rememberVm(
+fun <State, VM : Vm<State>> rememberVm(
     key1: Any? = null,
     key2: Any? = null,
     key3: Any? = null,

@@ -3,11 +3,11 @@ package me.timeto.shared.vm.activities.form
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.toTimerHintNote
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
 class ActivityFormTimerHintsVm(
     initTimerHints: Set<Int>,
-) : __Vm<ActivityFormTimerHintsVm.State>() {
+) : Vm<ActivityFormTimerHintsVm.State>() {
 
     data class State(
         val timerHints: Set<Int>,

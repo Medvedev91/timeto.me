@@ -7,9 +7,9 @@ import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonPrimitive
 import me.timeto.shared.getResourceContent
 import me.timeto.shared.launchEx
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
-class EmojiPickerVm : __Vm<EmojiPickerVm.State>() {
+class EmojiPickerVm : Vm<EmojiPickerVm.State>() {
 
     data class State(
         val emojis: List<Emoji>,

@@ -10,9 +10,9 @@ import me.timeto.shared.localUtcOffset
 import me.timeto.shared.DayBarsUi
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toHms
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
-class SummaryVm : __Vm<SummaryVm.State>() {
+class SummaryVm : Vm<SummaryVm.State>() {
 
     data class State(
         val pickerTimeStart: UnixTime,

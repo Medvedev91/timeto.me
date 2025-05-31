@@ -12,13 +12,13 @@ import me.timeto.shared.textFeatures
 import me.timeto.shared.toHms
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
 class EventFormVm(
     val initEventDb: EventDb?,
     initText: String?,
     initTime: Int?,
-) : __Vm<EventFormVm.State>() {
+) : Vm<EventFormVm.State>() {
 
     data class State(
         val doneText: String,

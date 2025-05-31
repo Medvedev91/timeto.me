@@ -7,11 +7,11 @@ import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
 class TaskFolderFormVm(
     folderDb: TaskFolderDb?,
-) : __Vm<TaskFolderFormVm.State>() {
+) : Vm<TaskFolderFormVm.State>() {
 
     data class State(
         val folderDb: TaskFolderDb?,

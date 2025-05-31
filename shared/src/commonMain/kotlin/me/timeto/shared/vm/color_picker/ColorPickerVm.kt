@@ -3,11 +3,11 @@ package me.timeto.shared.vm.color_picker
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.Palette
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
 class ColorPickerVm(
     examplesUi: ColorPickerExamplesUi,
-) : __Vm<ColorPickerVm.State>() {
+) : Vm<ColorPickerVm.State>() {
 
     companion object {
 

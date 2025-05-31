@@ -10,11 +10,11 @@ import me.timeto.shared.time
 import me.timeto.shared.textFeatures
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
 class HistoryFormVm(
     initIntervalDb: IntervalDb?,
-) : __Vm<HistoryFormVm.State>() {
+) : Vm<HistoryFormVm.State>() {
 
     private val initTime: Int = initIntervalDb?.id ?: time()
 

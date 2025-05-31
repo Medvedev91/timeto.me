@@ -4,9 +4,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.KvDb
 import me.timeto.shared.launchExIo
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
-class WhatsNewVm : __Vm<WhatsNewVm.State>() {
+class WhatsNewVm : Vm<WhatsNewVm.State>() {
 
     data class State(
         val tmp: Int = 1,

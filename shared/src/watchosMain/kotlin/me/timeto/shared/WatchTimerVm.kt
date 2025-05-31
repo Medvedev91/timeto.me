@@ -6,9 +6,9 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.timeto.shared.db.IntervalDb
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
-class WatchTimerVm : __Vm<WatchTimerVm.State>() {
+class WatchTimerVm : Vm<WatchTimerVm.State>() {
 
     data class State(
         val isPurple: Boolean,

@@ -9,9 +9,9 @@ import me.timeto.shared.SystemInfo
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.ping
 import me.timeto.shared.prayEmoji
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
-class PrivacyVm : __Vm<PrivacyVm.State>() {
+class PrivacyVm : Vm<PrivacyVm.State>() {
 
     data class State(
         val isSendingReportsEnabled: Boolean,

@@ -20,11 +20,11 @@ import me.timeto.shared.sortedUi
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.textFeatures
 import me.timeto.shared.vm.activities.timer.ActivityTimerStrategy
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
 class TasksTabTasksVm(
     val taskFolderDb: TaskFolderDb,
-) : __Vm<TasksTabTasksVm.State>() {
+) : Vm<TasksTabTasksVm.State>() {
 
     data class State(
         val tasksVmUi: List<TaskVmUi>,

@@ -6,11 +6,11 @@ import me.timeto.shared.Cache
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.EventDb
 import me.timeto.shared.onEachExIn
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
 class CalendarDayVm(
     private val unixDay: Int,
-) : __Vm<CalendarDayVm.State>() {
+) : Vm<CalendarDayVm.State>() {
 
     data class State(
         val initTime: Int,

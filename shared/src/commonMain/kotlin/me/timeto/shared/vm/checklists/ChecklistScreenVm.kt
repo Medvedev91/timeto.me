@@ -4,11 +4,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.onEachExIn
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
 class ChecklistScreenVm(
     checklistDb: ChecklistDb,
-) : __Vm<ChecklistScreenVm.State>() {
+) : Vm<ChecklistScreenVm.State>() {
 
     data class State(
         val checklistDb: ChecklistDb,

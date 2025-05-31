@@ -6,9 +6,9 @@ import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.TextFeatures.TimeData
 import me.timeto.shared.db.ActivityDb
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
-class WatchTabTasksVm : __Vm<WatchTabTasksVm.State>() {
+class WatchTabTasksVm : Vm<WatchTabTasksVm.State>() {
 
     class TaskUI(
         val task: TaskDb,

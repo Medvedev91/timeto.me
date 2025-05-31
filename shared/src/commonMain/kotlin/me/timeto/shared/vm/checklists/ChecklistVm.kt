@@ -8,11 +8,11 @@ import me.timeto.shared.launchExIo
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.moveUiListIos
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
 class ChecklistVm(
     checklistDb: ChecklistDb,
-) : __Vm<ChecklistVm.State>() {
+) : Vm<ChecklistVm.State>() {
 
     data class State(
         val checklistDb: ChecklistDb,

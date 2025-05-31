@@ -9,9 +9,9 @@ import me.timeto.shared.limitMin
 import me.timeto.shared.time
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.vm.history.form.HistoryFormUtils
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
-class HistoryVm : __Vm<HistoryVm.State>() {
+class HistoryVm : Vm<HistoryVm.State>() {
 
     data class State(
         val daysUi: List<DayUi>,

@@ -3,9 +3,9 @@ package me.timeto.shared
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
-class WatchTabTimerVm : __Vm<WatchTabTimerVm.State>() {
+class WatchTabTimerVm : Vm<WatchTabTimerVm.State>() {
 
     class ActivityUI(
         val activity: ActivityDb,

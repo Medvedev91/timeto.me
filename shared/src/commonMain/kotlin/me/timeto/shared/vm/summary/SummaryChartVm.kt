@@ -4,11 +4,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.PieChart
 import me.timeto.shared.launchEx
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
 class SummaryChartVm(
     activitiesUi: List<SummaryVm.ActivityUi>,
-) : __Vm<SummaryChartVm.State>() {
+) : Vm<SummaryChartVm.State>() {
 
     data class State(
         val pieItems: List<PieChart.ItemData>,

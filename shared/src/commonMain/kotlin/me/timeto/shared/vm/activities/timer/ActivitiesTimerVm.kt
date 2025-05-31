@@ -6,9 +6,9 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.onEachExIn
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
-class ActivitiesTimerVm : __Vm<ActivitiesTimerVm.State>() {
+class ActivitiesTimerVm : Vm<ActivitiesTimerVm.State>() {
 
     data class State(
         val lastIntervalId: Int,

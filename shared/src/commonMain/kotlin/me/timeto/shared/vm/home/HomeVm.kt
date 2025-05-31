@@ -16,9 +16,9 @@ import me.timeto.shared.DayBarsUi
 import me.timeto.shared.TimerStateUi
 import me.timeto.shared.vm.activities.timer.ActivityTimerStrategy
 import me.timeto.shared.vm.whats_new.WhatsNewVm
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
-class HomeVm : __Vm<HomeVm.State>() {
+class HomeVm : Vm<HomeVm.State>() {
 
     data class State(
         val intervalDb: IntervalDb,

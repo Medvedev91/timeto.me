@@ -1,11 +1,11 @@
 package me.timeto.shared.vm.timer_picker
 
 import kotlinx.coroutines.flow.MutableStateFlow
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
 class TimerPickerVm(
     initSeconds: Int,
-) : __Vm<TimerPickerVm.State>() {
+) : Vm<TimerPickerVm.State>() {
 
     data class State(
         val pickerItemsUi: List<PickerItemUi>,

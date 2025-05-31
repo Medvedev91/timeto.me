@@ -4,11 +4,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.onEachExIn
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
 class ShortcutsPickerVm(
     initShortcutsDb: List<ShortcutDb>,
-) : __Vm<ShortcutsPickerVm.State>() {
+) : Vm<ShortcutsPickerVm.State>() {
 
     data class State(
         val shortcutsDb: List<ShortcutDb>,

@@ -22,9 +22,9 @@ import me.timeto.shared.reportApi
 import me.timeto.shared.combine
 import me.timeto.shared.vm.app.AppVm.Companion.backupStateFlow
 import me.timeto.shared.vm.whats_new.WhatsNewVm
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
-class SettingsVm : __Vm<SettingsVm.State>() {
+class SettingsVm : Vm<SettingsVm.State>() {
 
     data class DayStartOffsetListItem(
         val seconds: Int,

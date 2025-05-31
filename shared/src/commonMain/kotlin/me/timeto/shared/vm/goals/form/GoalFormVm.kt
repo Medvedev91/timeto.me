@@ -10,11 +10,11 @@ import me.timeto.shared.textFeatures
 import me.timeto.shared.toTimerHintNote
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
 class GoalFormVm(
     strategy: GoalFormStrategy,
-) : __Vm<GoalFormVm.State>() {
+) : Vm<GoalFormVm.State>() {
 
     data class State(
         val strategy: GoalFormStrategy,

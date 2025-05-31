@@ -4,11 +4,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.db.NoteDb
 import me.timeto.shared.onEachExIn
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
 class NoteVm(
     noteDb: NoteDb,
-) : __Vm<NoteVm.State>() {
+) : Vm<NoteVm.State>() {
 
     data class State(
         val noteDb: NoteDb,

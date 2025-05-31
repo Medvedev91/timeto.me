@@ -4,11 +4,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.vm.goals.form.GoalFormData
 import me.timeto.shared.vm.goals.form.GoalFormStrategy
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
 class ActivityFormGoalsVm(
     initGoalFormsData: List<GoalFormData>,
-) : __Vm<ActivityFormGoalsVm.State>() {
+) : Vm<ActivityFormGoalsVm.State>() {
 
     data class State(
         val goalFormsData: List<GoalFormData>,

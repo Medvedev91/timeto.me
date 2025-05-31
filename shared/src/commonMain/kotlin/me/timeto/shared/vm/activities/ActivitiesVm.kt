@@ -10,11 +10,11 @@ import me.timeto.shared.textFeatures
 import me.timeto.shared.toTimerHintNote
 import me.timeto.shared.vm.activities.timer.ActivityTimerStrategy
 import me.timeto.shared.vm.activities.timer.ActivityTimerVm
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
 class ActivitiesVm(
     private val timerStrategy: ActivityTimerStrategy,
-) : __Vm<ActivitiesVm.State>() {
+) : Vm<ActivitiesVm.State>() {
 
     data class State(
         val activitiesUi: List<ActivityUi>

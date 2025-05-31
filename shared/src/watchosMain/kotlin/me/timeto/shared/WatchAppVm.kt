@@ -3,9 +3,9 @@ package me.timeto.shared
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.db.IntervalDb
-import me.timeto.shared.vm.__Vm
+import me.timeto.shared.vm.Vm
 
-class WatchAppVm : __Vm<WatchAppVm.State>() {
+class WatchAppVm : Vm<WatchAppVm.State>() {
 
     private var isSynced = false
 
