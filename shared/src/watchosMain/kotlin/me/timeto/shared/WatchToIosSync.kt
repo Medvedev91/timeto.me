@@ -200,7 +200,7 @@ private fun requestFromAppleWatch(
         errorHandler = { error ->
             launchExIo {
                 reportApi("requestFromAppleWatch() errorHandler:\n${error?.localizedDescription}")
-                showUiAlert(error?.localizedDescription ?: "Internal Error")
+                // showUiAlert(error?.localizedDescription ?: "Internal Error")
             }
         }
     )
