@@ -265,4 +265,4 @@ private fun prepPomodoroTimerString(timer: Int): String = when {
 }
 
 private val pomodoroTimers: List<Int> =
-    listOf(5, 10, 15, 30, 60).map { it * 60 }
+    listOf(1, 2, 3, 4, 5, 10, 15, 30, 60).map { it * 60 }
