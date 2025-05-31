@@ -17,7 +17,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.*
 import me.timeto.app.R
 import me.timeto.app.Haptic
-import me.timeto.app.misc.extensions.toColor
+import me.timeto.app.toColor
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.SquircleShape

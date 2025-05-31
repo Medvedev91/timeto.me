@@ -22,7 +22,7 @@ import me.timeto.app.ui.H_PADDING
 import me.timeto.app.MainActivity
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.c
-import me.timeto.app.misc.extensions.goldenRatioUp
+import me.timeto.app.goldenRatioUp
 import me.timeto.app.ui.halfDpCeil
 import me.timeto.app.ui.onePx
 import me.timeto.app.ui.squircleShape

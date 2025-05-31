@@ -34,12 +34,12 @@ import me.timeto.app.R
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
-import me.timeto.app.misc.extensions.goldenRatioDown
+import me.timeto.app.goldenRatioDown
 import me.timeto.app.ui.onePx
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.squircleShape
-import me.timeto.app.misc.extensions.toColor
+import me.timeto.app.toColor
 import me.timeto.app.ui.Divider
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1

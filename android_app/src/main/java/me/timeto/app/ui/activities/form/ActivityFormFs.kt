@@ -18,7 +18,7 @@ import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
-import me.timeto.app.misc.extensions.toColor
+import me.timeto.app.toColor
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.checklists.ChecklistsPickerFs
 import me.timeto.app.ui.color_picker.ColorPickerFs

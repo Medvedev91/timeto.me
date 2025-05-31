@@ -1,4 +1,4 @@
-package me.timeto.app.misc.extensions
+package me.timeto.app
 
 import androidx.compose.ui.unit.Dp
 import me.timeto.shared.goldenRatio

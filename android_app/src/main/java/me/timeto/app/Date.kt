@@ -1,4 +1,4 @@
-package me.timeto.app.misc.extensions
+package me.timeto.app
 
 import me.timeto.shared.UnixTime
 import java.util.Date
