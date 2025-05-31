@@ -151,9 +151,9 @@ class TimerDataUi(
 
 private fun secondsToString(seconds: Int): String {
     val hms = seconds.absoluteValue.toHms()
-    val h = if (hms[0] > 0) "${hms[0]}:" else ""
-    val m = hms[1].toString().padStart(2, '0') + ":"
-    val s = hms[2].toString().padStart(2, '0')
+    val h: String = if (hms[0] > 0) "${hms[0]}:" else ""
+    val m: String = hms[1].toString().padStart(2, '0') + ":"
+    val s: String = hms[2].toString().padStart(2, '0')
     return "$h$m$s"
 }
 
