@@ -7,7 +7,7 @@ private let spacing: CGFloat = 8.0
 // todo from Vm?
 private let cellsCount: Int = 6
 // todo remove
-private let matrixSize: Int = 4
+private let matrixSize: Int = 5
 
 struct HomeSettingsButtonsView: View {
     
@@ -125,18 +125,19 @@ private func buildMatrix(
     cellWidth: CGFloat
 ) -> [[MatrixItem]] {
     return [
+        buildEmptyRow(idxRow: 0, cellWidth: cellWidth),
         [
-            MatrixItem(start: 0, cells: 2, color: .red, idxRow: 0, cellWidth: cellWidth),
-            MatrixItem(start: 2, cells: 3, color: .blue, idxRow: 0, cellWidth: cellWidth),
-            MatrixItem(start: 5, cells: 1, color: barBgColor, idxRow: 0, cellWidth: cellWidth),
+            MatrixItem(start: 0, cells: 2, color: .red, idxRow: 1, cellWidth: cellWidth),
+            MatrixItem(start: 2, cells: 3, color: .blue, idxRow: 1, cellWidth: cellWidth),
+            MatrixItem(start: 5, cells: 1, color: barBgColor, idxRow: 1, cellWidth: cellWidth),
         ],
-        buildEmptyRow(idxRow: 1, cellWidth: cellWidth),
+        buildEmptyRow(idxRow: 2, cellWidth: cellWidth),
         [
-            MatrixItem(start: 0, cells: 2, color: .purple, idxRow: 2, cellWidth: cellWidth),
-            MatrixItem(start: 2, cells: 1, color: barBgColor, idxRow: 2, cellWidth: cellWidth),
-            MatrixItem(start: 3, cells: 3, color: .cyan, idxRow: 2, cellWidth: cellWidth),
+            MatrixItem(start: 0, cells: 2, color: .purple, idxRow: 3, cellWidth: cellWidth),
+            MatrixItem(start: 2, cells: 1, color: barBgColor, idxRow: 3, cellWidth: cellWidth),
+            MatrixItem(start: 3, cells: 3, color: .cyan, idxRow: 3, cellWidth: cellWidth),
         ],
-        buildEmptyRow(idxRow: 3, cellWidth: cellWidth),
+        buildEmptyRow(idxRow: 4, cellWidth: cellWidth),
     ]
 }
 
