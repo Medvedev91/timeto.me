@@ -38,8 +38,8 @@ private struct ButtonsView: View {
     var body: some View {
         ZStack(alignment: .topLeading) {
             Color.clear
-            ForEachIndexed(matrix) { idxRow, matrixRow in
-                ForEachIndexed(matrixRow) { idxItem, item in
+            ForEachIndexed(matrix) { _, matrixRow in
+                ForEachIndexed(matrixRow) { _, item in
                     DragItemView(
                         matrixItem: item,
                         onDrag: { x, y in
@@ -52,11 +52,11 @@ private struct ButtonsView: View {
                             zlog("nearest \(nearest.idxRow) \(nearest.start)")
                         }
                     )
-                        .id("row-\(idxRow)-item-\(idxItem)")
-                        .frame(
-                            width: abs((cellWidth * CGFloat(item.cells)) + (CGFloat(item.cells - 1) * spacing)),
-                            height: rowHeight
-                        )
+                    .id("row-\(item.idxRow)-item-\(item.start)")
+                    .frame(
+                        width: abs((cellWidth * CGFloat(item.cells)) + (CGFloat(item.cells - 1) * spacing)),
+                        height: rowHeight
+                    )
                 }
             }
         }
@@ -181,3 +181,94 @@ private struct MatrixItem {
         self.initY = CGFloat(idxRow) * rowHeight
     }
 }
+
+///
+
+private struct DataGridItem: Identifiable {
+    let id: UUID = UUID()
+    let rowIdx: Int
+    let cellStartIdx: Int
+    let cellsSize: Int
+    let color: Color
+}
+
+private struct DbDataItem {
+    let rowIdx: Int
+    let cellStartIdx: Int
+    let cellsSize: Int
+    let color: Color
+}
+
+private struct ViewGridItem {
+    
+    let data: DataGridItem
+    
+    let initX: CGFloat
+    let initY: CGFloat
+    
+    init(
+        data: DataGridItem,
+        cellWidth: CGFloat
+    ) {
+        self.data = data
+        self.initX = (CGFloat(data.cellStartIdx) * cellWidth) + (CGFloat(data.cellStartIdx) * spacing)
+        self.initY = CGFloat(data.rowIdx) * rowHeight
+    }
+}
+
+private func buildViewGrid(
+    cellWidth: CGFloat
+) -> [ViewGridItem] {
+    buildDataGrid().map { item in
+        ViewGridItem(data: item, cellWidth: cellWidth)
+    }
+}
+
+private func buildEmptyDataGridRow(
+    rowIdx: Int
+) -> [DataGridItem] {
+    (0..<cellsCount).map { cellIdx in
+        DataGridItem(rowIdx: rowIdx, cellStartIdx: cellIdx, cellsSize: 1, color: Color(.systemGray5))
+    }
+}
+
+private func buildDataGrid() -> [DataGridItem] {
+    var list: [DataGridItem] = [
+        DataGridItem(rowIdx: 1, cellStartIdx: 0, cellsSize: 2, color: .red),
+        DataGridItem(rowIdx: 1, cellStartIdx: 2, cellsSize: 3, color: .blue),
+        DataGridItem(rowIdx: 3, cellStartIdx: 0, cellsSize: 2, color: .purple),
+        DataGridItem(rowIdx: 3, cellStartIdx: 3, cellsSize: 3, color: .cyan),
+    ]
+    list.append(contentsOf: buildEmptyDataGridRow(rowIdx: 0))
+    list.append(contentsOf: buildEmptyDataGridRow(rowIdx: 1))
+    list.append(contentsOf: buildEmptyDataGridRow(rowIdx: 2))
+    list.append(contentsOf: buildEmptyDataGridRow(rowIdx: 3))
+    list.append(contentsOf: buildEmptyDataGridRow(rowIdx: 4))
+    return list
+}
+
+/*
+ private func buildDataGrid() -> [DataGridItem] {
+ let dbData: [DbDataItem] = [
+ DbDataItem(rowIdx: 0, cellStartIdx: 0, cellsSize: 2, color: .red),
+ DbDataItem(rowIdx: 0, cellStartIdx: 2, cellsSize: 3, color: .blue),
+ DbDataItem(rowIdx: 1, cellStartIdx: 0, cellsSize: 2, color: .purple),
+ DbDataItem(rowIdx: 1, cellStartIdx: 3, cellsSize: 3, color: .cyan),
+ ]
+ // todo !!
+ let maxDbRowIdx: Int = dbData.map { $0.rowIdx }.max()!
+ var dataGrid: [DataGridItem] = []
+ dataGrid.append(contentsOf: buildEmptyDataGridRow(rowIdx: 0))
+ dbData.enumerated().forEach { idx, dbItem in
+ dataGrid.append(
+ DataGridItem(
+ rowIdx: dbItem.rowIdx * 2 + 1,
+ cellStartIdx: dbItem.cellStartIdx,
+ cellsSize: dbItem.cellsSize
+ )
+ )
+ //        dataGrid.append(contentsOf: buildEmptyDataGridRow(rowIdx: idx))
+ }
+ return dataGrid
+ }
+*/
