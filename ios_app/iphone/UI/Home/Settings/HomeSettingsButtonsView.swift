@@ -41,7 +41,7 @@ private struct ButtonsView: View {
     let viewGridItems: [ViewGridItem]
     let bgViewGridItems: [ViewGridItem]
     
-    @State private var activeGridItems: [ViewGridItem] = []
+    @State private var hoverGridItems: [ViewGridItem] = []
     
     ///
     
@@ -66,15 +66,16 @@ private struct ButtonsView: View {
                             let bRange = abs(b.initX - x) + abs(b.initY - y)
                             return aRange < bRange
                         }!
+                        
                         var newGridItem = nearest
                         newGridItem.data.color = cellHoverColor
-                        activeGridItems = [newGridItem]
+                        hoverGridItems = [newGridItem]
                         zlog("nearest \(nearest.data.rowIdx) \(nearest.data.cellStartIdx)")
                     }
                 )
             }
             
-            ForEach(activeGridItems, id: \.data.id) { item in
+            ForEach(hoverGridItems, id: \.data.id) { item in
                 GridItemView(
                     viewGridItem: item,
                     cellWidth: cellWidth
