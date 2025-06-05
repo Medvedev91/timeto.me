@@ -13,7 +13,10 @@ private let matrixSize: Int = 5
 private let zIndexBg: Double = 1
 private let zIndexHover: Double = 2
 private let zIndexBar: Double = 3
-private let zIndexGrag: Double = 4
+private let zIndexDrag: Double = 4
+
+private let barBgColor = Color(.systemGray5)
+private let cellHoverColor = Color(.systemGray2)
 
 struct HomeSettingsButtonsView: View {
     
@@ -49,14 +52,14 @@ private struct ButtonsView: View {
         ZStack(alignment: .topLeading) {
             Color.clear
             
-            ForEach(bgViewGridItems, id: \.data.id) { item in
+            ForEach(bgViewGridItems, id: \.id) { item in
                 GridItemView(
                     viewGridItem: item,
                     cellWidth: cellWidth
                 )
             }
 
-            ForEach(viewGridItems, id: \.data.id) { item in
+            ForEach(viewGridItems, id: \.id) { item in
                 DragGridItemView(
                     viewGridItem: item,
                     cellWidth: cellWidth,
@@ -68,14 +71,14 @@ private struct ButtonsView: View {
                         }!
                         
                         var newGridItem = nearest
-                        newGridItem.data.color = cellHoverColor
+                        newGridItem.color = cellHoverColor
                         hoverGridItems = [newGridItem]
-                        zlog("nearest \(nearest.data.rowIdx) \(nearest.data.cellStartIdx)")
+                        zlog("nearest \(nearest.rowIdx) \(nearest.cellStartIdx)")
                     }
                 )
             }
-            
-            ForEach(hoverGridItems, id: \.data.id) { item in
+
+            ForEach(hoverGridItems, id: \.id) { item in
                 GridItemView(
                     viewGridItem: item,
                     cellWidth: cellWidth
@@ -99,12 +102,12 @@ private struct GridItemView: View {
         ZStack {}
             .fillMaxWidth()
             .frame(height: barHeight)
-            .background(roundedShape.fill(viewGridItem.data.color))
+            .background(roundedShape.fill(viewGridItem.color))
             .offset(x: offset.x, y: offset.y)
             .frame(
                 width: abs(
-                    (cellWidth * CGFloat(viewGridItem.data.cellsSize)) +
-                    (CGFloat(viewGridItem.data.cellsSize - 1) * spacing)
+                    (cellWidth * CGFloat(viewGridItem.cellsSize)) +
+                    (CGFloat(viewGridItem.cellsSize - 1) * spacing)
                 ),
                 height: rowHeight
             )
@@ -158,73 +161,62 @@ private struct DragGridItemView: View {
     }
 }
 
-private let barBgColor = Color(.systemGray5)
-private let cellHoverColor = Color(.systemGray2)
-
-private struct DataGridItem: Identifiable {
+private struct ViewGridItem {
+    
     let id: UUID = UUID()
     let rowIdx: Int
     let cellStartIdx: Int
     let cellsSize: Int
     var color: Color
-}
-
-private struct ViewGridItem {
-    
-    var data: DataGridItem
     
     let initX: CGFloat
     let initY: CGFloat
     
     init(
-        data: DataGridItem,
+        rowIdx: Int,
+        cellStartIdx: Int,
+        cellsSize: Int,
+        color: Color,
         cellWidth: CGFloat
     ) {
-        self.data = data
-        self.initX = (CGFloat(data.cellStartIdx) * cellWidth) + (CGFloat(data.cellStartIdx) * spacing)
-        self.initY = CGFloat(data.rowIdx) * rowHeight
+        self.rowIdx = rowIdx
+        self.cellStartIdx = cellStartIdx
+        self.cellsSize = cellsSize
+        self.color = color
+        self.initX = (CGFloat(cellStartIdx) * cellWidth) + (CGFloat(cellStartIdx) * spacing)
+        self.initY = CGFloat(rowIdx) * rowHeight
     }
 }
 
 private func buildViewGrid(
     cellWidth: CGFloat
 ) -> [ViewGridItem] {
-    buildDataGrid().map { item in
-        ViewGridItem(data: item, cellWidth: cellWidth)
-    }
+    [
+        ViewGridItem(rowIdx: 1, cellStartIdx: 0, cellsSize: 2, color: .red, cellWidth: cellWidth),
+        ViewGridItem(rowIdx: 1, cellStartIdx: 2, cellsSize: 3, color: .blue, cellWidth: cellWidth),
+        ViewGridItem(rowIdx: 3, cellStartIdx: 0, cellsSize: 2, color: .purple, cellWidth: cellWidth),
+        ViewGridItem(rowIdx: 3, cellStartIdx: 3, cellsSize: 3, color: .cyan, cellWidth: cellWidth),
+    ]
 }
 
 private func buildEmptyDataGridRow(
-    rowIdx: Int
-) -> [DataGridItem] {
+    rowIdx: Int,
+    cellWidth: CGFloat
+) -> [ViewGridItem] {
     (0..<cellsCount).map { cellIdx in
-        DataGridItem(rowIdx: rowIdx, cellStartIdx: cellIdx, cellsSize: 1, color: barBgColor)
+        ViewGridItem(rowIdx: rowIdx, cellStartIdx: cellIdx, cellsSize: 1, color: barBgColor, cellWidth: cellWidth)
     }
-}
-
-private func buildDataGrid() -> [DataGridItem] {
-    [
-        DataGridItem(rowIdx: 1, cellStartIdx: 0, cellsSize: 2, color: .red),
-        DataGridItem(rowIdx: 1, cellStartIdx: 2, cellsSize: 3, color: .blue),
-        DataGridItem(rowIdx: 3, cellStartIdx: 0, cellsSize: 2, color: .purple),
-        DataGridItem(rowIdx: 3, cellStartIdx: 3, cellsSize: 3, color: .cyan),
-    ]
 }
 
 private func buildBgViewGrid(
     cellWidth: CGFloat
 ) -> [ViewGridItem] {
-    buildBgDataGrid().map { item in
-        ViewGridItem(data: item, cellWidth: cellWidth)
-    }
-}
-
-private func buildBgDataGrid() -> [DataGridItem] {
-    var list: [DataGridItem] = []
-    list.append(contentsOf: buildEmptyDataGridRow(rowIdx: 0))
-    list.append(contentsOf: buildEmptyDataGridRow(rowIdx: 1))
-    list.append(contentsOf: buildEmptyDataGridRow(rowIdx: 2))
-    list.append(contentsOf: buildEmptyDataGridRow(rowIdx: 3))
-    list.append(contentsOf: buildEmptyDataGridRow(rowIdx: 4))
+    var list: [ViewGridItem] = []
+    list.append(contentsOf: buildEmptyDataGridRow(rowIdx: 0, cellWidth: cellWidth))
+    list.append(contentsOf: buildEmptyDataGridRow(rowIdx: 1, cellWidth: cellWidth))
+    list.append(contentsOf: buildEmptyDataGridRow(rowIdx: 2, cellWidth: cellWidth))
+    list.append(contentsOf: buildEmptyDataGridRow(rowIdx: 3, cellWidth: cellWidth))
+    list.append(contentsOf: buildEmptyDataGridRow(rowIdx: 4, cellWidth: cellWidth))
     return list
+
 }
