@@ -19,7 +19,7 @@ struct HomeSettingsButtonsView: View {
             ButtonsView(
                 width: width,
                 cellWidth: cellWidth,
-                matrix: buildMatrix(cellWidth: cellWidth)
+                viewGridItems: buildViewGrid(cellWidth: cellWidth)
             )
         }
         .padding(.horizontal, H_PADDING)
@@ -30,34 +30,48 @@ struct HomeSettingsButtonsView: View {
 private struct ButtonsView: View {
     
     let width: CGFloat
-    var cellWidth: CGFloat
-    let matrix: [[MatrixItem]]
+    let cellWidth: CGFloat
+    let viewGridItems: [ViewGridItem]
+    
+    @State private var activeGridItems: [ViewGridItem] = []
     
     ///
     
     var body: some View {
         ZStack(alignment: .topLeading) {
             Color.clear
-            ForEachIndexed(matrix) { _, matrixRow in
-                ForEachIndexed(matrixRow) { _, item in
-                    DragItemView(
-                        matrixItem: item,
-                        onDrag: { x, y in
-                            let items: [MatrixItem] = matrix.reduce([], +)
-                            let nearest: MatrixItem = items.min { a, b in
-                                let aRange = abs(a.initX - x) + abs(a.initY - y)
-                                let bRange = abs(b.initX - x) + abs(b.initY - y)
-                                return aRange < bRange
-                            }!
-                            zlog("nearest \(nearest.idxRow) \(nearest.start)")
-                        }
-                    )
-                    .id("row-\(item.idxRow)-item-\(item.start)")
-                    .frame(
-                        width: abs((cellWidth * CGFloat(item.cells)) + (CGFloat(item.cells - 1) * spacing)),
-                        height: rowHeight
-                    )
-                }
+            ForEachIndexed(viewGridItems) { _, item in
+                DragItemView(
+                    matrixItem: item,
+                    onDrag: { x, y in
+                        let nearest: ViewGridItem = viewGridItems.min { a, b in
+                            let aRange = abs(a.initX - x) + abs(a.initY - y)
+                            let bRange = abs(b.initX - x) + abs(b.initY - y)
+                            return aRange < bRange
+                        }!
+                        activeGridItems = [nearest]
+                        zlog("nearest \(nearest.data.rowIdx) \(nearest.data.cellStartIdx)")
+                    }
+                )
+                .id("row-\(item.data.id)")
+                .frame(
+                    width: abs((cellWidth * CGFloat(item.data.cellsSize)) + (CGFloat(item.data.cellsSize - 1) * spacing)),
+                    height: rowHeight
+                )
+            }
+            ///
+            ForEach(activeGridItems, id: \.self.data.id) { item in
+                DragItemView(
+                    matrixItem: item,
+                    onDrag: { x, y in
+                    },
+                    forceColor: .red
+                )
+                .id("active-row-\(item.data.id)")
+                .frame(
+                    width: abs((cellWidth * CGFloat(item.data.cellsSize)) + (CGFloat(item.data.cellsSize - 1) * spacing)),
+                    height: rowHeight
+                )
             }
         }
         .fillMaxSize()
@@ -66,8 +80,9 @@ private struct ButtonsView: View {
 
 private struct DragItemView: View {
     
-    let matrixItem: MatrixItem
+    let matrixItem: ViewGridItem
     let onDrag: (_ x: CGFloat, _ y: CGFloat) -> Void
+    var forceColor: Color? = nil
     
     ///
     
@@ -79,124 +94,47 @@ private struct DragItemView: View {
         CGPoint(x: s2.x + matrixItem.initX, y: s2.y + matrixItem.initY)
     }
     
+    private var zIndex: Double {
+        matrixItem.data.color == nil ? 0 : (isDrag ? 2 : 1)
+    }
+    
     var body: some View {
         
-        ZStack {
-            ZStack {}
-                .fillMaxWidth()
-                .frame(height: barHeight)
-                .background(roundedShape.fill(matrixItem.color))
-        }
-        .fillMaxSize()
+        ZStack {}
+            .fillMaxWidth()
+            .frame(height: barHeight)
+            .background(roundedShape.fill(forceColor ?? matrixItem.data.color ?? barBgColor))
         //
-        .offset(x: offset.x, y: offset.y)
-        .zIndex(isDrag ? 2 : 1)
-        .gesture(
-            DragGesture()
-                .updating($locationState) { currentState, gestureState, transaction in
-                    isDrag = true
-                    // todo remove?
-                    gestureState = currentState.location
-                    s2 = CGPoint(
-                        x: gestureState.x - currentState.startLocation.x,
-                        y: gestureState.y - currentState.startLocation.y
-                    )
-                    onDrag(offset.x, offset.y)
-//                    dragItem = DragItem(x: offset.x, y: offset.y)
-//                    print("go \(offset.x) \(offset.y)")
-                }
-                .onEnded { _ in
-                    print(";; end")
-                    isDrag = false
-//                    dragItem = nil
-                }
-        )
+            .offset(x: offset.x, y: offset.y)
+            .zIndex(zIndex)
+            .gesture(
+                DragGesture()
+                    .updating($locationState) { currentState, gestureState, transaction in
+                        isDrag = true
+                        // todo remove?
+                        gestureState = currentState.location
+                        s2 = CGPoint(
+                            x: gestureState.x - currentState.startLocation.x,
+                            y: gestureState.y - currentState.startLocation.y
+                        )
+                        onDrag(offset.x, offset.y)
+                    }
+                    .onEnded { _ in
+                        print(";; end")
+                        isDrag = false
+                    }
+            )
     }
-}
-
-private struct DragItem {
-    let x: CGFloat
-    let y: CGFloat
 }
 
 private let barBgColor = Color(.systemGray5)
-
-private func buildMatrix(
-    cellWidth: CGFloat
-) -> [[MatrixItem]] {
-    return [
-        buildEmptyRow(idxRow: 0, cellWidth: cellWidth),
-        [
-            MatrixItem(start: 0, cells: 2, color: .red, idxRow: 1, cellWidth: cellWidth),
-            MatrixItem(start: 2, cells: 3, color: .blue, idxRow: 1, cellWidth: cellWidth),
-            MatrixItem(start: 5, cells: 1, color: barBgColor, idxRow: 1, cellWidth: cellWidth),
-        ],
-        buildEmptyRow(idxRow: 2, cellWidth: cellWidth),
-        [
-            MatrixItem(start: 0, cells: 2, color: .purple, idxRow: 3, cellWidth: cellWidth),
-            MatrixItem(start: 2, cells: 1, color: barBgColor, idxRow: 3, cellWidth: cellWidth),
-            MatrixItem(start: 3, cells: 3, color: .cyan, idxRow: 3, cellWidth: cellWidth),
-        ],
-        buildEmptyRow(idxRow: 4, cellWidth: cellWidth),
-    ]
-}
-
-private func buildEmptyRow(
-    idxRow: Int,
-    cellWidth: CGFloat
-) -> [MatrixItem] {
-    [
-        MatrixItem(start: 0, cells: 1, color: barBgColor, idxRow: idxRow, cellWidth: cellWidth),
-        MatrixItem(start: 1, cells: 1, color: barBgColor, idxRow: idxRow, cellWidth: cellWidth),
-        MatrixItem(start: 2, cells: 1, color: barBgColor, idxRow: idxRow, cellWidth: cellWidth),
-        MatrixItem(start: 3, cells: 1, color: barBgColor, idxRow: idxRow, cellWidth: cellWidth),
-        MatrixItem(start: 4, cells: 1, color: barBgColor, idxRow: idxRow, cellWidth: cellWidth),
-        MatrixItem(start: 5, cells: 1, color: barBgColor, idxRow: idxRow, cellWidth: cellWidth),
-    ]
-}
-
-private struct MatrixItem {
-    
-    let start: Int
-    let cells: Int
-    let color: Color
-    
-    let idxRow: Int
-    
-    let initX: CGFloat
-    let initY: CGFloat
-    
-    init(
-        start: Int,
-        cells: Int,
-        color: Color,
-        idxRow: Int,
-        cellWidth: CGFloat
-    ) {
-        self.start = start
-        self.cells = cells
-        self.color = color
-        self.idxRow = idxRow
-        self.initX = (CGFloat(start) * cellWidth) + (CGFloat(start) * spacing)
-        self.initY = CGFloat(idxRow) * rowHeight
-    }
-}
-
-///
 
 private struct DataGridItem: Identifiable {
     let id: UUID = UUID()
     let rowIdx: Int
     let cellStartIdx: Int
     let cellsSize: Int
-    let color: Color
-}
-
-private struct DbDataItem {
-    let rowIdx: Int
-    let cellStartIdx: Int
-    let cellsSize: Int
-    let color: Color
+    let color: Color?
 }
 
 private struct ViewGridItem {
@@ -228,7 +166,7 @@ private func buildEmptyDataGridRow(
     rowIdx: Int
 ) -> [DataGridItem] {
     (0..<cellsCount).map { cellIdx in
-        DataGridItem(rowIdx: rowIdx, cellStartIdx: cellIdx, cellsSize: 1, color: Color(.systemGray5))
+        DataGridItem(rowIdx: rowIdx, cellStartIdx: cellIdx, cellsSize: 1, color: nil)
     }
 }
 
@@ -246,29 +184,3 @@ private func buildDataGrid() -> [DataGridItem] {
     list.append(contentsOf: buildEmptyDataGridRow(rowIdx: 4))
     return list
 }
-
-/*
- private func buildDataGrid() -> [DataGridItem] {
- let dbData: [DbDataItem] = [
- DbDataItem(rowIdx: 0, cellStartIdx: 0, cellsSize: 2, color: .red),
- DbDataItem(rowIdx: 0, cellStartIdx: 2, cellsSize: 3, color: .blue),
- DbDataItem(rowIdx: 1, cellStartIdx: 0, cellsSize: 2, color: .purple),
- DbDataItem(rowIdx: 1, cellStartIdx: 3, cellsSize: 3, color: .cyan),
- ]
- // todo !!
- let maxDbRowIdx: Int = dbData.map { $0.rowIdx }.max()!
- var dataGrid: [DataGridItem] = []
- dataGrid.append(contentsOf: buildEmptyDataGridRow(rowIdx: 0))
- dbData.enumerated().forEach { idx, dbItem in
- dataGrid.append(
- DataGridItem(
- rowIdx: dbItem.rowIdx * 2 + 1,
- cellStartIdx: dbItem.cellStartIdx,
- cellsSize: dbItem.cellsSize
- )
- )
- //        dataGrid.append(contentsOf: buildEmptyDataGridRow(rowIdx: idx))
- }
- return dataGrid
- }
-*/
