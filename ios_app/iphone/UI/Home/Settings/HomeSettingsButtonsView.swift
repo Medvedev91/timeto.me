@@ -4,10 +4,6 @@ import shared
 private let rowHeight: CGFloat = HomeScreen__itemHeight
 private let barHeight: CGFloat = HomeScreen__itemCircleHeight
 private let spacing: CGFloat = 8.0
-// todo from Vm?
-private let cellsCount: Int = 6
-// todo remove
-private let matrixSize: Int = 5
 
 // todo remove?
 private let zIndexBg: Double = 1
@@ -18,33 +14,40 @@ private let zIndexDrag: Double = 4
 private let barBgColor = Color(.systemGray5)
 private let cellHoverColor = Color(.systemGray2)
 
+private let buttonsHPadding: CGFloat = H_PADDING
+
 struct HomeSettingsButtonsView: View {
     
+    private let cellWidth: CGFloat = calcCellWidth()
+    
     var body: some View {
-        GeometryReader { geometry in
-            // todo
-            let width: CGFloat = geometry.size.width
-            let cellWidth: CGFloat = (width - (spacing * CGFloat(cellsCount - 1))) / CGFloat(cellsCount)
-            ButtonsView(
-                width: width,
-                cellWidth: cellWidth,
-                viewGridItems: buildViewGrid(cellWidth: cellWidth),
-                bgViewGridItems: buildBgViewGrid(cellWidth: cellWidth)
+        VmView({
+            HomeSettingsVm(
+                spacing: Float(spacing),
+                cellWidth: Float(cellWidth),
+                rowHeight: Float(rowHeight)
             )
+        }) { vm, state in
+            ButtonsView(
+                vm: vm,
+                state: state,
+                cellWidth: cellWidth
+            )
+            .frame(height: CGFloat(state.rowsCount) * rowHeight)
         }
         .padding(.horizontal, H_PADDING)
-        .frame(height: CGFloat(matrixSize) * rowHeight)
     }
 }
 
 private struct ButtonsView: View {
     
-    let width: CGFloat
-    let cellWidth: CGFloat
-    let viewGridItems: [ViewGridItem]
-    let bgViewGridItems: [ViewGridItem]
+    let vm: HomeSettingsVm
+    let state: HomeSettingsVm.State
     
-    @State private var hoverGridItems: [ViewGridItem] = []
+    // todo remove?
+    let cellWidth: CGFloat
+    
+    @State private var hoverGridItems: [HomeSettingsButtonUi] = []
     
     ///
     
@@ -52,32 +55,23 @@ private struct ButtonsView: View {
         ZStack(alignment: .topLeading) {
             Color.clear
             
-            ForEach(bgViewGridItems, id: \.id) { item in
+            ForEach(state.emptyButtonsUi, id: \.id) { buttonUi in
                 GridItemView(
-                    viewGridItem: item,
+                    viewGridItem: buttonUi,
                     cellWidth: cellWidth
                 )
             }
-
-            ForEach(viewGridItems, id: \.id) { item in
+            
+            ForEach(state.dataButtonsUi, id: \.id) { buttonUi in
                 DragGridItemView(
-                    viewGridItem: item,
+                    viewGridItem: buttonUi,
                     cellWidth: cellWidth,
                     onDrag: { x, y in
-                        let nearest: ViewGridItem = bgViewGridItems.min { a, b in
-                            let aRange = abs(a.initX - x) + abs(a.initY - y)
-                            let bRange = abs(b.initX - x) + abs(b.initY - y)
-                            return aRange < bRange
-                        }!
-                        
-                        var newGridItem = nearest
-                        newGridItem.color = cellHoverColor
-                        hoverGridItems = [newGridItem]
-                        zlog("nearest \(nearest.rowIdx) \(nearest.cellStartIdx)")
+                        hoverGridItems = vm.calcHoverButtonsUi(x: Float(x), y: Float(y))
                     }
                 )
             }
-
+            
             ForEach(hoverGridItems, id: \.id) { item in
                 GridItemView(
                     viewGridItem: item,
@@ -91,18 +85,19 @@ private struct ButtonsView: View {
 
 private struct GridItemView: View {
     
-    let viewGridItem: ViewGridItem
+    let viewGridItem: HomeSettingsButtonUi
+    // todo remove
     let cellWidth: CGFloat
     
     private var offset: CGPoint {
-        CGPoint(x: viewGridItem.initX, y: viewGridItem.initY)
+        CGPoint(x: CGFloat(viewGridItem.initX), y: CGFloat(viewGridItem.initY))
     }
     
     var body: some View {
         ZStack {}
             .fillMaxWidth()
             .frame(height: barHeight)
-            .background(roundedShape.fill(viewGridItem.color))
+            .background(roundedShape.fill(viewGridItem.colorRgba.toColor()))
             .offset(x: offset.x, y: offset.y)
             .frame(
                 width: abs(
@@ -116,7 +111,7 @@ private struct GridItemView: View {
 
 private struct DragGridItemView: View {
     
-    let viewGridItem: ViewGridItem
+    let viewGridItem: HomeSettingsButtonUi
     let cellWidth: CGFloat
     let onDrag: (_ x: CGFloat, _ y: CGFloat) -> Void
     
@@ -151,7 +146,7 @@ private struct DragGridItemView: View {
                         x: gestureState.x - currentState.startLocation.x,
                         y: gestureState.y - currentState.startLocation.y
                     )
-                    onDrag(offset.x + viewGridItem.initX, offset.y + viewGridItem.initY)
+                    onDrag(offset.x + CGFloat(viewGridItem.initX), offset.y + CGFloat(viewGridItem.initY))
                 }
                 .onEnded { _ in
                     print(";; end")
@@ -161,62 +156,8 @@ private struct DragGridItemView: View {
     }
 }
 
-private struct ViewGridItem {
-    
-    let id: UUID = UUID()
-    let rowIdx: Int
-    let cellStartIdx: Int
-    let cellsSize: Int
-    var color: Color
-    
-    let initX: CGFloat
-    let initY: CGFloat
-    
-    init(
-        rowIdx: Int,
-        cellStartIdx: Int,
-        cellsSize: Int,
-        color: Color,
-        cellWidth: CGFloat
-    ) {
-        self.rowIdx = rowIdx
-        self.cellStartIdx = cellStartIdx
-        self.cellsSize = cellsSize
-        self.color = color
-        self.initX = (CGFloat(cellStartIdx) * cellWidth) + (CGFloat(cellStartIdx) * spacing)
-        self.initY = CGFloat(rowIdx) * rowHeight
-    }
-}
-
-private func buildViewGrid(
-    cellWidth: CGFloat
-) -> [ViewGridItem] {
-    [
-        ViewGridItem(rowIdx: 1, cellStartIdx: 0, cellsSize: 2, color: .red, cellWidth: cellWidth),
-        ViewGridItem(rowIdx: 1, cellStartIdx: 2, cellsSize: 3, color: .blue, cellWidth: cellWidth),
-        ViewGridItem(rowIdx: 3, cellStartIdx: 0, cellsSize: 2, color: .purple, cellWidth: cellWidth),
-        ViewGridItem(rowIdx: 3, cellStartIdx: 3, cellsSize: 3, color: .cyan, cellWidth: cellWidth),
-    ]
-}
-
-private func buildEmptyDataGridRow(
-    rowIdx: Int,
-    cellWidth: CGFloat
-) -> [ViewGridItem] {
-    (0..<cellsCount).map { cellIdx in
-        ViewGridItem(rowIdx: rowIdx, cellStartIdx: cellIdx, cellsSize: 1, color: barBgColor, cellWidth: cellWidth)
-    }
-}
-
-private func buildBgViewGrid(
-    cellWidth: CGFloat
-) -> [ViewGridItem] {
-    var list: [ViewGridItem] = []
-    list.append(contentsOf: buildEmptyDataGridRow(rowIdx: 0, cellWidth: cellWidth))
-    list.append(contentsOf: buildEmptyDataGridRow(rowIdx: 1, cellWidth: cellWidth))
-    list.append(contentsOf: buildEmptyDataGridRow(rowIdx: 2, cellWidth: cellWidth))
-    list.append(contentsOf: buildEmptyDataGridRow(rowIdx: 3, cellWidth: cellWidth))
-    list.append(contentsOf: buildEmptyDataGridRow(rowIdx: 4, cellWidth: cellWidth))
-    return list
-
+private func calcCellWidth() -> CGFloat {
+    let cellsCount: Int = HomeSettingsVm.companion.cellsCount.toInt()
+    let width: CGFloat = UIScreen.main.bounds.size.width - (buttonsHPadding * 2)
+    return (width - (spacing * CGFloat(cellsCount - 1))) / CGFloat(cellsCount)
 }

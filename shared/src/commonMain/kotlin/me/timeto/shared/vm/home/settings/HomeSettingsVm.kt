@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.Palette
 import me.timeto.shared.vm.Vm
+import kotlin.math.absoluteValue
 
 class HomeSettingsVm(
     spacing: Float,
@@ -44,9 +45,24 @@ class HomeSettingsVm(
             )
         )
     }
+
+    fun calcHoverButtonsUi(
+        x: Float,
+        y: Float,
+    ): List<HomeSettingsButtonUi> {
+        val emptyButtonsUi = state.value.emptyButtonsUi
+        val nearestButtonUi: HomeSettingsButtonUi = emptyButtonsUi.minBy { buttonUi ->
+            (buttonUi.initX - x).absoluteValue + (buttonUi.initY - y).absoluteValue
+        }
+        val hoverButtonUi: List<HomeSettingsButtonUi> = listOf(
+            nearestButtonUi.copy(colorRgba = hoverButtonBgColorRgba)
+        )
+        return hoverButtonUi
+    }
 }
 
-private val gray5ColorRgba: ColorRgba = Palette.gray5.dark
+private val hoverButtonBgColorRgba: ColorRgba = Palette.gray2.dark
+private val emptyButtonBgColorRgba: ColorRgba = Palette.gray5.dark
 
 private fun buildEmptyButtonsUi(
     rowsCount: Int,
@@ -62,7 +78,7 @@ private fun buildEmptyButtonsUi(
                         rowIdx = rowIdx,
                         cellStartIdx = cellIdx,
                         cellsSize = 1,
-                        colorRgba = gray5ColorRgba,
+                        colorRgba = emptyButtonBgColorRgba,
                         spacing = spacing,
                         cellWidth = cellWidth,
                         rowHeight = rowHeight,
