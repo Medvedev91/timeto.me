@@ -47,17 +47,34 @@ class HomeSettingsVm(
     }
 
     fun calcHoverButtonsUi(
+        buttonUi: HomeSettingsButtonUi,
         x: Float,
         y: Float,
     ): List<HomeSettingsButtonUi> {
         val emptyButtonsUi = state.value.emptyButtonsUi
-        val nearestButtonUi: HomeSettingsButtonUi = emptyButtonsUi.minBy { buttonUi ->
-            (buttonUi.initX - x).absoluteValue + (buttonUi.initY - y).absoluteValue
+
+        val nearestButtonUi: HomeSettingsButtonUi = emptyButtonsUi.minBy { emptyButtonUi ->
+            (emptyButtonUi.initX - x).absoluteValue + (emptyButtonUi.initY - y).absoluteValue
         }
-        val hoverButtonUi: List<HomeSettingsButtonUi> = listOf(
-            nearestButtonUi.copy(colorRgba = hoverButtonBgColorRgba)
-        )
-        return hoverButtonUi
+
+        val usedCellIds: List<Int> = state.value.dataButtonsUi
+            .filter { it.id != buttonUi.id }
+            .filter { it.rowIdx == nearestButtonUi.rowIdx }
+            .map { it.cellStartIdx until (it.cellStartIdx + it.cellsSize) }
+            .flatten()
+
+        val hoverCellIds: IntRange =
+            (nearestButtonUi.cellStartIdx until (nearestButtonUi.cellStartIdx + buttonUi.cellsSize))
+
+        if (usedCellIds.intersect(hoverCellIds).isNotEmpty())
+            return listOf()
+
+        val hoverButtonsUi = emptyButtonsUi
+            .filter { it.rowIdx == nearestButtonUi.rowIdx }
+            .filter { it.cellStartIdx in hoverCellIds }
+            .map { it.copy(colorRgba = hoverButtonBgColorRgba) }
+
+        return hoverButtonsUi
     }
 }
 
