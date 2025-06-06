@@ -67,7 +67,10 @@ private struct ButtonsView: View {
                     viewGridItem: buttonUi,
                     cellWidth: cellWidth,
                     onDrag: { x, y in
-                        hoverGridItems = vm.calcHoverButtonsUi(x: Float(x), y: Float(y))
+                        hoverGridItems = vm.calcHoverButtonsUi(
+                            x: Float(x),
+                            y: Float(y)
+                        )
                     }
                 )
             }
