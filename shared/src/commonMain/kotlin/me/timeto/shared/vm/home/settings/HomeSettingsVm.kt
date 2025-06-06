@@ -57,6 +57,9 @@ class HomeSettingsVm(
             (emptyButtonUi.initX - x).absoluteValue + (emptyButtonUi.initY - y).absoluteValue
         }
 
+        if ((nearestButtonUi.cellStartIdx + buttonUi.cellsSize) > cellsCount)
+            return emptyList()
+
         val usedCellIds: List<Int> = state.value.dataButtonsUi
             .filter { it.id != buttonUi.id }
             .filter { it.rowIdx == nearestButtonUi.rowIdx }
@@ -67,7 +70,7 @@ class HomeSettingsVm(
             (nearestButtonUi.cellStartIdx until (nearestButtonUi.cellStartIdx + buttonUi.cellsSize))
 
         if (usedCellIds.intersect(hoverCellIds).isNotEmpty())
-            return listOf()
+            return emptyList()
 
         val hoverButtonsUi = emptyButtonsUi
             .filter { it.rowIdx == nearestButtonUi.rowIdx }
