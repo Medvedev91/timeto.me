@@ -1,6 +1,7 @@
 package me.timeto.shared.vm.home.settings
 
 import me.timeto.shared.ColorRgba
+import kotlin.math.absoluteValue
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -21,4 +22,7 @@ data class HomeSettingsButtonUi(
         (cellStartIdx.toFloat() * cellWidth) + (cellStartIdx.toFloat() * spacing)
     val initY: Float =
         rowIdx.toFloat() * rowHeight
+
+    val fullWidth: Float =
+        ((cellWidth * cellsSize) + ((cellsSize - 1).toFloat() * spacing)).absoluteValue
 }

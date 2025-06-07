@@ -21,8 +21,7 @@ struct HomeSettingsButtonsView: View {
         }) { vm, state in
             ButtonsView(
                 vm: vm,
-                state: state,
-                cellWidth: cellWidth
+                state: state
             )
             .frame(height: CGFloat(state.buttonsData.rowsCount) * rowHeight)
         }
@@ -35,8 +34,6 @@ private struct ButtonsView: View {
     let vm: HomeSettingsVm
     let state: HomeSettingsVm.State
     
-    let cellWidth: CGFloat
-    
     ///
     
     @State private var hoverButtonsUi: [HomeSettingsButtonUi] = []
@@ -48,15 +45,13 @@ private struct ButtonsView: View {
             
             ForEach(state.buttonsData.emptyButtonsUi, id: \.id) { buttonUi in
                 ButtonView(
-                    buttonUi: buttonUi,
-                    cellWidth: cellWidth
+                    buttonUi: buttonUi
                 )
             }
             
             ForEach(state.buttonsData.dataButtonsUi, id: \.id) { buttonUi in
                 DragButtonView(
                     buttonUi: buttonUi,
-                    cellWidth: cellWidth,
                     onDragMove: { cgPoint in
                         hoverButtonsUi = vm.calcHoverButtonsUi(
                             buttonUi: buttonUi,
@@ -82,8 +77,7 @@ private struct ButtonsView: View {
             
             ForEach(hoverButtonsUi, id: \.id) { buttonUi in
                 ButtonView(
-                    buttonUi: buttonUi,
-                    cellWidth: cellWidth
+                    buttonUi: buttonUi
                 )
             }
         }
@@ -104,8 +98,6 @@ private struct ButtonsView: View {
 private struct ButtonView: View {
     
     let buttonUi: HomeSettingsButtonUi
-    // todo remove
-    let cellWidth: CGFloat
     
     private var offset: CGPoint {
         CGPoint(x: CGFloat(buttonUi.initX), y: CGFloat(buttonUi.initY))
@@ -118,10 +110,7 @@ private struct ButtonView: View {
             .background(roundedShape.fill(buttonUi.colorRgba.toColor()))
             .offset(x: offset.x, y: offset.y)
             .frame(
-                width: abs(
-                    (cellWidth * CGFloat(buttonUi.cellsSize)) +
-                    (CGFloat(buttonUi.cellsSize - 1) * spacing)
-                ),
+                width: CGFloat(buttonUi.fullWidth),
                 height: rowHeight
             )
     }
@@ -129,9 +118,7 @@ private struct ButtonView: View {
 
 private struct DragButtonView: View {
     
-    // todo rename
     let buttonUi: HomeSettingsButtonUi
-    let cellWidth: CGFloat
     
     let onDragMove: (CGPoint) -> Void
     let onDragEnd: (CGPoint) -> Bool
@@ -151,8 +138,7 @@ private struct DragButtonView: View {
     
     var body: some View {
         ButtonView(
-            buttonUi: buttonUi,
-            cellWidth: cellWidth
+            buttonUi: buttonUi
         )
         .offset(x: localOffset.x, y: localOffset.y)
         .zIndex(dragging ? 2 : 1)
