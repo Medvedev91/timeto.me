@@ -46,8 +46,8 @@ private struct ButtonsView: View {
             ForEach(state.buttonsData.emptyButtonsUi, id: \.id) { buttonUi in
                 ButtonView(
                     buttonUi: buttonUi,
-                    extraRightWidth: .constant(0),
                     extraLeftWidth: .constant(0),
+                    extraRightWidth: .constant(0),
                     content: {}
                 )
             }
@@ -101,8 +101,8 @@ private struct ButtonsView: View {
             ForEach(hoverButtonsUi, id: \.id) { buttonUi in
                 ButtonView(
                     buttonUi: buttonUi,
-                    extraRightWidth: .constant(0),
                     extraLeftWidth: .constant(0),
+                    extraRightWidth: .constant(0),
                     content: {}
                 )
             }
@@ -124,8 +124,8 @@ private struct ButtonsView: View {
 private struct ButtonView<Content>: View where Content: View {
     
     let buttonUi: HomeSettingsButtonUi
-    @Binding var extraRightWidth: CGFloat
     @Binding var extraLeftWidth: CGFloat
+    @Binding var extraRightWidth: CGFloat
     @ViewBuilder var content: () -> Content
     
     private var offset: CGPoint {
@@ -141,7 +141,7 @@ private struct ButtonView<Content>: View where Content: View {
         .background(roundedShape.fill(buttonUi.colorRgba.toColor()))
         .offset(x: offset.x - extraLeftWidth, y: offset.y)
         .frame(
-            width: CGFloat(buttonUi.fullWidth) + extraRightWidth + extraLeftWidth,
+            width: CGFloat(buttonUi.fullWidth) + extraLeftWidth + extraRightWidth,
             height: rowHeight
         )
     }
@@ -171,33 +171,30 @@ private struct DragButtonView: View {
     }
     
     @State private var resizeOffsetLeft: CGFloat = 0
+    @State private var resizeOffsetRight: CGFloat = 0
 
     var body: some View {
         ZStack {
             ButtonView(
                 buttonUi: buttonUi,
-                extraRightWidth: .constant(0),
                 extraLeftWidth: $resizeOffsetLeft,
+                extraRightWidth: $resizeOffsetRight,
                 content: {
                     HStack {
-                        Circle()
-                            .fill(.white)
-                            .frame(width: barHeight, height: barHeight)
-                            .gesture(
-                                DragGesture(coordinateSpace: .global)
-                                    .onChanged { value in
-                                        resizeOffsetLeft = value.translation.width * -1
-                                        onResize(resizeOffsetLeft, 0)
+                        ResizeDotView(
+                            onResize: { value in
+                                resizeOffsetLeft = value * -1
+                                onResize(resizeOffsetLeft, resizeOffsetRight)
+                            },
+                            onResizeEnd: { _ in
+                                let isPositionChanged = onResizeEnd(resizeOffsetLeft, resizeOffsetRight)
+                                if !isPositionChanged {
+                                    withAnimation {
+                                        resizeOffsetLeft = 0
                                     }
-                                    .onEnded { _ in
-                                        let isPositionChanged = onResizeEnd(resizeOffsetLeft, 0)
-                                        if !isPositionChanged {
-                                            withAnimation {
-                                                resizeOffsetLeft = 0
-                                            }
-                                        }
-                                    }
-                            )
+                                }
+                            }
+                        )
                         Spacer()
                     }
                 }
@@ -225,6 +222,27 @@ private struct DragButtonView: View {
                     }
                 }
         )
+    }
+}
+
+private struct ResizeDotView: View {
+    
+    let onResize: (CGFloat) -> Void
+    let onResizeEnd: (CGFloat) -> Void
+    
+    var body: some View {
+        Circle()
+            .fill(.white)
+            .frame(width: barHeight, height: barHeight)
+            .gesture(
+                DragGesture(coordinateSpace: .global)
+                    .onChanged { value in
+                        onResize(value.translation.width)
+                    }
+                    .onEnded { value in
+                        onResizeEnd(value.translation.width)
+                    }
+            )
     }
 }
 
