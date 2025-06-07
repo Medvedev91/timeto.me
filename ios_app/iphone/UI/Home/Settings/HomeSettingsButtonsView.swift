@@ -56,7 +56,7 @@ private struct ButtonsView: View {
                 DragButtonView(
                     buttonUi: buttonUi,
                     onDrag: { cgPoint in
-                        hoverButtonsUi = vm.calcHoverButtonsUi(
+                        hoverButtonsUi = vm.getHoverButtonsUiOnDrag(
                             buttonUi: buttonUi,
                             x: Float(cgPoint.x),
                             y: Float(cgPoint.y)

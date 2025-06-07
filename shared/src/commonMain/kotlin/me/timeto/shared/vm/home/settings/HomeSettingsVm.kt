@@ -47,7 +47,7 @@ class HomeSettingsVm(
         )
     }
 
-    fun calcHoverButtonsUi(
+    fun getHoverButtonsUiOnDrag(
         buttonUi: HomeSettingsButtonUi,
         x: Float,
         y: Float,
@@ -87,7 +87,7 @@ class HomeSettingsVm(
         y: Float,
     ): Boolean {
         val hoverButtonsUi: List<HomeSettingsButtonUi> =
-            calcHoverButtonsUi(buttonUi, x = x, y = y)
+            getHoverButtonsUiOnDrag(buttonUi, x = x, y = y)
         if (hoverButtonsUi.isEmpty())
             return false
 
