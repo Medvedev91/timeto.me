@@ -74,6 +74,13 @@ private struct ButtonsView: View {
                             x: Float(cgPoint.x),
                             y: Float(cgPoint.y)
                         )
+                    },
+                    onResize: { left, right in
+                    // todo
+                    },
+                    onResizeEnd: { left, right in
+                    // todo
+                        false
                     }
                 )
             }
@@ -134,6 +141,9 @@ private struct DragButtonView: View {
     let onDrag: (CGPoint) -> Void
     let onDragEnd: (CGPoint) -> Bool
     
+    let onResize: (_ left: CGFloat, _ right: CGFloat) -> Void
+    let onResizeEnd: (_ left: CGFloat, _ right: CGFloat) -> Bool
+    
     ///
     
     @GestureState private var dragLocationState = CGPoint(x: 0, y: 0)
@@ -147,8 +157,6 @@ private struct DragButtonView: View {
         )
     }
     
-    
-    @GestureState private var resizeLocationState = CGPoint(x: 0, y: 0)
     @State private var resizeOffsetLeft: CGFloat = 0
 
     var body: some View {
@@ -166,9 +174,15 @@ private struct DragButtonView: View {
                                 DragGesture(coordinateSpace: .global)
                                     .onChanged { value in
                                         resizeOffsetLeft = value.translation.width * -1
+                                        onResize(resizeOffsetLeft, 0)
                                     }
                                     .onEnded { _ in
-                                        // todo
+                                        let isPositionChanged = onResizeEnd(resizeOffsetLeft, 0)
+                                        if !isPositionChanged {
+                                            withAnimation {
+                                                resizeOffsetLeft = 0
+                                            }
+                                        }
                                     }
                             )
                         Spacer()
@@ -192,7 +206,9 @@ private struct DragButtonView: View {
                     dragging = false
                     let isPositionChanged = onDragEnd(globalOffset)
                     if !isPositionChanged {
-                        localOffset = CGPoint(x: 0, y: 0)
+                        withAnimation {
+                            localOffset = CGPoint(x: 0, y: 0)
+                        }
                     }
                 }
         )
