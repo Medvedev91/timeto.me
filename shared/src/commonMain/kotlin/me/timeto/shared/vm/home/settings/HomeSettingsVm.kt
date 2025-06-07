@@ -7,9 +7,9 @@ import me.timeto.shared.vm.Vm
 import kotlin.math.absoluteValue
 
 class HomeSettingsVm(
-    spacing: Float,
-    cellWidth: Float,
-    rowHeight: Float,
+    private val spacing: Float,
+    private val cellWidth: Float,
+    private val rowHeight: Float,
 ) : Vm<HomeSettingsVm.State>() {
 
     companion object {
@@ -25,6 +25,7 @@ class HomeSettingsVm(
     override val state: MutableStateFlow<State>
 
     init {
+
         val dataButtonsUiRaw: List<HomeSettingsButtonUi> = listOf(
             HomeSettingsButtonUi(rowIdx = 1, cellStartIdx = 0, cellsSize = 2, colorRgba = Palette.red.dark, spacing = spacing, cellWidth = cellWidth, rowHeight = rowHeight),
             HomeSettingsButtonUi(rowIdx = 1, cellStartIdx = 2, cellsSize = 3, colorRgba = Palette.blue.dark, spacing = spacing, cellWidth = cellWidth, rowHeight = rowHeight),
@@ -32,27 +33,18 @@ class HomeSettingsVm(
             HomeSettingsButtonUi(rowIdx = 3, cellStartIdx = 4, cellsSize = 2, colorRgba = Palette.cyan.dark, spacing = spacing, cellWidth = cellWidth, rowHeight = rowHeight),
         )
 
-        val dataButtonsUiRawRows: List<List<HomeSettingsButtonUi>> = dataButtonsUiRaw
-            .groupBy { it.rowIdx }.toList().sortedBy { it.first }.map { it.second }
-
-        val dataButtonsUiForGrid = dataButtonsUiRawRows
-            .mapIndexed { rowIdx, buttonsUi ->
-                buttonsUi.map { it.copy(rowIdx = (rowIdx * 2 + 1)) }
-            }
-            .flatten()
-
-        val rowsCount: Int = dataButtonsUiRawRows.size * 2 + 1
+        val buttonsData = ButtonsData.build(
+            dataButtonsUiRaw = dataButtonsUiRaw,
+            spacing = spacing,
+            cellWidth = cellWidth,
+            rowHeight = rowHeight,
+        )
 
         state = MutableStateFlow(
             State(
-                rowsCount = rowsCount,
-                emptyButtonsUi = buildEmptyButtonsUi(
-                    rowsCount = rowsCount,
-                    spacing = spacing,
-                    cellWidth = cellWidth,
-                    rowHeight = rowHeight,
-                ),
-                dataButtonsUi = dataButtonsUiForGrid,
+                rowsCount = buttonsData.rowsCount,
+                emptyButtonsUi = buttonsData.emptyButtonsUi,
+                dataButtonsUi = buttonsData.dataButtonsUi,
             )
         )
     }
@@ -117,3 +109,42 @@ private fun buildEmptyButtonsUi(
                 }
         }
         .flatten()
+
+private data class ButtonsData(
+    val rowsCount: Int,
+    val emptyButtonsUi: List<HomeSettingsButtonUi>,
+    val dataButtonsUi: List<HomeSettingsButtonUi>,
+) {
+
+    companion object {
+
+        fun build(
+            dataButtonsUiRaw: List<HomeSettingsButtonUi>,
+            spacing: Float,
+            cellWidth: Float,
+            rowHeight: Float,
+        ): ButtonsData {
+            val dataButtonsUiRawRows: List<List<HomeSettingsButtonUi>> = dataButtonsUiRaw
+                .groupBy { it.rowIdx }.toList().sortedBy { it.first }.map { it.second }
+
+            val dataButtonsUiForGrid = dataButtonsUiRawRows
+                .mapIndexed { rowIdx, buttonsUi ->
+                    buttonsUi.map { it.copy(rowIdx = (rowIdx * 2 + 1)) }
+                }
+                .flatten()
+
+            val rowsCount: Int = dataButtonsUiRawRows.size * 2 + 1
+
+            return ButtonsData(
+                rowsCount = rowsCount,
+                emptyButtonsUi = buildEmptyButtonsUi(
+                    rowsCount = rowsCount,
+                    spacing = spacing,
+                    cellWidth = cellWidth,
+                    rowHeight = rowHeight,
+                ),
+                dataButtonsUi = dataButtonsUiForGrid,
+            )
+        }
+    }
+}
