@@ -76,11 +76,24 @@ private struct ButtonsView: View {
                         )
                     },
                     onResize: { left, right in
-                    // todo
+                        hoverButtonsUi = vm.getHoverButtonsUiOnResize(
+                            buttonUi: buttonUi,
+                            left: Float(left),
+                            right: Float(right)
+                        )
                     },
                     onResizeEnd: { left, right in
-                    // todo
-                        false
+                        hoverButtonsUi = []
+                        Task {
+                            // To run onChange() for hoverButtonsUi before this
+                            try? await Task.sleep(nanoseconds: 1_000)
+                            ignoreNextHaptic = true
+                        }
+                        return vm.onButtonResizeEnd(
+                            buttonUi: buttonUi,
+                            left: Float(left),
+                            right: Float(right)
+                        )
                     }
                 )
             }

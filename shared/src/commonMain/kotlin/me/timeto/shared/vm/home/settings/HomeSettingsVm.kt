@@ -120,6 +120,80 @@ class HomeSettingsVm(
         return true
     }
 
+    fun getHoverButtonsUiOnResize(
+        buttonUi: ButtonUi,
+        left: Float,
+        // todo
+        right: Float,
+    ): List<ButtonUi> {
+        val rowIdx: Int = buttonUi.rowIdx
+        val buttonsData: ButtonsData = state.value.buttonsData
+
+        val usedCellIds: List<Int> = buttonsData.dataButtonsUi
+            .filter { it.id != buttonUi.id }
+            .filter { it.rowIdx == rowIdx }
+            .map { it.cellStartIdx until (it.cellStartIdx + it.cellsSize) }
+            .flatten()
+
+        val nearestLeftEmptyButtonUi: ButtonUi = buttonsData.emptyButtonsUi.minBy { emptyButtonUi ->
+            (emptyButtonUi.initX - (buttonUi.initX - left)).absoluteValue
+        }
+
+        val hoverCellIds: IntRange =
+            // todo until nearestRightEmptyButtonUi
+            (nearestLeftEmptyButtonUi.cellStartIdx until (buttonUi.cellStartIdx + buttonUi.cellsSize))
+
+        if (usedCellIds.intersect(hoverCellIds).isNotEmpty())
+            return emptyList()
+
+        val hoverButtonsUi = buttonsData.emptyButtonsUi
+            .filter { it.rowIdx == rowIdx }
+            .filter { it.cellStartIdx in hoverCellIds }
+            .map { it.copy(colorRgba = hoverButtonBgColorRgba) }
+
+        return hoverButtonsUi
+    }
+
+    fun onButtonResizeEnd(
+        buttonUi: ButtonUi,
+        left: Float,
+        right: Float,
+    ): Boolean {
+        val hoverButtonsUi: List<ButtonUi> =
+            getHoverButtonsUiOnResize(buttonUi, left = left, right = right)
+        if (hoverButtonsUi.isEmpty())
+            return false
+
+        val firstHoverCellIdx: Int =
+            hoverButtonsUi.minOf { it.cellStartIdx }
+
+        val lastHoverButtonUi: Int =
+            hoverButtonsUi.maxOf { it.cellStartIdx }
+
+        val newButtonsUi: List<ButtonUi> =
+            state.value.buttonsData.dataButtonsUi.filter { it.id != buttonUi.id } +
+            buttonUi.copy(
+                cellStartIdx = firstHoverCellIdx,
+                cellsSize = lastHoverButtonUi - firstHoverCellIdx + 1,
+            )
+
+        val buttonsData = buildButtonsData(
+            dataButtonsUiRaw = newButtonsUi,
+            spacing = spacing,
+            cellWidth = cellWidth,
+            rowHeight = rowHeight,
+        )
+
+        state.update {
+            it.copy(
+                buttonsData = buttonsData,
+                update = it.update + 1,
+            )
+        }
+
+        return true
+    }
+
     ///
 
     data class ButtonsData(
