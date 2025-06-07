@@ -55,7 +55,7 @@ private struct ButtonsView: View {
             ForEach(state.buttonsData.dataButtonsUi, id: \.id) { buttonUi in
                 DragButtonView(
                     buttonUi: buttonUi,
-                    onDragMove: { cgPoint in
+                    onDrag: { cgPoint in
                         hoverButtonsUi = vm.calcHoverButtonsUi(
                             buttonUi: buttonUi,
                             x: Float(cgPoint.x),
@@ -131,7 +131,7 @@ private struct DragButtonView: View {
     
     let buttonUi: HomeSettingsButtonUi
     
-    let onDragMove: (CGPoint) -> Void
+    let onDrag: (CGPoint) -> Void
     let onDragEnd: (CGPoint) -> Bool
     
     ///
@@ -186,7 +186,7 @@ private struct DragButtonView: View {
                         x: currentState.location.x - currentState.startLocation.x,
                         y: currentState.location.y - currentState.startLocation.y
                     )
-                    onDragMove(globalOffset)
+                    onDrag(globalOffset)
                 }
                 .onEnded { _ in
                     dragging = false
