@@ -146,11 +146,9 @@ private struct DragButtonView: View {
             DragGesture()
                 .updating($dragLocationState) { currentState, gestureState, transaction in
                     dragging = true
-                    // todo remove?
-                    gestureState = currentState.location
                     localOffset = CGPoint(
-                        x: gestureState.x - currentState.startLocation.x,
-                        y: gestureState.y - currentState.startLocation.y
+                        x: currentState.location.x - currentState.startLocation.x,
+                        y: currentState.location.y - currentState.startLocation.y
                     )
                     onDragMove(globalOffset)
                 }
