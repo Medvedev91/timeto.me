@@ -36,7 +36,9 @@ class HomeSettingsVm(
             .groupBy { it.rowIdx }.toList().sortedBy { it.first }.map { it.second }
 
         val dataButtonsUiForGrid = dataButtonsUiRawRows
-            .mapIndexed { rowIdx, buttonsUi -> buttonsUi.map { it.copy(rowIdx = (rowIdx * 2 + 1)) } }
+            .mapIndexed { rowIdx, buttonsUi ->
+                buttonsUi.map { it.copy(rowIdx = (rowIdx * 2 + 1)) }
+            }
             .flatten()
 
         val rowsCount: Int = dataButtonsUiRawRows.size * 2 + 1
