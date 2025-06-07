@@ -19,6 +19,7 @@ class HomeSettingsVm(
 
     data class State(
         val buttonsData: ButtonsData,
+        val update: Int = 0,
     )
 
     override val state: MutableStateFlow<State>
@@ -84,7 +85,7 @@ class HomeSettingsVm(
         buttonUi: HomeSettingsButtonUi,
         x: Float,
         y: Float,
-    ) : Boolean {
+    ): Boolean {
         val hoverButtonsUi: List<HomeSettingsButtonUi> =
             calcHoverButtonsUi(buttonUi, x = x, y = y)
         if (hoverButtonsUi.isEmpty())
@@ -108,7 +109,10 @@ class HomeSettingsVm(
         )
 
         state.update {
-            it.copy(buttonsData = buttonsData)
+            it.copy(
+                buttonsData = buttonsData,
+                update = it.update + 1,
+            )
         }
 
         return true
@@ -125,6 +129,7 @@ class HomeSettingsVm(
 
 private val hoverButtonBgColorRgba: ColorRgba = Palette.gray2.dark
 private val emptyButtonBgColorRgba: ColorRgba = Palette.gray5.dark
+private val blackColorRgba = ColorRgba(0, 0, 0, 255)
 
 private fun buildEmptyButtonsUi(
     rowsCount: Int,
@@ -140,7 +145,7 @@ private fun buildEmptyButtonsUi(
                         rowIdx = rowIdx,
                         cellStartIdx = cellIdx,
                         cellsSize = 1,
-                        colorRgba = emptyButtonBgColorRgba,
+                        colorRgba = if ((rowIdx % 2) == 0) blackColorRgba else emptyButtonBgColorRgba,
                         spacing = spacing,
                         cellWidth = cellWidth,
                         rowHeight = rowHeight,

@@ -1,9 +1,9 @@
 import SwiftUI
 import shared
 
-private let rowHeight: CGFloat = HomeScreen__itemHeight
-private let barHeight: CGFloat = HomeScreen__itemCircleHeight
-private let spacing: CGFloat = 8.0
+private let rowHeight: CGFloat = 26
+private let barHeight: CGFloat = 24
+private let spacing: CGFloat = 10
 
 private let buttonsHPadding: CGFloat = H_PADDING
 
