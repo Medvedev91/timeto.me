@@ -45,7 +45,10 @@ private struct ButtonsView: View {
             
             ForEach(state.buttonsData.emptyButtonsUi, id: \.id) { buttonUi in
                 ButtonView(
-                    buttonUi: buttonUi
+                    buttonUi: buttonUi,
+                    extraRightWidth: .constant(0),
+                    extraLeftWidth: .constant(0),
+                    content: {}
                 )
             }
             
@@ -77,7 +80,10 @@ private struct ButtonsView: View {
             
             ForEach(hoverButtonsUi, id: \.id) { buttonUi in
                 ButtonView(
-                    buttonUi: buttonUi
+                    buttonUi: buttonUi,
+                    extraRightWidth: .constant(0),
+                    extraLeftWidth: .constant(0),
+                    content: {}
                 )
             }
         }
@@ -95,24 +101,29 @@ private struct ButtonsView: View {
     }
 }
 
-private struct ButtonView: View {
+private struct ButtonView<Content>: View where Content: View {
     
     let buttonUi: HomeSettingsButtonUi
+    @Binding var extraRightWidth: CGFloat
+    @Binding var extraLeftWidth: CGFloat
+    @ViewBuilder var content: () -> Content
     
     private var offset: CGPoint {
         CGPoint(x: CGFloat(buttonUi.initX), y: CGFloat(buttonUi.initY))
     }
     
     var body: some View {
-        ZStack {}
-            .fillMaxWidth()
-            .frame(height: barHeight)
-            .background(roundedShape.fill(buttonUi.colorRgba.toColor()))
-            .offset(x: offset.x, y: offset.y)
-            .frame(
-                width: CGFloat(buttonUi.fullWidth),
-                height: rowHeight
-            )
+        ZStack {
+            content()
+        }
+        .fillMaxWidth()
+        .frame(height: barHeight)
+        .background(roundedShape.fill(buttonUi.colorRgba.toColor()))
+        .offset(x: offset.x - extraLeftWidth, y: offset.y)
+        .frame(
+            width: CGFloat(buttonUi.fullWidth) + extraRightWidth + extraLeftWidth,
+            height: rowHeight
+        )
     }
 }
 
@@ -136,10 +147,35 @@ private struct DragButtonView: View {
         )
     }
     
+    
+    @GestureState private var resizeLocationState = CGPoint(x: 0, y: 0)
+    @State private var resizeOffsetLeft: CGFloat = 0
+
     var body: some View {
-        ButtonView(
-            buttonUi: buttonUi
-        )
+        ZStack {
+            ButtonView(
+                buttonUi: buttonUi,
+                extraRightWidth: .constant(0),
+                extraLeftWidth: $resizeOffsetLeft,
+                content: {
+                    HStack {
+                        Circle()
+                            .fill(.white)
+                            .frame(width: barHeight, height: barHeight)
+                            .gesture(
+                                DragGesture(coordinateSpace: .global)
+                                    .onChanged { value in
+                                        resizeOffsetLeft = value.translation.width * -1
+                                    }
+                                    .onEnded { _ in
+                                        // todo
+                                    }
+                            )
+                        Spacer()
+                    }
+                }
+            )
+        }
         .offset(x: localOffset.x, y: localOffset.y)
         .zIndex(dragging ? 2 : 1)
         .gesture(
