@@ -7,6 +7,8 @@ import me.timeto.shared.Palette
 import me.timeto.shared.vm.Vm
 import kotlin.math.absoluteValue
 
+typealias ButtonUi = HomeSettingsButtonUi
+
 class HomeSettingsVm(
     private val spacing: Float,
     private val cellWidth: Float,
@@ -26,11 +28,11 @@ class HomeSettingsVm(
 
     init {
 
-        val dataButtonsUiRaw: List<HomeSettingsButtonUi> = listOf(
-            HomeSettingsButtonUi(rowIdx = 1, cellStartIdx = 0, cellsSize = 2, colorRgba = Palette.red.dark, spacing = spacing, cellWidth = cellWidth, rowHeight = rowHeight),
-            HomeSettingsButtonUi(rowIdx = 1, cellStartIdx = 2, cellsSize = 3, colorRgba = Palette.blue.dark, spacing = spacing, cellWidth = cellWidth, rowHeight = rowHeight),
-            HomeSettingsButtonUi(rowIdx = 2, cellStartIdx = 0, cellsSize = 2, colorRgba = Palette.purple.dark, spacing = spacing, cellWidth = cellWidth, rowHeight = rowHeight),
-            HomeSettingsButtonUi(rowIdx = 3, cellStartIdx = 4, cellsSize = 2, colorRgba = Palette.cyan.dark, spacing = spacing, cellWidth = cellWidth, rowHeight = rowHeight),
+        val dataButtonsUiRaw: List<ButtonUi> = listOf(
+            ButtonUi(rowIdx = 1, cellStartIdx = 0, cellsSize = 2, colorRgba = Palette.red.dark, spacing = spacing, cellWidth = cellWidth, rowHeight = rowHeight),
+            ButtonUi(rowIdx = 1, cellStartIdx = 2, cellsSize = 3, colorRgba = Palette.blue.dark, spacing = spacing, cellWidth = cellWidth, rowHeight = rowHeight),
+            ButtonUi(rowIdx = 2, cellStartIdx = 0, cellsSize = 2, colorRgba = Palette.purple.dark, spacing = spacing, cellWidth = cellWidth, rowHeight = rowHeight),
+            ButtonUi(rowIdx = 3, cellStartIdx = 4, cellsSize = 2, colorRgba = Palette.cyan.dark, spacing = spacing, cellWidth = cellWidth, rowHeight = rowHeight),
         )
 
         val buttonsData = buildButtonsData(
@@ -48,13 +50,13 @@ class HomeSettingsVm(
     }
 
     fun getHoverButtonsUiOnDrag(
-        buttonUi: HomeSettingsButtonUi,
+        buttonUi: ButtonUi,
         x: Float,
         y: Float,
-    ): List<HomeSettingsButtonUi> {
+    ): List<ButtonUi> {
         val buttonsData: ButtonsData = state.value.buttonsData
 
-        val nearestButtonUi: HomeSettingsButtonUi = buttonsData.emptyButtonsUi.minBy { emptyButtonUi ->
+        val nearestButtonUi: ButtonUi = buttonsData.emptyButtonsUi.minBy { emptyButtonUi ->
             (emptyButtonUi.initX - x).absoluteValue + (emptyButtonUi.initY - y).absoluteValue
         }
 
@@ -82,19 +84,19 @@ class HomeSettingsVm(
     }
 
     fun onButtonDragEnd(
-        buttonUi: HomeSettingsButtonUi,
+        buttonUi: ButtonUi,
         x: Float,
         y: Float,
     ): Boolean {
-        val hoverButtonsUi: List<HomeSettingsButtonUi> =
+        val hoverButtonsUi: List<ButtonUi> =
             getHoverButtonsUiOnDrag(buttonUi, x = x, y = y)
         if (hoverButtonsUi.isEmpty())
             return false
 
-        val firstHoverButtonUi: HomeSettingsButtonUi =
+        val firstHoverButtonUi: ButtonUi =
             hoverButtonsUi.minBy { it.cellStartIdx }
 
-        val newButtonsUi: List<HomeSettingsButtonUi> =
+        val newButtonsUi: List<ButtonUi> =
             state.value.buttonsData.dataButtonsUi.filter { it.id != buttonUi.id } +
             buttonUi.copy(
                 rowIdx = firstHoverButtonUi.rowIdx,
@@ -122,8 +124,8 @@ class HomeSettingsVm(
 
     data class ButtonsData(
         val rowsCount: Int,
-        val emptyButtonsUi: List<HomeSettingsButtonUi>,
-        val dataButtonsUi: List<HomeSettingsButtonUi>,
+        val emptyButtonsUi: List<ButtonUi>,
+        val dataButtonsUi: List<ButtonUi>,
     )
 }
 
@@ -136,12 +138,12 @@ private fun buildEmptyButtonsUi(
     spacing: Float,
     cellWidth: Float,
     rowHeight: Float,
-): List<HomeSettingsButtonUi> =
+): List<ButtonUi> =
     (0 until rowsCount)
         .map { rowIdx ->
             (0 until HomeSettingsVm.cellsCount)
                 .map { cellIdx ->
-                    HomeSettingsButtonUi(
+                    ButtonUi(
                         rowIdx = rowIdx,
                         cellStartIdx = cellIdx,
                         cellsSize = 1,
@@ -156,12 +158,12 @@ private fun buildEmptyButtonsUi(
 
 
 private fun buildButtonsData(
-    dataButtonsUiRaw: List<HomeSettingsButtonUi>,
+    dataButtonsUiRaw: List<ButtonUi>,
     spacing: Float,
     cellWidth: Float,
     rowHeight: Float,
 ): HomeSettingsVm.ButtonsData {
-    val dataButtonsUiRawRows: List<List<HomeSettingsButtonUi>> = dataButtonsUiRaw
+    val dataButtonsUiRawRows: List<List<ButtonUi>> = dataButtonsUiRaw
         .groupBy { it.rowIdx }.toList().sortedBy { it.first }.map { it.second }
 
     val dataButtonsUiForGrid = dataButtonsUiRawRows
