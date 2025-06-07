@@ -5,6 +5,9 @@ private let rowHeight: CGFloat = 26
 private let barHeight: CGFloat = 24
 private let spacing: CGFloat = 10
 
+private var resizeDotViewArcRadius: CGFloat = barHeight / 2
+private var resizeDotViewArcLineWidth: CGFloat = 4
+
 private let buttonsHPadding: CGFloat = H_PADDING
 
 struct HomeSettingsButtonsView: View {
@@ -181,6 +184,7 @@ private struct DragButtonView: View {
                 extraRightWidth: $resizeOffsetRight,
                 content: {
                     HStack {
+                        
                         ResizeDotView(
                             onResize: { value in
                                 resizeOffsetLeft = value * -1
@@ -195,7 +199,26 @@ private struct DragButtonView: View {
                                 }
                             }
                         )
+                        .rotationEffect(.degrees(180.0))
+                        .offset(x: -2)
+
                         Spacer()
+                        
+                        ResizeDotView(
+                            onResize: { value in
+                                resizeOffsetRight = value
+                                onResize(resizeOffsetLeft, resizeOffsetRight)
+                            },
+                            onResizeEnd: { _ in
+                                let isPositionChanged = onResizeEnd(resizeOffsetLeft, resizeOffsetRight)
+                                if !isPositionChanged {
+                                    withAnimation {
+                                        resizeOffsetRight = 0
+                                    }
+                                }
+                            }
+                        )
+                        .offset(x: 2)
                     }
                 }
             )
@@ -230,10 +253,15 @@ private struct ResizeDotView: View {
     let onResize: (CGFloat) -> Void
     let onResizeEnd: (CGFloat) -> Void
     
+    ///
+    
+    private let size: CGFloat = barHeight - 16
+    
     var body: some View {
-        Circle()
-            .fill(.white)
-            .frame(width: barHeight, height: barHeight)
+        
+        ResizeDotViewArc(startAngle: .degrees(70), endAngle: .degrees(290), clockwise: true)
+            .stroke(.white.opacity(0.9), style: .init(lineWidth: resizeDotViewArcLineWidth, lineCap: .round))
+            .frame(width: resizeDotViewArcRadius, height: barHeight)
             .gesture(
                 DragGesture(coordinateSpace: .global)
                     .onChanged { value in
@@ -243,6 +271,25 @@ private struct ResizeDotView: View {
                         onResizeEnd(value.translation.width)
                     }
             )
+    }
+}
+
+private struct ResizeDotViewArc: Shape {
+    
+    let startAngle: Angle
+    let endAngle: Angle
+    let clockwise: Bool
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.addArc(
+            center: CGPoint(x: 0, y: resizeDotViewArcRadius),
+            radius: resizeDotViewArcRadius - (resizeDotViewArcLineWidth / 2),
+            startAngle: startAngle,
+            endAngle: endAngle,
+            clockwise: clockwise
+        )
+        return path
     }
 }
 

@@ -123,7 +123,6 @@ class HomeSettingsVm(
     fun getHoverButtonsUiOnResize(
         buttonUi: ButtonUi,
         left: Float,
-        // todo
         right: Float,
     ): List<ButtonUi> {
         val rowIdx: Int = buttonUi.rowIdx
@@ -139,9 +138,12 @@ class HomeSettingsVm(
             (emptyButtonUi.initX - (buttonUi.initX - left)).absoluteValue
         }
 
+        val nearestRightEmptyButtonUi: ButtonUi = buttonsData.emptyButtonsUi.minBy { emptyButtonUi ->
+            (emptyButtonUi.initX - (buttonUi.initX + buttonUi.fullWidth - buttonUi.cellWidth + right)).absoluteValue
+        }
+
         val hoverCellIds: IntRange =
-            // todo until nearestRightEmptyButtonUi
-            (nearestLeftEmptyButtonUi.cellStartIdx until (buttonUi.cellStartIdx + buttonUi.cellsSize))
+            (nearestLeftEmptyButtonUi.cellStartIdx..nearestRightEmptyButtonUi.cellStartIdx)
 
         if (usedCellIds.intersect(hoverCellIds).isNotEmpty())
             return emptyList()
