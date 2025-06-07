@@ -44,12 +44,12 @@ private struct ButtonsView: View {
     let vm: HomeSettingsVm
     let state: HomeSettingsVm.State
     
-    // todo remove?
     let cellWidth: CGFloat
     
-    @State private var hoverGridItems: [HomeSettingsButtonUi] = []
-    
     ///
+    
+    @State private var hoverButtonsUi: [HomeSettingsButtonUi] = []
+    @State private var ignoreNextHaptic: Bool = true
     
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -67,16 +67,24 @@ private struct ButtonsView: View {
                     viewGridItem: buttonUi,
                     cellWidth: cellWidth,
                     onDrag: { x, y in
-                        hoverGridItems = vm.calcHoverButtonsUi(
+                        hoverButtonsUi = vm.calcHoverButtonsUi(
                             buttonUi: buttonUi,
                             x: Float(x),
                             y: Float(y)
                         )
+                    },
+                    onDragEnd: {
+                        hoverButtonsUi = []
+                        Task {
+                            // To run onChange() for hoverButtonsUi before this
+                            try? await Task.sleep(nanoseconds: 1_000)
+                            ignoreNextHaptic = true
+                        }
                     }
                 )
             }
             
-            ForEach(hoverGridItems, id: \.id) { item in
+            ForEach(hoverButtonsUi, id: \.id) { item in
                 GridItemView(
                     viewGridItem: item,
                     cellWidth: cellWidth
@@ -84,6 +92,16 @@ private struct ButtonsView: View {
             }
         }
         .fillMaxSize()
+        .onChange(of: hoverButtonsUi) { _, new in
+            if new.isEmpty {
+                return
+            }
+            if ignoreNextHaptic {
+                ignoreNextHaptic = false
+                return
+            }
+            Haptic.softShot()
+        }
     }
 }
 
@@ -118,6 +136,7 @@ private struct DragGridItemView: View {
     let viewGridItem: HomeSettingsButtonUi
     let cellWidth: CGFloat
     let onDrag: (_ x: CGFloat, _ y: CGFloat) -> Void
+    let onDragEnd: () -> Void
     
     ///
     
@@ -155,6 +174,7 @@ private struct DragGridItemView: View {
                 .onEnded { _ in
                     print(";; end")
                     isDrag = false
+                    onDragEnd()
                 }
         )
     }

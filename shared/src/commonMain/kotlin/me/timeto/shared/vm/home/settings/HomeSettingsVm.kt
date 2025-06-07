@@ -25,13 +25,22 @@ class HomeSettingsVm(
     override val state: MutableStateFlow<State>
 
     init {
-        val rowsCount = 5
-        val dataButtonsUi: List<HomeSettingsButtonUi> = listOf(
+        val dataButtonsUiRaw: List<HomeSettingsButtonUi> = listOf(
             HomeSettingsButtonUi(rowIdx = 1, cellStartIdx = 0, cellsSize = 2, colorRgba = Palette.red.dark, spacing = spacing, cellWidth = cellWidth, rowHeight = rowHeight),
             HomeSettingsButtonUi(rowIdx = 1, cellStartIdx = 2, cellsSize = 3, colorRgba = Palette.blue.dark, spacing = spacing, cellWidth = cellWidth, rowHeight = rowHeight),
-            HomeSettingsButtonUi(rowIdx = 3, cellStartIdx = 0, cellsSize = 2, colorRgba = Palette.purple.dark, spacing = spacing, cellWidth = cellWidth, rowHeight = rowHeight),
-            HomeSettingsButtonUi(rowIdx = 3, cellStartIdx = 3, cellsSize = 3, colorRgba = Palette.cyan.dark, spacing = spacing, cellWidth = cellWidth, rowHeight = rowHeight),
+            HomeSettingsButtonUi(rowIdx = 2, cellStartIdx = 0, cellsSize = 2, colorRgba = Palette.purple.dark, spacing = spacing, cellWidth = cellWidth, rowHeight = rowHeight),
+            HomeSettingsButtonUi(rowIdx = 3, cellStartIdx = 4, cellsSize = 2, colorRgba = Palette.cyan.dark, spacing = spacing, cellWidth = cellWidth, rowHeight = rowHeight),
         )
+
+        val dataButtonsUiRawRows: List<List<HomeSettingsButtonUi>> = dataButtonsUiRaw
+            .groupBy { it.rowIdx }.toList().sortedBy { it.first }.map { it.second }
+
+        val dataButtonsUiForGrid = dataButtonsUiRawRows
+            .mapIndexed { rowIdx, buttonsUi -> buttonsUi.map { it.copy(rowIdx = (rowIdx * 2 + 1)) } }
+            .flatten()
+
+        val rowsCount: Int = dataButtonsUiRawRows.size * 2 + 1
+
         state = MutableStateFlow(
             State(
                 rowsCount = rowsCount,
@@ -41,7 +50,7 @@ class HomeSettingsVm(
                     cellWidth = cellWidth,
                     rowHeight = rowHeight,
                 ),
-                dataButtonsUi = dataButtonsUi,
+                dataButtonsUi = dataButtonsUiForGrid,
             )
         )
     }
