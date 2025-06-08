@@ -162,7 +162,7 @@ private struct DragButtonView: View {
     
     ///
     
-    @State private var dragging: Bool = false
+    @State private var onTop: Bool = false
     
     @State private var dragLocalOffset = CGPoint(x: 0, y: 0)
     private var dragGlobalOffset: CGPoint {
@@ -186,6 +186,7 @@ private struct DragButtonView: View {
                         
                         ResizeDotView(
                             onResize: { value in
+                                onTop = true
                                 resizeOffsetLeft = max(
                                     min(value * -1, CGFloat(buttonUi.resizeLeftMaxOffset)),
                                     CGFloat(buttonUi.resizeLeftMinOffset)
@@ -199,16 +200,18 @@ private struct DragButtonView: View {
                                         resizeOffsetLeft = 0
                                     }
                                 }
+                                onTop = false
                             }
                         )
                         .rotationEffect(.degrees(180.0))
                         .offset(x: -2)
-
+                        
                         Spacer()
                         
                         ResizeDotView(
                             onResize: { value in
-                                resizeOffsetRight = value
+                                onTop = true
+                                resizeOffsetRight = min(value, CGFloat(buttonUi.resizeRightMaxOffset))
                                 onResize(resizeOffsetLeft, resizeOffsetRight)
                             },
                             onResizeEnd: { _ in
@@ -218,6 +221,7 @@ private struct DragButtonView: View {
                                         resizeOffsetRight = 0
                                     }
                                 }
+                                onTop = false
                             }
                         )
                         .offset(x: 2)
@@ -226,11 +230,11 @@ private struct DragButtonView: View {
             )
         }
         .offset(x: dragLocalOffset.x, y: dragLocalOffset.y)
-        .zIndex(dragging ? 2 : 1)
+        .zIndex(onTop ? 2 : 1)
         .gesture(
             DragGesture()
                 .onChanged { value in
-                    dragging = true
+                    onTop = true
                     dragLocalOffset = CGPoint(
                         x: value.translation.width,
                         y: value.translation.height
@@ -238,13 +242,13 @@ private struct DragButtonView: View {
                     onDrag(dragGlobalOffset)
                 }
                 .onEnded { _ in
-                    dragging = false
                     let isPositionChanged = onDragEnd(dragGlobalOffset)
                     if !isPositionChanged {
                         withAnimation {
                             dragLocalOffset = CGPoint(x: 0, y: 0)
                         }
                     }
+                    onTop = false
                 }
         )
     }
