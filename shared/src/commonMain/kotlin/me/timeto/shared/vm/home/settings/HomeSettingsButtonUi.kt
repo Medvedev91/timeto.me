@@ -7,6 +7,7 @@ import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 data class HomeSettingsButtonUi(
+    val type: HomeSettingsButtonType,
     val sort: HomeButtonSort,
     val colorRgba: ColorRgba,
     val spacing: Float,
