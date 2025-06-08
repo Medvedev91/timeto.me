@@ -33,6 +33,7 @@ class HomeSettingsVm(
             ButtonUi(rowIdx = 1, cellStartIdx = 2, cellsSize = 3, colorRgba = Palette.blue.dark, spacing = spacing, cellWidth = cellWidth, rowHeight = rowHeight),
             ButtonUi(rowIdx = 2, cellStartIdx = 0, cellsSize = 2, colorRgba = Palette.purple.dark, spacing = spacing, cellWidth = cellWidth, rowHeight = rowHeight),
             ButtonUi(rowIdx = 3, cellStartIdx = 4, cellsSize = 2, colorRgba = Palette.cyan.dark, spacing = spacing, cellWidth = cellWidth, rowHeight = rowHeight),
+            ButtonUi(rowIdx = 3, cellStartIdx = 3, cellsSize = 2, colorRgba = Palette.green.dark, spacing = spacing, cellWidth = cellWidth, rowHeight = rowHeight),
         )
 
         val buttonsData = buildButtonsData(
@@ -239,8 +240,33 @@ private fun buildButtonsData(
     cellWidth: Float,
     rowHeight: Float,
 ): HomeSettingsVm.ButtonsData {
+    val buttonsUiWithInvalidPosition: MutableList<ButtonUi> =
+        mutableListOf()
     val dataButtonsUiRawRows: List<List<ButtonUi>> = dataButtonsUiRaw
         .groupBy { it.rowIdx }.toList().sortedBy { it.first }.map { it.second }
+        .map { row ->
+            val usedCellIds: MutableSet<Int> = mutableSetOf()
+            row.mapNotNull { buttonUi ->
+                val cellIds: IntRange =
+                    buttonUi.cellStartIdx until (buttonUi.cellStartIdx + buttonUi.cellsSize)
+                if (usedCellIds.intersect(cellIds).isNotEmpty()) {
+                    buttonsUiWithInvalidPosition.add(buttonUi)
+                    return@mapNotNull null
+                }
+                usedCellIds.addAll(cellIds)
+                buttonUi
+            }
+        }
+        .plus(
+            buttonsUiWithInvalidPosition.map { buttonUi ->
+                listOf(
+                    buttonUi.copy(
+                        cellStartIdx = 0,
+                        cellsSize = HomeSettingsVm.cellsCount,
+                    )
+                )
+            }
+        )
 
     val dataButtonsUiForGrid = dataButtonsUiRawRows
         .mapIndexed { rowIdx, buttonsUi ->
