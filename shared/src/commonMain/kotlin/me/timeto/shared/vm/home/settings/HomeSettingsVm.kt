@@ -25,7 +25,9 @@ class HomeSettingsVm(
     data class State(
         val buttonsData: ButtonsData,
         val update: Int = 0,
-    )
+    ) {
+        val title = "Home Settings"
+    }
 
     override val state: MutableStateFlow<State>
 
