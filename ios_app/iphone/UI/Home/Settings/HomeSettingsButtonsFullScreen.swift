@@ -10,7 +10,7 @@ private var resizeDotViewArcLineWidth: CGFloat = 6
 
 private let buttonsHPadding: CGFloat = H_PADDING
 
-struct HomeSettingsButtonsView: View {
+struct HomeSettingsButtonsFullScreen: View {
     
     private let cellWidth: CGFloat = calcCellWidth()
     
@@ -22,22 +22,27 @@ struct HomeSettingsButtonsView: View {
                 rowHeight: Float(rowHeight)
             )
         }) { vm, state in
-            ButtonsView(
-                vm: vm,
-                state: state
-            )
-            .frame(height: CGFloat(state.buttonsData.rowsCount) * rowHeight)
+            VStack {
+                Spacer()
+                HomeSettingsButtonsFullScreenInner(
+                    vm: vm,
+                    state: state
+                )
+                .frame(height: CGFloat(state.buttonsData.rowsCount) * rowHeight)
+            }
         }
         .padding(.horizontal, buttonsHPadding)
     }
 }
 
-private struct ButtonsView: View {
+private struct HomeSettingsButtonsFullScreenInner: View {
     
     let vm: HomeSettingsVm
     let state: HomeSettingsVm.State
     
     ///
+    
+    @Environment(\.dismiss) private var dismiss
     
     @State private var hoverButtonsUi: [HomeSettingsButtonUi] = []
     @State private var ignoreNextHaptic: Bool = true
@@ -120,6 +125,22 @@ private struct ButtonsView: View {
                 return
             }
             Haptic.softShot()
+        }
+        .navigationTitle(state.title)
+        .toolbarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel") {
+                    dismiss()
+                }
+            }
+            ToolbarItem(placement: .primaryAction) {
+                Button("Save") {
+                    vm.save()
+                    dismiss()
+                }
+                .fontWeight(.semibold)
+            }
         }
     }
 }
