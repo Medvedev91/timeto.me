@@ -162,14 +162,13 @@ private struct DragButtonView: View {
     
     ///
     
-    @GestureState private var dragLocationState = CGPoint(x: 0, y: 0)
     @State private var dragging: Bool = false
     
-    @State private var localOffset = CGPoint(x: 0, y: 0)
-    private var globalOffset: CGPoint {
+    @State private var dragLocalOffset = CGPoint(x: 0, y: 0)
+    private var dragGlobalOffset: CGPoint {
         CGPoint(
-            x: localOffset.x + CGFloat(buttonUi.initX),
-            y: localOffset.y + CGFloat(buttonUi.initY)
+            x: dragLocalOffset.x + CGFloat(buttonUi.initX),
+            y: dragLocalOffset.y + CGFloat(buttonUi.initY)
         )
     }
     
@@ -223,24 +222,24 @@ private struct DragButtonView: View {
                 }
             )
         }
-        .offset(x: localOffset.x, y: localOffset.y)
+        .offset(x: dragLocalOffset.x, y: dragLocalOffset.y)
         .zIndex(dragging ? 2 : 1)
         .gesture(
             DragGesture()
-                .updating($dragLocationState) { currentState, gestureState, transaction in
+                .onChanged { value in
                     dragging = true
-                    localOffset = CGPoint(
-                        x: currentState.location.x - currentState.startLocation.x,
-                        y: currentState.location.y - currentState.startLocation.y
+                    dragLocalOffset = CGPoint(
+                        x: value.translation.width,
+                        y: value.translation.height
                     )
-                    onDrag(globalOffset)
+                    onDrag(dragGlobalOffset)
                 }
                 .onEnded { _ in
                     dragging = false
-                    let isPositionChanged = onDragEnd(globalOffset)
+                    let isPositionChanged = onDragEnd(dragGlobalOffset)
                     if !isPositionChanged {
                         withAnimation {
-                            localOffset = CGPoint(x: 0, y: 0)
+                            dragLocalOffset = CGPoint(x: 0, y: 0)
                         }
                     }
                 }
