@@ -3,11 +3,11 @@ import kotlin.Int;
 CREATE TABLE GoalSq (
     id INTEGER AS Int NOT NULL PRIMARY KEY AUTOINCREMENT,
     activity_id INTEGER AS Int NOT NULL,
-    sort INTEGER AS Int NOT NULL,
     seconds INTEGER AS Int NOT NULL,
     period_json TEXT NOT NULL,
     note TEXT NOT NULL,
-    finish_text TEXT NOT NULL
+    finish_text TEXT NOT NULL,
+    home_button_sort TEXT NOT NULL
 );
 
 --
@@ -22,7 +22,7 @@ FROM GoalSq;
 
 insert:
 INSERT INTO GoalSq
-(activity_id, sort, seconds, period_json, note, finish_text)
+(activity_id, seconds, period_json, note, finish_text, home_button_sort)
 VALUES
 (?, ?, ?, ?, ?, ?);
 
@@ -35,8 +35,8 @@ VALUES ?;
 
 updateById:
 UPDATE GoalSq
-SET activity_id=?, sort=?, seconds=?, period_json=?,
-    note=?, finish_text=?
+SET activity_id=?, seconds=?, period_json=?,
+    note=?, finish_text=?, home_button_sort=?
 WHERE id = ?;
 
 --

@@ -15,11 +15,11 @@ import me.timeto.shared.vm.goals.form.GoalFormData
 data class GoalDb(
     val id: Int,
     val activity_id: Int,
-    val sort: Int,
     val seconds: Int,
     val period_json: String,
     val note: String,
     val finish_text: String,
+    val home_button_sort: String,
 ) : Backupable__Item {
 
     companion object : Backupable__Holder {
@@ -35,14 +35,14 @@ data class GoalDb(
             activityDb: ActivityDb,
             goalFormsData: List<GoalFormData>,
         ) {
-            goalFormsData.forEachIndexed { idx, goalFormData ->
+            goalFormsData.forEach { goalFormData ->
                 db.goalQueries.insert(
                     activity_id = activityDb.id,
-                    sort = idx,
                     seconds = goalFormData.seconds,
                     period_json = goalFormData.period.toJson().toString(),
                     note = goalFormData.note.trim(),
                     finish_text = goalFormData.finishText.trim(),
+                    home_button_sort = "",
                 )
             }
         }
@@ -63,11 +63,11 @@ data class GoalDb(
                 GoalSq(
                     id = j.getInt(0),
                     activity_id = j.getInt(1),
-                    sort = j.getInt(2),
-                    seconds = j.getInt(3),
-                    period_json = j.getString(4),
-                    note = j.getString(5),
-                    finish_text = j.getString(6),
+                    seconds = j.getInt(2),
+                    period_json = j.getString(3),
+                    note = j.getString(4),
+                    finish_text = j.getString(5),
+                    home_button_sort = j.getString(6),
                 )
             )
         }
@@ -85,8 +85,8 @@ data class GoalDb(
     override fun backupable__getId(): String = id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
-        id, activity_id, sort, seconds, period_json,
-        note, finish_text,
+        id, activity_id, seconds, period_json,
+        note, finish_text, home_button_sort,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
@@ -94,11 +94,11 @@ data class GoalDb(
         db.goalQueries.updateById(
             id = j.getInt(0),
             activity_id = j.getInt(1),
-            sort = j.getInt(2),
-            seconds = j.getInt(3),
-            period_json = j.getString(4),
-            note = j.getString(5),
-            finish_text = j.getString(6),
+            seconds = j.getInt(2),
+            period_json = j.getString(3),
+            note = j.getString(4),
+            finish_text = j.getString(5),
+            home_button_sort = j.getString(6),
         )
     }
 
@@ -200,9 +200,9 @@ data class GoalDb(
 private fun GoalSq.toDb() = GoalDb(
     id = id,
     activity_id = activity_id,
-    sort = sort,
     seconds = seconds,
     period_json = period_json,
     note = note,
     finish_text = finish_text,
+    home_button_sort = home_button_sort,
 )
