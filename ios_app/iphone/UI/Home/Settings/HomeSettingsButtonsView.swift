@@ -6,7 +6,7 @@ private let barHeight: CGFloat = 24
 private let spacing: CGFloat = 10
 
 private var resizeDotViewArcRadius: CGFloat = barHeight / 2
-private var resizeDotViewArcLineWidth: CGFloat = 4
+private var resizeDotViewArcLineWidth: CGFloat = 6
 
 private let buttonsHPadding: CGFloat = H_PADDING
 
@@ -204,7 +204,7 @@ private struct DragButtonView: View {
                             }
                         )
                         .rotationEffect(.degrees(180.0))
-                        .offset(x: -2)
+                        .offset(x: -resizeDotViewArcLineWidth / 2)
                         
                         Spacer()
                         
@@ -227,7 +227,7 @@ private struct DragButtonView: View {
                                 onTop = false
                             }
                         )
-                        .offset(x: 2)
+                        .offset(x: resizeDotViewArcLineWidth / 2)
                     }
                 }
             )
