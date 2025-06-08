@@ -6,6 +6,7 @@ import me.timeto.shared.Cache
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.Palette
+import me.timeto.shared.launchExIo
 import me.timeto.shared.vm.Vm
 import kotlin.math.absoluteValue
 
@@ -32,6 +33,7 @@ class HomeSettingsVm(
 
         val dataButtonsUiRaw: List<ButtonUi> = Cache.goalsDb.map { goalDb ->
             ButtonUi(
+                type = HomeSettingsButtonType.Goal(goalDb),
                 sort = HomeButtonSort.parseOrDefault(goalDb.home_button_sort),
                 colorRgba = goalDb.getActivityDbCached().colorRgba,
                 spacing = spacing,
@@ -52,6 +54,19 @@ class HomeSettingsVm(
                 buttonsData = buttonsData,
             )
         )
+    }
+
+    fun save() {
+        launchExIo {
+            state.value.buttonsData.dataButtonsUi.forEach { buttonUi ->
+                when (val type = buttonUi.type) {
+                    is HomeSettingsButtonType.Goal ->
+                        type.goalDb.updateHomeButtonSort(buttonUi.sort)
+                    is HomeSettingsButtonType.Empty -> {
+                    }
+                }
+            }
+        }
     }
 
     fun getHoverButtonsUiOnDrag(
@@ -229,6 +244,7 @@ private fun buildEmptyButtonsUi(
             (0 until HomeSettingsVm.cellsCount)
                 .map { cellIdx ->
                     ButtonUi(
+                        type = HomeSettingsButtonType.Empty,
                         sort = HomeButtonSort(
                             rowIdx = rowIdx,
                             cellIdx = cellIdx,
