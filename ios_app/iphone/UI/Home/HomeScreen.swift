@@ -63,15 +63,20 @@ private struct HomeScreenInner: View {
             }
             
             if let whatsNewMessage = state.whatsNewMessage {
-                NavigationLinkPush(.whatsNew) {
-                    Text(whatsNewMessage)
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 8)
-                        .font(.system(size: 17, weight: .medium))
-                        .background(roundedShape.fill(.red))
-                        .padding(.top, 8)
-                }
+                Button(
+                    action: {
+                        navigation.push(.whatsNew)
+                    },
+                    label: {
+                        Text(whatsNewMessage)
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
+                            .font(.system(size: 17, weight: .medium))
+                            .background(roundedShape.fill(.red))
+                            .padding(.top, 8)
+                    }
+                )
             }
             
             let isMainTasksExists = !state.mainTasks.isEmpty
