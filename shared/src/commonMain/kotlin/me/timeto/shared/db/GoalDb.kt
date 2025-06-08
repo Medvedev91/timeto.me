@@ -73,6 +73,15 @@ data class GoalDb(
         }
     }
 
+    suspend fun updateHomeButtonSort(
+        homeButtonSort: HomeButtonSort,
+    ): Unit = dbIo {
+        db.goalQueries.updateHomeButtonSortById(
+            home_button_sort = homeButtonSort.string,
+            id = id,
+        )
+    }
+
     fun buildPeriod(): Period =
         Period.fromJson(Json.parseToJsonElement(period_json).jsonObject)
 
