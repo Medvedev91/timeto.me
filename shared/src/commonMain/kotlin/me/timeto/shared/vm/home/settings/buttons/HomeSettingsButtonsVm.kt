@@ -1,4 +1,4 @@
-package me.timeto.shared.vm.home.settings
+package me.timeto.shared.vm.home.settings.buttons
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update

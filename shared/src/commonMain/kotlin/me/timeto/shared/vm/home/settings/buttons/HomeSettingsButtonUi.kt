@@ -1,4 +1,4 @@
-package me.timeto.shared.vm.home.settings
+package me.timeto.shared.vm.home.settings.buttons
 
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.HomeButtonSort
