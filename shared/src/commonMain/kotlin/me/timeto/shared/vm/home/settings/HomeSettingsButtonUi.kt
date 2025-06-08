@@ -1,14 +1,13 @@
 package me.timeto.shared.vm.home.settings
 
 import me.timeto.shared.ColorRgba
+import me.timeto.shared.HomeButtonSort
 import kotlin.math.absoluteValue
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 data class HomeSettingsButtonUi(
-    val rowIdx: Int,
-    val cellStartIdx: Int,
-    val cellsSize: Int,
+    val sort: HomeButtonSort,
     val colorRgba: ColorRgba,
     val spacing: Float,
     val cellWidth: Float,
@@ -19,25 +18,25 @@ data class HomeSettingsButtonUi(
     val id: String = Uuid.random().toString()
 
     val initX: Float =
-        (cellStartIdx.toFloat() * cellWidth) + (cellStartIdx.toFloat() * spacing)
+        (sort.cellIdx.toFloat() * cellWidth) + (sort.cellIdx.toFloat() * spacing)
     val initY: Float =
-        rowIdx.toFloat() * rowHeight
+        sort.rowIdx.toFloat() * rowHeight
 
     val fullWidth: Float =
-        ((cellWidth * cellsSize) + ((cellsSize - 1).toFloat() * spacing)).absoluteValue
+        ((cellWidth * sort.size) + ((sort.size - 1).toFloat() * spacing)).absoluteValue
 
     val resizeLeftMinOffset: Float =
-        -((cellWidth * (cellsSize - 1)) + (spacing * (cellsSize - 1)))
+        -((cellWidth * (sort.size - 1)) + (spacing * (sort.size - 1)))
 
     val resizeLeftMaxOffset: Float =
-        (cellWidth * cellStartIdx) + (spacing * cellStartIdx)
+        (cellWidth * sort.cellIdx) + (spacing * sort.cellIdx)
 
     val resizeRightMinOffset: Float =
-        -((cellWidth * (cellsSize - 1)) + (spacing * (cellsSize - 1)))
+        -((cellWidth * (sort.size - 1)) + (spacing * (sort.size - 1)))
 
     val resizeRightMaxOffset: Float = run {
         val cellsRight: Int =
-            HomeSettingsVm.cellsCount - (cellStartIdx + cellsSize)
+            HomeSettingsVm.cellsCount - (sort.cellIdx + sort.size)
         (cellWidth * cellsRight) + (spacing * cellsRight)
     }
 }
