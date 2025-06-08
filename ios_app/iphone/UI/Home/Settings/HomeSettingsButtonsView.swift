@@ -163,6 +163,7 @@ private struct DragButtonView: View {
     ///
     
     @State private var onTop: Bool = false
+    @State private var dragging: Bool = false
     
     @State private var dragLocalOffset = CGPoint(x: 0, y: 0)
     private var dragGlobalOffset: CGPoint {
@@ -195,7 +196,9 @@ private struct DragButtonView: View {
                             },
                             onResizeEnd: { _ in
                                 let isPositionChanged = onResizeEnd(resizeOffsetLeft, resizeOffsetRight)
-                                if !isPositionChanged {
+                                if isPositionChanged {
+                                    Haptic.mediumShot()
+                                } else {
                                     withAnimation {
                                         resizeOffsetLeft = 0
                                     }
@@ -219,7 +222,9 @@ private struct DragButtonView: View {
                             },
                             onResizeEnd: { _ in
                                 let isPositionChanged = onResizeEnd(resizeOffsetLeft, resizeOffsetRight)
-                                if !isPositionChanged {
+                                if isPositionChanged {
+                                    Haptic.mediumShot()
+                                } else {
                                     withAnimation {
                                         resizeOffsetRight = 0
                                     }
@@ -235,9 +240,14 @@ private struct DragButtonView: View {
         .offset(x: dragLocalOffset.x, y: dragLocalOffset.y)
         .zIndex(onTop ? 2 : 1)
         .gesture(
-            DragGesture()
+            // minimumDistance: 0 to on touch dragging haptic
+            DragGesture(minimumDistance: 0)
                 .onChanged { value in
                     onTop = true
+                    if !dragging {
+                        dragging = true
+                        Haptic.mediumShot()
+                    }
                     dragLocalOffset = CGPoint(
                         x: value.translation.width,
                         y: value.translation.height
@@ -246,12 +256,15 @@ private struct DragButtonView: View {
                 }
                 .onEnded { _ in
                     let isPositionChanged = onDragEnd(dragGlobalOffset)
-                    if !isPositionChanged {
+                    if isPositionChanged {
+                        Haptic.mediumShot()
+                    } else {
                         withAnimation {
                             dragLocalOffset = CGPoint(x: 0, y: 0)
                         }
                     }
                     onTop = false
+                    dragging = false
                 }
         )
     }
