@@ -25,4 +25,10 @@ data class HomeSettingsButtonUi(
 
     val fullWidth: Float =
         ((cellWidth * cellsSize) + ((cellsSize - 1).toFloat() * spacing)).absoluteValue
+
+    val resizeLeftMinOffset: Float =
+        -((cellWidth * (cellsSize - 1)) + (spacing * (cellsSize - 1)))
+
+    val resizeLeftMaxOffset: Float =
+        (cellWidth * cellStartIdx) + (spacing * cellStartIdx)
 }

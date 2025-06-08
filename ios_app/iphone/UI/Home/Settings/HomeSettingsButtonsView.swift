@@ -186,7 +186,10 @@ private struct DragButtonView: View {
                         
                         ResizeDotView(
                             onResize: { value in
-                                resizeOffsetLeft = value * -1
+                                resizeOffsetLeft = max(
+                                    min(value * -1, CGFloat(buttonUi.resizeLeftMaxOffset)),
+                                    CGFloat(buttonUi.resizeLeftMinOffset)
+                                )
                                 onResize(resizeOffsetLeft, resizeOffsetRight)
                             },
                             onResizeEnd: { _ in
