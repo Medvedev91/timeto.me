@@ -269,7 +269,7 @@ private struct ResizeDotView: View {
     var body: some View {
         
         ResizeDotViewArc(startAngle: .degrees(70), endAngle: .degrees(290), clockwise: true)
-            .stroke(.white.opacity(0.9), style: .init(lineWidth: resizeDotViewArcLineWidth, lineCap: .round))
+            .stroke(.white, style: .init(lineWidth: resizeDotViewArcLineWidth, lineCap: .round))
             .frame(width: resizeDotViewArcRadius, height: barHeight)
             .gesture(
                 DragGesture(coordinateSpace: .global)
