@@ -19,12 +19,12 @@ data class HomeSettingsButtonUi(
     val id: String = Uuid.random().toString()
 
     val initX: Float =
-        (sort.cellIdx.toFloat() * cellWidth) + (sort.cellIdx.toFloat() * spacing)
+        (sort.cellIdx * cellWidth) + (sort.cellIdx * spacing)
     val initY: Float =
-        sort.rowIdx.toFloat() * rowHeight
+        sort.rowIdx * rowHeight
 
     val fullWidth: Float =
-        ((cellWidth * sort.size) + ((sort.size - 1).toFloat() * spacing)).absoluteValue
+        ((cellWidth * sort.size) + ((sort.size - 1) * spacing)).absoluteValue
 
     val resizeLeftMinOffset: Float =
         -((cellWidth * (sort.size - 1)) + (spacing * (sort.size - 1)))
