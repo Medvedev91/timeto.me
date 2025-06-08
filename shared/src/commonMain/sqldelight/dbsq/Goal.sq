@@ -39,6 +39,11 @@ SET activity_id=?, seconds=?, period_json=?,
     note=?, finish_text=?, home_button_sort=?
 WHERE id = ?;
 
+updateHomeButtonSortById:
+UPDATE GoalSq
+SET home_button_sort=?
+WHERE id = ?;
+
 --
 -- Delete
 
