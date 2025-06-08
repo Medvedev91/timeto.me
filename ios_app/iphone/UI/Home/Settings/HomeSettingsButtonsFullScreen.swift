@@ -16,7 +16,7 @@ struct HomeSettingsButtonsFullScreen: View {
     
     var body: some View {
         VmView({
-            HomeSettingsVm(
+            HomeSettingsButtonsVm(
                 spacing: Float(spacing),
                 cellWidth: Float(cellWidth),
                 rowHeight: Float(rowHeight)
@@ -37,8 +37,8 @@ struct HomeSettingsButtonsFullScreen: View {
 
 private struct HomeSettingsButtonsFullScreenInner: View {
     
-    let vm: HomeSettingsVm
-    let state: HomeSettingsVm.State
+    let vm: HomeSettingsButtonsVm
+    let state: HomeSettingsButtonsVm.State
     
     ///
     
@@ -337,7 +337,7 @@ private struct ResizeDotViewArc: Shape {
 }
 
 private func calcCellWidth() -> CGFloat {
-    let cellsCount: Int = HomeSettingsVm.companion.cellsCount.toInt()
+    let cellsCount: Int = HomeSettingsButtonsVm.companion.cellsCount.toInt()
     let width: CGFloat = UIScreen.main.bounds.size.width - (buttonsHPadding * 2)
     return (width - (spacing * CGFloat(cellsCount - 1))) / CGFloat(cellsCount)
 }

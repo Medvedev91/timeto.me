@@ -37,7 +37,7 @@ data class HomeSettingsButtonUi(
 
     val resizeRightMaxOffset: Float = run {
         val cellsRight: Int =
-            HomeSettingsVm.cellsCount - (sort.cellIdx + sort.size)
+            HomeSettingsButtonsVm.cellsCount - (sort.cellIdx + sort.size)
         (cellWidth * cellsRight) + (spacing * cellsRight)
     }
 }

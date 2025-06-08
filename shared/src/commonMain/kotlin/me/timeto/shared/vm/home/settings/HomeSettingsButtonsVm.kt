@@ -12,11 +12,11 @@ import kotlin.math.absoluteValue
 
 typealias ButtonUi = HomeSettingsButtonUi
 
-class HomeSettingsVm(
+class HomeSettingsButtonsVm(
     private val spacing: Float,
     private val cellWidth: Float,
     private val rowHeight: Float,
-) : Vm<HomeSettingsVm.State>() {
+) : Vm<HomeSettingsButtonsVm.State>() {
 
     companion object {
         const val cellsCount = 6
@@ -243,7 +243,7 @@ private fun buildEmptyButtonsUi(
 ): List<ButtonUi> =
     (0 until rowsCount)
         .map { rowIdx ->
-            (0 until HomeSettingsVm.cellsCount)
+            (0 until HomeSettingsButtonsVm.cellsCount)
                 .map { cellIdx ->
                     ButtonUi(
                         type = HomeSettingsButtonType.Empty,
@@ -267,7 +267,7 @@ private fun buildButtonsData(
     spacing: Float,
     cellWidth: Float,
     rowHeight: Float,
-): HomeSettingsVm.ButtonsData {
+): HomeSettingsButtonsVm.ButtonsData {
     val buttonsUiWithInvalidPosition: MutableList<ButtonUi> =
         mutableListOf()
     val dataButtonsUiRawRows: List<List<ButtonUi>> = dataButtonsUiRaw
@@ -312,7 +312,7 @@ private fun buildButtonsData(
 
     val rowsCount: Int = dataButtonsUiRawRows.size * 2 + 1
 
-    return HomeSettingsVm.ButtonsData(
+    return HomeSettingsButtonsVm.ButtonsData(
         rowsCount = rowsCount,
         emptyButtonsUi = buildEmptyButtonsUi(
             rowsCount = rowsCount,
