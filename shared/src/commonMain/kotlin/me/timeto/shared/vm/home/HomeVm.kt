@@ -67,7 +67,7 @@ class HomeVm : Vm<HomeVm.State>() {
 
                         val goalTf: TextFeatures = goalDb.note.textFeatures()
 
-                        val dayBarsUiForGoal = todayBarsUi.barsUi
+                        val dayBarsUiForGoal: List<DayBarsUi.BarUi> = todayBarsUi.barsUi
                             .filter { it.activityDb?.id == activityDb.id }
                             .filter {
                                 // Goal without note is common for activity
