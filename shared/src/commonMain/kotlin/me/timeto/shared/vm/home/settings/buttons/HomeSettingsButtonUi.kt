@@ -20,6 +20,7 @@ data class HomeSettingsButtonUi(
 
     val initX: Float =
         (sort.cellIdx * cellWidth) + (sort.cellIdx * spacing)
+
     val initY: Float =
         sort.rowIdx * rowHeight
 
