@@ -8,6 +8,7 @@ import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.Palette
 import me.timeto.shared.launchExIo
 import me.timeto.shared.vm.Vm
+import me.timeto.shared.vm.home.buttons.HomeButtonsUi
 import kotlin.math.absoluteValue
 
 typealias ButtonUi = HomeSettingsButtonUi
@@ -17,10 +18,6 @@ class HomeSettingsButtonsVm(
     private val cellWidth: Float,
     private val rowHeight: Float,
 ) : Vm<HomeSettingsButtonsVm.State>() {
-
-    companion object {
-        const val cellsCount = 6
-    }
 
     data class State(
         val buttonsData: ButtonsData,
@@ -82,7 +79,7 @@ class HomeSettingsButtonsVm(
             (emptyButtonUi.initX - x).absoluteValue + (emptyButtonUi.initY - y).absoluteValue
         }
 
-        if ((nearestButtonUi.sort.cellIdx + buttonUi.sort.size) > cellsCount)
+        if ((nearestButtonUi.sort.cellIdx + buttonUi.sort.size) > HomeButtonsUi.cellsCount)
             return emptyList()
 
         val usedCellIds: List<Int> = buttonsData.dataButtonsUi
@@ -243,7 +240,7 @@ private fun buildEmptyButtonsUi(
 ): List<ButtonUi> =
     (0 until rowsCount)
         .map { rowIdx ->
-            (0 until HomeSettingsButtonsVm.cellsCount)
+            (0 until HomeButtonsUi.cellsCount)
                 .map { cellIdx ->
                     ButtonUi(
                         type = HomeSettingsButtonType.Empty,
