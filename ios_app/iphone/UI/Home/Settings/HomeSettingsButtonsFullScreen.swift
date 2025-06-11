@@ -337,7 +337,7 @@ private struct ResizeDotViewArc: Shape {
 }
 
 private func calcCellWidth() -> CGFloat {
-    let cellsCount: Int = HomeSettingsButtonsVm.companion.cellsCount.toInt()
+    let cellsCount: Int = HomeButtonsCellsCountKt.homeButtonsCellsCount.toInt()
     let width: CGFloat = UIScreen.main.bounds.size.width - (buttonsHPadding * 2)
     return (width - (spacing * CGFloat(cellsCount - 1))) / CGFloat(cellsCount)
 }
