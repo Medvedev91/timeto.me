@@ -2,6 +2,7 @@ package me.timeto.shared.vm.home.settings.buttons
 
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.HomeButtonSort
+import me.timeto.shared.vm.home.buttons.homeButtonsCellsCount
 import kotlin.math.absoluteValue
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
@@ -38,7 +39,7 @@ data class HomeSettingsButtonUi(
 
     val resizeRightMaxOffset: Float = run {
         val cellsRight: Int =
-            HomeButtonsUi.cellsCount - (sort.cellIdx + sort.size)
+            homeButtonsCellsCount - (sort.cellIdx + sort.size)
         (cellWidth * cellsRight) + (spacing * cellsRight)
     }
 }
