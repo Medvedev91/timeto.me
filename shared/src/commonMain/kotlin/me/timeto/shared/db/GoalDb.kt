@@ -26,8 +26,11 @@ data class GoalDb(
     companion object : Backupable__Holder {
 
         suspend fun selectAll(): List<GoalDb> = dbIo {
-            db.goalQueries.selectAll().asList { toDb() }
+            selectAllSync()
         }
+
+        fun selectAllSync(): List<GoalDb> =
+            db.goalQueries.selectAll().asList { toDb() }
 
         fun selectAllFlow(): Flow<List<GoalDb>> =
             db.goalQueries.selectAll().asListFlow { toDb() }
