@@ -21,6 +21,7 @@ data class GoalDb(
     val finish_text: String,
     val home_button_sort: String,
     val is_entire_activity: Int,
+    val timer: Int,
 ) : Backupable__Item {
 
     companion object : Backupable__Holder {
@@ -47,6 +48,7 @@ data class GoalDb(
                 finish_text = goalFormData.finishText.trim(),
                 home_button_sort = "",
                 is_entire_activity = goalFormData.isEntireActivity.toInt10(),
+                timer = goalFormData.timer,
             )
         }
 
@@ -72,6 +74,7 @@ data class GoalDb(
                     finish_text = j.getString(5),
                     home_button_sort = j.getString(6),
                     is_entire_activity = j.getInt(7),
+                    timer = j.getInt(8),
                 )
             )
         }
@@ -102,6 +105,7 @@ data class GoalDb(
             finish_text = goalFormData.finishText.trim(),
             home_button_sort = "",
             is_entire_activity = goalFormData.isEntireActivity.toInt10(),
+            timer = goalFormData.timer,
             id = id,
         )
     }
@@ -124,7 +128,7 @@ data class GoalDb(
     override fun backupable__backup(): JsonElement = listOf(
         id, activity_id, seconds, period_json,
         note, finish_text, home_button_sort,
-        is_entire_activity,
+        is_entire_activity, timer,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
@@ -138,6 +142,7 @@ data class GoalDb(
             finish_text = j.getString(5),
             home_button_sort = j.getString(6),
             is_entire_activity = j.getInt(7),
+            timer = j.getInt(8),
         )
     }
 
@@ -245,4 +250,5 @@ private fun GoalSq.toDb() = GoalDb(
     finish_text = finish_text,
     home_button_sort = home_button_sort,
     is_entire_activity = is_entire_activity,
+    timer = timer,
 )
