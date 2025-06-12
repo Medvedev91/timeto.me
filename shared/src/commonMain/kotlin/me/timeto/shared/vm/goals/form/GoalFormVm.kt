@@ -48,7 +48,9 @@ class GoalFormVm(
         val secondsTitle = "Duration"
         val secondsNote: String = seconds.toTimerHintNote(isShort = false)
 
-        val timerTitle = "Timer on Bar Pressed"
+        val timerHeader = "Timer on Bar Pressed"
+        val timerTitleRest = "Rest of Bar"
+        val timerTitleTimer = "Timer"
         val timerNote: String = timer.toTimerHintNote(isShort = false)
 
         val finishedTextTitle = "Finished Emoji"
@@ -79,7 +81,6 @@ class GoalFormVm(
         ): GoalFormData {
             val noteValidated: String = note.trim()
             val tf: TextFeatures = noteValidated.textFeatures().copy(
-                timer = timer,
                 checklistsDb = checklistsDb,
                 shortcutsDb = shortcutsDb,
             )
@@ -95,6 +96,7 @@ class GoalFormVm(
                 period = period,
                 finishText = finishedText.trim(),
                 isEntireActivity = isEntireActivity,
+                timer = timer,
             )
         }
     }
@@ -107,6 +109,7 @@ class GoalFormVm(
         val period: GoalDb.Period?
         val seconds: Int
         val finishedText: String
+        val timer: Int
         when (strategy) {
             is GoalFormStrategy.NewFormData -> {
                 tf = "".textFeatures()
@@ -114,6 +117,7 @@ class GoalFormVm(
                 period = null
                 seconds = 3 * 3_600
                 finishedText = "👍"
+                timer = 0
             }
             is GoalFormStrategy.EditFormData -> {
                 val formData: GoalFormData = strategy.initGoalFormData
@@ -122,6 +126,7 @@ class GoalFormVm(
                 period = formData.period
                 seconds = formData.seconds
                 finishedText = formData.finishText
+                timer = formData.timer
             }
         }
         state = MutableStateFlow(
@@ -131,7 +136,7 @@ class GoalFormVm(
                 isEntireActivity = isEntireActivity,
                 period = period,
                 seconds = seconds,
-                timer = tf.timer ?: (45 * 60),
+                timer = timer,
                 finishedText = finishedText,
                 checklistsDb = tf.checklistsDb,
                 shortcutsDb = tf.shortcutsDb,
