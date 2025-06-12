@@ -60,7 +60,6 @@ class HomeVm : Vm<HomeVm.State>() {
             listOf()
         else Cache.activitiesDbSorted
             .map { activityDb ->
-                val activityName = activityDb.name.textFeatures().textNoFeatures
                 activityDb.getGoalsDbCached()
                     .filter { it.buildPeriod().isToday() }
                     .map { goalDb ->
@@ -99,10 +98,7 @@ class HomeVm : Vm<HomeVm.State>() {
                             goalDb = goalDb,
                             goalTf = goalTf,
                             activityDb = activityDb,
-                            textLeft = prepGoalTextLeft(
-                                note = goalTf.textNoFeatures.takeIf { it.isNotBlank() } ?: activityName,
-                                secondsLeft = totalSeconds,
-                            ),
+                            totalSeconds = totalSeconds,
                             textRight = textRight,
                             ratio = totalSeconds.limitMax(goalDb.seconds).toFloat() / goalDb.seconds.toFloat(),
                         )
@@ -308,15 +304,28 @@ class HomeVm : Vm<HomeVm.State>() {
         val goalDb: GoalDb,
         val goalTf: TextFeatures,
         val activityDb: ActivityDb,
-        val textLeft: String,
+        val totalSeconds: Int,
         val textRight: String,
         val ratio: Float,
     ) {
 
         val bgColor: ColorRgba = activityDb.colorRgba
 
+        val textLeft = prepGoalTextLeft(
+            note = goalTf.textNoFeatures,
+            secondsLeft = totalSeconds,
+        )
+
         fun startInterval() {
-            val timer: Int = goalTf.timer ?: (45 * 60)
+            val timer: Int = run {
+                val goalTimer = goalDb.timer
+                if (goalTimer > 0)
+                    return@run goalTimer
+                val secondsLeft: Int = goalDb.seconds - totalSeconds
+                if (secondsLeft > 0)
+                    return@run secondsLeft
+                45 * 60
+            }
             val noteTf: TextFeatures =
                 goalDb.note.textFeatures().copy(goalDb = goalDb)
             launchExIo {
