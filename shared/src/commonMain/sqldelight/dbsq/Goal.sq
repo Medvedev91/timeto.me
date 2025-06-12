@@ -7,7 +7,8 @@ CREATE TABLE GoalSq (
     period_json TEXT NOT NULL,
     note TEXT NOT NULL,
     finish_text TEXT NOT NULL,
-    home_button_sort TEXT NOT NULL
+    home_button_sort TEXT NOT NULL,
+    is_entire_activity INTEGER AS Int NOT NULL
 );
 
 --
@@ -22,9 +23,11 @@ FROM GoalSq;
 
 insert:
 INSERT INTO GoalSq
-(activity_id, seconds, period_json, note, finish_text, home_button_sort)
+(activity_id, seconds, period_json,
+ note, finish_text, home_button_sort,
+ is_entire_activity)
 VALUES
-(?, ?, ?, ?, ?, ?);
+(?, ?, ?, ?, ?, ?, ?);
 
 insertSq:
 INSERT INTO GoalSq
@@ -36,7 +39,8 @@ VALUES ?;
 updateById:
 UPDATE GoalSq
 SET activity_id=?, seconds=?, period_json=?,
-    note=?, finish_text=?, home_button_sort=?
+    note=?, finish_text=?, home_button_sort=?,
+    is_entire_activity=?
 WHERE id = ?;
 
 updateHomeButtonSortById:
