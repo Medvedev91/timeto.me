@@ -317,11 +317,13 @@ class HomeVm : Vm<HomeVm.State>() {
 
         fun startInterval() {
             val timer: Int = goalTf.timer ?: (45 * 60)
+            val noteTf: TextFeatures =
+                goalDb.note.textFeatures().copy(goalDb = goalDb)
             launchExIo {
                 IntervalDb.insertWithValidation(
                     timer = timer,
                     activityDb = activityDb,
-                    note = goalDb.note,
+                    note = noteTf.textWithFeatures(),
                 )
             }
         }
