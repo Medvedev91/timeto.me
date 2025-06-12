@@ -254,8 +254,18 @@ data class ActivityDb(
                 pomodoro_timer = pomodoroTimer,
                 timer_hints = timerHints.toTimerHintsDb(),
             )
-            GoalDb.deleteByActivityDbSync(activityDb)
-            GoalDb.insertManySync(activityDb, goalFormsData)
+
+            // Goals
+            val currentGoals: List<GoalDb> = GoalDb.selectAllSync().filter { it.activity_id == id }
+            val goalFormsIds: Set<Int> = goalFormsData.mapNotNull { it.goalDb?.id }.toSet()
+            currentGoals.filter { it.id !in goalFormsIds }.forEach { it.deleteSync() }
+            goalFormsData.forEach { goalFormData ->
+                val goalDb: GoalDb? = goalFormData.goalDb
+                if (goalDb != null)
+                    goalDb.updateSync(goalFormData)
+                else
+                    GoalDb.insertSync(this@ActivityDb, goalFormData)
+            }
         }
     }
 
