@@ -114,6 +114,10 @@ data class GoalDb(
     fun getActivityDbCached(): ActivityDb =
         Cache.getActivityDbByIdOrNull(activity_id)!!
 
+    fun deleteSync() {
+        db.goalQueries.deleteById(id)
+    }
+
     //
     // Backupable Item
 
