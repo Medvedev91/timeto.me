@@ -20,6 +20,7 @@ data class GoalDb(
     val note: String,
     val finish_text: String,
     val home_button_sort: String,
+    val is_entire_activity: Int,
 ) : Backupable__Item {
 
     companion object : Backupable__Holder {
@@ -43,6 +44,7 @@ data class GoalDb(
                     note = goalFormData.note.trim(),
                     finish_text = goalFormData.finishText.trim(),
                     home_button_sort = "",
+                    is_entire_activity = goalFormData.isEntireActivity.toInt10(),
                 )
             }
         }
@@ -68,10 +70,16 @@ data class GoalDb(
                     note = j.getString(4),
                     finish_text = j.getString(5),
                     home_button_sort = j.getString(6),
+                    is_entire_activity = j.getInt(7),
                 )
             )
         }
     }
+
+    ///
+
+    val isEntireActivity: Boolean =
+        is_entire_activity.toBoolean10()
 
     suspend fun updateHomeButtonSort(
         homeButtonSort: HomeButtonSort,
@@ -96,6 +104,7 @@ data class GoalDb(
     override fun backupable__backup(): JsonElement = listOf(
         id, activity_id, seconds, period_json,
         note, finish_text, home_button_sort,
+        is_entire_activity,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
@@ -108,6 +117,7 @@ data class GoalDb(
             note = j.getString(4),
             finish_text = j.getString(5),
             home_button_sort = j.getString(6),
+            is_entire_activity = j.getInt(7),
         )
     }
 
@@ -214,4 +224,5 @@ private fun GoalSq.toDb() = GoalDb(
     note = note,
     finish_text = finish_text,
     home_button_sort = home_button_sort,
+    is_entire_activity = is_entire_activity,
 )
