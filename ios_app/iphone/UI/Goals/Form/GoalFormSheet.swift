@@ -15,7 +15,8 @@ struct GoalFormSheet: View {
                 vm: vm,
                 state: state,
                 strategy: strategy,
-                note: state.note
+                note: state.note,
+                isEntireActivity: state.isEntireActivity
             )
         }
     }
@@ -28,6 +29,7 @@ private struct GoalFormSheetInner: View {
     let strategy: GoalFormStrategy
     
     @State var note: String
+    @State var isEntireActivity: Bool
     
     ///
     
@@ -45,6 +47,17 @@ private struct GoalFormSheetInner: View {
                 )
                 .onChange(of: note) { _, new in
                     vm.setNote(newNote: new)
+                }
+            }
+            
+            Section {
+                
+                Toggle(
+                    state.isEntireActivityNote,
+                    isOn: $isEntireActivity
+                )
+                .onChange(of: isEntireActivity) { _, new in
+                    vm.setIsEntireActivity(newIsEntireActivity: new)
                 }
             }
             
