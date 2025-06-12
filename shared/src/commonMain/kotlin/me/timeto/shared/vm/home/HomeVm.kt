@@ -329,6 +329,14 @@ class HomeVm : Vm<HomeVm.State>() {
             val noteTf: TextFeatures =
                 goalDb.note.textFeatures().copy(goalDb = goalDb)
             launchExIo {
+                TaskDb.selectAsc()
+                    .filter { taskDb ->
+                        val tf = taskDb.text.textFeatures()
+                        taskDb.isToday && (tf.paused != null) && (tf.goalDb?.id == goalDb.id)
+                    }
+                    .forEach { taskDb ->
+                        taskDb.delete()
+                    }
                 IntervalDb.insertWithValidation(
                     timer = timer,
                     activityDb = activityDb,
