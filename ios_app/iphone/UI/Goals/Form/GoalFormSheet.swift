@@ -16,7 +16,8 @@ struct GoalFormSheet: View {
                 state: state,
                 strategy: strategy,
                 note: state.note,
-                isEntireActivity: state.isEntireActivity
+                isEntireActivity: state.isEntireActivity,
+                isTimerRestOfBar: state.timer == 0
             )
         }
     }
@@ -30,6 +31,7 @@ private struct GoalFormSheetInner: View {
     
     @State var note: String
     @State var isEntireActivity: Bool
+    @State var isTimerRestOfBar: Bool
     
     ///
     
@@ -103,31 +105,6 @@ private struct GoalFormSheetInner: View {
                         .interactiveDismissDisabled()
                     }
                 )
-            }
-            
-            Section {
-                
-                NavigationLinkSheet(
-                    label: {
-                        HStack {
-                            Text(state.timerTitle)
-                            Spacer()
-                            Text(state.timerNote)
-                                .foregroundColor(.secondary)
-                        }
-                    },
-                    sheet: {
-                        TimerSheet(
-                            title: state.timerTitle,
-                            doneTitle: "Done",
-                            initSeconds: state.timer.toInt(),
-                            onDone: { newTimer in
-                                vm.setTimer(newTimer: newTimer.toInt32())
-                            }
-                        )
-                        .interactiveDismissDisabled()
-                    }
-                )
                 
                 NavigationLinkSheet(
                     label: {
@@ -145,6 +122,46 @@ private struct GoalFormSheetInner: View {
                         )
                     }
                 )
+            }
+            
+            Section(state.timerHeader) {
+                
+                Toggle(
+                    state.timerTitleRest,
+                    isOn: $isTimerRestOfBar
+                )
+                .onChange(of: state.timer) { _, new in
+                    withAnimation {
+                        isTimerRestOfBar = (new == 0)
+                    }
+                }
+                .onChange(of: isTimerRestOfBar) { _, new in
+                    vm.setTimer(newTimer: new ? 0 : (45 * 60))
+                }
+                
+                if !isTimerRestOfBar {
+                    NavigationLinkSheet(
+                        label: {
+                            HStack {
+                                Text(state.timerTitleTimer)
+                                Spacer()
+                                Text(state.timerNote)
+                                    .foregroundColor(.secondary)
+                            }
+                        },
+                        sheet: {
+                            TimerSheet(
+                                title: state.timerTitleTimer,
+                                doneTitle: "Done",
+                                initSeconds: state.timer.toInt(),
+                                onDone: { newTimer in
+                                    vm.setTimer(newTimer: newTimer.toInt32())
+                                }
+                            )
+                            .interactiveDismissDisabled()
+                        }
+                    )
+                }
             }
             
             Section {
