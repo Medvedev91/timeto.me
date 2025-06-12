@@ -108,6 +108,21 @@ data class GoalDb(
         )
     }
 
+    fun updateSync(
+        goalFormData: GoalFormData,
+    ) {
+        db.goalQueries.updateById(
+            activity_id = activity_id,
+            seconds = goalFormData.seconds,
+            period_json = goalFormData.period.toJson().toString(),
+            note = goalFormData.note.trim(),
+            finish_text = goalFormData.finishText.trim(),
+            home_button_sort = "",
+            is_entire_activity = goalFormData.isEntireActivity.toInt10(),
+            id = id,
+        )
+    }
+
     fun buildPeriod(): Period =
         Period.fromJson(Json.parseToJsonElement(period_json).jsonObject)
 
