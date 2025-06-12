@@ -1,3 +1,4 @@
 import kotlin.Int;
 
 ALTER TABLE GoalSq ADD is_entire_activity INTEGER AS Int NOT NULL DEFAULT 0;
+ALTER TABLE GoalSq ADD timer INTEGER AS Int NOT NULL DEFAULT 0;

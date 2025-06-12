@@ -85,6 +85,7 @@ internal fun initKmp(
             IntColumnAdapter,
             IntColumnAdapter,
             IntColumnAdapter,
+            IntColumnAdapter,
         ),
     )
     SystemInfo.instance = systemInfo
