@@ -116,7 +116,9 @@ data class ActivityDb(
                 )
                 db.activityQueries.insert(activitySQ)
                 val activityDb: ActivityDb = activitySQ.toDb()
-                GoalDb.insertManySync(activityDb, goalFormsData)
+                goalFormsData.forEach { goalFormData ->
+                    GoalDb.insertSync(activityDb, goalFormData)
+                }
                 activityDb
             }
         }

@@ -35,23 +35,6 @@ data class GoalDb(
         fun selectAllFlow(): Flow<List<GoalDb>> =
             db.goalQueries.selectAll().asListFlow { toDb() }
 
-        fun insertManySync(
-            activityDb: ActivityDb,
-            goalFormsData: List<GoalFormData>,
-        ) {
-            goalFormsData.forEach { goalFormData ->
-                db.goalQueries.insert(
-                    activity_id = activityDb.id,
-                    seconds = goalFormData.seconds,
-                    period_json = goalFormData.period.toJson().toString(),
-                    note = goalFormData.note.trim(),
-                    finish_text = goalFormData.finishText.trim(),
-                    home_button_sort = "",
-                    is_entire_activity = goalFormData.isEntireActivity.toInt10(),
-                )
-            }
-        }
-
         fun insertSync(
             activityDb: ActivityDb,
             goalFormData: GoalFormData,
