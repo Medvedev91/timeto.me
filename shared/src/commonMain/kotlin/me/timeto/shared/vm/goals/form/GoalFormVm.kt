@@ -19,6 +19,7 @@ class GoalFormVm(
     data class State(
         val strategy: GoalFormStrategy,
         val note: String,
+        val isEntireActivity: Boolean,
         val period: GoalDb.Period?,
         val seconds: Int,
         val timer: Int,
@@ -37,7 +38,9 @@ class GoalFormVm(
             is GoalFormStrategy.EditFormData -> "Done"
         }
 
-        val notePlaceholder = "Note (optional)"
+        val notePlaceholder = "Note"
+
+        val isEntireActivityNote = "Account Entire Activity"
 
         val periodTitle = "Period"
         val periodNote: String = period?.note() ?: "None"
@@ -80,6 +83,8 @@ class GoalFormVm(
                 checklistsDb = checklistsDb,
                 shortcutsDb = shortcutsDb,
             )
+            if (tf.textNoFeatures.isBlank())
+                throw UiException("Empty note")
             if (period == null)
                 throw UiException("Period not selected")
 
@@ -89,6 +94,7 @@ class GoalFormVm(
                 seconds = seconds,
                 period = period,
                 finishText = finishedText.trim(),
+                isEntireActivity = isEntireActivity,
             )
         }
     }
@@ -97,12 +103,14 @@ class GoalFormVm(
 
     init {
         val tf: TextFeatures
+        val isEntireActivity: Boolean
         val period: GoalDb.Period?
         val seconds: Int
         val finishedText: String
         when (strategy) {
             is GoalFormStrategy.NewFormData -> {
                 tf = "".textFeatures()
+                isEntireActivity = false
                 period = null
                 seconds = 3 * 3_600
                 finishedText = "👍"
@@ -110,6 +118,7 @@ class GoalFormVm(
             is GoalFormStrategy.EditFormData -> {
                 val formData: GoalFormData = strategy.initGoalFormData
                 tf = formData.note.textFeatures()
+                isEntireActivity = formData.isEntireActivity
                 period = formData.period
                 seconds = formData.seconds
                 finishedText = formData.finishText
@@ -119,6 +128,7 @@ class GoalFormVm(
             State(
                 strategy = strategy,
                 note = tf.textNoFeatures,
+                isEntireActivity = isEntireActivity,
                 period = period,
                 seconds = seconds,
                 timer = tf.timer ?: (45 * 60),
@@ -133,6 +143,10 @@ class GoalFormVm(
 
     fun setNote(newNote: String) {
         state.update { it.copy(note = newNote) }
+    }
+
+    fun setIsEntireActivity(newIsEntireActivity: Boolean) {
+        state.update { it.copy(isEntireActivity = newIsEntireActivity) }
     }
 
     fun setPeriod(newPeriod: GoalDb.Period) {
