@@ -52,6 +52,21 @@ data class GoalDb(
             }
         }
 
+        fun insertSync(
+            activityDb: ActivityDb,
+            goalFormData: GoalFormData,
+        ) {
+            db.goalQueries.insert(
+                activity_id = activityDb.id,
+                seconds = goalFormData.seconds,
+                period_json = goalFormData.period.toJson().toString(),
+                note = goalFormData.note.trim(),
+                finish_text = goalFormData.finishText.trim(),
+                home_button_sort = "",
+                is_entire_activity = goalFormData.isEntireActivity.toInt10(),
+            )
+        }
+
         fun deleteByActivityDbSync(activityDb: ActivityDb) {
             db.goalQueries.deleteByActivityId(activity_id = activityDb.id)
         }
