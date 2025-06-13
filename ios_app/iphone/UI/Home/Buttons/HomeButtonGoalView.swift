@@ -5,6 +5,10 @@ struct HomeButtonGoalView: View {
     
     let goal: HomeButtonType.Goal
     
+    ///
+    
+    @Environment(Navigation.self) private var navigation
+    
     var body: some View {
         
         Button(
@@ -51,5 +55,17 @@ struct HomeButtonGoalView: View {
                 .frame(height: HomeScreen__itemHeight, alignment: .center)
             }
         )
+        .contextMenu {
+            Button(
+                action: {
+                    navigation.fullScreen {
+                        HomeSettingsButtonsFullScreen()
+                    }
+                },
+                label: {
+                    Label("Edit Home Screen", systemImage: "gear")
+                }
+            )
+        }
     }
 }
