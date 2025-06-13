@@ -1,6 +1,5 @@
 package me.timeto.shared.db
 
-import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
 import dbsq.ActivitySQ
 import kotlinx.coroutines.flow.Flow
@@ -37,7 +36,7 @@ data class ActivityDb(
         //
         // Select
 
-        fun anyChangeFlow(): Flow<Query<Int>> =
+        fun anyChangeFlow(): Flow<*> =
             db.activityQueries.anyChange().asFlow()
 
         private fun selectSortedSync(): List<ActivityDb> =
