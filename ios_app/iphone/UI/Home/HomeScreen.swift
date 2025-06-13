@@ -113,58 +113,7 @@ private struct HomeScreenInner: View {
                 }
             }
             
-            ForEachIndexed(
-                state.goalBarsUi,
-                content: { idx, goalBarUi in
-                    
-                    Button(
-                        action: {
-                            goalBarUi.startInterval()
-                        },
-                        label: {
-                            
-                            ZStack {
-                                
-                                ZStack {
-                                    
-                                    GeometryReader { geometry in
-                                        VStack {
-                                            ZStack {
-                                            }
-                                            .frame(maxHeight: .infinity)
-                                            .frame(width: geometry.size.width * Double(goalBarUi.ratio))
-                                            .background(goalBarUi.bgColor.toColor())
-                                            Spacer()
-                                        }
-                                    }
-                                    .fillMaxWidth()
-                                    .clipShape(roundedShape)
-                                    
-                                    HStack {
-                                        
-                                        Text(goalBarUi.textLeft)
-                                            .padding(.leading, HomeScreen__itemCircleHPadding)
-                                            .foregroundColor(.white)
-                                            .font(.system(size: HomeScreen__itemCircleFontSize, weight: HomeScreen__itemCircleFontWeight))
-                                        
-                                        Spacer()
-                                        
-                                        Text(goalBarUi.textRight)
-                                            .padding(.trailing, HomeScreen__itemCircleHPadding)
-                                            .foregroundColor(.white)
-                                            .font(.system(size: HomeScreen__itemCircleFontSize, weight: HomeScreen__itemCircleFontWeight))
-                                    }
-                                }
-                                .frame(height: HomeScreen__itemCircleHeight, alignment: .center)
-                                .background(roundedShape.fill(homeFgColor))
-                                .padding(.horizontal, H_PADDING)
-                            }
-                            .frame(height: HomeScreen__itemHeight, alignment: .center)
-                            .offset(y: 1)
-                        }
-                    )
-                }
-            )
+            HomeButtonsView()
             
             Padding(vertical: 10.0)
         }
