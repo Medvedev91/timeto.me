@@ -1,5 +1,6 @@
 package me.timeto.shared.db
 
+import app.cash.sqldelight.coroutines.asFlow
 import dbsq.GoalSq
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.*
@@ -25,6 +26,9 @@ data class GoalDb(
 ) : Backupable__Item {
 
     companion object : Backupable__Holder {
+
+        fun anyChangeFlow(): Flow<*> =
+            db.goalQueries.anyChange().asFlow()
 
         suspend fun selectAll(): List<GoalDb> = dbIo {
             selectAllSync()
