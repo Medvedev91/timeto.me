@@ -31,4 +31,14 @@ data class HomeButtonUi(
             )
         }
     }
+
+    fun recalculateUi(): HomeButtonUi {
+        when (type) {
+            is HomeButtonType.Goal -> {
+                val newType: HomeButtonType.Goal =
+                    type.recalculateUiIfNeeded() ?: return this
+                return this.copy(type = newType)
+            }
+        }
+    }
 }
