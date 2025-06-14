@@ -16,6 +16,7 @@ struct RepeatingFormSheet: View {
                 state: state,
                 text: state.text,
                 activityDb: state.activityDb,
+                goalDb: state.goalDb,
                 isImportant: state.isImportant
             )
         }
@@ -29,6 +30,7 @@ private struct RepeatingFormSheetInner: View {
     
     @State var text: String
     @State var activityDb: ActivityDb?
+    @State var goalDb: GoalDb?
     @State var isImportant: Bool
     
     ///
@@ -139,6 +141,18 @@ private struct RepeatingFormSheetInner: View {
             }
             
             Section {
+                
+                Picker(state.goalTitle, selection: $goalDb) {
+                    Text("None")
+                        .tag(nil as GoalDb?) // Support optional (nil) selection
+                    ForEach(state.goalsUi, id: \.goalDb) { goalUi in
+                        Text(goalUi.title)
+                            .tag(goalUi.goalDb as GoalDb?) // Support optional (nil) selection
+                    }
+                }
+                .onChange(of: goalDb) { _, newGoalDb in
+                    vm.setGoal(newGoalDb: newGoalDb)
+                }
                 
                 NavigationLinkSheet(
                     label: {
