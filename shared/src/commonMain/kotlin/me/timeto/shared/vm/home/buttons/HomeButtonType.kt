@@ -26,12 +26,12 @@ sealed class HomeButtonType {
         val elapsedSeconds: Int =
             intervalsSeconds + (activeTimeFrom?.let { time() - it } ?: 0)
 
-        val textLeft: String = buildTextLeft(
+        val textLeft: String = buildGoalTextLeft(
             note = goalTf.textNoFeatures,
             elapsedSeconds = elapsedSeconds,
         )
 
-        val textRight: String = buildTextRight(
+        val textRight: String = buildGoalTextRight(
             goalDb = goalDb,
             elapsedSeconds = elapsedSeconds,
         )
@@ -78,7 +78,7 @@ sealed class HomeButtonType {
     }
 }
 
-private fun buildTextLeft(
+private fun buildGoalTextLeft(
     note: String,
     elapsedSeconds: Int,
 ): String {
@@ -89,7 +89,7 @@ private fun buildTextLeft(
     return "$note ${secondsToUi.toTimerHintNote(isShort = false)}"
 }
 
-private fun buildTextRight(
+private fun buildGoalTextRight(
     goalDb: GoalDb,
     elapsedSeconds: Int,
 ): String {
