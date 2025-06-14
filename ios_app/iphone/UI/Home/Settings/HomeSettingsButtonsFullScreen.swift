@@ -159,6 +159,16 @@ private struct ButtonView<Content>: View where Content: View {
     var body: some View {
         ZStack {
             content()
+            if let goalType = buttonUi.type as? HomeSettingsButtonType.Goal {
+                HStack {
+                    Text(goalType.note)
+                        .foregroundColor(.white)
+                        .font(.system(size: HomeScreen__itemCircleFontSize, weight: HomeScreen__itemCircleFontWeight))
+                        .lineLimit(1)
+                    Spacer()
+                }
+                .padding(.horizontal, 12)
+            }
         }
         .fillMaxWidth()
         .frame(height: barHeight)
