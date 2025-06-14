@@ -76,7 +76,7 @@ class HomeSettingsButtonsVm(
         val buttonsData: ButtonsData = state.value.buttonsData
 
         val nearestButtonUi: ButtonUi = buttonsData.emptyButtonsUi.minBy { emptyButtonUi ->
-            (emptyButtonUi.initX - x).absoluteValue + (emptyButtonUi.initY - y).absoluteValue
+            (emptyButtonUi.offsetX - x).absoluteValue + (emptyButtonUi.offsetY - y).absoluteValue
         }
 
         if ((nearestButtonUi.sort.cellIdx + buttonUi.sort.size) > homeButtonsCellsCount)
@@ -156,11 +156,11 @@ class HomeSettingsButtonsVm(
             .flatten()
 
         val nearestLeftEmptyButtonUi: ButtonUi = buttonsData.emptyButtonsUi.minBy { emptyButtonUi ->
-            (emptyButtonUi.initX - (buttonUi.initX - left)).absoluteValue
+            (emptyButtonUi.offsetX - (buttonUi.offsetX - left)).absoluteValue
         }
 
         val nearestRightEmptyButtonUi: ButtonUi = buttonsData.emptyButtonsUi.minBy { emptyButtonUi ->
-            (emptyButtonUi.initX - (buttonUi.initX + buttonUi.fullWidth - buttonUi.cellWidth + right)).absoluteValue
+            (emptyButtonUi.offsetX - (buttonUi.offsetX + buttonUi.fullWidth - buttonUi.cellWidth + right)).absoluteValue
         }
 
         val hoverCellIds: IntRange =

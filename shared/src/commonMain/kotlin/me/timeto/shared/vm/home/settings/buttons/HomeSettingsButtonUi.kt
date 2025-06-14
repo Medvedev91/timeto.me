@@ -19,10 +19,10 @@ data class HomeSettingsButtonUi(
     @OptIn(ExperimentalUuidApi::class)
     val id: String = Uuid.random().toString()
 
-    val initX: Float =
+    val offsetX: Float =
         (sort.cellIdx * cellWidth) + (sort.cellIdx * spacing)
 
-    val initY: Float =
+    val offsetY: Float =
         sort.rowIdx * rowHeight
 
     val fullWidth: Float =

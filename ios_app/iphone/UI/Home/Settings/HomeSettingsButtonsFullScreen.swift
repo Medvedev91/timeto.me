@@ -153,7 +153,7 @@ private struct ButtonView<Content>: View where Content: View {
     @ViewBuilder var content: () -> Content
     
     private var offset: CGPoint {
-        CGPoint(x: CGFloat(buttonUi.initX), y: CGFloat(buttonUi.initY))
+        CGPoint(x: CGFloat(buttonUi.offsetX), y: CGFloat(buttonUi.offsetY))
     }
     
     var body: some View {
@@ -199,8 +199,8 @@ private struct DragButtonView: View {
     @State private var dragLocalOffset = CGPoint(x: 0, y: 0)
     private var dragGlobalOffset: CGPoint {
         CGPoint(
-            x: dragLocalOffset.x + CGFloat(buttonUi.initX),
-            y: dragLocalOffset.y + CGFloat(buttonUi.initY)
+            x: dragLocalOffset.x + CGFloat(buttonUi.offsetX),
+            y: dragLocalOffset.y + CGFloat(buttonUi.offsetY)
         )
     }
     
