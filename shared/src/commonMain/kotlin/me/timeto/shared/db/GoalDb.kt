@@ -107,7 +107,7 @@ data class GoalDb(
             period_json = goalFormData.period.toJson().toString(),
             note = goalFormData.note.trim(),
             finish_text = goalFormData.finishText.trim(),
-            home_button_sort = "",
+            home_button_sort = home_button_sort,
             is_entire_activity = goalFormData.isEntireActivity.toInt10(),
             timer = goalFormData.timer,
             id = id,
