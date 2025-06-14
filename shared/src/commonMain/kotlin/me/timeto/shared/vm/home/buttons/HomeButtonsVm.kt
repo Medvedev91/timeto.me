@@ -86,10 +86,13 @@ class HomeButtonsVm(
 
             val goalBarsUi: List<DayBarsUi.BarUi> = allBarsUi.barsUi
                 .filter { barUi ->
-                    if (goalDb.isEntireActivity)
-                        (barUi.activityDb?.id == goalDb.activity_id)
-                    else
-                        barUi.intervalTf.goalDb?.id == goalDb.id
+                    // We can attach goal for any interval,
+                    // no matter what the activity is.
+                    if (barUi.intervalTf.goalDb?.id == goalDb.id)
+                        return@filter true
+                    if (goalDb.isEntireActivity && (barUi.activityDb?.id == goalDb.activity_id))
+                        return@filter true
+                    false
                 }
 
             val intervalsSeconds: Int = goalBarsUi.sumOf { it.seconds }
