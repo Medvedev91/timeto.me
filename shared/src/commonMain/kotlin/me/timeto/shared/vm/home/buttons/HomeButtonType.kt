@@ -104,13 +104,18 @@ private fun buildGoalTextRight(
     elapsedSeconds: Int,
     sort: HomeButtonSort,
 ): String {
+    // Not Finished
     val timeLeft: Int = goalDb.seconds - elapsedSeconds
     if (timeLeft == 0)
         return goalDb.finish_text
     if (timeLeft > 0)
         return buildGoalTextRightTimer(timeLeft, sort)
-    val timerString = buildGoalTextRightTimer(timeLeft * -1, sort)
-    val isShort: Boolean = sort.size <= 4
+    // Finished
+    val timeLeftAbs: Int = timeLeft * -1
+    if (timeLeftAbs < 60)
+        return goalDb.finish_text
+    val timerString = buildGoalTextRightTimer(timeLeftAbs, sort)
+    val isShort: Boolean = sort.size <= 3
     return "+${if (isShort) "" else " "}${timerString}${if (isShort) "" else " ${goalDb.finish_text}"}"
 }
 
