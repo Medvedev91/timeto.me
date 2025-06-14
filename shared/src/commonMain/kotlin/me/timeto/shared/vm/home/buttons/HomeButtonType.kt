@@ -38,6 +38,7 @@ sealed class HomeButtonType {
         val textRight: String = buildGoalTextRight(
             goalDb = goalDb,
             elapsedSeconds = elapsedSeconds,
+            sort = sort,
         )
 
         val progressRatio: Float =
@@ -95,17 +96,13 @@ private fun buildGoalTextLeft(
         return "$note ${elapsedSeconds}${if (sort.size >= 4) " sec" else "s"}"
     if (elapsedSeconds < 3_600)
         return "$note ${elapsedSeconds / 60}${if (sort.size >= 4) " min" else "m"}"
-    val (h, m, _) = elapsedSeconds.toHms()
-    val timeString: String = when {
-        m == 0 -> "${h}h"
-        else -> "${h}:${m.toString().padStart(2, '0')}"
-    }
-    return "$note $timeString"
+    return "$note ${prepTimerStringFor1hPlus(elapsedSeconds)}"
 }
 
 private fun buildGoalTextRight(
     goalDb: GoalDb,
     elapsedSeconds: Int,
+    sort: HomeButtonSort,
 ): String {
     val timeLeft: Int = goalDb.seconds - elapsedSeconds
     if (timeLeft > 0)
@@ -113,4 +110,12 @@ private fun buildGoalTextRight(
     if (timeLeft == 0)
         return goalDb.finish_text
     return "+ ${(timeLeft * -1).toTimerHintNote(isShort = false)} ${goalDb.finish_text}"
+}
+
+private fun prepTimerStringFor1hPlus(seconds: Int): String {
+    val (h, m, _) = seconds.toHms()
+    return when {
+        m == 0 -> "${h}h"
+        else -> "${h}:${m.toString().padStart(2, '0')}"
+    }
 }
