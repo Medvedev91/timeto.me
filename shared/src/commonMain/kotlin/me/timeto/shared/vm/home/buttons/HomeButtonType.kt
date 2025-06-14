@@ -116,7 +116,7 @@ private fun buildGoalTextRight(
         return goalDb.finish_text
     val timerString = buildGoalTextRightTimer(timeLeftAbs, sort)
     val isShort: Boolean = sort.size <= 3
-    return "+${if (isShort) "" else " "}${timerString}${if (isShort) "" else " ${goalDb.finish_text}"}"
+    return "+${timerString}${if (isShort) "" else " ${goalDb.finish_text}"}"
 }
 
 private fun buildGoalTextRightTimer(
