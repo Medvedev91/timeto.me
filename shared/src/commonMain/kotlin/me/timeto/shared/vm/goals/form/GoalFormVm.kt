@@ -40,7 +40,7 @@ class GoalFormVm(
 
         val notePlaceholder = "Note"
 
-        val isEntireActivityNote = "Account Entire Activity"
+        val isEntireActivityNote = "Track Entire Activity"
 
         val periodTitle = "Period"
         val periodNote: String = period?.note() ?: "None"
