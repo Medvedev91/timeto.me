@@ -1,6 +1,7 @@
 package me.timeto.shared.vm.home.buttons
 
 import me.timeto.shared.ColorRgba
+import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.db.GoalDb
 import me.timeto.shared.db.IntervalDb
@@ -10,6 +11,7 @@ import me.timeto.shared.limitMax
 import me.timeto.shared.textFeatures
 import me.timeto.shared.time
 import me.timeto.shared.timeMls
+import me.timeto.shared.toHms
 import me.timeto.shared.toTimerHintNote
 
 sealed class HomeButtonType {
@@ -20,6 +22,7 @@ sealed class HomeButtonType {
         val bgColor: ColorRgba,
         val intervalsSeconds: Int,
         val activeTimeFrom: Int?,
+        val sort: HomeButtonSort,
         val update: Long = timeMls(),
     ) : HomeButtonType() {
 
@@ -29,6 +32,7 @@ sealed class HomeButtonType {
         val textLeft: String = buildGoalTextLeft(
             note = goalTf.textNoFeatures,
             elapsedSeconds = elapsedSeconds,
+            sort = sort,
         )
 
         val textRight: String = buildGoalTextRight(
@@ -81,12 +85,22 @@ sealed class HomeButtonType {
 private fun buildGoalTextLeft(
     note: String,
     elapsedSeconds: Int,
+    sort: HomeButtonSort,
 ): String {
-    if (elapsedSeconds == 0)
+    if (elapsedSeconds <= 0)
         return note
-    val rem: Int = elapsedSeconds % 60
-    val secondsToUi: Int = if (rem == 0) elapsedSeconds else (elapsedSeconds + (60 - rem))
-    return "$note ${secondsToUi.toTimerHintNote(isShort = false)}"
+    if (sort.size <= 2)
+        return note
+    if (elapsedSeconds < 60)
+        return "$note ${elapsedSeconds}${if (sort.size >= 4) " sec" else "s"}"
+    if (elapsedSeconds < 3_600)
+        return "$note ${elapsedSeconds / 60}${if (sort.size >= 4) " min" else "m"}"
+    val (h, m, _) = elapsedSeconds.toHms()
+    val timeString: String = when {
+        m == 0 -> "${h}h"
+        else -> "${h}:${m.toString().padStart(2, '0')}"
+    }
+    return "$note $timeString"
 }
 
 private fun buildGoalTextRight(

@@ -105,17 +105,21 @@ class HomeButtonsVm(
                     lastBarUiWithActivity.timeFinish
                 else null
 
+            val sort: HomeButtonSort =
+                HomeButtonSort.parseOrDefault(goalDb.home_button_sort)
+
             val type = HomeButtonType.Goal(
                 goalDb = goalDb,
                 goalTf = goalDb.note.textFeatures(),
                 bgColor = activityDb.colorRgba,
                 intervalsSeconds = intervalsSeconds,
                 activeTimeFrom = activeTimeFrom,
+                sort = sort,
             )
 
             HomeButtonNoSorted(
                 type = type,
-                sort = HomeButtonSort.parseOrDefault(goalDb.home_button_sort),
+                sort = sort,
                 fullWidth = width,
                 rowHeight = rowHeight,
                 spacing = spacing,
