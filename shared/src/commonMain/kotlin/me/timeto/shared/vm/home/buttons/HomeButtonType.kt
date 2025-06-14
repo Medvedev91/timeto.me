@@ -105,11 +105,24 @@ private fun buildGoalTextRight(
     sort: HomeButtonSort,
 ): String {
     val timeLeft: Int = goalDb.seconds - elapsedSeconds
-    if (timeLeft > 0)
-        return timeLeft.toTimerHintNote(isShort = false)
     if (timeLeft == 0)
         return goalDb.finish_text
-    return "+ ${(timeLeft * -1).toTimerHintNote(isShort = false)} ${goalDb.finish_text}"
+    if (timeLeft > 0)
+        return buildGoalTextRightTimer(timeLeft, sort)
+    val timerString = buildGoalTextRightTimer(timeLeft * -1, sort)
+    val isShort: Boolean = sort.size <= 4
+    return "+${if (isShort) "" else " "}${timerString}${if (isShort) "" else " ${goalDb.finish_text}"}"
+}
+
+private fun buildGoalTextRightTimer(
+    seconds: Int,
+    sort: HomeButtonSort,
+): String {
+    if (seconds < 60)
+        return "${seconds}${if (sort.size >= 4) " sec" else "s"}"
+    if (seconds < 3_600)
+        return "${seconds / 60}${if (sort.size >= 4) " min" else ""}"
+    return prepTimerStringFor1hPlus(seconds)
 }
 
 private fun prepTimerStringFor1hPlus(seconds: Int): String {
