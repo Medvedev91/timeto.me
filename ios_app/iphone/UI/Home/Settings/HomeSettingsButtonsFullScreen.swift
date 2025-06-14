@@ -165,7 +165,7 @@ private struct ButtonView<Content>: View where Content: View {
                         .foregroundColor(.white)
                         .font(.system(size: HomeScreen__itemCircleFontSize, weight: HomeScreen__itemCircleFontWeight))
                         .lineLimit(1)
-                    Spacer()
+                        .textAlign(.center)
                 }
                 .padding(.horizontal, 12)
             }
