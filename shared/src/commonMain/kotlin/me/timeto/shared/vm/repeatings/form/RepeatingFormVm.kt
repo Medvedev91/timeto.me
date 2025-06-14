@@ -7,6 +7,7 @@ import me.timeto.shared.TextFeatures
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.ChecklistDb
+import me.timeto.shared.db.GoalDb
 import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.db.TaskDb
@@ -31,6 +32,7 @@ class RepeatingFormVm(
         val daytimeUi: DaytimeUi?,
         val activityDb: ActivityDb?,
         val timerSeconds: Int?,
+        val goalDb: GoalDb?,
         val checklistsDb: List<ChecklistDb>,
         val shortcutsDb: List<ShortcutDb>,
         val isImportant: Boolean,
@@ -55,6 +57,12 @@ class RepeatingFormVm(
         val timerNote: String =
             timerSeconds?.toTimerHintNote(isShort = false) ?: "Not Selected"
         val timerPickerSeconds: Int = timerSeconds ?: (45 * 60)
+
+        val goalTitle = "Goal"
+        val goalNote: String =
+            goalDb?.note?.textFeatures()?.textNoFeatures ?: "None"
+        val goalsUi: List<GoalUi> =
+            Cache.goalsDb.map { GoalUi(it) }
 
         val checklistsTitle = "Checklists"
         val checklistsNote: String =
@@ -81,6 +89,7 @@ class RepeatingFormVm(
                 daytimeUi = initRepeatingDb?.daytime?.let { DaytimeUi.byDaytime(it) },
                 activityDb = tf.activityDb,
                 timerSeconds = tf.timer,
+                goalDb = tf.goalDb,
                 checklistsDb = tf.checklistsDb,
                 shortcutsDb = tf.shortcutsDb,
                 isImportant = initRepeatingDb?.isImportant ?: false,
@@ -106,6 +115,10 @@ class RepeatingFormVm(
 
     fun setTimerSeconds(newTimerSeconds: Int) {
         state.update { it.copy(timerSeconds = newTimerSeconds) }
+    }
+
+    fun setGoal(newGoalDb: GoalDb?) {
+        state.update { it.copy(goalDb = newGoalDb) }
     }
 
     fun setChecklists(newChecklistsDb: List<ChecklistDb>) {
@@ -146,6 +159,7 @@ class RepeatingFormVm(
             val tf: TextFeatures = text.textFeatures().copy(
                 activityDb = activityDb,
                 timer = timerSeconds,
+                goalDb = state.goalDb,
                 checklistsDb = state.checklistsDb,
                 shortcutsDb = state.shortcutsDb,
             )
@@ -222,5 +236,12 @@ class RepeatingFormVm(
     ) {
         val title: String =
             activityDb.name.textFeatures().textNoFeatures
+    }
+
+    data class GoalUi(
+        val goalDb: GoalDb,
+    ) {
+        val title: String =
+            goalDb.note.textFeatures().textNoFeatures
     }
 }
