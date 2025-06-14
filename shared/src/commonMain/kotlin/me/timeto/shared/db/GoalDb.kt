@@ -12,6 +12,7 @@ import me.timeto.shared.getString
 import me.timeto.shared.toJsonArray
 import me.timeto.shared.UiException
 import me.timeto.shared.vm.goals.form.GoalFormData
+import me.timeto.shared.vm.home.buttons.homeButtonsCellsCount
 
 data class GoalDb(
     val id: Int,
@@ -50,7 +51,7 @@ data class GoalDb(
                 period_json = goalFormData.period.toJson().toString(),
                 note = goalFormData.note.trim(),
                 finish_text = goalFormData.finishText.trim(),
-                home_button_sort = "",
+                home_button_sort = HomeButtonSort(rowIdx = 999, cellIdx = 0, size = homeButtonsCellsCount).string,
                 is_entire_activity = goalFormData.isEntireActivity.toInt10(),
                 timer = goalFormData.timer,
             )
