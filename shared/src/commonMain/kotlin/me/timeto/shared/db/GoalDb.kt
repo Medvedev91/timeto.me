@@ -99,6 +99,12 @@ data class GoalDb(
         )
     }
 
+    suspend fun update(
+        goalFormData: GoalFormData,
+    ): Unit = dbIo {
+        updateSync(goalFormData)
+    }
+
     fun updateSync(
         goalFormData: GoalFormData,
     ) {
