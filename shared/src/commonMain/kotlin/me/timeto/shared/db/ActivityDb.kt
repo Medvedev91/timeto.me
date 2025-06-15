@@ -239,8 +239,6 @@ data class ActivityDb(
     ): Unit = dbIo {
         db.transaction {
             val activityDb: ActivityDb = this@ActivityDb
-            if (isOther())
-                throw UiException("It's impossible to change \"Other\" activity")
             val validatedName: String = validateName(name)
             val validatedEmoji: String = validateEmojiSync(emoji, exActivity = activityDb)
             db.activityQueries.updateById(
