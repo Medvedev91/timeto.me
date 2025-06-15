@@ -51,21 +51,21 @@ struct HomeButtonGoalView: View {
                     }
                     .frame(height: HomeScreen__itemCircleHeight, alignment: .center)
                     .background(roundedShape.fill(homeFgColor))
+                    .contextMenu {
+                        Button(
+                            action: {
+                                navigation.fullScreen {
+                                    HomeSettingsButtonsFullScreen()
+                                }
+                            },
+                            label: {
+                                Label("Edit Home Screen", systemImage: "gear")
+                            }
+                        )
+                    }
                 }
                 .frame(height: HomeScreen__itemHeight, alignment: .center)
             }
         )
-        .contextMenu {
-            Button(
-                action: {
-                    navigation.fullScreen {
-                        HomeSettingsButtonsFullScreen()
-                    }
-                },
-                label: {
-                    Label("Edit Home Screen", systemImage: "gear")
-                }
-            )
-        }
     }
 }
