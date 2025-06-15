@@ -32,6 +32,12 @@ data class HomeButtonUi(
         }
     }
 
+    ///
+
+    val id: String = when (type) {
+        is HomeButtonType.Goal -> "goal_${type.goalDb.id}"
+    }
+
     fun recalculateUi(): HomeButtonUi {
         when (type) {
             is HomeButtonType.Goal -> {
