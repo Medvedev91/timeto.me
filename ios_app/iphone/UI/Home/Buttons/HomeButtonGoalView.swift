@@ -52,16 +52,38 @@ struct HomeButtonGoalView: View {
                     .frame(height: HomeScreen__itemCircleHeight, alignment: .center)
                     .background(roundedShape.fill(homeFgColor))
                     .contextMenu {
-                        Button(
-                            action: {
-                                navigation.fullScreen {
-                                    HomeSettingsButtonsFullScreen()
+                        
+                        Section {
+                            
+                            Button(
+                                action: {
+                                    navigation.sheet {
+                                        GoalFormSheet(
+                                            strategy: GoalFormStrategy.EditGoal(
+                                                goalDb: goal.goalDb
+                                            )
+                                        )
+                                    }
+                                },
+                                label: {
+                                    Label("Edit", systemImage: "square.and.pencil")
                                 }
-                            },
-                            label: {
-                                Label("Edit Home Screen", systemImage: "gear")
-                            }
-                        )
+                            )
+                        }
+                        
+                        Section {
+                            
+                            Button(
+                                action: {
+                                    navigation.fullScreen {
+                                        HomeSettingsButtonsFullScreen()
+                                    }
+                                },
+                                label: {
+                                    Label("Home Screen Settings", systemImage: "gear")
+                                }
+                            )
+                        }
                     }
                 }
                 .frame(height: HomeScreen__itemHeight, alignment: .center)
