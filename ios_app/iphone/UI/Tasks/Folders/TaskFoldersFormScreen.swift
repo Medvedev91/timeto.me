@@ -90,16 +90,16 @@ private struct TaskFoldersFormScreenInner: View {
             }
         }
         .animateVmValue(
-            value: state.foldersDb,
-            state: $foldersDbAnimate,
+            vmValue: state.foldersDb,
+            swiftState: $foldersDbAnimate,
             enabled: withFoldersAnimation,
             onChange: {
                 withFoldersAnimation = true
             }
         )
         .animateVmValue(
-            value: state.tmrwButtonUi,
-            state: $tmrwButtonUiAnimation
+            vmValue: state.tmrwButtonUi,
+            swiftState: $tmrwButtonUiAnimation
         )
         .environment(\.editMode, $editMode)
         .myFormContentMargins()

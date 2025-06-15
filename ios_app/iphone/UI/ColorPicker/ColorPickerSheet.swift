@@ -206,6 +206,6 @@ private struct ColorCircleView: View {
             }
         )
         .frame(width: circleCellSize, height: circleCellSize)
-        .animateVmValue(value: colorItem.isSelected, state: $isSelectedAnim)
+        .animateVmValue(vmValue: colorItem.isSelected, swiftState: $isSelectedAnim)
     }
 }

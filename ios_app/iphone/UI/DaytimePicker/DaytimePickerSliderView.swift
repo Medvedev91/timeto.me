@@ -121,8 +121,8 @@ private struct SliderView: View {
                         Spacer()
                     }
                     .animateVmValue(
-                        value: circleOffset,
-                        state: $circleOffsetAnimation,
+                        vmValue: circleOffset,
+                        swiftState: $circleOffsetAnimation,
                         animation: .spring(response: 0.15)
                     )
                 }

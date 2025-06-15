@@ -62,7 +62,7 @@ private struct ShortcutsPickerSheetInner: View {
             }
             .listSectionSeparator(.hidden, edges: [.top, .bottom])
         }
-        .animateVmValue(value: state.shortcutsDbSorted, state: $animatedShortcutsDb)
+        .animateVmValue(vmValue: state.shortcutsDbSorted, swiftState: $animatedShortcutsDb)
         .listStyle(.plain)
         .interactiveDismissDisabled()
         .environment(\.editMode, $editMode)

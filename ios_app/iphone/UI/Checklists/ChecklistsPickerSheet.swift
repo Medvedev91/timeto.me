@@ -66,7 +66,7 @@ private struct ChecklistsPickerSheetInner: View {
                 }
                 .listSectionSeparator(.hidden, edges: [.top, .bottom])
             }
-            .animateVmValue(value: state.checklistsDbSorted, state: $animatedChecklistsDb)
+            .animateVmValue(vmValue: state.checklistsDbSorted, swiftState: $animatedChecklistsDb)
             .listStyle(.plain)
             .interactiveDismissDisabled()
             .environment(\.editMode, $editMode)

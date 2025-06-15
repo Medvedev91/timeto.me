@@ -51,7 +51,7 @@ private struct PrivacyScreenInner: View {
                 isOn: $isSendingReportsEnabled
             )
             .customListItem()
-            .animateVmValue(value: state.isSendingReportsEnabled, state: $isSendingReportsEnabled)
+            .animateVmValue(vmValue: state.isSendingReportsEnabled, swiftState: $isSendingReportsEnabled)
             .onChange(of: isSendingReportsEnabled) { _, newValue in
                 vm.setIsSendingReports(isEnabled: newValue)
             }
