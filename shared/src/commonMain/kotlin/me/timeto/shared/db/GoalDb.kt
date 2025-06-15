@@ -127,6 +127,10 @@ data class GoalDb(
     fun getActivityDbCached(): ActivityDb =
         Cache.getActivityDbByIdOrNull(activity_id)!!
 
+    suspend fun delete(): Unit = dbIo {
+        deleteSync()
+    }
+
     fun deleteSync() {
         db.goalQueries.deleteById(id)
     }
