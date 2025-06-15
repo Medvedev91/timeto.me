@@ -206,4 +206,10 @@ class GoalFormVm(
             }
         }
     }
+
+    fun deleteGoal(goalDb: GoalDb) {
+        launchExIo {
+            goalDb.delete()
+        }
+    }
 }
