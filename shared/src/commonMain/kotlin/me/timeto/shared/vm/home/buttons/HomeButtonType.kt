@@ -12,7 +12,6 @@ import me.timeto.shared.textFeatures
 import me.timeto.shared.time
 import me.timeto.shared.timeMls
 import me.timeto.shared.toHms
-import me.timeto.shared.toTimerHintNote
 
 sealed class HomeButtonType {
 
