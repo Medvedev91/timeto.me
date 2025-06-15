@@ -10,6 +10,7 @@ import me.timeto.shared.textFeatures
 import me.timeto.shared.toTimerHintNote
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
+import me.timeto.shared.launchExIo
 import me.timeto.shared.vm.Vm
 
 class GoalFormVm(
@@ -31,11 +32,13 @@ class GoalFormVm(
         val title: String = when (strategy) {
             is GoalFormStrategy.NewFormData -> "New Goal"
             is GoalFormStrategy.EditFormData -> "Edit Goal"
+            is GoalFormStrategy.EditGoal -> "Edit Goal"
         }
 
         val doneText: String = when (strategy) {
-            is GoalFormStrategy.NewFormData,
+            is GoalFormStrategy.NewFormData -> "Done"
             is GoalFormStrategy.EditFormData -> "Done"
+            is GoalFormStrategy.EditGoal -> "Save"
         }
 
         val notePlaceholder = "Note"
@@ -128,6 +131,15 @@ class GoalFormVm(
                 finishedText = formData.finishText
                 timer = formData.timer
             }
+            is GoalFormStrategy.EditGoal -> {
+                val goalDb: GoalDb = strategy.goalDb
+                tf = goalDb.note.textFeatures()
+                isEntireActivity = goalDb.isEntireActivity
+                period = goalDb.buildPeriod()
+                seconds = goalDb.seconds
+                finishedText = goalDb.finish_text
+                timer = goalDb.timer
+            }
         }
         state = MutableStateFlow(
             State(
@@ -176,5 +188,22 @@ class GoalFormVm(
 
     fun setShortcutsDb(newShortcutsDb: List<ShortcutDb>) {
         state.update { it.copy(shortcutsDb = newShortcutsDb) }
+    }
+
+    fun saveGoal(
+        goalDb: GoalDb,
+        dialogsManager: DialogsManager,
+        onSuccess: () -> Unit,
+    ) {
+        val formData: GoalFormData = state.value.buildFormDataOrNull(
+            dialogsManager = dialogsManager,
+            goalDb = goalDb,
+        ) ?: return
+        launchExIo {
+            goalDb.update(formData)
+            onUi {
+                onSuccess()
+            }
+        }
     }
 }
