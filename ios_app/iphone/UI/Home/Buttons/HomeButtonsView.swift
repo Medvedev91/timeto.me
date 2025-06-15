@@ -35,7 +35,7 @@ private struct HomeButtonsViewInner: View {
         ZStack(alignment: .topLeading) {
             Color.clear
             
-            ForEach(state.buttonsUi, id: \.self) { buttonUi in
+            ForEach(state.buttonsUi, id: \.id) { buttonUi in
                 ZStack {
                     if let goal = buttonUi.type as? HomeButtonType.Goal {
                         HomeButtonGoalView(goal: goal)
