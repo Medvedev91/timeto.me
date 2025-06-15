@@ -208,12 +208,14 @@ private struct GoalFormSheetInner: View {
             }
             
             if let strategy = strategy as? GoalFormStrategy.EditFormData {
-                Section {
-                    Button("Delete Goal") {
-                        strategy.onDelete()
-                        dismiss()
-                    }
-                    .foregroundColor(.red)
+                DeleteButton {
+                    strategy.onDelete()
+                    dismiss()
+                }
+            } else if let strategy = strategy as? GoalFormStrategy.EditGoal {
+                DeleteButton {
+                    vm.deleteGoal(goalDb: strategy.goalDb)
+                    dismiss()
                 }
             }
         }
@@ -257,6 +259,20 @@ private struct GoalFormSheetInner: View {
                 }
                 .fontWeight(.semibold)
             }
+        }
+    }
+}
+
+private struct DeleteButton: View {
+    
+    let onTap: () -> Void
+    
+    var body: some View {
+        Section {
+            Button("Delete Goal") {
+                onTap()
+            }
+            .foregroundColor(.red)
         }
     }
 }
