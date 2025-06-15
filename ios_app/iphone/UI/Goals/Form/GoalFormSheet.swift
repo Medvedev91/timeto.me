@@ -243,6 +243,14 @@ private struct GoalFormSheetInner: View {
                         ) else { return }
                         strategy.onDone(formData)
                         dismiss()
+                    } else if let strategy = strategy as? GoalFormStrategy.EditGoal {
+                        vm.saveGoal(
+                            goalDb: strategy.goalDb,
+                            dialogsManager: navigation,
+                            onSuccess: {
+                                dismiss()
+                            }
+                        )
                     } else {
                         fatalError()
                     }
