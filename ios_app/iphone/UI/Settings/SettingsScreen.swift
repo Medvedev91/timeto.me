@@ -210,6 +210,16 @@ private struct SettingsScreenInner: View {
                     }
                 )
                 
+                NavigationLinkFullScreen(
+                    label: {
+                        Text(state.homeScreenText)
+                            .foregroundColor(.primary)
+                    },
+                    fullScreen: {
+                        HomeSettingsButtonsFullScreen()
+                    }
+                )
+                
                 Toggle(
                     state.todayOnHomeScreenText,
                     isOn: $todayOnHomeScreen

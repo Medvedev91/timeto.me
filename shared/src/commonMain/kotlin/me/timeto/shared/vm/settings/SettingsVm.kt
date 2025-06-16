@@ -48,6 +48,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
         val whatsNewNote: String =
             WhatsNewVm.historyItemsUi.first().timeAgoText
 
+        val homeScreenText = "Home Screen"
         val todayOnHomeScreenText = "Today on Home Screen"
 
         val dayStartNote: String = dayStartSecondsToString(dayStartSeconds)
@@ -101,7 +102,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
             isSendingReports: KvDb?,
             todayOnHomeScreen: KvDb?,
             autoBackupLastTime: UnixTime?,
-            feedbackSubject: String?
+            feedbackSubject: String?,
             ->
             state.update {
                 it.copy(
