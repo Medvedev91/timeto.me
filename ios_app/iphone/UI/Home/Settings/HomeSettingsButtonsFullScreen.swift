@@ -43,10 +43,12 @@ private struct HomeSettingsButtonsFullScreenInner: View {
     ///
     
     @Environment(\.dismiss) private var dismiss
+    @Environment(Navigation.self) private var navigation
     
     @State private var hoverButtonsUi: [HomeSettingsButtonUi] = []
     @State private var ignoreNextHaptic: Bool = true
-    
+    @State private var addGoalActivityPickerPresented = false
+
     var body: some View {
         ZStack(alignment: .topLeading) {
             Color.clear
@@ -149,12 +151,32 @@ private struct HomeSettingsButtonsFullScreenInner: View {
                 BottomBarAddButton(
                     text: state.newGoalText,
                     action: {
-                        // todo
+                        addGoalActivityPickerPresented = true
                     }
                 )
                 
                 Spacer()
             }
+        }
+        .confirmationDialog(
+            state.selectActivityTitle,
+            isPresented: $addGoalActivityPickerPresented
+        ) {
+            ForEach(state.activitiesUi, id: \.activityDb.id) { activityUi in
+                Button(activityUi.title) {
+                    navigation.sheet {
+                        GoalFormSheet(
+                            strategy: GoalFormStrategy.NewGoal(
+                                activityDb: activityUi.activityDb,
+                                onCreate: { goalDb in
+                                    vm.addGoalButton(goalDb: goalDb)
+                                }
+                            )
+                        )
+                    }
+                }
+            }
+            Button("Cancel", role: .cancel) {}
         }
     }
 }
