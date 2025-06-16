@@ -190,6 +190,26 @@ class GoalFormVm(
         state.update { it.copy(shortcutsDb = newShortcutsDb) }
     }
 
+    fun addGoal(
+        activityDb: ActivityDb,
+        dialogsManager: DialogsManager,
+        onCreate: (GoalDb) -> Unit,
+    ) {
+        val formData: GoalFormData = state.value.buildFormDataOrNull(
+            dialogsManager = dialogsManager,
+            goalDb = null,
+        ) ?: return
+        launchExIo {
+            val newGoalDb: GoalDb = GoalDb.insertAndGet(
+                activityDb = activityDb,
+                goalFormData = formData,
+            )
+            onUi {
+                onCreate(newGoalDb)
+            }
+        }
+    }
+
     fun saveGoal(
         goalDb: GoalDb,
         dialogsManager: DialogsManager,
