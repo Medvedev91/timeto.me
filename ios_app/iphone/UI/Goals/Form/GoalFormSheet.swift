@@ -245,6 +245,15 @@ private struct GoalFormSheetInner: View {
                         ) else { return }
                         strategy.onDone(formData)
                         dismiss()
+                    } else if let strategy = strategy as? GoalFormStrategy.NewGoal {
+                        vm.addGoal(
+                            activityDb: strategy.activityDb,
+                            dialogsManager: navigation,
+                            onCreate: { newGoalDb in
+                                strategy.onCreate(newGoalDb)
+                                dismiss()
+                            }
+                        )
                     } else if let strategy = strategy as? GoalFormStrategy.EditGoal {
                         vm.saveGoal(
                             goalDb: strategy.goalDb,
