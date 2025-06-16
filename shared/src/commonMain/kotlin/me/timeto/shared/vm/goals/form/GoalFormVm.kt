@@ -10,6 +10,7 @@ import me.timeto.shared.textFeatures
 import me.timeto.shared.toTimerHintNote
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.vm.Vm
 
@@ -32,12 +33,14 @@ class GoalFormVm(
         val title: String = when (strategy) {
             is GoalFormStrategy.NewFormData -> "New Goal"
             is GoalFormStrategy.EditFormData -> "Edit Goal"
+            is GoalFormStrategy.NewGoal -> "New Goal"
             is GoalFormStrategy.EditGoal -> "Edit Goal"
         }
 
         val doneText: String = when (strategy) {
             is GoalFormStrategy.NewFormData -> "Done"
             is GoalFormStrategy.EditFormData -> "Done"
+            is GoalFormStrategy.NewGoal -> "Create"
             is GoalFormStrategy.EditGoal -> "Save"
         }
 
@@ -130,6 +133,14 @@ class GoalFormVm(
                 seconds = formData.seconds
                 finishedText = formData.finishText
                 timer = formData.timer
+            }
+            is GoalFormStrategy.NewGoal -> {
+                tf = "".textFeatures()
+                isEntireActivity = false
+                period = null
+                seconds = 3 * 3_600
+                finishedText = "👍"
+                timer = 0
             }
             is GoalFormStrategy.EditGoal -> {
                 val goalDb: GoalDb = strategy.goalDb
