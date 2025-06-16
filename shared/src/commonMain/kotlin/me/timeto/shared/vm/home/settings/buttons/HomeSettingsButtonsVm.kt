@@ -24,6 +24,7 @@ class HomeSettingsButtonsVm(
         val update: Int = 0,
     ) {
         val title = "Home Settings"
+        val newGoalText = "New Goal"
     }
 
     override val state: MutableStateFlow<State>

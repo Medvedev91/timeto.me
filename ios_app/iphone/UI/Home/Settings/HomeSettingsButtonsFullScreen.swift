@@ -129,17 +129,31 @@ private struct HomeSettingsButtonsFullScreenInner: View {
         .navigationTitle(state.title)
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
+            
             ToolbarItem(placement: .cancellationAction) {
                 Button("Cancel") {
                     dismiss()
                 }
             }
+            
             ToolbarItem(placement: .primaryAction) {
                 Button("Save") {
                     vm.save()
                     dismiss()
                 }
                 .fontWeight(.semibold)
+            }
+            
+            ToolbarItemGroup(placement: .bottomBar) {
+                
+                BottomBarAddButton(
+                    text: state.newGoalText,
+                    action: {
+                        // todo
+                    }
+                )
+                
+                Spacer()
             }
         }
     }
