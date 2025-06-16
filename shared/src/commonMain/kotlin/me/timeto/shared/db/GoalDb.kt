@@ -60,6 +60,17 @@ data class GoalDb(
             )
         }
 
+        suspend fun insertAndGet(
+            activityDb: ActivityDb,
+            goalFormData: GoalFormData,
+        ): GoalDb = dbIo {
+            db.transactionWithResult {
+                insertSync(activityDb, goalFormData)
+                val lastId: Int = selectLastInsertedIdSync()
+                selectAllSync().first { it.id == lastId }
+            }
+        }
+
         fun deleteByActivityDbSync(activityDb: ActivityDb) {
             db.goalQueries.deleteByActivityId(activity_id = activityDb.id)
         }
