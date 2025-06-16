@@ -62,6 +62,28 @@ class HomeSettingsButtonsVm(
         )
     }
 
+    fun addGoalButton(goalDb: GoalDb) {
+        val newButtonUi = ButtonUi(
+            type = HomeSettingsButtonType.Goal(goalDb),
+            sort = HomeButtonSort.parseOrDefault(goalDb.home_button_sort),
+            colorRgba = goalDb.getActivityDbCached().colorRgba,
+            spacing = spacing,
+            cellWidth = cellWidth,
+            rowHeight = rowHeight,
+        )
+        val newButtonsUi: List<ButtonUi> =
+            state.value.buttonsData.dataButtonsUi + newButtonUi
+        val buttonsData = buildButtonsData(
+            dataButtonsUiRaw = newButtonsUi,
+            spacing = spacing,
+            cellWidth = cellWidth,
+            rowHeight = rowHeight,
+        )
+        state.update {
+            it.copy(buttonsData = buttonsData)
+        }
+    }
+
     fun save() {
         launchExIo {
             state.value.buttonsData.dataButtonsUi.forEach { buttonUi ->
