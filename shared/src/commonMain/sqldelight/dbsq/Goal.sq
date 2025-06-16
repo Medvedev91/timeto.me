@@ -24,6 +24,9 @@ selectAll:
 SELECT *
 FROM GoalSq;
 
+selectLastInsertId:
+SELECT last_insert_rowid();
+
 --
 -- Insert
 

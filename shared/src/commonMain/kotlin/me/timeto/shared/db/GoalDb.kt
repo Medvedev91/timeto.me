@@ -31,6 +31,9 @@ data class GoalDb(
         fun anyChangeFlow(): Flow<*> =
             db.goalQueries.anyChange().asFlow()
 
+        fun selectLastInsertedIdSync(): Int =
+            db.goalQueries.selectLastInsertId().executeAsOne().toInt()
+
         suspend fun selectAll(): List<GoalDb> = dbIo {
             selectAllSync()
         }
