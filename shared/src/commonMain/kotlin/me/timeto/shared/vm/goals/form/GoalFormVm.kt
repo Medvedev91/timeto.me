@@ -116,14 +116,22 @@ class GoalFormVm(
         val seconds: Int
         val finishedText: String
         val timer: Int
+        // Defaults
+        val defaultFf: TextFeatures = "".textFeatures()
+        val defaultIsEntireActivity = false
+        val defaultPeriod: GoalDb.Period? = null
+        val defaultSeconds = 3_600
+        val defaultFinishedText = "👍"
+        val defaultTimer = 0
+        ///
         when (strategy) {
             is GoalFormStrategy.NewFormData -> {
-                tf = "".textFeatures()
-                isEntireActivity = false
-                period = null
-                seconds = 3 * 3_600
-                finishedText = "👍"
-                timer = 0
+                tf = defaultFf
+                isEntireActivity = defaultIsEntireActivity
+                period = defaultPeriod
+                seconds = defaultSeconds
+                finishedText = defaultFinishedText
+                timer = defaultTimer
             }
             is GoalFormStrategy.EditFormData -> {
                 val formData: GoalFormData = strategy.initGoalFormData
@@ -135,12 +143,12 @@ class GoalFormVm(
                 timer = formData.timer
             }
             is GoalFormStrategy.NewGoal -> {
-                tf = "".textFeatures()
-                isEntireActivity = false
-                period = null
-                seconds = 3 * 3_600
-                finishedText = "👍"
-                timer = 0
+                tf = defaultFf
+                isEntireActivity = defaultIsEntireActivity
+                period = defaultPeriod
+                seconds = defaultSeconds
+                finishedText = defaultFinishedText
+                timer = defaultTimer
             }
             is GoalFormStrategy.EditGoal -> {
                 val goalDb: GoalDb = strategy.goalDb
