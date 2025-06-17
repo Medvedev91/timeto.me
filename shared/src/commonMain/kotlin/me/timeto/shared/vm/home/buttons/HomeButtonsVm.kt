@@ -9,12 +9,10 @@ import kotlinx.coroutines.launch
 import me.timeto.shared.Cache
 import me.timeto.shared.DayBarsUi
 import me.timeto.shared.HomeButtonSort
-import me.timeto.shared.UnixTime
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.GoalDb
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.delayToNextMinute
-import me.timeto.shared.localUtcOffsetWithDayStart
 import me.timeto.shared.textFeatures
 import me.timeto.shared.vm.Vm
 
@@ -76,7 +74,7 @@ class HomeButtonsVm(
     }
 
     private suspend fun buildButtonsUi(): List<HomeButtonUi> {
-        val allBarsUi: DayBarsUi = buildTodayBarsUi()
+        val allBarsUi: DayBarsUi = DayBarsUi.buildToday()
 
         val goalButtons: List<HomeButtonNoSorted> = Cache.goalsDb.mapNotNull { goalDb ->
             if (!goalDb.buildPeriod().isToday())
@@ -137,17 +135,6 @@ private data class HomeButtonNoSorted(
     val rowHeight: Float,
     val spacing: Float,
 )
-
-private suspend fun buildTodayBarsUi(): DayBarsUi {
-    val utcOffset: Int = localUtcOffsetWithDayStart
-    val todayDS: Int = UnixTime(utcOffset = utcOffset).localDay
-    val barsUi: List<DayBarsUi> = DayBarsUi.buildList(
-        dayStart = todayDS,
-        dayFinish = todayDS,
-        utcOffset = utcOffset,
-    )
-    return barsUi.first()
-}
 
 private fun List<HomeButtonNoSorted>.homeButtonsUiSorted(): List<HomeButtonUi> {
     val buttonsNoSortedWithInvalidPosition = mutableListOf<HomeButtonNoSorted>()
