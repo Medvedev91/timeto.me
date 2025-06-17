@@ -1,6 +1,7 @@
 package me.timeto.shared
 
 import me.timeto.shared.db.ActivityDb
+import me.timeto.shared.db.GoalDb
 import me.timeto.shared.db.IntervalDb
 
 class DayBarsUi(
@@ -14,6 +15,38 @@ class DayBarsUi(
             "${UnixTime.Companion.byLocalDay(unixDay).dayOfMonth()}"
         else ""
 
+    fun buildGoalStats(
+        goalDb: GoalDb,
+    ): GoalStats {
+        val goalBarsUi: List<BarUi> = barsUi
+            .filter { barUi ->
+                // We can attach goal for any interval,
+                // no matter what the activity is.
+                if (barUi.intervalTf.goalDb?.id == goalDb.id)
+                    return@filter true
+                if (goalDb.isEntireActivity && (barUi.activityDb?.id == goalDb.activity_id))
+                    return@filter true
+                false
+            }
+
+        val intervalsSeconds: Int =
+            goalBarsUi.sumOf { it.seconds }
+
+        val lastBarUiWithActivity: BarUi? =
+            barsUi.lastOrNull { it.activityDb != null }
+        val activeTimeFrom: Int? =
+            if ((lastBarUiWithActivity != null) && (lastBarUiWithActivity == goalBarsUi.lastOrNull()))
+                lastBarUiWithActivity.timeFinish
+            else null
+
+        return GoalStats(
+            intervalsSeconds = intervalsSeconds,
+            activeTimeFrom = activeTimeFrom,
+        )
+    }
+
+    ///
+
     class BarUi(
         val intervalDb: IntervalDb?,
         val timeStart: Int,
@@ -24,6 +57,11 @@ class DayBarsUi(
         val ratio: Float = seconds.toFloat() / 86_400
         val timeFinish: Int = timeStart + seconds
     }
+
+    data class GoalStats(
+        val intervalsSeconds: Int,
+        val activeTimeFrom: Int?,
+    )
 
     enum class DAY_STRING_FORMAT {
         ALL, EVEN,
