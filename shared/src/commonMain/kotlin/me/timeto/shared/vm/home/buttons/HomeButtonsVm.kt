@@ -80,29 +80,10 @@ class HomeButtonsVm(
             if (!goalDb.buildPeriod().isToday())
                 return@mapNotNull null
 
-            val activityDb: ActivityDb = goalDb.getActivityDbCached()
-
-            val goalBarsUi: List<DayBarsUi.BarUi> = allBarsUi.barsUi
-                .filter { barUi ->
-                    // We can attach goal for any interval,
-                    // no matter what the activity is.
-                    if (barUi.intervalTf.goalDb?.id == goalDb.id)
-                        return@filter true
-                    if (goalDb.isEntireActivity && (barUi.activityDb?.id == goalDb.activity_id))
-                        return@filter true
-                    false
-                }
-
-            val intervalsSeconds: Int = goalBarsUi.sumOf { it.seconds }
-
-            val lastBarUiWithActivity: DayBarsUi.BarUi? =
-                allBarsUi.barsUi.lastOrNull { it.activityDb != null }
-
-            val activeTimeFrom: Int? =
-                if ((lastBarUiWithActivity != null) && (lastBarUiWithActivity == goalBarsUi.lastOrNull()))
-                    lastBarUiWithActivity.timeFinish
-                else null
-
+            val activityDb: ActivityDb =
+                goalDb.getActivityDbCached()
+            val barsGoalStats: DayBarsUi.GoalStats =
+                allBarsUi.buildGoalStats(goalDb)
             val sort: HomeButtonSort =
                 HomeButtonSort.parseOrDefault(goalDb.home_button_sort)
 
@@ -110,8 +91,7 @@ class HomeButtonsVm(
                 goalDb = goalDb,
                 goalTf = goalDb.note.textFeatures(),
                 bgColor = activityDb.colorRgba,
-                intervalsSeconds = intervalsSeconds,
-                activeTimeFrom = activeTimeFrom,
+                barsGoalStats = barsGoalStats,
                 sort = sort,
             )
 

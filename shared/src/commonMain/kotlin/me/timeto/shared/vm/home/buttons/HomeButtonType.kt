@@ -1,6 +1,7 @@
 package me.timeto.shared.vm.home.buttons
 
 import me.timeto.shared.ColorRgba
+import me.timeto.shared.DayBarsUi
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.db.GoalDb
@@ -19,14 +20,14 @@ sealed class HomeButtonType {
         val goalDb: GoalDb,
         val goalTf: TextFeatures,
         val bgColor: ColorRgba,
-        val intervalsSeconds: Int,
-        val activeTimeFrom: Int?,
+        val barsGoalStats: DayBarsUi.GoalStats,
         val sort: HomeButtonSort,
         val update: Long = timeMls(),
     ) : HomeButtonType() {
 
         val elapsedSeconds: Int =
-            intervalsSeconds + (activeTimeFrom?.let { time() - it } ?: 0)
+            barsGoalStats.intervalsSeconds +
+            (barsGoalStats.activeTimeFrom?.let { time() - it } ?: 0)
 
         val textLeft: String = buildGoalTextLeft(
             note = goalTf.textNoFeatures,
@@ -44,7 +45,7 @@ sealed class HomeButtonType {
             elapsedSeconds.limitMax(goalDb.seconds).toFloat() / goalDb.seconds
 
         fun recalculateUiIfNeeded(): Goal? {
-            if (activeTimeFrom == null)
+            if (barsGoalStats.activeTimeFrom == null)
                 return null
             return this.copy(update = timeMls())
         }
