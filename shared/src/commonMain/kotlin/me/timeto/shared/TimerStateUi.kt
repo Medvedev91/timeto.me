@@ -1,6 +1,7 @@
 package me.timeto.shared
 
 import me.timeto.shared.db.ActivityDb
+import me.timeto.shared.db.GoalDb
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.vm.activities.timer.ActivityTimerStrategy
@@ -88,9 +89,15 @@ class TimerStateUi(
     fun togglePomodoro() {
         launchExIo {
             if (pausedTaskData != null) {
+                val goalDb: GoalDb? =
+                    pausedTaskData.taskDb.text.textFeatures().goalDb
+                val timer: Int = if (goalDb == null)
+                    pausedTaskData.timer
+                else
+                    DayBarsUi.buildToday().buildGoalStats(goalDb).calcTimer()
                 pausedTaskData.taskDb.startInterval(
-                    pausedTaskData.timer,
-                    pausedTaskData.activityDb,
+                    timer = timer,
+                    activityDb = pausedTaskData.activityDb,
                 )
             } else {
                 IntervalDb.pauseLastInterval()
