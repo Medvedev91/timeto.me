@@ -10,7 +10,6 @@ import me.timeto.shared.db.TaskDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.limitMax
 import me.timeto.shared.textFeatures
-import me.timeto.shared.time
 import me.timeto.shared.timeMls
 import me.timeto.shared.toHms
 
@@ -25,24 +24,20 @@ sealed class HomeButtonType {
         val update: Long = timeMls(),
     ) : HomeButtonType() {
 
-        val elapsedSeconds: Int =
-            barsGoalStats.intervalsSeconds +
-            (barsGoalStats.activeTimeFrom?.let { time() - it } ?: 0)
-
         val textLeft: String = buildGoalTextLeft(
             note = goalTf.textNoFeatures,
-            elapsedSeconds = elapsedSeconds,
+            elapsedSeconds = barsGoalStats.elapsedSeconds,
             sort = sort,
         )
 
         val textRight: String = buildGoalTextRight(
             goalDb = goalDb,
-            elapsedSeconds = elapsedSeconds,
+            elapsedSeconds = barsGoalStats.elapsedSeconds,
             sort = sort,
         )
 
         val progressRatio: Float =
-            elapsedSeconds.limitMax(goalDb.seconds).toFloat() / goalDb.seconds
+            barsGoalStats.elapsedSeconds.limitMax(goalDb.seconds).toFloat() / goalDb.seconds
 
         fun recalculateUiIfNeeded(): Goal? {
             if (barsGoalStats.activeTimeFrom == null)
@@ -51,15 +46,8 @@ sealed class HomeButtonType {
         }
 
         fun startInterval() {
-            val timer: Int = run {
-                val goalTimer = goalDb.timer
-                if (goalTimer > 0)
-                    return@run goalTimer
-                val secondsLeft: Int = goalDb.seconds - elapsedSeconds
-                if (secondsLeft > 0)
-                    return@run secondsLeft
-                45 * 60
-            }
+            val timer: Int =
+                barsGoalStats.calcTimer()
 
             val noteTf: TextFeatures =
                 goalDb.note.textFeatures().copy(goalDb = goalDb)
