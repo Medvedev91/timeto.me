@@ -40,6 +40,7 @@ class DayBarsUi(
             else null
 
         return GoalStats(
+            goalDb = goalDb,
             intervalsSeconds = intervalsSeconds,
             activeTimeFrom = activeTimeFrom,
         )
@@ -59,9 +60,24 @@ class DayBarsUi(
     }
 
     data class GoalStats(
+        val goalDb: GoalDb,
         val intervalsSeconds: Int,
         val activeTimeFrom: Int?,
-    )
+    ) {
+
+        val elapsedSeconds: Int =
+            intervalsSeconds + (activeTimeFrom?.let { time() - it } ?: 0)
+
+        fun calcTimer(): Int {
+            val goalTimer: Int = goalDb.timer
+            if (goalTimer > 0)
+                return goalTimer
+            val secondsLeft: Int = goalDb.seconds - elapsedSeconds
+            if (secondsLeft > 0)
+                return secondsLeft
+            return 45 * 60
+        }
+    }
 
     enum class DAY_STRING_FORMAT {
         ALL, EVEN,
