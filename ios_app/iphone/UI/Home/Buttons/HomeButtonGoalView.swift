@@ -53,7 +53,7 @@ struct HomeButtonGoalView: View {
                     .background(roundedShape.fill(homeFgColor))
                     .contextMenu {
                         
-                        Section {
+                        Section(goal.fullText) {
                             
                             Button(
                                 action: {
