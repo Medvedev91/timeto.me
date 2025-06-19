@@ -36,14 +36,14 @@ struct HomeButtonGoalView: View {
                         
                         HStack {
                             
-                            Text(goal.textLeft)
+                            Text(goal.leftText)
                                 .padding(.leading, HomeScreen__itemCircleHPadding)
                                 .foregroundColor(.white)
                                 .font(.system(size: HomeScreen__itemCircleFontSize, weight: HomeScreen__itemCircleFontWeight))
                             
                             Spacer()
                             
-                            Text(goal.textRight)
+                            Text(goal.rightText)
                                 .padding(.trailing, HomeScreen__itemCircleHPadding)
                                 .foregroundColor(.white)
                                 .font(.system(size: HomeScreen__itemCircleFontSize, weight: HomeScreen__itemCircleFontWeight))

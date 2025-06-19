@@ -29,9 +29,9 @@ sealed class HomeButtonType {
 
         val fullText: String
 
-        val textLeft: String
+        val leftText: String
 
-        val textRight: String = buildGoalTextRight(
+        val rightText: String = buildGoalTextRight(
             goalDb = goalDb,
             elapsedSeconds = elapsedSeconds,
             sort = sort,
@@ -43,7 +43,7 @@ sealed class HomeButtonType {
         init {
             val note: String = goalTf.textNoFeatures
             fullText = "$note ${prepTimerStringFor1hPlus(elapsedSeconds)}"
-            textLeft = run {
+            leftText = run {
                 if (elapsedSeconds <= 0)
                     return@run note
                 if (sort.size <= 2)
