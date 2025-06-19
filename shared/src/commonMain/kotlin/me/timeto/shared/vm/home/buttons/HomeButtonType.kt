@@ -24,20 +24,23 @@ sealed class HomeButtonType {
         val update: Long = timeMls(),
     ) : HomeButtonType() {
 
+        val elapsedSeconds: Int =
+            barsGoalStats.calcElapsedSeconds()
+
         val textLeft: String = buildGoalTextLeft(
             note = goalTf.textNoFeatures,
-            elapsedSeconds = barsGoalStats.elapsedSeconds,
+            elapsedSeconds = elapsedSeconds,
             sort = sort,
         )
 
         val textRight: String = buildGoalTextRight(
             goalDb = goalDb,
-            elapsedSeconds = barsGoalStats.elapsedSeconds,
+            elapsedSeconds = elapsedSeconds,
             sort = sort,
         )
 
         val progressRatio: Float =
-            barsGoalStats.elapsedSeconds.limitMax(goalDb.seconds).toFloat() / goalDb.seconds
+            elapsedSeconds.limitMax(goalDb.seconds).toFloat() / goalDb.seconds
 
         fun recalculateUiIfNeeded(): Goal? {
             if (barsGoalStats.activeTimeFrom == null)
