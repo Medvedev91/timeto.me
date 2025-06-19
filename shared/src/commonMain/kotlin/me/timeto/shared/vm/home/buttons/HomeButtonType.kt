@@ -27,11 +27,9 @@ sealed class HomeButtonType {
         val elapsedSeconds: Int =
             barsGoalStats.calcElapsedSeconds()
 
-        val textLeft: String = buildGoalTextLeft(
-            note = goalTf.textNoFeatures,
-            elapsedSeconds = elapsedSeconds,
-            sort = sort,
-        )
+        val fullText: String
+
+        val textLeft: String
 
         val textRight: String = buildGoalTextRight(
             goalDb = goalDb,
@@ -41,6 +39,22 @@ sealed class HomeButtonType {
 
         val progressRatio: Float =
             elapsedSeconds.limitMax(goalDb.seconds).toFloat() / goalDb.seconds
+
+        init {
+            val note: String = goalTf.textNoFeatures
+            fullText = "$note ${prepTimerStringFor1hPlus(elapsedSeconds)}"
+            textLeft = run {
+                if (elapsedSeconds <= 0)
+                    return@run note
+                if (sort.size <= 2)
+                    return@run note
+                if (elapsedSeconds < 60)
+                    return@run "$note ${elapsedSeconds}${if (sort.size >= 4) " sec" else "s"}"
+                if (elapsedSeconds < 3_600)
+                    return@run "$note ${elapsedSeconds / 60}${if (sort.size >= 4) " min" else "m"}"
+                fullText
+            }
+        }
 
         fun recalculateUiIfNeeded(): Goal? {
             if (barsGoalStats.activeTimeFrom == null)
@@ -72,22 +86,6 @@ sealed class HomeButtonType {
             }
         }
     }
-}
-
-private fun buildGoalTextLeft(
-    note: String,
-    elapsedSeconds: Int,
-    sort: HomeButtonSort,
-): String {
-    if (elapsedSeconds <= 0)
-        return note
-    if (sort.size <= 2)
-        return note
-    if (elapsedSeconds < 60)
-        return "$note ${elapsedSeconds}${if (sort.size >= 4) " sec" else "s"}"
-    if (elapsedSeconds < 3_600)
-        return "$note ${elapsedSeconds / 60}${if (sort.size >= 4) " min" else "m"}"
-    return "$note ${prepTimerStringFor1hPlus(elapsedSeconds)}"
 }
 
 private fun buildGoalTextRight(
