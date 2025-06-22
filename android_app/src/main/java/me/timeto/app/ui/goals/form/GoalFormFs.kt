@@ -73,6 +73,25 @@ fun GoalFormFs(
                             strategy.onDone(formData)
                             navigationLayer.close()
                         }
+                        is GoalFormStrategy.NewGoal -> {
+                            vm.addGoal(
+                                activityDb = strategy.activityDb,
+                                dialogsManager = navigationFs,
+                                onCreate = { newGoalDb ->
+                                    strategy.onCreate(newGoalDb)
+                                    navigationLayer.close()
+                                },
+                            )
+                        }
+                        is GoalFormStrategy.EditGoal -> {
+                            vm.saveGoal(
+                                goalDb = strategy.goalDb,
+                                dialogsManager = navigationFs,
+                                onSuccess = {
+                                    navigationLayer.close()
+                                },
+                            )
+                        }
                     }
                 },
             ),
