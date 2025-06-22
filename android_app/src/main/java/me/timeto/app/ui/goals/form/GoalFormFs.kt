@@ -243,17 +243,15 @@ fun GoalFormFs(
                 )
 
                 if (strategy is GoalFormStrategy.EditFormData) {
-                    FormPaddingSectionSection()
-                    FormButton(
-                        title = "Delete Goal",
-                        titleColor = c.red,
-                        isFirst = true,
-                        isLast = true,
-                        onClick = {
-                            strategy.onDelete()
-                            navigationLayer.close()
-                        },
-                    )
+                    DeleteButton {
+                        strategy.onDelete()
+                        navigationLayer.close()
+                    }
+                } else if (strategy is GoalFormStrategy.EditGoal) {
+                    DeleteButton {
+                        vm.deleteGoal(strategy.goalDb)
+                        navigationLayer.close()
+                    }
                 }
 
                 FormPaddingBottom(
@@ -262,4 +260,20 @@ fun GoalFormFs(
             }
         }
     }
+}
+
+@Composable
+private fun DeleteButton(
+    onClick: () -> Unit,
+) {
+    FormPaddingSectionSection()
+    FormButton(
+        title = "Delete Goal",
+        titleColor = c.red,
+        isFirst = true,
+        isLast = true,
+        onClick = {
+            onClick()
+        },
+    )
 }
