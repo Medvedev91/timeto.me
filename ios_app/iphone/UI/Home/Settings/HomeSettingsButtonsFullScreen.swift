@@ -342,7 +342,7 @@ private struct ResizeDotView: View {
     
     var body: some View {
         
-        ResizeDotViewArc(startAngle: .degrees(70), endAngle: .degrees(290), clockwise: true)
+        ResizeDotViewArcShape(startAngle: .degrees(70), endAngle: .degrees(290), clockwise: true)
             .stroke(.white, style: .init(lineWidth: resizeDotViewArcLineWidth, lineCap: .round))
             .frame(width: resizeDotViewArcRadius, height: barHeight)
             .gesture(
@@ -357,7 +357,7 @@ private struct ResizeDotView: View {
     }
 }
 
-private struct ResizeDotViewArc: Shape {
+private struct ResizeDotViewArcShape: Shape {
     
     let startAngle: Angle
     let endAngle: Angle
