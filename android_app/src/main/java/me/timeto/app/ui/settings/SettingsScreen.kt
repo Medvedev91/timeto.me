@@ -37,6 +37,7 @@ import me.timeto.app.ui.form.padding.FormPaddingSectionSection
 import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.form.button.FormButtonEmoji
 import me.timeto.app.ui.header.Header
+import me.timeto.app.ui.home.settings.HomeSettingsButtonsFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationScreen
 import me.timeto.app.ui.notes.NoteFormFs
@@ -361,6 +362,18 @@ fun SettingsScreen(
                                 vm = vm,
                                 state = state,
                             )
+                        }
+                    },
+                )
+
+                FormButton(
+                    title = state.homeScreenText,
+                    isFirst = false,
+                    isLast = false,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.push {
+                            HomeSettingsButtonsFs()
                         }
                     },
                 )
