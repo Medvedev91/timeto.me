@@ -28,8 +28,13 @@ class HomeSettingsButtonsVm(
     data class State(
         val buttonsData: ButtonsData,
         val activitiesUi: List<ActivityUi>,
+        val rowHeight: Float,
         val update: Int = 0,
     ) {
+
+        val height: Float =
+            rowHeight * buttonsData.rowsCount
+
         val title = "Home Settings"
         val newGoalText = "New Goal"
         val selectActivityTitle = "Select Activity"
@@ -61,6 +66,7 @@ class HomeSettingsButtonsVm(
             State(
                 buttonsData = buttonsData,
                 activitiesUi = Cache.activitiesDbSorted.map { ActivityUi(it) },
+                rowHeight = rowHeight,
             )
         )
     }

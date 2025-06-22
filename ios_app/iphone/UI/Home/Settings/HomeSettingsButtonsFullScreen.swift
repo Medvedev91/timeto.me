@@ -26,7 +26,7 @@ struct HomeSettingsButtonsFullScreen: View {
                     vm: vm,
                     state: state
                 )
-                .frame(height: CGFloat(state.buttonsData.rowsCount) * rowHeight)
+                .frame(height: CGFloat(state.height))
             }
         }
         .padding(.horizontal, buttonsHPadding)
