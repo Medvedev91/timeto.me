@@ -186,10 +186,6 @@ private struct ButtonView<Content>: View where Content: View {
     @Binding var extraRightWidth: CGFloat
     @ViewBuilder var content: () -> Content
     
-    private var offset: CGPoint {
-        CGPoint(x: CGFloat(buttonUi.offsetX), y: CGFloat(buttonUi.offsetY))
-    }
-    
     var body: some View {
         ZStack {
             content()
@@ -207,7 +203,7 @@ private struct ButtonView<Content>: View where Content: View {
         .fillMaxWidth()
         .frame(height: barHeight)
         .background(roundedShape.fill(buttonUi.colorRgba.toColor()))
-        .offset(x: offset.x - extraLeftWidth, y: offset.y)
+        .offset(x: CGFloat(buttonUi.offsetX) - extraLeftWidth, y: CGFloat(buttonUi.offsetY))
         .frame(
             width: CGFloat(buttonUi.fullWidth) + extraLeftWidth + extraRightWidth,
             height: rowHeight
