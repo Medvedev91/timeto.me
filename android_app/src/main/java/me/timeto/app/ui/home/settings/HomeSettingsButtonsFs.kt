@@ -12,6 +12,10 @@ import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.ZStack
+import me.timeto.app.ui.header.Header
+import me.timeto.app.ui.header.HeaderActionButton
+import me.timeto.app.ui.header.HeaderCancelButton
+import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.rememberVm
 import me.timeto.shared.vm.home.settings.buttons.HomeSettingsButtonsVm
 
@@ -24,6 +28,8 @@ private val buttonsHPadding: Dp = H_PADDING
 @Composable
 fun HomeSettingsButtonsFs() {
 
+    val navigationLayer = LocalNavigationLayer.current
+
     val configuration = LocalConfiguration.current
 
     val (vm, state) = rememberVm {
@@ -35,6 +41,25 @@ fun HomeSettingsButtonsFs() {
     }
 
     Screen {
+
+        Header(
+            title = state.title,
+            scrollState = null,
+            actionButton = HeaderActionButton(
+                text = "Save",
+                isEnabled = true,
+                onClick = {
+                    vm.save()
+                    navigationLayer.close()
+                },
+            ),
+            cancelButton = HeaderCancelButton(
+                text = "Cancel",
+                onClick = {
+                    navigationLayer.close()
+                },
+            ),
+        )
 
         SpacerW1()
 
