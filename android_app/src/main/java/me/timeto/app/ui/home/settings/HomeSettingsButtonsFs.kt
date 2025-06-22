@@ -9,14 +9,21 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import me.timeto.app.ui.H_PADDING
+import me.timeto.app.ui.H_PADDING_HALF
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.ZStack
+import me.timeto.app.ui.activities.ActivityPickerFs
+import me.timeto.app.ui.footer.Footer
+import me.timeto.app.ui.footer.FooterAddButton
+import me.timeto.app.ui.goals.form.GoalFormFs
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
+import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.rememberVm
+import me.timeto.shared.vm.goals.form.GoalFormStrategy
 import me.timeto.shared.vm.home.settings.buttons.HomeSettingsButtonsVm
 
 private val rowHeight: Dp = 26.dp
@@ -28,6 +35,7 @@ private val buttonsHPadding: Dp = H_PADDING
 @Composable
 fun HomeSettingsButtonsFs() {
 
+    val navigationFs = LocalNavigationFs.current
     val navigationLayer = LocalNavigationLayer.current
 
     val configuration = LocalConfiguration.current
@@ -69,6 +77,36 @@ fun HomeSettingsButtonsFs() {
                 .fillMaxWidth()
                 .height(state.height.dp),
         ) {
+        }
+
+        Footer(
+            scrollState = null,
+            contentModifier = Modifier
+                .padding(horizontal = H_PADDING_HALF),
+        ) {
+            FooterAddButton(
+                text = state.newGoalText,
+                onClick = {
+                    navigationFs.push {
+                        ActivityPickerFs(
+                            initActivityDb = null,
+                            onDone = { activityDb ->
+                                navigationFs.push {
+                                    GoalFormFs(
+                                        strategy = GoalFormStrategy.NewGoal(
+                                            activityDb = activityDb,
+                                            onCreate = { goalDb ->
+                                                vm.addGoalButton(goalDb)
+                                            }
+                                        )
+                                    )
+                                }
+                            }
+                        )
+                    }
+                },
+            )
+            SpacerW1()
         }
     }
 }
