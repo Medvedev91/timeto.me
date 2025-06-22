@@ -6,31 +6,38 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import me.timeto.app.toColor
+import me.timeto.app.ui.HStack
 import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.H_PADDING_HALF
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.activities.ActivityPickerFs
+import me.timeto.app.ui.c
 import me.timeto.app.ui.footer.Footer
 import me.timeto.app.ui.footer.FooterAddButton
 import me.timeto.app.ui.goals.form.GoalFormFs
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
+import me.timeto.app.ui.home.HomeScreen__itemCircleFontSize
+import me.timeto.app.ui.home.HomeScreen__itemCircleFontWeight
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
 import me.timeto.shared.vm.goals.form.GoalFormStrategy
+import me.timeto.shared.vm.home.settings.buttons.HomeSettingsButtonType
 import me.timeto.shared.vm.home.settings.buttons.HomeSettingsButtonUi
 import me.timeto.shared.vm.home.settings.buttons.HomeSettingsButtonsVm
 
@@ -154,8 +161,25 @@ private fun ButtonView(
                 .height(barHeight)
                 .clip(roundedShape)
                 .background(buttonUi.colorRgba.toColor()),
+            contentAlignment = Alignment.Center,
         ) {
             content()
+            val buttonType = buttonUi.type
+            if (buttonType is HomeSettingsButtonType.Goal) {
+                HStack(
+                    modifier = Modifier
+                        .padding(horizontal = 12.dp),
+                ) {
+                    Text(
+                        text = buttonType.note,
+                        color = c.white,
+                        maxLines = 1,
+                        textAlign = TextAlign.Center,
+                        fontSize = HomeScreen__itemCircleFontSize,
+                        fontWeight = HomeScreen__itemCircleFontWeight,
+                    )
+                }
+            }
         }
     }
 }
