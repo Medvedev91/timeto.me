@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
@@ -141,14 +142,20 @@ private fun ButtonView(
                 width = (buttonUi.fullWidth + extraLeftWidth + extraRightWidth).dp,
                 height = rowHeight,
             )
-            .height(barHeight)
             .offset(
                 x = (buttonUi.offsetX - extraLeftWidth).dp,
                 y = buttonUi.offsetY.dp,
-            )
-            .clip(roundedShape)
-            .background(buttonUi.colorRgba.toColor())
+            ),
+        contentAlignment = Alignment.Center,
     ) {
-        content()
+        ZStack(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(barHeight)
+                .clip(roundedShape)
+                .background(buttonUi.colorRgba.toColor()),
+        ) {
+            content()
+        }
     }
 }
