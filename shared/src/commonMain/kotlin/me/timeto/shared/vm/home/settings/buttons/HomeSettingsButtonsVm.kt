@@ -18,9 +18,12 @@ typealias ButtonUi = HomeSettingsButtonUi
 
 class HomeSettingsButtonsVm(
     private val spacing: Float,
-    private val cellWidth: Float,
     private val rowHeight: Float,
+    width: Float,
 ) : Vm<HomeSettingsButtonsVm.State>() {
+
+    private val cellWidth: Float =
+        (width - ((homeButtonsCellsCount - 1) * spacing)) / homeButtonsCellsCount
 
     data class State(
         val buttonsData: ButtonsData,

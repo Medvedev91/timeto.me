@@ -12,14 +12,12 @@ private let buttonsHPadding: CGFloat = H_PADDING
 
 struct HomeSettingsButtonsFullScreen: View {
     
-    private let cellWidth: CGFloat = calcCellWidth()
-    
     var body: some View {
         VmView({
             HomeSettingsButtonsVm(
                 spacing: Float(spacing),
-                cellWidth: Float(cellWidth),
-                rowHeight: Float(rowHeight)
+                rowHeight: Float(rowHeight),
+                width: Float(UIScreen.main.bounds.size.width - (buttonsHPadding * 2))
             )
         }) { vm, state in
             VStack {
@@ -380,10 +378,4 @@ private struct ResizeDotViewArc: Shape {
         )
         return path
     }
-}
-
-private func calcCellWidth() -> CGFloat {
-    let cellsCount: Int = HomeButtonsCellsCountKt.homeButtonsCellsCount.toInt()
-    let width: CGFloat = UIScreen.main.bounds.size.width - (buttonsHPadding * 2)
-    return (width - (spacing * CGFloat(cellsCount - 1))) / CGFloat(cellsCount)
 }
