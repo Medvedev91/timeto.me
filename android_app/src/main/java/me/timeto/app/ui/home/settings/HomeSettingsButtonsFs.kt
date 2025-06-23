@@ -1,7 +1,11 @@
 package me.timeto.app.ui.home.settings
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -119,6 +123,68 @@ fun HomeSettingsButtonsFs() {
                     )
                 }
             }
+
+            state.buttonsData.dataButtonsUi.forEach { buttonUi ->
+                key(buttonUi.id) {
+                    DragButtonView(
+                        buttonUi = buttonUi,
+                        onDrag = { xy ->
+                            hoverButtonsUi.value = vm.getHoverButtonsUiOnDrag(
+                                buttonUi = buttonUi,
+                                x = xy.x,
+                                y = xy.y,
+                            )
+                        },
+                        onDragEnd = { xy ->
+                            hoverButtonsUi.value = emptyList()
+                            // todo
+//                        Task {
+                            // To run onChange() for hoverButtonsUi before this
+//                            try ? await Task . sleep (nanoseconds: 1_000)
+//                                ignoreNextHaptic = true
+//                            }
+                            vm.onButtonDragEnd(
+                                buttonUi = buttonUi,
+                                x = xy.x,
+                                y = xy.y,
+                            )
+                        },
+                        onResize = { left, right ->
+                            hoverButtonsUi.value = vm.getHoverButtonsUiOnResize(
+                                buttonUi = buttonUi,
+                                left = left,
+                                right = right,
+                            )
+                        },
+                        onResizeEnd = { left, right ->
+                            hoverButtonsUi.value = emptyList()
+//                            Task {
+                            // To run onChange() for hoverButtonsUi before this
+//                                try ? await Task . sleep (nanoseconds: 1_000)
+//                                    ignoreNextHaptic = true
+//                                }
+                            vm.onButtonResizeEnd(
+                                buttonUi = buttonUi,
+                                left = left,
+                                right = right,
+                            )
+                        }
+                    )
+                }
+            }
+
+            hoverButtonsUi.value.forEach { buttonUi ->
+                key(buttonUi.id) {
+                    ButtonView(
+                        buttonUi = buttonUi,
+                        zIndex = 2f,
+                        offsetXY = XY(0f, 0f),
+                        extraLeftWidth = 0f,
+                        extraRightWidth = 0f,
+                        content = {},
+                    )
+                }
+            }
         }
 
         Footer(
@@ -210,8 +276,8 @@ private fun DragButtonView(
     buttonUi: HomeSettingsButtonUi,
     onDrag: (XY) -> Unit,
     onDragEnd: (XY) -> Boolean,
-    onResize: (left: XY, right: XY) -> Unit,
-    onResizeEnd: (left: XY, right: XY) -> Boolean,
+    onResize: (left: Float, right: Float) -> Unit,
+    onResizeEnd: (left: Float, right: Float) -> Boolean,
 ) {
     val zIndex = remember { mutableFloatStateOf(3f) }
     val dragLocalXY = remember { mutableStateOf(XY(0f, 0f)) }
@@ -219,11 +285,14 @@ private fun DragButtonView(
         dragLocalXY.value.x + buttonUi.offsetX,
         dragLocalXY.value.y + buttonUi.offsetY,
     )
+
+    val resizeOffsetLeft = remember { mutableFloatStateOf(0f) }
+
     ButtonView(
         buttonUi = buttonUi,
         zIndex = zIndex.floatValue,
         offsetXY = dragLocalXY.value,
-        extraLeftWidth = 0f,
+        extraLeftWidth = resizeOffsetLeft.floatValue,
         extraRightWidth = 0f,
         content = {
             ZStack(
@@ -246,8 +315,47 @@ private fun DragButtonView(
                             },
                         )
                     },
-            )
+            ) {
+                HStack(
+                    modifier = Modifier
+                        .fillMaxHeight(),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    ResizeButtonView(
+                        onResize = { delta ->
+                            resizeOffsetLeft.floatValue -= pxToDp(delta.roundToInt())
+                            onResize(resizeOffsetLeft.floatValue, 0f)
+                        },
+                        onResizeEnd = { delta ->
+                            if (!onResizeEnd(resizeOffsetLeft.floatValue, 0f))
+                                resizeOffsetLeft.floatValue = 0f
+                        }
+                    )
+                    SpacerW1()
+                }
+            }
         },
+    )
+}
+
+@Composable
+private fun ResizeButtonView(
+    onResize: (Float) -> Unit,
+    onResizeEnd: (Float) -> Unit,
+) {
+    ZStack(
+        modifier = Modifier
+            .size(width = 16.dp, height = 16.dp)
+            .background(c.red)
+            .draggable(
+                orientation = Orientation.Horizontal,
+                state = rememberDraggableState { delta ->
+                    onResize(delta)
+                },
+                onDragStopped = { delta ->
+                    onResizeEnd(delta)
+                },
+            ),
     )
 }
 
