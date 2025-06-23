@@ -340,7 +340,7 @@ private fun DragButtonView(
                         onResizeEnd = { delta ->
                             if (!onResizeEnd(resizeOffsetLeft.floatValue, resizeOffsetRight.floatValue))
                                 resizeOffsetLeft.floatValue = 0f
-                        }
+                        },
                     )
                     SpacerW1()
                     ResizeButtonView(
@@ -353,7 +353,7 @@ private fun DragButtonView(
                         onResizeEnd = { delta ->
                             if (!onResizeEnd(resizeOffsetLeft.floatValue, resizeOffsetRight.floatValue))
                                 resizeOffsetRight.floatValue = 0f
-                        }
+                        },
                     )
                 }
             }
