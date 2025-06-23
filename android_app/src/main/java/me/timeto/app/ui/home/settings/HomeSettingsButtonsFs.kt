@@ -242,6 +242,7 @@ private fun ButtonView(
             ),
         contentAlignment = Alignment.Center,
     ) {
+
         ZStack(
             modifier = Modifier
                 .fillMaxWidth()
@@ -249,25 +250,23 @@ private fun ButtonView(
                 .clip(roundedShape)
                 .background(buttonUi.colorRgba.toColor()),
             contentAlignment = Alignment.Center,
-        ) {
-            content()
-            val buttonType = buttonUi.type
-            if (buttonType is HomeSettingsButtonType.Goal) {
-                HStack(
-                    modifier = Modifier
-                        .padding(horizontal = 12.dp),
-                ) {
-                    Text(
-                        text = buttonType.note,
-                        color = c.white,
-                        maxLines = 1,
-                        textAlign = TextAlign.Center,
-                        fontSize = HomeScreen__itemCircleFontSize,
-                        fontWeight = HomeScreen__itemCircleFontWeight,
-                    )
-                }
-            }
+        ) {}
+
+        val buttonType = buttonUi.type
+        if (buttonType is HomeSettingsButtonType.Goal) {
+            Text(
+                text = buttonType.note,
+                modifier = Modifier
+                    .padding(horizontal = 12.dp),
+                color = c.white,
+                maxLines = 1,
+                textAlign = TextAlign.Center,
+                fontSize = HomeScreen__itemCircleFontSize,
+                fontWeight = HomeScreen__itemCircleFontWeight,
+            )
         }
+
+        content()
     }
 }
 
