@@ -1,6 +1,7 @@
 package me.timeto.app.ui.home.settings
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.draggable
@@ -21,6 +22,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
@@ -36,6 +40,7 @@ import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.activities.ActivityPickerFs
 import me.timeto.app.ui.c
+import me.timeto.app.ui.dpToPx
 import me.timeto.app.ui.footer.Footer
 import me.timeto.app.ui.footer.FooterAddButton
 import me.timeto.app.ui.goals.form.GoalFormFs
@@ -58,6 +63,10 @@ import kotlin.math.roundToInt
 private val rowHeight: Dp = 26.dp
 private val barHeight: Dp = 24.dp
 private val spacing: Dp = 10.dp
+
+private val resizeButtonViewArcRadiusDp: Dp = barHeight / 2
+private val resizeButtonViewArcLineWidthDp: Dp = 6.dp
+private val resizeButtonArcHeight: Dp = barHeight - (resizeButtonViewArcLineWidthDp)
 
 private val buttonsHPadding: Dp = H_PADDING
 
@@ -321,6 +330,7 @@ private fun DragButtonView(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     ResizeButtonView(
+                        modifier = Modifier,
                         onResize = { delta ->
                             resizeOffsetLeft.floatValue -= pxToDp(delta.roundToInt())
                             onResize(resizeOffsetLeft.floatValue, 0f)
@@ -339,13 +349,16 @@ private fun DragButtonView(
 
 @Composable
 private fun ResizeButtonView(
+    modifier: Modifier,
     onResize: (Float) -> Unit,
     onResizeEnd: (Float) -> Unit,
 ) {
-    ZStack(
-        modifier = Modifier
-            .size(width = 16.dp, height = 16.dp)
-            .background(c.red)
+    Canvas(
+        modifier = modifier
+            .size(
+                width = resizeButtonViewArcRadiusDp,
+                height = resizeButtonArcHeight,
+            )
             .draggable(
                 orientation = Orientation.Horizontal,
                 state = rememberDraggableState { delta ->
@@ -355,7 +368,19 @@ private fun ResizeButtonView(
                     onResizeEnd(delta)
                 },
             ),
-    )
+    ) {
+        drawArc(
+            color = c.white,
+            startAngle = 110f,
+            sweepAngle = 140f,
+            useCenter = false,
+            style = Stroke(
+                width = dpToPx(resizeButtonViewArcLineWidthDp.value).toFloat(),
+                cap = StrokeCap.Round,
+            ),
+            size = Size(resizeButtonArcHeight.toPx(), resizeButtonArcHeight.toPx()),
+        )
+    }
 }
 
 private data class XY(
