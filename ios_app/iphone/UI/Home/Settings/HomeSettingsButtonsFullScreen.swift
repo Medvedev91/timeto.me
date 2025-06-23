@@ -5,8 +5,8 @@ private let rowHeight: CGFloat = 26
 private let barHeight: CGFloat = 24
 private let spacing: CGFloat = 10
 
-private var resizeDotViewArcRadius: CGFloat = barHeight / 2
-private var resizeDotViewArcLineWidth: CGFloat = 6
+private let resizeDotViewArcRadius: CGFloat = barHeight / 2
+private let resizeDotViewArcLineWidth: CGFloat = 6
 
 private let buttonsHPadding: CGFloat = H_PADDING
 
