@@ -1,6 +1,8 @@
 package me.timeto.app.ui.home.settings
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -8,13 +10,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import me.timeto.app.toColor
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.H_PADDING
@@ -34,12 +42,14 @@ import me.timeto.app.ui.home.HomeScreen__itemCircleFontSize
 import me.timeto.app.ui.home.HomeScreen__itemCircleFontWeight
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
+import me.timeto.app.ui.pxToDp
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
 import me.timeto.shared.vm.goals.form.GoalFormStrategy
 import me.timeto.shared.vm.home.settings.buttons.HomeSettingsButtonType
 import me.timeto.shared.vm.home.settings.buttons.HomeSettingsButtonUi
 import me.timeto.shared.vm.home.settings.buttons.HomeSettingsButtonsVm
+import kotlin.math.roundToInt
 
 private val rowHeight: Dp = 26.dp
 private val barHeight: Dp = 24.dp
@@ -61,6 +71,10 @@ fun HomeSettingsButtonsFs() {
             rowHeight = rowHeight.value,
             width = (configuration.screenWidthDp.dp.value - (buttonsHPadding.value * 2)),
         )
+    }
+
+    val hoverButtonsUi = remember {
+        mutableStateOf(listOf<HomeSettingsButtonUi>())
     }
 
     Screen {
@@ -94,12 +108,16 @@ fun HomeSettingsButtonsFs() {
         ) {
 
             state.buttonsData.emptyButtonsUi.forEach { buttonUi ->
-                ButtonView(
-                    buttonUi = buttonUi,
-                    extraLeftWidth = 0f,
-                    extraRightWidth = 0f,
-                    content = {},
-                )
+                key(buttonUi.id) {
+                    ButtonView(
+                        buttonUi = buttonUi,
+                        zIndex = 1f,
+                        offsetXY = XY(0f, 0f),
+                        extraLeftWidth = 0f,
+                        extraRightWidth = 0f,
+                        content = {},
+                    )
+                }
             }
         }
 
@@ -138,6 +156,8 @@ fun HomeSettingsButtonsFs() {
 @Composable
 private fun ButtonView(
     buttonUi: HomeSettingsButtonUi,
+    zIndex: Float,
+    offsetXY: XY,
     extraLeftWidth: Float,
     extraRightWidth: Float,
     content: @Composable () -> Unit,
@@ -145,13 +165,14 @@ private fun ButtonView(
 
     ZStack(
         modifier = Modifier
+            .zIndex(zIndex)
             .size(
                 width = (buttonUi.fullWidth + extraLeftWidth + extraRightWidth).dp,
                 height = rowHeight,
             )
             .offset(
-                x = (buttonUi.offsetX - extraLeftWidth).dp,
-                y = buttonUi.offsetY.dp,
+                x = (buttonUi.offsetX - extraLeftWidth).dp + offsetXY.x.dp,
+                y = buttonUi.offsetY.dp + offsetXY.y.dp,
             ),
         contentAlignment = Alignment.Center,
     ) {
@@ -183,3 +204,54 @@ private fun ButtonView(
         }
     }
 }
+
+@Composable
+private fun DragButtonView(
+    buttonUi: HomeSettingsButtonUi,
+    onDrag: (XY) -> Unit,
+    onDragEnd: (XY) -> Boolean,
+    onResize: (left: XY, right: XY) -> Unit,
+    onResizeEnd: (left: XY, right: XY) -> Boolean,
+) {
+    val zIndex = remember { mutableFloatStateOf(3f) }
+    val dragLocalXY = remember { mutableStateOf(XY(0f, 0f)) }
+    fun buildGlobalXY() = XY(
+        dragLocalXY.value.x + buttonUi.offsetX,
+        dragLocalXY.value.y + buttonUi.offsetY,
+    )
+    ButtonView(
+        buttonUi = buttonUi,
+        zIndex = zIndex.floatValue,
+        offsetXY = dragLocalXY.value,
+        extraLeftWidth = 0f,
+        extraRightWidth = 0f,
+        content = {
+            ZStack(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .pointerInput(Unit) {
+                        detectDragGestures(
+                            onDragEnd = {
+                                zIndex.floatValue = 3f
+                                onDragEnd(buildGlobalXY())
+                            },
+                            onDrag = { change, dragAmount ->
+                                zIndex.floatValue = 4f
+                                change.consume()
+                                val xDp = pxToDp(dragAmount.x.roundToInt())
+                                val yDp = pxToDp(dragAmount.y.roundToInt())
+                                val newLocalXY = XY(dragLocalXY.value.x + xDp, dragLocalXY.value.y + yDp)
+                                dragLocalXY.value = newLocalXY
+                                onDrag(buildGlobalXY())
+                            },
+                        )
+                    },
+            )
+        },
+    )
+}
+
+private data class XY(
+    val x: Float,
+    val y: Float,
+)
