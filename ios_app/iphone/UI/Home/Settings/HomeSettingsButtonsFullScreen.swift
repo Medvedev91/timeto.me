@@ -5,8 +5,8 @@ private let rowHeight: CGFloat = 26
 private let barHeight: CGFloat = 24
 private let spacing: CGFloat = 10
 
-private let resizeDotViewArcRadius: CGFloat = barHeight / 2
-private let resizeDotViewArcLineWidth: CGFloat = 6
+private let resizeButtonViewArcRadius: CGFloat = barHeight / 2
+private let resizeButtonViewArcLineWidth: CGFloat = 6
 
 private let buttonsHPadding: CGFloat = H_PADDING
 
@@ -268,7 +268,7 @@ private struct DragButtonView: View {
                             }
                         )
                         .rotationEffect(.degrees(180.0))
-                        .offset(x: -resizeDotViewArcLineWidth / 2)
+                        .offset(x: -resizeButtonViewArcLineWidth / 2)
                         
                         Spacer()
                         
@@ -293,7 +293,7 @@ private struct DragButtonView: View {
                                 onTop = false
                             }
                         )
-                        .offset(x: resizeDotViewArcLineWidth / 2)
+                        .offset(x: resizeButtonViewArcLineWidth / 2)
                     }
                 }
             )
@@ -343,8 +343,8 @@ private struct ResizeButtonView: View {
     var body: some View {
         
         ResizeButtonViewArcShape(startAngle: .degrees(70), endAngle: .degrees(290), clockwise: true)
-            .stroke(.white, style: .init(lineWidth: resizeDotViewArcLineWidth, lineCap: .round))
-            .frame(width: resizeDotViewArcRadius, height: barHeight)
+            .stroke(.white, style: .init(lineWidth: resizeButtonViewArcLineWidth, lineCap: .round))
+            .frame(width: resizeButtonViewArcRadius, height: barHeight)
             .gesture(
                 DragGesture(coordinateSpace: .global)
                     .onChanged { value in
@@ -366,8 +366,8 @@ private struct ResizeButtonViewArcShape: Shape {
     func path(in rect: CGRect) -> Path {
         var path = Path()
         path.addArc(
-            center: CGPoint(x: 0, y: resizeDotViewArcRadius),
-            radius: resizeDotViewArcRadius - (resizeDotViewArcLineWidth / 2),
+            center: CGPoint(x: 0, y: resizeButtonViewArcRadius),
+            radius: resizeButtonViewArcRadius - (resizeButtonViewArcLineWidth / 2),
             startAngle: startAngle,
             endAngle: endAngle,
             clockwise: clockwise
