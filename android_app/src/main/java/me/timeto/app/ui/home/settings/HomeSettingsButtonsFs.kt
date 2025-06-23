@@ -22,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -295,13 +296,14 @@ private fun DragButtonView(
     )
 
     val resizeOffsetLeft = remember { mutableFloatStateOf(0f) }
+    val resizeOffsetRight = remember { mutableFloatStateOf(0f) }
 
     ButtonView(
         buttonUi = buttonUi,
         zIndex = zIndex.floatValue,
         offsetXY = dragLocalXY.value,
         extraLeftWidth = resizeOffsetLeft.floatValue,
-        extraRightWidth = 0f,
+        extraRightWidth = resizeOffsetRight.floatValue,
         content = {
             ZStack(
                 modifier = Modifier
@@ -333,14 +335,26 @@ private fun DragButtonView(
                         modifier = Modifier,
                         onResize = { delta ->
                             resizeOffsetLeft.floatValue -= pxToDp(delta.roundToInt())
-                            onResize(resizeOffsetLeft.floatValue, 0f)
+                            onResize(resizeOffsetLeft.floatValue, resizeOffsetRight.floatValue)
                         },
                         onResizeEnd = { delta ->
-                            if (!onResizeEnd(resizeOffsetLeft.floatValue, 0f))
+                            if (!onResizeEnd(resizeOffsetLeft.floatValue, resizeOffsetRight.floatValue))
                                 resizeOffsetLeft.floatValue = 0f
                         }
                     )
                     SpacerW1()
+                    ResizeButtonView(
+                        modifier = Modifier
+                            .rotate(180f),
+                        onResize = { delta ->
+                            resizeOffsetRight.floatValue -= pxToDp(delta.roundToInt())
+                            onResize(resizeOffsetLeft.floatValue, resizeOffsetRight.floatValue)
+                        },
+                        onResizeEnd = { delta ->
+                            if (!onResizeEnd(resizeOffsetLeft.floatValue, resizeOffsetRight.floatValue))
+                                resizeOffsetRight.floatValue = 0f
+                        }
+                    )
                 }
             }
         },
