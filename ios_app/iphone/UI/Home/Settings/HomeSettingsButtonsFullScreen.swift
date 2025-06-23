@@ -246,7 +246,7 @@ private struct DragButtonView: View {
                 content: {
                     HStack {
                         
-                        ResizeDotView(
+                        ResizeButtonView(
                             onResize: { value in
                                 onTop = true
                                 resizeOffsetLeft = max(
@@ -272,7 +272,7 @@ private struct DragButtonView: View {
                         
                         Spacer()
                         
-                        ResizeDotView(
+                        ResizeButtonView(
                             onResize: { value in
                                 onTop = true
                                 resizeOffsetRight = max(
@@ -331,7 +331,7 @@ private struct DragButtonView: View {
     }
 }
 
-private struct ResizeDotView: View {
+private struct ResizeButtonView: View {
     
     let onResize: (CGFloat) -> Void
     let onResizeEnd: (CGFloat) -> Void
@@ -342,7 +342,7 @@ private struct ResizeDotView: View {
     
     var body: some View {
         
-        ResizeDotViewArcShape(startAngle: .degrees(70), endAngle: .degrees(290), clockwise: true)
+        ResizeButtonViewArcShape(startAngle: .degrees(70), endAngle: .degrees(290), clockwise: true)
             .stroke(.white, style: .init(lineWidth: resizeDotViewArcLineWidth, lineCap: .round))
             .frame(width: resizeDotViewArcRadius, height: barHeight)
             .gesture(
@@ -357,7 +357,7 @@ private struct ResizeDotView: View {
     }
 }
 
-private struct ResizeDotViewArcShape: Shape {
+private struct ResizeButtonViewArcShape: Shape {
     
     let startAngle: Angle
     let endAngle: Angle
