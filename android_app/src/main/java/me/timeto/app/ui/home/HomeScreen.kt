@@ -4,11 +4,8 @@ import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Text
@@ -21,20 +18,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
-import me.timeto.app.ui.HStack
-import me.timeto.app.ui.H_PADDING
 import me.timeto.app.MainActivity
 import me.timeto.app.ui.VStack
-import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
-import me.timeto.app.ui.onePx
 import me.timeto.app.ui.pxToDp
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
-import me.timeto.app.toColor
 import me.timeto.app.ui.checklists.ChecklistView
 import me.timeto.app.ui.Padding
 import me.timeto.app.ui.SpacerW1
+import me.timeto.app.ui.home.buttons.HomeButtonsView
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.privacy.PrivacyFs
 import me.timeto.app.ui.readme.ReadmeFs
@@ -168,60 +161,7 @@ fun HomeScreen() {
                     SpacerW1()
             }
 
-            state.goalBarsUi.forEach { goalBarUi ->
-
-                HStack(
-                    modifier = Modifier
-                        .offset(y = 1.dp)
-                        .height(HomeScreen__itemHeight),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-
-                    ZStack(
-                        modifier = Modifier
-                            .padding(horizontal = H_PADDING)
-                            .height(HomeScreen__itemCircleHeight)
-                            .fillMaxWidth()
-                            .clip(roundedShape)
-                            .background(c.homeFg)
-                            .clickable {
-                                goalBarUi.startInterval()
-                            },
-                    ) {
-
-                        ZStack(
-                            modifier = Modifier
-                                .fillMaxHeight()
-                                .fillMaxWidth(goalBarUi.ratio)
-                                .background(goalBarUi.bgColor.toColor())
-                                .clip(roundedShape)
-                                .align(Alignment.CenterStart),
-                        )
-
-                        Text(
-                            text = goalBarUi.textLeft,
-                            modifier = Modifier
-                                .padding(start = HomeScreen__itemCircleHPadding, top = onePx)
-                                .align(Alignment.CenterStart),
-                            color = c.white,
-                            fontSize = HomeScreen__itemCircleFontSize,
-                            fontWeight = HomeScreen__itemCircleFontWeight,
-                            lineHeight = 18.sp,
-                        )
-
-                        Text(
-                            text = goalBarUi.textRight,
-                            modifier = Modifier
-                                .padding(end = HomeScreen__itemCircleHPadding, top = onePx)
-                                .align(Alignment.CenterEnd),
-                            color = c.white,
-                            fontSize = HomeScreen__itemCircleFontSize,
-                            fontWeight = HomeScreen__itemCircleFontWeight,
-                            lineHeight = 18.sp,
-                        )
-                    }
-                }
-            }
+            HomeButtonsView()
 
             Padding(vertical = 8.dp)
         }
