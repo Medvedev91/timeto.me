@@ -6,13 +6,11 @@ import kotlinx.coroutines.launch
 import me.timeto.shared.*
 import me.timeto.shared.db.*
 import me.timeto.shared.db.KvDb.Companion.todayOnHomeScreen
-import me.timeto.shared.limitMax
 import me.timeto.shared.limitMin
 import me.timeto.shared.SystemInfo
 import me.timeto.shared.TaskUi
 import me.timeto.shared.sortedUi
 import me.timeto.shared.time
-import me.timeto.shared.DayBarsUi
 import me.timeto.shared.TimerStateUi
 import me.timeto.shared.vm.activities.timer.ActivityTimerStrategy
 import me.timeto.shared.vm.whats_new.WhatsNewVm
@@ -24,7 +22,6 @@ class HomeVm : Vm<HomeVm.State>() {
         val intervalDb: IntervalDb,
         val isPurple: Boolean,
         val todayTasksUi: List<TaskUi>,
-        val todayBarsUi: DayBarsUi?,
         val fdroidMessage: String?,
         val readmeMessage: String?,
         val whatsNewMessage: String?,
@@ -54,57 +51,6 @@ class HomeVm : Vm<HomeVm.State>() {
             },
             shortcutsDb = textFeatures.shortcutsDb,
         )
-
-        // todo performance?
-        val goalBarsUi: List<GoalBarUi> = if (todayBarsUi == null)
-            listOf()
-        else Cache.activitiesDbSorted
-            .map { activityDb ->
-                activityDb.getGoalsDbCached()
-                    .filter { it.buildPeriod().isToday() }
-                    .map { goalDb ->
-
-                        val goalTf: TextFeatures = goalDb.note.textFeatures()
-
-                        val dayBarsUiForGoal: List<DayBarsUi.BarUi> = todayBarsUi.barsUi
-                            .filter { it.activityDb?.id == activityDb.id }
-                            .filter {
-                                // Goal without note is common for activity
-                                if (goalTf.textNoFeatures.isBlank()) true
-                                else goalTf.textNoFeatures == it.intervalTf.textNoFeatures
-                            }
-                        var totalSeconds: Int = dayBarsUiForGoal.sumOf { it.seconds }
-                        val lastWithActivity = todayBarsUi.barsUi
-                            .lastOrNull { it.activityDb != null }
-                        if (
-                            lastWithActivity != null &&
-                            lastWithActivity == dayBarsUiForGoal.lastOrNull()
-                        ) {
-                            val timeFinish = lastWithActivity.timeFinish
-                            val now = time()
-                            if (now < timeFinish)
-                                reportApi("MainActivity goal bad time $now $timeFinish")
-                            totalSeconds += (now - timeFinish)
-                        }
-
-                        val timeLeft: Int = goalDb.seconds - totalSeconds
-                        val textRight: String = run {
-                            if (timeLeft > 0) timeLeft.toTimerHintNote(isShort = false)
-                            else if (timeLeft == 0) goalDb.finish_text
-                            else "+ ${(timeLeft * -1).toTimerHintNote(isShort = false)} ${goalDb.finish_text}"
-                        }
-
-                        GoalBarUi(
-                            goalDb = goalDb,
-                            goalTf = goalTf,
-                            activityDb = activityDb,
-                            totalSeconds = totalSeconds,
-                            textRight = textRight,
-                            ratio = totalSeconds.limitMax(goalDb.seconds).toFloat() / goalDb.seconds.toFloat(),
-                        )
-                    }
-            }
-            .flatten()
 
         val mainTasks: List<MainTask> = run {
             val tasksUi: List<TaskUi> =
@@ -162,7 +108,6 @@ class HomeVm : Vm<HomeVm.State>() {
             intervalDb = Cache.lastIntervalDb,
             isPurple = false,
             todayTasksUi = listOf(),
-            todayBarsUi = null, // todo init data
             fdroidMessage = null, // todo init data
             readmeMessage = null, // todo init data
             whatsNewMessage = null, // todo init data
@@ -227,19 +172,6 @@ class HomeVm : Vm<HomeVm.State>() {
 
         ///
 
-        IntervalDb.anyChangeFlow()
-            .onEachExIn(scopeVm) {
-                upTodayBarsUi()
-            }
-        scopeVm.launch {
-            while (true) {
-                delayToNextMinute()
-                upTodayBarsUi()
-            }
-        }
-
-        ///
-
         scopeVm.launch {
             while (true) {
                 state.update {
@@ -273,19 +205,6 @@ class HomeVm : Vm<HomeVm.State>() {
         state.update { it.copy(isPurple = !it.isPurple) }
     }
 
-    private suspend fun upTodayBarsUi() {
-        val utcOffset = localUtcOffsetWithDayStart
-        val todayDS = UnixTime(utcOffset = utcOffset).localDay
-        val todayBarsUi = DayBarsUi
-            .buildList(
-                dayStart = todayDS,
-                dayFinish = todayDS,
-                utcOffset = utcOffset,
-            )
-            .first()
-        state.update { it.copy(todayBarsUi = todayBarsUi) }
-    }
-
     ///
 
     data class ListsContainerSize(
@@ -299,52 +218,6 @@ class HomeVm : Vm<HomeVm.State>() {
     )
 
     ///
-
-    class GoalBarUi(
-        val goalDb: GoalDb,
-        val goalTf: TextFeatures,
-        val activityDb: ActivityDb,
-        val totalSeconds: Int,
-        val textRight: String,
-        val ratio: Float,
-    ) {
-
-        val bgColor: ColorRgba = activityDb.colorRgba
-
-        val textLeft = prepGoalTextLeft(
-            note = goalTf.textNoFeatures,
-            secondsLeft = totalSeconds,
-        )
-
-        fun startInterval() {
-            val timer: Int = run {
-                val goalTimer = goalDb.timer
-                if (goalTimer > 0)
-                    return@run goalTimer
-                val secondsLeft: Int = goalDb.seconds - totalSeconds
-                if (secondsLeft > 0)
-                    return@run secondsLeft
-                45 * 60
-            }
-            val noteTf: TextFeatures =
-                goalDb.note.textFeatures().copy(goalDb = goalDb)
-            launchExIo {
-                TaskDb.selectAsc()
-                    .filter { taskDb ->
-                        val tf = taskDb.text.textFeatures()
-                        taskDb.isToday && (tf.paused != null) && (tf.goalDb?.id == goalDb.id)
-                    }
-                    .forEach { taskDb ->
-                        taskDb.delete()
-                    }
-                IntervalDb.insertWithValidation(
-                    timer = timer,
-                    activityDb = activityDb,
-                    note = noteTf.textWithFeatures(),
-                )
-            }
-        }
-    }
 
     class MainTask(
         val taskUi: TaskUi,
@@ -374,15 +247,4 @@ class HomeVm : Vm<HomeVm.State>() {
         val checklistsDb: List<ChecklistDb>,
         val shortcutsDb: List<ShortcutDb>,
     )
-}
-
-private fun prepGoalTextLeft(
-    note: String,
-    secondsLeft: Int,
-): String {
-    if (secondsLeft == 0)
-        return note
-    val rem = secondsLeft % 60
-    val secondsToUi = if (rem == 0) secondsLeft else (secondsLeft + (60 - rem))
-    return "$note ${secondsToUi.toTimerHintNote(isShort = false)}"
 }
