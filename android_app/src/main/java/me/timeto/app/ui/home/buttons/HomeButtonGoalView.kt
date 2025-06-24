@@ -21,7 +21,6 @@ import me.timeto.app.ui.home.HomeScreen__itemCircleFontWeight
 import me.timeto.app.ui.home.HomeScreen__itemCircleHPadding
 import me.timeto.app.ui.home.HomeScreen__itemCircleHeight
 import me.timeto.app.ui.home.HomeScreen__itemHeight
-import me.timeto.app.ui.onePx
 import me.timeto.app.ui.roundedShape
 import me.timeto.shared.vm.home.buttons.HomeButtonType
 
@@ -59,7 +58,7 @@ fun HomeButtonGoalView(
             Text(
                 text = goal.leftText,
                 modifier = Modifier
-                    .padding(start = HomeScreen__itemCircleHPadding, top = onePx)
+                    .padding(start = HomeScreen__itemCircleHPadding)
                     .align(Alignment.CenterStart),
                 color = c.white,
                 fontSize = HomeScreen__itemCircleFontSize,
@@ -70,7 +69,7 @@ fun HomeButtonGoalView(
             Text(
                 text = goal.rightText,
                 modifier = Modifier
-                    .padding(end = HomeScreen__itemCircleHPadding, top = onePx)
+                    .padding(end = HomeScreen__itemCircleHPadding)
                     .align(Alignment.CenterEnd),
                 color = c.white,
                 fontSize = HomeScreen__itemCircleFontSize,
