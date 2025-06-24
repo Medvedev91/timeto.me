@@ -1,5 +1,6 @@
 package me.timeto.app.ui.home.settings
 
+import android.view.MotionEvent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.Orientation
@@ -15,23 +16,30 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import me.timeto.app.Haptic
 import me.timeto.app.toColor
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.H_PADDING
@@ -77,6 +85,7 @@ fun HomeSettingsButtonsFs() {
     val navigationFs = LocalNavigationFs.current
     val navigationLayer = LocalNavigationLayer.current
 
+    val scope = rememberCoroutineScope()
     val configuration = LocalConfiguration.current
 
     val (vm, state) = rememberVm {
@@ -89,6 +98,20 @@ fun HomeSettingsButtonsFs() {
 
     val hoverButtonsUi = remember {
         mutableStateOf(listOf<HomeSettingsButtonUi>())
+    }
+
+    val isFirstRun = remember { mutableStateOf(true) }
+    val ignoreNextHaptic = remember { mutableStateOf(true) }
+    LaunchedEffect(hoverButtonsUi.value) {
+        if (isFirstRun.value) {
+            isFirstRun.value = false
+            return@LaunchedEffect
+        }
+        if (ignoreNextHaptic.value) {
+            ignoreNextHaptic.value = false
+            return@LaunchedEffect
+        }
+        Haptic.shot()
     }
 
     Screen {
@@ -147,12 +170,11 @@ fun HomeSettingsButtonsFs() {
                         },
                         onDragEnd = { xy ->
                             hoverButtonsUi.value = emptyList()
-                            // todo
-//                        Task {
-                            // To run onChange() for hoverButtonsUi before this
-//                            try ? await Task . sleep (nanoseconds: 1_000)
-//                                ignoreNextHaptic = true
-//                            }
+                            scope.launch {
+                                // To run change for hoverButtonsUi before this
+                                delay(500)
+                                ignoreNextHaptic.value = true
+                            }
                             vm.onButtonDragEnd(
                                 buttonUi = buttonUi,
                                 x = xy.x,
@@ -168,11 +190,11 @@ fun HomeSettingsButtonsFs() {
                         },
                         onResizeEnd = { left, right ->
                             hoverButtonsUi.value = emptyList()
-//                            Task {
-                            // To run onChange() for hoverButtonsUi before this
-//                                try ? await Task . sleep (nanoseconds: 1_000)
-//                                    ignoreNextHaptic = true
-//                                }
+                            scope.launch {
+                                // To run change for hoverButtonsUi before this
+                                delay(500)
+                                ignoreNextHaptic.value = true
+                            }
                             vm.onButtonResizeEnd(
                                 buttonUi = buttonUi,
                                 left = left,
@@ -280,6 +302,7 @@ private fun ButtonView(
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun DragButtonView(
     buttonUi: HomeSettingsButtonUi,
@@ -308,6 +331,10 @@ private fun DragButtonView(
             ZStack(
                 modifier = Modifier
                     .fillMaxSize()
+                    .motionEventSpy { event ->
+                        if (event.action == MotionEvent.ACTION_DOWN)
+                            Haptic.shot()
+                    }
                     .pointerInput(Unit) {
                         detectDragGestures(
                             onDragEnd = {
