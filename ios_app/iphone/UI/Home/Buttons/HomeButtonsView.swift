@@ -7,12 +7,10 @@ private let buttonsHPadding: CGFloat = H_PADDING
 
 struct HomeButtonsView: View {
     
-    private let width: CGFloat = calcWidth()
-    
     var body: some View {
         VmView({
             HomeButtonsVm(
-                width: Float(width),
+                width: Float(calcWidth()),
                 rowHeight: Float(rowHeight),
                 spacing: Float(spacing)
             )
