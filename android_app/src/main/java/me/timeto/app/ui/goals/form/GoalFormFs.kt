@@ -13,6 +13,7 @@ import me.timeto.app.ui.checklists.ChecklistsPickerFs
 import me.timeto.app.ui.emoji.EmojiPickerFs
 import me.timeto.app.ui.form.button.FormButton
 import me.timeto.app.ui.form.FormInput
+import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.form.button.FormButtonEmoji
 import me.timeto.app.ui.form.padding.FormPaddingBottom
 import me.timeto.app.ui.form.padding.FormPaddingSectionSection
@@ -123,6 +124,18 @@ fun GoalFormFs(
                     isLast = true,
                     isAutoFocus = false,
                     imeAction = ImeAction.Done,
+                )
+
+                FormPaddingSectionSection()
+
+                FormSwitch(
+                    title = state.isEntireActivityTitle,
+                    isEnabled = state.isEntireActivity,
+                    isFirst = true,
+                    isLast = true,
+                    onChange = { newIsEntireActivity ->
+                        vm.setIsEntireActivity(newIsEntireActivity)
+                    },
                 )
 
                 FormPaddingSectionSection()
