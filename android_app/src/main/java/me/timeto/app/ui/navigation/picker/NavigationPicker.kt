@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import me.timeto.app.ui.HStack
 import me.timeto.app.R
 import me.timeto.app.ui.ZStack
@@ -25,11 +26,22 @@ import me.timeto.app.ui.navigation.LocalNavigationLayer
 
 @Composable
 fun <T> NavigationPicker(
+    title: String?,
     items: List<NavigationPickerItem<T>>,
     onDone: (item: NavigationPickerItem<T>) -> Unit,
 ) {
 
     val navigationLayer = LocalNavigationLayer.current
+
+    if (title != null) {
+        Text(
+            text = title,
+            modifier = Modifier
+                .padding(top = 8.dp, bottom = 4.dp, start = 30.dp),
+            color = c.secondaryText,
+            fontSize = 14.sp,
+        )
+    }
 
     LazyColumn {
         items.forEachIndexed { idx, item ->

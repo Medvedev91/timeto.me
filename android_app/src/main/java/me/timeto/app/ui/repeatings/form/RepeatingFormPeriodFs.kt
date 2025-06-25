@@ -115,6 +115,7 @@ fun RepeatingFormPeriodFs(
                     withArrow = true,
                     onClick = {
                         navigationFs.picker(
+                            title = null,
                             items = state.periodPickerItemsUi.map { periodUi ->
                                 NavigationPickerItem(
                                     title = periodUi.title,
@@ -383,6 +384,7 @@ private fun DayOfTheYearFormFs(
                             )
                         }
                         navigationFs.picker(
+                            title = null,
                             items = pickerItems,
                             onDone = { pickerItem ->
                                 month.value = pickerItem.item
@@ -407,6 +409,7 @@ private fun DayOfTheYearFormFs(
                             )
                         }
                         navigationFs.picker(
+                            title = null,
                             items = pickerItems,
                             onDone = { pickerItem ->
                                 dayId.value = pickerItem.item

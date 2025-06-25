@@ -46,6 +46,7 @@ class Navigation : DialogsManager {
     }
 
     fun <T> picker(
+        title: String?,
         items: List<NavigationPickerItem<T>>,
         onDone: (item: NavigationPickerItem<T>) -> Unit,
     ) {
@@ -53,6 +54,7 @@ class Navigation : DialogsManager {
             innerPadding = PaddingValues(),
         ) {
             NavigationPicker(
+                title = title,
                 items = items,
                 onDone = onDone,
             )
