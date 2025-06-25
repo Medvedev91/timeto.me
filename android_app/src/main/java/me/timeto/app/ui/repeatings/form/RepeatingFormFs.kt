@@ -24,8 +24,10 @@ import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
+import me.timeto.app.ui.navigation.picker.NavigationPickerItem
 import me.timeto.app.ui.shortcuts.ShortcutsPickerFs
 import me.timeto.app.ui.timer.TimerSheet
+import me.timeto.shared.db.GoalDb
 import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.vm.repeatings.form.RepeatingFormVm
 
@@ -184,8 +186,28 @@ fun RepeatingFormFs(
                 FormPaddingSectionSection()
 
                 FormButton(
-                    title = state.checklistsTitle,
+                    title = state.goalTitle,
                     isFirst = true,
+                    isLast = false,
+                    note = state.goalNote,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.picker(
+                            title = state.goalTitle,
+                            items = buildGoalsPickerItems(
+                                goalsUi = state.goalsUi,
+                                selectedGoalDb = state.goalDb,
+                            ),
+                            onDone = { newGoal ->
+                                vm.setGoal(newGoal.item)
+                            },
+                        )
+                    },
+                )
+
+                FormButton(
+                    title = state.checklistsTitle,
+                    isFirst = false,
                     isLast = false,
                     note = state.checklistsNote,
                     withArrow = true,
@@ -257,4 +279,28 @@ fun RepeatingFormFs(
             }
         }
     }
+}
+
+private fun buildGoalsPickerItems(
+    goalsUi: List<RepeatingFormVm.GoalUi>,
+    selectedGoalDb: GoalDb?,
+): List<NavigationPickerItem<GoalDb?>> {
+    val list = mutableListOf<NavigationPickerItem<GoalDb?>>()
+    list.add(
+        NavigationPickerItem(
+            title = "None",
+            isSelected = selectedGoalDb == null,
+            item = null,
+        )
+    )
+    goalsUi.forEach { goalUi ->
+        list.add(
+            NavigationPickerItem(
+                title = goalUi.title,
+                isSelected = selectedGoalDb?.id == goalUi.goalDb.id,
+                item = goalUi.goalDb,
+            )
+        )
+    }
+    return list
 }
