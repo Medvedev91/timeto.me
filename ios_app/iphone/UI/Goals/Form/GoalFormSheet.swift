@@ -55,7 +55,7 @@ private struct GoalFormSheetInner: View {
             Section {
                 
                 Toggle(
-                    state.isEntireActivityNote,
+                    state.isEntireActivityTitle,
                     isOn: $isEntireActivity
                 )
                 .onChange(of: isEntireActivity) { _, new in
