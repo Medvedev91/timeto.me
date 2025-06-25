@@ -21,7 +21,7 @@ fun FormButtonNoteView(
         modifier = Modifier
             .padding(end = if (withArrow) 8.dp else 16.dp)
             .offset(),
-        color = color ?: c.tertiaryText,
+        color = color ?: c.secondaryText,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
     )
