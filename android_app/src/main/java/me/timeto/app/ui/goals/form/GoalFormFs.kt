@@ -11,11 +11,14 @@ import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.checklists.ChecklistsPickerFs
 import me.timeto.app.ui.emoji.EmojiPickerFs
+import me.timeto.app.ui.form.FormHeader
 import me.timeto.app.ui.form.button.FormButton
 import me.timeto.app.ui.form.FormInput
 import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.form.button.FormButtonEmoji
 import me.timeto.app.ui.form.padding.FormPaddingBottom
+import me.timeto.app.ui.form.padding.FormPaddingHeaderSection
+import me.timeto.app.ui.form.padding.FormPaddingSectionHeader
 import me.timeto.app.ui.form.padding.FormPaddingSectionSection
 import me.timeto.app.ui.form.padding.FormPaddingTop
 import me.timeto.app.ui.header.Header
@@ -195,12 +198,16 @@ fun GoalFormFs(
                     },
                 )
 
-                FormPaddingSectionSection()
+                FormPaddingSectionHeader()
+
+                FormHeader(state.timerHeader)
+
+                FormPaddingHeaderSection()
 
                 FormButton(
-                    title = state.timerHeader,
+                    title = state.timerTitleTimer,
                     isFirst = true,
-                    isLast = false,
+                    isLast = true,
                     note = state.timerNote,
                     withArrow = true,
                     onClick = {
