@@ -162,7 +162,7 @@ fun GoalFormFs(
                 FormButton(
                     title = state.secondsTitle,
                     isFirst = false,
-                    isLast = true,
+                    isLast = false,
                     note = state.secondsNote,
                     withArrow = true,
                     onClick = {
@@ -173,6 +173,22 @@ fun GoalFormFs(
                                 initSeconds = state.seconds,
                                 onDone = { newSeconds ->
                                     vm.setSeconds(newSeconds = newSeconds)
+                                },
+                            )
+                        }
+                    },
+                )
+
+                FormButtonEmoji(
+                    title = state.finishedTextTitle,
+                    emoji = state.finishedText,
+                    isFirst = false,
+                    isLast = true,
+                    onClick = {
+                        navigationFs.push {
+                            EmojiPickerFs(
+                                onDone = { emoji ->
+                                    vm.setFinishedText(emoji)
                                 },
                             )
                         }
@@ -201,22 +217,6 @@ fun GoalFormFs(
                     },
                 )
 
-                FormButtonEmoji(
-                    title = state.finishedTextTitle,
-                    emoji = state.finishedText,
-                    isFirst = false,
-                    isLast = true,
-                    onClick = {
-                        navigationFs.push {
-                            EmojiPickerFs(
-                                onDone = { emoji ->
-                                    vm.setFinishedText(emoji)
-                                },
-                            )
-                        }
-                    },
-                )
-
                 FormPaddingSectionSection()
 
                 FormButton(
@@ -231,7 +231,7 @@ fun GoalFormFs(
                                 initChecklistsDb = state.checklistsDb,
                                 onDone = { newChecklistsDb ->
                                     vm.setChecklistsDb(newChecklistsDb)
-                                }
+                                },
                             )
                         }
                     },
@@ -249,7 +249,7 @@ fun GoalFormFs(
                                 initShortcutsDb = state.shortcutsDb,
                                 onDone = { newShortcutsDb ->
                                     vm.setShortcutsDb(newShortcutsDb)
-                                }
+                                },
                             )
                         }
                     },
