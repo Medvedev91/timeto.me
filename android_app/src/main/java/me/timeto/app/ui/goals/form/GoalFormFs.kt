@@ -4,6 +4,9 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import me.timeto.app.ui.c
@@ -204,25 +207,41 @@ fun GoalFormFs(
 
                 FormPaddingHeaderSection()
 
-                FormButton(
-                    title = state.timerTitleTimer,
+                val timer: Int = state.timer
+                val isTimerRestOfBar: MutableState<Boolean> =
+                    remember(timer) { mutableStateOf(timer == 0) }
+
+                FormSwitch(
+                    title = state.timerTitleRest,
+                    isEnabled = isTimerRestOfBar.value,
                     isFirst = true,
-                    isLast = true,
-                    note = state.timerNote,
-                    withArrow = true,
-                    onClick = {
-                        navigationFs.push {
-                            TimerSheet(
-                                title = state.timerHeader,
-                                doneTitle = "Done",
-                                initSeconds = state.timer,
-                                onDone = { seconds ->
-                                    vm.setTimer(newTimer = seconds)
-                                },
-                            )
-                        }
+                    isLast = isTimerRestOfBar.value,
+                    onChange = { newValue ->
+                        vm.setTimer(if (newValue) 0 else (45 * 60))
                     },
                 )
+
+                if (!isTimerRestOfBar.value) {
+                    FormButton(
+                        title = state.timerTitleTimer,
+                        isFirst = false,
+                        isLast = true,
+                        note = state.timerNote,
+                        withArrow = true,
+                        onClick = {
+                            navigationFs.push {
+                                TimerSheet(
+                                    title = state.timerHeader,
+                                    doneTitle = "Done",
+                                    initSeconds = state.timer,
+                                    onDone = { seconds ->
+                                        vm.setTimer(newTimer = seconds)
+                                    },
+                                )
+                            }
+                        },
+                    )
+                }
 
                 FormPaddingSectionSection()
 
