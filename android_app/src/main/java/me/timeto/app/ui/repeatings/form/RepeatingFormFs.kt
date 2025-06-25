@@ -217,7 +217,7 @@ fun RepeatingFormFs(
                                 initChecklistsDb = state.checklistsDb,
                                 onDone = { newChecklistsDb ->
                                     vm.setChecklists(newChecklistsDb)
-                                }
+                                },
                             )
                         }
                     },
@@ -250,7 +250,7 @@ fun RepeatingFormFs(
                     isLast = true,
                     onChange = { newIsImportant ->
                         vm.setIsImportant(newIsImportant)
-                    }
+                    },
                 )
 
                 val repeatingDb: RepeatingDb? = state.initRepeatingDb
