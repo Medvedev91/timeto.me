@@ -1,7 +1,8 @@
 package me.timeto.app.ui.home.buttons
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -16,18 +17,26 @@ import me.timeto.app.toColor
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
+import me.timeto.app.ui.goals.form.GoalFormFs
 import me.timeto.app.ui.home.HomeScreen__itemCircleFontSize
 import me.timeto.app.ui.home.HomeScreen__itemCircleFontWeight
 import me.timeto.app.ui.home.HomeScreen__itemCircleHPadding
 import me.timeto.app.ui.home.HomeScreen__itemCircleHeight
 import me.timeto.app.ui.home.HomeScreen__itemHeight
+import me.timeto.app.ui.home.settings.HomeSettingsButtonsFs
+import me.timeto.app.ui.navigation.LocalNavigationFs
+import me.timeto.app.ui.navigation.picker.NavigationPickerItem
 import me.timeto.app.ui.roundedShape
+import me.timeto.shared.vm.goals.form.GoalFormStrategy
 import me.timeto.shared.vm.home.buttons.HomeButtonType
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeButtonGoalView(
     goal: HomeButtonType.Goal,
 ) {
+
+    val navigationFs = LocalNavigationFs.current
 
     HStack(
         modifier = Modifier
@@ -41,9 +50,31 @@ fun HomeButtonGoalView(
                 .fillMaxWidth()
                 .clip(roundedShape)
                 .background(c.homeFg)
-                .clickable {
-                    goal.startInterval()
-                },
+                .combinedClickable(
+                    onClick = {
+                        goal.startInterval()
+                    },
+                    onLongClick = {
+                        navigationFs.picker(
+                            title = goal.fullText,
+                            items = contextPickerItems,
+                            onDone = { pickerItem ->
+                                navigationFs.push {
+                                    when (pickerItem.item) {
+                                        ContextPickerItemType.EditGoal -> {
+                                            GoalFormFs(
+                                                strategy = GoalFormStrategy.EditGoal(goal.goalDb),
+                                            )
+                                        }
+                                        ContextPickerItemType.HomeScreenSettings -> {
+                                            HomeSettingsButtonsFs()
+                                        }
+                                    }
+                                }
+                            },
+                        )
+                    },
+                ),
         ) {
 
             ZStack(
@@ -78,4 +109,22 @@ fun HomeButtonGoalView(
             )
         }
     }
+}
+
+private val contextPickerItems = listOf(
+    NavigationPickerItem(
+        title = "Edit",
+        isSelected = false,
+        item = ContextPickerItemType.EditGoal,
+    ),
+    NavigationPickerItem(
+        title = "Edit Home Screen",
+        isSelected = false,
+        item = ContextPickerItemType.HomeScreenSettings,
+    ),
+)
+
+private enum class ContextPickerItemType {
+    EditGoal,
+    HomeScreenSettings,
 }
