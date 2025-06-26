@@ -1,8 +1,6 @@
 import SwiftUI
 import shared
 
-private let secondaryFontSize = 15.0
-
 struct WhatsNewScreen: View {
     
     @Environment(Navigation.self) private var navigation
@@ -23,25 +21,25 @@ struct WhatsNewScreen: View {
                                 
                                 Text(historyItemUi.dateText)
                                     .foregroundColor(.secondary)
-                                    .font(.system(size: secondaryFontSize))
+                                    .fontWeight(.light)
                                 
                                 Spacer()
                                 
                                 Text(historyItemUi.timeAgoText)
                                     .foregroundColor(.secondary)
-                                    .font(.system(size: secondaryFontSize))
+                                    .fontWeight(.light)
                             }
                             
                             Text(historyItemUi.title)
                                 .foregroundColor(.primary)
-                                .font(.system(size: 17, weight: .bold))
+                                .font(.system(size: 17, weight: .semibold))
                                 .padding(.top, 6)
                                 .textAlign(.leading)
                             
                             if let text = historyItemUi.text {
                                 Text(text)
                                     .foregroundColor(.secondary)
-                                    .font(.system(size: secondaryFontSize))
+                                    .fontWeight(.light)
                                     .padding(.top, 6)
                                     .textAlign(.leading)
                             }
