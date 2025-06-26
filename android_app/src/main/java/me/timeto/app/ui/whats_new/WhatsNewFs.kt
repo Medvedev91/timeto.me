@@ -80,14 +80,12 @@ fun WhatsNewFs() {
                                 modifier = Modifier
                                     .weight(1f),
                                 color = c.secondaryText,
-                                fontSize = 15.sp,
                                 fontWeight = FontWeight.Light,
                             )
 
                             Text(
                                 text = historyItemUi.timeAgoText,
                                 color = c.secondaryText,
-                                fontSize = 15.sp,
                                 fontWeight = FontWeight.Light,
                             )
                         }
@@ -98,7 +96,7 @@ fun WhatsNewFs() {
                                 .padding(top = 2.dp)
                                 .padding(horizontal = H_PADDING),
                             color = c.text,
-                            fontWeight = FontWeight.Bold,
+                            fontWeight = FontWeight.SemiBold,
                         )
 
                         val text = historyItemUi.text
@@ -108,7 +106,6 @@ fun WhatsNewFs() {
                                 modifier = Modifier
                                     .padding(top = 2.dp)
                                     .padding(horizontal = H_PADDING),
-                                fontSize = 15.sp,
                                 fontWeight = FontWeight.Light,
                                 color = c.secondaryText,
                             )
