@@ -9,7 +9,7 @@ Goals Improvements
 - editing "Other" activity.
 
 8 Jun 2025:
-New Goals
+Move to Tasks From History
 
 4 August 2024:
 Today on Home Screen
