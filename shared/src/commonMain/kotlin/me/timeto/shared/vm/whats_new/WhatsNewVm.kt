@@ -31,7 +31,7 @@ class WhatsNewVm : Vm<WhatsNewVm.State>() {
     companion object {
 
         val historyItemsUi: List<HistoryItemUi> = listOf(
-            HistoryItemUi(20265, "Goals Improvements", text = nov262025Text),
+            HistoryItemUi(20265, "Goals Improvements", text = h26062025Text),
             HistoryItemUi(20247, "Move to Tasks From History"),
             HistoryItemUi(20044, "New Goals"),
             HistoryItemUi(19939, "Today on Home Screen", text = "Can be disabled in settings."),
@@ -84,7 +84,7 @@ class WhatsNewVm : Vm<WhatsNewVm.State>() {
     }
 }
 
-private val nov262025Text = """
+private val h26062025Text = """
     - many in row goals "Settings -> Home Screen",
     - track entire activity option for goals,
     - rest of bar option for goal's timer, 
