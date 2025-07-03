@@ -25,7 +25,7 @@ kotlin {
 
     sourceSets {
 
-        val ktor_version = "3.2.0"
+        val ktor_version = "3.1.3"
         val sqldelight_version = "2.1.0"
 
         val commonMain by getting {
@@ -83,8 +83,8 @@ android {
     defaultConfig {
         minSdk = 26
     }
-    compileOptions.sourceCompatibility = JavaVersion.VERSION_17
-    compileOptions.targetCompatibility = JavaVersion.VERSION_17
+    compileOptions.sourceCompatibility = JavaVersion.VERSION_21
+    compileOptions.targetCompatibility = JavaVersion.VERSION_21
 }
 
 sqldelight {

@@ -12,7 +12,7 @@ android {
     defaultConfig {
         applicationId = "me.timeto.app"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 580
         versionName = "2025.06.26"
     }
@@ -51,8 +51,8 @@ android {
     // https://f-droid.org/en/docs/Reproducible_Builds/#png-crushcrunch
     packaging.resources { aaptOptions.cruncherEnabled = false }
 
-    compileOptions.sourceCompatibility = JavaVersion.VERSION_17
-    compileOptions.targetCompatibility = JavaVersion.VERSION_17
+    compileOptions.sourceCompatibility = JavaVersion.VERSION_21
+    compileOptions.targetCompatibility = JavaVersion.VERSION_21
 
     buildFeatures.buildConfig = true
 }
@@ -60,6 +60,6 @@ android {
 dependencies {
     implementation(project(":shared"))
     implementation("androidx.activity:activity-compose:1.10.1")
-    implementation("androidx.compose.material:material:1.8.2")
+    implementation("androidx.compose.material:material:1.8.3")
     implementation("com.google.android.material:material:1.12.0")
 }
