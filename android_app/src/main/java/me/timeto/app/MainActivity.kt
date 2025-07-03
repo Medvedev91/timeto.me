@@ -47,10 +47,10 @@ class MainActivity : ComponentActivity() {
 
     private val batteryReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent) {
-            val level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
-            val scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
+            val level: Int = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
+            val scale: Int = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
             BatteryInfo.emitLevel(level * 100 / scale)
-            val plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0)
+            val plugged: Int = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0)
             BatteryInfo.emitIsCharging(plugged != 0)
         }
     }
