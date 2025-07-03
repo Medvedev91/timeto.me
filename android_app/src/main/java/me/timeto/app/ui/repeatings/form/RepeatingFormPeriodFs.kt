@@ -146,7 +146,7 @@ fun RepeatingFormPeriodFs(
                                 factory = { context ->
                                     NumberPicker(context).apply {
                                         setOnValueChangedListener { _, _, new ->
-                                            vm.setSelectedNDays(new)
+                                            vm.setSelectedNDays(days[new])
                                         }
                                         displayedValues = days.map { "$it" }.toTypedArray()
                                         if (isSdkQPlus())
