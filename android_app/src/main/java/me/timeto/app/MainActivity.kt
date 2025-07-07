@@ -67,6 +67,9 @@ class MainActivity : ComponentActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
             notificationsPermissionProcessing()
 
+        val serviceIntent = Intent(this, TimerService::class.java)
+        this.startForegroundService(serviceIntent)
+
         setContent {
 
             val (vm, state) = rememberVm {

@@ -23,6 +23,9 @@ object NotificationCenter {
     fun channelTimerOverdue(): NotificationChannel =
         upsertChannel("timer_overdue", "Timer Overdue", null)
 
+    fun channelTimer(): NotificationChannel =
+        upsertChannel("timer", "Timer", null)
+
     fun getManager(): NotificationManager =
         App.Companion.instance.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
