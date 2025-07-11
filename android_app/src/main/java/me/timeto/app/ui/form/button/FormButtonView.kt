@@ -2,6 +2,7 @@ package me.timeto.app.ui.form.button
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material.Text
@@ -56,7 +57,7 @@ fun FormButtonView(
                     overflow = TextOverflow.Ellipsis,
                 )
 
-                SpacerW1()
+                Box(Modifier.weight(1f))
 
                 rightView()
             }
