@@ -47,7 +47,7 @@ fun FormButtonView(
             ) {
 
                 Text(
-                    title,
+                    text = title,
                     modifier = Modifier
                         .padding(start = H_PADDING, end = 10.dp)
                         .weight(1f),
