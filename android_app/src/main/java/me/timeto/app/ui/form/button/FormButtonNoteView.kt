@@ -17,7 +17,7 @@ fun FormButtonNoteView(
     withArrow: Boolean,
 ) {
     Text(
-        note,
+        text = note,
         modifier = Modifier
             .padding(end = if (withArrow) 8.dp else 16.dp)
             .offset(),
