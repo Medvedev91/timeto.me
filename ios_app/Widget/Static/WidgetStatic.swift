@@ -3,7 +3,7 @@ import SwiftUI
 
 // todo Enable in WidgetBundle
 
-struct WidgetStatic: SwiftUI.Widget {
+struct WidgetStatic: Widget {
     
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: "widget", provider: Provider()) { entry in

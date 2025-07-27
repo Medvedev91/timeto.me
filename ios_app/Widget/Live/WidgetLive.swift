@@ -3,7 +3,7 @@ import WidgetKit
 import SwiftUI
 import shared
 
-struct WidgetLive: SwiftUI.Widget {
+struct WidgetLive: Widget {
     
     var body: some WidgetConfiguration {
         
