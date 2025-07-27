@@ -72,19 +72,19 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		2C34928E2E273E9E00EA27BD /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Resources/Info.plist,
-			);
-			target = 2C3492792E273E9D00EA27BD /* WidgetExtension */;
-		};
 		2C3492932E27434100EA27BD /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				WidgetAttributes.swift,
 			);
 			target = 2C95BA81280D74AA0027FC35 /* timeto (iOS) */;
+		};
+		2C409CB52E36991A009E96D6 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Resources/Info.plist,
+			);
+			target = 2C3492792E273E9D00EA27BD /* WidgetExtension */;
 		};
 		2C8148C22D3DAB13000948F6 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -96,7 +96,7 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		2C3492802E273E9D00EA27BD /* Widget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (2C3492932E27434100EA27BD /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 2C34928E2E273E9E00EA27BD /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Widget; sourceTree = "<group>"; };
+		2C3492802E273E9D00EA27BD /* Widget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (2C3492932E27434100EA27BD /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 2C409CB52E36991A009E96D6 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Widget; sourceTree = "<group>"; };
 		2C8147512D3DA9F3000948F6 /* Common */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Common; sourceTree = "<group>"; };
 		2C81484C2D3DAAAA000948F6 /* iphone */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = iphone; sourceTree = "<group>"; };
 		2C8148B82D3DAB13000948F6 /* watch WatchKit Extension */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (2C8148C22D3DAB13000948F6 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "watch WatchKit Extension"; sourceTree = "<group>"; };
@@ -406,7 +406,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Widget/Info.plist;
+				INFOPLIST_FILE = Widget/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Widget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
@@ -441,7 +441,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Widget/Info.plist;
+				INFOPLIST_FILE = Widget/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Widget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
