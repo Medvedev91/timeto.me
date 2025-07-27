@@ -1,7 +1,7 @@
 import Foundation
 import ActivityKit
 
-struct WidgetAttributes: ActivityAttributes {
+struct WidgetLiveAttributes: ActivityAttributes {
     
     struct ContentState: Codable, Hashable {
         let title: String

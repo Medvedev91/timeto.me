@@ -75,7 +75,7 @@
 		2C3492932E27434100EA27BD /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				WidgetAttributes.swift,
+				Live/WidgetLiveAttributes.swift,
 			);
 			target = 2C95BA81280D74AA0027FC35 /* timeto (iOS) */;
 		};

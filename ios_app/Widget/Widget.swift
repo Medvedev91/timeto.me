@@ -8,7 +8,7 @@ struct Widget: SwiftUI.Widget {
     var body: some WidgetConfiguration {
         
         ActivityConfiguration(
-            for: WidgetAttributes.self,
+            for: WidgetLiveAttributes.self,
             content: { context in
                 HStack {
                     
@@ -70,7 +70,7 @@ struct Widget: SwiftUI.Widget {
 
 private struct IslandTimerView: View {
     
-    let state: WidgetAttributes.ContentState
+    let state: WidgetLiveAttributes.ContentState
     
     var body: some View {
         TimelineView(.periodic(from: Date.now, by: 1.0)) { timeline in

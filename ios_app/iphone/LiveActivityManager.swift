@@ -20,12 +20,12 @@ func initLiveActivity() {
 private func updateLiveActivity(liveActivity: LiveActivity) {
     let intervalDb = liveActivity.intervalDb
     Task {
-        for activity in ActivityKit.Activity<WidgetAttributes>.activities {
+        for activity in ActivityKit.Activity<WidgetLiveAttributes>.activities {
             await activity.end(nil, dismissalPolicy: .immediate)
         }
         
-        let attributes = WidgetAttributes()
-        let state = WidgetAttributes.ContentState(
+        let attributes = WidgetLiveAttributes()
+        let state = WidgetLiveAttributes.ContentState(
             title: liveActivity.dynamicIslandTitle,
             endDate: Date(timeIntervalSince1970: Double(intervalDb.id + intervalDb.timer)),
         )
