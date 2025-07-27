@@ -69,14 +69,8 @@ struct Widget2: SwiftUI.Widget {
     
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: "widget", provider: Provider()) { entry in
-            if #available(iOS 17.0, *) {
-                WidgetEntryView(entry: entry)
-                    .containerBackground(.fill.tertiary, for: .widget)
-            } else {
-                WidgetEntryView(entry: entry)
-                    .padding()
-                    .background()
-            }
+            WidgetEntryView(entry: entry)
+                .containerBackground(.black, for: .widget)
         }
     }
 }
@@ -103,7 +97,7 @@ struct Widget: SwiftUI.Widget {
                             .foregroundColor(.white)
                             .fontWeight(.medium)
                             .padding(.trailing, 1)
-                        Text(timerInterval: context.state.endDate.rangeForTimer(), countsDown: true)
+                        Text(timerInterval: context.state.endDate.widgetTimerRange(), countsDown: true)
                             .textAlign(.trailing)
                             .foregroundColor(.white)
                             .font(.system(size: 48, weight: .light))
@@ -155,19 +149,11 @@ private struct IslandTimerView: View {
             Text("00:00")
                 .hidden()
                 .overlay(alignment: .leading) {
-                    Text(timerInterval: state.endDate.rangeForTimer(), countsDown: true)
+                    Text(timerInterval: state.endDate.widgetTimerRange(), countsDown: true)
                         .monospacedDigit()
                         .lineLimit(1)
                         .minimumScaleFactor(0.1)
                 }
         }
-    }
-}
-
-private extension Date {
-    
-    func rangeForTimer() -> ClosedRange<Date> {
-        let now = Date.now
-        return now...(self > now ? self : now)
     }
 }
