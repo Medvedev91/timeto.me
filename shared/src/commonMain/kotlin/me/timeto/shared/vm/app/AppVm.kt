@@ -54,8 +54,21 @@ class AppVm : Vm<AppVm.State>() {
                 .onEachExIn(this) { lastInterval ->
                     NotificationAlarm.rescheduleAll()
                     performShortcutForInterval(lastInterval, secondsLimit = 3)
+                    // todo use selectActivityDb()
                     keepScreenOnStateFlow.emit(lastInterval.selectActivityDbCached().keepScreenOn)
+                    LiveActivity.update(lastInterval)
                 }
+
+            launchEx {
+                while (true) {
+                    try {
+                        delayToNextMinute()
+                    } catch (_: CancellationException) {
+                        break // On app closing
+                    }
+//                    LiveActivity.update(Cache.lastIntervalDb)
+                }
+            }
 
             ActivityDb
                 .anyChangeFlow()
@@ -74,7 +87,7 @@ class AppVm : Vm<AppVm.State>() {
                      */
                     try {
                         delay(1_000L)
-                    } catch (e: CancellationException) {
+                    } catch (_: CancellationException) {
                         break // On app closing
                     }
                     try {
