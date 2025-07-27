@@ -4,8 +4,8 @@ import SwiftUI
 struct WidgetBundle: SwiftUI.WidgetBundle {
     
     @WidgetBundleBuilder
-    var body: some SwiftUI.Widget {
-        Widget()
+    var body: some Widget {
+        WidgetLive()
         // WidgetStatic()
     }
 }
