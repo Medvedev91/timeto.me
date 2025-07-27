@@ -34,7 +34,7 @@ struct Widget: SwiftUI.Widget {
                 .padding(.horizontal)
                 .padding(.top, 12)
                 .padding(.bottom, 6)
-                .background(.black)
+                .activityBackgroundTint(.black.opacity(0.6))
             },
             dynamicIsland: { context in
                 DynamicIsland(
