@@ -75,7 +75,7 @@
 		2C34928E2E273E9E00EA27BD /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				Resources/Info.plist,
 			);
 			target = 2C3492792E273E9D00EA27BD /* WidgetExtension */;
 		};
