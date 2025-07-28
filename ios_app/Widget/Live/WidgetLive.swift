@@ -34,7 +34,7 @@ struct WidgetLive: Widget {
                 .padding(.horizontal)
                 .padding(.top, 12)
                 .padding(.bottom, 6)
-                .activityBackgroundTint(.black.opacity(0.6))
+                .activityBackgroundTint(.black.opacity(0.5))
             },
             dynamicIsland: { context in
                 DynamicIsland(
