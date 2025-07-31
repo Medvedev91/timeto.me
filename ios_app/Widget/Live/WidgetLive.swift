@@ -8,37 +8,17 @@ struct WidgetLive: Widget {
         ActivityConfiguration(
             for: WidgetLiveAttributes.self,
             content: { context in
-                VStack {
-                    
-                    Text(context.state.title)
-                        .textAlign(.trailing)
-                        .foregroundColor(.white)
-                        .fontWeight(.medium)
-                        .padding(.trailing, 1)
-                        .padding(.top, 12)
-                        .lineLimit(1)
-                    
-                    Text(timerInterval: context.state.endDate.widgetTimerRange(), countsDown: true)
-                        .textAlign(.trailing)
-                        .foregroundColor(.white)
-                        .font(.system(size: 48, weight: .light))
-                        .padding(.bottom, 6)
-                }
-                .padding(.horizontal)
-                .activityBackgroundTint(.black.opacity(0.4))
+                FullSizeTimerView(state: context.state)
+                    .padding(.top, 12)
+                    .padding(.bottom, 6)
+                    .padding(.horizontal)
+                    .activityBackgroundTint(.black.opacity(0.4))
             },
             dynamicIsland: { context in
                 DynamicIsland(
                     expanded: {
                         DynamicIslandExpandedRegion(.center) {
-                            VStack {
-                                // todo
-//                                Tmp(state: context.state)
-                                Button("report") {
-                                    reportApi("tap")
-                                }
-                                
-                            }
+                            FullSizeTimerView(state: context.state)
                         }
                     },
                     compactLeading: {
@@ -75,6 +55,28 @@ private struct IslandTimerView: View {
                         .lineLimit(1)
                         .minimumScaleFactor(0.1)
                 }
+        }
+    }
+}
+
+private struct FullSizeTimerView: View {
+    
+    let state: WidgetLiveAttributes.ContentState
+    
+    var body: some View {
+        VStack {
+            
+            Text(state.title)
+                .textAlign(.trailing)
+                .foregroundColor(.white)
+                .fontWeight(.medium)
+                .padding(.trailing, 1)
+                .lineLimit(1)
+            
+            Text(timerInterval: state.endDate.widgetTimerRange(), countsDown: true)
+                .textAlign(.trailing)
+                .foregroundColor(.white)
+                .font(.system(size: 48, weight: .light))
         }
     }
 }
