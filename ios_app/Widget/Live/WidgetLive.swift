@@ -52,9 +52,10 @@ struct WidgetLive: Widget {
                     },
                     compactLeading: {
                         Text(context.state.title)
+                            .textAlign(.leading)
                             .lineLimit(1)
-                            .minimumScaleFactor(0.5)
-                            .frame(width: 50)
+                            .minimumScaleFactor(0.6)
+                            .frame(width: min(50, CGFloat(context.state.title.count) * 10))
                     },
                     compactTrailing: {
                         IslandTimerView(state: context.state)
@@ -77,7 +78,7 @@ private struct IslandTimerView: View {
             // https://stackoverflow.com/a/78356027
             Text("00:00")
                 .hidden()
-                .overlay(alignment: .leading) {
+                .overlay(alignment: .center) {
                     Text(timerInterval: state.endDate.widgetTimerRange(), countsDown: true)
                         .monospacedDigit()
                         .lineLimit(1)
