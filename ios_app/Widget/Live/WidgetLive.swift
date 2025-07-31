@@ -1,7 +1,5 @@
-import ActivityKit
 import WidgetKit
 import SwiftUI
-import shared
 
 struct WidgetLive: Widget {
     
@@ -10,31 +8,24 @@ struct WidgetLive: Widget {
         ActivityConfiguration(
             for: WidgetLiveAttributes.self,
             content: { context in
-                HStack {
+                VStack {
                     
-                    // todo
-                    Button("Report") {
-                        reportApi("test")
-                    }
+                    Text(context.state.title)
+                        .textAlign(.trailing)
+                        .foregroundColor(.white)
+                        .fontWeight(.medium)
+                        .padding(.trailing, 1)
+                        .padding(.top, 12)
+                        .lineLimit(1)
                     
-                    Spacer()
-                    
-                    VStack {
-                        Text(context.state.title)
-                            .textAlign(.trailing)
-                            .foregroundColor(.white)
-                            .fontWeight(.medium)
-                            .padding(.trailing, 1)
-                        Text(timerInterval: context.state.endDate.widgetTimerRange(), countsDown: true)
-                            .textAlign(.trailing)
-                            .foregroundColor(.white)
-                            .font(.system(size: 48, weight: .light))
-                    }
+                    Text(timerInterval: context.state.endDate.widgetTimerRange(), countsDown: true)
+                        .textAlign(.trailing)
+                        .foregroundColor(.white)
+                        .font(.system(size: 48, weight: .light))
+                        .padding(.bottom, 6)
                 }
                 .padding(.horizontal)
-                .padding(.top, 12)
-                .padding(.bottom, 6)
-                .activityBackgroundTint(.black.opacity(0.5))
+                .activityBackgroundTint(.black.opacity(0.4))
             },
             dynamicIsland: { context in
                 DynamicIsland(
