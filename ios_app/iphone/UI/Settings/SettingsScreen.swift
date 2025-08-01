@@ -32,7 +32,7 @@ private struct SettingsScreenInner: View {
     @Environment(Navigation.self) private var navigation
     @Environment(\.scenePhase) private var scenePhase
     
-    @State private var isLiveActivityGranted = isLiveActivityGrantedFunc()
+    @State private var isLiveActivityGranted = LiveActivityManager.isPermissionGranted()
     
     @State private var isFileImporterPresented = false
     
@@ -383,7 +383,7 @@ private struct SettingsScreenInner: View {
             }
         }
         .onChange(of: scenePhase) {
-            isLiveActivityGranted = isLiveActivityGrantedFunc()
+            isLiveActivityGranted = LiveActivityManager.isPermissionGranted()
         }
     }
 }
@@ -412,8 +412,4 @@ private struct MyJsonFileDocument: FileDocument {
         let data = Data(text.utf8)
         return FileWrapper(regularFileWithContents: data)
     }
-}
-
-private func isLiveActivityGrantedFunc() -> Bool {
-    ActivityAuthorizationInfo().areActivitiesEnabled
 }

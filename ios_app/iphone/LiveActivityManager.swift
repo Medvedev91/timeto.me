@@ -7,17 +7,26 @@ private let liveActivityPublisher: AnyPublisher<LiveActivity, Never> =
 
 private var keepObject: Any? = nil
 
-func initLiveActivity() {
-    keepObject = liveActivityPublisher.sink { value in
-        updateLiveActivity(liveActivity: value)
+class LiveActivityManager {
+    
+    static func setup() {
+        keepObject = liveActivityPublisher.sink { value in
+            updateLiveActivity(liveActivity: value)
+        }
+    }
+    
+    static func isPermissionGranted() -> Bool {
+        ActivityAuthorizationInfo().areActivitiesEnabled
     }
 }
 
 ///
 
-// todo https://developer.apple.com/documentation/activitykit/activityauthorizationinfo/areactivitiesenabled
-// todo rename
 private func updateLiveActivity(liveActivity: LiveActivity) {
+    if !LiveActivityManager.isPermissionGranted() {
+        return
+    }
+    
     let intervalDb = liveActivity.intervalDb
     Task {
         for activity in ActivityKit.Activity<WidgetLiveAttributes>.activities {
@@ -30,11 +39,14 @@ private func updateLiveActivity(liveActivity: LiveActivity) {
             endDate: Date(timeIntervalSince1970: Double(intervalDb.id + intervalDb.timer)),
         )
         
-        // todo do catch
-        _ = try Activity.request(
-            attributes: attributes,
-            content: .init(state: state, staleDate: nil),
-            pushType: nil
-        )
+        do {
+            _ = try Activity.request(
+                attributes: attributes,
+                content: .init(state: state, staleDate: nil),
+                pushType: nil
+            )
+        } catch {
+            reportApi("updateLiveActivity() error:\(error)")
+        }
     }
 }
