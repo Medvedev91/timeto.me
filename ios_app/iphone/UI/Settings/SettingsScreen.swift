@@ -1,4 +1,5 @@
 import SwiftUI
+import ActivityKit
 import UniformTypeIdentifiers
 import shared
 
@@ -11,7 +12,8 @@ struct SettingsScreen: View {
             SettingsScreenInner(
                 vm: vm,
                 state: state,
-                todayOnHomeScreen: state.todayOnHomeScreen
+                todayOnHomeScreen: state.todayOnHomeScreen,
+                isLiveActivityEnabled: state.isLiveActivityEnabled,
             )
         }
     }
@@ -23,10 +25,14 @@ private struct SettingsScreenInner: View {
     let state: SettingsVm.State
     
     @State var todayOnHomeScreen: Bool
+    @State var isLiveActivityEnabled: Bool
     
     ///
     
     @Environment(Navigation.self) private var navigation
+    @Environment(\.scenePhase) private var scenePhase
+    
+    @State private var isLiveActivityGranted = isLiveActivityGrantedFunc()
     
     @State private var isFileImporterPresented = false
     
@@ -227,6 +233,27 @@ private struct SettingsScreenInner: View {
                 .onChange(of: todayOnHomeScreen) { _, new in
                     vm.setTodayOnHomeScreen(isOn: new)
                 }
+                
+                if isLiveActivityGranted {
+                    Toggle(
+                        "Live Activities",
+                        isOn: $isLiveActivityEnabled
+                    )
+                    .onChange(of: isLiveActivityEnabled) { _, isEnabled in
+                        vm.setIsLiveActivityEnabled(isEnabled: isEnabled)
+                    }
+                } else {
+                    HStack {
+                        Text("Live Activities Not Granted")
+                            .foregroundColor(.red)
+                        Spacer()
+                        Button("Grant") {
+                            openSystemSettings()
+                        }
+                        .fontWeight(.semibold)
+                        .foregroundColor(.red)
+                    }
+                }
             }
             
             Section("Backups") {
@@ -355,6 +382,9 @@ private struct SettingsScreenInner: View {
                 reportApi("iOS restore exception\n" + error.messageApp())
             }
         }
+        .onChange(of: scenePhase) {
+            isLiveActivityGranted = isLiveActivityGrantedFunc()
+        }
     }
 }
 
@@ -382,4 +412,8 @@ private struct MyJsonFileDocument: FileDocument {
         let data = Data(text.utf8)
         return FileWrapper(regularFileWithContents: data)
     }
+}
+
+private func isLiveActivityGrantedFunc() -> Bool {
+    ActivityAuthorizationInfo().areActivitiesEnabled
 }
