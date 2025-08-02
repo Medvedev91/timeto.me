@@ -61,6 +61,9 @@ data class KvDb(
         fun KvDb?.todayOnHomeScreen(): Boolean =
             this?.value?.toBoolean10() ?: true
 
+        fun KvDb?.isLiveActivityEnabled(): Boolean =
+            this?.value?.toBoolean10() ?: true
+
         //
         // Backupable Holder
 
@@ -84,6 +87,7 @@ data class KvDb(
         WHATS_NEW_CHECK_UNIX_DAY,
         FEEDBACK_SUBJECT,
         TODAY_ON_HOME_SCREEN,
+        IS_LIVE_ACTIVITY_ENABLED,
         IS_SENDING_REPORTS,
         HOME_README_OPEN_TIME;
 
