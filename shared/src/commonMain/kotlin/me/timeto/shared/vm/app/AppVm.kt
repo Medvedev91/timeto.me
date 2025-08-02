@@ -59,17 +59,6 @@ class AppVm : Vm<AppVm.State>() {
                     LiveActivity.update(lastInterval)
                 }
 
-            launchEx {
-                while (true) {
-                    try {
-                        delayToNextMinute()
-                    } catch (_: CancellationException) {
-                        break // On app closing
-                    }
-//                    LiveActivity.update(Cache.lastIntervalDb)
-                }
-            }
-
             ActivityDb
                 .anyChangeFlow()
                 .drop(1)
