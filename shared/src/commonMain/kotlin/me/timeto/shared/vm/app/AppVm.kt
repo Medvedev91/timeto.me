@@ -54,9 +54,7 @@ class AppVm : Vm<AppVm.State>() {
                 .onEachExIn(this) { lastInterval ->
                     NotificationAlarm.rescheduleAll()
                     performShortcutForInterval(lastInterval, secondsLimit = 3)
-                    // todo use selectActivityDb()
-                    keepScreenOnStateFlow.emit(lastInterval.selectActivityDbCached().keepScreenOn)
-                    LiveActivity.update(lastInterval)
+                    keepScreenOnStateFlow.emit(lastInterval.selectActivityDb().keepScreenOn)
                 }
 
             ActivityDb
