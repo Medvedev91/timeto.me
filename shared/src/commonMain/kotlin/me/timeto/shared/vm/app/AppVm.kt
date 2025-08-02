@@ -121,8 +121,8 @@ private fun performShortcutForInterval(
 
     val shortcutDb: ShortcutDb =
         intervalDb.note?.textFeatures()?.shortcutsDb?.firstOrNull()
-        ?: intervalDb.selectActivityDbCached().name.textFeatures().shortcutsDb.firstOrNull()
-        ?: return
+            ?: intervalDb.selectActivityDbCached().name.textFeatures().shortcutsDb.firstOrNull()
+            ?: return
 
     ShortcutPerformer.perform(shortcutDb)
 }
