@@ -33,6 +33,10 @@ private func updateLiveActivity(liveActivity: LiveActivity) {
             await activity.end(nil, dismissalPolicy: .immediate)
         }
         
+        if !liveActivity.enabled {
+            return
+        }
+        
         let attributes = WidgetLiveAttributes()
         let state = WidgetLiveAttributes.ContentState(
             title: liveActivity.dynamicIslandTitle,

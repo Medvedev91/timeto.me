@@ -8,6 +8,7 @@ import me.timeto.shared.db.*
 import me.timeto.shared.time
 import me.timeto.shared.vm.goals.form.GoalFormData
 import me.timeto.shared.ShortcutPerformer
+import me.timeto.shared.db.KvDb.Companion.isLiveActivityEnabled
 import me.timeto.shared.vm.whats_new.WhatsNewVm
 import me.timeto.shared.vm.Vm
 
@@ -56,6 +57,13 @@ class AppVm : Vm<AppVm.State>() {
                     performShortcutForInterval(lastInterval, secondsLimit = 3)
                     keepScreenOnStateFlow.emit(lastInterval.selectActivityDb().keepScreenOn)
                 }
+
+            combine(
+                IntervalDb.selectLastOneOrNullFlow().filterNotNull(),
+                KvDb.KEY.IS_LIVE_ACTIVITY_ENABLED.selectOrNullFlow(),
+            ) { lastIntervalDb, kvDb ->
+                LiveActivity.update(lastIntervalDb, enabled = kvDb.isLiveActivityEnabled())
+            }.launchIn(this)
 
             ActivityDb
                 .anyChangeFlow()
