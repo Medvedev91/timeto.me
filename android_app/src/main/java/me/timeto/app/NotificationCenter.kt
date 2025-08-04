@@ -17,6 +17,10 @@ import me.timeto.shared.getSoundTimerExpiredFileName
  */
 object NotificationCenter {
 
+    const val NOTIFICATION_ID_BREAK = 1
+    const val NOTIFICATION_ID_OVERDUE = 2
+    const val NOTIFICATION_ID_LIVE_UPDATE = 3
+
     fun channelTimerExpired(): NotificationChannel =
         upsertChannel("timer_expired", "Timer Expired", getSoundTimerExpiredFileName(false))
 
