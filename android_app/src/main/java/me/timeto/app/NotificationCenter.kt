@@ -27,6 +27,18 @@ object NotificationCenter {
     fun channelTimerOverdue(): NotificationChannel =
         upsertChannel("timer_overdue", "Timer Overdue", null)
 
+    fun channelLiveUpdates(): NotificationChannel {
+        // IMPORTANCE_DEFAULT is obligatory for live updates
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel("live_updates", "Live Updates", importance)
+        // Disable sound for each update (up to every second)
+        channel.setSound(null, null)
+        getManager().createNotificationChannel(channel)
+        return channel
+    }
+
+    ///
+
     fun getManager(): NotificationManager =
         App.Companion.instance.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
