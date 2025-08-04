@@ -51,6 +51,7 @@ private struct IslandTimerView: View {
                 .hidden()
                 .overlay(alignment: .center) {
                     Text(timerInterval: state.endDate.widgetTimerRange(), countsDown: true)
+                        .textAlign(.center)
                         .monospacedDigit()
                         .lineLimit(1)
                         .minimumScaleFactor(0.1)
