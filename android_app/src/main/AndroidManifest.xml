@@ -11,18 +11,18 @@
                      android:maxSdkVersion="32"/>
 
     <application
-            android:name=".App"
-            android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
-            android:label="timeto.me"
-            android:supportsRtl="true"
-            android:theme="@style/Theme.Timetome">
+        android:name=".App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="timeto.me"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Timetome">
 
         <activity
-                android:name=".MainActivity"
-                android:exported="true"
-                android:theme="@style/Theme.Timetome"
-                android:windowSoftInputMode="adjustResize"> <!-- Docs in MainActivity.kt -->
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Timetome"
+            android:windowSoftInputMode="adjustResize"> <!-- Docs in MainActivity.kt -->
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -32,8 +32,8 @@
         </activity>
 
         <receiver
-                android:name=".TimerNotificationReceiver"
-                android:enabled="true"/>
+            android:name=".TimerNotificationReceiver"
+            android:enabled="true"/>
 
     </application>
 
