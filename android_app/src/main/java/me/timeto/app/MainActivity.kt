@@ -100,26 +100,24 @@ class MainActivity : ComponentActivity() {
                     }
 
                     LaunchedEffect(Unit) {
-                        NotificationAlarm.flow
-                            .onEachExIn(this) { notifications ->
-                                AlarmCenter.cancelAllAlarms()
-                                NotificationCenter.cleanAllPushes()
-                                notifications.forEach {
-                                    AlarmCenter.scheduleNotification(it)
-                                }
+                        NotificationAlarm.flow.onEachExIn(this) { notifications ->
+                            AlarmCenter.cancelAllAlarms()
+                            NotificationCenter.cleanAllPushes()
+                            notifications.forEach {
+                                AlarmCenter.scheduleNotification(it)
                             }
+                        }
                         // TRICK Run strictly after scheduledNotificationsDataFlow launch.
                         // TRICK Without delay the first event does not handled. 1L enough.
                         vm.onNotificationsPermissionReady(delayMls = 500L)
                     }
 
                     LaunchedEffect(Unit) {
-                        keepScreenOnStateFlow
-                            .onEachExIn(this) { keepScreenOn ->
-                                val flag = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                                if (keepScreenOn) window.addFlags(flag)
-                                else window.clearFlags(flag)
-                            }
+                        keepScreenOnStateFlow.onEachExIn(this) { keepScreenOn ->
+                            val flag = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                            if (keepScreenOn) window.addFlags(flag)
+                            else window.clearFlags(flag)
+                        }
                     }
                 }
             }
@@ -152,11 +150,13 @@ class MainActivity : ComponentActivity() {
                 this, Manifest.permission.POST_NOTIFICATIONS
             ) == PackageManager.PERMISSION_GRANTED -> {
             }
+
             shouldShowRequestPermissionRationale(
                 Manifest.permission.POST_NOTIFICATIONS
             ) -> {
                 // todo
             }
+
             else -> {
                 val requester = registerForActivityResult(
                     ActivityResultContracts.RequestPermission()
