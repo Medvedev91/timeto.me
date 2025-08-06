@@ -71,10 +71,7 @@ class TimerNotificationReceiver : BroadcastReceiver() {
         manager.notify(requestCode, notification)
 
         // If live activity is presented - play sound and close notification
-        val isLiveUpdatesPresented: Boolean = manager.activeNotifications.any {
-            it.id == NotificationCenter.NOTIFICATION_ID_LIVE_UPDATE
-        }
-        if (isLiveUpdatesPresented) launchExIo {
+        if (LiveUpdatesUtils.isPresented()) launchExIo {
             delay(3_000)
             manager.cancel(requestCode)
         }
