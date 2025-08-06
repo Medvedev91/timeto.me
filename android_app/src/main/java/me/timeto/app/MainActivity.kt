@@ -27,6 +27,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.filterNotNull
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.main.MainScreen
@@ -117,6 +118,19 @@ class MainActivity : ComponentActivity() {
                             val flag = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                             if (keepScreenOn) window.addFlags(flag)
                             else window.clearFlags(flag)
+                        }
+                    }
+
+                    LaunchedEffect(Unit) {
+                        var isFirst = true
+                        LiveActivity.flow.filterNotNull().onEachExIn(this) { liveActivity ->
+                            // Without delay doesn't show at start
+                            if (isFirst) {
+                                delay(2_000)
+                                isFirst = false
+                            }
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA)
+                                LiveUpdatesUtils.update(liveActivity)
                         }
                     }
                 }
