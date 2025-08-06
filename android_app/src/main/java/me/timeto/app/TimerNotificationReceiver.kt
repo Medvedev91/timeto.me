@@ -19,7 +19,7 @@ class TimerNotificationReceiver : BroadcastReceiver() {
     }
 
     override fun onReceive(context: Context, intent: Intent) {
-        val manager = NotificationCenter.getManager()
+        val manager = NotificationCenter.manager
 
         val requestCode = intent.getIntExtra(EXTRA_REQUEST_CODE, 0)
 
