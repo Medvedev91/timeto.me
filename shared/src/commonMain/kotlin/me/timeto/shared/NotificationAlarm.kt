@@ -32,14 +32,11 @@ private suspend fun rescheduleNotifications() {
     if (inSeconds <= 0)
         return
 
-    val totalMinutes: Int = lastInterval.timer / 60
     NotificationAlarm.flow.emit(
         listOf(
             NotificationAlarm(
                 title = "Time Is Over ⏰",
-                text =
-                    if (totalMinutes == 1) "1 minute has expired"
-                    else "$totalMinutes minutes have expired",
+                text = lastInterval.getExpiredString(),
                 inSeconds = inSeconds,
                 type = NotificationAlarm.Type.timeToBreak,
             ),

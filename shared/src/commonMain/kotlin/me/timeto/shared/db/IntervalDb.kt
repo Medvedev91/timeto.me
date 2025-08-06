@@ -212,6 +212,12 @@ data class IntervalDb(
 
     fun unixTime() = UnixTime(id)
 
+    fun getExpiredString(): String {
+        val totalMinutes: Int = timer / 60
+        return if (totalMinutes == 1) "1 minute has expired"
+        else "$totalMinutes minutes have expired"
+    }
+
     suspend fun selectActivityDb(): ActivityDb =
         ActivityDb.selectByIdOrNull(activity_id)!!
 
@@ -262,10 +268,10 @@ data class IntervalDb(
                 throw UiException("The only entry")
             val activityDb: ActivityDb =
                 ActivityDb.selectByIdOrNullSync(activity_id)
-                ?: throw UiException("No activity")
+                    ?: throw UiException("No activity")
             val tempText: String =
                 note?.takeIf { it.isNotBlank() }
-                ?: activityDb.name.textFeatures().textNoFeatures
+                    ?: activityDb.name.textFeatures().textNoFeatures
             val textTf: TextFeatures = tempText.textFeatures().copy(
                 timer = timer,
                 activityDb = activityDb,
