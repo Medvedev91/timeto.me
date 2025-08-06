@@ -102,7 +102,7 @@ class MainActivity : ComponentActivity() {
                     LaunchedEffect(Unit) {
                         NotificationAlarm.flow.onEachExIn(this) { notifications ->
                             AlarmCenter.cancelAllAlarms()
-                            NotificationCenter.cleanAllPushes()
+                            NotificationCenter.cleanTimerPushes()
                             notifications.forEach {
                                 AlarmCenter.scheduleNotification(it)
                             }
@@ -126,7 +126,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        NotificationCenter.cleanAllPushes()
+        NotificationCenter.cleanTimerPushes()
 
         /**
          * https://developer.android.com/develop/ui/views/layout/immersive#kotlin
@@ -206,7 +206,7 @@ private fun ShortcutsListener() {
                 } else {
                     context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(shortcutDb.uri)))
                 }
-            } catch (e: ActivityNotFoundException) {
+            } catch (_: ActivityNotFoundException) {
                 navigationFs.alert("Invalid shortcut link")
             }
         }

@@ -71,7 +71,8 @@ object NotificationCenter {
      * At least on miui_12, if the "Badge -> Dot" is checked in the notification settings for
      * an app, when the application is opened, the notifications would removed automatically.
      */
-    fun cleanAllPushes() {
-        getManager().cancelAll()
+    fun cleanTimerPushes() {
+        getManager().cancel(NOTIFICATION_ID_BREAK)
+        getManager().cancel(NOTIFICATION_ID_OVERDUE)
     }
 }
