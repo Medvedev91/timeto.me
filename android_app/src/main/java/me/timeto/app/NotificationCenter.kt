@@ -21,6 +21,11 @@ object NotificationCenter {
     const val NOTIFICATION_ID_OVERDUE = 2
     const val NOTIFICATION_ID_LIVE_UPDATE = 3
 
+    val manager: NotificationManager =
+        App.instance.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+    // region Channels
+
     fun channelTimerExpired(): NotificationChannel =
         upsertChannel("timer_expired", "Timer Expired", getSoundTimerExpiredFileName(false))
 
