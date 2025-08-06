@@ -35,12 +35,23 @@ class TimerNotificationReceiver : BroadcastReceiver() {
          * Do not forget about channelTimerExpired()/channelTimerOverdue()
          */
         val (iconId, color, channel) = when (requestCode) {
+
             NotificationCenter.NOTIFICATION_ID_BREAK -> {
-                Triple(R.drawable.readme_notification_timer_checkmark, 0x34C759, NotificationCenter.channelTimerExpired())
+                Triple(
+                    R.drawable.readme_notification_timer_checkmark,
+                    0x34C759,
+                    NotificationCenter.channelTimerExpired(),
+                )
             }
+
             NotificationCenter.NOTIFICATION_ID_OVERDUE -> {
-                Triple(R.drawable.readme_notification_alarm, 0x0055FF, NotificationCenter.channelTimerOverdue())
+                Triple(
+                    R.drawable.readme_notification_alarm,
+                    0x0055FF,
+                    NotificationCenter.channelTimerOverdue(),
+                )
             }
+
             else -> {
                 reportApi("TimerNotificationReceiver invalid request code $requestCode")
                 throw Exception()
