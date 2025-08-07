@@ -73,8 +73,26 @@ class TimerNotificationReceiver : BroadcastReceiver() {
 
         manager.notify(requestCode, notification)
 
-        // If live activity is presented - play sound and close notification
-        if (LiveUpdatesUtils.isPresented()) launchExIo {
+        // No matter if Live Updates disabled in app settings,
+        // it will look like normal push replaced
+        if (
+            LiveUpdatesUtils.isSdkAvailable() &&
+            manager.canPostPromotedNotifications()
+        ) launchExIo {
+            val liveTitle: String =
+                intent.getStringExtra(EXTRA_LIVE_TITLE) ?: return@launchExIo
+            val liveFinishTime: Int =
+                intent.getIntExtra(EXTRA_LIVE_FINISH_TIME, 0).takeIf { it > 0 } ?: return@launchExIo
+            val liveExpiredString: String =
+                intent.getStringExtra(EXTRA_LIVE_EXPIRED_STRING) ?: return@launchExIo
+            LiveUpdatesUtils.upsert(
+                LiveUpdatesUtils.LiveData(
+                    title = liveTitle,
+                    finishTime = liveFinishTime,
+                    expiredString = liveExpiredString,
+                )
+            )
+            // Await to play sound and close notification
             delay(3_000)
             manager.cancel(requestCode)
         }
