@@ -2,12 +2,15 @@ package me.timeto.shared
 
 import kotlinx.coroutines.flow.MutableSharedFlow
 import me.timeto.shared.db.IntervalDb
+import me.timeto.shared.db.KvDb
+import me.timeto.shared.db.KvDb.Companion.isLiveActivityEnabled
 
 data class NotificationAlarm(
     val title: String,
     val text: String,
     val inSeconds: Int,
     val type: Type,
+    val liveActivity: LiveActivity,
 ) {
 
     companion object {
@@ -27,8 +30,8 @@ data class NotificationAlarm(
 }
 
 private suspend fun rescheduleNotifications() {
-    val lastInterval: IntervalDb = IntervalDb.selectLastOneOrNull()!!
-    val inSeconds: Int = (lastInterval.id + lastInterval.timer) - time()
+    val lastIntervalDb: IntervalDb = IntervalDb.selectLastOneOrNull()!!
+    val inSeconds: Int = (lastIntervalDb.id + lastIntervalDb.timer) - time()
     if (inSeconds <= 0)
         return
 
@@ -36,9 +39,13 @@ private suspend fun rescheduleNotifications() {
         listOf(
             NotificationAlarm(
                 title = "Time Is Over ⏰",
-                text = lastInterval.getExpiredString(),
+                text = lastIntervalDb.getExpiredString(),
                 inSeconds = inSeconds,
                 type = NotificationAlarm.Type.timeToBreak,
+                liveActivity = LiveActivity(
+                    intervalDb = lastIntervalDb,
+                    enabled = KvDb.KEY.IS_LIVE_ACTIVITY_ENABLED.selectOrNull().isLiveActivityEnabled(),
+                ),
             ),
         )
     )
