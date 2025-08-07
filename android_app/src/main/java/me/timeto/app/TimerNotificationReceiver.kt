@@ -16,6 +16,9 @@ class TimerNotificationReceiver : BroadcastReceiver() {
         const val EXTRA_TITLE = "title"
         const val EXTRA_TEXT = "text"
         const val EXTRA_REQUEST_CODE = "request_code"
+        const val EXTRA_LIVE_TITLE = "live_title"
+        const val EXTRA_LIVE_FINISH_TIME = "live_finish_time"
+        const val EXTRA_LIVE_EXPIRED_STRING = "live_expired_string"
     }
 
     override fun onReceive(context: Context, intent: Intent) {
