@@ -130,7 +130,7 @@ class MainActivity : ComponentActivity() {
                                 isFirst = false
                             }
                             if (LiveUpdatesUtils.isSdkAvailable()) {
-                                LiveUpdatesUtils.update(
+                                LiveUpdatesUtils.upsert(
                                     LiveUpdatesUtils.LiveData.build(liveActivity)
                                 )
                             }
