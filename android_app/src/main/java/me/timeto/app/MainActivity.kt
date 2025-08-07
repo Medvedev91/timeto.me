@@ -124,6 +124,11 @@ class MainActivity : ComponentActivity() {
                     LaunchedEffect(Unit) {
                         var isFirst = true
                         LiveActivity.flow.filterNotNull().onEachExIn(this) { liveActivity ->
+                            if (!liveActivity.enabled) {
+                                LiveUpdatesUtils.close()
+                                return@onEachExIn
+                            }
+
                             // Without delay doesn't show at start
                             if (isFirst) {
                                 delay(2_000)
