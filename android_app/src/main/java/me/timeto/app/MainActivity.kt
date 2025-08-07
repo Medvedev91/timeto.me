@@ -129,8 +129,11 @@ class MainActivity : ComponentActivity() {
                                 delay(2_000)
                                 isFirst = false
                             }
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA)
-                                LiveUpdatesUtils.update(liveActivity)
+                            if (LiveUpdatesUtils.isSdkAvailable()) {
+                                LiveUpdatesUtils.update(
+                                    LiveUpdatesUtils.LiveData.build(liveActivity)
+                                )
+                            }
                         }
                     }
                 }
