@@ -6,9 +6,11 @@ import me.timeto.shared.db.IntervalDb
 
 data class LiveActivity(
     val intervalDb: IntervalDb,
-    val activityDb: ActivityDb,
     val enabled: Boolean,
 ) {
+
+    val activityDb: ActivityDb =
+        intervalDb.selectActivityDbCached()
 
     val dynamicIslandTitle: String =
         (intervalDb.note ?: activityDb.name).textFeatures().textNoFeatures
@@ -23,11 +25,9 @@ data class LiveActivity(
             intervalDb: IntervalDb,
             enabled: Boolean,
         ) {
-            val activityDb = intervalDb.selectActivityDb()
             flow.emit(
                 LiveActivity(
                     intervalDb = intervalDb,
-                    activityDb = activityDb,
                     enabled = enabled,
                 )
             )
