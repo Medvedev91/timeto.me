@@ -398,62 +398,11 @@ fun SettingsScreen(
                     title = state.todayOnHomeScreenText,
                     isEnabled = state.todayOnHomeScreen,
                     isFirst = false,
-                    isLast = false,
+                    isLast = true,
                     onChange = { newValue ->
                         vm.setTodayOnHomeScreen(isOn = newValue)
                     },
                 )
-
-                if (LiveUpdatesUtils.isSdkAvailable()) {
-                    if (isLiveUpdatesEnabled.value) {
-                        FormSwitch(
-                            title = persistentNotificationText,
-                            isEnabled = state.isLiveActivityEnabled,
-                            isFirst = false,
-                            isLast = true,
-                            onChange = { isEnabled ->
-                                vm.setIsLiveActivityEnabled(isEnabled = isEnabled)
-                            },
-                        )
-                    } else {
-                        FormButton(
-                            title = persistentNotificationText,
-                            titleColor = c.red,
-                            isFirst = false,
-                            isLast = true,
-                            note = "Not Granted",
-                            noteColor = c.red,
-                            withArrow = true,
-                            arrowColor = c.red,
-                            onClick = {
-                                navigationFs.dialog { dialogLayer ->
-                                    NavigationAlert(
-                                        message = "Please enable \"Live updates\" in settings.",
-                                        withCancelButton = true,
-                                        buttonText = "Settings",
-                                        buttonColor = c.blue,
-                                        onButtonClick = {
-                                            openNotificationSettings(context)
-                                            dialogLayer.close()
-                                        },
-                                    )
-                                }
-                            },
-                        )
-                    }
-                } else {
-                    FormButton(
-                        title = persistentNotificationText,
-                        isFirst = false,
-                        isLast = true,
-                        note = "Android 16+",
-                        noteColor = c.red,
-                        withArrow = false,
-                        onClick = {
-                            navigationFs.alert("Persistent notifications only work on Android 16+.")
-                        },
-                    )
-                }
             }
 
             //
@@ -531,7 +480,7 @@ fun SettingsScreen(
                 FormButton(
                     title = "Timer Overdue",
                     isFirst = false,
-                    isLast = true,
+                    isLast = false,
                     onClick = {
                         openNotificationChannelSettings(
                             context = context,
@@ -539,6 +488,57 @@ fun SettingsScreen(
                         )
                     },
                 )
+
+                if (LiveUpdatesUtils.isSdkAvailable()) {
+                    if (isLiveUpdatesEnabled.value) {
+                        FormSwitch(
+                            title = persistentNotificationText,
+                            isEnabled = state.isLiveActivityEnabled,
+                            isFirst = false,
+                            isLast = true,
+                            onChange = { isEnabled ->
+                                vm.setIsLiveActivityEnabled(isEnabled = isEnabled)
+                            },
+                        )
+                    } else {
+                        FormButton(
+                            title = persistentNotificationText,
+                            titleColor = c.red,
+                            isFirst = false,
+                            isLast = true,
+                            note = "Not Granted",
+                            noteColor = c.red,
+                            withArrow = true,
+                            arrowColor = c.red,
+                            onClick = {
+                                navigationFs.dialog { dialogLayer ->
+                                    NavigationAlert(
+                                        message = "Please enable \"Live updates\" in settings.",
+                                        withCancelButton = true,
+                                        buttonText = "Settings",
+                                        buttonColor = c.blue,
+                                        onButtonClick = {
+                                            openNotificationSettings(context)
+                                            dialogLayer.close()
+                                        },
+                                    )
+                                }
+                            },
+                        )
+                    }
+                } else {
+                    FormButton(
+                        title = persistentNotificationText,
+                        isFirst = false,
+                        isLast = true,
+                        note = "Android 16+",
+                        noteColor = c.red,
+                        withArrow = false,
+                        onClick = {
+                            navigationFs.alert("Persistent notifications only work on Android 16+.")
+                        },
+                    )
+                }
             }
 
             //
