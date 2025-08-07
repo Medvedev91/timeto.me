@@ -210,6 +210,8 @@ data class IntervalDb(
         }
     }
 
+    val finishTime: Int = id + timer
+
     fun unixTime() = UnixTime(id)
 
     fun getExpiredString(): String {
