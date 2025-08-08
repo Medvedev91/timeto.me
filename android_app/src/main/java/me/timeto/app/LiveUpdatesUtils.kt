@@ -42,10 +42,8 @@ object LiveUpdatesUtils {
         )
 
         val isFinished: Boolean = time() >= finishTime
-        val chipText: String = run {
-            // Docs: If less than 7 characters, show the whole text.
-            title.substring(0, title.length.coerceAtMost(7))
-        }
+        // Docs: If less than 7 characters, show the whole text.
+        val chipText: String = title.substring(0, title.length.coerceAtMost(7))
         val notification = NotificationCompat.Builder(App.instance, channel.id)
             .setSmallIcon(R.drawable.sf_timer_medium_semibold)
             .setOngoing(true)
