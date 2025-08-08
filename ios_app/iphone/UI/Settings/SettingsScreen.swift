@@ -13,7 +13,6 @@ struct SettingsScreen: View {
                 vm: vm,
                 state: state,
                 todayOnHomeScreen: state.todayOnHomeScreen,
-                isLiveActivityEnabled: state.isLiveActivityEnabled,
             )
         }
     }
@@ -25,7 +24,6 @@ private struct SettingsScreenInner: View {
     let state: SettingsVm.State
     
     @State var todayOnHomeScreen: Bool
-    @State var isLiveActivityEnabled: Bool
     
     ///
     
@@ -234,15 +232,7 @@ private struct SettingsScreenInner: View {
                     vm.setTodayOnHomeScreen(isOn: new)
                 }
                 
-                if isLiveActivityGranted {
-                    Toggle(
-                        "Live Activities",
-                        isOn: $isLiveActivityEnabled
-                    )
-                    .onChange(of: isLiveActivityEnabled) { _, isEnabled in
-                        vm.setIsLiveActivityEnabled(isEnabled: isEnabled)
-                    }
-                } else {
+                if !isLiveActivityGranted {
                     HStack {
                         Text("Live Activities Not Granted")
                             .foregroundColor(.red)
