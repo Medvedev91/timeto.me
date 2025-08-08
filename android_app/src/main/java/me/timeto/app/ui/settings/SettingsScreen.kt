@@ -76,13 +76,13 @@ fun SettingsScreen(
         onClose()
     }
 
-    val isLiveUpdatesEnabled = remember {
-        mutableStateOf(isLiveUpdatesEnabled())
+    val isLiveUpdatesSystemEnabled = remember {
+        mutableStateOf(isLiveUpdatesSystemEnabled())
     }
 
     LifecycleListener { _, event ->
         if (event == Lifecycle.Event.ON_RESUME)
-            isLiveUpdatesEnabled.value = isLiveUpdatesEnabled()
+            isLiveUpdatesSystemEnabled.value = isLiveUpdatesSystemEnabled()
     }
 
     val (vm, state) = rememberVm {
@@ -489,53 +489,39 @@ fun SettingsScreen(
                     },
                 )
 
-                if (LiveUpdatesUtils.isSdkAvailable()) {
-                    if (isLiveUpdatesEnabled.value) {
-                        FormSwitch(
-                            title = persistentNotificationText,
-                            isEnabled = state.isLiveActivityEnabled,
-                            isFirst = false,
-                            isLast = true,
-                            onChange = { isEnabled ->
-                                vm.setIsLiveActivityEnabled(isEnabled = isEnabled)
-                            },
-                        )
-                    } else {
-                        FormButton(
-                            title = persistentNotificationText,
-                            titleColor = c.red,
-                            isFirst = false,
-                            isLast = true,
-                            note = "Not Granted",
-                            noteColor = c.red,
-                            withArrow = true,
-                            arrowColor = c.red,
-                            onClick = {
-                                navigationFs.dialog { dialogLayer ->
-                                    NavigationAlert(
-                                        message = "Please enable \"Live updates\" in settings.",
-                                        withCancelButton = true,
-                                        buttonText = "Settings",
-                                        buttonColor = c.blue,
-                                        onButtonClick = {
-                                            openNotificationSettings(context)
-                                            dialogLayer.close()
-                                        },
-                                    )
-                                }
-                            },
-                        )
-                    }
+                if (isLiveUpdatesSystemEnabled.value) {
+                    FormSwitch(
+                        title = persistentNotificationText,
+                        isEnabled = state.isLiveActivityEnabled,
+                        isFirst = false,
+                        isLast = true,
+                        onChange = { isEnabled ->
+                            vm.setIsLiveActivityEnabled(isEnabled = isEnabled)
+                        },
+                    )
                 } else {
                     FormButton(
                         title = persistentNotificationText,
+                        titleColor = c.red,
                         isFirst = false,
                         isLast = true,
-                        note = "Android 16+",
+                        note = "Not Granted",
                         noteColor = c.red,
-                        withArrow = false,
+                        withArrow = true,
+                        arrowColor = c.red,
                         onClick = {
-                            navigationFs.alert("Persistent notifications only work on Android 16+.")
+                            navigationFs.dialog { dialogLayer ->
+                                NavigationAlert(
+                                    message = "Please enable \"Live updates\" in settings.",
+                                    withCancelButton = true,
+                                    buttonText = "Settings",
+                                    buttonColor = c.blue,
+                                    onButtonClick = {
+                                        openNotificationSettings(context)
+                                        dialogLayer.close()
+                                    },
+                                )
+                            }
                         },
                     )
                 }
@@ -611,8 +597,8 @@ private fun openNotificationChannelSettings(
     )
 }
 
-private fun isLiveUpdatesEnabled(): Boolean {
+private fun isLiveUpdatesSystemEnabled(): Boolean {
     if (LiveUpdatesUtils.isSdkAvailable())
         return NotificationCenter.manager.canPostPromotedNotifications()
-    return false
+    return true
 }

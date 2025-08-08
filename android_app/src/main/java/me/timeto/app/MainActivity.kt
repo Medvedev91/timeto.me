@@ -134,11 +134,9 @@ class MainActivity : ComponentActivity() {
                                 delay(2_000)
                                 isFirst = false
                             }
-                            if (LiveUpdatesUtils.isSdkAvailable()) {
-                                LiveUpdatesUtils.upsert(
-                                    LiveUpdatesUtils.LiveData.build(liveActivity)
-                                )
-                            }
+                            LiveUpdatesUtils.upsert(
+                                LiveUpdatesUtils.LiveData.build(liveActivity)
+                            )
                         }
                     }
                 }

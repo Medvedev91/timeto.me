@@ -3,7 +3,6 @@ package me.timeto.app
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import me.timeto.shared.LiveActivity
 import me.timeto.shared.time
@@ -25,7 +24,6 @@ object LiveUpdatesUtils {
         NotificationCenter.manager.cancel(notificationId)
     }
 
-    @RequiresApi(Build.VERSION_CODES.BAKLAVA)
     fun upsert(liveData: LiveData) {
         val title = liveData.title
         val finishTime = liveData.finishTime

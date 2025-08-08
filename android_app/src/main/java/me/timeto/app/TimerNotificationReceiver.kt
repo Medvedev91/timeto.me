@@ -74,11 +74,11 @@ class TimerNotificationReceiver : BroadcastReceiver() {
         manager.notify(requestCode, notification)
 
         // No matter if Live Updates disabled in app settings,
-        // it will look like normal push replaced
-        if (
-            LiveUpdatesUtils.isSdkAvailable() &&
-            manager.canPostPromotedNotifications()
-        ) launchExIo {
+        // it will look like normal push replacement.
+        launchExIo {
+            if (LiveUpdatesUtils.isSdkAvailable() && !manager.canPostPromotedNotifications())
+                return@launchExIo
+
             val liveTitle: String =
                 intent.getStringExtra(EXTRA_LIVE_TITLE) ?: return@launchExIo
             val liveFinishTime: Int =
