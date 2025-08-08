@@ -28,8 +28,12 @@ data class NotificationAlarm(
 }
 
 private suspend fun rescheduleNotifications() {
-    val lastIntervalDb: IntervalDb = IntervalDb.selectLastOneOrNull()!!
-    val inSeconds: Int = (lastIntervalDb.id + lastIntervalDb.timer) - time()
+    val lastIntervalDb = IntervalDb.selectLastOneOrNull()!!
+
+    val liveActivity = LiveActivity(lastIntervalDb)
+    LiveActivity.flow.emit(liveActivity)
+
+    val inSeconds: Int = lastIntervalDb.finishTime - time()
     if (inSeconds <= 0)
         return
 
@@ -40,7 +44,7 @@ private suspend fun rescheduleNotifications() {
                 text = lastIntervalDb.getExpiredString(),
                 inSeconds = inSeconds,
                 type = NotificationAlarm.Type.timeToBreak,
-                liveActivity = LiveActivity(lastIntervalDb),
+                liveActivity = liveActivity,
             ),
         )
     )

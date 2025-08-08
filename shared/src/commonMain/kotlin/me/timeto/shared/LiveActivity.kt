@@ -8,20 +8,16 @@ data class LiveActivity(
     val intervalDb: IntervalDb,
 ) {
 
+    companion object {
+
+        val flow = MutableStateFlow<LiveActivity?>(null)
+    }
+
+    ///
+
     val activityDb: ActivityDb =
         intervalDb.selectActivityDbCached()
 
     val dynamicIslandTitle: String =
         (intervalDb.note ?: activityDb.name).textFeatures().textNoFeatures
-
-    ///
-
-    companion object {
-
-        val flow = MutableStateFlow<LiveActivity?>(null)
-
-        suspend fun update(intervalDb: IntervalDb) {
-            flow.emit(LiveActivity(intervalDb = intervalDb))
-        }
-    }
 }
