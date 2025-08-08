@@ -2,8 +2,6 @@ package me.timeto.shared
 
 import kotlinx.coroutines.flow.MutableSharedFlow
 import me.timeto.shared.db.IntervalDb
-import me.timeto.shared.db.KvDb
-import me.timeto.shared.db.KvDb.Companion.isLiveActivityEnabled
 
 data class NotificationAlarm(
     val title: String,
@@ -42,10 +40,7 @@ private suspend fun rescheduleNotifications() {
                 text = lastIntervalDb.getExpiredString(),
                 inSeconds = inSeconds,
                 type = NotificationAlarm.Type.timeToBreak,
-                liveActivity = LiveActivity(
-                    intervalDb = lastIntervalDb,
-                    enabled = KvDb.KEY.IS_LIVE_ACTIVITY_ENABLED.selectOrNull().isLiveActivityEnabled(),
-                ),
+                liveActivity = LiveActivity(lastIntervalDb),
             ),
         )
     )

@@ -480,7 +480,7 @@ fun SettingsScreen(
                 FormButton(
                     title = "Timer Overdue",
                     isFirst = false,
-                    isLast = false,
+                    isLast = isLiveUpdatesSystemEnabled.value,
                     onClick = {
                         openNotificationChannelSettings(
                             context = context,
@@ -489,17 +489,7 @@ fun SettingsScreen(
                     },
                 )
 
-                if (isLiveUpdatesSystemEnabled.value) {
-                    FormSwitch(
-                        title = persistentNotificationText,
-                        isEnabled = state.isLiveActivityEnabled,
-                        isFirst = false,
-                        isLast = true,
-                        onChange = { isEnabled ->
-                            vm.setIsLiveActivityEnabled(isEnabled = isEnabled)
-                        },
-                    )
-                } else {
+                if (!isLiveUpdatesSystemEnabled.value) {
                     FormButton(
                         title = persistentNotificationText,
                         titleColor = c.red,

@@ -20,10 +20,6 @@ object LiveUpdatesUtils {
     fun isSdkAvailable(): Boolean =
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA
 
-    fun close() {
-        NotificationCenter.manager.cancel(notificationId)
-    }
-
     fun upsert(liveData: LiveData) {
         val title = liveData.title
         val finishTime = liveData.finishTime

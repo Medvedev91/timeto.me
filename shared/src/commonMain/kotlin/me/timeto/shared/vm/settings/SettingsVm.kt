@@ -12,7 +12,6 @@ import me.timeto.shared.dayStartOffsetSeconds
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.KvDb
 import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
-import me.timeto.shared.db.KvDb.Companion.isLiveActivityEnabled
 import me.timeto.shared.db.KvDb.Companion.isSendingReports
 import me.timeto.shared.db.KvDb.Companion.todayOnHomeScreen
 import me.timeto.shared.db.NoteDb
@@ -41,7 +40,6 @@ class SettingsVm : Vm<SettingsVm.State>() {
         val autoBackupTimeString: String,
         val privacyEmoji: String?,
         val todayOnHomeScreen: Boolean,
-        val isLiveActivityEnabled: Boolean,
     ) {
 
         val headerTitle = "Settings"
@@ -83,7 +81,6 @@ class SettingsVm : Vm<SettingsVm.State>() {
             autoBackupTimeString = prepAutoBackupTimeString(AutoBackup.lastTimeCache.value),
             privacyEmoji = KvDb.KEY.IS_SENDING_REPORTS.selectOrNullCached().privacyEmojiOrNull(),
             todayOnHomeScreen = KvDb.KEY.TODAY_ON_HOME_SCREEN.selectOrNullCached().todayOnHomeScreen(),
-            isLiveActivityEnabled = KvDb.KEY.IS_LIVE_ACTIVITY_ENABLED.selectOrNullCached().isLiveActivityEnabled(),
         )
     )
 
@@ -96,7 +93,6 @@ class SettingsVm : Vm<SettingsVm.State>() {
             KvDb.KEY.DAY_START_OFFSET_SECONDS.selectOrNullFlow(),
             KvDb.KEY.IS_SENDING_REPORTS.selectOrNullFlow(),
             KvDb.KEY.TODAY_ON_HOME_SCREEN.selectOrNullFlow(),
-            KvDb.KEY.IS_LIVE_ACTIVITY_ENABLED.selectOrNullFlow(),
             AutoBackup.lastTimeCache,
             KvDb.KEY.FEEDBACK_SUBJECT.selectStringOrNullFlow(),
         ) { checklistsDb: List<ChecklistDb>,
@@ -105,7 +101,6 @@ class SettingsVm : Vm<SettingsVm.State>() {
             dayStartOffsetSeconds: KvDb?,
             isSendingReports: KvDb?,
             todayOnHomeScreen: KvDb?,
-            isLiveActivityEnabled: KvDb?,
             autoBackupLastTime: UnixTime?,
             feedbackSubject: String?,
             ->
@@ -117,7 +112,6 @@ class SettingsVm : Vm<SettingsVm.State>() {
                     dayStartSeconds = dayStartOffsetSeconds.asDayStartOffsetSeconds(),
                     privacyEmoji = isSendingReports.privacyEmojiOrNull(),
                     todayOnHomeScreen = todayOnHomeScreen.todayOnHomeScreen(),
-                    isLiveActivityEnabled = isLiveActivityEnabled.isLiveActivityEnabled(),
                     autoBackupTimeString = prepAutoBackupTimeString(autoBackupLastTime),
                     feedbackSubject = feedbackSubject ?: DEFAULT_FEEDBACK_SUBJECT,
                 )
@@ -129,10 +123,6 @@ class SettingsVm : Vm<SettingsVm.State>() {
         launchExIo {
             KvDb.KEY.TODAY_ON_HOME_SCREEN.upsertBoolean(isOn)
         }
-    }
-
-    fun setIsLiveActivityEnabled(isEnabled: Boolean): Unit = launchExIo {
-        KvDb.KEY.IS_LIVE_ACTIVITY_ENABLED.upsertBoolean(isEnabled)
     }
 
     fun setDayStartOffsetSeconds(seconds: Int) {

@@ -6,7 +6,6 @@ import me.timeto.shared.db.IntervalDb
 
 data class LiveActivity(
     val intervalDb: IntervalDb,
-    val enabled: Boolean,
 ) {
 
     val activityDb: ActivityDb =
@@ -21,16 +20,8 @@ data class LiveActivity(
 
         val flow = MutableStateFlow<LiveActivity?>(null)
 
-        suspend fun update(
-            intervalDb: IntervalDb,
-            enabled: Boolean,
-        ) {
-            flow.emit(
-                LiveActivity(
-                    intervalDb = intervalDb,
-                    enabled = enabled,
-                )
-            )
+        suspend fun update(intervalDb: IntervalDb) {
+            flow.emit(LiveActivity(intervalDb = intervalDb))
         }
     }
 }
