@@ -13,6 +13,7 @@ data class NotificationAlarm(
 
     companion object {
 
+        // Not StateFlow to reschedule same data object
         val flow = MutableSharedFlow<List<NotificationAlarm>>()
 
         suspend fun rescheduleAll() {

@@ -1,6 +1,6 @@
 package me.timeto.shared
 
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
 
@@ -10,7 +10,8 @@ data class LiveActivity(
 
     companion object {
 
-        val flow = MutableStateFlow<LiveActivity?>(null)
+        // Not StateFlow to reschedule same data object
+        val flow = MutableSharedFlow<LiveActivity?>()
     }
 
     ///

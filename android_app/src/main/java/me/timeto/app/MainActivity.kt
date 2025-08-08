@@ -27,6 +27,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.filterNotNull
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
@@ -56,6 +57,13 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private val notificationsPermissionGrantedFlow = MutableSharedFlow<Boolean>()
+    private val notificationsPermissionRequester = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        launchExIo { notificationsPermissionGrantedFlow.emit(isGranted) }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
@@ -64,9 +72,6 @@ class MainActivity : ComponentActivity() {
         // Needs android:windowSoftInputMode="adjustResize" in the manifest.
         WindowCompat.setDecorFitsSystemWindows(window, false)
         statusBarHeightDp = getStatusBarHeight(this@MainActivity)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
-            notificationsPermissionProcessing()
 
         setContent {
 
@@ -111,6 +116,16 @@ class MainActivity : ComponentActivity() {
                         // TRICK Run strictly after scheduledNotificationsDataFlow launch.
                         // TRICK Without delay the first event does not handled. 1L enough.
                         vm.onNotificationsPermissionReady(delayMls = 500L)
+                    }
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        LaunchedEffect(Unit) {
+                            notificationsPermissionGrantedFlow.onEachExIn(this) { isGranted ->
+                                if (isGranted)
+                                    vm.onNotificationsPermissionReady(delayMls = 0L)
+                            }
+                            notificationsPermissionProcessing()
+                        }
                     }
 
                     LaunchedEffect(Unit) {
@@ -173,12 +188,7 @@ class MainActivity : ComponentActivity() {
             }
 
             else -> {
-                val requester = registerForActivityResult(
-                    ActivityResultContracts.RequestPermission()
-                ) { isGranted ->
-                    // todo vm.onNotificationsPermissionReady()?
-                }
-                requester.launch(Manifest.permission.POST_NOTIFICATIONS)
+                notificationsPermissionRequester.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         }
     }
