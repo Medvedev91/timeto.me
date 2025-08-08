@@ -1,5 +1,4 @@
 import SwiftUI
-import ActivityKit
 import UniformTypeIdentifiers
 import shared
 
