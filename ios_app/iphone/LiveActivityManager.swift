@@ -36,7 +36,7 @@ private func updateLiveActivity(liveActivity: LiveActivity) {
         let attributes = WidgetLiveAttributes()
         let state = WidgetLiveAttributes.ContentState(
             title: liveActivity.dynamicIslandTitle,
-            endDate: Date(timeIntervalSince1970: Double(intervalDb.id + intervalDb.timer)),
+            endDate: Date(timeIntervalSince1970: Double(intervalDb.finishTime)),
         )
         
         do {

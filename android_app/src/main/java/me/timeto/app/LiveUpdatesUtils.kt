@@ -65,7 +65,7 @@ object LiveUpdatesUtils {
         companion object {
             fun build(liveActivity: LiveActivity) = LiveData(
                 title = liveActivity.dynamicIslandTitle,
-                finishTime = liveActivity.intervalDb.id + liveActivity.intervalDb.timer,
+                finishTime = liveActivity.intervalDb.finishTime,
                 expiredString = liveActivity.intervalDb.getExpiredString(),
             )
         }
