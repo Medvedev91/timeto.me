@@ -15,7 +15,7 @@ import me.timeto.shared.getSoundTimerExpiredFileName
  * Common docs: https://developer.android.com/guide/topics/ui/notifiers/notifications
  * Channel docs: https://developer.android.com/training/notify-user/channels
  */
-object NotificationCenter {
+object NotificationsUtils {
 
     const val NOTIFICATION_ID_BREAK = 1
     const val NOTIFICATION_ID_OVERDUE = 2

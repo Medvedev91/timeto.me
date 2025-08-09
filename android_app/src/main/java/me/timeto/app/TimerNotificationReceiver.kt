@@ -22,7 +22,7 @@ class TimerNotificationReceiver : BroadcastReceiver() {
     }
 
     override fun onReceive(context: Context, intent: Intent) {
-        val manager = NotificationCenter.manager
+        val manager = NotificationsUtils.manager
 
         val requestCode = intent.getIntExtra(EXTRA_REQUEST_CODE, 0)
 
@@ -41,19 +41,19 @@ class TimerNotificationReceiver : BroadcastReceiver() {
          */
         val (iconId, color, channel) = when (requestCode) {
 
-            NotificationCenter.NOTIFICATION_ID_BREAK -> {
+            NotificationsUtils.NOTIFICATION_ID_BREAK -> {
                 Triple(
                     R.drawable.readme_notification_timer_checkmark,
                     0x34C759,
-                    NotificationCenter.channelTimerExpired(),
+                    NotificationsUtils.channelTimerExpired(),
                 )
             }
 
-            NotificationCenter.NOTIFICATION_ID_OVERDUE -> {
+            NotificationsUtils.NOTIFICATION_ID_OVERDUE -> {
                 Triple(
                     R.drawable.readme_notification_alarm,
                     0x0055FF,
-                    NotificationCenter.channelTimerOverdue(),
+                    NotificationsUtils.channelTimerOverdue(),
                 )
             }
 

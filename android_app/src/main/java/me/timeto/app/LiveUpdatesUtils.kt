@@ -13,7 +13,7 @@ import me.timeto.shared.time
  * https://github.com/android/platform-samples/tree/main/samples/user-interface/live-updates
  */
 
-private const val notificationId: Int = NotificationCenter.NOTIFICATION_ID_LIVE_UPDATE
+private const val notificationId: Int = NotificationsUtils.NOTIFICATION_ID_LIVE_UPDATE
 
 object LiveUpdatesUtils {
 
@@ -24,8 +24,8 @@ object LiveUpdatesUtils {
         val title = liveData.title
         val finishTime = liveData.finishTime
 
-        val channel = NotificationCenter.channelLiveUpdates()
-        val manager = NotificationCenter.manager
+        val channel = NotificationsUtils.channelLiveUpdates()
+        val manager = NotificationsUtils.manager
 
         val context = App.instance.applicationContext
         val pIntent = PendingIntent.getActivity(

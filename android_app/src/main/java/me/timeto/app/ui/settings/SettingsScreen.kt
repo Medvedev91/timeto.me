@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
 import kotlinx.coroutines.launch
 import me.timeto.app.LiveUpdatesUtils
-import me.timeto.app.NotificationCenter
+import me.timeto.app.NotificationsUtils
 import me.timeto.app.askAQuestion
 import me.timeto.app.openNotificationSettings
 import me.timeto.app.showOpenSource
@@ -472,7 +472,7 @@ fun SettingsScreen(
                     onClick = {
                         openNotificationChannelSettings(
                             context = context,
-                            channel = NotificationCenter.channelTimerExpired(),
+                            channel = NotificationsUtils.channelTimerExpired(),
                         )
                     },
                 )
@@ -484,7 +484,7 @@ fun SettingsScreen(
                     onClick = {
                         openNotificationChannelSettings(
                             context = context,
-                            channel = NotificationCenter.channelTimerOverdue(),
+                            channel = NotificationsUtils.channelTimerOverdue(),
                         )
                     },
                 )
@@ -589,6 +589,6 @@ private fun openNotificationChannelSettings(
 
 private fun isLiveUpdatesSystemEnabled(): Boolean {
     if (LiveUpdatesUtils.isSdkAvailable())
-        return NotificationCenter.manager.canPostPromotedNotifications()
+        return NotificationsUtils.manager.canPostPromotedNotifications()
     return true
 }

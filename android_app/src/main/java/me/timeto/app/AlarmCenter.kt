@@ -4,8 +4,8 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import me.timeto.app.NotificationCenter.NOTIFICATION_ID_BREAK
-import me.timeto.app.NotificationCenter.NOTIFICATION_ID_OVERDUE
+import me.timeto.app.NotificationsUtils.NOTIFICATION_ID_BREAK
+import me.timeto.app.NotificationsUtils.NOTIFICATION_ID_OVERDUE
 import me.timeto.shared.NotificationAlarm
 import me.timeto.shared.timeMls
 

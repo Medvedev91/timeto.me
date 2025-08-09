@@ -121,7 +121,7 @@ class MainActivity : ComponentActivity() {
                         // Notifications Schedule
                         NotificationAlarm.flow.onEachExIn(this) { notifications ->
                             AlarmCenter.cancelAllAlarms()
-                            NotificationCenter.cleanTimerPushes()
+                            NotificationsUtils.cleanTimerPushes()
                             notifications.forEach {
                                 AlarmCenter.scheduleNotification(it)
                             }
@@ -155,7 +155,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        NotificationCenter.cleanTimerPushes()
+        NotificationsUtils.cleanTimerPushes()
 
         /**
          * https://developer.android.com/develop/ui/views/layout/immersive#kotlin
