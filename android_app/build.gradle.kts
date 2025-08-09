@@ -7,12 +7,12 @@ plugins {
 android {
 
     namespace = "me.timeto.app"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "me.timeto.app"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 580
         versionName = "2025.06.26"
     }
@@ -59,6 +59,7 @@ android {
 
 dependencies {
     implementation(project(":shared"))
+    implementation("androidx.core:core:1.17.0-rc01")
     implementation("androidx.activity:activity-compose:1.10.1")
     implementation("androidx.compose.material:material:1.8.3")
     implementation("com.google.android.material:material:1.12.0")

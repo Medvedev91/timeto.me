@@ -18,10 +18,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
 import kotlinx.coroutines.launch
-import me.timeto.app.NotificationCenter
+import me.timeto.app.LiveUpdatesUtils
+import me.timeto.app.NotificationsUtils
 import me.timeto.app.askAQuestion
+import me.timeto.app.openNotificationSettings
 import me.timeto.app.showOpenSource
+import me.timeto.app.ui.LifecycleListener
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.c
 import me.timeto.app.ui.whats_new.WhatsNewFs
@@ -40,6 +44,7 @@ import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.home.settings.HomeSettingsButtonsFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationScreen
+import me.timeto.app.ui.navigation.NavigationAlert
 import me.timeto.app.ui.notes.NoteFormFs
 import me.timeto.app.ui.notes.NoteFs
 import me.timeto.app.ui.privacy.PrivacyFs
@@ -54,6 +59,8 @@ import me.timeto.shared.performUi
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
+private const val persistentNotificationText = "Persistent Notification"
+
 @Composable
 fun SettingsScreen(
     onClose: () -> Unit,
@@ -67,6 +74,15 @@ fun SettingsScreen(
 
     BackHandler {
         onClose()
+    }
+
+    val isLiveUpdatesSystemEnabled = remember {
+        mutableStateOf(isLiveUpdatesSystemEnabled())
+    }
+
+    LifecycleListener { _, event ->
+        if (event == Lifecycle.Event.ON_RESUME)
+            isLiveUpdatesSystemEnabled.value = isLiveUpdatesSystemEnabled()
     }
 
     val (vm, state) = rememberVm {
@@ -456,7 +472,7 @@ fun SettingsScreen(
                     onClick = {
                         openNotificationChannelSettings(
                             context = context,
-                            channel = NotificationCenter.channelTimerExpired(),
+                            channel = NotificationsUtils.channelTimerExpired(),
                         )
                     },
                 )
@@ -464,14 +480,41 @@ fun SettingsScreen(
                 FormButton(
                     title = "Timer Overdue",
                     isFirst = false,
-                    isLast = true,
+                    isLast = isLiveUpdatesSystemEnabled.value,
                     onClick = {
                         openNotificationChannelSettings(
                             context = context,
-                            channel = NotificationCenter.channelTimerOverdue(),
+                            channel = NotificationsUtils.channelTimerOverdue(),
                         )
                     },
                 )
+
+                if (!isLiveUpdatesSystemEnabled.value) {
+                    FormButton(
+                        title = persistentNotificationText,
+                        titleColor = c.red,
+                        isFirst = false,
+                        isLast = true,
+                        note = "Not Granted",
+                        noteColor = c.red,
+                        withArrow = true,
+                        arrowColor = c.red,
+                        onClick = {
+                            navigationFs.dialog { dialogLayer ->
+                                NavigationAlert(
+                                    message = "Please enable \"Live updates\" in settings.",
+                                    withCancelButton = true,
+                                    buttonText = "Settings",
+                                    buttonColor = c.blue,
+                                    onButtonClick = {
+                                        openNotificationSettings(context)
+                                        dialogLayer.close()
+                                    },
+                                )
+                            }
+                        },
+                    )
+                }
             }
 
             //
@@ -542,4 +585,10 @@ private fun openNotificationChannelSettings(
             putExtra(Settings.EXTRA_CHANNEL_ID, channel.id)
         }
     )
+}
+
+private fun isLiveUpdatesSystemEnabled(): Boolean {
+    if (LiveUpdatesUtils.isSdkAvailable())
+        return NotificationsUtils.manager.canPostPromotedNotifications()
+    return true
 }

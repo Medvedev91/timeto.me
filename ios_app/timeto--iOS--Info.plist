@@ -2,12 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIUserInterfaceStyle</key>
-	<string>Dark</string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>timer_font.otf</string>
-	</array>
 	<key>NSUbiquitousContainers</key>
 	<dict>
 		<key>iCloud.me.timeto.app</key>
@@ -20,6 +14,10 @@
 			<string>ANY</string>
 		</dict>
 	</dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>timer_font.otf</string>
+	</array>
 	<key>UIFileSharingEnabled</key>
 	<true/>
 </dict>

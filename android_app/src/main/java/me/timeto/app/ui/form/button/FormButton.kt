@@ -15,6 +15,7 @@ fun FormButton(
     note: String? = null,
     noteColor: Color? = null,
     withArrow: Boolean = false,
+    arrowColor: Color? = null,
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     onLongClick: (() -> Unit)? = null,
@@ -41,7 +42,7 @@ fun FormButton(
                 }
 
                 if (withArrow) {
-                    FormButtonArrowView()
+                    FormButtonArrowView(color = arrowColor)
                 }
             }
         },

@@ -11,7 +11,7 @@ struct SettingsScreen: View {
             SettingsScreenInner(
                 vm: vm,
                 state: state,
-                todayOnHomeScreen: state.todayOnHomeScreen
+                todayOnHomeScreen: state.todayOnHomeScreen,
             )
         }
     }
@@ -27,6 +27,9 @@ private struct SettingsScreenInner: View {
     ///
     
     @Environment(Navigation.self) private var navigation
+    @Environment(\.scenePhase) private var scenePhase
+    
+    @State private var isLiveActivityGranted = LiveActivityManager.isPermissionGranted()
     
     @State private var isFileImporterPresented = false
     
@@ -227,6 +230,19 @@ private struct SettingsScreenInner: View {
                 .onChange(of: todayOnHomeScreen) { _, new in
                     vm.setTodayOnHomeScreen(isOn: new)
                 }
+                
+                if !isLiveActivityGranted {
+                    HStack {
+                        Text("Live Activities Not Granted")
+                            .foregroundColor(.red)
+                        Spacer()
+                        Button("Grant") {
+                            openSystemSettings()
+                        }
+                        .fontWeight(.semibold)
+                        .foregroundColor(.red)
+                    }
+                }
             }
             
             Section("Backups") {
@@ -354,6 +370,9 @@ private struct SettingsScreenInner: View {
                 navigation.alert(message: "Error")
                 reportApi("iOS restore exception\n" + error.messageApp())
             }
+        }
+        .onChange(of: scenePhase) {
+            isLiveActivityGranted = LiveActivityManager.isPermissionGranted()
         }
     }
 }

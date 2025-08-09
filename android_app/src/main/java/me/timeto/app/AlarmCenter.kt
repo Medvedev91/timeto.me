@@ -4,6 +4,8 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import me.timeto.app.NotificationsUtils.NOTIFICATION_ID_BREAK
+import me.timeto.app.NotificationsUtils.NOTIFICATION_ID_OVERDUE
 import me.timeto.shared.NotificationAlarm
 import me.timeto.shared.timeMls
 
@@ -11,10 +13,8 @@ object AlarmCenter {
 
     fun scheduleNotification(data: NotificationAlarm) {
         val requestCode: Int = when (data.type) {
-            NotificationAlarm.Type.timeToBreak ->
-                TimerNotificationReceiver.NOTIFICATION_ID.BREAK.id
-            NotificationAlarm.Type.overdue ->
-                TimerNotificationReceiver.NOTIFICATION_ID.OVERDUE.id
+            NotificationAlarm.Type.timeToBreak -> NOTIFICATION_ID_BREAK
+            NotificationAlarm.Type.overdue -> NOTIFICATION_ID_OVERDUE
         }
 
         val context = App.instance
@@ -23,6 +23,9 @@ object AlarmCenter {
         intent.putExtra(TimerNotificationReceiver.EXTRA_TITLE, data.title)
         intent.putExtra(TimerNotificationReceiver.EXTRA_TEXT, data.text)
         intent.putExtra(TimerNotificationReceiver.EXTRA_REQUEST_CODE, requestCode)
+        intent.putExtra(TimerNotificationReceiver.EXTRA_LIVE_TITLE, data.liveActivity.dynamicIslandTitle)
+        intent.putExtra(TimerNotificationReceiver.EXTRA_LIVE_FINISH_TIME, data.liveActivity.intervalDb.finishTime)
+        intent.putExtra(TimerNotificationReceiver.EXTRA_LIVE_EXPIRED_STRING, data.liveActivity.intervalDb.getExpiredString())
 
         val pIntent = PendingIntent.getBroadcast(
             context,
@@ -47,7 +50,7 @@ object AlarmCenter {
         val intent = Intent(context, TimerNotificationReceiver::class.java)
         val alarm = getAlarmManager()
 
-        val requestCodes: List<Int> = TimerNotificationReceiver.NOTIFICATION_ID.entries.map { it.id }
+        val requestCodes: List<Int> = listOf(NOTIFICATION_ID_BREAK, NOTIFICATION_ID_OVERDUE)
         requestCodes.forEach { requestCode ->
             val pIntent = PendingIntent.getBroadcast(
                 context,

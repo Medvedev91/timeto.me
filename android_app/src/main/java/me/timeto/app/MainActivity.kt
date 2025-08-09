@@ -27,6 +27,8 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.filterNotNull
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.main.MainScreen
@@ -55,6 +57,13 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private val notificationsPermissionGrantedFlow = MutableSharedFlow<Boolean>()
+    private val notificationsPermissionRequester = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        launchExIo { notificationsPermissionGrantedFlow.emit(isGranted) }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
@@ -63,9 +72,6 @@ class MainActivity : ComponentActivity() {
         // Needs android:windowSoftInputMode="adjustResize" in the manifest.
         WindowCompat.setDecorFitsSystemWindows(window, false)
         statusBarHeightDp = getStatusBarHeight(this@MainActivity)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
-            notificationsPermissionProcessing()
 
         setContent {
 
@@ -100,26 +106,47 @@ class MainActivity : ComponentActivity() {
                     }
 
                     LaunchedEffect(Unit) {
-                        NotificationAlarm.flow
-                            .onEachExIn(this) { notifications ->
-                                AlarmCenter.cancelAllAlarms()
-                                NotificationCenter.cleanAllPushes()
-                                notifications.forEach {
-                                    AlarmCenter.scheduleNotification(it)
-                                }
+                        // Live Updates
+                        var isFirstLiveActivity = true
+                        LiveActivity.flow.filterNotNull().onEachExIn(this) { liveActivity ->
+                            // Without delay doesn't show at start
+                            if (isFirstLiveActivity) {
+                                delay(500)
+                                isFirstLiveActivity = false
                             }
-                        // TRICK Run strictly after scheduledNotificationsDataFlow launch.
+                            LiveUpdatesUtils.upsert(
+                                LiveUpdatesUtils.LiveData.build(liveActivity)
+                            )
+                        }
+                        // Notifications Schedule
+                        NotificationAlarm.flow.onEachExIn(this) { notifications ->
+                            AlarmCenter.cancelAllAlarms()
+                            NotificationsUtils.cleanTimerPushes()
+                            notifications.forEach {
+                                AlarmCenter.scheduleNotification(it)
+                            }
+                        }
+                        // TRICK Run after subscribing to LiveActivity and NotificationAlarm flows.
                         // TRICK Without delay the first event does not handled. 1L enough.
-                        vm.onNotificationsPermissionReady(delayMls = 500L)
+                        vm.onNotificationsPermissionReady(delayMls = 500)
+                    }
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        LaunchedEffect(Unit) {
+                            notificationsPermissionGrantedFlow.onEachExIn(this) { isGranted ->
+                                if (isGranted)
+                                    vm.onNotificationsPermissionReady(delayMls = 0)
+                            }
+                            notificationsPermissionProcessing()
+                        }
                     }
 
                     LaunchedEffect(Unit) {
-                        keepScreenOnStateFlow
-                            .onEachExIn(this) { keepScreenOn ->
-                                val flag = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                                if (keepScreenOn) window.addFlags(flag)
-                                else window.clearFlags(flag)
-                            }
+                        keepScreenOnStateFlow.onEachExIn(this) { keepScreenOn ->
+                            val flag = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                            if (keepScreenOn) window.addFlags(flag)
+                            else window.clearFlags(flag)
+                        }
                     }
                 }
             }
@@ -128,7 +155,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        NotificationCenter.cleanAllPushes()
+        NotificationsUtils.cleanTimerPushes()
 
         /**
          * https://developer.android.com/develop/ui/views/layout/immersive#kotlin
@@ -152,18 +179,15 @@ class MainActivity : ComponentActivity() {
                 this, Manifest.permission.POST_NOTIFICATIONS
             ) == PackageManager.PERMISSION_GRANTED -> {
             }
+
             shouldShowRequestPermissionRationale(
                 Manifest.permission.POST_NOTIFICATIONS
             ) -> {
                 // todo
             }
+
             else -> {
-                val requester = registerForActivityResult(
-                    ActivityResultContracts.RequestPermission()
-                ) { isGranted ->
-                    // todo vm.onNotificationsPermissionReady()?
-                }
-                requester.launch(Manifest.permission.POST_NOTIFICATIONS)
+                notificationsPermissionRequester.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         }
     }
@@ -206,7 +230,7 @@ private fun ShortcutsListener() {
                 } else {
                     context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(shortcutDb.uri)))
                 }
-            } catch (e: ActivityNotFoundException) {
+            } catch (_: ActivityNotFoundException) {
                 navigationFs.alert("Invalid shortcut link")
             }
         }

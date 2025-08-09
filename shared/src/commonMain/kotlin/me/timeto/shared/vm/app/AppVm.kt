@@ -51,10 +51,10 @@ class AppVm : Vm<AppVm.State>() {
             IntervalDb
                 .selectLastOneOrNullFlow()
                 .filterNotNull()
-                .onEachExIn(this) { lastInterval ->
+                .onEachExIn(this) { lastIntervalDb ->
                     NotificationAlarm.rescheduleAll()
-                    performShortcutForInterval(lastInterval, secondsLimit = 3)
-                    keepScreenOnStateFlow.emit(lastInterval.selectActivityDbCached().keepScreenOn)
+                    performShortcutForInterval(lastIntervalDb, secondsLimit = 3)
+                    keepScreenOnStateFlow.emit(lastIntervalDb.selectActivityDb().keepScreenOn)
                 }
 
             ActivityDb
@@ -74,7 +74,7 @@ class AppVm : Vm<AppVm.State>() {
                      */
                     try {
                         delay(1_000L)
-                    } catch (e: CancellationException) {
+                    } catch (_: CancellationException) {
                         break // On app closing
                     }
                     try {
@@ -121,8 +121,8 @@ private fun performShortcutForInterval(
 
     val shortcutDb: ShortcutDb =
         intervalDb.note?.textFeatures()?.shortcutsDb?.firstOrNull()
-        ?: intervalDb.selectActivityDbCached().name.textFeatures().shortcutsDb.firstOrNull()
-        ?: return
+            ?: intervalDb.selectActivityDbCached().name.textFeatures().shortcutsDb.firstOrNull()
+            ?: return
 
     ShortcutPerformer.perform(shortcutDb)
 }

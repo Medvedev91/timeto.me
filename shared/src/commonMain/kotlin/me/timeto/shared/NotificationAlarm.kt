@@ -8,10 +8,12 @@ data class NotificationAlarm(
     val text: String,
     val inSeconds: Int,
     val type: Type,
+    val liveActivity: LiveActivity,
 ) {
 
     companion object {
 
+        // Not StateFlow to reschedule same data object
         val flow = MutableSharedFlow<List<NotificationAlarm>>()
 
         suspend fun rescheduleAll() {
@@ -27,21 +29,23 @@ data class NotificationAlarm(
 }
 
 private suspend fun rescheduleNotifications() {
-    val lastInterval: IntervalDb = IntervalDb.selectLastOneOrNull()!!
-    val inSeconds: Int = (lastInterval.id + lastInterval.timer) - time()
+    val lastIntervalDb = IntervalDb.selectLastOneOrNull()!!
+
+    val liveActivity = LiveActivity(lastIntervalDb)
+    LiveActivity.flow.emit(liveActivity)
+
+    val inSeconds: Int = lastIntervalDb.finishTime - time()
     if (inSeconds <= 0)
         return
 
-    val totalMinutes: Int = lastInterval.timer / 60
     NotificationAlarm.flow.emit(
         listOf(
             NotificationAlarm(
                 title = "Time Is Over ⏰",
-                text =
-                    if (totalMinutes == 1) "1 minute has expired"
-                    else "$totalMinutes minutes have expired",
+                text = lastIntervalDb.getExpiredString(),
                 inSeconds = inSeconds,
                 type = NotificationAlarm.Type.timeToBreak,
+                liveActivity = liveActivity,
             ),
         )
     )

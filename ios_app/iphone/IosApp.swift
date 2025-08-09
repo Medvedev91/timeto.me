@@ -23,6 +23,7 @@ struct IosApp: App {
                         .attachAutoBackupIos()
                         .statusBar(hidden: true)
                         .onAppear {
+                            LiveActivityManager.setup()
                             // Use together
                             UNUserNotificationCenter
                                 .current()
