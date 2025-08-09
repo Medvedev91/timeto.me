@@ -1,6 +1,7 @@
 package me.timeto.shared.vm.whats_new
 
 import kotlinx.coroutines.flow.MutableStateFlow
+import me.timeto.shared.SystemInfo
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.KvDb
 import me.timeto.shared.launchExIo
@@ -31,6 +32,7 @@ class WhatsNewVm : Vm<WhatsNewVm.State>() {
     companion object {
 
         val historyItemsUi: List<HistoryItemUi> = listOf(
+            h20250809(),
             HistoryItemUi(20265, "Goals Improvements", text = h26062025Text),
             HistoryItemUi(20247, "Move to Tasks From History"),
             HistoryItemUi(20044, "New Goals"),
@@ -82,6 +84,25 @@ class WhatsNewVm : Vm<WhatsNewVm.State>() {
             pomodoro("Read how it works"),
         }
     }
+}
+
+private fun h20250809(): WhatsNewVm.HistoryItemUi {
+    val isAndroid = SystemInfo.instance.os is SystemInfo.Os.Android
+    val title: String =
+        if (isAndroid) "Persistent Notification" else "Live Activity"
+    val text: String = if (isAndroid) """
+        - persistent notification with timer and description,
+        - lock screen support,
+        - [Android 16+] always on display support,
+        - [Android 16+] chip in the status bar support.
+        """.trimIndent()
+    else """
+        - live activity with timer and description,
+        - lock screen support,
+        - always on display support,
+        - dynamic island support.
+        """.trimIndent()
+    return WhatsNewVm.HistoryItemUi(20309, title = title, text = text)
 }
 
 private val h26062025Text = """

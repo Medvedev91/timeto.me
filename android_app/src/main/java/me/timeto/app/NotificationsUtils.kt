@@ -34,7 +34,7 @@ object NotificationsUtils {
         // IMPORTANCE_DEFAULT is obligatory for live updates
         val importance = NotificationManager.IMPORTANCE_DEFAULT
         val channel = NotificationChannel("live_updates", "Live Updates", importance)
-        // Disable sound for each update
+        // Disable sound for creation and each update
         channel.setSound(null, null)
         manager.createNotificationChannel(channel)
         return channel
