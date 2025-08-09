@@ -106,6 +106,19 @@ class MainActivity : ComponentActivity() {
                     }
 
                     LaunchedEffect(Unit) {
+                        // Live Updates
+                        var isFirstLiveActivity = true
+                        LiveActivity.flow.filterNotNull().onEachExIn(this) { liveActivity ->
+                            // Without delay doesn't show at start
+                            if (isFirstLiveActivity) {
+                                delay(500)
+                                isFirstLiveActivity = false
+                            }
+                            LiveUpdatesUtils.upsert(
+                                LiveUpdatesUtils.LiveData.build(liveActivity)
+                            )
+                        }
+                        // Notifications Schedule
                         NotificationAlarm.flow.onEachExIn(this) { notifications ->
                             AlarmCenter.cancelAllAlarms()
                             NotificationCenter.cleanTimerPushes()
@@ -113,16 +126,16 @@ class MainActivity : ComponentActivity() {
                                 AlarmCenter.scheduleNotification(it)
                             }
                         }
-                        // TRICK Run strictly after scheduledNotificationsDataFlow launch.
+                        // TRICK Run after subscribing to LiveActivity and NotificationAlarm flows.
                         // TRICK Without delay the first event does not handled. 1L enough.
-                        vm.onNotificationsPermissionReady(delayMls = 500L)
+                        vm.onNotificationsPermissionReady(delayMls = 500)
                     }
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                         LaunchedEffect(Unit) {
                             notificationsPermissionGrantedFlow.onEachExIn(this) { isGranted ->
                                 if (isGranted)
-                                    vm.onNotificationsPermissionReady(delayMls = 0L)
+                                    vm.onNotificationsPermissionReady(delayMls = 0)
                             }
                             notificationsPermissionProcessing()
                         }
@@ -133,20 +146,6 @@ class MainActivity : ComponentActivity() {
                             val flag = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                             if (keepScreenOn) window.addFlags(flag)
                             else window.clearFlags(flag)
-                        }
-                    }
-
-                    LaunchedEffect(Unit) {
-                        var isFirst = true
-                        LiveActivity.flow.filterNotNull().onEachExIn(this) { liveActivity ->
-                            // Without delay doesn't show at start
-                            if (isFirst) {
-                                delay(2_000)
-                                isFirst = false
-                            }
-                            LiveUpdatesUtils.upsert(
-                                LiveUpdatesUtils.LiveData.build(liveActivity)
-                            )
                         }
                     }
                 }
