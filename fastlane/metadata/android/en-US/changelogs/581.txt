@@ -1,0 +1,33 @@
+9 August 2025:
+<b>Persistent Notification</b>
+<ul>
+<li>persistent notification with timer and description,</li>
+<li>lock screen support,</li>
+<li>[Android 16+] always on display support,</li>
+<li>[Android 16+] chip in the status bar support.</li>
+</ul>
+
+26 June 2025:
+Goals Improvements
+- many in row goals "Settings -> Home Screen",
+- track entire activity option for goals,
+- rest of bar option for goal's timer,
+- attaching goal for repeating tasks,
+- auto-remove paused task on goal started,
+- goal bar context menu on long tap,
+- editing "Other" activity.
+
+8 Jun 2025:
+Move to Tasks From History
+
+4 August 2024:
+Today on Home Screen
+
+8 July 2024:
+New Pomodoro
+
+27 May 2024:
+Calendar Templates
+
+15 May 2024:
+Optional Pomodoro
