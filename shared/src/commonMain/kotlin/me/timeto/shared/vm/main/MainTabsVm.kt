@@ -6,7 +6,6 @@ import me.timeto.shared.Cache
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.IntervalDb
-import me.timeto.shared.db.TaskDb
 import me.timeto.shared.delayToNextMinute
 import me.timeto.shared.BatteryInfo
 import me.timeto.shared.ColorEnum
