@@ -23,14 +23,19 @@ class MainTabsVm : Vm<MainTabsVm.State>() {
         val batteryLevel: Int?,
         val isBatteryCharging: Boolean,
         val lastIntervalId: Int,
-        val todayTasksCount: Int,
         val forceUpdate: Int,
     ) {
 
         val timeText: String =
             UnixTime().getStringByComponents(UnixTime.StringComponent.hhmm24)
 
-        val tasksText: String = "$todayTasksCount"
+        val dateText: String = UnixTime().getStringByComponents(
+            UnixTime.StringComponent.dayOfWeek3,
+            UnixTime.StringComponent.space,
+            UnixTime.StringComponent.dayOfMonth,
+            UnixTime.StringComponent.space,
+            UnixTime.StringComponent.month3,
+        )
 
         val batteryUi: BatteryUi = run {
             val level: Int? = batteryLevel
@@ -41,11 +46,13 @@ class MainTabsVm : Vm<MainTabsVm.State>() {
                     colorEnum = if (level == 100) ColorEnum.green else ColorEnum.blue,
                     isHighlighted = true,
                 )
+
                 level in 0..20 -> BatteryUi(
                     text = text,
                     colorEnum = ColorEnum.red,
                     isHighlighted = true,
                 )
+
                 else -> BatteryUi(
                     text = text,
                     colorEnum = null,
@@ -60,7 +67,6 @@ class MainTabsVm : Vm<MainTabsVm.State>() {
             batteryLevel = BatteryInfo.levelFlow.value,
             isBatteryCharging = BatteryInfo.isChargingFlow.value,
             lastIntervalId = Cache.lastIntervalDb.id,
-            todayTasksCount = Cache.tasksDb.count { it.isToday },
             forceUpdate = 0,
         )
     )
@@ -72,14 +78,12 @@ class MainTabsVm : Vm<MainTabsVm.State>() {
         combine(
             BatteryInfo.levelFlow,
             BatteryInfo.isChargingFlow,
-            TaskDb.selectAscFlow(),
             IntervalDb.selectLastOneOrNullFlow(),
-        ) { level, isCharging, tasksDb, lastIntervalDb ->
+        ) { level, isCharging, lastIntervalDb ->
             state.update {
                 it.copy(
                     batteryLevel = level,
                     isBatteryCharging = isCharging,
-                    todayTasksCount = tasksDb.count { taskDb -> taskDb.isToday },
                     lastIntervalId = lastIntervalDb?.id ?: it.lastIntervalId,
                 )
             }
