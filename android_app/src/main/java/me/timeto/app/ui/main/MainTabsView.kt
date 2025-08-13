@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.ui.HStack
@@ -129,7 +130,7 @@ fun MainTabsView(
 
                 HStack(
                     modifier = Modifier
-                        .padding(end = 3.dp),
+                        .padding(end = 1.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
 
@@ -160,24 +161,16 @@ fun MainTabsView(
                         fontWeight = if (batteryUi.isHighlighted) FontWeight.Bold else FontWeight.Light,
                     )
 
-                    Icon(
-                        painter = painterResource(id = R.drawable.sf_smallcircle_filled_circle_small_light),
-                        contentDescription = "Tasks",
-                        tint = c.mainTabsMenuSecondary,
-                        modifier = Modifier
-                            .padding(start = 8.dp)
-                            .size(10.dp + halfDpFloor)
-                            .offset(y = -halfDpFloor),
-                    )
-
                     Text(
-                        text = state.tasksText,
+                        text = state.dateText,
                         modifier = Modifier
-                            .padding(start = 2.dp + halfDpFloor),
+                            .padding(start = 4.dp),
                         color = c.mainTabsMenuSecondary,
                         fontSize = 12.sp,
                         lineHeight = 14.sp,
                         fontWeight = FontWeight.Light,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                     )
                 }
             }

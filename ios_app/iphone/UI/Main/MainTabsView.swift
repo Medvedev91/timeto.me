@@ -92,17 +92,12 @@ private struct MainTabsViewInner: View {
                                     .foregroundColor(batteryTextColor)
                                     .font(.system(size: 13, weight: batteryUi.isHighlighted ? .bold : .regular))
                                 
-                                Image(systemName: "smallcircle.filled.circle")
-                                    .foregroundColor(menuSecondaryColor)
-                                    .font(.system(size: 11 + halfDpCeil, weight: .regular))
-                                    .padding(.leading, 6)
-                                    .padding(.trailing, 1 + halfDpFloor)
-                                
-                                Text(state.tasksText)
+                                Text(state.dateText)
                                     .foregroundColor(menuSecondaryColor)
                                     .font(.system(size: 13, weight: .regular))
+                                    .padding(.leading, 4)
                             }
-                            .padding(.trailing, 2)
+                            .padding(.trailing, 1)
                         }
                         .padding(.top, 3)
                         .frame(height: MainTabsView__HEIGHT)
