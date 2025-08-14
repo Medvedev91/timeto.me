@@ -104,6 +104,33 @@ data class GoalDb(
     val isEntireActivity: Boolean =
         is_entire_activity.toBoolean10()
 
+    suspend fun startInterval(
+        barsGoalStats: DayBarsUi.GoalStats,
+    ): IntervalDb {
+        val goalDb = this
+
+        val timer: Int =
+            barsGoalStats.calcTimer()
+
+        val noteTf: TextFeatures =
+            goalDb.note.textFeatures().copy(goalDb = goalDb)
+
+        TaskDb.selectAsc()
+            .filter { taskDb ->
+                val tf = taskDb.text.textFeatures()
+                taskDb.isToday && (tf.paused != null) && (tf.goalDb?.id == goalDb.id)
+            }
+            .forEach { taskDb ->
+                taskDb.delete()
+            }
+
+        return IntervalDb.insertWithValidation(
+            timer = timer,
+            activityDb = goalDb.getActivityDbCached(),
+            note = noteTf.textWithFeatures(),
+        )
+    }
+
     suspend fun updateHomeButtonSort(
         homeButtonSort: HomeButtonSort,
     ): Unit = dbIo {
