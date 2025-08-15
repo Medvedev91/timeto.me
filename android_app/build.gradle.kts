@@ -13,7 +13,7 @@ android {
         applicationId = "me.timeto.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 585
+        versionCode = 586
         versionName = "2025.08.09"
     }
 
@@ -46,6 +46,13 @@ android {
     dependenciesInfo {
         includeInApk = false
         includeInBundle = false
+    }
+
+    // https://gist.github.com/obfusk/61046e09cee352ae6dd109911534b12e#fix-proposed-by-linsui-disable-baseline-profiles
+    tasks.whenTaskAdded {
+        if (name.contains("ArtProfile")) {
+            enabled = false
+        }
     }
 
     // https://f-droid.org/en/docs/Reproducible_Builds/#png-crushcrunch
