@@ -323,8 +323,17 @@ private suspend fun addGettingReadyActivity() {
         pomodoroTimer = 5 * 60,
         timerHints = setOf(15 * 60, 30 * 60),
     )
+    // Checklist
+    val checklistDb = ChecklistDb.insertWithValidation("Morning")
+    ChecklistItemDb.insertWithValidation("Glass of Water", checklistDb)
+    ChecklistItemDb.insertWithValidation("Shower", checklistDb)
+    ChecklistItemDb.insertWithValidation("Breakfast", checklistDb)
+    ChecklistItemDb.insertWithValidation("Day Plan", checklistDb)
     // Goal
-    val goalForm = GoalFormData(null, 3_600, everyDayGoalPeriod, "Getting ready", "⏲️", true, 0)
+    val goalTitle = "Getting ready".textFeatures()
+        .copy(checklistsDb = listOf(checklistDb))
+        .textWithFeatures()
+    val goalForm = GoalFormData(null, 3_600, everyDayGoalPeriod, goalTitle, "⏲️", true, 0)
     val goalDb: GoalDb = GoalDb.insertAndGet(activityDb, goalForm)
     goalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 0, cellIdx = 3, size = 3))
 }
