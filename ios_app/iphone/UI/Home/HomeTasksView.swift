@@ -62,7 +62,7 @@ private struct TaskItemView: View {
                             .padding(.horizontal, HomeScreen__itemCircleHPadding)
                             .frame(height: HomeScreen__itemCircleHeight)
                             .background(roundedShape.fill(bgColor))
-                            .padding(.trailing, mainTask.taskUi.tf.paused != nil ? 9 : 8)
+                            .padding(.trailing, mainTask.taskUi.tf.paused != nil ? 9 : HomeScreen__itemCircleMarginTrailing)
                     }
                     
                     if mainTask.taskUi.tf.paused != nil {
