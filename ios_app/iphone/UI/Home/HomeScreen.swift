@@ -8,6 +8,7 @@ let HomeScreen__itemCircleHPadding: CGFloat = 7
 let HomeScreen__itemCircleHeight: CGFloat = 24
 let HomeScreen__itemCircleFontSize: CGFloat = 15
 let HomeScreen__itemCircleFontWeight: Font.Weight = .semibold
+let HomeScreen__itemCircleMarginTrailing: CGFloat = 8
 
 struct HomeScreen: View {
     
