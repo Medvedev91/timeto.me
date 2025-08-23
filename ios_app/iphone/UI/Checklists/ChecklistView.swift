@@ -228,12 +228,12 @@ private struct ChecklistIconView: View {
             if iconType == .checked {
                 Image(systemName: "checkmark")
                     .foregroundColor(.black)
-                    .font(.system(size: 13, weight: .medium))
+                    .font(.system(size: 13, weight: .semibold))
             }
             else if iconType == .partial {
                 Image(systemName: "minus")
                     .foregroundColor(.black)
-                    .font(.system(size: 13, weight: .medium))
+                    .font(.system(size: 13, weight: .semibold))
             }
         }
         .frame(width: HomeScreen__itemCircleHeight, height: HomeScreen__itemCircleHeight)
