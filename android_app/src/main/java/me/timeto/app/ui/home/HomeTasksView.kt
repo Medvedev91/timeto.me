@@ -95,7 +95,7 @@ fun HomeTasksView(
                     }
                     HStack(
                         modifier = Modifier
-                            .padding(end = if (mainTask.taskUi.tf.paused != null) 9.dp else 8.dp)
+                            .padding(end = if (mainTask.taskUi.tf.paused != null) 9.dp else HomeScreen__itemCircleMarginTrailing)
                             .height(HomeScreen__itemCircleHeight)
                             .clip(roundedShape)
                             .background(bgColor)

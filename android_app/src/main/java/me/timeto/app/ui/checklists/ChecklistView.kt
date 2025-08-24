@@ -27,6 +27,7 @@ import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.checklists.form.ChecklistFormItemFs
 import me.timeto.app.ui.home.HomeScreen__itemCircleHeight
+import me.timeto.app.ui.home.HomeScreen__itemCircleMarginTrailing
 import me.timeto.app.ui.home.HomeScreen__itemHeight
 import me.timeto.app.ui.home.HomeScreen__primaryFontSize
 import me.timeto.app.ui.navigation.LocalNavigationFs
@@ -116,7 +117,7 @@ fun ChecklistView(
                                 color = c.white,
                                 modifier = Modifier
                                     .padding(vertical = 4.dp)
-                                    .padding(start = 12.dp),
+                                    .padding(start = HomeScreen__itemCircleMarginTrailing),
                                 fontSize = itemFontSize,
                                 textAlign = TextAlign.Start,
                                 maxLines = maxLines,

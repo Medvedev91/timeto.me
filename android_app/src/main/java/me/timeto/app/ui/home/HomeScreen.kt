@@ -41,6 +41,7 @@ val HomeScreen__itemCircleHPadding = 6.dp
 val HomeScreen__itemCircleHeight = 22.dp
 val HomeScreen__itemCircleFontSize = 13.sp
 val HomeScreen__itemCircleFontWeight = FontWeight.SemiBold
+val HomeScreen__itemCircleMarginTrailing = 8.dp
 
 @Composable
 fun HomeScreen() {
