@@ -3,6 +3,7 @@ import shared
 
 let HomeScreen__primaryFontSize: CGFloat = 18
 
+let HomeScreen__hPadding: CGFloat = 8
 let HomeScreen__itemHeight: CGFloat = 38
 let HomeScreen__itemCircleHPadding: CGFloat = 7
 let HomeScreen__itemCircleHeight: CGFloat = 24

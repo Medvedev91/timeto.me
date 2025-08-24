@@ -203,7 +203,7 @@ private struct ChecklistViewInner: View {
                 }
             )
         }
-        .padding(.horizontal, H_PADDING)
+        .padding(.horizontal, HomeScreen__hPadding)
     }
 }
 

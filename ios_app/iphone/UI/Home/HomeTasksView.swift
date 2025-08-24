@@ -96,7 +96,7 @@ private struct TaskItemView: View {
                     }
                 }
                 .frame(height: HomeScreen__itemHeight)
-                .padding(.horizontal, H_PADDING)
+                .padding(.horizontal, HomeScreen__hPadding)
             }
         )
     }
