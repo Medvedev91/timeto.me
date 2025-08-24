@@ -21,11 +21,11 @@ import androidx.compose.ui.unit.dp
 import me.timeto.app.R
 import me.timeto.app.Haptic
 import me.timeto.app.ui.HStack
-import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.checklists.form.ChecklistFormItemFs
+import me.timeto.app.ui.home.HomeScreen__hPadding
 import me.timeto.app.ui.home.HomeScreen__itemCircleHeight
 import me.timeto.app.ui.home.HomeScreen__itemCircleMarginTrailing
 import me.timeto.app.ui.home.HomeScreen__itemHeight
@@ -40,7 +40,7 @@ import me.timeto.shared.vm.checklists.ChecklistStateUi
 
 private val checklistItemMinHeight = HomeScreen__itemHeight
 
-private val itemStartPadding = 8.dp
+private val itemStartPadding: Dp = HomeScreen__hPadding / 2
 private val checklistMenuInnerIconPadding: Dp =
     (checklistItemMinHeight - HomeScreen__itemCircleHeight) / 2
 private val itemFontSize: TextUnit = HomeScreen__primaryFontSize
@@ -73,8 +73,8 @@ fun ChecklistView(
         HStack(
             modifier = Modifier
                 .padding(
-                    start = H_PADDING - itemStartPadding,
-                    end = H_PADDING - checklistMenuInnerIconPadding,
+                    start = HomeScreen__hPadding - itemStartPadding,
+                    end = HomeScreen__hPadding - checklistMenuInnerIconPadding,
                 )
                 .weight(1f),
         ) {

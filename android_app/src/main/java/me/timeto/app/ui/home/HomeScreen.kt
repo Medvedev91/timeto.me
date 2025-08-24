@@ -36,6 +36,7 @@ import me.timeto.shared.vm.home.HomeVm
 
 val HomeScreen__primaryFontSize = 16.sp
 
+val HomeScreen__hPadding = 8.dp
 val HomeScreen__itemHeight = 36.dp
 val HomeScreen__itemCircleHPadding = 6.dp
 val HomeScreen__itemCircleHeight = 22.dp

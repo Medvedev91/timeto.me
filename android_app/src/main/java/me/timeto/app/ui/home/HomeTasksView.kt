@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.ui.HStack
-import me.timeto.app.ui.H_PADDING
 import me.timeto.app.R
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
@@ -33,6 +32,8 @@ import me.timeto.app.ui.activities.timer.ActivityTimerFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.vm.home.HomeVm
+
+private val mainTaskHalfHPadding: Dp = HomeScreen__hPadding / 2
 
 @Composable
 fun HomeTasksView(
@@ -160,7 +161,3 @@ fun HomeTasksView(
         }
     }
 }
-
-///
-
-private val mainTaskHalfHPadding: Dp = H_PADDING / 2
