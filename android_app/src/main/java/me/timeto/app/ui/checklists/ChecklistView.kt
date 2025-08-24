@@ -1,5 +1,7 @@
 package me.timeto.app.ui.checklists
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -24,10 +26,12 @@ import me.timeto.app.ui.VStack
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.checklists.form.ChecklistFormItemFs
+import me.timeto.app.ui.home.HomeScreen__itemCircleHeight
 import me.timeto.app.ui.home.HomeScreen__itemHeight
 import me.timeto.app.ui.home.HomeScreen__primaryFontSize
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.rememberVm
+import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.squircleShape
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.vm.checklists.ChecklistVm
@@ -36,8 +40,8 @@ import me.timeto.shared.vm.checklists.ChecklistStateUi
 private val checklistItemMinHeight = HomeScreen__itemHeight
 
 private val itemStartPadding = 8.dp
-private val checkboxSize = 18.dp
-private val checklistMenuInnerIconPadding: Dp = (checklistItemMinHeight - checkboxSize) / 2
+private val checklistMenuInnerIconPadding: Dp =
+    (checklistItemMinHeight - HomeScreen__itemCircleHeight) / 2
 private val itemFontSize: TextUnit = HomeScreen__primaryFontSize
 
 @Composable
@@ -98,17 +102,13 @@ fun ChecklistView(
                             horizontalArrangement = Arrangement.Start,
                         ) {
 
-                            Icon(
-                                painterResource(
-                                    id = if (itemUi.itemDb.isChecked)
-                                        R.drawable.sf_checkmark_square_fill_medium_regular
+                            ChecklistIconView(
+                                iconType =
+                                    if (itemUi.itemDb.isChecked)
+                                        ChecklistIconType.checked
                                     else
-                                        R.drawable.sf_square_medium_regular
-                                ),
+                                        ChecklistIconType.unchecked,
                                 contentDescription = "Checkbox",
-                                tint = c.white,
-                                modifier = Modifier
-                                    .size(checkboxSize),
                             )
 
                             Text(
@@ -172,21 +172,59 @@ fun ChecklistView(
                     },
             ) {
 
-                Icon(
-                    painter = painterResource(
-                        id = when (completionState) {
-                            is ChecklistStateUi.Completed -> R.drawable.sf_checkmark_square_fill_medium_regular
-                            is ChecklistStateUi.Empty -> R.drawable.sf_square_medium_regular
-                            is ChecklistStateUi.Partial -> R.drawable.sf_minus_square_fill_medium_medium
-                        }
-                    ),
-                    contentDescription = completionState.actionDesc,
-                    tint = c.white,
+                ZStack(
                     modifier = Modifier
-                        .size(checklistItemMinHeight)
-                        .padding(checklistMenuInnerIconPadding),
-                )
+                        .size(checklistItemMinHeight),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    ChecklistIconView(
+                        iconType = when (completionState) {
+                            is ChecklistStateUi.Completed -> ChecklistIconType.checked
+                            is ChecklistStateUi.Empty -> ChecklistIconType.unchecked
+                            is ChecklistStateUi.Partial -> ChecklistIconType.partial
+                        },
+                        contentDescription = completionState.actionDesc,
+                    )
+                }
             }
+        }
+    }
+}
+
+private enum class ChecklistIconType {
+    checked, unchecked, partial
+}
+
+@Composable
+private fun ChecklistIconView(
+    iconType: ChecklistIconType,
+    contentDescription: String,
+) {
+    val isFilled = iconType != ChecklistIconType.unchecked
+    ZStack(
+        modifier = Modifier
+            .size(HomeScreen__itemCircleHeight)
+            .clip(roundedShape)
+            .background(if (isFilled) c.white else c.transparent)
+            .border(2.dp, if (isFilled) c.transparent else c.homeFg, roundedShape),
+        contentAlignment = Alignment.Center,
+    ) {
+        if (iconType == ChecklistIconType.checked) {
+            Icon(
+                painterResource(id = R.drawable.sf_checkmark_medium_semibold),
+                contentDescription = contentDescription,
+                tint = c.black,
+                modifier = Modifier
+                    .size(10.dp),
+            )
+        } else if (iconType == ChecklistIconType.partial) {
+            Icon(
+                painterResource(id = R.drawable.sf_minus_medium_semibold),
+                contentDescription = "Checkbox",
+                tint = c.black,
+                modifier = Modifier
+                    .size(10.dp),
+            )
         }
     }
 }
