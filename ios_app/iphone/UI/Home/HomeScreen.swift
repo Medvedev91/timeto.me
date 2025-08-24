@@ -10,6 +10,7 @@ let HomeScreen__itemCircleHeight: CGFloat = 24
 let HomeScreen__itemCircleFontSize: CGFloat = 15
 let HomeScreen__itemCircleFontWeight: Font.Weight = .semibold
 let HomeScreen__itemCircleMarginTrailing: CGFloat = 8
+let HomeScreen__secondaryColor: Color = MainTabsVm.companion.menuSecondaryColorDark.toColor()
 
 struct HomeScreen: View {
     
