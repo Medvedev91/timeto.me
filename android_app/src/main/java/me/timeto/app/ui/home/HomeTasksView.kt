@@ -33,7 +33,8 @@ import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.vm.home.HomeVm
 
-private val mainTaskHalfHPadding: Dp = HomeScreen__hPadding / 2
+private val mainTaskInnerHPadding: Dp = 7.dp
+private val mainTaskOuterHPadding: Dp = HomeScreen__hPadding - mainTaskInnerHPadding
 
 @Composable
 fun HomeTasksView(
@@ -61,7 +62,7 @@ fun HomeTasksView(
                 modifier = Modifier
                     .height(HomeScreen__itemHeight)
                     .fillMaxWidth()
-                    .padding(horizontal = mainTaskHalfHPadding)
+                    .padding(horizontal = mainTaskOuterHPadding)
                     .clip(roundedShape)
                     .clickable {
                         mainTask.taskUi.taskDb.startIntervalForUi(
@@ -83,7 +84,7 @@ fun HomeTasksView(
                             },
                         )
                     }
-                    .padding(horizontal = mainTaskHalfHPadding),
+                    .padding(horizontal = mainTaskInnerHPadding),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
 
