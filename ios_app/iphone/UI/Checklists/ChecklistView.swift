@@ -92,6 +92,8 @@ private struct ChecklistViewInner: View {
                             .contentShape(Rectangle()) // Tap area full width
                         }
                     )
+                    // Inner padding to contextMenu() correct clipping
+                    .padding(.leading, HomeScreen__hPadding)
                     .customListItem()
                     .contextMenu {
                         
@@ -203,7 +205,7 @@ private struct ChecklistViewInner: View {
                 }
             )
         }
-        .padding(.horizontal, HomeScreen__hPadding)
+        .padding(.trailing, HomeScreen__hPadding)
     }
 }
 
