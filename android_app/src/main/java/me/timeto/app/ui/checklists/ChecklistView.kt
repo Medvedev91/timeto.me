@@ -162,7 +162,11 @@ fun ChecklistView(
             VStack(
                 modifier = Modifier
                     .fillMaxHeight()
-                    .padding(start = 4.dp, top = topPadding)
+                    .padding(
+                        start = 4.dp,
+                        top = topPadding,
+                        bottom = if (state.itemsUi.size > 1) 8.dp else 0.dp,
+                    )
                     .clip(roundedShape)
                     .clickable {
                         completionState.onClick()
