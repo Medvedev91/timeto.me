@@ -33,17 +33,17 @@ import me.timeto.app.ui.home.HomeScreen__primaryFontSize
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
-import me.timeto.app.ui.squircleShape
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.vm.checklists.ChecklistVm
 import me.timeto.shared.vm.checklists.ChecklistStateUi
 
 private val checklistItemMinHeight = HomeScreen__itemHeight
-
-private val itemStartPadding: Dp = HomeScreen__hPadding / 2
-private val checklistMenuInnerIconPadding: Dp =
-    (checklistItemMinHeight - HomeScreen__itemCircleHeight) / 2
 private val itemFontSize: TextUnit = HomeScreen__primaryFontSize
+
+private val checklistInnerIconPadding: Dp =
+    (checklistItemMinHeight - HomeScreen__itemCircleHeight) / 2
+private val checklistOuterHPadding: Dp =
+    HomeScreen__hPadding - checklistInnerIconPadding
 
 @Composable
 fun ChecklistView(
@@ -72,10 +72,7 @@ fun ChecklistView(
 
         HStack(
             modifier = Modifier
-                .padding(
-                    start = HomeScreen__hPadding - itemStartPadding,
-                    end = HomeScreen__hPadding - checklistMenuInnerIconPadding,
-                )
+                .padding(horizontal = checklistOuterHPadding)
                 .weight(1f),
         ) {
 
@@ -93,12 +90,12 @@ fun ChecklistView(
                             modifier = Modifier
                                 .defaultMinSize(minHeight = checklistItemMinHeight)
                                 .fillMaxWidth()
-                                .clip(squircleShape)
+                                .clip(roundedShape)
                                 .clickable {
                                     itemUi.toggle()
                                     Haptic.shot()
                                 }
-                                .padding(start = itemStartPadding),
+                                .padding(start = checklistInnerIconPadding),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Start,
                         ) {
@@ -138,7 +135,7 @@ fun ChecklistView(
                                 text = "New Item",
                                 color = c.blue,
                                 modifier = Modifier
-                                    .clip(squircleShape)
+                                    .clip(roundedShape)
                                     .clickable {
                                         navigationFs.push {
                                             ChecklistFormItemFs(
@@ -148,7 +145,7 @@ fun ChecklistView(
                                         }
                                     }
                                     .padding(vertical = 4.dp)
-                                    .padding(horizontal = itemStartPadding),
+                                    .padding(horizontal = HomeScreen__hPadding),
                                 fontSize = itemFontSize,
                             )
                         }
@@ -166,7 +163,7 @@ fun ChecklistView(
                 modifier = Modifier
                     .fillMaxHeight()
                     .padding(start = 4.dp, top = topPadding)
-                    .clip(squircleShape)
+                    .clip(roundedShape)
                     .clickable {
                         completionState.onClick()
                         Haptic.shot()
