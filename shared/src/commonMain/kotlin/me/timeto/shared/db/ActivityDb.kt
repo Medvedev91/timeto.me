@@ -124,6 +124,7 @@ data class ActivityDb(
 
         ///
 
+        // todo sync with fillInitData()
         // todo apple colors
         // attractiveness. In fillInitData() hardcode by indexes.
         // https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/color

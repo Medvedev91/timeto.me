@@ -25,11 +25,9 @@ Any questions [hi@timeto.me](mailto:hi@timeto.me?subject=[GitHub]%20Feedback)
 
 Hi,
 
-Developer is here.
-
 I built this app to manage my productivity. Here I will show how I use it.
 
-**This guide is not just a list of features, but my real day-to-day experience.**
+**It's not just a list of features, it is my real day-to-day experience.**
 
 Enjoy!
 

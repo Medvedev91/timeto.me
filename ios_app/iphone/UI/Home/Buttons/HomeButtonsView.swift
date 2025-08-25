@@ -3,7 +3,7 @@ import shared
 
 private let rowHeight: CGFloat = HomeScreen__itemHeight
 private let spacing: CGFloat = 8
-private let buttonsHPadding: CGFloat = H_PADDING
+private let buttonsHPadding: CGFloat = HomeScreen__hPadding
 
 struct HomeButtonsView: View {
     

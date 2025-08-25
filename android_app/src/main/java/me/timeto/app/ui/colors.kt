@@ -47,7 +47,6 @@ object c {
     // App Colors
 
     val homeFg = gray5
-    val homeTimerControls = Color(255, 255, 255, 180)
 
     val mainTabsMenuPrimary = MainTabsVm.menuPrimaryColorDark.toColor()
     val mainTabsMenuSecondary = MainTabsVm.menuSecondaryColorDark.toColor()

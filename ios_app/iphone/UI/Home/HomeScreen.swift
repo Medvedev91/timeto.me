@@ -3,11 +3,14 @@ import shared
 
 let HomeScreen__primaryFontSize: CGFloat = 18
 
+let HomeScreen__hPadding: CGFloat = 8
 let HomeScreen__itemHeight: CGFloat = 38
 let HomeScreen__itemCircleHPadding: CGFloat = 7
 let HomeScreen__itemCircleHeight: CGFloat = 24
 let HomeScreen__itemCircleFontSize: CGFloat = 15
 let HomeScreen__itemCircleFontWeight: Font.Weight = .semibold
+let HomeScreen__itemCircleMarginTrailing: CGFloat = 8
+let HomeScreen__secondaryColor: Color = MainTabsVm.companion.menuSecondaryColorDark.toColor()
 
 struct HomeScreen: View {
     

@@ -15,7 +15,7 @@ struct HomeTimerView: View {
     @Environment(Navigation.self) private var navigation
 
     private var controlsColor: Color {
-        state.timerStateUi.controlsColorEnum?.toColor() ?? homeTimerControlsColor
+        state.timerStateUi.controlsColorEnum?.toColor() ?? HomeScreen__secondaryColor
     }
     
     private var noteColor: Color { state.timerStateUi.noteColor.toColor() }

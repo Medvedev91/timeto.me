@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.ui.HStack
-import me.timeto.app.ui.H_PADDING
 import me.timeto.app.R
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
@@ -33,6 +32,9 @@ import me.timeto.app.ui.activities.timer.ActivityTimerFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.vm.home.HomeVm
+
+private val mainTaskInnerHPadding: Dp = 7.dp
+private val mainTaskOuterHPadding: Dp = HomeScreen__hPadding - mainTaskInnerHPadding
 
 @Composable
 fun HomeTasksView(
@@ -60,7 +62,7 @@ fun HomeTasksView(
                 modifier = Modifier
                     .height(HomeScreen__itemHeight)
                     .fillMaxWidth()
-                    .padding(horizontal = mainTaskHalfHPadding)
+                    .padding(horizontal = mainTaskOuterHPadding)
                     .clip(roundedShape)
                     .clickable {
                         mainTask.taskUi.taskDb.startIntervalForUi(
@@ -82,7 +84,7 @@ fun HomeTasksView(
                             },
                         )
                     }
-                    .padding(horizontal = mainTaskHalfHPadding),
+                    .padding(horizontal = mainTaskInnerHPadding),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
 
@@ -95,7 +97,7 @@ fun HomeTasksView(
                     }
                     HStack(
                         modifier = Modifier
-                            .padding(end = if (mainTask.taskUi.tf.paused != null) 9.dp else 8.dp)
+                            .padding(end = if (mainTask.taskUi.tf.paused != null) 9.dp else HomeScreen__itemCircleMarginTrailing)
                             .height(HomeScreen__itemCircleHeight)
                             .clip(roundedShape)
                             .background(bgColor)
@@ -160,7 +162,3 @@ fun HomeTasksView(
         }
     }
 }
-
-///
-
-private val mainTaskHalfHPadding: Dp = H_PADDING / 2

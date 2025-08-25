@@ -24,6 +24,7 @@ class ColorPickerVm(
         val doneText = "Done"
 
         val colorGroups: List<List<ColorItem>> = palettes
+            // todo dark?
             .map { listOf(it.aLight, it.light, it.aDark) }
             .flatten()
             .map {

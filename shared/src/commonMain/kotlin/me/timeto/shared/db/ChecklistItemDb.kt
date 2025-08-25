@@ -39,18 +39,12 @@ data class ChecklistItemDb(
             text: String,
             checklist: ChecklistDb,
         ): Unit = dbIo {
-
             db.transaction {
 
                 val allSorted: List<ChecklistItemDb> =
                     db.checklistItemQueries.selectSorted().asList { toDb() }
 
-                val timeId = time()
-                val nextId = if (allSorted.any { it.id == timeId })
-                    timeId + 1 // todo test
-                else
-                    timeId
-
+                val nextId: Int = allSorted.maxOfOrNull { it.id }?.plus(1) ?: 1
                 val sort: Int = allSorted.maxOfOrNull { it.sort }?.plus(1) ?: 0
 
                 val textValidated: String = validateTextRaw(text)

@@ -6,7 +6,7 @@ let MainTabsView__HEIGHT = 56.0
 private let menuTimeFont: Font = buildTimerFont(size: 10)
 
 private let menuPrimaryColor: Color = MainTabsVm.companion.menuPrimaryColorDark.toColor()
-private let menuSecondaryColor: Color = MainTabsVm.companion.menuSecondaryColorDark.toColor()
+private let menuSecondaryColor: Color = HomeScreen__secondaryColor
 
 extension View {
     
