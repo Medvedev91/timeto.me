@@ -289,8 +289,16 @@ private suspend fun addGettingReadyActivityAndStartGoal(): IntervalDb {
     val morningGoalForm = GoalFormData(null, 3_600, everyDayGoalPeriod, morningGoalTitle, "⏲️", false, 0)
     val morningGoalDb = GoalDb.insertAndGet(activityDb, morningGoalForm)
     morningGoalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 0, cellIdx = 0, size = 3))
+    // Recharge Checklist
+    val rechargeChecklistDb = ChecklistDb.insertWithValidation("Recharge")
+    ChecklistItemDb.insertWithValidation("Dinner", rechargeChecklistDb, false)
+    ChecklistItemDb.insertWithValidation("Relax", rechargeChecklistDb, false)
+    ChecklistItemDb.insertWithValidation("Meditation", rechargeChecklistDb, false)
     // Recharge Goal
-    val rechargeGoalForm = GoalFormData(null, 2 * 3_600, everyDayGoalPeriod, "Recharge", "⏲️", false, 0)
+    val rechargeGoalTitle = "Recharge".textFeatures()
+        .copy(checklistsDb = listOf(rechargeChecklistDb))
+        .textWithFeatures()
+    val rechargeGoalForm = GoalFormData(null, 2 * 3_600, everyDayGoalPeriod, rechargeGoalTitle, "⏲️", false, 0)
     val rechargeGoalDb = GoalDb.insertAndGet(activityDb, rechargeGoalForm)
     rechargeGoalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 2, cellIdx = 0, size = 2))
     // Start Goal
