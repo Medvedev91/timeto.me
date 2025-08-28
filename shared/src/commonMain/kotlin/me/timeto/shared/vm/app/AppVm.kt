@@ -375,8 +375,17 @@ private suspend fun addSleepActivity() {
         pomodoroTimer = 5 * 60,
         timerHints = setOf(20 * 60, 60 * 60, 6 * 3_600),
     )
+    // Checklist
+    val checklistDb = ChecklistDb.insertWithValidation("Sleep")
+    ChecklistItemDb.insertWithValidation("Set Alarm", checklistDb, false)
+    ChecklistItemDb.insertWithValidation("Check Tomorrow", checklistDb, false)
+    ChecklistItemDb.insertWithValidation("Prepare Breakfast", checklistDb, false)
+    ChecklistItemDb.insertWithValidation("Day Reflection", checklistDb, false)
     // Goal
-    val goalForm = GoalFormData(null, 8 * 3_600, everyDayGoalPeriod, "Sleep", "⏰", true, 0)
+    val goalTitle = "Sleep".textFeatures()
+        .copy(checklistsDb = listOf(checklistDb))
+        .textWithFeatures()
+    val goalForm = GoalFormData(null, 8 * 3_600, everyDayGoalPeriod, goalTitle, "⏰", true, 0)
     val goalDb: GoalDb = GoalDb.insertAndGet(activityDb, goalForm)
     goalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 3, cellIdx = 2, size = 4))
 }
