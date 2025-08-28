@@ -305,7 +305,7 @@ private suspend fun addGettingReadyActivityAndStartGoal(): IntervalDb {
     val rechargeGoalTitle = "Recharge".textFeatures()
         .copy(checklistsDb = listOf(rechargeChecklistDb))
         .textWithFeatures()
-    val rechargeGoalForm = GoalFormData(null, 2 * 3_600, everyDayGoalPeriod, rechargeGoalTitle, "⏲️", false, 0)
+    val rechargeGoalForm = GoalFormData(null, 3_600, everyDayGoalPeriod, rechargeGoalTitle, "⏲️", false, 0)
     val rechargeGoalDb = GoalDb.insertAndGet(activityDb, rechargeGoalForm)
     rechargeGoalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 2, cellIdx = 0, size = 2))
     // Start Goal
@@ -346,8 +346,17 @@ private suspend fun addFreeTimeActivity() {
         pomodoroTimer = 5 * 60,
         timerHints = setOf(5 * 60, 15 * 60, 3_600),
     )
+    // Checklist
+    val checklistDb = ChecklistDb.insertWithValidation("Free Time")
+    ChecklistItemDb.insertWithValidation("Walk", checklistDb, false)
+    ChecklistItemDb.insertWithValidation("Hobby", checklistDb, false)
+    ChecklistItemDb.insertWithValidation("News", checklistDb, false)
+    ChecklistItemDb.insertWithValidation("Small Tasks", checklistDb, false)
     // Goal
-    val goalForm = GoalFormData(null, 2 * 3_600, everyDayGoalPeriod, "Free Time", "⏲️", true, 0)
+    val goalTitle = "Free Time".textFeatures()
+        .copy(checklistsDb = listOf(checklistDb))
+        .textWithFeatures()
+    val goalForm = GoalFormData(null, 3 * 3_600, everyDayGoalPeriod, goalTitle, "⏲️", true, 0)
     val goalDb: GoalDb = GoalDb.insertAndGet(activityDb, goalForm)
     goalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 3, cellIdx = 0, size = 2))
 }
