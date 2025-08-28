@@ -179,6 +179,7 @@ private struct ChecklistViewInner: View {
                     .font(.system(size: itemFontSize))
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .frame(height: checklistItemMinHeight)
+                    .padding(.leading, HomeScreen__hPadding)
                     .textAlign(.leading)
                     .customListItem()
                 }
