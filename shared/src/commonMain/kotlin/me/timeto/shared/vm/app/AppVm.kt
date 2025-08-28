@@ -256,8 +256,15 @@ private suspend fun addExercisesActivity() {
         pomodoroTimer = 5 * 60,
         timerHints = setOf(5 * 60, 15 * 60, 1 * 3_600),
     )
+    // Checklist
+    val checklistDb = ChecklistDb.insertWithValidation("Exercises")
+    ChecklistItemDb.insertWithValidation("Smart Watch", checklistDb, false)
+    ChecklistItemDb.insertWithValidation("Bottle of Water", checklistDb, false)
     // Goal
-    val goalForm = GoalFormData(null, 3_600, everyDayGoalPeriod, "Exercises", "💪", true, 0)
+    val goalTitle = "Exercises".textFeatures()
+        .copy(checklistsDb = listOf(checklistDb))
+        .textWithFeatures()
+    val goalForm = GoalFormData(null, 3_600, everyDayGoalPeriod, goalTitle, "💪", true, 0)
     val goalDb = GoalDb.insertAndGet(activityDb, goalForm)
     goalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 2, cellIdx = 2, size = 2))
 }
