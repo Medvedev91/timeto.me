@@ -38,6 +38,7 @@ data class ChecklistItemDb(
         suspend fun insertWithValidation(
             text: String,
             checklist: ChecklistDb,
+            isChecked: Boolean,
         ): Unit = dbIo {
             db.transaction {
 
@@ -53,7 +54,7 @@ data class ChecklistItemDb(
                     id = nextId,
                     text = textValidated,
                     list_id = checklist.id,
-                    check_time = 0,
+                    check_time = if (isChecked) time() else 0,
                     sort = sort,
                 )
             }
