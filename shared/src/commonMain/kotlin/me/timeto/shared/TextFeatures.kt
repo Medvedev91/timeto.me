@@ -154,7 +154,7 @@ fun String.textFeatures(): TextFeatures = parseLocal(this)
 
 //////
 
-private val checklistRegex = "#c(\\d{10})".toRegex()
+private val checklistRegex = "#c(\\d+)".toRegex()
 private val shortcutRegex = "#s(\\d+)".toRegex()
 private val fromRepeatingRegex = "#r(\\d{10})_(\\d{5})_(\\d{10})?".toRegex()
 private val fromEventRegex = "#e(\\d{10})".toRegex()
