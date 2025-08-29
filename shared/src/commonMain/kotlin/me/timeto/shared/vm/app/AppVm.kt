@@ -296,18 +296,10 @@ private suspend fun addGettingReadyActivityAndStartGoal(): IntervalDb {
     val morningGoalForm = GoalFormData(null, 3_600, everyDayGoalPeriod, morningGoalTitle, "⏲️", false, 0)
     val morningGoalDb = GoalDb.insertAndGet(activityDb, morningGoalForm)
     morningGoalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 0, cellIdx = 0, size = 3))
-    // Recharge Checklist
-    val rechargeChecklistDb = ChecklistDb.insertWithValidation("Recharge")
-    ChecklistItemDb.insertWithValidation("Dinner", rechargeChecklistDb, false)
-    ChecklistItemDb.insertWithValidation("Relax", rechargeChecklistDb, false)
-    ChecklistItemDb.insertWithValidation("Meditation", rechargeChecklistDb, false)
-    // Recharge Goal
-    val rechargeGoalTitle = "Recharge".textFeatures()
-        .copy(checklistsDb = listOf(rechargeChecklistDb))
-        .textWithFeatures()
-    val rechargeGoalForm = GoalFormData(null, 3_600, everyDayGoalPeriod, rechargeGoalTitle, "⏲️", false, 0)
-    val rechargeGoalDb = GoalDb.insertAndGet(activityDb, rechargeGoalForm)
-    rechargeGoalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 2, cellIdx = 0, size = 2))
+    // Eating Goal
+    val eatingGoalForm = GoalFormData(null, 3_600, everyDayGoalPeriod, "Eating", "⏲️", false, 0)
+    val eatingGoalDb = GoalDb.insertAndGet(activityDb, eatingGoalForm)
+    eatingGoalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 2, cellIdx = 0, size = 2))
     // Start Goal
     return morningGoalDb.startInterval(DayBarsUi.buildToday().buildGoalStats(morningGoalDb))
 }
@@ -349,6 +341,7 @@ private suspend fun addFreeTimeActivity() {
     // Checklist
     val checklistDb = ChecklistDb.insertWithValidation("Free Time")
     ChecklistItemDb.insertWithValidation("Walk", checklistDb, false)
+    ChecklistItemDb.insertWithValidation("Meditation", checklistDb, false)
     ChecklistItemDb.insertWithValidation("Hobby", checklistDb, false)
     ChecklistItemDb.insertWithValidation("News", checklistDb, false)
     ChecklistItemDb.insertWithValidation("Small Tasks", checklistDb, false)
