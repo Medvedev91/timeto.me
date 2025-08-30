@@ -32,8 +32,8 @@ class WhatsNewVm : Vm<WhatsNewVm.State>() {
     companion object {
 
         val historyItemsUi: List<HistoryItemUi> = listOf(
-            h20250809(),
-            HistoryItemUi(20265, "Goals Improvements", text = h26062025Text),
+            h20250809,
+            HistoryItemUi(20265, "Goals Improvements", text = h20250626Text),
             HistoryItemUi(20247, "Move to Tasks From History"),
             HistoryItemUi(20044, "New Goals"),
             HistoryItemUi(19939, "Today on Home Screen", text = "Can be disabled in settings."),
@@ -86,7 +86,17 @@ class WhatsNewVm : Vm<WhatsNewVm.State>() {
     }
 }
 
-private fun h20250809(): WhatsNewVm.HistoryItemUi {
+private val h20250626Text = """
+    - many in row goals "Settings -> Home Screen",
+    - track entire activity option for goals,
+    - rest of bar option for goal's timer, 
+    - attaching goal for repeating tasks,
+    - auto-remove paused task on goal started,
+    - goal bar context menu on long tap,
+    - editing "Other" activity.
+""".trimIndent()
+
+private val h20250809: WhatsNewVm.HistoryItemUi = run {
     val isAndroid = SystemInfo.instance.os is SystemInfo.Os.Android
     val title: String =
         if (isAndroid) "Persistent Notification" else "Live Activity"
@@ -102,15 +112,5 @@ private fun h20250809(): WhatsNewVm.HistoryItemUi {
         - always on display support,
         - dynamic island support.
         """.trimIndent()
-    return WhatsNewVm.HistoryItemUi(20309, title = title, text = text)
+    WhatsNewVm.HistoryItemUi(20309, title = title, text = text)
 }
-
-private val h26062025Text = """
-    - many in row goals "Settings -> Home Screen",
-    - track entire activity option for goals,
-    - rest of bar option for goal's timer, 
-    - attaching goal for repeating tasks,
-    - auto-remove paused task on goal started,
-    - goal bar context menu on long tap,
-    - editing "Other" activity.
-""".trimIndent()
