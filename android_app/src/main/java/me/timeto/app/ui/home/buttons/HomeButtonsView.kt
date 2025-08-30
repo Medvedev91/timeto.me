@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.ZStack
+import me.timeto.app.ui.home.HomeScreen__hPadding
 import me.timeto.app.ui.home.HomeScreen__itemHeight
 import me.timeto.app.ui.rememberVm
 import me.timeto.shared.vm.home.buttons.HomeButtonType
@@ -21,7 +21,7 @@ import me.timeto.shared.vm.home.buttons.HomeButtonsVm
 private val rowHeight: Dp = HomeScreen__itemHeight
 private val spacing: Dp = 8.dp
 
-private val buttonsHPadding: Dp = H_PADDING
+private val buttonsHPadding: Dp = HomeScreen__hPadding
 
 @Composable
 fun HomeButtonsView() {

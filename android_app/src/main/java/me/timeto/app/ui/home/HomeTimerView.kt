@@ -55,7 +55,7 @@ fun HomeTimerView(
     val noteColor = animateColorAsState(state.timerStateUi.noteColor.toColor()).value
     val timerColor = animateColorAsState(state.timerStateUi.timerColor.toColor()).value
     val timerControlsColor = animateColorAsState(
-        state.timerStateUi.controlsColorEnum?.toColor() ?: c.homeTimerControls
+        state.timerStateUi.controlsColorEnum?.toColor() ?: c.mainTabsMenuSecondary
     ).value
 
     VStack(

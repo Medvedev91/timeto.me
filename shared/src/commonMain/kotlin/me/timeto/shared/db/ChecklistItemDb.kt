@@ -38,19 +38,14 @@ data class ChecklistItemDb(
         suspend fun insertWithValidation(
             text: String,
             checklist: ChecklistDb,
+            isChecked: Boolean,
         ): Unit = dbIo {
-
             db.transaction {
 
                 val allSorted: List<ChecklistItemDb> =
                     db.checklistItemQueries.selectSorted().asList { toDb() }
 
-                val timeId = time()
-                val nextId = if (allSorted.any { it.id == timeId })
-                    timeId + 1 // todo test
-                else
-                    timeId
-
+                val nextId: Int = allSorted.maxOfOrNull { it.id }?.plus(1) ?: 1
                 val sort: Int = allSorted.maxOfOrNull { it.sort }?.plus(1) ?: 0
 
                 val textValidated: String = validateTextRaw(text)
@@ -59,7 +54,7 @@ data class ChecklistItemDb(
                     id = nextId,
                     text = textValidated,
                     list_id = checklist.id,
-                    check_time = 0,
+                    check_time = if (isChecked) time() else 0,
                     sort = sort,
                 )
             }

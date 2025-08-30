@@ -5,11 +5,8 @@ import me.timeto.shared.DayBarsUi
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.db.GoalDb
-import me.timeto.shared.db.IntervalDb
-import me.timeto.shared.db.TaskDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.limitMax
-import me.timeto.shared.textFeatures
 import me.timeto.shared.timeMls
 import me.timeto.shared.toHms
 
@@ -63,26 +60,8 @@ sealed class HomeButtonType {
         }
 
         fun startInterval() {
-            val timer: Int =
-                barsGoalStats.calcTimer()
-
-            val noteTf: TextFeatures =
-                goalDb.note.textFeatures().copy(goalDb = goalDb)
-
             launchExIo {
-                TaskDb.selectAsc()
-                    .filter { taskDb ->
-                        val tf = taskDb.text.textFeatures()
-                        taskDb.isToday && (tf.paused != null) && (tf.goalDb?.id == goalDb.id)
-                    }
-                    .forEach { taskDb ->
-                        taskDb.delete()
-                    }
-                IntervalDb.insertWithValidation(
-                    timer = timer,
-                    activityDb = goalDb.getActivityDbCached(),
-                    note = noteTf.textWithFeatures(),
-                )
+                goalDb.startInterval(barsGoalStats)
             }
         }
     }

@@ -10,7 +10,6 @@ import me.timeto.shared.backups.Backupable__Holder
 import me.timeto.shared.backups.Backupable__Item
 import me.timeto.shared.getInt
 import me.timeto.shared.getString
-import me.timeto.shared.time
 import me.timeto.shared.toJsonArray
 import me.timeto.shared.UiException
 import kotlin.coroutines.cancellation.CancellationException
@@ -37,7 +36,11 @@ data class ChecklistDb(
             name: String,
         ): ChecklistDb = dbIo {
             db.transactionWithResult {
-                val nextId: Int = time()
+                val allChecklistsDb: List<ChecklistDb> =
+                    db.checklistQueries.selectAsc().asList { toDb() }
+
+                val nextId: Int =
+                    allChecklistsDb.maxOfOrNull { it.id }?.plus(1) ?: 1
                 val nameValidated: String =
                     validateNameRaw(name, exIds = emptySet())
                 val sqModel = ChecklistSQ(

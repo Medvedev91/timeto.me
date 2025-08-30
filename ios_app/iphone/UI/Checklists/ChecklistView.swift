@@ -1,7 +1,6 @@
 import SwiftUI
 import shared
 
-private let checkboxSize = 21.0
 private let checklistItemMinHeight: CGFloat = HomeScreen__itemHeight
 private let itemFontSize: CGFloat = HomeScreen__primaryFontSize
 
@@ -47,16 +46,16 @@ private struct ChecklistViewInner: View {
     
     @Environment(Navigation.self) private var navigation
     
-    private var stateIconResource: String {
+    private var stateIconType: ChecklistIconType {
         let stateUi = state.stateUi
         if stateUi is ChecklistStateUi.Completed {
-            return "checkmark.square.fill"
+            return .checked
         }
         if stateUi is ChecklistStateUi.Empty {
-            return "square"
+            return .unchecked
         }
         if stateUi is ChecklistStateUi.Partial {
-            return "minus.square.fill"
+            return .partial
         }
         fatalError()
     }
@@ -75,13 +74,11 @@ private struct ChecklistViewInner: View {
                             Haptic.softShot()
                         },
                         label: {
-                            
                             HStack {
                                 
-                                Image(systemName: itemUi.itemDb.isChecked ? "checkmark.square.fill" : "square")
-                                    .foregroundColor(.white)
-                                    .font(.system(size: checkboxSize, weight: .regular))
-                                    .padding(.trailing, 10)
+                                ChecklistIconView(
+                                    iconType: itemUi.itemDb.isChecked ? .checked : .unchecked
+                                )
                                 
                                 Text(itemUi.itemDb.text)
                                     .padding(.vertical, 4)
@@ -95,6 +92,8 @@ private struct ChecklistViewInner: View {
                             .contentShape(Rectangle()) // Tap area full width
                         }
                     )
+                    // Inner padding to contextMenu() correct clipping
+                    .padding(.leading, HomeScreen__hPadding)
                     .customListItem()
                     .contextMenu {
                         
@@ -180,6 +179,7 @@ private struct ChecklistViewInner: View {
                     .font(.system(size: itemFontSize))
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .frame(height: checklistItemMinHeight)
+                    .padding(.leading, HomeScreen__hPadding)
                     .textAlign(.leading)
                     .customListItem()
                 }
@@ -196,16 +196,56 @@ private struct ChecklistViewInner: View {
                     
                     VStack {
                         
-                        Image(systemName: stateIconResource)
-                            .foregroundColor(Color.white)
-                            .font(.system(size: checkboxSize, weight: .regular))
-                            .frame(height: checklistItemMinHeight)
+                        ChecklistIconView(
+                            iconType: stateIconType
+                        )
+                        .frame(height: checklistItemMinHeight)
                         
                         Spacer()
                     }
                 }
             )
         }
-        .padding(.horizontal, H_PADDING - 2)
+        .padding(.trailing, HomeScreen__hPadding)
+    }
+}
+
+private enum ChecklistIconType {
+    case checked
+    case unchecked
+    case partial
+}
+
+private struct ChecklistIconView: View {
+    
+    let iconType: ChecklistIconType
+    
+    ///
+    
+    private var isFilled: Bool {
+        iconType == .checked || iconType == .partial
+    }
+    
+    var body: some View {
+        ZStack {
+            if iconType == .checked {
+                Image(systemName: "checkmark")
+                    .foregroundColor(.black)
+                    .font(.system(size: 13, weight: .semibold))
+            }
+            else if iconType == .partial {
+                Image(systemName: "minus")
+                    .foregroundColor(.black)
+                    .font(.system(size: 13, weight: .semibold))
+            }
+        }
+        .frame(width: HomeScreen__itemCircleHeight, height: HomeScreen__itemCircleHeight)
+        .background(
+            Circle()
+                .fill(isFilled ? .white : .clear)
+                .strokeBorder(isFilled ? .clear : homeFgColor, lineWidth: 2)
+                .background(.clear)
+        )
+        .padding(.trailing, HomeScreen__itemCircleMarginTrailing)
     }
 }

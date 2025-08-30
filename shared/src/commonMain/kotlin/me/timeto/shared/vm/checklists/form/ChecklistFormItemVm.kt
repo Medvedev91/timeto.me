@@ -50,7 +50,7 @@ class ChecklistFormItemVm(
             if (oldItemDb != null)
                 oldItemDb.updateTextWithValidation(text)
             else
-                ChecklistItemDb.insertWithValidation(text, checklistDb)
+                ChecklistItemDb.insertWithValidation(text, checklistDb, false)
             onUi { onSuccess() }
         } catch (e: UiException) {
             dialogsManager.alert(e.uiMessage)
