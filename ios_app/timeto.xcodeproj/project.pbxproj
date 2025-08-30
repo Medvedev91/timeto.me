@@ -205,9 +205,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2C82BF7A28726E400041BCA3 /* Build configuration list for PBXNativeTarget "watch" */;
 			buildPhases = (
-				2C82BF5528726E3F0041BCA3 /* Resources */,
 				2C00B03C2914FE7700ACEC5B /* ShellScript */,
 				2C82BF5B28726E400041BCA3 /* Sources */,
+				2C82BF5528726E3F0041BCA3 /* Resources */,
 				2C82BF5C28726E400041BCA3 /* Frameworks */,
 			);
 			buildRules = (
@@ -230,8 +230,8 @@
 			buildPhases = (
 				2C01F713290AB2F100C88787 /* ShellScript */,
 				2C95BA7E280D74AA0027FC35 /* Sources */,
-				2C95BA7F280D74AA0027FC35 /* Frameworks */,
 				2C95BA80280D74AA0027FC35 /* Resources */,
+				2C95BA7F280D74AA0027FC35 /* Frameworks */,
 				2C82BF7328726E400041BCA3 /* Embed Watch Content */,
 				2C34928B2E273E9E00EA27BD /* Embed Foundation Extensions */,
 			);
