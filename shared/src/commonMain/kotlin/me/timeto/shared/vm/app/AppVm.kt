@@ -15,7 +15,6 @@ class AppVm : Vm<AppVm.State>() {
 
     companion object {
 
-        // todo
         val backupStateFlow = MutableStateFlow<String?>(null)
     }
 
