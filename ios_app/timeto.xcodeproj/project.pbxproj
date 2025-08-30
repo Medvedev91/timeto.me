@@ -205,9 +205,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2C82BF7A28726E400041BCA3 /* Build configuration list for PBXNativeTarget "watch" */;
 			buildPhases = (
-				2C82BF5528726E3F0041BCA3 /* Resources */,
 				2C00B03C2914FE7700ACEC5B /* ShellScript */,
 				2C82BF5B28726E400041BCA3 /* Sources */,
+				2C82BF5528726E3F0041BCA3 /* Resources */,
 				2C82BF5C28726E400041BCA3 /* Frameworks */,
 			);
 			buildRules = (
@@ -230,8 +230,8 @@
 			buildPhases = (
 				2C01F713290AB2F100C88787 /* ShellScript */,
 				2C95BA7E280D74AA0027FC35 /* Sources */,
-				2C95BA7F280D74AA0027FC35 /* Frameworks */,
 				2C95BA80280D74AA0027FC35 /* Resources */,
+				2C95BA7F280D74AA0027FC35 /* Frameworks */,
 				2C82BF7328726E400041BCA3 /* Embed Watch Content */,
 				2C34928B2E273E9E00EA27BD /* Embed Foundation Extensions */,
 			);
@@ -484,7 +484,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 585;
+				CURRENT_PROJECT_VERSION = 588;
 				DEVELOPMENT_TEAM = R3A4Z5YL2T;
 				EXCLUDED_ARCHS = arm64;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
@@ -502,7 +502,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2025.08.09;
+				MARKETING_VERSION = 2025.08.30;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
@@ -528,7 +528,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 585;
+				CURRENT_PROJECT_VERSION = 588;
 				DEVELOPMENT_TEAM = R3A4Z5YL2T;
 				EXCLUDED_ARCHS = arm64;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
@@ -546,7 +546,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2025.08.09;
+				MARKETING_VERSION = 2025.08.30;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
@@ -682,7 +682,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "timeto (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 585;
+				CURRENT_PROJECT_VERSION = 588;
 				DEVELOPMENT_TEAM = R3A4Z5YL2T;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
@@ -703,7 +703,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2025.08.09;
+				MARKETING_VERSION = 2025.08.30;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
@@ -747,7 +747,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "timeto (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 585;
+				CURRENT_PROJECT_VERSION = 588;
 				DEVELOPMENT_TEAM = R3A4Z5YL2T;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
@@ -768,7 +768,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2025.08.09;
+				MARKETING_VERSION = 2025.08.30;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
