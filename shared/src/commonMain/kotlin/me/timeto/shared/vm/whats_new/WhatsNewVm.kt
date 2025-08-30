@@ -32,6 +32,7 @@ class WhatsNewVm : Vm<WhatsNewVm.State>() {
     companion object {
 
         val historyItemsUi: List<HistoryItemUi> = listOf(
+            HistoryItemUi(20330, "UI Improvements", text = h20250830Text),
             h20250809,
             HistoryItemUi(20265, "Goals Improvements", text = h20250626Text),
             HistoryItemUi(20247, "Move to Tasks From History"),
@@ -114,3 +115,8 @@ private val h20250809: WhatsNewVm.HistoryItemUi = run {
         """.trimIndent()
     WhatsNewVm.HistoryItemUi(20309, title = title, text = text)
 }
+
+private val h20250830Text = """
+    - new checklists UI,
+    - date on home screen.
+""".trimIndent()
