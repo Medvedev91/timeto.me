@@ -7,7 +7,6 @@ import me.timeto.shared.db.KvDb.Companion.isSendingReports
 import me.timeto.shared.launchExIo
 import me.timeto.shared.SystemInfo
 import me.timeto.shared.onEachExIn
-import me.timeto.shared.ping
 import me.timeto.shared.prayEmoji
 import me.timeto.shared.vm.Vm
 
@@ -46,8 +45,6 @@ class PrivacyVm : Vm<PrivacyVm.State>() {
     fun setIsSendingReports(isEnabled: Boolean) {
         launchExIo {
             KvDb.upsertIsSendingReports(isEnabled)
-            if (isEnabled)
-                ping(force = true)
         }
     }
 
