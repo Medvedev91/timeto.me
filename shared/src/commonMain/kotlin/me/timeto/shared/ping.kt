@@ -3,33 +3,27 @@ package me.timeto.shared
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
 import me.timeto.shared.db.KvDb
-import me.timeto.shared.db.KvDb.Companion.isSendingReports
 
-var pingLastDay: Int? = null
+val pingTriggerFlow = MutableStateFlow(0)
 
 suspend fun ping(
-    force: Boolean = false,
+    notificationsPermission: NotificationsPermission,
 ) {
     try {
-
-        val today = UnixTime().localDay
-
-        if (!force) {
-            if (!KvDb.KEY.IS_SENDING_REPORTS.selectOrNull().isSendingReports())
-                return
-            if (pingLastDay == today)
-                return
-        }
-
         HttpClient().use { client ->
             val httpResponse = client.get("https://api.timeto.me/ping") {
                 val token = KvDb.selectTokenOrNullSafe()
                 val password = getsertTokenPassword()
                 url {
                     parameters.append("password", password)
+                    parameters.append("notifications_permission", notificationsPermission.toUrlParam())
                     urlAppendSystemInfo(token)
                 }
             }
@@ -40,10 +34,17 @@ suspend fun ping(
             val jData = j.jsonObject["data"]!!.jsonObject
             KvDb.KEY.TOKEN.upsertString(jData.getString("token"))
             KvDb.KEY.FEEDBACK_SUBJECT.upsertString(jData.getString("feedback_subject"))
-            pingLastDay = today // After success
         }
     } catch (e: Throwable) {
         reportApi("ping() exception:\n$e")
+        ioScope().launch {
+            try {
+                delay(10 * 60 * 1_000L) // 10 min
+                pingTriggerFlow.emit(pingTriggerFlow.value + 1)
+            } catch (_: CancellationException) {
+                // On app close
+            }
+        }
     }
 }
 
@@ -55,4 +56,11 @@ private suspend fun getsertTokenPassword(): String {
     val newPassword = (1..15).map { chars.random() }.joinToString("")
     KvDb.KEY.TOKEN_PASSWORD.upsertString(newPassword)
     return newPassword
+}
+
+private fun NotificationsPermission.toUrlParam(): String = when (this) {
+    NotificationsPermission.notAsked -> "not_asked"
+    NotificationsPermission.denied -> "denied"
+    NotificationsPermission.rationale -> "rationale"
+    NotificationsPermission.granted -> "granted"
 }
