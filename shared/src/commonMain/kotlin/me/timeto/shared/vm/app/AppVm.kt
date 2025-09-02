@@ -96,7 +96,7 @@ class AppVm : Vm<AppVm.State>() {
                     ping()
                     try {
                         delay(10 * 60 * 1_000L) // 10 min
-                    } catch (e: CancellationException) {
+                    } catch (_: CancellationException) {
                         break // On app closing
                     }
                 }
