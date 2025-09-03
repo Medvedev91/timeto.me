@@ -184,9 +184,6 @@ private fun syncTmrw() {
 
 private suspend fun fillInitData() {
 
-    syncTodayEventsLastDay = null
-    syncTodayRepeatingLastDay = null
-
     TaskFolderDb.insertNoValidation(TaskFolderDb.ID_TODAY, "Today", 1)
     TaskFolderDb.insertTmrw()
     TaskFolderDb.insertNoValidation(time(), "SMDAY", 3)
