@@ -8,6 +8,7 @@ import me.timeto.shared.db.*
 import me.timeto.shared.time
 import me.timeto.shared.vm.goals.form.GoalFormData
 import me.timeto.shared.ShortcutPerformer
+import me.timeto.shared.db.KvDb.Companion.isSendingReports
 import me.timeto.shared.vm.whats_new.WhatsNewVm
 import me.timeto.shared.vm.Vm
 
@@ -88,14 +89,23 @@ class AppVm : Vm<AppVm.State>() {
                 }
             }
 
+            combine(
+                KvDb.KEY.IS_SENDING_REPORTS.selectOrNullFlow()
+                    .map { it.isSendingReports() }.distinctUntilChanged(),
+                NotificationsPermission.flow.filterNotNull(),
+                todayFlow,
+                pingTriggerFlow,
+            ) { isSendingReportsKvDb, notificationsPermission, _, _ ->
+                if (!isSendingReportsKvDb)
+                    return@combine
+                ping(notificationsPermission = notificationsPermission)
+            }.launchIn(this)
+
             launchEx {
-                // Delay to not load the system at startup. But not too long
-                // because some data may be needed soon, like feedback subject.
-                delay(500L)
                 while (true) {
-                    ping()
                     try {
-                        delay(10 * 60 * 1_000L) // 10 min
+                        delayToNextMinute()
+                        todayFlow.emit(UnixTime().localDay)
                     } catch (_: CancellationException) {
                         break // On app closing
                     }
@@ -176,7 +186,6 @@ private suspend fun fillInitData() {
 
     syncTodayEventsLastDay = null
     syncTodayRepeatingLastDay = null
-    pingLastDay = null
 
     TaskFolderDb.insertNoValidation(TaskFolderDb.ID_TODAY, "Today", 1)
     TaskFolderDb.insertTmrw()
