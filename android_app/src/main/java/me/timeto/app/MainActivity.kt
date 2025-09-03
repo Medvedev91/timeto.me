@@ -176,7 +176,8 @@ class MainActivity : ComponentActivity() {
     private fun notificationsPermissionProcessing() {
         when {
             ContextCompat.checkSelfPermission(
-                this, Manifest.permission.POST_NOTIFICATIONS
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
             ) == PackageManager.PERMISSION_GRANTED -> {
             }
 
@@ -187,7 +188,9 @@ class MainActivity : ComponentActivity() {
             }
 
             else -> {
-                notificationsPermissionRequester.launch(Manifest.permission.POST_NOTIFICATIONS)
+                notificationsPermissionRequester.launch(
+                    Manifest.permission.POST_NOTIFICATIONS
+                )
             }
         }
     }
