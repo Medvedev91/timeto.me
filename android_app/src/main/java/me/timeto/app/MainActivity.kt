@@ -26,9 +26,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.lifecycle.Lifecycle
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.filterNotNull
+import me.timeto.app.ui.LifecycleListener
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.main.MainScreen
@@ -57,12 +59,26 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    // region NotificationsPermission
+
     private val notificationsPermissionGrantedFlow = MutableSharedFlow<Boolean>()
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private val notificationsPermissionRequester = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
+        // WARNING If the user has pressed back:
+        // rationale=false and isGranted=false even it is the first request!
+        val notificationsPermission: NotificationsPermission = when {
+            isGranted -> NotificationsPermission.granted
+            shouldNotificationsPermissionRationale() -> NotificationsPermission.rationale
+            else -> NotificationsPermission.denied
+        }
+        notificationsPermission.emit()
         launchExIo { notificationsPermissionGrantedFlow.emit(isGranted) }
     }
+
+    // endregion
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -139,6 +155,18 @@ class MainActivity : ComponentActivity() {
                             }
                             notificationsPermissionProcessing()
                         }
+                        // Cover the case when a user enables notifications from settings.
+                        // Check only granted permission because if the
+                        // user denied the permission - the app restarts.
+                        LifecycleListener { _, event ->
+                            if ((event == Lifecycle.Event.ON_RESUME) &&
+                                isNotificationsPermissionGranted()
+                            ) {
+                                NotificationsPermission.granted.emit()
+                            }
+                        }
+                    } else {
+                        NotificationsPermission.granted.emit()
                     }
 
                     LaunchedEffect(Unit) {
@@ -175,15 +203,12 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun notificationsPermissionProcessing() {
         when {
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.POST_NOTIFICATIONS
-            ) == PackageManager.PERMISSION_GRANTED -> {
+            isNotificationsPermissionGranted() -> {
+                NotificationsPermission.granted.emit()
             }
 
-            shouldShowRequestPermissionRationale(
-                Manifest.permission.POST_NOTIFICATIONS
-            ) -> {
+            shouldNotificationsPermissionRationale() -> {
+                NotificationsPermission.rationale.emit()
                 // todo
             }
 
@@ -194,6 +219,18 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun isNotificationsPermissionGranted(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.POST_NOTIFICATIONS
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun shouldNotificationsPermissionRationale(): Boolean =
+        shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)
 }
 
 @Composable
