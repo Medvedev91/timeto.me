@@ -47,18 +47,16 @@ struct IosApp: App {
             if phase == .active {
                 UNUserNotificationCenter.current().removeAllDeliveredNotifications()
                 UNUserNotificationCenter.current().setBadgeCount(0)
+                // WARNING App does not restart after permission changes.
                 // Cover the case when a user enables notifications from settings.
-                // WARNING App not restarts after permission changes.
-                if let flowPermission = NotificationsPermission.companion.flow.value as? NotificationsPermission {
-                    UNUserNotificationCenter.current().getNotificationSettings { settings in
-                        // It only makes sense to check authorized and denied.
-                        let status = settings.authorizationStatus
-                        if status == .authorized && flowPermission != NotificationsPermission.granted {
-                            NotificationsPermission.granted.emit()
-                        }
-                        else if status == .denied && flowPermission != NotificationsPermission.denied {
-                            NotificationsPermission.denied.emit()
-                        }
+                UNUserNotificationCenter.current().getNotificationSettings { settings in
+                    // It only makes sense to check authorized and denied.
+                    let status = settings.authorizationStatus
+                    if status == .authorized {
+                        NotificationsPermission.granted.emit()
+                    }
+                    else if status == .denied {
+                        NotificationsPermission.denied.emit()
                     }
                 }
             }
