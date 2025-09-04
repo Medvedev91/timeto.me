@@ -158,6 +158,7 @@ class MainActivity : ComponentActivity() {
                         // Cover the case when a user enables notifications from settings.
                         // Check only granted permission because if the
                         // user denied the permission - the app restarts.
+                        // No need to check if NotificationsPermission.flow is null.
                         LifecycleListener { _, event ->
                             if ((event == Lifecycle.Event.ON_RESUME) &&
                                 isNotificationsPermissionGranted()
