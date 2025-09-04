@@ -9,11 +9,11 @@ enum class NotificationsPermission {
     companion object {
 
         val flow = MutableStateFlow<NotificationsPermission?>(null)
+    }
 
-        fun emit(permission: NotificationsPermission) {
-            launchExIo {
-                flow.emit(permission)
-            }
+    fun emit() {
+        launchExIo {
+            flow.emit(this@NotificationsPermission)
         }
     }
 }
