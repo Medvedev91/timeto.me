@@ -206,7 +206,6 @@ private struct ChecklistViewInner: View {
                 }
             )
         }
-        .padding(.trailing, HomeScreen__hPadding)
     }
 }
 
