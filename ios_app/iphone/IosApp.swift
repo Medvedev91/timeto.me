@@ -29,6 +29,11 @@ struct IosApp: App {
                                 .current()
                                 .requestAuthorization(options: [.badge, .sound, .alert]) { isGranted, _ in
                                     if isGranted {
+                                        NotificationsPermission.granted.emit()
+                                    } else {
+                                        NotificationsPermission.denied.emit()
+                                    }
+                                    if isGranted {
                                         // Without delay the first event does not handled. 50mls enough.
                                         vm.onNotificationsPermissionReady(delayMls: Int64(500))
                                     }
@@ -42,6 +47,20 @@ struct IosApp: App {
             if phase == .active {
                 UNUserNotificationCenter.current().removeAllDeliveredNotifications()
                 UNUserNotificationCenter.current().setBadgeCount(0)
+                // Cover the case when a user enables notifications from settings.
+                // WARNING App not restarts after permission changes.
+                if let flowPermission = NotificationsPermission.companion.flow.value as? NotificationsPermission {
+                    UNUserNotificationCenter.current().getNotificationSettings { settings in
+                        // It only makes sense to check authorized and denied.
+                        let status = settings.authorizationStatus
+                        if status == .authorized && flowPermission != NotificationsPermission.granted {
+                            NotificationsPermission.granted.emit()
+                        }
+                        else if status == .denied && flowPermission != NotificationsPermission.denied {
+                            NotificationsPermission.denied.emit()
+                        }
+                    }
+                }
             }
         }
     }
