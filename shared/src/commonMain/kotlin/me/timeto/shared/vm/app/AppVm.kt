@@ -323,8 +323,14 @@ private suspend fun addCommuteActivity() {
         pomodoroTimer = 5 * 60,
         timerHints = setOf(30 * 60, 1 * 3_600),
     )
+    // Checklist
+    val checklistDb = ChecklistDb.insertWithValidation("Commute")
+    ChecklistItemDb.insertWithValidation("Podcast", checklistDb, false)
     // Goal
-    val goalForm = GoalFormData(null, 3_600, everyDayGoalPeriod, "Commute", "⏲️", true, 0)
+    val goalTitle = "Commute".textFeatures()
+        .copy(checklistsDb = listOf(checklistDb))
+        .textWithFeatures()
+    val goalForm = GoalFormData(null, 3_600, everyDayGoalPeriod, goalTitle, "⏲️", true, 0)
     val goalDb = GoalDb.insertAndGet(activityDb, goalForm)
     goalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 0, cellIdx = 3, size = 3))
 }
