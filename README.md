@@ -29,7 +29,7 @@ The main feature of this app is <ins>goals</ins>:
 
 Tap a goal to start a timer with the remaining time for that goal:
 
-<img src="/misc/readme_resources/readme_checklist_github.png" width="500" />
+<img src="/misc/readme_resources/readme_checklist_github.png?v2" width="500" />
 
 Developer is here.
 
