@@ -7,6 +7,7 @@ struct HomeReadmeView: View {
     
     let title: String
     let buttonText: String
+    let onButtonClick: () -> Void
     
     @Environment(Navigation.self) private var navigation
     
@@ -20,6 +21,7 @@ struct HomeReadmeView: View {
                 
                 Button(
                     action: {
+                        onButtonClick()
                         navigation.fullScreen {
                             Readme2FullScreen()
                         }
