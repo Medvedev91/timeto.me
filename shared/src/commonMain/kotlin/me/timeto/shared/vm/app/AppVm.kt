@@ -241,8 +241,15 @@ private suspend fun addWorkActivity() {
         pomodoroTimer = 5 * 60,
         timerHints = setOf(45 * 60, 2 * 3_600),
     )
+    // Checklist
+    val checklistDb = ChecklistDb.insertWithValidation("Work")
+    ChecklistItemDb.insertWithValidation("Workday Plan", checklistDb, false)
+    ChecklistItemDb.insertWithValidation("Retrospective", checklistDb, false)
     // Goal
-    val goalForm = GoalFormData(null, 8 * 3_600, everyDayGoalPeriod, "Work", "✅", true, 0)
+    val goalTitle = "Work".textFeatures()
+        .copy(checklistsDb = listOf(checklistDb))
+        .textWithFeatures()
+    val goalForm = GoalFormData(null, 8 * 3_600, everyDayGoalPeriod, goalTitle, "✅", true, 0)
     val goalDb = GoalDb.insertAndGet(activityDb, goalForm)
     goalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 1, cellIdx = 0, size = 6))
 }
