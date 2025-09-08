@@ -17,7 +17,7 @@ struct HomeReadmeView: View {
                 
                 Text(title)
                     .textAlign(.center)
-                    .fontWeight(.semibold)
+                    .fontWeight(.medium)
                 
                 Button(
                     action: {
@@ -38,14 +38,14 @@ struct HomeReadmeView: View {
                             .frame(height: HomeScreen__itemCircleHeight + 2)
                             .padding(.horizontal, 10)
                             .background(roundedShape.fill(.white))
-                            .padding(.top, 8)
+                            .padding(.top, 10)
                     }
                 )
             }
         }
         .fillMaxWidth()
-        .padding(.top, 11)
-        .padding(.bottom, 13)
+        .padding(.top, 12)
+        .padding(.bottom, 14)
         .background(shape.fill(.blue))
         .padding(.horizontal, HomeScreen__hPadding)
         .padding(.bottom, bottomMargin)
