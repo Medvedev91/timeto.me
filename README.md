@@ -27,6 +27,10 @@ The main feature of this app is <ins>goals</ins>:
 
 <img src="/misc/readme_resources/readme_goals.png" width="500" />
 
+Tap a goal to start a timer with the remaining time for that goal:
+
+<img src="/misc/readme_resources/readme_checklist_github.png" width="500" />
+
 Developer is here.
 
 I built this app to manage my productivity. Here I will show how I use it.
