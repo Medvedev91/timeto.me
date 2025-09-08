@@ -23,7 +23,7 @@ Any questions [hi@timeto.me](mailto:hi@timeto.me?subject=[GitHub]%20Feedback)
 
 # How to Use the App
 
-Hi,
+The main feature of this app is <u>goals</u>:
 
 Developer is here.
 
