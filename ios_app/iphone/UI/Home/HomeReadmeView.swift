@@ -8,6 +8,8 @@ struct HomeReadmeView: View {
     let title: String
     let buttonText: String
     
+    @Environment(Navigation.self) private var navigation
+    
     var body: some View {
         HStack {
             VStack {
@@ -18,6 +20,9 @@ struct HomeReadmeView: View {
                 
                 Button(
                     action: {
+                        navigation.fullScreen {
+                            Readme2FullScreen()
+                        }
                     },
                     label: {
                         Text(buttonText)
