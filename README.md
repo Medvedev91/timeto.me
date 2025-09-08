@@ -25,7 +25,7 @@ Any questions [hi@timeto.me](mailto:hi@timeto.me?subject=[GitHub]%20Feedback)
 
 The main feature of this app is <ins>goals</ins>:
 
-<img src="/misc/readme_resources/readme_goals.png" width="500" />
+<img src="/misc/readme_resources/readme_goals_github.png" width="500" />
 
 Tap a goal to start a timer with the remaining time for that goal:
 
