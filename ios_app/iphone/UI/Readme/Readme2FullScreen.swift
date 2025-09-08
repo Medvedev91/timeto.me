@@ -24,7 +24,7 @@ struct Readme2FullScreen: View {
                      Text("! To stop the current goal, you have to start the next one.")
             )
             
-            TextView(text: Text("You can add a checklist for goals. Useful for morning/evening routines, work, excercises, etc. Like this:"))
+            TextView(text: Text("You can add a checklist for goals. Useful for morning/evening routines, work, exercises, etc. Like this:"))
             
             ScreenshotView(image: "readme_checklist")
             
