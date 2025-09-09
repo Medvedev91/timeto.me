@@ -20,7 +20,7 @@ struct Readme2FullScreen: View {
             TextView(text: Text("Timer is running ") +
                      Text("all the time").underline() +
                      Text(", 24/7, even for sleep or breakfast. ") +
-                     Text("No stop option").underline() +
+                     Text("There is no stop option").underline() +
                      Text("! To stop the current goal, you have to start the next one.")
             )
             
