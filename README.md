@@ -37,6 +37,5 @@ This way I control my time and don't forget anything.
 
 Try to adapt it to your life.
 
-Best regards,
-
+Best regards, <br />
 Ivan
