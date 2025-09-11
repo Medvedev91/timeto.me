@@ -12,36 +12,34 @@ struct HomeReadmeView: View {
     @Environment(Navigation.self) private var navigation
     
     var body: some View {
-        HStack {
-            VStack {
-                
-                Text(title)
-                    .textAlign(.center)
-                    .fontWeight(.medium)
-                
-                Button(
-                    action: {
-                        onButtonClick()
-                        navigation.fullScreen {
-                            Readme2FullScreen()
-                        }
-                    },
-                    label: {
-                        Text(buttonText)
-                            .font(
-                                .system(
-                                    size: HomeScreen__itemCircleFontSize,
-                                    weight: HomeScreen__itemCircleFontWeight
-                                )
-                            )
-                            .foregroundColor(.black.opacity(0.8))
-                            .frame(height: HomeScreen__itemCircleHeight + 2)
-                            .padding(.horizontal, 10)
-                            .background(roundedShape.fill(.white))
-                            .padding(.top, 10)
+        VStack {
+            
+            Text(title)
+                .textAlign(.center)
+                .fontWeight(.medium)
+            
+            Button(
+                action: {
+                    onButtonClick()
+                    navigation.fullScreen {
+                        Readme2FullScreen()
                     }
-                )
-            }
+                },
+                label: {
+                    Text(buttonText)
+                        .font(
+                            .system(
+                                size: HomeScreen__itemCircleFontSize,
+                                weight: HomeScreen__itemCircleFontWeight
+                            )
+                        )
+                        .foregroundColor(.black.opacity(0.8))
+                        .frame(height: HomeScreen__itemCircleHeight + 2)
+                        .padding(.horizontal, 10)
+                        .background(roundedShape.fill(.white))
+                        .padding(.top, 10)
+                }
+            )
         }
         .fillMaxWidth()
         .padding(.top, 12)
