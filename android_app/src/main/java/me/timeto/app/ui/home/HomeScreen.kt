@@ -30,8 +30,6 @@ import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.home.buttons.HomeButtonsView
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.privacy.PrivacyFs
-import me.timeto.app.ui.readme.ReadmeFs
-import me.timeto.app.ui.squircleShape
 import me.timeto.app.ui.whats_new.WhatsNewFs
 import me.timeto.shared.vm.home.HomeVm
 
@@ -151,15 +149,12 @@ fun HomeScreen() {
                     SpacerW1()
             }
 
-            val readmeMessage = state.readmeMessage
-            if (readmeMessage != null) {
-                MessageButton(
-                    title = readmeMessage,
-                    onClick = {
+            if (state.showReadme) {
+                HomeReadmeView(
+                    title = state.readmeTitle,
+                    buttonText = state.readmeButtonText,
+                    onButtonClick = {
                         vm.onReadmeOpen()
-                        navigationFs.push {
-                            ReadmeFs()
-                        }
                     },
                 )
             }
