@@ -21,17 +21,17 @@ Any questions [hi@timeto.me](mailto:hi@timeto.me?subject=[GitHub]%20Feedback)
 
 The main feature of this app is <ins>goals</ins>:
 
-<img src="/misc/readme_resources/readme_goals_github.png" width="400" />
+<img src="/misc/readme_resources/readme_goals_github.png" width="360" />
 
 Tap a goal to start a timer with the remaining time for that goal:
 
-<img src="/misc/readme_resources/readme_timer_github.png" width="400" />
+<img src="/misc/readme_resources/readme_timer_github.png" width="360" />
 
 Timer is running <ins>all the time</ins>, 24/7, even for sleep or breakfast. <ins>There is no stop option!</ins> To stop the current goal, you have to start the next one.
 
 You can add a checklist for goals. Useful for morning/evening routines, work, exercises, etc. Like this:
 
-<img src="/misc/readme_resources/readme_checklist_github.png" width="400" />
+<img src="/misc/readme_resources/readme_checklist_github.png" width="360" />
 
 This way I control my time and don't forget anything.
 
