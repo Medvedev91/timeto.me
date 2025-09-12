@@ -18,7 +18,7 @@ import me.timeto.app.ui.SquircleShape
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.navigation.LocalNavigationFs
-import me.timeto.app.ui.readme.ReadmeFs
+import me.timeto.app.ui.readme.Readme2Fs
 import me.timeto.app.ui.roundedShape
 
 private val shape = SquircleShape(12.dp)
@@ -64,7 +64,7 @@ fun HomeReadmeView(
                 .clickable {
                     onButtonClick()
                     navigationFs.push {
-                        ReadmeFs()
+                        Readme2Fs()
                     }
                 }
                 .padding(horizontal = 10.dp),
