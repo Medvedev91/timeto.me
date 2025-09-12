@@ -72,7 +72,7 @@ fun Readme2Fs() {
                     withStyle(style = SpanStyle(textDecoration = TextDecoration.Underline)) {
                         append("goals")
                     }
-                    append("!")
+                    append(":")
                 }
             )
 

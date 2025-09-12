@@ -33,6 +33,7 @@ struct Readme2FullScreen: View {
             TextView(text: Text("Try to adapt it to your life."))
             
             TextView(text: Text("Best regards,\nIvan"))
+                .padding(.bottom, 16)
         }
         .navigationTitle("How to Use the App")
         .toolbar {
