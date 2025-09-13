@@ -31,7 +31,7 @@ import me.timeto.app.ui.SquircleShape
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.header.Header
-import me.timeto.app.ui.header.HeaderActionButton
+import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 
 private val pTextLineHeight = 23.sp
@@ -50,14 +50,13 @@ fun Readme2Fs() {
         Header(
             title = "How to Use the App",
             scrollState = scrollState,
-            actionButton = HeaderActionButton(
+            actionButton = null,
+            cancelButton = HeaderCancelButton(
                 text = "Done",
-                isEnabled = true,
                 onClick = {
                     navigationLayer.close()
                 },
             ),
-            cancelButton = null,
         )
 
         VStack(
