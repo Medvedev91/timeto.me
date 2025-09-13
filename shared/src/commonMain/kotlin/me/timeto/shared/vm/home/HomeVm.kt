@@ -23,11 +23,14 @@ class HomeVm : Vm<HomeVm.State>() {
         val isPurple: Boolean,
         val todayTasksUi: List<TaskUi>,
         val fdroidMessage: String?,
-        val readmeMessage: String?,
+        val showReadme: Boolean,
         val whatsNewMessage: String?,
         val listsContainerSize: ListsContainerSize?,
         val idToUpdate: Long,
     ) {
+
+        val readmeTitle = "Goals is the main feature of this app."
+        val readmeButtonText = "Read How to Use the App"
 
         val timerStateUi = TimerStateUi(
             intervalDb = intervalDb,
@@ -109,7 +112,7 @@ class HomeVm : Vm<HomeVm.State>() {
             isPurple = false,
             todayTasksUi = listOf(),
             fdroidMessage = null, // todo init data
-            readmeMessage = null, // todo init data
+            showReadme = false, // todo init data
             whatsNewMessage = null, // todo init data
             listsContainerSize = null,
             idToUpdate = 0,
@@ -152,7 +155,7 @@ class HomeVm : Vm<HomeVm.State>() {
             .selectOrNullFlow()
             .onEachExIn(scopeVm) { kvDb ->
                 state.update {
-                    it.copy(readmeMessage = if (kvDb == null) "How to Use the App" else null)
+                    it.copy(showReadme = kvDb == null)
                 }
             }
 

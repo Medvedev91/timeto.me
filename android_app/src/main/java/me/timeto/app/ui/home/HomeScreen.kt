@@ -30,7 +30,6 @@ import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.home.buttons.HomeButtonsView
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.privacy.PrivacyFs
-import me.timeto.app.ui.readme.ReadmeFs
 import me.timeto.app.ui.whats_new.WhatsNewFs
 import me.timeto.shared.vm.home.HomeVm
 
@@ -73,19 +72,6 @@ fun HomeScreen() {
             modifier = Modifier.padding(top = 10.dp),
             contentPadding = PaddingValues(horizontal = 50.dp),
         )
-
-        val readmeMessage = state.readmeMessage
-        if (readmeMessage != null) {
-            MessageButton(
-                title = readmeMessage,
-                onClick = {
-                    vm.onReadmeOpen()
-                    navigationFs.push {
-                        ReadmeFs()
-                    }
-                },
-            )
-        }
 
         val fdroidMessage = state.fdroidMessage
         if (fdroidMessage != null) {
@@ -161,6 +147,16 @@ fun HomeScreen() {
 
                 if (!isMainTasksExists && checklistDb == null)
                     SpacerW1()
+            }
+
+            if (state.showReadme) {
+                HomeReadmeView(
+                    title = state.readmeTitle,
+                    buttonText = state.readmeButtonText,
+                    onButtonClick = {
+                        vm.onReadmeOpen()
+                    },
+                )
             }
 
             HomeButtonsView()

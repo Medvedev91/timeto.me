@@ -49,7 +49,8 @@ private struct SettingsScreenInner: View {
                             .foregroundColor(.primary)
                     },
                     fullScreen: {
-                        ReadmeFullScreen(defaultItem: .basics)
+                        // ReadmeFullScreen(defaultItem: .basics)
+                        Readme2FullScreen()
                     }
                 )
                 

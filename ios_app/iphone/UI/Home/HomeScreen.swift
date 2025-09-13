@@ -45,26 +45,6 @@ private struct HomeScreenInner: View {
             
             HomeTimerView(vm: vm, state: state)
             
-            if let readmeMessage = state.readmeMessage {
-                Button(
-                    action: {
-                        vm.onReadmeOpen()
-                        navigation.fullScreen {
-                            ReadmeFullScreen(defaultItem: .basics)
-                        }
-                    },
-                    label: {
-                        Text(readmeMessage)
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 8)
-                            .font(.system(size: 17, weight: .medium))
-                            .background(roundedShape.fill(.red))
-                            .padding(.top, 8)
-                    }
-                )
-            }
-            
             if let whatsNewMessage = state.whatsNewMessage {
                 Button(
                     action: {
@@ -114,6 +94,16 @@ private struct HomeScreenInner: View {
                     
                     Spacer()
                 }
+            }
+            
+            if state.showReadme {
+                HomeReadmeView(
+                    title: state.readmeTitle,
+                    buttonText: state.readmeButtonText,
+                    onButtonClick: {
+                        vm.onReadmeOpen()
+                    }
+                )
             }
             
             HomeButtonsView()
