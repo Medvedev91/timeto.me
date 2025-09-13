@@ -31,13 +31,11 @@ import me.timeto.app.ui.SquircleShape
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.header.Header
-import me.timeto.app.ui.navigation.LocalNavigationLayer
 
 private val pTextLineHeight = 23.sp
 
 @Composable
 fun Readme2Fs() {
-    val navigationLayer = LocalNavigationLayer.current
 
     VStack(
         modifier = Modifier
