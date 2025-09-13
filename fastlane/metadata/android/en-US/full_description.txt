@@ -1,5 +1,14 @@
-The main feature of this app is there is no "stop" option. Once you have completed one activity, you have to set a timer for the next one, even if it's a "sleeping" activity.
+The main feature of this app is <u>goals</u>.
 
-This time-tracking approach provides real 24/7 data on how long everything takes. You can see it on the Chart screen. It's always surprising.
+Tap a goal to start a timer with the remaining time for that goal.
 
-By default, the app contains the activities that I use: meditation, work, music, personal development, exercises, walk, getting ready, sleep / rest, other. That's all I need, but you can change it.
+Timer is running <u>all the time</u>, 24/7, even for sleep or breakfast. <u>There is no stop option!</u> To stop the current goal, you have to start the next one.
+
+You can add a checklist for goals. Useful for morning/evening routines, work, exercises, etc.
+
+This way I control my time and don't forget anything.
+
+Try to adapt it to your life.
+
+Best regards, <br>
+Ivan
