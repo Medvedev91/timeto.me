@@ -14,7 +14,7 @@ class WatchTaskSheetVm(
     ) {
 
         val listTitle: String =
-            activity.nameWithEmoji().textFeatures().textUi()
+            activity.name.textFeatures().textUi()
 
         val timerHintsUi: List<TimerHintUi> = activity.timerHints.map { seconds ->
             TimerHintUi(

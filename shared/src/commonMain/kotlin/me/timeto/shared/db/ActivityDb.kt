@@ -198,9 +198,6 @@ data class ActivityDb(
             .toSet()
     }
 
-    fun nameWithEmoji(isLeading: Boolean = false): String =
-        if (isLeading) "$emoji $name" else "$name $emoji"
-
     fun getType(): Type =
         Type.entries.first { it.id == type_id }
 
