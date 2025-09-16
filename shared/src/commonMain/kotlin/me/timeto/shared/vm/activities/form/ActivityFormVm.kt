@@ -220,7 +220,7 @@ class ActivityFormVm(
         onSuccess: () -> Unit,
     ) {
         val name: String =
-            activityDb.nameWithEmoji().textFeatures().textNoFeatures
+            activityDb.name.textFeatures().textNoFeatures
         dialogsManager.confirmation(
             message = "Are you sure you want to delete \"$name\" activity?",
             buttonText = "Delete",
