@@ -5,7 +5,6 @@ import dbsq.TaskSQ
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
-import me.timeto.shared.Cache
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.TimerTimeParser
 import me.timeto.shared.UnixTime
@@ -87,14 +86,6 @@ data class TaskDb(
                 textFeatures = textFeatures.copy(
                     timer = timeParser.seconds,
                     textNoFeatures = textFeatures.textNoFeatures.replace(timeParser.match, ""),
-                )
-            }
-
-            val activity = Cache.activitiesDbSorted.firstOrNull { it.emoji in textFeatures.textNoFeatures }
-            if (activity != null) {
-                textFeatures = textFeatures.copy(
-                    activityDb = activity,
-                    textNoFeatures = textFeatures.textNoFeatures.replace(activity.emoji, "")
                 )
             }
 
