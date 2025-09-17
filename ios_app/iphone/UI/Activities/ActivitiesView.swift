@@ -35,10 +35,6 @@ struct ActivitiesView: View {
 
 ///
 
-private let activityItemEmojiWidth = 30.0
-private let activityItemEmojiHPadding = 8.0
-private let activityItemPaddingStart = activityItemEmojiWidth + (activityItemEmojiHPadding * 2)
-
 private struct ActivitiesViewInner: View {
     
     let vm: ActivitiesVm
@@ -73,15 +69,11 @@ private struct ActivitiesViewInner: View {
                                 
                                 HStack {
                                     
-                                    Text(activityUi.activityDb.emoji)
-                                        .frame(width: activityItemEmojiWidth)
-                                        .padding(.horizontal, activityItemEmojiHPadding)
-                                        .font(.system(size: 22))
-                                    
                                     Text(activityUi.text)
                                         .foregroundColor(.primary)
                                         .truncationMode(.tail)
                                         .lineLimit(1)
+                                        .padding(.leading, H_PADDING)
                                     
                                     Spacer()
                                     
@@ -154,7 +146,7 @@ private struct ActivitiesViewInner: View {
                         
                         if state.activitiesUi.last != activityUi {
                             Divider()
-                                .padding(.leading, activityItemPaddingStart)
+                                .padding(.leading, H_PADDING)
                         }
                     }
                     .frame(height: ActivitiesView__listItemHeight)
