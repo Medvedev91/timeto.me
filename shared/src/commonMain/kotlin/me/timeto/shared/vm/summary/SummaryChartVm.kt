@@ -30,7 +30,7 @@ class SummaryChartVm(
                     value = seconds.toDouble(),
                     color = activity.colorRgba,
                     title = activityUi.title,
-                    shortTitle = activity.emoji,
+                    shortTitle = activityUi.title,
                     subtitleTop = "${(activityUi.ratio * 100).toInt()}%",
                     subtitleBottom = activityUi.totalTimeString,
                     customData = activityUi.perDayString,
