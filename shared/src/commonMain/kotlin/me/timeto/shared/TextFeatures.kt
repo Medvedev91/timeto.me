@@ -31,7 +31,6 @@ data class TextFeatures(
     }
 
     fun textUi(
-        withActivityEmoji: Boolean = true,
         withPausedEmoji: Boolean = false,
         withTimer: Boolean = true,
         timerPrefix: String = "",
@@ -39,8 +38,6 @@ data class TextFeatures(
         val a = mutableListOf(textNoFeatures)
         if (paused != null && withPausedEmoji)
             a.add(0, "⏸️")
-        if (activityDb != null && withActivityEmoji)
-            a.add(activityDb.emoji)
         if (timer != null && withTimer)
             a.add(timerPrefix + timer.toTimerHintNote(isShort = false))
         return a.joinToString(" ")
