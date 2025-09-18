@@ -20,9 +20,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
@@ -30,6 +28,7 @@ import me.timeto.app.R
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.Divider
+import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.activities.form.ActivityFormFs
 import me.timeto.app.ui.activities.form.ActivityFormTimerHintsFs
 import me.timeto.app.ui.activities.timer.ActivityTimerFs
@@ -41,11 +40,6 @@ import me.timeto.shared.vm.activities.timer.ActivityTimerStrategy
 val ActivitiesView__listItemHeight = 42.dp
 val ActivitiesView__timerHintHPadding = 5.dp
 val ActivitiesView__listEndPadding = 8.dp
-
-private val activityItemEmojiHPadding = 8.dp
-private val activityItemEmojiWidth = 32.dp
-private val activityItemPaddingStart: Dp =
-    activityItemEmojiWidth + (activityItemEmojiHPadding * 2)
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -104,17 +98,9 @@ fun ActivitiesView(
                     ) {
 
                         Text(
-                            text = activityDb.emoji,
-                            modifier = Modifier
-                                .padding(horizontal = activityItemEmojiHPadding)
-                                .width(activityItemEmojiWidth),
-                            textAlign = TextAlign.Center,
-                            fontSize = 20.sp,
-                        )
-
-                        Text(
                             text = activityUi.text,
                             modifier = Modifier
+                                .padding(start = H_PADDING)
                                 .weight(1f),
                             color = c.text,
                             textAlign = TextAlign.Start,
@@ -168,7 +154,7 @@ fun ActivitiesView(
                     }
 
                     if (activitiesUi.first() != activityUi) {
-                        Divider(Modifier.padding(start = activityItemPaddingStart))
+                        Divider(Modifier.padding(start = H_PADDING))
                     }
 
                     if (activityUi.isActive) {

@@ -90,7 +90,6 @@ class HistoryVm : Vm<HistoryVm.State>() {
                 activityDb = activityDb,
                 isStartsPrevDay = unixTime.localDay < unixDay,
                 text = (intervalDb.note ?: activityDb.name).textFeatures().textUi(
-                    withActivityEmoji = false,
                     withTimer = false,
                 ),
                 secondsForBar = barTimeFinish - dayTimeStart.limitMin(intervalDb.id),
