@@ -1,0 +1,30 @@
+import kotlin.Int;
+
+CREATE TABLE Goal2Sq (
+    id INTEGER AS Int NOT NULL PRIMARY KEY,
+    parent_id INTEGER AS Int, -- Nullable
+    type_id INTEGER AS Int NOT NULL,
+    name TEXT NOT NULL,
+    seconds INTEGER AS Int NOT NULL,
+    timer INTEGER AS Int NOT NULL,
+    period_json TEXT NOT NULL,
+    finish_text TEXT NOT NULL,
+    home_button_sort TEXT NOT NULL,
+    color_rgba TEXT NOT NULL,
+    keep_screen_on INTEGER AS Int NOT NULL,
+    pomodoro_timer INTEGER AS Int NOT NULL
+);
+
+--
+-- Select
+
+selectAll:
+SELECT *
+FROM Goal2Sq;
+
+--
+-- Insert
+
+insert:
+INSERT INTO Goal2Sq
+VALUES ?;

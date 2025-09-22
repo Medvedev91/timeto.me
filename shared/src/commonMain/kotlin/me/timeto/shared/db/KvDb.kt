@@ -79,6 +79,7 @@ data class KvDb(
     enum class KEY {
 
         DAY_START_OFFSET_SECONDS,
+        ACTIVITIES_MIGRATED,
         TOKEN,
         TOKEN_PASSWORD,
         WHATS_NEW_CHECK_UNIX_DAY,

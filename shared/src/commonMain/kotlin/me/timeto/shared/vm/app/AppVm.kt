@@ -39,6 +39,8 @@ class AppVm : Vm<AppVm.State>() {
             if (!Cache.isLateInitInitialized())
                 fillInitData()
 
+            activitiesMigration()
+
             state.update { it.copy(isAppReady = true) }
 
             ///

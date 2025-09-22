@@ -149,7 +149,7 @@ data class TextFeatures(
 
 fun String.textFeatures(): TextFeatures = parseLocal(this)
 
-//////
+///
 
 private val checklistRegex = "#c(\\d+)".toRegex()
 private val shortcutRegex = "#s(\\d+)".toRegex()
