@@ -54,18 +54,23 @@ private struct Goal2FormSheetInner: View {
                     vm.setName(newName: newName)
                 }
                 
-                NavigationLinkAction(
-                    label: {
-                        HStack {
-                            Text(state.secondsTitle)
-                            Spacer()
-                            Text(secondsNote)
-                                .foregroundColor(.secondary)
-                        }
-                    },
+                Button(
                     action: {
                         withAnimation {
                             isSecondsPickerExpanded.toggle()
+                        }
+                    },
+                    label: {
+                        HStack {
+                            Text(state.secondsTitle)
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text(secondsNote)
+                                .foregroundColor(.secondary)
+                            Image(systemName: "chevron.up.chevron.down")
+                                .padding(.leading, 4)
+                                .font(.system(size: 13, weight: .regular))
+                                .foregroundColor(.secondary)
                         }
                     },
                 )
@@ -103,6 +108,11 @@ private struct Goal2FormSheetInner: View {
         }
         .onAppear {
             focusedField = .name
+        }
+        .onChange(of: isSecondsPickerExpanded) { _, newValue in
+            if newValue {
+                focusedField = nil
+            }
         }
     }
 }
