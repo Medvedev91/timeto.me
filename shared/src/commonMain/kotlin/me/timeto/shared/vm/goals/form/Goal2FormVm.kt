@@ -4,7 +4,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.textFeatures
-import me.timeto.shared.toTimerHintNote
 import me.timeto.shared.vm.Vm
 
 class Goal2FormVm(
@@ -30,7 +29,7 @@ class Goal2FormVm(
 
         val secondsTitle = "Time"
         val secondsNote: String =
-            seconds.toTimerHintNote(isShort = false)
+            secondsToString(seconds)
     }
 
     override val state: MutableStateFlow<State>
@@ -77,19 +76,19 @@ private fun buildSecondsPickerItems(
                 defSeconds
 
     return a.toSet().sorted().map { seconds ->
-
-        val hours: Int = seconds / 3600
-        val minutes: Int = (seconds % 3600) / 60
-
-        val title: String = when {
-            hours == 0 -> "$minutes min"
-            minutes == 0 -> "$hours h"
-            else -> "$hours : ${minutes.toString().padStart(2, '0')}"
-        }
-
         Goal2FormVm.SecondsPickerItemUi(
-            title = title,
+            title = secondsToString(seconds),
             seconds = seconds,
         )
+    }
+}
+
+private fun secondsToString(seconds: Int): String {
+    val hours: Int = seconds / 3600
+    val minutes: Int = (seconds % 3600) / 60
+    return when {
+        hours == 0 -> "$minutes min"
+        minutes == 0 -> "$hours hr"
+        else -> "$hours hr ${minutes.toString().padStart(2, '0')} min"
     }
 }
