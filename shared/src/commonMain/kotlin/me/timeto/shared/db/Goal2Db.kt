@@ -20,6 +20,7 @@ import me.timeto.shared.UnixTime
 import me.timeto.shared.db.Goal2Db.Period
 import me.timeto.shared.removeDuplicateSpaces
 import me.timeto.shared.time
+import me.timeto.shared.toBoolean10
 import me.timeto.shared.zlog
 
 // todo can't delete "Other" type
@@ -92,6 +93,9 @@ data class Goal2Db(
     val colorRgba: ColorRgba by lazy {
         ColorRgba.fromRgbaStringEx(color_rgba)
     }
+
+    val keepScreenOn: Boolean =
+        keep_screen_on.toBoolean10()
 
     fun buildPeriod(): Period =
         Period.fromJson(Json.parseToJsonElement(period_json).jsonObject)

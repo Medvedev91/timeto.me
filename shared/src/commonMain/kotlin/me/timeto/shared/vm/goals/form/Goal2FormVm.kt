@@ -25,6 +25,7 @@ class Goal2FormVm(
         val period: Goal2Db.Period,
         val timer: Int,
         val colorRgba: ColorRgba,
+        val keepScreenOn: Boolean,
     ) {
 
         val title: String =
@@ -52,6 +53,8 @@ class Goal2FormVm(
         val timerTitleTimer = "Timer"
         val timerNote: String =
             timer.toTimerHintNote(isShort = false)
+
+        val keepScreenOnTitle = "Keep Screen On"
 
         val colorTitle = "Color"
         val colorPickerTitle = "Goal Color"
@@ -96,6 +99,7 @@ class Goal2FormVm(
                 period = initGoalDb?.buildPeriod() ?: Goal2Db.Period.DaysOfWeek.everyDay,
                 timer = initGoalDb?.timer ?: 0,
                 colorRgba = initGoalDb?.colorRgba ?: Goal2Db.nextColorCached(),
+                keepScreenOn = initGoalDb?.keepScreenOn ?: true,
             )
         )
     }
@@ -124,6 +128,10 @@ class Goal2FormVm(
 
     fun setColorRgba(newColorRgba: ColorRgba) {
         state.update { it.copy(colorRgba = newColorRgba) }
+    }
+
+    fun setKeepScreenOn(newKeepScreenOn: Boolean) {
+        state.update { it.copy(keepScreenOn = newKeepScreenOn) }
     }
 
     ///

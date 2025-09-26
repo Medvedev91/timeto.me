@@ -20,6 +20,7 @@ struct Goal2FormSheet: View {
                 parentGoalUi: state.parentGoalUi,
                 isDoneEnabled: state.isDoneEnabled,
                 isTimerRestOfBar: state.timer == 0,
+                keepScreenOn: state.keepScreenOn,
             )
         }
     }
@@ -36,6 +37,7 @@ private struct Goal2FormSheetInner: View {
     @State var parentGoalUi: Goal2FormVm.GoalUi?
     @State var isDoneEnabled: Bool
     @State var isTimerRestOfBar: Bool
+    @State var keepScreenOn: Bool
 
     ///
     
@@ -194,6 +196,14 @@ private struct Goal2FormSheetInner: View {
                         }
                     }
                 )
+                
+                Toggle(
+                    state.keepScreenOnTitle,
+                    isOn: $keepScreenOn
+                )
+                .onChange(of: keepScreenOn) { _, new in
+                    vm.setKeepScreenOn(newKeepScreenOn: new)
+                }
             }
         }
         .navigationTitle(state.title)
