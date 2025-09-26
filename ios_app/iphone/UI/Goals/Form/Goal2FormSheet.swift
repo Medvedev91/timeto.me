@@ -99,6 +99,10 @@ private struct Goal2FormSheetInner: View {
                     }
                 }
                 
+            }
+            
+            Section {
+                
                 NavigationLinkSheet(
                     label: {
                         HStack {
