@@ -4,11 +4,13 @@ import dbsq.ActivitySQ
 import dbsq.Goal2Sq
 import dbsq.GoalSq
 import kotlinx.coroutines.flow.Flow
+import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.int
 import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.UiException
@@ -48,6 +50,9 @@ data class Goal2Db(
         private fun selectAllSync(): List<Goal2Db> =
             db.goal2Queries.selectAll().asList { toDb() }
     }
+
+    fun buildPeriod(): Period =
+        Period.fromJson(Json.parseToJsonElement(period_json).jsonObject)
 
     ///
 
@@ -91,6 +96,8 @@ data class Goal2Db(
         ) : Period {
 
             companion object {
+
+                val everyDay = DaysOfWeek(setOf(0, 1, 2, 3, 4, 5, 6))
 
                 fun fromJson(json: JsonObject) = DaysOfWeek(
                     days = json["days"]!!.jsonArray.map { it.jsonPrimitive.int }.toSet(),
@@ -182,7 +189,7 @@ suspend fun activitiesMigration(): Unit = dbIo {
                             name = activityDb.name,
                             seconds = 3_600,
                             timer = 0,
-                            period_json = Period.DaysOfWeek(setOf(0, 1, 2, 3, 4, 5, 6)).toJson().toString(),
+                            period_json = Period.DaysOfWeek.everyDay.toJson().toString(),
                             finish_text = "👍",
                             home_button_sort = HomeButtonSort.parseOrDefault("").string,
                             color_rgba = activityDb.color_rgba,
@@ -222,7 +229,7 @@ suspend fun activitiesMigration(): Unit = dbIo {
                             name = activityDb.name,
                             seconds = 3_600,
                             timer = 0,
-                            period_json = Period.DaysOfWeek(setOf(0, 1, 2, 3, 4, 5, 6)).toJson().toString(),
+                            period_json = Period.DaysOfWeek.everyDay.toJson().toString(),
                             finish_text = "👍",
                             home_button_sort = HomeButtonSort.parseOrDefault("").string,
                             color_rgba = activityDb.color_rgba,

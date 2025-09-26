@@ -18,6 +18,7 @@ class Goal2FormVm(
         val secondsPickerItemsUi: List<SecondsPickerItemUi>,
         val parentGoalsUi: List<GoalUi>,
         val parentGoalUi: GoalUi?,
+        val period: Goal2Db.Period,
     ) {
 
         val title: String =
@@ -35,6 +36,10 @@ class Goal2FormVm(
             secondsToString(seconds)
 
         val parentGoalTitle = "Parent Goal"
+
+        val periodTitle = "Days"
+        val periodNote: String =
+            period.note()
     }
 
     override val state: MutableStateFlow<State>
@@ -55,6 +60,7 @@ class Goal2FormVm(
                 secondsPickerItemsUi = buildSecondsPickerItems(defSeconds = seconds),
                 parentGoalsUi = parentGoalsUi,
                 parentGoalUi = parentGoalUi,
+                period = initGoalDb?.buildPeriod() ?: Goal2Db.Period.DaysOfWeek.everyDay,
             )
         )
     }
