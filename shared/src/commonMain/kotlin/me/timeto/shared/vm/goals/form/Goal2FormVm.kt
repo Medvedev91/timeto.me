@@ -2,6 +2,7 @@ package me.timeto.shared.vm.goals.form
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import me.timeto.shared.Cache
 import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.textFeatures
 import me.timeto.shared.vm.Vm
@@ -15,6 +16,8 @@ class Goal2FormVm(
         val name: String,
         val seconds: Int,
         val secondsPickerItemsUi: List<SecondsPickerItemUi>,
+        val parentGoalsUi: List<GoalUi>,
+        val parentGoalUi: GoalUi?,
     ) {
 
         val title: String =
@@ -30,6 +33,8 @@ class Goal2FormVm(
         val secondsTitle = "Time"
         val secondsNote: String =
             secondsToString(seconds)
+
+        val parentGoalTitle = "Parent Goal"
     }
 
     override val state: MutableStateFlow<State>
@@ -37,12 +42,19 @@ class Goal2FormVm(
     init {
         val tf = (initGoalDb?.name ?: "").textFeatures()
         val seconds: Int = initGoalDb?.seconds ?: 3_600
+        val parentGoalsUi = Cache.goals2Db
+            .filter { it.id != initGoalDb?.id }
+            .map { GoalUi(it) }
+        val parentGoalUi: GoalUi? =
+            parentGoalsUi.firstOrNull { it.goalDb.id == initGoalDb?.parent_id }
         state = MutableStateFlow(
             State(
                 initGoalDb = initGoalDb,
                 name = tf.textNoFeatures,
                 seconds = seconds,
                 secondsPickerItemsUi = buildSecondsPickerItems(defSeconds = seconds),
+                parentGoalsUi = parentGoalsUi,
+                parentGoalUi = parentGoalUi,
             )
         )
     }
@@ -57,12 +69,23 @@ class Goal2FormVm(
         state.update { it.copy(seconds = newSeconds) }
     }
 
+    fun setParentGoalUi(goalUi: GoalUi?) {
+        state.update { it.copy(parentGoalUi = goalUi) }
+    }
+
     ///
 
     data class SecondsPickerItemUi(
         val title: String,
         val seconds: Int,
     )
+
+    data class GoalUi(
+        val goalDb: Goal2Db,
+    ) {
+        val title: String =
+            goalDb.name.textFeatures().textNoFeatures
+    }
 }
 
 private fun buildSecondsPickerItems(

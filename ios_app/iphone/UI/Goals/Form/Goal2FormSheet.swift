@@ -17,6 +17,7 @@ struct Goal2FormSheet: View {
                 name: state.name,
                 seconds: state.seconds,
                 secondsNote: state.secondsNote,
+                parentGoalUi: state.parentGoalUi,
             )
         }
     }
@@ -30,6 +31,7 @@ private struct Goal2FormSheetInner: View {
     @State var name: String
     @State var seconds: Int32
     @State var secondsNote: String
+    @State var parentGoalUi: Goal2FormVm.GoalUi?
     
     ///
     
@@ -85,6 +87,18 @@ private struct Goal2FormSheetInner: View {
                     .pickerStyle(.wheel)
                     .onChange(of: seconds) { _, newSeconds in
                         vm.setSeconds(newSeconds: newSeconds)
+                    }
+                }
+            }
+            
+            Section {
+                
+                Picker(state.parentGoalTitle, selection: $parentGoalUi) {
+                    Text("None")
+                        .tag(nil as Goal2FormVm.GoalUi?) // Support optional (nil) selection
+                    ForEach(state.parentGoalsUi, id: \.goalDb.id) { goalUi in
+                        Text(goalUi.title)
+                            .tag(goalUi as Goal2FormVm.GoalUi?) // Support optional (nil) selection
                     }
                 }
             }

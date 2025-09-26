@@ -3,6 +3,7 @@ package me.timeto.shared.db
 import dbsq.ActivitySQ
 import dbsq.Goal2Sq
 import dbsq.GoalSq
+import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -40,6 +41,9 @@ data class Goal2Db(
 
         suspend fun selectAll(): List<Goal2Db> =
             dbIo { selectAllSync() }
+
+        fun selectAllFlow(): Flow<List<Goal2Db>> =
+            db.goal2Queries.selectAll().asListFlow { toDb() }
 
         private fun selectAllSync(): List<Goal2Db> =
             db.goal2Queries.selectAll().asList { toDb() }
