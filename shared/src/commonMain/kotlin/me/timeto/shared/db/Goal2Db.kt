@@ -25,6 +25,7 @@ import me.timeto.shared.zlog
 
 // todo can't delete "Other" type
 // todo backupable
+// todo check parent recursion
 data class Goal2Db(
     val id: Int,
     val parent_id: Int?,
