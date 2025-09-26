@@ -214,6 +214,10 @@ private struct Goal2FormSheetInner: View {
                 .animateVmValue(vmValue: state.isDoneEnabled, swiftState: $isDoneEnabled)
             }
         }
+        // Hide keyboard on scroll
+        .simultaneousGesture(DragGesture().onChanged({ _ in
+            focusedField = nil
+        }))
         .onAppear {
             focusedField = .name
         }
