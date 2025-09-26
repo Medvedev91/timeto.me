@@ -43,6 +43,9 @@ private struct Goal2FormSheetInner: View {
     @FocusState private var focusedField: FocusedField?
     
     @State private var isSecondsPickerExpanded = false
+    private var secondsNoteColor: Color {
+        isSecondsPickerExpanded ? .pink : .secondary
+    }
     
     var body: some View {
         List {
@@ -70,11 +73,11 @@ private struct Goal2FormSheetInner: View {
                                 .foregroundColor(.primary)
                             Spacer()
                             Text(secondsNote)
-                                .foregroundColor(.secondary)
+                                .foregroundColor(secondsNoteColor)
                             Image(systemName: "chevron.up.chevron.down")
                                 .padding(.leading, 4)
                                 .font(.system(size: 13, weight: .regular))
-                                .foregroundColor(.secondary)
+                                .foregroundColor(secondsNoteColor)
                         }
                     },
                 )
