@@ -79,6 +79,10 @@ class Goal2FormVm(
         state.update { it.copy(parentGoalUi = goalUi) }
     }
 
+    fun setPeriod(newPeriod: Goal2Db.Period) {
+        state.update { it.copy(period = newPeriod) }
+    }
+
     ///
 
     data class SecondsPickerItemUi(

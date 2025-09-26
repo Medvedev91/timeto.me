@@ -94,6 +94,25 @@ private struct Goal2FormSheetInner: View {
                         vm.setSeconds(newSeconds: newSeconds)
                     }
                 }
+                
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
+                            Text(state.periodTitle)
+                            Spacer()
+                            Text(state.periodNote)
+                                .foregroundColor(.secondary)
+                        }
+                    },
+                    sheet: {
+                        GoalFormPeriodSheet(
+                            initGoalDbPeriod: state.period,
+                            onDone: { newPeriod in
+                                vm.setPeriod(newPeriod: newPeriod)
+                            }
+                        )
+                    }
+                )
             }
             
             Section {
