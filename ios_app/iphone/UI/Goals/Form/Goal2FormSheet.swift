@@ -18,6 +18,7 @@ struct Goal2FormSheet: View {
                 seconds: state.seconds,
                 secondsNote: state.secondsNote,
                 parentGoalUi: state.parentGoalUi,
+                isDoneEnabled: state.isDoneEnabled,
             )
         }
     }
@@ -32,6 +33,7 @@ private struct Goal2FormSheetInner: View {
     @State var seconds: Int32
     @State var secondsNote: String
     @State var parentGoalUi: Goal2FormVm.GoalUi?
+    @State var isDoneEnabled: Bool
     
     ///
     
@@ -117,7 +119,8 @@ private struct Goal2FormSheetInner: View {
                 Button(state.doneText) {
                 }
                 .fontWeight(.semibold)
-                .disabled(!state.isDoneEnabled)
+                .disabled(!isDoneEnabled)
+                .animateVmValue(vmValue: state.isDoneEnabled, swiftState: $isDoneEnabled)
             }
         }
         .onAppear {
