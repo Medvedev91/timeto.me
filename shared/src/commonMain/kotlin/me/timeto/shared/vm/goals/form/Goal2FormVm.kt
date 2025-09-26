@@ -4,8 +4,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
 import me.timeto.shared.ColorRgba
+import me.timeto.shared.UiException
 import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.textFeatures
+import me.timeto.shared.toHms
 import me.timeto.shared.toTimerHintNote
 import me.timeto.shared.vm.Vm
 import me.timeto.shared.vm.color_picker.ColorPickerExampleUi
@@ -26,6 +28,7 @@ class Goal2FormVm(
         val timer: Int,
         val colorRgba: ColorRgba,
         val keepScreenOn: Boolean,
+        val pomodoroTimer: Int,
     ) {
 
         val title: String =
@@ -55,6 +58,12 @@ class Goal2FormVm(
             timer.toTimerHintNote(isShort = false)
 
         val keepScreenOnTitle = "Keep Screen On"
+
+        val pomodoroTitle = "Pomodoro"
+        val pomodoroItemsUi: List<PomodoroItemUi> =
+            listOf(1, 2, 3, 4, 5, 10, 15, 30, 60).map { minutes ->
+                PomodoroItemUi(timer = minutes * 60)
+            }
 
         val colorTitle = "Color"
         val colorPickerTitle = "Goal Color"
@@ -100,6 +109,7 @@ class Goal2FormVm(
                 timer = initGoalDb?.timer ?: 0,
                 colorRgba = initGoalDb?.colorRgba ?: Goal2Db.nextColorCached(),
                 keepScreenOn = initGoalDb?.keepScreenOn ?: true,
+                pomodoroTimer = initGoalDb?.pomodoro_timer ?: (5 * 60),
             )
         )
     }
@@ -134,6 +144,10 @@ class Goal2FormVm(
         state.update { it.copy(keepScreenOn = newKeepScreenOn) }
     }
 
+    fun setPomodoroTimer(newPomodoroTimer: Int) {
+        state.update { it.copy(pomodoroTimer = newPomodoroTimer) }
+    }
+
     ///
 
     data class SecondsPickerItemUi(
@@ -146,6 +160,22 @@ class Goal2FormVm(
     ) {
         val title: String =
             goalDb.name.textFeatures().textNoFeatures
+    }
+
+    data class PomodoroItemUi(
+        val timer: Int,
+    ) {
+        val title: String = when {
+            timer < 0 -> throw UiException("prepPomodoroTimerString(0)")
+            timer < 3_600 -> "${timer / 60} min"
+            else -> {
+                val (h, m, _) = timer.toHms()
+                if (m == 0)
+                    "$h ${if (h == 1) "hour" else "hours"}"
+                else
+                    "${h}h ${m}m"
+            }
+        }
     }
 }
 

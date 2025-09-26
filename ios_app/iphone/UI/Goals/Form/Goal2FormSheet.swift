@@ -21,6 +21,7 @@ struct Goal2FormSheet: View {
                 isDoneEnabled: state.isDoneEnabled,
                 isTimerRestOfBar: state.timer == 0,
                 keepScreenOn: state.keepScreenOn,
+                pomodoroTimer: state.pomodoroTimer,
             )
         }
     }
@@ -38,6 +39,7 @@ private struct Goal2FormSheetInner: View {
     @State var isDoneEnabled: Bool
     @State var isTimerRestOfBar: Bool
     @State var keepScreenOn: Bool
+    @State var pomodoroTimer: Int32
 
     ///
     
@@ -200,7 +202,20 @@ private struct Goal2FormSheetInner: View {
                         }
                     }
                 )
+            }
+            
+            Section {
                 
+                Picker(state.pomodoroTitle, selection: $pomodoroTimer) {
+                    ForEach(state.pomodoroItemsUi, id: \.timer) { itemUi in
+                        Text(itemUi.title)
+                            .tag(itemUi.timer)
+                    }
+                }
+                .onChange(of: pomodoroTimer) { _, newPomodoroTimer in
+                    vm.setPomodoroTimer(newPomodoroTimer: newPomodoroTimer)
+                }
+
                 Toggle(
                     state.keepScreenOnTitle,
                     isOn: $keepScreenOn
