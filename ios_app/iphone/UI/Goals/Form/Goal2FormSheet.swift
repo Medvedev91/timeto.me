@@ -108,6 +108,49 @@ private struct Goal2FormSheetInner: View {
                 NavigationLinkSheet(
                     label: {
                         HStack {
+                            Text("Checklists")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text(state.checklistsNote)
+                                .foregroundColor(.secondary)
+                        }
+                    },
+                    sheet: {
+                        ChecklistsPickerSheet(
+                            initChecklistsDb: state.checklistsDb,
+                            onDone: { newChecklistsDb in
+                                vm.setChecklistsDb(newChecklistsDb: newChecklistsDb)
+                            }
+                        )
+                    }
+                )
+                
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
+                            Text("Shortcuts")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text(state.shortcutsNote)
+                                .foregroundColor(.secondary)
+                        }
+                    },
+                    sheet: {
+                        ShortcutsPickerSheet(
+                            initShortcutsDb: state.shortcutsDb,
+                            onDone: { newShortcutsDb in
+                                vm.setShortcutsDb(newShortcutsDb: newShortcutsDb)
+                            }
+                        )
+                    }
+                )
+            }
+            
+            Section {
+                
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
                             Text(state.periodTitle)
                             Spacer()
                             Text(state.periodNote)
@@ -215,7 +258,7 @@ private struct Goal2FormSheetInner: View {
                 .onChange(of: pomodoroTimer) { _, newPomodoroTimer in
                     vm.setPomodoroTimer(newPomodoroTimer: newPomodoroTimer)
                 }
-
+                
                 Toggle(
                     state.keepScreenOnTitle,
                     isOn: $keepScreenOn

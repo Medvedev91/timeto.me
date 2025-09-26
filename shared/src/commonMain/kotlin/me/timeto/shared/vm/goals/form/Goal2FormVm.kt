@@ -5,7 +5,9 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.UiException
+import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.Goal2Db
+import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toHms
 import me.timeto.shared.toTimerHintNote
@@ -29,6 +31,8 @@ class Goal2FormVm(
         val colorRgba: ColorRgba,
         val keepScreenOn: Boolean,
         val pomodoroTimer: Int,
+        val checklistsDb: List<ChecklistDb>,
+        val shortcutsDb: List<ShortcutDb>,
     ) {
 
         val title: String =
@@ -64,6 +68,14 @@ class Goal2FormVm(
             listOf(1, 2, 3, 4, 5, 10, 15, 30, 60).map { minutes ->
                 PomodoroItemUi(timer = minutes * 60)
             }
+
+        val checklistsNote: String =
+            if (checklistsDb.isEmpty()) "None"
+            else checklistsDb.joinToString(", ") { it.name }
+
+        val shortcutsNote: String =
+            if (shortcutsDb.isEmpty()) "None"
+            else shortcutsDb.joinToString(", ") { it.name }
 
         val colorTitle = "Color"
         val colorPickerTitle = "Goal Color"
@@ -110,6 +122,8 @@ class Goal2FormVm(
                 colorRgba = initGoalDb?.colorRgba ?: Goal2Db.nextColorCached(),
                 keepScreenOn = initGoalDb?.keepScreenOn ?: true,
                 pomodoroTimer = initGoalDb?.pomodoro_timer ?: (5 * 60),
+                checklistsDb = tf.checklistsDb,
+                shortcutsDb = tf.shortcutsDb,
             )
         )
     }
@@ -146,6 +160,14 @@ class Goal2FormVm(
 
     fun setPomodoroTimer(newPomodoroTimer: Int) {
         state.update { it.copy(pomodoroTimer = newPomodoroTimer) }
+    }
+
+    fun setChecklistsDb(newChecklistsDb: List<ChecklistDb>) {
+        state.update { it.copy(checklistsDb = newChecklistsDb) }
+    }
+
+    fun setShortcutsDb(newShortcutsDb: List<ShortcutDb>) {
+        state.update { it.copy(shortcutsDb = newShortcutsDb) }
     }
 
     ///
