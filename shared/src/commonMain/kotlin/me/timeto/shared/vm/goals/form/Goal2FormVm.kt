@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
 import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.textFeatures
+import me.timeto.shared.toTimerHintNote
 import me.timeto.shared.vm.Vm
 
 class Goal2FormVm(
@@ -19,6 +20,7 @@ class Goal2FormVm(
         val parentGoalsUi: List<GoalUi>,
         val parentGoalUi: GoalUi?,
         val period: Goal2Db.Period,
+        val timer: Int,
     ) {
 
         val title: String =
@@ -40,6 +42,12 @@ class Goal2FormVm(
         val periodTitle = "Days"
         val periodNote: String =
             period.note()
+
+        val timerHeader = "TIMER ON BAR PRESSED"
+        val timerTitleRest = "Rest of Bar"
+        val timerTitleTimer = "Timer"
+        val timerNote: String =
+            timer.toTimerHintNote(isShort = false)
     }
 
     override val state: MutableStateFlow<State>
@@ -61,6 +69,7 @@ class Goal2FormVm(
                 parentGoalsUi = parentGoalsUi,
                 parentGoalUi = parentGoalUi,
                 period = initGoalDb?.buildPeriod() ?: Goal2Db.Period.DaysOfWeek.everyDay,
+                timer = initGoalDb?.timer ?: 0,
             )
         )
     }
@@ -81,6 +90,10 @@ class Goal2FormVm(
 
     fun setPeriod(newPeriod: Goal2Db.Period) {
         state.update { it.copy(period = newPeriod) }
+    }
+
+    fun setTimer(newTimer: Int) {
+        state.update { it.copy(timer = newTimer) }
     }
 
     ///

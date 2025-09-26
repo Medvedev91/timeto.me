@@ -19,6 +19,7 @@ struct Goal2FormSheet: View {
                 secondsNote: state.secondsNote,
                 parentGoalUi: state.parentGoalUi,
                 isDoneEnabled: state.isDoneEnabled,
+                isTimerRestOfBar: state.timer == 0,
             )
         }
     }
@@ -34,7 +35,8 @@ private struct Goal2FormSheetInner: View {
     @State var secondsNote: String
     @State var parentGoalUi: Goal2FormVm.GoalUi?
     @State var isDoneEnabled: Bool
-    
+    @State var isTimerRestOfBar: Bool
+
     ///
     
     @Environment(\.dismiss) private var dismiss
@@ -113,6 +115,46 @@ private struct Goal2FormSheetInner: View {
                         )
                     }
                 )
+            }
+            
+            Section(state.timerHeader) {
+                
+                Toggle(
+                    state.timerTitleRest,
+                    isOn: $isTimerRestOfBar
+                )
+                .onChange(of: state.timer) { _, new in
+                    withAnimation {
+                        isTimerRestOfBar = (new == 0)
+                    }
+                }
+                .onChange(of: isTimerRestOfBar) { _, new in
+                    vm.setTimer(newTimer: new ? 0 : (45 * 60))
+                }
+                
+                if !isTimerRestOfBar {
+                    NavigationLinkSheet(
+                        label: {
+                            HStack {
+                                Text(state.timerTitleTimer)
+                                Spacer()
+                                Text(state.timerNote)
+                                    .foregroundColor(.secondary)
+                            }
+                        },
+                        sheet: {
+                            TimerSheet(
+                                title: state.timerTitleTimer,
+                                doneTitle: "Done",
+                                initSeconds: state.timer.toInt(),
+                                onDone: { newTimer in
+                                    vm.setTimer(newTimer: newTimer.toInt32())
+                                }
+                            )
+                            .interactiveDismissDisabled()
+                        }
+                    )
+                }
             }
             
             Section {
